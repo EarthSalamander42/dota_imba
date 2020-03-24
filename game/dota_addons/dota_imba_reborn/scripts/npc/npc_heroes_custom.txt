@@ -685,13 +685,13 @@
 		"Ability11"					"special_bonus_attack_damage_65"
 		"Ability12"					"special_bonus_imba_earth_spirit_3"
 		"Ability13"					"special_bonus_armor_8"
-		"Ability14"					"special_bonus_imba_earth_spirit_4"
+		"Ability14"					"special_bonus_spell_amplify_20"
 		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
 		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
 		
 		// Removed Talents
-		// "Ability14"					"special_bonus_spell_amplify_20"
+		// "Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
 		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
 		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
 		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
@@ -1686,7 +1686,7 @@
 		"Ability10"					"special_bonus_imba_nevermore_1"
 		"Ability11"					"special_bonus_attack_speed_20"
 		"Ability12"					"special_bonus_imba_nevermore_3"
-		"Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
+		"Ability13"					"special_bonus_movement_speed_30"
 		"Ability14"					"special_bonus_imba_nevermore_5"
 		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
@@ -1694,7 +1694,7 @@
 		
 		// Removed Talents
 		// "Ability11"					"special_bonus_imba_nevermore_2" // Necromastery Siphon
-		// "Ability13"					"special_bonus_movement_speed_30"
+		// "Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
 		// "Ability15"					"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	}
 

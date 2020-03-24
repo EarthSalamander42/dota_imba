@@ -208,15 +208,16 @@ function modifier_item_imba_mekansm_aura:GetTexture()
 
 -- Stores the aura's parameters to prevent errors when the item is destroyed
 function modifier_item_imba_mekansm_aura:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.aura_health_regen = self:GetAbility():GetSpecialValueFor("aura_health_regen")
 end
 
 -- Declare modifier events/properties
 function modifier_item_imba_mekansm_aura:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 	}
-	return funcs
 end
 
 function modifier_item_imba_mekansm_aura:GetModifierConstantHealthRegen()

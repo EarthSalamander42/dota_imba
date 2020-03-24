@@ -285,29 +285,30 @@ function modifier_imba_blink_boots_handler:IsPurgable() return false end
 function modifier_imba_blink_boots_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_blink_boots_handler:DeclareFunctions()
-	if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then return {MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE} end
-	return { MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
-	MODIFIER_EVENT_ON_TAKEDAMAGE }
+	if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then
+		return {MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE}
+	else
+		return {
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
+			MODIFIER_EVENT_ON_TAKEDAMAGE
+		}
+	end
 end
 
 function modifier_imba_blink_boots_handler:GetModifierMoveSpeedBonus_Special_Boots()
-	local ability = self:GetAbility()
-	local speed_bonus = ability:GetSpecialValueFor("bonus_movement_speed")
-	return speed_bonus
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	end
 end
 
 function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
-	local ability = self:GetAbility()
-	local blink_damage_cooldown = ability:GetSpecialValueFor("blink_damage_cooldown")
-
-	local parent = self:GetParent()					-- Modifier carrier
-	local unit = keys.unit							-- Who took damage
-	
-	if parent == unit and keys.attacker:GetTeam() ~= parent:GetTeam() then
-		-- Custom function from funcs.lua
-		if keys.attacker:IsHeroDamage(keys.damage) then
-			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
-				ability:StartCooldown(blink_damage_cooldown)
+	if self:GetAbility() then
+		if self:GetParent() == keys.unit and keys.attacker:GetTeam() ~= self:GetParent():GetTeam() then
+			-- Custom function from funcs.lua
+			if keys.attacker:IsHeroDamage(keys.damage) then
+				if self:GetAbility():GetCooldownTimeRemaining() < self:GetAbility():GetSpecialValueFor("blink_damage_cooldown") then
+					self:GetAbility():StartCooldown(self:GetAbility():GetSpecialValueFor("blink_damage_cooldown"))
+				end
 			end
 		end
 	end

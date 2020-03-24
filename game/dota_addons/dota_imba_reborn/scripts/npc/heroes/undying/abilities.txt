@@ -30,7 +30,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"10.0 8.0 6.0 4.0"
-		"AbilityDuration"				"21.0 24.0 27.0 30.0"
+		"AbilityDuration"				"45.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -43,12 +43,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"decay_damage"					"20 50 80 110"
+				"decay_damage"					"40 100 160 220"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"str_steal"						"4"
+				"str_steal"						"4 5 6 7"
 			}	
 			"03"
 			{
@@ -59,7 +59,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"325"
+				"radius"						"325 375 425 475"
 			}			
 			"05"
 			{
@@ -69,7 +69,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"str_steal_scepter"				"10"
+				"str_steal_scepter"				"10 11 12 13"
 				"RequiresScepter"	"1"
 			}
 			
@@ -126,22 +126,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_unit"			"22 29 36 43"
+				"damage_per_unit"			"26 34 42 50"
 			}			
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_units"					"8 9 10 11"
+				"max_units"					"10 14 18 22"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1300"
+				"radius"					"1300 1400 1500 1600"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tombstone_heal"			"4 8 12 16"
+				"tombstone_heal"			"8 12 16 20"
 			}
 		}
 	}	
@@ -184,12 +184,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tombstone_health"				"8 10 12 14"
+				"tombstone_health"		"10 14 28 22"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hits_to_destroy_tooltip"				"4 5 6 7"
+				"hits_to_destroy_tooltip"	"5 7 9 11"
 				"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
 			}
 			"03"
@@ -262,7 +262,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"			"50 60 70 80"
+				"bonus_attack_speed"	"200"
 			}
 			"07"
 			{
@@ -282,25 +282,27 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_undying"
-		"AbilityTextureName"			"undying_soul_rip"
+		"AbilityTextureName"			"custom/undying/flesh_golem_grab"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_Undying.SoulRip.Cast"
+		
+		"MaxLevel"						"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastAnimation"			"ACT_DOTA_UNDYING_SOUL_RIP"
+		"AbilityCastAnimation"			"ACT_DOTA_UNDYING_DECAY"
 		"AbilityCastGestureSlot"		"DEFAULT"
 		"AbilityCastPoint"				"0.35"
-		"AbilityCastRange"				"750"
+		"AbilityCastRange"				"100"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30"
+		"AbilityCooldown"				"40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -310,7 +312,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-		
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
+			}
 		}
 	}	
 
@@ -349,12 +355,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow"						"40 45 50"
+				"slow"						"50 55 60"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"25 35 45"
+				"damage"					"35 45 55"
 			}
 			"03"
 			{
@@ -364,7 +370,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_percentage"			"40 50 60"
+				"str_percentage"			"55 66 75"
 			}
 			"05"
 			{
@@ -401,19 +407,14 @@
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"remnants_incoming_damage"	"20"
+				"remnants_health_damage_pct"			"9"
 			}
 			"13"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"remnants_health_damage_pct"			"9"
-			}
-			"14"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"remnants_max_health_heal_pct_hero"		"15"
 			}
-			"15"
+			"14"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"remnants_max_health_heal_pct_non_hero"		"2"

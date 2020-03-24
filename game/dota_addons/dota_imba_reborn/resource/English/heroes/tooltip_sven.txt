@@ -78,10 +78,12 @@
 "DOTA_Tooltip_ability_imba_sven_colossal_slash"                        "Colossal Slash"
 "DOTA_Tooltip_ability_imba_sven_colossal_slash_Description"            "Can only be used during God's Strength.\nChannels all your remaining power to end God's Strength with an enormous destructive shockwave. The wave travels further the earlier God's Strength is ended. Deals a guaranteed critical hit to enemies in the way."
 "DOTA_Tooltip_ability_imba_sven_colossal_slash_Lore"                    "SVEN SMASH!!!"
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_Note0"					"Does not proc attack modifiers."
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_Note1"					"Cannot hit attack immune units."
 "DOTA_Tooltip_ability_imba_sven_colossal_slash_radius"                  "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_sven_colossal_slash_crit_bonus_pct"          "%CRITICAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_sven_colossal_slash_base_range"              "BASE RANGE:"
-"DOTA_Tooltip_ability_imba_sven_colossal_slash_range_multiplier"                    "RANGE PER REMAINING SECOND:"
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_range_multiplier"		"RANGE PER REMAINING SECOND:"
 
 // Sven's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_sven_1"            "+70 Storm Hammer effect radius"

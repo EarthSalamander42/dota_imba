@@ -112,7 +112,7 @@ end
 function modifier_item_imba_butterfly:OnDestroy()
 	if IsServer() then
 		-- Remove unique modifier if it is the last Butterfly in inventory
-		if not self.caster:HasModifier("modifier_item_imba_butterfly") then
+		if self.caster and not self.caster:IsNull() and not self.caster:HasModifier("modifier_item_imba_butterfly") then
 			self.caster:RemoveModifierByName("modifier_item_imba_butterfly_unique")
 		end
 	end

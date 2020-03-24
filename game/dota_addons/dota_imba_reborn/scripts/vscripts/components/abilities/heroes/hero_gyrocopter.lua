@@ -101,6 +101,8 @@ end
 ---------------------------------------------
 
 function modifier_imba_gyrocopter_rocket_barrage:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.radius	= self:GetAbility():GetSpecialValueFor("radius")
 	self.rockets_per_second	= self:GetAbility():GetSpecialValueFor("rockets_per_second")
 	self.ballistic_duration	= self:GetAbility():GetSpecialValueFor("ballistic_duration")

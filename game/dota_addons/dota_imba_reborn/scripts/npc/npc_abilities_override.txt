@@ -4243,13 +4243,13 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"120 170 220"
 			}
-			"05"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_scepter"			"145 205 265"
 				"RequiresScepter"		"1"
 			}
-			"06"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_buffer"			"10"

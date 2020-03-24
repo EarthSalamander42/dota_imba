@@ -942,7 +942,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 		local crit_chance_total = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 
 		-- Ignore crit for buildings
-		if target:IsBuilding() or keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then
+		if target:IsBuilding() or target:IsOther() or keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then
 			return end
 
 		-- if we have phantom strike modifier, apply bonus percentage to our crit_chance

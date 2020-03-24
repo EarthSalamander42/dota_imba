@@ -6,16 +6,17 @@ LinkLuaModifier("modifier_imba_undying_decay_buff_counter", "components/abilitie
 LinkLuaModifier("modifier_imba_undying_decay_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_decay_debuff_counter", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_undying_soul_rip_deprecate_mind", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_soul_rip_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_soul_rip_aura_modifier", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_undying_tombstone_death_trigger", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_modifier", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathlust", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_undying_tombstone_zombie_modifier", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_undying_flesh_golem_grab", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_flesh_golem_grab_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
@@ -32,17 +33,19 @@ modifier_imba_undying_decay_debuff				= modifier_imba_undying_decay_debuff or cl
 modifier_imba_undying_decay_debuff_counter		= modifier_imba_undying_decay_debuff_counter or class({})
 
 imba_undying_soul_rip							= imba_undying_soul_rip or class({})
+modifier_imba_undying_soul_rip					= imba_undying_soul_rip or class({})
+modifier_imba_undying_soul_rip_deprecate_mind	= modifier_imba_undying_soul_rip_deprecate_mind or class({})
 modifier_imba_undying_soul_rip_aura				= modifier_imba_undying_soul_rip_aura or class({})
 modifier_imba_undying_soul_rip_aura_modifier	= modifier_imba_undying_soul_rip_aura_modifier or class({})
 
 imba_undying_tombstone												= imba_undying_tombstone or class({})
 modifier_imba_undying_tombstone_death_trigger						= modifier_imba_undying_tombstone_death_trigger or class({})
 modifier_imba_undying_tombstone_zombie_aura							= modifier_imba_undying_tombstone_zombie_aura or class({})
+modifier_imba_undying_tombstone_zombie_modifier						= modifier_imba_undying_tombstone_zombie_modifier or class({})
 modifier_imba_undying_tombstone_zombie_deathlust					= modifier_imba_undying_tombstone_zombie_deathlust or class({})
 modifier_imba_undying_tombstone_zombie_deathstrike					= modifier_imba_undying_tombstone_zombie_deathstrike or class({})
-modifier_imba_undying_tombstone_zombie_deathstrike_slow				= modifier_imba_undying_tombstone_zombie_deathstrike_slow or class({})
 modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter		= modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter or class({})
-modifier_imba_undying_tombstone_zombie_modifier						= modifier_imba_undying_tombstone_zombie_modifier or class({})
+modifier_imba_undying_tombstone_zombie_deathstrike_slow				= modifier_imba_undying_tombstone_zombie_deathstrike_slow or class({})
 
 imba_undying_tombstone_zombie_deathstrike							= imba_undying_tombstone_zombie_deathstrike or class({})
 
@@ -330,6 +333,7 @@ end
 function modifier_imba_undying_decay_debuff_counter:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		-- IMBAfication: Braiiiinssss...
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
 	}
 end
@@ -364,18 +368,34 @@ function imba_undying_soul_rip:OnSpellStart()
 	
 	local target = self:GetCursorTarget()
 	
-	local units_ripped = 0
+	local units_ripped		= 0
+	local damage_particle	= nil
+	
 	
 	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
 		if unit ~= self:GetCaster() and unit ~= target then
-			ApplyDamage({
-				victim 			= unit,
-				damage 			= self:GetSpecialValueFor("damage_per_unit"),
-				damage_type		= DAMAGE_TYPE_PURE,
-				damage_flags 	= DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NON_LETHAL, -- Putting reflection flag here in case of unwanted interactions
-				attacker 		= self:GetCaster(),
-				ability 		= self
-			})
+			if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+				damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_undying/undying_soul_rip_damage.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			else
+				damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_undying/undying_soul_rip_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			end
+			
+			ParticleManager:SetParticleControlEnt(damage_particle, 1, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(damage_particle)
+		
+			-- "Units which require a certain amount of attacks to be killed do not lose health when counted in by Soul Rip."
+			if unit:GetName() ~= "npc_dota_unit_undying_zombie" then
+				unit:SetHealth(math.max(unit:GetHealth() - self:GetSpecialValueFor("damage_per_unit"), 1))
+			end
+			
+			-- ApplyDamage({
+				-- victim 			= unit,
+				-- damage 			= self:GetSpecialValueFor("damage_per_unit"),
+				-- damage_type		= DAMAGE_TYPE_PURE,
+				-- damage_flags 	= DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NON_LETHAL, -- Putting reflection flag here in case of unwanted interactions
+				-- attacker 		= self:GetCaster(),
+				-- ability 		= self
+			-- })
 			
 			units_ripped = units_ripped + 1
 			
@@ -389,7 +409,7 @@ function imba_undying_soul_rip:OnSpellStart()
 		target:EmitSound("Hero_Undying.SoulRip.Enemy")
 	
 		ApplyDamage({
-			victim 			= enemy,
+			victim 			= target,
 			damage 			= self:GetSpecialValueFor("damage_per_unit") * units_ripped,
 			damage_type		= DAMAGE_TYPE_MAGICAL,
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
@@ -410,6 +430,10 @@ function imba_undying_soul_rip:OnSpellStart()
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetSpecialValueFor("tombstone_heal"), nil)
 	end
 end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_SOUL_RIP_DEPRECATE_MIND --
+---------------------------------------------------
 
 -----------------------------------------
 -- MODIFIER_IMBA_UNDYING_SOUL_RIP_AURA --
@@ -435,6 +459,12 @@ function imba_undying_tombstone:OnSpellStart()
 	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_Undying.Tombstone", self:GetCaster())
 
 	local tombstone = CreateUnitByName("npc_dota_unit_tombstone"..self:GetLevel(), self:GetCursorPosition(), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+	
+	-- Just gonna spam all the health functions to see what sticks cause this is super inconsistent
+	tombstone:SetBaseMaxHealth(self:GetSpecialValueFor("tombstone_health") * 2)
+	tombstone:SetMaxHealth(self:GetSpecialValueFor("tombstone_health") * 2)
+	tombstone:SetHealth(self:GetSpecialValueFor("tombstone_health") * 2)
+	
 	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_tombstone_zombie_aura", {})
 	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = self:GetSpecialValueFor("duration")})
 	
@@ -462,27 +492,54 @@ function modifier_imba_undying_tombstone_zombie_aura:OnCreated()
 	self.radius							= self:GetAbility():GetSpecialValueFor("radius")
 	self.health_threshold_pct_tooltip	= self:GetAbility():GetSpecialValueFor("health_threshold_pct_tooltip")
 	self.zombie_interval				= self:GetAbility():GetSpecialValueFor("zombie_interval")
-
+	self.level							= self:GetAbility():GetLevel()
+	
 	if not IsServer() then return end
+	
+	self.zombie_types = {"npc_dota_unit_undying_zombie", "npc_dota_unit_undying_zombie_torso"}
 	
 	self:OnIntervalThink()
 	self:StartIntervalThink(self.zombie_interval)
 end
 
 function modifier_imba_undying_tombstone_zombie_aura:OnIntervalThink()
-	local zombie = nil
+	local zombie				= nil
+	local deathstrike_ability	= nil
 
     -- "Zombies do not spawn for invisible units or units in the Fog of War."
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
 		 -- "Zombies do not spawn for wards, buildings, couriers, hidden units and zombies from an enemy Tombstone."
 		if not enemy:IsCourier() and enemy:GetName() ~= "npc_dota_unit_undying_zombie" then
-			-- No offset?
-			zombie = CreateUnitByName("npc_dota_unit_undying_zombie", enemy:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), self:GetCaster():GetTeamNumber())
-			zombie:AddAbility("imba_undying_tombstone_zombie_deathstrike")
+			zombie = CreateUnitByName(self.zombie_types[RandomInt(1, #self.zombie_types)], enemy:GetAbsOrigin(), true, self:GetParent(), self:GetParent(), self:GetCaster():GetTeamNumber())
+			
+			zombie:EmitSound("Undying_Zombie.Spawn")
+			
+			-- Seems like these things are STILL getting stuck on units so put a bit of an offest
+			FindClearSpaceForUnit(zombie, enemy:GetAbsOrigin() + RandomVector(enemy:GetHullRadius() + zombie:GetHullRadius()), true)
+			zombie:SetAggroTarget(enemy)
+			
+			-- Passive modifier that handles the zombie's health and aggro
+			zombie:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_undying_tombstone_zombie_modifier", {})
+			
+			deathstrike_ability = zombie:AddAbility("imba_undying_tombstone_zombie_deathstrike")
+			
+			if deathstrike_ability then
+				deathstrike_ability:SetLevel(self.level)
+			end
+			
 			zombie:SwapAbilities("imba_undying_tombstone_zombie_deathstrike", "undying_tombstone_zombie_deathstrike", true, false)
 			zombie:RemoveAbility("undying_tombstone_zombie_deathstrike")
-			
-			zombie:SetAttacking(enemy)
+		end
+	end
+end
+
+-- "When the Tombstone expires or is killed, all its zombies instantly die."
+function modifier_imba_undying_tombstone_zombie_aura:OnDestroy()
+	if not IsServer() then return end
+	
+	for _, ent in pairs(Entities:FindAllByName("npc_dota_unit_undying_zombie")) do
+		if ent:GetOwner() == self:GetParent() then
+			ent:ForceKill(false)
 		end
 	end
 end
@@ -509,23 +566,107 @@ function modifier_imba_undying_tombstone_zombie_aura:GetAbsoluteNoDamagePure()
 end
 
 function modifier_imba_undying_tombstone_zombie_aura:OnAttackLanded(keys)
-	if keys.target == self.parent and (keys.attacker:IsRealHero() or keys.attacker:IsClone() or keys.attacker:IsTempestDouble()) then
-		-- Deal with enemy logic first
-
-		if self.parent:GetTeam() ~= keys.attacker:GetTeam() then
-		
-			self.parent:SetHealth(self.parent:GetHealth() - self.health_increments)
+	if keys.target == self:GetParent() then
+		if (keys.attacker:IsRealHero() or keys.attacker:IsClone() or keys.attacker:IsTempestDouble()) then
+			self:GetParent():SetHealth(self:GetParent():GetHealth() - 4)
+		else
+			self:GetParent():SetHealth(self:GetParent():GetHealth() - 1)
+		end
 			
-			if self.parent:GetHealth() <= 0 then
-				self.parent:Kill(nil, keys.attacker)
-				-- This needs to be called to have the proper particle removal
+		if self:GetParent():GetHealth() <= 0 then
+			self:GetParent():Kill(nil, keys.attacker)
+			self:Destroy()
+		end
+	end
+end
+
+-----------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_TOMBSTONE_ZOMBIE_MODIFIER --
+-----------------------------------------------------
+
+function modifier_imba_undying_tombstone_zombie_modifier:IsPurgable()	return false end
+
+function modifier_imba_undying_tombstone_zombie_modifier:OnCreated()
+	if not IsServer() then return end
+	
+	if self:GetParent():GetAggroTarget() then
+		self.aggro_target = self:GetParent():GetAggroTarget()
+	else
+		self:GetParent():ForceKill(false)
+	end
+	
+	self.invis_timer	= 0
+	self.game_time		= GameRules:GetGameTime()
+end
+
+function modifier_imba_undying_tombstone_zombie_modifier:CheckState()
+	if IsServer() then
+		-- "When a zombies' target turns invisible, the associated zombies die after 0.1 seconds."
+		if not self.aggro_target or self.aggro_target:IsNull() or (self.aggro_target:IsInvisible() and not self:GetParent():CanEntityBeSeenByMyTeam(self.aggro_target)) then
+			self.invis_timer = GameRules:GetGameTime() - self.game_time
+			
+			if self.invis_timer >= 0.1 then
+				self:GetParent():ForceKill(false)
+			end
+		else
+			self.invis_timer	= 0
+		end
+		
+		self.game_time		= GameRules:GetGameTime()
+		
+		-- -- Okay, I can't get zombies to stick onto one target so I'm just going to call that an IMBAfication -_-
+		-- if self.aggro_target and not self.aggro_target:IsNull() then
+			-- self:GetParent():SetAggroTarget(self.aggro_target)
+		-- end
+	end
+	
+	-- -- Not vanilla? Screw it, getting tired of these getting stuck on things
+	-- return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+end
+
+function modifier_imba_undying_tombstone_zombie_modifier:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		
+		MODIFIER_EVENT_ON_DEATH
+	}
+end
+
+function modifier_imba_undying_tombstone_zombie_modifier:GetAbsoluteNoDamageMagical()
+    return 1
+end
+
+function modifier_imba_undying_tombstone_zombie_modifier:GetAbsoluteNoDamagePhysical()
+    return 1
+end
+
+function modifier_imba_undying_tombstone_zombie_modifier:GetAbsoluteNoDamagePure()
+    return 1
+end
+
+function modifier_imba_undying_tombstone_zombie_modifier:OnAttackLanded(keys)
+	if keys.target == self:GetParent() then
+		if (keys.attacker:IsRealHero() or keys.attacker:IsClone() or keys.attacker:IsTempestDouble() or keys.attacker:IsBuilding()) then
+			self:GetParent():Kill(nil, keys.attacker)
+			self:Destroy()
+		else
+			-- "Illusions and creep-heroes are treated like creeps by the zombies, so the take 2 attacks to destroy it, instead of 1."
+			self:GetParent():SetHealth(self:GetParent():GetHealth() - 1)
+			
+			if self:GetParent():GetHealth() <= 0 then
+				self:GetParent():Kill(nil, keys.attacker)
 				self:Destroy()
 			end
-		
-		-- Then with ally logic
-		else
-			keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_keeper_of_the_light_will_o_wisp_blessing", {duration = self.ignis_blessing_duration})
 		end
+	end
+end
+
+function modifier_imba_undying_tombstone_zombie_modifier:OnDeath(keys)
+	if keys.unit == self.aggro_target and not keys.reincarnate then
+		self:GetParent():ForceKill(false)
 	end
 end
 
@@ -534,25 +675,146 @@ end
 -----------------------------------------------
 
 function imba_undying_tombstone_zombie_deathstrike:GetIntrinsicModifierName()
-	return "modifier_imba_undying_tombstone_zombie_modifier"
+	return "modifier_imba_undying_tombstone_zombie_deathstrike"
 end
 
-function imba_undying_tombstone_zombie_deathstrike:OnSpellStart()
+--------------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_TOMBSTONE_ZOMBIE_DEATHSTRIKE --
+--------------------------------------------------------
 
+-- Going to combine Deathstrike and the standard zombie modifier logic together. Might be a bad idea?...
+
+function modifier_imba_undying_tombstone_zombie_deathstrike:IsHidden()		return true end
+function modifier_imba_undying_tombstone_zombie_deathstrike:IsPurgable()	return false end
+function modifier_imba_undying_tombstone_zombie_deathstrike:RemoveOnDeath()	return false end
+
+function modifier_imba_undying_tombstone_zombie_deathstrike:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
-modifier_imba_undying_tombstone_zombie_deathlust					= modifier_imba_undying_tombstone_zombie_deathlust or class({})
-modifier_imba_undying_tombstone_zombie_deathstrike					= modifier_imba_undying_tombstone_zombie_deathstrike or class({})
-modifier_imba_undying_tombstone_zombie_deathstrike_slow				= modifier_imba_undying_tombstone_zombie_deathstrike_slow or class({})
-modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter		= modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter or class({})
-modifier_imba_undying_tombstone_zombie_modifier						= modifier_imba_undying_tombstone_zombie_modifier or class({})
+function modifier_imba_undying_tombstone_zombie_deathstrike:OnAttackLanded(keys)
+	if self:GetAbility() and keys.attacker == self:GetParent() and not keys.target:IsBuilding() and not keys.target:IsOther() and keys.target:GetTeamNumber() ~= keys.attacker:GetTeamNumber() and keys.target:GetName() ~= "npc_dota_visage_familiar" then
+		keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter", {})
+		local deathstrike_modifier = keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_undying_tombstone_zombie_deathstrike_slow", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+		
+		if deathstrike_modifier then
+			deathstrike_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+		end
+	end
+end
+
+---------------------------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_TOMBSTONE_ZOMBIE_DEATHSTRIKE_SLOW_COUNTER --
+---------------------------------------------------------------------
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.slow					= self:GetAbility():GetSpecialValueFor("slow")
+end
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter:OnStackCountChanged(stackCount)
+	if not IsServer() then return end
+
+	if self:GetStackCount() <= 0 then
+		self:Destroy()
+	end
+end
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+end
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow * self:GetStackCount()
+end
+
+-------------------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_TOMBSTONE_ZOMBIE_DEATHSTRIKE_SLOW --
+-------------------------------------------------------------
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow:IsHidden()			return true end
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.health_threshold_pct	= self:GetAbility():GetSpecialValueFor("health_threshold_pct")
+	self.duration				= self:GetAbility():GetSpecialValueFor("duration")
+	
+	if not IsServer() then return end
+	
+	if self:GetParent():HasModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter") then
+		self:GetParent():FindModifierByName("modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter"):IncrementStackCount()
+	end
+	
+	-- "The health of the target is checked in 0.5 second intervals. If their target is below the threshold, the Deathlust Frenzy buff is placed."
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow:OnIntervalThink()
+	if self:GetParent():GetHealthPercent() <= self.health_threshold_pct then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_undying_tombstone_zombie_deathlust", {duration = self.duration})
+	end
+end
+
+function modifier_imba_undying_tombstone_zombie_deathstrike_slow:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetParent():HasModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter") then
+		self:GetParent():FindModifierByName("modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter"):DecrementStackCount()
+	end
+end
+
+------------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_TOMBSTONE_ZOMBIE_DEATHLUST --
+------------------------------------------------------
+
+function modifier_imba_undying_tombstone_zombie_deathlust:IsPurgable()	return false end
+
+function modifier_imba_undying_tombstone_zombie_deathlust:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.bonus_move_speed		= self:GetAbility():GetSpecialValueFor("bonus_move_speed")
+	self.bonus_attack_speed		= self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+end
+
+function modifier_imba_undying_tombstone_zombie_deathlust:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
+end
+
+function modifier_imba_undying_tombstone_zombie_deathlust:GetModifierMoveSpeedBonus_Percentage()
+	return self.bonus_move_speed
+end
+
+function modifier_imba_undying_tombstone_zombie_deathlust:GetModifierAttackSpeedBonus_Constant()
+	return self.bonus_attack_speed
+end
 
 -----------------------------------
 -- IMBA_UNDYING_FLESH_GOLEM_GRAB --
 -----------------------------------
 
+function imba_undying_flesh_golem_grab:IsInnateAbility()	return true end
+function imba_undying_flesh_golem_grab:IsStealable()		return false end
+
 function imba_undying_flesh_golem_grab:OnSpellStart()
-	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_flesh_golem_grab_debuff", {duration = 2.468})
+	local target = self:GetCursorTarget()
+
+	local grab_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_flesh_golem_grab_debuff", {duration = self:GetSpecialValueFor("duration")})
+	
+	if grab_modifier then
+		grab_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+	end
 end
 
 --------------------------------------------
@@ -567,20 +829,40 @@ end
 -- MODIFIER_IMBA_UNDYING_FLESH_GOLEM_GRAB_DEBUFF --
 ---------------------------------------------------
 
+function modifier_imba_undying_flesh_golem_grab_debuff:IsPurgable()	return false end
+
 function modifier_imba_undying_flesh_golem_grab_debuff:OnCreated()
 	if not IsServer() then return end
 	
-	self:GetParent():FollowEntity(self:GetCaster(), false)
+	-- self:GetParent():FollowEntity(self:GetCaster(), false)
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_undying_flesh_golem_grab_debuff:OnIntervalThink()
+	if not self:GetCaster() or self:GetCaster():IsStunned() or self:GetCaster():IsHexed() or self:GetCaster():IsNightmared() or self:GetCaster():IsOutOfGame() or not self:GetCaster():HasModifier("modifier_imba_undying_flesh_golem") then
+		self:Destroy()
+	end
+
+	if self:GetCaster():GetAggroTarget() ~= self:GetParent() then
+		self:GetParent():SetAbsOrigin(self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_attack1")) - Vector(0, 0, 50))
+	else
+		self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * 50))
+	end
 end
 
 function modifier_imba_undying_flesh_golem_grab_debuff:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():FollowEntity(nil, false)
+	-- self:GetParent():FollowEntity(nil, false)
+	
+	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), true)
 end
 
 function modifier_imba_undying_flesh_golem_grab_debuff:CheckState()
-	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	return {
+		[MODIFIER_STATE_NO_UNIT_COLLISION]	= true,
+		[MODIFIER_STATE_TETHERED]			= true
+	}
 end
 
 ------------------------------
@@ -605,14 +887,24 @@ end
 
 -- "Illusions get a new Flesh Golem buff, lasting for the full duration, regardless of how much is left on Undying himself."
 -- This intrinsic modifier is only meant for illusions to check if their owner has the Flesh Golem modifier, and to apply it if so
--- function modifier_imba_undying_flesh_golem_illusion_check:IsHidden()		return true end
+function modifier_imba_undying_flesh_golem_illusion_check:IsHidden()		return true end
 function modifier_imba_undying_flesh_golem_illusion_check:IsPurgable()		return false end
 function modifier_imba_undying_flesh_golem_illusion_check:RemoveOnDeath()	return false end
 
 -- TODO: Cannot test this using the current -upgrade logic
 function modifier_imba_undying_flesh_golem_illusion_check:OnCreated()
+	if not IsServer() then return end
+	
+	if self:GetParent():HasAbility("imba_undying_flesh_golem_grab") then
+		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_grab"):SetActivated(false)
+	end
+
 	if self:GetAbility() and self:GetParent():IsIllusion() and self:GetParent():GetPlayerOwner():GetAssignedHero():HasModifier("modifier_imba_undying_flesh_golem") then
 		self:GetParent():AddNewModifier(self:GetParent():GetPlayerOwner():GetAssignedHero(), self:GetAbility(), "modifier_imba_undying_flesh_golem", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+		
+		if self:GetParent():HasAbility("imba_undying_flesh_golem_grab") then
+			self:GetParent():FindAbilityByName("imba_undying_flesh_golem_grab"):SetActivated(true)
+		end
 	end
 end
 
@@ -637,18 +929,38 @@ function modifier_imba_undying_flesh_golem:OnCreated()
 	self.zombie_radius	= self:GetAbility():GetSpecialValueFor("zombie_radius")
 	self.movement_bonus	= self:GetAbility():GetSpecialValueFor("movement_bonus")
 	self.zombie_multiplier	= self:GetAbility():GetSpecialValueFor("zombie_multiplier")
-	self.remnants_aura_radius	= self:GetAbility():GetSpecialValueFor("remnants_aura_radius") 
+	self.remnants_aura_radius	= self:GetAbility():GetSpecialValueFor("remnants_aura_radius")
+	
+	if not IsServer() then return end
+	
+	if self:GetParent():HasAbility("imba_undying_flesh_golem_grab") then
+		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_grab"):SetActivated(true)
+	end
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_undying_flesh_golem:OnIntervalThink()
+	self.strength	= 0
+	self.strength	= self:GetParent():GetStrength() * self.str_percentage * 0.01
+	self:GetParent():CalculateStatBonus()
 end
 
 function modifier_imba_undying_flesh_golem:OnDestroy()
 	if not IsServer() then return end
 	
 	self:GetParent():EmitSound("Hero_Undying.FleshGolem.End")
+	
+	if self:GetParent():HasAbility("imba_undying_flesh_golem_grab") then
+		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_grab"):SetActivated(false)
+	end
 end
 
 function modifier_imba_undying_flesh_golem:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		-- MODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE, -- Yeah this still doesn't work
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_MODEL_CHANGE,
 		
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
@@ -662,24 +974,27 @@ function modifier_imba_undying_flesh_golem:GetModifierMoveSpeedBonus_Constant()
 	return self.movement_bonus
 end
 
+function modifier_imba_undying_flesh_golem:GetModifierBonusStats_Strength()
+	return self.strength
+end
+
+-- function modifier_imba_undying_flesh_golem:GetModifierBonusStats_Strength_Percentage()
+	-- return self.str_percentage
+-- end
+
 function modifier_imba_undying_flesh_golem:GetModifierModelChange()
 	return "models/heroes/undying/undying_flesh_golem.vmdl"
 end
 
--- TODO: Check if this affects allied units
+-- This can affect allied units
 function modifier_imba_undying_flesh_golem:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() and not keys.target:IsBuilding() and not keys.target:IsOther() then
-		local slow_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_undying_flesh_golem_slow", {
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_undying_flesh_golem_slow", {
 			duration	= self.slow_duration,
 			slow		= self.slow,
 			damage		= self.damage,
 			zombie_multiplier	= self.zombie_multiplier
-			
 		})
-		
-		if slow_modifier then
-			slow_modifier:SetDuration(self.slow_duration * (1 - keys.target:GetStatusResistance()), true)
-		end
 	end
 end
 
@@ -711,8 +1026,12 @@ function modifier_imba_undying_flesh_golem_plague_aura:IsHidden()	return self:Ge
 function modifier_imba_undying_flesh_golem_plague_aura:OnCreated()
 	if self:GetAbility() then
 		self.remnants_health_damage_pct	= self:GetAbility():GetSpecialValueFor("remnants_health_damage_pct")
+		self.remnants_max_health_heal_pct_hero	= self:GetAbility():GetSpecialValueFor("remnants_max_health_heal_pct_hero")
+		self.remnants_max_health_heal_pct_non_hero	= self:GetAbility():GetSpecialValueFor("remnants_max_health_heal_pct_non_hero")
 	else
-		self.remnants_health_damage_pct	= 9
+		self.remnants_health_damage_pct				= 9
+		self.remnants_max_health_heal_pct_hero		= 15
+		self.remnants_max_health_heal_pct_non_hero	= 2
 	end
 	
 	self.interval	= 0.5
@@ -742,41 +1061,71 @@ function modifier_imba_undying_flesh_golem_plague_aura:DeclareFunctions()
 	return {MODIFIER_EVENT_ON_DEATH}
 end
 
+function modifier_imba_undying_flesh_golem_plague_aura:OnDeath(keys)
+	if keys.unit == self:GetParent() and not keys.reincarnate then
+		self:GetCaster():EmitSound("Hero_Undying.SoulRip.Ally")
+		
+		local heal_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_undying/undying_fg_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:SetParticleControlEnt(heal_particle, 1, keys.unit, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.unit:GetAbsOrigin(), true)
+		ParticleManager:ReleaseParticleIndex(heal_particle)
+	
+		if keys.unit:IsRealHero() then
+			self:GetCaster():Heal(self:GetCaster():GetMaxHealth() * self.remnants_max_health_heal_pct_hero * 0.01, self:GetCaster())
+			
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCaster(), self:GetCaster():GetMaxHealth() * self.remnants_max_health_heal_pct_hero * 0.01, nil)
+		else
+			self:GetCaster():Heal(self:GetCaster():GetMaxHealth() * self.remnants_max_health_heal_pct_non_hero * 0.01, self:GetCaster())
+			
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCaster(), self:GetCaster():GetMaxHealth() * self.remnants_max_health_heal_pct_non_hero * 0.01, nil)
+		end
+	end
+end
+
 --------------------------------------------
 -- MODIFIER_IMBA_UNDYING_FLESH_GOLEM_SLOW --
 --------------------------------------------
+
+function modifier_imba_undying_flesh_golem_slow:IgnoreTenacity()	return true end
 
 function modifier_imba_undying_flesh_golem_slow:OnCreated(keys)
 	if self:GetAbility() then
 		self.slow				= self:GetAbility():GetSpecialValueFor("slow")
 		self.damage				= self:GetAbility():GetSpecialValueFor("damage")
 		self.zombie_multiplier	= self:GetAbility():GetSpecialValueFor("zombie_multiplier")
-		self.remnants_incoming_damage	= self:GetAbility():GetSpecialValueFor("remnants_incoming_damage")
-		self.remnants_max_health_heal_pct	= self:GetAbility():GetSpecialValueFor("remnants_max_health_heal_pct")
 	elseif keys then
 		self.slow				= keys.slow
 		self.damage				= keys.damage
 		self.zombie_multiplier	= keys.zombie_multiplier
-		self.remnants_incoming_damage	= keys.remnants_incoming_damage
-		self.remnants_max_health_heal_pct	= keys.remnants_max_health_heal_pct
 	else
 		self.slow				= 40
 		self.damage				= 25
-		self.zombie_multiplier	= 2 -- TODO: Change this later maybe
-		self.remnants_incoming_damage	= 0
-		self.remnants_max_health_heal_pct	= 0
+		self.zombie_multiplier	= 2
 	end
 	
 	if not IsServer() then return end
 	
+	if self:GetAbility() then
+		self.damage_type	= self:GetAbility():GetAbilityDamageType()
+	else
+		self.damage_type	= DAMAGE_TYPE_MAGICAL
+	end
+	
 	self:SetStackCount(self.slow * (-1))
 	
-	self:StartIntervalThink(-1)
-	self:StartIntervalThink(1 - self:GetParent():GetStatusResistance())
+	self:StartIntervalThink(1)
 end
 
-function modifier_imba_undying_flesh_golem_slow:OnRefresh()
-	self:OnCreated()
+function modifier_imba_undying_flesh_golem_slow:OnIntervalThink()
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, self:GetParent(), self.damage, nil)
+
+	ApplyDamage({
+		victim 			= self:GetParent(),
+		damage 			= self.damage,
+		damage_type		= self.damage_type,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self
+	})
 end
 
 function modifier_imba_undying_flesh_golem_slow:DeclareFunctions()
@@ -786,1253 +1135,15 @@ function modifier_imba_undying_flesh_golem_slow:DeclareFunctions()
 	}
 end
 
-function modifier_imba_undying_flesh_golem_slow:GetModifierMoveSpeedBonus_Percentagea()
+function modifier_imba_undying_flesh_golem_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetStackCount()
 end
 
 function modifier_imba_undying_flesh_golem_slow:GetModifierIncomingDamage_Percentage(keys)
-	-- if zombie then damage + w/e, else just use the w/e
+	if keys.attacker:GetName() == "npc_dota_unit_undying_zombie" then
+		return 100 * self.zombie_multiplier
+	end
 end
-	
-	
-	-- if IsServer() then
-		-- local unit = params.unit
-
-		-- if params.attacker == self:GetParent() then
-			-- -- If this is an illusion, do nothing
-			-- if not params.attacker:IsRealHero() then
-				-- return nil
-			-- end
-
-			-- -- If target has break, do nothing
-			-- if params.attacker:PassivesDisabled() then
-				-- return nil
-			-- end
-
-			-- -- Initialize stacks
-			-- local stacks = 1
-
-			-- -- If the target was a real hero, increase stack count
-			-- if unit:IsRealHero() then
-				-- stacks = self.hero_multiplier
-			-- end
-
-			-- -- If the caster doesn't have the modifier, add it
-			-- if not self.caster:HasModifier(self.modifier_sadist) then
-				-- self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_sadist_stack", {duration = self.regen_duration})
-			-- end
-
-			-- -- Increment stacks
-			-- local modifier_sadist_handler = self.caster:FindModifierByName(self.modifier_sadist)
-			-- if modifier_sadist_handler then
-				-- for i = 1, stacks do
-					-- modifier_sadist_handler:IncrementStackCount()
-					-- modifier_sadist_handler:ForceRefresh()
-				-- end
-			-- end
-		-- end
-	-- end
-
-
-
-
--- LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_pull", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_target_vision", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_void_spirit_dissimilate", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_dissimilate_ally", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_ring", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_physical_buff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_thinker_aura", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_thinker_buff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_resonant_pulse_equal_exchange", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_void_spirit_astral_step_grace_time", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_void_spirit_astral_step_armor_pierce", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_helper", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_aether_remnant_helper_buff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_void_spirit_void_stasis", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_imba_void_spirit_astral_step_debuff", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_astral_step_crit", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_imba_void_spirit_astral_step_invis", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
-
--- LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
-
--- imba_void_spirit_aether_remnant							= imba_void_spirit_aether_remnant or class({})
--- modifier_imba_void_spirit_aether_remnant_pull			= modifier_imba_void_spirit_aether_remnant_pull or class({})
--- modifier_imba_void_spirit_aether_remnant_target_vision	= modifier_imba_void_spirit_aether_remnant_target_vision or class({})
-
--- imba_void_spirit_dissimilate							= imba_void_spirit_dissimilate or class({})
--- modifier_imba_void_spirit_dissimilate					= modifier_imba_void_spirit_dissimilate or class({})
--- modifier_imba_void_spirit_dissimilate_ally				= modifier_imba_void_spirit_dissimilate_ally or class({})
-
--- imba_void_spirit_resonant_pulse							= imba_void_spirit_resonant_pulse or class({})
--- modifier_imba_void_spirit_resonant_pulse_ring			= modifier_imba_void_spirit_resonant_pulse_ring or class({})
--- modifier_imba_void_spirit_resonant_pulse_physical_buff	= modifier_imba_void_spirit_resonant_pulse_physical_buff or class({})
--- modifier_imba_void_spirit_resonant_pulse_thinker_aura	= modifier_imba_void_spirit_resonant_pulse_thinker_aura or class({})
--- modifier_imba_void_spirit_resonant_pulse_thinker_buff	= modifier_imba_void_spirit_resonant_pulse_thinker_buff or class({})
--- modifier_imba_void_spirit_resonant_pulse_equal_exchange	= modifier_imba_void_spirit_resonant_pulse_equal_exchange or class({})
-
--- imba_void_spirit_astral_step_helper						= imba_void_spirit_astral_step_helper or class({})
--- modifier_imba_void_spirit_astral_step_grace_time		= modifier_imba_void_spirit_astral_step_grace_time or class({})
-
--- imba_void_spirit_astral_step_helper_2					= imba_void_spirit_astral_step_helper_2 or class({})
--- modifier_imba_void_spirit_astral_step_armor_pierce		= modifier_imba_void_spirit_astral_step_armor_pierce or class({})
-
--- imba_void_spirit_aether_remnant_helper					= imba_void_spirit_aether_remnant_helper or class({})
--- modifier_imba_void_spirit_aether_remnant_helper			= modifier_imba_void_spirit_aether_remnant_helper or class({})
--- modifier_imba_void_spirit_aether_remnant_helper_buff	= modifier_imba_void_spirit_aether_remnant_helper_buff or class({})
-
--- imba_void_spirit_void_stasis							= imba_void_spirit_void_stasis or class({})
--- modifier_imba_void_spirit_void_stasis					= modifier_imba_void_spirit_void_stasis or class({})
-
--- imba_void_spirit_astral_step							= imba_void_spirit_astral_step or class({})
--- modifier_imba_void_spirit_astral_step_debuff			= modifier_imba_void_spirit_astral_step_debuff or class({})
--- modifier_imba_void_spirit_astral_step_crit				= modifier_imba_void_spirit_astral_step_crit or class({})
--- modifier_imba_void_spirit_astral_step_invis				= modifier_imba_void_spirit_astral_step_invis or class({})
-
--- -------------------------------------
--- -- IMBA_VOID_SPIRIT_AETHER_REMNANT --
--- -------------------------------------
-
--- function imba_void_spirit_aether_remnant:OnSpellStart()
-
--- end
-
--- ---------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_AETHER_REMNANT_PULL --
--- ---------------------------------------------------
-
--- function modifier_imba_void_spirit_aether_remnant_pull:OnCreated()
-
--- end
-
--- ---------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_AETHER_REMNANT_PULL --
--- ---------------------------------------------------
-
--- function modifier_imba_void_spirit_aether_remnant_target_vision:CheckState()
-	-- return {[MODIFIER_STATE_INVISIBLE] = false}
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_target_vision:GetPriority()
-	-- return MODIFIER_PRIORITY_HIGH
--- end
-
--- ----------------------------------
--- -- IMBA_VOID_SPIRIT_DISSIMILATE --
--- ----------------------------------
-
--- function imba_void_spirit_dissimilate:GetBehavior()
-	-- return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
--- end
-
--- function imba_void_spirit_dissimilate:GetCastRange(location, target)
-	-- return (self:GetSpecialValueFor("damage_radius") * (100 + self:GetSpecialValueFor("scepter_size_increase_pct")) * 0.01) - self:GetCaster():GetCastRangeBonus()
--- end
-
--- function imba_void_spirit_dissimilate:OnSpellStart()
-	-- self:GetCaster():EmitSound("Hero_VoidSpirit.Dissimilate.Cast")
-	
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_dissimilate", {duration = self:GetSpecialValueFor("phase_duration")})
-	
-	-- if self:GetAutoCastState() then
-		-- local cosmic_particle = nil
-		
-		-- local damage_radius	= self:GetSpecialValueFor("damage_radius")
-		
-		-- if self:GetCaster():HasScepter() then
-			-- damage_radius	= damage_radius * (100 + self:GetSpecialValueFor("scepter_size_increase_pct") * 0.01)
-		-- end
-		
-		-- for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("damage_radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, FIND_ANY_ORDER, false)) do
-			-- if ally ~= self:GetCaster() then
-				-- cosmic_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/void_spirit_cosmic_assault.vpcf", PATTACH_WORLDORIGIN, ally)
-				-- ParticleManager:SetParticleControl(cosmic_particle, 0, ally:GetAbsOrigin())
-				-- ParticleManager:SetParticleControl(cosmic_particle, 1, Vector(100, 0, 0))
-				-- ParticleManager:ReleaseParticleIndex(cosmic_particle)
-			
-				-- ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_dissimilate_ally", {duration = self:GetSpecialValueFor("phase_duration")})
-			-- end
-		-- end
-	-- end
--- end
-
--- -------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_DISSIMILATE --
--- -------------------------------------------
-
--- function modifier_imba_void_spirit_dissimilate:IsHidden()	return true end
--- function modifier_imba_void_spirit_dissimilate:IsPurgable()	return false end
-
--- function modifier_imba_void_spirit_dissimilate:OnCreated()
-	-- self.destination_fx_radius		= self:GetAbility():GetSpecialValueFor("destination_fx_radius") -- What is this even used for?
-	-- self.portals_per_ring			= self:GetAbility():GetSpecialValueFor("portals_per_ring")
-	-- self.angle_per_ring_portal		= self:GetAbility():GetSpecialValueFor("angle_per_ring_portal")
-	-- -- The portal particles are actually smaller than 275 radius if you feed it 275 so I feel like there's some messed up stuff going on
-	-- self.first_ring_distance_offset	= self:GetAbility():GetSpecialValueFor("first_ring_distance_offset")
-	-- self.damage_radius				= self:GetAbility():GetSpecialValueFor("damage_radius")
-	-- self.scepter_size_increase_pct	= self:GetAbility():GetSpecialValueFor("scepter_size_increase_pct")
-	
-	-- -- Yeah IDK
-	-- self.particle_offset			= 25
-	
-	-- if self:GetCaster():HasScepter() then
-		-- self.first_ring_distance_offset	= self.first_ring_distance_offset * (100 + self.scepter_size_increase_pct) * 0.01
-		-- self.damage_radius 				= self.damage_radius * (100 + self.scepter_size_increase_pct) * 0.01
-		-- self.particle_offset			= self.particle_offset * (100 + self.scepter_size_increase_pct) * 0.01
-	-- end
-	
-	-- if not IsServer() then return end
-	
-	-- self.damage			= self:GetAbility():GetAbilityDamage()
-	-- self.damage_type	= self:GetAbility():GetAbilityDamageType()
-	
-	-- self.portal_selection_orders = {
-		-- [DOTA_UNIT_ORDER_MOVE_TO_POSITION]	= true,
-		-- [DOTA_UNIT_ORDER_MOVE_TO_TARGET]	= true,
-		-- [DOTA_UNIT_ORDER_ATTACK_MOVE]		= true,
-		-- [DOTA_UNIT_ORDER_ATTACK_TARGET]		= true
-	-- }
-	
-	-- -- Initialize portals
-	-- self.portals = {}
-	
-	-- EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_VoidSpirit.Dissimilate.Portals", self:GetCaster())
-	
-	-- -- Create two sets of poratls; one for team and one for opposing team
-	
-	-- -- Center portal
-	-- local portal = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate.vpcf", PATTACH_WORLDORIGIN, self:GetParent(), self:GetCaster():GetOpposingTeamNumber())
-	-- ParticleManager:SetParticleControl(portal, 0, self:GetCaster():GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(portal, 1, Vector(self.damage_radius + self.particle_offset, 1, 1))
-	-- self:AddParticle(portal, false, false, -1, false, false)
-	
-	-- portal = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate.vpcf", PATTACH_WORLDORIGIN, self:GetParent(), self:GetCaster():GetTeamNumber())
-	-- ParticleManager:SetParticleControl(portal, 0, self:GetCaster():GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(portal, 1, Vector(self.damage_radius + self.particle_offset, 1, 1))
-	-- ParticleManager:SetParticleControl(portal, 2, Vector(1, 0, 0))
-	-- self:AddParticle(portal, false, false, -1, false, false)
-	
-	-- local portal_position = nil
-	
-	-- self.portals[portal] = self:GetCaster():GetAbsOrigin()
-	
-	-- -- Default to center portal if no orders are issued
-	-- self.closest_particle	= portal
-	-- self.closest_position	= self:GetCaster():GetAbsOrigin()
-	
-	-- -- Outer portals
-	-- for outer_portals = 1, self.portals_per_ring do
-		-- portal_position = GetGroundPosition(RotatePosition(self:GetCaster():GetAbsOrigin(), QAngle(0, self.angle_per_ring_portal * (outer_portals - 1), 0), self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * (self.first_ring_distance_offset))), nil)
-		
-		-- EmitSoundOnLocationWithCaster(portal_position, "Hero_VoidSpirit.Dissimilate.Portals", self:GetCaster())
-		
-		-- portal = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate.vpcf", PATTACH_WORLDORIGIN, self:GetParent(), self:GetCaster():GetOpposingTeamNumber())
-		-- ParticleManager:SetParticleControl(portal, 0, portal_position)
-		-- ParticleManager:SetParticleControl(portal, 1, Vector(self.damage_radius + self.particle_offset, 1, 1))
-		-- self:AddParticle(portal, false, false, -1, false, false)
-		
-		-- portal = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate.vpcf", PATTACH_WORLDORIGIN, self:GetParent(), self:GetCaster():GetTeamNumber())
-		-- ParticleManager:SetParticleControl(portal, 0, portal_position)
-		-- ParticleManager:SetParticleControl(portal, 1, Vector(self.damage_radius + self.particle_offset, 1, 1))
-		-- self:AddParticle(portal, false, false, -1, false, false)
-		
-		-- self.portals[portal] = portal_position
-	-- end
-	
-	-- self:GetParent():AddNoDraw()
--- end
-
--- function modifier_imba_void_spirit_dissimilate:OnDestroy()
-	-- if not IsServer() or not self:GetParent():IsAlive() then return end
-	
-	-- self:GetCaster():StopSound("Hero_VoidSpirit.Dissimilate.Portals")
-	-- self:GetParent():EmitSound("Hero_VoidSpirit.Dissimilate.TeleportIn")
-
-	-- local damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate_dmg.vpcf", PATTACH_ABSORIGIN, self:GetParent())
-	-- ParticleManager:SetParticleControl(damage_particle, 0, self.closest_position)
-	-- ParticleManager:SetParticleControl(damage_particle, 1, Vector((self.damage_radius + self.particle_offset) / 2, 0, 1))
-	-- ParticleManager:ReleaseParticleIndex(damage_particle)
-	
-	-- self:GetParent():StartGesture(ACT_DOTA_CAST_ABILITY_3_END)
-	
-	-- FindClearSpaceForUnit(self:GetParent(), self.closest_position, false)
-	-- self:GetParent():Interrupt()
-	
-	-- for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.closest_position, nil, self.damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		-- enemy:EmitSound("Hero_VoidSpirit.Dissimilate.Stun")
-	
-		-- ApplyDamage({
-			-- victim 			= enemy,
-			-- damage 			= self.damage,
-			-- damage_type		= self.damage_type,
-			-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			-- attacker 		= self:GetCaster(),
-			-- ability 		= self:GetAbility()
-		-- })
-		
-		-- -- "The level 25 talent also adds a stun to this. Applies the damage first, then the stun."
-		-- if self:GetCaster():HasTalent("special_bonus_imba_void_spirit_dissimilate_stun") then
-			-- local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_void_spirit_dissimilate_stun")})
-			
-			-- if stun_modifier then
-				-- stun_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_void_spirit_dissimilate_stun") * (1 - enemy:GetStatusResistance()), true)
-			-- end
-		-- end
-	-- end
-	
-	-- self:GetParent():RemoveNoDraw()
--- end
-
--- -- "Fully disables, silences, mutes, and disarms Void Spirit, making him unable to do anything."
--- -- I think if you make him stunned then it won't properly register move orders, so let's not do that
--- function modifier_imba_void_spirit_dissimilate:CheckState()
-	-- return {
-		-- [MODIFIER_STATE_SILENCED]		= true,
-		-- [MODIFIER_STATE_MUTED]			= true,
-		-- [MODIFIER_STATE_DISARMED]		= true,
-		
-		-- [MODIFIER_STATE_ROOTED]			= true,
-		-- [MODIFIER_STATE_INVULNERABLE]	= true,
-		-- [MODIFIER_STATE_OUT_OF_GAME]	= true
-	-- }
--- end
-
--- function modifier_imba_void_spirit_dissimilate:DeclareFunctions()
-	-- return {
-		-- MODIFIER_EVENT_ON_ORDER
-	-- }
--- end
-
--- -- Non-vanilla interaction; displays the "Can't Attack" error if you try to issue an attack command, whereas this doesn't appear for vanilla
--- function modifier_imba_void_spirit_dissimilate:OnOrder(keys)
-	-- -- Don't check for orders that were issued before the buff was created, with some offset
-	-- if keys.unit == self:GetParent() and self.portal_selection_orders[keys.order_type] and self.portals and GameRules:GetGameTime() >= self:GetCreationTime() + 0.11 then
-		-- self.shortest_distance	= nil
-		-- self.closest_particle	= nil
-		-- self.closest_position	= nil
-		
-		-- self.selected_pos = keys.new_pos
-		
-		-- if keys.target then
-			-- self.selected_pos = keys.target:GetAbsOrigin()
-		-- end
-		
-		-- for particle, position in pairs(self.portals) do
-			-- ParticleManager:SetParticleControl(particle, 2, Vector(0, 0, 0))
-		
-			-- if not self.shortest_distance or (self.selected_pos - position):Length2D() < self.shortest_distance then
-				-- self.shortest_distance	= (self.selected_pos - position):Length2D()
-				-- self.closest_particle	= particle
-				-- self.closest_position	= position
-			-- end
-		-- end
-		
-		-- if self.closest_particle then
-			-- ParticleManager:SetParticleControl(self.closest_particle, 2, Vector(1, 0, 0))
-		-- end
-	-- end
--- end
-
--- ------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_DISSIMILATE_ALLY --
--- ------------------------------------------------
-
--- function modifier_imba_void_spirit_dissimilate_ally:IsPurgable()	return false end
-
--- function modifier_imba_void_spirit_dissimilate_ally:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- self.closest_position			= self:GetParent():GetAbsOrigin()
-	-- self.offset						= self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()
-	-- self.main_dissimilate_modifier	= self:GetCaster():FindModifierByName("modifier_imba_void_spirit_dissimilate")
-	
-	-- self:GetParent():AddNoDraw()
-	
-	-- if not self.main_dissimilate_modifier then self:Destroy() end
--- end
-
--- function modifier_imba_void_spirit_dissimilate_ally:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- FindClearSpaceForUnit(self:GetParent(), self.main_dissimilate_modifier.closest_position + self.offset, false)
-	
-	-- self:GetParent():RemoveNoDraw()
--- end
-
--- function modifier_imba_void_spirit_dissimilate_ally:CheckState()
-	-- return {
-		-- [MODIFIER_STATE_SILENCED]		= true,
-		-- [MODIFIER_STATE_MUTED]			= true,
-		-- [MODIFIER_STATE_DISARMED]		= true,
-		
-		-- [MODIFIER_STATE_ROOTED]			= true,
-		-- [MODIFIER_STATE_INVULNERABLE]	= true,
-		-- [MODIFIER_STATE_OUT_OF_GAME]	= true
-	-- }
--- end
-
--- -------------------------------------
--- -- IMBA_VOID_SPIRIT_RESONANT_PULSE --
--- -------------------------------------
-
--- function imba_void_spirit_resonant_pulse:OnSpellStart()
-	-- self:GetCaster():EmitSound("Hero_VoidSpirit.Pulse.Cast")
-	-- self:GetCaster():EmitSound("Hero_VoidSpirit.Pulse")
-	
-	-- local pulse_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-	-- ParticleManager:SetParticleControl(pulse_particle, 1, Vector(self:GetSpecialValueFor("speed"), 1, 0))
-	-- ParticleManager:ReleaseParticleIndex(pulse_particle)
-	
-	-- self:GetCaster():RemoveModifierByName("modifier_imba_void_spirit_resonant_pulse_physical_buff")
-
-	-- self.pulse_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_void_spirit_resonant_pulse_thinker_aura", {duration = self:GetSpecialValueFor("buff_duration")}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
-	
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_resonant_pulse_ring", {
-		-- duration 			= self:GetSpecialValueFor("radius") / self:GetSpecialValueFor("speed"),
-		-- thinker_entindex	= self.pulse_thinker:entindex()
-	-- })
-	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_resonant_pulse_physical_buff", {duration = self:GetSpecialValueFor("buff_duration")})
-	
-	-- -- -- Random testing (I don't know how to control both positions)
-	-- -- -- Also do NOT use this because it crashes the game if you switch heroes
-	-- -- if self:GetCaster():HasAbility("void_spirit_aether_remnant") then
-		-- -- self:GetCaster():SetCursorPosition(self:GetCaster():GetAbsOrigin() + Vector(100, 100, 0))
-		-- -- self:GetCaster():SetCursorPosition(self:GetCaster():GetAbsOrigin() - Vector(100, 100, 0))
-		-- -- self:GetCaster():FindAbilityByName("void_spirit_aether_remnant"):OnSpellStart()
-	-- -- end
--- end
-
--- function imba_void_spirit_resonant_pulse:OnProjectileHit(target, location)
-	-- if target then
-		-- if target == self:GetCaster() then
-			-- if target:HasModifier("modifier_imba_void_spirit_resonant_pulse_physical_buff") then
-				-- target:FindModifierByName("modifier_imba_void_spirit_resonant_pulse_physical_buff"):SetStackCount(target:FindModifierByName("modifier_imba_void_spirit_resonant_pulse_physical_buff"):GetStackCount() + self:GetSpecialValueFor("absorb_per_hero_hit"))
-			-- else
-				-- target:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_resonant_pulse_physical_buff", {duration = self:GetSpecialValueFor("buff_duration")})
-			-- end
-		-- else
-			-- if target:HasModifier("modifier_imba_void_spirit_resonant_pulse_thinker_aura") then
-				-- target:FindModifierByName("modifier_imba_void_spirit_resonant_pulse_thinker_aura"):SetStackCount(target:FindModifierByName("modifier_imba_void_spirit_resonant_pulse_thinker_aura"):GetStackCount() + self:GetSpecialValueFor("absorb_per_hero_hit"))
-			-- end
-		-- end
-	-- end
--- end
-
--- ---------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_RESONANT_PULSE_RING --
--- ---------------------------------------------------
-
--- function modifier_imba_void_spirit_resonant_pulse_ring:IsHidden()	return true end
--- function modifier_imba_void_spirit_resonant_pulse_ring:IsPurgable()	return false end
--- function modifier_imba_void_spirit_resonant_pulse_ring:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_void_spirit_resonant_pulse_ring:GetEffectName()
-	-- return "particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_buff.vpcf"
--- end
-
--- -- Do I just assume this ring has a thickness of 1 or something
--- -- I guess make it 50 to be reasonable
--- function modifier_imba_void_spirit_resonant_pulse_ring:OnCreated(keys)
-	-- self.speed	 					= self:GetAbility():GetSpecialValueFor("speed")
-	-- self.return_projectile_speed	= self:GetAbility():GetSpecialValueFor("return_projectile_speed")
-	-- self.equal_exchange_duration	= self:GetAbility():GetSpecialValueFor("equal_exchange_duration")
-	
-	-- self.thickness = 50
-	
-	-- if not IsServer() then return end
-	
-	-- self.damage		= self:GetAbility():GetTalentSpecialValueFor("damage")
-	
-	-- self.damage_type	= self:GetAbility():GetAbilityDamageType()
-	
-	-- self.hit_enemies	= {}
-	-- self.interval		= FrameTime()
-	-- self.ring_size		= 0
-	
-	-- self.thinker_entindex	= keys.thinker_entindex
-	
-	-- self:OnIntervalThink()
-	-- self:StartIntervalThink(FrameTime())
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
-	-- self.ring_size = self:GetElapsedTime() * self.speed
-
-	-- for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.ring_size, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		-- if not self.hit_enemies[enemy:entindex()] and ((enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()) * Vector(1, 1, 0)):Length2D() >= self.ring_size - self.thickness then
-		
-			-- enemy:EmitSound("Hero_VoidSpirit.Pulse.Target")
-			
-			-- self.impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
-			-- ParticleManager:SetParticleControlEnt(self.impact_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-			-- ParticleManager:ReleaseParticleIndex(self.impact_particle)
-			
-			-- ApplyDamage({
-				-- victim 			= enemy,
-				-- damage 			= self.damage,
-				-- damage_type		= self.damage_type,
-				-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				-- attacker 		= self:GetCaster(),
-				-- ability 		= self:GetAbility()
-			-- })
-			
-			-- if enemy:IsRealHero() or enemy:IsClone() or enemy:IsTempestDouble() then
-				-- ProjectileManager:CreateTrackingProjectile({
-					-- EffectName			= "particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_absorb.vpcf",
-					-- Ability				= self:GetAbility(),
-					-- Source				= enemy:GetAbsOrigin(),
-					-- vSourceLoc			= enemy:GetAbsOrigin(),
-					-- Target				= self:GetParent(),
-					-- iMoveSpeed			= self.return_projectile_speed,
-					-- -- flExpireTime		= nil,
-					-- bDodgeable			= false,
-					-- bIsAttack			= false,
-					-- bReplaceExisting	= false,
-					-- iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-					-- bDrawsOnMinimap		= nil,
-					-- bVisibleToEnemies	= true,
-					-- bProvidesVision		= false,
-					-- iVisionRadius		= nil,
-					-- iVisionTeamNumber	= nil,
-					-- ExtraData			= {}
-				-- })
-				
-				-- -- IMBAfication: Expansion Dome
-				-- ProjectileManager:CreateTrackingProjectile({
-					-- EffectName			= "particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_absorb.vpcf",
-					-- Ability				= self:GetAbility(),
-					-- Source				= enemy:GetAbsOrigin(),
-					-- vSourceLoc			= enemy:GetAbsOrigin(),
-					-- Target				= EntIndexToHScript(self.thinker_entindex),
-					-- iMoveSpeed			= self.return_projectile_speed,
-					-- -- flExpireTime		= nil,
-					-- bDodgeable			= false,
-					-- bIsAttack			= false,
-					-- bReplaceExisting	= false,
-					-- iSourceAttachment	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-					-- bDrawsOnMinimap		= nil,
-					-- bVisibleToEnemies	= true,
-					-- bProvidesVision		= false,
-					-- iVisionRadius		= nil,
-					-- iVisionTeamNumber	= nil,
-					-- ExtraData			= {}
-				-- })
-			-- end
-			
-			-- self.hit_enemies[enemy:entindex()] = true
-			
-			-- -- IMBAfication: Equal Exchange
-			-- enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_void_spirit_resonant_pulse_equal_exchange", {duration = self.equal_exchange_duration})
-		-- end
-	-- end
--- end
-
--- ------------------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_RESONANT_PULSE_PHYSICAL_BUFF --
--- ------------------------------------------------------------
-
--- function modifier_imba_void_spirit_resonant_pulse_physical_buff:GetStatusEffectName()
-	-- return "particles/status_fx/status_effect_void_spirit_pulse_buff.vpcf"
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_physical_buff:OnCreated()
-	-- self.base_absorb_amount	= self:GetAbility():GetSpecialValueFor("base_absorb_amount")
-	
-	-- if not IsServer() then return end
-	
-	-- -- Arbitrary side-by-side testing
-	-- self.radius				= 130
-	
-	-- self.shield_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- ParticleManager:SetParticleControlEnt(self.shield_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-	-- ParticleManager:SetParticleControl(self.shield_particle, 1, Vector(self.radius, 1, 1))
-	-- self:AddParticle(self.shield_particle, false, false, -1, false, false)
-	
-	-- self:SetStackCount(self.base_absorb_amount)
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_physical_buff:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- self:GetParent():EmitSound("Hero_VoidSpirit.Pulse.Destroy")
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_physical_buff:DeclareFunctions()
-	-- return {MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT}
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_physical_buff:GetModifierIncomingPhysicalDamageConstant(keys)
-	-- self.deflect_particle	= ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_shield_deflect.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- ParticleManager:SetParticleControlEnt(self.deflect_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-	-- ParticleManager:SetParticleControl(self.deflect_particle, 1, Vector(self.radius, 1, 1))
-	-- ParticleManager:ReleaseParticleIndex(self.deflect_particle)
-
-	-- if keys.damage >= self:GetStackCount() then
-		-- self:Destroy()
-		-- return self:GetStackCount() * (-1)
-	-- else
-		-- self:SetStackCount(self:GetStackCount() - keys.damage)
-		-- return keys.damage * (-1)
-	-- end
--- end
-
--- -----------------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_RESONANT_PULSE_THINKER_AURA --
--- -----------------------------------------------------------
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:OnCreated()
-	-- self.radius			= self:GetAbility():GetSpecialValueFor("radius")
-	-- self.base_absorb_amount	= self:GetAbility():GetSpecialValueFor("base_absorb_amount")
-	
-	-- self.shield_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- -- ParticleManager:SetParticleControlEnt(self.shield_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-	-- ParticleManager:SetParticleControl(self.shield_particle, 1, Vector(self.radius, 1, 1))
-	-- self:AddParticle(self.shield_particle, false, false, -1, false, false)
-	
-	-- self:SetStackCount(self.base_absorb_amount)
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:IsHidden()						return true end
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:IsAura()						return true end
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:IsAuraActiveOnDeath() 			return false end
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraRadius()					return self.radius end
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraSearchFlags()				return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetModifierAura()				return "modifier_imba_void_spirit_resonant_pulse_thinker_buff" end
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraDuration()				return 0.1 end
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraEntityReject(target)		return target == self:GetCaster() end
-
--- -----------------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_RESONANT_PULSE_THINKER_BUFF --
--- -----------------------------------------------------------
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_buff:GetStatusEffectName()
-	-- return "particles/status_fx/status_effect_void_spirit_pulse_buff.vpcf"
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_buff:OnCreated()
-	-- self.radius	= self:GetAbility():GetSpecialValueFor("radius")
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_buff:DeclareFunctions()
-	-- return {MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_CONSTANT}
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_thinker_buff:GetModifierIncomingPhysicalDamageConstant(keys)
-	-- if not self:GetAuraOwner() then return end
-
-	-- self.deflect_particle	= ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/pulse/void_spirit_pulse_shield_deflect.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetAuraOwner())
-	-- -- ParticleManager:SetParticleControlEnt(self.deflect_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetAuraOwner():GetAbsOrigin(), true)
-	-- ParticleManager:SetParticleControl(self.deflect_particle, 1, Vector(self.radius, 1, 1))
-	-- ParticleManager:ReleaseParticleIndex(self.deflect_particle)
-
-	-- if keys.damage >= self:GetAuraOwner():FindModifierByName("modifier_imba_void_spirit_resonant_pulse_thinker_aura"):GetStackCount() then
-		-- self:GetAuraOwner():Destroy()
-		-- self:Destroy()
-		-- return self:GetAuraOwner():FindModifierByName("modifier_imba_void_spirit_resonant_pulse_thinker_aura"):GetStackCount() * (-1)
-	-- else
-		-- self:GetAuraOwner():FindModifierByName("modifier_imba_void_spirit_resonant_pulse_thinker_aura"):SetStackCount(self:GetAuraOwner():FindModifierByName("modifier_imba_void_spirit_resonant_pulse_thinker_aura"):GetStackCount() - keys.damage)
-		-- return keys.damage * (-1)
-	-- end
--- end
-
--- -------------------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_RESONANT_PULSE_EQUAL_EXCHANGE --
--- -------------------------------------------------------------
-
--- function modifier_imba_void_spirit_resonant_pulse_equal_exchange:OnCreated()
-	-- if not self:GetAbility() then self:Destroy() return end
-
-	-- self.equal_exchange_attacks	= self:GetAbility():GetSpecialValueFor("equal_exchange_attacks")
-	
-	-- self:SetStackCount(self.equal_exchange_attacks)
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_equal_exchange:CheckState()
-	-- return {[MODIFIER_STATE_BLOCK_DISABLED] = true}
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_equal_exchange:DeclareFunctions()
-	-- return {MODIFIER_EVENT_ON_ATTACK_LANDED}
--- end
-
--- function modifier_imba_void_spirit_resonant_pulse_equal_exchange:OnAttackLanded(keys)
-	-- if keys.target == self:GetParent() then
-		-- self:DecrementStackCount()
-		
-		-- if self:GetStackCount() <= 0 then
-			-- self:Destroy()
-		-- end
-	-- end
--- end
-
--- -----------------------------------------
--- -- IMBA_VOID_SPIRIT_ASTRAL_STEP_HELPER --
--- -----------------------------------------
-
--- -- Echo Slash: Scrapping this IMBAfication due to the sheer amount of anime
-
--- function imba_void_spirit_astral_step_helper:IsStealable()		return false end
-
--- function imba_void_spirit_astral_step_helper:GetManaCost(level)
-	-- return self.BaseClass.GetManaCost(self, level) + (self:GetCaster():GetMaxMana() * self:GetSpecialValueFor("max_mana_pct") * 0.01)
--- end
-
--- function imba_void_spirit_astral_step_helper:OnAbilityPhaseStart()
-	-- if self:GetCaster():HasModifier("modifier_imba_void_spirit_astral_step_grace_time") and self:GetCaster():FindModifierByName("modifier_imba_void_spirit_astral_step_grace_time"):GetElapsedTime() >= self:GetSpecialValueFor("grace_time_start") then
-		-- return true
-	-- end
--- end
-
--- function imba_void_spirit_astral_step_helper:OnSpellStart()
-	-- if self:GetCaster():HasAbility("imba_void_spirit_astral_step") and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step").original_vector then
-		-- self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):OnSpellStart(self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step").original_vector * (-1))
-	-- end	
--- end
-
--- -------------------------------------------
--- -- IMBA_VOID_SPIRIT_ASTRAL_STEP_HELPER_2 --
--- -------------------------------------------
-
--- function imba_void_spirit_astral_step_helper_2:GetAssociatedSecondaryAbilities()
-	-- return "imba_void_spirit_astral_step"
--- end
-
--- function imba_void_spirit_astral_step_helper_2:OnAbilityPhaseStart()
-	-- if self.charge_modifier and self.charge_modifier:GetStackCount() > 0 then
-		-- self:GetCaster():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_2_END, 0.2)
-		-- return true
-	-- else
-		-- DisplayError(self:GetCaster():GetPlayerOwnerID(), "#dota_hud_error_astral_step_no_charges")
-		-- return false
-	-- end
--- end
-
--- function imba_void_spirit_astral_step_helper_2:OnChannelFinish(bInterrupted)
-	-- -- Preventing projectiles getting stuck in one spot due to potential 0 length vector
-	-- if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
-		-- self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
-	-- end
-	
-	-- self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_2_END)
-	
-	-- if self.charge_modifier and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier:GetStackCount() >= 1 then
-		-- -- All this garbage is just to try and check for WTF mode to not expend charges and yet it's still bypassable
-		-- local wtf_mode = true
-		
-		-- if not GameRules:IsCheatMode() then
-			-- wtf_mode = false
-		-- else
-			-- for ability = 0, 24 - 1 do
-				-- if self:GetCaster():GetAbilityByIndex(ability) and self:GetCaster():GetAbilityByIndex(ability):GetCooldownTimeRemaining() > 0 then
-					-- wtf_mode = false
-					-- break
-				-- end
-			-- end
-
-			-- if wtf_mode == false then
-				-- for item = 0, 15 do
-					-- if self:GetCaster():GetItemInSlot(item) and self:GetCaster():GetItemInSlot(item):GetCooldownTimeRemaining() > 0 then
-						-- wtf_mode = false
-						-- break
-					-- end
-				-- end
-			-- end
-		-- end
-		
-		-- if wtf_mode == false then
-			-- self.charge_modifier:DecrementStackCount()
-			-- self.charge_modifier:CalculateCharge()
-		-- end
-	-- end
-	
-	-- if self:GetCaster():HasAbility("imba_void_spirit_astral_step") then
-		-- self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):OnSpellStart(nil, (((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):GetSpecialValueFor("max_travel_distance")) * (1 + (self:GetSpecialValueFor("bonus_range_pct") * 0.01)) + self:GetCaster():GetCastRangeBonus()) , bInterrupted)
-	-- end
--- end
-
--- --------------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_ASTRAL_STEP_ARMOR_PIERCE --
--- --------------------------------------------------------
-
--- function modifier_imba_void_spirit_astral_step_armor_pierce:IsHidden()		return true end
--- function modifier_imba_void_spirit_astral_step_armor_pierce:IsPurgable()	return false end
-
--- function modifier_imba_void_spirit_astral_step_armor_pierce:DeclareFunctions()
-	-- return {MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR}
--- end
-
--- function modifier_imba_void_spirit_astral_step_armor_pierce:GetModifierIgnorePhysicalArmor()
-	-- return 1
--- end
-
--- --------------------------------------------
--- -- IMBA_VOID_SPIRIT_AETHER_REMNANT_HELPER --
--- --------------------------------------------
-
--- function imba_void_spirit_aether_remnant_helper:IsInnateAbility()	return true end
-
--- function imba_void_spirit_aether_remnant_helper:GetIntrinsicModifierName()
-	-- return "modifier_imba_void_spirit_aether_remnant_helper"
--- end
-
--- -----------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_AETHER_REMNANT_HELPER --
--- -----------------------------------------------------
-
--- function modifier_imba_void_spirit_aether_remnant_helper:IsHidden()			return true end
--- function modifier_imba_void_spirit_aether_remnant_helper:IsPurgable()		return false end
--- function modifier_imba_void_spirit_aether_remnant_helper:RemoveOnDeath()	return false end
-
--- function modifier_imba_void_spirit_aether_remnant_helper:DeclareFunctions()
-	-- return {MODIFIER_EVENT_ON_TAKEDAMAGE}
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_helper:OnTakeDamage(keys)
-	-- if keys.inflictor and keys.inflictor:GetName() == "void_spirit_aether_remnant" and keys.attacker == self:GetParent() and keys.unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and keys.unit:IsHero() then
-		-- self:GetParent():AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_helper_buff", {duration = self:GetAbility():GetSpecialValueFor("swiftness_duration")})
-		
-		-- local vision_modifier = keys.unit:AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_target_vision", {duration = self:GetAbility():GetSpecialValueFor("vision_duration")})
-		
-		-- if vision_modifier then
-			-- vision_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("vision_duration") * (1 - keys.unit:GetStatusResistance()), true)
-		-- end
-	-- end
--- end
-
--- ----------------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_AETHER_REMNANT_HELPER_BUFF --
--- ----------------------------------------------------------
-
--- function modifier_imba_void_spirit_aether_remnant_helper_buff:GetEffectName()
-	-- return "particles/status_fx/status_effect_void_spirit_aether_remnant.vpcf"
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_helper_buff:OnCreated()
-	-- self.damage_bonus		= self:GetAbility():GetSpecialValueFor("damage_bonus")
-	-- self.move_speed_bonus	= self:GetAbility():GetSpecialValueFor("move_speed_bonus")
-	-- self.evasion_bonus		= self:GetAbility():GetSpecialValueFor("evasion_bonus")
-	-- self.swiftness_duration	= self:GetAbility():GetSpecialValueFor("swiftness_duration")
-
-	-- if not IsServer() then return end
-	
-	-- self.stack_table = {}
-	
-	-- table.insert(self.stack_table, GameRules:GetDOTATime(true, true))
-	
-	-- self:IncrementStackCount()
-	
-	-- self:StartIntervalThink(FrameTime())
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_helper_buff:OnRefresh()
-	-- if not IsServer() then return end
-	
-	-- table.insert(self.stack_table, GameRules:GetDOTATime(true, true))
-	
-	-- self:IncrementStackCount()
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_helper_buff:OnIntervalThink()
-	-- Custom_ArrayRemove(self.stack_table, function(i, j)
-		-- -- Remember that you return what you want to KEEP, which is kinda contradictory to the function name...
-		-- return GameRules:GetDOTATime(true, true) - self.stack_table[i] <= self.swiftness_duration
-	-- end)
-	
-	-- if #self.stack_table ~= self:GetStackCount() then
-		-- self:SetStackCount(#self.stack_table)
-	-- end
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_helper_buff:DeclareFunctions()
-	-- return {
-		-- MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		-- MODIFIER_PROPERTY_EVASION_CONSTANT
-	-- }
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_helper_buff:GetModifierPreAttack_BonusDamage()
-	-- return self.damage_bonus * self:GetStackCount()
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_helper_buff:GetModifierMoveSpeedBonus_Constant()
-	-- return self.move_speed_bonus * self:GetStackCount()
--- end
-
--- function modifier_imba_void_spirit_aether_remnant_helper_buff:GetModifierEvasion_Constant()
-	-- return self.evasion_bonus * self:GetStackCount()
--- end
-
--- ------------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_ASTRAL_STEP_GRACE_TIME --
--- ------------------------------------------------------
-
--- function modifier_imba_void_spirit_astral_step_grace_time:IsHidden()		return true end
--- function modifier_imba_void_spirit_astral_step_grace_time:IsPurgable()		return false end
--- function modifier_imba_void_spirit_astral_step_grace_time:RemoveOnDeath()	return false end
-
--- function modifier_imba_void_spirit_astral_step_grace_time:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- self.grace_time_start	= self:GetAbility():GetSpecialValueFor("grace_time_start")
-	
-	-- self:GetAbility():SetActivated(true)
-	
-	-- -- self:StartIntervalThink(self.grace_time_start)
--- end
-
--- -- function modifier_imba_void_spirit_astral_step_grace_time:OnIntervalThink()
-	-- -- self:GetAbility():SetActivated(true)
-	-- -- self:StartIntervalThink(-1)
--- -- end
-
--- function modifier_imba_void_spirit_astral_step_grace_time:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- self:GetAbility():SetActivated(false)
--- end
-
--- ----------------------------------
--- -- IMBA_VOID_SPIRIT_VOID_STASIS --
--- ----------------------------------
-
--- function imba_void_spirit_void_stasis:IsInnateAbility() return true end
-
--- function imba_void_spirit_void_stasis:OnInventoryContentsChanged()
-	-- if self:GetCaster():HasScepter() then
-		-- self:SetHidden(false)
-	-- else
-		-- self:SetHidden(true)
-	-- end
--- end
-
--- function imba_void_spirit_void_stasis:OnHeroCalculateStatBonus()
-	-- self:OnInventoryContentsChanged()
--- end
-
--- function imba_void_spirit_void_stasis:GetChannelAnimation()
-	-- return ACT_DOTA_GENERIC_CHANNEL_1
--- end
-
--- function imba_void_spirit_void_stasis:GetAOERadius()
-	-- return self:GetSpecialValueFor("radius")
--- end
-
--- function imba_void_spirit_void_stasis:OnSpellStart()
-	-- -- self:GetCaster():EmitSound("Imba.Hellblade")
-
-	-- self.aoe_particle_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/planeshift_outer_ring.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-	-- ParticleManager:SetParticleControl(self.aoe_particle_1, 0, self:GetCursorPosition())
-	-- ParticleManager:SetParticleControl(self.aoe_particle_1, 1, Vector(self:GetSpecialValueFor("radius"), 0, 0))
-	
-	-- self:GetCaster():StartGesture(ACT_DOTA_GENERIC_CHANNEL_1)
--- end
-
--- function imba_void_spirit_void_stasis:OnChannelFinish(bInterrupted)
-	-- -- self:GetCaster():StopSound("Imba.Hellblade")
-
-	-- ParticleManager:DestroyParticle(self.aoe_particle_1, true)
-	-- ParticleManager:ReleaseParticleIndex(self.aoe_particle_1)
-	
-	-- self:GetCaster():FadeGesture(ACT_DOTA_GENERIC_CHANNEL_1)
-	
-	-- if not bInterrupted then
-		-- EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_VoidSpirit.AstralStep.Target", self:GetCaster())
-		
-		-- self.aoe_particle_impact = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/planeshift/planeshift_aether_start.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-		-- ParticleManager:SetParticleControl(self.aoe_particle_impact, 0, self:GetCursorPosition())
-		-- ParticleManager:ReleaseParticleIndex(self.aoe_particle_impact)
-		
-		-- for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, FIND_ANY_ORDER, false)) do
-			-- unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_void_stasis", {duration = self:GetSpecialValueFor("duration")})
-			
-			-- unit:Interrupt()
-		-- end
-	-- end
--- end
-
--- -------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_VOID_STASIS --
--- -------------------------------------------
-
--- function modifier_imba_void_spirit_void_stasis:IsPurgable()		return false end
--- function modifier_imba_void_spirit_void_stasis:IgnoreTenacity()	return true end
-
--- function modifier_imba_void_spirit_void_stasis:GetStatusEffectName()
-	-- return "particles/status_fx/status_effect_faceless_chronosphere.vpcf"
--- end
-
--- function modifier_imba_void_spirit_void_stasis:CheckState()
-	-- if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-		-- return {
-			-- [MODIFIER_STATE_STUNNED]		= true,
-			-- [MODIFIER_STATE_FROZEN]			= true,
-			-- [MODIFIER_STATE_MAGIC_IMMUNE]	= true,
-			-- [MODIFIER_STATE_INVULNERABLE]	= true,
-			-- [MODIFIER_STATE_OUT_OF_GAME]	= true,
-			-- [MODIFIER_STATE_NO_HEALTH_BAR]	= true
-		-- }
-	-- else
-		-- return {
-			-- [MODIFIER_STATE_DISARMED]		= true,
-			-- [MODIFIER_STATE_MUTED]			= true,
-			-- [MODIFIER_STATE_SILENCED]		= true,
-			-- [MODIFIER_STATE_MAGIC_IMMUNE]	= true,
-			-- [MODIFIER_STATE_INVULNERABLE]	= true,
-			-- [MODIFIER_STATE_OUT_OF_GAME]	= true,
-			-- [MODIFIER_STATE_NO_HEALTH_BAR]	= true
-		-- }
-	-- end
--- end
-
--- ----------------------------------
--- -- IMBA_VOID_SPIRIT_ASTRAL_STEP --
--- ----------------------------------
-
--- function imba_void_spirit_astral_step_helper_2:GetAssociatedPrimaryAbilities()
-	-- return "imba_void_spirit_astral_step_helper_2"
--- end
-
--- function imba_void_spirit_astral_step:GetIntrinsicModifierName()
-	-- return "modifier_generic_charges"
--- end
-
--- function imba_void_spirit_astral_step:OnUpgrade()
-	-- if self:IsTrained() and self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper") and not self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):IsTrained() then
-		-- self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):SetLevel(1)
-		-- self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):SetActivated(false)
-	-- end
-	
-	-- if self:IsTrained() and self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper_2") then
-		-- self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2"):SetLevel(self:GetLevel())
-	-- end
-	
-	-- if self:GetLevel() == 1 then
-		-- for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
-			-- if mod:GetAbility() == self then
-				-- mod:OnCreated()
-				
-				-- if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper_2") then
-					-- self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier = mod
-				-- end
-				
-				-- break
-			-- end
-		-- end
-	-- end
--- end
-
--- function imba_void_spirit_astral_step:GetCastRange(location, target)
-	-- if IsClient() then
-		-- return self:GetSpecialValueFor("max_travel_distance")
-	-- end
--- end
-
--- function imba_void_spirit_astral_step:OnSpellStart(recastVector, warpVector, bInterrupted)
-	-- -- Preventing projectiles getting stuck in one spot due to potential 0 length vector
-	-- if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
-		-- self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
-	-- end
-	
-	-- -- Just in case the helper ability never gets skilled somehow
-	-- if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper") and not self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):IsTrained() then
-		-- self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):SetLevel(1)
-	-- end
-	
-	-- local original_position	= self:GetCaster():GetAbsOrigin()
-	
-	-- local final_position = self:GetCaster():GetAbsOrigin() + ((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * math.max(math.min(((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()) * Vector(1, 1, 0)):Length2D(), self:GetSpecialValueFor("max_travel_distance") + self:GetCaster():GetCastRangeBonus()), self:GetSpecialValueFor("min_travel_distance")))
-	
-	-- if recastVector then
-		-- final_position	= self:GetCaster():GetAbsOrigin() + recastVector
-	-- end
-	
-	-- if warpVector then
-		-- final_position	= self:GetCaster():GetAbsOrigin() + warpVector
-	-- end
-	
-	-- self.original_vector	= (final_position - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetSpecialValueFor("max_travel_distance") + self:GetCaster():GetCastRangeBonus())
-	
-	-- self:GetCaster():SetForwardVector(self.original_vector:Normalized())
-	
-	-- self:GetCaster():EmitSound("Hero_VoidSpirit.AstralStep.Start")
-	
-	-- local step_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-	-- ParticleManager:SetParticleControl(step_particle, 0, self:GetCaster():GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(step_particle, 1, final_position)
-	-- ParticleManager:ReleaseParticleIndex(step_particle)
-	
-	-- local bHeroHit	= false
-	
-	-- -- Logically speaking it doesn't make sense for it to check for enemies hit before Void Spirit actually moves, but it makes more sense without creating more variables
-	-- for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), final_position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)) do
-		-- -- enemy:EmitSound("Hero_VoidSpirit.AstralStep.MarkExplosionAOE")
-		-- -- enemy:EmitSound("Hero_VoidSpirit.AstralStep.Target")
-		
-		-- self.impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
-		-- ParticleManager:SetParticleControlEnt(self.impact_particle, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-		-- ParticleManager:ReleaseParticleIndex(self.impact_particle)
-		
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_crit", {})
-		-- self:GetCaster():SetAbsOrigin(enemy:GetAbsOrigin() - self:GetCaster():GetForwardVector())
-		
-		-- if warpVector and not bInterrupted then
-			-- enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_armor_pierce", {})
-		-- end
-		
-		-- self:GetCaster():PerformAttack(enemy, false, true, true, false, false, false, true)
-		-- self:GetCaster():RemoveModifierByName("modifier_imba_void_spirit_astral_step_crit")
-		
-		-- enemy:RemoveModifierByName("modifier_imba_void_spirit_astral_step_armor_pierce")
-		
-		-- enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_debuff", {duration = self:GetSpecialValueFor("pop_damage_delay")})
-		
-		-- if enemy:IsHero() and not bHeroHit then
-			-- bHeroHit = true
-		-- end
-	-- end
-	
-	-- self.impact_particle = nil
-	
-	-- if not warpVector then
-		-- FindClearSpaceForUnit(self:GetCaster(), final_position, false)
-	-- else
-		-- FindClearSpaceForUnit(self:GetCaster(), original_position, false)
-	-- end
-	
-	-- self:GetCaster():EmitSound("Hero_VoidSpirit.AstralStep.End")
-	
-	-- -- IMBAfication: Echo Slash (disabled)
-	-- if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper") and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):IsTrained() then
-		-- self:GetCaster():RemoveModifierByName("modifier_imba_void_spirit_astral_step_grace_time")
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"), "modifier_imba_void_spirit_astral_step_grace_time", {duration = self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):GetSpecialValueFor("grace_time_end")})
-	-- end
-	
-	-- -- IMBAfication: Warp Slash
-	-- if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper_2") then
-		-- if self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier and ((not warpVector and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier:GetStackCount() <= 1) or (warpVector and self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier:GetStackCount() <= 0)) then
-			-- self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2"):StartCooldown(self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier:GetRemainingTime())
-		-- end
-	-- end
-	
-	-- -- IMBAfication: I am ALL The Hidden Ones
-	-- if bHeroHit and not recastVector then
-		-- if not self:GetCaster():HasModifier("modifier_imba_void_spirit_astral_step_invis") then
-			-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_invis", {duration = self:GetSpecialValueFor("hidden_ones_duration")})
-		-- else
-			-- self:GetCaster():FindModifierByName("modifier_imba_void_spirit_astral_step_invis"):SetDuration(self:GetCaster():FindModifierByName("modifier_imba_void_spirit_astral_step_invis"):GetRemainingTime() + self:GetSpecialValueFor("hidden_ones_duration"), true)
-		-- end
-	-- end
--- end
-
--- --------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_ASTRAL_STEP_DEBUFF --
--- --------------------------------------------------
-
--- function modifier_imba_void_spirit_astral_step_debuff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
--- function modifier_imba_void_spirit_astral_step_debuff:GetEffectName()
-	-- return "particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step_debuff.vpcf"
--- end
-
--- function modifier_imba_void_spirit_astral_step_debuff:GetStatusEffectName()
-	-- return "particles/status_fx/status_effect_void_spirit_astral_step_debuff.vpcf"
--- end
-
--- function modifier_imba_void_spirit_astral_step_debuff:OnCreated()
-	-- self.pop_damage			= self:GetAbility():GetSpecialValueFor("pop_damage")
-	-- self.movement_slow_pct	= self:GetAbility():GetSpecialValueFor("movement_slow_pct") * (-1)
--- end
-
--- function modifier_imba_void_spirit_astral_step_debuff:OnDestroy()
-	-- if not IsServer() then return end
-	
-	-- self.damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/astral_step/void_spirit_astral_step_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	-- ParticleManager:ReleaseParticleIndex(self.damage_particle)
-	
-	-- ApplyDamage({
-		-- victim 			= self:GetParent(),
-		-- damage 			= self.pop_damage,
-		-- damage_type		= DAMAGE_TYPE_MAGICAL,
-		-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		-- attacker 		= self:GetCaster(),
-		-- ability 		= self:GetAbility()
-	-- })
-	
-	-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.pop_damage, nil)
--- end
-
--- function modifier_imba_void_spirit_astral_step_debuff:DeclareFunctions()
-	-- return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
--- end
-
--- function modifier_imba_void_spirit_astral_step_debuff:GetModifierMoveSpeedBonus_Percentage()
-	-- return self.movement_slow_pct
--- end
-
--- ------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_ASTRAL_STEP_CRIT --
--- ------------------------------------------------
-
--- function modifier_imba_void_spirit_astral_step_crit:IsPurgable()	return false end
-
--- -- This CheckState is basically only for allowing cleave to properly function (since Void Spirit will warp to in front of the target before performing the attack)
--- function modifier_imba_void_spirit_astral_step_crit:CheckState()
-	-- return {
-		-- [MODIFIER_STATE_NO_UNIT_COLLISION]					= true,
-		-- [MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]	= true,
-		
-		-- [MODIFIER_STATE_INVULNERABLE]						= true -- Just in case?
-	-- }
--- end
-
--- function modifier_imba_void_spirit_astral_step_crit:DeclareFunctions()
-	-- return {
-		-- MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-		-- MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
-	-- }
--- end
-
--- function modifier_imba_void_spirit_astral_step_crit:GetModifierPreAttack_CriticalStrike()
-	-- if self:GetCaster():HasTalent("special_bonus_imba_void_spirit_astral_step_crit") then
-		-- return self:GetCaster():FindTalentValue("special_bonus_imba_void_spirit_astral_step_crit")
-	-- end
--- end
-
--- -- Hopefully this is enough random information to only suppress cleaves?...
--- function modifier_imba_void_spirit_astral_step_crit:GetModifierTotalDamageOutgoing_Percentage(keys)
-	-- if not keys.no_attack_cooldown and keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.damage_flags == DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION then
-		-- return -100
-	-- end
--- end
-
--- -------------------------------------------------
--- -- MODIFIER_IMBA_VOID_SPIRIT_ASTRAL_STEP_INVIS --
--- -------------------------------------------------
-
--- function modifier_imba_void_spirit_astral_step_invis:CheckState()
-	-- return {[MODIFIER_STATE_INVISIBLE] = true}
--- end
-
--- function modifier_imba_void_spirit_astral_step_invis:DeclareFunctions()
-	-- return {MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
--- end
-
--- function modifier_imba_void_spirit_astral_step_invis:GetModifierInvisibilityLevel()
-	-- return 1
--- end
 
 -- ---------------------
 -- -- TALENT HANDLERS --

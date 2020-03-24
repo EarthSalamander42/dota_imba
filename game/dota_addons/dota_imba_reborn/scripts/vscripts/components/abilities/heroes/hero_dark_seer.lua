@@ -802,36 +802,36 @@ function modifier_imba_dark_seer_wall_of_replica:OnIntervalThink()
 		-- self:AddParticle(self.particle, false, false, -1, false, false)
 	-- end
 	
-	-- All of this code text is just to mess around with colours
-	self.random_int_1		= self.random_int_1 + self.scale_1
-	self.random_int_2		= self.random_int_2 + self.scale_2
-	self.random_int_3		= self.random_int_3 + self.scale_3
+	-- -- All of this code text is just to mess around with colours
+	-- self.random_int_1		= self.random_int_1 + self.scale_1
+	-- self.random_int_2		= self.random_int_2 + self.scale_2
+	-- self.random_int_3		= self.random_int_3 + self.scale_3
 	
-	if self.random_int_1 >= 255 then
-		self.random_int_1 = 255
-		self.scale_1 = RandomInt(-3, -6)
-	elseif self.random_int_1 <= 0 then
-		self.random_int_1 = 0
-		self.scale_1 = RandomInt(3, 6)
-	end
+	-- if self.random_int_1 >= 255 then
+		-- self.random_int_1 = 255
+		-- self.scale_1 = RandomInt(-3, -6)
+	-- elseif self.random_int_1 <= 0 then
+		-- self.random_int_1 = 0
+		-- self.scale_1 = RandomInt(3, 6)
+	-- end
 	
-	if self.random_int_2 >= 255 then
-		self.random_int_2 = 255
-		self.scale_2 = RandomInt(-3, -6)
-	elseif self.random_int_1 <= 0 then
-		self.random_int_2 = 0
-		self.scale_2 = RandomInt(3, 6)
-	end
+	-- if self.random_int_2 >= 255 then
+		-- self.random_int_2 = 255
+		-- self.scale_2 = RandomInt(-3, -6)
+	-- elseif self.random_int_1 <= 0 then
+		-- self.random_int_2 = 0
+		-- self.scale_2 = RandomInt(3, 6)
+	-- end
 	
-	if self.random_int_3 >= 255 then
-		self.random_int_3 = 255
-		self.scale_3 = RandomInt(-3, -6)
-	elseif self.random_int_3 <= 0 then
-		self.random_int_3 = 0
-		self.scale_3 = RandomInt(3, 6)
-	end
+	-- if self.random_int_3 >= 255 then
+		-- self.random_int_3 = 255
+		-- self.scale_3 = RandomInt(-3, -6)
+	-- elseif self.random_int_3 <= 0 then
+		-- self.random_int_3 = 0
+		-- self.scale_3 = RandomInt(3, 6)
+	-- end
 
-	ParticleManager:SetParticleControl(self.particle, 60, Vector(self.random_int_1, self.random_int_2, self.random_int_3))
+	-- ParticleManager:SetParticleControl(self.particle, 60, Vector(self.random_int_1, self.random_int_2, self.random_int_3))
 	
 	-- Okay now for actual logic
 	local enemies			= FindUnitsInLine(self:GetCaster():GetTeamNumber(), self.wall_start, self.wall_end, nil, self.thickness, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)

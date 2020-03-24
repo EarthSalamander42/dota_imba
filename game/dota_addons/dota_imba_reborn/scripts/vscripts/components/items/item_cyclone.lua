@@ -162,6 +162,9 @@ end
 
 function modifier_item_imba_cyclone_2_movement:OnDestroy()
 	if not IsServer() then return end
+
+	-- To prevent projectiles that were swirling around with Violent Displacement to land at the end
+	ProjectileManager:ProjectileDodge(self:GetParent())
 	
 	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
 	

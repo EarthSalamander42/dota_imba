@@ -971,7 +971,7 @@ function imba_sven_colossal_slash:OnProjectileHit(target, location)
 	if target then
 		local caster = self:GetCaster()
 		local mod = caster:AddNewModifier(caster, self, "modifier_imba_colossal_slash_crit", {})
-		caster:PerformAttack(target, true, false, true, true, true, false, true)
+		caster:PerformAttack(target, true, false, true, false, false, false, true)
 		mod:Destroy()
 	end
 end
@@ -985,13 +985,11 @@ function modifier_imba_colossal_slash_crit:IsStunDebuff() return false end
 function modifier_imba_colossal_slash_crit:RemoveOnDeath() return true end
 -------------------------------------------
 function modifier_imba_colossal_slash_crit:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-			MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
-			MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
+	}
 end
 
 function modifier_imba_colossal_slash_crit:GetAttackSound()
@@ -1031,11 +1029,9 @@ function modifier_imba_colossal_slash_animation:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_colossal_slash_animation:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+	}
 end
 
 function modifier_imba_colossal_slash_animation:GetActivityTranslationModifiers()

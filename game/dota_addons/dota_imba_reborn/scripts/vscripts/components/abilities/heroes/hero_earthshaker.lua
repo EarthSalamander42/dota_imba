@@ -110,7 +110,7 @@ function earthshaker_fissure_lua:OnSpellStart()
 		radius,
 		DOTA_UNIT_TARGET_TEAM_BOTH,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		0
+		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
 	)
 
 	-- precache damage
@@ -127,7 +127,7 @@ function earthshaker_fissure_lua:OnSpellStart()
 		-- shove
 		FindClearSpaceForUnit( unit, unit:GetOrigin(), true )
 
-		if unit:GetTeamNumber()~=caster:GetTeamNumber() then
+		if unit:GetTeamNumber()~=caster:GetTeamNumber() and not unit:IsMagicImmune() then
 			-- damage
 			damageTable.victim = unit
 			ApplyDamage(damageTable)

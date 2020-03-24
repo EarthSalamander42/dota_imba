@@ -1473,7 +1473,7 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
 		local scepter_speed_mult = 1
 		
 		if caster:HasScepter() then
-			scepter_speed_mult = 0.4
+			scepter_speed_mult = 0.7
 		end
 		
 		-- "Reload" animation, to make it look good with the entire visual of the assassination talent
@@ -1488,10 +1488,10 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
 	else
 		self.bAutoCast = false
 	
-		local playback_rate = 1.0
+		local playback_rate = 1.15
 
 		if caster:HasScepter() then
-			playback_rate = 2.0
+			playback_rate = 1.5
 		end
 
 		caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_4, playback_rate)		
@@ -1759,7 +1759,11 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 		ApplyDamage(damageTable)
 
 		-- Apply a ministun to the target
-		target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
+		local stun_modifier = target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
+		
+		if stun_modifier then
+			stun_modifier:SetDuration(ministun_duration * (1 - target:GetStatusResistance()), true)
+		end
 		
 		-- Memes (give a small cooldown to it so you don't potentially get the voice thing spammed upon multiple projectile lands
 		if target:IsRealHero() and not target:IsAlive() and RollPercentage(100) and (not self.meme_cooldown or GameRules:GetGameTime() - self.meme_cooldown >= 2.0) then

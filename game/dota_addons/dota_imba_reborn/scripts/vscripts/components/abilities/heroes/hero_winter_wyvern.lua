@@ -389,7 +389,7 @@ function imba_winter_wyvern_splinter_blast:OnTrackingProjectileHit(keys)
 				iMoveSpeed			= keys.secondary_projectile_speed,
 				vSourceLoc 			= keys.target:GetAbsOrigin(),
 				bDrawsOnMinimap 	= false,
-				bDodgeable 			= false,
+				bDodgeable 			= true,
 				bIsAttack 			= false,
 				bVisibleToEnemies 	= true,
 				bReplaceExisting 	= false,
@@ -406,7 +406,7 @@ function imba_winter_wyvern_splinter_blast:OnTrackingProjectileHit(keys)
 end
 
 function imba_winter_wyvern_splinter_blast:OnProjectileHit_ExtraData(target, location, ExtraData)
-	if target:IsAlive() then 
+	if target and target:IsAlive() then 
 		local caster = self:GetCaster();
 		-- splinter_proc == 0 means this is the first time hero got it. time to triggers a second volley!
 		if ExtraData.splinter_proc == 0 then 

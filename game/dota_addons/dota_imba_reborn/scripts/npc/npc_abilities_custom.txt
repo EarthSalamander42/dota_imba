@@ -5158,7 +5158,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"1.2"
+		"AbilityCastPoint"				"1.17" // Supposed to be 1.2 seconds, but the 0.03 difference is to allow instant spirit stomp combos to work
 		"AbilityCastRange"				"500"
 		"AbilityCooldown"				"14.0 13.0 12.0 11.0"
 		"AbilityManaCost"				"0"

@@ -125,13 +125,17 @@ function modifier_imba_dust_of_appearance:CheckState()
 end
 
 function modifier_imba_dust_of_appearance:GetModifierProvidesFOWVision()
-	for _,v in ipairs(self.invisModifiers) do
-		if self:GetParent():HasModifier(v) then return 1 end
+	if self.invisModifiers then
+		for _,v in ipairs(self.invisModifiers) do
+			if self:GetParent():HasModifier(v) then return 1 end
+		end
 	end
 end
 
 function modifier_imba_dust_of_appearance:GetModifierMoveSpeedBonus_Percentage()
-	for _,v in ipairs(self.invisModifiers) do
-		if self:GetParent():HasModifier(v) then return self.invisible_slow end
+	if self.invisModifiers then
+		for _,v in ipairs(self.invisModifiers) do
+			if self:GetParent():HasModifier(v) then return self.invisible_slow end
+		end
 	end
 end

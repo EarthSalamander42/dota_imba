@@ -1062,11 +1062,11 @@ function modifier_imba_necromastery_souls:DestroyOnExpire()
 end
 
 function modifier_imba_necromastery_souls:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-					  MODIFIER_EVENT_ON_ATTACK_LANDED,
-					  MODIFIER_EVENT_ON_DEATH}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_DEATH
+	}
 end
 
 function modifier_imba_necromastery_souls:GetModifierPreAttack_BonusDamage()
@@ -1133,21 +1133,21 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 			-- -- Gain a soul and refresh
 			-- AddNecromasterySouls(self.caster, self.hero_attack_soul_count)
 
-			-- If caster is not broken and is visible, launch a hero soul to the caster
-			if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then
-				local soul_projectile = {Target = self.caster,
-										 Source = target,
-										 Ability = self.ability,
-										 EffectName = self.particle_soul_hero,
-										 bDodgeable = false,
-										 bProvidesVision = false,
-										 iMoveSpeed = self.soul_projectile_speed,
-										 iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-										 }
+			-- -- If caster is not broken and is visible, launch a hero soul to the caster
+			-- if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then
+				-- local soul_projectile = {Target = self.caster,
+										 -- Source = target,
+										 -- Ability = self.ability,
+										 -- EffectName = self.particle_soul_hero,
+										 -- bDodgeable = false,
+										 -- bProvidesVision = false,
+										 -- iMoveSpeed = self.soul_projectile_speed,
+										 -- iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+										 -- }
 
 
-				ProjectileManager:CreateTrackingProjectile(soul_projectile)
-			end
+				-- ProjectileManager:CreateTrackingProjectile(soul_projectile)
+			-- end
 		end
 	end
 end
@@ -1755,16 +1755,16 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 		caster:Heal(damage_dealt, caster)
 	end
 	
-	-- F.E.A.R.
-	if not target:HasModifier("modifier_nevermore_requiem_fear") then
-		local fear_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration")})
+	-- -- F.E.A.R.
+	-- if not target:HasModifier("modifier_nevermore_requiem_fear") then
+		-- local fear_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration")})
 		
-		if fear_modifier then
-			fear_modifier:SetDuration(self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance()), true)
-		end
-	else
-		target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
-	end
+		-- if fear_modifier then
+			-- fear_modifier:SetDuration(self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance()), true)
+		-- end
+	-- else
+		-- target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
+	-- end
 end
 
 
