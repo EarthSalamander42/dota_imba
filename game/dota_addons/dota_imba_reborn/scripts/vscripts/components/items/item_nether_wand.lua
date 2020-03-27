@@ -129,18 +129,6 @@ function modifier_item_imba_arcane_nexus_passive:OnDestroy()
 end
 
 function modifier_item_imba_arcane_nexus_passive:OnCreated()
-	self.item = self:GetAbility()
-	self.parent = self:GetParent()
-	if self.parent:IsHero() and self.item then
-		self.bonus_damage = self.item:GetSpecialValueFor("bonus_damage")
-		self.bonus_as = self.item:GetSpecialValueFor("bonus_as")
-		self.bonus_intellect = self.item:GetSpecialValueFor("bonus_intellect")
-		self.cast_range_bonus = self.item:GetSpecialValueFor("cast_range_bonus")
-		self.spell_amp = self.item:GetSpecialValueFor("spell_amp")
-		self.burn_duration = self.item:GetSpecialValueFor("burn_duration")
-		self.bonus_cdr = self.item:GetSpecialValueFor("bonus_cdr")
-	end
-	
 	if not IsServer() then return end
 	
     -- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiples
@@ -177,31 +165,37 @@ end
 --   - Armlet of Dementor
 --   - Arcane Nexus
 function modifier_item_imba_arcane_nexus_passive:GetModifierSpellAmplify_PercentageUnique()
-    if self:GetAbility():GetSecondaryCharges() == 1 then
-        return self.spell_amp
+    if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 then
+        return self:GetAbility():GetSpecialValueFor("spell_amp")
     end
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
+    if self:GetAbility() then
+        return self:GetAbility():GetSpecialValueFor("bonus_damage")
+    end
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_as
+    if self:GetAbility() then
+        return self:GetAbility():GetSpecialValueFor("bonus_as")
+    end
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
+    if self:GetAbility() then
+        return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+    end
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierPercentageCooldown()
-	if self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasModifier("modifier_imba_octarine_core_unique") then
-		return self.bonus_cdr
+	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasModifier("modifier_imba_octarine_core_unique") then
+		return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 	end
 end
 
 function modifier_item_imba_arcane_nexus_passive:GetModifierPercentageManacost()
-	if self:GetAbility():GetSecondaryCharges() == 1 then
-		return self.bonus_cdr
+	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 then
+		 return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 	end
 end

@@ -7,9 +7,18 @@ LinkLuaModifier("modifier_imba_dark_seer_vacuum_refresh_tracker", "components/ab
 
 LinkLuaModifier("modifier_imba_dark_seer_wormhole", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_HORIZONTAL)
 
-LinkLuaModifier("modifier_imba_dark_seer_ion_shell", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_dark_seer_vacuum_entry_portal", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_seer_vacuum_exit_portal", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_seer_vacuum_camera_track", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_imba_dark_seer_ion_shell", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_seer_ion_shell_negation", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_dark_seer_surge", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_seer_surge_slow", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
+
+LinkLuaModifier("modifier_imba_dark_seer_close_portal", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_dark_seer_wall_of_replica", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_dark_seer_wall_of_replica_slow", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
@@ -22,11 +31,20 @@ modifier_imba_dark_seer_vacuum_refresh_tracker		= class({})
 imba_dark_seer_wormhole								= class({})
 modifier_imba_dark_seer_wormhole					= class({})
 
+modifier_imba_dark_seer_vacuum_entry_portal			= modifier_imba_dark_seer_vacuum_entry_portal or class({})
+modifier_imba_dark_seer_vacuum_exit_portal			= modifier_imba_dark_seer_vacuum_exit_portal or class({})
+modifier_imba_dark_seer_vacuum_camera_track			= modifier_imba_dark_seer_vacuum_camera_track or class({})
+
 imba_dark_seer_ion_shell							= class({})
 modifier_imba_dark_seer_ion_shell					= class({})
+modifier_imba_dark_seer_ion_shell_negation			= modifier_imba_dark_seer_ion_shell_negation or class({})
 
 imba_dark_seer_surge								= class({})
 modifier_imba_dark_seer_surge						= class({})
+modifier_imba_dark_seer_surge_slow					= modifier_imba_dark_seer_surge_slow or class({})
+
+imba_dark_seer_close_portal							= imba_dark_seer_close_portal or class({})
+modifier_imba_dark_seer_close_portal				= modifier_imba_dark_seer_close_portal or class({})
 
 imba_dark_seer_wall_of_replica						= class({})
 modifier_imba_dark_seer_wall_of_replica				= class({})
@@ -63,8 +81,14 @@ function imba_dark_seer_vacuum:GetCooldown(level)
 	end
 end
 
+function imba_dark_seer_vacuum:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST 
+end
+
 function imba_dark_seer_vacuum:OnSpellStart()
 	if not IsServer() then return end
+	
+	self.cursor_position	= self:GetCursorPosition()
 	
 	-- Check if this ability exists to do secondary logic
 	local wormhole_ability	= self:GetCaster():FindAbilityByName("imba_dark_seer_wormhole")
@@ -341,6 +365,25 @@ function imba_dark_seer_wormhole:OnSpellStart()
 	
 	GridNav:DestroyTreesAroundPoint( self:GetCursorPosition(), self:GetSpecialValueFor("radius_tree"), true )
 	
+	if vacuum_ability and vacuum_ability:GetAutoCastState() and vacuum_ability:GetCursorPosition() then
+		local exit_portal = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_exit_portal", {
+			duration		= vacuum_ability:GetSpecialValueFor("teleport_duration")
+		}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+	
+		local entry_portal = CreateModifierThinker(self:GetCaster(), vacuum_ability, "modifier_imba_dark_seer_vacuum_entry_portal", {
+			duration				= vacuum_ability:GetSpecialValueFor("teleport_duration"),
+			exit_portal_entindex	= exit_portal:entindex(),
+			enemy_tracker			= self.enemy_tracker
+		}, vacuum_ability.cursor_position, self:GetCaster():GetTeamNumber(), false)
+		
+		if self:GetCaster():HasAbility("imba_dark_seer_close_portal") then
+			self:GetCaster():FindAbilityByName("imba_dark_seer_close_portal").exit_portal = exit_portal
+			self:GetCaster():FindAbilityByName("imba_dark_seer_close_portal").entry_portal = entry_portal
+			
+			self:GetCaster():FindAbilityByName("imba_dark_seer_close_portal"):SetActivated(true)
+		end
+	end
+	
 	-- Swap abilities if applicable
 	if vacuum_ability and vacuum_ability:IsHidden() then
 		self:GetCaster():SwapAbilities("imba_dark_seer_vacuum", "imba_dark_seer_wormhole", true, false)
@@ -428,15 +471,104 @@ function modifier_imba_dark_seer_wormhole:CheckState()
 end
 
 function modifier_imba_dark_seer_wormhole:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
     }
-
-    return decFuncs
 end
 
 function modifier_imba_dark_seer_wormhole:GetOverrideAnimation()
 	 return ACT_DOTA_FLAIL
+end
+
+-------------------------------------------------
+-- MODIFIER_IMBA_DARK_SEER_VACUUM_ENTRY_PORTAL --
+-------------------------------------------------
+
+function modifier_imba_dark_seer_vacuum_entry_portal:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+
+	if not IsServer() then return end
+	
+	self.teleport_radius	= self:GetAbility():GetSpecialValueFor("teleport_radius")
+	
+	self.entry_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/void_spirit_entryportal.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self:AddParticle(self.entry_particle, false, false, -1, false, false)
+	
+	self.exit_portal	= EntIndexToHScript(keys.exit_portal_entindex)
+	self.ported_units	= {}
+	self.enemy_tracker = {}
+	self.camera_tracker = {}
+	
+	if self:GetCaster():HasAbility("imba_dark_seer_wormhole") and self:GetCaster():FindAbilityByName("imba_dark_seer_wormhole").enemy_tracker then
+		for _, enemy in pairs(self:GetCaster():FindAbilityByName("imba_dark_seer_wormhole").enemy_tracker) do
+			self.enemy_tracker[enemy:entindex()] = true
+		end
+	end
+end
+
+function modifier_imba_dark_seer_vacuum_entry_portal:CheckState()
+	if not IsServer() then return end
+	
+	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.teleport_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)) do
+		-- Once again, do not allow porting into fountain
+		if self:GetElapsedTime() >= 0.1 and not self.ported_units[unit:entindex()] and not unit:HasModifier("modifier_imba_dark_seer_wormhole") and (unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() or not IsNearFountain(self.exit_portal:GetAbsOrigin(), 1700)) then
+			if unit:IsHero() then
+				EmitSoundOnLocationWithCaster(unit:GetAbsOrigin(), "Wormhole.Disappear", self:GetCaster())
+			else
+				EmitSoundOnLocationWithCaster(unit:GetAbsOrigin(), "Wormhole.CreepDisappear", self:GetCaster())
+			end
+		
+			FindClearSpaceForUnit(unit, self.exit_portal:GetAbsOrigin(), true)
+			
+			-- This is to re-orient the camera so people will have a slightly better idea of where they are being ported around
+			if unit.GetPlayerID then
+				PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
+				unit:AddNewModifier(unit, self:GetAbility(), "modifier_imba_dark_seer_vacuum_camera_track", {duration = FrameTime()})
+			end
+			
+			if unit:IsHero() then
+				EmitSoundOnLocationWithCaster(unit:GetAbsOrigin(), "Wormhole.Appear", self:GetCaster())
+			else
+				EmitSoundOnLocationWithCaster(unit:GetAbsOrigin(), "Wormhole.CreepAppear", self:GetCaster())
+			end
+			
+			self.ported_units[unit:entindex()] = true
+		end
+	end
+end
+
+function modifier_imba_dark_seer_vacuum_entry_portal:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetCaster():HasAbility("imba_dark_seer_close_portal") then
+		self:GetCaster():FindAbilityByName("imba_dark_seer_close_portal"):SetActivated(false)
+	end
+end
+
+------------------------------------------------
+-- MODIFIER_IMBA_DARK_SEER_VACUUM_EXIT_PORTAL --
+------------------------------------------------
+
+function modifier_imba_dark_seer_vacuum_exit_portal:OnCreated()
+	if not IsServer() then return end
+	
+	self.exit_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/void_spirit_exitportal_edge.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self:AddParticle(self.exit_particle, false, false, -1, false, false)
+end
+
+-------------------------------------------------
+-- MODIFIER_IMBA_DARK_SEER_VACUUM_CAMERA_TRACK --
+-------------------------------------------------
+
+function modifier_imba_dark_seer_vacuum_camera_track:IsHidden()			return true end
+function modifier_imba_dark_seer_vacuum_camera_track:IsPurgable()		return false end
+function modifier_imba_dark_seer_vacuum_camera_track:RemoveOnDeath()	return false end
+function modifier_imba_dark_seer_vacuum_camera_track:IgnoreTenacity()	return true end
+
+function modifier_imba_dark_seer_vacuum_camera_track:OnDestroy()
+	if not IsServer() then return end
+	
+	PlayerResource:SetCameraTarget(self:GetParent():GetPlayerID(), nil)
 end
 
 ---------------
@@ -474,16 +606,26 @@ function imba_dark_seer_ion_shell:GetIntrinsicModifierName()
 	return "modifier_imba_dark_seer_ion_shell_handler"
 end
 
+function imba_dark_seer_ion_shell:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST 
+end
+
 function imba_dark_seer_ion_shell:OnSpellStart()
 	if not IsServer() then return end
 	
-	self:GetCursorTarget():EmitSound(self:GetCaster().ion_shell_sound)
+	self:GetCursorTarget():EmitSound(self:GetCaster().ion_shell_sound or "Hero_Dark_Seer.Ion_Shield_Start")
 	
 	if self:GetCaster():GetName() == "npc_dota_hero_dark_seer" and RollPercentage(50) then
 		self:GetCaster():EmitSound("dark_seer_dkseer_ability_surge_0"..math.random(1,2))
 	end
 	
-	local ion_shell_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_ion_shell", {duration = self:GetSpecialValueFor("duration")})
+	local ion_shell_modifier = nil
+	
+	if self:GetAutoCastState() and self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+		ion_shell_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_ion_shell_negation", {duration = self:GetSpecialValueFor("duration")})
+	else
+		ion_shell_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_ion_shell", {duration = self:GetSpecialValueFor("duration")})
+	end
 	
 	-- Ion Shell is affected by status resistance, so reduce the duration if applied on enemies
 	if self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
@@ -508,7 +650,7 @@ function modifier_imba_dark_seer_ion_shell:OnCreated()
 	
 	self:GetParent():EmitSound("Hero_Dark_Seer.Ion_Shield_lp")
 	
-	self.particle			= ParticleManager:CreateParticle(self:GetCaster().ion_shell_effect, PATTACH_POINT_FOLLOW, self:GetParent())
+	self.particle			= ParticleManager:CreateParticle(self:GetCaster().ion_shell_effect or "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(self.particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(50, 50, 50)) -- Arbitrary
 	self:AddParticle(self.particle, false, false, -1, false, false)
@@ -519,6 +661,8 @@ function modifier_imba_dark_seer_ion_shell:OnCreated()
 end
 
 function modifier_imba_dark_seer_ion_shell:OnRefresh()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.damage_per_second	= self:GetAbility():GetTalentSpecialValueFor("damage_per_second")
 	
 	if not IsServer() then return end
@@ -566,7 +710,7 @@ end
 function modifier_imba_dark_seer_ion_shell:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():EmitSound(self:GetCaster().ion_shell_end_sound)
+	self:GetParent():EmitSound(self:GetCaster().ion_shell_end_sound or "Hero_Dark_Seer.Ion_Shield_end")
 	
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():EmitSound("Hero_Abaddon.AphoticShield.Destroy")
@@ -625,6 +769,134 @@ function modifier_imba_dark_seer_ion_shell:GetModifierProvidesFOWVision()
 	end
 end
 
+------------------------------------------------
+-- MODIFIER_IMBA_DARK_SEER_ION_SHELL_NEGATION --
+------------------------------------------------
+
+function modifier_imba_dark_seer_ion_shell_negation:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.damage_per_second			= self:GetAbility():GetTalentSpecialValueFor("damage_per_second")
+	self.proton_explosion_radius	= self:GetAbility():GetSpecialValueFor("proton_explosion_radius")
+	self.proton_damage_pct			= self:GetAbility():GetSpecialValueFor("proton_damage_pct")
+
+	self.interval 			= 0.1
+	
+	if not IsServer() then return end
+	
+	self.radius						= self:GetAbility():GetTalentSpecialValueFor("radius")
+	self.damage_table	= {
+		victim 			= self:GetParent(),
+		damage 			= self.damage_per_second * self.interval,
+		damage_type		= DAMAGE_TYPE_MAGICAL,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	}
+	
+	self:GetParent():EmitSound("Hero_Dark_Seer.Ion_Shield_lp")
+	
+	self.particle			= ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(self.particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, self.radius, self.radius))
+	self:AddParticle(self.particle, false, false, -1, false, false)
+	
+	self:SetStackCount(0)
+	
+	self:StartIntervalThink(self.interval)
+end
+
+function modifier_imba_dark_seer_ion_shell_negation:OnRefresh()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.damage_per_second	= self:GetAbility():GetTalentSpecialValueFor("damage_per_second")
+	
+	if not IsServer() then return end
+	
+	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
+	ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, self.radius, self.radius))
+	
+	self:SetStackCount(0)
+end
+
+function modifier_imba_dark_seer_ion_shell_negation:OnIntervalThink()
+	if not IsServer() then return end
+	
+	local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	
+	for _, unit in pairs(units) do
+		if unit ~= self:GetParent() then
+			local particle = ParticleManager:CreateParticle(self:GetCaster().ion_shell_damage_effect, PATTACH_POINT, self:GetParent())
+			ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(particle)
+			
+			-- This is to retroactively upgrade any existing Ion Shells with talent acquisition
+			if self:GetAbility() then
+				self.damage_per_second	= self:GetAbility():GetTalentSpecialValueFor("damage_per_second")
+			end
+			
+			if unit:GetTeamNumber() == self:GetParent():GetTeamNumber() then
+				self.damage_table.damage	= self.damage_per_second * self.interval
+			else
+				self.damage_table.damage	= self.damage_per_second * self.interval * 0.5
+			end
+			
+			--IMBAfication: Proton Explosion
+			self:SetStackCount(self:GetStackCount() + math.floor(ApplyDamage(self.damage_table) * self.proton_damage_pct * 0.01))
+		end
+	end
+end
+
+function modifier_imba_dark_seer_ion_shell_negation:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("Hero_Dark_Seer.Ion_Shield_end")
+	
+	if self:GetRemainingTime() <= 0 then
+		self:GetParent():EmitSound("Hero_Abaddon.AphoticShield.Destroy")
+		
+		local particle = ParticleManager:CreateParticle("particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(particle)
+
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.proton_explosion_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		
+		for _, enemy in pairs(enemies) do
+			if enemy ~= self:GetParent() then
+				ApplyDamage({
+					victim 			= enemy,
+					damage 			= self:GetStackCount(),
+					damage_type		= DAMAGE_TYPE_MAGICAL,
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self:GetAbility()
+				})
+				
+				-- Only reapply the ability if it exists and they don't already have a shield
+				if self:GetCaster() and self:GetAbility() and not enemy:FindModifierByNameAndCaster("modifier_imba_dark_seer_ion_shell_negation", self:GetCaster()) then
+					local ion_shell_negation_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_dark_seer_ion_shell_negation", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+					
+					if ion_shell_negation_modifier then
+						-- Change the modifier duration based on status resistance
+						ion_shell_negation_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+						
+						-- Split the previous stack count evenly amongst all affected enemies
+						-- ion_shell_modifier:SetStackCount(self:GetStackCount() / (#enemies - 1))
+					end
+				end
+			end
+		end
+	end
+end
+
+function modifier_imba_dark_seer_ion_shell_negation:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
+end
+
+function modifier_imba_dark_seer_ion_shell_negation:GetModifierProvidesFOWVision()
+	return 1
+end
+
 -----------
 -- SURGE --
 -----------
@@ -646,9 +918,50 @@ function imba_dark_seer_surge:OnSpellStart()
 		EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_Dark_Seer.Surge", self:GetCaster())
 	end
 
+	-- IMBAfication: Group Advancement
 	for _, ally in pairs(allies) do
 		ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_surge", {duration = self:GetSpecialValueFor("duration")})
-	end	
+	end
+	
+	local knockback_modifier	= nil
+	local slow_modifier			= nil
+	
+	-- IMBAfication: Sonic Boom
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("surge_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		enemy:EmitSound("Hero_Dark_Seer.Surge_Sonic_Boom")
+		
+		knockback_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+		{
+			distance		= self:GetSpecialValueFor("sonic_boom_knockback_speed") * self:GetSpecialValueFor("sonic_boom_knockback_duration"),
+			direction_x 	= (enemy:GetAbsOrigin() - self:GetCursorPosition()):Normalized().x,
+			direction_y 	= (enemy:GetAbsOrigin() - self:GetCursorPosition()):Normalized().y,
+			direction_z 	= (enemy:GetAbsOrigin() - self:GetCursorPosition()):Normalized().z,
+			duration 		= self:GetSpecialValueFor("sonic_boom_knockback_duration"),
+			height			= 0,
+			bGroundStop 	= false,
+			bDecelerate 	= false,
+			bInterruptible 	= false,
+			bIgnoreTenacity	= true,
+			bTreeRadius		= enemy:GetHullRadius(),
+			bStun			= false,
+			bDestroyTreesAlongPath	= true
+		})
+		
+		slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_surge_slow", {duration = self:GetSpecialValueFor("sonic_boom_move_speed_duration")})
+		
+		if slow_modifier then
+			slow_modifier:SetDuration((self:GetSpecialValueFor("sonic_boom_move_speed_duration")) * (1 - enemy:GetStatusResistance()), true)
+		end
+		
+		ApplyDamage({
+			victim 			= enemy,
+			damage 			= self:GetSpecialValueFor("sonic_boom_damage"),
+			damage_type		= DAMAGE_TYPE_MAGICAL,
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		})
+	end
 end
 
 --------------------
@@ -689,6 +1002,77 @@ end
 
 function modifier_imba_dark_seer_surge:GetModifierIgnoreMovespeedLimit()
 	return 1
+end
+
+----------------------------------------
+-- MODIFIER_IMBA_DARK_SEER_SURGE_SLOW --
+----------------------------------------
+
+function modifier_imba_dark_seer_surge_slow:GetEffectName()
+	return "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_debuff.vpcf"
+end
+
+function modifier_imba_dark_seer_surge_slow:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.sonic_boom_move_speed_slow		= self:GetAbility():GetSpecialValueFor("sonic_boom_move_speed_slow") * (-1)
+	self.sonic_boom_miss_percentage		= self:GetAbility():GetSpecialValueFor("sonic_boom_miss_percentage")
+end
+
+function modifier_imba_dark_seer_surge_slow:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MISS_PERCENTAGE
+    }
+end
+
+function modifier_imba_dark_seer_surge_slow:GetModifierMoveSpeedBonus_Percentage()
+    return self.sonic_boom_move_speed_slow
+end
+
+function modifier_imba_dark_seer_surge_slow:GetModifierMiss_Percentage()
+    return self.sonic_boom_miss_percentage
+end
+
+---------------------------------
+-- IMBA_DARK_SEER_CLOSE_PORTAL --
+---------------------------------
+
+function imba_dark_seer_close_portal:IsInnateAbility()	return true end
+function imba_dark_seer_close_portal:IsStealable()		return false end
+
+function imba_dark_seer_close_portal:GetIntrinsicModifierName()
+	return "modifier_imba_dark_seer_close_portal"
+end
+
+function imba_dark_seer_close_portal:OnSpellStart()
+	if self.entry_portal and not self.entry_portal:IsNull() then
+		self.entry_portal:Destroy()
+		self.entry_portal = nil
+	end
+	
+	if self.exit_portal and not self.exit_portal:IsNull() then
+		self.exit_portal:Destroy()
+		self.exit_portal = nil
+	end
+	
+	self:SetActivated(false)
+end
+
+------------------------------------------
+-- MODIFIER_IMBA_DARK_SEER_CLOSE_PORTAL --
+------------------------------------------
+
+function modifier_imba_dark_seer_close_portal:IsHidden()	return true end
+function modifier_imba_dark_seer_close_portal:IsPurgable()	return false end
+function modifier_imba_dark_seer_close_portal:RemoveOnDeath()	return false end
+
+function modifier_imba_dark_seer_close_portal:OnCreated()
+	if not IsServer() then return end
+	
+	if self:GetAbility() then
+		self:GetAbility():SetActivated(false)
+	end
 end
 
 ---------------------
@@ -734,6 +1118,7 @@ function modifier_imba_dark_seer_wall_of_replica:OnCreated(params)
 	self.slow_duration			= self:GetAbility():GetTalentSpecialValueFor("slow_duration")
 	self.movement_slow			= self:GetAbility():GetSpecialValueFor("movement_slow")
 	self.scepter_rotation_speed	= self:GetAbility():GetSpecialValueFor("scepter_rotation_speed")
+	self.minimum_interval		= self:GetAbility():GetSpecialValueFor("minimum_interval")
 	
 	self.scepter		= self:GetCaster():HasScepter()
 	
@@ -847,7 +1232,11 @@ function modifier_imba_dark_seer_wall_of_replica:OnIntervalThink()
 		if wall_slow_modifier then
 			wall_slow_modifier:SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
 		else
-			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_dark_seer_wall_of_replica_slow", {duration = self.slow_duration, movement_slow = self.movement_slow}):SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_dark_seer_wall_of_replica_slow", {
+				duration			= self.slow_duration,
+				movement_slow		= self.movement_slow,
+				minimum_interval	= self.minimum_interval
+			}):SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
 		end
 	end
 end
@@ -870,12 +1259,14 @@ function modifier_imba_dark_seer_wall_of_replica_slow:GetAttributes()	return MOD
 
 function modifier_imba_dark_seer_wall_of_replica_slow:OnCreated(params)
 	if not IsServer() then return end
-
+	
+	self.minimum_interval	= params.minimum_interval
+	
 	self:SetStackCount(params.movement_slow * (-1))
 	
 	self.attack_speed	= self:GetParent():GetAttackSpeed()
 	
-	self:StartIntervalThink(1 / self.attack_speed)
+	self:StartIntervalThink(math.max(1 / self.attack_speed, self.minimum_interval))
 end
 
 function modifier_imba_dark_seer_wall_of_replica_slow:OnIntervalThink()
@@ -887,7 +1278,7 @@ function modifier_imba_dark_seer_wall_of_replica_slow:OnIntervalThink()
 	
 	self.attack_speed	= self:GetParent():GetAttackSpeed()
 	
-	self:StartIntervalThink(1 / self.attack_speed)
+	self:StartIntervalThink(math.max(1 / self.attack_speed, self.minimum_interval))
 end
 
 function modifier_imba_dark_seer_wall_of_replica_slow:DeclareFunctions()

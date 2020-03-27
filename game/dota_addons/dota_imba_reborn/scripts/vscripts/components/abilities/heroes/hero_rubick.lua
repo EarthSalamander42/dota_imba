@@ -531,14 +531,13 @@ function modifier_imba_rubick_fade_bolt:OnCreated()
 end
 
 function modifier_imba_rubick_fade_bolt:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 	}
-	return funcs
 end
 
 function modifier_imba_rubick_fade_bolt:GetModifierPreAttack_BonusDamage()
-	if self:GetParent():IsHero() or self:GetParent():IsRoshan() then
+	if self:GetParent():IsHero() or (self:GetParent().IsRoshan and self:GetParent():IsRoshan()) then
 		return -self:GetAbility():GetSpecialValueFor("hero_attack_damage_reduction")
 	else
 		return -self:GetAbility():GetSpecialValueFor("creep_attack_damage_reduction")
@@ -548,11 +547,9 @@ end
 modifier_imba_rubick_fade_bolt_break = class({})
 
 function modifier_imba_rubick_fade_bolt_break:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_PASSIVES_DISABLED] = true
 	}
-
-	return state
 end
 
 ------------------------------------

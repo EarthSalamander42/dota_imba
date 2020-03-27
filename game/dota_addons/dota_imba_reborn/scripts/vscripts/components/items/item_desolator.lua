@@ -239,20 +239,21 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_desolator:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-	return funcs
 end
 
 function modifier_item_imba_desolator:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("damage")
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("damage")
+	end
 end
 
 -- On attack landed, apply the debuff
 function modifier_item_imba_desolator:OnAttackLanded( keys )
-	if IsServer() then
+	if self:GetAbility() then
 		local owner = self:GetParent()
 
 		-- If this attack was not performed by the modifier's owner, do nothing
@@ -297,12 +298,11 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_desolator_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_BONUS_DAY_VISION,
 		MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
 	}
-	return funcs
 end
 
 function modifier_item_imba_desolator_debuff:GetModifierPhysicalArmorBonus()

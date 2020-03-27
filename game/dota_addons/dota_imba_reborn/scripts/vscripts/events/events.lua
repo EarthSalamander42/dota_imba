@@ -984,19 +984,19 @@ function GameMode:OnPlayerChat(keys)
 						elseif string.find(text, 'terror') and hero:GetName() == "npc_dota_hero_terrorblade" then
 							ability_set = {
 								[0] = "imba_terrorblade_reflection",
-								-- [1] = "imba_void_spirit_dissimilate",
-								-- [2] = "imba_void_spirit_resonant_pulse",
-								-- [3] = "imba_void_spirit_void_stasis",
-								-- [4] = "imba_void_spirit_astral_step_helper",
-								-- [5] = "imba_void_spirit_astral_step",
-								-- [6] = "special_bonus_attack_damage_25",
-								-- [7] = "special_bonus_hp_250",
-								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
-								-- [9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
-								-- [10] = "special_bonus_movement_speed_50",
-								-- [11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
-								-- [12] = "special_bonus_imba_void_spirit_astral_step_crit",
-								-- [13] = "special_bonus_imba_void_spirit_dissimilate_stun"
+								[1] = "imba_terrorblade_conjure_image",
+								[2] = "imba_terrorblade_metamorphosis",
+								[3] = "imba_terrorblade_terror_wave",
+								[4] = "imba_terrorblade_power_rend",
+								[5] = "imba_terrorblade_sunder",
+								[6] = "special_bonus_movement_speed_20",
+								[7] = "special_bonus_evasion_15",
+								[8] = "special_bonus_hp_250",
+								[9] = "special_bonus_attack_speed_25",
+								[10] = "special_bonus_all_stats_10",
+								[11] = "special_bonus_imba_terrorblade_reflection_cooldown",
+								[12] = "special_bonus_imba_terrorblade_sunder_cooldown",
+								[13] = "special_bonus_imba_terrorblade_metamorphosis_attack_range"
 							}
 							
 							upgraded = true
@@ -1006,16 +1006,16 @@ function GameMode:OnPlayerChat(keys)
 								[1] = "imba_undying_soul_rip",
 								[2] = "imba_undying_tombstone",
 								[3] = "imba_undying_flesh_golem_grab",
-								[4] = "generic_hidden",
+								[4] = "imba_undying_flesh_golem_throw",
 								[5] = "imba_undying_flesh_golem",
-								-- [6] = "special_bonus_attack_damage_25",
-								-- [7] = "special_bonus_hp_250",
-								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
-								-- [9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
-								-- [10] = "special_bonus_movement_speed_50",
-								-- [11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
-								-- [12] = "special_bonus_imba_void_spirit_astral_step_crit",
-								-- [13] = "special_bonus_imba_void_spirit_dissimilate_stun"
+								[6] = "special_bonus_cast_range_150",
+								[7] = "special_bonus_hp_regen_6",
+								[8] = "special_bonus_imba_undying_tombstone_zombie_damage",
+								[9] = "special_bonus_imba_undying_decay_duration",
+								[10] = "special_bonus_imba_undying_tombstone_on_death",
+								[11] = "special_bonus_imba_undying_flesh_golem_grab_allies",
+								[12] = "special_bonus_reincarnation_200",
+								[13] = "special_bonus_imba_undying_decay_cooldown"
 							}
 							
 							upgraded = true
@@ -1037,6 +1037,11 @@ function GameMode:OnPlayerChat(keys)
 									new_ability:SetLevel(1)
 								end
 							end
+						end
+						
+						-- Doing the switch with Undying gives him an infinite usage reincarnation which is...not good for field testing
+						if hero:GetName() == "npc_dota_hero_undying" then
+							hero:RemoveModifierByName("modifier_special_bonus_reincarnation")
 						end
 						
 						if hero:GetName() == "npc_dota_hero_void_spirit" and not hero:HasAbility("imba_void_spirit_aether_remnant_helper") then

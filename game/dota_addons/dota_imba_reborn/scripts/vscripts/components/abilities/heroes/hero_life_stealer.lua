@@ -719,11 +719,9 @@ function modifier_imba_life_stealer_open_wounds_cross_contamination:OnCreated()
 end
 
 function modifier_imba_life_stealer_open_wounds_cross_contamination:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
     }
-	
-	return decFuncs
 end
 
 function modifier_imba_life_stealer_open_wounds_cross_contamination:GetModifierIncomingDamage_Percentage()
@@ -1250,6 +1248,8 @@ function modifier_imba_life_stealer_infest_effect:GetModifierMoveSpeedBonus_Perc
 end
 
 function modifier_imba_life_stealer_infest_effect:GetModifierExtraHealthBonus(keys)
+	-- -- So there was a slight oversight with this that you can infest wards and increase their health, which gets kind of insane since they take fixed damage. It's obviously a bug, but I'm still on the fence about keeping this in for the meme factor or not...
+	-- if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() and not self:GetParent():IsOther() then
 	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 		return self.bonus_health
 	end

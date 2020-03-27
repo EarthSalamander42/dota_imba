@@ -378,11 +378,11 @@ function modifier_imba_crystal_nova_snowfield_buff:IsPurgable() return false end
 function modifier_imba_crystal_nova_snowfield_buff:IsDebuff() return false end
 
 function modifier_imba_crystal_nova_snowfield_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
-
-	return decFuncs
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+	}
 end
 
 function modifier_imba_crystal_nova_snowfield_buff:GetModifierMoveSpeedBonus_Percentage()
@@ -403,6 +403,8 @@ end
 modifier_imba_crystal_nova_snowfield_debuff = class({})
 
 function modifier_imba_crystal_nova_snowfield_debuff:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -416,9 +418,7 @@ function modifier_imba_crystal_nova_snowfield_debuff:IsPurgable() return false e
 function modifier_imba_crystal_nova_snowfield_debuff:IsDebuff() return true end
 
 function modifier_imba_crystal_nova_snowfield_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
 function modifier_imba_crystal_nova_snowfield_debuff:GetModifierMoveSpeedBonus_Percentage()

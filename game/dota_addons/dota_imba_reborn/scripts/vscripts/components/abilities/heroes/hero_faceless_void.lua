@@ -1537,6 +1537,7 @@ end
 -- TIME LOCK FREEZE MODIFIER (7.20 Version) --
 ----------------------------------------------
 
+function modifier_imba_faceless_void_time_lock_720_freeze:IsDebuff()		return true end
 function modifier_imba_faceless_void_time_lock_720_freeze:IsPurgable()		return false end
 function modifier_imba_faceless_void_time_lock_720_freeze:IsPurgeException()	return true end
 

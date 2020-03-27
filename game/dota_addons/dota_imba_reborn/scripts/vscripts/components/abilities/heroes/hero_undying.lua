@@ -6,9 +6,8 @@ LinkLuaModifier("modifier_imba_undying_decay_buff_counter", "components/abilitie
 LinkLuaModifier("modifier_imba_undying_decay_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_decay_debuff_counter", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_undying_soul_rip_deprecate_mind", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_undying_soul_rip_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_undying_soul_rip_aura_modifier", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_soul_rip_soul_injection", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_soul_rip_soul_injection_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_undying_tombstone_death_trigger", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
@@ -20,6 +19,8 @@ LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow", "comp
 
 LinkLuaModifier("modifier_imba_undying_flesh_golem_grab", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_flesh_golem_grab_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
 
 LinkLuaModifier("modifier_imba_undying_flesh_golem_illusion_check", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_flesh_golem", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
@@ -33,10 +34,8 @@ modifier_imba_undying_decay_debuff				= modifier_imba_undying_decay_debuff or cl
 modifier_imba_undying_decay_debuff_counter		= modifier_imba_undying_decay_debuff_counter or class({})
 
 imba_undying_soul_rip							= imba_undying_soul_rip or class({})
-modifier_imba_undying_soul_rip					= imba_undying_soul_rip or class({})
-modifier_imba_undying_soul_rip_deprecate_mind	= modifier_imba_undying_soul_rip_deprecate_mind or class({})
-modifier_imba_undying_soul_rip_aura				= modifier_imba_undying_soul_rip_aura or class({})
-modifier_imba_undying_soul_rip_aura_modifier	= modifier_imba_undying_soul_rip_aura_modifier or class({})
+modifier_imba_undying_soul_rip_soul_injection	= modifier_imba_undying_soul_rip_soul_injection or class({})
+modifier_imba_undying_soul_rip_soul_injection_debuff	= modifier_imba_undying_soul_rip_soul_injection_debuff or class({})
 
 imba_undying_tombstone												= imba_undying_tombstone or class({})
 modifier_imba_undying_tombstone_death_trigger						= modifier_imba_undying_tombstone_death_trigger or class({})
@@ -53,6 +52,8 @@ imba_undying_flesh_golem_grab										= imba_undying_flesh_golem_grab or class(
 modifier_imba_undying_flesh_golem_grab								= modifier_imba_undying_flesh_golem_grab or class({})
 modifier_imba_undying_flesh_golem_grab_debuff						= modifier_imba_undying_flesh_golem_grab_debuff or class({})
 
+imba_undying_flesh_golem_throw										= imba_undying_flesh_golem_throw or class({})
+
 imba_undying_flesh_golem											= imba_undying_flesh_golem or class({})
 modifier_imba_undying_flesh_golem_illusion_check					= modifier_imba_undying_flesh_golem_illusion_check or class({})
 modifier_imba_undying_flesh_golem									= modifier_imba_undying_flesh_golem or class({})
@@ -65,6 +66,10 @@ modifier_imba_undying_flesh_golem_slow								= modifier_imba_undying_flesh_gole
 
 function imba_undying_decay:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
+end
+
+function imba_undying_decay:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_undying_decay_cooldown")
 end
 
 -- "Upon acquiring/losing Aghanim's Scepter, all stacks of stolen strength adapts immediately. "
@@ -117,7 +122,42 @@ function imba_undying_decay:OnSpellStart()
 	self.scepter_updated = self:GetCaster():HasScepter()
 
 	self:GetCaster():EmitSound("Hero_Undying.Decay.Cast")
-	
+
+	if self:GetCaster():GetName() == "npc_dota_hero_undying" and RollPercentage(50) then
+		if not self.responses then
+			self.responses = 
+			{
+				"undying_undying_decay_03",
+				"undying_undying_decay_04",
+				"undying_undying_decay_05",
+				"undying_undying_decay_07",
+				"undying_undying_decay_08",
+				"undying_undying_decay_09",
+				"undying_undying_decay_10"
+			}
+		end
+		
+		if not self.responses_big then
+			self.responses_big = 
+			{
+				"undying_undying_big_decay_03",
+				"undying_undying_big_decay_04",
+				"undying_undying_big_decay_05",
+				"undying_undying_big_decay_07",
+				"undying_undying_big_decay_08",
+				"undying_undying_big_decay_09",
+				"undying_undying_big_decay_10"
+			}
+		end
+		
+		if self:GetCaster():HasModifier("modifier_imba_undying_flesh_golem") then
+			-- WHy isn't there a function that plays only on one unit but not on client? This function doesn't make the sound come out of the unit which is wrong, but no one else is supposed to hear these voicelines either. Ugh...
+			EmitSoundOnClient(self.responses_big[RandomInt(1, #self.responses_big)], self:GetCaster():GetPlayerOwner())
+		else
+			EmitSoundOnClient(self.responses[RandomInt(1, #self.responses)], self:GetCaster():GetPlayerOwner())
+		end
+	end
+		
 	local decay_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_undying/undying_decay.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(decay_particle, 0, self:GetCursorPosition())
 	ParticleManager:SetParticleControl(decay_particle, 1, Vector(self:GetSpecialValueFor("radius"), 0, 0))
@@ -146,7 +186,7 @@ function imba_undying_decay:OnSpellStart()
 				
 				table.insert(clone_owner_units[enemy:GetPlayerOwner():GetAssignedHero():entindex()], enemy:entindex())
 			end
-		else
+		else		
 			if enemy:IsHero() and not enemy:IsIllusion() then
 				enemy:EmitSound("Hero_Undying.Decay.Target")
 				self:GetCaster():EmitSound("Hero_Undying.Decay.Transfer")
@@ -168,16 +208,16 @@ function imba_undying_decay:OnSpellStart()
 				
 				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
 				buff_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff", {duration = self:GetTalentSpecialValueFor("decay_duration")})
-				
-				ApplyDamage({
-					victim 			= enemy,
-					damage 			= self:GetSpecialValueFor("decay_damage"),
-					damage_type		= self:GetAbilityDamageType(),
-					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-					attacker 		= self:GetCaster(),
-					ability 		= self
-				})
 			end
+			
+			ApplyDamage({
+				victim 			= enemy,
+				damage 			= self:GetSpecialValueFor("decay_damage"),
+				damage_type		= self:GetAbilityDamageType(),
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self
+			})
 		end
 	end
 	
@@ -231,6 +271,9 @@ function modifier_imba_undying_decay_buff:OnCreated()
 	else
 		self:SetStackCount(self:GetStackCount() + self.str_steal_scepter)
 	end
+	
+	-- "The strength gain on Undying does not keep the current health percentage either, and instead adds 20 health per strength to the current health pool."
+	self:GetParent():SetHealth(self:GetParent():GetHealth() + (self:GetStackCount() * 20))
 end
 
 function modifier_imba_undying_decay_buff:OnDestroy()
@@ -239,6 +282,8 @@ function modifier_imba_undying_decay_buff:OnDestroy()
 	if self:GetParent():HasModifier("modifier_imba_undying_decay_buff_counter") then
 		self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):GetStackCount() - self:GetStackCount())
 	end
+	
+	self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetStackCount() * 20))
 end
 
 function modifier_imba_undying_decay_buff:OnStackCountChanged(stackCount)
@@ -295,6 +340,9 @@ function modifier_imba_undying_decay_debuff:OnCreated()
 	else
 		self:SetStackCount(self:GetStackCount() + self.str_steal_scepter)
 	end
+
+	-- "The strength loss on the target does not keep the current health percentage, but instead removes 20 health per strength from the current health pool."
+	self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetStackCount() * 20))
 end
 
 function modifier_imba_undying_decay_debuff:OnDestroy()
@@ -310,6 +358,8 @@ function modifier_imba_undying_decay_debuff:OnDestroy()
 			return self:GetAbility().debuff_modifier_table[i] ~= self
 		end)
 	end
+	
+	self:GetParent():SetHealth(self:GetParent():GetHealth() + (self:GetStackCount() * 20))
 end
 
 function modifier_imba_undying_decay_debuff:OnStackCountChanged(stackCount)
@@ -366,11 +416,39 @@ function imba_undying_soul_rip:OnSpellStart()
 	
 	self:GetCaster():EmitSound("Hero_Undying.SoulRip.Cast")
 	
+	if self:GetCaster():GetName() == "npc_dota_hero_undying" and RollPercentage(50) then
+		if not self.responses then
+			self.responses = 
+			{
+				"undying_undying_soulrip_02",
+				"undying_undying_soulrip_03",
+				"undying_undying_soulrip_04",
+				"undying_undying_soulrip_07"
+			}
+		end
+		
+		if not self.responses_big then
+			self.responses_big = 
+			{
+				"undying_undying_big_soulrip_02",
+				"undying_undying_big_soulrip_03",
+				"undying_undying_big_soulrip_04",
+				"undying_undying_big_soulrip_07"
+			}
+		end
+		
+		if self:GetCaster():HasModifier("modifier_imba_undying_flesh_golem") then
+			-- WHy isn't there a function that plays only on one unit but not on client? This function doesn't make the sound come out of the unit which is wrong, but no one else is supposed to hear these voicelines either. Ugh...
+			EmitSoundOnClient(self.responses_big[RandomInt(1, #self.responses_big)], self:GetCaster():GetPlayerOwner())
+		else
+			EmitSoundOnClient(self.responses[RandomInt(1, #self.responses)], self:GetCaster():GetPlayerOwner())
+		end
+	end
+	
 	local target = self:GetCursorTarget()
 	
 	local units_ripped		= 0
 	local damage_particle	= nil
-	
 	
 	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
 		if unit ~= self:GetCaster() and unit ~= target then
@@ -386,6 +464,9 @@ function imba_undying_soul_rip:OnSpellStart()
 			-- "Units which require a certain amount of attacks to be killed do not lose health when counted in by Soul Rip."
 			if unit:GetName() ~= "npc_dota_unit_undying_zombie" then
 				unit:SetHealth(math.max(unit:GetHealth() - self:GetSpecialValueFor("damage_per_unit"), 1))
+			elseif unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() and unit:GetTeamNumber() ~= target:GetTeamNumber() then
+				-- IMBAfication: Do Zombies Have Souls?
+				unit:PerformAttack(target, true, true, true, true, false, false, true)
 			end
 			
 			-- ApplyDamage({
@@ -405,71 +486,210 @@ function imba_undying_soul_rip:OnSpellStart()
 		end
 	end
 	
-	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not target:TriggerSpellAbsorb(self) then
-		target:EmitSound("Hero_Undying.SoulRip.Enemy")
-	
-		ApplyDamage({
-			victim 			= target,
-			damage 			= self:GetSpecialValueFor("damage_per_unit") * units_ripped,
-			damage_type		= DAMAGE_TYPE_MAGICAL,
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self
-		})
-	elseif target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target:GetName() ~= "npc_dota_unit_undying_tombstone" then
-		target:EmitSound("Hero_Undying.SoulRip.Ally")
-	
-		target:Heal(self:GetSpecialValueFor("damage_per_unit") * units_ripped, self:GetCaster())
+	if units_ripped >= 1 then
+		if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not target:TriggerSpellAbsorb(self) then
+			target:EmitSound("Hero_Undying.SoulRip.Enemy")
+			
+			ApplyDamage({
+				victim 			= target,
+				damage 			= self:GetSpecialValueFor("damage_per_unit") * units_ripped,
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self
+			})
+			
+			-- IMBAfication: Soul Injection
+			local injection_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_soul_rip_soul_injection_debuff", {duration = self:GetSpecialValueFor("soul_injection_duration")})
+			
+			if injection_modifier then
+				injection_modifier:SetStackCount(units_ripped)
+				injection_modifier:SetDuration(self:GetSpecialValueFor("soul_injection_duration") * (1 - target:GetStatusResistance()), true)
+				
+				if target.CalculateStatBonus then
+					target:CalculateStatBonus()
+				end
+			end
+		elseif target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target:GetName() ~= "npc_dota_unit_undying_tombstone" then
+			target:EmitSound("Hero_Undying.SoulRip.Ally")
 		
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetSpecialValueFor("damage_per_unit") * units_ripped, nil)
-	elseif target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target:GetName() == "npc_dota_unit_undying_tombstone" then
-		target:EmitSound("Hero_Undying.SoulRip.Ally")
-	
-		target:Heal(self:GetSpecialValueFor("tombstone_heal"), self:GetCaster())
+			target:Heal(self:GetSpecialValueFor("damage_per_unit") * units_ripped, self:GetCaster())
+			
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetSpecialValueFor("damage_per_unit") * units_ripped, nil)
+			
+			-- IMBAfication: Soul Injection
+			local injection_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_soul_rip_soul_injection", {duration = self:GetSpecialValueFor("soul_injection_duration")})
+			
+			if injection_modifier then
+				injection_modifier:SetStackCount(units_ripped)
+				
+				if target.CalculateStatBonus then
+					target:CalculateStatBonus()
+				end
+			end
+		elseif target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target:GetName() == "npc_dota_unit_undying_tombstone" then
+			target:EmitSound("Hero_Undying.SoulRip.Ally")
 		
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetSpecialValueFor("tombstone_heal"), nil)
+			target:Heal(self:GetSpecialValueFor("tombstone_heal"), self:GetCaster())
+			
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetSpecialValueFor("tombstone_heal"), nil)
+		end
 	end
 end
 
 ---------------------------------------------------
--- MODIFIER_IMBA_UNDYING_SOUL_RIP_DEPRECATE_MIND --
+-- MODIFIER_IMBA_UNDYING_SOUL_RIP_SOUL_INJECTION --
 ---------------------------------------------------
 
------------------------------------------
--- MODIFIER_IMBA_UNDYING_SOUL_RIP_AURA --
------------------------------------------
+function modifier_imba_undying_soul_rip_soul_injection:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_undying_soul_rip_aura:OnCreated()
-
+function modifier_imba_undying_soul_rip_soul_injection:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.soul_injection_stats_per_unit	= self:GetAbility():GetSpecialValueFor("soul_injection_stats_per_unit")
 end
 
---------------------------------------------------
--- MODIFIER_IMBA_UNDYING_SOUL_RIP_AURA_MODIFIER --
---------------------------------------------------
+function modifier_imba_undying_soul_rip_soul_injection:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetParent().CalculateStatBonus then
+		self:GetParent():CalculateStatBonus()
+	end
+end
 
-function modifier_imba_undying_soul_rip_aura_modifier:OnCreated()
+function modifier_imba_undying_soul_rip_soul_injection:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
+	}
+end
 
+function modifier_imba_undying_soul_rip_soul_injection:GetModifierBonusStats_Strength()
+	return self.soul_injection_stats_per_unit * self:GetStackCount()
+end
+
+function modifier_imba_undying_soul_rip_soul_injection:GetModifierBonusStats_Agility()
+	return self.soul_injection_stats_per_unit * self:GetStackCount()
+end
+
+function modifier_imba_undying_soul_rip_soul_injection:GetModifierBonusStats_Intellect()
+	return self.soul_injection_stats_per_unit * self:GetStackCount()
+end
+
+----------------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_SOUL_RIP_SOUL_INJECTION_DEBUFF --
+----------------------------------------------------------
+
+function modifier_imba_undying_soul_rip_soul_injection_debuff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_undying_soul_rip_soul_injection_debuff:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.soul_injection_stats_per_unit	= self:GetAbility():GetSpecialValueFor("soul_injection_stats_per_unit") * (-1)
+end
+
+function modifier_imba_undying_soul_rip_soul_injection_debuff:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetParent().CalculateStatBonus then
+		self:GetParent():CalculateStatBonus()
+	end
+end
+
+function modifier_imba_undying_soul_rip_soul_injection_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
+	}
+end
+
+function modifier_imba_undying_soul_rip_soul_injection_debuff:GetModifierBonusStats_Strength()
+	return self.soul_injection_stats_per_unit * self:GetStackCount()
+end
+
+function modifier_imba_undying_soul_rip_soul_injection_debuff:GetModifierBonusStats_Agility()
+	return self.soul_injection_stats_per_unit * self:GetStackCount()
+end
+
+function modifier_imba_undying_soul_rip_soul_injection_debuff:GetModifierBonusStats_Intellect()
+	return self.soul_injection_stats_per_unit * self:GetStackCount()
 end
 
 ----------------------------
 -- IMBA_UNDYING_TOMBSTONE --
 ----------------------------
 
-function imba_undying_tombstone:OnSpellStart()
-	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_Undying.Tombstone", self:GetCaster())
+function imba_undying_tombstone:OnSpellStart(deathPosition)
+	local position = self:GetCursorPosition()
+	
+	if deathPosition then
+		position	= deathPosition
+	end
 
-	local tombstone = CreateUnitByName("npc_dota_unit_tombstone"..self:GetLevel(), self:GetCursorPosition(), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+	EmitSoundOnLocationWithCaster(position, "Hero_Undying.Tombstone", self:GetCaster())
+	
+	if self:GetCaster():GetName() == "npc_dota_hero_undying" then
+		if not self.responses then
+			self.responses = 
+			{
+				"undying_undying_tombstone_01",
+				"undying_undying_tombstone_02",
+				"undying_undying_tombstone_03",
+				"undying_undying_tombstone_04",
+				"undying_undying_tombstone_05",
+				"undying_undying_tombstone_06",
+				"undying_undying_tombstone_07",
+				"undying_undying_tombstone_08",
+				"undying_undying_tombstone_09",
+				"undying_undying_tombstone_10",
+				"undying_undying_tombstone_11",
+				"undying_undying_tombstone_12",
+				"undying_undying_tombstone_13"
+			}
+		end
+		
+		if not self.responses_big then
+			self.responses_big = 
+			{
+				"undying_undying_big_tombstone_01",
+				"undying_undying_big_tombstone_02",
+				"undying_undying_big_tombstone_03",
+				"undying_undying_big_tombstone_04",
+				"undying_undying_big_tombstone_05",
+				"undying_undying_big_tombstone_06",
+				"undying_undying_big_tombstone_07",
+				"undying_undying_big_tombstone_08",
+				"undying_undying_big_tombstone_09",
+				"undying_undying_big_tombstone_10",
+				"undying_undying_big_tombstone_11",
+				"undying_undying_big_tombstone_12",
+				"undying_undying_big_tombstone_13"
+			}
+		end
+		
+		if self:GetCaster():HasModifier("modifier_imba_undying_flesh_golem") then
+			-- WHy isn't there a function that plays only on one unit but not on client? This function doesn't make the sound come out of the unit which is wrong, but no one else is supposed to hear these voicelines either. Ugh...
+			EmitSoundOnClient(self.responses_big[RandomInt(1, #self.responses_big)], self:GetCaster():GetPlayerOwner())
+		else
+			EmitSoundOnClient(self.responses[RandomInt(1, #self.responses)], self:GetCaster():GetPlayerOwner())
+		end
+	end
+	
+	local tombstone = CreateUnitByName("npc_dota_unit_tombstone"..self:GetLevel(), position, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 	
 	-- Just gonna spam all the health functions to see what sticks cause this is super inconsistent
-	tombstone:SetBaseMaxHealth(self:GetSpecialValueFor("tombstone_health") * 2)
-	tombstone:SetMaxHealth(self:GetSpecialValueFor("tombstone_health") * 2)
-	tombstone:SetHealth(self:GetSpecialValueFor("tombstone_health") * 2)
+	tombstone:SetBaseMaxHealth(self:GetTalentSpecialValueFor("hits_to_destroy_tooltip") * 4)
+	tombstone:SetMaxHealth(self:GetTalentSpecialValueFor("hits_to_destroy_tooltip") * 4)
+	tombstone:SetHealth(self:GetTalentSpecialValueFor("hits_to_destroy_tooltip") * 4)
 	
 	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_tombstone_zombie_aura", {})
+	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_magic_immune", {duration = self:GetSpecialValueFor("duration")})
 	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = self:GetSpecialValueFor("duration")})
 	
 	-- "Destroys trees within 300 radius around the Tombstone upon cast."
-	GridNav:DestroyTreesAroundPoint(self:GetCursorPosition(), 300, true)
+	GridNav:DestroyTreesAroundPoint(position, 300, true)
 end
 
 ---------------------------------------------------
@@ -486,6 +706,7 @@ end
 
 -- I believe this was meant to be an intrinsic modifier to the undying_tombstone_zombie_aura ability, but it seems like the Tombstone doesn't have this anymore? So I guess I'll just use it as the tombstone's standard modifier
 
+function modifier_imba_undying_tombstone_zombie_aura:IsHidden()		return true end
 function modifier_imba_undying_tombstone_zombie_aura:IsPurgable()	return false end
 
 function modifier_imba_undying_tombstone_zombie_aura:OnCreated()
@@ -514,6 +735,9 @@ function modifier_imba_undying_tombstone_zombie_aura:OnIntervalThink()
 			
 			zombie:EmitSound("Undying_Zombie.Spawn")
 			
+			zombie:SetBaseDamageMin(zombie:GetBaseDamageMin() + self:GetCaster():FindTalentValue("special_bonus_imba_undying_tombstone_zombie_damage"))
+			zombie:SetBaseDamageMax(zombie:GetBaseDamageMax() + self:GetCaster():FindTalentValue("special_bonus_imba_undying_tombstone_zombie_damage"))
+			
 			-- Seems like these things are STILL getting stuck on units so put a bit of an offest
 			FindClearSpaceForUnit(zombie, enemy:GetAbsOrigin() + RandomVector(enemy:GetHullRadius() + zombie:GetHullRadius()), true)
 			zombie:SetAggroTarget(enemy)
@@ -534,15 +758,17 @@ function modifier_imba_undying_tombstone_zombie_aura:OnIntervalThink()
 end
 
 -- "When the Tombstone expires or is killed, all its zombies instantly die."
-function modifier_imba_undying_tombstone_zombie_aura:OnDestroy()
-	if not IsServer() then return end
+
+-- IMBAfication: No Home to Return
+-- function modifier_imba_undying_tombstone_zombie_aura:OnDestroy()
+	-- if not IsServer() then return end
 	
-	for _, ent in pairs(Entities:FindAllByName("npc_dota_unit_undying_zombie")) do
-		if ent:GetOwner() == self:GetParent() then
-			ent:ForceKill(false)
-		end
-	end
-end
+	-- for _, ent in pairs(Entities:FindAllByName("npc_dota_unit_undying_zombie")) do
+		-- if ent:GetOwner() == self:GetParent() then
+			-- ent:ForceKill(false)
+		-- end
+	-- end
+-- end
 
 function modifier_imba_undying_tombstone_zombie_aura:DeclareFunctions()
     return {
@@ -807,13 +1033,51 @@ end
 function imba_undying_flesh_golem_grab:IsInnateAbility()	return true end
 function imba_undying_flesh_golem_grab:IsStealable()		return false end
 
+function imba_undying_flesh_golem_grab:GetAssociatedSecondaryAbilities()
+	return "imba_undying_flesh_golem_throw"
+end
+
+function imba_undying_flesh_golem_grab:CastFilterResultTarget(target)
+	if self:GetCaster():HasTalent("special_bonus_imba_undying_flesh_golem_grab_allies") then
+		if target:GetName() == "npc_dota_unit_undying_tombstone" then
+			return UF_SUCCESS
+		elseif target == self:GetCaster() then
+			return UF_FAIL_CUSTOM
+		else
+			return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, self:GetCaster():GetTeamNumber())
+		end
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+	end
+end
+
+function imba_undying_flesh_golem_grab:GetCustomCastErrorTarget(target)
+	if self:GetCaster():HasTalent("special_bonus_imba_undying_flesh_golem_grab_allies") and target == self:GetCaster() then
+		return "#dota_hud_error_cant_cast_on_self"
+	end
+end
+
 function imba_undying_flesh_golem_grab:OnSpellStart()
 	local target = self:GetCursorTarget()
 
-	local grab_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_flesh_golem_grab_debuff", {duration = self:GetSpecialValueFor("duration")})
+	local grab_modifier_debuff = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_flesh_golem_grab_debuff", {duration = self:GetSpecialValueFor("duration")})
 	
-	if grab_modifier then
-		grab_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+	if grab_modifier_debuff then
+		grab_modifier_debuff:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+		
+		local grab_modifier	= self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_flesh_golem_grab", {
+			duration		= self:GetSpecialValueFor("duration"),
+			target_entindex	= target:entindex()
+		})
+		
+		if grab_modifier and self:GetCaster():GetTeamNumber() ~= target:GetTeamNumber() then
+			grab_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+		end
+	end
+	
+	if self:GetCaster():HasAbility("imba_undying_flesh_golem_throw") then
+		self:GetCaster():FindAbilityByName("imba_undying_flesh_golem_throw"):SetActivated(true)
+		self:GetCaster():SwapAbilities("imba_undying_flesh_golem_grab", "imba_undying_flesh_golem_throw", false, true)
 	end
 end
 
@@ -821,8 +1085,15 @@ end
 -- MODIFIER_IMBA_UNDYING_FLESH_GOLEM_GRAB --
 --------------------------------------------
 
-function modifier_imba_undying_flesh_golem_grab:OnCreated()
+function modifier_imba_undying_flesh_golem_grab:IsHidden()		return true end
+function modifier_imba_undying_flesh_golem_grab:IsPurgable()	return false end
+-- Undying should NEVER be able to grab more than one unit at a time, but this is just in case something breaks...and hopefully makes it not as broken
+function modifier_imba_undying_flesh_golem_grab:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_imba_undying_flesh_golem_grab:OnCreated(keys)
+	if not IsServer() then return end
+	
+	self.target	= EntIndexToHScript(keys.target_entindex)
 end
 
 ---------------------------------------------------
@@ -834,12 +1105,17 @@ function modifier_imba_undying_flesh_golem_grab_debuff:IsPurgable()	return false
 function modifier_imba_undying_flesh_golem_grab_debuff:OnCreated()
 	if not IsServer() then return end
 	
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.blink_break_range	= self:GetAbility():GetSpecialValueFor("blink_break_range")
+	self.position			= self:GetCaster():GetAbsOrigin()
+	
 	-- self:GetParent():FollowEntity(self:GetCaster(), false)
 	self:StartIntervalThink(FrameTime())
 end
 
 function modifier_imba_undying_flesh_golem_grab_debuff:OnIntervalThink()
-	if not self:GetCaster() or self:GetCaster():IsStunned() or self:GetCaster():IsHexed() or self:GetCaster():IsNightmared() or self:GetCaster():IsOutOfGame() or not self:GetCaster():HasModifier("modifier_imba_undying_flesh_golem") then
+	if not self:GetCaster() or self:GetCaster():IsStunned() or self:GetCaster():IsHexed() or self:GetCaster():IsNightmared() or self:GetCaster():IsOutOfGame() or not self:GetCaster():HasModifier("modifier_imba_undying_flesh_golem") or (self:GetCaster():GetAbsOrigin() - self.position):Length2D() > self.blink_break_range then
 		self:Destroy()
 	end
 
@@ -848,6 +1124,8 @@ function modifier_imba_undying_flesh_golem_grab_debuff:OnIntervalThink()
 	else
 		self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * 50))
 	end
+	
+	self.position	= self:GetCaster():GetAbsOrigin()
 end
 
 function modifier_imba_undying_flesh_golem_grab_debuff:OnDestroy()
@@ -855,7 +1133,13 @@ function modifier_imba_undying_flesh_golem_grab_debuff:OnDestroy()
 	
 	-- self:GetParent():FollowEntity(nil, false)
 	
+	FindClearSpaceForUnit(self:GetCaster(), self:GetCaster():GetAbsOrigin(), true)
 	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), true)
+	
+	if self:GetCaster():HasAbility("imba_undying_flesh_golem_throw") and self:GetCaster():FindAbilityByName("imba_undying_flesh_golem_throw"):IsActivated() then
+		self:GetCaster():FindAbilityByName("imba_undying_flesh_golem_throw"):SetActivated(false)
+		self:GetCaster():SwapAbilities("imba_undying_flesh_golem_grab", "imba_undying_flesh_golem_throw", true, false)
+	end
 end
 
 function modifier_imba_undying_flesh_golem_grab_debuff:CheckState()
@@ -863,6 +1147,43 @@ function modifier_imba_undying_flesh_golem_grab_debuff:CheckState()
 		[MODIFIER_STATE_NO_UNIT_COLLISION]	= true,
 		[MODIFIER_STATE_TETHERED]			= true
 	}
+end
+
+------------------------------------
+-- IMBA_UNDYING_FLESH_GOLEM_THROW --
+------------------------------------
+
+function imba_undying_flesh_golem_throw:IsInnateAbility()	return true end
+function imba_undying_flesh_golem_throw:IsStealable()		return false end
+
+function imba_undying_flesh_golem_throw:GetAssociatedPrimaryAbilities()
+	return "imba_undying_flesh_golem_grab"
+end
+
+function imba_undying_flesh_golem_throw:OnSpellStart()
+	if self:GetCaster():HasModifier("modifier_imba_undying_flesh_golem_grab") and self:GetCaster():FindModifierByName("modifier_imba_undying_flesh_golem_grab").target then
+		local target = self:GetCaster():FindModifierByName("modifier_imba_undying_flesh_golem_grab").target
+	
+		target:RemoveModifierByName("modifier_imba_undying_flesh_golem_grab_debuff")
+		self:GetCaster():RemoveModifierByName("modifier_imba_undying_flesh_golem_grab")
+		
+		local knockback_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+		{
+			distance		= (self:GetCursorPosition() - target:GetAbsOrigin()):Length2D(),
+			direction_x 	= (self:GetCursorPosition() - target:GetAbsOrigin()):Normalized().x,
+			direction_y 	= (self:GetCursorPosition() - target:GetAbsOrigin()):Normalized().y,
+			direction_z 	= (self:GetCursorPosition() - target:GetAbsOrigin()):Normalized().z,
+			duration 		= (self:GetCursorPosition() - target:GetAbsOrigin()):Length2D() / self:GetSpecialValueFor("throw_speed"),
+			height			= self:GetSpecialValueFor("throw_max_height") * ((self:GetCursorPosition() - target:GetAbsOrigin()):Length2D() / self.BaseClass.GetCastRange(self, self:GetCursorPosition(), target)),
+			bGroundStop 	= false,
+			bDecelerate 	= false,
+			bInterruptible 	= false,
+			bIgnoreTenacity	= true,
+			bTreeRadius		= target:GetHullRadius(),
+			bStun			= false,
+			bDestroyTreesAlongPath	= true
+		})
+	end
 end
 
 ------------------------------
@@ -896,7 +1217,13 @@ function modifier_imba_undying_flesh_golem_illusion_check:OnCreated()
 	if not IsServer() then return end
 	
 	if self:GetParent():HasAbility("imba_undying_flesh_golem_grab") then
+		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_grab"):SetLevel(1)
 		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_grab"):SetActivated(false)
+	end
+	
+	if self:GetParent():HasAbility("imba_undying_flesh_golem_throw") then
+		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_throw"):SetLevel(1)
+		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_throw"):SetActivated(false)
 	end
 
 	if self:GetAbility() and self:GetParent():IsIllusion() and self:GetParent():GetPlayerOwner():GetAssignedHero():HasModifier("modifier_imba_undying_flesh_golem") then
@@ -953,6 +1280,11 @@ function modifier_imba_undying_flesh_golem:OnDestroy()
 	
 	if self:GetParent():HasAbility("imba_undying_flesh_golem_grab") then
 		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_grab"):SetActivated(false)
+	end
+	
+	if self:GetParent():HasAbility("imba_undying_flesh_golem_throw") and self:GetParent():FindAbilityByName("imba_undying_flesh_golem_throw"):IsActivated() then
+		self:GetParent():FindAbilityByName("imba_undying_flesh_golem_throw"):SetActivated(false)
+		self:GetParent():SwapAbilities("imba_undying_flesh_golem_grab", "imba_undying_flesh_golem_throw", true, false)
 	end
 end
 
@@ -1021,7 +1353,7 @@ function modifier_imba_undying_flesh_golem:GetModifierAura()				return "modifier
 -- MODIFIER_IMBA_UNDYING_FLESH_GOLEM_PLAGUE_AURA --
 ---------------------------------------------------
 
-function modifier_imba_undying_flesh_golem_plague_aura:IsHidden()	return self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() end
+function modifier_imba_undying_flesh_golem_plague_aura:IsHidden()	return self:GetCaster() and self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() end
 
 function modifier_imba_undying_flesh_golem_plague_aura:OnCreated()
 	if self:GetAbility() then
@@ -1058,7 +1390,10 @@ end
 
 function modifier_imba_undying_flesh_golem_plague_aura:DeclareFunctions()
 	-- IMBAfications: Remnants of Flesh Golem
-	return {MODIFIER_EVENT_ON_DEATH}
+	return {
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_PROPERTY_TOOLTIP
+	}
 end
 
 function modifier_imba_undying_flesh_golem_plague_aura:OnDeath(keys)
@@ -1079,6 +1414,10 @@ function modifier_imba_undying_flesh_golem_plague_aura:OnDeath(keys)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCaster(), self:GetCaster():GetMaxHealth() * self.remnants_max_health_heal_pct_non_hero * 0.01, nil)
 		end
 	end
+end
+
+function modifier_imba_undying_flesh_golem_plague_aura:OnTooltip()
+	return self.remnants_health_damage_pct
 end
 
 --------------------------------------------
@@ -1145,6 +1484,54 @@ function modifier_imba_undying_flesh_golem_slow:GetModifierIncomingDamage_Percen
 	end
 end
 
--- ---------------------
--- -- TALENT HANDLERS --
--- ---------------------
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_undying_decay_cooldown", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_undying_tombstone_on_death", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_undying_flesh_golem_grab_allies", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_undying_decay_cooldown		= modifier_special_bonus_imba_undying_decay_cooldown or class({})
+modifier_special_bonus_imba_undying_tombstone_on_death	= modifier_special_bonus_imba_undying_tombstone_on_death or class({})
+modifier_special_bonus_imba_undying_flesh_golem_grab_allies	= modifier_special_bonus_imba_undying_flesh_golem_grab_allies or class({})
+
+function modifier_special_bonus_imba_undying_decay_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_undying_decay_cooldown:IsPurgable() 		return false end
+function modifier_special_bonus_imba_undying_decay_cooldown:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_undying_tombstone_on_death:IsHidden() 		return true end
+function modifier_special_bonus_imba_undying_tombstone_on_death:IsPurgable() 		return false end
+function modifier_special_bonus_imba_undying_tombstone_on_death:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_undying_flesh_golem_grab_allies:IsHidden() 		return true end
+function modifier_special_bonus_imba_undying_flesh_golem_grab_allies:IsPurgable() 		return false end
+function modifier_special_bonus_imba_undying_flesh_golem_grab_allies:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_undying_tombstone_on_death:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_DEATH}
+end
+
+function modifier_special_bonus_imba_undying_tombstone_on_death:OnDeath(keys)
+	if keys.unit == self:GetParent() and self:GetParent():HasAbility("imba_undying_tombstone") and self:GetParent():FindAbilityByName("imba_undying_tombstone"):IsTrained() then
+		self:GetParent():FindAbilityByName("imba_undying_tombstone"):OnSpellStart(self:GetParent():GetAbsOrigin())
+	end
+end
+
+function imba_undying_decay:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_undying_decay_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_undying_decay_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_undying_decay_cooldown"), "modifier_special_bonus_imba_undying_decay_cooldown", {})
+	end
+end
+
+function imba_undying_tombstone:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_undying_tombstone_on_death") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_undying_tombstone_on_death") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_undying_tombstone_on_death"), "modifier_special_bonus_imba_undying_tombstone_on_death", {})
+	end
+end
+
+function imba_undying_flesh_golem_grab:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_undying_flesh_golem_grab_allies") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_undying_flesh_golem_grab_allies") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_undying_flesh_golem_grab_allies"), "modifier_special_bonus_imba_undying_flesh_golem_grab_allies", {})
+	end
+end

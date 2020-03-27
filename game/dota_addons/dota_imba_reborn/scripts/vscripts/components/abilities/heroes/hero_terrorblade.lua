@@ -9,6 +9,8 @@ LinkLuaModifier("modifier_imba_terrorblade_metamorphosis", "components/abilities
 LinkLuaModifier("modifier_imba_terrorblade_metamorphosis_transform_aura", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_terrorblade_metamorphosis_transform_aura_applier", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_terrorblade_metamorphosis_fear_thinker", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
+
 imba_terrorblade_reflection					= imba_terrorblade_reflection or class({})
 modifier_imba_terrorblade_reflection_slow	= modifier_imba_terrorblade_reflection_slow or class({})
 modifier_imba_terrorblade_reflection_unit	= modifier_imba_terrorblade_reflection_unit or class({})
@@ -21,6 +23,11 @@ modifier_imba_terrorblade_metamorphosis							= modifier_imba_terrorblade_metamo
 modifier_imba_terrorblade_metamorphosis_transform_aura			= modifier_imba_terrorblade_metamorphosis_transform_aura or class({})
 modifier_imba_terrorblade_metamorphosis_transform_aura_applier	= modifier_imba_terrorblade_metamorphosis_transform_aura_applier or class({})
 
+imba_terrorblade_terror_wave				= imba_terrorblade_terror_wave or class({})
+modifier_imba_terrorblade_metamorphosis_fear_thinker			= modifier_imba_terrorblade_metamorphosis_fear_thinker or class({})
+
+imba_terrorblade_power_rend					= imba_terrorblade_power_rend or class({})
+
 imba_terrorblade_sunder						= imba_terrorblade_sunder or class({})
 
 ---------------------------------
@@ -31,11 +38,19 @@ function imba_terrorblade_reflection:GetAOERadius()
 	return self:GetSpecialValueFor("range")
 end
 
+function imba_terrorblade_reflection:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_reflection_cooldown")
+end
+
+function imba_terrorblade_reflection:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) - self:GetCaster():GetCastRangeBonus()
+end
+
 function imba_terrorblade_reflection:OnSpellStart()
 	local spawn_range	= 108
 	local slow_modifier	= nil
 
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)) do
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)) do
 		if enemy:GetHullRadius() > 8 then
 			spawn_range = 108
 		else
@@ -56,9 +71,17 @@ function imba_terrorblade_reflection:OnSpellStart()
 		, 1, spawn_range, false, true)
 		
 		for _, illusion in pairs(illusions) do
-			illusion:SetAttacking(enemy)
-			-- illusion:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_unit", {})
+			-- Vanilla modifier to give the illusions that Terrorblade illusion texture
 			illusion:AddNewModifier(self:GetCaster(), self, "modifier_terrorblade_reflection_invulnerability", {})
+			-- illusion:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_unit", {})
+			
+			-- I hate using timers, but unless I make a new modifier this might not work
+			Timers:CreateTimer(0.01, function()
+				ExecuteOrderFromTable({
+				UnitIndex	= illusion:entindex(),
+				OrderType	= DOTA_UNIT_ORDER_ATTACK_TARGET,
+				TargetIndex = enemy:entindex()})
+			end)
 		end
 		
 		slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_slow", {duration = self:GetSpecialValueFor("illusion_duration")})
@@ -73,7 +96,13 @@ end
 -- MODIFIER_IMBA_TERRORBLADE_REFLECTION_SLOW --
 -----------------------------------------------
 
+function modifier_imba_terrorblade_reflection_slow:GetEffectName()
+	return "particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow.vpcf"
+end
+
 function modifier_imba_terrorblade_reflection_slow:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
 	self.move_slow	= self:GetAbility():GetSpecialValueFor("move_slow") * (-1)
 end
 
@@ -130,7 +159,7 @@ end
 function imba_terrorblade_conjure_image:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Terrorblade.ConjureImage")
 
-	CreateIllusions(self:GetCaster(), self:GetCaster(), {
+	local illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), {
 		outgoing_damage = self:GetSpecialValueFor("illusion_outgoing_damage"),
 		incoming_damage	= self:GetSpecialValueFor("illusion_incoming_damage"),
 		bounty_base		= self:GetCaster():GetIllusionBounty(), -- Custom function but it should just be caster level * 2
@@ -140,6 +169,13 @@ function imba_terrorblade_conjure_image:OnSpellStart()
 		duration		= self:GetSpecialValueFor("illusion_duration")
 	}
 	, 1, 108, false, true)
+
+	for _, illusion in pairs(illusions) do
+		-- Vanilla modifier to give the illusions that Terrorblade illusion texture
+		illusion:AddNewModifier(self:GetCaster(), self, "modifier_terrorblade_conjureimage", {})
+		
+		illusion:StartGesture(ACT_DOTA_CAST_ABILITY_3_END)
+	end
 end
 
 ------------------------------------
@@ -150,16 +186,41 @@ function imba_terrorblade_metamorphosis:OnSpellStart()
 -- Hero_Terrorblade.Metamorphosis
 -- Hero_Terrorblade.Metamorphosis.Scepter
 -- Hero_Terrorblade.Metamorphosis.Fear
-
+	self:GetCaster():EmitSound("Hero_Terrorblade.Metamorphosis")
+	
+	self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_3)
+	
+	self:GetCaster():RemoveModifierByName("modifier_imba_terrorblade_metamorphosis")
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_metamorphosis_transform", {duration = self:GetSpecialValueFor("transformation_time")})
+	
+	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("metamorph_aura_tooltip"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+		if unit ~= self:GetCaster() and unit:IsIllusion() and unit:GetPlayerOwnerID() == self:GetCaster():GetPlayerOwnerID() and unit:GetName() == self:GetCaster():GetName() then
+			unit:RemoveModifierByName("modifier_imba_terrorblade_metamorphosis")
+			unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_metamorphosis_transform", {duration = self:GetSpecialValueFor("transformation_time")})
+		end
+	end
 end
 
 -------------------------------------------------------
 -- MODIFIER_IMBA_TERRORBLADE_METAMORPHOSIS_TRANSFORM --
 -------------------------------------------------------
 
+function modifier_imba_terrorblade_metamorphosis_transform:IsHidden()	return true end
+function modifier_imba_terrorblade_metamorphosis_transform:IsPurgable() return false end
+
 function modifier_imba_terrorblade_metamorphosis_transform:OnCreated()
 	self.duration	= self:GetAbility():GetSpecialValueFor("duration")
+	
+	if not IsServer() then return end
+
+	local transform_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:ReleaseParticleIndex(transform_particle)
+	
+	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_terrorblade_metamorphosis_transform_aura_applier", {})
+	
+	if self:GetParent():HasAbility("imba_terrorblade_terror_wave") then
+		self:GetParent():FindAbilityByName("imba_terrorblade_terror_wave"):SetActivated(false)
+	end
 end
 
 function modifier_imba_terrorblade_metamorphosis_transform:OnDestroy()
@@ -168,29 +229,89 @@ function modifier_imba_terrorblade_metamorphosis_transform:OnDestroy()
 	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_terrorblade_metamorphosis", {duration = self.duration})
 end
 
+function modifier_imba_terrorblade_metamorphosis_transform:CheckState()
+	return {[MODIFIER_STATE_STUNNED] = true}
+end
+
 ---------------------------------------------
 -- MODIFIER_IMBA_TERRORBLADE_METAMORPHOSIS --
 ---------------------------------------------
 
+function modifier_imba_terrorblade_metamorphosis:IsPurgable() return false end
+
 function modifier_imba_terrorblade_metamorphosis:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.bonus_range 	= self:GetAbility():GetTalentSpecialValueFor("bonus_range")
+	self.bonus_damage	= self:GetAbility():GetSpecialValueFor("bonus_damage")
 	self.speed_loss		= self:GetAbility():GetSpecialValueFor("speed_loss") * (-1)
+	
+	if not IsServer() then return end
+	
+	self.previous_attack_cability = self:GetParent():GetAttackCapability()
+	
+	self:GetParent():SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+	
+	if self:GetParent():HasAbility("imba_terrorblade_terror_wave") then
+		if not self:GetParent():FindAbilityByName("imba_terrorblade_terror_wave"):IsTrained() then
+			self:GetParent():FindAbilityByName("imba_terrorblade_terror_wave"):SetLevel(1)
+		end
+		
+		self:GetParent():FindAbilityByName("imba_terrorblade_terror_wave"):SetActivated(true)
+	end
+end
+
+function modifier_imba_terrorblade_metamorphosis:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StartGesture(ACT_DOTA_CAST_ABILITY_3_END)
+	
+	self:GetParent():SetAttackCapability(self.previous_attack_cability)
+	
+	self:GetParent():RemoveModifierByName("modifier_imba_terrorblade_metamorphosis_transform_aura_applier")
+	
+	if self:GetParent():HasAbility("imba_terrorblade_terror_wave") then
+		self:GetParent():FindAbilityByName("imba_terrorblade_terror_wave"):SetActivated(false)
+	end
+end
+
+function modifier_imba_terrorblade_metamorphosis:CheckState()
+	if not self:GetAbility() then self:Destroy() return end
 end
 
 function modifier_imba_terrorblade_metamorphosis:DeclareFunctions()
 	return {
+		MODIFIER_PROPERTY_MODEL_CHANGE,
+		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
 		MODIFIER_PROPERTY_PROJECTILE_NAME,
+		
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
 	}
 end
 
-function modifier_imba_terrorblade_metamorphosis:GetModifierProjectileName()
-
+function modifier_imba_terrorblade_metamorphosis:GetModifierModelChange()
+	return "models/heroes/terrorblade/demon.vmdl"
 end
 
+function modifier_imba_terrorblade_metamorphosis:GetAttackSound()
+	return "Hero_Terrorblade_Morphed.Attack"
+end
+
+function modifier_imba_terrorblade_metamorphosis:GetModifierProjectileName()
+	return "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+end
+
+-- "Using Metamorphosis does not increase Rubick's attack range."
 function modifier_imba_terrorblade_metamorphosis:GetModifierAttackRangeBonus()
-	return self.bonus_range
+	if self:GetParent():GetName() ~= "npc_dota_hero_rubick" then
+		return self.bonus_range
+	end
+end
+
+function modifier_imba_terrorblade_metamorphosis:GetModifierBaseAttack_BonusDamage()
+	return self.bonus_damage
 end
 
 function modifier_imba_terrorblade_metamorphosis:GetModifierMoveSpeedBonus_Constant()
@@ -202,7 +323,18 @@ end
 ------------------------------------------------------------
 
 function modifier_imba_terrorblade_metamorphosis_transform_aura:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
 
+	if not IsServer() then return end
+	
+	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_terrorblade_metamorphosis_transform", {duration = self:GetAbility():GetSpecialValueFor("transformation_time")})
+end
+
+function modifier_imba_terrorblade_metamorphosis_transform_aura:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():RemoveModifierByName("modifier_imba_terrorblade_metamorphosis_transform")
+	self:GetParent():RemoveModifierByName("modifier_imba_terrorblade_metamorphosis")
 end
 
 --------------------------------------------------------------------
@@ -224,26 +356,133 @@ function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraR
 function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
 function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO end
-function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetModifierAura()				return "modifier_imba_vengefulspirit_command_negative_aura_effect_723" end
-function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraEntityReject(hTarget)	return hTarget:GetPlayerOwnerID() ~= self:GetCaster():GetPlayerOwnerID() end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetModifierAura()				return "modifier_imba_terrorblade_metamorphosis_transform_aura" end
+function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraEntityReject(hTarget)	return hTarget == self:GetParent() or self:GetParent():IsIllusion() or not hTarget:IsIllusion() or hTarget:GetPlayerOwnerID() ~= self:GetCaster():GetPlayerOwnerID() or hTarget:HasModifier("modifier_terrorblade_reflection_invulnerability") end
+
+----------------------------------
+-- IMBA_TERRORBLADE_TERROR_WAVE --
+----------------------------------
+
+function imba_terrorblade_terror_wave:IsInnateAbility()	return true end
+
+-- The wave is released 0.6 seconds after cast, starting at the original cast location.
+-- The cast sound is global and audible to the enemy through the fog of war.
+-- The wave travels outwards at a speed of 1000, taking 1.6 seconds to reach max radius.
+function imba_terrorblade_terror_wave:OnSpellStart()
+	self:GetCaster():EmitSound("Hero_Terrorblade.Metamorphosis.Scepter")	
+	
+	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_terrorblade_metamorphosis_fear_thinker", {duration = self:GetSpecialValueFor("spawn_delay") + (self:GetSpecialValueFor("radius") / self:GetSpecialValueFor("speed"))}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+end
+
+----------------------------------------------------------
+-- MODIFIER_IMBA_TERRORBLADE_METAMORPHOSIS_FEAR_THINKER --
+----------------------------------------------------------
+
+function modifier_imba_terrorblade_metamorphosis_fear_thinker:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.fear_duration	= self:GetAbility():GetSpecialValueFor("fear_duration")
+	self.radius			= self:GetAbility():GetSpecialValueFor("radius")
+	self.speed			= self:GetAbility():GetSpecialValueFor("speed")
+	self.spawn_delay	= self:GetAbility():GetSpecialValueFor("spawn_delay")
+	
+	if not IsServer() then return end
+	
+	self.bLaunched		= false
+	self.feared_units	= {}
+	self.fear_modifier	= nil
+	
+	self:StartIntervalThink(self.spawn_delay)
+end
+
+-- Once again, wiki says nothing about a width (might be 1 for all I know, but I'll arbitrarily make it 50)
+function modifier_imba_terrorblade_metamorphosis_fear_thinker:OnIntervalThink()
+	if not self.bLaunched then
+		self.bLaunched = true
+		
+		local wave_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_scepter.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		-- Yeah, this particle CP doesn't actually match the speed (vanilla uses 1400 as CP value, while the speed is 1600)
+		ParticleManager:SetParticleControl(wave_particle, 1, Vector(self.speed, self.speed, self.speed))
+		ParticleManager:SetParticleControl(wave_particle, 2, Vector(self.speed, self.speed, self.speed))
+		ParticleManager:ReleaseParticleIndex(wave_particle)
+		
+		self:StartIntervalThink(-1)
+		self:StartIntervalThink(FrameTime())
+	else
+		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, math.min(self.speed * (self:GetElapsedTime() - self.spawn_delay), self.radius), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+			if not self.feared_units[enemy:entindex()] and (enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() >= math.min(self.speed * (self:GetElapsedTime() - self.spawn_delay), self.radius) - 50 then
+				enemy:EmitSound("Hero_Terrorblade.Metamorphosis.Fear")
+				
+				-- Vanilla fear modifier
+				self.fear_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_terrorblade_fear", {duration = self.fear_duration})
+				
+				if self.fear_modifier then
+					self.fear_modifier:SetDuration(self.fear_duration * (1 - enemy:GetStatusResistance()), true)
+				end
+				
+				self.feared_units[enemy:entindex()] = true
+			end
+		end
+	end
+end
+
+---------------------------------
+-- IMBA_TERRORBLADE_POWER_REND --
+---------------------------------
+
+function imba_terrorblade_power_rend:OnSpellStart()
+
+end
 
 -----------------------------
 -- IMBA_TERRORBLADE_SUNDER --
 -----------------------------
+
+function imba_terrorblade_sunder:CastFilterResultTarget(target)
+	if target == self:GetCaster() then
+		return UF_FAIL_CUSTOM
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+	end
+end
+
+function imba_terrorblade_sunder:GetCustomCastErrorTarget(target)
+	if target == self:GetCaster() then
+		return "#dota_hud_error_cant_cast_on_self"
+	end
+end
+
+function imba_terrorblade_sunder:GetCooldown(level)
+	if self.GetCursorTarget and self:GetCursorTarget() and self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and self:GetCursorTarget():IsMagicImmune() then
+		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_sunder_cooldown") + self:GetSpecialValueFor("spell_immunity_cooldown_increase")
+	else
+		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_sunder_cooldown")
+	end
+end
 
 function imba_terrorblade_sunder:OnSpellStart()
 	local target = self:GetCursorTarget()
 	
 	if target:TriggerSpellAbsorb(self) then return end
 	
-	local caster_health	= self:GetCaster():GetHealth()
-	local target_health	= target:GetHealth()
+	local caster_health_percent	= self:GetCaster():GetHealthPercent()
+	local target_health_percent	= target:GetHealthPercent()
 	
 	self:GetCaster():EmitSound("Hero_Terrorblade.Sunder.Cast")
 	target:EmitSound("Hero_Terrorblade.Sunder.Target")
 	
-	self:GetCaster():SetHealth(math.max(target_health, self:GetCaster():GetMaxHealth() * self:GetSpecialValueFor("hit_point_minimum_pct") * 0.01))
-	target:SetHealth(math.max(caster_health, target:GetMaxHealth() * self:GetSpecialValueFor("hit_point_minimum_pct") * 0.01))
+	local sunder_particle_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControlEnt(sunder_particle_1, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(sunder_particle_1, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(sunder_particle_1)
+
+	local sunder_particle_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(sunder_particle_2, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(sunder_particle_2, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(sunder_particle_2)
+	
+	self:GetCaster():SetHealth(self:GetCaster():GetMaxHealth() * math.max(caster_health_percent, self:GetSpecialValueFor("hit_point_minimum_pct")) * 0.01)
+	target:SetHealth(target:GetMaxHealth() * math.max(target_health_percent, self:GetSpecialValueFor("hit_point_minimum_pct")) * 0.01)
 end
 
 ---------------------

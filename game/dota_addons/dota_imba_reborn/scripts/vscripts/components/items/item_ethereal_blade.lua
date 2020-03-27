@@ -184,6 +184,8 @@ end
 ----------------------------------
 
 function modifier_item_imba_ethereal_blade_slow:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.blast_movement_slow				=	self:GetAbility():GetSpecialValueFor("blast_movement_slow")
 	self.realms_grasp_turn_rate_reduction	= 	self:GetAbility():GetSpecialValueFor("realms_grasp_turn_rate_reduction")
 	self.realms_grasp_cast_time_lag	= 	self:GetAbility():GetSpecialValueFor("realms_grasp_cast_time_lag")
@@ -194,15 +196,13 @@ function modifier_item_imba_ethereal_blade_slow:OnRefresh()
 end
 
 function modifier_item_imba_ethereal_blade_slow:DeclareFunctions()
-    local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		
 		-- IMBAfication: Realm's Grasp
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
 		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE 
     }
-	
-	return decFuncs
 end
 
 function modifier_item_imba_ethereal_blade_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -226,35 +226,28 @@ function modifier_item_imba_ethereal_blade:IsPurgable()		return false end
 function modifier_item_imba_ethereal_blade:RemoveOnDeath()	return false end
 function modifier_item_imba_ethereal_blade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_item_imba_ethereal_blade:OnCreated()
-	self.ability	= self:GetAbility()
-
-	-- AbilitySpecials
-	self.bonus_strength		=	self.ability:GetSpecialValueFor("bonus_strength")
-	self.bonus_agility		=	self.ability:GetSpecialValueFor("bonus_agility")
-	self.bonus_intellect	=	self.ability:GetSpecialValueFor("bonus_intellect")
-	
-	if not IsServer() then return end
-end
-
 function modifier_item_imba_ethereal_blade:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
     }
-	
-    return decFuncs
 end
 
 function modifier_item_imba_ethereal_blade:GetModifierBonusStats_Strength()
-	return self.bonus_strength
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_strength")
+	end
 end
 
 function modifier_item_imba_ethereal_blade:GetModifierBonusStats_Agility()
-	return self.bonus_agility
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_agility")
+	end
 end
 
 function modifier_item_imba_ethereal_blade:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	end
 end

@@ -40,6 +40,8 @@
 "Dota_Tooltip_modifier_imba_jinada_buff_crit"									"Jinada"
 "Dota_Tooltip_modifier_imba_jinada_buff_crit_Description"						"Your next attack will deal bonus damage."
 
+"DOTA_Tooltip_modifier_imba_jinada_gold_tracker"								"Jinada Gold Stolen"
+
 ////===============================================================================================================
 // Bounty Hunter's Shadow Walk
 ////===============================================================================================================

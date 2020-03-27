@@ -764,7 +764,6 @@ end
 
 function modifier_imba_heartstopper_aura_damage:GetModifierHPRegenAmplify_Percentage()
 	if self:GetAbility() ~= nil then
-		print( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
 		return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
 	end
 end

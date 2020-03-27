@@ -52,7 +52,7 @@
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_radius"					"AURA RADIUS:"
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_miss_pct"				"%MISS CHANCE:"
 
-"DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_aghanim_description"	"Crippling Fear can be set to auto-cast to make it a targeted spell, being able to cast the Crippling Fear aura on any allied hero or standard unit. Additionally, enemies affected by Crippling Fear cannot block or evade attacks."
+"DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_aghanim_description"	"<font color='#FF7800'>Crippling Fear can be set to auto-cast to make it a targeted spell, being able to cast the Crippling Fear aura on any allied hero or standard unit. Additionally, enemies affected by Crippling Fear cannot block or evade attacks.</font>"
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_scepter_cast_range"	"SCEPTER CAST RANGE:"
 
 "DOTA_Tooltip_modifier_imba_night_stalker_crippling_fear_aura_720"					"Crippling Fear"

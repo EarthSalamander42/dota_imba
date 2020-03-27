@@ -49,11 +49,6 @@ function modifier_item_imba_heart:OnCreated()
 	self.modifier_self = "modifier_item_imba_heart"
 	self.modifier_unique = "modifier_item_imba_heart_unique"
 
-	-- Ability specials
-	self.bonus_strength = self:GetAbility():GetSpecialValueFor("bonus_strength")
-	self.bonus_health = self:GetAbility():GetSpecialValueFor("bonus_health")
-	self.fixed_health_regen	= self:GetAbility():GetSpecialValueFor("fixed_health_regen")
-
 	if IsServer() then
 		-- If this is the first heart, add the unique modifier
 		if not self:GetCaster():HasModifier(self.modifier_unique) then
@@ -80,15 +75,21 @@ function modifier_item_imba_heart:DeclareFunctions()
 end
 
 function modifier_item_imba_heart:GetModifierBonusStats_Strength()
-	return self.bonus_strength
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_strength")
+	end
 end
 
 function modifier_item_imba_heart:GetModifierHealthBonus()
-	return self.bonus_health
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
 end
 
 function modifier_item_imba_heart:GetModifierConstantHealthRegen()
-	return self.fixed_health_regen
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("fixed_health_regen")
+	end
 end
 
 -- Strength aura modifier, regenerations

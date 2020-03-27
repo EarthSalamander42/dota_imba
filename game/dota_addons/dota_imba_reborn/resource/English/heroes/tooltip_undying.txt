@@ -13,7 +13,7 @@
 "DOTA_Tooltip_ability_imba_undying_decay_aghanim_description"		"Increases strength steal."
 
 "DOTA_Tooltip_ability_imba_undying_soul_rip"							"Soul Rip"
-"DOTA_Tooltip_ability_imba_undying_soul_rip_Description"				"Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy. Soul Rip can also be used to heal Tombstone."
+"DOTA_Tooltip_ability_imba_undying_soul_rip_Description"				"Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy. Soul Rip can also be used to heal Tombstone.\n<font color='#FF7800'>Soul Injection:</font> Increases/decreases all attributes of the target ally/enemy by %soul_injection_stats_per_unit% per nearby unit used for %soul_injection_duration% seconds. Stacks with, but does not refresh itself.\n<font color='#FF7800'>Do Zombies Have Souls?:</font> If an enemy is targeted by Soul Rip, and an allied zombie is counted as a nearby unit, the zombie will perform an instant attack on the target. This attack cannot miss."
 "DOTA_Tooltip_ability_imba_undying_soul_rip_Lore"					"Even allies feel despair in Undying's presence."
 "DOTA_Tooltip_ability_imba_undying_soul_rip_Note0"					"Can heal Tombstone, but can't heal or damage other buildings."
 "DOTA_Tooltip_ability_imba_undying_soul_rip_Note1"					"Does not rip from invisible units."
@@ -23,7 +23,7 @@
 "DOTA_Tooltip_ability_imba_undying_soul_rip_tombstone_heal"	"TOMBSTONE HEAL:"
 
 "DOTA_Tooltip_ability_imba_undying_tombstone"						"Tombstone"
-"DOTA_Tooltip_ability_imba_undying_tombstone_Description"			"Summons a tombstone at the target point.  Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.  Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie."
+"DOTA_Tooltip_ability_imba_undying_tombstone_Description"			"Summons a tombstone at the target point.  Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.  Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.\n<font color='#FF7800'>Easy Prey:</font> Zombies will attack whoever's closer to them.\n<font color='#FF7800'>No Home to Return:</font> Zombies do not die if the tombstone is destroyed."
 "DOTA_Tooltip_ability_imba_undying_tombstone_Lore"					"Dirge calls on his fallen brothers to fight for the Dead God."
 "DOTA_Tooltip_ability_imba_undying_tombstone_Note0"					"Tombstone is Spell Immune, but can be healed by Soul Rip."
 "DOTA_Tooltip_ability_imba_undying_tombstone_Note1"					"Zombies and Tombstone are Spell Immune."
@@ -43,9 +43,17 @@
 "DOTA_Tooltip_ability_imba_undying_tombstone_zombie_deathstrike_bonus_attack_speed"			"BONUS ATTACK SPEED:"
 
 "DOTA_Tooltip_ability_imba_undying_flesh_golem_grab"						"Flesh Golem Grab"
-"DOTA_Tooltip_ability_imba_undying_flesh_golem_grab_Description"			"Can only be activated while Flesh Golem is active. Grabs the target enemy, leashing them and moving them along with Undying. Can only be interrupted if Undying is disabled or Flesh Golem expires. Ignores spell block."
+"DOTA_Tooltip_ability_imba_undying_flesh_golem_grab_Description"			"Can only be activated while Flesh Golem is active. Grabs the target enemy, leashing them and moving them along with Undying. Can only be interrupted if Undying is disabled, moves more than %blink_break_range% distance in one instance, or Flesh Golem expires. Ignores spell block."
 "DOTA_Tooltip_ability_imba_undying_flesh_golem_grab_Lore"					"Do not let the Tank get near."
 "DOTA_Tooltip_ability_imba_undying_flesh_golem_grab_duration"				"DURATION:"
+"DOTA_Tooltip_ability_imba_undying_flesh_golem_grab_abilitycastrange"		"CAST RANGE:"
+
+"DOTA_Tooltip_ability_imba_undying_flesh_golem_throw"						"Flesh Golem Throw"
+"DOTA_Tooltip_ability_imba_undying_flesh_golem_throw_Description"			"Throws the grabbed unit to the cast location."
+"DOTA_Tooltip_ability_imba_undying_flesh_golem_throw_Lore"					"\"This prey no longer interests me.\""
+"DOTA_Tooltip_ability_imba_undying_flesh_golem_throw_Note0"					"Destroys any trees the unit collides with while being thrown."
+"DOTA_Tooltip_ability_imba_undying_flesh_golem_throw_throw_speed"			"THROW SPEED:"
+"DOTA_Tooltip_ability_imba_undying_flesh_golem_throw_abilitycastrange"		"CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_undying_flesh_golem"						"Flesh Golem"
 "DOTA_Tooltip_ability_imba_undying_flesh_golem_Description"			"Undying transforms into a horrifying flesh golem. Gains a percentage increase to strength and imbues attacks with a slow and damage over time. Zombies do double damage to enemies affected by Flesh Golem's attacks.\n<font color='#FF7800'>Remnants of Flesh Golem:</font> Enemies within %remnants_aura_radius% radius of Flesh Golem takes %remnants_health_damage_pct%%% of their current health as magical damage every second. Additionally, any unit dying within this radius heals Undying for %remnants_max_health_heal_pct_non_hero%%% of his max health, while hero deaths will heal for %remnants_max_health_heal_pct_hero%%% of his max health."
@@ -62,24 +70,38 @@
 "DOTA_Tooltip_ability_imba_undying_flesh_golem_movement_bonus"		"MOVEMENT BONUS:"
 //"DOTA_Tooltip_ability_imba_undying_flesh_golem_spawn_rate"			"ZOMBIE SPAWN RATE:"
 
-"DOTA_Tooltip_modifier_imba_undying_decay_buff"						"Decay"
-"DOTA_Tooltip_modifier_imba_undying_decay_buff_Description"			"Stealing %dMODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS% strength."
+
 "DOTA_Tooltip_modifier_imba_undying_decay_buff_counter"				"Decay"
-"DOTA_Tooltip_modifier_imba_undying_decay_buff_counter_Description"	"Stealing %dMODIFIER_PROPERTY_TOOLTIP% strength."
-"DOTA_Tooltip_modifier_imba_undying_decay_debuff"					"Decay"
-"DOTA_Tooltip_modifier_imba_undying_decay_debuff_Description"		"Losing 4 strength."
+"DOTA_Tooltip_modifier_imba_undying_decay_buff_counter_Description"	"Stealing %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS% strength."
+
 "DOTA_Tooltip_modifier_imba_undying_decay_debuff_counter"			"Decay"
-"DOTA_Tooltip_modifier_imba_undying_decay_debuff_counter_Description"	"Losing %dMODIFIER_PROPERTY_TOOLTIP% strength."
+"DOTA_Tooltip_modifier_imba_undying_decay_debuff_counter_Description"	"Losing %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS% strength and %dMODIFIER_PROPERTY_STATS_INTELLECT_BONUS% intellect."
+
+"DOTA_Tooltip_modifier_imba_undying_soul_rip_soul_injection"				"Soul Injection"
+"DOTA_Tooltip_modifier_imba_undying_soul_rip_soul_injection_Description"	"All attributes increased by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%."
+
+"DOTA_Tooltip_modifier_imba_undying_soul_rip_soul_injection_debuff"				"Soul Injection"
+"DOTA_Tooltip_modifier_imba_undying_soul_rip_soul_injection_debuff_Description"	"All attributes reduced by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%."
+
 "DOTA_Tooltip_modifier_imba_undying_flesh_golem"									"Flesh Golem"
 "DOTA_Tooltip_modifier_imba_undying_flesh_golem_Description"						"Strength increased by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE%%%. Attacks slow enemies and deal bonus damage over time."
 "DOTA_Tooltip_modifier_imba_undying_flesh_golem_plague_aura"						"Flesh Golem's Plague Aura"
-"DOTA_Tooltip_modifier_imba_undying_flesh_golem_plague_aura_Description"			"Movement slowed, and losing a percentage of current health per second."
+"DOTA_Tooltip_modifier_imba_undying_flesh_golem_plague_aura_Description"			"Losing %dMODIFIER_PROPERTY_TOOLTIP%%% of current health per second."
+
 "DOTA_Tooltip_modifier_imba_undying_flesh_golem_slow"							"Flesh Golem Plague"
 "DOTA_Tooltip_modifier_imba_undying_flesh_golem_slow_Description"				"Movement slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and receiving damage over time. Attacking zombies deal double damage."
 
 "DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_modifier"					"Deathlust Slow"
 "DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_modifier_Description"					"Undying Zombie attacks slow their target."
 "DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter"					"Deathlust Slow"
-"DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter_Description"		"Being slowed %dMODIFIER_PROPERTY_TOOLTIP%%% by Undying Zombies."
+"DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter_Description"		"Being slowed %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% by Undying Zombies."
 "DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_deathlust"							"Deathlust Frenzy"
 "DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_deathlust_Description"				"Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% faster movement and attack speed."
+
+"DOTA_Tooltip_ability_special_bonus_imba_undying_tombstone_zombie_damage"	"+{s:value} Tombstone Zombie Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_undying_decay_duration"	"+{s:value} Decay Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_undying_tombstone_on_death"	"Tombstone On Death"
+"DOTA_Tooltip_ability_special_bonus_imba_undying_tombstone_health"	"+{s:value} Tombstone Attacks to Destroy"
+"DOTA_Tooltip_ability_special_bonus_imba_undying_flesh_golem_grab_allies"	"Flesh Golem Grab Allies and Tombstones"
+"DOTA_Tooltip_ability_special_bonus_imba_undying_flesh_golem_grab_allies_Description"	"Tombstones cannot be thrown, and are instead dropped at their location."
+"DOTA_Tooltip_ability_special_bonus_imba_undying_decay_cooldown"	"-{s:value}s Decay Cooldown"

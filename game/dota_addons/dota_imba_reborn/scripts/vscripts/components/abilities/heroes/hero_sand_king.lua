@@ -1397,6 +1397,8 @@ function modifier_imba_sandking_sand_storm_720_thinker:GetModifierAura()		return
 -----------------------------------------------------
 
 function modifier_imba_sandking_sand_storm_720_thinker_aura:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.ability	= self:GetAbility()
 
 	self.coarse_vision_pct		= self.ability:GetSpecialValueFor("coarse_vision_pct")

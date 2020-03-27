@@ -933,21 +933,15 @@ end
 modifier_imba_tidebringer = class({})
 
 function modifier_imba_tidebringer:DeclareFunctions()
-	local decFuncs =
-	{
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_tidebringer:OnCreated()
-	self.range = self:GetAbility():GetSpecialValueFor("range")
-	self.radius_start = self:GetAbility():GetSpecialValueFor("radius_start")
-	self.radius_end = self:GetAbility():GetSpecialValueFor("radius_end")
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	if IsServer() then
@@ -958,9 +952,6 @@ function modifier_imba_tidebringer:OnCreated()
 end
 
 function modifier_imba_tidebringer:OnRefresh()
-	self.range = self:GetAbility():GetSpecialValueFor("range")
-	self.radius_start = self:GetAbility():GetSpecialValueFor("radius_start")
-	self.radius_end = self:GetAbility():GetSpecialValueFor("radius_end")
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	if IsServer() then
@@ -971,7 +962,7 @@ function modifier_imba_tidebringer:OnRefresh()
 end
 
 function modifier_imba_tidebringer:OnAttackStart( params )
-	if IsServer() then
+	if self:GetAbility() then
 		local parent = self:GetParent()
 		local target = params.target
 		if (parent == params.attacker) and (target:GetTeamNumber() ~= parent:GetTeamNumber()) and (target.IsCreep or target.IsHero) then
@@ -1006,7 +997,7 @@ end
 
 function modifier_imba_tidebringer:OnAttackLanded( params )
 	local ability = self:GetAbility()
-	if IsServer() then
+	if self:GetAbility() then
 		local parent = self:GetParent()
 		local tidebringer_bonus_damage = self.bonus_damage
 		if params.attacker == parent and ( not parent:IsIllusion() ) and self.pass_attack then
@@ -1018,9 +1009,9 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 				return 0
 			end
 
-			local range = self.range
-			local radius_start = self.radius_start
-			local radius_end = self.radius_end
+			local range = self:GetAbility():GetSpecialValueFor("range")
+			local radius_start = self:GetAbility():GetSpecialValueFor("radius_start")
+			local radius_end = self:GetAbility():GetSpecialValueFor("radius_end")
 
 			parent:RemoveModifierByName("modifier_imba_tidebringer_sword_particle")
 

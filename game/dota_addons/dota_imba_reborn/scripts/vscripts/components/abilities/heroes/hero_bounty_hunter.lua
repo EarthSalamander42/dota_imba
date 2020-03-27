@@ -226,6 +226,10 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 				target:ModifyGold(-actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				self:GetCaster():ModifyGold(actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_GOLD, self:GetCaster(), actual_gold_to_steal, nil)
+				
+				if self:GetCaster():HasModifier("modifier_imba_jinada_gold_tracker") then
+					self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() + actual_gold_to_steal)
+				end
 			end
 		end
 		
@@ -425,6 +429,7 @@ MergeTables(LinkedModifiers,{
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_imba_jinada_passive"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_jinada_gold_tracker"] = LUA_MODIFIER_MOTION_NONE
 })
 
 imba_bounty_hunter_jinada = imba_bounty_hunter_jinada or class({})
@@ -566,19 +571,21 @@ function modifier_imba_jinada_passive:GetAttributes()
 end
 
 function modifier_imba_jinada_passive:OnCreated()
+	if not IsServer() then return end
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_jinada_gold_tracker", {})
+	
 	self:StartIntervalThink(0.2)
 end
 
 function modifier_imba_jinada_passive:OnIntervalThink()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()
-		local crit_modifier = "modifier_imba_jinada_buff_crit"
+	local caster = self:GetCaster()
+	local ability = self:GetAbility()
+	local crit_modifier = "modifier_imba_jinada_buff_crit"
 
-		-- Check if caster should have the crit modifier.
-		if ability:IsCooldownReady() and not caster:HasModifier(crit_modifier) then
-			caster:AddNewModifier(caster, ability, crit_modifier, {})
-		end
+	-- Check if caster should have the crit modifier.
+	if ability:IsCooldownReady() and not caster:HasModifier(crit_modifier) then
+		caster:AddNewModifier(caster, ability, crit_modifier, {})
 	end
 end
 
@@ -738,6 +745,10 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 				target:ModifyGold(-actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				attacker:ModifyGold(actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				SendOverheadEventMessage(attacker, OVERHEAD_ALERT_GOLD, attacker, actual_gold_to_steal, nil)
+				
+				if self:GetCaster():HasModifier("modifier_imba_jinada_gold_tracker") then
+					self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() + actual_gold_to_steal)
+				end
 			end
 
 			-- Remove the critical strike modifier from the caster
@@ -820,6 +831,15 @@ function modifier_imba_jinada_buff_crit:IsDebuff()
 	return false
 end
 
+---------------------------------------
+-- MODIFIER_IMBA_JINADA_GOLD_TRACKER --
+---------------------------------------
+
+modifier_imba_jinada_gold_tracker	= modifier_imba_jinada_gold_tracker or class({})
+
+function modifier_imba_jinada_gold_tracker:IsHidden()		return true end
+function modifier_imba_jinada_gold_tracker:IsPurgable()		return false end
+function modifier_imba_jinada_gold_tracker:RemoveOnDeath()	return false end
 
 -------------------------------------------
 --			SHADOW WALK

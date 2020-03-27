@@ -533,12 +533,6 @@ LinkLuaModifier("modifier_imba_juggernaut_healing_ward_passive", "components/abi
 modifier_imba_juggernaut_healing_ward_passive = modifier_imba_juggernaut_healing_ward_passive or class({})
 
 function modifier_imba_juggernaut_healing_ward_passive:OnCreated()
-	if IsTotem(self:GetParent()) then
-		self.radius = self:GetAbility():GetTalentSpecialValueFor("heal_radius_totem")
-	else
-		self.radius = self:GetAbility():GetTalentSpecialValueFor("heal_radius")
-	end
-
 	if IsServer() then
 		-- Play spawn particle
 		local eruption_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_healing_ward_eruption.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
@@ -557,12 +551,6 @@ function modifier_imba_juggernaut_healing_ward_passive:OnCreated()
 end
 
 function modifier_imba_juggernaut_healing_ward_passive:OnRefresh()	
-	if IsTotem(self:GetParent()) then
-		self.radius = self:GetAbility():GetTalentSpecialValueFor("heal_radius_totem")
-	else
-		self.radius = self:GetAbility():GetTalentSpecialValueFor("heal_radius")
-	end
-
 	if IsServer() then
 		-- Play spawn particle
 		local eruption_pfx = ParticleManager:CreateParticle("particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_eruption_dc.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
@@ -624,7 +612,13 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_imba_juggernaut_healing_ward_passive:GetAuraRadius()
-	return self.radius
+	if self:GetAbility() then
+		if IsTotem(self:GetParent()) then
+			self.radius = self:GetAbility():GetTalentSpecialValueFor("heal_radius_totem")
+		else
+			self.radius = self:GetAbility():GetTalentSpecialValueFor("heal_radius")
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -1242,18 +1236,11 @@ end
 
 function modifier_imba_juggernaut_blade_dance_passive:OnCreated()
 	self:StartIntervalThink(1)
-	self.crit = self:GetAbility():GetTalentSpecialValueFor("crit_damage")
-	self.chance = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 	self.critProc = false
 
 	-- Turn unit target passive, tooltip purposes
 	self:GetAbility().GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 	self:GetAbility():GetBehavior()
-end
-
-function modifier_imba_juggernaut_blade_dance_passive:OnRefresh()
-	self.crit = self:GetAbility():GetTalentSpecialValueFor("crit_damage")
-	self.chance = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 end
 
 function modifier_imba_juggernaut_blade_dance_passive:OnIntervalThink() -- account for talents being skilled
@@ -1271,9 +1258,9 @@ if IsServer() then
 	function modifier_imba_juggernaut_blade_dance_passive:GetModifierPreAttack_CriticalStrike(keys)
 		if self:GetParent():PassivesDisabled() then return nil end
 
-		if keys.attacker == self:GetParent() then
+		if self:GetAbility() and keys.attacker == self:GetParent() then
 			self.critProc = false
-			if RollPseudoRandom(self.chance, self) then
+			if RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("crit_chance"), self) then
 				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_ATTACK_EVENT, self:GetParent():GetAttacksPerSecond())
 				local crit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 				ParticleManager:SetParticleControl(crit_pfx, 0, self:GetParent():GetAbsOrigin())
@@ -1282,7 +1269,7 @@ if IsServer() then
 				self.critProc = true
 				self:GetParent():EmitSound("Hero_Juggernaut.BladeDance")
 
-				return self.crit
+				return self:GetAbility():GetTalentSpecialValueFor("crit_damage")
 			end
 		end
 	end

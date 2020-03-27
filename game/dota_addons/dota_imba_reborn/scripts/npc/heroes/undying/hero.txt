@@ -15,18 +15,23 @@
 		"Ability2"		"imba_undying_soul_rip"
 		"Ability3"		"imba_undying_tombstone"
 		"Ability4"		"imba_undying_flesh_golem_grab"
-		"Ability5"		"generic_hidden"
+		"Ability5"		"imba_undying_flesh_golem_throw"
 		"Ability6"		"imba_undying_flesh_golem"
 		
 		"Ability10"		"special_bonus_cast_range_150"
 		"Ability11"		"special_bonus_hp_regen_6"
-		"Ability12"		"special_bonus_unique_undying"
-		"Ability13"		"special_bonus_unique_undying_4"
-		"Ability14"		"special_bonus_unique_undying_3"
-		"Ability15"		"special_bonus_unique_undying_5"
+		"Ability12"		"special_bonus_imba_undying_tombstone_zombie_damage"
+		"Ability13"		"special_bonus_imba_undying_decay_duration"
+		"Ability14"		"special_bonus_imba_undying_tombstone_on_death"
+		"Ability15"		"special_bonus_imba_undying_flesh_golem_grab_allies"
 		"Ability16"		"special_bonus_reincarnation_200"
-		"Ability17"		"special_bonus_unique_undying_2"
+		"Ability17"		"special_bonus_imba_undying_decay_cooldown"
 		
 		// Removed Talents
+		// "Ability12"		"special_bonus_unique_undying"
+		// "Ability13"		"special_bonus_unique_undying_4"
+		// "Ability14"		"special_bonus_unique_undying_3"
+		// "Ability15"		"special_bonus_unique_undying_5"
+		// "Ability17"		"special_bonus_unique_undying_2"
 	}
 }

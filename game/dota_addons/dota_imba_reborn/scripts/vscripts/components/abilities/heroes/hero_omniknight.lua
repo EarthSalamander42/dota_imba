@@ -833,6 +833,8 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
             local heal = damage * self.damage_as_heal_pct * 0.01
             for _,ally in pairs(allies) do
                 ally:Heal(heal, self.caster)
+				
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, heal, nil)
 
                 -- Apply heal effect
                 self.particle_heal_fx = ParticleManager:CreateParticle(self.particle_heal, PATTACH_ABSORIGIN_FOLLOW, ally)

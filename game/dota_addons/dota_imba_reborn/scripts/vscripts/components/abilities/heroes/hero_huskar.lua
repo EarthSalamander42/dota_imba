@@ -185,6 +185,8 @@ function modifier_imba_huskar_inner_fire_raze_land:GetEffectName()
 end
 
 function modifier_imba_huskar_inner_fire_raze_land:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.raze_land_strength_pct	= self:GetAbility():GetSpecialValueFor("raze_land_strength_pct")
 	
 	if not IsServer() then return end

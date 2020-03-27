@@ -27,30 +27,16 @@ function imba_skywrath_mage_arcane_bolt:GetIntrinsicModifierName()
 end
 
 function imba_skywrath_mage_arcane_bolt:OnUnStolen()
-	local caster = self:GetCaster()
-
 	-- Remove modifier to lessen load. Not that it would ever do something.
-	caster:RemoveModifierByName("modifier_imba_skywrath_flying_movement")
+	self:GetCaster():RemoveModifierByName("modifier_imba_skywrath_flying_movement")
 end
 
 function imba_skywrath_mage_arcane_bolt:GetManaCost(level)
-	local caster = self:GetCaster()
-	local mana_cost = self.BaseClass.GetManaCost(self,level)
-
-	-- #1 Talent: Arcane Bolt mana cost decrease
-	mana_cost = mana_cost - caster:FindTalentValue("special_bonus_imba_skywrath_mage_1")
-
-	return mana_cost
+	return self.BaseClass.GetManaCost(self,level) - self:GetCaster():FindTalentValue("special_bonus_imba_skywrath_mage_1")
 end
 
 function imba_skywrath_mage_arcane_bolt:GetCooldown(level)
-	local caster = self:GetCaster()
-	local cooldown = self.BaseClass.GetCooldown(self, level)
-
-	-- #5 Talent: Arcane Bolt cooldown decrease
-	cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_skywrath_mage_5")
-
-	return cooldown
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_skywrath_mage_5")
 end
 
 function imba_skywrath_mage_arcane_bolt:CastFilterResultTarget( target )
@@ -324,7 +310,6 @@ function imba_skywrath_mage_concussive_shot:OnSpellStart()
 	local ability = self    
 	local cast_response = "skywrath_mage_drag_concussive_shot_0"..math.random(1, 3)
 	local sound_cast = "Hero_SkywrathMage.ConcussiveShot.Cast"    
-	local particle_fail = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_failure.vpcf"
 	local scepter = caster:HasScepter()
 
 	-- Ability specials
@@ -342,9 +327,6 @@ function imba_skywrath_mage_concussive_shot:OnSpellStart()
 		EmitSoundOn(cast_response, caster)
 	end
 
-	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)
-
 	-- Find the closest valid enemy to shot the projectile on
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 									  caster:GetAbsOrigin(),
@@ -355,51 +337,69 @@ function imba_skywrath_mage_concussive_shot:OnSpellStart()
 									  DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
 									  FIND_CLOSEST,
 									  false)
-
-	-- If no enemies was found, add fizzle effect and exit
-	if #enemies == 0 then
-		local particle_fail_fx = ParticleManager:CreateParticle(particle_fail, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(particle_fail_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_fail_fx, 1, caster:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(particle_fail_fx)
-
-		return nil
-	end
-
-	-- Otherwise, launch projectile
-	local target = enemies[1]   
+									  
+	local basic_units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, search_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 	
-	if (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= ability:GetSpecialValueFor("search_radius") then
-		LaunchConcussiveShot(caster, caster, ability, target, true, max_bounces)
-	else
-		LaunchConcussiveShot(caster, caster, ability, target, true, max_bounces, false)
-	end
-
-	-- #8 Talent: Concussive Shot hits all visible heroes
-	if caster:HasTalent("special_bonus_imba_skywrath_mage_8") then
-		for _,enemy in pairs(enemies) do
-			if enemy ~= target then
-				LaunchConcussiveShot(caster, caster, ability, enemy, true, max_bounces)                    
+	if #enemies >= 1 then
+		-- Play cast sound
+		EmitSoundOn(sound_cast, caster)
+		
+		local cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf", PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(cast_particle, 0, caster:GetAbsOrigin())
+		-- How the hell does this particle work
+		ParticleManager:SetParticleControl(cast_particle, 1, enemies[1]:GetAbsOrigin())
+		ParticleManager:SetParticleControlEnt(cast_particle, 2, enemies[1], PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", enemies[1]:GetAbsOrigin(), true)
+		ParticleManager:ReleaseParticleIndex(cast_particle)
+		
+		if (enemies[1]:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetSpecialValueFor("search_radius") then
+			LaunchConcussiveShot(caster, caster, ability, enemies[1], true, max_bounces)
+		else
+			LaunchConcussiveShot(caster, caster, ability, enemies[1], true, max_bounces, false)
+		end
+		
+		-- #8 Talent: Concussive Shot hits all visible heroes
+		if caster:HasTalent("special_bonus_imba_skywrath_mage_8") then
+			for _,enemy in pairs(enemies) do
+				if enemy ~= enemies[1] then
+					LaunchConcussiveShot(caster, caster, ability, enemy, true, max_bounces)                    
+				end
 			end
+			
+			return nil
+		end
+	else
+		-- Vanilla 7.20 Patch: "Now launches for creeps as well, when no heroes are within range to target."
+		if #basic_units >= 1 then
+			-- Play cast sound
+			EmitSoundOn(sound_cast, caster)
+			
+			local cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControl(cast_particle, 0, caster:GetAbsOrigin())
+			-- How the hell does this particle work
+			ParticleManager:SetParticleControl(cast_particle, 1, basic_units[1]:GetAbsOrigin())
+			ParticleManager:SetParticleControlEnt(cast_particle, 2, basic_units[1], PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", basic_units[1]:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(cast_particle)
+		
+			if (basic_units[1]:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetSpecialValueFor("search_radius") then
+				LaunchConcussiveShot(caster, caster, ability, basic_units[1], true, max_bounces)
+			else
+				LaunchConcussiveShot(caster, caster, ability, basic_units[1], true, max_bounces, false)
+			end
+		else
+			local particle_fail_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_failure.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControl(particle_fail_fx, 0, caster:GetAbsOrigin())
+			ParticleManager:SetParticleControl(particle_fail_fx, 1, caster:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(particle_fail_fx)
+		
+			return nil
 		end
 	end
 
-	-- Scepter: Shot a second Concussive Shot at a random enemy. Doesn't work when the caster has #8 Talent
-	if scepter and not caster:HasTalent("special_bonus_imba_skywrath_mage_8") then        
-		local enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(),
-											   target:GetAbsOrigin(),
-											   nil,
-											   scepter_search_radius,
-											   DOTA_UNIT_TARGET_TEAM_ENEMY,
-											   DOTA_UNIT_TARGET_HERO,
-											   DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-											   FIND_ANY_ORDER,
-											   false)
-
-		
+	-- Scepter: Shot a second Concussive Shot at a random enemy
+	if scepter then        		
 		-- If at least one hero was found to shot at, make sure it's not the main target        
-		for _,enemy_hero in pairs(enemy_heroes) do
-			if enemy_hero ~= target then
+		for _, enemy_hero in pairs(enemies) do
+			if enemy_hero ~= enemies[1] and not enemy_hero:IsMagicImmune() then
 				-- Launch a concussive shot at the secondary hero				
 				if (enemy_hero:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= ability:GetSpecialValueFor("scepter_search_radius") then
 					LaunchConcussiveShot(caster, caster, ability, enemy_hero, true, max_bounces)
@@ -410,21 +410,10 @@ function imba_skywrath_mage_concussive_shot:OnSpellStart()
 				return nil
 			end
 		end
-	
-		-- No heroes found. Try finding a creep instead
-		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(),
-											   target:GetAbsOrigin(),
-											   nil,
-											   scepter_search_radius,
-											   DOTA_UNIT_TARGET_TEAM_ENEMY,
-											   DOTA_UNIT_TARGET_BASIC,
-											   DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-											   FIND_ANY_ORDER,
-											   false)
 
-		for _,enemy_creep in pairs(enemy_creeps) do
+		for _, enemy_creep in pairs(basic_units) do
 			-- Make sure it's not the main target
-			if enemy_creep ~= target then
+			if enemy_creep ~= basic_units[1] and not enemy_creep:IsMagicImmune() then
 				-- Fire at this creep blyat
 				if (enemy_creep:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() <= ability:GetSpecialValueFor("scepter_search_radius") then
 					LaunchConcussiveShot(caster, caster, ability, enemy_creep, true, max_bounces)
@@ -494,13 +483,22 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 									  FIND_ANY_ORDER,
 									  false)
 
+	local slow_modifier = nil
+	local final_damage	= nil
+	
 	-- For each enemy, only apply if the enemy is not magic immune
 	for _,enemy in pairs(enemies) do
 		if not enemy:IsMagicImmune() then
+			if enemy:IsCreep() then
+				final_damage = damage * self:GetSpecialValueFor("creep_damage_pct") * 0.01
+			else
+				final_damage = damage
+			end
+		
 			-- Deal damage
 			local damageTable = {victim = enemy,
 								 attacker = caster, 
-								 damage = damage,
+								 damage = final_damage,
 								 damage_type = DAMAGE_TYPE_MAGICAL,
 								 ability = ability
 								 }
@@ -508,7 +506,11 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 			ApplyDamage(damageTable)  
 
 			-- Apply/Refresh slow debuff
-			enemy:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration})
+			slow_modifier = enemy:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration})
+			
+			if slow_modifier then
+				slow_modifier:SetDuration(slow_duration * (1 - enemy:GetStatusResistance()), true)
+			end
 		end
 	end
 
@@ -740,8 +742,12 @@ function ApplyAncientSeal(caster, ability, target)
 	seal_duration = seal_duration + caster:FindTalentValue("special_bonus_imba_skywrath_mage_2")
 
 	-- Apply the main modifier on the target
-	target:AddNewModifier(caster, ability, modifier_main_seal, {duration = seal_duration})
+	local seal_modifier = target:AddNewModifier(caster, ability, modifier_main_seal, {duration = seal_duration})
 
+	if seal_modifier then
+		seal_modifier:SetDuration(seal_duration * (1 - target:GetStatusResistance()), true)
+	end
+			
 	-- Apply the modifier thinker on the ground at the target's location
 	CreateModifierThinker(caster, ability, modifier_thinker_aura, {duration = seal_duration}, target:GetAbsOrigin(), caster:GetTeamNumber(), false)
 end
@@ -848,6 +854,8 @@ end
 modifier_imba_ancient_seal_secondary = class({})
 
 function modifier_imba_ancient_seal_secondary:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -872,9 +880,7 @@ function modifier_imba_ancient_seal_secondary:GetEffectAttachType()
 end
 
 function modifier_imba_ancient_seal_secondary:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
 end
 
 function modifier_imba_ancient_seal_secondary:GetModifierMagicalResistanceBonus()
@@ -886,8 +892,7 @@ function modifier_imba_ancient_seal_secondary:IsPurgable() return true end
 function modifier_imba_ancient_seal_secondary:IsDebuff() return true end
 
 function modifier_imba_ancient_seal_secondary:CheckState()
-	local state = {[MODIFIER_STATE_SILENCED] = true}
-	return state
+	return {[MODIFIER_STATE_SILENCED] = true}
 end
 
 
@@ -939,7 +944,7 @@ function imba_skywrath_mage_mystic_flare:OnSpellStart()
 	end
 
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)    
+	EmitSoundOnLocationWithCaster(target_point, sound_cast, self:GetCaster()) 
 
 	-- Mystic Flareeeee
 	ExecuteMysticFlare(caster, ability, target_point)
@@ -961,9 +966,10 @@ function imba_skywrath_mage_mystic_flare:OnSpellStart()
 		for _,enemy_hero in pairs(enemy_heroes) do
 			local distance = (enemy_hero:GetAbsOrigin() - target_point):Length2D()
 			
-			print(damage_radius)
+			-- print(damage_radius)
 			if distance > damage_radius then
-
+				EmitSoundOnLocationWithCaster(enemy_hero:GetAbsOrigin(), "Hero_SkywrathMage.MysticFlare.Scepter", self:GetCaster())
+			
 				-- Secondary flare
 				ExecuteMysticFlare(caster, ability, enemy_hero:GetAbsOrigin())
 				return nil
@@ -985,7 +991,8 @@ function imba_skywrath_mage_mystic_flare:OnSpellStart()
 			-- Make sure the target is far enough
 			local distance = (enemy_creep:GetAbsOrigin() - target_point):Length2D()
 			if (distance - 50) > damage_radius then
-
+				EmitSoundOnLocationWithCaster(enemy_creep:GetAbsOrigin(), "Hero_SkywrathMage.MysticFlare.Scepter", self:GetCaster())
+			
 				-- Blast this creep blyat (lol no damage)
 				ExecuteMysticFlare(caster, ability, enemy_creep:GetAbsOrigin())
 				return nil
@@ -1019,7 +1026,6 @@ function modifier_imba_mystic_flare:OnCreated()
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
-		self.sound_target = "Hero_SkywrathMage.MysticFlare.Target"
 		self.core_particle = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient.vpcf"
 		self.particle_explosion = "particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion.vpcf"
 		self.particle_shockwave = "particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion_shockwave.vpcf"
@@ -1049,6 +1055,9 @@ function modifier_imba_mystic_flare:OnCreated()
 
 		-- Get thinker's location
 		self.parent_loc = self.parent:GetAbsOrigin()
+
+		-- Play target sound
+		EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_SkywrathMage.MysticFlare", self:GetCaster()) 
 
 		-- Add particle effect
 		self.core_particle_fx = ParticleManager:CreateParticle(self.core_particle, PATTACH_WORLDORIGIN, nil)        
@@ -1129,9 +1138,6 @@ end
 
 function modifier_imba_mystic_flare:OnIntervalThink()
 	if IsServer() then
-		-- Play target sound
-		EmitSoundOn(self.sound_target, self.parent)
-
 		-- Find nearby enemy heroes in the area
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
 										  self.parent_loc,
@@ -1152,6 +1158,8 @@ function modifier_imba_mystic_flare:OnIntervalThink()
 		-- Deal this instance's damage to each hero
 		for _,enemy in pairs (enemies) do
 			if not enemy:IsMagicImmune() then
+				enemy:EmitSound("Hero_SkywrathMage.MysticFlare.Target")
+			
 				local damageTable = {victim = enemy,
 									 attacker = self.caster, 
 									 damage = self.instance_damage,
@@ -1162,10 +1170,25 @@ function modifier_imba_mystic_flare:OnIntervalThink()
 				ApplyDamage(damageTable)  
 			end
 		end
+		
+		-- Vanilla 7.21 Patch: "Mystic Flare now deals damage to creeps if no heroes are around."
+		if #enemies <= 0 then
+			local basic_units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		
+			for _, enemy in pairs(basic_units) do
+				enemy:EmitSound("Hero_SkywrathMage.MysticFlare.Target")
+				
+				ApplyDamage({
+					victim		= enemy,
+					attacker	= self:GetCaster(), 
+					damage		= self.damage_per_interval / #basic_units,
+					damage_type	= DAMAGE_TYPE_MAGICAL,
+					ability		= self:GetAbility()
+				})
+			end
+		end
 	end
 end
-
-
 
 --------------------------------
 -- PERMANENT FLYING MOVEMENT  --
