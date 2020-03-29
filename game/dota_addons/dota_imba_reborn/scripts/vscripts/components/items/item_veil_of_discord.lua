@@ -235,6 +235,8 @@ function modifier_veil_buff_aura_modifier:IsHidden() return false end
 function modifier_veil_buff_aura_modifier:IsPurgable() return true end
 
 function modifier_veil_buff_aura_modifier:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.aura_mana_regen	= self:GetAbility():GetSpecialValueFor("aura_mana_regen")
 	self.aura_spell_power	= self:GetAbility():GetSpecialValueFor("aura_spell_power")
 end

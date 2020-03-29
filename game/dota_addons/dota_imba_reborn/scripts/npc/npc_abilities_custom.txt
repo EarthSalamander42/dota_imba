@@ -10557,7 +10557,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"max_charges"					"2 2 2 3"
-				"LinkedSpecialBonus"			"special_bonus_imba_lycan_10"
 			}
 			"05"
 			{

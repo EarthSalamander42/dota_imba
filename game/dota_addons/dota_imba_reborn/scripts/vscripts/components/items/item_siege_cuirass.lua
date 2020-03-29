@@ -288,11 +288,11 @@ function modifier_imba_siege_cuirass_aura_positive_effect:IsPurgable() return fa
 function modifier_imba_siege_cuirass_aura_positive_effect:IsDebuff() return false end
 
 function modifier_imba_siege_cuirass_aura_positive_effect:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
-
-	return decFuncs
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_siege_cuirass_aura_positive_effect:GetModifierAttackSpeedBonus_Constant()

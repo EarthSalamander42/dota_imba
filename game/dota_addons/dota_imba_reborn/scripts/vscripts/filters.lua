@@ -226,27 +226,27 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		-- Roshan special modifier rules
 		-------------------------------------------------------------------------------------------------
-		if modifier_owner:IsRoshan() then
-			-- Ignore stuns
-			print("Roshan modifier name:", modifier_name)
-			if modifier_name == "modifier_stunned" then
-				return false
-			end
+		-- if modifier_owner:IsRoshan() then
+			-- -- Ignore stuns
+			-- print("Roshan modifier name:", modifier_name)
+			-- if modifier_name == "modifier_stunned" then
+				-- return false
+			-- end
 
-			-- Halve the duration of everything else
-			if modifier_caster ~= modifier_owner and keys.duration > 0 then
-				keys.duration = keys.duration / (100 / 50)
-			end
+			-- -- Halve the duration of everything else
+			-- if modifier_caster ~= modifier_owner and keys.duration > 0 then
+				-- keys.duration = keys.duration / (100 / 50)
+			-- end
 
-			-- Fury swipes capping
-			if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
-				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
-			end
+			-- -- Fury swipes capping
+			-- if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
+				-- modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+			-- end
 
-			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
-				return false
-			end
-		end
+			-- if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
+				-- return false
+			-- end
+		-- end
 
 		-- -- add particle or sound playing to notify
 		-- if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then

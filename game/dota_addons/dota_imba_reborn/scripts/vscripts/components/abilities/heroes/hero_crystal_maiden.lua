@@ -359,6 +359,8 @@ end
 modifier_imba_crystal_nova_snowfield_buff = class({})
 
 function modifier_imba_crystal_nova_snowfield_buff:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()

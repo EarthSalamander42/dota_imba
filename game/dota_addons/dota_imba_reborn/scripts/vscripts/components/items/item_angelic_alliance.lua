@@ -353,6 +353,8 @@ function modifier_imba_angelic_alliance_debuff_caster:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW end
 
 function modifier_imba_angelic_alliance_debuff_caster:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.armor_change	= self:GetAbility():GetSpecialValueFor("armor_change") * (-1)
 end
 

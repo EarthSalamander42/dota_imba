@@ -471,8 +471,10 @@ function modifier_item_imba_guardian_greaves_aura:GetTexture()
 
 -- Stores the aura's parameters to prevent errors when the item is destroyed
 function modifier_item_imba_guardian_greaves_aura:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+
 	local ability = self:GetAbility()
-	if not ability then return end
+	
 	self.aura_health_regen = ability:GetSpecialValueFor("aura_health_regen")
 	self.aura_armor = ability:GetSpecialValueFor("aura_armor")
 	self.aura_health_regen_bonus = ability:GetSpecialValueFor("aura_health_regen_bonus")

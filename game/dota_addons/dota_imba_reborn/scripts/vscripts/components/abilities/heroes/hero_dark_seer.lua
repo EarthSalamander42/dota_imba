@@ -58,6 +58,18 @@ function imba_dark_seer_vacuum:GetAssociatedSecondaryAbilities()
 	return "imba_dark_seer_wormhole"
 end
 
+function imba_dark_seer_vacuum:CastFilterResultLocation(vLocation)
+	if not IsServer() then return end
+
+	if IsNearFountain(vLocation, 1700 + self:GetSpecialValueFor("radius")) then
+		return UF_FAIL_CUSTOM
+	end
+end
+
+function imba_dark_seer_vacuum:GetCustomCastErrorLocation()
+	return "#dota_hud_error_cant_cast_near_fountain"
+end
+
 -- Level up corresponding wormhole ability
 function imba_dark_seer_vacuum:OnUpgrade()
 	if not IsServer() then return end
@@ -103,43 +115,45 @@ function imba_dark_seer_vacuum:OnSpellStart()
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)	
 	
 	for _, enemy in pairs(enemies) do
-		-- Need some weird workaround for being able to affect invulnerable units
-		if enemy:IsInvulnerable() and not enemy:HasModifier("modifier_eul_cyclone") then
-			enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_vacuum", 
-			{
-				duration		= self:GetTalentSpecialValueFor("duration"),
-				x				= self:GetCursorPosition().x,
-				y				= self:GetCursorPosition().y,
-				caster_entindex	= self:GetCaster():entindex()
-			})
-			
-			if wormhole_ability then
-				enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
+		if not enemy.IsCourier or not enemy:IsCourier() then
+			-- Need some weird workaround for being able to affect invulnerable units
+			if enemy:IsInvulnerable() and not enemy:HasModifier("modifier_eul_cyclone") then
+				enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_vacuum", 
+				{
+					duration		= self:GetTalentSpecialValueFor("duration"),
+					x				= self:GetCursorPosition().x,
+					y				= self:GetCursorPosition().y,
+					caster_entindex	= self:GetCaster():entindex()
+				})
+				
+				if wormhole_ability then
+					enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
+				end
+			else
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum", 
+				{
+					duration		= self:GetTalentSpecialValueFor("duration"),
+					x				= self:GetCursorPosition().x,
+					y				= self:GetCursorPosition().y
+				})
+				
+				if wormhole_ability then
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
+				end
 			end
-		else
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum", 
-			{
-				duration		= self:GetTalentSpecialValueFor("duration"),
-				x				= self:GetCursorPosition().x,
-				y				= self:GetCursorPosition().y
-			})
 			
 			if wormhole_ability then
 				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
+				
+				-- This is redundant but was primarily for adding in the Vacuum ability without leveling it (through testing)
+				wormhole_ability:SetLevel(self:GetLevel())
+				
+				if not wormhole_ability.enemy_tracker then
+					wormhole_ability.enemy_tracker = {}
+				end			
+				
+				table.insert(wormhole_ability.enemy_tracker, enemy)
 			end
-		end
-		
-		if wormhole_ability then
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
-			
-			-- This is redundant but was primarily for adding in the Vacuum ability without leveling it (through testing)
-			wormhole_ability:SetLevel(self:GetLevel())
-			
-			if not wormhole_ability.enemy_tracker then
-				wormhole_ability.enemy_tracker = {}
-			end			
-			
-			table.insert(wormhole_ability.enemy_tracker, enemy)
 		end
 	end
 	
@@ -319,7 +333,7 @@ function imba_dark_seer_wormhole:CastFilterResultLocation(vLocation)
 end
 
 function imba_dark_seer_wormhole:GetCustomCastErrorLocation()
-	return "Cannot Port Enemies Near Fountain"
+	return "#dota_hud_error_cant_cast_near_fountain"
 end
 
 function imba_dark_seer_wormhole:GetAOERadius()
@@ -1219,18 +1233,16 @@ function modifier_imba_dark_seer_wall_of_replica:OnIntervalThink()
 	-- ParticleManager:SetParticleControl(self.particle, 60, Vector(self.random_int_1, self.random_int_2, self.random_int_3))
 	
 	-- Okay now for actual logic
-	local enemies			= FindUnitsInLine(self:GetCaster():GetTeamNumber(), self.wall_start, self.wall_end, nil, self.thickness, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)
-	
 	-- This is to retroactively upgrade any existing walls with talent acquisition
 	if self:GetAbility() then
 		self.slow_duration			= self:GetAbility():GetTalentSpecialValueFor("slow_duration")
 	end
 	
-	for _, enemy in pairs(enemies) do
-		local wall_slow_modifier = enemy:FindModifierByNameAndCaster("modifier_imba_dark_seer_wall_of_replica_slow", self:GetParent())
+	for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self.wall_start, self.wall_end, nil, self.thickness, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)) do
+		self.wall_slow_modifier = enemy:FindModifierByNameAndCaster("modifier_imba_dark_seer_wall_of_replica_slow", self:GetParent())
 		
-		if wall_slow_modifier then
-			wall_slow_modifier:SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
+		if self.wall_slow_modifier then
+			self.wall_slow_modifier:SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
 		else
 			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_dark_seer_wall_of_replica_slow", {
 				duration			= self.slow_duration,

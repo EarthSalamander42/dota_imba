@@ -1162,7 +1162,7 @@ function GameMode:OnPlayerChat(keys)
 					
 					DisplayError(caster:GetPlayerID(), "Destroyed "..obs_count.." observer wards and "..sentry_count.." sentry wards placed by "..PlayerResource:GetPlayerName(tonumber(text))..".")
 				else
-					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
+					DisplayError(caster:GetPlayerID(), "Invalid Excavate Target")
 				end
 			elseif str == "-die" then
 				local pos = caster:GetAbsOrigin()
