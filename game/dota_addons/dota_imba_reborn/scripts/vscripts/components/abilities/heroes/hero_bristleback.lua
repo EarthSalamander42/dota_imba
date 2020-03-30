@@ -140,7 +140,7 @@ end
 
 function imba_bristleback_viscous_nasal_goo:OnProjectileHit(hTarget, vLocation)
 	if hTarget ~= nil and hTarget:IsAlive() and not hTarget:IsMagicImmune() then
-		local goo_modifier = hTarget:AddNewModifier(self.caster, self, "modifier_imba_bristleback_viscous_nasal_goo", {duration = self.goo_duration})
+		local goo_modifier = hTarget:AddNewModifier(self.caster, self, "modifier_imba_bristleback_viscous_nasal_goo", {duration = self.goo_duration * (1 - hTarget:GetStatusResistance())})
 		
 		hTarget:EmitSound("Hero_Bristleback.ViscousGoo.Target")
 		
@@ -392,7 +392,7 @@ function modifier_imba_bristleback_quillspray_thinker:OnIntervalThink()
 			
 			enemy:EmitSound("Hero_Bristleback.QuillSpray.Target")
 			
-			enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_bristleback_quill_spray", {duration = self.quill_stack_duration})
+			enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_bristleback_quill_spray", {duration = self.quill_stack_duration * (1 - enemy:GetStatusResistance())})
 			
 			table.insert(self.hit_enemies, enemy)
 			

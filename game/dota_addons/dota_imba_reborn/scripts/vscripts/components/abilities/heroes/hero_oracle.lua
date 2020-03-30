@@ -220,11 +220,7 @@ function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_par
 	
 		enemy:Purge(true, false, false, false, false)
 		
-		self.purge_modifier = enemy:AddNewModifier(self:GetCaster(), self, modifier_name, {duration = math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * math.min(charge_pct, 1), self:GetSpecialValueFor("minimum_purge_duration"))})
-		
-		if self.purge_modifier then
-			self.purge_modifier:SetDuration(math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * math.min(charge_pct, 1), self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self, modifier_name, {duration = (math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * math.min(charge_pct, 1), self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()))})
 
 		ApplyDamage({
 			victim 			= enemy,
@@ -235,8 +231,6 @@ function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_par
 			ability 		= self
 		})
 	end
-	
-	self.purge_modifier = nil
 end
 
 ---------------------------------------------

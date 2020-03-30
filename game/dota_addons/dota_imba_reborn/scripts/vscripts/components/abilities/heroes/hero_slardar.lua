@@ -155,7 +155,7 @@ function modifier_imba_guardian_sprint_buff:OnIntervalThink()
 
 			-- Apply enemies attack speed slow modifier
 			for _,enemy in pairs(enemies) do
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_talent_slow, {duration = 0.3})
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_talent_slow, {duration = 0.3 * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end
@@ -391,8 +391,8 @@ function modifier_imba_rip_current_movement:RipCurrentLand()
 			ApplyDamage(damageTable)
 
 			-- Apply stun and slow modifiers
-			enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
-			enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
+			enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 
@@ -672,9 +672,9 @@ function SlithereenCrush(self)
 			ApplyDamage(damageTable)
 
 			-- Apply the three debuffs on them
-			enemy:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
-			enemy:AddNewModifier(caster, ability, modifier_slow, {duration = (stun_duration + slow_duration)})
-			enemy:AddNewModifier(caster, ability, modifier_royal_break, {duration = royal_break_duration})
+			enemy:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(caster, ability, modifier_slow, {duration = (stun_duration + slow_duration) * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(caster, ability, modifier_royal_break, {duration = royal_break_duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 end
@@ -1008,9 +1008,9 @@ function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage
 
 					-- Apply bash stun with duration depending on hero/creep
 					if target:IsHero() or target:IsBuilding() then
-						target:AddNewModifier(caster, ability, modifier_stun, {duration = hero_stun_duration})
+						target:AddNewModifier(caster, ability, modifier_stun, {duration = hero_stun_duration * (1 - target:GetStatusResistance())})
 					else
-						target:AddNewModifier(caster, ability, modifier_stun, {duration = (hero_stun_duration * creep_duration_mult)})
+						target:AddNewModifier(caster, ability, modifier_stun, {duration = (hero_stun_duration * creep_duration_mult) * (1 - target:GetStatusResistance())})
 					end
 
 					total_bonus_damage = total_bonus_damage + bash_damage
@@ -1095,11 +1095,7 @@ function modifier_imba_slardar_bash_720:GetModifierProcAttack_BonusDamage_Physic
 		else
 			keys.target:EmitSound("Hero_Slardar.Bash")
 			
-			local stun_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self:GetAbility():GetSpecialValueFor("duration")})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
-			end
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())})
 			
 			self:SetStackCount(0)
 			
@@ -1216,11 +1212,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 	EmitSoundOn(sound_cast, caster)
 
 	-- Apply debuff modifier on enemy
-	local corrosive_haze_modifier = target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration})
-	
-	if corrosive_haze_modifier then
-		corrosive_haze_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
-	end
+	target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - target:GetStatusResistance())})
 
 	-- Apply particle effects on enemy
 	-- Timers:CreateTimer(0.01, function()
@@ -1251,11 +1243,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 		-- Ignore main target
 		for _,enemy in pairs(enemies) do
 			if enemy ~= target and not enemy:HasModifier(modifier_debuff) then
-				corrosive_haze_modifier = enemy:AddNewModifier(caster, ability, modifier_secondary_debuff, {duration = duration})
-
-				if corrosive_haze_modifier then
-					corrosive_haze_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(caster, ability, modifier_secondary_debuff, {duration = duration * (1 - enemy:GetStatusResistance())})
 	
 				-- Apply particle effects on enemy
 				-- Timers:CreateTimer(0.01, function()
@@ -1445,7 +1433,7 @@ function modifier_imba_corrosive_haze_debuff:GetModifierTotalDamageOutgoing_Perc
 
 		-- Check chance, apply slip modifier and negate damage
 		if rand <= slip_up_chance_pct then
-			parent:AddNewModifier(caster, ability, modifier_slip, {duration = slip_up_duration})
+			parent:AddNewModifier(caster, ability, modifier_slip, {duration = slip_up_duration * (1 - parent:GetStatusResistance())})
 
 			return slip_up_damage_negation
 		end
@@ -1550,7 +1538,7 @@ function modifier_imba_corrosive_haze_debuff_secondary:GetModifierTotalDamageOut
 
 		-- Check chance, apply slip modifier and negate damage
 		if rand <= slip_up_chance_pct then
-			parent:AddNewModifier(caster, ability, modifier_slip, {duration = slip_up_duration})
+			parent:AddNewModifier(caster, ability, modifier_slip, {duration = slip_up_duration * (1 - parent:GetStatusResistance())})
 
 			return slip_up_damage_negation
 		end
@@ -1821,8 +1809,8 @@ function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion( me, dt)
 				
 				-- Apply enemies attack speed slow modifier
 				for _,enemy in pairs(enemies) do
-					enemy:AddNewModifier(caster, caster:FindAbilityByName("imba_slardar_slithereen_crush"), "modifier_imba_slithereen_crush_slow", {duration = 1})
-					enemy:AddNewModifier(caster,  caster:FindAbilityByName("imba_slardar_corrosive_haze"), "modifier_imba_corrosive_haze_debuff", {duration = 1})
+					enemy:AddNewModifier(caster, caster:FindAbilityByName("imba_slardar_slithereen_crush"), "modifier_imba_slithereen_crush_slow", {duration = 1 * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(caster,  caster:FindAbilityByName("imba_slardar_corrosive_haze"), "modifier_imba_corrosive_haze_debuff", {duration = 1 * (1 - enemy:GetStatusResistance())})
 				end
 			end
 		end

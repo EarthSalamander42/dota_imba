@@ -88,10 +88,10 @@ function imba_huskar_inner_fire:OnSpellStart()
 		ApplyDamage(damageTable)
 		
 		-- Apply the knockback (and pass the caster's location coordinates to know which way to knockback)
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_knockback", {duration = knockback_duration, x = self:GetCaster():GetAbsOrigin().x, y = self:GetCaster():GetAbsOrigin().y})
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_knockback", {duration = knockback_duration * (1 - enemy:GetStatusResistance()), x = self:GetCaster():GetAbsOrigin().x, y = self:GetCaster():GetAbsOrigin().y})
 		
 		-- Apply the disarm
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_disarm", {duration = disarm_duration})
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_disarm", {duration = disarm_duration * (1 - enemy:GetStatusResistance())})
 	end
 	
 	-- IMBAfication: Raze Land
@@ -922,13 +922,15 @@ function modifier_imba_huskar_life_break:OnDestroy()
 			damage_flags 	= DOTA_DAMAGE_FLAG_NON_LETHAL
 		}
 		local self_damage = ApplyDamage(damageTable_self)
-
-		-- Apply the slow modifier
-		local slow_modifier = self.target:AddNewModifier(self.parent, self.ability, "modifier_imba_huskar_life_break_slow", {duration = self.ability:GetDuration()})
 		
-		if slow_modifier then
-			slow_modifier:SetDuration(self.ability:GetDuration() * (1 - self.target:GetStatusResistance()), true)
+		local duration = self.ability:GetDuration() * (1 - self.target:GetStatusResistance())
+		
+		if self.target:GetTeamNumber() == self.parent:GetTeamNumber() then
+			duration = self.ability:GetDuration()
 		end
+		
+		-- Apply the slow modifier
+		self.target:AddNewModifier(self.parent, self.ability, "modifier_imba_huskar_life_break_slow", {duration = duration})
 		
 		-- This is optional I guess but it replicates vanilla Life Break being reflected by Lotus Orb a bit closer (cause the target starts attacking you)
 		self.parent:MoveToTargetToAttack( self.target )

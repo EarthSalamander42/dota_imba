@@ -240,11 +240,7 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 		-- Increment the amount of hit units to deal more damage against further targets
 		EntIndexToHScript(data.stroke_dummy).hit_units = EntIndexToHScript(data.stroke_dummy).hit_units + 1
 		
-		local slow_debuff = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_dark_artistry_slow", {duration = self:GetSpecialValueFor("slow_duration")})
-		
-		if slow_debuff then
-			slow_debuff:SetDuration(self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_dark_artistry_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance())})
 		
 		if data.bPrimary == 1 then
 			-- IMBAfication: Your Stain Spreads
@@ -531,16 +527,12 @@ function imba_grimstroke_ink_creature:OnProjectileHit_ExtraData(target, location
 				target:EmitSound("Hero_Grimstroke.InkCreature.Attach")
 
 				-- Apply the silence modifier
-				local individual_modifier = target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature", 
+				target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature", 
 					{
-						duration 			= self:GetSpecialValueFor("latch_duration"),
+						duration 			= self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()),
 						latched_unit_offset	= self:GetSpecialValueFor("latched_unit_offset"),
 						ink_unit_entindex	= data.ink_unit_entindex
 					})
-				
-				if individual_modifier then
-					individual_modifier:SetDuration(self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()), true)
-				end
 				
 				-- Check the ink creature's own handler modifier
 				local ink_modifier	= EntIndexToHScript(data.ink_unit_entindex):FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature_thinker", self:GetCaster())
@@ -551,14 +543,10 @@ function imba_grimstroke_ink_creature:OnProjectileHit_ExtraData(target, location
 				end
 				
 				-- Apply the silence counting modifier
-				local counter_modifier = target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature_debuff", 
+				target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature_debuff", 
 					{
-						duration 			= self:GetSpecialValueFor("latch_duration"),
+						duration 			= self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()),
 					})
-				
-				if counter_modifier then
-					counter_modifier:SetDuration(self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()), true)
-				end
 			end
 		else
 			-- Refresh cooldown
@@ -1078,11 +1066,7 @@ function modifier_imba_grimstroke_spirit_walk_buff:OnDestroy()
 				ApplyDamage(damageTable)
 				
 				if not ink_gods_incarnation_modifier or (ink_gods_incarnation_modifier and ink_gods_incarnation_modifier.stunned and not ink_gods_incarnation_modifier.stunned[enemy]) then
-					local debuff_modifier	= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_spirit_walk_debuff", {duration = (self.max_stun / self.total_ticks) * self.counter})
-					
-					if debuff_modifier then
-						debuff_modifier:SetDuration(((self.max_stun / self.total_ticks) * self.counter) * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_spirit_walk_debuff", {duration = ((self.max_stun / self.total_ticks) * self.counter) * (1 - enemy:GetStatusResistance())})
 					
 					stunned_table[enemy] = true
 				end

@@ -422,7 +422,7 @@ function imba_wisp_tether:OnProjectileHit_ExtraData(target, location, ExtraData)
 		-- Acalia wants more stuff here...
 
 		-- Apply slow debuff
-		local slow_ref = target:AddNewModifier(caster, self, "modifier_imba_wisp_tether_slow", { duration = slow_duration })
+		local slow_ref = target:AddNewModifier(caster, self, "modifier_imba_wisp_tether_slow", { duration = slow_duration * (1 - target:GetStatusResistance()) })
 		slow_ref:SetStackCount(slow)
 
 		-- An enemy unit may only be slowed once per cast.
@@ -1117,7 +1117,7 @@ function modifier_imba_wisp_spirits_hero_hit:IsHidden() return true end
 function modifier_imba_wisp_spirits_hero_hit:OnCreated(params) 
 	if IsServer() then
 		local target = self:GetParent()
-		local slow_modifier = target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_wisp_spirits_slow", {duration = params.slow_duration})
+		local slow_modifier = target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_wisp_spirits_slow", {duration = params.slow_duration * (1 - target:GetStatusResistance())})
 		slow_modifier:SetStackCount(params.slow)
 	end
 end
@@ -1227,9 +1227,9 @@ function modifier_imba_wisp_spirit_handler:OnHit(caster, spirit, enemies_hit, cr
 			if enemy:IsConsideredHero() and not enemy:IsIllusion() then
 				enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_hero_hit", {duration = 0.03, slow_duration = slow_duration, slow = slow})
 				if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
-					enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")}):SetDuration(ability:GetSpecialValueFor("spirit_debuff_duration") * (1 - enemy:GetStatusResistance()), true)
+					enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration") * (1 - enemy:GetStatusResistance())})
 				elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
-					enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")}):SetDuration(ability:GetSpecialValueFor("spirit_debuff_duration") * (1 - enemy:GetStatusResistance()), true)
+					enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration") * (1 - enemy:GetStatusResistance())})
 				end
 
 				hit_hero = true

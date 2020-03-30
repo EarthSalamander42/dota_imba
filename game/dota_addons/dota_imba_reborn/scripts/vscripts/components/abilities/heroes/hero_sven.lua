@@ -114,7 +114,7 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 				if enemy == target and target:TriggerSpellAbsorb(self) then
 				else
 					ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
-					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration})
+					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration * (1 - enemy:GetStatusResistance())})
 					
 					if caster:HasTalent("special_bonus_imba_sven_9") then
 						enemy:Purge(true, false, false, false, false)

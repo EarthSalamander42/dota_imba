@@ -110,15 +110,11 @@ function imba_shadow_shaman_ether_shock:OnSpellStart()
 			ApplyDamage(damageTable)
 			
 			-- IMBAfication: Joy Buzzer
-			local joy_buzzer_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_joy_buzzer", {duration = (self:GetSpecialValueFor("joy_buzzer_stun_duration") + self:GetSpecialValueFor("joy_buzzer_off_duration")) * self:GetSpecialValueFor("joy_buzzer_instances") - self:GetSpecialValueFor("joy_buzzer_stun_duration")})
+			local joy_buzzer_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_joy_buzzer", {duration = ((self:GetSpecialValueFor("joy_buzzer_stun_duration") + self:GetSpecialValueFor("joy_buzzer_off_duration")) * self:GetSpecialValueFor("joy_buzzer_instances") - self:GetSpecialValueFor("joy_buzzer_stun_duration")) * (1 - enemy:GetStatusResistance())})
 			
 			-- IMBAfication: Dramatic Entrance
 			if self == self:GetCaster():FindAbilityByName(self:GetName()) and dramatic_passive_modifier and dramatic_passive_modifier.dramatic and dramatic_passive_modifier.dramatic == true then
-				local dramatic_entrance_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_mute", {duration = self:GetSpecialValueFor("dramatic_mute_duration")})
-				
-				if dramatic_entrance_modifier then
-					dramatic_entrance_modifier:SetDuration(self:GetSpecialValueFor("dramatic_mute_duration") * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_mute", {duration = self:GetSpecialValueFor("dramatic_mute_duration") * (1 - enemy:GetStatusResistance())})
 			end
 		
 			enemies_hit = enemies_hit + 1
@@ -260,11 +256,7 @@ function imba_shadow_shaman_voodoo:OnSpellStart()
 					self:GetCaster():EmitSound("shadowshaman_shad_ability_voodoo_0"..RandomInt(1, 4))
 				end
 				
-				local voodoo_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")})
-				
-				if voodoo_modifier then
-					voodoo_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-				end
+				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 			end
 		end
 	else
@@ -312,11 +304,7 @@ function modifier_imba_shadow_shaman_voodoo_handler:OnAttackLanded(keys)
 			keys.target:EmitSound("Hero_ShadowShaman.Hex.Target")
 			keys.target:EmitSound("General.Illusion.Create")
 			
-			local voodoo_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shadow_shaman_voodoo", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks", "value2")})
-		
-			if voodoo_modifier then
-				voodoo_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks", "value2") * (1 - keys.target:GetStatusResistance()), true)
-			end
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shadow_shaman_voodoo", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks", "value2") * (1 - keys.target:GetStatusResistance())})
 		end
 	end
 end

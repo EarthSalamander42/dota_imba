@@ -186,7 +186,7 @@ function base_modifier_dual_breath_caster:_DualBreathApplyModifierToEnemies( ene
 		--Apply Debuff only once per unit
 		if not affected_unit_list[enemy] then
 			affected_unit_list[enemy] = true
-			enemy:AddNewModifier(caster, ability, modifier_debuff_name, { duration = debuff_duration })
+			enemy:AddNewModifier(caster, ability, modifier_debuff_name, { duration = debuff_duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 end
@@ -620,19 +620,11 @@ function modifier_imba_ice_path_thinker:OnIntervalThink()
 		if not frozen_enemy_set[enemy] then
 			-- Freeze enemy if they touch ice path the first time
 			frozen_enemy_set[enemy] = true
-			local stun_modifier = enemy:AddNewModifier(caster, ability, modifier_freeze, { duration = self:GetRemainingTime() })
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(self:GetRemainingTime() * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(caster, ability, modifier_freeze, { duration = self:GetRemainingTime() * (1 - enemy:GetStatusResistance())})
 		else
 			if not enemy:FindModifierByNameAndCaster(modifier_freeze, caster) then
 				-- Slow enemy after the freeze expires
-				local slow_modifier = enemy:AddNewModifier(caster, ability, self.modifier_slow, { duration = 1.0 })
-				
-				if slow_modifier then
-					slow_modifier:SetDuration(1.0 * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(caster, ability, self.modifier_slow, { duration = 1.0 * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end
@@ -891,7 +883,7 @@ function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire( keys )
 			-- Apply liquid fire modifier to enemies in the area
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(enemies) do
-				enemy:AddNewModifier(caster, ability, modifier_liquid_fire_debuff, { duration = duration }):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+				enemy:AddNewModifier(caster, ability, modifier_liquid_fire_debuff, { duration = duration * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end

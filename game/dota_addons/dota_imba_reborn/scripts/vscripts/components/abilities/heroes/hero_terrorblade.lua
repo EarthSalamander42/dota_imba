@@ -136,11 +136,7 @@ function imba_terrorblade_reflection:OnSpellStart()
 			illusion:AddNewModifier(self:GetCaster(), self, "modifier_terrorblade_reflection_invulnerability", {})
 		end
 		
-		slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_slow", {duration = self:GetSpecialValueFor("illusion_duration")})
-		
-		if slow_modifier then
-			slow_modifier:SetDuration((self:GetSpecialValueFor("illusion_duration") + (self:GetSpecialValueFor("infinity_duration_per_stack") * self:GetCaster():GetModifierStackCount("modifier_imba_terrorblade_reflection_infinity_mirror_stacks", self:GetCaster()))) * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_slow", {duration = self:GetSpecialValueFor("illusion_duration") * (1 - enemy:GetStatusResistance())})
 	end
 end
 
@@ -658,7 +654,7 @@ function imba_terrorblade_power_rend:CastFilterResultTarget(target)
 	elseif not target.GetStrength then
 		return UF_FAIL_OTHER
 	else
-		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES +DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, self:GetCaster():GetTeamNumber())
 	end
 end
 
@@ -722,11 +718,9 @@ function imba_terrorblade_power_rend:OnSpellStart()
 		caster_modifier.intellect_differential	= target_intellect - caster_intellect
 	end
 	
-	local target_modifier	= target:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_power_rend", {duration = self:GetSpecialValueFor("duration")})
+	local target_modifier	= target:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_power_rend", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 	
 	if target_modifier then
-		target_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-		
 		target_modifier.strength_differential	= caster_strength - target_strength
 		target_modifier.agility_differential	= caster_agility - target_agility
 		target_modifier.intellect_differential	= caster_intellect - target_intellect
@@ -788,7 +782,7 @@ function imba_terrorblade_sunder:CastFilterResultTarget(target)
 	if target == self:GetCaster() then
 		return UF_FAIL_CUSTOM
 	else
-		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, self:GetCaster():GetTeamNumber())
 	end
 end
 

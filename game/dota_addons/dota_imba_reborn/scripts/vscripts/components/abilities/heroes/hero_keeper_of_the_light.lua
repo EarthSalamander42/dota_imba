@@ -229,17 +229,9 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:GetModifierMo
 end
 
 function modifier_imba_keeper_of_the_light_illuminate_self_thinker:CheckState()
-	if not IsServer() then return end
-
-	local state = {}
-	
-	if not self.ability:IsChanneling() then
-		if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_travelling_light") then
-			state[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
-		end
+	if IsServer() and not self.ability:IsChanneling() and self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_travelling_light") then
+		return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]} = true
 	end
-		
-	return state
 end
 
 -----------------------------
@@ -556,21 +548,13 @@ function imba_keeper_of_the_light_blinding_light:Pulse(position)
 		enemy:SetForwardVector((enemy:GetAbsOrigin() - position):Normalized())
 		
 		-- nil checks cause of timer shenanigans
-		local blind_mod 	= enemy:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_blinding_light", {duration = self.duration})
-		
-		if blind_mod then
-			blind_mod:SetDuration(self.duration * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_blinding_light", {duration = self.duration * (1 - enemy:GetStatusResistance())})
 		
 		if enemy:HasModifier("modifier_imba_blinding_light_knockback") then
 			enemy:FindModifierByName("modifier_imba_blinding_light_knockback"):Destroy()
 		end
 		
-		local knockback_mod	= enemy:AddNewModifier(self.caster, self, "modifier_imba_blinding_light_knockback", {x = position.x, y = position.y, z = position.z, duration = self.knockback_duration})
-		
-		if knockback_mod then
-			knockback_mod:SetDuration(self.knockback_duration * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self.caster, self, "modifier_imba_blinding_light_knockback", {x = position.x, y = position.y, z = position.z, duration = self.knockback_duration * (1 - enemy:GetStatusResistance())})
 	end
 end
 
@@ -769,7 +753,7 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 		end
 		
 		-- IMBAfication: Mana Leak
-		self.target:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_mana_leak", {duration = self.duration}):SetDuration(self.duration * (1 - self.target:GetStatusResistance()), true)
+		self.target:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_mana_leak", {duration = self.duration * (1 - self.target:GetStatusResistance())})
 		
 		-- Flow Inhibition Talent
 		if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_flow_inhibition") then
@@ -822,7 +806,7 @@ function modifier_imba_keeper_of_the_light_mana_leak:OnCreated()
 	self.starting_position	= self.parent:GetAbsOrigin()
 	
 	if self.parent:GetMaxMana() <= 0 then
-		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - self.parent:GetStatusResistance()), true)
+		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration * (1 - self.parent:GetStatusResistance())})
 		self:Destroy()
 	else
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
@@ -849,7 +833,7 @@ function modifier_imba_keeper_of_the_light_mana_leak:OnIntervalThink()
 	end
 	
 	if self.parent:GetMana() <= 0 then
-		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - self.parent:GetStatusResistance()), true)
+		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration * (1 - self.parent:GetStatusResistance())})
 		self:Destroy()
 	end
 	
@@ -1261,15 +1245,13 @@ end
 
 -- IMBAfication: Ignis Blessing
 function modifier_imba_keeper_of_the_light_will_o_wisp:CheckState(keys)
-	local state = {
-	[MODIFIER_STATE_SPECIALLY_DENIABLE] = true
+	return {
+		[MODIFIER_STATE_SPECIALLY_DENIABLE] = true
 	}
-
-	return state
 end
 
 function modifier_imba_keeper_of_the_light_will_o_wisp:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
@@ -1277,8 +1259,6 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:DeclareFunctions()
 		
 		MODIFIER_EVENT_ON_ATTACKED
     }
-
-    return decFuncs
 end
 
 function modifier_imba_keeper_of_the_light_will_o_wisp:GetAbsoluteNoDamageMagical()
@@ -1377,26 +1357,22 @@ end
 
 -- Creeps don't turn to face the wisp zzzzzzzzzz
 function modifier_imba_keeper_of_the_light_will_o_wisp_aura:CheckState()
-	local state = {
-	[MODIFIER_STATE_HEXED] = true,	-- Using this as substitute for Sleep which isn't a provided state
-	[MODIFIER_STATE_DISARMED] = true,
-	[MODIFIER_STATE_SILENCED] = true,
-	[MODIFIER_STATE_MUTED] = true,
-	[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
-	[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
+	return {
+		[MODIFIER_STATE_HEXED] = true,	-- Using this as substitute for Sleep which isn't a provided state
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_SILENCED] = true,
+		[MODIFIER_STATE_MUTED] = true,
+		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
+		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
 	}
-
-	return state
 end
 
 function modifier_imba_keeper_of_the_light_will_o_wisp_aura:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		
 		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE 
     }
-
-    return decFuncs
 end
 
 function modifier_imba_keeper_of_the_light_will_o_wisp_aura:GetModifierMoveSpeed_Absolute()

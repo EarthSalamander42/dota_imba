@@ -79,7 +79,7 @@ function imba_axe_berserkers_call:OnSpellStart()
 			ExecuteOrderFromTable(newOrder)
 		end
 		self:AddCalledTarget(target)
-		target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetSpecialValueFor("duration")})
+		target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 	end
 
 	-- if enemies table is empty play random responses_zero_enemy
@@ -409,9 +409,9 @@ function imba_axe_battle_hunger:ApplyBattleHunger(caster, target)
 	-- Roshan Battle Hunger doesn't pause due to no damage done, sorry, no cheesing
 	-- feel free to cast on creeps, though
 	if target:IsRoshan() then
-		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = true}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		target:AddNewModifier(caster, self, target_modifier, {duration = duration * (1 - target:GetStatusResistance()), no_pause = true})
 	else
-		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = false}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		target:AddNewModifier(caster, self, target_modifier, {duration = duration * (1 - target:GetStatusResistance()), no_pause = false})
 	end
 end
 -------------------------------------------

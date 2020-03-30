@@ -423,15 +423,11 @@ end
 
 function modifier_imba_clinkz_death_pact_723:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() and keys.target:IsRealHero() then		
-		local pact_modifier	= keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_clinkz_death_pact_723_enemy", {
-			duration		= self.debuff_duration,
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_clinkz_death_pact_723_enemy", {
+			duration		= self.debuff_duration * (1 - keys.target:GetStatusResistance()),
 			armor_reduction	= self.armor_reduction,
 			permanent_bonus	= self.permanent_bonus
 		})
-		
-		if pact_modifier then
-			pact_modifier:SetDuration(self.debuff_duration * (1 - keys.target:GetStatusResistance()), true)
-		end
 	end
 end
 
@@ -633,7 +629,7 @@ function imba_clinkz_searing_arrows:OnProjectileHit(target, location)
 		caster:PerformAttack(target, false, true, true, false, false, false, true)
 
 		-- Apply the active debuff
-		target:AddNewModifier(caster, ability, modifier_active, {duration = active_duration})
+		target:AddNewModifier(caster, ability, modifier_active, {duration = active_duration * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -1060,7 +1056,7 @@ function modifier_imba_skeleton_walk_invis:OnIntervalThink()
 			for _,enemy in pairs(enemy_heroes) do				
 				-- Stop at the first valid enemy that isn't magic immune
 				if not enemy:IsMagicImmune() then
-					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skeleton_walk_talent_root", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_3")})
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skeleton_walk_talent_root", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_3") * (1 - enemy:GetStatusResistance())})
 
 					-- If an enemy was rooted successfully, remove Clinkz's invisibility
 					if enemy:HasModifier("modifier_imba_skeleton_walk_talent_root") then
@@ -1235,7 +1231,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 				local spook_duration = self.base_spook_duration + (((self.spook_radius - distance) / self.spook_distance_inc) * self.spook_added_duration)
 
 				-- Apply spook for the duration
-				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_spook, {duration = spook_duration})
+				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_spook, {duration = spook_duration * (1 - enemy:GetStatusResistance())})
 			end
 		end
 		
@@ -1577,7 +1573,7 @@ function imba_clinkz_death_pact:OnSpellStart()
 		-- Set the 7.01 Contract
 		if target_team == Clinkz_team or target:HasModifier("modifier_imba_reincarnation_wraith_form") then
 		else
-		target:AddNewModifier(caster, ability, modifier_debuff_mark, {duration = duration})
+		target:AddNewModifier(caster, ability, modifier_debuff_mark, {duration = duration * (1 - target:GetStatusResistance())})
 		end
 	else 
 		-- Get creeps' current HP
@@ -1660,7 +1656,7 @@ function imba_clinkz_death_pact:OnSpellStart()
 	-- Apply a marker on the target if caster has the talent
 	if caster:HasTalent("special_bonus_imba_clinkz_8") and caster:GetTeamNumber() ~= target:GetTeamNumber() then
 		local mark_duration = caster:FindTalentValue("special_bonus_imba_clinkz_8", "mark_duration")
-		target:AddNewModifier(caster, ability, modifier_talent_debuff_mark, {duration = mark_duration})
+		target:AddNewModifier(caster, ability, modifier_talent_debuff_mark, {duration = mark_duration * (1 - keys.target:GetStatusResistance())})
 	end
 end
 

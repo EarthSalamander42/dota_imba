@@ -127,11 +127,7 @@ function modifier_imba_rattletrap_battery_assault:OnIntervalThink()
 
 			ApplyDamage(damageTable)
 		
-			local stun_modifier	= enemies[1]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(0.1 * (1 - enemies[1]:GetStatusResistance()), true)
-			end
+			enemies[1]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 0.1 * (1 - enemies[1]:GetStatusResistance())})
 		else
 			-- IMBAfication: Fragmentation Rend
 			local damageTable = {
@@ -145,11 +141,7 @@ function modifier_imba_rattletrap_battery_assault:OnIntervalThink()
 
 			ApplyDamage(damageTable)
 		
-			local fragmentation_modifier	= enemies[1]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_battery_assault_fragmentation_rend", {duration = self.fragmentation_duration})
-			
-			if fragmentation_modifier then
-				fragmentation_modifier:SetDuration(self.fragmentation_duration * (1 - enemies[1]:GetStatusResistance()), true)
-			end
+			enemies[1]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_battery_assault_fragmentation_rend", {duration = self.fragmentation_duration * (1 - enemies[1]:GetStatusResistance())})
 		end
 	else
 		ParticleManager:SetParticleControl(particle2, 1, self:GetParent():GetAbsOrigin() + RandomVector(RandomInt(0, 128))) -- Arbitrary numbers
@@ -474,7 +466,7 @@ function modifier_imba_rattletrap_power_cogs:OnIntervalThink()
 			-- The cog is the caster here, as its position will be passed into the modifier
 			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_rattletrap_cog_push", 
 			{
-				duration	= self.push_duration,
+				duration	= self.push_duration * (1 - enemy:GetStatusResistance()),
 				
 				damage		= self.damage,
 				mana_burn	= self.mana_burn,
@@ -737,7 +729,7 @@ function modifier_imba_rattletrap_power_cogs_charge_coil_counter:OnAttackLanded(
 		if #charge_coil_instances >= 1 then
 			keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_rattletrap_cog_push", 
 			{
-				duration	= self.push_duration,
+				duration	= self.push_duration * (1 - keys.target:GetStatusResistance()),
 					
 				damage		= self.damage,
 				mana_burn	= self.mana_burn,
@@ -1007,7 +999,7 @@ function imba_rattletrap_rocket_flare:OnProjectileHit_ExtraData(hTarget, vLocati
 				-- enemy:SetMana(0)
 			-- end
 			
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_rocket_flare_critical", {duration = self:GetSpecialValueFor("system_duration")}):SetDuration(self:GetSpecialValueFor("system_duration") * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_rocket_flare_critical", {duration = self:GetSpecialValueFor("system_duration") * (1 - enemy:GetStatusResistance())})
 		end
 	
 		local damageTable = {
@@ -1193,7 +1185,7 @@ function imba_rattletrap_hookshot:OnProjectileThink_ExtraData(vLocation, ExtraDa
 		-- 60 to 120 degrees is just a safety deviation from the standard perpendicular angle (90 degrees) expected to pass by
 		if distance_vector:Length2D() > self:GetSpecialValueFor("latch_radius") and math.abs(math.abs(AngleDiff(VectorToAngles(distance_vector).y, VectorToAngles(self.direction).y)) - 90) <= 30 and not self.razor_wind[enemy:GetEntityIndex()] then
 			
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = 0.1}):SetDuration(0.1 * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = 0.1 * (1 - enemy:GetStatusResistance())})
 			
 			local damageTable = {
 				victim 			= enemy,
@@ -1253,7 +1245,7 @@ function imba_rattletrap_hookshot:OnProjectileHit_ExtraData(hTarget, vLocation, 
 			end
 			
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
+				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance())})
 			end
 		end
 	else
@@ -1336,7 +1328,7 @@ function modifier_imba_rattletrap_hookshot:UpdateHorizontalMotion( me, dt )
 		if not unit:IsCourier() then
 			-- Apply pass-by stun modifier to enemies
 			if unit:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not self.enemies_hit[unit:GetEntityIndex()] then
-				unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - unit:GetStatusResistance()), true)
+				unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration * (1 - unit:GetStatusResistance())})
 				
 				-- "Does not attempt to damage any spell immune enemy."
 				if not unit:IsMagicImmune() then

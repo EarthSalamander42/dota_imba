@@ -633,17 +633,10 @@ function imba_dark_seer_ion_shell:OnSpellStart()
 		self:GetCaster():EmitSound("dark_seer_dkseer_ability_surge_0"..math.random(1,2))
 	end
 	
-	local ion_shell_modifier = nil
-	
 	if self:GetAutoCastState() and self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-		ion_shell_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_ion_shell_negation", {duration = self:GetSpecialValueFor("duration")})
+		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_ion_shell_negation", {duration = self:GetSpecialValueFor("duration") * (1 - self:GetCursorTarget():GetStatusResistance())})
 	else
-		ion_shell_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_ion_shell", {duration = self:GetSpecialValueFor("duration")})
-	end
-	
-	-- Ion Shell is affected by status resistance, so reduce the duration if applied on enemies
-	if self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-		ion_shell_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - self:GetCursorTarget():GetStatusResistance()), true)
+		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_ion_shell", {duration = self:GetSpecialValueFor("duration")})
 	end
 end
 
@@ -750,15 +743,7 @@ function modifier_imba_dark_seer_ion_shell:OnDestroy()
 				
 				-- Only reapply the ability if it exists and they don't already have a shield
 				if self:GetCaster() and self:GetAbility() and not enemy:FindModifierByNameAndCaster("modifier_imba_dark_seer_ion_shell", self:GetCaster()) then
-					local ion_shell_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_dark_seer_ion_shell", {duration = self:GetAbility():GetSpecialValueFor("duration")})
-					
-					if ion_shell_modifier then
-						-- Change the modifier duration based on status resistance
-						ion_shell_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
-						
-						-- Split the previous stack count evenly amongst all affected enemies
-						-- ion_shell_modifier:SetStackCount(self:GetStackCount() / (#enemies - 1))
-					end
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_dark_seer_ion_shell", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance())})
 				end
 			end
 		end
@@ -888,15 +873,7 @@ function modifier_imba_dark_seer_ion_shell_negation:OnDestroy()
 				
 				-- Only reapply the ability if it exists and they don't already have a shield
 				if self:GetCaster() and self:GetAbility() and not enemy:FindModifierByNameAndCaster("modifier_imba_dark_seer_ion_shell_negation", self:GetCaster()) then
-					local ion_shell_negation_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_dark_seer_ion_shell_negation", {duration = self:GetAbility():GetSpecialValueFor("duration")})
-					
-					if ion_shell_negation_modifier then
-						-- Change the modifier duration based on status resistance
-						ion_shell_negation_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
-						
-						-- Split the previous stack count evenly amongst all affected enemies
-						-- ion_shell_modifier:SetStackCount(self:GetStackCount() / (#enemies - 1))
-					end
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_dark_seer_ion_shell_negation", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance())})
 				end
 			end
 		end
@@ -937,14 +914,11 @@ function imba_dark_seer_surge:OnSpellStart()
 		ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_surge", {duration = self:GetSpecialValueFor("duration")})
 	end
 	
-	local knockback_modifier	= nil
-	local slow_modifier			= nil
-	
 	-- IMBAfication: Sonic Boom
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("surge_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		enemy:EmitSound("Hero_Dark_Seer.Surge_Sonic_Boom")
 		
-		knockback_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
 		{
 			distance		= self:GetSpecialValueFor("sonic_boom_knockback_speed") * self:GetSpecialValueFor("sonic_boom_knockback_duration"),
 			direction_x 	= (enemy:GetAbsOrigin() - self:GetCursorPosition()):Normalized().x,
@@ -961,11 +935,7 @@ function imba_dark_seer_surge:OnSpellStart()
 			bDestroyTreesAlongPath	= true
 		})
 		
-		slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_surge_slow", {duration = self:GetSpecialValueFor("sonic_boom_move_speed_duration")})
-		
-		if slow_modifier then
-			slow_modifier:SetDuration((self:GetSpecialValueFor("sonic_boom_move_speed_duration")) * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_surge_slow", {duration = self:GetSpecialValueFor("sonic_boom_move_speed_duration") * (1 - enemy:GetStatusResistance())})
 		
 		ApplyDamage({
 			victim 			= enemy,
@@ -1245,10 +1215,10 @@ function modifier_imba_dark_seer_wall_of_replica:OnIntervalThink()
 			self.wall_slow_modifier:SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
 		else
 			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_dark_seer_wall_of_replica_slow", {
-				duration			= self.slow_duration,
+				duration			= self.slow_duration * (1 - enemy:GetStatusResistance()),
 				movement_slow		= self.movement_slow,
 				minimum_interval	= self.minimum_interval
-			}):SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
+			})
 		end
 	end
 end

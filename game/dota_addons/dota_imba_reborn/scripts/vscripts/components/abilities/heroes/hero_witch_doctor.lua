@@ -82,11 +82,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 						end
 					end
 					
-					local stun_modifier = hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
-					
-					if stun_modifier then
-						stun_modifier:SetDuration(ExtraData.hero_duration * (1 - hTarget:GetStatusResistance()), true)
-					end
+					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration * (1 - hTarget:GetStatusResistance())})
 					
 					ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = ExtraData.hero_damage, damage_type = self:GetAbilityDamageType()})
 				end
@@ -99,7 +95,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 				if not hTarget:IsMagicImmune() and (ExtraData.bFirstCast == 0 or not hTarget:TriggerSpellAbsorb(self)) then
 
-					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.creep_duration})
+					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.creep_duration * (1 - hTarget:GetStatusResistance())})
 					ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = ExtraData.creep_damage, damage_type = self:GetAbilityDamageType()})
 				end
 			else
@@ -661,7 +657,7 @@ function modifier_imba_maledict:DealHPBurstDamage(hTarget)
 
 	-- #7 TALENT: Maledict applies a no healing debuff briefly
 	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_7") then
-		hTarget:AddNewModifier(self:GetCaster(), hAbility, "modifier_imba_maledict_talent", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_witch_doctor_7")} )
+		hTarget:AddNewModifier(self:GetCaster(), hAbility, "modifier_imba_maledict_talent", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_witch_doctor_7") * (1 - hTarget:GetStatusResistance())} )
 	end
 end
 

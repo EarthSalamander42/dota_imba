@@ -48,7 +48,7 @@ function item_imba_orchid:OnSpellStart()
 	target:EmitSound("DOTA_Item.Orchid.Activate")
 
 	-- Apply the Orchid debuff
-	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_orchid_debuff", {duration = self:GetSpecialValueFor("silence_duration")})
+	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_orchid_debuff", {duration = self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance())})
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -228,7 +228,7 @@ function item_imba_bloodthorn:OnSpellStart()
 		target:EmitSound("DOTA_Item.Orchid.Activate")
 
 		-- Apply the Orchid debuff
-		target:AddNewModifier(caster, self, "modifier_item_imba_bloodthorn_debuff", {duration = silence_duration})
+		target:AddNewModifier(caster, self, "modifier_item_imba_bloodthorn_debuff", {duration = silence_duration * (1 - target:GetStatusResistance())})
 	end
 end
 

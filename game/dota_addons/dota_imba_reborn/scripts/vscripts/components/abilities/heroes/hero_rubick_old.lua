@@ -79,7 +79,7 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 				return nil
 			end
 
-			duration = self:GetSpecialValueFor("enemy_lift_duration")
+			duration = self:GetSpecialValueFor("enemy_lift_duration") * (1 - self.target:GetStatusResistance())
 			self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis_stun", { duration = duration })
 			is_ally = false
 		else
@@ -260,7 +260,7 @@ function modifier_imba_telekinesis:EndTransition()
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), parent_pos, nil, impact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
 			if enemy ~= parent then
-				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = impact_stun_duration})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = impact_stun_duration * (1 - enemy:GetStatusResistance())})
 			end
 			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
 		end

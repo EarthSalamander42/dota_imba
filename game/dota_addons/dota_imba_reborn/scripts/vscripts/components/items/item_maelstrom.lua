@@ -232,7 +232,6 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 			
 		if (keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self.static_radius and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			local static_particle	= nil
-			local slow_modifier		= nil
 			
 			static_particle = ParticleManager:CreateParticle(self.particle_name_proc, PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
 			ParticleManager:SetParticleControlEnt(static_particle, 0, keys.attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.attacker:GetAbsOrigin(), true)
@@ -248,11 +247,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 				ability 		= self:GetAbility()
 			})
 			
-			slow_modifier = keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self.static_slow_duration * (1 - keys.attacker:GetStatusResistance()), true)
-			end
+			keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration * (1 - keys.attacker:GetStatusResistance())})
 		end
 		
 		local unit_count = 0
@@ -273,11 +268,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 					ability 		= self:GetAbility()
 				})
 				
-				slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration})
-				
-				if slow_modifier then
-					slow_modifier:SetDuration(self.static_slow_duration * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration * (1 - enemy:GetStatusResistance())})
 				
 				unit_count = unit_count + 1
 				

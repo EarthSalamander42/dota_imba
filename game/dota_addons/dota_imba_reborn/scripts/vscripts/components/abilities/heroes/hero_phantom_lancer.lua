@@ -184,11 +184,7 @@ function imba_phantom_lancer_spirit_lance:OnProjectileHit_ExtraData(target, loca
 		
 			-- "The lance first applies the debuff, then the damage."
 			-- Slow target
-			local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_phantom_lancer_spirit_lance", {duration = self:GetSpecialValueFor("duration")})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_phantom_lancer_spirit_lance", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 			
 			-- Deal damage to target
 			ApplyDamage({

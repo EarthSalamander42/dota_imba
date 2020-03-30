@@ -386,7 +386,7 @@ function imba_vengefulspirit_magic_missile:OnProjectileHit_ExtraData(target, loc
 			end
 			ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 			if (not target:IsMagicImmune()) or caster:HasTalent("special_bonus_imba_vengefulspirit_5") then
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration}):SetDuration(ExtraData.stun_duration * (1 - target:GetStatusResistance()), true)
+				target:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration * (1 - target:GetStatusResistance())})
 			end
 		end
 
@@ -553,7 +553,7 @@ function imba_vengefulspirit_wave_of_terror:OnProjectileHit_ExtraData(target, lo
 	if target then
 		local caster = self:GetCaster()
 		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
-		target:AddNewModifier(caster, self, "modifier_imba_wave_of_terror", {duration = ExtraData.duration}):SetDuration(ExtraData.duration * (1 - target:GetStatusResistance()), true)
+		target:AddNewModifier(caster, self, "modifier_imba_wave_of_terror", {duration = ExtraData.duration * (1 - target:GetStatusResistance())})
 	else
 		-- self:CreateVisibilityNode(location, self:GetSpecialValueFor("vision_aoe"), self:GetSpecialValueFor("vision_duration"))
 		
@@ -1301,11 +1301,7 @@ function imba_vengefulspirit_nether_swap:OnSpellStart()
 		if self:GetCaster():HasScepter() then
 			for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target_loc, nil, self:GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 				-- Vanilla modifier
-				local fear_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_wave_of_terror_fear", {duration = self:GetSpecialValueFor("scepter_duration")})
-				
-				if fear_modifier then
-					fear_modifier:SetDuration(self:GetSpecialValueFor("scepter_duration") * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_wave_of_terror_fear", {duration = self:GetSpecialValueFor("scepter_duration") * (1 - enemy:GetStatusResistance())})
 			end
 		end
 
@@ -1346,7 +1342,7 @@ function imba_vengefulspirit_nether_swap:OnProjectileHit(target, location)
 		local stun_duration = caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "stun_duration")
 		ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 		if not target:IsMagicImmune() then
-			target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - target:GetStatusResistance()), true)
+			target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
 		end
 	end
 

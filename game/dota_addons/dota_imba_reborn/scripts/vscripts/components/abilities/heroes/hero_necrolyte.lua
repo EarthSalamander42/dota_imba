@@ -963,7 +963,7 @@ function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
 		if self:GetParent() == params.unit then
 			if self.ability and not self.reincarnate_respawn then
 				local debuff_duration = self.ability:GetSpecialValueFor("debuff_duration")
-				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration})
+				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration * (1 - params.unit:GetStatusResistance())})
 			end
 
 			self:GetParent():RemoveModifierByName("modifier_imba_reapers_scythe_respawn")

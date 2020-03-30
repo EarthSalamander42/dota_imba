@@ -132,10 +132,10 @@ function modifier_imba_winter_wyvern_arctic_burn:OnAttackLanded(keys)
 			if (not keys.target:HasModifier("modifier_imba_winter_wyvern_arctic_burn_damage") or caster:HasScepter() == true) and not keys.target:IsMagicImmune()
 			then
 				local ability = self:GetAbility();
-				keys.target:AddNewModifier(caster, ability, "modifier_imba_winter_wyvern_arctic_burn_damage", {duration = damage_duration});
+				keys.target:AddNewModifier(caster, ability, "modifier_imba_winter_wyvern_arctic_burn_damage", {duration = damage_duration * (1 - keys.target:GetStatusResistance())});
 
 				local slow = ability:GetSpecialValueFor("move_slow");
-				local slow_modifier = keys.target:AddNewModifier(caster, self:GetAbility(), "modifier_imba_winter_wyvern_arctic_burn_slow", {duration = damage_duration});
+				local slow_modifier = keys.target:AddNewModifier(caster, self:GetAbility(), "modifier_imba_winter_wyvern_arctic_burn_slow", {duration = damage_duration * (1 - keys.target:GetStatusResistance())});
 				slow_modifier:SetStackCount(slow * -1)
 				
 				EmitSoundOn("Hero_Winter_Wyvern.ArcticBurn.projectileImpact", keys.target);
@@ -431,11 +431,11 @@ function imba_winter_wyvern_splinter_blast:OnProjectileHit_ExtraData(target, loc
 			imba_winter_wyvern_splinter_blast:OnTrackingProjectileHit(splinter_proj);
 		end
 
-		target:AddNewModifier(caster, self, "modifier_imba_winter_wyvern_splinter_blast_slow", {duration = ExtraData.slow_duration, slow = ExtraData.slow, attack_slow = ExtraData.attack_slow});
+		target:AddNewModifier(caster, self, "modifier_imba_winter_wyvern_splinter_blast_slow", {duration = ExtraData.slow_duration * (1 - target:GetStatusResistance()), slow = ExtraData.slow, attack_slow = ExtraData.attack_slow});
 		
 		if	caster:HasTalent("special_bonus_unique_winter_wyvern_4") then
 			local stun_duration = caster:FindTalentValue("special_bonus_unique_winter_wyvern_4", "value");
-			target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration});
+			target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())});
 		end
 		
 		caster:EmitSound("Hero_Winter_Wyvern.SplinterBlast.Splinter");
@@ -592,7 +592,7 @@ function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys)
 					--self.triggered = true;
 					
 					if not keys.attacker:IsMagicImmune() then
-						keys.attacker:AddNewModifier(parent, nil, "modifier_imba_winter_wyvern_cold_embrace_freeze", {duration = self.freeze_duration});
+						keys.attacker:AddNewModifier(parent, nil, "modifier_imba_winter_wyvern_cold_embrace_freeze", {duration = self.freeze_duration * (1 - keys.attacker:GetStatusResistance())});
 					end
 					
 					-- Heal to max

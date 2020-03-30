@@ -28,7 +28,7 @@ end
 
 function imba_broodmother_spawn_spiderlings:OnProjectileHit(hTarget, vLocation)
 	if hTarget then
-		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_broodmother_spawn_spiderlings", {duration = self:GetSpecialValueFor("buff_duration")})
+		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_broodmother_spawn_spiderlings", {duration = self:GetSpecialValueFor("buff_duration") * (1 - hTarget:GetStatusResistance())})
 
 		ApplyDamage({
 			attacker = self:GetCaster(),
@@ -244,7 +244,7 @@ function modifier_imba_broodmother_incapacitating_bite:OnAttackLanded(params)
 	if not IsServer() then return end
 
 	if self:GetParent() == params.attacker then
-		params.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_broodmother_incapacitating_bite_orb", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+		params.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_broodmother_incapacitating_bite_orb", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - params.target:GetStatusResistance())})
 	end
 end
 
@@ -347,9 +347,9 @@ end
 function modifier_imba_broodmother_poison_sting:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and not keys.target:IsBuilding() then
 		if keys.target:IsHero() then
-			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_broodmother_poison_sting_debuff", {duration = self.duration_hero})
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_broodmother_poison_sting_debuff", {duration = self.duration_hero * (1 - keys.target:GetStatusResistance())})
 		else
-			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_broodmother_poison_sting_debuff", {duration = self.duration})
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_broodmother_poison_sting_debuff", {duration = self.duration * (1 - keys.target:GetStatusResistance())})
 		end
 	
 		if not keys.target:IsOther() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then

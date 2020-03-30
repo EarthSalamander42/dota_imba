@@ -131,18 +131,10 @@ function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
 					self:GetParent():PerformAttack(enemy, false, true, true, false, true, false, false)
 					self:GetParent():RemoveModifierByNameAndCaster("modifier_imba_nian_frenzy_swipes_suppression", self:GetCaster())
 					
-					local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_slow", {duration = self.move_speed_slow_duration})
-					
-					if slow_modifier then
-						slow_modifier:SetDuration(self.move_speed_slow_duration * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_slow", {duration = self.move_speed_slow_duration * (1 - enemy:GetStatusResistance())})
 					
 					if self:GetCaster():HasTalent("special_bonus_imba_nian_frenzy_swipes_upgrade") then
-						local armor_reduction_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_armor_reduction", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_nian_frenzy_swipes_upgrade", "duration")})
-						
-						if armor_reduction_modifier then
-							armor_reduction_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_nian_frenzy_swipes_upgrade", "duration") * (1 - enemy:GetStatusResistance()), true)
-						end
+						enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_frenzy_swipes_armor_reduction", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_nian_frenzy_swipes_upgrade", "duration") * (1 - enemy:GetStatusResistance())})
 					end
 				end
 			end
@@ -395,22 +387,12 @@ function modifier_imba_nian_crushing_leap_movement:OnDestroy()
 			ApplyDamage(damageTable)
 		
 			if not enemy:IsMagicImmune() then
-				local root_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_rooted", {duration = self.root_duration})
-				
-				if root_modifier then
-					root_modifier:SetDuration(self.root_duration * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_rooted", {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
 				
 				if self:GetCaster():HasScepter() then
-					local strength_modifier		= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_strength", {duration = self.scepter_duration})
-					local agility_modifier		= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_agility", {duration = self.scepter_duration})
-					local intellect_modifier	= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_intellect", {duration = self.scepter_duration})
-					
-					if strength_modifier and agility_modifier and intellect_modifier then
-						strength_modifier:SetDuration(self.scepter_duration * (1 - enemy:GetStatusResistance()), true)
-						agility_modifier:SetDuration(self.scepter_duration * (1 - enemy:GetStatusResistance()), true)
-						intellect_modifier:SetDuration(self.scepter_duration * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_strength", {duration = self.scepter_duration * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_agility", {duration = self.scepter_duration * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nian_crushing_leap_intellect", {duration = self.scepter_duration * (1 - enemy:GetStatusResistance())})
 				end
 			end
 		end
@@ -614,11 +596,7 @@ function imba_nian_tail_spin:OnSpellStart()
 
 		ApplyDamage(damageTable)
 	
-		local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")})
-		
-		if stun_modifier then
-			stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
 		
 		local direction_vector = Vector(0, 0, 0)
 		
@@ -783,11 +761,7 @@ function imba_nian_volcanic_burster:OnProjectileThink_ExtraData(location, data)
 				bTreeRadius		= self:GetSpecialValueFor("tree_radius")
 			})
 			
-			local burn_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster", {duration = self:GetSpecialValueFor("burn_duration")})
-			
-			if burn_modifier then
-				burn_modifier:SetDuration(self:GetSpecialValueFor("burn_duration") * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster", {duration = self:GetSpecialValueFor("burn_duration") * (1 - enemy:GetStatusResistance())})
 			
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster_cooldown", {duration = self:GetSpecialValueFor("stun_on") + self:GetSpecialValueFor("stun_off")})
 		end
@@ -798,11 +772,7 @@ function imba_nian_volcanic_burster:OnProjectileHit_ExtraData(target, location, 
 	if not IsServer() then return end
 		
 	if target and data.bSecondary == 1 then
-		local burn_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster", {duration = self:GetSpecialValueFor("burn_duration")})
-		
-		if burn_modifier then
-			burn_modifier:SetDuration(self:GetSpecialValueFor("burn_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster", {duration = self:GetSpecialValueFor("burn_duration") * (1 - enemy:GetStatusResistance())})
 	elseif not target and data.volcanic_dummy then
 		EntIndexToHScript(data.volcanic_dummy):RemoveSelf()
 	end

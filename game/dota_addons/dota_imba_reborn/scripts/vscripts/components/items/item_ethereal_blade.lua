@@ -92,7 +92,7 @@ function item_imba_ethereal_blade:OnProjectileHit(target, location)
 			target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_ethereal", {duration = self.duration_ally})
 			target:AddNewModifier(self.caster, self, "modifier_item_gem_of_true_sight", {duration = self.duration}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
 		else
-			target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_ethereal", {duration = self.duration}):SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
+			target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_ethereal", {duration = self.duration * (1 - target:GetStatusResistance())})
 						
 			-- ...apply the damage if it's an enemy...
 			local damageTable = {
@@ -108,7 +108,7 @@ function item_imba_ethereal_blade:OnProjectileHit(target, location)
 			
 			-- ...and apply the slow modifier.
 			if target:IsAlive() then
-				target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_slow", {duration = self.duration}):SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
+				target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_slow", {duration = self.duration * (1 - target:GetStatusResistance())})
 			end
 		end
 	end

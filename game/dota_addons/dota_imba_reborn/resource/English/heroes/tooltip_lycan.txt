@@ -25,7 +25,6 @@
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note1"							"If Lycan is Broken, Wolfsbane's damage bonus is removed from everyone benefitting it."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Lore"							"Lycan has devoted his life to the wolves that adopted him into their pack. Adapting his tactics to the neverending hunt in the Ancients' battlefield was a trivial matter."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_damage_bonus"					"DAMAGE PER STACK:"
-"DOTA_Tooltip_ability_imba_lycan_wolfsbane_radius"                      	"KILL SEARCH RADIUS:"
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_shapeshift_cooldown_reduction"	"SHAPESHIFT COOLDOWN REDUCTION PER STACK:"
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_aghanim_description"				"Grants the damage to all allied heroes and player controlled creeps. Lycan no longer has to be present in a kill for Wolfsbane to trigger, but the minimum amount of allies is still required."
 

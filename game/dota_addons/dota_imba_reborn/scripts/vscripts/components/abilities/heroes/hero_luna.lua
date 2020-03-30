@@ -91,11 +91,7 @@ function imba_luna_lucent_beam:OnSpellStart()
 	
 	ApplyDamage(damageTable)
 	
-	local stun_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")})
-	
-	if stun_modifier then
-		stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - self:GetCursorTarget():GetStatusResistance()), true)
-	end
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration") * (1 - self:GetCursorTarget():GetStatusResistance())})
 	
 	if self:GetAutoCastState() then
 		-- IMBAfication: Atmospheric Refraction	
@@ -737,11 +733,7 @@ function modifier_imba_luna_eclipse:OnIntervalThink()
 				ApplyDamage(damageTable)
 				
 				if self:GetCaster():HasTalent("special_bonus_unique_luna_5") then
-					local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_unique_luna_5")})
-					
-					if stun_modifier then
-						stun_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_unique_luna_5") * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_unique_luna_5") * (1 - enemy:GetStatusResistance())})
 				end
 				
 				-- -- IMBAfication: Dark Moon

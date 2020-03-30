@@ -263,7 +263,7 @@ function ThunderStrikeBoltStrike(self)
 	
 	-- #4 Talent: Thunder Strikes slow the main target
 	if self.caster:HasTalent("special_bonus_imba_disruptor_4") then
-		self.target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.talent_4_slow_duration})
+		self.target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.talent_4_slow_duration * (1 - self.target:GetStatusResistance())})
 	end
 			
 	-- Add bolt particle
@@ -297,11 +297,7 @@ function ThunderStrikeBoltStrike(self)
 								
 			ApplyDamage(damageTable)			
 			
-			local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_thunder_strike_slow", {duration = self.slow_duration})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_thunder_strike_slow", {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
 			
 			-- Give a Stormbearer stack to caster			
 			if self.caster:HasModifier(stormbearer_buff) and enemy:IsRealHero() then
@@ -1164,7 +1160,7 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 		target:InterruptMotionControllers(true)
 	
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
-		target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
+		target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5 * (1 - target:GetStatusResistance()), target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 	-- Checks if the target is outside the field,
 	elseif distance_from_border > 0 and math.abs(distance_from_border) <= math.max(target:GetHullRadius(), 60) then
 	
@@ -1174,9 +1170,9 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 
 		--check if caster has scepter
 		if caster:HasTalent("special_bonus_imba_disruptor_1") then
-			target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
+			target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5 * (1 - target:GetStatusResistance()), target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 		else
-			target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_knockback", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
+			target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_knockback", {duration = 0.5 * (1 - target:GetStatusResistance()), target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 		end
 	else
 		-- Removes debuffs, so the unit can move freely
@@ -1728,7 +1724,7 @@ function modifier_imba_static_storm_talent:OnDestroy()
 	end	
 	if self.stack_count > 0 then
 		self.duration = self.caster:FindTalentValue("special_bonus_imba_disruptor_6","interval") * self.stack_count
-		modifier_talent_stun = self.parent:AddNewModifier(self.caster,self.ability,"modifier_imba_static_storm_talent_ministun",{duration = self.duration})
+		modifier_talent_stun = self.parent:AddNewModifier(self.caster,self.ability,"modifier_imba_static_storm_talent_ministun",{duration = self.duration * (1 - self.parent:GetStatusResistance())})
 	
 		if modifier_talent_stun then
 		modifier_talent_stun:SetStackCount(self.stack_count)
@@ -1761,7 +1757,7 @@ function modifier_imba_static_storm_talent_ministun:OnIntervalThink()
 		self:Destroy()
 	end
 
-	self.parent:AddNewModifier(self.caster,self.parent,"modifier_imba_static_storm_talent_ministun_trigger",{duration = self.caster:FindTalentValue("special_bonus_imba_disruptor_6","stun_duration")})
+	self.parent:AddNewModifier(self.caster,self.parent,"modifier_imba_static_storm_talent_ministun_trigger",{duration = self.caster:FindTalentValue("special_bonus_imba_disruptor_6","stun_duration") * (1 - self.parent:GetStatusResistance())})
 end
 
 modifier_imba_static_storm_talent_ministun_trigger = modifier_imba_static_storm_talent_ministun_trigger or class({})

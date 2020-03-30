@@ -45,11 +45,7 @@ function item_imba_dust_of_appearance:OnSpellStart()
 	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
 	for _,unit in pairs(targets) do
 		if unit:IsInvisible() or unit:IsImbaInvisible() then foundInvis = foundInvis + 1 end
-		true_sight_modifier = unit:AddNewModifier(caster, self, "modifier_imba_dust_of_appearance", {duration = duration})
-		
-		if true_sight_modifier then
-			true_sight_modifier:SetDuration(duration * (1 - unit:GetStatusResistance()), true)
-		end
+		true_sight_modifier = unit:AddNewModifier(caster, self, "modifier_imba_dust_of_appearance", {duration = duration * (1 - unit:GetStatusResistance())})
 	end
 
 	local chance = self:GetSpecialValueFor("meme_chance") * foundInvis

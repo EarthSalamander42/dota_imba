@@ -80,7 +80,6 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_stomp_fx, 2, self:GetCaster():GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_stomp_fx)
 	
-	local stun_modifier = nil
 	self.enemy_entindex_table = {}
 	
 	-- Find all nearby enemies
@@ -91,11 +90,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 			-- "The stomp first applies the debuff, then the damage."
 			
 			-- Stun them
-			stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
 			
 			-- Deal damage to nearby non-magic immune enemies
 			ApplyDamage({
@@ -774,8 +769,8 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 				ApplyDamage(damageTable)
 
 				-- Add stun and slow modifiers to the enemy
-				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration})
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_trample_slow, {duration = self.stun_duration + self.slow_duration})
+				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_trample_slow, {duration = (self.stun_duration + self.slow_duration) * (1 - enemy:GetStatusResistance())})
 
 				-- #8 Talent: Stampede duration increase per trampled enemy
 				if self.caster:HasTalent("special_bonus_imba_centaur_8") and enemy:IsRealHero() then

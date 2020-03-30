@@ -64,7 +64,7 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 			
 		for _,enemy in pairs(enemies) do
 			if not linked_units[enemy:GetEntityIndex()] then
-				local bond_modifier = enemy:AddNewModifier(caster, ability, modifier_bonds, {duration = duration})
+				local bond_modifier = enemy:AddNewModifier(caster, ability, modifier_bonds, {duration = duration * (1 - enemy:GetStatusResistance())})
 				table.insert(modifier_table, bond_modifier)
 				
 				table.insert(bond_table, enemy)
@@ -654,7 +654,7 @@ function modifier_imba_upheaval:OnIntervalThink()
 		false)
 
 	for _,enemy in pairs(enemies) do
-		local modifier_debuff_handler = enemy:AddNewModifier(self.caster, self.ability, self.modifier_debuff, {duration = self.linger_duration})
+		local modifier_debuff_handler = enemy:AddNewModifier(self.caster, self.ability, self.modifier_debuff, {duration = self.linger_duration * (1 - enemy:GetStatusResistance())})
 		-- Insert the amount of slow in the new modifier
 		if modifier_debuff_handler then
 			modifier_debuff_handler.slow = self.slow
@@ -1047,7 +1047,7 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 			false)
 
 		for _,enemy in pairs(enemies) do
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rain_of_chaos_stun", {duration = self:GetSpecialValueFor("stun_duration")})
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rain_of_chaos_stun", {duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
 		end
 
 		-- Summon the appropriate Golem unit based on the skill's level at the target point

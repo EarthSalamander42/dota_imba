@@ -187,7 +187,7 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 		if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 			-- Trigger spell absorb if applicable
 			if data.bTargeted == 1 and target:TriggerSpellAbsorb(self) then
-				target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("shieldbreaker_stun")}):SetDuration(self:GetSpecialValueFor("shieldbreaker_stun") * (1 - target:GetStatusResistance()), true)
+				target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("shieldbreaker_stun") * (1 - target:GetStatusResistance())})
 				return nil
 			end
 
@@ -201,7 +201,7 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 			-- Make the targeted gush not have any effects except for shield break if scepter (no double damage nuttiness)
 			if not (data.bScepter == 1 and data.bTargeted == 1) then
 				-- "Gush first applies the debuff, then the damage."
-				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - target:GetStatusResistance()), true)
+				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_gush", {duration = self:GetDuration() * (1 - target:GetStatusResistance())})
 
 				-- "Provides 200 radius ground vision around each hit enemy for 2 seconds."
 				if data.bScepter == 1 then
@@ -236,7 +236,7 @@ function imba_tidehunter_gush:OnProjectileHit_ExtraData(target, location, data)
 				z			= data.z,
 			})
 
-			if surf_modifier then
+			if surf_modifier and target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 				surf_modifier:SetDuration(self:GetSpecialValueFor("surf_duration") * (1 - target:GetStatusResistance()), true)
 			end
 		end
@@ -605,7 +605,7 @@ function imba_tidehunter_anchor_smash:Smash(enemy, bThrown)
 		
 		-- The smash first applies the debuff, then the instant attack.
 		if not enemy:IsMagicImmune() then
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash", {duration = self:GetSpecialValueFor("reduction_duration")}):SetDuration(self:GetSpecialValueFor("reduction_duration") * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_tidehunter_anchor_smash", {duration = self:GetSpecialValueFor("reduction_duration") * (1 - enemy:GetStatusResistance())})
 		end
 		
 		-- "These instant attacks are allowed to trigger attack modifiers, except cleave, normally. Has True Strike."
@@ -877,13 +877,13 @@ function imba_tidehunter_ravage:OnSpellStart()
 					enemy:EmitSound(hit_sound)
 
 					-- Apply stun and air time modifiers
-					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - enemy:GetStatusResistance()), true)
+					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration * (1 - enemy:GetStatusResistance())})
 
 					-- Knock the enemy into the air
 					local knockback =
 					{
-							knockback_duration = 0.5,
-						duration = 0.5,
+							knockback_duration = 0.5 * (1 - enemy:GetStatusResistance()),
+						duration = 0.5 * (1 - enemy:GetStatusResistance()),
 						knockback_distance = 0,
 						knockback_height = 350,
 					}
@@ -891,11 +891,7 @@ function imba_tidehunter_ravage:OnSpellStart()
 					enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
 
 					-- IMBAfication: Suggestive Compromise
-					local suggestive_modifier = enemy:AddNewModifier(caster, self, "modifier_imba_tidehunter_ravage_suggestive_compromise", {duration = suggestive_duration})
-					
-					if suggestive_modifier then
-						suggestive_modifier:SetDuration(suggestive_duration * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(caster, self, "modifier_imba_tidehunter_ravage_suggestive_compromise", {duration = suggestive_duration * (1 - enemy:GetStatusResistance())})
 					
 					Timers:CreateTimer(0.5, function()
 						-- Apply damage
@@ -1024,13 +1020,13 @@ function modifier_imba_tidehunter_ravage_creeping_wave:OnCreated(params)
 		ParticleManager:ReleaseParticleIndex(hit_particle)
 
 		-- Apply stun and air time modifiers
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
 
 		-- Knock the enemy into the air
 		local knockback =
 		{
-			knockback_duration	= 0.5,
-			duration 			= 0.5,
+			knockback_duration	= 0.5 * (1 - enemy:GetStatusResistance()),
+			duration 			= 0.5 * (1 - enemy:GetStatusResistance()),
 			knockback_distance	= 0,
 			knockback_height 	= 350,
 		}
@@ -1039,11 +1035,7 @@ function modifier_imba_tidehunter_ravage_creeping_wave:OnCreated(params)
 		enemy:AddNewModifier(self:GetCaster(), self, "modifier_knockback", knockback)
 		
 		-- IMBAfication: Suggestive Compromise
-		local suggestive_modifier = enemy:AddNewModifier(self:GetCaster(), ability, "modifier_imba_tidehunter_ravage_suggestive_compromise", {duration = params.suggestive_duration})
-		
-		if suggestive_modifier then
-			suggestive_modifier:SetDuration(params.suggestive_duration * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), ability, "modifier_imba_tidehunter_ravage_suggestive_compromise", {duration = params.suggestive_duration * (1 - enemy:GetStatusResistance())})
 		
 		Timers:CreateTimer(0.5, function()
 			-- Apply damage

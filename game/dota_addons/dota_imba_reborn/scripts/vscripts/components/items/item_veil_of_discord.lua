@@ -53,16 +53,10 @@ function item_imba_veil_of_discord:OnSpellStart()
 		FIND_ANY_ORDER,
 		false)
 
-	local debuff_modifier = nil
-
 	-- Iterate through the unit table and give each unit its respective modifier
 	for _,enemy in pairs(enemies) do
 		-- Give enemies a debuff
-		debuff_modifier = enemy:AddNewModifier(caster, self, "modifier_veil_active_debuff", {duration = self:GetSpecialValueFor("resist_debuff_duration")})
-		
-		if debuff_modifier then
-			debuff_modifier:SetDuration(self:GetSpecialValueFor("resist_debuff_duration") * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(caster, self, "modifier_veil_active_debuff", {duration = self:GetSpecialValueFor("resist_debuff_duration") * (1 - enemy:GetStatusResistance())})
 	end
 end
 

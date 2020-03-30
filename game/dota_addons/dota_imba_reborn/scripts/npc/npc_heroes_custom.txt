@@ -690,13 +690,13 @@
 		"Ability11"					"special_bonus_attack_damage_65"
 		"Ability12"					"special_bonus_imba_earth_spirit_3"
 		"Ability13"					"special_bonus_armor_8"
-		"Ability14"					"special_bonus_spell_amplify_20"
+		"Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
 		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
 		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
 		
 		// Removed Talents
-		// "Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
+		// "Ability14"					"special_bonus_spell_amplify_20"
 		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
 		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
 		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
@@ -1025,7 +1025,7 @@
 		"Ability14"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
 		"Ability15"					"special_bonus_imba_lina_9" // +X/Y% Fiery Soul Per Stack
 		"Ability16"					"special_bonus_imba_lina_10" // -6s Dragon Slave Cooldown
-		"Ability17"					"special_bonus_attack_range_175"
+		"Ability17"					"special_bonus_attack_range_200"
 		
 		// Removed Abilities
 		// "Ability10"					"special_bonus_imba_lina_1" // Additional Dragon Slaves
@@ -1572,17 +1572,18 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_queenofpain_sonic_wave"
 
-		"Ability10"					"special_bonus_strength_10"
-		"Ability11"					"special_bonus_imba_queenofpain_2"
-		"Ability12"					"special_bonus_imba_queenofpain_1"
-		"Ability13"					"special_bonus_imba_queenofpain_4"
+		"Ability10"					"special_bonus_imba_queenofpain_4" // "Delightful Torment Bonus Attack Speed"
+		"Ability11"					"special_bonus_imba_queenofpain_2" // "Sonic Wave deals damage in five instances"
+		"Ability12"					"special_bonus_imba_queenofpain_1" // "Shadow Struck targets can be seen through fog"
+		"Ability13"					"special_bonus_imba_queen_of_pain_shadow_strike_aoe"
 		"Ability14"					"special_bonus_spell_lifesteal_30"
-		"Ability15"					"special_bonus_imba_queen_of_pain_shadow_strike_aoe"
+		"Ability15"					"special_bonus_imba_queenofpain_3" // Damaging an enemy causes Shadow Strike to deal its tick damage
 		"Ability16"					"special_bonus_imba_queen_of_pain_scream_of_pain_fear"
 		"Ability17"					"special_bonus_spell_block_15"
 		
 		// Removed Talents
-		// "Ability12"					"special_bonus_imba_queenofpain_3" // Damaging an enemy causes Shadow Strike to deal its tick damage
+		// "Ability10"					"special_bonus_strength_10"
+		// "Ability12"					
 		// "Ability14"					"special_bonus_imba_queenofpain_5" // Blink can be used twice in quick succession, with increased mana cost
 		// "Ability15"					"special_bonus_imba_queenofpain_6" // Enemies affected by Shadow Strike release Screams of Pain every damage tick
 		// "Ability16"					"special_bonus_imba_queenofpain_7" // Scream of Pain now causes confusion
@@ -1691,7 +1692,7 @@
 		"Ability10"					"special_bonus_imba_nevermore_1"
 		"Ability11"					"special_bonus_attack_speed_20"
 		"Ability12"					"special_bonus_imba_nevermore_3"
-		"Ability13"					"special_bonus_movement_speed_30"
+		"Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
 		"Ability14"					"special_bonus_imba_nevermore_5"
 		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
@@ -1699,7 +1700,7 @@
 		
 		// Removed Talents
 		// "Ability11"					"special_bonus_imba_nevermore_2" // Necromastery Siphon
-		// "Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
+		// "Ability13"					"special_bonus_movement_speed_30"
 		// "Ability15"					"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	}
 

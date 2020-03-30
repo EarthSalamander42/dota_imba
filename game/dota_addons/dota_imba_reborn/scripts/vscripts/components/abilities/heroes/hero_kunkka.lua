@@ -457,12 +457,12 @@ function imba_kunkka_torrent:OnSpellStart()
 
 						-- Applies the slow
 						if torrent_count == 0 then
-							enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow", {duration = slow_duration})
+							enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 							if extra_slow then
-								enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow_tide", {duration = slow_duration})
+								enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow_tide", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 							end
 						else
-							enemy:AddNewModifier(caster, self, "modifier_imba_sec_torrent_slow", {duration = sec_torrent_slow_duration})
+							enemy:AddNewModifier(caster, self, "modifier_imba_sec_torrent_slow", {duration = sec_torrent_slow_duration * (1 - enemy:GetStatusResistance())})
 						end
 					end
 
@@ -805,7 +805,7 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnIntervalThink()
 						end)
 
 
-					enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_sec_torrent_slow", {duration = self.sec_torrent_slow_duration})
+					enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_sec_torrent_slow", {duration = self.sec_torrent_slow_duration * (1 - enemy:GetStatusResistance())})
 				end
 
 				-- Creates the post-ability sound effect
@@ -1142,7 +1142,7 @@ function modifier_imba_tidebringer:TidebringerEffects( target, ability )
 	self.hitCounter = self.hitCounter + 1
 	local attacker = self:GetCaster()
 	if ( self.tide_index == 1 or self.tide_index == 3 ) and not target:IsMagicImmune() then
-		target:AddNewModifier(attacker, ability, "modifier_imba_tidebringer_slow", {duration = ability:GetSpecialValueFor("tide_red_slow_duration")})
+		target:AddNewModifier(attacker, ability, "modifier_imba_tidebringer_slow", {duration = ability:GetSpecialValueFor("tide_red_slow_duration") * (1 - target:GetStatusResistance())})
 	end
 
 	if self.tide_index == 1 then
@@ -1171,7 +1171,7 @@ function modifier_imba_tidebringer:TidebringerEffects( target, ability )
 
 		-- Apply knockback on enemies hit
 		target:RemoveModifierByName("modifier_knockback")
-		target:AddNewModifier(self:GetParent(), ability, "modifier_knockback", knockback):SetDuration(ability:GetSpecialValueFor("tsunami_stun"), true)
+		target:AddNewModifier(self:GetParent(), ability, "modifier_knockback", knockback)
 	end
 end
 
@@ -1266,8 +1266,8 @@ function imba_kunkka_x_marks_the_spot:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
-		local duration = self:GetSpecialValueFor("duration")
-		local sec_duration = self:GetSpecialValueFor("sec_duration")
+		local duration = self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance())
+		local sec_duration = self:GetSpecialValueFor("sec_duration") * (1 - enemy:GetStatusResistance())
 		local talent_hits = false
 
 		if caster:HasTalent("special_bonus_imba_kunkka_5") then
@@ -1391,7 +1391,7 @@ function modifier_imba_x_marks_the_spot:OnDestroy( params )
 			-- #3 Talent: X Marks The Spot Return grants 10% movespeed for allies, 10% movespeed reduction for enemies
 			if caster:HasTalent("special_bonus_imba_kunkka_3") then
 				if caster:GetTeamNumber() ~= parent:GetTeamNumber() then
-					parent:AddNewModifier(caster,ability,"modifier_imba_x_marks_the_spot_talent_ms",{duration = ability:GetTalentSpecialValueFor("duration")})
+					parent:AddNewModifier(caster,ability,"modifier_imba_x_marks_the_spot_talent_ms",{duration = ability:GetTalentSpecialValueFor("duration") * (1 - parent:GetStatusResistance())})
 				else
 					parent:AddNewModifier(caster,ability,"modifier_imba_x_marks_the_spot_talent_ms",{duration = ability:GetTalentSpecialValueFor("allied_duration")})
 				end
@@ -1765,9 +1765,9 @@ function imba_kunkka_ghostship:OnSpellStart()
 						for k, enemy in pairs(enemies) do
 							ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 							if extra_slow then
-								enemy:AddNewModifier(caster, self, "modifier_imba_ghostship_tide_slow", { duration = stun_duration + self:GetSpecialValueFor("tide_red_slow_duration") })
+								enemy:AddNewModifier(caster, self, "modifier_imba_ghostship_tide_slow", { duration = stun_duration + self:GetSpecialValueFor("tide_red_slow_duration") * (1 - enemy:GetStatusResistance()) })
 							end
-							enemy:AddNewModifier(caster, self, "modifier_stunned", { duration = stun_duration })
+							enemy:AddNewModifier(caster, self, "modifier_stunned", { duration = stun_duration * (1 - enemy:GetStatusResistance()) })
 						end
 					end)
 			end)

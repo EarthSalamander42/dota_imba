@@ -26,7 +26,7 @@ function imba_silencer_arcane_curse:OnSpellStart()
 	EmitSoundOn("Hero_Silencer.Curse.Cast", caster)
 
 	for _, enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, self, "modifier_imba_arcane_curse_debuff", {duration = base_duration})
+		enemy:AddNewModifier(caster, self, "modifier_imba_arcane_curse_debuff", {duration = base_duration * (1 - enemy:GetStatusResistance())})
 		EmitSoundOn("Hero_Silencer.Curse.Impact", enemy)
 	end
 end
@@ -400,7 +400,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 				end
 
 				target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
-					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance()),
 					int_steal	= self:GetAbility():GetSpecialValueFor("int_steal")
 				})
 			
@@ -621,7 +621,7 @@ end
 function modifier_imba_silencer_glaives_hit_counter:OnStackCountChanged(old_stack_count)
 	if IsServer() then
 		if self:GetStackCount() >= self.hits_to_silence then
-			self:GetParent():AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
+			self:GetParent():AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration * (1 - self:GetParent():GetStatusResistance())})
 			self:SetStackCount(0)
 		end
 	end
@@ -716,7 +716,7 @@ function modifier_imba_silencer_glaives_talent_effect:OnStackCountChanged( oldSt
 			}
 			ApplyDamage( damageTable )
 
-			parent:AddNewModifier(caster, ability, "modifier_imba_silencer_glaives_talent_effect_procced", {duration = caster:FindTalentValue("special_bonus_imba_silencer_6", "noIntDuration")})
+			parent:AddNewModifier(caster, ability, "modifier_imba_silencer_glaives_talent_effect_procced", {duration = caster:FindTalentValue("special_bonus_imba_silencer_6", "noIntDuration") * (1 - parent:GetStatusResistance())})
 			parent:RemoveModifierByName("modifier_imba_silencer_glaives_talent_effect")
 		end
 	end
@@ -772,7 +772,7 @@ function modifier_imba_silencer_glaives_of_wisdom_multiple:OnCreated(params)
 		})
 	else
 		self.debuff_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_debuff_counter", {
-			duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+			duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - self:GetParent():GetStatusResistance()),
 			int_steal	= self.int_steal
 		})
 	end
@@ -979,7 +979,7 @@ function imba_silencer_last_word_silence_aura:OnAbilityExecuted( params )
 			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_prevention, {duration = self.prevention_duration})
 
 			-- Silence!
-			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_silence", {duration = self.silence_duration * (1 - self:GetParent():GetStatusResistance())})
 		end
 	end
 end
@@ -1059,7 +1059,7 @@ function modifier_imba_silencer_last_word_debuff:OnAbilityExecuted( params )
 			if params.ability:IsToggle() and params.ability:GetToggleState() then
 				return
 			end
-			self:GetParent():AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_silencer_last_word_repeat_thinker", {duration = self.silence_duration})
+			self:GetParent():AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_silencer_last_word_repeat_thinker", {duration = self.silence_duration * (1 - self:GetParent():GetStatusResistance())})
 			self:Destroy()
 		end
 	end
@@ -1073,7 +1073,7 @@ end
 function modifier_imba_silencer_last_word_debuff:OnIntervalThink()
 	local target = self:GetParent()
 	if IsServer() then
-		target:AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
+		target:AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -1313,7 +1313,7 @@ function imba_silencer_global_silence:OnSpellStart()
 
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
-			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_global_silence", {duration = self:GetDuration()})
+			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_global_silence", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
 			if enemy:IsRealHero() then
 				EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", enemy:GetPlayerOwner())
 				
@@ -1493,7 +1493,6 @@ function imba_silencer_global_silence_v2:OnSpellStart()
 		EmitSoundOn("Hero_Silencer.Penn", self:GetCaster())
 	end
 	
-	local silence_modifier = nil
 	local hero_silence_particle = nil
 	
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)) do
@@ -1506,13 +1505,9 @@ function imba_silencer_global_silence_v2:OnSpellStart()
 			
 			-- Cannot apply debuffs on invulnerable units normally, so I have to route the caster to be the enemy itself
 			if enemy:IsInvulnerable() then
-				silence_modifier = enemy:AddNewModifier(enemy, self, "modifier_imba_silencer_global_silence_v2", {duration = self:GetDuration()})
+				enemy:AddNewModifier(enemy, self, "modifier_imba_silencer_global_silence_v2", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
 			else
-				silence_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_silencer_global_silence_v2", {duration = self:GetDuration()})
-			end
-			
-			if silence_modifier then
-				silence_modifier:SetDuration(self:GetDuration() * (1 - enemy:GetStatusResistance()), true)
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_silencer_global_silence_v2", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
 			end
 			
 			if enemy:IsRealHero() then

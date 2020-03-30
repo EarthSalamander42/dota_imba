@@ -125,20 +125,15 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 			ParticleManager:SetParticleControl(shackleshot_particle, 2, Vector(self:GetTalentSpecialValueFor("stun_duration"), 0, 0))
 			
 			if target.AddNewModifier then
-				local target_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
+				local target_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance())})
 				
 				if target_modifier then
 					target_modifier:AddParticle(shackleshot_particle, false, false, -1, false, false)
-					target_modifier:SetDuration(self:GetTalentSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance()), true)
 				end
 			end
 			
 			if enemy.AddNewModifier then
-				local enemy_shackleshot_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
-				
-				if enemy_shackleshot_modifier then
-					enemy_shackleshot_modifier:SetDuration(self:GetTalentSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
 			end
 			
 			break
@@ -158,11 +153,10 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 					ParticleManager:SetParticleControl(shackleshot_tree_particle, 1, tree:GetAbsOrigin())
 					ParticleManager:SetParticleControl(shackleshot_tree_particle, 2, Vector(self:GetTalentSpecialValueFor("stun_duration"), 0, 0))
 
-					local target_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration")})
+					local target_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_shackle_shot", {duration = self:GetTalentSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance())})
 					
 					if target_modifier then
 						target_modifier:AddParticle(shackleshot_tree_particle, false, false, -1, false, false)
-						target_modifier:SetDuration(self:GetTalentSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance()), true)
 					end
 				end	
 				
@@ -215,13 +209,12 @@ function imba_windranger_shackleshot:OnProjectileHit_ExtraData(target, location,
 					
 				-- targets == 0 represents the unit that was originally targeted; if there's no unit behind them just apply the fail stun and that's it
 				elseif targets == 0 then
-					local stun_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("fail_stun_duration")})
+					local stun_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("fail_stun_duration") * (1 - target:GetStatusResistance())})
 					
 					if stun_modifier then
 						local shackleshot_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_windrunner/windrunner_shackleshot_single.vpcf", PATTACH_ABSORIGIN, target)
 						-- TODO: Figure out how this particle is oriented?
 						ParticleManager:SetParticleControlForward(shackleshot_particle, 2, Vector(ExtraData.location_x, ExtraData.location_y, ExtraData.location_z):Normalized())
-						stun_modifier:SetDuration(self:GetSpecialValueFor("fail_stun_duration") * (1 - target:GetStatusResistance()), true)
 						stun_modifier:AddParticle(shackleshot_particle, false, false, -1, false, false)
 					end
 				end
@@ -414,11 +407,7 @@ function imba_windranger_powershot:OnProjectileHit_ExtraData(target, location, d
 			damage		= self:GetTalentSpecialValueFor("powershot_damage") * self:GetSpecialValueFor("godshot_damage_pct") * 0.01
 			damage_type	= DAMAGE_TYPE_PURE
 			
-			local stun_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("godshot_stun_duration")})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(self:GetSpecialValueFor("godshot_stun_duration") * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("godshot_stun_duration") * (1 - target:GetStatusResistance())})
 		-- IMBAfication: Scattershot
 		elseif data.channel_pct >= self:GetSpecialValueFor("scattershot_min") and data.channel_pct <= self:GetSpecialValueFor("scattershot_max") then
 			damage		= self:GetTalentSpecialValueFor("powershot_damage") * self:GetSpecialValueFor("scattershot_damage_pct") * 0.01 * ((100 - self:GetSpecialValueFor("damage_reduction")) * 0.01) ^ EntIndexToHScript(data.dummy_index).units_hit
@@ -885,7 +874,7 @@ end
 function modifier_imba_windranger_focusfire_vanilla_enhancer:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() and self:GetParent():HasModifier("modifier_windrunner_focusfire") and self.target and not self.target:IsNull() and self.target:IsAlive() and self.target == keys.target and RollPseudoRandom(self.ability:GetSpecialValueFor("ministun_chance"), self) then
 		keys.target:EmitSound("DOTA_Item.MKB.Minibash")
-		keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
+		keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = 0.1 * (1 - keys.target:GetStatusResistance())})
 	end
 end
 

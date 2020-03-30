@@ -177,7 +177,7 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 
 				-- debuff_duration can be 0 if caster has ability but not learnt it yet
 				if debuff_duration > 0 and not caster:PassivesDisabled() then
-					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration * (1 - target:GetStatusResistance()) })
 				end
 			end
 		else
@@ -464,7 +464,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 
 				if debuff_duration and debuff_duration > 0 then
 					if not caster:PassivesDisabled() and curse_of_avernus then
-						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration * (1 - unit:GetStatusResistance()) })
 					end
 
 					-- Show particle when hit
@@ -687,7 +687,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 					local ability = self:GetAbility()
 					if ability then
 						local debuff_duration = ability:GetSpecialValueFor("debuff_duration") -- Not possible for this to be 0 here
-						target:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+						target:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration * (1 - target:GetStatusResistance())})
 						local responses = {"abaddon_abad_frostmourne_01","abaddon_abad_frostmourne_02","abaddon_abad_frostmourne_03","abaddon_abad_frostmourne_04","abaddon_abad_frostmourne_05","abaddon_abad_frostmourne_06","abaddon_abad_frostmourne_06"}
 						caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 30,"curse_of_avernus")
 					end

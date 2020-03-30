@@ -90,7 +90,7 @@ function imba_dragon_knight_breathe_fire:OnProjectileHit(target, location)
 		ApplyDamage({victim = target, damage = damage + health_as_damage, damage_type = damage_type, attacker = self:GetCaster(), ability = self})	
 
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_breathe_fire_debuff", {duration = debuff_duration})
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_breathe_fire_debuff", {duration = debuff_duration * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -161,7 +161,7 @@ function imba_dragon_knight_dragon_tail:OnSpellStart()
 				self.main_target:EmitSound("Hero_DragonKnight.DragonTail.Target")
 				ParticleManager:CreateParticle("particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.main_target)
 				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail", {duration = self:GetSpecialValueFor("duration_instances")})
-				self.main_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff", {duration = self:GetSpecialValueFor("stun_duration")})
+				self.main_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff", {duration = self:GetSpecialValueFor("stun_duration") * (1 - self.main_target:GetStatusResistance())})
 
 				ApplyDamage({attacker = self:GetCaster(), victim = self.main_target, damage_type = self:GetAbilityDamageType(), damage = self:GetAbilityDamage(), ability = self})
 			else
@@ -180,7 +180,7 @@ function imba_dragon_knight_dragon_tail:OnSpellStart()
 						ApplyDamage({attacker = self:GetCaster(), victim = enemy, ability = self, damage = self:GetAbilityDamage(), damage_type = self:GetAbilityDamageType()})
 					end
 
-					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff", {duration = self:GetSpecialValueFor("stun_duration") /2})
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff", {duration = (self:GetSpecialValueFor("stun_duration") / 2) * (1 - enemy:GetStatusResistance())})
 				end
 
 				local info = 
@@ -212,7 +212,7 @@ function imba_dragon_knight_dragon_tail:OnProjectileHit(target, location, ExtraD
 				ApplyDamage({attacker = self:GetCaster(), victim = target, damage_type = self:GetAbilityDamageType(), damage = self:GetAbilityDamage(), ability = self})
 			end
 
-			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff", {duration = self:GetSpecialValueFor("stun_duration")})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff", {duration = self:GetSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance())})
 		end
 	end
 end
@@ -462,11 +462,11 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 		
 		ApplyDamage({attacker = self:GetCaster(), victim = target, damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage, damage_type = dmg_type, ability = breathe_fire})	
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
-		target:AddNewModifier(self:GetCaster(), breathe_fire, "modifier_imba_breathe_fire_debuff", {duration = breathe_fire:GetSpecialValueFor("duration")})
+		target:AddNewModifier(self:GetCaster(), breathe_fire, "modifier_imba_breathe_fire_debuff", {duration = breathe_fire:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 
 		if dragon_tail then
 			ApplyDamage({attacker = self:GetCaster(), victim = target, damage = dragon_tail:GetAbilityDamage(), damage_type = dragon_tail:GetAbilityDamageType(), ability = dragon_tail})
-			target:AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail_debuff", {duration = dragon_tail:GetSpecialValueFor("stun_duration")})
+			target:AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail_debuff", {duration = dragon_tail:GetSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance())})
 		end
 
 		target:EmitSound("Hero_DragonKnight.DragonTail.Target")

@@ -487,15 +487,10 @@ function imba_medusa_mystic_snake:OnProjectileHit_ExtraData(hTarget, vLocation, 
 				end
 			end
 			
-			slow_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_mystic_snake_slow", {duration = self:GetSpecialValueFor("slow_duration")})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self:GetSpecialValueFor("slow_duraton") * (1 - hTarget:GetStatusResistance()), true)
-			end
+			hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_mystic_snake_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - hTarget:GetStatusResistance())})
 			
 			-- This is an IMBAfication branching off a somewhat necessary modifier, as this is used to make sure one mystic snake doesn't hit the same target more than once
 			local tracker_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_mystic_snake_tracker", {duration = self:GetSpecialValueFor("myotoxin_duration")})
-			
 			
 			if tracker_modifier then
 				tracker_modifier.number = ExtraData.particle_snake
@@ -1016,12 +1011,12 @@ function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 		
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_medusa_stone_gaze_stone", 
 			{
-				duration 					= self.stone_duration,
+				duration 					= self.stone_duration * (1 - self:GetParent():GetStatusResistance()),
 				bonus_physical_damage		= self.bonus_physical_damage
 			})
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_medusa_stone_gaze_stiff_joints", 
 			{
-				duration 					= self.stiff_joints_duration,
+				duration 					= self.stiff_joints_duration * (1 - self:GetParent():GetStatusResistance()),
 				bonus_physical_damage		= self.bonus_physical_damage
 			})			
 			self:StartIntervalThink(-1)
@@ -1189,7 +1184,7 @@ function modifier_imba_medusa_stone_gaze_red_eyes_facing:OnDestroy()
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_medusa_stone_gaze_stone", 
 		{
-			duration 					= self.red_eyes_stone_duration,
+			duration 					= self.red_eyes_stone_duration * (1 - self:GetParent():GetStatusResistance()),
 			bonus_physical_damage		= self.bonus_physical_damage
 		})
 	end

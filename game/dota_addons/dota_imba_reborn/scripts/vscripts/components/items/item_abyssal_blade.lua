@@ -72,17 +72,9 @@ function item_imba_abyssal_blade:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(particle_abyssal_fx)
 
 	-- Stun and break the target for the duration
-	local stun_modifier = target:AddNewModifier(caster, ability, modifier_bash, {duration = active_stun_duration})
+	target:AddNewModifier(caster, ability, modifier_bash, {duration = active_stun_duration * (1 - target:GetStatusResistance())})
 	
-	if stun_modifier then
-		stun_modifier:SetDuration(active_stun_duration * (1 - target:GetStatusResistance()), true)
-	end
-	
-	local break_modifier = target:AddNewModifier(caster, ability, modifier_break, {duration = actual_break_duration})
-
-	if break_modifier then
-		break_modifier:SetDuration(actual_break_duration * (1 - target:GetStatusResistance()), true)
-	end
+	target:AddNewModifier(caster, ability, modifier_break, {duration = actual_break_duration * (1 - target:GetStatusResistance())})
 end
 
 
@@ -177,28 +169,16 @@ function modifier_imba_abyssal_blade:OnAttackLanded(keys)
 		if IMBA_DISABLED_SKULL_BASHER == nil or not IMBA_DISABLED_SKULL_BASHER[keys.attacker:GetUnitName()] then
 			keys.target:EmitSound("DOTA_Item.SkullBasher")
 			
-			local bash_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_bash", {duration = self:GetAbility():GetSpecialValueFor("stun_duration")})
-			
-			if bash_modifier then
-				bash_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("stun_duration") * (1 - keys.target:GetStatusResistance()), true)
-			end
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_bash", {duration = self:GetAbility():GetSpecialValueFor("stun_duration") * (1 - keys.target:GetStatusResistance())})
 		end
 		
 		-- IMBAfication: Skull Crash
 		-- If the target is not skull crashed yet, CRUSH IT!
 		if not keys.target:HasModifier("modifier_imba_abyssal_blade_skull_crash") then
 			if RollPercentage(self:GetAbility():GetSpecialValueFor("insta_skull_break_chance_pct")) then
-				local break_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_skull_break", {duration = self:GetAbility():GetSpecialValueFor("actual_break_duration")})
-				
-				if break_modifier then
-					break_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("actual_break_duration") * (1 - keys.target:GetStatusResistance()), true)
-				end
+				keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_skull_break", {duration = self:GetAbility():GetSpecialValueFor("actual_break_duration") * (1 - keys.target:GetStatusResistance())})
 			else
-				local crash_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_skull_crash", {duration = self:GetAbility():GetSpecialValueFor("skull_break_duration")})
-				
-				if crash_modifier then
-					crash_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("skull_break_duration") * (1 - keys.target:GetStatusResistance()), true)
-				end
+				keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_skull_crash", {duration = self:GetAbility():GetSpecialValueFor("skull_break_duration") * (1 - keys.target:GetStatusResistance())})
 			end
 		else
 			-- Otherwise, it was ALREADY CRUSHED! BREAK IT!!!!!!!!!!!! BREAK IT!!!!!!!!!!!!!!!
@@ -206,11 +186,7 @@ function modifier_imba_abyssal_blade:OnAttackLanded(keys)
 			keys.target:RemoveModifierByName("modifier_imba_abyssal_blade_skull_crash")
 
 			-- Apply BREAK!
-			local break_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_skull_break", {duration = self:GetAbility():GetSpecialValueFor("actual_break_duration")})
-
-			if break_modifier then
-				break_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("actual_break_duration") * (1 - keys.target:GetStatusResistance()), true)
-			end
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_skull_break", {duration = self:GetAbility():GetSpecialValueFor("actual_break_duration") * (1 - keys.target:GetStatusResistance())})
 		end
 	end
 end

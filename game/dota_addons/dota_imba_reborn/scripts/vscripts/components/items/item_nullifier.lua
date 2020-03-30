@@ -86,18 +86,10 @@ function item_imba_nullifier:OnProjectileHit(target, location)
 		-- ..and apply the purge, mute modifier, and slow modifier
 		target:Purge(true, false, false, false, false)
 		
-		local dispel_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_dispel", {duration = self:GetSpecialValueFor("mute_duration")})
-		
-		if dispel_modifier then
-			dispel_modifier:SetDuration(self:GetSpecialValueFor("mute_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_dispel", {duration = self:GetSpecialValueFor("mute_duration") * (1 - target:GetStatusResistance())})
 		
 		if self:GetLevel() >= 2 then
-			local mute_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_mute", {duration = self:GetSpecialValueFor("mute_duration")})
-			
-			if mute_modifier then
-				mute_modifier:SetDuration(self:GetSpecialValueFor("mute_duration") * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_mute", {duration = self:GetSpecialValueFor("mute_duration") * (1 - target:GetStatusResistance())})
 			
 			-- IMBAfication: Objection Index
 			
@@ -226,7 +218,7 @@ function modifier_item_imba_nullifier_dispel:OnCreated()
 	local overhead_particle = ParticleManager:CreateParticle(overhead_particle, PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 	self:AddParticle(overhead_particle, false, false, -1, false, false)
 	
-	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_nullifier_slow", {duration = self.slow_interval_duration}):SetDuration(self.slow_interval_duration * (1 - self:GetParent():GetStatusResistance()), true)
+	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_nullifier_slow", {duration = self.slow_interval_duration * (1 - self:GetParent():GetStatusResistance())})
 end
 
 function modifier_item_imba_nullifier_dispel:CheckState()
@@ -245,7 +237,7 @@ function modifier_item_imba_nullifier_dispel:OnAttackLanded(keys)
 	if not IsServer() then return end
 	
 	if keys.target == self:GetParent() then
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_nullifier_slow", {duration = self.slow_interval_duration}):SetDuration(self.slow_interval_duration * (1 - self:GetParent():GetStatusResistance()), true)
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_nullifier_slow", {duration = self.slow_interval_duration * (1 - self:GetParent():GetStatusResistance())})
 	end	
 end
 

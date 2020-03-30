@@ -75,7 +75,7 @@ function item_imba_angelic_alliance:OnSpellStart()
 		end
 	else
 		if target:TriggerSpellAbsorb(self) then return nil end
-		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_debuff", {duration = duration})
+		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_debuff", {duration = duration * (1 - target:GetStatusResistance())})
 	end
 
 	if target ~= self:GetCaster() then
@@ -187,7 +187,7 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 		if caster == target and not keys.target:IsIllusion() and RollPseudoRandom(chance, self) then				-- Disarm attacker when the wielder is the one getting hit
 			if attacker:IsMagicImmune() then return end
 			if attacker:HasModifier("modifier_imba_angelic_alliance_passive_disarm") then return end
-			attacker:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration})
+			attacker:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration * (1 - attacker:GetStatusResistance())})
 			attacker:EmitSound("DOTA_Item.HeavensHalberd.Activate")
 		end
 	end

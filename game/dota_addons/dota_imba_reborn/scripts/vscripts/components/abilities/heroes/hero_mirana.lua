@@ -167,7 +167,7 @@ function StarfallWave(caster, ability, caster_position, radius, damage)
 					-- #8 Talent: Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
 					if caster:HasTalent("special_bonus_imba_mirana_8") then
 						local seed_duration = caster:FindTalentValue("special_bonus_imba_mirana_8")
-						enemy:AddNewModifier(caster, ability, "modifier_imba_starfall_talent_seed_debuff", {duration = seed_duration})
+						enemy:AddNewModifier(caster, ability, "modifier_imba_starfall_talent_seed_debuff", {duration = seed_duration * (1 - enemy:GetStatusResistance())})
 					end
 				end
 			end)
@@ -572,7 +572,7 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
 	end
 
 	-- Apply stun
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 	return true
 end

@@ -199,7 +199,7 @@ function item_imba_desolator:OnProjectileHit(target, target_loc)
 
 		-- Apply the armor debuff, if applicable
 		if not target:HasModifier("modifier_item_imba_desolator_2_debuff") then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration")})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 		end
 
 		-- Fire the effect particle
@@ -400,7 +400,7 @@ function item_imba_desolator_2:OnProjectileHit(target, target_loc)
 
 		-- Apply the armor debuff, if applicable
 		if not target:HasModifier("modifier_item_imba_desolator_2_debuff") then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration")})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 		end
 
 		-- Fire the effect particle
@@ -525,5 +525,5 @@ function Desolate(attacker, target, ability, modifier_name, duration)
 	end
 
 	-- Apply the modifier
-	target:AddNewModifier(attacker, ability, modifier_name, {duration = duration})
+	target:AddNewModifier(attacker, ability, modifier_name, {duration = duration * (1 - target:GetStatusResistance())})
 end

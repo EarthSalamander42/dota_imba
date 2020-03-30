@@ -177,11 +177,7 @@ function modifier_imba_static_remnant:OnDestroy( params )
 
 				-- cast shorter Electric Vortex
 				if pull_duration ~= 0 and not self.ballLightning then
-					local root_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z, electric_vortex_pull_distance = electric_vortex_pull_distance})
-					
-					if root_modifier then
-						root_modifier:SetDuration(pull_duration * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration * (1 - enemy:GetStatusResistance()), speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z, electric_vortex_pull_distance = electric_vortex_pull_distance})
 				end
 			end
 		end
@@ -263,7 +259,7 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 			if target:TriggerSpellAbsorb(self) then return end
 
 			-- Apply pull modifier on target
-			target:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance})
+			target:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration * (1 - target:GetStatusResistance()), speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance})
 		else
 			-- AGHANIM'S SCEPTER: Electric Vortex affects multiple targets around Storm.
 			--Find nearby enemies
@@ -281,7 +277,7 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 			for _,enemy in pairs(enemies) do
 				local direction 		= 	(caster:GetAbsOrigin() - enemy:GetAbsOrigin()):Normalized()
 				-- Apply vortex on enemy
-				enemy:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance} )
+				enemy:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration * (1 - enemy:GetStatusResistance()), speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance} )
 			end
 		end
 
@@ -695,7 +691,7 @@ function modifier_imba_overload_buff:OnAttackLanded(keys)
 					ApplyDamage(damageTable)
 
 					-- Apply debuff
-					enemy:AddNewModifier(parent, ability, "modifier_imba_overload_debuff",	{duration = slow_duration} )
+					enemy:AddNewModifier(parent, ability, "modifier_imba_overload_debuff",	{duration = slow_duration * (1 - enemy:GetStatusResistance())} )
 
 					-- Remove overload buff
 					self:Destroy()

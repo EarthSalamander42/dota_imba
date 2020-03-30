@@ -139,11 +139,7 @@ function modifier_imba_ancient_apparition_cold_feet:OnIntervalThink()
 				self.ticks = self.ticks + 1
 				self.counter = 0
 			else
-				local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet_freeze", {duration = self.stun_duration})
-				
-				if stun_modifier then
-					stun_modifier:SetDuration(self.stun_duration * (1 - self:GetParent():GetStatusResistance()), true)
-				end
+				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet_freeze", {duration = self.stun_duration * (1 - self:GetParent():GetStatusResistance())})
 				
 				self:Destroy()
 			end
@@ -154,11 +150,9 @@ function modifier_imba_ancient_apparition_cold_feet:OnIntervalThink()
 end
 
 function modifier_imba_ancient_apparition_cold_feet:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_ORDER
 	}
-	
-	return decFuncs
 end
 
 -- IMBAfication: Pole Transferral
@@ -402,19 +396,11 @@ function imba_ancient_apparition_chilling_touch:OnOrbImpact( keys )
 
 	keys.target:EmitSound("Hero_Ancient_Apparition.ChillingTouch.Target")
 
-	local chilling_touch_modifier = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_chilling_touch_slow", { duration = self:GetSpecialValueFor("duration") })
-
-	if chilling_touch_modifier then
-		chilling_touch_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
-	end
+	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_chilling_touch_slow", { duration = self:GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())})
 	
 	-- IMBAfication: Packed Ice
-	local stun_modifier = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", { duration = self:GetSpecialValueFor("packed_ice_duration") })
-
-	if stun_modifier then
-		stun_modifier:SetDuration(self:GetSpecialValueFor("packed_ice_duration") * (1 - keys.target:GetStatusResistance()), true)
-	end
-
+	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", { duration = self:GetSpecialValueFor("packed_ice_duration") * (1 - keys.target:GetStatusResistance())})
+	
 	ApplyDamage({
 		victim 			= keys.target,
 		damage 			= self:GetTalentSpecialValueFor("damage"),
@@ -539,11 +525,7 @@ function modifier_imba_ancient_apparition_imbued_ice:OnAttackLanded(keys)
 		ApplyDamage(self.damage_table)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, keys.target, self.damage_per_attack, nil)
 		
-		local imbued_ice_slow_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_imbued_ice_slow", {duration = self.move_speed_duration})
-		
-		if imbued_ice_slow_modifier then
-			imbued_ice_slow_modifier:SetDuration(self.move_speed_duration * (1 - keys.target:GetStatusResistance()), true)
-		end
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_imbued_ice_slow", {duration = self.move_speed_duration * (1 - keys.target:GetStatusResistance())})
 		
 		if self:GetStackCount() <= 0 then
 			self:Destroy()
@@ -984,30 +966,24 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileThink_ExtraData(l
 		end
 
 		for _, enemy in pairs(enemies) do
-			if not enemy.IsCourier or not enemy:IsCourier() then
-				local ice_blast_modifier = nil
-				
+			if not enemy.IsCourier or not enemy:IsCourier() then				
 				if enemy:IsInvulnerable() then
-					ice_blast_modifier = enemy:AddNewModifier(enemy, self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+					enemy:AddNewModifier(enemy, self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
 						{
-							duration		= duration,
+							duration		= duration * (1 - enemy:GetStatusResistance()),
 							dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
 							kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct"),
 							caster_entindex	= self:GetCaster():entindex()
 						}
 					)
 				else
-					ice_blast_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+					enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
 						{
-							duration		= duration,
+							duration		= duration * (1 - enemy:GetStatusResistance()),
 							dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
 							kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct")
 						}
 					)
-				end
-				
-				if ice_blast_modifier then
-					ice_blast_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
 				end
 			end
 		end
@@ -1044,29 +1020,23 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(tar
 		for _, enemy in pairs(enemies) do
 			if not enemy.IsCourier or not enemy:IsCourier() then
 				-- IMBAfication: Absolute Freeze
-				local ice_blast_modifier = nil
-				
 				if enemy:IsInvulnerable() then
-					ice_blast_modifier = enemy:AddNewModifier(enemy, self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+					enemy:AddNewModifier(enemy, self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
 						{
-							duration		= duration,
+							duration		= duration * (1 - enemy:GetStatusResistance()),
 							dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
 							kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct"),
 							caster_entindex	= self:GetCaster():entindex()
 						}
 					)
 				else
-					ice_blast_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+					enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
 						{
-							duration		= duration,
+							duration		= duration * (1 - enemy:GetStatusResistance()),
 							dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
 							kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct")
 						}
 					)
-				end
-				
-				if ice_blast_modifier then
-					ice_blast_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
 				end
 			
 				if not enemy:IsMagicImmune() then

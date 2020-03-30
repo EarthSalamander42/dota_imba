@@ -223,11 +223,7 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 		
 		if targetted_projectile then
 			-- ...and apply the Cripple modifier.
-			local cripple_modifier = target:AddNewModifier(self.caster, self, "modifier_item_imba_rod_of_atos_debuff", {duration = self.duration})
-			
-			if cripple_modifier then
-				cripple_modifier:SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self.caster, self, "modifier_item_imba_rod_of_atos_debuff", {duration = self.duration * (1 - target:GetStatusResistance())})
 		end
 	end
 end

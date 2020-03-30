@@ -204,11 +204,11 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 					damage = cleave_damage,
 					damage_type = DAMAGE_TYPE_PURE}))
 
-				enemy:AddNewModifier(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_panic_debuff", {duration = panic_duration})
+				enemy:AddNewModifier(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_panic_debuff", {duration = panic_duration * (1 - enemy:GetStatusResistance())})
 			end
 
 			-- Give the main target a different, longer modifier
-			params.target:AddNewModifier(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_break_debuff", {duration = break_duration})
+			params.target:AddNewModifier(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_break_debuff", {duration = break_duration * (1 - params.target:GetStatusResistance())})
 
 			-- Emit custom sound effect
 			self:GetParent():EmitSound("Imba.SilverEdgeInvisAttack")

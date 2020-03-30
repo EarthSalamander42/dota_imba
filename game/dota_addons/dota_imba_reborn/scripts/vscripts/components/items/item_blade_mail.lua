@@ -160,10 +160,9 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 			local reflectDamage = ApplyDamage(damageTable)
 			
 			-- IMBAfication: Lacerate
-			local lacerate_modifier = keys.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", {duration = self.lacerate_duration})
+			local lacerate_modifier = keys.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", {duration = self.lacerate_duration * (1 - keys.attacker:GetStatusResistance())})
 			
 			if lacerate_modifier then
-				lacerate_modifier:SetDuration(self.lacerate_duration * (1 - keys.attacker:GetStatusResistance()), true)
 				-- Don't want to brick units into negative max health, so set an upper limit
 				lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct * 0.01), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
 				
@@ -193,10 +192,9 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 			local reflectDamage = ApplyDamage(damageTable)
 			
 			-- IMBAfication: Lacerate
-			local lacerate_modifier = keys.attacker:GetPlayerOwner():GetAssignedHero():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", {duration = self.lacerate_duration})
+			local lacerate_modifier = keys.attacker:GetPlayerOwner():GetAssignedHero():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", {duration = self.lacerate_duration * (1 - keys.attacker:GetStatusResistance())})
 			
 			if lacerate_modifier then
-				lacerate_modifier:SetDuration(self.lacerate_duration * (1 - keys.attacker:GetPlayerOwner():GetAssignedHero():GetStatusResistance()), true)
 				-- Don't want to brick units into negative max health, so set an upper limit
 				lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct * 0.01), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
 				

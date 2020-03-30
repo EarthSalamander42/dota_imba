@@ -202,8 +202,8 @@ function imba_undying_decay:OnSpellStart()
 				-- ParticleManager:ReleaseParticleIndex(flies_transfer_particle)
 				
 				-- "Steals strength before applying its damage."
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_debuff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
-				debuff_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_debuff", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_debuff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration") * (1 - enemy:GetStatusResistance())})
+				debuff_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_debuff", {duration = self:GetTalentSpecialValueFor("decay_duration") * (1 - enemy:GetStatusResistance())})
 				table.insert(self.debuff_modifier_table, debuff_modifier)
 				
 				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
@@ -231,8 +231,8 @@ function imba_undying_decay:OnSpellStart()
 			
 			selected_unit =  EntIndexToHScript(tables[RandomInt(1, #tables)])
 		
-			enemy:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
-			debuff_modifier = enemy:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff", {duration = self:GetTalentSpecialValueFor("decay_duration")})
+			enemy:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration") * (1 - enemy:GetStatusResistance())})
+			debuff_modifier = enemy:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff", {duration = self:GetTalentSpecialValueFor("decay_duration") * (1 - enemy:GetStatusResistance())})
 			table.insert(self.debuff_modifier_table, debuff_modifier)
 			
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff_counter", {duration = self:GetTalentSpecialValueFor("decay_duration")})
@@ -500,11 +500,10 @@ function imba_undying_soul_rip:OnSpellStart()
 			})
 			
 			-- IMBAfication: Soul Injection
-			local injection_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_soul_rip_soul_injection_debuff", {duration = self:GetSpecialValueFor("soul_injection_duration")})
+			local injection_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_soul_rip_soul_injection_debuff", {duration = self:GetSpecialValueFor("soul_injection_duration") * (1 - target:GetStatusResistance())})
 			
 			if injection_modifier then
 				injection_modifier:SetStackCount(units_ripped)
-				injection_modifier:SetDuration(self:GetSpecialValueFor("soul_injection_duration") * (1 - target:GetStatusResistance()), true)
 				
 				if target.CalculateStatBonus then
 					target:CalculateStatBonus()
@@ -1063,14 +1062,13 @@ function imba_undying_flesh_golem_grab:OnSpellStart()
 	local grab_modifier_debuff = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_flesh_golem_grab_debuff", {duration = self:GetSpecialValueFor("duration")})
 	
 	if grab_modifier_debuff then
-		grab_modifier_debuff:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-		
 		local grab_modifier	= self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_flesh_golem_grab", {
 			duration		= self:GetSpecialValueFor("duration"),
 			target_entindex	= target:entindex()
 		})
 		
 		if grab_modifier and self:GetCaster():GetTeamNumber() ~= target:GetTeamNumber() then
+			grab_modifier_debuff:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
 			grab_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
 		end
 	end
@@ -1322,7 +1320,7 @@ end
 function modifier_imba_undying_flesh_golem:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() and not keys.target:IsBuilding() and not keys.target:IsOther() then
 		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_undying_flesh_golem_slow", {
-			duration	= self.slow_duration,
+			duration	= self.slow_duration * (1 - keys.target:GetStatusResistance()),
 			slow		= self.slow,
 			damage		= self.damage,
 			zombie_multiplier	= self.zombie_multiplier

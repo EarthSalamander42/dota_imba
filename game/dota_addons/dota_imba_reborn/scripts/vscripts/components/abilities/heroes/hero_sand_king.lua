@@ -173,8 +173,8 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
          center_x = bump_point.x,
          center_y = bump_point.y,
          center_z = bump_point.z,
-         duration = knockup_duration,
-         knockback_duration = knockup_duration,
+         duration = knockup_duration * (1 - target:GetStatusResistance()),
+         knockback_duration = knockup_duration * (1 - target:GetStatusResistance()),
          knockback_distance = push_distance,
          knockback_height = knockup_height
     }
@@ -183,7 +183,7 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
     target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
 
     -- Stun the target
-    target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+    target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
 
     -- Apply Caustic Finale to heroes, unless they already have it
     if target:IsHero() and not target:IsIllusion() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
@@ -869,11 +869,7 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
             end
 
             -- Apply slow
-            slow_modifier = enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self.slow_duration * (1 - enemy:GetStatusResistance()), true)
-			end
+            slow_modifier = enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
         end
     end
 end
@@ -1108,7 +1104,7 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
             ApplyDamage(damageTable)
 
             -- Apply Epicenter slow
-            enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
+            enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
 			
 			-- Nah too strong
 			-- if self.caster:HasTalent("special_bonus_imba_sand_king_4") then

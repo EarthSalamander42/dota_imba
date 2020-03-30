@@ -179,7 +179,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 			-- stun_duration = scepter_stun_duration
 		-- end
 
-		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", {duration = stun_duration})
+		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", {duration = stun_duration * (1 - target:GetStatusResistance()})
 
 		-- -- Check if the Shuriken is an enchanted shuriken from #4 talent
 		-- if shuriken_crit == 1 then
@@ -243,7 +243,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		})
 
 		-- Apply pull modifier
-		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_debuff_pull", {duration = pull_duration})
+		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_debuff_pull", {duration = pull_duration * (1 - target:GetStatusResistance())})
 		
 
 		
@@ -1186,7 +1186,7 @@ function imba_bounty_hunter_track:OnSpellStart()
 		end
 
 		-- Add track debuff to target
-		target:AddNewModifier(caster, ability, modifier_track, {duration = duration})
+		target:AddNewModifier(caster, ability, modifier_track, {duration = duration * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -1495,7 +1495,7 @@ function imba_bounty_hunter_headhunter:OnProjectileHit(target, location)
 
 	-- Apply contract modifiers
 	caster:AddNewModifier(caster, ability, modifier_contract_buff, {duration = duration})
-	target:AddNewModifier(caster, ability, modifier_contract_debuff, {duration = duration})
+	target:AddNewModifier(caster, ability, modifier_contract_debuff, {duration = duration * (1 - target:GetStatusResistance())})
 
 	-- Show the area of the target
 	AddFOWViewer(caster:GetTeamNumber(), target:GetAbsOrigin(), vision_radius, vision_linger_time, false)

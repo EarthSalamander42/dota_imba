@@ -55,7 +55,7 @@ function imba_dazzle_poison_touch:OnProjectileHit(target, location)
 	if target:TriggerSpellAbsorb(self) then return end
 
 	EmitSoundOn("Hero_Dazzle.Poison_Touch", target)
-	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_setin", {duration = self:GetSpecialValueFor("set_in_time")})
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_setin", {duration = self:GetSpecialValueFor("set_in_time") * (1 - target:GetStatusResistance())})
 end
 
 -----------------------------------------------
@@ -87,11 +87,11 @@ function modifier_imba_dazzle_poison_touch_setin:OnDestroy()
 			local ability = self:GetAbility()
 
 			if ability:GetCaster():HasTalent("special_bonus_imba_dazzle_4") then
-				local slowMod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_talent_slow", {duration = ability:GetSpecialValueFor("poison_duration")})
+				local slowMod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_talent_slow", {duration = ability:GetSpecialValueFor("poison_duration") * (1 - parent:GetStatusResistance())})
 				slowMod:SetStackCount(parent:GetMaxHealth())
 			end
 
-			local mod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_debuff", {duration = ability:GetSpecialValueFor("poison_duration")})
+			local mod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_debuff", {duration = ability:GetSpecialValueFor("poison_duration") * (1 - parent:GetStatusResistance())})
 			mod:SetStackCount(self:GetStackCount())
 		end
 	end
@@ -110,7 +110,7 @@ function modifier_imba_dazzle_poison_touch_setin:OnIntervalThink()
 		local remaining = self:GetRemainingTime()
 		if remaining <= 1 then
 			local ability = self:GetAbility()
-			self:GetParent():AddNewModifier(ability:GetCaster(), ability, "modifier_stunned", {duration = 1})
+			self:GetParent():AddNewModifier(ability:GetCaster(), ability, "modifier_stunned", {duration = 1 * (1 - self:GetParent():GetStatusResistance())})
 			self:StartIntervalThink(-1)
 		end
 	end
@@ -214,7 +214,7 @@ function modifier_imba_dazzle_poison_touch_debuff:OnAbilityFullyCast( keys )
 		local originalAbility = self:GetAbility()
 		local originalCaster = originalAbility:GetCaster()
 		if ability:GetCursorTarget() == parent and caster:GetTeamNumber() == parent:GetTeamNumber() and not caster:FindModifierByName("modifier_imba_dazzle_poison_touch_debuff") and keys.ability:GetName() ~= "ability_capture" then
-			local mod = caster:AddNewModifier(originalAbility:GetCaster(), originalAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = originalAbility:GetSpecialValueFor("poison_duration")})
+			local mod = caster:AddNewModifier(originalAbility:GetCaster(), originalAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = originalAbility:GetSpecialValueFor("poison_duration") * (1 - caster:GetStatusResistance())})
 			mod:SetStackCount(self:GetStackCount())
 		end
 	end
@@ -1402,7 +1402,7 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 			local oldMod = unit:FindModifierByName("modifier_imba_dazzle_poison_touch_debuff")
 			if poisonTouched and poisonTouchAbility then
 				if not oldMod or oldMod:GetStackCount() < poisonTouched then
-					local modifier = unit:AddNewModifier(caster, poisonTouchAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = poisonTouchAbility:GetSpecialValueFor("poison_duration")})
+					local modifier = unit:AddNewModifier(caster, poisonTouchAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = poisonTouchAbility:GetSpecialValueFor("poison_duration") * (1 - unit:GetStatusResistance())})
 					EmitSoundOn("Hero_Dazzle.Poison_Tick", unit)
 					modifier:SetStackCount(poisonTouched)
 				end
@@ -2018,17 +2018,19 @@ function modifier_imba_dazzle_bad_juju:OnAbilityFullyCast(params)
 
 			for _, unit in pairs(units) do
 				local modifier_name = "modifier_imba_dazzle_bad_juju_buff"
-
+				local duration		= self:GetAbility():GetSpecialValueFor("duration")
+				
 				if unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 					modifier_name = "modifier_imba_dazzle_bad_juju_debuff"
+					duration		= self:GetAbility():GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance())
 				end
 
 				if unit:HasModifier(modifier_name) then
 					local modifier = unit:FindModifierByName(modifier_name)
 					modifier:SetStackCount(modifier:GetStackCount() + 1)
-					modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration"), true)
+					modifier:SetDuration(duration, true)
 				else
-					unit:AddNewModifier(unit, self:GetAbility(), modifier_name, {duration=self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
+					unit:AddNewModifier(unit, self:GetAbility(), modifier_name, {duration = duration}):SetStackCount(1)
 				end
 			end
 			

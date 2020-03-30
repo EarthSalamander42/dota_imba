@@ -75,13 +75,7 @@ function imba_gyrocopter_rocket_barrage:OnProjectileHit(target, location)
 	if target then
 		target:EmitSound("Hero_Gyrocopter.Rocket_Barrage.Impact")
 	
-		self.ballistic_modifier	= target:AddNewModifier(self:GetCaster(), self, "modifier_imba_gyrocopter_rocket_barrage_ballistic_suppression", {duration = self:GetSpecialValueFor("ballistic_duration")})
-		
-		if self.ballistic_modifier then
-			self.ballistic_modifier:SetDuration(self:GetSpecialValueFor("ballistic_duration") * (1 - target:GetStatusResistance()), true)
-		end
-		
-		self.ballistic_modifier = nil
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_gyrocopter_rocket_barrage_ballistic_suppression", {duration = self:GetSpecialValueFor("ballistic_duration") * (1 - target:GetStatusResistance())})
 	
 		ApplyDamage({
 			victim 			= target,
@@ -143,13 +137,7 @@ function modifier_imba_gyrocopter_rocket_barrage:OnIntervalThink()
 				ParticleManager:ReleaseParticleIndex(self.barrage_particle)
 				
 				-- IMBAfication: Ballistic Suppression
-				self.ballistic_modifier	= self.lock_on_enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_rocket_barrage_ballistic_suppression", {duration = self.ballistic_duration})
-				
-				if self.ballistic_modifier then
-					self.ballistic_modifier:SetDuration(self.ballistic_duration * (1 - self.lock_on_enemy:GetStatusResistance()), true)
-				end
-				
-				self.ballistic_modifier = nil
+				self.lock_on_enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_rocket_barrage_ballistic_suppression", {duration = self.ballistic_duration * (1 - self.lock_on_enemy:GetStatusResistance())})
 	
 				ApplyDamage({
 					victim 			= self.lock_on_enemy,
@@ -198,13 +186,7 @@ function modifier_imba_gyrocopter_rocket_barrage:OnIntervalThink()
 					ParticleManager:ReleaseParticleIndex(self.barrage_particle)
 					
 					-- IMBAfication: Ballistic Suppression
-					self.ballistic_modifier	= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_rocket_barrage_ballistic_suppression", {duration = self.ballistic_duration})
-					
-					if self.ballistic_modifier then
-						self.ballistic_modifier:SetDuration(self.ballistic_duration * (1 - enemy:GetStatusResistance()), true)
-					end
-					
-					self.ballistic_modifier = nil
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_rocket_barrage_ballistic_suppression", {duration = self.ballistic_duration * (1 - enemy:GetStatusResistance())})
 		
 					ApplyDamage({
 						victim 			= enemy,
@@ -629,11 +611,7 @@ function modifier_imba_gyrocopter_homing_missile:OnIntervalThink()
 		
 		if not self.target:IsMagicImmune() then
 			-- "The rocket first applies the debuff, then the damage."
-			local stun_modifier	= self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(self.stun_duration * (1 - self.target:GetStatusResistance()), true)
-			end
+			self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration * (1 - self.target:GetStatusResistance())})
 			
 			ApplyDamage({
 				victim 			= self.target,
@@ -666,11 +644,7 @@ function modifier_imba_gyrocopter_homing_missile:OnIntervalThink()
 			
 			-- IMBAfication: Lock-On
 			if self.target:IsAlive() then
-				local lock_on_modifier = self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_lock_on", {duration = self.lock_on_duration})
-				
-				if lock_on_modifier then
-					lock_on_modifier:SetDuration(self.lock_on_duration * (1 - self.target:GetStatusResistance()), true)
-				end
+				self.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_lock_on", {duration = self.lock_on_duration * (1 - self.target:GetStatusResistance())})
 			end
 		end
 		
@@ -682,11 +656,7 @@ function modifier_imba_gyrocopter_homing_missile:OnIntervalThink()
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.target:GetAbsOrigin(), nil, (self:GetParent():GetIdealSpeed() * self.propulsion_speed_pct * 0.01) + (math.max(self:GetElapsedTime() - self.pre_flight_time, 0) * self.propulsion_duration_pct * 0.01), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 			if enemy ~= self.target then
 				-- "The rocket first applies the debuff, then the damage."
-				local stun_modifier	= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
-				
-				if stun_modifier then
-					stun_modifier:SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
 				
 				ApplyDamage({
 					victim 			= enemy,
@@ -1363,11 +1333,7 @@ function modifier_imba_gyrocopter_call_down_thinker:OnIntervalThink()
 	
 	if not self.first_missile_impact then
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-			self.slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_call_down_slow", {duration = self.slow_duration_first, slow = self.slow_first})
-			
-			if self.slow_modifier then
-				self.slow_modifier:SetDuration(self.slow_duration_first * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_call_down_slow", {duration = self.slow_duration_first * (1 - enemy:GetStatusResistance()), slow = self.slow_first})
 			
 			ApplyDamage({
 				victim 			= enemy,
@@ -1386,11 +1352,7 @@ function modifier_imba_gyrocopter_call_down_thinker:OnIntervalThink()
 		self.first_missile_impact = true
 	elseif not self.second_missile_impact then
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-			self.slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_call_down_slow", {duration = self.slow_duration_second, slow = self.slow_second})
-			
-			if self.slow_modifier then
-				self.slow_modifier:SetDuration(self.slow_duration_second * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyrocopter_call_down_slow", {duration = self.slow_duration_second * (1 - enemy:GetStatusResistance()), slow = self.slow_second})
 			
 			ApplyDamage({
 				victim 			= enemy,

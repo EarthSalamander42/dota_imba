@@ -539,14 +539,14 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		elseif target ~= nil and target:GetTeam() ~= caster:GetTeam() then
 			
 			if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() then
-				local static_charge_modifier = target:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0})
+				local static_charge_modifier = target:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0 * (1 - target:GetStatusResistance())})
 				
 				if static_charge_modifier ~= nil then 
 					static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + ability:GetSpecialValueFor("static_charge_stacks"))
 				end
 			end
 				
-			target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+			target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 			if caster:HasTalent("special_bonus_imba_zuus_5") then 
 				local root_duration = 0.5
@@ -554,9 +554,8 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 				if thundergod_focus_modifier ~= nil then 
 					root_duration = 0.5 + (thundergod_focus_modifier:GetStackCount() * 0.25)
 				end
-
-				print("Root duration:", root_duration)
-				target:AddNewModifier(caster, ability, "modifier_rooted", {duration = root_duration})
+				
+				target:AddNewModifier(caster, ability, "modifier_rooted", {duration = root_duration * (1 - target:GetStatusResistance())})
 			end
 
 			--7.21 changes (why you gotta complicate things Valve)
@@ -755,7 +754,7 @@ function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 					ApplyDamage(damage_table)
 
 					-- Add a static charge 
-					local static_charge_modifier = unit:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration})
+					local static_charge_modifier = unit:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration * (1 - unit:GetStatusResistance())})
 					if static_charge_modifier ~= nil then
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)	
 					end
@@ -797,10 +796,9 @@ function modifier_imba_zuus_static_field:Apply(target)
 	ApplyDamage(damage_table)
 
 	-- Add a static charge 
-	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration})
+	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration * (1 - target:GetStatusResistance())})
 	if static_charge_modifier then
 		static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
-		static_charge_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
 	end
 end
 
@@ -1394,7 +1392,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 				-- Does not apply the static charge stacks on heroes that are greater than 2500 distance away
 				if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() and (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() <= 2500 then
 					-- Add static charges prior to inflicting the damage
-					local static_charge_modifier = hero:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0})
+					local static_charge_modifier = hero:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0 * (1 - hero:GetStatusResistance())})
 					
 					if static_charge_modifier ~= nil then
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
@@ -1438,7 +1436,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 				hero:EmitSound("Hero_Zuus.GodsWrath.Target")
 				hero:AddNewModifier(caster, ability, "modifier_imba_zuus_lightning_fow", {duration = sight_duration, radius = true_sight_radius})
 				
-				local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})
+				local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration * (1 - hero:GetStatusResistance())})
 				if true_sight ~= nil then
 					true_sight:SetStackCount(true_sight_radius)
 				end

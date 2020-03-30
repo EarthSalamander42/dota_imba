@@ -92,7 +92,7 @@ function imba_troll_warlord_berserkers_rage:OnProjectileHit(hTarget, vLocation)
 		hTarget:EmitSound("n_creep_TrollWarlord.Ensnare")
 		
 		if hTarget:IsAlive() then
-			hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_berserkers_rage_ensnare", {duration = ensnare_duration}):SetDuration(ensnare_duration * (1 - hTarget:GetStatusResistance()), true)
+			hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_berserkers_rage_ensnare", {duration = ensnare_duration * (1 - hTarget:GetStatusResistance())})
 		end
 	end
 end
@@ -176,11 +176,7 @@ function modifier_imba_berserkers_rage_melee:OnAttackLanded( params )
 					local bash_damage = ability:GetSpecialValueFor("bash_damage")
 					local ensnare_duration = ability:GetSpecialValueFor("ensnare_duration")
 					ApplyDamage({victim = params.target, attacker = parent, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-					local bash_modifier = params.target:AddNewModifier(parent, ability, "modifier_stunned", {duration = ensnare_duration})
-					
-					if bash_modifier then
-						bash_modifier:SetDuration(ensnare_duration * (1 - params.target:GetStatusResistance()), true)
-					end
+					params.target:AddNewModifier(parent, ability, "modifier_stunned", {duration = ensnare_duration * (1 - params.target:GetStatusResistance())})
 					
 					params.target:EmitSound("DOTA_Item.SkullBasher")
 				end
@@ -276,7 +272,7 @@ function modifier_imba_berserkers_rage_ranged:OnAttackLanded( params )
 			local ability = self:GetAbility()
 			if RollPseudoRandom(ability:GetSpecialValueFor("ensnare_chance"), ability) then
 				local hamstring_duration = ability:GetSpecialValueFor("hamstring_duration")
-				params.target:AddNewModifier(parent, ability, "modifier_imba_berserkers_rage_slow", {duration = hamstring_duration})
+				params.target:AddNewModifier(parent, ability, "modifier_imba_berserkers_rage_slow", {duration = hamstring_duration * (1 - params.target:GetStatusResistance())})
 				params.target:EmitSound("DOTA_Item.Daedelus.Crit")
 			end
 		end
@@ -441,7 +437,7 @@ function imba_troll_warlord_whirling_axes_ranged:OnProjectileHit_ExtraData(targe
 		if RollPseudoRandom(ExtraData.on_hit_pct, self) then
 			caster:PerformAttack(target, true, true, true, true, false, true, true)
 		end
-		target:AddNewModifier(caster, self, "modifier_imba_whirling_axes_ranged", {duration = ExtraData.duration})
+		target:AddNewModifier(caster, self, "modifier_imba_whirling_axes_ranged", {duration = ExtraData.duration * (1 - target:GetStatusResistance())})
 		target:EmitSound("Hero_TrollWarlord.WhirlingAxes.Target")
 	else
 		self[ExtraData.index]["count"] = self[ExtraData.index]["count"] or 0
@@ -594,7 +590,7 @@ function imba_troll_warlord_whirling_axes_melee:DoAxeStuff(index,range,caster_lo
 		ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 		-- Imbued Axes
 		caster:PerformAttack(enemy, true, true, true, true, false, true, true)
-		enemy:AddNewModifier(caster, self, "modifier_imba_whirling_axes_melee", {duration = blind_duration, blind_stacks = blind_stacks})
+		enemy:AddNewModifier(caster, self, "modifier_imba_whirling_axes_melee", {duration = blind_duration * (1 - enemy:GetStatusResistance()), blind_stacks = blind_stacks})
 		enemy:EmitSound("Hero_TrollWarlord.WhirlingAxes.Target")
 	end
 end

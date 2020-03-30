@@ -167,9 +167,9 @@ function imba_outworld_devourer_astral_imprisonment:OnSpellStart()
 	end
 end
 
------------------------------------------------------------
--- modifier_imba_outworld_devourer_astral_imprisonment_prison --
------------------------------------------------------------
+----------------------------------------------------------------
+-- MODIFIER_IMBA_OUTWORLD_DEVOURER_ASTRAL_IMPRISONMENT_PRISON --
+----------------------------------------------------------------
 
 function modifier_imba_outworld_devourer_astral_imprisonment_prison:IsPurgable()	return false end
 
@@ -350,7 +350,7 @@ function modifier_imba_outworld_devourer_essence_flux_active:OnTakeDamage(keys)
 	if keys.attacker == self:GetCaster() then --and keys.damage_category == 0 then
 		keys.unit:EmitSound("Hero_ObsidianDestroyer.Equilibrium.Damage")
 		
-		keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_outworld_devourer_essence_flux_debuff", {duration = self.slow_duration})
+		keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_outworld_devourer_essence_flux_debuff", {duration = self.slow_duration * (1 - keys.unit:GetStatusResistance())})
 		
 		self:IncrementStackCount()
 	end

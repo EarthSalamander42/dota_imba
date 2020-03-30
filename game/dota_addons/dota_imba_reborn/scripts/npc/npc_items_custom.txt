@@ -8934,7 +8934,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1250"
+		"ItemCost"						"900"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -8982,7 +8982,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"21"
+				"bonus_intellect"		"28"
 			}
 			"02"
 			{
@@ -8992,7 +8992,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER" // also mana cost reduction
-				"bonus_cdr"				"15"
+				"bonus_cdr"				"20"
 			}
 			"04"
 			{

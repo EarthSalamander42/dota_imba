@@ -482,8 +482,7 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 									  DOTA_UNIT_TARGET_FLAG_NONE,
 									  FIND_ANY_ORDER,
 									  false)
-
-	local slow_modifier = nil
+									  
 	local final_damage	= nil
 	
 	-- For each enemy, only apply if the enemy is not magic immune
@@ -506,11 +505,7 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 			ApplyDamage(damageTable)  
 
 			-- Apply/Refresh slow debuff
-			slow_modifier = enemy:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(slow_duration * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 
@@ -742,11 +737,7 @@ function ApplyAncientSeal(caster, ability, target)
 	seal_duration = seal_duration + caster:FindTalentValue("special_bonus_imba_skywrath_mage_2")
 
 	-- Apply the main modifier on the target
-	local seal_modifier = target:AddNewModifier(caster, ability, modifier_main_seal, {duration = seal_duration})
-
-	if seal_modifier then
-		seal_modifier:SetDuration(seal_duration * (1 - target:GetStatusResistance()), true)
-	end
+	target:AddNewModifier(caster, ability, modifier_main_seal, {duration = seal_duration * (1 - target:GetStatusResistance())})
 			
 	-- Apply the modifier thinker on the ground at the target's location
 	CreateModifierThinker(caster, ability, modifier_thinker_aura, {duration = seal_duration}, target:GetAbsOrigin(), caster:GetTeamNumber(), false)

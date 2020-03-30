@@ -61,13 +61,13 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lina_4_Description"	"Light Strike Arrays cause magma to erupt from the ground, dealing minor damage for duration of the stun."
 "DOTA_Tooltip_ability_special_bonus_imba_lina_5"            	"Lina's spells apply damage over time"
 "DOTA_Tooltip_ability_special_bonus_imba_lina_5_Description" 	"Enemies hit by Lina's spells take (40 * # of Fiery Soul Stacks) damage per second for 5 seconds."
-"DOTA_Tooltip_ability_special_bonus_imba_lina_6"            	"Laguna Blade stuns targets for 0.25 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_6"            	"Laguna Blade stuns targets for {s:value} seconds"
 "DOTA_Tooltip_ability_special_bonus_imba_lina_7"				"Reverb Array"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_7_Description"    "LSA's main explosion is repeated twice, which subsequents explosion having 75 larger radius but halved stun duration of the previous."
+"DOTA_Tooltip_ability_special_bonus_imba_lina_7_Description"    "LSA's main explosion is repeated twice, which subsequents explosion having {s:add_radius} larger radius but halved stun duration of the previous."
 "DOTA_Tooltip_ability_special_bonus_imba_lina_8"            	"Blazing Fire"
 "DOTA_Tooltip_ability_special_bonus_imba_lina_8_Description"	"Attacks apply Blazing Fire, dealing 10% of Lina's intelligence as damage per second.\nLina's spells will consume the debuff, instantly dealing remaing damage."
-"DOTA_Tooltip_ability_special_bonus_imba_lina_9"            	"+30/2% Fiery Soul Per Stack"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_10"            	"-6s Dragon Slave Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_9"            	"+{s:value}/{s:value2}% Fiery Soul Per Stack"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_10"            	"-{s:value}s Dragon Slave Cooldown"
 
 
 "DOTA_Tooltip_modifier_imba_blazing_strike"                	"Blazing Fire"

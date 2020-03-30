@@ -926,11 +926,7 @@ function imba_lycan_howl_723:OnSpellStart()
 	ParticleManager:SetParticleControlEnt(particle_lycan_howl_fx, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_mouth", self:GetCaster():GetAbsOrigin(), true)
 
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		local howl_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", {duration = self:GetSpecialValueFor("howl_duration")})
-		
-		if howl_modifier then
-			howl_modifier:SetDuration(self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", {duration = self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance())})
 		
 		-- IMBAfication: Moon Phase
 		if not GameRules:IsDaytime() and self:GetAutoCastState() then
@@ -961,11 +957,7 @@ function imba_lycan_howl_723:OnSpellStart()
 				ParticleManager:SetParticleControl(particle_wolves_howl_fx, 1, creature:GetAbsOrigin())
 				
 				for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), creature:GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-					local howl_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", {duration = self:GetSpecialValueFor("howl_duration")})
-					
-					if howl_modifier then
-						howl_modifier:SetDuration(self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", {duration = self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance())})
 				end
 				
 				-- IMBAfication: Moon Phase
@@ -2037,8 +2029,8 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded (keys)
 			end
 			
 			-- Inflict modifier on enemy.
-			target:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.duration})			
-            target:AddNewModifier(self.caster, self.ability, "modifier_imba_summoned_wolf_wicked_crunch_damage", {duration = self.duration})			
+			target:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.duration * (1 - target:GetStatusResistance())})
+            target:AddNewModifier(self.caster, self.ability, "modifier_imba_summoned_wolf_wicked_crunch_damage", {duration = self.duration * (1 - target:GetStatusResistance())})
 
 		end
 		
@@ -2049,7 +2041,7 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded (keys)
         		local max_stacks = self.ability:GetSpecialValueFor("max_stacks")
 				
 				-- Refresh the debuff modifier
-				target:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.ability:GetSpecialValueFor("duration"), lycan_attack = true})
+				target:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.ability:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), lycan_attack = true})
 
 				-- Consumes damage debuff and deals damage
 				local bonus_damage_modifier = target:FindModifierByName("modifier_imba_summoned_wolf_wicked_crunch_damage")

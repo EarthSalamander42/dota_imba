@@ -437,7 +437,7 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 						if modifier_handler then
 							local new_duration = modifier_handler.duration
 							enemy:RemoveModifierByName(requiem_debuff)
-							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration})
+							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration * (1 - enemy:GetStatusResistance())})
 						end
 					end
 
@@ -451,7 +451,7 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 						if modifier_handler then
 							local new_duration = modifier_handler.duration
 							enemy:RemoveModifierByName(requiem_debuff)
-							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration})
+							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration * (1 - enemy:GetStatusResistance())})
 						end
 					end
 			end
@@ -562,7 +562,7 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 	
 	-- Apply a debuff stack that causes shadowrazes to do more damage
 	if not enemy:HasModifier(modifier_debuff) then
-		enemy:AddNewModifier(caster, ability, modifier_debuff, {duration = duration})
+		enemy:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - enemy:GetStatusResistance())})
 	end
 	
 	local modifier_debuff_counter = enemy:FindModifierByName(modifier_debuff)
@@ -1724,7 +1724,7 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 	end
 
 	-- Apply the debuff on enemies hit
-	target:AddNewModifier(caster, ability, modifier_debuff, {duration = slow_duration})
+	target:AddNewModifier(caster, ability, modifier_debuff, {duration = slow_duration * (1 - target:GetStatusResistance())})
 	-- If the caster still has the Soul Harvest buff, increase it
 	if caster:HasModifier(modifier_harvest) and target:IsRealHero() then
 		local modifier_harvest_handler = caster:FindModifierByName(modifier_harvest)
@@ -1755,16 +1755,12 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 		caster:Heal(damage_dealt, caster)
 	end
 	
-	-- -- F.E.A.R.
-	-- if not target:HasModifier("modifier_nevermore_requiem_fear") then
-		-- local fear_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration")})
-		
-		-- if fear_modifier then
-			-- fear_modifier:SetDuration(self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance()), true)
-		-- end
-	-- else
-		-- target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
-	-- end
+	-- F.E.A.R.
+	if not target:HasModifier("modifier_nevermore_requiem_fear") then
+		target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance())})
+	else
+		target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
+	end
 end
 
 

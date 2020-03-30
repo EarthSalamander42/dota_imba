@@ -147,7 +147,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 		end
 
 		if caster:HasTalent("special_bonus_imba_skeleton_king_3") then
-			target:AddNewModifier(caster, ability, "modifier_imba_wraithfire_blast_debuff_talent", {duration = caster:FindTalentValue("special_bonus_imba_skeleton_king_3", "duration")})
+			target:AddNewModifier(caster, ability, "modifier_imba_wraithfire_blast_debuff_talent", {duration = caster:FindTalentValue("special_bonus_imba_skeleton_king_3", "duration") * (1 - target:GetStatusResistance())})
 		end
 
 		-- If it was a main blast, deal damage
@@ -161,7 +161,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 		ApplyDamage(damageTable)
 
 		-- Main stun the target
-		target:AddNewModifier(caster, ability, modifier_stun, {duration = main_target_stun_duration})
+		target:AddNewModifier(caster, ability, modifier_stun, {duration = main_target_stun_duration * (1 - target:GetStatusResistance())})
 		
 		-- IMBAfication: Behond the Wraith!
 		if extra_data.bTalent == 0 then
@@ -185,7 +185,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 
 	else
 		-- Otherwise, stun for short duration
-		target:AddNewModifier(caster, ability, modifier_stun, {duration = secondary_target_stun_duration})
+		target:AddNewModifier(caster, ability, modifier_stun, {duration = secondary_target_stun_duration * (1 - target:GetStatusResistance())})
 	end
 
 	-- If the enemy died, play the cast response
@@ -196,7 +196,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 	end)
 
 	-- Apply the debuff on the enemy
-	target:AddNewModifier(caster, ability, modifier_debuff, {duration = debuff_duration})
+	target:AddNewModifier(caster, ability, modifier_debuff, {duration = debuff_duration * (1 - target:GetStatusResistance())})
 
 	-- #7 Talent: Wraithfire Blast now summons Wraiths on all targets hit
 	if caster:HasTalent("special_bonus_imba_skeleton_king_7") and not bTalent then
@@ -1854,7 +1854,7 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
 		-- If this is a real hero, stun and deal damage to it
 		if self.parent:IsRealHero() then
 
-			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
+			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration * (1 - self.parent:GetStatusResistance())})
 
 			local damageTable = {victim = self.parent,
 								 attacker = self.caster, 
@@ -1931,7 +1931,7 @@ function imba_wraith_king_create_kingdom(keys)
 									 false)
 
 	for _,enemy_unit in pairs(enemy_units) do
-				enemy_unit:AddNewModifier(keys.caster, keys.ability, keys.modifier_slow, {duration = keys.slow_duration})
+		enemy_unit:AddNewModifier(keys.caster, keys.ability, keys.modifier_slow, {duration = keys.slow_duration * (1 - enemy_unit:GetStatusResistance())})
 	end
 
 	-- Play the Wraith Fire ring particle
@@ -2046,11 +2046,7 @@ function modifier_imba_wraith_soul_strike:OnAttackLanded(keys)
 		if self.owner:HasTalent("special_bonus_imba_skeleton_king_4") then
 			local duration = self.owner:FindTalentValue("special_bonus_imba_skeleton_king_4", "duration")
 
-			local slow_modifier = target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = duration})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = duration * (1 - target:GetStatusResistance())})
 		end
 	end
 end

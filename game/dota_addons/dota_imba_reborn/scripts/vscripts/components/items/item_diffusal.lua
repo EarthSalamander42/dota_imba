@@ -61,19 +61,11 @@ function item_imba_diffusal_blade:OnSpellStart()
 	target:Purge(true, false, false, false, false)
 	
 	-- Add the slow modifier
-	local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_blade_slow", {duration = self:GetSpecialValueFor("purge_slow_duration")})
-	
-	if slow_modifier then
-		slow_modifier:SetDuration(self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance()), true)
-	end
+	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_blade_slow", {duration = self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance())})
 	
 	-- If the target is not a hero (or a creep hero), root it
 	if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-		local root_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration")})
-		
-		if root_modifier then
-			root_modifier:SetDuration(self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -245,19 +237,11 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 		end
 
 		-- Add the slow modifier
-		local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_blade_2_slow", {duration = self:GetSpecialValueFor("purge_slow_duration")})
-		
-		if slow_modifier then
-			slow_modifier:SetDuration(self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_blade_2_slow", {duration = self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance())})
 		
 		-- If the target is not a hero (or a creep hero), root it
 		if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-			local root_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration")})
-			
-			if root_modifier then
-				root_modifier:SetDuration(self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance())})
 		end
 	
 		return nil

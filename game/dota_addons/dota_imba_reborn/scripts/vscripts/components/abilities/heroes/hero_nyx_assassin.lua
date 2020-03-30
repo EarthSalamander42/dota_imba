@@ -194,13 +194,13 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 	ParticleManager:ReleaseParticleIndex(particle_impact_fx)
 
 	-- Stun target
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = duration, slow_after_stun = slow_after_stun})
+	target:AddNewModifier(caster, ability, modifier_stun, {duration = duration, slow_after_stun = slow_after_stun * (1 - target:GetStatusResistance())})
 
 	-- Hurl target in the air
 	local knockbackProperties =
 		{
-			duration = air_time,
-			knockback_duration = air_time,
+			duration = air_time * (1 - target:GetStatusResistance()),
+			knockback_duration = air_time * (1 - target:GetStatusResistance()),
 			knockback_distance = 0,
 			knockback_height = air_height
 		}
@@ -372,7 +372,7 @@ end
 
 function modifier_imba_impale_stun:OnDestroy()
 	if self.slow_after_stun and not self:GetParent():IsMagicImmune() then
-		self.parent:AddNewModifier(self.caster, self.ability, self.slow_modifier, { duration = self.slow_duration })
+		self.parent:AddNewModifier(self.caster, self.ability, self.slow_modifier, { duration = self.slow_duration * (1 - self.parent:GetStatusResistance())})
 	end
 end
 
@@ -594,7 +594,7 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 
 	-- If target doesn't have a parasite yet, plant a new one in it
 	if not target:HasModifier(modifier_parasite) then
-		target:AddNewModifier(caster, ability, modifier_parasite, {duration = parasite_duration})
+		target:AddNewModifier(caster, ability, modifier_parasite, {duration = parasite_duration * (1 - target:GetStatusResistance())})
 	end
 
 	-- Get target's intelligence
@@ -728,7 +728,7 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 		if self.parasite_charged_mana >= self.charge_threshold then
 
 			-- Give the target the charged parasite modifier and the appropriate variables
-			local modifier_charged_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_charged, {duration = self.explosion_delay})
+			local modifier_charged_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_charged, {duration = self.explosion_delay * (1 - self.parent:GetStatusResistance())})
 			if modifier_charged_handler then
 				modifier_charged_handler.starting_target_mana = self.starting_target_mana
 				modifier_charged_handler.parasite_charged_mana = self.parasite_charged_mana
@@ -1045,7 +1045,7 @@ function modifier_imba_spiked_carapace:OnCreated()
 
 			for _,enemy in pairs(enemies) do
 				-- Stun each enemy
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
 
 				-- Grant 30 Vendetta stacks
 				if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
@@ -1251,11 +1251,7 @@ function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePure(keys)
 				end
 
 				-- Stun it
-				local stun_modifier = keys.attacker:AddNewModifier(self:GetCaster(), self.ability, self.modifier_stun, {duration = self.stun_duration})
-				
-				if stun_modifier then
-					stun_modifier:SetDuration(self.stun_duration * (1 - keys.attacker:GetStatusResistance()), true)
-				end
+				keys.attacker:AddNewModifier(self:GetCaster(), self.ability, self.modifier_stun, {duration = self.stun_duration * (1 - keys.attacker:GetStatusResistance())})
 			end
 		end
 	
@@ -1506,7 +1502,7 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 			end
 			
 			-- Add the break debuff
-			target:AddNewModifier(self.caster, self.ability, "modifier_imba_vendetta_break", {duration = self.break_duration})
+			target:AddNewModifier(self.caster, self.ability, "modifier_imba_vendetta_break", {duration = self.break_duration * (1 - target:GetStatusResistance())})
 
 			-- Remove modifier
 			self:Destroy()
@@ -1558,9 +1554,7 @@ end
 modifier_imba_vendetta_break	= class({})
 
 function modifier_imba_vendetta_break:CheckState()
-	local state = {[MODIFIER_STATE_PASSIVES_DISABLED] = true}
-	
-	return state
+	return {[MODIFIER_STATE_PASSIVES_DISABLED] = true}
 end
 
 -----------------------------------------------------------------

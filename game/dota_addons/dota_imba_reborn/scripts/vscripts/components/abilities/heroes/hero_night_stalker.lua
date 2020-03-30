@@ -229,7 +229,7 @@ function imba_night_stalker_void:OnSpellStart()
 		ApplyDamage(damageTable)    
 
 		-- Apply ministun on target
-		target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
+		target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration * (1 - target:GetStatusResistance())})
 
 		-- -- Set duration variable
 		local duration
@@ -296,7 +296,7 @@ function imba_night_stalker_void:OnSpellStart()
 		end
 
 		-- Apply Void on the target with the correct duration
-		target:AddNewModifier(caster, ability, modifier_void, {duration = duration})
+		target:AddNewModifier(caster, ability, modifier_void, {duration = duration * (1 - target:GetStatusResistance())})
 	else
 		-- Scepter logic
 		local slow_duration	= day_duration
@@ -315,7 +315,7 @@ function imba_night_stalker_void:OnSpellStart()
 		for _, enemy in pairs(enemies) do
 			-- "Void first applies the slow debuff, then the damage, then the stun debuff."
 			
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_slow", {duration = slow_duration}):SetDuration(slow_duration * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_slow", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 			
 			local damageTable = 
 			{
@@ -329,11 +329,7 @@ function imba_night_stalker_void:OnSpellStart()
 			ApplyDamage(damageTable) 
 			
 			-- Apply ministun on target
-			local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_ministun", {duration = stun_duration})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(stun_duration * (1 - enemy:GetStatusResistance()), true)
-			end
+			local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_ministun", {duration = stun_duration * (1 - enemy:GetStatusResistance())})
 			
 			-- if not hit_hero and enemy:IsRealHero() then
 				-- hit_hero = true
@@ -538,7 +534,7 @@ function imba_night_stalker_crippling_fear:OnSpellStart()
 	end
 
 	-- Apply Silence modifier
-	target:AddNewModifier(caster, ability, modifier_fear, {duration = duration})
+	target:AddNewModifier(caster, ability, modifier_fear, {duration = duration * (1 - target:GetStatusResistance())})
 end
 
 -- Silence modifier
@@ -640,7 +636,7 @@ function modifier_imba_crippling_fear_silence:OnHeroKilled(keys)
 			for _,enemy in pairs(enemies) do
 				-- Make sure enemy didn't get magic immune suddenly
 				if not enemy:IsMagicImmune() then
-					enemy:AddNewModifier(self.caster, self.ability, self.modifier_fear, {duration = self.fear_duartion})
+					enemy:AddNewModifier(self.caster, self.ability, self.modifier_fear, {duration = self.fear_duartion * (1 - enemy:GetStatusResistance())})
 				end
 			end
 		end

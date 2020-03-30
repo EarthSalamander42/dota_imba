@@ -86,30 +86,18 @@ function imba_visage_grave_chill:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(chill_particle)
 	
 	-- I set the target as the caster here rather than the caster itself because I am utilizing that target's Death's Enticement IMBAfication modifier stacks, which I want to show on client-side
-	local chill_buff_modifier	= self:GetCaster():AddNewModifier(target, self, "modifier_imba_visage_grave_chill_buff", {duration = self:GetSpecialValueFor("chill_duration")})
-	
-	if chill_buff_modifier then
-		chill_buff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-	end
+	self:GetCaster():AddNewModifier(target, self, "modifier_imba_visage_grave_chill_buff", {duration = self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance())})
 	
 	-- "Grave Chill also grants the buff to Familiars within 1200 range of Visage. The buff on the Familiars is not aura-based. It places a separate buff on each Familiar."
 	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
 	
 	for _, ally in pairs(allies) do
 		if string.find(ally:GetDebugName(), "npc_dota_visage_familiar") then
-			chill_buff_modifier	= ally:AddNewModifier(target, self, "modifier_imba_visage_grave_chill_buff", {duration = self:GetSpecialValueFor("chill_duration")})
-	
-			if chill_buff_modifier then
-				chill_buff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-			end
+			ally:AddNewModifier(target, self, "modifier_imba_visage_grave_chill_buff", {duration = self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance())})
 		end
 	end
 	
-	local chill_debuff_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_grave_chill_debuff", {duration = self:GetSpecialValueFor("chill_duration")})
-	
-	if chill_debuff_modifier then
-		chill_debuff_modifier:SetDuration(self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance()), true)
-	end
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_visage_grave_chill_debuff", {duration = self:GetSpecialValueFor("chill_duration") * (1 - target:GetStatusResistance())})
 end
 
 -------------------------------
@@ -955,11 +943,7 @@ end
 
 function modifier_imba_visage_summon_familiars:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() then
-		local petrifying_breath_modifier = keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_visage_summon_familiars_petrifying_breath", {duration = self.petrifying_breath_duration})
-		
-		if petrifying_breath_modifier then
-			petrifying_breath_modifier:SetDuration(self.petrifying_breath_duration * (1 - keys.target:GetStatusResistance()), true)
-		end
+		keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_visage_summon_familiars_petrifying_breath", {duration = self.petrifying_breath_duration * (1 - keys.target:GetStatusResistance())})
 	end
 end
 
@@ -1099,11 +1083,7 @@ function modifier_imba_visage_summon_familiars_stone_form_buff:OnCreated()
 	
 	-- "Stone Form first applies the debuff, then the damage."
 	for _, enemy in pairs(enemies) do
-		stun_modifier		= enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
-		
-		if stun_modifier then
-			stun_modifier:SetDuration(self.stun_duration * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
 	
 		damageTable.victim	= enemy
 

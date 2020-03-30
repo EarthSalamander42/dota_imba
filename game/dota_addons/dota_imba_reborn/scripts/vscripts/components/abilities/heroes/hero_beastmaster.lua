@@ -352,7 +352,7 @@ function modifier_imba_boar_poison:OnAttackLanded(params)
 		-- When the boar attacks a target, apply poison on the target.
 		if (parent == params.attacker) then
 			if (target:IsCreep() or target:IsHero()) and not target:IsBuilding() then
-				target:AddNewModifier(parent, ability, "modifier_imba_boar_poison_debuff", {duration = duration})
+				target:AddNewModifier(parent, ability, "modifier_imba_boar_poison_debuff", {duration = duration * (1 - target:GetStatusResistance())})
 			end
 		end
 	end

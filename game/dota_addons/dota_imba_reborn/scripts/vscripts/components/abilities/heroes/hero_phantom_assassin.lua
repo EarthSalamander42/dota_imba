@@ -190,8 +190,8 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 
 	-- Apply slow and silence modifiers
 	if not target:IsMagicImmune() then
-		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_silence", {duration = self:GetSpecialValueFor("silence_duration")})
-		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_slow", {duration = self:GetSpecialValueFor("slow_duration")})
+		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_silence", {duration = self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance())})
 	end
 
 	caster:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_dmg_reduction", {})

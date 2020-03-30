@@ -120,7 +120,7 @@ function imba_pugna_nether_blast:OnSpellStart()
 
 			-- If the enemy doesn't have the modifier yet, apply it
 			if not enemy:HasModifier(modifier_magic_res) then
-				enemy:AddNewModifier(caster, ability, modifier_magic_res, {duration = magic_res_duration})
+				enemy:AddNewModifier(caster, ability, modifier_magic_res, {duration = magic_res_duration * (1 - enemy:GetStatusResistance())})
 			end
 
 			-- Increment stack count
@@ -254,6 +254,8 @@ function imba_pugna_decrepify:OnSpellStart()
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
 		end
+		
+		duration = duration * (1 - target:GetStatusResistance())
 	end
 
 	-- Apply decrepify modifier on target

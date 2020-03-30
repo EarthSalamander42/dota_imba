@@ -257,11 +257,11 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
 	end
 	
 	-- Immediately apply stun
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
 	
 	-- #7 Talent: Earth Spikes slows target by 25% and they take 30% more damage from Finger of Death
 	if caster:HasTalent("special_bonus_imba_lion_7") then
-	target:AddNewModifier(caster, ability, modifier_death_spike, {duration = knock_up_time + caster:FindTalentValue("special_bonus_imba_lion_7","duration")})
+		target:AddNewModifier(caster, ability, modifier_death_spike, {duration = (knock_up_time + caster:FindTalentValue("special_bonus_imba_lion_7","duration")) * (1 - target:GetStatusResistance())})
 	end
 
 	
@@ -272,8 +272,8 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
 		center_x = target.x,
 		center_y = target.y,
 		center_z = target.z,
-		duration = knock_up_time,
-		knockback_duration = knock_up_time,
+		duration = knock_up_time * (1 - target:GetStatusResistance()),
+		knockback_duration = knock_up_time * (1 - target:GetStatusResistance()),
 		knockback_distance = 0,
 		knockback_height = knock_up_height
 	}
@@ -399,7 +399,7 @@ function imba_lion_hex:OnSpellStart()
 			ParticleManager:ReleaseParticleIndex(particle_hex_fx)
 			
 			-- Transform your enemy into a frog
-			target:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+			target:AddNewModifier(caster, ability, modifier_hex, {duration = duration * (1 - target:GetStatusResistance())})
 		end
 	else
 		target = self:GetCursorPosition()
@@ -422,7 +422,7 @@ function imba_lion_hex:OnSpellStart()
 			ParticleManager:SetParticleControl(particle_hex_fx, 0, enemy:GetAbsOrigin())      
 			ParticleManager:ReleaseParticleIndex(particle_hex_fx)
 			
-			enemy:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(caster, ability, modifier_hex, {duration = duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 end
@@ -520,7 +520,7 @@ function modifier_imba_lion_hex:OnIntervalThink()
 				ParticleManager:ReleaseParticleIndex(self.particle_hex_fx)
 
 				-- Give it the hex modifier
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_hex, {duration = self.duration})                
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_hex, {duration = self.duration * (1 - enemy:GetStatusResistance())})
 
 				-- Increment count
 				hexed_enemies = hexed_enemies + 1
@@ -725,7 +725,7 @@ function imba_lion_mana_drain:OnSpellStart()
 			-- If there are any enemies, apply debuff modifier to them for the duration of the interval
 			if #enemies > 0 then
 				for _,enemy in pairs(enemies) do
-					enemy:AddNewModifier(caster, ability, modifier_manadrain, {duration = interval*2})                    
+					enemy:AddNewModifier(caster, ability, modifier_manadrain, {duration = interval*2})
 				end
 
 				return interval
@@ -1296,7 +1296,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 			return nil
 		end
 
-		target:AddNewModifier(caster, ability, "modifier_imba_finger_of_death_delay", {duration = kill_grace_duration})
+		target:AddNewModifier(caster, ability, "modifier_imba_finger_of_death_delay", {duration = kill_grace_duration * (1 - target:GetStatusResistance())})
 		
 		-- Play impact sound
 		EmitSoundOn(sound_impact, target)

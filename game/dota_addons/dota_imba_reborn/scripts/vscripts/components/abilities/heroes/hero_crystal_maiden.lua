@@ -100,7 +100,7 @@ function modifier_imba_arcane_dynamo:OnTakeDamage( kv )
 		-- inflictor only appears for ability/item caused damages
 		if kv.inflictor and not kv.inflictor:IsItem() then
 			local duration = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_5", "duration")
-			kv.unit:AddNewModifier(self.caster, self.ability, self.ability_slow_modifier, { duration = duration })
+			kv.unit:AddNewModifier(self.caster, self.ability, self.ability_slow_modifier, { duration = duration * (1 - kv.unit:GetStatusResistance())})
 		end
 	end
 end
@@ -218,7 +218,7 @@ function imba_crystal_maiden_crystal_nova:OnSpellStart()
 
 	-- Slow and damage all enemies caught in the radius
 	for _,enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, self, "modifier_imba_crystal_nova_slow", {duration = nova_slow_duration} )
+		enemy:AddNewModifier(caster, self, "modifier_imba_crystal_nova_slow", {duration = nova_slow_duration * (1 - enemy:GetStatusResistance())} )
 		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = nova_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 	end
 end
@@ -501,26 +501,16 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 
 		-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 		if target:GetTeam() ~= caster:GetTeam() then
-			local frostbite_modifier = nil
-			
 			if target:IsConsideredHero() or target:IsRoshan() or target:IsAncient() then
 				-- target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
-				frostbite_modifier = target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration })
-				
-				if frostbite_modifier then
-					frostbite_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
-				end
+				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration * (1 - target:GetStatusResistance())})
 			else
 				-- target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
-				frostbite_modifier = target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration_creep })
-
-				if frostbite_modifier then
-					frostbite_modifier:SetDuration(duration_creep * (1 - target:GetStatusResistance()), true)
-				end
+				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration_creep * (1 - target:GetStatusResistance())})
 			end
 			
 		else
-			target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_ally", { duration = duration})
+			target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_ally", {duration = duration})
 		end
 	end
 end
@@ -591,7 +581,7 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnDestroy()
 	if self.passive_proc and not self.parent:IsMagicImmune() and self.caster:HasTalent("special_bonus_imba_crystal_maiden_1") then
 		local duration = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_1", "duration")
 
-		self.parent:AddNewModifier(self.caster, self.ability, icy_touch_slow_modifier, { duration = duration })
+		self.parent:AddNewModifier(self.caster, self.ability, icy_touch_slow_modifier, { duration = duration * (1 - self.parent:GetStatusResistance())})
 	end
 end
 
@@ -731,7 +721,7 @@ function modifier_imba_crystal_maiden_frostbite_passive_ready:OnTakeDamage(keys)
 			end
 
 			--Apply Frost bite to enemy
-			attacker:AddNewModifier(unit, self:GetAbility(), "modifier_imba_crystal_maiden_frostbite_enemy", { duration = self:GetAbility():GetLevelSpecialValueFor("duration", 0), passive_proc = true})
+			attacker:AddNewModifier(unit, self:GetAbility(), "modifier_imba_crystal_maiden_frostbite_enemy", { duration = self:GetAbility():GetLevelSpecialValueFor("duration", 0) * (1 - attacker:GetStatusResistance()), passive_proc = true})
 			attacker:EmitSound("Hero_Crystal.Frostbite")
 			unit:AddNewModifier(unit, self:GetAbility(), "modifier_imba_crystal_maiden_frostbite_passive_recharging", {duration = cooldown})
 			self:Destroy()
@@ -763,7 +753,7 @@ function modifier_imba_crystal_maiden_frostbite_passive_recharging:OnCreated()
 	end
 end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsHidden() return false end
-function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsDebuff() return false end
+function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsDebuff() return true end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsPurgable() return false end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:GetTexture() return "custom/crystal_maiden_frostbite_cooldown" end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:OnDestroy()
@@ -981,7 +971,7 @@ function imba_crystal_maiden_freezing_field:OnSpellStart()
 
 		-- Apply a reduced time frostbite to the enemies
 		for _,enemy in pairs(enemies) do
-			enemy:AddNewModifier(enemy, self, "modifier_imba_crystal_maiden_frostbite_enemy", {duration = self.frostbite_duration} )
+			enemy:AddNewModifier(enemy, self, "modifier_imba_crystal_maiden_frostbite_enemy", {duration = self.frostbite_duration * (1 - enemy:GetStatusResistance())} )
 		end
 
 		--Slow aura
@@ -1222,7 +1212,7 @@ function modifier_imba_crystal_maiden_freezing_field_slow:OnIntervalThink()
 	end
 	if self.accumulated_exposure >= self.frostbite_delay then
 		self.accumulated_exposure = self.accumulated_exposure - self.frostbite_delay
-		self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_crystal_maiden_frostbite_enemy", {duration = self.frostbite_duration} )
+		self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_crystal_maiden_frostbite_enemy", {duration = self.frostbite_duration * (1 - self.parent:GetStatusResistance())} )
 	end
 end
 

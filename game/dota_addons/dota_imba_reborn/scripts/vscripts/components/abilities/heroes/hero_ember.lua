@@ -53,7 +53,7 @@ end
 -- Apply Searing Chains debuff
 function ApplySearingChains(caster, source, target, ability, duration)
 	target:EmitSound("Hero_EmberSpirit.SearingChains.Target")
-	target:AddNewModifier(caster, ability, "modifier_imba_searing_chains_debuff", {damage = ability:GetSpecialValueFor("damage_per_tick"), tick_interval = ability:GetSpecialValueFor("tick_interval"), duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+	target:AddNewModifier(caster, ability, "modifier_imba_searing_chains_debuff", {damage = ability:GetSpecialValueFor("damage_per_tick"), tick_interval = ability:GetSpecialValueFor("tick_interval"), duration = duration * (1 - target:GetStatusResistance())})
 	local impact_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_start.vpcf", PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControl(impact_pfx, 0, source:GetAbsOrigin())
 	ParticleManager:SetParticleControl(impact_pfx, 1, target:GetAbsOrigin())
@@ -385,7 +385,7 @@ function modifier_imba_searing_chains_debuff:OnCreated(keys)
 		self:StartIntervalThink(self.tick_interval)
 
 		-- Mini-stun
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 0.1 * (1 - self:GetParent():GetStatusResistance())})
 	end
 end
 
