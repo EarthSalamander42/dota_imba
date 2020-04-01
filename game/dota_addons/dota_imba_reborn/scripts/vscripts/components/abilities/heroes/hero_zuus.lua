@@ -1613,6 +1613,31 @@ function modifier_imba_zuus_thundergods_awakening:OnRemoved()
 	end
 end
 
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_zuus_4", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_zuus_9", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_zuus_8", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_zuus_4	= modifier_special_bonus_imba_zuus_4 or class({})
+modifier_special_bonus_imba_zuus_9	= modifier_special_bonus_imba_zuus_9 or class({})
+modifier_special_bonus_imba_zuus_8	= modifier_special_bonus_imba_zuus_8 or class({})
+
+function modifier_special_bonus_imba_zuus_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_zuus_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_zuus_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_8:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions --
 
 LinkLuaModifier("modifier_special_bonus_imba_zuus_3", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)

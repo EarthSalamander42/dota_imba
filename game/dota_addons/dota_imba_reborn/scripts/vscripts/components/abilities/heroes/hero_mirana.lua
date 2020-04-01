@@ -1717,3 +1717,39 @@ end
 function modifier_imba_mirana_silence_stance_visible:IsPurgable() return false end
 function modifier_imba_mirana_silence_stance_visible:IsDebuff() return false end
 function modifier_imba_mirana_silence_stance_visible:RemoveOnDeath() return false end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_mirana_1", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_mirana_9", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_mirana_4", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_mirana_8", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_mirana_10", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_mirana_1	= modifier_special_bonus_imba_mirana_1 or class({})
+modifier_special_bonus_imba_mirana_9	= modifier_special_bonus_imba_mirana_9 or class({})
+modifier_special_bonus_imba_mirana_4	= modifier_special_bonus_imba_mirana_4 or class({})
+modifier_special_bonus_imba_mirana_8	= modifier_special_bonus_imba_mirana_8 or class({})
+modifier_special_bonus_imba_mirana_10	= modifier_special_bonus_imba_mirana_10 or class({})
+
+function modifier_special_bonus_imba_mirana_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_mirana_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_mirana_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_mirana_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_mirana_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_10:RemoveOnDeath() 	return false end

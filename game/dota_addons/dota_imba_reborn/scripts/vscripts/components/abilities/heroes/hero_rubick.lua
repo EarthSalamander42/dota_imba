@@ -1621,19 +1621,14 @@ function modifier_imba_rubick_spellsteal:OnCreated( kv )
 	end
 	
 	self.stolen_spell_amp = kv.spell_amp * 100
-
-	if self:GetParent():HasScepter() then
-		-- print("Spell Amp:", self.stolen_spell_amp)
-		self:SetStackCount(self.stolen_spell_amp)
-	end
+	
+	self:SetStackCount(self.stolen_spell_amp)
 end
 
 function modifier_imba_rubick_spellsteal:OnRefresh( kv )
 	if IsClient() then return end
-	if self:GetParent():HasScepter() then
-		-- print("Spell Amp (refresh):", self.stolen_spell_amp)
-		self:SetStackCount(self.stolen_spell_amp)
-	end
+	
+	self:SetStackCount(self.stolen_spell_amp)
 end
 
 function modifier_imba_rubick_spellsteal:OnDestroy( kv )
@@ -1646,12 +1641,10 @@ end
 -- Modifier Effects
 --------------------------------------------------------------------------------
 function modifier_imba_rubick_spellsteal:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ABILITY_START,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
-
-	return funcs
 end
 
 function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
@@ -1688,8 +1681,12 @@ function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
 	end
 end
 
-function modifier_imba_rubick_spellsteal:GetModifierSpellAmplify_Percentage()
-	return self:GetStackCount()
+function modifier_imba_rubick_spellsteal:GetModifierSpellAmplify_Percentage(keys)
+	if self:GetCaster():HasTalent("special_bonus_imba_rubick_spell_steal_spell_amp") and keys and keys.inflictor and keys.inflictor:IsStolen() then
+		return math.max(self:GetCaster():FindTalentValue("special_bonus_imba_rubick_spell_steal_spell_amp"), self:GetStackCount())
+	elseif self:GetCaster():HasScepter() then
+		return self:GetStackCount()
+	end
 end
 
 -------------------------------------------
@@ -1881,3 +1878,27 @@ function imba_rubick_arcane_supremacy:OnOwnerSpawned()
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_rubick_remnants_of_null_field"), "modifier_special_bonus_imba_rubick_remnants_of_null_field", {})
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_rubick_2", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rubick_3", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rubick_spell_steal_spell_amp", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_rubick_2	= modifier_special_bonus_imba_rubick_2 or class({})
+modifier_special_bonus_imba_rubick_3	= modifier_special_bonus_imba_rubick_3 or class({})
+modifier_special_bonus_imba_rubick_spell_steal_spell_amp	= modifier_special_bonus_imba_rubick_spell_steal_spell_amp or class({})
+
+function modifier_special_bonus_imba_rubick_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_rubick_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rubick_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_rubick_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rubick_spell_steal_spell_amp:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_spell_steal_spell_amp:IsPurgable()		return false end
+function modifier_special_bonus_imba_rubick_spell_steal_spell_amp:RemoveOnDeath() 	return false end

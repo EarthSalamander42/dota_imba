@@ -1101,12 +1101,16 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_sven_4", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sven_5", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sven_6", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sven_7", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sven_8", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sven_9", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_sven_4	= class({})
 modifier_special_bonus_imba_sven_5	= class({})
 modifier_special_bonus_imba_sven_6	= modifier_special_bonus_imba_sven_6 or class({})
+modifier_special_bonus_imba_sven_7	= modifier_special_bonus_imba_sven_8 or class({})
 modifier_special_bonus_imba_sven_8	= modifier_special_bonus_imba_sven_8 or class({})
+modifier_special_bonus_imba_sven_9	= modifier_special_bonus_imba_sven_8 or class({})
 
 function modifier_special_bonus_imba_sven_4:IsHidden() 			return true end
 function modifier_special_bonus_imba_sven_4:IsPurgable() 		return false end
@@ -1120,9 +1124,17 @@ function modifier_special_bonus_imba_sven_6:IsHidden() 			return true end
 function modifier_special_bonus_imba_sven_6:IsPurgable() 		return false end
 function modifier_special_bonus_imba_sven_6:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_sven_7:IsHidden() 			return true end
+function modifier_special_bonus_imba_sven_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_7:RemoveOnDeath() 	return false end
+
 function modifier_special_bonus_imba_sven_8:IsHidden() 			return true end
 function modifier_special_bonus_imba_sven_8:IsPurgable() 		return false end
 function modifier_special_bonus_imba_sven_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sven_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_sven_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_9:RemoveOnDeath() 	return false end
 
 function imba_sven_storm_bolt:OnOwnerSpawned()
 	if not IsServer() then return end

@@ -852,9 +852,36 @@ function modifier_imba_sonic_wave_daze:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_queenofpain_1", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_queenofpain_2", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_queenofpain_3", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_queenofpain_1	= modifier_special_bonus_imba_queenofpain_1 or class({})
+modifier_special_bonus_imba_queenofpain_2	= modifier_special_bonus_imba_queenofpain_2 or class({})
+modifier_special_bonus_imba_queenofpain_3	= modifier_special_bonus_imba_queenofpain_3 or class({})
+modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear	= modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear or class({})
+
+function modifier_special_bonus_imba_queenofpain_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_queenofpain_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_queenofpain_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_queenofpain_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_queenofpain_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_queenofpain_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_queenofpain_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_queenofpain_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_queenofpain_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear:IsHidden() 		return true end
+function modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear:IsPurgable()		return false end
+function modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_queenofpain_4", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)

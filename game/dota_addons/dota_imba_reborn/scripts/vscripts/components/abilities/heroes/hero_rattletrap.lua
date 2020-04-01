@@ -1442,3 +1442,33 @@ end
 function modifier_imba_rattletrap_hookshot:GetOverrideAnimation()
 	 return ACT_DOTA_RATTLETRAP_HOOKSHOT_LOOP
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_rattletrap_battery_assault_aura", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rattletrap_rocket_flare_truesight", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rattletrap_rocket_flare_speed", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rattletrap_battery_assault_interval", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_rattletrap_battery_assault_aura		= modifier_special_bonus_imba_rattletrap_battery_assault_aura or class({})
+modifier_special_bonus_imba_rattletrap_rocket_flare_truesight	= modifier_special_bonus_imba_rattletrap_rocket_flare_truesight or class({})
+modifier_special_bonus_imba_rattletrap_rocket_flare_speed		= modifier_special_bonus_imba_rattletrap_rocket_flare_speed or class({})
+modifier_special_bonus_imba_rattletrap_battery_assault_interval	= modifier_special_bonus_imba_rattletrap_battery_assault_interval or class({})
+
+function modifier_special_bonus_imba_rattletrap_battery_assault_aura:IsHidden() 		return true end
+function modifier_special_bonus_imba_rattletrap_battery_assault_aura:IsPurgable()		return false end
+function modifier_special_bonus_imba_rattletrap_battery_assault_aura:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rattletrap_rocket_flare_truesight:IsHidden() 		return true end
+function modifier_special_bonus_imba_rattletrap_rocket_flare_truesight:IsPurgable()		return false end
+function modifier_special_bonus_imba_rattletrap_rocket_flare_truesight:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rattletrap_rocket_flare_speed:IsHidden() 		return true end
+function modifier_special_bonus_imba_rattletrap_rocket_flare_speed:IsPurgable()		return false end
+function modifier_special_bonus_imba_rattletrap_rocket_flare_speed:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rattletrap_battery_assault_interval:IsHidden() 		return true end
+function modifier_special_bonus_imba_rattletrap_battery_assault_interval:IsPurgable()		return false end
+function modifier_special_bonus_imba_rattletrap_battery_assault_interval:RemoveOnDeath() 	return false end

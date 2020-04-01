@@ -843,8 +843,9 @@ function modifier_imba_blur_smoke:OnIntervalThink()
 end
 
 -- IDK what is being done in other files if applicable but these abilities are applying and removing like multiple times...
+-- Wearables issue causing IMBApass PA skin to kill your eardrums if some flags aren't put in
 function modifier_imba_blur_smoke:OnDestroy()
-	if IsServer() then
+	if IsServer() and (self:GetParent():IsConsideredHero() or self:GetParent():IsBuilding() or self:GetParent():IsCreep()) then
 		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur.Break")
 	end
 end
@@ -1274,3 +1275,21 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 		-- gravestone:SetMaterialGroup(tostring(style))
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_9", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_3", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_phantom_assassin_9	= modifier_special_bonus_imba_phantom_assassin_9 or class({})
+modifier_special_bonus_imba_phantom_assassin_3	= modifier_special_bonus_imba_phantom_assassin_3 or class({})
+
+function modifier_special_bonus_imba_phantom_assassin_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_phantom_assassin_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_phantom_assassin_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phantom_assassin_3:IsHidden() 			return true end
+function modifier_special_bonus_imba_phantom_assassin_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_phantom_assassin_3:RemoveOnDeath() 	return false end

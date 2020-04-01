@@ -1397,19 +1397,55 @@ end
 -- This is done to reget the behavior of the spell for client purposes
 -------------------------------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_1", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_abaddon_2", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_3", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_abaddon_4", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_5", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_6", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_7", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_8", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_abaddon_1 = modifier_special_bonus_imba_abaddon_1 or class({})
 modifier_special_bonus_imba_abaddon_2 = modifier_special_bonus_imba_abaddon_2 or class({})
+modifier_special_bonus_imba_abaddon_3 = modifier_special_bonus_imba_abaddon_3 or class({})
 modifier_special_bonus_imba_abaddon_4 = modifier_special_bonus_imba_abaddon_4 or class({})
+modifier_special_bonus_imba_abaddon_5 = modifier_special_bonus_imba_abaddon_5 or class({})
+modifier_special_bonus_imba_abaddon_6 = modifier_special_bonus_imba_abaddon_6 or class({})
+modifier_special_bonus_imba_abaddon_7 = modifier_special_bonus_imba_abaddon_7 or class({})
+modifier_special_bonus_imba_abaddon_8 = modifier_special_bonus_imba_abaddon_8 or class({})
+
+function modifier_special_bonus_imba_abaddon_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_1:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_1:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_abaddon_2:IsHidden() 		return true end
 function modifier_special_bonus_imba_abaddon_2:IsPurgable() 	return false end
 function modifier_special_bonus_imba_abaddon_2:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_abaddon_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_3:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_3:RemoveOnDeath() 	return false end
+
 function modifier_special_bonus_imba_abaddon_4:IsHidden() 		return true end
 function modifier_special_bonus_imba_abaddon_4:IsPurgable() 	return false end
 function modifier_special_bonus_imba_abaddon_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_abaddon_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_5:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_abaddon_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_6:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_abaddon_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_7:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_abaddon_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_8:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_8:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_abaddon_4:OnCreated( params )
 	if IsServer() then

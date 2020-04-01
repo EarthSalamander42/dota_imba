@@ -1254,9 +1254,36 @@ function modifier_imba_crystal_maiden_freezing_field_armor_bonus:GetOverrideAnim
 	return ACT_DOTA_CAST_ABILITY_4
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_crystal_maiden_4", "components/abilities/heroes/hero_crystal_maiden", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_crystal_maiden_8", "components/abilities/heroes/hero_crystal_maiden", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_crystal_maiden_frostbite_duration", "components/abilities/heroes/hero_crystal_maiden", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_crystal_maiden_crystal_nova_damage", "components/abilities/heroes/hero_crystal_maiden", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_crystal_maiden_4	= modifier_special_bonus_imba_crystal_maiden_4 or class({})
+modifier_special_bonus_imba_crystal_maiden_8	= modifier_special_bonus_imba_crystal_maiden_8 or class({})
+modifier_special_bonus_imba_crystal_maiden_frostbite_duration	= modifier_special_bonus_imba_crystal_maiden_frostbite_duration or class({})
+modifier_special_bonus_imba_crystal_maiden_crystal_nova_damage	= modifier_special_bonus_imba_crystal_maiden_crystal_nova_damage or class({})
+
+function modifier_special_bonus_imba_crystal_maiden_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_crystal_maiden_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_crystal_maiden_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_crystal_maiden_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_crystal_maiden_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_crystal_maiden_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_crystal_maiden_frostbite_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_crystal_maiden_frostbite_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_crystal_maiden_frostbite_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_crystal_maiden_crystal_nova_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_crystal_maiden_crystal_nova_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_crystal_maiden_crystal_nova_damage:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction", "components/abilities/heroes/hero_crystal_maiden", LUA_MODIFIER_MOTION_NONE)
 

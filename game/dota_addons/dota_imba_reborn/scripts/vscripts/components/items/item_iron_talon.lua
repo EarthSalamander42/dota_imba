@@ -106,7 +106,6 @@ end
 -------------------------
 
 function modifier_item_imba_iron_talon:AllowIllusionDuplicate()	return false end
-function modifier_item_imba_iron_talon:IsHidden()		return true end
 function modifier_item_imba_iron_talon:IsPurgable()		return false end
 function modifier_item_imba_iron_talon:RemoveOnDeath()	return false end
 function modifier_item_imba_iron_talon:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end

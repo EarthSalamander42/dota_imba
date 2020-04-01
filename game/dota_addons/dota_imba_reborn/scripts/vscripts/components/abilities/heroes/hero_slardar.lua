@@ -1912,6 +1912,32 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_slardar_1", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_slardar_13", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_slardar_11", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_slardar_12", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_slardar_1		= modifier_special_bonus_imba_slardar_1 or class({})
+modifier_special_bonus_imba_slardar_13		= modifier_special_bonus_imba_slardar_13 or class({})
+modifier_special_bonus_imba_slardar_11		= modifier_special_bonus_imba_slardar_11 or class({})
+modifier_special_bonus_imba_slardar_12		= modifier_special_bonus_imba_slardar_12 or class({})
+
+function modifier_special_bonus_imba_slardar_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_slardar_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_slardar_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_slardar_13:IsHidden() 		return true end
+function modifier_special_bonus_imba_slardar_13:IsPurgable()		return false end
+function modifier_special_bonus_imba_slardar_13:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_slardar_11:IsHidden() 		return true end
+function modifier_special_bonus_imba_slardar_11:IsPurgable()		return false end
+function modifier_special_bonus_imba_slardar_11:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_slardar_12:IsHidden() 		return true end
+function modifier_special_bonus_imba_slardar_12:IsPurgable()		return false end
+function modifier_special_bonus_imba_slardar_12:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_slardar_6", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_slardar_6	= class({})

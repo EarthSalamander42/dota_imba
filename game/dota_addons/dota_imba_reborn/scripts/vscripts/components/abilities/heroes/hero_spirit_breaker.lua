@@ -1234,10 +1234,12 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bonus_health", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bash_chance", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_spirit_breaker_charge_speed					= class({})
 modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown			= class({})
 modifier_special_bonus_imba_spirit_breaker_bonus_health					= class({})
+modifier_special_bonus_imba_spirit_breaker_bash_chance					= modifier_special_bonus_imba_spirit_breaker_bash_chance or class({})
 
 function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsHidden() 		return true end
 function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsPurgable() 		return false end
@@ -1250,6 +1252,10 @@ function modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown:RemoveOnDe
 function modifier_special_bonus_imba_spirit_breaker_bonus_health:IsHidden() 		return true end
 function modifier_special_bonus_imba_spirit_breaker_bonus_health:IsPurgable() 		return false end
 function modifier_special_bonus_imba_spirit_breaker_bonus_health:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_spirit_breaker_bash_chance:IsHidden() 		return true end
+function modifier_special_bonus_imba_spirit_breaker_bash_chance:IsPurgable() 		return false end
+function modifier_special_bonus_imba_spirit_breaker_bash_chance:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_spirit_breaker_bonus_health:OnCreated()
 	self.bonus_health	= self:GetParent():FindTalentValue("special_bonus_imba_spirit_breaker_bonus_health")

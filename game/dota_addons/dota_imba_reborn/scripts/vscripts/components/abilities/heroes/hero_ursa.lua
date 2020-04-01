@@ -1597,6 +1597,38 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_ursa_2", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ursa_4", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ursa_5", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ursa_6", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ursa_7", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_ursa_2	= modifier_special_bonus_imba_ursa_2 or class({})
+modifier_special_bonus_imba_ursa_4	= modifier_special_bonus_imba_ursa_4 or class({})
+modifier_special_bonus_imba_ursa_5	= modifier_special_bonus_imba_ursa_5 or class({})
+modifier_special_bonus_imba_ursa_6	= modifier_special_bonus_imba_ursa_6 or class({})
+modifier_special_bonus_imba_ursa_7	= modifier_special_bonus_imba_ursa_7 or class({})
+
+function modifier_special_bonus_imba_ursa_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ursa_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ursa_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ursa_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ursa_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_7:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_ursa_3", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_ursa_3	= class({})

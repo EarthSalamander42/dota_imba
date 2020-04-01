@@ -1332,13 +1332,43 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_axe_2", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_axe_3", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_axe_4", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_axe_5", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_axe_8", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_axe_9", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_axe_2	= modifier_special_bonus_imba_axe_2 or class({})
+modifier_special_bonus_imba_axe_3	= modifier_special_bonus_imba_axe_3 or class({})
+modifier_special_bonus_imba_axe_4	= modifier_special_bonus_imba_axe_4 or class({})
+modifier_special_bonus_imba_axe_5	= modifier_special_bonus_imba_axe_5 or class({})
 modifier_special_bonus_imba_axe_8	= modifier_special_bonus_imba_axe_8 or class({})
+modifier_special_bonus_imba_axe_9	= modifier_special_bonus_imba_axe_9 or class({})
+
+function modifier_special_bonus_imba_axe_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_axe_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_axe_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_axe_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_5:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_axe_8:IsHidden() 		return true end
 function modifier_special_bonus_imba_axe_8:IsPurgable()		return false end
 function modifier_special_bonus_imba_axe_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_axe_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_9:RemoveOnDeath() 	return false end
 
 function imba_axe_culling_blade:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_axe_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_axe_8") then

@@ -2349,3 +2349,33 @@ end
 function modifier_imba_lich_sinister_gaze_bonus_health:GetModifierExtraHealthBonus()
 	return self:GetStackCount()
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_lich_10", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lich_6", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lich_1", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lich_7", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lich_10	= modifier_special_bonus_imba_lich_10 or class({})
+modifier_special_bonus_imba_lich_6	= modifier_special_bonus_imba_lich_6 or class({})
+modifier_special_bonus_imba_lich_1	= modifier_special_bonus_imba_lich_1 or class({})
+modifier_special_bonus_imba_lich_7	= modifier_special_bonus_imba_lich_7 or class({})
+
+function modifier_special_bonus_imba_lich_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_10:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lich_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lich_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lich_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_7:RemoveOnDeath() 	return false end

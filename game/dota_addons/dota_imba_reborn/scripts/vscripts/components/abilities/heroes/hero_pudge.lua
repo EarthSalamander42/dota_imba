@@ -1470,15 +1470,33 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_pudge_4", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_pudge_5", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pudge_7", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pudge_8", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_pudge_9", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_pudge_4	= class({})
 modifier_special_bonus_imba_pudge_5	= class({})
+modifier_special_bonus_imba_pudge_7	= class({})
+modifier_special_bonus_imba_pudge_8	= class({})
 modifier_special_bonus_imba_pudge_9	= class({})
+
+function modifier_special_bonus_imba_pudge_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_pudge_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_pudge_4:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_pudge_5:IsHidden() 		return true end
 function modifier_special_bonus_imba_pudge_5:IsPurgable() 		return false end
 function modifier_special_bonus_imba_pudge_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pudge_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_pudge_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_pudge_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pudge_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_pudge_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_pudge_8:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_pudge_9:IsHidden() 		return true end
 function modifier_special_bonus_imba_pudge_9:IsPurgable() 		return false end

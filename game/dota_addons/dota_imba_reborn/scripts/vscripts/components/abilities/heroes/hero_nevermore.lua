@@ -1940,3 +1940,57 @@ end
 function modifier_imba_reqiuem_harvest:IsHidden() return false end
 function modifier_imba_reqiuem_harvest:IsPurgable() return false end
 function modifier_imba_reqiuem_harvest:IsDebuff() return false end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_1", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_2", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_3", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_4", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_5", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_6", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_7", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_8", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_nevermore_1	= modifier_special_bonus_imba_nevermore_1 or class({})
+modifier_special_bonus_imba_nevermore_2	= modifier_special_bonus_imba_nevermore_2 or class({})
+modifier_special_bonus_imba_nevermore_3	= modifier_special_bonus_imba_nevermore_3 or class({})
+modifier_special_bonus_imba_nevermore_4	= modifier_special_bonus_imba_nevermore_4 or class({})
+modifier_special_bonus_imba_nevermore_5	= modifier_special_bonus_imba_nevermore_5 or class({})
+modifier_special_bonus_imba_nevermore_6	= modifier_special_bonus_imba_nevermore_6 or class({})
+modifier_special_bonus_imba_nevermore_7	= modifier_special_bonus_imba_nevermore_7 or class({})
+modifier_special_bonus_imba_nevermore_8	= modifier_special_bonus_imba_nevermore_8 or class({})
+
+function modifier_special_bonus_imba_nevermore_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_8:RemoveOnDeath() 	return false end

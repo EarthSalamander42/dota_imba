@@ -1113,9 +1113,36 @@ function modifier_imba_mass_serpent_ward:OnDestroy()
 	end
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_shackles_duration", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_ether_shock_damage", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_3", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_shadow_shaman_shackles_duration	= modifier_special_bonus_imba_shadow_shaman_shackles_duration or class({})
+modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks	= modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks or class({})
+modifier_special_bonus_imba_shadow_shaman_ether_shock_damage	= modifier_special_bonus_imba_shadow_shaman_ether_shock_damage or class({})
+modifier_special_bonus_imba_shadow_shaman_3	= modifier_special_bonus_imba_shadow_shaman_3 or class({})
+
+function modifier_special_bonus_imba_shadow_shaman_shackles_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_shackles_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_shadow_shaman_shackles_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks:IsPurgable()		return false end
+function modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_shadow_shaman_ether_shock_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_ether_shock_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_shadow_shaman_ether_shock_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_shadow_shaman_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_shadow_shaman_3:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)

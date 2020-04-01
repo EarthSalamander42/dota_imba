@@ -2142,9 +2142,21 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks		= modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks or class({})
+modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct	= modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct or class({})
 modifier_special_bonus_imba_timbersaw_timber_chain_range	= class({})
+
+function modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks:IsHidden() 		return true end
+function modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks:IsPurgable()	 	return false end
+function modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct:IsHidden() 		return true end
+function modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct:IsPurgable()	 	return false end
+function modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsHidden() 		return true end
 function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsPurgable()	 	return false end

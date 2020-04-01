@@ -1408,6 +1408,43 @@ function modifier_imba_finger_of_death_counter:OnTooltip()
 	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("damage_per_kill")
 end
 
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_lion_3", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_5", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_8", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_7", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_2", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lion_3	= modifier_special_bonus_imba_lion_3 or class({})
+modifier_special_bonus_imba_lion_5	= modifier_special_bonus_imba_lion_5 or class({})
+modifier_special_bonus_imba_lion_8	= modifier_special_bonus_imba_lion_8 or class({})
+modifier_special_bonus_imba_lion_7	= modifier_special_bonus_imba_lion_7 or class({})
+modifier_special_bonus_imba_lion_2	= modifier_special_bonus_imba_lion_2 or class({})
+
+function modifier_special_bonus_imba_lion_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lion_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lion_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lion_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lion_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_2:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions --
 
 -- #9 Talent: +1000 Earth Spike Range

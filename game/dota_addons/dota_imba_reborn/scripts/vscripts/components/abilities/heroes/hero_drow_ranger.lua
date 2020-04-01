@@ -2420,9 +2420,40 @@ function imba_drow_ranger_trueshot_720:OnOwnerSpawned()
 	end
 end
 
--- -----------------------
--- -- TALENT 9 MODIFIER --
--- -----------------------
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_7", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_frost_arrows_damage", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_10", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_3", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_drow_ranger_7					= modifier_special_bonus_imba_drow_ranger_7 or class({})
+modifier_special_bonus_imba_drow_ranger_frost_arrows_damage	= modifier_special_bonus_imba_drow_ranger_frost_arrows_damage or class({})
+modifier_special_bonus_imba_drow_ranger_10					= modifier_special_bonus_imba_drow_ranger_10 or class({})
+modifier_special_bonus_imba_drow_ranger_3					= modifier_special_bonus_imba_drow_ranger_3 or class({})
+
+function modifier_special_bonus_imba_drow_ranger_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_drow_ranger_frost_arrows_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_frost_arrows_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_frost_arrows_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_drow_ranger_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_10:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_drow_ranger_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_3:RemoveOnDeath() 	return false end
+
+-----------------------
+-- TALENT 9 MODIFIER --
+-----------------------
 -- +x Gust Distance/Knockback
 
 function modifier_special_bonus_imba_drow_ranger_9:IsHidden() 		return true end

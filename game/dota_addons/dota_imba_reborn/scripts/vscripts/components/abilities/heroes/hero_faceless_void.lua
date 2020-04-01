@@ -1567,6 +1567,24 @@ function modifier_imba_faceless_void_time_lock_720_freeze:CheckState()
 	}
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_7", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_12", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_faceless_void_7		= modifier_special_bonus_imba_faceless_void_7 or class({})
+modifier_special_bonus_imba_faceless_void_12	= modifier_special_bonus_imba_faceless_void_12 or class({})
+
+function modifier_special_bonus_imba_faceless_void_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_faceless_void_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_faceless_void_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_faceless_void_12:IsHidden() 		return true end
+function modifier_special_bonus_imba_faceless_void_12:IsPurgable()		return false end
+function modifier_special_bonus_imba_faceless_void_12:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_3", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_9", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)

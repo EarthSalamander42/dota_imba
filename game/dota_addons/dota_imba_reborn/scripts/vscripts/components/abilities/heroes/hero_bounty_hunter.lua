@@ -179,7 +179,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 			-- stun_duration = scepter_stun_duration
 		-- end
 
-		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", {duration = stun_duration * (1 - target:GetStatusResistance()})
+		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 		-- -- Check if the Shuriken is an enchanted shuriken from #4 talent
 		-- if shuriken_crit == 1 then
@@ -1805,3 +1805,51 @@ end
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_bounty_hunter", MotionController)
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_6", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_3", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_2", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_7", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_1", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_9", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_8", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_bounty_hunter_6	= modifier_special_bonus_imba_bounty_hunter_6 or class({})
+modifier_special_bonus_imba_bounty_hunter_3	= modifier_special_bonus_imba_bounty_hunter_3 or class({})
+modifier_special_bonus_imba_bounty_hunter_2	= modifier_special_bonus_imba_bounty_hunter_2 or class({})
+modifier_special_bonus_imba_bounty_hunter_7	= modifier_special_bonus_imba_bounty_hunter_7 or class({})
+modifier_special_bonus_imba_bounty_hunter_1	= modifier_special_bonus_imba_bounty_hunter_1 or class({})
+modifier_special_bonus_imba_bounty_hunter_9	= modifier_special_bonus_imba_bounty_hunter_9 or class({})
+modifier_special_bonus_imba_bounty_hunter_8	= modifier_special_bonus_imba_bounty_hunter_8 or class({})
+
+function modifier_special_bonus_imba_bounty_hunter_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_8:RemoveOnDeath() 	return false end

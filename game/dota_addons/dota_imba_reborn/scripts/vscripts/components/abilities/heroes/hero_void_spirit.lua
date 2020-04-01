@@ -1230,6 +1230,33 @@ function modifier_imba_void_spirit_astral_step_invis:GetModifierInvisibilityLeve
 	return 1
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_void_spirit_resonant_pulse_damage", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_void_spirit_astral_step_crit", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_void_spirit_dissimilate_stun", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_void_spirit_resonant_pulse_damage	= modifier_special_bonus_imba_void_spirit_resonant_pulse_damage or class({})
+modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown	= modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown or class({})
+modifier_special_bonus_imba_void_spirit_astral_step_crit	= modifier_special_bonus_imba_void_spirit_astral_step_crit or class({})
+modifier_special_bonus_imba_void_spirit_dissimilate_stun	= modifier_special_bonus_imba_void_spirit_dissimilate_stun or class({})
+
+function modifier_special_bonus_imba_void_spirit_resonant_pulse_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_void_spirit_resonant_pulse_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_void_spirit_resonant_pulse_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown:IsPurgable()		return false end
+function modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_void_spirit_astral_step_crit:IsHidden() 		return true end
+function modifier_special_bonus_imba_void_spirit_astral_step_crit:IsPurgable()		return false end
+function modifier_special_bonus_imba_void_spirit_astral_step_crit:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_void_spirit_dissimilate_stun:IsHidden() 		return true end
+function modifier_special_bonus_imba_void_spirit_dissimilate_stun:IsPurgable()		return false end
+function modifier_special_bonus_imba_void_spirit_dissimilate_stun:RemoveOnDeath() 	return false end

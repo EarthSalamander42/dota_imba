@@ -1423,3 +1423,45 @@ end
 function modifier_imba_sandking_sand_storm_720_thinker_aura:GetModifierMiss_Percentage()
   	return self.coarse_miss_pct
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_1", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_2", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_9", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_4", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_6", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_8", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sand_king_1		= modifier_special_bonus_imba_sand_king_1 or class({})
+modifier_special_bonus_imba_sand_king_2		= modifier_special_bonus_imba_sand_king_2 or class({})
+modifier_special_bonus_imba_sand_king_9		= modifier_special_bonus_imba_sand_king_9 or class({})
+modifier_special_bonus_imba_sand_king_4		= modifier_special_bonus_imba_sand_king_4 or class({})
+modifier_special_bonus_imba_sand_king_6		= modifier_special_bonus_imba_sand_king_6 or class({})
+modifier_special_bonus_imba_sand_king_8		= modifier_special_bonus_imba_sand_king_8 or class({})
+
+function modifier_special_bonus_imba_sand_king_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_8:RemoveOnDeath() 	return false end

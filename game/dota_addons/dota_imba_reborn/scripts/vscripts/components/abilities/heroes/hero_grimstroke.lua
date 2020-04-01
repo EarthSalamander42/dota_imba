@@ -1545,9 +1545,36 @@ function modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow:GetModifierMo
 	return self.movement_slow * (-1)
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_grimstroke_ink_swell_max_damage", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_grimstroke_ink_swell_radius", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_grimstroke_ink_swell_max_damage	= modifier_special_bonus_imba_grimstroke_ink_swell_max_damage or class({})
+modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits	= modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits or class({})
+modifier_special_bonus_imba_grimstroke_ink_swell_radius	= modifier_special_bonus_imba_grimstroke_ink_swell_radius or class({})
+modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage	= modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage or class({})
+
+function modifier_special_bonus_imba_grimstroke_ink_swell_max_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_grimstroke_ink_swell_max_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_grimstroke_ink_swell_max_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits:IsHidden() 		return true end
+function modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits:IsPurgable()		return false end
+function modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_grimstroke_ink_swell_radius:IsHidden() 		return true end
+function modifier_special_bonus_imba_grimstroke_ink_swell_radius:IsPurgable()		return false end
+function modifier_special_bonus_imba_grimstroke_ink_swell_radius:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_grimstroke_stroke_of_fate_cast_range", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
 

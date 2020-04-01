@@ -12,6 +12,7 @@ LinkLuaModifier("modifier_imba_undying_soul_rip_soul_injection_debuff", "compone
 LinkLuaModifier("modifier_imba_undying_tombstone_death_trigger", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_modifier", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_undying_tombstone_zombie_modifier_no_home", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathlust", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
@@ -41,6 +42,7 @@ imba_undying_tombstone												= imba_undying_tombstone or class({})
 modifier_imba_undying_tombstone_death_trigger						= modifier_imba_undying_tombstone_death_trigger or class({})
 modifier_imba_undying_tombstone_zombie_aura							= modifier_imba_undying_tombstone_zombie_aura or class({})
 modifier_imba_undying_tombstone_zombie_modifier						= modifier_imba_undying_tombstone_zombie_modifier or class({})
+modifier_imba_undying_tombstone_zombie_modifier_no_home				= modifier_imba_undying_tombstone_zombie_modifier_no_home or class({})
 modifier_imba_undying_tombstone_zombie_deathlust					= modifier_imba_undying_tombstone_zombie_deathlust or class({})
 modifier_imba_undying_tombstone_zombie_deathstrike					= modifier_imba_undying_tombstone_zombie_deathstrike or class({})
 modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter		= modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter or class({})
@@ -683,7 +685,7 @@ function imba_undying_tombstone:OnSpellStart(deathPosition)
 	tombstone:SetMaxHealth(self:GetTalentSpecialValueFor("hits_to_destroy_tooltip") * 4)
 	tombstone:SetHealth(self:GetTalentSpecialValueFor("hits_to_destroy_tooltip") * 4)
 	
-	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_tombstone_zombie_aura", {})
+	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_tombstone_zombie_aura", {duration = self:GetSpecialValueFor("duration")})
 	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_magic_immune", {duration = self:GetSpecialValueFor("duration")})
 	tombstone:AddNewModifier(self:GetCaster(), self, "modifier_kill", {duration = self:GetSpecialValueFor("duration")})
 	
@@ -709,6 +711,7 @@ function modifier_imba_undying_tombstone_zombie_aura:IsHidden()		return true end
 function modifier_imba_undying_tombstone_zombie_aura:IsPurgable()	return false end
 
 function modifier_imba_undying_tombstone_zombie_aura:OnCreated()
+	self.duration						= self:GetAbility():GetSpecialValueFor("duration")
 	self.radius							= self:GetAbility():GetSpecialValueFor("radius")
 	self.health_threshold_pct_tooltip	= self:GetAbility():GetSpecialValueFor("health_threshold_pct_tooltip")
 	self.zombie_interval				= self:GetAbility():GetSpecialValueFor("zombie_interval")
@@ -742,7 +745,7 @@ function modifier_imba_undying_tombstone_zombie_aura:OnIntervalThink()
 			zombie:SetAggroTarget(enemy)
 			
 			-- Passive modifier that handles the zombie's health and aggro
-			zombie:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_undying_tombstone_zombie_modifier", {})
+			zombie:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_undying_tombstone_zombie_modifier", {enemy_entindex = enemy:entindex()})
 			
 			deathstrike_ability = zombie:AddAbility("imba_undying_tombstone_zombie_deathstrike")
 			
@@ -757,17 +760,28 @@ function modifier_imba_undying_tombstone_zombie_aura:OnIntervalThink()
 end
 
 -- "When the Tombstone expires or is killed, all its zombies instantly die."
-
--- IMBAfication: No Home to Return
--- function modifier_imba_undying_tombstone_zombie_aura:OnDestroy()
-	-- if not IsServer() then return end
+function modifier_imba_undying_tombstone_zombie_aura:OnDestroy()
+	if not IsServer() then return end
 	
-	-- for _, ent in pairs(Entities:FindAllByName("npc_dota_unit_undying_zombie")) do
-		-- if ent:GetOwner() == self:GetParent() then
-			-- ent:ForceKill(false)
-		-- end
-	-- end
--- end
+	for _, ent in pairs(Entities:FindAllByName("npc_dota_unit_undying_zombie")) do
+		if ent:GetOwner() == self:GetParent() then
+			-- IMBAfication: No Home to Return
+			if self:GetRemainingTime() > 0 then
+				ent:ForceKill(false)
+			else
+				if ent:HasModifier("modifier_imba_undying_tombstone_zombie_modifier") then
+					ent:FindModifierByName("modifier_imba_undying_tombstone_zombie_modifier").bTombstoneDead	= true
+					ent:FindModifierByName("modifier_imba_undying_tombstone_zombie_modifier").aggro_target		= nil
+				end
+				
+				ent:SetOwner(self:GetCaster())
+				ent:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
+				ent:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_undying_tombstone_zombie_modifier_no_home", {duration = self.duration})
+				ent:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = self.duration})
+			end
+		end
+	end
+end
 
 function modifier_imba_undying_tombstone_zombie_aura:DeclareFunctions()
     return {
@@ -811,42 +825,47 @@ end
 
 function modifier_imba_undying_tombstone_zombie_modifier:IsPurgable()	return false end
 
-function modifier_imba_undying_tombstone_zombie_modifier:OnCreated()
+function modifier_imba_undying_tombstone_zombie_modifier:OnCreated(keys)
 	if not IsServer() then return end
 	
-	if self:GetParent():GetAggroTarget() then
-		self.aggro_target = self:GetParent():GetAggroTarget()
-	else
-		self:GetParent():ForceKill(false)
-	end
+	self.aggro_target = EntIndexToHScript(keys.enemy_entindex)
 	
-	self.invis_timer	= 0
-	self.game_time		= GameRules:GetGameTime()
+	self.invis_timer		= 0
+	self.game_time			= GameRules:GetGameTime()
 end
 
 function modifier_imba_undying_tombstone_zombie_modifier:CheckState()
 	if IsServer() then
-		-- "When a zombies' target turns invisible, the associated zombies die after 0.1 seconds."
-		if not self.aggro_target or self.aggro_target:IsNull() or (self.aggro_target:IsInvisible() and not self:GetParent():CanEntityBeSeenByMyTeam(self.aggro_target)) then
-			self.invis_timer = GameRules:GetGameTime() - self.game_time
-			
-			if self.invis_timer >= 0.1 then
-				self:GetParent():ForceKill(false)
+		if not self.bTombstoneDead then
+			-- "When a zombies' target turns invisible, the associated zombies die after 0.1 seconds."
+			if not self.aggro_target or self.aggro_target:IsNull() or (self.aggro_target:IsInvisible() and not self:GetParent():CanEntityBeSeenByMyTeam(self.aggro_target)) then
+				self.invis_timer = GameRules:GetGameTime() - self.game_time
+				
+				if self.invis_timer >= 0.1 then
+					self:GetParent():ForceKill(false)
+				end
+			else
+				self.invis_timer	= 0
+				
+				if not self:GetParent():CanEntityBeSeenByMyTeam(self.aggro_target) then
+					ExecuteOrderFromTable({
+						UnitIndex	= self:GetParent():entindex(),
+						OrderType	= DOTA_UNIT_ORDER_MOVE_TO_POSITION,
+						Position	= self.aggro_target:GetAbsOrigin()
+					})
+				elseif self:GetParent():GetAggroTarget() ~= self.aggro_target then
+					-- This spams "Game code (account 0) tried to execute invalid order (7). Target entity index is out of range." in console...
+					ExecuteOrderFromTable({
+						UnitIndex	= self:GetParent():entindex(),
+						OrderType	= DOTA_UNIT_ORDER_ATTACK_TARGET,
+						TargetIndex = self.aggro_target
+					})
+				end
+				
+				self.game_time		= GameRules:GetGameTime()
 			end
-		else
-			self.invis_timer	= 0
 		end
-		
-		self.game_time		= GameRules:GetGameTime()
-		
-		-- -- Okay, I can't get zombies to stick onto one target so I'm just going to call that an IMBAfication -_-
-		-- if self.aggro_target and not self.aggro_target:IsNull() then
-			-- self:GetParent():SetAggroTarget(self.aggro_target)
-		-- end
 	end
-	
-	-- -- Not vanilla? Screw it, getting tired of these getting stuck on things
-	-- return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 end
 
 function modifier_imba_undying_tombstone_zombie_modifier:DeclareFunctions()
@@ -890,9 +909,19 @@ function modifier_imba_undying_tombstone_zombie_modifier:OnAttackLanded(keys)
 end
 
 function modifier_imba_undying_tombstone_zombie_modifier:OnDeath(keys)
-	if keys.unit == self.aggro_target and not keys.reincarnate then
+	if self.aggro_target and keys.unit == self.aggro_target and not keys.reincarnate then
 		self:GetParent():ForceKill(false)
 	end
+end
+
+-------------------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_TOMBSTONE_ZOMBIE_MODIFIER_NO_HOME --
+-------------------------------------------------------------
+
+function modifier_imba_undying_tombstone_zombie_modifier_no_home:IsPurgable()	return false end
+
+function modifier_imba_undying_tombstone_zombie_modifier_no_home:GetStatusEffectName()
+	return "particles/econ/items/spirit_breaker/spirit_breaker_iron_surge/status_effect_iron_surge.vpcf"
 end
 
 -----------------------------------------------
@@ -1486,17 +1515,25 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_undying_decay_cooldown", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_undying_decay_duration", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_undying_tombstone_zombie_damage", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_undying_tombstone_on_death", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_undying_flesh_golem_grab_allies", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_undying_decay_cooldown", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_undying_decay_cooldown		= modifier_special_bonus_imba_undying_decay_cooldown or class({})
+modifier_special_bonus_imba_undying_decay_duration		= modifier_special_bonus_imba_undying_decay_duration or class({})
+modifier_special_bonus_imba_undying_tombstone_zombie_damage	= modifier_special_bonus_imba_undying_tombstone_zombie_damage or class({})
 modifier_special_bonus_imba_undying_tombstone_on_death	= modifier_special_bonus_imba_undying_tombstone_on_death or class({})
 modifier_special_bonus_imba_undying_flesh_golem_grab_allies	= modifier_special_bonus_imba_undying_flesh_golem_grab_allies or class({})
+modifier_special_bonus_imba_undying_decay_cooldown		= modifier_special_bonus_imba_undying_decay_cooldown or class({})
 
-function modifier_special_bonus_imba_undying_decay_cooldown:IsHidden() 		return true end
-function modifier_special_bonus_imba_undying_decay_cooldown:IsPurgable() 		return false end
-function modifier_special_bonus_imba_undying_decay_cooldown:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_undying_decay_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_undying_decay_duration:IsPurgable() 		return false end
+function modifier_special_bonus_imba_undying_decay_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_undying_tombstone_zombie_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_undying_tombstone_zombie_damage:IsPurgable() 		return false end
+function modifier_special_bonus_imba_undying_tombstone_zombie_damage:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_undying_tombstone_on_death:IsHidden() 		return true end
 function modifier_special_bonus_imba_undying_tombstone_on_death:IsPurgable() 		return false end
@@ -1505,6 +1542,10 @@ function modifier_special_bonus_imba_undying_tombstone_on_death:RemoveOnDeath() 
 function modifier_special_bonus_imba_undying_flesh_golem_grab_allies:IsHidden() 		return true end
 function modifier_special_bonus_imba_undying_flesh_golem_grab_allies:IsPurgable() 		return false end
 function modifier_special_bonus_imba_undying_flesh_golem_grab_allies:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_undying_decay_cooldown:IsHidden() 			return true end
+function modifier_special_bonus_imba_undying_decay_cooldown:IsPurgable() 		return false end
+function modifier_special_bonus_imba_undying_decay_cooldown:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_undying_tombstone_on_death:DeclareFunctions()
 	return {MODIFIER_EVENT_ON_DEATH}

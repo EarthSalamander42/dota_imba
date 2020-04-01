@@ -2227,6 +2227,24 @@ function modifier_imba_wisp_overcharge_721_handler:OnOrder(keys)
 	end
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_wisp_11", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_wisp_6", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_wisp_11		= modifier_special_bonus_imba_wisp_11 or class({})
+modifier_special_bonus_imba_wisp_6		= modifier_special_bonus_imba_wisp_6 or class({})
+
+function modifier_special_bonus_imba_wisp_11:IsHidden() 		return true end
+function modifier_special_bonus_imba_wisp_11:IsPurgable()		return false end
+function modifier_special_bonus_imba_wisp_11:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_wisp_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_wisp_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_wisp_6:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions
 LinkLuaModifier("modifier_special_bonus_imba_wisp_4", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_wisp_9", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)

@@ -1390,9 +1390,25 @@ function modifier_imba_gyrocopter_call_down_slow:GetModifierMoveSpeedBonus_Perce
 	return self:GetStackCount()
 end
 
--- ---------------------
--- -- TALENT HANDLERS --
--- ---------------------
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_gyrocopter_flak_cannon_attacks", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_gyrocopter_rocket_barrage_damage", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_gyrocopter_flak_cannon_attacks		= modifier_special_bonus_imba_gyrocopter_flak_cannon_attacks or class({})
+modifier_special_bonus_imba_gyrocopter_rocket_barrage_damage	= modifier_special_bonus_imba_gyrocopter_rocket_barrage_damage or class({})
+
+function modifier_special_bonus_imba_gyrocopter_flak_cannon_attacks:IsHidden() 		return true end
+function modifier_special_bonus_imba_gyrocopter_flak_cannon_attacks:IsPurgable() 	return false end
+function modifier_special_bonus_imba_gyrocopter_flak_cannon_attacks:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_gyrocopter_rocket_barrage_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_gyrocopter_rocket_barrage_damage:IsPurgable() 		return false end
+function modifier_special_bonus_imba_gyrocopter_rocket_barrage_damage:RemoveOnDeath() 	return false end
+
+
 
 LinkLuaModifier("modifier_special_bonus_imba_gyrocopter_call_down_cooldown", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_gyrocopter_gatling_guns_activate", "components/abilities/heroes/hero_gyrocopter", LUA_MODIFIER_MOTION_NONE)

@@ -2640,3 +2640,45 @@ function imba_lycan_summon_wolves:OnOwnerSpawned()
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_10"), "modifier_special_bonus_imba_lycan_10", {})
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_lycan_5", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lycan_3", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lycan_1", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lycan_2", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lycan_6", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lycan_9", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lycan_5		= modifier_special_bonus_imba_lycan_5 or class({})
+modifier_special_bonus_imba_lycan_3		= modifier_special_bonus_imba_lycan_3 or class({})
+modifier_special_bonus_imba_lycan_1		= modifier_special_bonus_imba_lycan_1 or class({})
+modifier_special_bonus_imba_lycan_2		= modifier_special_bonus_imba_lycan_2 or class({})
+modifier_special_bonus_imba_lycan_6		= modifier_special_bonus_imba_lycan_6 or class({})
+modifier_special_bonus_imba_lycan_9		= modifier_special_bonus_imba_lycan_9 or class({})
+
+function modifier_special_bonus_imba_lycan_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_lycan_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_lycan_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lycan_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_lycan_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_lycan_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lycan_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_lycan_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_lycan_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lycan_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_lycan_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_lycan_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lycan_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_lycan_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_lycan_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lycan_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_lycan_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_lycan_9:RemoveOnDeath() 	return false end

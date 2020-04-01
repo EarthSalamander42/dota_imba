@@ -1291,6 +1291,26 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_visage_soul_assumption_extra_targets", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_visage_soul_assumption_charge_damage", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_visage_gravekeepers_cloak_cd_reduction", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_visage_soul_assumption_extra_targets	= modifier_special_bonus_imba_visage_soul_assumption_extra_targets or class({})
+modifier_special_bonus_imba_visage_soul_assumption_charge_damage	= modifier_special_bonus_imba_visage_soul_assumption_charge_damage or class({})
+modifier_special_bonus_imba_visage_gravekeepers_cloak_cd_reduction	= modifier_special_bonus_imba_visage_gravekeepers_cloak_cd_reduction or class({})
+
+function modifier_special_bonus_imba_visage_soul_assumption_extra_targets:IsHidden() 		return true end
+function modifier_special_bonus_imba_visage_soul_assumption_extra_targets:IsPurgable()		return false end
+function modifier_special_bonus_imba_visage_soul_assumption_extra_targets:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_visage_soul_assumption_charge_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_visage_soul_assumption_charge_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_visage_soul_assumption_charge_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_visage_gravekeepers_cloak_cd_reduction:IsHidden() 		return true end
+function modifier_special_bonus_imba_visage_gravekeepers_cloak_cd_reduction:IsPurgable()		return false end
+function modifier_special_bonus_imba_visage_gravekeepers_cloak_cd_reduction:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed", "components/abilities/heroes/hero_visage", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_visage_summon_familiars_bonus_move_speed	= class({})

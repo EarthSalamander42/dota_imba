@@ -1614,3 +1614,51 @@ function modifier_special_bonus_imba_nyx_assassin_5:OnTakeDamage(kv)
 		end
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_6", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_2", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_3", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_13", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_4", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_12", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_11", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_nyx_assassin_6	= modifier_special_bonus_imba_nyx_assassin_6 or class({})
+modifier_special_bonus_imba_nyx_assassin_2	= modifier_special_bonus_imba_nyx_assassin_2 or class({})
+modifier_special_bonus_imba_nyx_assassin_3	= modifier_special_bonus_imba_nyx_assassin_3 or class({})
+modifier_special_bonus_imba_nyx_assassin_13	= modifier_special_bonus_imba_nyx_assassin_13 or class({})
+modifier_special_bonus_imba_nyx_assassin_4	= modifier_special_bonus_imba_nyx_assassin_4 or class({})
+modifier_special_bonus_imba_nyx_assassin_12	= modifier_special_bonus_imba_nyx_assassin_12 or class({})
+modifier_special_bonus_imba_nyx_assassin_11	= modifier_special_bonus_imba_nyx_assassin_11 or class({})
+
+function modifier_special_bonus_imba_nyx_assassin_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_nyx_assassin_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_nyx_assassin_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nyx_assassin_2:IsHidden() 			return true end
+function modifier_special_bonus_imba_nyx_assassin_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_nyx_assassin_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nyx_assassin_3:IsHidden() 			return true end
+function modifier_special_bonus_imba_nyx_assassin_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_nyx_assassin_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nyx_assassin_13:IsHidden() 		return true end
+function modifier_special_bonus_imba_nyx_assassin_13:IsPurgable()		return false end
+function modifier_special_bonus_imba_nyx_assassin_13:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nyx_assassin_4:IsHidden() 			return true end
+function modifier_special_bonus_imba_nyx_assassin_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_nyx_assassin_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nyx_assassin_12:IsHidden() 		return true end
+function modifier_special_bonus_imba_nyx_assassin_12:IsPurgable()		return false end
+function modifier_special_bonus_imba_nyx_assassin_12:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nyx_assassin_11:IsHidden() 		return true end
+function modifier_special_bonus_imba_nyx_assassin_11:IsPurgable()		return false end
+function modifier_special_bonus_imba_nyx_assassin_11:RemoveOnDeath() 	return false end

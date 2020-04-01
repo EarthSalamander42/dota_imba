@@ -1501,6 +1501,24 @@ function modifier_imba_swap_back:OnCreated()
 	end
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_1", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_2", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_vengefulspirit_1	= modifier_special_bonus_imba_vengefulspirit_1 or class({})
+modifier_special_bonus_imba_vengefulspirit_2	= modifier_special_bonus_imba_vengefulspirit_2 or class({})
+
+function modifier_special_bonus_imba_vengefulspirit_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_vengefulspirit_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_vengefulspirit_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_vengefulspirit_2:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_3", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_5", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)

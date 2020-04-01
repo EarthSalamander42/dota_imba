@@ -230,7 +230,7 @@ end
 
 function modifier_imba_keeper_of_the_light_illuminate_self_thinker:CheckState()
 	if IsServer() and not self.ability:IsChanneling() and self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_travelling_light") then
-		return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY]} = true
+		return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
 	end
 end
 
@@ -1426,9 +1426,36 @@ function modifier_imba_keeper_of_the_light_will_o_wisp_blessing:GetModifierProcA
     return self:GetStackCount()
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_travelling_light", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight	= modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight or class({})
+modifier_special_bonus_imba_keeper_of_the_light_travelling_light	= modifier_special_bonus_imba_keeper_of_the_light_travelling_light or class({})
+modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition	= modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition or class({})
+modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate	= modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate or class({})
+
+function modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight:IsHidden() 		return true end
+function modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight:IsPurgable()		return false end
+function modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_keeper_of_the_light_travelling_light:IsHidden() 		return true end
+function modifier_special_bonus_imba_keeper_of_the_light_travelling_light:IsPurgable()		return false end
+function modifier_special_bonus_imba_keeper_of_the_light_travelling_light:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition:IsHidden() 		return true end
+function modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition:IsPurgable()		return false end
+function modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate:IsHidden() 		return true end
+function modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate:IsPurgable()		return false end
+function modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate:RemoveOnDeath() 	return false end
 
 -- -- Client-side helper functions --
 

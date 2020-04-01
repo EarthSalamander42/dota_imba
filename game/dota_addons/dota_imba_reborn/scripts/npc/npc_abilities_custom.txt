@@ -48,6 +48,7 @@
 #base heroes/terrorblade/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
+#base heroes/treant/abilities.txt
 #base heroes/undying/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
@@ -30266,6 +30267,7 @@
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"60"
+		"AbilityDuration"				"25.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -30301,12 +30303,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 5 7 9"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"25"
+				"health"				"1 1 2 2"
 			}
 			"05"
 			{
@@ -30321,7 +30318,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_totem"	"9"
+				"health_totem"	"3 3 4 4"
 			}
 		}
 	}
@@ -30359,7 +30356,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 5 7 9"
+				"health"				"1 1 2 2"
 			}
 			"04"
 			{
@@ -30374,7 +30371,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_totem"			"9"
+				"health_totem"			"3 3 4 4"
 			}
 		}
 	}
@@ -32362,7 +32359,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "0.4"
+				"value"	                    "0.3"
 			}
 		}
 	}

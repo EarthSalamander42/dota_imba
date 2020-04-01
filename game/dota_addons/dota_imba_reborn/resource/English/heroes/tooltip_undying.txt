@@ -23,7 +23,7 @@
 "DOTA_Tooltip_ability_imba_undying_soul_rip_tombstone_heal"	"TOMBSTONE HEAL:"
 
 "DOTA_Tooltip_ability_imba_undying_tombstone"						"Tombstone"
-"DOTA_Tooltip_ability_imba_undying_tombstone_Description"			"Summons a tombstone at the target point.  Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.  Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.\n<font color='#FF7800'>Easy Prey:</font> Zombies will attack whoever's closer to them.\n<font color='#FF7800'>No Home to Return:</font> Zombies do not die if the tombstone is destroyed."
+"DOTA_Tooltip_ability_imba_undying_tombstone_Description"			"Summons a tombstone at the target point.  Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.  Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.\n<font color='#FF7800'>No Home to Return:</font> If Tombstone naturally expires while any of its zombies are still alive, they become fully controllable and last for an additional %duration% seconds."
 "DOTA_Tooltip_ability_imba_undying_tombstone_Lore"					"Dirge calls on his fallen brothers to fight for the Dead God."
 "DOTA_Tooltip_ability_imba_undying_tombstone_Note0"					"Tombstone is Spell Immune, but can be healed by Soul Rip."
 "DOTA_Tooltip_ability_imba_undying_tombstone_Note1"					"Zombies and Tombstone are Spell Immune."
@@ -82,6 +82,9 @@
 
 "DOTA_Tooltip_modifier_imba_undying_soul_rip_soul_injection_debuff"				"Soul Injection"
 "DOTA_Tooltip_modifier_imba_undying_soul_rip_soul_injection_debuff_Description"	"All attributes reduced by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%."
+
+"DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_modifier_no_home"						"No Home to Return"
+"DOTA_Tooltip_modifier_imba_undying_tombstone_zombie_modifier_no_home_Description"			"It's a free range zombie!!!"
 
 "DOTA_Tooltip_modifier_imba_undying_flesh_golem"									"Flesh Golem"
 "DOTA_Tooltip_modifier_imba_undying_flesh_golem_Description"						"Strength increased by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS_PERCENTAGE%%%. Attacks slow enemies and deal bonus damage over time."

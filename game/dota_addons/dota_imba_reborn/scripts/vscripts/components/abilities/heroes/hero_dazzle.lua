@@ -2106,6 +2106,24 @@ function modifier_imba_dazzle_bad_juju_debuff:GetModifierPhysicalArmorBonus()
 	return armor_reduction * self:GetStackCount() * (-1)
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_damage", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_slow", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_dazzle_poison_touch_damage	= modifier_special_bonus_imba_dazzle_poison_touch_damage or class({})
+modifier_special_bonus_imba_dazzle_poison_touch_slow	= modifier_special_bonus_imba_dazzle_poison_touch_slow or class({})
+
+function modifier_special_bonus_imba_dazzle_poison_touch_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_dazzle_poison_touch_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_dazzle_poison_touch_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dazzle_poison_touch_slow:IsHidden() 		return true end
+function modifier_special_bonus_imba_dazzle_poison_touch_slow:IsPurgable()		return false end
+function modifier_special_bonus_imba_dazzle_poison_touch_slow:RemoveOnDeath() 	return false end
+
 ----------------------
 -----	Talents	 -----
 ----------------------

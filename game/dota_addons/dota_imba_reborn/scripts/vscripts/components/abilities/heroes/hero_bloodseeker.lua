@@ -1153,12 +1153,23 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_1", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_5", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_7", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_bloodseeker_1					= modifier_special_bonus_imba_bloodseeker_1 or class({})
+modifier_special_bonus_imba_bloodseeker_5					= modifier_special_bonus_imba_bloodseeker_5 or class({})
 modifier_special_bonus_imba_bloodseeker_7					= modifier_special_bonus_imba_bloodseeker_7 or class({})
 modifier_special_bonus_imba_bloodseeker_rupture_cast_range	= modifier_special_bonus_imba_bloodseeker_rupture_cast_range or class({})
+
+function modifier_special_bonus_imba_bloodseeker_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_bloodseeker_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_bloodseeker_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bloodseeker_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_bloodseeker_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_bloodseeker_5:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_bloodseeker_7:IsHidden() 		return true end
 function modifier_special_bonus_imba_bloodseeker_7:IsPurgable()		return false end

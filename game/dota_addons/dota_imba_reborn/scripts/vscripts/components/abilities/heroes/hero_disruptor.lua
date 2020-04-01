@@ -1787,6 +1787,36 @@ function modifier_imba_static_storm_talent_ministun_trigger:IsHidden()
 	return true
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_disruptor_1", "components/abilities/heroes/hero_disruptor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_disruptor_3", "components/abilities/heroes/hero_disruptor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_disruptor_8", "components/abilities/heroes/hero_disruptor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_disruptor_10", "components/abilities/heroes/hero_disruptor", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_disruptor_1	= modifier_special_bonus_imba_disruptor_1 or class({})
+modifier_special_bonus_imba_disruptor_3	= modifier_special_bonus_imba_disruptor_3 or class({})
+modifier_special_bonus_imba_disruptor_8	= modifier_special_bonus_imba_disruptor_8 or class({})
+modifier_special_bonus_imba_disruptor_10	= modifier_special_bonus_imba_disruptor_10 or class({})
+
+function modifier_special_bonus_imba_disruptor_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_disruptor_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_disruptor_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_disruptor_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_disruptor_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_disruptor_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_disruptor_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_disruptor_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_disruptor_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_disruptor_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_disruptor_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_disruptor_10:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions --
 
 LinkLuaModifier("modifier_special_bonus_imba_disruptor_9", "components/abilities/heroes/hero_disruptor", LUA_MODIFIER_MOTION_NONE)

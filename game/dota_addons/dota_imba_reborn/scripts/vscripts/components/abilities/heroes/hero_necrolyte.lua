@@ -1007,9 +1007,36 @@ function modifier_imba_reapers_scythe_debuff:GetModifierBaseDamageOutgoing_Perce
 	return self.damage_reduction_pct
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_2", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_3", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_6", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_8", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_necrolyte_2	= modifier_special_bonus_imba_necrolyte_2 or class({})
+modifier_special_bonus_imba_necrolyte_3	= modifier_special_bonus_imba_necrolyte_3 or class({})
+modifier_special_bonus_imba_necrolyte_6	= modifier_special_bonus_imba_necrolyte_6 or class({})
+modifier_special_bonus_imba_necrolyte_8	= modifier_special_bonus_imba_necrolyte_8 or class({})
+
+function modifier_special_bonus_imba_necrolyte_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_8:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_1", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_4", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)

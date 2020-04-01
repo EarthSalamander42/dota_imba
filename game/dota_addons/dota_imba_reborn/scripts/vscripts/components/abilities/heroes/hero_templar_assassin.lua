@@ -1399,6 +1399,26 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_dispels", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_bash", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_refraction_instances", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_templar_assassin_meld_dispels		= modifier_special_bonus_imba_templar_assassin_meld_dispels or class({})
+modifier_special_bonus_imba_templar_assassin_meld_bash		= modifier_special_bonus_imba_templar_assassin_meld_bash or class({})
+modifier_special_bonus_imba_templar_assassin_refraction_instances		= modifier_special_bonus_imba_templar_assassin_refraction_instances or class({})
+
+function modifier_special_bonus_imba_templar_assassin_meld_dispels:IsHidden() 		return true end
+function modifier_special_bonus_imba_templar_assassin_meld_dispels:IsPurgable() 	return false end
+function modifier_special_bonus_imba_templar_assassin_meld_dispels:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_templar_assassin_meld_bash:IsHidden() 		return true end
+function modifier_special_bonus_imba_templar_assassin_meld_bash:IsPurgable() 	return false end
+function modifier_special_bonus_imba_templar_assassin_meld_bash:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_templar_assassin_refraction_instances:IsHidden() 		return true end
+function modifier_special_bonus_imba_templar_assassin_refraction_instances:IsPurgable() 	return false end
+function modifier_special_bonus_imba_templar_assassin_refraction_instances:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_armor_reduction", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_psionic_trap_damage", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 

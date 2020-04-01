@@ -1019,6 +1019,42 @@ function GameMode:OnPlayerChat(keys)
 							}
 							
 							upgraded = true
+						elseif string.find(text, 'tinker') and hero:GetName() == "npc_dota_hero_tinker" then
+							ability_set = {
+								[0] = "imba_tinker_laser",
+								[1] = "imba_tinker_heat_seeking_missile",
+								[2] = "imba_tinker_march_of_the_machines",
+								[3] = "imba_tinker_technomancy",
+								[4] = "generic_hidden",
+								[5] = "imba_tinker_rearm",
+								[6] = "special_bonus_imba_tinker_1",
+								[7] = "special_bonus_imba_tinker_2",
+								[8] = "special_bonus_imba_tinker_3",
+								[9] = "special_bonus_imba_tinker_4",
+								[10] = "special_bonus_imba_tinker_5",
+								[11] = "special_bonus_imba_tinker_6",
+								[12] = "special_bonus_imba_tinker_7",
+								[13] = "special_bonus_imba_tinker_8"
+							}
+							upgraded = true
+						elseif string.find(text, 'treant') and hero:GetName() == "npc_dota_hero_treant" then
+							ability_set = {
+								[0] = "imba_treant_natures_grasp",
+								[1] = "imba_treant_leech_seed",
+								[2] = "imba_treant_living_armor",
+								[3] = "treant_eyes_in_the_forest",
+								[4] = "imba_treant_natures_guise",
+								[5] = "imba_treant_overgrowth",
+								[6] = "special_bonus_attack_damage_50",
+								[7] = "special_bonus_imba_treant_natures_guise_invisibility",
+								[8] = "special_bonus_imba_treant_natures_grasp_damage",
+								[9] = "special_bonus_imba_treant_living_armor_heal",
+								[10] = "special_bonus_cooldown_reduction_15",
+								[11] = "special_bonus_imba_treant_leech_seed_heal",
+								[12] = "special_bonus_imba_treant_living_armor_aoe",
+								[13] = "special_bonus_imba_treant_overgrowth_damage"
+							}
+							upgraded = true
 						end
 						
 						for ability = 0, 23 do
@@ -1033,7 +1069,8 @@ function GameMode:OnPlayerChat(keys)
 								-- Remove this when done
 								if new_ability:GetName() == "imba_gyrocopter_lock_on" or
 								new_ability:GetName() == "imba_gyrocopter_gatling_guns" or 
-								new_ability:GetName() == "imba_void_spirit_void_stasis" then
+								new_ability:GetName() == "imba_void_spirit_void_stasis" or
+								new_ability:GetName() == "imba_tinker_technomancy" then
 									new_ability:SetLevel(1)
 								end
 							end

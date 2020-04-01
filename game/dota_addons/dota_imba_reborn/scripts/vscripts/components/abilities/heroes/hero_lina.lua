@@ -1117,6 +1117,20 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_lina_6", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lina_7", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lina_6	= modifier_special_bonus_imba_lina_6 or class({})
+modifier_special_bonus_imba_lina_7 = modifier_special_bonus_imba_lina_7 or class({})
+
+function modifier_special_bonus_imba_lina_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_lina_6:IsPurgable() 		return false end
+function modifier_special_bonus_imba_lina_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lina_7:IsHidden() 			return true end
+function modifier_special_bonus_imba_lina_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_lina_7:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_lina_9", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lina_10", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 

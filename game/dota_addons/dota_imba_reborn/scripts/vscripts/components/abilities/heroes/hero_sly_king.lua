@@ -863,3 +863,15 @@ end
 function modifier_imba_winterbringer_slow:GetModifierAttackSpeedBonus_Constant()
 	return self.as_slow * (-1)
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sly_king_2", "components/abilities/heroes/hero_sly_king", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sly_king_2	= modifier_special_bonus_imba_sly_king_2 or class({})
+
+function modifier_special_bonus_imba_sly_king_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_sly_king_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_sly_king_2:RemoveOnDeath() 	return false end

@@ -2052,4 +2052,33 @@ end
 function modifier_imba_obsidian_destroyer_equilibrium_debuff:GetModifierAttackSpeedBonus_Constant()
     return self.atk_speed_diff * self:GetStackCount() * (-1)
 end
-	
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_2", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_4", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_10", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_9", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_obsidian_destroyer_2	= modifier_special_bonus_imba_obsidian_destroyer_2 or class({})
+modifier_special_bonus_imba_obsidian_destroyer_4	= modifier_special_bonus_imba_obsidian_destroyer_4 or class({})
+modifier_special_bonus_imba_obsidian_destroyer_10	= modifier_special_bonus_imba_obsidian_destroyer_10 or class({})
+modifier_special_bonus_imba_obsidian_destroyer_9	= modifier_special_bonus_imba_obsidian_destroyer_9 or class({})
+
+function modifier_special_bonus_imba_obsidian_destroyer_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_obsidian_destroyer_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_obsidian_destroyer_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_obsidian_destroyer_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_obsidian_destroyer_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_obsidian_destroyer_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_obsidian_destroyer_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_obsidian_destroyer_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_obsidian_destroyer_10:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_obsidian_destroyer_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_obsidian_destroyer_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_obsidian_destroyer_9:RemoveOnDeath() 	return false end

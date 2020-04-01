@@ -1366,6 +1366,26 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_oracle_fortunes_end_max_duration", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_oracle_false_promise_invisibility", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_oracle_false_promise_duration", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_oracle_fortunes_end_max_duration	= modifier_special_bonus_imba_oracle_fortunes_end_max_duration or class({})
+modifier_special_bonus_imba_oracle_false_promise_invisibility	= modifier_special_bonus_imba_oracle_false_promise_invisibility or class({})
+modifier_special_bonus_imba_oracle_false_promise_duration		= modifier_special_bonus_imba_oracle_false_promise_duration or class({})
+
+function modifier_special_bonus_imba_oracle_fortunes_end_max_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_oracle_fortunes_end_max_duration:IsPurgable() 		return false end
+function modifier_special_bonus_imba_oracle_fortunes_end_max_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_oracle_false_promise_invisibility:IsHidden() 		return true end
+function modifier_special_bonus_imba_oracle_false_promise_invisibility:IsPurgable() 	return false end
+function modifier_special_bonus_imba_oracle_false_promise_invisibility:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_oracle_false_promise_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_oracle_false_promise_duration:IsPurgable() 	return false end
+function modifier_special_bonus_imba_oracle_false_promise_duration:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_oracle_purifying_flames_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 

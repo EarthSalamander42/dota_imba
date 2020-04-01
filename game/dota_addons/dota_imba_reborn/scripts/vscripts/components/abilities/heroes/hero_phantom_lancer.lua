@@ -1112,22 +1112,52 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage			= modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage or class({})
 modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter	= modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter or class({})
+modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance		= modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance or class({})
 modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown			= modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown or class({})
+
+function modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage:IsHidden() 			return true end
+function modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage:IsPurgable() 		return false end
+function modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter:IsHidden() 			return true end
 function modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter:IsPurgable() 		return false end
 function modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance:IsHidden() 		return true end
+function modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance:IsPurgable() 		return false end
+function modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance:RemoveOnDeath() 	return false end
+
 function modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown:IsHidden() 			return true end
 function modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown:IsPurgable() 		return false end
 function modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown:RemoveOnDeath() 	return false end
 
+function imba_phantom_lancer_spirit_lance:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_spirit_lance_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_spirit_lance_damage"), "modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage", {})
+	end
+end
+
 function imba_phantom_lancer_doppelwalk:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_doppelwalk_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_doppelwalk_cooldown"), "modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown", {})
+	end
+end
+
+function imba_phantom_lancer_phantom_edge:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_phantom_edge_distance") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_phantom_edge_distance"), "modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance", {})
+	end
+end
+
+function imba_phantom_lancer_juxtapose:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"), "modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter", {})
 	end
 end

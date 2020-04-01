@@ -629,6 +629,20 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance						= modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance or class({})
+modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken				= modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken or class({})
+
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:IsHidden() 		return true end
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:IsPurgable() 	return false end
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:IsHidden() 		return true end
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:IsPurgable() 	return false end
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_naga_siren_rip_tide_armor", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
 

@@ -1156,11 +1156,23 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_brewmaster_primal_split_health", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_brewmaster_druken_brawler_damage", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_brewmaster_primal_split_cooldown", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration	= modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration or class({})
+modifier_special_bonus_imba_brewmaster_primal_split_health			= modifier_special_bonus_imba_brewmaster_primal_split_health or class({})
 modifier_special_bonus_imba_brewmaster_druken_brawler_damage	= class({})
 modifier_special_bonus_imba_brewmaster_primal_split_cooldown	= class({})
+
+function modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_brewmaster_primal_split_health:IsHidden() 			return true end
+function modifier_special_bonus_imba_brewmaster_primal_split_health:IsPurgable() 		return false end
+function modifier_special_bonus_imba_brewmaster_primal_split_health:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_brewmaster_druken_brawler_damage:IsHidden() 		return true end
 function modifier_special_bonus_imba_brewmaster_druken_brawler_damage:IsPurgable() 		return false end

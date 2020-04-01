@@ -521,3 +521,21 @@ end
 function modifier_imba_outworld_devourer_sanity_eclipse_charge:GetModifierManaBonus()
 	return self:GetStackCount() * self.stack_mana
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier	= modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier or class({})
+modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage			= modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage or class({})
+
+function modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier:IsHidden() 		return true end
+function modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier:IsPurgable()		return false end
+function modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage:RemoveOnDeath() 	return false end

@@ -1202,9 +1202,30 @@ function modifier_imba_skywrath_flying_movement:IsHidden() return true end
 function modifier_imba_skywrath_flying_movement:IsPurgable() return false end
 function modifier_imba_skywrath_flying_movement:IsDebuff() return false end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_9", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_11", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_6", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_skywrath_mage_9	= modifier_special_bonus_imba_skywrath_mage_9 or class({})
+modifier_special_bonus_imba_skywrath_mage_11	= modifier_special_bonus_imba_skywrath_mage_11 or class({})
+modifier_special_bonus_imba_skywrath_mage_6	= modifier_special_bonus_imba_skywrath_mage_6 or class({})
+
+function modifier_special_bonus_imba_skywrath_mage_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_skywrath_mage_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_skywrath_mage_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skywrath_mage_11:IsHidden() 		return true end
+function modifier_special_bonus_imba_skywrath_mage_11:IsPurgable()		return false end
+function modifier_special_bonus_imba_skywrath_mage_11:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skywrath_mage_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_skywrath_mage_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_skywrath_mage_6:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_3", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_10", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)

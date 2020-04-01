@@ -1570,6 +1570,42 @@ function imba_earth_spirit_petrify:OnSpellStart()
 	end
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_1", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_3", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_7", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_2", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_earth_spirit_1		= modifier_special_bonus_imba_earth_spirit_1 or class({})
+modifier_special_bonus_imba_earth_spirit_3		= modifier_special_bonus_imba_earth_spirit_3 or class({})
+modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration		= modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration or class({})
+modifier_special_bonus_imba_earth_spirit_7		= modifier_special_bonus_imba_earth_spirit_7 or class({})
+modifier_special_bonus_imba_earth_spirit_2		= modifier_special_bonus_imba_earth_spirit_2 or class({})
+
+function modifier_special_bonus_imba_earth_spirit_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_earth_spirit_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_earth_spirit_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_earth_spirit_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_earth_spirit_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_earth_spirit_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_earth_spirit_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_earth_spirit_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_earth_spirit_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_earth_spirit_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_earth_spirit_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_earth_spirit_2:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions --
 
 LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_4", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)

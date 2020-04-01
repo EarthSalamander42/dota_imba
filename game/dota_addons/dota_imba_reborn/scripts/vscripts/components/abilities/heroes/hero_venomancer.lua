@@ -1282,6 +1282,36 @@ end
 
 -------------------------------------------
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_4", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_6", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_plague_ward_upgrade", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_venomancer_4	= modifier_special_bonus_imba_venomancer_4 or class({})
+modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards	= modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards or class({})
+modifier_special_bonus_imba_venomancer_6	= modifier_special_bonus_imba_venomancer_6 or class({})
+modifier_special_bonus_imba_venomancer_plague_ward_upgrade	= modifier_special_bonus_imba_venomancer_plague_ward_upgrade or class({})
+
+function modifier_special_bonus_imba_venomancer_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_venomancer_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards:IsPurgable()		return false end
+function modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_venomancer_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_venomancer_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_venomancer_plague_ward_upgrade:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_plague_ward_upgrade:IsPurgable()		return false end
+function modifier_special_bonus_imba_venomancer_plague_ward_upgrade:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_1", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_2", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)

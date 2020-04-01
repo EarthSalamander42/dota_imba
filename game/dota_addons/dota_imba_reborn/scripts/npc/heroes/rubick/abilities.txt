@@ -343,6 +343,22 @@
 				"cooldown_scepter"			"2.0"
 				"RequiresScepter"			"1"
 			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"clandestine_spell_amp_per_cast"		"1.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"clandestine_max_spell_amp"				"100"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"clandestine_loss_pct"					"50"
+			}
 		}
 	}
 
@@ -356,7 +372,7 @@
 		
 		"AbilityTextureName"			"custom/imba_rubick_clandestine_librarian"
 		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -636,6 +652,29 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"magic_resistance"			"20"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_rubick_spell_steal_spell_amp"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"50"
 			}
 		}
 	}

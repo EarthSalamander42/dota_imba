@@ -2098,10 +2098,36 @@ function modifier_imba_wraith_soul_strike_talent:IsPurgable()	return false end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_1", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_4", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_9", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_10", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_skeleton_king_1		= modifier_special_bonus_imba_skeleton_king_1 or class({})
+modifier_special_bonus_imba_skeleton_king_4		= modifier_special_bonus_imba_skeleton_king_4 or class({})
+modifier_special_bonus_imba_skeleton_king_9		= modifier_special_bonus_imba_skeleton_king_9 or class({})
+modifier_special_bonus_imba_skeleton_king_10	= modifier_special_bonus_imba_skeleton_king_10 or class({})
+
+function modifier_special_bonus_imba_skeleton_king_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_1:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skeleton_king_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skeleton_king_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skeleton_king_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_10:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_6", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_skeleton_king_6	= modifier_special_bonus_imba_skeleton_king_6 or class({})
 
-function modifier_special_bonus_imba_skeleton_king_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_skeleton_king_6:IsHidden() 		return true end
 function modifier_special_bonus_imba_skeleton_king_6:IsPurgable() 		return false end
 function modifier_special_bonus_imba_skeleton_king_6:RemoveOnDeath() 	return false end

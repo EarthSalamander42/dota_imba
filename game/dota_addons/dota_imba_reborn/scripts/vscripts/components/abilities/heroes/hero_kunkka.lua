@@ -2120,3 +2120,51 @@ end
 function modifier_imba_ghostship_tide_slow:RemoveOnDeath()
 	return true
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_1", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_2", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_3", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_4", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_6", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_8", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_9", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_kunkka_1		= modifier_special_bonus_imba_kunkka_1 or class({})
+modifier_special_bonus_imba_kunkka_2		= modifier_special_bonus_imba_kunkka_2 or class({})
+modifier_special_bonus_imba_kunkka_3		= modifier_special_bonus_imba_kunkka_3 or class({})
+modifier_special_bonus_imba_kunkka_4		= modifier_special_bonus_imba_kunkka_4 or class({})
+modifier_special_bonus_imba_kunkka_6		= modifier_special_bonus_imba_kunkka_6 or class({})
+modifier_special_bonus_imba_kunkka_8		= modifier_special_bonus_imba_kunkka_8 or class({})
+modifier_special_bonus_imba_kunkka_9		= modifier_special_bonus_imba_kunkka_9 or class({})
+
+function modifier_special_bonus_imba_kunkka_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_9:RemoveOnDeath() 	return false end

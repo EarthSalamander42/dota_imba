@@ -1031,6 +1031,30 @@ function imba_storm_spirit_static_remnant:IsHiddenWhenStolen() return false end
 function imba_storm_spirit_electric_vortex:IsHiddenWhenStolen() return false end
 function imba_storm_spirit_ball_lightning:IsHiddenWhenStolen() return false end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_6", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_1", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_7", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_storm_spirit_6	= modifier_special_bonus_imba_storm_spirit_6 or class({})
+modifier_special_bonus_imba_storm_spirit_1	= modifier_special_bonus_imba_storm_spirit_1 or class({})
+modifier_special_bonus_imba_storm_spirit_7	= modifier_special_bonus_imba_storm_spirit_7 or class({})
+
+function modifier_special_bonus_imba_storm_spirit_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_storm_spirit_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_storm_spirit_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_storm_spirit_1:IsHidden() 			return true end
+function modifier_special_bonus_imba_storm_spirit_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_storm_spirit_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_storm_spirit_7:IsHidden() 			return true end
+function modifier_special_bonus_imba_storm_spirit_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_storm_spirit_7:RemoveOnDeath() 	return false end
+
 -- CLient-side stuff
 
 LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_2", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)

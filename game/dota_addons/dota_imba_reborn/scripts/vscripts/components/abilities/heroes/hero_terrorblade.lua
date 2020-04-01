@@ -308,12 +308,14 @@ function imba_terrorblade_conjure_image:OnSpellStart()
 		duration		= self:GetSpecialValueFor("illusion_duration")
 	}
 	, 1, 108, false, true)
-
-	for _, illusion in pairs(illusions) do
-		-- Vanilla modifier to give the illusions that Terrorblade illusion texture
-		illusion:AddNewModifier(self:GetCaster(), self, "modifier_terrorblade_conjureimage", {})
-		
-		illusion:StartGesture(ACT_DOTA_CAST_ABILITY_3_END)
+	
+	if illusions then
+		for _, illusion in pairs(illusions) do
+			-- Vanilla modifier to give the illusions that Terrorblade illusion texture
+			illusion:AddNewModifier(self:GetCaster(), self, "modifier_terrorblade_conjureimage", {})
+			
+			illusion:StartGesture(ACT_DOTA_CAST_ABILITY_3_END)
+		end
 	end
 end
 
@@ -334,9 +336,17 @@ function modifier_imba_terrorblade_conjure_image_autocast:CheckState()
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_terrorblade_conjure_image_autocast_cooldown", {duration = 1})
 	
 		if self:GetCaster().GetPlayerID then
-			self:GetCaster():CastAbilityNoTarget(self:GetAbility(), self:GetCaster():GetPlayerID())
+			if self:GetCaster():GetAggroTarget() then
+				self:GetCaster():CastAbilityImmediately(self:GetAbility(), self:GetCaster():GetPlayerID())
+			else
+				self:GetCaster():CastAbilityNoTarget(self:GetAbility(), self:GetCaster():GetPlayerID())
+			end
 		elseif self:GetCaster().GetPlayerOwner and self:GetCaster():GetPlayerOwner().GetPlayerID then
-			self:GetCaster():CastAbilityNoTarget(self:GetAbility(), self:GetCaster():GetPlayerOwner():GetPlayerID())
+			if self:GetCaster():GetAggroTarget() then
+				self:GetCaster():CastAbilityImmediately(self:GetAbility(), self:GetCaster():GetPlayerOwner():GetPlayerID())
+			else
+				self:GetCaster():CastAbilityNoTarget(self:GetAbility(), self:GetCaster():GetPlayerOwner():GetPlayerID())
+			end
 		end
 	end
 end
@@ -587,7 +597,7 @@ function imba_terrorblade_terror_wave:IsInnateAbility()	return true end
 -- The cast sound is global and audible to the enemy through the fog of war.
 -- The wave travels outwards at a speed of 1000, taking 1.6 seconds to reach max radius.
 function imba_terrorblade_terror_wave:OnSpellStart()
-	self:GetCaster():EmitSound("Hero_Terrorblade.Metamorphosis.Scepter")	
+	EmitGlobalSound("Hero_Terrorblade.Metamorphosis.Scepter")	
 	
 	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_terrorblade_metamorphosis_fear_thinker", {duration = self:GetSpecialValueFor("spawn_delay") + (self:GetSpecialValueFor("radius") / self:GetSpecialValueFor("speed"))}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 end
@@ -618,7 +628,8 @@ function modifier_imba_terrorblade_metamorphosis_fear_thinker:OnIntervalThink()
 	if not self.bLaunched then
 		self.bLaunched = true
 		
-		local wave_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_scepter.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		local wave_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_scepter.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+		ParticleManager:SetParticleControl(wave_particle, 0, self:GetParent():GetAbsOrigin())
 		-- Yeah, this particle CP doesn't actually match the speed (vanilla uses 1400 as CP value, while the speed is 1600)
 		ParticleManager:SetParticleControl(wave_particle, 1, Vector(self.speed, self.speed, self.speed))
 		ParticleManager:SetParticleControl(wave_particle, 2, Vector(self.speed, self.speed, self.speed))

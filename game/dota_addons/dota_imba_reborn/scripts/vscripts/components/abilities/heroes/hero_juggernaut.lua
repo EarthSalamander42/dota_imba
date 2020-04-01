@@ -474,25 +474,29 @@ function imba_juggernaut_healing_ward:OnSpellStart()
 	-- Play cast sound
 	caster:EmitSound("Hero_Juggernaut.HealingWard.Cast")
 
-	-- Spawn the Healing Ward
-	local healing_ward = CreateUnitByName("npc_imba_juggernaut_healing_ward", targetPoint, true, caster, caster, caster:GetTeam())
+	-- -- Spawn the Healing Ward
+	-- local healing_ward = CreateUnitByName("npc_imba_juggernaut_healing_ward", targetPoint, true, caster, caster, caster:GetTeam())
 
-	-- Make the ward immediately follow its caster
-	healing_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
-	Timers:CreateTimer(0.1, function()
-		healing_ward:MoveToNPC(caster)
+	-- -- Make the ward immediately follow its caster
+	-- healing_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
+	-- Timers:CreateTimer(0.1, function()
+		-- healing_ward:MoveToNPC(caster)
+	-- end)
+
+	CreateUnitByNameAsync("npc_dota_juggernaut_healing_ward", targetPoint, true, caster, caster, caster:GetTeamNumber(), function(healing_ward)
+		-- Increase the ward's health, if appropriate
+		SetCreatureHealth(healing_ward, self:GetTalentSpecialValueFor("health"), true)
+		-- Apply the Healing Ward duration modifier
+		healing_ward:AddNewModifier(caster, self, "modifier_kill", {duration = self:GetDuration()})
+		-- Grant the Healing Ward its abilities
+		healing_ward:AddAbility("imba_juggernaut_healing_ward_passive"):SetLevel( self:GetLevel() )
+		
+		healing_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
+		
+		Timers:CreateTimer(0.1, function()
+			healing_ward:MoveToNPC(caster)
+		end)
 	end)
-
-	-- Increase the ward's health, if appropriate
-	SetCreatureHealth(healing_ward, self:GetTalentSpecialValueFor("health"), true)
-
-	-- Prevent nearby units from getting stuck
-	ResolveNPCPositions(healing_ward:GetAbsOrigin(), healing_ward:GetHullRadius() + healing_ward:GetCollisionPadding())
-
-	-- Apply the Healing Ward duration modifier
-	healing_ward:AddNewModifier(caster, self, "modifier_kill", {duration = self:GetTalentSpecialValueFor("duration")})
-	-- Grant the Healing Ward its abilities
-	healing_ward:AddAbility("imba_juggernaut_healing_ward_passive"):SetLevel( self:GetLevel() )
 end
 
 imba_juggernaut_healing_ward_passive = imba_juggernaut_healing_ward_passive or class({})
@@ -521,12 +525,14 @@ function imba_juggernaut_healing_ward_passive:OnSpellStart()
 
 	-- Transform ward into totem
 	caster:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
-	caster:SetModel("models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl")
+	-- caster:SetModel("models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl")
 	SetCreatureHealth(caster, self:GetTalentSpecialValueFor("health_totem"), true)
 	caster:FindModifierByName("modifier_imba_juggernaut_healing_ward_passive"):ForceRefresh()
 	
 	-- Use this modifier to help with the client/server-side nonsense, as movement capability cannot be properly tracked (i.e. the IsTotem() function)
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_juggernaut_healing_ward_totem", {})
+	
+	self:SetActivated(false)
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_healing_ward_passive", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
@@ -546,7 +552,7 @@ function modifier_imba_juggernaut_healing_ward_passive:OnCreated()
 		ParticleManager:SetParticleControlEnt(self:GetCaster().healing_ward_ambient_pfx, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 
 		EmitSoundOn("Hero_Juggernaut.HealingWard.Loop", self:GetParent())
-		self:StartIntervalThink(0.1) -- anti valve garbage measures
+		-- self:StartIntervalThink(0.1) -- anti valve garbage measures
 	end
 end
 
@@ -568,13 +574,13 @@ function modifier_imba_juggernaut_healing_ward_passive:OnRefresh()
 	end
 end
 
-function modifier_imba_juggernaut_healing_ward_passive:OnIntervalThink()
-	if IsTotem(self:GetParent()) and self:GetParent():GetModelName() == "models/heroes/juggernaut/jugg_healing_ward.vmdl" then
-		self:GetParent():SetModel("models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl")
-	elseif not IsTotem(self:GetParent()) and self:GetParent():GetModelName() == "models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl" then
-		self:GetParent():SetModel("models/heroes/juggernaut/jugg_healing_ward.vmdl")
-	end
-end
+-- function modifier_imba_juggernaut_healing_ward_passive:OnIntervalThink()
+	-- if IsTotem(self:GetParent()) and self:GetParent():GetModelName() == "models/heroes/juggernaut/jugg_healing_ward.vmdl" then
+		-- self:GetParent():SetModel("models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl")
+	-- elseif not IsTotem(self:GetParent()) and self:GetParent():GetModelName() == "models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl" then
+		-- self:GetParent():SetModel("models/heroes/juggernaut/jugg_healing_ward.vmdl")
+	-- end
+-- end
 
 function modifier_imba_juggernaut_healing_ward_passive:IsHidden()
 	return true
@@ -621,6 +627,11 @@ function modifier_imba_juggernaut_healing_ward_passive:GetAuraRadius()
 	end
 end
 
+-- "The heal is provided by an aura. Its healing buff lingers for 2.5 seconds."
+function modifier_imba_juggernaut_healing_ward_passive:GetAuraDuration()
+	return 2.5
+end
+
 --------------------------------------------------------------------------------
 function modifier_imba_juggernaut_healing_ward_passive:IsPurgable()
 	return false
@@ -648,12 +659,8 @@ end
 
 function modifier_imba_juggernaut_healing_ward_passive:OnAttackLanded(params) -- health handling
 	if params.target == self:GetParent() then
-		local damage = 1
-		if params.attacker:IsRealHero() or params.attacker:IsTower() then
-			damage = 3
-		end
-		if self:GetParent():GetHealth() > damage then
-			self:GetParent():SetHealth( self:GetParent():GetHealth() - damage)
+		if self:GetParent():GetHealth() > 1 then
+			self:GetParent():SetHealth( self:GetParent():GetHealth() - 1)
 		else
 			self:GetParent():Kill(nil, params.attacker)
 		end
@@ -726,8 +733,16 @@ LinkLuaModifier("modifier_imba_juggernaut_healing_ward_totem", "components/abili
 
 modifier_imba_juggernaut_healing_ward_totem	= modifier_imba_juggernaut_healing_ward_totem or class({})
 
-function modifier_imba_juggernaut_healing_ward_totem:IsHidden()		return true end
-function modifier_imba_juggernaut_healing_ward_totem:IsPurgable()	return false end
+function modifier_imba_juggernaut_healing_ward_totem:IsPurgable()		return false end
+function modifier_imba_juggernaut_healing_ward_totem:RemoveOnDeath()	return false end
+
+function modifier_imba_juggernaut_healing_ward_totem:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MODEL_CHANGE}
+end
+
+function modifier_imba_juggernaut_healing_ward_totem:GetModifierModelChange()
+	return "models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl"
+end
 
 -- BLADE DANCE --
 imba_juggernaut_blade_dance = imba_juggernaut_blade_dance or class({})
@@ -1861,7 +1876,9 @@ function modifier_imba_omni_slash_caster:OnCreated()
 				self:BounceAndSlaughter(true)
 				
 				-- Well this looks messy as hell
-				local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
+				-- local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
+				
+				local slash_rate = (self.caster:GetSecondsPerAttack() / (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
 				
 				self:StartIntervalThink(slash_rate)
 			end
@@ -1875,7 +1892,9 @@ function modifier_imba_omni_slash_caster:OnIntervalThink()
 	self:BounceAndSlaughter()
 	
 	-- Slash interval updates as attack speed updates
-	local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
+	-- local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
+	
+	local slash_rate = (self.caster:GetSecondsPerAttack() / (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
 
 	self:StartIntervalThink(-1)
 	self:StartIntervalThink(slash_rate)
@@ -1981,13 +2000,12 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter(first_slash)
 end
 
 function modifier_imba_omni_slash_caster:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
 		--MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_omni_slash_caster:GetModifierBaseAttack_BonusDamage()
@@ -2039,6 +2057,10 @@ end
 
 function modifier_imba_omni_slash_caster:GetModifierPreAttack_BonusDamage(kv)
 	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
+
+function modifier_imba_omni_slash_caster:GetOverrideAnimation()
+	return ACT_DOTA_OVERRIDE_ABILITY_4
 end
 
 function modifier_imba_omni_slash_caster:OnDestroy()
@@ -2145,9 +2167,7 @@ function modifier_imba_omni_slash_caster:StatusEffectPriority()
 end
 
 function modifier_imba_omni_slash_caster:GetStatusEffectName()
-	if self:GetCaster().omni_slash_status_effect then
-		return self:GetCaster().omni_slash_status_effect
-	end
+	return self:GetCaster().omni_slash_status_effect or "particles/status_fx/status_effect_omnislash.vpcf"
 end
 
 function modifier_imba_omni_slash_caster:IsHidden() return false end
@@ -2287,6 +2307,38 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_juggernaut_2", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_juggernaut_3", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_juggernaut_1", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_juggernaut_4", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_juggernaut_10", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_juggernaut_2	= modifier_special_bonus_imba_juggernaut_2 or class({})
+modifier_special_bonus_imba_juggernaut_3	= modifier_special_bonus_imba_juggernaut_3 or class({})
+modifier_special_bonus_imba_juggernaut_1	= modifier_special_bonus_imba_juggernaut_1 or class({})
+modifier_special_bonus_imba_juggernaut_4	= modifier_special_bonus_imba_juggernaut_4 or class({})
+modifier_special_bonus_imba_juggernaut_10	= modifier_special_bonus_imba_juggernaut_10 or class({})
+
+function modifier_special_bonus_imba_juggernaut_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_juggernaut_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_juggernaut_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_juggernaut_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_juggernaut_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_juggernaut_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_juggernaut_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_juggernaut_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_juggernaut_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_juggernaut_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_juggernaut_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_juggernaut_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_juggernaut_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_juggernaut_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_juggernaut_10:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 

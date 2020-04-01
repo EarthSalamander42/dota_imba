@@ -1125,23 +1125,66 @@ function modifier_imba_guardian_angel_shield:IsDebuff() return false end
 
 -- Client-side helper functions --
 
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_1", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_2", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_3", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_4", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_5", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_omniknight_6", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_omniknight_7", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_8", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_9", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_omniknight_10", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_omniknight_6 = class({})
+modifier_special_bonus_imba_omniknight_1		= modifier_special_bonus_imba_omniknight_1 or class({})
+modifier_special_bonus_imba_omniknight_2		= modifier_special_bonus_imba_omniknight_2 or class({})
+modifier_special_bonus_imba_omniknight_3		= modifier_special_bonus_imba_omniknight_3 or class({})
+modifier_special_bonus_imba_omniknight_4		= modifier_special_bonus_imba_omniknight_4 or class({})
+modifier_special_bonus_imba_omniknight_5		= modifier_special_bonus_imba_omniknight_5 or class({})
+modifier_special_bonus_imba_omniknight_6		= modifier_special_bonus_imba_omniknight_6 or class({})
+modifier_special_bonus_imba_omniknight_7		= modifier_special_bonus_imba_omniknight_7 or class({})
+modifier_special_bonus_imba_omniknight_8		= modifier_special_bonus_imba_omniknight_8 or class({})
+modifier_special_bonus_imba_omniknight_9		= modifier_special_bonus_imba_omniknight_9 or class({})
+modifier_special_bonus_imba_omniknight_10		= modifier_special_bonus_imba_omniknight_10 or class({})
+
+function modifier_special_bonus_imba_omniknight_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_1:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_omniknight_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_2:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_omniknight_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_omniknight_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_omniknight_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_5:RemoveOnDeath() 	return false end
+
 function modifier_special_bonus_imba_omniknight_6:IsHidden() 		return true end
 function modifier_special_bonus_imba_omniknight_6:IsPurgable() 		return false end
 function modifier_special_bonus_imba_omniknight_6:RemoveOnDeath() 	return false end
 
-modifier_special_bonus_imba_omniknight_7 = class({})
 function modifier_special_bonus_imba_omniknight_7:IsHidden() 		return true end
 function modifier_special_bonus_imba_omniknight_7:IsPurgable() 		return false end
 function modifier_special_bonus_imba_omniknight_7:RemoveOnDeath() 	return false end
 
-modifier_special_bonus_imba_omniknight_10 = class({})
+function modifier_special_bonus_imba_omniknight_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_omniknight_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_9:RemoveOnDeath() 	return false end
+
 function modifier_special_bonus_imba_omniknight_10:IsHidden() 		return true end
-function modifier_special_bonus_imba_omniknight_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_10:IsPurgable() 	return false end
 function modifier_special_bonus_imba_omniknight_10:RemoveOnDeath() 	return false end
 
 function imba_omniknight_repel:OnOwnerSpawned()

@@ -1261,9 +1261,38 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+Attempted to create unknown modifier type !
+Attempted to create unknown modifier type !
+Attempted to create unknown modifier type !
+Attempted to create unknown modifier type !
+
+LinkLuaModifier("modifier_special_bonus_imba_mystic_snake_mana_steal", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_medusa_extra_split_shot_targets", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_medusa_stone_gaze_duration", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_medusa_split_shot_modifiers", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_medusa_bonus_mana", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_medusa_bonus_mana			= class({})
+modifier_special_bonus_imba_mystic_snake_mana_steal			= modifier_special_bonus_imba_mystic_snake_mana_steal or class({})
+modifier_special_bonus_imba_medusa_extra_split_shot_targets	= modifier_special_bonus_imba_medusa_extra_split_shot_targets or class({})
+modifier_special_bonus_imba_medusa_stone_gaze_duration		= modifier_special_bonus_imba_medusa_stone_gaze_duration or class({})
+modifier_special_bonus_imba_medusa_split_shot_modifiers		= modifier_special_bonus_imba_medusa_split_shot_modifiers or class({})
+modifier_special_bonus_imba_medusa_bonus_mana				= class({})
+
+function modifier_special_bonus_imba_mystic_snake_mana_steal:IsHidden() 		return true end
+function modifier_special_bonus_imba_mystic_snake_mana_steal:IsPurgable() 	return false end
+function modifier_special_bonus_imba_mystic_snake_mana_steal:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_medusa_extra_split_shot_targets:IsHidden() 		return true end
+function modifier_special_bonus_imba_medusa_extra_split_shot_targets:IsPurgable() 	return false end
+function modifier_special_bonus_imba_medusa_extra_split_shot_targets:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_medusa_stone_gaze_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_medusa_stone_gaze_duration:IsPurgable() 	return false end
+function modifier_special_bonus_imba_medusa_stone_gaze_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_medusa_split_shot_modifiers:IsHidden() 		return true end
+function modifier_special_bonus_imba_medusa_split_shot_modifiers:IsPurgable() 	return false end
+function modifier_special_bonus_imba_medusa_split_shot_modifiers:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_medusa_bonus_mana:IsHidden() 		return true end
 function modifier_special_bonus_imba_medusa_bonus_mana:IsPurgable() 	return false end

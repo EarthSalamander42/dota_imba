@@ -2202,3 +2202,51 @@ end
 function modifier_imba_reverse_polarity_slow:IsPurgable()
 	return true
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_magnataur_1", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_magnataur_2", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_magnataur_3", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_magnataur_4", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_magnataur_6", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_magnataur_8", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_magnataur_9", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_magnataur_1		= modifier_special_bonus_imba_magnataur_1 or class({})
+modifier_special_bonus_imba_magnataur_2		= modifier_special_bonus_imba_magnataur_2 or class({})
+modifier_special_bonus_imba_magnataur_3		= modifier_special_bonus_imba_magnataur_3 or class({})
+modifier_special_bonus_imba_magnataur_4		= modifier_special_bonus_imba_magnataur_4 or class({})
+modifier_special_bonus_imba_magnataur_6		= modifier_special_bonus_imba_magnataur_6 or class({})
+modifier_special_bonus_imba_magnataur_8		= modifier_special_bonus_imba_magnataur_8 or class({})
+modifier_special_bonus_imba_magnataur_9		= modifier_special_bonus_imba_magnataur_9 or class({})
+
+function modifier_special_bonus_imba_magnataur_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_magnataur_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_magnataur_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_magnataur_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_magnataur_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_magnataur_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_magnataur_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_magnataur_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_magnataur_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_magnataur_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_magnataur_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_magnataur_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_magnataur_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_magnataur_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_magnataur_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_magnataur_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_magnataur_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_magnataur_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_magnataur_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_magnataur_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_magnataur_9:RemoveOnDeath() 	return false end

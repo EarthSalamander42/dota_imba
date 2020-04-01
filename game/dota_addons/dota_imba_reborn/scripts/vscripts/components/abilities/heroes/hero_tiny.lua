@@ -1660,6 +1660,36 @@ function modifier_imba_tiny_grow_passive:GetModifierPhysicalArmorBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_armor")
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_tiny_1", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_tiny_2", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_tiny_6", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_tiny_7", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_tiny_1		= modifier_special_bonus_imba_tiny_1 or class({})
+modifier_special_bonus_imba_tiny_2		= modifier_special_bonus_imba_tiny_2 or class({})
+modifier_special_bonus_imba_tiny_6		= modifier_special_bonus_imba_tiny_6 or class({})
+modifier_special_bonus_imba_tiny_7		= modifier_special_bonus_imba_tiny_7 or class({})
+
+function modifier_special_bonus_imba_tiny_1:IsHidden() 			return true end
+function modifier_special_bonus_imba_tiny_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_tiny_2:IsHidden() 			return true end
+function modifier_special_bonus_imba_tiny_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_tiny_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_tiny_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_tiny_7:IsHidden() 			return true end
+function modifier_special_bonus_imba_tiny_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_7:RemoveOnDeath() 	return false end
+
 --- Someone forgot to initialize this zzz
 
 LinkLuaModifier("modifier_special_bonus_imba_tiny_8", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)

@@ -968,6 +968,26 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_windranger_powershot_damage", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_windranger_shackle_shot_duration", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_windranger_windrun_invisibility", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_windranger_powershot_damage			= modifier_special_bonus_imba_windranger_powershot_damage or class({})
+modifier_special_bonus_imba_windranger_shackle_shot_duration	= modifier_special_bonus_imba_windranger_shackle_shot_duration or class({})
+modifier_special_bonus_imba_windranger_windrun_invisibility		= modifier_special_bonus_imba_windranger_windrun_invisibility or class({})
+
+function modifier_special_bonus_imba_windranger_powershot_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_windranger_powershot_damage:IsPurgable() 		return false end
+function modifier_special_bonus_imba_windranger_powershot_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_windranger_shackle_shot_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_windranger_shackle_shot_duration:IsPurgable() 	return false end
+function modifier_special_bonus_imba_windranger_shackle_shot_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_windranger_windrun_invisibility:IsHidden() 		return true end
+function modifier_special_bonus_imba_windranger_windrun_invisibility:IsPurgable() 	return false end
+function modifier_special_bonus_imba_windranger_windrun_invisibility:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_windranger_shackle_shot_cooldown", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_windranger_focusfire_damage_reduction", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 

@@ -1050,6 +1050,36 @@ function modifier_imba_enigma_black_hole_handler:GetActivityTranslationModifiers
 	end
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_enigma_8", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_malefice_damage", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_3", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_4", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_enigma_8	= modifier_special_bonus_imba_enigma_8 or class({})
+modifier_special_bonus_imba_enigma_malefice_damage	= modifier_special_bonus_imba_enigma_malefice_damage or class({})
+modifier_special_bonus_imba_enigma_3	= modifier_special_bonus_imba_enigma_3 or class({})
+modifier_special_bonus_imba_enigma_4	= modifier_special_bonus_imba_enigma_4 or class({})
+
+function modifier_special_bonus_imba_enigma_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_enigma_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_enigma_malefice_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_enigma_malefice_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_malefice_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_enigma_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_enigma_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_enigma_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_enigma_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_4:RemoveOnDeath() 	return false end
+
 ---------------------------------------------------------------------------------------------------------
 -- Adding separate modifier initializations here for talents that need client-side interaction as well --
 ---------------------------------------------------------------------------------------------------------

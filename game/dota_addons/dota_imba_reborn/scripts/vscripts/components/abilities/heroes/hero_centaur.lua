@@ -899,3 +899,63 @@ end
 function modifier_imba_stampede_trample_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self.ms_slow_pct * (-1)
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_centaur_1", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_centaur_2", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_centaur_3", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_centaur_4", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_centaur_5", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_centaur_6", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_centaur_7", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_centaur_8", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_centaur_9", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_centaur_1	= modifier_special_bonus_imba_centaur_1 or class({})
+modifier_special_bonus_imba_centaur_2	= modifier_special_bonus_imba_centaur_2 or class({})
+modifier_special_bonus_imba_centaur_3	= modifier_special_bonus_imba_centaur_3 or class({})
+modifier_special_bonus_imba_centaur_4	= modifier_special_bonus_imba_centaur_4 or class({})
+modifier_special_bonus_imba_centaur_5	= modifier_special_bonus_imba_centaur_5 or class({})
+modifier_special_bonus_imba_centaur_6	= modifier_special_bonus_imba_centaur_6 or class({})
+modifier_special_bonus_imba_centaur_7	= modifier_special_bonus_imba_centaur_7 or class({})
+modifier_special_bonus_imba_centaur_8	= modifier_special_bonus_imba_centaur_8 or class({})
+modifier_special_bonus_imba_centaur_9	= modifier_special_bonus_imba_centaur_9 or class({})
+
+function modifier_special_bonus_imba_centaur_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_centaur_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_centaur_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_centaur_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_centaur_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_centaur_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_centaur_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_centaur_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_centaur_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_9:RemoveOnDeath() 	return false end

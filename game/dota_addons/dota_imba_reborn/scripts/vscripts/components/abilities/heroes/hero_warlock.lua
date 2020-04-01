@@ -1724,9 +1724,42 @@ function modifier_imba_golem_spell_immunity:IsHidden() return false end
 function modifier_imba_golem_spell_immunity:IsPurgable() return false end
 function modifier_imba_golem_spell_immunity:IsDebuff() return false end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_warlock_1", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_3", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_9", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_5", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_4", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_warlock_1	= modifier_special_bonus_imba_warlock_1 or class({})
+modifier_special_bonus_imba_warlock_3	= modifier_special_bonus_imba_warlock_3 or class({})
+modifier_special_bonus_imba_warlock_9	= modifier_special_bonus_imba_warlock_9 or class({})
+modifier_special_bonus_imba_warlock_5	= modifier_special_bonus_imba_warlock_5 or class({})
+modifier_special_bonus_imba_warlock_4	= modifier_special_bonus_imba_warlock_4 or class({})
+
+function modifier_special_bonus_imba_warlock_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_warlock_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_warlock_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_warlock_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_warlock_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_4:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
 

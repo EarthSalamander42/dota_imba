@@ -1585,6 +1585,36 @@ function imba_bane_nightmare:IsHiddenWhenStolen() return false end
 function imba_bane_nightmare_end:IsHiddenWhenStolen() return false end
 function imba_bane_fiends_grip:IsHiddenWhenStolen() return false end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_bane_7", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bane_3", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bane_brain_sap_damage", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bane_fiends_grip_duration", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_bane_7	= modifier_special_bonus_imba_bane_7 or class({})
+modifier_special_bonus_imba_bane_3	= modifier_special_bonus_imba_bane_3 or class({})
+modifier_special_bonus_imba_bane_brain_sap_damage	= modifier_special_bonus_imba_bane_brain_sap_damage or class({})
+modifier_special_bonus_imba_bane_fiends_grip_duration	= modifier_special_bonus_imba_bane_fiends_grip_duration or class({})
+
+function modifier_special_bonus_imba_bane_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_bane_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bane_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_bane_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bane_brain_sap_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_brain_sap_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_bane_brain_sap_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bane_fiends_grip_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_fiends_grip_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_bane_fiends_grip_duration:RemoveOnDeath() 	return false end
+
 -- -- Client-side helper functions --
 
 LinkLuaModifier("modifier_special_bonus_imba_bane_2", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)

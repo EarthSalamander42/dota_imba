@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_terrorblade_reflection_Note1"									"<font color='#FF7800'>Illusion duration is not affected by status resistance.</font>"
 
 "DOTA_Tooltip_ability_imba_terrorblade_conjure_image"									"Conjure Image"
-"DOTA_Tooltip_ability_imba_terrorblade_conjure_image_Description"						"Creates an illusion of Terrorblade that deals damage.\n<font color='#FF7800'>Optimal Creation:</font> Can be set to auto-cast to automatically cast Conjure Image whenever it is off cooldown and castable."
+"DOTA_Tooltip_ability_imba_terrorblade_conjure_image_Description"						"Creates an illusion of Terrorblade that deals damage.\n<font color='#FF7800'>Optimal Creation:</font> Can be set to auto-cast to automatically cast Conjure Image whenever it is off cooldown and castable. If activated while the caster has an aggro target, Conjure Image will have no cast point and no cast backswing."
 "DOTA_Tooltip_ability_imba_terrorblade_conjure_image_Lore"								"There's only one thing more dangerous than facing Terrorblade.  Facing MORE Terrrorblades!"
 "DOTA_Tooltip_ability_imba_terrorblade_conjure_image_Note0"								"Illusions created by Conjure Image are visually different for enemies."
 "DOTA_Tooltip_ability_imba_terrorblade_conjure_image_illusion_duration"					"ILLUSION DURATION:"

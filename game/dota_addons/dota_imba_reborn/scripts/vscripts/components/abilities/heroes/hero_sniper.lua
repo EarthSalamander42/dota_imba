@@ -702,7 +702,7 @@ function modifier_imba_sniper_headshot:OnAttackLanded(keys)
 		
 		if self.take_aim_aimed_assault and self.take_aim_aimed_assault[keys.record] and self:GetCaster():HasTalent("special_bonus_imba_sniper_7") then
 			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_headshot_eyeshot", {
-				duration	= self:GetCaster():FindTalentValue("special_bonus_imba_sniper_7", "duration") * (1 - keys.:GetStatusResistance())
+				duration	= self:GetCaster():FindTalentValue("special_bonus_imba_sniper_7", "duration") * (1 - keys.target:GetStatusResistance())
 			})
 		end
 	end
@@ -1921,6 +1921,20 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sniper_7", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sniper_8", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sniper_7		= modifier_special_bonus_imba_sniper_7 or class({})
+modifier_special_bonus_imba_sniper_8		= modifier_special_bonus_imba_sniper_8 or class({})
+
+function modifier_special_bonus_imba_sniper_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_sniper_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sniper_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sniper_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_sniper_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sniper_8:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_sniper_6", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sniper_9", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)

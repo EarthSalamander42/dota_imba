@@ -53,7 +53,7 @@
 "DOTA_Tooltip_modifier_imba_rubick_arcane_supremacy_flip_Description"			"Spell amplification reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
 "DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
-"DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own <font color='#FF7800'>indefinitely</font> or until he dies.\n<font color='#FF7800'>All Copy:</font> Spell Steal can also target creeps."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own <font color='#FF7800'>indefinitely</font> or until he dies.\n<font color='#FF7800'>All Copy:</font> Spell Steal can also target creeps.\n<font color='#FF7800'>Clandestine Librarian:</font> Grants %clandestine_spell_amp_per_cast%%% spell amplification every time Spell Steal is cast, up to a maximum of %clandestine_max_spell_amp% stacks. %clandestine_loss_pct%%% of the stacks (rounded down) are lost upon death."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Lore"						"...but even their lesser magics can be a source of much utility..."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Note0"						"Cannot steal Monkey King's Wukong's Command or Void Spirit's Aether Remnant. Attempting to do so results in a cast error."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_aghanim_description"		"Decreases cooldown, increases cast range and upgrades the spell to the Scepter level.\n<font color='#FF7800'>Copies the target's spell amplification values, adding it to Rubick's own. Expires on death or when another spell is stolen.</font>"
@@ -67,7 +67,7 @@
 "DOTA_Tooltip_ability_imba_rubick_clandestine_librarian_Lore"			"...and with each conjuration, his combat prowess grew greater still."	
 
 "DOTA_Tooltip_modifier_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
-"DOTA_Tooltip_modifier_imba_rubick_clandestine_librarian_Description"	"Spell Amp increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_rubick_clandestine_librarian_Description"	"Spell amplification increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_1"						"Spell Steal can target creeps"
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_2"						"-0.5s Tekekinesis ally lift time"
@@ -81,6 +81,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_fade_bolt_cooldown"		"-{s:value}s Fade Bolt Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_remnants_of_null_field"	"Remnants of Null Field"
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_remnants_of_null_field_Description"	"Applies a {s:radius} radius aura that increases allies' (green) or decreases enemies' (red) magic resistance by {s:magic_resistance}%."
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_spell_steal_spell_amp"	"+{s:value}% Spell Amp For Stolen Spells"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_spell_steal_spell_amp_Description"	"Does not stack with Spell Steal's Aghanim's Scepter spell amplification, but ensures a minimum of {s:value}%."
 
 "DOTA_Tooltip_modifier_special_bonus_imba_rubick_remnants_of_null_field_positive"	"Null Field"
 "DOTA_Tooltip_modifier_special_bonus_imba_rubick_remnants_of_null_field_positive_Description"	"Magic resistance increased by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."

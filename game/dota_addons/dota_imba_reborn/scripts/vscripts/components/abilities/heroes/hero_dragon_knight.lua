@@ -749,3 +749,39 @@ end
 
 function modifier_imba_elder_dragon_form_debuff:GetEffectName() return "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf" end
 function modifier_imba_elder_dragon_form_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_dragon_knight_1", "components/abilities/heroes/hero_dragon_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dragon_knight_3", "components/abilities/heroes/hero_dragon_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dragon_knight_5", "components/abilities/heroes/hero_dragon_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dragon_knight_7", "components/abilities/heroes/hero_dragon_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dragon_knight_4", "components/abilities/heroes/hero_dragon_knight", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_dragon_knight_1		= modifier_special_bonus_imba_dragon_knight_1 or class({})
+modifier_special_bonus_imba_dragon_knight_3		= modifier_special_bonus_imba_dragon_knight_3 or class({})
+modifier_special_bonus_imba_dragon_knight_5		= modifier_special_bonus_imba_dragon_knight_5 or class({})
+modifier_special_bonus_imba_dragon_knight_7		= modifier_special_bonus_imba_dragon_knight_7 or class({})
+modifier_special_bonus_imba_dragon_knight_4		= modifier_special_bonus_imba_dragon_knight_4 or class({})
+
+function modifier_special_bonus_imba_dragon_knight_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_dragon_knight_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_dragon_knight_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dragon_knight_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_dragon_knight_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_dragon_knight_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dragon_knight_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_dragon_knight_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_dragon_knight_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dragon_knight_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_dragon_knight_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_dragon_knight_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dragon_knight_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_dragon_knight_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_dragon_knight_4:RemoveOnDeath() 	return false end

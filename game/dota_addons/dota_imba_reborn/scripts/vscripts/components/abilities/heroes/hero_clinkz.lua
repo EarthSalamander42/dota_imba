@@ -2239,9 +2239,44 @@ function modifier_imba_death_pact_talent_buff:GetModifierExtraHealthBonus()
 	return bonus_hp    
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_clinkz_8", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_clinkz_death_pact_723_health", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_clinkz_9", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_clinkz_10", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_clinkz_8									= modifier_special_bonus_imba_clinkz_8 or class({})
+modifier_special_bonus_imba_clinkz_death_pact_723_health				= modifier_special_bonus_imba_clinkz_death_pact_723_health or class({})
+modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration	= modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration or class({})
+modifier_special_bonus_imba_clinkz_9									= modifier_special_bonus_imba_clinkz_9 or class({})
+modifier_special_bonus_imba_clinkz_10									= modifier_special_bonus_imba_clinkz_10 or class({})
+
+function modifier_special_bonus_imba_clinkz_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_clinkz_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_clinkz_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_clinkz_death_pact_723_health:IsHidden() 		return true end
+function modifier_special_bonus_imba_clinkz_death_pact_723_health:IsPurgable()		return false end
+function modifier_special_bonus_imba_clinkz_death_pact_723_health:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_clinkz_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_clinkz_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_clinkz_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_clinkz_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_clinkz_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_clinkz_10:RemoveOnDeath() 	return false end
+
 -- Client-side helper functions --
 
--- #5 Talent: Frost Armor adds a portion of the Lich's intelligence to the armor bonus
 LinkLuaModifier("modifier_special_bonus_imba_clinkz_5", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_clinkz_5 = class({})

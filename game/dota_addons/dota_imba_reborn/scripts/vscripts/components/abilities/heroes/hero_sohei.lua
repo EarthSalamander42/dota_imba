@@ -1606,3 +1606,14 @@ if IsServer() then
 	end
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sohei_wholeness_of_body_heal", "components/abilities/heroes/hero_sohei", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sohei_wholeness_of_body_heal		= modifier_special_bonus_imba_sohei_wholeness_of_body_heal or class({})
+
+function modifier_special_bonus_imba_sohei_wholeness_of_body_heal:IsHidden() 		return true end
+function modifier_special_bonus_imba_sohei_wholeness_of_body_heal:IsPurgable()		return false end
+function modifier_special_bonus_imba_sohei_wholeness_of_body_heal:RemoveOnDeath() 	return false end

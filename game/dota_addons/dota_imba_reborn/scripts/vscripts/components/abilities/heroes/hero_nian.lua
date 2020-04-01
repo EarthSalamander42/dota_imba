@@ -858,6 +858,20 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_nian_frenzy_swipes_upgrade", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_nian_frenzy_swipes_upgrade					= modifier_special_bonus_imba_nian_frenzy_swipes_upgrade or class({})
+modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity		= modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity or class({})
+
+function modifier_special_bonus_imba_nian_frenzy_swipes_upgrade:IsHidden() 		return true end
+function modifier_special_bonus_imba_nian_frenzy_swipes_upgrade:IsPurgable() 	return false end
+function modifier_special_bonus_imba_nian_frenzy_swipes_upgrade:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity:IsHidden() 		return true end
+function modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity:IsPurgable() 		return false end
+function modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_nian_crushing_leap_cast_range", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nian_crushing_leap_cooldown", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 

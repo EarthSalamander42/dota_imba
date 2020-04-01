@@ -1675,12 +1675,54 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_alchemist_1", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_alchemist_2", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_alchemist_3", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_alchemist_4", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_alchemist_5", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_alchemist_6", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_alchemist_7", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_alchemist_8", "components/abilities/heroes/hero_alchemist", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_alchemist_1		= modifier_special_bonus_imba_alchemist_1 or class({})
+modifier_special_bonus_imba_alchemist_2		= modifier_special_bonus_imba_alchemist_2 or class({})
+modifier_special_bonus_imba_alchemist_3		= modifier_special_bonus_imba_alchemist_3 or class({})
+modifier_special_bonus_imba_alchemist_4		= modifier_special_bonus_imba_alchemist_4 or class({})
+modifier_special_bonus_imba_alchemist_5		= modifier_special_bonus_imba_alchemist_5 or class({})
+modifier_special_bonus_imba_alchemist_6		= modifier_special_bonus_imba_alchemist_6 or class({})
+modifier_special_bonus_imba_alchemist_7		= modifier_special_bonus_imba_alchemist_7 or class({})
+modifier_special_bonus_imba_alchemist_8		= modifier_special_bonus_imba_alchemist_8 or class({})
 
 function modifier_special_bonus_imba_alchemist_1:IsHidden() 		return true end
 function modifier_special_bonus_imba_alchemist_1:IsPurgable() 		return false end
 function modifier_special_bonus_imba_alchemist_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_alchemist_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_alchemist_2:IsPurgable() 		return false end
+function modifier_special_bonus_imba_alchemist_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_alchemist_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_alchemist_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_alchemist_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_alchemist_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_alchemist_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_alchemist_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_alchemist_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_alchemist_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_alchemist_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_alchemist_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_alchemist_6:IsPurgable() 		return false end
+function modifier_special_bonus_imba_alchemist_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_alchemist_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_alchemist_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_alchemist_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_alchemist_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_alchemist_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_alchemist_8:RemoveOnDeath() 	return false end
 
 function imba_alchemist_acid_spray:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_alchemist_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_alchemist_1") then

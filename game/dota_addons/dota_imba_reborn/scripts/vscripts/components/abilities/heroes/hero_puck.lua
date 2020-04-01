@@ -799,9 +799,30 @@ function modifier_imba_puck_dream_coil_visionary:OnIntervalThink()
 	end
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_puck_phase_shift_attacks", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_puck_illusory_orb_speed", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_puck_dream_coil_targets", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_puck_phase_shift_attacks	= modifier_special_bonus_imba_puck_phase_shift_attacks or class({})
+modifier_special_bonus_imba_puck_illusory_orb_speed		= modifier_special_bonus_imba_puck_illusory_orb_speed or class({})
+modifier_special_bonus_imba_puck_dream_coil_targets		= modifier_special_bonus_imba_puck_dream_coil_targets or class({})
+
+function modifier_special_bonus_imba_puck_phase_shift_attacks:IsHidden() 		return true end
+function modifier_special_bonus_imba_puck_phase_shift_attacks:IsPurgable()		return false end
+function modifier_special_bonus_imba_puck_phase_shift_attacks:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_puck_illusory_orb_speed:IsHidden() 		return true end
+function modifier_special_bonus_imba_puck_illusory_orb_speed:IsPurgable()		return false end
+function modifier_special_bonus_imba_puck_illusory_orb_speed:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_puck_dream_coil_targets:IsHidden() 		return true end
+function modifier_special_bonus_imba_puck_dream_coil_targets:IsPurgable()		return false end
+function modifier_special_bonus_imba_puck_dream_coil_targets:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_range", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)

@@ -1285,9 +1285,36 @@ function modifier_imba_dark_seer_wall_of_replica_slow:OnTakeDamageKillCredit(key
 	end
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_ion_shell_radius", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_vacuum_increased_duration", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_ion_shell_damage", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_dark_seer_ion_shell_radius	= modifier_special_bonus_imba_dark_seer_ion_shell_radius or class({})
+modifier_special_bonus_imba_dark_seer_vacuum_increased_duration	= modifier_special_bonus_imba_dark_seer_vacuum_increased_duration or class({})
+modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration	= modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration or class({})
+modifier_special_bonus_imba_dark_seer_ion_shell_damage	= modifier_special_bonus_imba_dark_seer_ion_shell_damage or class({})
+
+function modifier_special_bonus_imba_centaur_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_centaur_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_centaur_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dark_seer_vacuum_increased_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_dark_seer_vacuum_increased_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_dark_seer_vacuum_increased_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dark_seer_ion_shell_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_dark_seer_ion_shell_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_dark_seer_ion_shell_damage:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_dark_seer_surge_cast_range", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 

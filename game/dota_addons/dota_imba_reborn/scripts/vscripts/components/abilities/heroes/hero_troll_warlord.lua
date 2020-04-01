@@ -1110,6 +1110,14 @@ end
 
 -- Client-side helper functions
 
+LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_7", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_troll_warlord_7		= modifier_special_bonus_imba_troll_warlord_7 or class({})
+
+function modifier_special_bonus_imba_troll_warlord_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_troll_warlord_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_troll_warlord_7:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_1", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_2", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_4", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
