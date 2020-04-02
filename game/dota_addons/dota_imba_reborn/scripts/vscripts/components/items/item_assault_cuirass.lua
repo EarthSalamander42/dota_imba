@@ -46,8 +46,8 @@ function modifier_imba_assault_cuirass:OnCreated()
 	
 	-- If it is the first Assault Cuirass in the inventory, grant the Assault Cuirass aura
 	if not self:GetCaster():HasModifier("modifier_imba_assault_cuirass_aura_positive") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_assault_cuirass_aura_positive", {})
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_assault_cuirass_aura_negative", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_assault_cuirass_aura_positive", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_assault_cuirass_aura_negative", {})
 	end
 end
 
@@ -64,31 +64,31 @@ end
 
 function modifier_imba_assault_cuirass:GetModifierAttackSpeedBonus_Constant()
 	if self:GetAbility() then
-		self:GetAbility():GetSpecialValueFor("bonus_as")
+		return self:GetAbility():GetSpecialValueFor("bonus_as")
 	end
 end
 
 function modifier_imba_assault_cuirass:GetModifierPhysicalArmorBonus()
 	if self:GetAbility() then
-		self:GetAbility():GetSpecialValueFor("bonus_armor")
+		return self:GetAbility():GetSpecialValueFor("bonus_armor")
 	end
 end
 
 function modifier_imba_assault_cuirass:GetModifierBonusStats_Strength()
 	if self:GetAbility() then
-		self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	end
 end
 
 function modifier_imba_assault_cuirass:GetModifierBonusStats_Agility()
 	if self:GetAbility() then
-		self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	end
 end
 
 function modifier_imba_assault_cuirass:GetModifierBonusStats_Intellect()
 	if self:GetAbility() then
-		self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	end
 end
 
@@ -105,25 +105,15 @@ end
 -- Assault Cuirass positive aura
 modifier_imba_assault_cuirass_aura_positive = class({})
 
-function modifier_imba_assault_cuirass_aura_positive:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.modifier_assault = "modifier_imba_assault_cuirass_aura_positive_effect"
-	
-	if self.ability then
-		-- Ability specials
-		self.radius = self.ability:GetSpecialValueFor("radius")
-	end
-end
-
 function modifier_imba_assault_cuirass_aura_positive:IsDebuff() return false end
 function modifier_imba_assault_cuirass_aura_positive:AllowIllusionDuplicate() return true end
 function modifier_imba_assault_cuirass_aura_positive:IsHidden() return true end
 function modifier_imba_assault_cuirass_aura_positive:IsPurgable() return false end
 
 function modifier_imba_assault_cuirass_aura_positive:GetAuraRadius()
-	return self.radius
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("radius")
+	end
 end
 
 function modifier_imba_assault_cuirass_aura_positive:GetAuraEntityReject(target)
@@ -148,7 +138,7 @@ function modifier_imba_assault_cuirass_aura_positive:GetAuraSearchType()
 end
 
 function modifier_imba_assault_cuirass_aura_positive:GetModifierAura()
-	return self.modifier_assault
+	return "modifier_imba_assault_cuirass_aura_positive_effect"
 end
 
 function modifier_imba_assault_cuirass_aura_positive:IsAura()
@@ -161,18 +151,9 @@ end
 modifier_imba_assault_cuirass_aura_positive_effect = class({})
 
 function modifier_imba_assault_cuirass_aura_positive_effect:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-
-	if not self.ability then
-		self:Destroy()
-		return nil
-	end
-
 	-- Ability specials
-	self.aura_as_ally = self.ability:GetSpecialValueFor("aura_as_ally")
-	self.aura_armor_ally = self.ability:GetSpecialValueFor("aura_armor_ally")
+	self.aura_as_ally = self:GetAbility():GetSpecialValueFor("aura_as_ally")
+	self.aura_armor_ally = self:GetAbility():GetSpecialValueFor("aura_armor_ally")
 end
 
 function modifier_imba_assault_cuirass_aura_positive_effect:IsHidden() return false end
@@ -187,12 +168,10 @@ function modifier_imba_assault_cuirass_aura_positive_effect:DeclareFunctions()
 end
 
 function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierAttackSpeedBonus_Constant()
-	if not self.ability then return nil end
 	return self.aura_as_ally
 end
 
 function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierPhysicalArmorBonus()
-	if not self.ability then return nil end
 	return self.aura_armor_ally
 end
 
@@ -208,24 +187,15 @@ end
 -- Assault Cuirass negative aura
 modifier_imba_assault_cuirass_aura_negative = class({})
 
-function modifier_imba_assault_cuirass_aura_negative:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-
-	if self.ability then
-		-- Ability specials
-		self.radius = self.ability:GetSpecialValueFor("radius")
-	end
-end
-
 function modifier_imba_assault_cuirass_aura_negative:IsDebuff() return false end
 function modifier_imba_assault_cuirass_aura_negative:AllowIllusionDuplicate() return true end
 function modifier_imba_assault_cuirass_aura_negative:IsHidden() return true end
 function modifier_imba_assault_cuirass_aura_negative:IsPurgable() return false end
 
 function modifier_imba_assault_cuirass_aura_negative:GetAuraRadius()
-	return self.radius
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("radius")
+	end
 end
 
 function modifier_imba_assault_cuirass_aura_negative:GetAuraEntityReject(target)
@@ -263,14 +233,9 @@ end
 modifier_imba_assault_cuirass_aura_negative_effect = class({})
 
 function modifier_imba_assault_cuirass_aura_negative_effect:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
+	if not self:GetAbility() then self:Destroy() return end
 
-	if self.ability then
-		-- Ability specials
-		self.aura_armor_reduction_enemy = self.ability:GetSpecialValueFor("aura_armor_reduction_enemy") * (-1)
-	end
+	self.aura_armor_reduction_enemy = self:GetAbility():GetSpecialValueFor("aura_armor_reduction_enemy") * (-1)
 end
 
 function modifier_imba_assault_cuirass_aura_negative_effect:IsHidden() return false end

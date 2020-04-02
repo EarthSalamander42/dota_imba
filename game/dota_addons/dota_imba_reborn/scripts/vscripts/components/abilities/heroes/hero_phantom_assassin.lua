@@ -851,8 +851,9 @@ function modifier_imba_blur_smoke:OnIntervalThink()
 end
 
 -- IDK what is being done in other files if applicable but these abilities are applying and removing like multiple times...
-function modifier_imba_blur_smoke:OnRemoved()
-	if IsServer() then
+-- Wearables issue causing IMBApass PA skin to kill your eardrums if some flags aren't put in
+function modifier_imba_blur_smoke:OnDestroy()
+	if IsServer() and (self:GetParent():IsConsideredHero() or self:GetParent():IsBuilding() or self:GetParent():IsCreep()) then
 		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur.Break")
 	end
 end

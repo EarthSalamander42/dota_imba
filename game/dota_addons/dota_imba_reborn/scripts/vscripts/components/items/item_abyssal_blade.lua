@@ -177,7 +177,7 @@ function modifier_imba_abyssal_blade:OnAttackLanded(keys)
 		if IMBA_DISABLED_SKULL_BASHER == nil or not IMBA_DISABLED_SKULL_BASHER[keys.attacker:GetUnitName()] then
 			keys.target:EmitSound("DOTA_Item.SkullBasher")
 			
-			local bash_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_bash", {duration = self:GetAbility():GetSpecialValueFor("stun_duration")})
+			local bash_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_bash", {duration = self:GetAbility():GetSpecialValueFor("stun_duration")})
 			
 			if bash_modifier then
 				bash_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("stun_duration") * (1 - keys.target:GetStatusResistance()), true)
