@@ -98,6 +98,8 @@ FORCE_PICKED_HERO = "npc_dota_hero_dummy_dummy"		-- What hero should we force al
 MAXIMUM_ATTACK_SPEED = 1000					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
 
+b_USE_MULTIPLE_COURIERS = true				-- Should we allow a courier for each player?
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: gameplay globals
 -------------------------------------------------------------------------------------------------
@@ -632,7 +634,7 @@ if GetMapName() == MapOverthrow() then
 end
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = true -- Should we use vanilla couriers? -- nil to use none of turbo or team couriers
+USE_TEAM_COURIER = nil -- Should we use vanilla couriers? -- nil to use none of turbo or team couriers
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
