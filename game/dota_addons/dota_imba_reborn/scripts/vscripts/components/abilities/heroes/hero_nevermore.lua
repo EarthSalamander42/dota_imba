@@ -520,10 +520,10 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 		-- Adjust damage
 		damage = damage + (stacks * damage_per_soul) + debuff_boost
 
-		-- -- Add a Necromastery stack if it was a hero
-		-- if enemy:IsRealHero() then
-			-- AddNecromasterySouls(caster, souls_per_raze)
-		-- end
+		-- Add a Necromastery stack if it was a hero
+		if enemy:IsRealHero() then
+			AddNecromasterySouls(caster, souls_per_raze)
+		end
 
 		-- If caster is not broken, launch a soul projectile to the caster
 		if not caster:PassivesDisabled() then
@@ -1130,24 +1130,24 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 				return nil
 			end
 
-			-- -- Gain a soul and refresh
-			-- AddNecromasterySouls(self.caster, self.hero_attack_soul_count)
+			-- Gain a soul and refresh
+			AddNecromasterySouls(self.caster, self.hero_attack_soul_count)
 
-			-- -- If caster is not broken and is visible, launch a hero soul to the caster
-			-- if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then
-				-- local soul_projectile = {Target = self.caster,
-										 -- Source = target,
-										 -- Ability = self.ability,
-										 -- EffectName = self.particle_soul_hero,
-										 -- bDodgeable = false,
-										 -- bProvidesVision = false,
-										 -- iMoveSpeed = self.soul_projectile_speed,
-										 -- iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-										 -- }
+			-- If caster is not broken and is visible, launch a hero soul to the caster
+			if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then
+				local soul_projectile = {Target = self.caster,
+										 Source = target,
+										 Ability = self.ability,
+										 EffectName = self.particle_soul_hero,
+										 bDodgeable = false,
+										 bProvidesVision = false,
+										 iMoveSpeed = self.soul_projectile_speed,
+										 iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+										 }
 
 
-				-- ProjectileManager:CreateTrackingProjectile(soul_projectile)
-			-- end
+				ProjectileManager:CreateTrackingProjectile(soul_projectile)
+			end
 		end
 	end
 end

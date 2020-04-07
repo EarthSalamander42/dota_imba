@@ -364,16 +364,16 @@ function modifier_imba_enigma_eidolon:IsStunDebuff() 		return false end
 function modifier_imba_enigma_eidolon:RemoveOnDeath() 	return true  end
 
 function modifier_imba_enigma_eidolon:DeclareFunctions()
-	local funcs =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
-			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		}
-	return funcs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
 end
 
 function modifier_imba_enigma_eidolon:OnCreated( keys )
@@ -408,9 +408,15 @@ function modifier_imba_enigma_eidolon:GetModifierMoveSpeedBonus_Constant() retur
 function modifier_imba_enigma_eidolon:GetModifierAttackSpeedBonus_Constant() return self.attack_speed_bonus end
 function modifier_imba_enigma_eidolon:GetModifierPreAttack_BonusDamage() return self:GetStackCount() end
 
+function modifier_imba_enigma_eidolon:GetModifierAttackRangeBonus()
+	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetCaster():HasTalent("special_bonus_imba_enigma_demonic_conversion_attack_range") then
+		return self:GetCaster():FindTalentValue("special_bonus_imba_enigma_demonic_conversion_attack_range")
+	end
+end
+
 function modifier_imba_enigma_eidolon:OnAttackLanded(keys)
 	if not IsServer() then return end
-	if keys.attacker == self:GetParent() and not keys.target:IsBuilding() then
+	if keys.attacker == self:GetParent() and not keys.target:IsBuilding() and self:GetParent():GetOwner() == self:GetCaster() then
 		if self:GetParent():GetTeamNumber() ~= keys.target:GetTeamNumber() then
 			local target = keys.target
 			if not target:HasModifier("modifier_imba_enigma_eidolon_attack_counter") then
@@ -1101,3 +1107,17 @@ modifier_special_bonus_imba_enigma_5 = class ({})
 function modifier_special_bonus_imba_enigma_5:IsHidden()		return true end
 function modifier_special_bonus_imba_enigma_5:IsPurgable()		return false end
 function modifier_special_bonus_imba_enigma_5:RemoveOnDeath()	return false end
+
+LinkLuaModifier("modifier_special_bonus_imba_enigma_demonic_conversion_attack_range", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_enigma_demonic_conversion_attack_range	= modifier_special_bonus_imba_enigma_demonic_conversion_attack_range or class({})
+
+function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:IsHidden()		return true end
+function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:IsPurgable()	return false end
+function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:RemoveOnDeath()	return false end
+
+function imba_enigma_demonic_conversion:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_enigma_demonic_conversion_attack_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_demonic_conversion_attack_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_demonic_conversion_attack_range"), "modifier_special_bonus_imba_enigma_demonic_conversion_attack_range", {})
+	end
+end

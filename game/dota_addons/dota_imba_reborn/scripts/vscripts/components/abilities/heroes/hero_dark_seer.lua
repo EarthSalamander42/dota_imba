@@ -662,6 +662,8 @@ function modifier_imba_dark_seer_ion_shell:OnCreated()
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(50, 50, 50)) -- Arbitrary
 	self:AddParticle(self.particle, false, false, -1, false, false)
 	
+	print(self.particle)
+	
 	self:SetStackCount(0)
 	
 	self:StartIntervalThink(self.interval)
@@ -1227,6 +1229,9 @@ function modifier_imba_dark_seer_wall_of_replica:OnDestroy()
 	if not IsServer() then return end
 
 	self:GetParent():StopSound("Hero_Dark_Seer.Wall_of_Replica_lp")
+	
+	-- Seems like the walls are STILL making people lag? I don't know if this will solve anything anymore.
+	self:GetParent():RemoveSelf()
 end
 
 -----------------------------------
@@ -1296,9 +1301,9 @@ modifier_special_bonus_imba_dark_seer_vacuum_increased_duration	= modifier_speci
 modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration	= modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration or class({})
 modifier_special_bonus_imba_dark_seer_ion_shell_damage	= modifier_special_bonus_imba_dark_seer_ion_shell_damage or class({})
 
-function modifier_special_bonus_imba_centaur_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_dark_seer_ion_shell_radius:IsHidden() 		return true end
+function modifier_special_bonus_imba_dark_seer_ion_shell_radius:IsPurgable()		return false end
+function modifier_special_bonus_imba_dark_seer_ion_shell_radius:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_dark_seer_vacuum_increased_duration:IsHidden() 		return true end
 function modifier_special_bonus_imba_dark_seer_vacuum_increased_duration:IsPurgable()		return false end

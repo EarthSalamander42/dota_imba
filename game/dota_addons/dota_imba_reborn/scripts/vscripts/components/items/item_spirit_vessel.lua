@@ -304,32 +304,29 @@ function modifier_item_imba_spirit_vessel_damage:OnDestroy()
 	end
 end
 
-function modifier_item_imba_spirit_vessel_damage:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
-		-- MODIFIER_PROPERTY_LIFESTEAL_AMPLIFY_PERCENTAGE -- Valve still not linking up their functions zzz...
-    -- }
-
-    -- return decFuncs
-	
-	return {MODIFIER_PROPERTY_TOOLTIP}
+function modifier_item_imba_spirit_vessel_damage:DeclareFunctions()	
+	return {
+		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_TOOLTIP
+	}
 end
 
--- function modifier_item_imba_spirit_vessel_damage:GetModifierHPRegenAmplify_Percentage()
-	-- return self.hp_regen_reduction_enemy
--- end
+function modifier_item_imba_spirit_vessel_damage:GetModifierHealAmplify_PercentageTarget()
+	return self.hp_regen_reduction_enemy
+end
 
--- function modifier_item_imba_spirit_vessel_damage:GetModifierLifestealRegenAmplify_Percentage()
-	-- return self.hp_regen_reduction_enemy
--- end
+function modifier_item_imba_spirit_vessel_damage:GetModifierHPRegenAmplify_Percentage()
+	return self.hp_regen_reduction_enemy
+end
 
 function modifier_item_imba_spirit_vessel_damage:OnTooltip()
 	return self.hp_regen_reduction_enemy
 end
 
-function modifier_item_imba_spirit_vessel_damage:Custom_AllHealAmplify_Percentage()
-	return self.hp_regen_reduction_enemy
-end
+-- function modifier_item_imba_spirit_vessel_damage:Custom_AllHealAmplify_Percentage()
+	-- return self.hp_regen_reduction_enemy
+-- end
 
 ----------------------------
 -- SPIRIT VESSEL MODIFIER --

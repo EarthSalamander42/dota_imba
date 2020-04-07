@@ -37,20 +37,11 @@ function item_imba_mask_of_madness:GetIntrinsicModifierName()
 end
 
 function item_imba_mask_of_madness:OnSpellStart()
-	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self
-	local modifier_berserk = "modifier_imba_mask_of_madness_berserk"
-	local sound_cast = "DOTA_Item.MaskOfMadness.Activate"
-
-	-- Ability specials
-	local berserk_duration = ability:GetSpecialValueFor("berserk_duration")
-
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOn("DOTA_Item.MaskOfMadness.Activate", self:GetCaster())
 
 	-- Berserk!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	caster:AddNewModifier(caster, ability, modifier_berserk, {duration = berserk_duration})
+	caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_mask_of_madness_berserk", {duration = self:GetSpecialValueFor("berserk_duration")})
 end
 
 -- Passive MoM modifier
@@ -68,74 +59,54 @@ function modifier_imba_mask_of_madness:OnCreated()
 	--self.modifier_rage = "modifier_imba_mask_of_madness_rage"
 
 	-- Ability specials
-	self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
-	self.attack_speed_bonus = self.ability:GetSpecialValueFor("attack_speed_bonus")
 	-- self.rage_damage_bonus = self.ability:GetSpecialValueFor("rage_damage_bonus")
 	-- self.rage_lifesteal_bonus_pct = self.ability:GetSpecialValueFor("rage_lifesteal_bonus_pct")
 
-	if IsServer() then
-		if not self.caster:HasModifier("modifier_imba_mask_of_madness_unique") then
-			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_mask_of_madness_unique", {})
-		end
-
+	if self:GetAbility() and IsServer() then
 		-- Change to lifesteal projectile, if there's nothing "stronger"
 		ChangeAttackProjectileImba(self.caster)
 	end
-end
-
-function modifier_imba_mask_of_madness:DeclareFunctions()
-	local decFunc = {   MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT    }
-	return decFunc
-end
-
-function modifier_imba_mask_of_madness:GetModifierPreAttack_BonusDamage()
-	return self.damage_bonus
-
-		-- Check for rage!!
-		-- if self.caster:HasModifier(self.modifier_rage) then
-		--     damage_bonus = damage_bonus + self.rage_damage_bonus
-		-- end
-end
-
-function modifier_imba_mask_of_madness:GetModifierAttackSpeedBonus_Constant()
-	return self.attack_speed_bonus
 end
 
 function modifier_imba_mask_of_madness:OnDestroy()
 	if IsServer() then
 		-- If it is the last MoM in inventory, remove unique modiifer
 		if not self.caster:IsNull() and not self.caster:HasModifier("modifier_imba_mask_of_madness") then
-			self.caster:RemoveModifierByName("modifier_imba_mask_of_madness_unique")
-			
 			-- Remove lifesteal projectile
 			ChangeAttackProjectileImba(self.caster)
 		end
 	end
 end
 
-
-modifier_imba_mask_of_madness_unique = class({})
-function modifier_imba_mask_of_madness_unique:IsHidden() return true end
-function modifier_imba_mask_of_madness_unique:IsPurgable() return false end
-function modifier_imba_mask_of_madness_unique:IsDebuff() return false end
-
-function modifier_imba_mask_of_madness_unique:OnCreated()
-	-- Ability properties
-	self.ability = self:GetAbility()
-
-	-- Abilty specials
-	self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
+function modifier_imba_mask_of_madness:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
-function modifier_imba_mask_of_madness_unique:OnRefresh()
-	self:OnCreated()
+function modifier_imba_mask_of_madness:GetModifierPreAttack_BonusDamage()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("damage_bonus")
+	end
+
+	-- Check for rage!!
+	-- if self.caster:HasModifier(self.modifier_rage) then
+	--     damage_bonus = damage_bonus + self.rage_damage_bonus
+	-- end
+end
+
+function modifier_imba_mask_of_madness:GetModifierAttackSpeedBonus_Constant()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("attack_speed_bonus")
+	end
 end
 
 function modifier_imba_mask_of_madness_unique:GetModifierLifesteal()
-	return self.lifesteal_pct
+	if self:GetAbility() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self then
+		return self:GetAbility():GetSpecialValueFor("lifesteal_pct")
+	end
 end
-
 
 -- Berserk modifier
 modifier_imba_mask_of_madness_berserk = class({})

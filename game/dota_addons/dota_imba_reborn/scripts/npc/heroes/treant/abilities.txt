@@ -1,54 +1,6 @@
 "DOTAAbilities"
 {
 	//=================================================================================================================
-	// Treant Protector: Nature's Guise
-	//=================================================================================================================
-	"imba_treant_natures_guise"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_treant"
-		"AbilityTextureName"			"treant_natures_guise"
-		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
-		"FightRecapLevel"				"2"
-		"MaxLevel"						"1"
-		"AbilitySound"					"Hero_Treant.NaturesGuise.On"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"150"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"grace_time"				"0.75"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_time"				"3"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"regen_amp"					"40"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_bonus"			"15"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	}	
-	//=================================================================================================================
 	//  Treant Protector: Nature's Grasp
 	//=================================================================================================================
 	"imba_treant_natures_grasp"
@@ -72,7 +24,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 19 18 17"
+		"AbilityCooldown"				"15"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -85,13 +37,14 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"				"30 40 50 60"
-				"LinkedSpecialBonus"			"special_bonus_unique_treant_9"
+				"damage_per_second"				"40 50 60 70"
+				//"LinkedSpecialBonus"			"special_bonus_unique_treant_9"
+				"LinkedSpecialBonus"			"special_bonus_imba_treant_natures_grasp_damage"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"25 30 35 40"
+				"movement_slow"				"35 40 45 50"
 			}
 			"03"
 			{
@@ -167,13 +120,14 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"leech_damage"					"15 30 45 60"
-				"LinkedSpecialBonus"			"special_bonus_unique_treant_2"
+				"leech_damage"					"25 40 55 70"
+				//"LinkedSpecialBonus"			"special_bonus_unique_treant_2"
+				"LinkedSpecialBonus"			"special_bonus_imba_treant_leech_seed_heal"
 			}		
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_slow"					"-18 -24 -30 -36"
+				"movement_slow"					"-26 -34 -42 -50"
 			}	
 			"04"
 			{
@@ -183,17 +137,28 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"700"
+				"radius"						"700 750 800 850"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"duration"						"5.0"
+				"duration"						"5.25 5.50 5.75 6.00"
 			}
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"projectile_speed"				"550"
+				"projectile_speed"				"550 600 650 700"
+			}
+			
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"remnants_cast_range"			"350"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"remnants_radius"				"500"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -223,7 +188,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"26 22 18 14"
+		"AbilityCooldown"				"22 18 14 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -234,13 +199,14 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"total_heal"		"60 100 140 180"
-				"LinkedSpecialBonus"			"special_bonus_unique_treant_8"
+				"total_heal"		"100 160 220 280"
+				//"LinkedSpecialBonus"			"special_bonus_unique_treant_8"
+				"LinkedSpecialBonus"			"special_bonus_imba_treant_living_armor_heal"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_armor"		"5 6 7 8"
+				"bonus_armor"		"7 10 13 16"
 			}
 			"03"
 			{
@@ -248,8 +214,88 @@
 				"duration"			"12.0"
 			}
 
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"remnants_damage_block_instances"	"4 5 6 7"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"remnants_damage_block"			"30 40 50 60"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+	//=================================================================================================================
+	// Treant Protector: Nature's Guise
+	//=================================================================================================================
+	"imba_treant_natures_guise"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_treant"
+		"AbilityTextureName"			"treant_natures_guise"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+		"FightRecapLevel"				"2"
+		"MaxLevel"						"1"
+		"AbilitySound"					"Hero_Treant.NaturesGuise.On"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"150"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"grace_time"				"0.75"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_time"				"3"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"regen_amp"					"40"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_bonus"			"15"
+			}
+			
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cast_cast_point"			"0.3"
+			}	
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_mana_cost"			"60"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_cooldown"				"15"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_cast_range"			"300"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
 	
 	//=================================================================================================================
@@ -280,7 +326,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100"
+		"AbilityCooldown"				"100 80 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -299,7 +345,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"800"
+				"radius"						"800 1000 1200"
 				"LinkedSpecialBonus"			"special_bonus_unique_treant_5"
 			}	
 			
@@ -312,8 +358,25 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"			"75"
-				"LinkedSpecialBonus"		"special_bonus_unique_treant_11"
+				"damage"			"100 125 150"
+				//"LinkedSpecialBonus"		"special_bonus_unique_treant_11"
+				"LinkedSpecialBonus"		"special_bonus_imba_treant_overgrowth_damage"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ent_strength_per_unit"			"1.5"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ent_model_size_per_unit"		"1.5"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"ent_size_duration"				"10"
 			}
 		}
 	}

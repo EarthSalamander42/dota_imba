@@ -484,7 +484,7 @@ function EndScoreboard(args) {
 				panel_rank_name.style.marginTop = "0px";
 
 				// setup Battlepass XP progress bar
-				if (player_table && player_table.XP && player_table.MaxXP) {
+				if (player_table && player_table.XP && player_table.MaxXP && player_table.player_xp == 1) {
 					panel_xp_text.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
 					panel_level_text.text = $.Localize("#battlepass_level") + player_table.Lvl;
 					panel_rank_name.text = player_table.title;

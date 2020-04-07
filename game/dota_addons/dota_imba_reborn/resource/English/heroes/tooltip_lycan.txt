@@ -144,3 +144,5 @@
 
 "DOTA_Tooltip_modifier_imba_talent_wolf_packleader"           "Packleader Aura"
 "DOTA_Tooltip_modifier_imba_talent_wolf_packleader_Description"     "Damage increased by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%."
+
+"DOTA_Tooltip_ability_lycan_wolf_bite_Description"		"Lycan bites an ally, granting them Shapeshift properties. Lycan and the bitten target gain %lifesteal_percent%%% Lifesteal and share %lifesteal%%% Lifesteal with each other as long as they are within %lifesteal_range% range of each other.\n<font color='#FF0000'>Does not benefit from any IMBAfications.</font>"

@@ -1055,6 +1055,12 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_treant_overgrowth_damage"
 							}
 							upgraded = true
+						elseif string.find(text, 'arc') and hero:GetName() == "npc_dota_hero_arc_warden" then
+							ability_set = {
+								[0] = "imba_arc_warden_flux",
+								[1] = "imba_arc_warden_magnetic_field",
+							}
+							upgraded = true
 						end
 						
 						for ability = 0, 23 do
@@ -1470,3 +1476,15 @@ function GameMode:OnRuneActivated(keys)
 		ImbaRunes:PickupRune("illusion", hero, false)
 	end
 end
+
+-- The game was paused
+-- This isn't working...
+-- function GameMode:OnPause(keys)
+	-- print("Game paused.")
+-- -- userid ( short )
+-- -- value ( short )
+-- -- message ( short )
+	-- print(keys.userid)
+	-- print(keys.value)
+	-- print(keys.message)
+-- end

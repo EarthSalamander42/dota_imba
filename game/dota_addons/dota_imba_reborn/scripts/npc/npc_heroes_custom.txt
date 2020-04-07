@@ -784,7 +784,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_enigma_black_hole"
 
-		"Ability10"					"special_bonus_movement_speed_25"
+		"Ability10"					"special_bonus_imba_enigma_demonic_conversion_attack_range"
 		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
 		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
 		"Ability13"					"special_bonus_imba_enigma_malefice_damage"
@@ -794,6 +794,7 @@
 		"Ability17"					"special_bonus_imba_enigma_4" // Black Hole cast on death
 		
 		// Removed Talents
+		// "Ability10"					"special_bonus_movement_speed_25"
 		// "Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 6 seconds.
 		// "Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
 	}
@@ -875,11 +876,11 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"Ability1"					"imba_jakiro_fire_breath"
+		"Ability1"					"imba_jakiro_dual_breath"
 		"Ability2"					"imba_jakiro_ice_path"
 		"Ability3"					"imba_jakiro_liquid_fire"
-		"Ability4"					"imba_jakiro_ice_breath"
-		"Ability5"					"generic_hidden"
+		"Ability4"					"imba_jakiro_fire_breath"
+		"Ability5"					"imba_jakiro_ice_breath"
 		"Ability6"					"imba_jakiro_macropyre"
 
 		"Ability10"					"special_bonus_imba_jakiro_1"
@@ -1690,7 +1691,7 @@
 		"Ability6"					"imba_nevermore_requiem"		
 
 		"Ability10"					"special_bonus_imba_nevermore_1"
-		"Ability11"					"special_bonus_attack_speed_20"
+		"Ability11"					"special_bonus_attack_speed_25"
 		"Ability12"					"special_bonus_imba_nevermore_3"
 		"Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
 		"Ability14"					"special_bonus_imba_nevermore_5"

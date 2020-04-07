@@ -139,7 +139,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lich_8"            	"Frost Aura"
 "DOTA_Tooltip_ability_special_bonus_imba_lich_8_Description"	"Ice Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked."
 "DOTA_Tooltip_ability_special_bonus_imba_lich_9"            	"Frost Shield Provides +{s:value} HP Regen"
-"DOTA_Tooltip_ability_special_bonus_imba_lich_9_Description"	"Regeneration effect only has %{s:building_efficiency} on buildings."
+"DOTA_Tooltip_ability_special_bonus_imba_lich_9_Description"	"Regeneration effect only has {s:building_efficiency}% on buildings."
 "DOTA_Tooltip_ability_special_bonus_imba_lich_10"            	"+{s:value}% Sinister Gaze Distance Moved"
 "DOTA_Tooltip_ability_special_bonus_imba_lich_11"            	"Death Blossom (Frost Nova Auto-Cast Option)"
 "DOTA_Tooltip_ability_special_bonus_imba_lich_11_Description"   "Increases Frost Nova cooldown by 300%. Casting this creates {s:rings} expanding rings of novae around the target, exploding after {s:explosion_delay} seconds."

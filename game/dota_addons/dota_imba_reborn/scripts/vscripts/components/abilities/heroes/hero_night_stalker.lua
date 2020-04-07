@@ -870,6 +870,12 @@ function modifier_imba_hunter_in_the_night:IsHidden() return false end
 function modifier_imba_hunter_in_the_night:IsPurgable() return false end
 function modifier_imba_hunter_in_the_night:IsDebuff() return false end
 
+function modifier_imba_hunter_in_the_night:CheckState()
+	if self:GetAbility() and self:GetAbility():GetLevel() >= 1 and IsDaytime and not IsDaytime() and not self:GetParent():HasModifier("modifier_imba_darkness_night") and not self:GetParent():PassivesDisabled() then
+		return {[MODIFIER_STATE_FLYING] = true}
+	end
+end
+
 function modifier_imba_hunter_in_the_night:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 					  MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,

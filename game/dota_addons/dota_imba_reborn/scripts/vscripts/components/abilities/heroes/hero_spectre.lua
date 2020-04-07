@@ -154,7 +154,7 @@ function modifier_imba_spectre_haunt:OnIntervalThink()
 	if (self:GetParent():GetAbsOrigin() - self.location):Length2D() <= self.travel_speed then
 		self.location = self:GetParent():GetAbsOrigin()
 		
-		if not self:GetParent():IsInvisible() and not self:GetParent():IsInvulnerable() and not self:GetParent():IsOutOfGame() and self:GetCaster():IsAlive() and (self.self_haunt_modifier and self.self_haunt_modifier.current_target ~= self:GetParent()) and not IsNearFountain(self:GetParent():GetAbsOrigin(), 1200) then
+		if not self:GetParent():IsInvisible() and not self:GetParent():IsInvulnerable() and not self:GetParent():IsOutOfGame() and not self:GetParent():IsAttackImmune() and self:GetCaster():IsAlive() and (self.self_haunt_modifier and self.self_haunt_modifier.current_target ~= self:GetParent()) and not IsNearFountain(self:GetParent():GetAbsOrigin(), 1200) then
 			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_spectre_haunt_reduce", {illusion_damage_outgoing = self.illusion_damage_outgoing})
 			self:GetCaster():PerformAttack(self:GetParent(), true, true, true, true, false, false, true)
 			self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_spectre_haunt_reduce", self:GetCaster())
@@ -171,17 +171,13 @@ function modifier_imba_spectre_haunt:OnIntervalThink()
 end
 
 function modifier_imba_spectre_haunt:CheckState()
-	local state = {[MODIFIER_STATE_PROVIDES_VISION] = true}
-	
-	return state
+	return {[MODIFIER_STATE_PROVIDES_VISION] = true}
 end
 
 function modifier_imba_spectre_haunt:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_spectre_haunt:GetBonusVisionPercentage()
@@ -226,9 +222,7 @@ function modifier_imba_spectre_haunt_reduce:OnCreated(params)
 end
 
 function modifier_imba_spectre_haunt_reduce:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE}
-	
-	return decFuncs
+	return {MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE}
 end
 
 function modifier_imba_spectre_haunt_reduce:GetModifierTotalDamageOutgoing_Percentage(keys)

@@ -901,7 +901,7 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 			end
 			
 			-- Add debuff/increment stacks if already exists
-			local fury_swipes_debuff_handler = target:AddNewModifier(caster, ability, fury_swipes_debuff, {duration = stack_duration * (1 - enemy:GetStatusResistance())})
+			local fury_swipes_debuff_handler = target:AddNewModifier(caster, ability, fury_swipes_debuff, {duration = stack_duration * (1 - target:GetStatusResistance())})
 			
 			if fury_swipes_debuff_handler then
 				fury_swipes_debuff_handler:IncrementStackCount()

@@ -28,24 +28,23 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_lina_fiery_soul"                            "Fiery Soul"
-"DOTA_Tooltip_ability_imba_lina_fiery_soul_Description"                "Grants bonus attack and movement speed for %duration% seconds each time Lina casts a spell. Stacks with itself, up to %max_stacks% times.\n<font color='#FF7800'>Fire, Fire, Baby:</font> Each stack of Fiery Soul also grants Lina an amount of cast point reduction. Additionally, when Lina casts an ability, all other abilities that are currently on-cooldown are reduced by %cdr_pct% seconds.\n<font color='#FF7800'>Fiery Shockwave: </font>Fiery Soul can be activated when reaching %max_stacks% stacks, consuming all stacks and releasing a %immolation_aoe% radius shockwave around Lina. Deals %immolation_damage_max% damage within %max_damage_aoe%  radius, and %immolation_damage_min% damage at %min_damage_aoe% or greater radius, with linearly scaling damage in-between."
+"DOTA_Tooltip_ability_imba_lina_fiery_soul_Description"                "Grants bonus attack and movement speed for %duration% seconds each time Lina casts a spell. Stacks with itself, up to %max_stacks% times.\n<font color='#FF7800'>Fire, Fire, Baby:</font> Each stack of Fiery Soul also grants Lina %animation_pct%%% cast point reduction. Additionally, when Lina casts an ability, all other abilities that are currently on-cooldown are reduced by %cdr_pct% seconds.\n<font color='#FF7800'>Fiery Shockwave: </font>Fiery Soul can be activated when reaching %max_stacks% stacks, consuming all stacks and releasing a %immolation_aoe% radius shockwave around Lina. Deals %immolation_damage_max% damage within %max_damage_aoe%  radius, and %immolation_damage_min% damage at %min_damage_aoe% or greater radius, with linearly scaling damage in-between. Destroys trees within radius."
 "DOTA_Tooltip_ability_imba_lina_fiery_soul_Lore"                        "Dancing flames embody Lina's playful nature, bringing out her true blazing self."
 "DOTA_Tooltip_ability_imba_lina_fiery_soul_bonus_as"                    "ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_lina_fiery_soul_bonus_ms_pct"                "%MOVEMENT SPEED:"
-"DOTA_Tooltip_ability_imba_lina_fiery_soul_animation_pct"              "%CAST POINT REDUCTION:"
 
-"DOTA_Tooltip_modifier_imba_fiery_soul_counter"                        "Fiery Soul"
-"DOTA_Tooltip_modifier_imba_fiery_soul_counter_Description"            "Gaining movement speed and attack speed per stack. Reduces abilities cooldown when casting a Spell."
+"DOTA_Tooltip_modifier_imba_fiery_soul_counter"							"Fiery Soul"
+"DOTA_Tooltip_modifier_imba_fiery_soul_counter_Description"				"Attack Speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and Movement Speed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%. Slightly reduces current ability cooldowns whenever an ability is cast."
 
 ////===============================================================================================================
 // Lina's Laguna Blade
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_lina_laguna_blade"                          "Laguna Blade"
-"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"              "Fires off a bolt of scorching lightning at an enemy, dealing massive damage after a %effect_delay% second delay.\n<font color='#FF7800'>Forked Lightning:</font> Hits up to %bounce_amount% additional random enemies in %bounce_range% radius around the main target. Occurs after the target got hit by Laguna Blade."
-"DOTA_Tooltip_ability_imba_lina_laguna_blade_Note0"                    "Bounce targets are chosen at random, including illusions and creeps."
-"DOTA_Tooltip_ability_imba_lina_laguna_blade_Lore"                      "The air around Lina becomes so intensely torrid that it scorches foes with white-hot lightning."
-"DOTA_Tooltip_ability_imba_lina_laguna_blade_aghanim_description"                   "Changes the damage type to pure, and allows Laguna Blade to slice through Spell Immunity."
+"DOTA_Tooltip_ability_imba_lina_laguna_blade"							"Laguna Blade"
+"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"				"Fires off a bolt of scorching lightning at an enemy, dealing massive damage after a %effect_delay% second delay.\n<font color='#FF7800'>Forked Lightning:</font> Hits up to %bounce_amount% additional random enemies in %bounce_range% radius around the main target. Occurs after the target got hit by Laguna Blade."
+"DOTA_Tooltip_ability_imba_lina_laguna_blade_Note0"						"Bounce targets are chosen at random, including illusions and creeps."
+"DOTA_Tooltip_ability_imba_lina_laguna_blade_Lore"						"The air around Lina becomes so intensely torrid that it scorches foes with white-hot lightning."
+"DOTA_Tooltip_ability_imba_lina_laguna_blade_aghanim_description"		"Changes Laguna Blade's damage type to Pure, and allows it to slice through spell immunity."
 "DOTA_Tooltip_ability_imba_lina_laguna_blade_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 ////===============================================================================================================

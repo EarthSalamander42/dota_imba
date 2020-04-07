@@ -994,7 +994,7 @@ end
 function modifier_over_channel_handler:OnAbilityExecuted( keys )
     if not IsServer() then return end
 	
-    if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" then
+    if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" and keys.ability:GetName() ~= "ability_capture" then
         self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")})
 		
 		local parent = self:GetParent()

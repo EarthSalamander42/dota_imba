@@ -77,7 +77,9 @@ function imba_spirit_breaker_charge_of_darkness:OnSpellStart()
 	if target:TriggerSpellAbsorb(self) then
 		return nil
 	end
-
+	
+	self:GetCaster():Interrupt()
+	
 	self:GetCaster():EmitSound("Hero_Spirit_Breaker.ChargeOfDarkness")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_spirit_breaker" and RollPercentage(10) then
@@ -445,19 +447,11 @@ function modifier_imba_spirit_breaker_charge_of_darkness_vision:OnCreated()
 	if not IsServer() then return end
 	
 	self.particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_spirit_breaker/spirit_breaker_charge_target.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetCaster():GetTeamNumber())
-end
-
-function modifier_imba_spirit_breaker_charge_of_darkness_vision:OnDestroy()
-	if not IsServer() then return end
-
-	ParticleManager:DestroyParticle(self.particle, false)
-	ParticleManager:ReleaseParticleIndex(self.particle)
+	self:AddParticle(self.particle, false, false, -1, false, true)
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness_vision:CheckState()
-	local state = {[MODIFIER_STATE_PROVIDES_VISION] = true}
-
-	return state
+	return {[MODIFIER_STATE_PROVIDES_VISION] = true}
 end
 
 ---------------------------------------------

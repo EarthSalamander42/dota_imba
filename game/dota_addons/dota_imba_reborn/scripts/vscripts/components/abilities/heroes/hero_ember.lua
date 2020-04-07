@@ -99,13 +99,14 @@ end
 -- Flame Guard passive
 modifier_imba_flame_guard_passive = modifier_imba_flame_guard_passive or class ({})
 
-function modifier_imba_flame_guard_passive:IsDebuff() return false end
-function modifier_imba_flame_guard_passive:IsHidden() return false end
-function modifier_imba_flame_guard_passive:IsPurgable() return false end
+function modifier_imba_flame_guard_passive:IsHidden()		return false end
+function modifier_imba_flame_guard_passive:IsPurgable()		return false end
+function modifier_imba_flame_guard_passive:RemoveOnDeath()	return false end
 
-function modifier_imba_flame_guard_passive:GetAttributes()
-	return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
-end
+-- Are these necessary?
+-- function modifier_imba_flame_guard_passive:GetAttributes()
+	-- return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
+-- end
 
 function modifier_imba_flame_guard_passive:GetEffectName()
 	return "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
@@ -138,14 +139,15 @@ function modifier_imba_flame_guard_passive:OnIntervalThink()
 end
 
 function modifier_imba_flame_guard_passive:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-	return funcs
 end
 
 function modifier_imba_flame_guard_passive:GetModifierMagicalResistanceBonus()
-	return self:GetAbility():GetSpecialValueFor("absorb_amount")
+	if self:GetCaster():HasTalent("special_bonus_ember_permanent_guard") then
+		return self:GetCaster():FindTalentValue("special_bonus_ember_permanent_guard")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -519,48 +521,49 @@ end
 function modifier_imba_fire_remnant_state:OnCreated(keys)
 	if IsServer() then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = self:GetDuration()})
-		if self:GetCaster():HasScepter() then
-			self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("attack_cd_scepter"))
-			self.has_scepter = true
-		else
-			self:StartIntervalThink(5.0)
-			self.has_scepter = false
-		end
+		
+		-- if self:GetCaster():HasScepter() then
+			-- self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("attack_cd_scepter"))
+			-- self.has_scepter = true
+		-- else
+			-- self:StartIntervalThink(5.0)
+			-- self.has_scepter = false
+		-- end
 	end
 end
 
-function modifier_imba_fire_remnant_state:OnIntervalThink()
-	if IsServer() then
-		if self.has_scepter then
-			local caster = self:GetCaster()
-			local remnant = self:GetParent()
+-- function modifier_imba_fire_remnant_state:OnIntervalThink()
+	-- if IsServer() then
+		-- if self.has_scepter then
+			-- local caster = self:GetCaster()
+			-- local remnant = self:GetParent()
 
-			-- Animate the slash
-			remnant:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK , 1)
+			-- -- Animate the slash
+			-- remnant:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK , 1)
 
-			-- print(caster:Script_GetAttackRange())
+			-- -- print(caster:Script_GetAttackRange())
 			
-			-- Pick a random enemy in range
-			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, caster:Script_GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
-			if nearby_enemies[1] then
-				caster:PerformAttack(nearby_enemies[1], true, true, true, false, false, false, true)
-			end
-		else
-			local rand = RandomInt(1, 10)
-			if rand == 1 then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_4 , 1)
---			elseif rand == 2 then
---				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_STATUE , 1)
-			elseif rand == 3 then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VICTORY_START , 1)
-			elseif rand == 4 then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VERSUS , 3)
---			elseif rand > 4 and rand < 7 then
---				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_REMNANT_STATUE , 1)
-			end
-		end
-	end
-end
+			-- -- Pick a random enemy in range
+			-- local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, caster:Script_GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
+			-- if nearby_enemies[1] then
+				-- caster:PerformAttack(nearby_enemies[1], true, true, true, false, false, false, true)
+			-- end
+		-- else
+			-- local rand = RandomInt(1, 10)
+			-- if rand == 1 then
+				-- self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_4 , 1)
+-- --			elseif rand == 2 then
+-- --				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_STATUE , 1)
+			-- elseif rand == 3 then
+				-- self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VICTORY_START , 1)
+			-- elseif rand == 4 then
+				-- self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VERSUS , 3)
+-- --			elseif rand > 4 and rand < 7 then
+-- --				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_REMNANT_STATUE , 1)
+			-- end
+		-- end
+	-- end
+-- end
 
 function modifier_imba_fire_remnant_state:OnDestroy()
 	if IsServer() then

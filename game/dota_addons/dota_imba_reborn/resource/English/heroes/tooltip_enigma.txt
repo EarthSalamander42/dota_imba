@@ -17,6 +17,7 @@
 "DOTA_Tooltip_ability_imba_enigma_demonic_conversion_Lore"              "Enigma is capable of drawing aspects of himself from other dimensions - the result is a trio of dark eidolons that hunt the corporeal plane."
 "DOTA_Tooltip_ability_imba_enigma_demonic_conversion_Note0"            "Attacks done to structures do not count for the split."
 "DOTA_Tooltip_ability_imba_enigma_demonic_conversion_Note1"            "When splitting, the new Eidolon will have the duration of its parent, plus additional child duration based on Demonic Conversion's level."
+"DOTA_Tooltip_ability_imba_enigma_demonic_conversion_Note2"            "If the Eidolon's owner is not the caster (ex. through being converted or controlled by another hero), the Eidolon does not benefit from Endless or Void Mass."
 "DOTA_Tooltip_ability_imba_enigma_demonic_conversion_duration"          "EIDOLON DURATION:"
 "DOTA_Tooltip_ability_imba_enigma_demonic_conversion_child_duration"                "CHILD EIDOLON DURATION:"
 "DOTA_Tooltip_ability_imba_enigma_demonic_conversion_base_health"                   "HEALTH:"
@@ -29,7 +30,7 @@
 
 // Enigma's Midnight Pulse
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse"                      "Midnight Pulse"
-"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Description"          "Steeps an area in dark resonance, damaging enemy units based on their max HP.\n<font color='#FF7800'>Gravity Falls:</font> Counts as a gravity force where units are pulled towards. Midnight Pulse is stronger than Enigma as a gravity source, but is weaker than Black Hole.\n<font color='#FF7800'>Former Variant:</font> Midnight Pulse deals pure damage instead of magical, but at slightly reduced values.\n<font color='#FF7800'>Safe Space:</font> Grants health regeneration to eidolons."
+"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Description"          "Steeps an area in dark resonance, damaging enemy units based on their max HP.\n<font color='#FF7800'>Gravity Falls:</font> Counts as a gravity force where units are pulled towards. Midnight Pulse is stronger than Enigma as a gravity source, but is weaker than Black Hole.\n<font color='#FF7800'>Former Variant:</font> Midnight Pulse deals pure damage instead of magical, but at slightly reduced values.\n<font color='#FF7800'>Safe Space:</font> Grants %eidolon_hp_regen% health regeneration to eidolons."
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Lore"                  "A section of the world slowly descends into the void."
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Note0"                "The pull does not pierce Spell Immunity."
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Note1"                "The health regeneration for Eidolons does not stack from multiple sources."
@@ -37,7 +38,6 @@
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_damage_per_tick"                   "%MAX HP DAMAGE:"
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_enigma_midnight_pulse_well_pull_strength"                "PULL POWER:"
-"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_eidolon_hp_regen"                  "EIDOLON HEALTH REGEN:"
 
 "DOTA_Tooltip_modifier_imba_enigma_midnight_pulse_aura"               "Midnight Pulse"
 "DOTA_Tooltip_modifier_imba_enigma_midnight_pulse_aura_Description"         "Take damage based on your max hp."
@@ -81,6 +81,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_8"						"Heroes can be used as sources for Eidolons"
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_8_Description"			"They become the target of Primordial Shard, using their stats to fuel the Eidolons."
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_malefice_damage"		"+{s:value} Malefice Instance Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_enigma_demonic_conversion_attack_range"	"+{s:value} Eidolon Attack Range"
 
 "DOTA_Tooltip_modifier_enigma_magic_immunity"                          "Void of Magic"
 "DOTA_Tooltip_modifier_enigma_magic_immunity_Description"              "Void of Magic gives you spell immunity."

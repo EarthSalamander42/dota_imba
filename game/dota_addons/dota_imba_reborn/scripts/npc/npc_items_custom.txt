@@ -8672,7 +8672,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_conversion_rate"	"70"
+				"mana_conversion_rate"	"80"
 			}
 			"06"
 			{
@@ -10017,7 +10017,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_attack_speed"			"130"
+				"berserk_attack_speed"			"150"
 			}
 			"04"
 			{
@@ -14058,7 +14058,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ankle_breaker_damage_pct"		"75"
+				"ankle_breaker_damage_pct"		"85"
 			}
 		}
 	}

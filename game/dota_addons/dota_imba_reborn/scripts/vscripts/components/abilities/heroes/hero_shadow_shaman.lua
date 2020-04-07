@@ -922,8 +922,8 @@ function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild, elaps
 	ward:SetHealth(new_hp)
 	
 	-- Update Damage
-	ward:SetBaseDamageMin(ward:GetBaseDamageMin() + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
-	ward:SetBaseDamageMax(ward:GetBaseDamageMax() + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
+	ward:SetBaseDamageMin(self:GetSpecialValueFor("damage_tooltip") + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
+	ward:SetBaseDamageMax(self:GetSpecialValueFor("damage_tooltip") + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
 
 	-- Differentiate snake charmer wards
 	if bChild then

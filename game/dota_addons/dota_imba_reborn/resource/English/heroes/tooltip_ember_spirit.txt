@@ -50,7 +50,9 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_effect_radius"         "EXPLOSION RADIUS:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_damage"                "EXPLOSION DAMAGE:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_attack_cd_scepter"     "SCEPTER ATTACK RATE:"
-"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_aghanim_description"   "Increases cast range by %scepter_additional_cast_range% and maximum charges by %scepter_additional_charges%. <font color='#FF7800'>Causes your remnants to attack a random enemy in their range, using your attack damage and items, every 2 seconds.</font>"
+"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_aghanim_description"   "Increases cast range by %scepter_additional_cast_range% and maximum charges by %scepter_additional_charges%."
+
+// <font color='#FF7800'>Causes your remnants to attack a random enemy in their range, using your attack damage and items, every 2 seconds.</font>
 
 // Modifiers
 "DOTA_Tooltip_modifier_imba_sleight_of_fist_caster"					"Sleight of Fist"
@@ -82,5 +84,5 @@
 "DOTA_Tooltip_Ability_special_bonus_ember_sleight_extra_targets"                "Sleight of Fist hits 3 bonus targets"
 "DOTA_Tooltip_Ability_special_bonus_ember_sleight_extra_targets_description"    "3 amongst the targets are randomly picked to be hit one extra time. Effect can stack on a single unit."
 "DOTA_Tooltip_Ability_special_bonus_ember_permanent_guard"                      "Permanent Flame Guard"
-"DOTA_Tooltip_Ability_special_bonus_ember_permanent_guard_description"          "Grants +60%% permanent magic resistance instead of the normal shield."
+"DOTA_Tooltip_Ability_special_bonus_ember_permanent_guard_description"          "Grants +{s:value}% permanent magic resistance instead of the normal shield."
 "DOTA_Tooltip_Ability_special_bonus_ember_remnant_charges"                      "+2 Fire Remnant charges"

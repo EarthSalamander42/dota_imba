@@ -1,5 +1,5 @@
 // Sange
-"DOTA_Tooltip_Ability_item_imba_sange"							"#{DOTA_Tooltip_ability_item_sange}"
+"DOTA_Tooltip_Ability_item_imba_sange"							"#{DOTA_Tooltip_ability_item_sange} (Pre 7.23)"
 "DOTA_Tooltip_ability_item_imba_sange_Description"				"<h1><font color='#FF7800'>Active: Steadfast Durability</font></h1> Grants %bonus_status_resistance_active%%% status resistance for %active_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_sange_Lore"						"Sange is an unusually accurate weapon, seeking weak points automatically."
 "DOTA_Tooltip_ability_item_imba_sange_maim_stack"				"%MAIM SLOW:"
@@ -35,7 +35,7 @@
 "DOTA_Tooltip_modifier_item_imba_kaya_active_Description"		"Grants %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% mana loss and cooldown reduction on the next spell cast."
 
 // Sange and Yasha
-"DOTA_Tooltip_Ability_item_imba_sange_yasha"					"#{DOTA_Tooltip_Ability_item_sange_and_yasha}"
+"DOTA_Tooltip_Ability_item_imba_sange_yasha"					"#{DOTA_Tooltip_Ability_item_sange_and_yasha} (Pre 7.23)"
 "DOTA_Tooltip_ability_item_imba_sange_yasha_Description"		"<h1><font color='#FF7800'>Active: Steadfast Dance</font></h1> Grants %bonus_status_resistance_active%%% status resistance and %bonus_evasion_active%%% evasion for %active_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_sange_yasha_Lore"				"#{DOTA_Tooltip_ability_item_sange_and_yasha_Lore}"
 "DOTA_Tooltip_ability_item_imba_sange_yasha_Note0"				"Movement speed bonus does not stack with itself or other Yasha upgrades."
@@ -50,7 +50,7 @@
 "DOTA_Tooltip_modifier_item_imba_sange_yasha_active_Description"	"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance and %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion."
 
 // Heaven's Halberd
-"DOTA_Tooltip_ability_item_imba_heavens_halberd"					"#{DOTA_Tooltip_ability_item_heavens_halberd}"
+"DOTA_Tooltip_ability_item_imba_heavens_halberd"					"#{DOTA_Tooltip_ability_item_heavens_halberd} (Pre 7.23)"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_Description"		"<h1>Active: Disarm</h1> Prevents a target from attacking for %disarm_melee_duration% seconds. Duration increases to %disarm_range_duration% seconds if the target is ranged.\n<h1><font color='#FF7800'>Active: Resilience</font></h1> Can be cast on allies to grant %bonus_status_resistance_active%%% status resistance for %disarm_range_duration% seconds.</font>"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_Lore"				"This halberd moves with the speed of a smaller weapon, allowing the bearer to win duels that a heavy edge would not."
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_Note0"				"Disarm cannot be purged."
@@ -66,7 +66,7 @@
 "DOTA_Tooltip_modifier_item_imba_heavens_halberd_active_disarm_Description"		"Disarmed."
 
 // Kaya and Sange
-"DOTA_Tooltip_Ability_item_imba_kaya_and_sange"						"Kaya and Sange"
+"DOTA_Tooltip_Ability_item_imba_kaya_and_sange"						"Kaya and Sange (Pre 7.23)"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_Description"			"<h1><font color='#FF7800'>Active: Steadfast Spell</font></h1> Grants %bonus_status_resistance_active%%% status resistance and %bonus_cdr_active%%% mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
 // "DOTA_Tooltip_ability_item_imba_kaya_and_sange_Lore"				"#{DOTA_Tooltip_ability_item_kaya_and_sange_Lore}"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_Note0"				"Movement speed bonus does not stack with itself or other Yasha upgrades."

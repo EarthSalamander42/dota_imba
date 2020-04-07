@@ -78,7 +78,7 @@ function modifier_imba_nian_frenzy_swipes:OnCreated()
 	if not IsServer() then return end
 	
 	self.attack_point	= self:GetParent():GetAttackAnimationPoint() / (1 + self:GetParent():GetIncreasedAttackSpeed())
-	self.slash_rate = 1 / ( self:GetParent():GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_speed_multiplier"), 1)))
+	self.slash_rate		= self:GetParent():GetSecondsPerAttack() / self:GetAbility():GetSpecialValueFor("attack_speed_multiplier")
 	
 	self.wind_up = true
 	
@@ -102,9 +102,10 @@ function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
 		
 			if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
 				-- self:GetCaster():ReduceMana(self.mana_per_attack)
-			
+
 				self:GetParent():FadeGesture(ACT_DOTA_ATTACK)
-				self:GetParent():StartGesture(ACT_DOTA_ATTACK)
+				-- Arbitrary divisor
+				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_ATTACK, self:GetParent():GetDisplayAttackSpeed() / 200)
 			end
 			
 			self.wind_up = false
@@ -142,7 +143,7 @@ function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
 		
 		self.wind_up = true
 		
-		self.slash_rate = 1 / ( self:GetParent():GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_speed_multiplier"), 1)))
+		self.slash_rate		= self:GetParent():GetSecondsPerAttack() / self:GetAbility():GetSpecialValueFor("attack_speed_multiplier")
 		self:StartIntervalThink(self.attack_point)
 	end
 end
@@ -154,12 +155,10 @@ function modifier_imba_nian_frenzy_swipes:OnDestroy()
 end
 
 function modifier_imba_nian_frenzy_swipes:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_DISARMED]	= true,
 		[MODIFIER_STATE_ROOTED]		= true
 	}
-	
-	return state
 end
 
 ----------------------------------------
@@ -177,15 +176,12 @@ end
 
  -- MODIFIER_PROPERTY_SUPPRESS_CLEAVE does not work
 function modifier_imba_nian_frenzy_swipes_suppression:DeclareFunctions()
-	local decFuncs = 
-	{
+	return {
 		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_SUPPRESS_CLEAVE,
 		
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_nian_frenzy_swipes_suppression:GetModifierDamageOutgoing_Percentage()
@@ -212,12 +208,9 @@ function modifier_imba_nian_frenzy_swipes_slow:OnCreated()
 end
 
 function modifier_imba_nian_frenzy_swipes_slow:DeclareFunctions()
-	local decFuncs = 
-	{
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_nian_frenzy_swipes_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -239,13 +232,10 @@ function modifier_imba_nian_frenzy_swipes_armor_reduction:OnRefresh()
 end
 
 function modifier_imba_nian_frenzy_swipes_armor_reduction:DeclareFunctions()
-	local decFuncs = 
-	{
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_TOOLTIP
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_nian_frenzy_swipes_armor_reduction:GetModifierPhysicalArmorBonus()
@@ -460,12 +450,10 @@ function modifier_imba_nian_crushing_leap_strength:OnRefresh()
 end
 
 function modifier_imba_nian_crushing_leap_strength:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_TOOLTIP
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_nian_crushing_leap_strength:GetModifierBonusStats_Strength()
@@ -496,12 +484,10 @@ function modifier_imba_nian_crushing_leap_agility:OnRefresh()
 end
 
 function modifier_imba_nian_crushing_leap_agility:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_TOOLTIP
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_nian_crushing_leap_agility:GetModifierBonusStats_Agility()
@@ -532,12 +518,10 @@ function modifier_imba_nian_crushing_leap_intellect:OnRefresh()
 end
 
 function modifier_imba_nian_crushing_leap_intellect:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_TOOLTIP
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_nian_crushing_leap_intellect:GetModifierBonusStats_Intellect()

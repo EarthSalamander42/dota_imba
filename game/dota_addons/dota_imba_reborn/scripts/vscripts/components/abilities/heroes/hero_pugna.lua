@@ -1239,14 +1239,6 @@ function modifier_imba_life_drain:OnCreated()
 	self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
 	self.break_distance_extend = self.ability:GetSpecialValueFor("break_distance_extend")
 
-
-	-- Play target sounds
-	EmitSoundOn(self.sound_target, self.parent)
-
-	-- Stop any ongoing looping sound on the target
-	StopSoundOn(self.sound_loop, self.parent)
-	EmitSoundOn(self.sound_loop, self.parent)
-
 	-- Decide whether it is an enemy or an ally
 	if self.parent:GetTeamNumber() == self.caster:GetTeamNumber() then
 		self.is_ally = true
@@ -1261,21 +1253,27 @@ function modifier_imba_life_drain:OnCreated()
 		self.drain_amount = self.health_drain
 	-- end
 
-
-	-- Add appropriate particle effect
-	if self.is_ally then
-		-- Play ally particle
-		self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_give, PATTACH_ABSORIGIN, self.caster)
-		ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-	else
-		-- Play enemy particle
-		self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, self.caster)
-		ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-	end
-
 	if IsServer() then
+		-- Play target sounds
+		EmitSoundOn(self.sound_target, self.parent)
+
+		-- Stop any ongoing looping sound on the target
+		StopSoundOn(self.sound_loop, self.parent)
+		EmitSoundOn(self.sound_loop, self.parent)
+	
+		-- Add appropriate particle effect
+		if self.is_ally then
+			-- Play ally particle
+			self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_give, PATTACH_ABSORIGIN, self.caster)
+			ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		else
+			-- Play enemy particle
+			self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, self.caster)
+			ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		end
+	
 		-- Extend break range by caster's Cast Range
 		self.break_distance_extend = self.break_distance_extend + self:GetCaster():GetCastRangeBonus()
 
@@ -1440,7 +1438,11 @@ function modifier_imba_life_drain:IsDebuff()
 end
 
 function modifier_imba_life_drain:OnDestroy()
+	if not IsServer() then return end
+
 	-- Remove particles
+	print(self.particle_drain_fx)
+	
 	ParticleManager:DestroyParticle(self.particle_drain_fx, false)
 	ParticleManager:ReleaseParticleIndex(self.particle_drain_fx)
 

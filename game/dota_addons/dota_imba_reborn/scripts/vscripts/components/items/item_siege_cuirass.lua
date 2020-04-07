@@ -96,6 +96,8 @@ end
 modifier_imba_siege_cuirass_active = class({})
 
 function modifier_imba_siege_cuirass_active:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -116,11 +118,11 @@ function modifier_imba_siege_cuirass_active:OnCreated()
 	self:AddParticle(particle_buff_fx, false, false, -1, false, false)
 end
 
-function modifier_imba_siege_cuirass_active:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+function modifier_imba_siege_cuirass_active:DeclareFunctions()	
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_siege_cuirass_active:GetModifierAttackSpeedBonus_Constant()
@@ -148,7 +150,7 @@ function modifier_imba_siege_cuirass:OnCreated()
 	self.modifier_aura_positive = "modifier_imba_siege_cuirass_aura_positive"
 	self.modifier_aura_negative = "modifier_imba_siege_cuirass_aura_negative"
 
-	if IsServer() then
+	if self:GetAbility() and IsServer() then
 		-- If it is the first siege cuirass in the inventory, grant the siege cuirass aura
 		if not self.caster:HasModifier(self.modifier_aura_positive) then
 			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura_positive, {})

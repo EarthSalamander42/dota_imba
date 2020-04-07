@@ -103,3 +103,5 @@
 // Juggernaut's summoned unit: Healing Ward, Healing Totem
 "npc_imba_juggernaut_healing_ward"										"Healing Ward"
 "npc_imba_juggernaut_healing_totem"										"Healing Totem"
+
+"DOTA_Tooltip_ability_juggernaut_swift_slash_Description"			"Performs a quick Omnislash.\n<font color='#FF0000'>Does not benefit from any IMBAfications.</font>"

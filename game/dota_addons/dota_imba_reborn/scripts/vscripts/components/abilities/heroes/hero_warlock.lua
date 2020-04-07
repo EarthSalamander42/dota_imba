@@ -730,25 +730,21 @@ function modifier_imba_upheaval_debuff:OnIntervalThink()
 end
 
 function modifier_imba_upheaval_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_upheaval_debuff:GetModifierMoveSpeedBonus_Percentage()
-	local stacks = self:GetStackCount()
-	return stacks * (-1)
+	return self:GetStackCount() * (-1)
 end
 
 function modifier_imba_upheaval_debuff:GetModifierAttackSpeedBonus_Constant()
 	-- #2 Talent: Upheaval also reduces attack speed
 	if self.caster:HasTalent("special_bonus_imba_warlock_2") then
-		local stacks = self:GetStackCount()
-		return stacks * (-1)
+		return self:GetStackCount() * (-1)
 	end
-
-	return nil
 end
 
 -- Golem Upheaval buff
@@ -1150,9 +1146,8 @@ end
 -- Stun modifier
 modifier_imba_rain_of_chaos_stun = class({})
 
-function modifier_imba_rain_of_chaos_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state
+function modifier_imba_rain_of_chaos_stun:CheckState() 
+	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
 function modifier_imba_rain_of_chaos_stun:GetEffectName()
@@ -1291,9 +1286,8 @@ function modifier_imba_rain_of_chaos_demon_link:GetModifierIncomingDamage_Percen
 	return -100
 end
 
-function modifier_imba_rain_of_chaos_demon_link:GetModifierBaseDamageOutgoing_Percentage()
-	local stacks = self:GetStackCount()
-	return stacks * self.scepter_damage_per_demon_pct
+function modifier_imba_rain_of_chaos_demon_link:GetModifierBaseDamageOutgoing_Percentage() 
+	return self:GetStackCount() * self.scepter_damage_per_demon_pct
 end
 
 function modifier_imba_rain_of_chaos_demon_link:OnTakeDamage(keys)
@@ -1716,8 +1710,7 @@ function modifier_imba_golem_spell_immunity:GetEffectName()
 end
 
 function modifier_imba_golem_spell_immunity:CheckState()
-	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
-	return state
+	return {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 end
 
 function modifier_imba_golem_spell_immunity:IsHidden() return false end

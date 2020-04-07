@@ -845,7 +845,7 @@ function imba_life_stealer_infest:OnSpellStart()
 		infest_effect_modifier.infest_modifier	= infest_modifier
 	end
 	
-	if self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsRoshan() then
+	if self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsOther() and not target:IsRoshan() then
 		target:Heal(self:GetSpecialValueFor("bonus_health"), self:GetCaster())
 		
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCaster(), self:GetSpecialValueFor("bonus_health"), nil)
@@ -915,7 +915,7 @@ function imba_life_stealer_infest:OnSpellStart()
 		self:GetCaster():SwapAbilities(self:GetName(), consume_ability:GetName(), false, true)
 	end
 
-	if self:GetCaster():HasAbility("imba_life_stealer_rage_723") and self:GetCaster():HasScepter() and self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsRoshan() then
+	if self:GetCaster():HasAbility("imba_life_stealer_rage_723") and self:GetCaster():HasScepter() and self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsOther() and not target:IsRoshan() then
 		local rage_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
 		
 		target:EmitSound("Hero_LifeStealer.Rage")
@@ -1117,7 +1117,7 @@ function modifier_imba_life_stealer_infest_effect:OnCreated()
 	
 	local infest_overhead_particle
 	
-	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() then
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() and not self:GetParent():IsOther() then
 		infest_overhead_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetParent():GetTeamNumber())
 	else
 		infest_overhead_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
@@ -1209,7 +1209,7 @@ function modifier_imba_life_stealer_infest_effect:OnStackCountChanged(stackCount
 end
 
 function modifier_imba_life_stealer_infest_effect:CheckState()
-	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and (self:GetParent():IsHero() or self:GetParent():IsBuilding()) then
+	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and (self:GetParent():IsHero() or self:GetParent():IsBuilding() or self:GetParent():IsOther()) then
 		return {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
 	end
 end
@@ -1236,9 +1236,7 @@ function modifier_imba_life_stealer_infest_effect:GetModifierMoveSpeedBonus_Perc
 end
 
 function modifier_imba_life_stealer_infest_effect:GetModifierExtraHealthBonus(keys)
-	-- -- So there was a slight oversight with this that you can infest wards and increase their health, which gets kind of insane since they take fixed damage. It's obviously a bug, but I'm still on the fence about keeping this in for the meme factor or not...
-	-- if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() and not self:GetParent():IsOther() then
-	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() and not self:GetParent():IsOther() then
 		return self.bonus_health
 	end
 end

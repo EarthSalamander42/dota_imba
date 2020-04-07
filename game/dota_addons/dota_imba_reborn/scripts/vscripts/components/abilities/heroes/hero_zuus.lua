@@ -132,7 +132,7 @@ function modifier_imba_zuus_arc_lightning:OnIntervalThink()
 	if (self.unit_counter >= self.jump_count and self.jump_count > 0) or not self.zapped then
 		-- IMBAfication: Static Chain (do the same loop as above but check additional range and only if they have the Static Field modifier
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.current_unit:GetAbsOrigin(), nil, self.radius * self.static_chain_mult, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)) do
-			if not self.units_affected[enemy] or (self:GetCaster():HasTalent("special_bonus_imba_zuus_8") and self.units_affected[enemy] < self:GetCaster():FindTalentValue("special_bonus_imba_zuus_8", "additional_hits")) and enemy ~= self.current_unit and enemy ~= self.previous_unit and enemy:HasModifier("modifier_imba_zuus_static_charge") then
+			if (not self.units_affected[enemy] or (self:GetCaster():HasTalent("special_bonus_imba_zuus_8") and self.units_affected[enemy] < self:GetCaster():FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))) and enemy ~= self.current_unit and enemy ~= self.previous_unit and enemy:HasModifier("modifier_imba_zuus_static_charge") then
 				enemy:EmitSound("Hero_Zuus.ArcLightning.Target")
 				
 				self.lightning_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.current_unit)
@@ -153,9 +153,9 @@ function modifier_imba_zuus_arc_lightning:OnIntervalThink()
 				
 				self.zapped								= true
 				
-				if self:GetCaster():HasModifier("modifier_imba_zuus_static_field") then
-					self:GetCaster():FindModifierByName("modifier_imba_zuus_static_field"):Apply(enemy)
-				end
+				-- if self:GetCaster():HasModifier("modifier_imba_zuus_static_field") then
+					-- self:GetCaster():FindModifierByName("modifier_imba_zuus_static_field"):Apply(enemy)
+				-- end
 				
 				ApplyDamage({
 					victim 			= enemy,
@@ -1543,7 +1543,7 @@ LinkLuaModifier("modifier_imba_zuus_thundergods_awakening", "components/abilitie
 modifier_imba_zuus_thundergods_awakening = class({})
 function modifier_imba_zuus_thundergods_awakening:IsHidden() 	return false end
 function modifier_imba_zuus_thundergods_awakening:IsBuff() 		return true end
-function modifier_imba_zuus_thundergods_awakening:IsPurgable() 	return false end
+-- function modifier_imba_zuus_thundergods_awakening:IsPurgable() 	return false end
 function modifier_imba_zuus_thundergods_awakening:OnCreated()
 	if IsServer() then 
 		--self.static_field = ParticleManager:CreateParticle("particles/hero/zeus/awakening_zuus_static_field.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())

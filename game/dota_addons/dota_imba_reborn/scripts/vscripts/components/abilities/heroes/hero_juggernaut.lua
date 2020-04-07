@@ -1276,7 +1276,7 @@ if IsServer() then
 		if self:GetAbility() and keys.attacker == self:GetParent() then
 			self.critProc = false
 			if RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("crit_chance"), self) then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_ATTACK_EVENT, self:GetParent():GetAttacksPerSecond())
+				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_ATTACK_EVENT, self:GetParent():GetSecondsPerAttack())
 				local crit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 				ParticleManager:SetParticleControl(crit_pfx, 0, self:GetParent():GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(crit_pfx)

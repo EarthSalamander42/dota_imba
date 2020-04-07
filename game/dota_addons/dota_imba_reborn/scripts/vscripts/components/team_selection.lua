@@ -20,11 +20,12 @@
 -- Utility and configuration
 -----------------------------------
 
-ListenToGameEvent('game_rules_state_change', function(keys)
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		InitializeTeamSelection()
-	end
-end, nil)
+-- Disabling this for now because it is not decoupled from IMBA's server; if that goes down, then players cannot start games -- AltiV
+-- ListenToGameEvent('game_rules_state_change', function(keys)
+	-- if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		-- InitializeTeamSelection()
+	-- end
+-- end, nil)
 
 -- list of names of the events
 local TeamSelectionEvents = {

@@ -14,7 +14,7 @@ function SelectionFilter( entityList ) {
     }
 
     else if (SELECT_ONLY_BUILDINGS) {
-        if (entityList.length > 1 && IsMixedBuildingSelectionGroup(entityList) ){
+        if (entityList && entityList.length > 1 && IsMixedBuildingSelectionGroup(entityList) ){
             $.Schedule(1/60, SelectOnlyBuildings)   
         }
     }

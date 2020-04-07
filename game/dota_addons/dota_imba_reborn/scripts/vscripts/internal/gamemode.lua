@@ -110,6 +110,7 @@ function GameMode:_InitGameMode()
 	ListenToGameEvent('dota_player_learned_ability', Dynamic_Wrap(self, 'OnPlayerLearnedAbility'), self)
 	ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(self, 'OnTeamKillCredit'), self)
 	ListenToGameEvent('dota_rune_activated_server', Dynamic_Wrap(self, 'OnRuneActivated'), self)
+	-- ListenToGameEvent('dota_pause_event', Dynamic_Wrap(self, 'OnPause'), self) -- Doesn't work
 
 	-- Change random seed
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '^0+','')

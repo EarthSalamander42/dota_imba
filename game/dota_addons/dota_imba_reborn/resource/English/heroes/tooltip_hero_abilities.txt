@@ -1205,9 +1205,7 @@
 // Shadow Fiend's Necromastery
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_necromastery"                      "Necromastery"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain up to %max_temporary_souls_pct%%% more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls."
-
-// \n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain up to %max_temporary_souls_pct%%% more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls.\n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
 
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"					"Can't steal the soul of units which don't have one in the first place."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"						"Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."

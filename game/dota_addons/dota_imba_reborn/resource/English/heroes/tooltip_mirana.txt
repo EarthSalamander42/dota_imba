@@ -54,11 +54,14 @@
 
 // Mirana's Moonlight Shadow
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow"						"Moonlight Shadow"
-"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Description"			"Turns Mirana and all allied heroes invisible. If a hero loses invisibility due to attacking or casting a spell, it will be restored after the fade delay, as long as Moonlight Shadow is still active.\n<font color='#FF7800'>Selemene's Cloak:</font> Heroes affected by Moonlight Shadow become immune to True Sight, unless an enemy hero is near them.\n<font color='#FF7800'>Emergency Shroud:</font> Immediately grants invisibility with no fade delay upon initial cast."
-"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Note0"              "Illusions do not remove True Sight immunity."
-"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Note1"              "Losing True Sight immunity does not imply losing regular invisibility."
+"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Description"			"Turns Mirana and all allied heroes invisible. If a hero loses invisibility due to attacking or casting a spell, it will be restored after the fade delay, as long as Moonlight Shadow is still active.\n<font color='#FF7800'>Emergency Shroud:</font> Immediately grants invisibility with no fade delay upon initial cast.\n<font color='#FF7800'>Selemene's Eyes:</font> Heroes affected by Moonlight Shadow's invisibility gain flying vision."
+
+// <font color='#FF7800'>Selemene's Cloak:</font> Heroes affected by Moonlight Shadow become immune to True Sight, unless an enemy hero is near them.
+
+// "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Note0"              "Illusions do not remove True Sight immunity."
+// "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Note1"              "Losing True Sight immunity does not imply losing regular invisibility."
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_Lore"                "Her tenure with Selemene allows Mirana to eclipse the ground, wrapping her allies in a cloak of shadows."
-"DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_truesight_immunity_radius"       "TRUE SIGHT IMMUNITY RADIUS:"
+// "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_truesight_immunity_radius"       "TRUE SIGHT IMMUNITY RADIUS:"
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_fade_delay"          "FADE DELAY:"
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow_bonus_movement_speed"	"%MOVEMENT SPEED:"

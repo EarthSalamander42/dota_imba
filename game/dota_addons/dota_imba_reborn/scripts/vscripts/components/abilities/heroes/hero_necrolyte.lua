@@ -27,12 +27,10 @@ end
 
 modifier_imba_sadist = class({})
 function modifier_imba_sadist:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_DEATH,
-			MODIFIER_EVENT_ON_ATTACK_LANDED
-		}
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_sadist:OnCreated()
@@ -534,19 +532,24 @@ function modifier_imba_ghost_shroud_buff:OnCreated()
 	end
 end
 
--- function modifier_imba_ghost_shroud_buff:DeclareFunctions()
-	-- return {
-		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
-	-- }
--- end
+function modifier_imba_ghost_shroud_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+	}
+end
 
--- function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
-	-- return self.healing_amp_pct
--- end
-
-function modifier_imba_ghost_shroud_buff:Custom_AllHealAmplify_Percentage()
+function modifier_imba_ghost_shroud_buff:GetModifierHealAmplify_PercentageTarget()
 	return self.healing_amp_pct
 end
+
+function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
+	return self.healing_amp_pct
+end
+
+-- function modifier_imba_ghost_shroud_buff:Custom_AllHealAmplify_Percentage()
+	-- return self.healing_amp_pct
+-- end
 
 ----------------------------------------
 -- Ghost Shroud Negative Aura Handler --
