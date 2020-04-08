@@ -178,10 +178,11 @@ function GameMode:SetupShrines()
 		local shrine = CreateUnitByName("npc_dota_goodguys_healers", pos, true, nil, nil, 2)
 		shrine:SetAbsOrigin(pos)
 		
-		-- Don't give jungle shrines backdoor protection
-		if shrine:HasAbility("backdoor_protection_in_base") then
-			shrine:RemoveAbility("backdoor_protection_in_base")
-		end
+		-- Removing the backdoor protection ability makes the Sancturary ability hidden for some reason -_-
+		-- -- Don't give jungle shrines backdoor protection
+		-- if shrine:HasAbility("backdoor_protection_in_base") then
+			-- shrine:RemoveAbility("backdoor_protection_in_base")
+		-- end
 		
 		local find_trees = GridNav:GetAllTreesAroundPoint(pos, 100, true)
 
@@ -197,11 +198,12 @@ function GameMode:SetupShrines()
 	for _, pos in pairs(bad_shrine_position) do 
 		local shrine = CreateUnitByName("npc_dota_badguys_healers", pos, true, nil, nil, 3)
 		shrine:SetAbsOrigin(pos)
-
-		-- Don't give jungle shrines backdoor protection
-		if shrine:HasAbility("backdoor_protection_in_base") then
-			shrine:RemoveAbility("backdoor_protection_in_base")
-		end
+		
+		-- Removing the backdoor protection ability makes the Sancturary ability hidden for some reason -_-
+		-- -- Don't give jungle shrines backdoor protection
+		-- if shrine:HasAbility("backdoor_protection_in_base") then
+			-- shrine:RemoveAbility("backdoor_protection_in_base")
+		-- end
 		
 		local find_trees = GridNav:GetAllTreesAroundPoint(pos, 100, true)
 

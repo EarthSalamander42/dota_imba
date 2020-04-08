@@ -125,6 +125,8 @@ modifier_imba_pipe_aura = modifier_imba_pipe_aura or class({})
 function modifier_imba_pipe_aura:IsPurgable() return false end
 
 function modifier_imba_pipe_aura:OnCreated( params )
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.parent = self:GetParent()
 	self.caster = self:GetCaster()
 	self.bonus_health_regen = self:GetAbility():GetSpecialValueFor("aura_bonus_health_regen")

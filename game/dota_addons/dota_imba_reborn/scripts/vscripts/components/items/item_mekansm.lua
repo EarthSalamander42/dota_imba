@@ -238,17 +238,18 @@ function modifier_item_imba_mekansm_heal:GetTexture()
 
 -- Stores the ability's parameters to prevent errors if the item is destroyed
 function modifier_item_imba_mekansm_heal:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.heal_bonus_armor = self:GetAbility():GetSpecialValueFor("heal_bonus_armor")
 	self.heal_percentage = self:GetAbility():GetSpecialValueFor("heal_percentage")
 end
 
 -- Declare modifier events/properties
 function modifier_item_imba_mekansm_heal:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_mekansm_heal:GetModifierHealthRegenPercentage()

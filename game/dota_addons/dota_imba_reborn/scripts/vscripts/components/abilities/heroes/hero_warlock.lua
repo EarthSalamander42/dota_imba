@@ -1564,61 +1564,56 @@ function modifier_imba_permanent_immolation_aura:OnCreated()
 	self.particle_burn = "particles/hero/warlock/warlock_upheaval_golem_burn.vpcf"
 
 	-- Ability special
-	self.damage = self.ability:GetSpecialValueFor("damage")
 	self.radius = self.ability:GetSpecialValueFor("radius")
-	self.burn_interval = self.ability:GetSpecialValueFor("burn_interval")
 
 	-- Actual radius to use, in case of Upheaval burns
 	self.actual_radius = self.radius
 
 	if IsServer() then
 		-- Start thinking
-		self:StartIntervalThink(self.burn_interval)
+		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("burn_interval"))
 	end
 end
 
 function modifier_imba_permanent_immolation_aura:OnIntervalThink()
-	if IsServer() then
-		if self.caster:HasModifier(self.modifier_upheaval) then
-			local modifier_upheaval_handler = self.caster:FindModifierByName(self.modifier_upheaval)
-			if modifier_upheaval_handler and modifier_upheaval_handler.radius and modifier_upheaval_handler.center then
+	if self.caster:HasModifier(self.modifier_upheaval) then
+		local modifier_upheaval_handler = self.caster:FindModifierByName(self.modifier_upheaval)
+		if modifier_upheaval_handler and modifier_upheaval_handler.radius and modifier_upheaval_handler.center then
 
-				-- Set actual aura radius. Need to dramatically increase the radius of the immolation. This is remedied by rejecting enemies outside the radius
-				self.actual_radius = modifier_upheaval_handler.radius * 2
+			-- Set actual aura radius. Need to dramatically increase the radius of the immolation. This is remedied by rejecting enemies outside the radius
+			self.actual_radius = modifier_upheaval_handler.radius * 2
 
-				-- BURN!!!! effect
-				self.particle_burn_fx = ParticleManager:CreateParticle(self.particle_burn, PATTACH_WORLDORIGIN, self.caster)
-				ParticleManager:SetParticleControl(self.particle_burn_fx, 0, modifier_upheaval_handler.center)
-				ParticleManager:SetParticleControl(self.particle_burn_fx, 1, Vector(modifier_upheaval_handler.radius, 0, 0))
-				ParticleManager:ReleaseParticleIndex(self.particle_burn_fx)
-			end
-		else
-			self.actual_radius = self.radius
+			-- BURN!!!! effect
+			self.particle_burn_fx = ParticleManager:CreateParticle(self.particle_burn, PATTACH_WORLDORIGIN, self.caster)
+			ParticleManager:SetParticleControl(self.particle_burn_fx, 0, modifier_upheaval_handler.center)
+			ParticleManager:SetParticleControl(self.particle_burn_fx, 1, Vector(modifier_upheaval_handler.radius, 0, 0))
+			ParticleManager:ReleaseParticleIndex(self.particle_burn_fx)
 		end
+	else
+		self.actual_radius = self.radius
+	end
 
-		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
-			nil,
-			self.actual_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false)
+	-- Find nearby enemies
+	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+		self.caster:GetAbsOrigin(),
+		nil,
+		self.actual_radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 
-		for _,enemy in pairs(enemies) do
-			if enemy:HasModifier(self.modifier_burn) then
-				-- Damage enemies
-				local damageTable = {victim = enemy,
-					attacker = self.caster,
-					damage = self.damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = self.ability
-				}
-
-				ApplyDamage(damageTable)
-			end
+	for _,enemy in pairs(enemies) do
+		if enemy:HasModifier(self.modifier_burn) then
+			-- Damage enemies
+			ApplyDamage({
+				victim			= enemy,
+				attacker		= self.caster,
+				damage			= self:GetAbility():GetSpecialValueFor("damage"),
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				ability			= self.ability
+			})
 		end
 	end
 end
@@ -1645,11 +1640,8 @@ function modifier_imba_permanent_immolation_aura:GetAuraEntityReject(target)
 		return false
 	end
 
-	-- Calculate distance
-	local distance = (self.caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
-
 	-- If the distance is bigger than the Immolation Aura's radius, ignore it
-	if distance > self.radius then
+	if (self.caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() > self.radius then
 		return true
 	end
 
