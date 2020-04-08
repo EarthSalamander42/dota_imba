@@ -49,14 +49,10 @@ function imba_empress_eleven_curses:OnSpellStart(curse_target, curse_stacks)
 		ParticleManager:ReleaseParticleIndex(hit_pfx)
 
 		-- Refresh the modifier's duration
-		enemy:AddNewModifier(caster, self, "modifier_imba_eleven_curses", {duration = stack_duration})
-
-		-- Increase the modifier's stack count
-		local modifier_curse_instance = enemy:FindModifierByName("modifier_imba_eleven_curses")
+		local modifier_curse_instance = enemy:AddNewModifier(caster, self, "modifier_imba_eleven_curses", {duration = stack_duration * (1 - enemy:GetStatusResistance())})
 		
 		if modifier_curse_instance then
 			modifier_curse_instance:SetStackCount(math.min(max_stacks, modifier_curse_instance:GetStackCount() + stacks_to_add))
-			modifier_curse_instance:SetDuration(stack_duration * (1 - enemy:GetStatusResistance()), true)
 		end
 	end
 end

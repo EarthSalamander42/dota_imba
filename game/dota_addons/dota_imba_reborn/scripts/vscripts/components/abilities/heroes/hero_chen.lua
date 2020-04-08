@@ -91,18 +91,10 @@ function imba_chen_penitence:OnProjectileHit_ExtraData(hTarget, vLocation, kv)
 	local particle	= ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_penitence.vpcf", PATTACH_ABSORIGIN_FOLLOW, hTarget)
 	ParticleManager:ReleaseParticleIndex(particle)
 	
-	local penitence_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence", {duration = self:GetSpecialValueFor("duration")})
-	
-	if penitence_modifier then
-		penitence_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
-	end
+	hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence", {duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance())})
 	
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_remnants_of_penitence") then
-		local remnants_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence_remnants", {duration = self:GetSpecialValueFor("duration")})
-		
-		if remnants_modifier then
-			remnants_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
-		end
+		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence_remnants", {duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance())})
 	end
 end
 

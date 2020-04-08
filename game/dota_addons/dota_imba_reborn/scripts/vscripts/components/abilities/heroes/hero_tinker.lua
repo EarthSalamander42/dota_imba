@@ -573,7 +573,7 @@ function imba_tinker_laser:OnProjectileHit(target, location)
 		else
 			-- Damage & blind
 			ApplyDamage({attacker = caster, victim = target, ability = self, damage = damage, damage_type = damage_type})
-			target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration })	
+			target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration * (1 - target:GetStatusResistance())})	
 			self.cast_table[target] = true
 		end
 	end
@@ -817,7 +817,7 @@ function imba_tinker_heat_seeking_missile:OnProjectileHit_ExtraData(target, loca
 				modifier_defence_break:ForceRefresh()
 				else
 				-- Else, create the debuff and refresh it
-				modifier_defence_break = enemy:AddNewModifier(caster,self,"modifier_imba_heat_seeking_missile_break",{duration = ExtraData.vision_duration})
+				modifier_defence_break = enemy:AddNewModifier(caster,self,"modifier_imba_heat_seeking_missile_break",{duration = ExtraData.vision_duration * (1 - enemy:GetStatusResistance())})
 				modifier_defence_break:ForceRefresh()
 				end
 			end
@@ -1290,19 +1290,19 @@ function imba_tinker_march_of_the_machines:OnProjectileHit_ExtraData(target, loc
 				ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 				-- Tesla-bot handling
 				if ExtraData.tesla_stun_duration then
-					enemy:AddNewModifier(caster, self, "modifier_imba_march_tesla_stun", {duration = ExtraData.tesla_stun_duration})
+					enemy:AddNewModifier(caster, self, "modifier_imba_march_tesla_stun", {duration = ExtraData.tesla_stun_duration * (1 - enemy:GetStatusResistance())})
 				end
 				-- Sticky-bot handling
 				if ExtraData.sticky_duration then
-					enemy:AddNewModifier(caster, self, "modifier_imba_march_sticky_root", {duration = ExtraData.sticky_duration})
+					enemy:AddNewModifier(caster, self, "modifier_imba_march_sticky_root", {duration = ExtraData.sticky_duration * (1 - enemy:GetStatusResistance())})
 				end
 				-- Dismantle-bot handling
 				if ExtraData.dismantle_duration then
-					enemy:AddNewModifier(caster, self, "modifier_imba_march_dismantle", {duration = ExtraData.dismantle_duration})
+					enemy:AddNewModifier(caster, self, "modifier_imba_march_dismantle", {duration = ExtraData.dismantle_duration * (1 - enemy:GetStatusResistance())})
 				end
 				-- Drone-bot handling
 				if ExtraData.drone_duration then
-					enemy:AddNewModifier(caster, self, "modifier_imba_march_drone", {duration = ExtraData.drone_duration})
+					enemy:AddNewModifier(caster, self, "modifier_imba_march_drone", {duration = ExtraData.drone_duration * (1 - enemy:GetStatusResistance())})
 				end
 			end
 		end

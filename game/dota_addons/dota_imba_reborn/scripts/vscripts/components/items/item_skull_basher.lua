@@ -97,32 +97,20 @@ function modifier_imba_skull_basher:OnAttackLanded(keys)
 		if IMBA_DISABLED_SKULL_BASHER == nil or not IMBA_DISABLED_SKULL_BASHER[keys.attacker:GetUnitName()] then
 			keys.target:EmitSound("DOTA_Item.SkullBasher")
 			
-			local bash_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_bash", {duration = self:GetAbility():GetSpecialValueFor("stun_duration")})
-			
-			if bash_modifier then
-				bash_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("stun_duration") * (1 - keys.target:GetStatusResistance()), true)
-			end
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_bash", {duration = self:GetAbility():GetSpecialValueFor("stun_duration") * (1 - keys.target:GetStatusResistance())})
 		end
 		
 		-- IMBAfication: Skull Crash
 		-- If the target is not skull crashed yet, CRUSH IT!
 		if not keys.target:HasModifier("modifier_imba_skull_basher_skull_crash") then
-			local crash_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_skull_crash", {duration = self:GetAbility():GetSpecialValueFor("skull_break_duration")})
-			
-			if crash_modifier then
-				crash_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("skull_break_duration") * (1 - keys.target:GetStatusResistance()), true)
-			end
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_skull_crash", {duration = self:GetAbility():GetSpecialValueFor("skull_break_duration") * (1 - keys.target:GetStatusResistance())})
 		else
 			-- Otherwise, it was ALREADY CRUSHED! BREAK IT!!!!!!!!!!!! BREAK IT!!!!!!!!!!!!!!!
 			-- Consume skull crash modifier
 			keys.target:RemoveModifierByName("modifier_imba_skull_basher_skull_crash")
 
 			-- Apply BREAK!
-			local break_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_skull_break", {duration = self:GetAbility():GetSpecialValueFor("actual_break_duration")})
-
-			if break_modifier then
-				break_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("actual_break_duration") * (1 - keys.target:GetStatusResistance()), true)
-			end
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skull_basher_skull_break", {duration = self:GetAbility():GetSpecialValueFor("actual_break_duration") * (1 - keys.target:GetStatusResistance())})
 		end
 	end
 end

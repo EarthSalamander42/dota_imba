@@ -15,8 +15,8 @@
 		"Ability1"		"imba_dark_seer_vacuum"
 		"Ability2"		"imba_dark_seer_ion_shell"
 		"Ability3"		"imba_dark_seer_surge"
-		"Ability4"		"imba_dark_seer_wormhole"
-		"Ability5"		"generic_hidden"
+		"Ability4"		"imba_dark_seer_close_portal"
+		"Ability5"		"imba_dark_seer_wormhole"
 		"Ability6"		"imba_dark_seer_wall_of_replica"
 		
 		"Ability10"		"special_bonus_imba_dark_seer_ion_shell_radius"

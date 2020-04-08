@@ -148,15 +148,11 @@ function modifier_imba_furion_wrath_of_nature_thinker:OnCreated()
 			end
 			
 			if self:GetCaster():HasScepter() or self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost") then
-				self.debuff_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_furion_wrath_of_nature_spawn", {
-					duration 					= self.scepter_buffer,
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_furion_wrath_of_nature_spawn", {
+					duration 					= self.scepter_buffer * (1 - enemy:GetStatusResistance()),
 					treant_bonus_damage			= self.treant_bonus_damage,
 					treant_bonus_damage_hero	= self.treant_bonus_damage_hero
 				})
-				
-				if self.debuff_modifier then
-					self.debuff_modifier:SetDuration(self.scepter_buffer * (1 - enemy:GetStatusResistance()), true)
-				end
 			end
 			
 			if self:GetCaster():HasScepter() then
@@ -214,15 +210,11 @@ function modifier_imba_furion_wrath_of_nature_thinker:OnIntervalThink()
 			end
 			
 			if self:GetCaster():HasScepter() or self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost") then
-				self.debuff_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_furion_wrath_of_nature_spawn", {
-					duration 					= self.scepter_buffer,
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_furion_wrath_of_nature_spawn", {
+					duration 					= self.scepter_buffer * (1 - enemy:GetStatusResistance()),
 					treant_bonus_damage			= self.treant_bonus_damage,
 					treant_bonus_damage_hero	= self.treant_bonus_damage_hero
 				})
-				
-				if self.debuff_modifier then
-					self.debuff_modifier:SetDuration(self.scepter_buffer * (1 - enemy:GetStatusResistance()), true)
-				end
 			end
 			
 			if self:GetCaster():HasScepter() then

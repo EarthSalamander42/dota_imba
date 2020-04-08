@@ -19,9 +19,9 @@ function item_imba_wand_of_the_brine:OnSpellStart()
 
 		local hTarget = self:GetCursorTarget()
 		
-		hTarget:Purge(false, true, false, true, true)
-		
 		hTarget:AddNewModifier( self:GetCaster(), self, "modifier_item_imba_wand_of_the_brine_bubble", { duration = self.bubble_duration } )
+		
+		hTarget:Purge(false, true, false, true, true)
 
 		EmitSoundOn( "DOTA_Item.GhostScepter.Activate", self:GetCaster() )
 	end

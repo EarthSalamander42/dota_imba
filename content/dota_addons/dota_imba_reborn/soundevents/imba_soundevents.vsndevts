@@ -4444,3 +4444,34 @@
 		}
 	}
 }
+
+"Hero_Dark_Seer.Surge_Sonic_Boom"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/dark_seer/surge_sonic_boom.vsnd"
+						}
+					}
+                    "volume"            {   "value"     "2.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.050000"  }
+                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.00000"  }
+                    "soundlevel"        {   "value"     "81.00000" }
+					"spread_radius"		{ 	"value"		"300.000000" }
+				}
+			}
+		}
+	}
+}

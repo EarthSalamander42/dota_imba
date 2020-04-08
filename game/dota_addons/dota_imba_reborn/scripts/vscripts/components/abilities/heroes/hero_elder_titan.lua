@@ -106,7 +106,7 @@ function imba_elder_titan_echo_stomp:OnSpellStart()
 				ApplyDamage(damageTable)
 
 				-- Stun them
-				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end
@@ -193,7 +193,7 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 					end
 
 					-- Stun them
-					enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+					enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - enemy:GetStatusResistance())})
 					
 					if enemy:IsRealHero() then
 						heroes_hit = heroes_hit + 1
@@ -393,7 +393,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			
 			-- "Astral Spirit roots targets hit" talent
 			if self:GetParent():GetOwner():HasTalent("special_bonus_imba_elder_titan_3") then
-				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_rooted", {duration = duration})
+				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_rooted", {duration = duration * (1 - enemy:GetStatusResistance())})
 
 				local root_fx = ParticleManager:CreateParticle("particles/units/heroes/heroes_underlord/abyssal_underlord_pitofmalice_stun.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 				ParticleManager:SetParticleControl(root_fx, 0, enemy:GetAbsOrigin())
@@ -857,7 +857,7 @@ function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 				ApplyDamage(damageTable)
 
 				-- Stun them
-				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - enemy:GetStatusResistance())})
 			end
 		end
 		
@@ -947,9 +947,9 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 		local enemies = FindUnitsInLine(caster:GetTeamNumber(), caster_position, crack_ending, nil, crack_width, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags())
 		for _, enemy in pairs(enemies) do
 			enemy:Interrupt()
-			enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter", {duration = slow_duration})
+			enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 			if caster:HasScepter() then
-				enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter_scepter", {duration = slow_duration})
+				enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter_scepter", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 			end
 			ApplyDamage({victim = enemy, attacker = caster, damage = enemy:GetMaxHealth() * crack_damage * 0.01, damage_type = DAMAGE_TYPE_PHYSICAL, ability = self})
 			ApplyDamage({victim = enemy, attacker = caster, damage = enemy:GetMaxHealth() * crack_damage * 0.01, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})

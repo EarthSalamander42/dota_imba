@@ -1,5 +1,6 @@
 #base heroes/ancient_apparition/hero.txt
 #base heroes/batrider/hero.txt
+// #base heroes/brewmaster/hero.txt
 #base heroes/bristleback/hero.txt
 // #base heroes/broodmother/hero.txt
 #base heroes/chen/hero.txt
@@ -9,6 +10,7 @@
 #base heroes/enchantress/hero.txt
 #base heroes/furion/hero.txt
 #base heroes/grimstroke/hero.txt
+// #base heroes/gyrocopter/hero.txt
 #base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
 #base heroes/leshrac/hero.txt
@@ -28,9 +30,12 @@
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
 #base heroes/templar_assassin/hero.txt // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
+// #base heroes/terrorblade/hero.txt
 #base heroes/tidehunter/hero.txt
 #base heroes/timbersaw/hero.txt
+// #base heroes/undying/hero.txt
 #base heroes/visage/hero.txt
+// #base heroes/void_spirit/hero.txt
 #base heroes/weaver/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
@@ -685,13 +690,13 @@
 		"Ability11"					"special_bonus_attack_damage_65"
 		"Ability12"					"special_bonus_imba_earth_spirit_3"
 		"Ability13"					"special_bonus_armor_8"
-		"Ability14"					"special_bonus_spell_amplify_20"
+		"Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
 		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
 		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
 		
 		// Removed Talents
-		// "Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
+		// "Ability14"					"special_bonus_spell_amplify_20"
 		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
 		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
 		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
@@ -779,7 +784,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_enigma_black_hole"
 
-		"Ability10"					"special_bonus_movement_speed_25"
+		"Ability10"					"special_bonus_imba_enigma_demonic_conversion_attack_range"
 		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
 		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
 		"Ability13"					"special_bonus_imba_enigma_malefice_damage"
@@ -789,6 +794,7 @@
 		"Ability17"					"special_bonus_imba_enigma_4" // Black Hole cast on death
 		
 		// Removed Talents
+		// "Ability10"					"special_bonus_movement_speed_25"
 		// "Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 6 seconds.
 		// "Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
 	}
@@ -870,11 +876,11 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"Ability1"					"imba_jakiro_fire_breath"
+		"Ability1"					"imba_jakiro_dual_breath"
 		"Ability2"					"imba_jakiro_ice_path"
 		"Ability3"					"imba_jakiro_liquid_fire"
-		"Ability4"					"imba_jakiro_ice_breath"
-		"Ability5"					"generic_hidden"
+		"Ability4"					"imba_jakiro_fire_breath"
+		"Ability5"					"imba_jakiro_ice_breath"
 		"Ability6"					"imba_jakiro_macropyre"
 
 		"Ability10"					"special_bonus_imba_jakiro_1"
@@ -1020,7 +1026,7 @@
 		"Ability14"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
 		"Ability15"					"special_bonus_imba_lina_9" // +X/Y% Fiery Soul Per Stack
 		"Ability16"					"special_bonus_imba_lina_10" // -6s Dragon Slave Cooldown
-		"Ability17"					"special_bonus_attack_range_175"
+		"Ability17"					"special_bonus_attack_range_200"
 		
 		// Removed Abilities
 		// "Ability10"					"special_bonus_imba_lina_1" // Additional Dragon Slaves
@@ -1567,17 +1573,18 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_queenofpain_sonic_wave"
 
-		"Ability10"					"special_bonus_strength_10"
-		"Ability11"					"special_bonus_imba_queenofpain_2"
-		"Ability12"					"special_bonus_imba_queenofpain_1"
-		"Ability13"					"special_bonus_imba_queenofpain_4"
+		"Ability10"					"special_bonus_imba_queenofpain_4" // "Delightful Torment Bonus Attack Speed"
+		"Ability11"					"special_bonus_imba_queenofpain_2" // "Sonic Wave deals damage in five instances"
+		"Ability12"					"special_bonus_imba_queenofpain_1" // "Shadow Struck targets can be seen through fog"
+		"Ability13"					"special_bonus_imba_queen_of_pain_shadow_strike_aoe"
 		"Ability14"					"special_bonus_spell_lifesteal_30"
-		"Ability15"					"special_bonus_imba_queen_of_pain_shadow_strike_aoe"
+		"Ability15"					"special_bonus_imba_queenofpain_3" // Damaging an enemy causes Shadow Strike to deal its tick damage
 		"Ability16"					"special_bonus_imba_queen_of_pain_scream_of_pain_fear"
 		"Ability17"					"special_bonus_spell_block_15"
 		
 		// Removed Talents
-		// "Ability12"					"special_bonus_imba_queenofpain_3" // Damaging an enemy causes Shadow Strike to deal its tick damage
+		// "Ability10"					"special_bonus_strength_10"
+		// "Ability12"					
 		// "Ability14"					"special_bonus_imba_queenofpain_5" // Blink can be used twice in quick succession, with increased mana cost
 		// "Ability15"					"special_bonus_imba_queenofpain_6" // Enemies affected by Shadow Strike release Screams of Pain every damage tick
 		// "Ability16"					"special_bonus_imba_queenofpain_7" // Scream of Pain now causes confusion
@@ -1684,9 +1691,9 @@
 		"Ability6"					"imba_nevermore_requiem"		
 
 		"Ability10"					"special_bonus_imba_nevermore_1"
-		"Ability11"					"special_bonus_attack_speed_20"
+		"Ability11"					"special_bonus_attack_speed_25"
 		"Ability12"					"special_bonus_imba_nevermore_3"
-		"Ability13"					"special_bonus_movement_speed_30"
+		"Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
 		"Ability14"					"special_bonus_imba_nevermore_5"
 		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
@@ -1694,7 +1701,7 @@
 		
 		// Removed Talents
 		// "Ability11"					"special_bonus_imba_nevermore_2" // Necromastery Siphon
-		// "Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
+		// "Ability13"					"special_bonus_movement_speed_30"
 		// "Ability15"					"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	}
 

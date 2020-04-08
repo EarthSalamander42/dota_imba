@@ -66,8 +66,8 @@
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_remnant_refresh_radius"			"REMNANT EXPLODE RADIUS:"
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_aghanim_description"				"<font color='#FF7800'>Magnetize becomes auto-castable. When auto-cast is on, exploding remnants pull enemies with Earth's Mark to their location.</font>"
 
-"DOTA_Tooltip_Ability_imba_earth_spirit_petrify"									"#{DOTA_Tooltip_ability_earth_spirit_petrify}\n<font color='#FF7800'>Potent Stone:</font> Ignores status resistance and spell absorb."
-"DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Description"						"#{DOTA_Tooltip_ability_earth_spirit_petrify_Description}"
+"DOTA_Tooltip_Ability_imba_earth_spirit_petrify"									"#{DOTA_Tooltip_ability_earth_spirit_petrify}"
+"DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Description"						"#{DOTA_Tooltip_ability_earth_spirit_petrify_Description}\n<font color='#FF7800'>Potent Stone:</font> Ignores status resistance and spell absorb."
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Lore"								"#{DOTA_Tooltip_ability_earth_spirit_petrify_Lore}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_duration"							"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_damage"								"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"

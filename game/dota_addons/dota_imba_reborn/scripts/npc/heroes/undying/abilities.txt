@@ -54,7 +54,8 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"decay_duration"				"45"
-				"LinkedSpecialBonus"			"special_bonus_unique_undying_4"
+				//"LinkedSpecialBonus"			"special_bonus_unique_undying_4"
+				"LinkedSpecialBonus"			"special_bonus_imba_undying_decay_duration"
 			}
 			"04"
 			{
@@ -143,8 +144,19 @@
 				"var_type"					"FIELD_INTEGER"
 				"tombstone_heal"			"8 12 16 20"
 			}
+			
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"soul_injection_stats_per_unit"			"1"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"soul_injection_duration"	"10"
+			}
 		}
-	}	
+	}
 
 	//=================================================================================================================
 	// Undying: Tombstone
@@ -190,7 +202,8 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hits_to_destroy_tooltip"	"5 7 9 11"
-				"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
+				//"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
+				"LinkedSpecialBonus"		"special_bonus_imba_undying_tombstone_health"
 			}
 			"03"
 			{
@@ -285,8 +298,10 @@
 		"AbilityTextureName"			"custom/undying/flesh_golem_grab"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_Undying.SoulRip.Cast"
@@ -302,7 +317,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"40"
+		"AbilityCooldown"				"30"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -317,8 +332,62 @@
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"10"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blink_break_range"		"1200"
+			}
 		}
-	}	
+	}
+	
+	//=================================================================================================================
+	// Undying: Flesh Golem Throw
+	//=================================================================================================================
+	"imba_undying_flesh_golem_throw"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_undying"
+		"AbilityTextureName"			"custom/undying/flesh_golem_throw"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"1"
+		
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_UNDYING_TOMBSTONE"
+		"AbilityCastGestureSlot"		"DEFAULT"
+		"AbilityCastPoint"				"0.35"
+		"AbilityCastRange"				"400"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"throw_speed"			"750"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"throw_max_height"		"200"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Undying: Flesh Golem
@@ -421,7 +490,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	//
 	//=================================================================================================================
@@ -446,6 +515,146 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"value"					"30"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_undying_decay_duration" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_undying_decay"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"50"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_undying_tombstone_on_death" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_undying_tombstone"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_undying_tombstone_health" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_undying_tombstone"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_undying_flesh_golem_grab_allies" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_undying_flesh_golem_grab"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//
+	//=================================================================================================================
+	"special_bonus_imba_undying_decay_cooldown" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_undying_decay"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
 			}
 		}
 	}

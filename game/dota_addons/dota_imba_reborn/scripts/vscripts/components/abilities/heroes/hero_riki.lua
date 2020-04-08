@@ -693,7 +693,7 @@ function imba_riki_blink_strike:OnSpellStart()
 			self.hCaster:MoveToTargetToAttack(hTarget)
 			if (hTarget:GetTeamNumber() ~= self.hCaster:GetTeamNumber()) then
 				ApplyDamage({victim = hTarget, attacker = self.hCaster, damage = self.damage, damage_type = damage_type})
-				hTarget:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_debuff_turn", {duration = self.duration})
+				hTarget:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_debuff_turn", {duration = self.duration * (1 - hTarget:GetStatusResistance())})
 			end
 			self.hCaster:SetForwardVector(target_loc_forward_vector)
 			EmitSoundOn("Hero_Riki.Blink_Strike", hTarget)
@@ -792,7 +792,7 @@ function imba_riki_blink_strike:DoJumpAttack(hTarget, hNextTarget)
 		self.hCaster:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK, 1.5)
 		self.hCaster:PerformAttack(hTarget, true, true, true, false, false, false, false)
 		ApplyDamage({victim = hTarget, attacker = self.hCaster, damage = self.damage, damage_type = self:GetAbilityDamageType()})
-		hTarget:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_debuff_turn", {duration = self.duration})
+		hTarget:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_debuff_turn", {duration = self.duration * (1 - hTarget:GetStatusResistance())})
 		self.hCaster:SetAbsOrigin(location)
 	end
 end
@@ -1219,7 +1219,7 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 					local turn_debuff_duration
 					if blink_strike_ability then
 						turn_debuff_duration = blink_strike_ability:GetSpecialValueFor("duration")
-						target:AddNewModifier(parent, blink_strike_ability, "modifier_imba_blink_strike_debuff_turn", {duration = turn_debuff_duration})
+						target:AddNewModifier(parent, blink_strike_ability, "modifier_imba_blink_strike_debuff_turn", {duration = turn_debuff_duration * (1 - target:GetStatusResistance())})
 						ApplyDamage({victim = target, attacker = attacker, damage = blink_strike_ability:GetSpecialValueFor("bonus_damage") or blink_strike_ability:GetSpecialValueFor("damage"), damage_type = blink_strike_ability:GetAbilityDamageType()})
 					end
 
@@ -1365,7 +1365,7 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 					if backbreaker_mod then
 						backbreaker_mod:ForceRefresh()
 					else
-						backbreaker_mod = target:AddNewModifier(parent,ability,"modifier_imba_riki_backbreaker",{duration = parent:FindTalentValue("special_bonus_imba_riki_7","duration")})
+						backbreaker_mod = target:AddNewModifier(parent,ability,"modifier_imba_riki_backbreaker",{duration = parent:FindTalentValue("special_bonus_imba_riki_7","duration") * (1 - target:GetStatusResistance())})
 					end
 				else
 					if backbreaker_mod then
@@ -1475,7 +1475,7 @@ function modifier_imba_riki_backbreaker:OnRefresh()
 			ParticleManager:ReleaseParticleIndex(backbreak_particle_fx)
 			EmitSoundOn("Imba.RikiCritStab", parent)
 
-			parent:AddNewModifier(caster,ability,"modifier_imba_riki_backbroken",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","break_duration")})
+			parent:AddNewModifier(caster,ability,"modifier_imba_riki_backbroken",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","break_duration") * (1 - target:GetStatusResistance())})
 			self:Destroy()
 		end
 	end
@@ -1773,7 +1773,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 							if backbreaker_mod then
 								backbreaker_mod:ForceRefresh()
 							else
-								backbreaker_mod = unit:AddNewModifier(caster,backstab_ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration")})
+								backbreaker_mod = unit:AddNewModifier(caster,backstab_ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration") * (1 - unit:GetStatusResistance())})
 							end
 						end
 					end
@@ -1911,7 +1911,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:ProcTricks(caster,abil
 		if martyrs_mark_mod then
 			martyrs_mark_mod:ForceRefresh()
 		else
-			martyrs_mark_mod = target:AddNewModifier(caster,ability,"modifier_imba_martyrs_mark",{duration = talent_duration})
+			martyrs_mark_mod = target:AddNewModifier(caster,ability,"modifier_imba_martyrs_mark",{duration = talent_duration * (1 - target:GetStatusResistance())})
 		end
 	end
 
@@ -1940,7 +1940,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:ProcTricks(caster,abil
 			if backbreaker_mod then
 				backbreaker_mod:ForceRefresh()
 			else
-				backbreaker_mod = target:AddNewModifier(caster,backstab_ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration")})
+				backbreaker_mod = target:AddNewModifier(caster,backstab_ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration") * (1 - target:GetStatusResistance())})
 			end
 		end
 	end
@@ -2163,6 +2163,62 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_riki_1", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_riki_2", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_riki_3", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_riki_4", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_riki_5", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_riki_6", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_riki_7", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_riki_8", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_riki_cloak_and_dagger_damage", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_riki_1	= modifier_special_bonus_imba_riki_1 or class({})
+modifier_special_bonus_imba_riki_2	= modifier_special_bonus_imba_riki_2 or class({})
+modifier_special_bonus_imba_riki_3	= modifier_special_bonus_imba_riki_3 or class({})
+modifier_special_bonus_imba_riki_4	= modifier_special_bonus_imba_riki_4 or class({})
+modifier_special_bonus_imba_riki_5	= modifier_special_bonus_imba_riki_5 or class({})
+modifier_special_bonus_imba_riki_6	= modifier_special_bonus_imba_riki_6 or class({})
+modifier_special_bonus_imba_riki_7	= modifier_special_bonus_imba_riki_7 or class({})
+modifier_special_bonus_imba_riki_8	= modifier_special_bonus_imba_riki_8 or class({})
+modifier_special_bonus_imba_riki_cloak_and_dagger_damage	= modifier_special_bonus_imba_riki_cloak_and_dagger_damage or class({})
+
+function modifier_special_bonus_imba_riki_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_cloak_and_dagger_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_riki_cloak_and_dagger_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_riki_cloak_and_dagger_damage:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_riki_smokescreen_cooldown", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_riki_blink_strike_cast_range", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)

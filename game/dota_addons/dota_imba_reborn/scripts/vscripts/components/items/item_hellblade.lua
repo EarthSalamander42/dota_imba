@@ -53,7 +53,7 @@ function item_imba_hellblade:OnSpellStart()
 		EmitSoundOn(sound_cast, caster)
 
 		-- Add the curse debuff to the target
-		target:AddNewModifier(caster, ability, debuff, {duration = duration})
+		target:AddNewModifier(caster, ability, debuff, {duration = duration * (1 - target:GetStatusResistance())})
 
 		-- Check for Linken's Sphere
 		if target:GetTeam() ~= caster:GetTeam() then

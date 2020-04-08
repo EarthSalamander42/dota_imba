@@ -212,14 +212,14 @@ function ApplyFrostAttack(modifier, target)
 	-- Apply slow effect if the target didn't suddenly become magic immune
 	if not target:IsMagicImmune() then
 		if not target:HasModifier(modifier.modifier_slow) then
-			local modifier_slow_handler = target:AddNewModifier(modifier.caster, modifier.ability, modifier.modifier_slow, {duration = duration})
+			local modifier_slow_handler = target:AddNewModifier(modifier.caster, modifier.ability, modifier.modifier_slow, {duration = duration * (1 - target:GetStatusResistance())})
 			if modifier_slow_handler then
 				modifier_slow_handler:IncrementStackCount()
 			end
 		else
 			local modifier_slow_handler = target:FindModifierByName(modifier.modifier_slow)
 			modifier_slow_handler:IncrementStackCount()
-			modifier_slow_handler:SetDuration(modifier_slow_handler:GetDuration(), true)
+			modifier_slow_handler:SetDuration(modifier_slow_handler:GetDuration() * (1 - target:GetStatusResistance()), true)
 		end
 	end
 end
@@ -428,7 +428,7 @@ function modifier_imba_frost_arrows_slow:OnStackCountChanged()
 				end
 			end
 
-			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, {duration = self.freeze_duration})
+			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, {duration = self.freeze_duration * (1 - self.parent:GetStatusResistance())})
 
 			-- Play freeze sound
 			EmitSoundOn("hero_Crystal.frostbite", self.parent)
@@ -556,10 +556,9 @@ end
 function imba_drow_ranger_frost_arrows_723:OnOrbImpact( keys )
 	-- Apply slow effect if the target didn't suddenly become magic immune
 	if not keys.target:IsMagicImmune() then
-		local modifier_slow_handler = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_frost_arrows_slow", {duration = self:GetDuration()})
+		local modifier_slow_handler = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_frost_arrows_slow", {duration = self:GetDuration() * (1 - keys.target:GetStatusResistance())})
 		
 		if modifier_slow_handler then
-			modifier_slow_handler:SetDuration(self:GetDuration() * (1 - keys.target:GetStatusResistance()), true)
 			modifier_slow_handler:IncrementStackCount()
 		end
 	end
@@ -853,7 +852,7 @@ function imba_drow_ranger_gust:OnProjectileHit(target, location)
 				center_x = caster:GetAbsOrigin()[1]+1,
 				center_y = caster:GetAbsOrigin()[2]+1,
 				center_z = caster:GetAbsOrigin()[3],
-				duration = knockback_duration,
+				duration = knockback_duration * (1 - target:GetStatusResistance()),
 				knockback_duration = knockback_duration,
 				knockback_distance = distance,
 				knockback_height = 0,
@@ -874,7 +873,7 @@ function imba_drow_ranger_gust:OnProjectileHit(target, location)
 		ApplyDamage(damageTable)
 
 		-- Apply silence
-		target:AddNewModifier(caster, ability, modifier_silence, {duration = silence_duration})
+		target:AddNewModifier(caster, ability, modifier_silence, {duration = silence_duration * (1 - target:GetStatusResistance())})
 
 
 		-- if appropriate, apply chill stacks (only if Frost Arrows were learned)
@@ -884,13 +883,14 @@ function imba_drow_ranger_gust:OnProjectileHit(target, location)
 
 				-- Apply stacks or increase stacks if already exists
 				if not target:HasModifier(modifier_chill) then
-					local modifier = target:AddNewModifier(caster, frost_ability, modifier_chill, {duration = chill_duration})
+					local modifier = target:AddNewModifier(caster, frost_ability, modifier_chill, {duration = chill_duration * (1 - target:GetStatusResistance())})
 					if modifier then
 						modifier:SetStackCount(chill_stacks)
 					end
 				else
 					local modifier = target:FindModifierByName(modifier_chill)
 					modifier:SetStackCount(modifier:GetStackCount() + chill_stacks)
+					modifier:SetDuration(chill_duration * (1 - target:GetStatusResistance()), true)
 				end
 			end
 		end
@@ -1017,7 +1017,7 @@ function modifier_imba_gust_buff:OnAttackLanded(kv)
 				center_x = caster:GetAbsOrigin()[1]+1,
 				center_y = caster:GetAbsOrigin()[2]+1,
 				center_z = caster:GetAbsOrigin()[3],
-				duration = knockback_duration,
+				duration = knockback_duration * (1 - target:GetStatusResistance()),
 				knockback_duration = knockback_duration,
 				knockback_distance = distance,
 				knockback_height = 0,
@@ -1350,10 +1350,9 @@ function imba_drow_ranger_multishot:OnProjectileHit_ExtraData(target, location, 
 	
 		if self:GetCaster():HasAbility("imba_drow_ranger_frost_arrows_723") and self:GetCaster():FindAbilityByName("imba_drow_ranger_frost_arrows_723"):IsTrained() then
 			if not target:IsMagicImmune() then
-				local frost_modifier = target:AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_drow_ranger_frost_arrows_723"), "modifier_imba_frost_arrows_slow", {duration = self:GetSpecialValueFor("arrow_slow_duration")})
+				local frost_modifier = target:AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_drow_ranger_frost_arrows_723"), "modifier_imba_frost_arrows_slow", {duration = self:GetSpecialValueFor("arrow_slow_duration") * (1 - target:GetStatusResistance())})
 				
 				if frost_modifier then
-					frost_modifier:SetDuration(self:GetSpecialValueFor("arrow_slow_duration") * (1 - target:GetStatusResistance()), true)
 					frost_modifier:IncrementStackCount()
 				end
 			end
@@ -1909,7 +1908,7 @@ function modifier_imba_markmanship_buff:OnAttackLanded(keys)
 		if self.parent == attacker then
 			-- Only apply if the target isn't magic immune or a building
 			if not target:IsMagicImmune() and not target:IsBuilding() then
-				target:AddNewModifier(self.caster, self.ability, self.modifier, {duration = self.duration})
+				target:AddNewModifier(self.caster, self.ability, self.modifier, {duration = self.duration * (1 - target:GetStatusResistance())})
 			end
 		end
 	end
@@ -2421,9 +2420,40 @@ function imba_drow_ranger_trueshot_720:OnOwnerSpawned()
 	end
 end
 
--- -----------------------
--- -- TALENT 9 MODIFIER --
--- -----------------------
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_7", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_frost_arrows_damage", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_10", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_3", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_drow_ranger_7					= modifier_special_bonus_imba_drow_ranger_7 or class({})
+modifier_special_bonus_imba_drow_ranger_frost_arrows_damage	= modifier_special_bonus_imba_drow_ranger_frost_arrows_damage or class({})
+modifier_special_bonus_imba_drow_ranger_10					= modifier_special_bonus_imba_drow_ranger_10 or class({})
+modifier_special_bonus_imba_drow_ranger_3					= modifier_special_bonus_imba_drow_ranger_3 or class({})
+
+function modifier_special_bonus_imba_drow_ranger_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_drow_ranger_frost_arrows_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_frost_arrows_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_frost_arrows_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_drow_ranger_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_10:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_drow_ranger_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_drow_ranger_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_drow_ranger_3:RemoveOnDeath() 	return false end
+
+-----------------------
+-- TALENT 9 MODIFIER --
+-----------------------
 -- +x Gust Distance/Knockback
 
 function modifier_special_bonus_imba_drow_ranger_9:IsHidden() 		return true end

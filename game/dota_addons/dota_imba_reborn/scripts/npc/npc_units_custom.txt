@@ -6096,57 +6096,6 @@
 		"HasInventory"              "0"
 	}
 	
-	"npc_dota_shadow_shaman_ward_1"
-	{
-		// Attack
-		//----------------------------------------------------------------
-		"AttackDamageMin"			"50"			// Damage range min.
-		"AttackDamageMax"			"50"			// Damage range max.
-		
-		// Movement
-		//----------------------------------------------------------------
-		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air (this was for movement talent)
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"2"		// Base health.
-	}
-
-	"npc_dota_shadow_shaman_ward_2"
-	{
-		// Attack
-		//----------------------------------------------------------------
-		"AttackDamageMin"			"100"			// Damage range min.
-		"AttackDamageMax"			"100"			// Damage range max.
-		
-		// Movement
-		//----------------------------------------------------------------
-		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"3"		// Base health.
-	}
-
-	"npc_dota_shadow_shaman_ward_3"
-	{
-		// Attack
-		//----------------------------------------------------------------
-		"AttackDamageMin"			"150"			// Damage range min.
-		"AttackDamageMax"			"150"			// Damage range max.
-		
-		// Movement
-		//----------------------------------------------------------------
-		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"4"		// Base health.
-	}
-	
 	"npc_dota_rattletrap_cog"
 	{										
 		// Movement

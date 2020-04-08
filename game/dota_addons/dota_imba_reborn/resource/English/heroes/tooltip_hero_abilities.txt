@@ -1205,9 +1205,7 @@
 // Shadow Fiend's Necromastery
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_necromastery"                      "Necromastery"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain up to %max_temporary_souls_pct%%% more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls."
-
-// \n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain up to %max_temporary_souls_pct%%% more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls.\n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
 
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"					"Can't steal the soul of units which don't have one in the first place."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"						"Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
@@ -1237,13 +1235,8 @@
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_requiem"                          "Requiem of Souls"
 
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Description"              "Shadow Fiend gathers his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will have its movement speed and attack damage reduced. Consumes all temporary souls, and creates lines of energy for every %souls_per_line% souls captured through Necromastery. Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.\n<font color='#FF7800'>Soul Frenzy:</font> After the Requiem ends, Shadow Fiend enters a state of Soul Frenzy, where razes have no cooldown. Lasts for %harvest_base_cd% seconds, and is increased by %harvest_line_duration_inc% seconds for every line that hits an enemy hero. If he misses a raze, Soul Frenzy ends."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Description"             "Shadow Fiend gathers his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed reduced for %requiem_slow_duration% seconds for each line hit. Lines of energy are created for every %requiem_soul_conversion% souls captured through Necromastery. <br><br> Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.\n<font color='#FF7800'>Remnants of Requiem:</font> Also reduces attack damage by %damage_reduction_pct%%% for %slow_duration% seconds. The movement speed reduction also lasts for this duration.\n<font color='#FF7800'>Soul Frenzy:</font> After the Requiem ends, Shadow Fiend enters a state of Soul Frenzy, where razes have no cooldown. Lasts for %harvest_base_cd% seconds, and is increased by %harvest_line_duration_inc% seconds for every line that hits an enemy hero. If he misses a raze, Soul Frenzy ends."
 "DOTA_Tooltip_ability_imba_nevermore_requiem_damage_reduction_pct"                  "%ATTACK DAMAGE REDUCTION:"
-
-
-//"Shadow Fiend gathers his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed reduced for %requiem_slow_duration% seconds for each line hit. Lines of energy are created for every %requiem_soul_conversion% souls captured through Necromastery. <br><br> Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.\n<font color='#FF7800'>Remnants of Requiem:</font> Also reduces attack damage by %damage_reduction_pct%%% for %slow_duration% seconds. The movement speed reduction also lasts for this duration.\n<font color='#FF7800'>Soul Frenzy:</font> After the Requiem ends, Shadow Fiend enters a state of Soul Frenzy, where razes have no cooldown. Lasts for %harvest_base_cd% seconds, and is increased by %harvest_line_duration_inc% seconds for every line that hits an enemy hero. If he misses a raze, Soul Frenzy ends."
-
-
 "DOTA_Tooltip_ability_imba_nevermore_requiem_Lore"						"The captured souls of those past slain are released to ravage their former allies."
 "DOTA_Tooltip_ability_imba_nevermore_requiem_Note0"						"When dying, the caster first loses souls due to dying, then consumes all leftover temporary souls for Requiem."
 "DOTA_Tooltip_ability_imba_nevermore_requiem_Note1"						"When Requiem is stolen by either Rubick or Nether Ward, they also get the same Necromastery stacks as Shadow Fiend currently have, but cannot increase or lose stacks in any way."
@@ -1280,13 +1273,13 @@
 // Skywrath Mage's Arcane Bolt
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt"                  "Arcane Bolt"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"                   "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane Wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases successive Arcane Bolts' projectile speed and increases the intelligence multiplier. Arcane Wrath stacks with and refreshes itself infinitely. Lasts %arcane_wrath_duration% seconds."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"                   "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane Wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases successive Arcane Bolts' projectile speed by %projectile_speed_per_stack% and increases the intelligence multiplier by %intelligence_bonus_per_stack%%% for %arcane_wrath_duration% seconds. Stacks with and refreshes itself."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Lore"              "Within the Ghastly Eyrie's endless intrigue, only the clever and calm can hope to survive."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Note0"				"The projectile's base speed is very slow (%projectile_speed% ms), providing %vision_radius% vision around it.  Upon impact, it will reveal the target area for %impact_vision_duration% seconds."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Note1"				"Arcane Bolt cannot be disjointed."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_base_damage"                   "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_pct"        "%INTELLIGENCE MULTIPLIER:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_projectile_speed_per_stack"    "BOLT SPEED PER STACK:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_per_stack"  "%INT MULTIPLIER PER STACK:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within 700 range willl be hit with the same ability. Heroes will take priority."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within %scepter_search_radius% range willl be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff"                          "Arcane Wrath"
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff_Description"              "Arcane Bolt intelligence multiplier increased by %dMODIFIER_PROPERTY_TOOLTIP%%%, and projectile speed increased by %dMODIFIER_PROPERTY_TOOLTIP%."
@@ -1295,50 +1288,51 @@
 // Skywrath Mage's Concussive Shot
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot"              "Concussive Shot"
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Lore"          "Those who serve the court of the Ghastly Eyrie are ever locked in covert war. One must always know where danger lurks nearest."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note0"                     "The slow debuff is always refreshed, and does not stacks with itself."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note1"                     "Scepter secondary shot is fully overridden by the level 40 Concussive Shot talent."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note2"                     "Concussive Shot will try to hit the nearest enemy, even if it magic immune."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius. Deals %creep_damage_pct%%% damage to creeps.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Lore"						"Those who serve the court of the Ghastly Eyrie are ever locked in covert war. One must always know where danger lurks nearest."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note0"                     "If no enemy heroes are in range or they are in fog, Concussive Shot targets the nearest enemy creep."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note1"                     "Damages creeps around the impact area."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note2"                     "Provides %vision_radius% vision around the projectile, and reveals the target area for %impact_vision_duration% seconds upon impact."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_ms_slow_pct"               "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_slow_duration"             "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_max_bounces"               "MAXIMUM GHASTLY PULSE BOUNCES:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_aghanim_description"       "When Skywrath Mage casts Concussive Shot, a different random target within cast range will be hit with the same ability. Heroes will take priority."
 
-"DOTA_Tooltip_modifier_imba_concussive_shot_slow"                      "Concussive Shot"
-"DOTA_Tooltip_modifier_imba_concussive_shot_slow_Description"          "Slowed."
+"DOTA_Tooltip_modifier_imba_concussive_shot_slow"						"Concussive Shot"
+"DOTA_Tooltip_modifier_imba_concussive_shot_slow_Description"			"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Skywrath Mage's Ancient Seal
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal"                  "Ancient Seal"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Description"                  "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.\n<font color='#FF7800'>Embedded Seal:</font> Skywrath pierces the Seal strongly through the target, marking the ground. The seal emnates an aura that applies the same effects as Ancient Seal for all enemies in its range. Lasts for the same duration as the regular seal."
+"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Description"                  "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells. <font color='#FF7800'>Magic resistance reduction affects non-hero units.</font>\n<font color='#FF7800'>Embedded Seal:</font> Skywrath pierces the Seal strongly through the target, marking the ground in a %sigil_radius% radius area. The seal emnates an aura that applies the same effects as Ancient Seal for all enemies in its range. Lasts for the same duration as the regular seal."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Lore"            "A holy incantation, whosoever finds themselves touched by Avilliva's sigil must suffer in penitent silence."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Note0"            "The ground seal ignores targets that has the regular seal on them, but can apply it if the seal gets purged."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_seal_duration"                "SEAL DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_mr_reduction_pct"             "%MAGIC AMPLIFICATION:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_sigil_radius"                 "EMBEDDED SEAL RADIUS:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_aghanim_description"          "Anytime Skywrath Mage casts Ancient Seal, a different random target within 700 range will be affected by the same ability. Heroes will take priority."
 
-"DOTA_Tooltip_modifier_imba_ancient_seal_main"                          "Ancient Seal"
-"DOTA_Tooltip_modifier_imba_ancient_seal_main_Description"              "Silenced, and taking increased magic damage."
+"DOTA_Tooltip_modifier_imba_ancient_seal_main"							"Ancient Seal"
+"DOTA_Tooltip_modifier_imba_ancient_seal_main_Description"				"Silenced and magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
-"DOTA_Tooltip_modifier_imba_ancient_seal_secondary"                    "Embedded Seal"
-"DOTA_Tooltip_modifier_imba_ancient_seal_secondary_Description"                     "Affected by the seal on the ground! Silenced and taking increased magic damage."
+"DOTA_Tooltip_modifier_imba_ancient_seal_secondary"						"Embedded Seal"
+"DOTA_Tooltip_modifier_imba_ancient_seal_secondary_Description"			"Affected by the seal on the ground! Silenced and magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 ////===============================================================================================================
 // Skywrath Mage's Mystic Flare
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare"                  "Mystic Flare"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"		"Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over a duration.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, a huge amount of arcane energy is unleashed, damaging nearby enemies. The damage is based on Skywrath's intelligence, and is increased by %int_increase_per_stack%%% for each Arcane Wrath stack he has at the moment of explosion."
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Lore"            "Only the most practiced of Skywrath sorcerers could hope to shape the skies into such a storm."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"		"Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over a duration.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, a huge amount of arcane energy is unleashed, damaging nearby enemies. The damage is based on %int_as_damage_pct%%% of Skywrath's intelligence, and is increased by %int_increase_per_stack%%% for each Arcane Wrath stack he has at the moment of explosion."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Lore"					"Only the most practiced of Skywrath sorcerers could hope to shape the skies into such a storm."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Note0"				"Mystic Flare only affects Heroes; it does not damage illusions or creep heroes."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Note1"				"Spell immune enemies do not count toward the damage distribution."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Note2"				"Mystic Flare will damage enemy creeps if no enemy heroes are present."
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_radius"                "FLARE RADIUS:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_duration"				"DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_explosion_radius"             "NOVA RADIUS:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_int_as_damage_pct"            "%INTELLIGENCE AS DAMAGE:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within 700 range (that is not inside the initial Mystic Flare). Heroes will take priority."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within %scepter_search_radius% range (that is not inside the initial Mystic Flare). Heroes will take priority."
 
 ////===============================================================================================================
 // Skywrath Mage's Custom Talents

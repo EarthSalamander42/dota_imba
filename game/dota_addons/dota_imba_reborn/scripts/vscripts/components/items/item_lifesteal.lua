@@ -64,14 +64,12 @@ function modifier_imba_morbid_mask:OnCreated()
 end
 
 function modifier_imba_morbid_mask:DeclareFunctions()
-	local decFunc = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFunc
+	return {MODIFIER_EVENT_ON_ATTACK_LANDED}
 end
 
 function modifier_imba_morbid_mask:OnDestroy()
 	if IsServer() then
-		if not self.caster:IsNull() and not self.caster:HasModifier("modifier_imba_morbid_mask") then
+		if self.caster and not self.caster:IsNull() and not self.caster:HasModifier("modifier_imba_morbid_mask") then
 			self.caster:RemoveModifierByName("modifier_imba_morbid_mask_unique")
 			
 			-- Remove lifesteal projectile
@@ -90,13 +88,10 @@ function modifier_imba_morbid_mask_unique:IsPurgable() return false end
 function modifier_imba_morbid_mask_unique:RemoveOnDeath() return false end
 
 function modifier_imba_morbid_mask_unique:OnCreated()
-	-- Ability properties
-	self.ability = self:GetAbility()
-
-	if self.ability then
-		-- Ability specials
-		self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
-	end
+	if not self:GetAbility() then self:Destroy() return end
+	
+	-- Ability specials
+	self.lifesteal_pct = self:GetAbility():GetSpecialValueFor("lifesteal_pct")
 end
 
 function modifier_imba_morbid_mask_unique:OnRefresh()

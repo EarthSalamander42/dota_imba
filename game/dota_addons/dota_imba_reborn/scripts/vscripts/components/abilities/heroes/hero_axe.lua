@@ -79,7 +79,7 @@ function imba_axe_berserkers_call:OnSpellStart()
 			ExecuteOrderFromTable(newOrder)
 		end
 		self:AddCalledTarget(target)
-		target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetSpecialValueFor("duration")})
+		target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 	end
 
 	-- if enemies table is empty play random responses_zero_enemy
@@ -409,9 +409,9 @@ function imba_axe_battle_hunger:ApplyBattleHunger(caster, target)
 	-- Roshan Battle Hunger doesn't pause due to no damage done, sorry, no cheesing
 	-- feel free to cast on creeps, though
 	if target:IsRoshan() then
-		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = true}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		target:AddNewModifier(caster, self, target_modifier, {duration = duration * (1 - target:GetStatusResistance()), no_pause = true})
 	else
-		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = false}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		target:AddNewModifier(caster, self, target_modifier, {duration = duration * (1 - target:GetStatusResistance()), no_pause = false})
 	end
 end
 -------------------------------------------
@@ -1332,13 +1332,43 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_axe_2", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_axe_3", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_axe_4", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_axe_5", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_axe_8", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_axe_9", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_axe_2	= modifier_special_bonus_imba_axe_2 or class({})
+modifier_special_bonus_imba_axe_3	= modifier_special_bonus_imba_axe_3 or class({})
+modifier_special_bonus_imba_axe_4	= modifier_special_bonus_imba_axe_4 or class({})
+modifier_special_bonus_imba_axe_5	= modifier_special_bonus_imba_axe_5 or class({})
 modifier_special_bonus_imba_axe_8	= modifier_special_bonus_imba_axe_8 or class({})
+modifier_special_bonus_imba_axe_9	= modifier_special_bonus_imba_axe_9 or class({})
+
+function modifier_special_bonus_imba_axe_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_axe_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_axe_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_axe_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_5:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_axe_8:IsHidden() 		return true end
 function modifier_special_bonus_imba_axe_8:IsPurgable()		return false end
 function modifier_special_bonus_imba_axe_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_axe_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_axe_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_axe_9:RemoveOnDeath() 	return false end
 
 function imba_axe_culling_blade:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_axe_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_axe_8") then

@@ -167,7 +167,7 @@ function StarfallWave(caster, ability, caster_position, radius, damage)
 					-- #8 Talent: Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
 					if caster:HasTalent("special_bonus_imba_mirana_8") then
 						local seed_duration = caster:FindTalentValue("special_bonus_imba_mirana_8")
-						enemy:AddNewModifier(caster, ability, "modifier_imba_starfall_talent_seed_debuff", {duration = seed_duration})
+						enemy:AddNewModifier(caster, ability, "modifier_imba_starfall_talent_seed_debuff", {duration = seed_duration * (1 - enemy:GetStatusResistance())})
 					end
 				end
 			end)
@@ -572,7 +572,7 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
 	end
 
 	-- Apply stun
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 	return true
 end
@@ -1388,30 +1388,33 @@ function modifier_imba_moonlight_shadow_invis:IsPurgable() return false end
 function modifier_imba_moonlight_shadow_invis:IsDebuff() return false end
 
 function modifier_imba_moonlight_shadow_invis:OnIntervalThink()
-	if IsServer() then
-		-- Look around for enemy heroes in the immunity radius
-		local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
-			self.parent:GetAbsOrigin(),
-			nil,
-			self.truesight_immunity_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO,
-			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
-			FIND_ANY_ORDER,
-			false)
+	-- Look around for enemy heroes in the immunity radius
+	local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
+		self.parent:GetAbsOrigin(),
+		nil,
+		self.truesight_immunity_radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+		FIND_ANY_ORDER,
+		false)
 
-		-- if the hero is not invisible, do nothing
-		if self:GetStackCount() == 0 then
-			return nil
-		end
+	-- if the hero is not invisible, do nothing
+	if self:GetStackCount() == 0 then
+		return nil
+	end
 
-		-- If an enemy hero was found, remove immunity
-		if #enemies > 0 then
-			self:SetStackCount(1)
-		else
-			-- Else, set it back
-			self:SetStackCount(2)
-		end
+	-- If an enemy hero was found, remove immunity
+	if #enemies > 0 then
+		self:SetStackCount(1)
+	else
+		-- Else, set it back
+		self:SetStackCount(2)
+	end
+	
+	-- IMBAfication: Selemene's Eyes
+	if self:GetStackCount() >= 1 then
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self:GetParent():GetCurrentVisionRange(), 0.1, false)
 	end
 end
 
@@ -1434,9 +1437,7 @@ function modifier_imba_moonlight_shadow_invis:GetModifierMoveSpeedBonus_Percenta
 end
 
 function modifier_imba_moonlight_shadow_invis:GetModifierInvisibilityLevel()
-	local stacks = self:GetStackCount()
-
-	if stacks == 2 or stacks == 1 then
+	if self:GetStackCount() >= 1 then
 		return 1
 	else
 		return 0
@@ -1480,25 +1481,18 @@ function modifier_imba_moonlight_shadow_invis:OnAttack(keys)
 end
 
 function modifier_imba_moonlight_shadow_invis:CheckState()
-	if IsServer() then
-		local state
-		local stacks = self:GetStackCount()
-
-		-- If parent is not invisible, no states are applied
-		if stacks == 0 then
-			return nil
-		end
-
-		-- If parent is truesight immune and invisible, set correct state
-		if stacks == 2 then
-			state = {[MODIFIER_STATE_TRUESIGHT_IMMUNE] = true,
-				[MODIFIER_STATE_INVISIBLE] = true}
-		else
-			state = {[MODIFIER_STATE_INVISIBLE] = true}
-		end
-
-		return state
+	-- If parent is not invisible, no states are applied
+	if self:GetStackCount() == 0 then
+		return nil
 	end
+
+	-- -- If parent is truesight immune and invisible, set correct state
+	-- if self:GetStackCount() == 2 then
+		-- return {[MODIFIER_STATE_TRUESIGHT_IMMUNE] = true,
+			-- [MODIFIER_STATE_INVISIBLE] = true}
+	-- else
+		return {[MODIFIER_STATE_INVISIBLE] = true}
+	-- end
 end
 
 -- Dummy invisibility modifier (shown)
@@ -1717,3 +1711,39 @@ end
 function modifier_imba_mirana_silence_stance_visible:IsPurgable() return false end
 function modifier_imba_mirana_silence_stance_visible:IsDebuff() return false end
 function modifier_imba_mirana_silence_stance_visible:RemoveOnDeath() return false end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_mirana_1", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_mirana_9", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_mirana_4", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_mirana_8", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_mirana_10", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_mirana_1	= modifier_special_bonus_imba_mirana_1 or class({})
+modifier_special_bonus_imba_mirana_9	= modifier_special_bonus_imba_mirana_9 or class({})
+modifier_special_bonus_imba_mirana_4	= modifier_special_bonus_imba_mirana_4 or class({})
+modifier_special_bonus_imba_mirana_8	= modifier_special_bonus_imba_mirana_8 or class({})
+modifier_special_bonus_imba_mirana_10	= modifier_special_bonus_imba_mirana_10 or class({})
+
+function modifier_special_bonus_imba_mirana_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_mirana_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_mirana_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_mirana_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_mirana_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_mirana_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_mirana_10:RemoveOnDeath() 	return false end

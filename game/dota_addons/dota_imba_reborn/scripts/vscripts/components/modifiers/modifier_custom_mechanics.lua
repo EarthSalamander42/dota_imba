@@ -132,14 +132,15 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 end
 
 -- Test fix for invincible 0 HP illusions
--- function modifier_custom_mechanics:OnAttackStart( keys )
-	-- if not IsServer() then return end
+function modifier_custom_mechanics:OnAttackStart( keys )
+	if not IsServer() then return end
 	
-	-- -- Don't know if this is going to work but might as well try something to remedy the illusion issue
-	-- if self:GetParent() == keys.attacker and not self:GetParent():IsRealHero() and self:GetParent():GetHealth() <= 0 then
-		-- UTIL_Remove(self:GetParent())
-	-- end
--- end
+	-- Don't know if this is going to work but might as well try something to remedy the illusion issue
+	if (self:GetParent():IsIllusion() and self:GetParent():GetHealth() <= 0) or (self:GetParent().GetPlayerID and self:GetParent():GetPlayerID() == -1) then
+		self:GetParent():ForceKill(false)
+		self:GetParent():RemoveSelf()
+	end
+end
 
 --[[
 -- this function stack with actual respawn time, and when trying to call GetRespawnTime() or GetTimeUntilRespawn() game crash

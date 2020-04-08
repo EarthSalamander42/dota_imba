@@ -40,7 +40,11 @@ function imba_enchantress_untouchable:OnSpellStart()
 				-- enemy:Stop()
 			-- end
 			
-			enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
+			if self:GetCaster():HasTalent("special_bonus_imba_enchantress_5") then
+				enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
+			else
+				enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration * (1 - enemy:GetStatusResistance())})
+			end
 		end
 	end
 	
@@ -166,7 +170,7 @@ end
 modifier_imba_enchantress_untouchable_peace_on_earth	= class({})
 
 function modifier_imba_enchantress_untouchable_peace_on_earth:IsDebuff()		return true end
-function modifier_imba_enchantress_untouchable_peace_on_earth:IgnoreTenacity()	return self:GetCaster():HasTalent("special_bonus_imba_enchantress_5") end
+-- function modifier_imba_enchantress_untouchable_peace_on_earth:IgnoreTenacity()	return self:GetCaster():HasTalent("special_bonus_imba_enchantress_5") end
 
 function modifier_imba_enchantress_untouchable_peace_on_earth:OnCreated()
 	self.parent	= self:GetParent()
@@ -297,7 +301,7 @@ function imba_enchantress_enchant:OnSpellStart()
 		-- Basic dispel (just buffs)
 		self.target:Purge(true, false, false, false, false)
 		
-		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_slow", {duration = self.tooltip_duration})
+		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_slow", {duration = self.tooltip_duration * (1 - self.target:GetStatusResistance())})
 	
 		if self.caster:GetName() == "npc_dota_hero_enchantress" then
 			self.caster:EmitSound("enchantress_ench_ability_enchant_0"..math.random(4,6))
@@ -622,7 +626,7 @@ function modifier_imba_enchantress_natures_attendants:OnIntervalThink()
 				hurt_allies[selected_unit]:GiveMana(self.cyan_mana_restore)			
 			end
 			
-			-- TODO: Rest for the Weary
+			-- IMBAfication: Rest for the Weary
 			if hurt_allies[selected_unit]:GetHealthPercent() < self.critical_health_pct and not hurt_allies[selected_unit]:HasModifier("modifier_imba_enchantress_natures_attendants_mini") then
 				hurt_allies[selected_unit]:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_natures_attendants_mini", {duration = self.ability.duration})
 			end

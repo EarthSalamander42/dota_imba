@@ -220,11 +220,7 @@ function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_par
 	
 		enemy:Purge(true, false, false, false, false)
 		
-		self.purge_modifier = enemy:AddNewModifier(self:GetCaster(), self, modifier_name, {duration = math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * math.min(charge_pct, 1), self:GetSpecialValueFor("minimum_purge_duration"))})
-		
-		if self.purge_modifier then
-			self.purge_modifier:SetDuration(math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * math.min(charge_pct, 1), self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self, modifier_name, {duration = (math.max(self:GetTalentSpecialValueFor("maximum_purge_duration") * math.min(charge_pct, 1), self:GetSpecialValueFor("minimum_purge_duration")) * (1 - enemy:GetStatusResistance()))})
 
 		ApplyDamage({
 			victim 			= enemy,
@@ -235,8 +231,6 @@ function imba_oracle_fortunes_end:ApplyFortunesEnd(target, target_sound, aoe_par
 			ability 		= self
 		})
 	end
-	
-	self.purge_modifier = nil
 end
 
 ---------------------------------------------
@@ -1371,6 +1365,26 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_oracle_fortunes_end_max_duration", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_oracle_false_promise_invisibility", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_oracle_false_promise_duration", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_oracle_fortunes_end_max_duration	= modifier_special_bonus_imba_oracle_fortunes_end_max_duration or class({})
+modifier_special_bonus_imba_oracle_false_promise_invisibility	= modifier_special_bonus_imba_oracle_false_promise_invisibility or class({})
+modifier_special_bonus_imba_oracle_false_promise_duration		= modifier_special_bonus_imba_oracle_false_promise_duration or class({})
+
+function modifier_special_bonus_imba_oracle_fortunes_end_max_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_oracle_fortunes_end_max_duration:IsPurgable() 		return false end
+function modifier_special_bonus_imba_oracle_fortunes_end_max_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_oracle_false_promise_invisibility:IsHidden() 		return true end
+function modifier_special_bonus_imba_oracle_false_promise_invisibility:IsPurgable() 	return false end
+function modifier_special_bonus_imba_oracle_false_promise_invisibility:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_oracle_false_promise_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_oracle_false_promise_duration:IsPurgable() 	return false end
+function modifier_special_bonus_imba_oracle_false_promise_duration:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_oracle_purifying_flames_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)

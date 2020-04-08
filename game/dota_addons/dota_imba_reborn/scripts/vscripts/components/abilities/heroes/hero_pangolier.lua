@@ -1401,7 +1401,7 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 
 				if target:HasModifier(self.procced_debuff) then
 					target:RemoveModifierByName(self.procced_debuff)
-					target:AddNewModifier(self:GetCaster(), self:GetAbility(), self.procced_debuff, {duration = self.duration})
+					target:AddNewModifier(self:GetCaster(), self:GetAbility(), self.procced_debuff, {duration = self.duration * (1 - target:GetStatusResistance())})
 					return
 				else
 					if not target:HasModifier(self.delayed_debuff) and not target:HasModifier(self.procced_debuff) then --heartpiercer wasn't already in effect: apply the delay if it's not already in effect
@@ -1413,7 +1413,7 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 							EmitSoundOn(self.proc_sound_hero, target)
 						end
 
-						target:AddNewModifier(self:GetParent(), self:GetAbility(), self.delayed_debuff, {duration = self.debuff_delay})
+						target:AddNewModifier(self:GetParent(), self:GetAbility(), self.delayed_debuff, {duration = self.debuff_delay * (1 - target:GetStatusResistance())})
 					end
 				end
 			end
@@ -1447,7 +1447,7 @@ end
 function modifier_imba_heartpiercer_delay:OnRemoved()
 	if IsServer() then
 		--apply the debuff
-		local modifier_handler = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_heartpiercer_debuff", {duration = self.duration})
+		local modifier_handler = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_heartpiercer_debuff", {duration = self.duration * (1 - self:GetParent():GetStatusResistance())})
 	end
 end
 
@@ -2225,7 +2225,7 @@ function modifier_imba_pangolier_lucky_shot:OnAttackLanded(keys)
 			
 			-- Apply the same modifiers if they already exist
 			-- if keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_disarm") then
-				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_disarm", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_disarm", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())})
 			-- elseif keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_silence") then
 				-- keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_silence", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
 			-- -- If the target doesn't have either of the modifiers, randomly apply one of them
@@ -2254,7 +2254,7 @@ function modifier_imba_pangolier_lucky_shot:OnAttackLanded(keys)
 		-- IMBAfication: Remnants of Heartpiercer
 		if keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_disarm") or keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_silence") then
 			if RollPercentage(self:GetAbility():GetSpecialValueFor("heartpiercer_chance")) then
-				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_heartpiercer", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_heartpiercer", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())})
 			end
 			
 			-- Emit sound
@@ -2405,3 +2405,45 @@ function modifier_imba_pangolier_lucky_shot_heartpiercer:GetModifierStatusResist
 	--return self:GetStackCount() / (-100)
 	return self:GetStackCount()
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_pangolier_1", "components/abilities/heroes/hero_pangolier", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pangolier_2", "components/abilities/heroes/hero_pangolier", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pangolier_4", "components/abilities/heroes/hero_pangolier", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pangolier_lucky_shot_status_resist", "components/abilities/heroes/hero_pangolier", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pangolier_7", "components/abilities/heroes/hero_pangolier", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pangolier_8", "components/abilities/heroes/hero_pangolier", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_pangolier_1	= modifier_special_bonus_imba_pangolier_1 or class({})
+modifier_special_bonus_imba_pangolier_2	= modifier_special_bonus_imba_pangolier_2 or class({})
+modifier_special_bonus_imba_pangolier_4	= modifier_special_bonus_imba_pangolier_4 or class({})
+modifier_special_bonus_imba_pangolier_lucky_shot_status_resist	= modifier_special_bonus_imba_pangolier_lucky_shot_status_resist or class({})
+modifier_special_bonus_imba_pangolier_7	= modifier_special_bonus_imba_pangolier_7 or class({})
+modifier_special_bonus_imba_pangolier_8	= modifier_special_bonus_imba_pangolier_8 or class({})
+
+function modifier_special_bonus_imba_pangolier_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_pangolier_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_pangolier_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pangolier_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_pangolier_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_pangolier_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pangolier_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_pangolier_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_pangolier_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pangolier_lucky_shot_status_resist:IsHidden() 		return true end
+function modifier_special_bonus_imba_pangolier_lucky_shot_status_resist:IsPurgable()		return false end
+function modifier_special_bonus_imba_pangolier_lucky_shot_status_resist:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pangolier_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_pangolier_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_pangolier_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pangolier_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_pangolier_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_pangolier_8:RemoveOnDeath() 	return false end

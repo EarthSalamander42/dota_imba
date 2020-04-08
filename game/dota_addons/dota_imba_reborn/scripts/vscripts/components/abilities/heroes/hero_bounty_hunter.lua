@@ -179,7 +179,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 			-- stun_duration = scepter_stun_duration
 		-- end
 
-		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", {duration = stun_duration})
+		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 		-- -- Check if the Shuriken is an enchanted shuriken from #4 talent
 		-- if shuriken_crit == 1 then
@@ -226,6 +226,10 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 				target:ModifyGold(-actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				self:GetCaster():ModifyGold(actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_GOLD, self:GetCaster(), actual_gold_to_steal, nil)
+				
+				if self:GetCaster():HasModifier("modifier_imba_jinada_gold_tracker") then
+					self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() + actual_gold_to_steal)
+				end
 			end
 		end
 		
@@ -239,7 +243,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		})
 
 		-- Apply pull modifier
-		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_debuff_pull", {duration = pull_duration})
+		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_debuff_pull", {duration = pull_duration * (1 - target:GetStatusResistance())})
 		
 
 		
@@ -425,6 +429,7 @@ MergeTables(LinkedModifiers,{
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_imba_jinada_passive"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_jinada_gold_tracker"] = LUA_MODIFIER_MOTION_NONE
 })
 
 imba_bounty_hunter_jinada = imba_bounty_hunter_jinada or class({})
@@ -566,19 +571,21 @@ function modifier_imba_jinada_passive:GetAttributes()
 end
 
 function modifier_imba_jinada_passive:OnCreated()
+	if not IsServer() then return end
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_jinada_gold_tracker", {})
+	
 	self:StartIntervalThink(0.2)
 end
 
 function modifier_imba_jinada_passive:OnIntervalThink()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()
-		local crit_modifier = "modifier_imba_jinada_buff_crit"
+	local caster = self:GetCaster()
+	local ability = self:GetAbility()
+	local crit_modifier = "modifier_imba_jinada_buff_crit"
 
-		-- Check if caster should have the crit modifier.
-		if ability:IsCooldownReady() and not caster:HasModifier(crit_modifier) then
-			caster:AddNewModifier(caster, ability, crit_modifier, {})
-		end
+	-- Check if caster should have the crit modifier.
+	if ability:IsCooldownReady() and not caster:HasModifier(crit_modifier) then
+		caster:AddNewModifier(caster, ability, crit_modifier, {})
 	end
 end
 
@@ -738,6 +745,10 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 				target:ModifyGold(-actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				attacker:ModifyGold(actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				SendOverheadEventMessage(attacker, OVERHEAD_ALERT_GOLD, attacker, actual_gold_to_steal, nil)
+				
+				if self:GetCaster():HasModifier("modifier_imba_jinada_gold_tracker") then
+					self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() + actual_gold_to_steal)
+				end
 			end
 
 			-- Remove the critical strike modifier from the caster
@@ -820,6 +831,15 @@ function modifier_imba_jinada_buff_crit:IsDebuff()
 	return false
 end
 
+---------------------------------------
+-- MODIFIER_IMBA_JINADA_GOLD_TRACKER --
+---------------------------------------
+
+modifier_imba_jinada_gold_tracker	= modifier_imba_jinada_gold_tracker or class({})
+
+function modifier_imba_jinada_gold_tracker:IsHidden()		return true end
+function modifier_imba_jinada_gold_tracker:IsPurgable()		return false end
+function modifier_imba_jinada_gold_tracker:RemoveOnDeath()	return false end
 
 -------------------------------------------
 --			SHADOW WALK
@@ -1166,7 +1186,7 @@ function imba_bounty_hunter_track:OnSpellStart()
 		end
 
 		-- Add track debuff to target
-		target:AddNewModifier(caster, ability, modifier_track, {duration = duration})
+		target:AddNewModifier(caster, ability, modifier_track, {duration = duration * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -1475,7 +1495,7 @@ function imba_bounty_hunter_headhunter:OnProjectileHit(target, location)
 
 	-- Apply contract modifiers
 	caster:AddNewModifier(caster, ability, modifier_contract_buff, {duration = duration})
-	target:AddNewModifier(caster, ability, modifier_contract_debuff, {duration = duration})
+	target:AddNewModifier(caster, ability, modifier_contract_debuff, {duration = duration * (1 - target:GetStatusResistance())})
 
 	-- Show the area of the target
 	AddFOWViewer(caster:GetTeamNumber(), target:GetAbsOrigin(), vision_radius, vision_linger_time, false)
@@ -1785,3 +1805,51 @@ end
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_bounty_hunter", MotionController)
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_6", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_3", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_2", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_7", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_1", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_9", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_8", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_bounty_hunter_6	= modifier_special_bonus_imba_bounty_hunter_6 or class({})
+modifier_special_bonus_imba_bounty_hunter_3	= modifier_special_bonus_imba_bounty_hunter_3 or class({})
+modifier_special_bonus_imba_bounty_hunter_2	= modifier_special_bonus_imba_bounty_hunter_2 or class({})
+modifier_special_bonus_imba_bounty_hunter_7	= modifier_special_bonus_imba_bounty_hunter_7 or class({})
+modifier_special_bonus_imba_bounty_hunter_1	= modifier_special_bonus_imba_bounty_hunter_1 or class({})
+modifier_special_bonus_imba_bounty_hunter_9	= modifier_special_bonus_imba_bounty_hunter_9 or class({})
+modifier_special_bonus_imba_bounty_hunter_8	= modifier_special_bonus_imba_bounty_hunter_8 or class({})
+
+function modifier_special_bonus_imba_bounty_hunter_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bounty_hunter_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_bounty_hunter_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_bounty_hunter_8:RemoveOnDeath() 	return false end

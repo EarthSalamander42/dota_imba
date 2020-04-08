@@ -102,6 +102,7 @@ SelectVO = function(keys)
 		"skywrath_mage",
 		"slardar",
 		"slark",
+		"snapfire",
 		"sniper",
 		"spectre",
 		"spirit_breaker",
@@ -121,9 +122,10 @@ SelectVO = function(keys)
 		"undying",
 		"ursa",
 		"vengefulspirit",
-		"venomancer" ,
+		"venomancer",
 		"viper",
 		"visage",
+		"void_spirit",
 		"warlock",
 		"weaver",
 		"windrunner",
@@ -149,8 +151,8 @@ SelectVO = function(keys)
 			"_5"
 		}
 		selectedstr = heroes[math.floor(locnum/8)+1]..mesarrs[math.fmod(locnum,8)+1]
-		print(math.floor(locnum/8))
-		print(selectedstr)
+		-- print(math.floor(locnum/8))
+		-- print(selectedstr)
 		selectedid = math.floor(locnum/8)+2
 		selectedid2 = math.fmod(locnum,8)+1
 	else
@@ -294,7 +296,7 @@ SelectVO = function(keys)
 			end
 			selectedstr = nowheroname..mesarrs[locnum+1]
 			selectedid = herolocid
-			print(selectedid)
+			-- print(selectedid)
 			selectedid2 = locnum+1
 		end
 	end
@@ -342,9 +344,9 @@ SelectVO = function(keys)
 				"soundboard.what_just_happened",
 				"soundboard.looking_spicy",
 				"soundboard.no_chill",
-				"custom_soundboard.ding_ding_ding",
+				"soundboard.ding_ding",
 				"soundboard.absolutely_perfect",
-				"custom_soundboard.lets_play",
+				"soundboard.lets_play_dota",
 				--ch an
 				"soundboard.duiyou_ne",
 				"soundboard.wan_bu_liao_la",
@@ -380,38 +382,39 @@ SelectVO = function(keys)
 				"soundboard.da_da_da_nyet",
 				"soundboard.wot_eto_bru",
 				--bp19
-				"custom_soundboard.ti9_kooka_laugh",
-				"custom_soundboard.ti9_monkey_biz",
-				"custom_soundboard.ti9_orangutan_kiss",
-				"custom_soundboard.ti9_skeeter",
-				"custom_soundboard.ti9_crowd_groan",
-				"custom_soundboard.ti9_head_bonk",
-				"custom_soundboard.ti9_record_scratch",
-				"custom_soundboard.ti9_ta_da",
+				"soundboard.ti9.kooka_laugh",
+				"soundboard.ti9.monkey_biz",
+				"soundboard.ti9.orangutan_kiss",
+				"soundboard.ti9.skeeter",
+				"soundboard.ti9.crowd_groan",
+				"soundboard.ti9.head_bonk",
+				"soundboard.ti9.record_scratch",
+				"soundboard.ti9.ta_daa",
 				--epic
 				"soundboard.easiest_money",
 				"soundboard.echo_slama_jama",
 				"soundboard.next_level",
 				"soundboard.oy_oy_oy",
 				"soundboard.ta_daaaa",
-				"soundboard.ceeb",--need fix
+				-- "soundboard.ceeb",--need fix
+				"soundboard.ceb.start",
 				"soundboard.goodness_gracious",
 				--epic2
 				"soundboard.nakupuuu",
 				"soundboard.whats_cooking",
 				"soundboard.eughahaha",
-				"custom_soundboard.glados_chat_01",
-				"custom_soundboard.glados_chat_21",
-				"custom_soundboard.glados_chat_04",
-				"custom_soundboard.glados_chat_07",
+				"soundboard.glados.probability_99",
+				"soundboard.glados.disappointed",
+				"soundboard.glados.probability_1",
+				"soundboard.glados.probability_17",
 				"",
 				--kor cas
-				"custom_soundboard.kor_yes_no",
-				"custom_soundboard.kor_scan",
-				"custom_soundboard.kor_immortality",
-				"custom_soundboard.kor_roshan",
-				"custom_soundboard.kor_yolo",
-				"custom_soundboard.kor_million_dollar_house",
+				"soundboard.ti3.kor_yes_no",
+				"soundboard.ti3.kor_scan",
+				"soundboard.ti3.kor_immortality",
+				"soundboard.ti3.kor_roshan",
+				"soundboard.ti3.kor_yolo",
+				"soundboard.ti3.kor_house",
 				"",
 				"",
 			},
@@ -495,7 +498,7 @@ SelectVO = function(keys)
 				"batrider_bat_kill_04",
 				"batrider_bat_ability_failure_03",
 				},
-				{
+				{ -- 10
 				"beastmaster_beas_laugh_09",
 				"beastmaster_beas_ability_summonsboar_04",
 				"beastmaster_beas_rare_01",
@@ -545,7 +548,7 @@ SelectVO = function(keys)
 				"bristleback_bristle_kill_03",
 				"bristleback_bristle_spawn_03",
 				},
-				{
+				{ -- 15
 				"broodmother_broo_laugh_06",
 				"broodmother_broo_ability_spawn_05",
 				"broodmother_broo_invis_02",
@@ -595,7 +598,7 @@ SelectVO = function(keys)
 				"clinkz_clinkz_win_01",
 				"clinkz_clinkz_kill_02",
 				},
-				{
+				{ -- 20
 				"rattletrap_ratt_kill_14",
 				"rattletrap_ratt_level_13",
 				"rattletrap_ratt_deny_09",
@@ -645,7 +648,7 @@ SelectVO = function(keys)
 				"dazzle_dazz_kill_10",
 				"dazzle_dazz_respawn_09",
 				},
-				{
+				{ -- 25
 				"death_prophet_dpro_laugh_012",
 				"death_prophet_dpro_denyghost_04",
 				"death_prophet_dpro_deny_16",
@@ -695,7 +698,7 @@ SelectVO = function(keys)
 				"drowranger_dro_win_03",
 				"drowranger_drow_kill_17",
 				},
-				{
+				{ -- 30
 				"earth_spirit_earthspi_laugh_06",
 				"earth_spirit_earthspi_thanks_04",
 				"earth_spirit_earthspi_deny_05",
@@ -745,7 +748,7 @@ SelectVO = function(keys)
 				"enchantress_ench_deny_15",
 				"enchantress_ench_rare_01",
 				},
-				{
+				{ -- 35
 				"enigma_enig_laugh_03",
 				"enigma_enig_respawn_05",
 				"enigma_enig_purch_01",
@@ -795,7 +798,7 @@ SelectVO = function(keys)
 				"huskar_husk_lasthit_07",
 				"huskar_husk_kill_04",
 				},
-				{
+				{ -- 40
 				"invoker_invo_laugh_06",
 				"invoker_invo_purch_01",
 				"invoker_invo_ability_invoke_01",
@@ -845,7 +848,7 @@ SelectVO = function(keys)
 				"keeper_of_the_light_keep_kill_09",
 				"keeper_of_the_light_keep_cast_02",
 				},
-				{
+				{ -- 45
 				"kunkka_kunk_laugh_06",
 				"kunkka_kunk_thanks_03",
 				"kunkka_kunk_kill_04",
@@ -895,7 +898,7 @@ SelectVO = function(keys)
 				"life_stealer_lifest_kill_13",
 				"life_stealer_lifest_ability_infest_burst_06",
 				},
-				{
+				{ -- 50
 				"lina_lina_laugh_09",
 				"lina_lina_kill_01",
 				"lina_lina_kill_05",
@@ -945,7 +948,7 @@ SelectVO = function(keys)
 				"lycan_lycan_attack_05",
 				"lycan_lycan_cast_02",
 				},
-				{
+				{ -- 55
 				"magnataur_magn_laugh_06",
 				"magnataur_magn_purch_04",
 				"magnataur_magn_failure_08",
@@ -995,7 +998,7 @@ SelectVO = function(keys)
 				"mirana_mir_rare_04",
 				"mirana_mir_kill_04",
 				},
-				{
+				{ -- 60
 				"monkey_king_monkey_laugh_17",
 				"monkey_king_monkey_drop_common_01",
 				"monkey_king_monkey_regen_02",
@@ -1045,7 +1048,7 @@ SelectVO = function(keys)
 				"necrolyte_necr_respawn_12",
 				"necrolyte_necr_rare_04",
 				},
-				{
+				{ -- 65
 				"night_stalker_nstalk_laugh_06",
 				"night_stalker_nstalk_purch_03",
 				"night_stalker_nstalk_respawn_05",
@@ -1095,7 +1098,7 @@ SelectVO = function(keys)
 				"oracle_orac_kill_22",
 				"oracle_orac_randomprophecies_02",
 				},
-				{
+				{ -- 70
 				"outworld_destroyer_odest_laugh_04",
 				"outworld_destroyer_odest_begin_02",
 				"outworld_destroyer_odest_win_04",
@@ -1145,7 +1148,7 @@ SelectVO = function(keys)
 				"phoenix_phoenix_bird_emote_bad",
 				"phoenix_phoenix_bird_level_up",
 				},
-				{
+				{ -- 75
 				"puck_puck_laugh_01",
 				"puck_puck_spawn_04",
 				"puck_puck_kill_09",
@@ -1195,7 +1198,7 @@ SelectVO = function(keys)
 				"razor_raz_kill_05",
 				"razor_raz_kill_09",
 				},
-				{
+				{ -- 80
 				"riki_riki_laugh_03",
 				"riki_riki_kill_01",
 				"riki_riki_kill_03",
@@ -1245,7 +1248,7 @@ SelectVO = function(keys)
 				"nevermore_nev_attack_07",
 				"nevermore_nev_attack_11",
 				},
-				{
+				{ -- 85
 				"shadowshaman_shad_blink_02",
 				"shadowshaman_shad_level_03",
 				"shadowshaman_shad_ability_voodoo_06",
@@ -1295,6 +1298,16 @@ SelectVO = function(keys)
 				"slark_slark_drop_rare_01",
 				"slark_slark_happy_07",
 				},
+				{ -- 90
+				"snapfire_snapfire_laugh_02_02",
+				"snapfire_snapfire_wheel_thanks_02",
+				"snapfire_snapfire_spawn_25",
+				"snapfire_snapfire_wheel_all_03",
+				"snapfire_snapfire_wheel_all_07",
+				"snapfire_snapfire_whawiz_01",
+				"snapfire_snapfire_rival_67",
+				"snapfire_snapfire_spawn_24",
+				},
 				{
 				"sniper_snip_laugh_08",
 				"sniper_snip_level_06",
@@ -1335,7 +1348,7 @@ SelectVO = function(keys)
 				"stormspirit_ss_ability_static_02",
 				"stormspirit_ss_lasthit_04",
 				},
-				{
+				{ -- 95
 				"sven_sven_laugh_11",
 				"sven_sven_thanks_01",
 				"sven_sven_ability_teleport_01",
@@ -1385,7 +1398,7 @@ SelectVO = function(keys)
 				"tidehunter_tide_rival_25",
 				"tidehunter_tide_rare_01",
 				},
-				{
+				{ -- 100
 				"shredder_timb_laugh_04",
 				"shredder_timb_thanks_03",
 				"shredder_timb_kill_10",
@@ -1435,7 +1448,7 @@ SelectVO = function(keys)
 				"troll_warlord_troll_death_05",
 				"troll_warlord_troll_unknown_09",
 				},
-				{
+				{ -- 105
 				"tusk_tusk_laugh_06",
 				"tusk_tusk_kill_26",
 				"tusk_tusk_snowball_17",
@@ -1485,7 +1498,7 @@ SelectVO = function(keys)
 				"vengefulspirit_vng_rare_10",
 				"vengefulspirit_vng_rare_05",
 				},
-				{
+				{ -- 110
 				"venomancer_venm_laugh_02",
 				"venomancer_venm_ability_ward_02",
 				"venomancer_venm_purch_01",
@@ -1516,6 +1529,16 @@ SelectVO = function(keys)
 				"visage_visa_happy_03",
 				},
 				{
+				"void_spirit_voidspir_laugh_05",
+				"void_spirit_voidspir_thanks_04",
+				"void_spirit_voidspir_spawn_14",
+				"void_spirit_voidspir_rival_114",
+				"void_spirit_voidspir_rival_113",
+				"void_spirit_voidspir_rival_72",
+				"void_spirit_voidspir_rival_71",
+				"void_spirit_voidspir_wheel_all_10_02",
+				},
+				{
 				"warlock_warl_laugh_06",
 				"warlock_warl_ability_reign_07",
 				"warlock_warl_defusal_04",
@@ -1525,7 +1548,7 @@ SelectVO = function(keys)
 				"warlock_warl_lasthit_02",
 				"warlock_warl_doubdemon_06",
 				},
-				{
+				{ -- 115
 				"weaver_weav_laugh_04",
 				"weaver_weav_win_03",
 				"weaver_weav_ability_timelap_05",
@@ -1575,7 +1598,7 @@ SelectVO = function(keys)
 				"skeleton_king_wraith_items_02",
 				"skeleton_king_wraith_win_03",
 			},
-			{
+			{ -- 120
 				"zuus_zuus_laugh_01",
 				"zuus_zuus_level_03",
 				"zuus_zuus_win_05",
@@ -1586,18 +1609,28 @@ SelectVO = function(keys)
 				"zuus_zuus_rival_13",
 			}
 		}
-		if votimer[keys.PlayerID] ~= nil then
-			print(GameRules:GetGameTime() - votimer[keys.PlayerID], 5)
-			if GameRules:GetGameTime() - votimer[keys.PlayerID] > 5 then
-				local chat = LoadKeyValues("scripts/hero_chat_wheel_english.txt")
-				EmitAnnouncerSound(heroesvo[selectedid][selectedid2])
-				--GameRules:SendCustomMessage("<font color='#70EA72'>".."test".."</font>",-1,0)
-				Say(PlayerResource:GetPlayer(keys.PlayerID), chat_prefix..chat["dota_chatwheel_message_"..selectedstr], false)
-				votimer[keys.PlayerID] = GameRules:GetGameTime()
-			end
-		else
+		if not votimer[keys.PlayerID] or GameRules:GetGameTime() - votimer[keys.PlayerID] > 5 then
+			-- print(GameRules:GetGameTime() - votimer[keys.PlayerID], 5)
+			-- print("selectedid: ", selectedid)
+			-- print("selectedid2: ", selectedid2)
+			-- print("selectedstr: ", selectedstr)
 			local chat = LoadKeyValues("scripts/hero_chat_wheel_english.txt")
-			EmitAnnouncerSound(heroesvo[selectedid][selectedid2])
+			
+			-- One exception in here cause I don't know how to prematurely stop Announcer Sounds...
+			if heroesvo[selectedid][selectedid2] ~= "soundboard.ceb.start" then
+				EmitAnnouncerSound(heroesvo[selectedid][selectedid2])
+			else
+				EmitGlobalSound("soundboard.ceb.start")
+				
+				PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero():SetContextThink(DoUniqueString("ceb"), function()
+					StopGlobalSound("soundboard.ceb.start")
+					EmitGlobalSound("soundboard.ceb.stop")
+					
+					return nil
+				end, 2.0)
+			end
+			
+			--GameRules:SendCustomMessage("<font color='#70EA72'>".."test".."</font>",-1,0)
 			Say(PlayerResource:GetPlayer(keys.PlayerID), chat_prefix..chat["dota_chatwheel_message_"..selectedstr], false)
 			votimer[keys.PlayerID] = GameRules:GetGameTime()
 		end

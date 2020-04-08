@@ -4,6 +4,7 @@
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Description"            "Burns an opponent's mana on each attack. Mana Break deals %damage_per_burn% damage per mana burned as damage to the target.\n<font color='#FF7800'>Energy Blast:</font> When Anti Mage deals mana burn that causes the current mana pool of the target to fall below a multiplication of %threshold_difference%%, its mana becomes unstable and explodes violently, damaging the target and all nearby enemies in %blast_aoe% radius. The damage is equal to a portion of the target's maximum mana pool. This effect always occurs if the enemy has no mana after the attack is complete."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Note0"                  "Does not work on structures, units naturally without mana, or magic immune targets."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Note1"                  "Mana Break only has %illusion_percentage%%% effect by illusions."
+"DOTA_Tooltip_ability_imba_antimage_mana_break_Note2"                  "Illusions triggering Energy Blast deal %illusions_efficiency_pct%%% of standard damage."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_Lore"                    "Thy mana's weight, in life pay."
 "DOTA_Tooltip_ability_imba_antimage_mana_break_base_mana_burn"          "MANA BURNED:"
 "DOTA_Tooltip_ability_imba_antimage_mana_break_mana_per_hit_pct"		"%MAX MANA BURNED PER HIT:"

@@ -108,19 +108,11 @@ function item_imba_witchblade:OnSpellStart()
 	end)
 	
 	-- Add the slow modifier
-	local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration})
-
-	if slow_modifier then
-		slow_modifier:SetDuration(self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance()), true)
-	end
+	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration * (1 - target:GetStatusResistance())})
 	
 	-- If the target is not a hero (or a creep hero), root it
 	if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-		local root_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration")})
-		
-		if root_modifier then
-			root_modifier:SetDuration(self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance())})
 	end
 	
 	-- IMBAfication: Internal Bypass

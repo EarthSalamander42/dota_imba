@@ -1831,7 +1831,7 @@
 			"03"
 			{	
 				"var_type"						"FIELD_INTEGER"
-				"arrow_count"					"1 2 3 4"
+				"arrow_count"					"0 1 2 3"
 			}
 			"04"
 			{

@@ -133,16 +133,12 @@ function earthshaker_fissure_lua:OnSpellStart()
 			ApplyDamage(damageTable)
 
 			-- stun
-			local stun_modifier = unit:AddNewModifier(
+			unit:AddNewModifier(
 				caster, -- player source
 				self, -- ability source
 				"modifier_stunned", -- modifier name
-				{ duration = stun_duration } -- kv
+				{ duration = stun_duration * (1 - unit:GetStatusResistance()) } -- kv
 			)
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(stun_duration * (1 - unit:GetStatusResistance()), true)
-			end
 		end
 	end
 
@@ -894,8 +890,8 @@ function modifier_earthshaker_aftershock_lua:CastAftershock()
 			self:GetParent(), -- player source
 			self:GetAbility(), -- ability source
 			"modifier_stunned", -- modifier name
-			{ duration = self.duration } -- kv
-		):SetDuration(self.duration * (1 - enemy:GetStatusResistance()), true)
+			{ duration = self.duration * (1 - enemy:GetStatusResistance()) } -- kv
+		)
 
 		self.damageTable.victim = enemy
 		ApplyDamage(self.damageTable)

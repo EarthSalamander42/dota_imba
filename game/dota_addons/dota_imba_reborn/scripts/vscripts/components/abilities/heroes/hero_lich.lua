@@ -112,7 +112,7 @@ function IncreaseStacksColdFront(caster, target, stacks)
 
 	-- Add the modifier if the target doesn't have it already
 	if not target:HasModifier(modifier_debuff) then
-		target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration})
+		target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - target:GetStatusResistance())})
 	end
 
 	-- Increase the stacks and refresh its duration
@@ -181,7 +181,7 @@ function modifier_imba_cold_front_debuff:OnStackCountChanged()
 			FrostNova(self.caster, self.frost_nova_ability, self.parent, true)
 
 			-- Apply freeze on the target
-			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, {duration = self.freeze_duration})
+			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, {duration = self.freeze_duration * (1 - self.parent:GetStatusResistance())})
 		end
 	end
 end
@@ -405,7 +405,7 @@ function FrostNova(caster, ability, target, cold_front)
 			end
 
 			-- Apply Frost Nova debuff
-			enemy:AddNewModifier(caster, ability, modifier_nova, {duration = slow_duration})
+			enemy:AddNewModifier(caster, ability, modifier_nova, {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 
@@ -905,7 +905,7 @@ function modifier_imba_frost_armor_buff:OnAttackLanded(keys)
 
 		-- If attacker doesn't have the debuff, apply it
 		if not attacker:HasModifier(self.modifier_armor_debuff) then
-			modifier_debuff_handler = attacker:AddNewModifier(self.caster, self.ability, self.modifier_armor_debuff, {duration = self.frost_duration})
+			modifier_debuff_handler = attacker:AddNewModifier(self.caster, self.ability, self.modifier_armor_debuff, {duration = self.frost_duration * (1 - attacker:GetStatusResistance())})
 
 			-- Set frost armor stacks to attacks to break
 			if modifier_debuff_handler then
@@ -1062,7 +1062,7 @@ function modifier_imba_frost_armor_debuff:OnStackCountChanged()
 		end
 
 		-- Apply disarm
-		self.parent:AddNewModifier(self.caster, self.ability, self.modifier_disarm, {duration = self.disarm_duration})
+		self.parent:AddNewModifier(self.caster, self.ability, self.modifier_disarm, {duration = self.disarm_duration * (1 - self.parent:GetStatusResistance())})
 	end
 end
 
@@ -1687,7 +1687,7 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 	ApplyDamage(damageTable)
 
 	-- Apply slow
-	target:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration})
+	target:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration * (1 - target:GetStatusResistance())})
 
 	-- Add Cold Front stacks
 	IncreaseStacksColdFront(caster, target, cold_front_stacks)
@@ -1909,7 +1909,7 @@ function modifier_imba_lich_frost_shield:OnIntervalThink()
 		ApplyDamage(damageTable)
 		
 		-- Apply the slow modifier
-		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_lich_frost_shield_slow", {duration = self.slow_duration})
+		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_lich_frost_shield_slow", {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
 
 		IncreaseStacksColdFront(self.caster, enemy, self.cold_front_stacks)
 	end
@@ -2349,3 +2349,33 @@ end
 function modifier_imba_lich_sinister_gaze_bonus_health:GetModifierExtraHealthBonus()
 	return self:GetStackCount()
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_lich_10", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lich_6", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lich_1", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lich_7", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lich_10	= modifier_special_bonus_imba_lich_10 or class({})
+modifier_special_bonus_imba_lich_6	= modifier_special_bonus_imba_lich_6 or class({})
+modifier_special_bonus_imba_lich_1	= modifier_special_bonus_imba_lich_1 or class({})
+modifier_special_bonus_imba_lich_7	= modifier_special_bonus_imba_lich_7 or class({})
+
+function modifier_special_bonus_imba_lich_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_10:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lich_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lich_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lich_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_lich_7:RemoveOnDeath() 	return false end

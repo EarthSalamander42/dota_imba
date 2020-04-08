@@ -36,6 +36,7 @@
 "dota_hud_error_cant_shrine_1v1"							"You can't use shrines in 1v1!"
 "dota_hud_error_cant_infest_bob"							"You can't infest BOB!"
 "dota_hud_error_cant_devour_roshan"							"This boii is too big for your mouth!"
+"dota_hud_error_cant_cast_near_fountain"					"Cannot Cast Near Fountain Area"
 
 //=================================================================================================================
 //=================================================================================================================

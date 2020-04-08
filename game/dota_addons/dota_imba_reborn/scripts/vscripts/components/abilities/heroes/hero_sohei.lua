@@ -1301,13 +1301,9 @@ if IsServer() then
 --------------------------------------------------------------------------------
 
 	function modifier_sohei_momentum_knockback:SlowAndStun( unit, caster, ability )
-		local slow_modifier = unit:AddNewModifier( caster, ability, "modifier_sohei_momentum_slow", {
-			duration = self.slow_duration,
+		unit:AddNewModifier( caster, ability, "modifier_sohei_momentum_slow", {
+			duration = self.slow_duration * (1 - unit:GetStatusResistance()),
 		} )
-		
-		if slow_modifier then
-			slow_modifier:SetDuration(self.slow_duration * (1 - unit:GetStatusResistance()), true)
-		end
 
 		-- local talent = caster:FindAbilityByName( "special_bonus_sohei_stun" )
 
@@ -1318,13 +1314,9 @@ if IsServer() then
 				-- duration = stunDuration
 			-- } )
 		-- end
-		local stun_modifier = unit:AddNewModifier( caster, ability, "modifier_stunned", {
-			duration = self.stun_duration,
+		unit:AddNewModifier( caster, ability, "modifier_stunned", {
+			duration = self.stun_duration * (1 - unit:GetStatusResistance()),
 		} )
-		
-		if stun_modifier then
-			stun_modifier:SetDuration(self.stun_duration * (1 - unit:GetStatusResistance()), true)
-		end
 	end
 end
 
@@ -1614,3 +1606,14 @@ if IsServer() then
 	end
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sohei_wholeness_of_body_heal", "components/abilities/heroes/hero_sohei", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sohei_wholeness_of_body_heal		= modifier_special_bonus_imba_sohei_wholeness_of_body_heal or class({})
+
+function modifier_special_bonus_imba_sohei_wholeness_of_body_heal:IsHidden() 		return true end
+function modifier_special_bonus_imba_sohei_wholeness_of_body_heal:IsPurgable()		return false end
+function modifier_special_bonus_imba_sohei_wholeness_of_body_heal:RemoveOnDeath() 	return false end

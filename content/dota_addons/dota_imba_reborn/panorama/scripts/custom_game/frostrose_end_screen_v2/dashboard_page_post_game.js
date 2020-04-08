@@ -13,6 +13,8 @@ var permanent_buffs = {
 	"modifier_imba_necromastery_souls": "spellicons",
 	"modifier_imba_clinkz_death_pact_723_permanent_buff": "spellicons",
 	"modifier_imba_furion_wrath_of_nature": "spellicons",
+	"modifier_imba_furion_wrath_of_nature": "spellicons",
+	"modifier_imba_jinada_gold_tracker": "spellicons",
 
 	"modifier_item_ultimate_scepter_consumed": "items",
 	"modifier_item_tome_of_knowledge_consumed": "items",
@@ -482,7 +484,7 @@ function EndScoreboard(args) {
 				panel_rank_name.style.marginTop = "0px";
 
 				// setup Battlepass XP progress bar
-				if (player_table && player_table.XP && player_table.MaxXP) {
+				if (player_table && player_table.XP && player_table.MaxXP && player_table.player_xp == 1) {
 					panel_xp_text.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
 					panel_level_text.text = $.Localize("#battlepass_level") + player_table.Lvl;
 					panel_rank_name.text = player_table.title;

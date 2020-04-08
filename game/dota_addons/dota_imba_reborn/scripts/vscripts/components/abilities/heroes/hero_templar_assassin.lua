@@ -350,7 +350,7 @@ end
 -- Splitting this into its own function so it can be applied elsewhere as an IMBAfication
 function imba_templar_assassin_meld:ApplyMeld(target, attacker)
 	-- "Meld first applies its armor debuff, then Templar Assassin's attack damage, and then the Meld damage (Talent and then the bash)."
-	target:AddNewModifier(attacker, self, "modifier_imba_templar_assassin_meld_armor", {duration = self:GetDuration()})
+	target:AddNewModifier(attacker, self, "modifier_imba_templar_assassin_meld_armor", {duration = self:GetDuration() * (1 - target:GetStatusResistance())})
 
 	ApplyDamage({
 		victim 			= target,
@@ -364,11 +364,7 @@ function imba_templar_assassin_meld:ApplyMeld(target, attacker)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, self:GetSpecialValueFor("bonus_damage"), nil)
 
 	if self:GetCaster():HasTalent("special_bonus_imba_templar_assassin_meld_bash") then
-		local bash_modifier = target:AddNewModifier(attacker, self, "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_templar_assassin_meld_bash")})
-		
-		if bash_modifier then
-			bash_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_templar_assassin_meld_bash") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(attacker, self, "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_templar_assassin_meld_bash") * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -949,11 +945,7 @@ end
 
 function modifier_imba_templar_assassin_trap_nerves:OnOrder(keys)
 	if keys.unit == self:GetParent() and self.stun_orders[keys.order_type] then
-		local bash_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self.inhibit_nerves_ministun_duration})
-		
-		if bash_modifier then
-			bash_modifier:SetDuration(0.1 * (1 - self:GetParent():GetStatusResistance()), true)
-		end
+		self:GetParent():AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self.inhibit_nerves_ministun_duration * (1 - self:GetParent():GetStatusResistance())})
 	end
 end
 
@@ -1406,6 +1398,26 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_dispels", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_bash", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_refraction_instances", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_templar_assassin_meld_dispels		= modifier_special_bonus_imba_templar_assassin_meld_dispels or class({})
+modifier_special_bonus_imba_templar_assassin_meld_bash		= modifier_special_bonus_imba_templar_assassin_meld_bash or class({})
+modifier_special_bonus_imba_templar_assassin_refraction_instances		= modifier_special_bonus_imba_templar_assassin_refraction_instances or class({})
+
+function modifier_special_bonus_imba_templar_assassin_meld_dispels:IsHidden() 		return true end
+function modifier_special_bonus_imba_templar_assassin_meld_dispels:IsPurgable() 	return false end
+function modifier_special_bonus_imba_templar_assassin_meld_dispels:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_templar_assassin_meld_bash:IsHidden() 		return true end
+function modifier_special_bonus_imba_templar_assassin_meld_bash:IsPurgable() 	return false end
+function modifier_special_bonus_imba_templar_assassin_meld_bash:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_templar_assassin_refraction_instances:IsHidden() 		return true end
+function modifier_special_bonus_imba_templar_assassin_refraction_instances:IsPurgable() 	return false end
+function modifier_special_bonus_imba_templar_assassin_refraction_instances:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_armor_reduction", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_psionic_trap_damage", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)

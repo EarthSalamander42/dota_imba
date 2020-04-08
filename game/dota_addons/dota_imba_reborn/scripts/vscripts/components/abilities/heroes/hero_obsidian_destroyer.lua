@@ -491,7 +491,7 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
 	local modifier_debuff = "modifier_imba_arcane_orb_debuff"           
 
 	if not target:HasModifier(modifier_debuff) then
-		target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration})                                                   
+		target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - target:GetStatusResistance())})
 	end
 
 	local modifier_debuff_handler = target:FindModifierByName(modifier_debuff)                                 
@@ -866,8 +866,12 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 		local modifier_essence = "modifier_imba_essence_aura_buff"
 
 		-- Ability specials
-		local prison_duration = self:GetSpecialValueFor("prison_duration")    
-
+		local prison_duration = self:GetSpecialValueFor("prison_duration")
+		
+		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+			prison_duration = prison_duration * (1 - target:GetStatusResistance())
+		end
+		
 		-- Play cast sound
 		EmitSoundOn(sound_cast, caster)  
 
@@ -1989,7 +1993,7 @@ function modifier_imba_obsidian_destroyer_equilibrium_active:OnTakeDamage(keys)
 		
 		self.caster:GiveMana(keys.damage * (self.mana_steal_active / 100))
 	
-		keys.unit:AddNewModifier(self.caster, self.ability, "modifier_imba_obsidian_destroyer_equilibrium_debuff", {duration = self.slow_duration})
+		keys.unit:AddNewModifier(self.caster, self.ability, "modifier_imba_obsidian_destroyer_equilibrium_debuff", {duration = self.slow_duration * (1 - keys.unit:GetStatusResistance())})
 		
 		self:IncrementStackCount()
 	end
@@ -2048,4 +2052,33 @@ end
 function modifier_imba_obsidian_destroyer_equilibrium_debuff:GetModifierAttackSpeedBonus_Constant()
     return self.atk_speed_diff * self:GetStackCount() * (-1)
 end
-	
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_2", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_4", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_10", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_9", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_obsidian_destroyer_2	= modifier_special_bonus_imba_obsidian_destroyer_2 or class({})
+modifier_special_bonus_imba_obsidian_destroyer_4	= modifier_special_bonus_imba_obsidian_destroyer_4 or class({})
+modifier_special_bonus_imba_obsidian_destroyer_10	= modifier_special_bonus_imba_obsidian_destroyer_10 or class({})
+modifier_special_bonus_imba_obsidian_destroyer_9	= modifier_special_bonus_imba_obsidian_destroyer_9 or class({})
+
+function modifier_special_bonus_imba_obsidian_destroyer_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_obsidian_destroyer_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_obsidian_destroyer_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_obsidian_destroyer_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_obsidian_destroyer_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_obsidian_destroyer_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_obsidian_destroyer_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_obsidian_destroyer_10:IsPurgable()		return false end
+function modifier_special_bonus_imba_obsidian_destroyer_10:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_obsidian_destroyer_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_obsidian_destroyer_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_obsidian_destroyer_9:RemoveOnDeath() 	return false end

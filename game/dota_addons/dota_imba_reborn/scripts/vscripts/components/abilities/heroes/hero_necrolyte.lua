@@ -27,12 +27,10 @@ end
 
 modifier_imba_sadist = class({})
 function modifier_imba_sadist:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_DEATH,
-			MODIFIER_EVENT_ON_ATTACK_LANDED
-		}
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_sadist:OnCreated()
@@ -534,19 +532,24 @@ function modifier_imba_ghost_shroud_buff:OnCreated()
 	end
 end
 
--- function modifier_imba_ghost_shroud_buff:DeclareFunctions()
-	-- return {
-		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
-	-- }
--- end
+function modifier_imba_ghost_shroud_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+	}
+end
 
--- function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
-	-- return self.healing_amp_pct
--- end
-
-function modifier_imba_ghost_shroud_buff:Custom_AllHealAmplify_Percentage()
+function modifier_imba_ghost_shroud_buff:GetModifierHealAmplify_PercentageTarget()
 	return self.healing_amp_pct
 end
+
+function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
+	return self.healing_amp_pct
+end
+
+-- function modifier_imba_ghost_shroud_buff:Custom_AllHealAmplify_Percentage()
+	-- return self.healing_amp_pct
+-- end
 
 ----------------------------------------
 -- Ghost Shroud Negative Aura Handler --
@@ -764,7 +767,6 @@ end
 
 function modifier_imba_heartstopper_aura_damage:GetModifierHPRegenAmplify_Percentage()
 	if self:GetAbility() ~= nil then
-		print( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
 		return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
 	end
 end
@@ -964,7 +966,7 @@ function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
 		if self:GetParent() == params.unit then
 			if self.ability and not self.reincarnate_respawn then
 				local debuff_duration = self.ability:GetSpecialValueFor("debuff_duration")
-				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration})
+				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration * (1 - params.unit:GetStatusResistance())})
 			end
 
 			self:GetParent():RemoveModifierByName("modifier_imba_reapers_scythe_respawn")
@@ -1008,9 +1010,36 @@ function modifier_imba_reapers_scythe_debuff:GetModifierBaseDamageOutgoing_Perce
 	return self.damage_reduction_pct
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_2", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_3", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_6", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_8", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_necrolyte_2	= modifier_special_bonus_imba_necrolyte_2 or class({})
+modifier_special_bonus_imba_necrolyte_3	= modifier_special_bonus_imba_necrolyte_3 or class({})
+modifier_special_bonus_imba_necrolyte_6	= modifier_special_bonus_imba_necrolyte_6 or class({})
+modifier_special_bonus_imba_necrolyte_8	= modifier_special_bonus_imba_necrolyte_8 or class({})
+
+function modifier_special_bonus_imba_necrolyte_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_8:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_1", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_4", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)

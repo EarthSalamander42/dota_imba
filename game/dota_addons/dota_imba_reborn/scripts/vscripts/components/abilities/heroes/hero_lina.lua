@@ -31,7 +31,7 @@ function modifier_special_bonus_imba_lina_8:OnAttackLanded( params )
 			local dmg_int_pct = parent:FindTalentValue("special_bonus_imba_lina_8", "dmg_int_pct")
 			local dmg_per_tick = ( int * dmg_int_pct / 100) / (duration / ticks)
 			local tick_duration = duration / ticks
-			target:AddNewModifier(parent, nil, "modifier_imba_blazing_fire", {duration = duration, dmg_per_tick = dmg_per_tick, tick_duration = tick_duration})
+			target:AddNewModifier(parent, nil, "modifier_imba_blazing_fire", {duration = duration * (1 - target:GetStatusResistance()), dmg_per_tick = dmg_per_tick, tick_duration = tick_duration})
 		end
 	end
 end
@@ -273,7 +273,7 @@ function imba_lina_dragon_slave:OnProjectileHit_ExtraData(target, location, Extr
 			else
 				local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
 				if fiery_soul:GetLevel() > 0 then
-					target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+					target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration") * (1 - target:GetStatusResistance())})
 				end
 			end
 		end
@@ -434,7 +434,7 @@ function imba_lina_light_strike_array:OnHit( target, damage, stun_duration )
 		else
 			local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
 			if fiery_soul:GetLevel() > 0 then
-				target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+				target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration") * (1 - target:GetStatusResistance())})
 			end
 		end
 	end
@@ -443,11 +443,7 @@ function imba_lina_light_strike_array:OnHit( target, damage, stun_duration )
 
 	-- more fail-safe, AddNewModifier attempt to index a nil value
 	if target:IsAlive() then
-		local stun_modifier = target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
-	
-		if stun_modifier then
-			stun_modifier:SetDuration(stun_duration * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -614,11 +610,7 @@ function modifier_imba_lina_light_strike_array_v2_thinker_single:OnDestroy()
 	
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.light_strike_array_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		-- "Light Strike Array first applies the debuff, then the damage."
-		local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.light_strike_array_stun_duration})
-		
-		if stun_modifier then
-			stun_modifier:SetDuration(self.light_strike_array_stun_duration * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.light_strike_array_stun_duration * (1 - enemy:GetStatusResistance())})
 		
 		ApplyDamage({
 			victim 			= enemy,
@@ -728,7 +720,7 @@ function imba_lina_fiery_soul:OnSpellStart()
 				else
 					local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
 					if fiery_soul:GetLevel() > 0 then
-						enemy:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+						enemy:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration") * (1 - enemy:GetStatusResistance())})
 					end
 				end
 			end
@@ -1040,14 +1032,14 @@ function imba_lina_laguna_blade:OnSpellStart()
 				else
 					local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
 					if fiery_soul:GetLevel() > 0 then
-						target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+						target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration") * (1 - target:GetStatusResistance())})
 					end
 				end
 			end
 
 			target:RemoveModifierByName("modifier_imba_blazing_fire")
 			if caster:HasTalent("special_bonus_imba_lina_6") then
-				target:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
+				target:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") * (1 - target:GetStatusResistance()) })
 			end
 			-- Bouncing --
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -1074,13 +1066,13 @@ function imba_lina_laguna_blade:OnSpellStart()
 							else
 								local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
 								if fiery_soul:GetLevel() > 0 then
-									enemies[i]:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+									enemies[i]:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration") * (1 -enemies[i]:GetStatusResistance())})
 								end
 							end
 						end
 						enemies[i]:RemoveModifierByName("modifier_imba_blazing_fire")
 						if caster:HasTalent("special_bonus_imba_lina_6") then
-							enemies[i]:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
+							enemies[i]:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") * (1 -enemies[i]:GetStatusResistance())})
 						end
 					end)
 				end
@@ -1124,6 +1116,20 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_lina_6", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lina_7", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lina_6	= modifier_special_bonus_imba_lina_6 or class({})
+modifier_special_bonus_imba_lina_7 = modifier_special_bonus_imba_lina_7 or class({})
+
+function modifier_special_bonus_imba_lina_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_lina_6:IsPurgable() 		return false end
+function modifier_special_bonus_imba_lina_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lina_7:IsHidden() 			return true end
+function modifier_special_bonus_imba_lina_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_lina_7:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_lina_9", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lina_10", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)

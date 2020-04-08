@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves"								"#{DOTA_Tooltip_ability_lycan_summon_wolves}"
-"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Description"					"Summons a number of wolves to fight with you. Wolves have passive evasion and invisibility, and their abilities and stats improve with their level.\n<font color='#FF7800'>The Pack is for Life:</font> Wolves last until killed.\n<font color='#FF7800'>Wolf Pack:</font> Lycan gains a charge of Wolf Pack every %charge_cooldown% seconds, up to a maximum of %max_charges% charges. Whenever a wolf dies, a stack is consumed and the wolf respawns near Lycan's location.\n<font color='#FF7800'>Alpha's Leadership:</font> Wolves gain bonus health based on Lycan's level."
+"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Description"					"Summons a number of wolves to fight with you. Wolves have passive evasion and invisibility, and their abilities and stats improve with their level.\n<font color='#FF7800'>The Pack is for Life:</font> Wolves last until killed.\n<font color='#FF7800'>Wolf Pack:</font> Lycan gains a charge of Wolf Pack every %charge_cooldown% seconds, up to a maximum of %max_charges% charges. Whenever a wolf dies, a stack is consumed and the wolf respawns near Lycan's location.\n<font color='#FF7800'>Alpha's Leadership:</font> Wolves gain bonus health equal to %HP_bonus_per_lycan_level%x the caster's level."
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_Note0"						"Automatically revives wolves whenever there is a charge available, until the maximum of wolves is reached."
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_Lore"						"#{DOTA_Tooltip_ability_lycan_summon_wolves_Lore}"
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolves_count"				"WOLF COUNT:"
@@ -9,20 +9,24 @@
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolf_health_tooltip"			"WOLF HEALTH:"
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolf_speed_tooltip"			"WOLF MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolf_armor_tooltip"			"WOLF ARMOR:"
-"DOTA_Tooltip_ability_imba_lycan_summon_wolves_HP_bonus_per_lycan_level"	"BONUS HEALTH PER LEVEL:"
 
 "DOTA_Tooltip_modifier_imba_lycan_wolf_charge"                          "Wolf Pack"
 "DOTA_Tooltip_modifier_imba_lycan_wolf_charge_Description"              "Whenever a wolf dies, a stack is consumed and another wolf joins Lycan."
 
+"DOTA_Tooltip_modifier_imba_lycan_summon_wolves_charges"                          "Wolf Pack"
+"DOTA_Tooltip_modifier_imba_lycan_summon_wolves_charges_Description"              "Whenever a wolf dies, a stack is consumed and another wolf joins the caster."
+
+"DOTA_Tooltip_modifier_imba_lycan_summon_wolves_damage_talent"						"Lead By Example"
+"DOTA_Tooltip_modifier_imba_lycan_summon_wolves_damage_talent_Description"			"Gaining %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% damage from the caster."
+
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane"									"Wolfsbane"
-"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"						"Passively increases Lycan and his wolves' damage whenever Lycan is near an enemy hero kill with at least %minimum_allies_required% allies in a %radius% radius. This effect can only occur once every %prevent_modifier_duration% seconds.\n<font color='#FF7800'>Full Moon:</font> Also decreases Shapeshift's cooldown with each stack of Wolfsbane."
+"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"						"Grants a stack which increases Lycan and his wolves' damage and decreases Shapeshift's cooldown whenever Lycan is near an enemy hero kill with at least %minimum_allies_required% allies in a %radius% radius. This effect can only occur once every %prevent_modifier_duration% seconds."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note0"							"Lycan himself is ignored for the minimum ally count requirement, even when he holds a scepter."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note1"							"If Lycan is Broken, Wolfsbane's damage bonus is removed from everyone benefitting it."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Lore"							"Lycan has devoted his life to the wolves that adopted him into their pack. Adapting his tactics to the neverending hunt in the Ancients' battlefield was a trivial matter."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_damage_bonus"					"DAMAGE PER STACK:"
-"DOTA_Tooltip_ability_imba_lycan_wolfsbane_radius"                      	"KILL SEARCH RADIUS:"
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_shapeshift_cooldown_reduction"	"SHAPESHIFT COOLDOWN REDUCTION PER STACK:"
-"DOTA_Tooltip_ability_imba_lycan_wolfsbane_aghanim_description"				"Now grants damage to all allied heroes and player controlled creeps. Lycan no longer has to be present in a kill for Wolfsbane to trigger, but the minimum amount of allies is still required."
+"DOTA_Tooltip_ability_imba_lycan_wolfsbane_aghanim_description"				"Grants the damage to all allied heroes and player controlled creeps. Lycan no longer has to be present in a kill for Wolfsbane to trigger, but the minimum amount of allies is still required."
 
 "DOTA_Tooltip_modifier_imba_wolfsbane_wolves"                          "Wolfsbane"
 "DOTA_Tooltip_modifier_imba_wolfsbane_wolves_Description"              "%dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% Bonus damage from successful kills as a pack."
@@ -31,7 +35,7 @@
 "DOTA_Tooltip_modifier_imba_wolfsbane_lycan_Description"                "%dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% Bonus damage and %dMODIFIER_PROPERTY_TOOLTIP% less seconds of cooldown on Shapeshift from successful kills as a pack."
 
 "DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent"                    "Wolfsbane Cooldown"
-"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent_Description"                    "The pack has recently hunted! Cannot benefit from Wolfsbane for the duration."
+"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent_Description"		"The pack has recently hunted! Cannot benefit from Wolfsbane for the duration."
 
 "DOTA_Tooltip_modifier_imba_wolfsbane_talent"                   "Thrill of the Hunt"
 "DOTA_Tooltip_modifier_imba_wolfsbane_talent_Description"             "Movement Speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, damage by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%, and attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
@@ -91,7 +95,7 @@
 "DOTA_Tooltip_modifier_imba_shapeshift_certain_crit_Description"		"Next attack will be a guaranteed critical hit."
 
 "DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch"                "Wicked Crunch"
-"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Description"                 "Lycan's wolves use their vicious bite to crunch enemies' muscles, lowering their attack speed and weakening their flesh. Every attack adds a stack of Wicked Crunch and Deep Claws to the target, up to %max_stacks%.\n<font color='#FF7800'>Top of the food chain:</font> Lycan's attacks refresh the duration of Wicked Crunch and consumes any Deep Claws stacks, dealing %damage_bonus_per_stack% bonus damage for each stack."
+"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Description"                 "Lycan's wolves use their vicious bite to crunch enemies' muscles, lowering their attack speed and weakening their flesh. Every attack adds a stack of Wicked Crunch and Deep Claws to the target, up to %max_stacks%.\n<font color='#FF7800'>Top of the Food Chain:</font> Lycan's attacks refresh the duration of Wicked Crunch and consumes any Deep Claws stacks, dealing %damage_bonus_per_stack% bonus damage for each stack."
 "DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Note0"          "Attack speed loss does not depend on stack amount."
 "DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Lore"            "Wolf packs are incredibly organized, even amidst the chaos of the hunt. Lower ranked wolves will rip apart their prey's flesh, only for the Alpha to feast on the tender meat within."
 "DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_damage_bonus_per_stack"      "DAMAGE PER STACK:"
@@ -140,3 +144,5 @@
 
 "DOTA_Tooltip_modifier_imba_talent_wolf_packleader"           "Packleader Aura"
 "DOTA_Tooltip_modifier_imba_talent_wolf_packleader_Description"     "Damage increased by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%."
+
+"DOTA_Tooltip_ability_lycan_wolf_bite_Description"		"Lycan bites an ally, granting them Shapeshift properties. Lycan and the bitten target gain %lifesteal_percent%%% Lifesteal and share %lifesteal%%% Lifesteal with each other as long as they are within %lifesteal_range% range of each other.\n<font color='#FF0000'>Does not benefit from any IMBAfications.</font>"

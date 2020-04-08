@@ -327,7 +327,7 @@ function modifier_item_imba_butterfly_wind_song_active:OnIntervalThink()
 		for _,enemy in pairs(enemies) do
 			if not enemy:HasModifier(self.modifier_slow) then
 				local remaining_time = self:GetRemainingTime()
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = remaining_time})
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = remaining_time * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end

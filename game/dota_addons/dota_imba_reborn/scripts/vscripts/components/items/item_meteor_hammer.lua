@@ -113,7 +113,7 @@ function item_imba_meteor_hammer:OnChannelFinish(bInterrupted)
 					enemy:EmitSound("DOTA_Item.MeteorHammer.Damage")
 				
 					-- Debuffs come first, then damage
-					enemy:AddNewModifier(self.caster, self, "modifier_stunned", {duration = self.stun_duration})
+					enemy:AddNewModifier(self.caster, self, "modifier_stunned", {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
 					enemy:AddNewModifier(self.caster, self, "modifier_item_imba_meteor_hammer_burn", {duration = self.burn_duration})
 					
 					local impactDamage = self.impact_damage_units

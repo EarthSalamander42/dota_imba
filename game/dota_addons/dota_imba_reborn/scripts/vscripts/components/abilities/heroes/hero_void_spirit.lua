@@ -244,11 +244,7 @@ function modifier_imba_void_spirit_dissimilate:OnDestroy()
 		
 		-- "The level 25 talent also adds a stun to this. Applies the damage first, then the stun."
 		if self:GetCaster():HasTalent("special_bonus_imba_void_spirit_dissimilate_stun") then
-			local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_void_spirit_dissimilate_stun")})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_void_spirit_dissimilate_stun") * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_void_spirit_dissimilate_stun") * (1 - enemy:GetStatusResistance())})
 		end
 	end
 	
@@ -468,11 +464,7 @@ function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
 			ParticleManager:ReleaseParticleIndex(self.impact_particle)
 			
 			if self:GetCaster():HasScepter() then
-				self.silence_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_silence", {duration = self.silence_duration_scepter})
-				
-				if self.silence_modifier then
-					self.silence_modifier:SetDuration(self.silence_duration_scepter * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_silence", {duration = self.silence_duration_scepter * (1 - enemy:GetStatusResistance())})
 			end
 			
 			ApplyDamage({
@@ -530,7 +522,7 @@ function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
 			self.hit_enemies[enemy:entindex()] = true
 			
 			-- IMBAfication: Equal Exchange
-			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_void_spirit_resonant_pulse_equal_exchange", {duration = self.equal_exchange_duration})
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_void_spirit_resonant_pulse_equal_exchange", {duration = self.equal_exchange_duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 end
@@ -811,11 +803,7 @@ function modifier_imba_void_spirit_aether_remnant_helper:OnTakeDamage(keys)
 	if keys.inflictor and keys.inflictor:GetName() == "void_spirit_aether_remnant" and keys.attacker == self:GetParent() and keys.unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and keys.unit:IsHero() then
 		self:GetParent():AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_helper_buff", {duration = self:GetAbility():GetSpecialValueFor("swiftness_duration")})
 		
-		local vision_modifier = keys.unit:AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_target_vision", {duration = self:GetAbility():GetSpecialValueFor("vision_duration")})
-		
-		if vision_modifier then
-			vision_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("vision_duration") * (1 - keys.unit:GetStatusResistance()), true)
-		end
+		keys.unit:AddNewModifier(self:GetCaster(), keys.inflictor, "modifier_imba_void_spirit_aether_remnant_target_vision", {duration = self:GetAbility():GetSpecialValueFor("vision_duration") * (1 - keys.unit:GetStatusResistance())})
 	end
 end
 
@@ -1105,7 +1093,7 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector, warpVector, bIn
 		
 		enemy:RemoveModifierByName("modifier_imba_void_spirit_astral_step_armor_pierce")
 		
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_debuff", {duration = self:GetSpecialValueFor("pop_damage_delay")})
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_astral_step_debuff", {duration = self:GetSpecialValueFor("pop_damage_delay") * (1 - enemy:GetStatusResistance())})
 		
 		if enemy:IsHero() and not bHeroHit then
 			bHeroHit = true
@@ -1242,6 +1230,33 @@ function modifier_imba_void_spirit_astral_step_invis:GetModifierInvisibilityLeve
 	return 1
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_void_spirit_resonant_pulse_damage", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_void_spirit_astral_step_crit", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_void_spirit_dissimilate_stun", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_void_spirit_resonant_pulse_damage	= modifier_special_bonus_imba_void_spirit_resonant_pulse_damage or class({})
+modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown	= modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown or class({})
+modifier_special_bonus_imba_void_spirit_astral_step_crit	= modifier_special_bonus_imba_void_spirit_astral_step_crit or class({})
+modifier_special_bonus_imba_void_spirit_dissimilate_stun	= modifier_special_bonus_imba_void_spirit_dissimilate_stun or class({})
+
+function modifier_special_bonus_imba_void_spirit_resonant_pulse_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_void_spirit_resonant_pulse_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_void_spirit_resonant_pulse_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown:IsPurgable()		return false end
+function modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_void_spirit_astral_step_crit:IsHidden() 		return true end
+function modifier_special_bonus_imba_void_spirit_astral_step_crit:IsPurgable()		return false end
+function modifier_special_bonus_imba_void_spirit_astral_step_crit:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_void_spirit_dissimilate_stun:IsHidden() 		return true end
+function modifier_special_bonus_imba_void_spirit_dissimilate_stun:IsPurgable()		return false end
+function modifier_special_bonus_imba_void_spirit_dissimilate_stun:RemoveOnDeath() 	return false end

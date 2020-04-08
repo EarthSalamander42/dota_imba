@@ -146,7 +146,7 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 		for _,enemy in pairs(enemies) do
 			if enemy ~= caster then
 				if enemy:GetTeamNumber() ~= caster:GetTeamNumber() then
-					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self:GetSpecialValueFor("burn_duration")} )
+					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self:GetSpecialValueFor("burn_duration") * (1 - enemy:GetStatusResistance())} )
 				else
 					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_burning_wings_ally_buff", {duration = 0.2})
 				end
@@ -448,7 +448,7 @@ function modifier_imba_phoenix_icarus_dive_extend_burn:OnIntervalThink()
 		FIND_ANY_ORDER,
 		false)
 	for _,enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self.burn_duration} )
+		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self.burn_duration * (1 - enemy:GetStatusResistance())} )
 	end
 end
 
@@ -631,7 +631,7 @@ function modifier_imba_phoenix_fire_spirits_count:OnIntervalThink()
 		FIND_ANY_ORDER,
 		false)
 	for _, enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_fire_spirits_debuff", { duration = ability:GetSpecialValueFor("duration") } )
+		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_fire_spirits_debuff", { duration = ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()) } )
 	end
 end
 
@@ -763,7 +763,7 @@ function imba_phoenix_launch_fire_spirit:OnProjectileThink( vLocation )
 		false)
 	for _, enemy in pairs(enemies) do
 		if enemy:GetTeamNumber() ~= caster:GetTeamNumber() then
-			enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_fire_spirits_debuff", { duration = ability:GetSpecialValueFor("duration") } )
+			enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_fire_spirits_debuff", { duration = ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()) } )
 		else
 			enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_burning_wings_ally_buff", {duration = 0.2})
 		end
@@ -805,7 +805,7 @@ function imba_phoenix_launch_fire_spirit:OnProjectileHit( hTarget, vLocation)
 	for _,unit in pairs(units) do
 		if unit ~= caster then
 			if unit:GetTeamNumber() ~= caster:GetTeamNumber() then
-				unit:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_debuff", {duration = self:GetSpecialValueFor("duration")} )
+				unit:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_debuff", {duration = self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance())} )
 			else
 				unit:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_buff", {duration = self:GetSpecialValueFor("duration")} )
 			end
@@ -1402,7 +1402,7 @@ function modifier_imba_phoenix_sun_ray_dummy_buff:OnIntervalThink()
 	local caster = self:GetCaster()
 	local target = self:GetParent()
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_debuff", { duration = self.tick_interval * 1.9 } )
+		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_debuff", { duration = self.tick_interval * 1.9 * (1 - target:GetStatusResistance()) } )
 	else
 		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_buff", { duration = self.tick_interval * 1.9 } )
 	end
@@ -2082,7 +2082,7 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnProjectileHit( hTarget, 
 	for _,unit in pairs(units) do
 		if unit ~= caster then
 			if unit:GetTeamNumber() ~= caster:GetTeamNumber() then
-				unit:AddNewModifier(caster, caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"), "modifier_imba_phoenix_fire_spirits_debuff", {duration = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("duration")} )
+				unit:AddNewModifier(caster, caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"), "modifier_imba_phoenix_fire_spirits_debuff", {duration = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance())} )
 			else
 				unit:AddNewModifier(caster, caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"), "modifier_imba_phoenix_fire_spirits_buff", {duration = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("duration")} )
 			end
@@ -2749,3 +2749,51 @@ function modifier_imba_phoenix_burning_wings_ally_buff:OnDestroy()
 	caster:Heal(num_heal, caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, num_heal, nil)
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_phoenix_2", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phoenix_7", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phoenix_4", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phoenix_5", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phoenix_6", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phoenix_3", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phoenix_8", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_phoenix_2		= modifier_special_bonus_imba_phoenix_2 or class({})
+modifier_special_bonus_imba_phoenix_7		= modifier_special_bonus_imba_phoenix_7 or class({})
+modifier_special_bonus_imba_phoenix_4		= modifier_special_bonus_imba_phoenix_4 or class({})
+modifier_special_bonus_imba_phoenix_5		= modifier_special_bonus_imba_phoenix_5 or class({})
+modifier_special_bonus_imba_phoenix_6		= modifier_special_bonus_imba_phoenix_6 or class({})
+modifier_special_bonus_imba_phoenix_3		= modifier_special_bonus_imba_phoenix_3 or class({})
+modifier_special_bonus_imba_phoenix_8		= modifier_special_bonus_imba_phoenix_8 or class({})
+
+function modifier_special_bonus_imba_phoenix_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_phoenix_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_phoenix_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phoenix_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_phoenix_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_phoenix_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phoenix_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_phoenix_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_phoenix_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phoenix_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_phoenix_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_phoenix_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phoenix_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_phoenix_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_phoenix_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phoenix_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_phoenix_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_phoenix_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phoenix_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_phoenix_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_phoenix_8:RemoveOnDeath() 	return false end

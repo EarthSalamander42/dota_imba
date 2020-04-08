@@ -111,12 +111,12 @@ function imba_timbersaw_whirling_death:WhirlingDeath(revving_down_efficacy)
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("whirling_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		if enemy:IsHero() and enemy.GetPrimaryStatValue then
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_whirling_death_debuff", {
-				duration				= self:GetSpecialValueFor("duration"),
+				duration				= self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()),
 				blood_oil_convert_pct	= self:GetSpecialValueFor("blood_oil_convert_pct"),
 				blood_oil_duration		= self:GetSpecialValueFor("blood_oil_duration"),
 				
 				efficacy				= efficacy
-			}):SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+			})
 			
 			if not hero_check then
 				hero_check = true
@@ -607,17 +607,13 @@ function modifier_imba_timbersaw_timber_chain:UpdateHorizontalMotion(me, dt)
 				end
 				
 				if self:GetAbility().whirling_ability then
-					local whirling_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_whirling_death_debuff", {
-						duration				= self:GetAbility().whirling_ability:GetSpecialValueFor("duration"),
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_whirling_death_debuff", {
+						duration				= self:GetAbility().whirling_ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()),
 						blood_oil_convert_pct	= self:GetAbility().whirling_ability:GetSpecialValueFor("blood_oil_convert_pct"),
 						blood_oil_duration		= self:GetAbility().whirling_ability:GetSpecialValueFor("blood_oil_duration"),
 						
 						stat_loss_pct			= self.whirling_chain_stat_loss_pct
 					})
-					
-					if whirling_modifier then
-						whirling_modifier:SetDuration(self:GetAbility().whirling_ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
-					end
 				end
 			end
 			
@@ -626,7 +622,7 @@ function modifier_imba_timbersaw_timber_chain:UpdateHorizontalMotion(me, dt)
 				local direction = (self.tree:GetAbsOrigin() - enemy:GetAbsOrigin()):Normalized()
 			
 				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_timber_chain_side_hooks", {
-					duration		= ((self.tree:GetAbsOrigin() - enemy:GetAbsOrigin()):Length2D() / self.speed) * self.side_hooks_drag_pct * 0.01,
+					duration		= ((self.tree:GetAbsOrigin() - enemy:GetAbsOrigin()):Length2D() / self.speed) * self.side_hooks_drag_pct * 0.01 * (1 - enemy:GetStatusResistance()),
 					
 					direction_x		= direction.x,
 					direction_y		= direction.y,
@@ -1158,11 +1154,7 @@ function imba_timbersaw_chakram_2:OnProjectileThink_ExtraData(location, data)
 					ability 		= self
 				})
 					
-				local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
-				
-				if slow_modifier then
-					slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - enemy:GetStatusResistance()), true)
-				end			
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration") * (1 - enemy:GetStatusResistance())})
 			
 				self.projectiles[data.id].returning_enemies[enemy] = true
 			end
@@ -1190,11 +1182,7 @@ function imba_timbersaw_chakram_2:OnProjectileHitHandle(target, location, projec
 				ability 		= self
 			})
 			
-			local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance())})
 			
 			self.projectiles[projectileHandle].launching_enemies[target] = true
 		end
@@ -1447,11 +1435,7 @@ function imba_timbersaw_chakram:OnProjectileThink_ExtraData(location, data)
 					ability 		= self
 				})
 					
-				local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
-				
-				if slow_modifier then
-					slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - enemy:GetStatusResistance()), true)
-				end			
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration") * (1 - enemy:GetStatusResistance())})
 			
 				self.projectiles[data.id].returning_enemies[enemy] = true
 			end
@@ -1479,11 +1463,7 @@ function imba_timbersaw_chakram:OnProjectileHitHandle(target, location, projecti
 				ability 		= self
 			})
 			
-			local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance())})
 			
 			self.projectiles[projectileHandle].launching_enemies[target] = true
 		end
@@ -2134,11 +2114,7 @@ function imba_timbersaw_chakram_3:OnProjectileHitHandle(target, location, projec
 			ability 		= self
 		})
 		
-		local slow_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration")})
-		
-		if slow_modifier then
-			slow_modifier:SetDuration(self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_timbersaw_chakram_debuff", {duration = self:GetSpecialValueFor("pass_slow_duration") * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -2166,9 +2142,21 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks		= modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks or class({})
+modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct	= modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct or class({})
 modifier_special_bonus_imba_timbersaw_timber_chain_range	= class({})
+
+function modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks:IsHidden() 		return true end
+function modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks:IsPurgable()	 	return false end
+function modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct:IsHidden() 		return true end
+function modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct:IsPurgable()	 	return false end
+function modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsHidden() 		return true end
 function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsPurgable()	 	return false end

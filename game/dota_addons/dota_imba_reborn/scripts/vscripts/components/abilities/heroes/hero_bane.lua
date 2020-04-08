@@ -69,12 +69,12 @@ function imba_bane_enfeeble:OnSpellStart()
 				FIND_ANY_ORDER,
 				false)
 			for _, enemy in pairs(enemies) do
-				enemy:AddNewModifier( caster, self, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration} ):SetDuration(enfeeble_duration * (1 - enemy:GetStatusResistance()), true)
+				enemy:AddNewModifier( caster, self, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration * (1 - enemy:GetStatusResistance())} )
 			end
 		else
 
 			-- Apply enfeeble debuff
-			target:AddNewModifier(caster, self, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration}):SetDuration(enfeeble_duration * (1 - target:GetStatusResistance()), true)
+			target:AddNewModifier(caster, self, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration * (1 - target:GetStatusResistance())})
 		end
 
 		-- Emit sound effect
@@ -346,11 +346,7 @@ function imba_bane_enfeeble_723:OnSpellStart()
 			self:GetCaster():EmitSound("bane_bane_ability_enfeeble_"..string.format("%02d",RandomInt(1,14)))
 		end
 	
-		local enfeeble_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_enfeeble_723_effect", {duration = self:GetSpecialValueFor("duration")})
-		
-		if enfeeble_modifier then
-			enfeeble_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_enfeeble_723_effect", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -369,11 +365,7 @@ end
 
 function modifier_imba_bane_enfeeble_723_handler:OnAbilityExecuted(keys)
 	if keys.unit == self:GetParent() and not self:GetParent():PassivesDisabled() and (not keys.ability:IsItem() and not keys.ability:IsToggle()) and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and keys.ability ~= self:GetAbility() then
-		local enfeeble_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_bane_enfeeble_723_effect", {duration = self:GetAbility():GetSpecialValueFor("duration")})
-		
-		if enfeeble_modifier then
-			enfeeble_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
-		end
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_bane_enfeeble_723_effect", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())})
 	end
 end
 
@@ -504,12 +496,7 @@ function imba_bane_brain_sap:OnSpellStart()
 		caster:Heal(sapdamage, caster)
 
 		-- Apply brain sap debuff
-		local real_duration = sapduration
-		if target.GetStatusResistance then
-			real_duration = sapduration * (1 - target:GetStatusResistance())
-		end
-
-		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = real_duration})
+		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = sapduration * (1 - target:GetStatusResistance())})
 
 		-- Emit brain sap particle
 		local sapFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_sap.vpcf", PATTACH_ABSORIGIN, caster)
@@ -681,11 +668,7 @@ function imba_bane_brain_sap_723:OnSpellStart()
 		self:GetCaster():Heal(damage_heal, self:GetCaster())
 		
 		-- IMBAfication: Addlebrain
-		local addlebrain_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_brain_sap_mana", {duration = self:GetSpecialValueFor("addlebrain_duration")})
-		
-		if addlebrain_modifier then
-			addlebrain_modifier:SetDuration(self:GetSpecialValueFor("addlebrain_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_brain_sap_mana", {duration = self:GetSpecialValueFor("addlebrain_duration") * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -736,10 +719,15 @@ function imba_bane_nightmare:OnSpellStart()
 
 		if caster:GetTeamNumber() ~= target:GetTeamNumber() and caster:HasTalent("special_bonus_imba_bane_1") then
 			for i=1, talent_enfeeble_stacks do
-				target:AddNewModifier(caster, enfeeble, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration} ):SetDuration(enfeeble_duration * (1 - target:GetStatusResistance()), true)
+				target:AddNewModifier(caster, enfeeble, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration * (1 - target:GetStatusResistance())})
 			end
 		end
-
+		
+		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+			nightmareduration	= nightmareduration * (1 - target:GetStatusResistance())
+			invulnduration		= invulnduration * (1 - target:GetStatusResistance())
+		end
+		
 		-- Apply Nightmare modifiers
 		target:AddNewModifier(caster, self, "modifier_imba_nightmare_dot",   {duration = nightmareduration})
 		target:AddNewModifier(caster, self, "modifier_imba_nightmare_invul", {duration = invulnduration})
@@ -878,6 +866,12 @@ function modifier_imba_nightmare_dot:OnAttackStart(t)
 			-- if t.attacker:IsBuilding() then
 				-- return nil
 			-- end
+			
+			if t.attacker:GetTeamNumber() ~= caster:GetTeamNumber() then
+				nightmare_duration				= nightmare_duration * (1 - t.attacker:GetStatusResistance())
+				nightmare_invuln_duration		= nightmare_invuln_duration * (1 - t.attacker:GetStatusResistance())
+			end
+		
 			-- Apply Nightmare debuff to attackers
 			t.attacker:AddNewModifier(caster, ability, "modifier_imba_nightmare_dot", {duration = nightmare_duration})
 			t.attacker:AddNewModifier(caster, ability, "modifier_imba_nightmare_invul", {duration = nightmare_invuln_duration})
@@ -1268,15 +1262,9 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 		if not parent:IsMagicImmune() and self.propogated == 0 then -- Are we magic immune somehow(omniknight)? have we already retriggered once?
 			if self.original_target == 1 then -- If we are the original target and it's NOT spread, we need to interrupt the primary caster (typically Bane)
 				parent:InterruptChannel()
-		end
-
-		local modifier = parent:AddNewModifier(	caster,
-			ability, "modifier_imba_fiends_grip_handler",
-			{duration = fiends_grip_linger_duration, propogated = 1})
-			
-			if modifier then
-				modifier:SetDuration(fiends_grip_linger_duration * (1 - parent:GetStatusResistance()), true)
 			end
+
+			parent:AddNewModifier(caster, ability, "modifier_imba_fiends_grip_handler", {duration = fiends_grip_linger_duration * (1 - parent:GetStatusResistance()), propogated = 1})
 		end
 
 		if not self.baby then
@@ -1382,11 +1370,10 @@ function modifier_imba_fiends_grip_talent:OnIntervalThink()
 end
 
 function modifier_imba_fiends_grip_talent:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
 		MODIFIER_EVENT_ON_STATE_CHANGED
 	}
-	return decFuncs
 end
 
 function modifier_imba_fiends_grip_talent:OnStateChanged(keys)
@@ -1461,11 +1448,7 @@ function imba_bane_fiends_grip_723:OnSpellStart()
 		if not self:GetCaster():HasTalent("special_bonus_imba_bane_3") then
 			self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_fiends_grip_723", {duration = self:GetChannelTime()})
 		else
-			local grip_modifier = self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_fiends_grip_723", {duration = self.BaseClass.GetChannelTime(self) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")})
-			
-			if grip_modifier then
-				grip_modifier:SetDuration((self.BaseClass.GetChannelTime(self) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")) * (1 - self.target:GetStatusResistance()), true)
-			end
+			self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_fiends_grip_723", {duration = (self.BaseClass.GetChannelTime(self) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")) * (1 - self.target:GetStatusResistance())})
 		end
 	else
 		self:GetCaster():Interrupt()
@@ -1601,6 +1584,36 @@ function imba_bane_brain_sap:IsHiddenWhenStolen() return false end
 function imba_bane_nightmare:IsHiddenWhenStolen() return false end
 function imba_bane_nightmare_end:IsHiddenWhenStolen() return false end
 function imba_bane_fiends_grip:IsHiddenWhenStolen() return false end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_bane_7", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bane_3", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bane_brain_sap_damage", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bane_fiends_grip_duration", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_bane_7	= modifier_special_bonus_imba_bane_7 or class({})
+modifier_special_bonus_imba_bane_3	= modifier_special_bonus_imba_bane_3 or class({})
+modifier_special_bonus_imba_bane_brain_sap_damage	= modifier_special_bonus_imba_bane_brain_sap_damage or class({})
+modifier_special_bonus_imba_bane_fiends_grip_duration	= modifier_special_bonus_imba_bane_fiends_grip_duration or class({})
+
+function modifier_special_bonus_imba_bane_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_bane_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bane_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_bane_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bane_brain_sap_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_brain_sap_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_bane_brain_sap_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bane_fiends_grip_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_fiends_grip_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_bane_fiends_grip_duration:RemoveOnDeath() 	return false end
 
 -- -- Client-side helper functions --
 

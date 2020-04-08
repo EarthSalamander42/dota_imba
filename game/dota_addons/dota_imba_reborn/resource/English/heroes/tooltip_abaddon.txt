@@ -23,7 +23,7 @@
 "DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block_Description"                  "Incoming damage blocked by Aphotic Shield's protection"
 
 // Abaddon's Curse of Avernus
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus"                    "Curse of Avernus"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus"                    "Curse of Avernus (Pre 7.20)"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Description"		"Abaddon strikes enemies with a chilling curse on every attack, causing all units who attack the slowed enemy to gain increased movement and attack speed.\n<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal Abaddon by %heal_convert%%% of the damage."
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Note0"                    "Illusions do not apply this debuff."
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Lore"              "The curse that slows an enemy, speeds an ally."

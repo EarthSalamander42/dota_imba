@@ -83,11 +83,7 @@ function imba_brewmaster_thunder_clap:OnSpellStart()
 			end
 			
 			-- "The clap first applies the debuff, then the damage."
-			local slow_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_thunder_clap", {duration = slow_duration})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(slow_duration * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_thunder_clap", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 			
 			ApplyDamage({
 				victim 			= enemy,
@@ -130,11 +126,7 @@ function imba_brewmaster_thunder_clap:OnProjectileHit_ExtraData(target, location
 	if target and not target:IsMagicImmune() then
 		target:EmitSound("Brewmaster_Earth.Boulder.Target")
 	
-		local stun_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("debris_stun_duration")})
-		
-		if stun_modifier then
-			stun_modifier:SetDuration(self:GetSpecialValueFor("debris_stun_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("debris_stun_duration") * (1 - target:GetStatusResistance())})
 
 		ApplyDamage({
 			victim 			= target,
@@ -349,11 +341,7 @@ function imba_brewmaster_cinder_brew:OnProjectileThinkHandle(projectileHandle)
 				-- IMBAfication: Alcohol Wash
 				unit:Purge(true, false, false, false, false)
 				
-				self.brew_modifier = unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_cinder_brew", {duration = self:GetSpecialValueFor("duration")})
-				
-				if self.brew_modifier then
-					self.brew_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance()), true)
-				end
+				unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_cinder_brew", {duration = self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance())})
 			elseif self:GetCaster():HasScepter() then
 				local splash_particle = ParticleManager:CreateParticle("particles/econ/events/ti9/blink_dagger_ti9_start_lvl2_splash.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
 				ParticleManager:ReleaseParticleIndex(splash_particle)
@@ -382,11 +370,7 @@ function imba_brewmaster_cinder_brew:OnProjectileHitHandle(target, location, pro
 					-- IMBAfication: Alcohol Wash
 					unit:Purge(true, false, false, false, false)
 					
-					self.brew_modifier = unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_cinder_brew", {duration = self:GetSpecialValueFor("duration")})
-					
-					if self.brew_modifier then
-						self.brew_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance()), true)
-					end
+					unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_brewmaster_cinder_brew", {duration = self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance())})
 				elseif self:GetCaster():HasScepter() then
 					local splash_particle = ParticleManager:CreateParticle("particles/econ/events/ti9/blink_dagger_ti9_start_lvl2_splash.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
 					ParticleManager:ReleaseParticleIndex(splash_particle)
@@ -1172,11 +1156,23 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_brewmaster_primal_split_health", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_brewmaster_druken_brawler_damage", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_brewmaster_primal_split_cooldown", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration	= modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration or class({})
+modifier_special_bonus_imba_brewmaster_primal_split_health			= modifier_special_bonus_imba_brewmaster_primal_split_health or class({})
 modifier_special_bonus_imba_brewmaster_druken_brawler_damage	= class({})
 modifier_special_bonus_imba_brewmaster_primal_split_cooldown	= class({})
+
+function modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_brewmaster_primal_split_health:IsHidden() 			return true end
+function modifier_special_bonus_imba_brewmaster_primal_split_health:IsPurgable() 		return false end
+function modifier_special_bonus_imba_brewmaster_primal_split_health:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_brewmaster_druken_brawler_damage:IsHidden() 		return true end
 function modifier_special_bonus_imba_brewmaster_druken_brawler_damage:IsPurgable() 		return false end

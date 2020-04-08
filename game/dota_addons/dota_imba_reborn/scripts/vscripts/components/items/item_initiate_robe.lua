@@ -51,9 +51,6 @@ function modifier_imba_initiate_robe_passive:DeclareFunctions()
 end
 
 function modifier_imba_initiate_robe_passive:OnCreated()
-	self.mana_conversion_rate 	= self:GetAbility():GetSpecialValueFor("mana_conversion_rate")
-	self.max_stacks				= self:GetAbility():GetSpecialValueFor("max_stacks")
-
 	if IsServer() then 
 		local item = self:GetAbility()
 		self.parent = self:GetParent()
@@ -72,8 +69,8 @@ end
 
 function modifier_imba_initiate_robe_passive:OnIntervalThink()
 	-- If mana percentage at any frame is lower than the frame before it, set stacks
-	if self.parent:GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then
-		self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self.mana_conversion_rate * 0.01), self.max_stacks))
+	if self:GetAbility() and self.parent:GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then
+		self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self:GetAbility():GetSpecialValueFor("mana_conversion_rate") * 0.01), self:GetAbility():GetSpecialValueFor("max_stacks")))
 	end
 
 	self.mana_raw = self:GetParent():GetMana()

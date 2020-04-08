@@ -190,8 +190,8 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 
 	-- Apply slow and silence modifiers
 	if not target:IsMagicImmune() then
-		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_silence", {duration = self:GetSpecialValueFor("silence_duration")})
-		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_slow", {duration = self:GetSpecialValueFor("slow_duration")})
+		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_silence", {duration = self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance())})
 	end
 
 	caster:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_dmg_reduction", {})
@@ -832,19 +832,11 @@ end
 
 function modifier_imba_blur_smoke:OnIntervalThink()
 	if self.linger == true then return end
-
-	-- script error on enemies line
-	-- print(self:GetAbility():GetSpecialValueFor("vanish_radius"))
-	-- print(self:GetParent():GetTeamNumber())
-	-- print(self:GetParent():GetAbsOrigin())
 	
 	-- "The effect is dispelled when getting within 600 range of an enemy hero (including clones, excluding illusions) or an enemy building (except for shrines) (just gonna ignore that shrine line)."
 	if #FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.vanish_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false) > 0 then
 		self.linger = true
 		self:StartIntervalThink(-1)
-		-- Timers:CreateTimer(self.fade_duration, function()
-			-- self:Destroy()
-		-- end)
 		
 		self:SetDuration(self.fade_duration, true)
 	end
@@ -1283,3 +1275,21 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 		-- gravestone:SetMaterialGroup(tostring(style))
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_9", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_3", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_phantom_assassin_9	= modifier_special_bonus_imba_phantom_assassin_9 or class({})
+modifier_special_bonus_imba_phantom_assassin_3	= modifier_special_bonus_imba_phantom_assassin_3 or class({})
+
+function modifier_special_bonus_imba_phantom_assassin_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_phantom_assassin_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_phantom_assassin_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phantom_assassin_3:IsHidden() 			return true end
+function modifier_special_bonus_imba_phantom_assassin_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_phantom_assassin_3:RemoveOnDeath() 	return false end

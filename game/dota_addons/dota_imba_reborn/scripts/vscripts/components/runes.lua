@@ -298,9 +298,13 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 
 			-- FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + RandomVector(72), true)
 			
-			-- Adding a quick thing to make it give bonus vision as an IMBAfication cause...meh
-			unit:AddNewModifier(unit, nil, "modifier_imba_illusion_rune", {duration = 40.0})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
+			
+			for _, ally in pairs(FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+				if ally:GetOwner() and ally:GetOwner().GetAssignedHero and ally:GetOwner():GetAssignedHero() == unit then
+					ally:AddNewModifier(unit, nil, "modifier_imba_illusion_rune", {duration = 40.0})
+				end
+			end
 		elseif rune_name == "invis" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_invisibility_rune_handler", {duration=2.0, rune_duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Invis", unit)

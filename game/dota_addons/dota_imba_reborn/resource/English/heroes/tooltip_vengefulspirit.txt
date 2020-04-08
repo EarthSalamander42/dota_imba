@@ -58,7 +58,7 @@
 
 // Vengeful Spirit's Rancor
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor"					        "Rancor"
-"DOTA_Tooltip_ability_imba_vengefulspirit_rancor_Description"          "Whenever Vengeful Spirit takes damage, she accumulates her hatred for her foes. Every %stack_receive_pct%%% health she loses through damage grants a stack of Rancor, granting her bonus attack damage and spell amplification. Stacks decay over time while being alive. Rancor stacks cannot exceed %max_stacks% stacks.\nRancor also affects allied heroes within %aura_radius% radius at %aura_efficiency%%% efficacy."
+"DOTA_Tooltip_ability_imba_vengefulspirit_rancor_Description"          "Whenever Vengeful Spirit takes damage, she accumulates her hatred for her foes. Every %stack_receive_pct%%% health she loses through damage grants a stack of Rancor, granting her bonus attack damage and spell amplification. Stacks decay over time while being alive. Rancor stacks cannot exceed %max_stacks% stacks.\nRancor also affects allied heroes within %aura_radius% radius at %aura_efficiency%%% efficiency."
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_Lore"					"Vengeance is a dish best served... NOW."
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_Note0"					"Break only prevents gaining new stacks."
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_damage_pct"			"BONUS DAMAGE PER STACK:"
@@ -66,7 +66,7 @@
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_stack_duration"		"STACK DECAY DELAY:"
 
 "DOTA_Tooltip_modifier_imba_rancor_stack"									"Rancor"
-"DOTA_Tooltip_modifier_imba_rancor_stack_Description"					    "Attack damage increased by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%, and spell amplification increased by %2fMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_rancor_stack_Description"					    "Attack damage increased by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%, and spell amplification increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
 "DOTA_Tooltip_modifier_imba_rancor_ally_aura"								"Rancor Aura"
 "DOTA_Tooltip_modifier_imba_rancor_ally_aura_Description"					"Attack damage increased by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%, and spell amplification increased by %2fMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."

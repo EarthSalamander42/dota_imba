@@ -98,7 +98,7 @@ function modifier_imba_mana_break_passive:OnAttackStart(keys)
 			-- Get the target's current mana percentage
 			self.mana_percentage = target:GetManaPercent()
 
-			-- Get the threshold difference phase he's currently in (4 is 75%-100%, 3 is 50%-75% etc unless numbers change)
+			-- Get the threshold difference phase he's currently in (2 is 50%-100%, 1 is 0%-50% etc unless numbers change)
 			-- Phase 0 means he has no mana at all
 			self.mana_phase = math.ceil(self.mana_percentage / self.threshold_difference)
 
@@ -1222,14 +1222,25 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_antimage_8", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_antimage_9", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_antimage_10", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_antimage_11", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_antimage_blink_range", "components/abilities/heroes/hero_antimage", LUA_MODIFIER_MOTION_NONE)
 
-
+modifier_special_bonus_imba_antimage_8	= modifier_special_bonus_imba_antimage_8 or class({})
+modifier_special_bonus_imba_antimage_9	= modifier_special_bonus_imba_antimage_9 or class({})
 modifier_special_bonus_imba_antimage_10		= class({})
 modifier_special_bonus_imba_antimage_11		= class({})
 modifier_special_bonus_imba_antimage_blink_range	= modifier_special_bonus_imba_antimage_blink_range or class({})
+
+function modifier_special_bonus_imba_antimage_8:IsHidden() 			return true end
+function modifier_special_bonus_imba_antimage_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_antimage_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_antimage_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_antimage_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_antimage_9:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_antimage_10:IsHidden() 		return true end
 function modifier_special_bonus_imba_antimage_10:IsPurgable() 		return false end

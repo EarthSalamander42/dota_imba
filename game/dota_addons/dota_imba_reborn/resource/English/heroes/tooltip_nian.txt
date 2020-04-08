@@ -7,6 +7,7 @@
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note0"									"The attack arc is within 70 degrees of the front of Nian."
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note1"									"The attacks will not occur if Nian is banished or stunned."
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note2"									"These attacks cannot apply cleave."
+"DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Note3"									"Does not hit buildings or ward-type units."
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_attack_damage_multiplier"					"ATTACK DAMAGE MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_attack_speed_multiplier"					"ATTACK SPEED MULTIPLIER:"
 // "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_mana_per_attack"							"MANA COST PER ATTACK:"

@@ -6,6 +6,7 @@
 
 #base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
+#base heroes/arc_warden/abilities.txt
 #base heroes/bane/abilities.txt
 #base heroes/batrider/abilities.txt
 #base heroes/bloodseeker/abilities.txt
@@ -48,6 +49,7 @@
 #base heroes/terrorblade/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
+#base heroes/treant/abilities.txt
 #base heroes/undying/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
@@ -6333,6 +6335,26 @@
 		}
 	}
 
+	"special_bonus_imba_enigma_demonic_conversion_attack_range"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"200"
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// Jakiro's Fire Breath
 	//=================================================================================================================
@@ -6523,6 +6545,126 @@
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Ability: Jakiro's Dual Breath
+	//=================================================================================================================
+	"imba_jakiro_dual_breath"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_jakiro"
+		"AbilityTextureName"			"jakiro_dual_breath"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Jakiro.DualBreath"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.55"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+		"AbilityDuration"				"5.0"
+
+		
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"135 140 155 170"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.25"	// Applies two modifiers 
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"start_radius"			"225"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_radius"			"275"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"750 750 750 750"
+				//"LinkedSpecialBonus"	"special_bonus_unique_jakiro_5"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1050"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fire_delay"			"0.3 0.3 0.3 0.3"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_damage"			"40 60 80 100"
+				//"LinkedSpecialBonus"	"special_bonus_unique_jakiro_2"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"		"fire_damage_increase"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_movement_speed_pct"	"-28 -36 -42 -48"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"	"slow_increase"
+				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_attack_speed_pct"		"-28 -36 -42 -48"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"	"slow_increase"
+				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_fire"			"1050"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
+			}
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_movement_speed_pct_fire"	"-10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"frost_damage"			"20 30 40 50"
+			}
+		}		
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
 
 	//=================================================================================================================
@@ -10557,7 +10699,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"max_charges"					"2 2 2 3"
-				"LinkedSpecialBonus"			"special_bonus_imba_lycan_10"
 			}
 			"05"
 			{
@@ -19224,6 +19365,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_search_radius"		"700"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -19332,7 +19474,7 @@
 			"10"
 			{
 				"var_type" 				"FIELD_INTEGER"
-				"vision_radius"			"300"
+				"vision_radius"			"400"
 			}
 
 			"11"
@@ -19345,6 +19487,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_search_radius"		"700"
+				"RequiresScepter"			"1"
+			}
+			
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_damage_pct"		"75"
 			}
 		}
 	}
@@ -19463,8 +19612,9 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint" 		 "0.1"
 		"AbilityCastRange"		 "1200"
+		"AbilityCastPoint" 		 "0.1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -30258,6 +30408,7 @@
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"60"
+		"AbilityDuration"				"25.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -30293,12 +30444,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 5 7 9"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"25"
+				"health"				"1 1 2 2"
 			}
 			"05"
 			{
@@ -30313,7 +30459,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_totem"	"9"
+				"health_totem"	"3 3 4 4"
 			}
 		}
 	}
@@ -30351,7 +30497,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 5 7 9"
+				"health"				"1 1 2 2"
 			}
 			"04"
 			{
@@ -30366,7 +30512,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_totem"			"9"
+				"health_totem"			"3 3 4 4"
 			}
 		}
 	}
@@ -32354,7 +32500,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "0.4"
+				"value"	                    "0.3"
 			}
 		}
 	}
@@ -37978,7 +38124,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stack_duration"			"0.5"
+				"stack_duration"			"0.6"
 			}
 
 			"06"
@@ -42755,7 +42901,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"1"		// placeholder value
+				"value"			"40"
 			}
 		}
 	}

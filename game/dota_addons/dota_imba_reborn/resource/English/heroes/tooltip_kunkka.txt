@@ -98,3 +98,5 @@
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_7"					"Tidebringer now hits all enemies affected by Torrent"
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_8"					"Rum absorbs damage instead of delaying it"
 "DOTA_Tooltip_ability_special_bonus_imba_kunkka_9"					"+{s:value}% Tidebringer Cleave"
+
+"DOTA_Tooltip_ability_kunkka_torrent_storm_Description"							"Releases a visible Torrent in a random area around you once every %torrent_interval% for %torrent_duration% seconds. Spawns in within %torrent_max_distance% range of you.\n<font color='#FF0000'>Does not benefit from any IMBAfications.</font>"

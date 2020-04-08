@@ -39,6 +39,9 @@
 "DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_aura"					"Healing Ward"
 "DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_aura_Description"		"Regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% of max health per second, and increasing attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
+"DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_totem"					"Fortify"
+"DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_totem_Description"		"Can no longer move. Health increased, and granting increased max health regeneration in a larger radius."
+
 // Juggernaut's Blade Dance
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance"						"#{DOTA_Tooltip_ability_juggernaut_blade_dance}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Description"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_Description}\n<font color='#FF7800'>Wind Dance:</font> Landing a critical hit grants a stack of Wind Dance, gaining %bonus_agi% bonus agility and %bonus_ms%%% move speed per stack for %bonus_duration% seconds. Attacking refreshes the bonus, even if a critical hit wasn't landed.\n<font color='#FF7800'>Secret Blade:</font> Attacking an enemy grants a stack of Secret Blade for %secret_blade_duration% seconds, refreshing duration on each hit. Reaching %active_min_stacks% stacks of Secret Blade allows Blade Dance to be activated to dash towards a target point up to %active_distance% distance. All stacks of Secret Blade are consumed and converted into attack counts, which are used to attack enemies once each during the dash, as well as multiple times at dash end. Each unit can be hit up to a total of %secret_blade_max_hits% times. Juggernaut is invulnerable while dashing.\nBlade Dance cannot gain Wind Dance stacks, Secret Blade stacks, or be activated during Omnislash."
@@ -100,3 +103,5 @@
 // Juggernaut's summoned unit: Healing Ward, Healing Totem
 "npc_imba_juggernaut_healing_ward"										"Healing Ward"
 "npc_imba_juggernaut_healing_totem"										"Healing Totem"
+
+"DOTA_Tooltip_ability_juggernaut_swift_slash_Description"			"Performs a quick Omnislash.\n<font color='#FF0000'>Does not benefit from any IMBAfications.</font>"

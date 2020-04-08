@@ -66,7 +66,7 @@ function imba_batrider_sticky_napalm:OnSpellStart()
 	self.enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetCursorPosition(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
 	for _, enemy in pairs(self.enemies) do
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_sticky_napalm", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_sticky_napalm", {duration = self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance())})
 	end
 	
 	-- "Provides 400 radius flying vision at the targeted point upon cast for 2 seconds."
@@ -350,16 +350,12 @@ function imba_batrider_flamebreak:OnProjectileHit_ExtraData(target, location, da
 				bDestroyTreesAlongPath = true
 			})
 
-			local damage_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_flamebreak_damage",
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_flamebreak_damage",
 			{
-				duration			= self:GetTalentSpecialValueFor("damage_duration"),
+				duration			= self:GetTalentSpecialValueFor("damage_duration") * (1 - enemy:GetStatusResistance()),
 				damage_per_second	= self:GetSpecialValueFor("damage_per_second"),
 				damage_type			= self:GetAbilityDamageType()
 			})
-			
-			if damage_modifier then
-				damage_modifier:SetDuration(self:GetTalentSpecialValueFor("damage_duration") * (1 - enemy:GetStatusResistance()), true)
-			end
 		end
 	end
 end
@@ -691,7 +687,7 @@ function modifier_imba_batrider_firefly_thinker:IsPurgable()	return false end
 function modifier_imba_batrider_firefly_thinker:OnCreated()
 	if not IsServer() then return end
 	
-	self.firefly_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_firefly.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.firefly_particle = ParticleManager:CreateParticle("particles/hero/batrider/batrider_ti8_immortal_firefly_300_radius.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
 	ParticleManager:SetParticleControl(self.firefly_particle, 11, Vector(1, 0, 0))
 	self:AddParticle(self.firefly_particle, false, false, -1, false, false)
@@ -771,14 +767,10 @@ function imba_batrider_flaming_lasso:OnSpellStart()
 	
 	-- "Can be cast on Roshan, but he is neither disabled nor dragged (Upgradable by Aghanim's Scepter. nor damaged). Batrider is still disarmed."
 	if not target:IsRoshan() then
-		local lasso_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_flaming_lasso", {
-			duration			= self:GetSpecialValueFor("duration"),
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_flaming_lasso", {
+			duration			= self:GetSpecialValueFor("duration")  * (1 - target:GetStatusResistance()),
 			attacker_entindex	= self:GetCaster():entindex()
 		})
-		
-		if lasso_modifier then
-			lasso_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-		end
 	end
 
 	if self:GetCaster():HasScepter() then
@@ -786,25 +778,17 @@ function imba_batrider_flaming_lasso:OnSpellStart()
 		
 		for _, enemy in pairs(enemies) do
 			if enemy ~= target and enemy:IsConsideredHero() then
-				local secondary_lasso_modifier = enemy:AddNewModifier(target, self, "modifier_imba_batrider_flaming_lasso", {
-					duration			= self:GetSpecialValueFor("duration"),
+				enemy:AddNewModifier(target, self, "modifier_imba_batrider_flaming_lasso", {
+					duration			= self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()),
 					attacker_entindex	= self:GetCaster():entindex()
 				})
-				
-				if secondary_lasso_modifier then
-					secondary_lasso_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
-				end
 				
 				break
 			end
 		end
 	end
 
-	local self_lasso_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_flaming_lasso_self", {duration = self:GetSpecialValueFor("duration")})
-	
-	if self_lasso_modifier then
-		self_lasso_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-	end	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_batrider_flaming_lasso_self", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 end
 
 ------------------------------------------

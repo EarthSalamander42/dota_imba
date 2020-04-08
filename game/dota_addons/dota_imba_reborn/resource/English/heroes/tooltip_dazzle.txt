@@ -34,7 +34,7 @@
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_cast_range"            "CAST RANGE:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_scepter_radius"						"SCEPTER RADIUS:"
-"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_aghanim_description"				"Causes Shallow Grave to be an AoE spell. <font color='#FF0000'>Does not apply Gravely Mistaken to units that are not directly targeted by the ability.</font>"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_aghanim_description"				"<font color=#FF7800'>Causes Shallow Grave to be an AoE spell. Does not apply Gravely Mistaken to units that are not directly targeted by the ability.</font>"
 
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave"                      "Shallow Grave"
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave_Description"          "Protected from death for the duration."

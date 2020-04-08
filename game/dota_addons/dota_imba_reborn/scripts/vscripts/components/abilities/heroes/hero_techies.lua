@@ -999,12 +999,12 @@ function modifier_imba_statis_trap:_Explode()
 	-- Root enemies nearby if not disarmed, and apply a electrocharge
 	for _,enemy in pairs(enemies) do
 		if not caster:HasModifier(modifier_disarmed) then
-			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration})
+			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
 		end
 
 		-- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
 		if not enemy:HasModifier(modifier_electrocharge) then
-			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration})
+			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
 		else
 			RefreshElectroCharge(enemy)
 		end
@@ -1511,7 +1511,7 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
 			ApplyDamage(damageTable)
 
 			-- Add silence modifier to them
-			enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration})
+			enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration * (1 - enemy:GetStatusResistance())})
 
 			-- Check (and mark) if an enemy died from the blast
 			Timers:CreateTimer(FrameTime(), function()

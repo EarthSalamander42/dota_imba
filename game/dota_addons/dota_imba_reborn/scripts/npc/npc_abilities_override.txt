@@ -774,9 +774,9 @@
 	//=================================================================================================================
 	"item_tome_of_knowledge"
 	{
-		"ItemCost"						"30"
+		"ItemCost"						"50"
 		"ItemInitialStockTime"			"390.0"
-		"ItemStockTime"					"120.0"
+		"ItemStockTime"					"60.0"
 		"ItemStockMax"					"5"
 
 		"ItemStackable"					"1"

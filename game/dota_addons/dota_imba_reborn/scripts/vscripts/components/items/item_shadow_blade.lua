@@ -128,7 +128,7 @@ function modifier_item_imba_shadow_blade_invis:OnAttack(params)
 			local debuff_duration  =   ability:GetSpecialValueFor("turnrate_slow_duration")
 
 			-- Apply turnrate debuff modifier
-			params.target:AddNewModifier(params.attacker, ability, "modifier_item_imba_shadow_blade_invis_turnrate_debuff", {duration = debuff_duration})
+			params.target:AddNewModifier(params.attacker, ability, "modifier_item_imba_shadow_blade_invis_turnrate_debuff", {duration = debuff_duration * (1 - params.target:GetStatusResistance())})
 
 			-- Remove the invis on attack
 			self:Destroy()

@@ -350,7 +350,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 			end
 
 			-- Apply the slow
-			enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", {duration = duration})
+			enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", {duration = duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 
@@ -544,10 +544,9 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 			end
 
 			if abilities_on_cooldown > 0 then
-				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", {duration = cd_increase})
+				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", {duration = cd_increase * (1 - enemy:GetStatusResistance())})
 				
 				if debuff then
-					debuff:SetDuration(cd_increase * (1 - enemy:GetStatusResistance()), true)
 					debuff:SetStackCount(abilities_on_cooldown)
 				end
 			end
@@ -827,9 +826,9 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 					-- Stun, based on if it's a hero or a creep
 					if target:IsHero() then
-						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
+						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration * (1 - target:GetStatusResistance())})
 					else
-						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration})
+						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration * (1 - target:GetStatusResistance())})
 					end
 
 					-- Emit sound
@@ -892,9 +891,9 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 							-- Stun, based on if it's a hero or a creep
 							if target:IsHero() then
-								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
+								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration * (1 - target:GetStatusResistance())})
 							else
-								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration})
+								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration * (1 - target:GetStatusResistance())})
 							end
 
 							-- Bonus damage to main target is already bundled in "GetModifierProcAttack_BonusDamage_Magical", so no need to damage the main target.
@@ -1473,10 +1472,10 @@ function modifier_imba_faceless_void_time_lock_720:ApplyTimeLock(target)
 
 	-- Hero stun duration
 	if target:IsConsideredHero() or target:IsRoshan() then
-		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration * (1 - target:GetStatusResistance())})
 	-- Creep stun duration
 	else
-		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration_creep}):SetDuration(duration_creep * (1 - target:GetStatusResistance()), true)
+		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration_creep * (1 - target:GetStatusResistance())})
 	end
 	
 	-- IMBAfication: Chronocharges
@@ -1537,6 +1536,7 @@ end
 -- TIME LOCK FREEZE MODIFIER (7.20 Version) --
 ----------------------------------------------
 
+function modifier_imba_faceless_void_time_lock_720_freeze:IsDebuff()		return true end
 function modifier_imba_faceless_void_time_lock_720_freeze:IsPurgable()		return false end
 function modifier_imba_faceless_void_time_lock_720_freeze:IsPurgeException()	return true end
 
@@ -1566,6 +1566,24 @@ function modifier_imba_faceless_void_time_lock_720_freeze:CheckState()
 		[MODIFIER_STATE_FROZEN] = true
 	}
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_7", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_12", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_faceless_void_7		= modifier_special_bonus_imba_faceless_void_7 or class({})
+modifier_special_bonus_imba_faceless_void_12	= modifier_special_bonus_imba_faceless_void_12 or class({})
+
+function modifier_special_bonus_imba_faceless_void_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_faceless_void_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_faceless_void_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_faceless_void_12:IsHidden() 		return true end
+function modifier_special_bonus_imba_faceless_void_12:IsPurgable()		return false end
+function modifier_special_bonus_imba_faceless_void_12:RemoveOnDeath() 	return false end
 
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_3", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)

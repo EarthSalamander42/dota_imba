@@ -437,7 +437,7 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 						if modifier_handler then
 							local new_duration = modifier_handler.duration
 							enemy:RemoveModifierByName(requiem_debuff)
-							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration})
+							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration * (1 - enemy:GetStatusResistance())})
 						end
 					end
 
@@ -451,7 +451,7 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 						if modifier_handler then
 							local new_duration = modifier_handler.duration
 							enemy:RemoveModifierByName(requiem_debuff)
-							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration})
+							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration * (1 - enemy:GetStatusResistance())})
 						end
 					end
 			end
@@ -520,10 +520,10 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 		-- Adjust damage
 		damage = damage + (stacks * damage_per_soul) + debuff_boost
 
-		-- -- Add a Necromastery stack if it was a hero
-		-- if enemy:IsRealHero() then
-			-- AddNecromasterySouls(caster, souls_per_raze)
-		-- end
+		-- Add a Necromastery stack if it was a hero
+		if enemy:IsRealHero() then
+			AddNecromasterySouls(caster, souls_per_raze)
+		end
 
 		-- If caster is not broken, launch a soul projectile to the caster
 		if not caster:PassivesDisabled() then
@@ -562,7 +562,7 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 	
 	-- Apply a debuff stack that causes shadowrazes to do more damage
 	if not enemy:HasModifier(modifier_debuff) then
-		enemy:AddNewModifier(caster, ability, modifier_debuff, {duration = duration})
+		enemy:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - enemy:GetStatusResistance())})
 	end
 	
 	local modifier_debuff_counter = enemy:FindModifierByName(modifier_debuff)
@@ -1130,24 +1130,24 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 				return nil
 			end
 
-			-- -- Gain a soul and refresh
-			-- AddNecromasterySouls(self.caster, self.hero_attack_soul_count)
+			-- Gain a soul and refresh
+			AddNecromasterySouls(self.caster, self.hero_attack_soul_count)
 
-			-- -- If caster is not broken and is visible, launch a hero soul to the caster
-			-- if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then
-				-- local soul_projectile = {Target = self.caster,
-										 -- Source = target,
-										 -- Ability = self.ability,
-										 -- EffectName = self.particle_soul_hero,
-										 -- bDodgeable = false,
-										 -- bProvidesVision = false,
-										 -- iMoveSpeed = self.soul_projectile_speed,
-										 -- iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-										 -- }
+			-- If caster is not broken and is visible, launch a hero soul to the caster
+			if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then
+				local soul_projectile = {Target = self.caster,
+										 Source = target,
+										 Ability = self.ability,
+										 EffectName = self.particle_soul_hero,
+										 bDodgeable = false,
+										 bProvidesVision = false,
+										 iMoveSpeed = self.soul_projectile_speed,
+										 iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+										 }
 
 
-				-- ProjectileManager:CreateTrackingProjectile(soul_projectile)
-			-- end
+				ProjectileManager:CreateTrackingProjectile(soul_projectile)
+			end
 		end
 	end
 end
@@ -1724,7 +1724,7 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 	end
 
 	-- Apply the debuff on enemies hit
-	target:AddNewModifier(caster, ability, modifier_debuff, {duration = slow_duration})
+	target:AddNewModifier(caster, ability, modifier_debuff, {duration = slow_duration * (1 - target:GetStatusResistance())})
 	-- If the caster still has the Soul Harvest buff, increase it
 	if caster:HasModifier(modifier_harvest) and target:IsRealHero() then
 		local modifier_harvest_handler = caster:FindModifierByName(modifier_harvest)
@@ -1755,16 +1755,12 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 		caster:Heal(damage_dealt, caster)
 	end
 	
-	-- -- F.E.A.R.
-	-- if not target:HasModifier("modifier_nevermore_requiem_fear") then
-		-- local fear_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration")})
-		
-		-- if fear_modifier then
-			-- fear_modifier:SetDuration(self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance()), true)
-		-- end
-	-- else
-		-- target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
-	-- end
+	-- F.E.A.R.
+	if not target:HasModifier("modifier_nevermore_requiem_fear") then
+		target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance())})
+	else
+		target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
+	end
 end
 
 
@@ -1944,3 +1940,57 @@ end
 function modifier_imba_reqiuem_harvest:IsHidden() return false end
 function modifier_imba_reqiuem_harvest:IsPurgable() return false end
 function modifier_imba_reqiuem_harvest:IsDebuff() return false end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_1", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_2", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_3", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_4", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_5", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_6", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_7", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_nevermore_8", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_nevermore_1	= modifier_special_bonus_imba_nevermore_1 or class({})
+modifier_special_bonus_imba_nevermore_2	= modifier_special_bonus_imba_nevermore_2 or class({})
+modifier_special_bonus_imba_nevermore_3	= modifier_special_bonus_imba_nevermore_3 or class({})
+modifier_special_bonus_imba_nevermore_4	= modifier_special_bonus_imba_nevermore_4 or class({})
+modifier_special_bonus_imba_nevermore_5	= modifier_special_bonus_imba_nevermore_5 or class({})
+modifier_special_bonus_imba_nevermore_6	= modifier_special_bonus_imba_nevermore_6 or class({})
+modifier_special_bonus_imba_nevermore_7	= modifier_special_bonus_imba_nevermore_7 or class({})
+modifier_special_bonus_imba_nevermore_8	= modifier_special_bonus_imba_nevermore_8 or class({})
+
+function modifier_special_bonus_imba_nevermore_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_nevermore_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_nevermore_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_nevermore_8:RemoveOnDeath() 	return false end

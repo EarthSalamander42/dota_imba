@@ -177,7 +177,12 @@ function GameMode:SetupShrines()
 	for _, pos in pairs(good_shrine_position) do 
 		local shrine = CreateUnitByName("npc_dota_goodguys_healers", pos, true, nil, nil, 2)
 		shrine:SetAbsOrigin(pos)
-
+		
+		-- Don't give jungle shrines backdoor protection
+		if shrine:HasAbility("backdoor_protection_in_base") then
+			shrine:RemoveAbility("backdoor_protection_in_base")
+		end
+		
 		local find_trees = GridNav:GetAllTreesAroundPoint(pos, 100, true)
 
 		for _, tree in pairs(find_trees) do
@@ -193,6 +198,11 @@ function GameMode:SetupShrines()
 		local shrine = CreateUnitByName("npc_dota_badguys_healers", pos, true, nil, nil, 3)
 		shrine:SetAbsOrigin(pos)
 
+		-- Don't give jungle shrines backdoor protection
+		if shrine:HasAbility("backdoor_protection_in_base") then
+			shrine:RemoveAbility("backdoor_protection_in_base")
+		end
+		
 		local find_trees = GridNav:GetAllTreesAroundPoint(pos, 100, true)
 
 		for _, tree in pairs(find_trees) do
@@ -365,11 +375,24 @@ function GameMode:OnSettingVote(keys)
 end
 --]]
 
+-- Custom game-modes as per api:GetCustomGamemode():
+-- 1: Standard
+-- 2: Mutation
+-- 3: Super Frantic
+-- 4: Diretide
+-- 5: Same Hero Selection
+
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- If no one voted, default to IMBA 10v10 gamemode
 		GameRules:SetCustomGameDifficulty(2)
-		api:SetCustomGamemode(1)
+		
+		-- Let Super Frantic be the default mode for 10v10, and Standard be the default for everything else
+		if GetMapName() == "imba_10v10" then
+			api:SetCustomGamemode(3)
+		else
+			api:SetCustomGamemode(1)
+		end
 
 		if GameMode.VoteTable == nil then return end
 		local votes = GameMode.VoteTable

@@ -72,15 +72,7 @@ function imba_doom_bringer_doom:OnSpellStart()
 			local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("aoe_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, FIND_ANY_ORDER, false)
 		
 			for _, enemy in pairs(enemies) do
-				local doom_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_doom_bringer_doom_enemies", {duration = self:GetSpecialValueFor("duration")})
-				
-				if doom_modifier then
-					-- if not self:GetCaster():HasScepter() then
-						doom_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
-					-- else
-						-- doom_modifier:SetDuration(self:GetSpecialValueFor("duration"), true)
-					-- end
-				end
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_doom_bringer_doom_enemies", {duration = self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end

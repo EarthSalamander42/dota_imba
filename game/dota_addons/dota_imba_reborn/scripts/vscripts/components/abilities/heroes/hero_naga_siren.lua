@@ -250,11 +250,7 @@ function imba_naga_siren_ensnare:OnProjectileHit_ExtraData(hTarget, vLocation, h
 			hTarget:EmitSound("Hero_NagaSiren.Ensnare.Target")
 		end
 
-		local mod = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_ensnare", {duration = self:GetSpecialValueFor("duration")})
-		
-		if mod then
-			mod:SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
-		end
+		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_ensnare", {duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance())})
 	end
 end
 
@@ -348,17 +344,13 @@ function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 
 					if mod then
 						local mod = victim:FindModifierByName("modifier_imba_naga_siren_rip_tide_debuff")
-						mod:SetDuration(self:GetAbility():GetSpecialValueFor("duration"), true)
+						mod:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - victim:GetStatusResistance()), true)
 						mod:SetStackCount(mod:GetStackCount() + 1)
 						damage = damage + (self:GetAbility():GetSpecialValueFor("wet_bonus_damage") * mod:GetStackCount())
 					else
 						-- self:GetCaster():GetPlayerOwner():GetAssignedHero() is to allow the armor reduction talent from the real unit to apply
-						mod = victim:AddNewModifier(self:GetCaster():GetPlayerOwner():GetAssignedHero(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
+						mod = victim:AddNewModifier(self:GetCaster():GetPlayerOwner():GetAssignedHero(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - victim:GetStatusResistance())}):SetStackCount(1)
 						damage = damage + self:GetAbility():GetSpecialValueFor("wet_bonus_damage")
-					end
-					
-					if mod then
-						mod:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - victim:GetStatusResistance()), true)
 					end
 
 					local damageTable = {
@@ -636,6 +628,20 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance						= modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance or class({})
+modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken				= modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken or class({})
+
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:IsHidden() 		return true end
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:IsPurgable() 	return false end
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:IsHidden() 		return true end
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:IsPurgable() 	return false end
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_naga_siren_rip_tide_armor", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)

@@ -138,7 +138,7 @@ function item_imba_heavens_halberd:OnSpellStart(keys)
 			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_ally_buff", {duration = self:GetSpecialValueFor("buff_duration")})
 			self:GetCaster():EmitSound(active_sword_sound)
 		else
-			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_active_disarm", {duration = duration})
+			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_active_disarm", {duration = duration * (1 - target:GetStatusResistance())})
 			target:EmitSound("DOTA_Item.HeavensHalberd.Activate")
 		end
 	end
@@ -1199,7 +1199,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		return end
 
 	-- Stack the maim up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1209,7 +1209,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 
 		-- Proc! Apply the disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		ability:UseResources(false, false, true)
 	end
@@ -1259,7 +1259,7 @@ function kayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 
 		-- Proc! Apply the silence modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
@@ -1290,13 +1290,13 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the maim up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1314,7 +1314,7 @@ function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_pr
 		return end
 
 	-- Stack the maim/amp up
-	local modifier_debuff = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_debuff = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_debuff and modifier_debuff:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_debuff:SetStackCount(modifier_debuff:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1325,7 +1325,7 @@ function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_pr
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 
 		-- Proc! Apply the disarm/silence modifier
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
@@ -1357,13 +1357,13 @@ function kayaYashaAttack(attacker, target, ability, modifier_enemy_stacks, modif
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the silence modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the magic amp up
-	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
 		target:EmitSound("Imba.kayaStack")
@@ -1395,14 +1395,14 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the silence/disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the maim/amp up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")

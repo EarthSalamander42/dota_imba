@@ -223,11 +223,7 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 		
 		if targetted_projectile then
 			-- ...and apply the Cripple modifier.
-			local cripple_modifier = target:AddNewModifier(self.caster, self, "modifier_item_imba_rod_of_atos_debuff", {duration = self.duration})
-			
-			if cripple_modifier then
-				cripple_modifier:SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
-			end
+			target:AddNewModifier(self.caster, self, "modifier_item_imba_rod_of_atos_debuff", {duration = self.duration * (1 - target:GetStatusResistance())})
 		end
 	end
 end
@@ -256,24 +252,12 @@ function modifier_item_imba_rod_of_atos:RemoveOnDeath() return false end
 function modifier_item_imba_rod_of_atos:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_rod_of_atos:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	self.parent		= self:GetParent()
-	
-	-- AbilitySpecials
-	self.bonus_intellect	=	self.ability:GetSpecialValueFor("bonus_intellect")
-	self.bonus_strength		=	self.ability:GetSpecialValueFor("bonus_strength")
-	self.bonus_agility		=	self.ability:GetSpecialValueFor("bonus_agility")
-	self.initial_charges		=	self.ability:GetSpecialValueFor("initial_charges")
-	
 	if not IsServer() then return end
 	
 	-- Need to do this instead of using the "ItemInitialCharges" KV because the latter messes with sell prices
-	if self.ability:GetLevel() >= 2 then
-		if not self.ability.initialized then
-			self.ability:SetCurrentCharges(self.initial_charges)
-			self.ability.initialized = true
-		end	
+	if self:GetAbility() and self:GetAbility():GetLevel() >= 2 and not self:GetAbility().initialized then
+		self:GetAbility():SetCurrentCharges(self:GetAbility():GetSpecialValueFor("initial_charges"))
+		self:GetAbility().initialized = true
 	end
 end
 
@@ -286,13 +270,19 @@ function modifier_item_imba_rod_of_atos:DeclareFunctions()
 end
 
 function modifier_item_imba_rod_of_atos:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	end
 end
 
 function modifier_item_imba_rod_of_atos:GetModifierBonusStats_Strength()
-	return self.bonus_strength
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_strength")
+	end
 end
 
 function modifier_item_imba_rod_of_atos:GetModifierBonusStats_Agility()
-	return self.bonus_agility
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_agility")
+	end
 end

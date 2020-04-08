@@ -21,10 +21,10 @@ function imba_bloodseeker_bloodrage:OnSpellStart()
 	local caster = self:GetCaster()
 	if hTarget:TriggerSpellAbsorb(self) then return end --if target has spell absorption, stop.
 	
-	local bloodrage_modifier = hTarget:AddNewModifier(caster, self, "modifier_imba_bloodrage_buff_stats", {duration = self:GetSpecialValueFor("duration")})
-	
-	if bloodrage_modifier then
-		bloodrage_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
+	if hTarget:GetTeamNumber() ~= caster:GetTeamNumber() then
+		hTarget:AddNewModifier(caster, self, "modifier_imba_bloodrage_buff_stats", {duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance())})
+	else
+		hTarget:AddNewModifier(caster, self, "modifier_imba_bloodrage_buff_stats", {duration = self:GetSpecialValueFor("duration")})
 	end
 	
 	EmitSoundOn("hero_bloodseeker.bloodRage", hTarget)
@@ -310,7 +310,7 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 
 		for _,target in pairs(targets) do
 			local damage = self:GetSpecialValueFor("damage")
-			target:AddNewModifier(caster, self, "modifier_imba_blood_bath_debuff_silence", {duration = self:GetSpecialValueFor("silence_duration")}):SetDuration(self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance()), true)
+			target:AddNewModifier(caster, self, "modifier_imba_blood_bath_debuff_silence", {duration = self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance())})
 			if rupture then
 				if rupture:GetLevel() >= 1 then
 					rupture.from_blood_rite = true
@@ -866,7 +866,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = 0.3})
 	else
 		if hTarget:TriggerSpellAbsorb(self) then return end --if target has spell absorption, stop.
-		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
+		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance())})
 		EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
 		EmitSoundOn("hero_bloodseeker.rupture", hTarget)
 		--How bad was their day?
@@ -1153,12 +1153,23 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_1", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_5", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_7", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range", "components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_bloodseeker_1					= modifier_special_bonus_imba_bloodseeker_1 or class({})
+modifier_special_bonus_imba_bloodseeker_5					= modifier_special_bonus_imba_bloodseeker_5 or class({})
 modifier_special_bonus_imba_bloodseeker_7					= modifier_special_bonus_imba_bloodseeker_7 or class({})
 modifier_special_bonus_imba_bloodseeker_rupture_cast_range	= modifier_special_bonus_imba_bloodseeker_rupture_cast_range or class({})
+
+function modifier_special_bonus_imba_bloodseeker_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_bloodseeker_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_bloodseeker_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_bloodseeker_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_bloodseeker_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_bloodseeker_5:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_bloodseeker_7:IsHidden() 		return true end
 function modifier_special_bonus_imba_bloodseeker_7:IsPurgable()		return false end

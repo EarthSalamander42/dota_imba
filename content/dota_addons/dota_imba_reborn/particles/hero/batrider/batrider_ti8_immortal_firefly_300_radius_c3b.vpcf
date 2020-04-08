@@ -1,0 +1,144 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 64
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_flAnimationRate = 0.5
+			m_bGammaCorrectVertexColors = false
+			m_bSaturateColorPreAlphaBlend = false
+			m_flAddSelfAmount = 1.0
+			m_flOverbrightFactor = 2.0
+			m_hTexture = resource:"materials/particle/fire_particle_10/fire_particle_10_low.vtex"
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 0.35
+		},
+		{
+			_class = "C_OP_RemapVisibilityScalar"
+			m_nFieldOutput = "7"
+			m_flRadiusScale = 0.1
+		},
+		{
+			_class = "C_OP_EndCapTimedDecay"
+			m_flDecayTime = 0.125
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_nFieldOutput = "7"
+			m_flOutput = 0.0
+			m_flLerpTime = 0.125
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_nFieldOutput = "16"
+			m_flOutput = 0.0
+			m_flLerpTime = 0.125
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_flOutput = 0.0
+			m_flLerpTime = 0.125
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_CreateFromParentParticles"
+			m_flIncrement = 0.5
+			m_bRandomDistribution = true
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 10
+			m_bShuffle = true
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 240, 190, 75, 255 ]
+			m_ColorMax = [ 255, 206, 116, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 150.0
+			m_flRadiusMax = 200.0
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 150
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin = [ -32.0, -32.0, 10.0 ]
+			m_OffsetMax = [ 32.0, 32.0, 15.0 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 1.0
+			}
+		},
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flOpEndFadeInTime = 8.0
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 8.0
+			}
+		},
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flOpStartFadeInTime = 3.0
+			m_flOpEndFadeInTime = 5.0
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 8.0
+			}
+		},
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flOpStartFadeInTime = 5.0
+			m_flOpEndFadeInTime = 12.0
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_CONTROL_POINT_COMPONENT"
+				m_nControlPoint = 11
+				m_nVectorComponent = 0
+				m_nMapType = "PF_MAP_TYPE_MULT"
+				m_flMultFactor = 16.0
+			}
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = [  ]
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 6
+}

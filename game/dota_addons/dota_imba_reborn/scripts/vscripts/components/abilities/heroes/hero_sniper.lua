@@ -678,53 +678,32 @@ function modifier_imba_sniper_headshot:OnAttackLanded(keys)
 		if self.headshot_records[keys.record] then
 			-- "The knockback is not applied on units who are already affected by other sources of forced movement."
 			if keys.target.Custom_IsUnderForcedMovement and not keys.target:Custom_IsUnderForcedMovement() then	
-				local knockback_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_knockback", {
+				keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_knockback", {
 					center_x			= self:GetParent():GetAbsOrigin()[1] + 1,
 					center_y			= self:GetParent():GetAbsOrigin()[2] + 1,
 					center_z			= self:GetParent():GetAbsOrigin()[3],
-					duration			= self:GetAbility():GetSpecialValueFor("knockback_duration"),
-					knockback_duration	= self:GetAbility():GetSpecialValueFor("knockback_duration"),
+					duration			= self:GetAbility():GetSpecialValueFor("knockback_duration") * (1 - keys.target:GetStatusResistance()),
+					knockback_duration	= self:GetAbility():GetSpecialValueFor("knockback_duration") * (1 - keys.target:GetStatusResistance()),
 					knockback_distance	= self:GetAbility():GetSpecialValueFor("knockback_distance"),
 					knockback_height	= 0,
 					should_stun			= 0
 				})
-
-				if knockback_modifier then
-					knockback_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("knockback_duration") * (1 - keys.target:GetStatusResistance()), true)
-					
-					-- -- Add Headshot particle effects
-					-- local particle_slow_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf", PATTACH_OVERHEAD_FOLLOW, keys.target)
-					-- ParticleManager:SetParticleControl(particle_slow_fx, 0, keys.target:GetAbsOrigin())
-					-- knockback_modifier:AddParticle(particle_slow_fx, false, false, -1, false, true)
-				end
 				
-				local slow_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_headshot_slow", {duration = self:GetAbility():GetSpecialValueFor("headshot_duration")})
-				
-				if slow_modifier then
-					slow_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("headshot_duration") * (1 - keys.target:GetStatusResistance()), true)
-				end
+				keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_headshot_slow", {duration = self:GetAbility():GetSpecialValueFor("headshot_duration") * (1 - keys.target:GetStatusResistance())})
 			end
 		end
 		
 		-- IMBAfication: Perfect Shot
 		if self.perfectshot_records[keys.record] then
-			local perfectshot_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_perfectshot_stun", {
-				duration	= self:GetAbility():GetSpecialValueFor("perfectshot_stun_duration")
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_perfectshot_stun", {
+				duration	= self:GetAbility():GetSpecialValueFor("perfectshot_stun_duration") * (1 - keys.target:GetStatusResistance())
 			})
-			
-			if perfectshot_modifier then
-				perfectshot_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("perfectshot_stun_duration") * (1 - keys.target:GetStatusResistance()), true)
-			end
 		end
 		
 		if self.take_aim_aimed_assault and self.take_aim_aimed_assault[keys.record] and self:GetCaster():HasTalent("special_bonus_imba_sniper_7") then
-			local eyeshot_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_headshot_eyeshot", {
-				duration	= self:GetCaster():FindTalentValue("special_bonus_imba_sniper_7", "duration")
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_headshot_eyeshot", {
+				duration	= self:GetCaster():FindTalentValue("special_bonus_imba_sniper_7", "duration") * (1 - keys.target:GetStatusResistance())
 			})
-			
-			if eyeshot_modifier then
-				eyeshot_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_sniper_7", "duration") * (1 - keys.target:GetStatusResistance()), true)
-			end
 		end
 	end
 end
@@ -1759,11 +1738,7 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 		ApplyDamage(damageTable)
 
 		-- Apply a ministun to the target
-		local stun_modifier = target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
-		
-		if stun_modifier then
-			stun_modifier:SetDuration(ministun_duration * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration * (1 - target:GetStatusResistance())})
 		
 		-- Memes (give a small cooldown to it so you don't potentially get the voice thing spammed upon multiple projectile lands
 		if target:IsRealHero() and not target:IsAlive() and RollPercentage(100) and (not self.meme_cooldown or GameRules:GetGameTime() - self.meme_cooldown >= 2.0) then
@@ -1783,8 +1758,8 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 				center_x = caster:GetAbsOrigin().x,
 				center_y = caster:GetAbsOrigin().y,
 				center_z = caster:GetAbsOrigin().z,
-				duration = 0.2,
-				knockback_duration = 0.2,
+				duration = 0.2 * (1 - target:GetStatusResistance()),
+				knockback_duration = 0.2 * (1 - target:GetStatusResistance()),
 				knockback_distance = push_distance,
 				knockback_height = 0
 			}
@@ -1946,6 +1921,20 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sniper_7", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sniper_8", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sniper_7		= modifier_special_bonus_imba_sniper_7 or class({})
+modifier_special_bonus_imba_sniper_8		= modifier_special_bonus_imba_sniper_8 or class({})
+
+function modifier_special_bonus_imba_sniper_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_sniper_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sniper_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sniper_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_sniper_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sniper_8:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_sniper_6", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sniper_9", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)

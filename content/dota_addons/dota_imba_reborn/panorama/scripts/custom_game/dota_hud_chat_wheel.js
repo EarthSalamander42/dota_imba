@@ -10,10 +10,10 @@ var heronames = new Array(
 	new Array("Nyx Assassin","Ogre Magi","Omniknight","Oracle","Outworld Devourer","Pangolier","Phantom Assassin","Phantom Lancer"),
 	new Array("Phoenix","Puck","Pudge","Pugna","Queen of Pain","Razor","Riki","Rubick"),
 	new Array("Sand King","Shadow Demon","Shadow Fiend","Shadow Shaman","Silencer","Skywrath Mage","Slardar","Slark"),
-	new Array("Sniper","Spectre","Spirit Breaker","Storm Spirit","Sven","Techies","Templar Assassin","Terrorblade"),
-	new Array("Tidehunter","Timbersaw","Tinker","Tiny","Treant Protector","Troll Warlord","Tusk","Underlord"),
-	new Array("Undying","Ursa","Vengeful Spirit","Venomancer","Viper","Visage","Warlock","Weaver"),
-	new Array("Windranger","Winter Wyvern ","Witch Doctor","Wraith King","Zeus","","","")
+    new Array("Snapfire","Sniper","Spectre","Spirit Breaker","Storm Spirit","Sven","Techies","Templar Assassin"),
+    new Array("Terrorblade","Tidehunter","Timbersaw","Tinker","Tiny","Treant Protector","Troll Warlord","Tusk"),
+    new Array("Underlord","Undying","Ursa","Vengeful Spirit","Venomancer","Viper","Visage","Void Spirit"),
+    new Array("Warlock","Weaver","Windranger","Winter Wyvern ","Witch Doctor","Wraith King","Zeus","")
 );
 var heronames2 = new Array(
 	"abaddon",
@@ -104,6 +104,7 @@ var heronames2 = new Array(
 	"skywrath_mage",
 	"slardar",
 	"slark",
+	"snapfire",
 	"sniper",
 	"spectre",
 	"spirit_breaker",
@@ -126,6 +127,7 @@ var heronames2 = new Array(
 	"venomancer" ,
 	"viper",
 	"visage",
+	"void_spirit",
 	"warlock",
 	"weaver",
 	"windrunner",
@@ -210,7 +212,7 @@ var rings = new Array(
 		new Array(24,18,23,20,21,22,0,0)//new Array(17,18,19,20,21,22,23,24)
 	),
 	new Array(//12 more2
-		new Array("#heros_m-n","#heros_n-p","#heros_p-r","#heros_s-s","#heros_s-t","#heros_t-u","#heros_u-w","#heros_w-z"),
+		new Array("#heros_m-n","#heros_n-p","#heros_p-r","#heros_s-s","#heros_s-t","#heros_t-t","#heros_u-v","#heros_w-z"),
 		new Array(false,false,false,false,false,false,false,false),
 		new Array(nowrings+8,nowrings+9,nowrings+10,nowrings+11,nowrings+12,nowrings+13,nowrings+14,nowrings+15)
 	),

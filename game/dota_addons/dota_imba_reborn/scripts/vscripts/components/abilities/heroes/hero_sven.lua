@@ -114,7 +114,7 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 				if enemy == target and target:TriggerSpellAbsorb(self) then
 				else
 					ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
-					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration})
+					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration * (1 - enemy:GetStatusResistance())})
 					
 					if caster:HasTalent("special_bonus_imba_sven_9") then
 						enemy:Purge(true, false, false, false, false)
@@ -199,6 +199,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_great_cleave", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_great_cleave_active", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_great_cleave_armor_reduction", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 imba_sven_great_cleave = class({})
 function imba_sven_great_cleave:IsHiddenWhenStolen() return false end
@@ -218,6 +219,11 @@ end
 function imba_sven_great_cleave:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
+		
+		-- Random sounds to better signify this was cast
+		self:GetCaster():EmitSound("Hero_Sven.IronWill")
+		self:GetCaster():EmitSound("Hero_Sven.SignetLayer")
+		
 		caster:AddNewModifier(caster, self, "modifier_imba_great_cleave_active", {duration = 5})
 	end
 end
@@ -233,11 +239,9 @@ function modifier_imba_great_cleave:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_great_cleave:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED
-		}
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_great_cleave:OnAttackLanded( params )
@@ -265,57 +269,101 @@ function modifier_imba_great_cleave_active:IsStunDebuff() return false end
 function modifier_imba_great_cleave_active:RemoveOnDeath() return true end
 -------------------------------------------
 
+function modifier_imba_great_cleave_active:OnCreated()
+	local parent = self:GetParent()
+	local fire_fx = ParticleManager:CreateParticle("particles/hero/sven/great_cleave_glow_base.vpcf", PATTACH_ABSORIGIN, parent)
+	ParticleManager:SetParticleControlEnt(fire_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_weapon", parent:GetAbsOrigin(), true)
+	self:AddParticle(fire_fx, false, false, -1, false, false)
+	
+	self.armor_ignore	= self:GetAbility():GetTalentSpecialValueFor("armor_ignore")
+end
+
+function modifier_imba_great_cleave_active:CheckState()
+	return {
+		[MODIFIER_STATE_CANNOT_MISS] = true
+	}
+end
+
 function modifier_imba_great_cleave_active:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-			MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		-- MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+		
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY,
+		
+		MODIFIER_PROPERTY_TOOLTIP
+	}
 end
 
 function modifier_imba_great_cleave_active:GetActivityTranslationModifiers()
 	if self:GetParent():GetName() == "npc_dota_hero_sven" then
 		return "fear"
 	end
-	return 0
 end
 
-function modifier_imba_great_cleave_active:CheckState()
-	local state =
-		{
-			[MODIFIER_STATE_CANNOT_MISS] = true
-		}
-	return state
-end
+-- function modifier_imba_great_cleave_active:GetModifierTotalDamageOutgoing_Percentage( params )
+	-- if IsServer() then
+		-- if params.target and not params.inflictor then
+			-- local armor = params.target:GetPhysicalArmorValue(false)
+			-- local armor_ignore = self:GetAbility():GetTalentSpecialValueFor("armor_ignore")
+			-- local reduction_feedback
+			-- if armor < 0 then
+				-- return 0
+			-- elseif armor <= armor_ignore then
+				-- reduction_feedback = CalculateReductionFromArmor_Percentage( 0, armor )
 
-function modifier_imba_great_cleave_active:GetModifierTotalDamageOutgoing_Percentage( params )
-	if IsServer() then
-		if params.target and not params.inflictor then
-			local armor = params.target:GetPhysicalArmorValue(false)
-			local armor_ignore = self:GetAbility():GetTalentSpecialValueFor("armor_ignore")
-			local reduction_feedback
-			if armor < 0 then
-				return 0
-			elseif armor <= armor_ignore then
-				reduction_feedback = CalculateReductionFromArmor_Percentage( 0, armor )
-
-			else
-				reduction_feedback = CalculateReductionFromArmor_Percentage( (armor - armor_ignore), armor )
-			end
-			-- reduction_feedback = reduction_feedback * (1 + ( reduction_feedback / 100))
+			-- else
+				-- reduction_feedback = CalculateReductionFromArmor_Percentage( (armor - armor_ignore), armor )
+			-- end
+			-- -- reduction_feedback = reduction_feedback * (1 + ( reduction_feedback / 100))
 			
-			return reduction_feedback * -100
-		end
-		return 0
+			-- return reduction_feedback * -100
+		-- end
+		-- return 0
+	-- end
+-- end
+
+function modifier_imba_great_cleave_active:OnAttackLanded(keys)
+	if keys.attacker == self:GetParent() and keys.target then
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_great_cleave_armor_reduction", {armor_ignore = self.armor_ignore})
 	end
 end
 
-function modifier_imba_great_cleave_active:OnCreated()
-	local parent = self:GetParent()
-	local fire_fx = ParticleManager:CreateParticle("particles/hero/sven/great_cleave_glow_base.vpcf", PATTACH_ABSORIGIN, parent)
-	ParticleManager:SetParticleControlEnt(fire_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_weapon", parent:GetAbsOrigin(), true)
-	self:AddParticle(fire_fx, false, false, -1, false, false)
+function modifier_imba_great_cleave_active:OnAttackRecordDestroy(keys)
+	if keys.attacker == self:GetParent() and keys.target then
+		keys.target:RemoveModifierByName("modifier_imba_great_cleave_armor_reduction")
+	end
+end
+
+function modifier_imba_great_cleave_active:OnTooltip()
+	return self.armor_ignore
+end
+
+------------------------------------------------
+-- MODIFIER_IMBA_GREAT_CLEAVE_ARMOR_REDUCTION --
+------------------------------------------------
+
+modifier_imba_great_cleave_armor_reduction	= modifier_imba_great_cleave_armor_reduction or class({})
+
+function modifier_imba_great_cleave_armor_reduction:IsHidden()		return true end
+function modifier_imba_great_cleave_armor_reduction:IsPurgable()	return false end
+
+function modifier_imba_great_cleave_armor_reduction:OnCreated(keys)
+	if not IsServer() then return end
+	
+	self.armor_ignore_base	= keys.armor_ignore
+	
+	self.armor				= self:GetParent():GetPhysicalArmorValue(false)
+	self.armor_ignore		= math.min(self.armor, self.armor_ignore_base) * (-1)
+end
+
+function modifier_imba_great_cleave_armor_reduction:DeclareFunctions()
+	return {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+end
+
+function modifier_imba_great_cleave_armor_reduction:GetModifierPhysicalArmorBonus()
+	return self.armor_ignore
 end
 
 -------------------------------------------
@@ -712,7 +760,8 @@ function modifier_imba_god_strength:OnCreated()
 end
 
 function modifier_imba_god_strength:OnRefresh()
-	self.bonus_dmg_pct = self:GetAbility():GetSpecialValueFor("gods_strength_damage")
+	self.bonus_dmg_pct = self:GetAbility():GetTalentSpecialValueFor("bonus_dmg_pct")
+	self.gods_strength_bonus_str	= self:GetAbility():GetSpecialValueFor("gods_strength_bonus_str")
 	self.aura_radius_scepter = self:GetAbility():GetSpecialValueFor("aura_radius_scepter")
 end
 
@@ -788,7 +837,11 @@ function modifier_imba_god_strength:DeclareFunctions()
 end
 
 function modifier_imba_god_strength:GetModifierBaseDamageOutgoing_Percentage()
-	return self.bonus_dmg_pct
+	if self:GetAbility() then
+		return self:GetAbility():GetTalentSpecialValueFor("bonus_dmg_pct")
+	else
+		return self.bonus_dmg_pct
+	end
 end
 
 function modifier_imba_god_strength:GetModifierBonusStats_Strength()
@@ -1047,9 +1100,17 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_sven_4", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sven_5", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sven_6", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sven_7", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sven_8", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sven_9", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_sven_4	= class({})
 modifier_special_bonus_imba_sven_5	= class({})
+modifier_special_bonus_imba_sven_6	= modifier_special_bonus_imba_sven_6 or class({})
+modifier_special_bonus_imba_sven_7	= modifier_special_bonus_imba_sven_8 or class({})
+modifier_special_bonus_imba_sven_8	= modifier_special_bonus_imba_sven_8 or class({})
+modifier_special_bonus_imba_sven_9	= modifier_special_bonus_imba_sven_8 or class({})
 
 function modifier_special_bonus_imba_sven_4:IsHidden() 			return true end
 function modifier_special_bonus_imba_sven_4:IsPurgable() 		return false end
@@ -1059,6 +1120,22 @@ function modifier_special_bonus_imba_sven_5:IsHidden() 			return true end
 function modifier_special_bonus_imba_sven_5:IsPurgable() 		return false end
 function modifier_special_bonus_imba_sven_5:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_sven_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_sven_6:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sven_7:IsHidden() 			return true end
+function modifier_special_bonus_imba_sven_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sven_8:IsHidden() 			return true end
+function modifier_special_bonus_imba_sven_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sven_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_sven_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_9:RemoveOnDeath() 	return false end
+
 function imba_sven_storm_bolt:OnOwnerSpawned()
 	if not IsServer() then return end
 
@@ -1067,10 +1144,22 @@ function imba_sven_storm_bolt:OnOwnerSpawned()
 	end
 end
 
+function imba_sven_great_cleave:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_sven_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_6") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_6"), "modifier_special_bonus_imba_sven_6", {})
+	end
+end
+
 function imba_sven_gods_strength:OnOwnerSpawned()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_sven_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_4"), "modifier_special_bonus_imba_sven_4", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_sven_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_8") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_8"), "modifier_special_bonus_imba_sven_8", {})
 	end
 end

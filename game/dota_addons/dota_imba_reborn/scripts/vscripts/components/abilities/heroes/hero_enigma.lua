@@ -67,7 +67,7 @@ function SearchForEngimaThinker(caster, victim, length, talent)
 	if Black_Hole.thinker and not Black_Hole.thinker:IsNull() then hThinker = Black_Hole.thinker end -- black hole
 
 	iLenght = CalculatePullLength(caster, victim, length)
-	victim:AddNewModifier(caster, nil, "modifier_imba_enigma_generic_pull", {duration = 1.0, target = hThinker:entindex(), length = iLenght})
+	victim:AddNewModifier(caster, nil, "modifier_imba_enigma_generic_pull", {duration = 1.0 * (1 - victim:GetStatusResistance()), target = hThinker:entindex(), length = iLenght})
 end
 
 modifier_imba_enigma_generic_pull = modifier_imba_enigma_generic_pull or class({})
@@ -286,7 +286,7 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
 		damage_type = DAMAGE_TYPE_MAGICAL,
 		ability = ability}
 	ApplyDamage(damageTable)
-	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = self.stun_duration})
+	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = self.stun_duration * (1 - target:GetStatusResistance())})
 	EmitSoundOn("Hero_Enigma.MaleficeTick", target)
 	
 	if ability:GetAutoCastState() then
@@ -364,16 +364,16 @@ function modifier_imba_enigma_eidolon:IsStunDebuff() 		return false end
 function modifier_imba_enigma_eidolon:RemoveOnDeath() 	return true  end
 
 function modifier_imba_enigma_eidolon:DeclareFunctions()
-	local funcs =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
-			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		}
-	return funcs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
 end
 
 function modifier_imba_enigma_eidolon:OnCreated( keys )
@@ -408,9 +408,15 @@ function modifier_imba_enigma_eidolon:GetModifierMoveSpeedBonus_Constant() retur
 function modifier_imba_enigma_eidolon:GetModifierAttackSpeedBonus_Constant() return self.attack_speed_bonus end
 function modifier_imba_enigma_eidolon:GetModifierPreAttack_BonusDamage() return self:GetStackCount() end
 
+function modifier_imba_enigma_eidolon:GetModifierAttackRangeBonus()
+	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetCaster():HasTalent("special_bonus_imba_enigma_demonic_conversion_attack_range") then
+		return self:GetCaster():FindTalentValue("special_bonus_imba_enigma_demonic_conversion_attack_range")
+	end
+end
+
 function modifier_imba_enigma_eidolon:OnAttackLanded(keys)
 	if not IsServer() then return end
-	if keys.attacker == self:GetParent() and not keys.target:IsBuilding() then
+	if keys.attacker == self:GetParent() and not keys.target:IsBuilding() and self:GetParent():GetOwner() == self:GetCaster() then
 		if self:GetParent():GetTeamNumber() ~= keys.target:GetTeamNumber() then
 			local target = keys.target
 			if not target:HasModifier("modifier_imba_enigma_eidolon_attack_counter") then
@@ -420,7 +426,7 @@ function modifier_imba_enigma_eidolon:OnAttackLanded(keys)
 				self.last_target:FindModifierByNameAndCaster("modifier_imba_enigma_eidolon_attacks_debuff", self:GetParent()):Destroy()
 			end
 			self.last_target = target
-			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attacks_debuff", {duration = self:GetAbility():GetSpecialValueFor("increased_mass_duration")})
+			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attacks_debuff", {duration = self:GetAbility():GetSpecialValueFor("increased_mass_duration") * (1 - target:GetStatusResistance())})
 		end
 
 		if self.attacks > 1 then
@@ -826,7 +832,7 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 			for _, building in pairs(buildings) do
 				ApplyDamage({victim = building, attacker = self:GetCaster(), damage = self.dmg, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
 				
-				building:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 1.0})
+				building:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 1.0 * (1 - building:GetStatusResistance())})
 			end
 		end
 	end
@@ -1050,6 +1056,36 @@ function modifier_imba_enigma_black_hole_handler:GetActivityTranslationModifiers
 	end
 end
 
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_enigma_8", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_malefice_damage", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_3", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_4", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_enigma_8	= modifier_special_bonus_imba_enigma_8 or class({})
+modifier_special_bonus_imba_enigma_malefice_damage	= modifier_special_bonus_imba_enigma_malefice_damage or class({})
+modifier_special_bonus_imba_enigma_3	= modifier_special_bonus_imba_enigma_3 or class({})
+modifier_special_bonus_imba_enigma_4	= modifier_special_bonus_imba_enigma_4 or class({})
+
+function modifier_special_bonus_imba_enigma_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_enigma_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_enigma_malefice_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_enigma_malefice_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_malefice_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_enigma_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_enigma_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_enigma_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_enigma_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_4:RemoveOnDeath() 	return false end
+
 ---------------------------------------------------------------------------------------------------------
 -- Adding separate modifier initializations here for talents that need client-side interaction as well --
 ---------------------------------------------------------------------------------------------------------
@@ -1071,3 +1107,17 @@ modifier_special_bonus_imba_enigma_5 = class ({})
 function modifier_special_bonus_imba_enigma_5:IsHidden()		return true end
 function modifier_special_bonus_imba_enigma_5:IsPurgable()		return false end
 function modifier_special_bonus_imba_enigma_5:RemoveOnDeath()	return false end
+
+LinkLuaModifier("modifier_special_bonus_imba_enigma_demonic_conversion_attack_range", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_enigma_demonic_conversion_attack_range	= modifier_special_bonus_imba_enigma_demonic_conversion_attack_range or class({})
+
+function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:IsHidden()		return true end
+function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:IsPurgable()	return false end
+function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:RemoveOnDeath()	return false end
+
+function imba_enigma_demonic_conversion:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_enigma_demonic_conversion_attack_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_demonic_conversion_attack_range") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_demonic_conversion_attack_range"), "modifier_special_bonus_imba_enigma_demonic_conversion_attack_range", {})
+	end
+end

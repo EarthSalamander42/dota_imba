@@ -132,7 +132,7 @@ function modifier_imba_zuus_arc_lightning:OnIntervalThink()
 	if (self.unit_counter >= self.jump_count and self.jump_count > 0) or not self.zapped then
 		-- IMBAfication: Static Chain (do the same loop as above but check additional range and only if they have the Static Field modifier
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.current_unit:GetAbsOrigin(), nil, self.radius * self.static_chain_mult, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)) do
-			if not self.units_affected[enemy] or (self:GetCaster():HasTalent("special_bonus_imba_zuus_8") and self.units_affected[enemy] < self:GetCaster():FindTalentValue("special_bonus_imba_zuus_8", "additional_hits")) and enemy ~= self.current_unit and enemy ~= self.previous_unit and enemy:HasModifier("modifier_imba_zuus_static_charge") then
+			if (not self.units_affected[enemy] or (self:GetCaster():HasTalent("special_bonus_imba_zuus_8") and self.units_affected[enemy] < self:GetCaster():FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))) and enemy ~= self.current_unit and enemy ~= self.previous_unit and enemy:HasModifier("modifier_imba_zuus_static_charge") then
 				enemy:EmitSound("Hero_Zuus.ArcLightning.Target")
 				
 				self.lightning_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.current_unit)
@@ -153,9 +153,9 @@ function modifier_imba_zuus_arc_lightning:OnIntervalThink()
 				
 				self.zapped								= true
 				
-				if self:GetCaster():HasModifier("modifier_imba_zuus_static_field") then
-					self:GetCaster():FindModifierByName("modifier_imba_zuus_static_field"):Apply(enemy)
-				end
+				-- if self:GetCaster():HasModifier("modifier_imba_zuus_static_field") then
+					-- self:GetCaster():FindModifierByName("modifier_imba_zuus_static_field"):Apply(enemy)
+				-- end
 				
 				ApplyDamage({
 					victim 			= enemy,
@@ -539,14 +539,14 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		elseif target ~= nil and target:GetTeam() ~= caster:GetTeam() then
 			
 			if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() then
-				local static_charge_modifier = target:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0})
+				local static_charge_modifier = target:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0 * (1 - target:GetStatusResistance())})
 				
 				if static_charge_modifier ~= nil then 
 					static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + ability:GetSpecialValueFor("static_charge_stacks"))
 				end
 			end
 				
-			target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+			target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 			if caster:HasTalent("special_bonus_imba_zuus_5") then 
 				local root_duration = 0.5
@@ -554,9 +554,8 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 				if thundergod_focus_modifier ~= nil then 
 					root_duration = 0.5 + (thundergod_focus_modifier:GetStackCount() * 0.25)
 				end
-
-				print("Root duration:", root_duration)
-				target:AddNewModifier(caster, ability, "modifier_rooted", {duration = root_duration})
+				
+				target:AddNewModifier(caster, ability, "modifier_rooted", {duration = root_duration * (1 - target:GetStatusResistance())})
 			end
 
 			--7.21 changes (why you gotta complicate things Valve)
@@ -755,7 +754,7 @@ function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 					ApplyDamage(damage_table)
 
 					-- Add a static charge 
-					local static_charge_modifier = unit:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration})
+					local static_charge_modifier = unit:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration * (1 - unit:GetStatusResistance())})
 					if static_charge_modifier ~= nil then
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)	
 					end
@@ -797,10 +796,9 @@ function modifier_imba_zuus_static_field:Apply(target)
 	ApplyDamage(damage_table)
 
 	-- Add a static charge 
-	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration})
+	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration * (1 - target:GetStatusResistance())})
 	if static_charge_modifier then
 		static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
-		static_charge_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
 	end
 end
 
@@ -1394,7 +1392,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 				-- Does not apply the static charge stacks on heroes that are greater than 2500 distance away
 				if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() and (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() <= 2500 then
 					-- Add static charges prior to inflicting the damage
-					local static_charge_modifier = hero:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0})
+					local static_charge_modifier = hero:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0 * (1 - hero:GetStatusResistance())})
 					
 					if static_charge_modifier ~= nil then
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
@@ -1438,7 +1436,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 				hero:EmitSound("Hero_Zuus.GodsWrath.Target")
 				hero:AddNewModifier(caster, ability, "modifier_imba_zuus_lightning_fow", {duration = sight_duration, radius = true_sight_radius})
 				
-				local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})
+				local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration * (1 - hero:GetStatusResistance())})
 				if true_sight ~= nil then
 					true_sight:SetStackCount(true_sight_radius)
 				end
@@ -1545,7 +1543,7 @@ LinkLuaModifier("modifier_imba_zuus_thundergods_awakening", "components/abilitie
 modifier_imba_zuus_thundergods_awakening = class({})
 function modifier_imba_zuus_thundergods_awakening:IsHidden() 	return false end
 function modifier_imba_zuus_thundergods_awakening:IsBuff() 		return true end
-function modifier_imba_zuus_thundergods_awakening:IsPurgable() 	return false end
+-- function modifier_imba_zuus_thundergods_awakening:IsPurgable() 	return false end
 function modifier_imba_zuus_thundergods_awakening:OnCreated()
 	if IsServer() then 
 		--self.static_field = ParticleManager:CreateParticle("particles/hero/zeus/awakening_zuus_static_field.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
@@ -1614,6 +1612,31 @@ function modifier_imba_zuus_thundergods_awakening:OnRemoved()
 		ParticleManager:DestroyParticle(self.static_field, true)
 	end
 end
+
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_zuus_4", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_zuus_9", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_zuus_8", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_zuus_4	= modifier_special_bonus_imba_zuus_4 or class({})
+modifier_special_bonus_imba_zuus_9	= modifier_special_bonus_imba_zuus_9 or class({})
+modifier_special_bonus_imba_zuus_8	= modifier_special_bonus_imba_zuus_8 or class({})
+
+function modifier_special_bonus_imba_zuus_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_zuus_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_zuus_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_8:RemoveOnDeath() 	return false end
 
 -- Client-side helper functions --
 

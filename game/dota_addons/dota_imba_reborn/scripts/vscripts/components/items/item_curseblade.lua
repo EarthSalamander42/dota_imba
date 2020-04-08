@@ -64,7 +64,7 @@ function item_imba_curseblade:OnSpellStart()
 		end
 
 		-- Add the curse debuff to the target
-		target:AddNewModifier(caster, ability, debuff, {duration = duration})
+		target:AddNewModifier(caster, ability, debuff, {duration = duration * (1 - target:GetStatusResistance())})
 
 		-- Find all modifiers on caster
 		local modifiers = caster:FindAllModifiers()

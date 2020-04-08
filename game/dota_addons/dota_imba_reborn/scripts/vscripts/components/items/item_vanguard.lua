@@ -48,23 +48,17 @@ function modifier_item_imba_stout_shield:GetAttributes()	return MODIFIER_ATTRIBU
 -- function modifier_item_imba_stout_shield:GetCustomDamageBlockUnique()
 	-- return self:GetAbility():GetSpecialValueFor("damage_block") end
 
-function modifier_item_imba_stout_shield:OnCreated()
-	self.damage_block_melee		= self:GetAbility():GetSpecialValueFor("damage_block_melee")
-	self.damage_block_ranged	= self:GetAbility():GetSpecialValueFor("damage_block_ranged")
-	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
-end
-
 -- Declare modifier events/properties
 function modifier_item_imba_stout_shield:DeclareFunctions()
 	return {MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK}
 end
 
 function modifier_item_imba_stout_shield:GetModifierPhysical_ConstantBlock()
-	if RollPseudoRandom(self.block_chance, self) then
+	if self:GetAbility() and RollPseudoRandom(self:GetAbility():GetSpecialValueFor("block_chance"), self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
+			return self:GetAbility():GetSpecialValueFor("damage_block_melee")
 		else
-			return self.damage_block_ranged
+			return self:GetAbility():GetSpecialValueFor("damage_block_ranged")
 		end
 	end
 end

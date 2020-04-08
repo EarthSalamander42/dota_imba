@@ -137,7 +137,7 @@ function item_imba_ogre_seal_totem:TryToDamage()
 						-- IDK why this sound won't play so w/e...
 						EmitSoundOn( "Dungeon.BloodSplatterImpact", enemy )
 					else
-						enemy:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.stun_duration } )
+						enemy:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.stun_duration * (1 - enemy:GetStatusResistance()) } )
 					end
 				end
 			end

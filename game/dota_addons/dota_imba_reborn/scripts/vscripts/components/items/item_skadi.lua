@@ -100,7 +100,7 @@ function item_imba_skadi:OnSpellStart()
 			ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 			-- Apply freeze modifier
-			enemy:AddNewModifier(caster, self, "modifier_item_imba_skadi_freeze", {duration = duration})
+			enemy:AddNewModifier(caster, self, "modifier_item_imba_skadi_freeze", {duration = duration * (1 - enemy:GetStatusResistance())})
 
 			-- Apply ministun
 			enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = 0.01})
@@ -277,10 +277,7 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		local slow_duration = self.min_duration + (self.max_duration - self.min_duration) * math.max( self.slow_range_cap - target_distance, 0) / self.slow_range_cap
 
 		-- Apply the slow
-		local slow_modifier = target:AddNewModifier(attacker, self:GetAbility(), "modifier_item_imba_skadi_slow", {duration = slow_duration})
-		if slow_modifier ~= nil then 
-			slow_modifier:SetDuration(slow_duration * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(attacker, self:GetAbility(), "modifier_item_imba_skadi_slow", {duration = slow_duration * (1 - target:GetStatusResistance())})
 	end
 end
 
