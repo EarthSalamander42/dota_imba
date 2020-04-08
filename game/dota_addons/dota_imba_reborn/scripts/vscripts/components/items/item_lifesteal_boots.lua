@@ -57,16 +57,9 @@ function modifier_imba_lifesteal_boots:GetTexture()
 end
 
 function modifier_imba_lifesteal_boots:OnCreated()
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-
-	self.bonus_movement_speed = self.ability:GetSpecialValueFor("bonus_movement_speed")
-	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
-	self.armor = self.ability:GetSpecialValueFor("armor")
-	
 	if IsServer() then
 		-- Change to lifesteal projectile, if there's nothing "stronger"
-		ChangeAttackProjectileImba(self.caster)
+		ChangeAttackProjectileImba(self:GetCaster())
 	end
 end
 
@@ -74,7 +67,7 @@ end
 function modifier_imba_lifesteal_boots:OnDestroy()
 	if IsServer() then
 		-- Remove lifesteal projectile
-		ChangeAttackProjectileImba(self.caster)
+		ChangeAttackProjectileImba(self:GetCaster())
 	end
 end
 
@@ -92,15 +85,21 @@ function modifier_imba_lifesteal_boots:DeclareFunctions()
 end
 
 function modifier_imba_lifesteal_boots:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_damage")
+	end
 end
 
 function modifier_imba_lifesteal_boots:GetModifierMoveSpeedBonus_Special_Boots()
-	return self.bonus_movement_speed
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	end
 end
 
 function modifier_imba_lifesteal_boots:GetModifierPhysicalArmorBonus()
-	return self.armor
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("armor")
+	end
 end
 
 function modifier_imba_lifesteal_boots:GetModifierLifesteal()
@@ -117,6 +116,8 @@ function modifier_imba_lifesteal_boots_buff:IsPurgable() return false end
 function modifier_imba_lifesteal_boots_buff:IsDebuff() return false end
 
 function modifier_imba_lifesteal_boots_buff:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
