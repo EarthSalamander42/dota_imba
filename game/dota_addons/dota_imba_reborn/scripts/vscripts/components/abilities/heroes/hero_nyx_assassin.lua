@@ -194,7 +194,7 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 	ParticleManager:ReleaseParticleIndex(particle_impact_fx)
 
 	-- Stun target
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = duration, slow_after_stun = slow_after_stun * (1 - target:GetStatusResistance())})
+	target:AddNewModifier(caster, ability, modifier_stun, {duration = duration * (1 - target:GetStatusResistance()), slow_after_stun = slow_after_stun})
 
 	-- Hurl target in the air
 	local knockbackProperties =

@@ -1261,11 +1261,6 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-Attempted to create unknown modifier type !
-Attempted to create unknown modifier type !
-Attempted to create unknown modifier type !
-Attempted to create unknown modifier type !
-
 LinkLuaModifier("modifier_special_bonus_imba_mystic_snake_mana_steal", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_medusa_extra_split_shot_targets", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_medusa_stone_gaze_duration", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)

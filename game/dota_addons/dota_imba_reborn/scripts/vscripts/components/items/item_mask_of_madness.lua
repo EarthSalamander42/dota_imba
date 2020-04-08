@@ -24,7 +24,6 @@
 
 item_imba_mask_of_madness = class({})
 LinkLuaModifier("modifier_imba_mask_of_madness", "components/items/item_mask_of_madness.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mask_of_madness_unique", "components/items/item_mask_of_madness.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mask_of_madness_berserk", "components/items/item_mask_of_madness.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mask_of_madness_rage", "components/items/item_mask_of_madness.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -41,7 +40,7 @@ function item_imba_mask_of_madness:OnSpellStart()
 	EmitSoundOn("DOTA_Item.MaskOfMadness.Activate", self:GetCaster())
 
 	-- Berserk!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_mask_of_madness_berserk", {duration = self:GetSpecialValueFor("berserk_duration")})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mask_of_madness_berserk", {duration = self:GetSpecialValueFor("berserk_duration")})
 end
 
 -- Passive MoM modifier
@@ -102,7 +101,7 @@ function modifier_imba_mask_of_madness:GetModifierAttackSpeedBonus_Constant()
 	end
 end
 
-function modifier_imba_mask_of_madness_unique:GetModifierLifesteal()
+function modifier_imba_mask_of_madness:GetModifierLifesteal()
 	if self:GetAbility() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self then
 		return self:GetAbility():GetSpecialValueFor("lifesteal_pct")
 	end
