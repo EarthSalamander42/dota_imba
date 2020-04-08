@@ -24,7 +24,6 @@
 ---------------------------------
 item_imba_ancient_janggo = class({})
 LinkLuaModifier("modifier_imba_drums", "components/items/item_drums.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_drums_aura", "components/items/item_drums.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_drums_aura_effect", "components/items/item_drums.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_drums_active", "components/items/item_drums.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -121,22 +120,6 @@ function modifier_imba_drums:IsPurgable()		return false end
 function modifier_imba_drums:RemoveOnDeath()	return false end
 function modifier_imba_drums:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_drums:OnCreated()
-	-- Ability specials
-	self.bonus_int = self:GetAbility():GetSpecialValueFor("bonus_int")
-	self.bonus_str = self:GetAbility():GetSpecialValueFor("bonus_str")
-	self.bonus_agi = self:GetAbility():GetSpecialValueFor("bonus_agi")
-	self.bonus_mana_regen = self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
-	self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
-
-	if IsServer() then
-		-- If it is the first drums in inventory, add the aura modifier
-		if not self:GetCaster():HasModifier("modifier_imba_drums_aura") then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drums_aura", {})
-		end
-	end
-end
-
 function modifier_imba_drums:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -149,87 +132,74 @@ function modifier_imba_drums:DeclareFunctions()
 end
 
 function modifier_imba_drums:GetModifierBonusStats_Intellect()
-	return self.bonus_int
-end
-
-function modifier_imba_drums:GetModifierBonusStats_Strength()
-	return self.bonus_str
-end
-
-function modifier_imba_drums:GetModifierBonusStats_Agility()
-	return self.bonus_agi
-end
-
-function modifier_imba_drums:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen
-end
-
-function modifier_imba_drums:GetModifierMoveSpeedBonus_Constant()
-	return self.bonus_movement_speed
-end
-
-function modifier_imba_drums:OnDestroy()
-	if IsServer() then
-		-- If it is the last drums in inventory, remove the aura modifier
-		if not self:GetCaster():HasModifier("modifier_imba_drums") then
-			self:GetCaster():RemoveModifierByName("modifier_imba_drums_aura")
-		end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_int")
 	end
 end
 
-
--- Drums aura modifier
-modifier_imba_drums_aura = class({})
-
-function modifier_imba_drums_aura:OnCreated()
-	-- Ability specials
-	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+function modifier_imba_drums:GetModifierBonusStats_Strength()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_str")
+	end
 end
 
-function modifier_imba_drums_aura:IsDebuff() return false end
-function modifier_imba_drums_aura:AllowIllusionDuplicate() return true end
-function modifier_imba_drums_aura:IsHidden() return true end
-function modifier_imba_drums_aura:IsPurgable() return false end
-
-function modifier_imba_drums_aura:GetAuraRadius()
-	return self.radius
+function modifier_imba_drums:GetModifierBonusStats_Agility()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_agi")
+	end
 end
 
-function modifier_imba_drums_aura:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NONE
+function modifier_imba_drums:GetModifierConstantManaRegen()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+	end
 end
 
-function modifier_imba_drums_aura:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+function modifier_imba_drums:GetModifierMoveSpeedBonus_Constant()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	end
 end
 
-function modifier_imba_drums_aura:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-end
-
-function modifier_imba_drums_aura:GetModifierAura()
-	return "modifier_imba_drums_aura_effect"
-end
-
-function modifier_imba_drums_aura:IsAura()
+function modifier_imba_drums:IsAura()
 	return true
 end
 
-function modifier_imba_drums_aura:GetAuraEntityReject(target)
+function modifier_imba_drums:GetAuraRadius()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("radius")
+	end
+end
 
+function modifier_imba_drums:GetAuraSearchFlags()
+	return DOTA_UNIT_TARGET_FLAG_NONE
+end
+
+function modifier_imba_drums:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
+
+function modifier_imba_drums:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_imba_drums:GetModifierAura()
+	return "modifier_imba_drums_aura_effect"
+end
+
+function modifier_imba_drums:GetAuraEntityReject(target)
 	-- If the target has higher level aura (Siege), do not apply the aura
 	if target:HasModifier("modifier_imba_siege_cuirass_aura_positive_effect") then
 		return true
 	end
-
-	-- Apply for the rest
-	return false
 end
 
 -- Drum aura modifier effect
 modifier_imba_drums_aura_effect = class({})
 
 function modifier_imba_drums_aura_effect:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability specials
 	self.aura_ms = self:GetAbility():GetSpecialValueFor("aura_ms")
 	self.aura_as = self:GetAbility():GetSpecialValueFor("aura_as")

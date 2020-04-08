@@ -417,9 +417,13 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				end
 			end
 
-			-- if vote count is lower than player count / 4, default to standard
+			-- if vote count is lower than player count / 4, default to whatever the standard is
 			if highest_vote < 5 then
-				highest_key = 1
+				if GetMapName() == "imba_10v10" then
+					highest_key = 3
+				else
+					highest_key = 1
+				end
 			else
 				-- Check for a tie by counting how many values have the highest number of votes
 				local tieTable = {}

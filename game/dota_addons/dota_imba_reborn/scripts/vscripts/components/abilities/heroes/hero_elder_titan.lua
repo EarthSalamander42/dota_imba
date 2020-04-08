@@ -718,10 +718,11 @@ function modifier_imba_elder_titan_natural_order:GetEffectName()
 end
 
 function modifier_imba_elder_titan_natural_order:OnCreated()
-	local ability = self:GetAbility()
-	self.base_armor_reduction = ability:GetSpecialValueFor("armor_reduction_pct")
-	self.magic_resist_reduction = ability:GetSpecialValueFor("magic_resistance_pct")
-	self.status_resistance_pct	= ability:GetSpecialValueFor("status_resistance_pct")
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.base_armor_reduction = self:GetAbility():GetSpecialValueFor("armor_reduction_pct")
+	self.magic_resist_reduction = self:GetAbility():GetSpecialValueFor("magic_resistance_pct")
+	self.status_resistance_pct	= self:GetAbility():GetSpecialValueFor("status_resistance_pct")
 end
 
 function modifier_imba_elder_titan_natural_order:DeclareFunctions()
