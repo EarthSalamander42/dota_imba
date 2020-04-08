@@ -19,8 +19,8 @@
 -- Date: 04/08/2017
 
 item_imba_heart = item_imba_heart or class({})
+
 LinkLuaModifier("modifier_item_imba_heart", "components/items/item_heart", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_heart_unique", "components/items/item_heart", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_heart_aura_buff", "components/items/item_heart", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_heart:GetIntrinsicModifierName()
@@ -34,7 +34,6 @@ function item_imba_heart:GetCooldown(level)
 		return self:GetSpecialValueFor("regen_cooldown_melee")
 	end
 end
-
 
 -- Stats modifier (stackable)
 modifier_item_imba_heart = modifier_item_imba_heart or class({})
@@ -51,6 +50,22 @@ function modifier_item_imba_heart:OnCreated()
     for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
         mod:GetAbility():SetSecondaryCharges(_)
     end
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_item_imba_heart:OnIntervalThink()
+	if not self:GetAbility() then
+		self:StartIntervalThink(-1)
+		self:Destroy()
+		return nil
+	end
+
+	if self:GetAbility():GetCooldownTimeRemaining() == 0 then
+		self:SetStackCount(self:GetAbility():GetSpecialValueFor("noncombat_regen"))
+	else
+		self:SetStackCount(self:GetAbility():GetSpecialValueFor("base_regen"))
+	end
 end
 
 function modifier_item_imba_heart:OnDestroy()

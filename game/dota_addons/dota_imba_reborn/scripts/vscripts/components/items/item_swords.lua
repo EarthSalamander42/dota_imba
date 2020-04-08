@@ -814,23 +814,33 @@ function modifier_item_imba_yasha_and_kaya:DeclareFunctions()
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_attack_speed
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierMoveSpeedBonus_Percentage_Unique()
-	return self.bonus_ms
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_ms")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierBonusStats_Agility()
-	return self.bonus_agility
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_agility")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierPercentageManacost()
-	return self.bonus_cdr
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	end
 end
 
 -- As of 7.23, the items that Kaya's tree contains are as follows:
@@ -842,16 +852,19 @@ end
 --   - Arcane Nexus
 --   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_yasha_and_kaya:GetModifierPercentageCooldown()
-    if self:GetAbility():GetSecondaryCharges() == 1 and
+	if self:GetAbility() and
+    self:GetAbility():GetSecondaryCharges() == 1 and
 	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
 	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
 	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
-        return self.bonus_cdr
+        return self:GetAbility():GetSpecialValueFor("bonus_cdr")
     end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierSpellAmplify_PercentageUnique()
-	return self.spell_amp
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("spell_amp")
+	end
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -872,29 +885,32 @@ function modifier_item_imba_yasha_and_kaya_active:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
+function modifier_item_imba_yasha_and_kaya_active:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.bonus_cdr_active		= self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	self.bonus_evasion_active	= self:GetAbility():GetSpecialValueFor("bonus_evasion_active")
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_yasha_and_kaya_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_yasha_and_kaya_active:GetModifierPercentageCooldown()
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	return self.bonus_cdr_active
 end
 
 function modifier_item_imba_yasha_and_kaya_active:GetModifierPercentageManacost()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	return self.bonus_cdr_active
 end
 
 function modifier_item_imba_yasha_and_kaya_active:GetModifierEvasion_Constant()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_evasion_active")
+	return self.bonus_evasion_active
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -928,7 +944,7 @@ function modifier_item_imba_triumvirate:GetAttributes()	return MODIFIER_ATTRIBUT
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
@@ -937,7 +953,6 @@ function modifier_item_imba_triumvirate:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-	return funcs
 end
 
 function modifier_item_imba_triumvirate:GetModifierPreAttack_BonusDamage()
