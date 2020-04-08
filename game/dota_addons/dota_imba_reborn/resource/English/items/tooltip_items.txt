@@ -985,7 +985,7 @@
 "DOTA_Tooltip_modifier_item_imba_silver_edge_invis_panic_debuff_Description"    "RUN AWAY. WAIT, NO, HELP MY TEAMMATE. WAIT, NO, HE'S DEAD FUUUUUUUUUUUUUUUUU (Turn rate slowed by %dMODIFIER_PROPERTY_TURN_RATE_PERCENTAGE%%%, total outgoing damage reduced by %dMODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE%%%, and passives disabled.)"
 
 "DOTA_Tooltip_modifier_item_imba_silver_edge_invis_break_debuff"                "Break"
-"DOTA_Tooltip_modifier_item_imba_silver_edge_invis_break_debuff_Description"    "Passives are disabled, healing and health regeneration reduced by %dMODIFIER_PROPERTY_TOOLTIP%%%, and outgoing damage reduced by %eMODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_item_imba_silver_edge_invis_break_debuff_Description"    "Passives are disabled, healing and health regeneration reduced by %dMODIFIER_PROPERTY_TOOLTIP%%%, and outgoing damage reduced by %dMODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE%%%."
 
 // Skull Basher
 "DOTA_Tooltip_Ability_item_imba_skull_basher"                  "Skull Basher"
