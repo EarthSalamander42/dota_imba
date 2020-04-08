@@ -32,30 +32,30 @@ function base_ability_dual_breath:GetCastRange(Location, Target)
 	end
 end
 
-function base_ability_dual_breath:OnUpgrade()
+-- function base_ability_dual_breath:OnUpgrade()
 
-	if IsServer() then
-		local caster = self:GetCaster()
-		-- Do not switch dual breath abilities if it is a stolen spell
-		if self:IsStolen() then
-			return nil
-		end
+	-- if IsServer() then
+		-- local caster = self:GetCaster()
+		-- -- Do not switch dual breath abilities if it is a stolen spell
+		-- if self:IsStolen() then
+			-- return nil
+		-- end
 
-		local ability_other_breath_name = self.ability_other_breath_name
+		-- local ability_other_breath_name = self.ability_other_breath_name
 
-		if not ability_other_breath_name then
-			return nil
-		end
+		-- if not ability_other_breath_name then
+			-- return nil
+		-- end
 
-		-- Prevent dead lock updating each other
-		local ability_level = self:GetLevel()
-		if not caster.breath_level or caster.breath_level ~= ability_level then
-			caster.breath_level = ability_level
-			SetAbilityLevelIfPresent(caster, ability_other_breath_name, ability_level)
-		end
-	end
+		-- -- Prevent dead lock updating each other
+		-- local ability_level = self:GetLevel()
+		-- if not caster.breath_level or caster.breath_level ~= ability_level then
+			-- caster.breath_level = ability_level
+			-- SetAbilityLevelIfPresent(caster, ability_other_breath_name, ability_level)
+		-- end
+	-- end
 
-end
+-- end
 
 function base_ability_dual_breath:OnSpellStart()
 
@@ -492,6 +492,16 @@ modifier_imba_jakiro_dual_breath_self_disable_turning	= modifier_imba_jakiro_dua
 
 function imba_jakiro_dual_breath:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_1")
+end
+
+function imba_jakiro_dual_breath:OnUpgrade()
+	if self:GetCaster():HasAbility("imba_jakiro_fire_breath") then
+		self:GetCaster():FindAbilityByName("imba_jakiro_fire_breath"):SetLevel(self:GetLevel())
+	end
+	
+	if self:GetCaster():HasAbility("imba_jakiro_ice_breath") then
+		self:GetCaster():FindAbilityByName("imba_jakiro_ice_breath"):SetLevel(self:GetLevel())
+	end
 end
 
 function imba_jakiro_dual_breath:OnSpellStart()
