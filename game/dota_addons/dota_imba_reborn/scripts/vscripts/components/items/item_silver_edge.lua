@@ -361,6 +361,8 @@ function modifier_item_imba_silver_edge_invis_panic_debuff:IsPurgable() return t
 
 -- Turnrate slow
 function modifier_item_imba_silver_edge_invis_panic_debuff:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	local ability   =   self:GetAbility()
 
 	self.turnrate   		= ability:GetSpecialValueFor("panic_turnrate_slow")
@@ -404,10 +406,10 @@ function modifier_item_imba_silver_edge_invis_break_debuff:IsPurgable() return f
 
 -- Turnrate slow
 function modifier_item_imba_silver_edge_invis_break_debuff:OnCreated()
-	local ability   =   self:GetAbility()
+	if not self:GetAbility() then self:Destroy() return end
 
-	self.damage_reduction	=	ability:GetSpecialValueFor("panic_damage_reduction")
-	self.heal_reduction		=	ability:GetSpecialValueFor("heal_reduction") * (-1)
+	self.damage_reduction	=	self:GetAbility():GetSpecialValueFor("panic_damage_reduction")
+	self.heal_reduction		=	self:GetAbility():GetSpecialValueFor("heal_reduction") * (-1)
 
 end
 
@@ -420,6 +422,8 @@ end
 function modifier_item_imba_silver_edge_invis_break_debuff:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 		
 		MODIFIER_PROPERTY_TOOLTIP
 	}
@@ -427,20 +431,28 @@ end
 
 function modifier_item_imba_silver_edge_invis_break_debuff:GetModifierTotalDamageOutgoing_Percentage()
 	-- Wait until the other debuff is over to reduce damage (to prevent them stacking)
-	if self:GetParent():FindModifierByName("modifier_item_imba_silver_edge_invis_panic_debuff") then
+	if self:GetParent():HasModifier("modifier_item_imba_silver_edge_invis_panic_debuff") then
 		return 0
 	else
 		return self.damage_reduction
 	end
 end
 
+function modifier_item_imba_silver_edge_invis_break_debuff:GetModifierHealAmplify_PercentageTarget()
+	return self.heal_reduction
+end
+
+function modifier_item_imba_silver_edge_invis_break_debuff:GetModifierHPRegenAmplify_Percentage()
+	return self.heal_reduction
+end
+
 function modifier_item_imba_silver_edge_invis_break_debuff:OnTooltip()
 	return self.heal_reduction
 end
 
-function modifier_item_imba_silver_edge_invis_break_debuff:Custom_AllHealAmplify_Percentage()
-	return self.heal_reduction
-end
+-- function modifier_item_imba_silver_edge_invis_break_debuff:Custom_AllHealAmplify_Percentage()
+	-- return self.heal_reduction
+-- end
 
 --- PARTICLE FOR RANGED CLEAVE
 modifier_item_imba_silver_edge_invis_attack_cleave_particle = modifier_item_imba_silver_edge_invis_attack_cleave_particle or class({})
