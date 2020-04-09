@@ -598,10 +598,10 @@ function modifier_imba_juggernaut_healing_ward_passive:GetModifierAura()
 	return "modifier_imba_juggernaut_healing_ward_aura"
 end
 
-function modifier_imba_juggernaut_healing_ward_passive:GetAuraEntityReject(target)
-	if target:GetUnitName() == self:GetParent():GetUnitName() then return true end
-	return false
-end
+-- function modifier_imba_juggernaut_healing_ward_passive:GetAuraEntityReject(target)
+	-- if target:GetUnitName() == self:GetParent():GetUnitName() then return true end
+	-- return false
+-- end
 
 --------------------------------------------------------------------------------
 
@@ -612,7 +612,7 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_imba_juggernaut_healing_ward_passive:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP
 end
 
 --------------------------------------------------------------------------------
@@ -620,9 +620,9 @@ end
 function modifier_imba_juggernaut_healing_ward_passive:GetAuraRadius()
 	if self:GetAbility() then
 		if IsTotem(self:GetParent()) then
-			self.radius = self:GetAbility():GetTalentSpecialValueFor("heal_radius_totem")
+			return self:GetAbility():GetTalentSpecialValueFor("heal_radius_totem")
 		else
-			self.radius = self:GetAbility():GetTalentSpecialValueFor("heal_radius")
+			return self:GetAbility():GetTalentSpecialValueFor("heal_radius")
 		end
 	end
 end

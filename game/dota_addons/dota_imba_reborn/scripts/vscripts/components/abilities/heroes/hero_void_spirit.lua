@@ -719,6 +719,10 @@ function imba_void_spirit_astral_step_helper_2:OnAbilityPhaseStart()
 	end
 end
 
+function imba_void_spirit_astral_step_helper_2:OnAbilityPhaseInterrupted()
+	self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_2_END)
+end
+
 function imba_void_spirit_astral_step_helper_2:OnChannelFinish(bInterrupted)
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
@@ -758,7 +762,7 @@ function imba_void_spirit_astral_step_helper_2:OnChannelFinish(bInterrupted)
 	end
 	
 	if self:GetCaster():HasAbility("imba_void_spirit_astral_step") then
-		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):OnSpellStart(nil, (((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):GetSpecialValueFor("max_travel_distance")) * (1 + (self:GetSpecialValueFor("bonus_range_pct") * 0.01)) + self:GetCaster():GetCastRangeBonus()) , bInterrupted)
+		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):OnSpellStart(nil, (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step"):GetSpecialValueFor("max_travel_distance") * (1 + (self:GetSpecialValueFor("bonus_range_pct") * 0.01)) + self:GetCaster():GetCastRangeBonus()) * Vector(1, 1, 0), bInterrupted)
 	end
 end
 
@@ -997,7 +1001,7 @@ end
 -- IMBA_VOID_SPIRIT_ASTRAL_STEP --
 ----------------------------------
 
-function imba_void_spirit_astral_step_helper_2:GetAssociatedPrimaryAbilities()
+function imba_void_spirit_astral_step:GetAssociatedPrimaryAbilities()
 	return "imba_void_spirit_astral_step_helper_2"
 end
 
@@ -1036,6 +1040,8 @@ function imba_void_spirit_astral_step:GetCastRange(location, target)
 	end
 end
 
+-- recastVector is for Echo Slash (disabled)
+-- warpVector is for Warp Slash (enabled)
 function imba_void_spirit_astral_step:OnSpellStart(recastVector, warpVector, bInterrupted)
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
@@ -1056,7 +1062,7 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector, warpVector, bIn
 	end
 	
 	if warpVector then
-		final_position	= self:GetCaster():GetAbsOrigin() + warpVector
+		final_position	= GetGroundPosition(self:GetCaster():GetAbsOrigin() + warpVector, nil)
 	end
 	
 	self.original_vector	= (final_position - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetSpecialValueFor("max_travel_distance") + self:GetCaster():GetCastRangeBonus())

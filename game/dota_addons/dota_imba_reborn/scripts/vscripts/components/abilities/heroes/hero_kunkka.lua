@@ -1266,8 +1266,8 @@ function imba_kunkka_x_marks_the_spot:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
-		local duration = self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance())
-		local sec_duration = self:GetSpecialValueFor("sec_duration") * (1 - enemy:GetStatusResistance())
+		local duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())
+		local sec_duration = self:GetSpecialValueFor("sec_duration") * (1 - target:GetStatusResistance())
 		local talent_hits = false
 
 		if caster:HasTalent("special_bonus_imba_kunkka_5") then

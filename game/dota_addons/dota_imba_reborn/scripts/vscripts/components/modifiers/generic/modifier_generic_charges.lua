@@ -133,7 +133,7 @@ function modifier_generic_charges:CalculateCharge()
 		else
 			self:GetAbility():EndCooldown()
 			
-			if self:GetAbility():GetName() ~= "imba_void_spirit_astral_step" or self:GetAbility():GetName() ~= "imba_gyrocopter_homing_missile" then
+			if self:GetAbility():GetName() ~= "imba_gyrocopter_homing_missile" and self:GetAbility():GetName() ~= "imba_void_spirit_astral_step" and self:GetAbility():GetName() ~= "imba_void_spirit_astral_step_helper_2" then
 				self:GetAbility():StartCooldown(0.25)
 			end
 		end
