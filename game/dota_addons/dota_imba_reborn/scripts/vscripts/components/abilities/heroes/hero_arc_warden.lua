@@ -10,6 +10,8 @@ LinkLuaModifier("modifier_imba_arc_warden_magnetic_field_thinker_evasion", "comp
 LinkLuaModifier("modifier_imba_arc_warden_magnetic_field_attack_speed", "components/abilities/heroes/hero_arc_warden", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_arc_warden_magnetic_field_evasion", "components/abilities/heroes/hero_arc_warden", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_arc_warden_spark_wraith_thinker", "components/abilities/heroes/hero_arc_warden", LUA_MODIFIER_MOTION_NONE)
+
 imba_arc_warden_flux			= imba_arc_warden_flux or class({})
 modifier_imba_arc_warden_flux	= modifier_imba_arc_warden_flux or class({})
 
@@ -19,8 +21,8 @@ modifier_imba_arc_warden_magnetic_field_thinker_evasion			= modifier_imba_arc_wa
 modifier_imba_arc_warden_magnetic_field_attack_speed			= modifier_imba_arc_warden_magnetic_field_attack_speed or class({})
 modifier_imba_arc_warden_magnetic_field_evasion					= modifier_imba_arc_warden_magnetic_field_evasion or class({})
 
-
-imba_arc_warden_spark_wraith	= imba_arc_warden_spark_wraith or class({})
+imba_arc_warden_spark_wraith									= imba_arc_warden_spark_wraith or class({})
+modifier_imba_arc_warden_spark_wraith_thinker					= modifier_imba_arc_warden_spark_wraith_thinker or class({})
 
     -- "modifier_arc_warden_scepter",
     -- "modifier_arc_warden_spark_wraith_purge",
@@ -244,6 +246,45 @@ end
 
 function imba_arc_warden_spark_wraith:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_arc_warden_spark_wraith_cooldown")
+end
+
+function imba_arc_warden_spark_wraith:OnSpellStart()
+	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_arc_warden_spark_wraith_thinker", {
+		duration = self:GetSpecialValueFor("duration")
+	}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+end
+
+---------------------------------------------------
+-- MODIFIER_IMBA_ARC_WARDEN_SPARK_WRAITH_THINKER --
+---------------------------------------------------
+
+function modifier_imba_arc_warden_spark_wraith_thinker:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
+	self.activation_delay	= self:GetAbility():GetSpecialValueFor("activation_delay")
+	self.wraith_speed		= self:GetAbility():GetSpecialValueFor("wraith_speed")
+	self.spark_damage		= self:GetAbility():GetTalentSpecialValueFor("spark_damage")
+	self.think_interval			= self:GetAbility():GetSpecialValueFor("think_interval")
+	self.wraith_vision_radius	= self:GetAbility():GetSpecialValueFor("wraith_vision_radius")
+	self.wraith_vision_duration	= self:GetAbility():GetSpecialValueFor("wraith_vision_duration")
+	self.ministun_duration		= self:GetAbility():GetSpecialValueFor("ministun_duration")
+	self.move_speed_slow_pct	= self:GetAbility():GetSpecialValueFor("move_speed_slow_pct")
+	
+	if not IsServer() then return end
+	
+	self.wraith_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_arc_warden/arc_warden_wraith.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(self.wraith_particle, 1, Vector(self.radius, 1, 1))
+	self:AddParticle(self.wraith_particle, false, false, -1, false, false)
+	
+	self:GetCaster():SetContextThink(DoUniqueString(self:GetName()), function()
+		self:StartIntervalThink(self.think_interval)
+		return nil
+	end, self.activation_delay - self.think_interval)
+end
+
+function modifier_imba_arc_warden_spark_wraith_thinker:OnIntervalThink()
+	
 end
 
 ---------------------

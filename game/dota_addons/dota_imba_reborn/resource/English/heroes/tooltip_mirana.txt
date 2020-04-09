@@ -70,7 +70,7 @@
 "DOTA_Tooltip_modifier_imba_moonlight_shadow_Description"              "Granting allied heroes constant invisibility."
 
 "DOTA_Tooltip_modifier_imba_moonlight_shadow_invis_dummy"              "Moonlight Shadow"
-"DOTA_Tooltip_modifier_imba_moonlight_shadow_invis_dummy_Description"               "Invisible. Immune to True Sight as long as there are no nearby enemy heroes."
+"DOTA_Tooltip_modifier_imba_moonlight_shadow_invis_dummy_Description"               "Invisible. Gaining flying vision."
 
 "DOTA_Tooltip_modifier_imba_moonlight_shadow_invis_fade_time"          "Moonlight Shadow"
 "DOTA_Tooltip_modifier_imba_moonlight_shadow_invis_fade_time_Description"           "Invisible after fade-time."
