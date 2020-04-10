@@ -114,7 +114,9 @@ function modifier_imba_hook_sharp_stack:DeclareFunctions() return {
 } end
 
 function modifier_imba_hook_sharp_stack:OnTooltip()
-	return self:GetAbility():GetSpecialValueFor("stack_damage") * self:GetStackCount()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stack_damage") * self:GetStackCount()
+	end
 end
 
 function modifier_imba_hook_light_stack:IsDebuff() return false end
@@ -150,11 +152,15 @@ function modifier_imba_hook_light_stack:DeclareFunctions() return {
 } end
 
 function modifier_imba_hook_light_stack:OnTooltip()
-	return self:GetAbility():GetSpecialValueFor("stack_speed") * self:GetStackCount()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stack_speed") * self:GetStackCount()
+	end
 end
 
 function modifier_imba_hook_light_stack:OnTooltip2()
-	return self:GetAbility():GetSpecialValueFor("stack_range") * self:GetStackCount()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stack_range") * self:GetStackCount()
+	end
 end
 
 LinkLuaModifier("modifier_imba_pudge_meat_hook_caster_root","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)

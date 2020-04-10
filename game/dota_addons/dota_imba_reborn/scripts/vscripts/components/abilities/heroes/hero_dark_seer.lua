@@ -1291,10 +1291,10 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_dark_seer_ion_shell_radius", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_dark_seer_vacuum_increased_duration", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_dark_seer_ion_shell_damage", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_ion_shell_radius", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_vacuum_increased_duration", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dark_seer_ion_shell_damage", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_dark_seer_ion_shell_radius	= modifier_special_bonus_imba_dark_seer_ion_shell_radius or class({})
 modifier_special_bonus_imba_dark_seer_vacuum_increased_duration	= modifier_special_bonus_imba_dark_seer_vacuum_increased_duration or class({})
