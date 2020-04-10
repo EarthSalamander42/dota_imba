@@ -11,6 +11,7 @@ LinkLuaModifier("modifier_imba_arc_warden_magnetic_field_attack_speed", "compone
 LinkLuaModifier("modifier_imba_arc_warden_magnetic_field_evasion", "components/abilities/heroes/hero_arc_warden", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_arc_warden_spark_wraith_thinker", "components/abilities/heroes/hero_arc_warden", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_arc_warden_spark_wraith_purge", "components/abilities/heroes/hero_arc_warden", LUA_MODIFIER_MOTION_NONE)
 
 imba_arc_warden_flux			= imba_arc_warden_flux or class({})
 modifier_imba_arc_warden_flux	= modifier_imba_arc_warden_flux or class({})
@@ -23,6 +24,7 @@ modifier_imba_arc_warden_magnetic_field_evasion					= modifier_imba_arc_warden_m
 
 imba_arc_warden_spark_wraith									= imba_arc_warden_spark_wraith or class({})
 modifier_imba_arc_warden_spark_wraith_thinker					= modifier_imba_arc_warden_spark_wraith_thinker or class({})
+modifier_imba_arc_warden_spark_wraith_purge						= modifier_imba_arc_warden_spark_wraith_purge or class({})
 
     -- "modifier_arc_warden_scepter",
     -- "modifier_arc_warden_spark_wraith_purge",
@@ -248,10 +250,40 @@ function imba_arc_warden_spark_wraith:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_arc_warden_spark_wraith_cooldown")
 end
 
-function imba_arc_warden_spark_wraith:OnSpellStart()
+function imba_arc_warden_spark_wraith:OnSpellStart(recastDuration, recastLocation)
+	self:GetCaster():EmitSound("Hero_ArcWarden.SparkWraith.Cast")
+	EmitSoundOnLocationWithCaster(location, "Hero_ArcWarden.SparkWraith.Appear", self:GetCaster())
+	
 	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_arc_warden_spark_wraith_thinker", {
-		duration = self:GetSpecialValueFor("duration")
-	}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+		duration = recastDuration or self:GetSpecialValueFor("duration")
+	}, recastLocation or self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+end
+
+function imba_arc_warden_spark_wraith:OnProjectileHit_ExtraData(target, location, ExtraData)
+	if target then
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), location, self:GetAbility():GetSpecialValueFor("wraith_vision_radius"), self:GetSpecialValueFor("wraith_vision_duration"), true)
+	
+		if not target:IsMagicImmune() then
+			target:EmitSound("Hero_ArcWarden.SparkWraith.Damage")
+			
+			-- "Deals damage based on the level upon cast of the ability. Leveling up Spark Wraith does not update the damage of already placed Spark Wraiths."
+			-- "The wraith first applies the damage, then the debuff."
+			-- "Choosing the damage upgrading talent immediately upgrades all already placed wraiths, including ones which already seek a target."
+			ApplyDamage({
+				victim 			= target,
+				damage 			= ExtraData.spark_damage + self:GetCaster():FindTalentValue("special_bonus_imba_arc_warden_spark_wraith_damage"),
+				damage_type		= self:GetAbilityDamageType(),
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self
+			})
+			
+			target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetAbility():GetSpecialValueFor("ministun_duration") * (1 - target:GetStatusResistance())})
+		elseif not target:IsAlive() then
+			-- IMBAfication: Reconstitution
+			self:OnSpellStart(math.max(ExtraData.thinker_duration - ExtraData.thinker_time, 0), location)
+		end
+	end
 end
 
 ---------------------------------------------------
@@ -264,14 +296,13 @@ function modifier_imba_arc_warden_spark_wraith_thinker:OnCreated()
 	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
 	self.activation_delay	= self:GetAbility():GetSpecialValueFor("activation_delay")
 	self.wraith_speed		= self:GetAbility():GetSpecialValueFor("wraith_speed")
-	self.spark_damage		= self:GetAbility():GetTalentSpecialValueFor("spark_damage")
+	self.spark_damage		= self:GetAbility():GetSpecialValueFor("spark_damage")
 	self.think_interval			= self:GetAbility():GetSpecialValueFor("think_interval")
 	self.wraith_vision_radius	= self:GetAbility():GetSpecialValueFor("wraith_vision_radius")
-	self.wraith_vision_duration	= self:GetAbility():GetSpecialValueFor("wraith_vision_duration")
-	self.ministun_duration		= self:GetAbility():GetSpecialValueFor("ministun_duration")
-	self.move_speed_slow_pct	= self:GetAbility():GetSpecialValueFor("move_speed_slow_pct")
 	
 	if not IsServer() then return end
+	
+	self:GetParent():EmitSound("Hero_ArcWarden.SparkWraith.Loop")
 	
 	self.wraith_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_arc_warden/arc_warden_wraith.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControl(self.wraith_particle, 1, Vector(self.radius, 1, 1))
@@ -284,7 +315,75 @@ function modifier_imba_arc_warden_spark_wraith_thinker:OnCreated()
 end
 
 function modifier_imba_arc_warden_spark_wraith_thinker:OnIntervalThink()
+	for _, enemy in pairs(indUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
+		self:GetParent():EmitSound("Hero_ArcWarden.SparkWraith.Activate")
+		
+		ProjectileManager:CreateTrackingProjectile({
+			EffectName			= "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf",
+			Ability				= self:GetAbility(),
+			Source				= self:GetParent(),
+			vSourceLoc			= self:GetParent():GetAbsOrigin(),
+			Target				= enemy,
+			iMoveSpeed			= self.wraith_speed,
+			flExpireTime		= nil,
+			bDodgeable			= false,
+			bIsAttack			= false,
+			bReplaceExisting	= false,
+			iSourceAttachment	= nil,
+			bDrawsOnMinimap		= nil,
+			bVisibleToEnemies	= true,
+			bProvidesVision		= true,
+			iVisionRadius		= self.wraith_vision_radius,
+			iVisionTeamNumber	= self:GetCaster():GetTeamNumber(),
+			ExtraData			= {
+				spark_damage		= self.spark_damage,
+				thinker_time		= self:GetElapsedTime(),
+				thinker_duration	= self:GetDuration()
+			}
+		})
+		
+		self:Destroy()
+		break
+	end
+end
+
+function modifier_imba_arc_warden_spark_wraith_thinker:OnDestroy()
+	if not IsServer() then return end
 	
+	self:GetParent():StopSound("Hero_ArcWarden.SparkWraith.Loop")
+end
+
+function modifier_imba_arc_warden_spark_wraith_thinker:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_FIXED_DAY_VISION,
+		MODIFIER_PROPERTY_FIXED_NIGHT_VISION
+	}
+end
+
+function modifier_imba_arc_warden_spark_wraith_thinker:GetFixedDayVision()
+	return self.wraith_vision_radius
+end
+
+function modifier_imba_arc_warden_spark_wraith_thinker:GetFixedNightVision()
+	return self.wraith_vision_radius
+end
+
+-------------------------------------------------
+-- MODIFIER_IMBA_ARC_WARDEN_SPARK_WRAITH_PURGE --
+-------------------------------------------------
+
+function modifier_imba_arc_warden_spark_wraith_purge:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.move_speed_slow_pct	= self:GetAbility():GetSpecialValueFor("move_speed_slow_pct") * (-1)
+end
+
+function modifier_imba_arc_warden_spark_wraith_purge:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+end
+
+function modifier_imba_arc_warden_spark_wraith_purge:GetModifierMoveSpeedBonus_Percentage()
+	return self.move_speed_slow_pct
 end
 
 ---------------------
