@@ -230,7 +230,7 @@ function modifier_imba_void_spirit_dissimilate:OnDestroy()
 	FindClearSpaceForUnit(self:GetParent(), self.closest_position, false)
 	self:GetParent():Interrupt()
 	
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.closest_position, nil, self.damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.closest_position, nil, self.damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		enemy:EmitSound("Hero_VoidSpirit.Dissimilate.Stun")
 	
 		ApplyDamage({
@@ -454,7 +454,7 @@ end
 function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
 	self.ring_size = self:GetElapsedTime() * self.speed
 	
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.ring_size, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.ring_size, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 		if not self.hit_enemies[enemy:entindex()] and ((enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()) * Vector(1, 1, 0)):Length2D() >= self.ring_size - self.thickness then
 		
 			enemy:EmitSound("Hero_VoidSpirit.Pulse.Target")
@@ -600,7 +600,7 @@ function modifier_imba_void_spirit_resonant_pulse_thinker_aura:IsAuraActiveOnDea
 function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraRadius()					return self.radius end
 function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraSearchFlags()				return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
 function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP end
 function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetModifierAura()				return "modifier_imba_void_spirit_resonant_pulse_thinker_buff" end
 function modifier_imba_void_spirit_resonant_pulse_thinker_aura:GetAuraDuration()				return 0.1 end
 
@@ -1078,8 +1078,14 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector, warpVector, bIn
 	
 	local bHeroHit	= false
 	
+	local target_flags = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_void_spirit_astral_step_crit") and not warpVector and then
+		target_flags = target_flags + DOTA_UNIT_TARGET_BUILDING
+	end
+	
 	-- Logically speaking it doesn't make sense for it to check for enemies hit before Void Spirit actually moves, but it makes more sense without creating more variables
-	for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), final_position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)) do
+	for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), final_position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, target_flags, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)) do
 		-- enemy:EmitSound("Hero_VoidSpirit.AstralStep.MarkExplosionAOE")
 		-- enemy:EmitSound("Hero_VoidSpirit.AstralStep.Target")
 		

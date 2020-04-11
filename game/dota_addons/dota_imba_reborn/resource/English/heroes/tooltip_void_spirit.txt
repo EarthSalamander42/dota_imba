@@ -110,7 +110,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_void_spirit_dissimilate_stun"				"Dissimilate Stuns for {s:value}s"
 "DOTA_Tooltip_ability_special_bonus_imba_void_spirit_resonant_pulse_damage"				"+{s:value} Resonant Pulse Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit"				"Astral Step {s:value}% Crit"
-"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit_Description"	"Attacks made with Astral Step deal a critical strike."
+"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit_Description"	"Attacks made with Astral Step deal a critical strike. Now also hits buildings (does not apply to Warp Slash)."
 
 //"DOTA_Tooltip_ability_special_bonus_unique_imba_void_spirit_2"				"+{s:value} Astral Step Range"
 //"DOTA_Tooltip_ability_special_bonus_unique_imba_void_spirit_5"				"{s:value}% Larger Dissimilate Portals"
