@@ -46,7 +46,10 @@
 //      Zeus: Nimbus
 //---------------------------------------------------------------------------
 "DOTA_Tooltip_Ability_imba_zuus_cloud"							"Nimbus"
-"DOTA_Tooltip_Ability_imba_zuus_cloud_description"				"Creates a controllable storm cloud anywhere on the map that automatically casts Lightning Bolt on nearby enemies.\n<font color='#FF7800'>Divine Intervention: </font>Zeus is now the damage source when taking damage calculations of Nimbus, meaning spell amplification and on-damage effects will direct to Zeus. Lightning Bolt intervals are not affected by cooldown reduction.\n<font color='#FF7800'>Zap:</font> At any time, Zeus can choose to travel to the cloud by lightning."
+"DOTA_Tooltip_Ability_imba_zuus_cloud_description"				"Creates a controllable storm cloud anywhere on the map that automatically casts Lightning Bolt on nearby enemies.\n<font color='#FF7800'>Divine Intervention: </font>Zeus is now the damage source when taking damage calculations of Nimbus, meaning spell amplification and on-damage effects will direct to Zeus. Lightning Bolt intervals are not affected by cooldown reduction."
+
+// \n<font color='#FF7800'>Zap:</font> At any time, Zeus can choose to travel to the cloud by lightning.
+
 "DOTA_Tooltip_Ability_imba_zuus_cloud_lore"						"Where the thunder god's ire grows, storm clouds quickly gather."
 "DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_bolt_interval"		"LIGHTNING BOLT INTERVAL:"

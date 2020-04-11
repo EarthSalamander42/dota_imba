@@ -259,7 +259,35 @@ function GameMode:ModifierFilter( keys )
 				-- end
 			-- end
 		-- end
-
+		
+		-- Tried some fancy stuff in the frantic file but you cannot properly override vanilla durations so I will do it here for Legion Commander's Duel
+		-- Because Duel ends if either of the modifiers (on caster and target) ends, we need a way to equalize the durations even if the two units have differing status resistance
+		-- Because Duel first applies a modifier on the target, I will use it to store the proper duration to set it to, and use that for the caster duration
+		if modifier_name == "modifier_legion_commander_duel" and keys.duration > 0 then
+			if modifier_owner:HasModifier("modifier_frantic") and not modifier_ability.frantic_adjusted_duration then
+				modifier_ability.frantic_adjusted_duration = keys.duration / ((100 - modifier_owner:FindModifierByName("modifier_frantic"):GetStackCount()) * 0.01)
+				keys.duration = modifier_ability.frantic_adjusted_duration
+			elseif modifier_ability.frantic_adjusted_duration then
+				keys.duration = modifier_ability.frantic_adjusted_duration
+				modifier_ability.frantic_adjusted_duration = nil
+			end
+		end
+		
+		-- Bringing Helm of the Undying back but giving it Wraith King's Reincarnation Wraith mechanics for balance
+		if modifier_name == "modifier_item_helm_of_the_undying_active" then
+			-- "An ally enters Death Delay when their health reaches 1, unless they are affected by Shallow Grave, Battle Trance, Wraith Delay, or have Reincarnation."
+			if modifier_owner:HasModifier("modifier_imba_dazzle_shallow_grave") or 
+			modifier_owner:HasModifier("modifier_imba_dazzle_nothl_protection") or 
+			modifier_owner:HasModifier("modifier_imba_battle_trance_720") or 
+			modifier_owner:HasModifier("modifier_imba_reincarnation_wraith_form") or 
+			modifier_owner:HasModifier("modifier_item_imba_bloodstone_active_720") then
+				return false
+			else
+				modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_helm_of_the_undying_addendum", {duration = keys.duration + FrameTime()})
+			end
+		end
+		
+		-- Deactivate Tusk's Snowball so you don't allow multiple casting while Snowball is active (resulting in permanently lingering particles)
 		if modifier_name == "modifier_tusk_snowball_movement" then
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
 				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)

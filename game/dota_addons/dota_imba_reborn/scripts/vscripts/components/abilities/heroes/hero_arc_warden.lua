@@ -246,25 +246,73 @@ end
 -- IMBA_ARC_WARDEN_SPARK_WRAITH --
 ----------------------------------
 
+function imba_arc_warden_spark_wraith:GetAOERadius()
+	return self:GetSpecialValueFor("radius")
+end
+
+function imba_arc_warden_spark_wraith:GetBehavior()
+	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
 function imba_arc_warden_spark_wraith:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_arc_warden_spark_wraith_cooldown")
 end
 
 function imba_arc_warden_spark_wraith:OnSpellStart(recastDuration, recastLocation)
 	self:GetCaster():EmitSound("Hero_ArcWarden.SparkWraith.Cast")
-	EmitSoundOnLocationWithCaster(location, "Hero_ArcWarden.SparkWraith.Appear", self:GetCaster())
+	EmitSoundOnLocationWithCaster(recastLocation or self:GetCursorPosition(), "Hero_ArcWarden.SparkWraith.Appear", self:GetCaster())
 	
-	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_arc_warden_spark_wraith_thinker", {
-		duration = recastDuration or self:GetSpecialValueFor("duration")
-	}, recastLocation or self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+	if not self:GetAutoCastState() then
+		CreateModifierThinker(self:GetCaster(), self, "modifier_imba_arc_warden_spark_wraith_thinker", {
+			duration = recastDuration or self:GetSpecialValueFor("duration")
+		}, recastLocation or self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+	else
+		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
+		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
+			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+		end
+		
+		ProjectileManager:CreateLinearProjectile({
+			EffectName	= "particles/hero/arc_warden/spark_wraith_linear.vpcf",
+			Ability		= self,
+			Source		= self:GetCaster(),
+			vSpawnOrigin	= self:GetCaster():GetAbsOrigin(),
+			vVelocity	= ((self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()) * Vector(1, 1, 0)):Normalized() * self:GetSpecialValueFor("wraith_speed"),
+			vAcceleration	= nil, --hmm...
+			fMaxSpeed	= nil, -- What's the default on this thing?
+			fDistance	= self.BaseClass.GetCastRange(self, self:GetCursorPosition(), self:GetCaster()) + self:GetCaster():GetCastRangeBonus(),
+			fStartRadius	= 100,
+			fEndRadius		= 100,
+			fExpireTime		= nil,
+			iUnitTargetTeam	= DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+			bIgnoreSource		= true,
+			bHasFrontalCone		= false,
+			bDrawsOnMinimap		= false,
+			bVisibleToEnemies	= true,
+			bProvidesVision		= true,
+			iVisionRadius		= self:GetSpecialValueFor("wraith_vision_radius"),
+			iVisionTeamNumber	= self:GetCaster():GetTeamNumber(),
+			ExtraData			= {
+				spark_damage		= self:GetSpecialValueFor("spark_damage"),
+				auto_cast			= 1
+			}
+		})
+	end
 end
 
 function imba_arc_warden_spark_wraith:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if target then
-		AddFOWViewer(self:GetCaster():GetTeamNumber(), location, self:GetAbility():GetSpecialValueFor("wraith_vision_radius"), self:GetSpecialValueFor("wraith_vision_duration"), true)
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), location, self:GetSpecialValueFor("wraith_vision_radius"), self:GetSpecialValueFor("wraith_vision_duration"), true)
 	
 		if not target:IsMagicImmune() then
 			target:EmitSound("Hero_ArcWarden.SparkWraith.Damage")
+			
+			if ExtraData.auto_cast == 1 then
+				local burst_particle = ParticleManager:CreateParticle("particles/econ/items/arc_warden/arc_warden_ti9_immortal/arc_warden_ti9_wraith_prj_burst.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+				ParticleManager:ReleaseParticleIndex(burst_particle)
+			end
 			
 			-- "Deals damage based on the level upon cast of the ability. Leveling up Spark Wraith does not update the damage of already placed Spark Wraiths."
 			-- "The wraith first applies the damage, then the debuff."
@@ -278,11 +326,13 @@ function imba_arc_warden_spark_wraith:OnProjectileHit_ExtraData(target, location
 				ability 		= self
 			})
 			
-			target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetAbility():GetSpecialValueFor("ministun_duration") * (1 - target:GetStatusResistance())})
-		elseif not target:IsAlive() then
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_arc_warden_spark_wraith_purge", {duration = self:GetSpecialValueFor("ministun_duration") * (1 - target:GetStatusResistance())})
+		elseif not target:IsAlive() and ExtraData.thinker_duration and ExtraData.thinker_time then
 			-- IMBAfication: Reconstitution
 			self:OnSpellStart(math.max(ExtraData.thinker_duration - ExtraData.thinker_time, 0), location)
 		end
+		
+		return true
 	end
 end
 
@@ -315,11 +365,11 @@ function modifier_imba_arc_warden_spark_wraith_thinker:OnCreated()
 end
 
 function modifier_imba_arc_warden_spark_wraith_thinker:OnIntervalThink()
-	for _, enemy in pairs(indUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)) do
 		self:GetParent():EmitSound("Hero_ArcWarden.SparkWraith.Activate")
 		
 		ProjectileManager:CreateTrackingProjectile({
-			EffectName			= "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf",
+			EffectName			= "particles/units/heroes/hero_arc_warden/arc_warden_wraith_prj.vpcf",
 			Ability				= self:GetAbility(),
 			Source				= self:GetParent(),
 			vSourceLoc			= self:GetParent():GetAbsOrigin(),

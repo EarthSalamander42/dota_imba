@@ -507,15 +507,16 @@ function modifier_imba_bristleback_quill_spray_autocaster:OnIntervalThink()
 	end
 	
 	-- IMBAfication: Cardio
-	if self.ability:GetAutoCastState() then
+	if self.ability:GetAutoCastState() and not self.caster:IsOutOfGame() and not self.caster:IsInvulnerable() then
 		self.distance			= self.distance + (self.caster:GetAbsOrigin() - self.last_position):Length()
-		self.last_position		= self.caster:GetAbsOrigin()
 		
 		if self.distance >= self.cardio_threshold and not self.parent:IsIllusion() and not self.parent:PassivesDisabled() then
 			self.ability:OnSpellStart()
 			self.distance = 0
 		end
 	end
+	
+	self.last_position		= self.caster:GetAbsOrigin()
 end
 
 -----------------

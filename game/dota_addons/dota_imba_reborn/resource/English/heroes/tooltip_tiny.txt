@@ -4,7 +4,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone"                          "Rolling Stone"
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_Description"              "Tiny gains mass as he moves, gaining damage and movement speed (does not gain movement speed while Tree Grab is active) at the cost of attack speed. Every second that Tiny moves, he gains a small amount of mass. A stack is granted when reaching one full minute of movement (60 seconds)."
+"DOTA_Tooltip_ability_imba_tiny_rolling_stone_Description"              "Tiny gains mass as he moves, gaining damage and movement speed <font color='#FF0000'>(does not gain movement speed while Tree Grab is active)</font> at the cost of attack speed. Every second that Tiny moves, he gains a small amount of mass. A stack is granted when reaching one full minute of movement (60 seconds)."
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_Note0"                    "Movement does not need to be continuous."
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_Note1"                    "It does not matter how much distance Tiny has covered on each movement, as it only records movement time."
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_Lore"                    "Tiny's living mass constantly attracts minor pebbles and rocks."

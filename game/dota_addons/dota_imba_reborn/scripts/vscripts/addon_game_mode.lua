@@ -21,6 +21,8 @@ function Precache( context )
 	LinkLuaModifier("modifier_wearable", "components/modifiers/modifier_wearable.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_invulnerable_hidden", "components/modifiers/modifier_invulnerable_hidden.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("components/modifiers/demo/lm_take_no_damage", LUA_MODIFIER_MOTION_NONE)
+	
+	LinkLuaModifier("modifier_item_imba_helm_of_the_undying_addendum", "components/items/item_helm_of_the_undying", LUA_MODIFIER_MOTION_NONE)
 
 	-- vanilla item override
 	LinkLuaModifier("modifier_item_imba_bottle_heal", "components/items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE) -- imba bottle using vanilla replacing modifier in ModifierFilter

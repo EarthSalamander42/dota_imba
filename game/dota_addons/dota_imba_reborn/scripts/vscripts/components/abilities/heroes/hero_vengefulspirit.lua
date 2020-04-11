@@ -939,6 +939,24 @@ end
 function modifier_imba_vengefulspirit_command_aura_723:OnDeath(keys)
 	if keys.unit == self:GetParent() and keys.unit:IsRealHero() then
 		keys.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_vengefulspirit_command_negative_aura_723", {})
+		
+		self:GetCaster():SetContextThink(DoUniqueString(self:GetName()), function()
+			for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+				-- Lots of checks to attempt to extract the Vengeful Spirit strong illusion
+				if unit:GetName() == self:GetCaster():GetName() and unit ~= self:GetCaster() and unit:GetOwner() and unit:GetOwner():GetAssignedHero() and unit:GetOwner():GetAssignedHero() == self:GetCaster() then
+					-- Give modifiers for custom talents that require client-side stuff
+					if unit:HasTalent("special_bonus_imba_vengefulspirit_5") and not unit:HasModifier("modifier_special_bonus_imba_vengefulspirit_5") then
+						unit:AddNewModifier(unit, unit:FindAbilityByName("special_bonus_imba_vengefulspirit_5"), "modifier_special_bonus_imba_vengefulspirit_5", {})
+					end
+
+					if unit:HasTalent("special_bonus_imba_vengefulspirit_11") and not unit:HasModifier("modifier_special_bonus_imba_vengefulspirit_11") then
+						unit:AddNewModifier(unit, unit:FindAbilityByName("special_bonus_imba_vengefulspirit_11"), "modifier_special_bonus_imba_vengefulspirit_11", {})
+					end
+				end
+			end
+			
+			return nil
+		end, FrameTime())
 	end
 end
 

@@ -93,9 +93,9 @@ function imba_dark_seer_vacuum:GetCooldown(level)
 	end
 end
 
-function imba_dark_seer_vacuum:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST 
-end
+-- function imba_dark_seer_vacuum:GetBehavior()
+	-- return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST 
+-- end
 
 function imba_dark_seer_vacuum:OnSpellStart()
 	if not IsServer() then return end
@@ -126,9 +126,9 @@ function imba_dark_seer_vacuum:OnSpellStart()
 					caster_entindex	= self:GetCaster():entindex()
 				})
 				
-				if wormhole_ability then
-					enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
-				end
+				-- if wormhole_ability then
+					-- enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
+				-- end
 			else
 				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum", 
 				{
@@ -137,9 +137,9 @@ function imba_dark_seer_vacuum:OnSpellStart()
 					y				= self:GetCursorPosition().y
 				})
 				
-				if wormhole_ability then
-					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
-				end
+				-- if wormhole_ability then
+					-- enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_wormhole", {duration = self:GetSpecialValueFor("wormhole_duration")})
+				-- end
 			end
 			
 			if wormhole_ability then
@@ -355,31 +355,31 @@ function imba_dark_seer_wormhole:OnSpellStart()
 	ParticleManager:SetParticleControl(particle, 1, Vector(self:GetSpecialValueFor("radius"), 1, 1))
 	ParticleManager:ReleaseParticleIndex(particle)
 	
-	for _, enemy in pairs(self.enemy_tracker) do
-		if not enemy:IsNull() and enemy:HasModifier("modifier_imba_dark_seer_vacuum_wormhole") and not enemy:HasModifier("modifier_imba_dark_seer_wormhole") and not IsNearFountain(enemy:GetAbsOrigin(), 1700) then
-			-- Need some weird workaround for being able to affect invulnerable units
-			if enemy:IsInvulnerable() and not enemy:HasModifier("modifier_eul_cyclone") then
-				enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_wormhole", 
-				{
-					duration		= self:GetTalentSpecialValueFor("duration"),
-					x				= self:GetCursorPosition().x,
-					y				= self:GetCursorPosition().y,
-					caster_entindex	= self:GetCaster():entindex()
-				})
-			else
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_wormhole", 
-				{
-					duration	= self:GetTalentSpecialValueFor("duration"),
-					x			= self:GetCursorPosition().x,
-					y			= self:GetCursorPosition().y
-				})
-			end
-		end
-	end
+	-- for _, enemy in pairs(self.enemy_tracker) do
+		-- if not enemy:IsNull() and enemy:HasModifier("modifier_imba_dark_seer_vacuum_wormhole") and not enemy:HasModifier("modifier_imba_dark_seer_wormhole") and not IsNearFountain(enemy:GetAbsOrigin(), 1700) then
+			-- -- Need some weird workaround for being able to affect invulnerable units
+			-- if enemy:IsInvulnerable() and not enemy:HasModifier("modifier_eul_cyclone") then
+				-- enemy:AddNewModifier(enemy, self, "modifier_imba_dark_seer_wormhole", 
+				-- {
+					-- duration		= self:GetTalentSpecialValueFor("duration"),
+					-- x				= self:GetCursorPosition().x,
+					-- y				= self:GetCursorPosition().y,
+					-- caster_entindex	= self:GetCaster():entindex()
+				-- })
+			-- else
+				-- enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dark_seer_wormhole", 
+				-- {
+					-- duration	= self:GetTalentSpecialValueFor("duration"),
+					-- x			= self:GetCursorPosition().x,
+					-- y			= self:GetCursorPosition().y
+				-- })
+			-- end
+		-- end
+	-- end
 	
 	GridNav:DestroyTreesAroundPoint( self:GetCursorPosition(), self:GetSpecialValueFor("radius_tree"), true )
 	
-	if vacuum_ability and vacuum_ability:GetAutoCastState() and vacuum_ability:GetCursorPosition() then
+	-- if vacuum_ability and vacuum_ability:GetAutoCastState() and vacuum_ability:GetCursorPosition() then
 		local exit_portal = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_dark_seer_vacuum_exit_portal", {
 			duration		= vacuum_ability:GetSpecialValueFor("teleport_duration")
 		}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
@@ -396,7 +396,7 @@ function imba_dark_seer_wormhole:OnSpellStart()
 			
 			self:GetCaster():FindAbilityByName("imba_dark_seer_close_portal"):SetActivated(true)
 		end
-	end
+	-- end
 	
 	-- Swap abilities if applicable
 	if vacuum_ability and vacuum_ability:IsHidden() then

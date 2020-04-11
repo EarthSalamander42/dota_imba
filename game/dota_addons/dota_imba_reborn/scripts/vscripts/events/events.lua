@@ -1059,6 +1059,7 @@ function GameMode:OnPlayerChat(keys)
 							ability_set = {
 								[0] = "imba_arc_warden_flux",
 								[1] = "imba_arc_warden_magnetic_field",
+								[2] = "imba_arc_warden_spark_wraith",
 							}
 							upgraded = true
 						end
