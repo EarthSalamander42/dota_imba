@@ -878,7 +878,9 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 	var reward_row = $("#BattlepassRewardRow");
 
 	var player_avatar = $("#PlayerSteamAvatar");
-	player_avatar.steamid = Game.GetLocalPlayerInfo(Players.GetLocalPlayer()).player_steamid;
+
+	if (player_avatar)
+		player_avatar.steamid = Game.GetLocalPlayerInfo(Players.GetLocalPlayer()).player_steamid;
 
 	for (var i = 1; i <= 1000; i++) {
 		if (BattlepassRewards[i] != undefined) {
