@@ -88,10 +88,10 @@ function imba_huskar_inner_fire:OnSpellStart()
 		ApplyDamage(damageTable)
 		
 		-- Apply the knockback (and pass the caster's location coordinates to know which way to knockback)
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_knockback", {duration = knockback_duration, x = self:GetCaster():GetAbsOrigin().x, y = self:GetCaster():GetAbsOrigin().y})
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_knockback", {duration = knockback_duration * (1 - enemy:GetStatusResistance()), x = self:GetCaster():GetAbsOrigin().x, y = self:GetCaster():GetAbsOrigin().y})
 		
 		-- Apply the disarm
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_disarm", {duration = disarm_duration})
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_disarm", {duration = disarm_duration * (1 - enemy:GetStatusResistance())})
 	end
 	
 	-- IMBAfication: Raze Land
@@ -185,6 +185,8 @@ function modifier_imba_huskar_inner_fire_raze_land:GetEffectName()
 end
 
 function modifier_imba_huskar_inner_fire_raze_land:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.raze_land_strength_pct	= self:GetAbility():GetSpecialValueFor("raze_land_strength_pct")
 	
 	if not IsServer() then return end
@@ -282,6 +284,14 @@ function imba_huskar_burning_spear:GetAbilityTargetFlags()
 	end
 end
 
+function imba_huskar_burning_spear:CastFilterResultTarget(target)
+	if self:GetCaster():HasTalent("special_bonus_imba_huskar_pure_burning_spears") then
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, self:GetCaster():GetTeamNumber())
+	else
+		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+	end
+end
+
 function imba_huskar_burning_spear:OnOrbFire()
 	self:GetCaster():EmitSound("Hero_Huskar.Burning_Spear.Cast")
 	
@@ -290,12 +300,12 @@ function imba_huskar_burning_spear:OnOrbFire()
 end
 
 function imba_huskar_burning_spear:OnOrbImpact( keys )
-	local duration = self:GetDuration()
-	
-	keys.target:EmitSound("Hero_Huskar.Burning_Spear")
-	
-	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_burning_spear_debuff", { duration = duration })
-	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_burning_spear_counter", { duration = duration })
+	if not keys.target:IsMagicImmune() or self:GetCaster():HasTalent("special_bonus_imba_huskar_pure_burning_spears") then	
+		keys.target:EmitSound("Hero_Huskar.Burning_Spear")
+		
+		keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_burning_spear_debuff", { duration = self:GetDuration() })
+		keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_burning_spear_counter", { duration = self:GetDuration() })
+	end
 end
 
 ------------------------------------
@@ -320,7 +330,7 @@ function modifier_imba_huskar_burning_spear_counter:OnCreated()
 
 	self.damage_type = DAMAGE_TYPE_MAGICAL
 	
-	if self:GetCaster() and self:GetCaster():HasTalent("special_bonus_unique_huskar_5") then
+	if self:GetCaster() and self:GetCaster():HasTalent("special_bonus_imba_huskar_pure_burning_spears") then
 		self.damage_type = DAMAGE_TYPE_PURE
 	end
 
@@ -351,7 +361,7 @@ function modifier_imba_huskar_burning_spear_counter:OnIntervalThink()
 		
 		self.damage_type = DAMAGE_TYPE_MAGICAL
 		
-		if self:GetCaster() and self:GetCaster():HasTalent("special_bonus_unique_huskar_5") then
+		if self:GetCaster() and self:GetCaster():HasTalent("special_bonus_imba_huskar_pure_burning_spears") then
 			self.damage_type = DAMAGE_TYPE_PURE
 		end
 	end
@@ -912,13 +922,15 @@ function modifier_imba_huskar_life_break:OnDestroy()
 			damage_flags 	= DOTA_DAMAGE_FLAG_NON_LETHAL
 		}
 		local self_damage = ApplyDamage(damageTable_self)
-
-		-- Apply the slow modifier
-		local slow_modifier = self.target:AddNewModifier(self.parent, self.ability, "modifier_imba_huskar_life_break_slow", {duration = self.ability:GetDuration()})
 		
-		if slow_modifier then
-			slow_modifier:SetDuration(self.ability:GetDuration() * (1 - self.target:GetStatusResistance()), true)
+		local duration = self.ability:GetDuration() * (1 - self.target:GetStatusResistance())
+		
+		if self.target:GetTeamNumber() == self.parent:GetTeamNumber() then
+			duration = self.ability:GetDuration()
 		end
+		
+		-- Apply the slow modifier
+		self.target:AddNewModifier(self.parent, self.ability, "modifier_imba_huskar_life_break_slow", {duration = duration})
 		
 		-- This is optional I guess but it replicates vanilla Life Break being reflected by Lotus Orb a bit closer (cause the target starts attacking you)
 		self.parent:MoveToTargetToAttack( self.target )
@@ -1208,12 +1220,24 @@ end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_huskar_life_break_cast_range", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_huskar_pure_burning_spears", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_huskar_life_break_cast_range	= class({})
+modifier_special_bonus_imba_huskar_life_break_cast_range	= modifier_special_bonus_imba_huskar_life_break_cast_range or class({})
+modifier_special_bonus_imba_huskar_pure_burning_spears		= modifier_special_bonus_imba_huskar_pure_burning_spears or class({})
 
 function modifier_special_bonus_imba_huskar_life_break_cast_range:IsHidden() 		return true end
 function modifier_special_bonus_imba_huskar_life_break_cast_range:IsPurgable() 		return false end
 function modifier_special_bonus_imba_huskar_life_break_cast_range:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_huskar_pure_burning_spears:IsHidden() 			return true end
+function modifier_special_bonus_imba_huskar_pure_burning_spears:IsPurgable() 		return false end
+function modifier_special_bonus_imba_huskar_pure_burning_spears:RemoveOnDeath() 	return false end
+
+function imba_huskar_burning_spear:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_huskar_pure_burning_spears") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_huskar_pure_burning_spears") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_huskar_pure_burning_spears"), "modifier_special_bonus_imba_huskar_pure_burning_spears", {})
+	end
+end
 
 function imba_huskar_life_break:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_huskar_life_break_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_huskar_life_break_cast_range") then

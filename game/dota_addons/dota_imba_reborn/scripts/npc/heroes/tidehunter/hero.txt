@@ -22,7 +22,7 @@
 		"Ability10"		"special_bonus_movement_speed_20"
 		"Ability11"		"special_bonus_unique_tidehunter_2"
 		"Ability12"		"special_bonus_imba_tidehunter_greater_hardening"
-		"Ability13"		"special_bonus_unique_tidehunter_3"
+		"Ability13"		"special_bonus_imba_tidehunter_anchor_smash_damage_reduction"
 		"Ability14"		"special_bonus_unique_tidehunter_4"
 		"Ability15"		"special_bonus_imba_tidehunter_gush_armor"
 		"Ability16"		"special_bonus_cooldown_reduction_25"
@@ -30,6 +30,7 @@
 
 		// Removed Talents
 		// "Ability12"		"special_bonus_exp_boost_40"
+		// "Ability13"		"special_bonus_unique_tidehunter_3"
 		// "Ability15"		"special_bonus_unique_tidehunter"
 	}
 }

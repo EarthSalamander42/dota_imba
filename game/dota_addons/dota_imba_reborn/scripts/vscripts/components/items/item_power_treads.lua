@@ -79,8 +79,8 @@ end
 --	Item Modifier - Movement speed and stat bonus (stacks responsible for texture and stat bonus choice)
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_power_treads_2 == nil then modifier_imba_power_treads_2 = class({}) end
+
 function modifier_imba_power_treads_2:IsHidden() return true end
-function modifier_imba_power_treads_2:IsDebuff() return false end
 function modifier_imba_power_treads_2:IsPurgable() return false end
 function modifier_imba_power_treads_2:RemoveOnDeath() return false end
 function modifier_imba_power_treads_2:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end

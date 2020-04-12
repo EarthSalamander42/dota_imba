@@ -141,8 +141,8 @@ end
 --	Shiva Handler
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_shiva_handler == nil then modifier_imba_shiva_handler = class({}) end
+
 function modifier_imba_shiva_handler:IsHidden() return true end
-function modifier_imba_shiva_handler:IsDebuff() return false end
 function modifier_imba_shiva_handler:IsPurgable() return false end
 function modifier_imba_shiva_handler:RemoveOnDeath() return false end
 function modifier_imba_shiva_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
@@ -250,7 +250,7 @@ end
 
 function modifier_imba_shiva_aura:IsHidden() return true end
 function modifier_imba_shiva_aura:IsPurgable() return false end
-function modifier_imba_shiva_aura:IsPermanent() return true end
+function modifier_imba_shiva_aura:RemoveOnDeath() return false end
 
 ---------------------------------------
 -- Shiva's Guard Passive Aura Debuff --

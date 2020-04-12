@@ -36,6 +36,7 @@
 "dota_hud_error_cant_shrine_1v1"							"You can't use shrines in 1v1!"
 "dota_hud_error_cant_infest_bob"							"You can't infest BOB!"
 "dota_hud_error_cant_devour_roshan"							"This boii is too big for your mouth!"
+"dota_hud_error_cant_cast_near_fountain"					"Cannot Cast Near Fountain Area"
 
 //=================================================================================================================
 //=================================================================================================================
@@ -291,30 +292,6 @@
 "DOTA_Tooltip_modifier_roshan_sugar_rush_start_delay_Description"       "Roshan is waiting for a victim to attack!"
 
 //=================================================================================================================
-// Fountain
-//=================================================================================================================
-"DOTA_Tooltip_ability_imba_fountain_grievous_wounds"					"Grievous Wounds"
-"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_Description"		"Inflicts additional damage on each attack."
-"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_Lore"				"The fountain is evil. Don't piss off the fountain."
-"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_damage_increase"	"%DAMAGE INCREASE:"
-"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_debuff_duration"	"#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_abilityduration}"
-
-"DOTA_Tooltip_ability_imba_fountain_relief"								"Relief Aura"
-"DOTA_Tooltip_ability_imba_fountain_relief_Description"					"Relieves the tension on nearby units, drastically increasing their Tenacity and their damage reduction. Dealing damage in any way to an enemy unit or hero rejects the buff from the attacker for %aura_reject_time% seconds.\n<font color='#FF7800'>Relieved From Command:</font> Disconnected players get %disconnected_dmg_reduction%% damage reduction, and cannot be harmed. However, they're still suspectible for the aura rejection."
-"DOTA_Tooltip_ability_imba_fountain_relief_Lore"						"Everyone loves to be near the fountain. Even the bad guys."
-"DOTA_Tooltip_ability_imba_fountain_relief_tenacity"					"%TENACITY BONUS:"
-"DOTA_Tooltip_ability_imba_fountain_relief_aura_radius"					"#{DOTA_Tooltip_ability_filler_ability_radius}"
-
-"DOTA_Tooltip_modifier_imba_fountain_relief_aura_buff"					"Relief Aura"
-"DOTA_Tooltip_modifier_imba_fountain_relief_aura_buff_Description"		"Massively increases your Tenacity and damage reduction as long as you don't deal damage to enemies."
-
-"DOTA_Tooltip_modifier_imba_fountain_relief_aura_reject"				"Relief Aura Cooldown"
-"DOTA_Tooltip_modifier_imba_fountain_relief_aura_reject_Description"	"Recently dealt damage to an enemy, causing tension. You cannot gain Relief Aura's buff again for a few seconds."
-
-"DOTA_Tooltip_modifier_fountain_passive"								"Fountain"
-"DOTA_Tooltip_modifier_fountain_passive_Description"					"I have no idea what this modifier is for."
-
-//=================================================================================================================
 // Developers
 //=================================================================================================================
 "npc_imba_developer_shush"                                  "Shush"
@@ -480,7 +457,6 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_lifestealer"             "+1.5s Rage duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_medusa"                  "+2s Stone Gaze Stun"
 //"DOTA_Tooltip_Ability_special_bonus_unique_medusa_2"                "+10 Split Shot targets"
-"DOTA_Tooltip_Ability_special_bonus_unique_ogre_magi"               "+45 Bloodlust AS"
 //"DOTA_Tooltip_Ability_special_bonus_unique_death_prophet"           "+8 Exorcism Spirits"
 //"DOTA_Tooltip_Ability_special_bonus_unique_tusk"                    "+150% Walrus Punch Crit"
 //"DOTA_Tooltip_Ability_special_bonus_unique_tusk_2"                  "+140 Snowball damage"
@@ -599,3 +575,8 @@
 
 "DOTA_Tooltip_modifier_imba_mudgolem_cloak_aura_bonus"	        						"Cloak Aura"
 "DOTA_Tooltip_modifier_imba_mudgolem_cloak_aura_bonus_Description"	                    "Magic resistance increased by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
+
+"dota_tooltip_ability_imba_necronomicon_archer_spread_shot"								"Spread Shot"
+"dota_tooltip_ability_imba_necronomicon_archer_spread_shot_description"					"Attacks all enemies in range simultaneously. Only the main target of attacks will receive attack bonuses such as Critical Strike."
+"dota_tooltip_ability_imba_necronomicon_archer_spread_shot_lore"						"The Dark Terminator does not in fact attack hundreds of times per second - its attacks are mostly illusory. The pain they cause, however, is very real."
+"dota_tooltip_ability_imba_necronomicon_archer_spread_shot_Note0"						"Deos not affect buildings or ward-type units."

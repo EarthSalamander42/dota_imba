@@ -115,7 +115,8 @@ end
 ----------------------------
 
 function modifier_item_imba_ghost:IsHidden()		return true end
-function modifier_item_imba_ghost:IsPermanent()	return true end
+function modifier_item_imba_ghost:IsPurgable()		return false end
+function modifier_item_imba_ghost:RemoveOnDeath()	return false end
 function modifier_item_imba_ghost:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_ghost:OnCreated()

@@ -827,6 +827,26 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_weaver_shukuchi_damage", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_weaver_shukuchi_damage	= modifier_special_bonus_imba_weaver_shukuchi_damage or class({})
+modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks	= modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks or class({})
+modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack	= modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack or class({})
+
+function modifier_special_bonus_imba_weaver_shukuchi_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_weaver_shukuchi_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_weaver_shukuchi_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks:IsHidden() 		return true end
+function modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks:IsPurgable()		return false end
+function modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack:IsHidden() 		return true end
+function modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack:IsPurgable()		return false end
+function modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_weaver_the_swarm_armor_reduction", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_weaver_shukuchi_hasted_speed", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
 

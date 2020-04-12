@@ -41,12 +41,11 @@
 
 // Sniper's Take Aim
 "DOTA_Tooltip_ability_imba_sniper_take_aim"                            "Take Aim"
-"DOTA_Tooltip_ability_imba_sniper_take_aim_Description"                "Passively extends the attack range of Sniper's rifle.\n<font color='#FF7800'>Aimed Assault:</font> When off cooldown and cast or attacking with auto-cast on, increses Sniper's attack range even further, and applies a Headshot Perfect Shot if appilcable."
-"DOTA_Tooltip_ability_imba_sniper_take_aim_Lore"                        "Kardel always takes it upon himself to stay as far from harm as he can while still performing his role - taking perfect aim."
-"DOTA_Tooltip_ability_imba_sniper_take_aim_Note0"                      "A Perfect Shot can only proc if Headshot is leveled. Otherwise, Sniper will only benefit from the bonus range."
-"DOTA_Tooltip_ability_imba_sniper_take_aim_Note1"                      "Aimed Assault's range bonus stacks fully with the passive bonus range."
-"DOTA_Tooltip_ability_imba_sniper_take_aim_passive_bonus_range"                     "PASSIVE RANGE BONUS:"
-"DOTA_Tooltip_ability_imba_sniper_take_aim_aim_bonus_range"            "AIMED ASSAULT RANGE BONUS:"
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Description"                "Passively extends the attack range of Sniper's rifle.\n<font color='#FF7800'>Aimed Assault:</font> When off cooldown and cast or attacking with auto-cast on, increases Sniper's attack range by an additional %aim_bonus_range% for that attack, and applies Headshot's Perfect Shot if appilcable."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Lore"						"Kardel always takes it upon himself to stay as far from harm as he can while still performing his role - taking perfect aim."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Note0"						"A Perfect Shot can only proc if Headshot is leveled. Otherwise, Sniper will only benefit from the bonus range."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Note1"						"Aimed Assault's range bonus stacks fully with the passive bonus range."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_passive_bonus_range"			"PASSIVE RANGE BONUS:"
 
 // Sniper's Assassinate
 "DOTA_Tooltip_ability_imba_sniper_assassinate"							"Assassinate"

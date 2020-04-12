@@ -154,10 +154,13 @@ end
 
 modifier_item_imba_hand_of_midas = class({})
 
-function modifier_item_imba_hand_of_midas:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+function modifier_item_imba_hand_of_midas:IsHidden()			return true end
+function modifier_item_imba_hand_of_midas:IsPurgable()		return false end
+function modifier_item_imba_hand_of_midas:RemoveOnDeath()	return false end
+function modifier_item_imba_hand_of_midas:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-	return decFuncs
+function modifier_item_imba_hand_of_midas:DeclareFunctions()
+	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 end
 
 function modifier_item_imba_hand_of_midas:GetModifierAttackSpeedBonus_Constant()
@@ -174,6 +177,4 @@ function modifier_item_imba_hand_of_midas:IsHidden()
 	return true
 end
 
-function modifier_item_imba_hand_of_midas:IsPermanent()
-	return true
-end
+function modifier_item_imba_hand_of_midas:RemoveOnDeath()	return false end

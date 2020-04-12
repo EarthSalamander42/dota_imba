@@ -192,27 +192,19 @@ function modifier_imba_life_stealer_rage_insanity:OnStackCountChanged(stackCount
 		-- If there is a caster enemy in range, make the insanity target go to attack them
 		  -- The reason I say "caster enemy" and not "target ally" is cause you can go Insanity on neutrals, just not caster allies
 		if #enemies >= 2 then
-			local insanity_active_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_life_stealer_rage_insanity_active",
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_life_stealer_rage_insanity_active",
 			{
-				duration		= self.active_duration,
+				duration		= self.active_duration * (1 - self:GetParent():GetStatusResistance()),
 				active_range	= self.active_range,
 				target_entindex	= enemies[2]:entindex()
 			})
 			
-			if insanity_active_modifier then
-				insanity_active_modifier:SetDuration(self.active_duration * (1 - self:GetParent():GetStatusResistance()), true)
-			end
-			
-			local insanity_target_modifier = enemies[2]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_life_stealer_rage_insanity_target", {duration = self.active_duration})
-			
-			if insanity_target_modifier then
-				insanity_target_modifier:SetDuration(self.active_duration * (1 - self:GetParent():GetStatusResistance()), true)
-			end
+			enemies[2]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_life_stealer_rage_insanity_target", {duration = self.active_duration * (1 - self:GetParent():GetStatusResistance())})
 		-- Otherwise, just give them the modifier and periodically search for allies
 		else
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_life_stealer_rage_insanity_active",
 				{
-					duration		= self.active_duration,
+					duration		= self.active_duration * (1 - self:GetParent():GetStatusResistance()),
 					active_range	= self.active_range
 				})
 		end
@@ -626,10 +618,10 @@ function imba_life_stealer_open_wounds:OnSpellStart()
 	local impact_particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds_impact, PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:ReleaseParticleIndex(impact_particle)
 	
-	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 	
 	-- IMBAfication: Cross-Contamination
-	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds_cross_contamination", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds_cross_contamination", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 end
 
 --------------------------
@@ -719,11 +711,9 @@ function modifier_imba_life_stealer_open_wounds_cross_contamination:OnCreated()
 end
 
 function modifier_imba_life_stealer_open_wounds_cross_contamination:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
     }
-	
-	return decFuncs
 end
 
 function modifier_imba_life_stealer_open_wounds_cross_contamination:GetModifierIncomingDamage_Percentage()
@@ -855,7 +845,7 @@ function imba_life_stealer_infest:OnSpellStart()
 		infest_effect_modifier.infest_modifier	= infest_modifier
 	end
 	
-	if self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsRoshan() then
+	if self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsOther() and not target:IsRoshan() then
 		target:Heal(self:GetSpecialValueFor("bonus_health"), self:GetCaster())
 		
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCaster(), self:GetSpecialValueFor("bonus_health"), nil)
@@ -925,7 +915,7 @@ function imba_life_stealer_infest:OnSpellStart()
 		self:GetCaster():SwapAbilities(self:GetName(), consume_ability:GetName(), false, true)
 	end
 
-	if self:GetCaster():HasAbility("imba_life_stealer_rage_723") and self:GetCaster():HasScepter() and self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsRoshan() then
+	if self:GetCaster():HasAbility("imba_life_stealer_rage_723") and self:GetCaster():HasScepter() and self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsOther() and not target:IsRoshan() then
 		local rage_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
 		
 		target:EmitSound("Hero_LifeStealer.Rage")
@@ -1127,7 +1117,7 @@ function modifier_imba_life_stealer_infest_effect:OnCreated()
 	
 	local infest_overhead_particle
 	
-	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() then
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() and not self:GetParent():IsOther() then
 		infest_overhead_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetParent():GetTeamNumber())
 	else
 		infest_overhead_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
@@ -1211,11 +1201,7 @@ function modifier_imba_life_stealer_infest_effect:OnStackCountChanged(stackCount
 				bIgnoreTenacity	= true
 			})
 			
-			local stun_modifier			= self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.chestburster_fail_stun_duration})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(self.chestburster_fail_stun_duration * (1 - self:GetCaster():GetStatusResistance()), true)
-			end
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.chestburster_fail_stun_duration * (1 - self:GetCaster():GetStatusResistance())})
 			
 			self:Destroy()
 		end
@@ -1223,7 +1209,7 @@ function modifier_imba_life_stealer_infest_effect:OnStackCountChanged(stackCount
 end
 
 function modifier_imba_life_stealer_infest_effect:CheckState()
-	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and (self:GetParent():IsHero() or self:GetParent():IsBuilding()) then
+	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and (self:GetParent():IsHero() or self:GetParent():IsBuilding() or self:GetParent():IsOther()) then
 		return {[MODIFIER_STATE_SPECIALLY_DENIABLE] = true}
 	end
 end
@@ -1250,7 +1236,7 @@ function modifier_imba_life_stealer_infest_effect:GetModifierMoveSpeedBonus_Perc
 end
 
 function modifier_imba_life_stealer_infest_effect:GetModifierExtraHealthBonus(keys)
-	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() and not self:GetParent():IsOther() then
 		return self.bonus_health
 	end
 end

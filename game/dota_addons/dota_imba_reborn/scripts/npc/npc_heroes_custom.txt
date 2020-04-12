@@ -32,8 +32,10 @@
 #base heroes/spirit_breaker/hero.txt
 // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
 #base heroes/templar_assassin/hero.txt
+// #base heroes/terrorblade/hero.txt
 #base heroes/tidehunter/hero.txt
 #base heroes/timbersaw/hero.txt
+// #base heroes/undying/hero.txt
 #base heroes/visage/hero.txt
 #base heroes/void_spirit/hero.txt
 #base heroes/weaver/hero.txt
@@ -43,7 +45,6 @@
 #base heroes/winter_wyvern/hero.txt
 // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
 #base heroes/invoker/hero.txt
-
 #base custom_heroes/hell_empress/hero.txt
 #base custom_heroes/malfurion/hero.txt
 #base custom_heroes/nian/hero.txt
@@ -285,12 +286,13 @@
 		"Ability11"					"special_bonus_imba_bounty_hunter_3" //Jinada can now be cast on allies, granting them the ensured Jinada buff
 		"Ability12"					"special_bonus_imba_bounty_hunter_2" //Tracked enemies grant normal vision instead of fogvision for the duration.
 		"Ability13"					"special_bonus_imba_bounty_hunter_7" //Shadow Jaunt can be cast on Headhunter's contract targets from huge range
-		"Ability14"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit
+		"Ability14"					"special_bonus_attack_speed_60"
 		"Ability15"					"special_bonus_imba_bounty_hunter_9" // +X Jinada Gold Steal
 		"Ability16"					"special_bonus_imba_bounty_hunter_1" //Tracked enemies take increased damage from any source
 		"Ability17"					"special_bonus_imba_bounty_hunter_8" //Track becomes hidden and unpurgable
 		
 		// Removed Talents
+		// "Ability14"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit // DISABLED
 		// "Ability15"					"special_bonus_imba_bounty_hunter_5" // Global Shuriken bounce range on all Tracked target
 	}
 
@@ -315,8 +317,8 @@
 		"Ability13"					"special_bonus_imba_centaur_2" //Arena damage reduction extends to allies
 		"Ability14"					"special_bonus_imba_centaur_9" // +X Retaliate Damage
 		"Ability15"					"special_bonus_strength_20"
-		"Ability16"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
-		"Ability17"					"special_bonus_imba_centaur_6" //Return becomes an aura
+		"Ability16"					"special_bonus_imba_centaur_6" //Return becomes an aura
+		"Ability17"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
 		
 		// Removed Talents
 		//"Ability12"					"special_bonus_imba_centaur_8" //Stampede duration increase per trampled enemy
@@ -593,16 +595,16 @@
 		"Ability6"					"imba_earth_spirit_magnetize"
 
 		"Ability10"					"special_bonus_imba_earth_spirit_1"
-		"Ability11"					"special_bonus_attack_damage_50"
+		"Ability11"					"special_bonus_attack_damage_65"
 		"Ability12"					"special_bonus_imba_earth_spirit_3"
 		"Ability13"					"special_bonus_armor_8"
-		"Ability14"					"special_bonus_spell_amplify_15"
+		"Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
 		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
 		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
 		"Ability17"					"special_bonus_imba_earth_spirit_2"
 		
 		// Removed Talents
-		// "Ability13"					"special_bonus_imba_earth_spirit_4"
+		// "Ability14"					"special_bonus_spell_amplify_20"
 		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
 		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
 		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
@@ -627,7 +629,7 @@
 
 		"Ability10"					"special_bonus_imba_elder_titan_1" // 2400 cast range ancestral spirit
 		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
-		"Ability12"					"special_bonus_magic_resistance_15"
+		"Ability12"					"special_bonus_magic_resistance_20"
 		"Ability13"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
 		"Ability14"					"special_bonus_attack_speed_70"
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
@@ -681,7 +683,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_enigma_black_hole"
 
-		"Ability10"					"special_bonus_movement_speed_25"
+		"Ability10"					"special_bonus_imba_enigma_demonic_conversion_attack_range"
 		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
 		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
 		"Ability13"					"special_bonus_imba_enigma_malefice_damage"
@@ -691,6 +693,7 @@
 		"Ability17"					"special_bonus_imba_enigma_4" // Black Hole cast on death
 		
 		// Removed Talents
+		// "Ability10"					"special_bonus_movement_speed_25"
 		// "Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 6 seconds.
 		// "Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
 	}
@@ -740,11 +743,11 @@
 		//Picking Screen
 		"IsImba"					"1"
 
-		"Ability1"					"imba_jakiro_fire_breath"
+		"Ability1"					"imba_jakiro_dual_breath"
 		"Ability2"					"imba_jakiro_ice_path"
 		"Ability3"					"imba_jakiro_liquid_fire"
-		"Ability4"					"imba_jakiro_ice_breath"
-		"Ability5"					"generic_hidden"
+		"Ability4"					"imba_jakiro_fire_breath"
+		"Ability5"					"imba_jakiro_ice_breath"
 		"Ability6"					"imba_jakiro_macropyre"
 
 		"Ability10"					"special_bonus_imba_jakiro_1"
@@ -774,8 +777,8 @@
 		"Ability1"					"imba_juggernaut_blade_fury"
 		"Ability2"					"imba_juggernaut_healing_ward"
 		"Ability3"					"imba_juggernaut_blade_dance"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
+		"Ability4"					"juggernaut_swift_slash"
+		"Ability5"					"juggernaut_omni_slash"
 		"Ability6"					"imba_juggernaut_omni_slash"
 
 		"Ability10"					"special_bonus_all_stats_6"
@@ -880,7 +883,7 @@
 		"Ability14"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
 		"Ability15"					"special_bonus_imba_lina_9" // +X/Y% Fiery Soul Per Stack
 		"Ability16"					"special_bonus_imba_lina_10" // -6s Dragon Slave Cooldown
-		"Ability17"					"special_bonus_attack_range_175"
+		"Ability17"					"special_bonus_attack_range_200"
 		
 		// Removed Abilities
 		// "Ability10"					"special_bonus_imba_lina_1" // Additional Dragon Slaves
@@ -1083,7 +1086,7 @@
 		"Ability10"					"special_bonus_hp_225"
 		"Ability11"					"special_bonus_mp_225"
 		"Ability12"					"special_bonus_strength_15"
-		"Ability13"					"special_bonus_lifesteal_15"
+		"Ability13"					"special_bonus_lifesteal_25"
 		"Ability14"					"special_bonus_movement_speed_40"
 		"Ability15"					"special_bonus_attack_damage_50"
 		"Ability16"					"special_bonus_imba_night_stalker_9"
@@ -1332,17 +1335,18 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_queenofpain_sonic_wave"
 
-		"Ability10"					"special_bonus_strength_10"
-		"Ability11"					"special_bonus_imba_queenofpain_2"
-		"Ability12"					"special_bonus_imba_queenofpain_1"
-		"Ability13"					"special_bonus_imba_queenofpain_4"
+		"Ability10"					"special_bonus_imba_queenofpain_4" // "Delightful Torment Bonus Attack Speed"
+		"Ability11"					"special_bonus_imba_queenofpain_2" // "Sonic Wave deals damage in five instances"
+		"Ability12"					"special_bonus_imba_queenofpain_1" // "Shadow Struck targets can be seen through fog"
+		"Ability13"					"special_bonus_imba_queen_of_pain_shadow_strike_aoe"
 		"Ability14"					"special_bonus_spell_lifesteal_30"
-		"Ability15"					"special_bonus_imba_queen_of_pain_shadow_strike_aoe"
+		"Ability15"					"special_bonus_imba_queenofpain_3" // Damaging an enemy causes Shadow Strike to deal its tick damage
 		"Ability16"					"special_bonus_imba_queen_of_pain_scream_of_pain_fear"
 		"Ability17"					"special_bonus_spell_block_15"
 		
 		// Removed Talents
-		// "Ability12"					"special_bonus_imba_queenofpain_3" // Damaging an enemy causes Shadow Strike to deal its tick damage
+		// "Ability10"					"special_bonus_strength_10"
+		// "Ability12"					
 		// "Ability14"					"special_bonus_imba_queenofpain_5" // Blink can be used twice in quick succession, with increased mana cost
 		// "Ability15"					"special_bonus_imba_queenofpain_6" // Enemies affected by Shadow Strike release Screams of Pain every damage tick
 		// "Ability16"					"special_bonus_imba_queenofpain_7" // Scream of Pain now causes confusion
@@ -1440,9 +1444,9 @@
 		"Ability6"					"imba_nevermore_requiem"		
 
 		"Ability10"					"special_bonus_imba_nevermore_1"
-		"Ability11"					"special_bonus_attack_speed_20"
+		"Ability11"					"special_bonus_attack_speed_25"
 		"Ability12"					"special_bonus_imba_nevermore_3"
-		"Ability13"					"special_bonus_movement_speed_30"
+		"Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
 		"Ability14"					"special_bonus_imba_nevermore_5"
 		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
@@ -1450,7 +1454,7 @@
 		
 		// Removed Talents
 		// "Ability11"					"special_bonus_imba_nevermore_2" // Necromastery Siphon
-		// "Ability13"					"special_bonus_imba_nevermore_4" // "+0.5% lifesteal per Necromastery soul"
+		// "Ability13"					"special_bonus_movement_speed_30"
 		// "Ability15"					"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	}
 
@@ -1852,7 +1856,7 @@
 		"Ability6"					"imba_warlock_rain_of_chaos"
 
 		"Ability10"					"special_bonus_imba_warlock_1" // "+30 Shadow Word attack speed on Golems"
-		"Ability11"					"special_bonus_cast_range_150"
+		"Ability11"					"special_bonus_cast_range_175"
 		"Ability12"					"special_bonus_armor_10"
 		"Ability13"					"special_bonus_imba_warlock_3" // "+7% Fatal Bonds shared damage"
 		"Ability14"					"special_bonus_imba_warlock_9" // "Summons a Warlock Golem on Death"

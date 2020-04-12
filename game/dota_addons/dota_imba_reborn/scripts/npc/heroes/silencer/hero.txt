@@ -18,7 +18,7 @@
 		"Ability3"					"imba_silencer_last_word"
 		"Ability4"					"imba_silencer_arcane_supremacy"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_silencer_global_silence"
+		"Ability6"					"imba_silencer_global_silence_v2"
 		
 		"Ability10"					"special_bonus_imba_silencer_1"
 		"Ability11"					"special_bonus_attack_speed_30"
@@ -28,5 +28,8 @@
 		"Ability15"					"special_bonus_imba_silencer_4"
 		"Ability16"					"special_bonus_imba_silencer_10"
 		"Ability17"					"special_bonus_imba_silencer_8"
+		
+		// Removed Abilities
+		// "Ability6"					"imba_silencer_global_silence"
 	}
 }

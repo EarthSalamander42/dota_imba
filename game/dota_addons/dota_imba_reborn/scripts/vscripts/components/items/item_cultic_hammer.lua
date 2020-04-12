@@ -110,11 +110,7 @@ function item_imba_cultic_hammer:OnChannelFinish(bInterrupted)
 			
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_cultic_status_resistance", {duration = self:GetSpecialValueFor("wretched_status_duration")})
 			
-			local root_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_cultic_root", {duration = self:GetSpecialValueFor("wretched_root_duration")})
-			
-			if root_modifier then
-				root_modifier:SetDuration(self:GetSpecialValueFor("wretched_root_duration") * (1 - enemy:GetStatusResistance()), true)
-			end
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_cultic_root", {duration = self:GetSpecialValueFor("wretched_root_duration") * (1 - enemy:GetStatusResistance())})
 		end
 		
 		GridNav:DestroyTreesAroundPoint(self:GetCursorPosition(), self:GetSpecialValueFor("wretched_radius"), true)

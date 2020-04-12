@@ -21,16 +21,18 @@
 		Updated:  11.05.2017
 	]]
 
-item_imba_aegis = item_imba_aegis or class({})
+
 
 LinkLuaModifier("modifier_item_imba_aegis", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_aegis_pfx", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 
+item_imba_aegis					= item_imba_aegis or class({})
+modifier_item_imba_aegis		= modifier_item_imba_aegis or class({})
+modifier_item_imba_aegis_pfx	= modifier_item_imba_aegis_pfx or class({})
+
 function item_imba_aegis:GetAbilityTextureName()
 	return "custom/imba_aegis"
 end
-
-modifier_item_imba_aegis = modifier_item_imba_aegis or class({})
 
 function modifier_item_imba_aegis:OnCreated()
 	if not IsServer() then return end
@@ -43,12 +45,10 @@ function modifier_item_imba_aegis:OnCreated()
 end
 
 function modifier_item_imba_aegis:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_REINCARNATION,
-			MODIFIER_EVENT_ON_DEATH
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_REINCARNATION,
+		MODIFIER_EVENT_ON_DEATH
+	}
 end
 
 function modifier_item_imba_aegis:GetTexture()
@@ -108,8 +108,6 @@ function modifier_item_imba_aegis:OnDestroy()
 		UTIL_Remove(item)
 	end
 end
-
-modifier_item_imba_aegis_pfx = modifier_item_imba_aegis_pfx or class({})
 
 function modifier_item_imba_aegis_pfx:IsHidden() return true end
 function modifier_item_imba_aegis_pfx:IsPurgable() return false end

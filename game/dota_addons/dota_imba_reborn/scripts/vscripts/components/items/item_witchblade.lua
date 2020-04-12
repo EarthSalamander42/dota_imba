@@ -1,9 +1,9 @@
 -- Creator:
 -- 	AltiV - February 28th, 2019
 
-LinkLuaModifier("modifier_item_imba_witchblade_slow", "components/items/item_witchblade.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_witchblade_root", "components/items/item_witchblade.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_witchblade", "components/items/item_witchblade.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_witchblade_slow", "components/items/item_witchblade", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_witchblade_root", "components/items/item_witchblade", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_witchblade", "components/items/item_witchblade", LUA_MODIFIER_MOTION_NONE)
 
 item_imba_witchblade					= class({})
 modifier_item_imba_witchblade_slow		= class({})
@@ -27,8 +27,6 @@ function item_imba_witchblade:GetCooldown(level)
 end
 
 function item_imba_witchblade:OnSpellStart()
-	self.caster		= self:GetCaster()
-	
 	-- AbilitySpecials
 	self.bonus_agility							= self:GetSpecialValueFor("bonus_agility")
 	self.bonus_intellect						= self:GetSpecialValueFor("bonus_intellect")
@@ -50,14 +48,14 @@ function item_imba_witchblade:OnSpellStart()
 	local target			= self:GetCursorTarget()
 	
 	-- If the target has Linken sphere, trigger it and do nothing else
-	if target:GetTeam() ~= self.caster:GetTeam() then
+	if target:GetTeam() ~= self:GetCaster():GetTeam() then
 		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 	end
 	
 	-- Play the cast sounds
-	self.caster:EmitSound("DOTA_Item.DiffusalBlade.Activate")
+	self:GetCaster():EmitSound("DOTA_Item.DiffusalBlade.Activate")
 	target:EmitSound("DOTA_Item.DiffusalBlade.Target")
 	
 	-- Play hit particle
@@ -93,7 +91,7 @@ function item_imba_witchblade:OnSpellStart()
 
 			-- Damage the target
 			local damageTable = {victim = target,
-				attacker = self.caster,
+				attacker = self:GetCaster(),
 				damage = damage,
 				damage_type = DAMAGE_TYPE_MAGICAL,
 				ability = self,
@@ -109,13 +107,13 @@ function item_imba_witchblade:OnSpellStart()
 		end
 	end)
 	
+	-- Add the slow modifier
+	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration * (1 - target:GetStatusResistance())})
+	
 	-- If the target is not a hero (or a creep hero), root it
 	if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-		target:AddNewModifier(self.caster, self, "modifier_item_imba_witchblade_root", {duration = self.purge_root_duration})
+		target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance())})
 	end
-
-	-- Add the slow modifier
-	target:AddNewModifier(self.caster, self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration})
 	
 	-- IMBAfication: Internal Bypass
 	if target:IsMagicImmune() or target:IsBuilding() then
@@ -136,8 +134,6 @@ end
 
 function modifier_item_imba_witchblade_slow:OnCreated()
 	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	self.parent		= self:GetParent()
 	
 	if not self.ability then return end
 	
@@ -156,14 +152,19 @@ function modifier_item_imba_witchblade_slow:OnCreated()
 	self.combust_mana_loss						= self.ability:GetSpecialValueFor("combust_mana_loss")
 	self.severance_chance						= self.ability:GetSpecialValueFor("severance_chance")
 	
-	self.initial_slow 							= 100
+	self.initial_slow 							= -100
 	self.slow_intervals							= self.initial_slow / self.purge_rate
 	
 	if not IsServer() then return end
 	
 	self:SetStackCount(self.initial_slow)
 	
-	self:StartIntervalThink((self.purge_slow_duration / self.purge_rate)* (1 - self.parent:GetStatusResistance()))
+	self:StartIntervalThink((self.purge_slow_duration / self.purge_rate)* (1 - self:GetParent():GetStatusResistance()))
+end
+
+function modifier_item_imba_witchblade_slow:OnRefresh()
+	self:StartIntervalThink(-1)
+	self:OnCreated()
 end
 
 function modifier_item_imba_witchblade_slow:OnIntervalThink()
@@ -171,13 +172,11 @@ function modifier_item_imba_witchblade_slow:OnIntervalThink()
 end
 
 function modifier_item_imba_witchblade_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
 function modifier_item_imba_witchblade_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetStackCount() * (-1)
+	return self:GetStackCount()
 end
 
 ------------------------------
@@ -185,11 +184,9 @@ end
 ------------------------------
 
 function modifier_item_imba_witchblade_root:CheckState(keys)
-	local state = {
-	[MODIFIER_STATE_ROOTED] = true
+	return {
+		[MODIFIER_STATE_ROOTED] = true
 	}
-
-	return state
 end
 
 -------------------------
@@ -197,55 +194,37 @@ end
 -------------------------
 
 function modifier_item_imba_witchblade:IsHidden()		return true end
-function modifier_item_imba_witchblade:IsPermanent()	return true end
+function modifier_item_imba_witchblade:IsPurgable()		return false end
+function modifier_item_imba_witchblade:RemoveOnDeath()	return false end
 function modifier_item_imba_witchblade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_item_imba_witchblade:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	self.parent		= self:GetParent()
-	
-	-- AbilitySpecials
-	self.bonus_agility							= self.ability:GetSpecialValueFor("bonus_agility")
-	self.bonus_intellect						= self.ability:GetSpecialValueFor("bonus_intellect")
-	self.feedback_mana_burn						= self.ability:GetSpecialValueFor("feedback_mana_burn")
-	self.feedback_mana_burn_illusion_melee		= self.ability:GetSpecialValueFor("feedback_mana_burn_illusion_melee")
-	self.feedback_mana_burn_illusion_ranged		= self.ability:GetSpecialValueFor("feedback_mana_burn_illusion_ranged")
-	self.purge_rate								= self.ability:GetSpecialValueFor("purge_rate")
-	self.purge_root_duration					= self.ability:GetSpecialValueFor("purge_root_duration")
-	self.purge_slow_duration					= self.ability:GetSpecialValueFor("purge_slow_duration")
-	self.damage_per_burn						= self.ability:GetSpecialValueFor("damage_per_burn")
-	self.cast_range_tooltip						= self.ability:GetSpecialValueFor("cast_range_tooltip")
-	
-	self.combust_mana_loss						= self.ability:GetSpecialValueFor("combust_mana_loss")
-	self.severance_chance						= self.ability:GetSpecialValueFor("severance_chance")
-end
-
 function modifier_item_imba_witchblade:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		
 		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
     }
-	
-    return decFuncs
 end
 
 function modifier_item_imba_witchblade:GetModifierBonusStats_Agility()
-	return self.bonus_agility
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_agility")
+	end
 end
 
 function modifier_item_imba_witchblade:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	end
 end
 
 function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physical(keys)
 	if not IsServer() then return end
 
 	-- Only apply if the attacker is the caster / non-ally team / target has mana / target is not spell immune / only applies to one item
-	if keys.attacker == self.caster and keys.attacker:GetTeam() ~= keys.target:GetTeam() and keys.target:GetMaxMana() > 0 and not keys.target:IsMagicImmune() and self.caster:FindAllModifiersByName(self:GetName())[1] == self then
+	if self:GetAbility() and keys.attacker == self:GetCaster() and keys.attacker:GetTeam() ~= keys.target:GetTeam() and keys.target:GetMaxMana() > 0 and not keys.target:IsMagicImmune() and self:GetCaster():FindAllModifiersByName(self:GetName())[1] == self then
 
 		-- Apply mana burn particle effect
 		local particle = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_manaburn_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
@@ -256,17 +235,17 @@ function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physica
 		
 		if keys.attacker:IsIllusion() then
 			if keys.attacker:IsRangedAttacker() then
-				mana_burn = self.feedback_mana_burn_illusion_ranged	
+				mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn_illusion_ranged")
 			elseif not keys.attacker:IsRangedAttacker() then
-				mana_burn = self.feedback_mana_burn_illusion_melee
+				mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn_illusion_melee")
 			end
 		else
-			mana_burn = self.feedback_mana_burn
+			mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn")
 		end
 		
 		-- Anti Mage Compromise?...
-		if self.caster:HasAbility("imba_antimage_mana_break") then
-			mana_burn = math.max(mana_burn - self.caster:FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
+		if self:GetCaster():HasAbility("imba_antimage_mana_break") then
+			mana_burn = math.max(mana_burn - self:GetCaster():FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
 		end
 		
 		-- Get the target's mana, to check how much we're burning him
@@ -278,9 +257,9 @@ function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physica
 		-- Damage target depending on amount of mana actually burnt
 		local damage
 		if target_mana >= mana_burn then
-			damage = mana_burn * self.damage_per_burn
+			damage = mana_burn * self:GetAbility():GetSpecialValueFor("damage_per_burn")
 		else
-			damage = target_mana * self.damage_per_burn
+			damage = target_mana * self:GetAbility():GetSpecialValueFor("damage_per_burn")
 		end
 
 		return damage
@@ -293,10 +272,10 @@ function modifier_item_imba_witchblade:OnTakeDamage(keys)
 	local target = keys.unit
 
 	-- Only apply if the attacker is the caster / non-ally team / target has mana / target is not spell immune / only applies for one item
-	if keys.attacker == self.caster and keys.attacker:GetTeam() ~= target:GetTeam() and target:GetMaxMana() > 0 and not target:IsMagicImmune() and self.caster:FindAllModifiersByName(self:GetName())[1] == self and keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and keys.damage > 0 then
+	if self:GetAbility() and keys.attacker == self:GetCaster() and keys.attacker:GetTeam() ~= target:GetTeam() and target:GetMaxMana() > 0 and not target:IsMagicImmune() and self:GetCaster():FindAllModifiersByName(self:GetName())[1] == self and keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and keys.damage > 0 then
 		-- Copying part of OnSpellStart code
 		-- Roll for a chance to dispel a buff
-		if RollPseudoRandom(self.severance_chance, self) then
+		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("severance_chance"), self) then
 			target:EmitSound("DOTA_Item.DiffusalBlade.Target")
 	
 			-- Play hit particle
@@ -316,7 +295,7 @@ function modifier_item_imba_witchblade:OnTakeDamage(keys)
 
 				if modifiers_lost > 0 then
 					-- Burn mana and deal damage according to modifiers lost on the purge
-					local mana_burn = modifiers_lost * self.combust_mana_loss
+					local mana_burn = modifiers_lost * self:GetAbility():GetSpecialValueFor("combust_mana_loss")
 
 					-- Burn the target's mana
 					local target_mana = target:GetMana()
@@ -332,7 +311,7 @@ function modifier_item_imba_witchblade:OnTakeDamage(keys)
 
 					-- Damage the target
 					local damageTable = {victim = target,
-						attacker = self.caster,
+						attacker = self:GetCaster(),
 						damage = damage,
 						damage_type = DAMAGE_TYPE_MAGICAL,
 						ability = self,

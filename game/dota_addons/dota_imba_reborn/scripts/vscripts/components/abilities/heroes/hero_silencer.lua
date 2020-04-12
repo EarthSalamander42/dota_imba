@@ -26,7 +26,7 @@ function imba_silencer_arcane_curse:OnSpellStart()
 	EmitSoundOn("Hero_Silencer.Curse.Cast", caster)
 
 	for _, enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, self, "modifier_imba_arcane_curse_debuff", {duration = base_duration})
+		enemy:AddNewModifier(caster, self, "modifier_imba_arcane_curse_debuff", {duration = base_duration * (1 - enemy:GetStatusResistance())})
 		EmitSoundOn("Hero_Silencer.Curse.Impact", enemy)
 	end
 end
@@ -93,11 +93,11 @@ function modifier_imba_arcane_curse_debuff:OnIntervalThink()
 		local target = self.parent
 
 		if target:IsAlive() then
-			if target:IsSilenced() or target:HasModifier("modifier_imba_silencer_global_silence") then
+			if target:IsSilenced() or target:HasModifier("modifier_imba_silencer_global_silence") or target:HasModifier("modifier_imba_silencer_global_silence_v2") then
 				self:SetDuration( self:GetRemainingTime() + self.tick_rate, true )
 			end
 
-			if ( not target:IsSilenced() or not target:FindModifierByName("modifier_imba_silencer_global_silence") ) or self.aghs_upgraded then
+			if ( not target:IsSilenced() or not target:FindModifierByName("modifier_imba_silencer_global_silence") or not target:HasModifier("modifier_imba_silencer_global_silence_v2") ) or self.aghs_upgraded then
 				local damage_dealt = self.curse_damage * self.tick_rate
 				local stack_count = self:GetStackCount()
 
@@ -189,7 +189,8 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 					"imba_obsidian_destroyer_arcane_orb",
 					"imba_sniper_take_aim",
 					"imba_kunkka_ebb_and_flow",
-					"imba_kunkka_tidebringer"}
+					"imba_kunkka_tidebringer",
+					"imba_outworld_devourer_astral_imprisonment_movement"}
 
 				-- If the ability is one of those spells that should be ignored, do nothing
 				for _, spell in pairs(uneffected_spells) do
@@ -400,7 +401,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 				end
 
 				target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
-					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance()),
 					int_steal	= self:GetAbility():GetSpecialValueFor("int_steal")
 				})
 			
@@ -431,16 +432,17 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 						-- modifier:SetDuration(modifier:GetRemainingTime() + global_silence_duration_increase, true)
 					-- end
 				-- end
+				
+				-- IMBAfication: Tranquility of Aeol Drias
+				local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
+				if not hit_counter then
+					hit_counter = target:AddNewModifier(attacker, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
+				end
 
-				-- local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
-				-- if not hit_counter then
-					-- hit_counter = target:AddNewModifier(attacker, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
-				-- end
-
-				-- if hit_counter then
-					-- hit_counter:IncrementStackCount()
-					-- hit_counter:SetDuration(self.hit_count_duration, true)
-				-- end
+				if hit_counter then
+					hit_counter:IncrementStackCount()
+					hit_counter:SetDuration(self.hit_count_duration, true)
+				end
 
 				-- local int_damage = target:FindModifierByName(self.modifier_int_damage)
 				-- if not int_damage then
@@ -600,10 +602,15 @@ end
 LinkLuaModifier("modifier_imba_silencer_glaives_hit_counter", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_silencer_glaives_hit_counter = modifier_imba_silencer_glaives_hit_counter or class({})
 
-function modifier_imba_silencer_glaives_hit_counter:IsDebuff() return true end
-function modifier_imba_silencer_glaives_hit_counter:IsPurgable() return false end
-function modifier_imba_silencer_glaives_hit_counter:IsHidden() return true end
+function modifier_imba_silencer_glaives_hit_counter:IgnoreTenacity()	return true end
+function modifier_imba_silencer_glaives_hit_counter:IsDebuff() 			return true end
+function modifier_imba_silencer_glaives_hit_counter:IsPurgable() 		return false end
+-- function modifier_imba_silencer_glaives_hit_counter:IsHidden() return true end
 function modifier_imba_silencer_glaives_hit_counter:OnCreated( kv )
+	if self:GetAbility() and IsClient() then
+		self.hits_to_silence	= self:GetAbility():GetSpecialValueFor("hits_to_silence")
+	end
+
 	if IsServer() then
 		self.target = self:GetParent()
 		self.caster = self:GetAbility():GetCaster()
@@ -615,11 +622,22 @@ end
 function modifier_imba_silencer_glaives_hit_counter:OnStackCountChanged(old_stack_count)
 	if IsServer() then
 		if self:GetStackCount() >= self.hits_to_silence then
-			self:GetParent():AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
+			self:GetParent():AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration * (1 - self:GetParent():GetStatusResistance())})
 			self:SetStackCount(0)
 		end
 	end
 end
+
+function modifier_imba_silencer_glaives_hit_counter:DeclareFunctions()
+	return {MODIFIER_PROPERTY_TOOLTIP}
+end
+
+function modifier_imba_silencer_glaives_hit_counter:OnTooltip()
+	if self.hits_to_silence then
+		return self.hits_to_silence
+	end
+end
+
 ---------------------------------
 -- Glaives of Wisdom int reduction modifier
 ---------------------------------
@@ -699,7 +717,7 @@ function modifier_imba_silencer_glaives_talent_effect:OnStackCountChanged( oldSt
 			}
 			ApplyDamage( damageTable )
 
-			parent:AddNewModifier(caster, ability, "modifier_imba_silencer_glaives_talent_effect_procced", {duration = caster:FindTalentValue("special_bonus_imba_silencer_6", "noIntDuration")})
+			parent:AddNewModifier(caster, ability, "modifier_imba_silencer_glaives_talent_effect_procced", {duration = caster:FindTalentValue("special_bonus_imba_silencer_6", "noIntDuration") * (1 - parent:GetStatusResistance())})
 			parent:RemoveModifierByName("modifier_imba_silencer_glaives_talent_effect")
 		end
 	end
@@ -755,7 +773,7 @@ function modifier_imba_silencer_glaives_of_wisdom_multiple:OnCreated(params)
 		})
 	else
 		self.debuff_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_debuff_counter", {
-			duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
+			duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - self:GetParent():GetStatusResistance()),
 			int_steal	= self.int_steal
 		})
 	end
@@ -962,7 +980,7 @@ function imba_silencer_last_word_silence_aura:OnAbilityExecuted( params )
 			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_prevention, {duration = self.prevention_duration})
 
 			-- Silence!
-			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_silence", {duration = self.silence_duration * (1 - self:GetParent():GetStatusResistance())})
 		end
 	end
 end
@@ -981,7 +999,7 @@ function modifier_imba_silencer_last_word_debuff:IsPurgable() return true end
 
 function modifier_imba_silencer_last_word_debuff:OnCreated( kv )
 	self.caster = self:GetCaster()
-	self.m_regen_reduct_pct = self:GetAbility():GetSpecialValueFor("m_regen_reduct_pct")
+	self.m_regen_reduct_pct = self:GetAbility():GetSpecialValueFor("m_regen_reduct_pct") * (-1)
 	self.int_multiplier		= self:GetAbility():GetSpecialValueFor("int_multiplier")
 	
 	if IsServer() then
@@ -1021,21 +1039,16 @@ function modifier_imba_silencer_last_word_debuff:OnDestroy( kv )
 end
 
 function modifier_imba_silencer_last_word_debuff:CheckState()
-	local state = {
-		--[MODIFIER_STATE_DISARMED] = true,
-		[MODIFIER_STATE_PROVIDES_VISION] = true,
+	return {
+		[MODIFIER_STATE_PROVIDES_VISION] = true
 	}
-
-	return state
 end
 
 function modifier_imba_silencer_last_word_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 		MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE
 	}
-
-	return funcs
 end
 
 function modifier_imba_silencer_last_word_debuff:OnAbilityExecuted( params )
@@ -1047,21 +1060,21 @@ function modifier_imba_silencer_last_word_debuff:OnAbilityExecuted( params )
 			if params.ability:IsToggle() and params.ability:GetToggleState() then
 				return
 			end
-			self:GetParent():AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_silencer_last_word_repeat_thinker", {duration = self.silence_duration})
+			self:GetParent():AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_silencer_last_word_repeat_thinker", {duration = self.silence_duration * (1 - self:GetParent():GetStatusResistance())})
 			self:Destroy()
 		end
 	end
 end
 
 function modifier_imba_silencer_last_word_debuff:GetModifierTotalPercentageManaRegen( params )
-	return self.m_regen_reduct_pct * (-1)
+	return self.m_regen_reduct_pct
 end
 
 
 function modifier_imba_silencer_last_word_debuff:OnIntervalThink()
 	local target = self:GetParent()
 	if IsServer() then
-		target:AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
+		target:AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -1138,7 +1151,6 @@ modifier_imba_silencer_arcane_supremacy = modifier_imba_silencer_arcane_supremac
 function imba_silencer_arcane_supremacy:IsInnateAbility() return true end
 function modifier_imba_silencer_arcane_supremacy:AllowIllusionDuplicate() return false end
 function modifier_imba_silencer_arcane_supremacy:RemoveOnDeath() return false end
-function modifier_imba_silencer_arcane_supremacy:IsPermanent() return true end
 function modifier_imba_silencer_arcane_supremacy:IsPurgable() return false end
 
 function imba_silencer_arcane_supremacy:GetIntrinsicModifierName()
@@ -1206,7 +1218,7 @@ function modifier_imba_silencer_arcane_supremacy:OnDeath( params )
 				local distance = (self.caster:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D()
 				if distance <= self.steal_range or params.attacker == self.caster then
 					stealType = "full"
-				elseif params.unit:HasModifier("modifier_imba_silencer_global_silence") then
+				elseif params.unit:HasModifier("modifier_imba_silencer_global_silence") or params.unit:HasModifier("modifier_imba_silencer_global_silence_v2") then
 					stealType = "underUlt"
 				end
 
@@ -1302,7 +1314,7 @@ function imba_silencer_global_silence:OnSpellStart()
 
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
-			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_global_silence", {duration = self:GetDuration()})
+			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_global_silence", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
 			if enemy:IsRealHero() then
 				EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", enemy:GetPlayerOwner())
 				
@@ -1456,15 +1468,198 @@ function modifier_imba_silencer_global_silence:LastWord()
 	end
 end
 
+
+-- This part was made by AltiV
+
+-------------------------------------
+-- IMBA_SILENCER_GLOBAL_SILENCE_V2 --
+-------------------------------------
+
+LinkLuaModifier("modifier_imba_silencer_global_silence_v2", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_silencer_global_silence_v2_mana_reduction", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+
+imba_silencer_global_silence_v2							= imba_silencer_global_silence_v2 or class({})
+modifier_imba_silencer_global_silence_v2				= modifier_imba_silencer_global_silence_v2 or class({})
+modifier_imba_silencer_global_silence_v2_mana_reduction	= modifier_imba_silencer_global_silence_v2_mana_reduction or class({})
+
+function imba_silencer_global_silence_v2:OnSpellStart()
+	local silence_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_global_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControl(silence_particle, 1, self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_attack2")))
+	ParticleManager:ReleaseParticleIndex(silence_particle)
+	
+	self:GetCaster():EmitSound("Hero_Silencer.GlobalSilence.Cast")
+		
+	-- Would prefer if this worked in the client one below because enemies can't really hear this one
+	if USE_MEME_SOUNDS and RollPercentage(30) then
+		EmitSoundOn("Hero_Silencer.Penn", self:GetCaster())
+	end
+	
+	local hero_silence_particle = nil
+	
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)) do
+		if not enemy.IsCourier or not enemy:IsCourier() then
+			if enemy:IsHero() then
+				hero_silence_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_global_silence_hero.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+				ParticleManager:SetParticleControlEnt(hero_silence_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+				ParticleManager:ReleaseParticleIndex(hero_silence_particle)
+			end
+			
+			-- Cannot apply debuffs on invulnerable units normally, so I have to route the caster to be the enemy itself
+			if enemy:IsInvulnerable() then
+				enemy:AddNewModifier(enemy, self, "modifier_imba_silencer_global_silence_v2", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
+			else
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_silencer_global_silence_v2", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
+			end
+			
+			if enemy:IsRealHero() then
+				EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", enemy:GetPlayerOwner())
+			end
+		end
+	end
+end
+
+----------------------------------------------
+-- MODIFIER_IMBA_SILENCER_GLOBAL_SILENCE_V2 --
+----------------------------------------------
+
+function modifier_imba_silencer_global_silence_v2:IsDebuff()	return true end
+
+function modifier_imba_silencer_global_silence_v2:GetEffectName()
+	return "particles/generic_gameplay/generic_silenced.vpcf"
+end
+
+function modifier_imba_silencer_global_silence_v2:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_silencer_global_silence_v2:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.caster									= self:GetAbility():GetCaster()
+	
+	self.max_mana_reduction_percentage			= self:GetAbility():GetSpecialValueFor("max_mana_reduction_percentage")
+	self.max_mana_remainder_duration_multiplier	= self:GetAbility():GetSpecialValueFor("max_mana_remainder_duration_multiplier")
+end
+
+function modifier_imba_silencer_global_silence_v2:OnDestroy()
+	if not IsServer() then return end
+	
+	if self:GetRemainingTime() > 0 then
+		if self:GetParent():IsInvulnerable() then
+			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_silencer_global_silence_v2_mana_reduction", {
+				duration						= self:GetRemainingTime() * self.max_mana_remainder_duration_multiplier,
+				max_mana_reduction_percentage	= self.max_mana_reduction_percentage
+			})
+		else
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_global_silence_v2_mana_reduction", {
+				duration						= self:GetRemainingTime() * self.max_mana_remainder_duration_multiplier,
+				max_mana_reduction_percentage	= self.max_mana_reduction_percentage
+			})
+		end
+	end
+end
+
+function modifier_imba_silencer_global_silence_v2:CheckState()
+	return {[MODIFIER_STATE_SILENCED] = true}
+end
+
+function modifier_imba_silencer_global_silence_v2:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_TOOLTIP
+	}
+end
+
+function modifier_imba_silencer_global_silence_v2:GetModifierIncomingDamage_Percentage()
+	if self.caster then
+		return self.caster:FindTalentValue("special_bonus_imba_silencer_10")
+	end
+end
+
+function modifier_imba_silencer_global_silence_v2:OnTooltip(keys)
+	if keys.fail_type == 1 then
+		return self.max_mana_remainder_duration_multiplier
+	elseif keys.fail_type == 2 then
+		return self.max_mana_reduction_percentage
+	end
+end
+
+-------------------------------------------------------------
+-- MODIFIER_IMBA_SILENCER_GLOBAL_SILENCE_V2_MANA_REDUCTION --
+-------------------------------------------------------------
+
+function modifier_imba_silencer_global_silence_v2_mana_reduction:IsDebuff()			return true end
+function modifier_imba_silencer_global_silence_v2_mana_reduction:IsPurgable()		return false end
+function modifier_imba_silencer_global_silence_v2_mana_reduction:IgnoreTenacity()	return true end
+
+function modifier_imba_silencer_global_silence_v2_mana_reduction:GetEffectName()
+	return "particles/econ/items/silencer/silencer_ti6/silencer_last_word_status_ti6_ring_mist.vpcf"
+end
+
+function modifier_imba_silencer_global_silence_v2_mana_reduction:OnCreated(keys)
+	if self:GetAbility() then
+		self.max_mana_reduction_percentage	= self:GetAbility():GetSpecialValueFor("max_mana_reduction_percentage")
+	elseif keys then
+		self.max_mana_reduction_percentage	= keys.max_mana_reduction_percentage
+	else
+		self.max_mana_reduction_percentage	= 80
+	end
+	
+	if not IsServer() then return end
+	
+	local particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_silenced_old.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self:AddParticle(particle, false, false, -1, false, false)
+	
+	self:SetStackCount(self:GetParent():GetMaxMana() * (self.max_mana_reduction_percentage) * 0.01 * (-1))
+end
+
+function modifier_imba_silencer_global_silence_v2_mana_reduction:DeclareFunctions()
+	return {
+		-- MODIFIER_PROPERTY_EXTRA_MANA_PERCENTAGE -- Of course this doesn't work
+		MODIFIER_PROPERTY_MANA_BONUS
+	}
+end
+
+-- function modifier_imba_silencer_global_silence_v2_mana_reduction:GetModifierExtraManaPercentage()
+
+-- end
+
+function modifier_imba_silencer_global_silence_v2_mana_reduction:GetModifierManaBonus()
+	return self:GetStackCount()
+end
+
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_silencer_1", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_silencer_9", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_silencer_8", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_silencer_1	= modifier_special_bonus_imba_silencer_1 or class({})
+modifier_special_bonus_imba_silencer_9	= modifier_special_bonus_imba_silencer_9 or class({})
+modifier_special_bonus_imba_silencer_8	= modifier_special_bonus_imba_silencer_8 or class({})
+
+function modifier_special_bonus_imba_silencer_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_silencer_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_silencer_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_silencer_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_silencer_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_silencer_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_silencer_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_silencer_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_silencer_8:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_silencer_4", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_silencer_arcane_curse_slow", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_silencer_10", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_silencer_4	= class({})
 modifier_special_bonus_imba_silencer_arcane_curse_slow	= modifier_special_bonus_imba_silencer_arcane_curse_slow or class({})
+modifier_special_bonus_imba_silencer_10	= modifier_special_bonus_imba_silencer_10 or class({})
 
 function modifier_special_bonus_imba_silencer_4:IsHidden() 		return true end
 function modifier_special_bonus_imba_silencer_4:IsPurgable() 	return false end
@@ -1473,6 +1668,10 @@ function modifier_special_bonus_imba_silencer_4:RemoveOnDeath() 	return false en
 function modifier_special_bonus_imba_silencer_arcane_curse_slow:IsHidden() 		return true end
 function modifier_special_bonus_imba_silencer_arcane_curse_slow:IsPurgable() 	return false end
 function modifier_special_bonus_imba_silencer_arcane_curse_slow:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_silencer_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_silencer_10:IsPurgable() 	return false end
+function modifier_special_bonus_imba_silencer_10:RemoveOnDeath() 	return false end
 
 function imba_silencer_arcane_curse:OnOwnerSpawned()
 	if not IsServer() then return end
@@ -1487,5 +1686,13 @@ function imba_silencer_arcane_supremacy:OnOwnerSpawned()
 
 	if self:GetCaster():HasTalent("special_bonus_imba_silencer_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_4"), "modifier_special_bonus_imba_silencer_4", {})
+	end
+end
+
+function imba_silencer_global_silence_v2:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_silencer_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_10"), "modifier_special_bonus_imba_silencer_10", {})
 	end
 end

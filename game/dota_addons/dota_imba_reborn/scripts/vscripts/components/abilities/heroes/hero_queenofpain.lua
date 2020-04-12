@@ -35,11 +35,9 @@ function modifier_imba_delightful_torment_thinker:IsStunDebuff() return false en
 -------------------------------------------
 
 function modifier_imba_delightful_torment_thinker:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_delightful_torment_thinker:OnTakeDamage( params )
@@ -533,7 +531,7 @@ function imba_queenofpain_scream_of_pain:OnProjectileHit_ExtraData(target, locat
 		if target then
 			local caster = self:GetCaster()
 			ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
-			target:AddNewModifier(caster, self, "modifier_imba_scream_of_pain_reflect", {duration = ExtraData.pain_duration, pain_reflect_pct = ExtraData.pain_reflect_pct, damage_threshold = ExtraData.damage})
+			target:AddNewModifier(caster, self, "modifier_imba_scream_of_pain_reflect", {duration = ExtraData.pain_duration * (1 - target:GetStatusResistance()), pain_reflect_pct = ExtraData.pain_reflect_pct, damage_threshold = ExtraData.damage})
 			if target:IsAlive() == false then
 				if (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_queenofpain") then
 					caster:EmitSound("queenofpain_pain_ability_screamofpain_0"..math.random(1,4))
@@ -542,7 +540,7 @@ function imba_queenofpain_scream_of_pain:OnProjectileHit_ExtraData(target, locat
 
 			-- Talent #7 handling
 			if caster:HasTalent("special_bonus_imba_queenofpain_7") then
-				target:AddNewModifier(caster, self, "modifier_imba_sonic_wave_daze", {stacks = caster:FindTalentValue("special_bonus_imba_queenofpain_7")})
+				target:AddNewModifier(caster, self, "modifier_imba_sonic_wave_daze", {stacks = caster:FindTalentValue("special_bonus_imba_queenofpain_7") * (1 - target:GetStatusResistance())})
 			end
 
 			-- Talent #8 handling
@@ -563,11 +561,7 @@ function imba_queenofpain_scream_of_pain:OnProjectileHit_ExtraData(target, locat
 			-- Scream of Pain Xs Fear talent (only apply to the standard SOP and not all the extensions, for "reasonable" play
 			if self:GetCaster():HasTalent("special_bonus_imba_queen_of_pain_scream_of_pain_fear") and ExtraData.damage == self:GetSpecialValueFor("damage") then
 				-- Vanilla fear modifier
-				local fear_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_queenofpain_scream_of_pain_fear", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_queen_of_pain_scream_of_pain_fear")})
-				
-				if fear_modifier then
-					fear_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_queen_of_pain_scream_of_pain_fear") * (1 - target:GetStatusResistance()), true)
-				end
+				target:AddNewModifier(self:GetCaster(), self, "modifier_queenofpain_scream_of_pain_fear", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_queen_of_pain_scream_of_pain_fear") * (1 - target:GetStatusResistance())})
 			end
 		end
 	end
@@ -595,11 +589,9 @@ end
 
 
 function modifier_imba_scream_of_pain_reflect:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_scream_of_pain_reflect:OnTakeDamage( params )
@@ -609,13 +601,15 @@ function modifier_imba_scream_of_pain_reflect:OnTakeDamage( params )
 		local ability = self:GetAbility()
 		if params.attacker == parent then
 			local damage = params.damage
+			
 			if (self.damage_counter + damage) > self.damage_threshold then
 				damage = self.damage_threshold - self.damage_counter
 				self:Destroy()
 			else
 				self.damage_counter = self.damage_counter + damage
 			end
-			ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
+			
+			ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_HPLOSS})
 		end
 	end
 end
@@ -734,23 +728,19 @@ function imba_queenofpain_sonic_wave:OnProjectileHit_ExtraData(target, location,
 	if target then
 		ApplyDamage({attacker = caster, victim = target, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 		
-		local knockback_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
+		target:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
 		{
 			distance		= self:GetSpecialValueFor("knockback_distance"),
 			direction_x 	= location.x - ExtraData.x,
 			direction_y 	= location.y - ExtraData.y,
 			direction_z 	= location.z - ExtraData.z,
-			duration 		= self:GetSpecialValueFor("knockback_duration"),
+			duration 		= self:GetSpecialValueFor("knockback_duration") * (1 - target:GetStatusResistance()),
 			bGroundStop 	= false,
 			bDecelerate 	= false,
 			bInterruptible 	= false,
 			bIgnoreTenacity	= false,
 			bDestroyTreesAlongPath	= true
-		})		
-		
-		if knockback_modifier then
-			knockback_modifier:SetDuration(self:GetSpecialValueFor("knockback_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		})
 		
 		if caster:HasScepter() then
 			target:AddNewModifier(caster, self, "modifier_imba_sonic_wave_daze", {stacks = self:GetSpecialValueFor("orders_scepter")})
@@ -862,9 +852,36 @@ function modifier_imba_sonic_wave_daze:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_queenofpain_1", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_queenofpain_2", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_queenofpain_3", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_queenofpain_1	= modifier_special_bonus_imba_queenofpain_1 or class({})
+modifier_special_bonus_imba_queenofpain_2	= modifier_special_bonus_imba_queenofpain_2 or class({})
+modifier_special_bonus_imba_queenofpain_3	= modifier_special_bonus_imba_queenofpain_3 or class({})
+modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear	= modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear or class({})
+
+function modifier_special_bonus_imba_queenofpain_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_queenofpain_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_queenofpain_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_queenofpain_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_queenofpain_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_queenofpain_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_queenofpain_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_queenofpain_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_queenofpain_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear:IsHidden() 		return true end
+function modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear:IsPurgable()		return false end
+function modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_queenofpain_4", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)

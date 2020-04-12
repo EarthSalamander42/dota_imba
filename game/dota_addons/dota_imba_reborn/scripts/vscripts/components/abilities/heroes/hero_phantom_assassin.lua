@@ -184,8 +184,8 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 
 	-- Apply slow and silence modifiers
 	if not target:IsMagicImmune() then
-		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_silence", {duration = self:GetSpecialValueFor("silence_duration")})
-		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_slow", {duration = self:GetSpecialValueFor("slow_duration")})
+		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_silence", {duration = self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance())})
 	end
 
 	caster:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_dmg_reduction", {})
@@ -272,8 +272,7 @@ function modifier_imba_stifling_dagger_silence:OnCreated()
 end
 
 function modifier_imba_stifling_dagger_silence:CheckState()
-	local states = { [MODIFIER_STATE_SILENCED] = true, }
-	return states
+	return {[MODIFIER_STATE_SILENCED] = true}
 end
 
 function modifier_imba_stifling_dagger_silence:IsDebuff() 	return true end
@@ -289,8 +288,7 @@ function modifier_imba_stifling_dagger_silence:IsHidden()		return true end
 modifier_imba_stifling_dagger_bonus_damage = class({})
 
 function modifier_imba_stifling_dagger_bonus_damage:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE }
-	return funcs
+	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
 end
 
 function modifier_imba_stifling_dagger_bonus_damage:GetModifierPreAttack_BonusDamage()
@@ -576,8 +574,8 @@ function modifier_imba_blur:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.parent = self:GetParent()
-	self.modifier_aura = "modifier_imba_blur_blur"
-	self.modifier_speed = "modifier_imba_blur_speed"
+	self.modifier_aura = "modifier_imba_blur_blur" -- Not on mini-map modifier
+	self.modifier_speed = "modifier_imba_blur_speed" -- IMBAfication: Swift and Silent
 
 	-- Ability specials
 	self.radius = self:GetAbility():GetSpecialValueFor("radius")
@@ -772,25 +770,9 @@ function modifier_imba_blur_blur:GetStatusEffectName()
 	return "particles/hero/phantom_assassin/blur_status_fx.vpcf"
 end
 
--- function modifier_imba_blur_blur:OnCreated()
-	-- if not IsServer() then return end
-
-	-- -- looks so ugly m8
--- --	self.blur_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
--- end
-
 function modifier_imba_blur_blur:CheckState()
 	return {[MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES] = true}
 end
-
--- function modifier_imba_blur_blur:OnDestroy()
-	-- if not IsServer() then return end
-
-	-- if self.blur_particle then
-		-- ParticleManager:DestroyParticle(self.blur_particle, false)
-		-- ParticleManager:ReleaseParticleIndex(self.blur_particle)
-	-- end
--- end
 
 -------------------------------------------
 -- Blur invuln modifier
@@ -809,6 +791,47 @@ function modifier_imba_blur_smoke:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
+
+function modifier_imba_blur_smoke:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.vanish_radius = self:GetAbility():GetSpecialValueFor("vanish_radius")
+	self.fade_duration = self:GetAbility():GetSpecialValueFor("fade_duration")
+
+	if IsServer() then
+		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
+		
+		self.linger = false
+		
+		self:OnIntervalThink()
+		self:StartIntervalThink(FrameTime())
+	end
+end
+
+function modifier_imba_blur_smoke:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_blur_smoke:OnIntervalThink()
+	if self.linger == true then return end
+	
+	-- "The effect is dispelled when getting within 600 range of an enemy hero (including clones, excluding illusions) or an enemy building (except for shrines) (just gonna ignore that shrine line)."
+	if #FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.vanish_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false) > 0 then
+		self.linger = true
+		self:StartIntervalThink(-1)
+		
+		self:SetDuration(self.fade_duration, true)
+	end
+end
+
+-- IDK what is being done in other files if applicable but these abilities are applying and removing like multiple times...
+-- Wearables issue causing IMBApass PA skin to kill your eardrums if some flags aren't put in
+function modifier_imba_blur_smoke:OnDestroy()
+	if IsServer() and (self:GetParent():IsConsideredHero() or self:GetParent():IsBuilding() or self:GetParent():IsCreep()) then
+		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur.Break")
+	end
+end
+
 function modifier_imba_blur_smoke:CheckState()
 	return {
 		[MODIFIER_STATE_INVISIBLE] = true,
@@ -817,7 +840,7 @@ function modifier_imba_blur_smoke:CheckState()
 end
 
 function modifier_imba_blur_smoke:GetPriority()
-	return MODIFIER_PRIORITY_NORMAL
+	return MODIFIER_PRIORITY_SUPER_ULTRA
 end
 
 function modifier_imba_blur_smoke:DeclareFunctions()
@@ -834,45 +857,6 @@ end
 function modifier_imba_blur_smoke:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() and keys.target:IsRoshan() then
 		self:SetDuration(math.min(self.fade_duration, self:GetRemainingTime()), true)
-	end
-end
-
-function modifier_imba_blur_smoke:OnCreated()
-	if self:GetAbility() and not self:GetAbility():IsNull() then
-		self.vanish_radius = self:GetAbility():GetSpecialValueFor("vanish_radius")
-		self.fade_duration = self:GetAbility():GetSpecialValueFor("fade_duration")
-
-		if IsServer() then
-			self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
-			self:StartIntervalThink(FrameTime())
-		end
-	end
-end
-
-function modifier_imba_blur_smoke:OnIntervalThink()
-	if self.linger == true then return end
-
-	-- script error on enemies line
-	-- print(self:GetAbility():GetSpecialValueFor("vanish_radius"))
-	-- print(self:GetParent():GetTeamNumber())
-	-- print(self:GetParent():GetAbsOrigin())
-	
-	-- "The effect is dispelled when getting within 600 range of an enemy hero (including clones, excluding illusions) or an enemy building (except for shrines) (just gonna ignore that shrine line)."
-	if #FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.vanish_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false) > 0 then
-		self.linger = true
-		self:StartIntervalThink(-1)
-		-- Timers:CreateTimer(self.fade_duration, function()
-			-- self:Destroy()
-		-- end)
-		
-		self:SetDuration(self.fade_duration, true)
-	end
-end
-
--- IDK what is being done in other files if applicable but these abilities are applying and removing like multiple times...
-function modifier_imba_blur_smoke:OnRemoved()
-	if IsServer() then
-		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur.Break")
 	end
 end
 
@@ -927,7 +911,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 		local crit_chance_total = self:GetAbility():GetTalentSpecialValueFor("crit_chance")
 
 		-- Ignore crit for buildings
-		if target:IsBuilding() then
+		if target:IsBuilding() or target:IsOther() or keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then
 			return end
 
 		-- if we have phantom strike modifier, apply bonus percentage to our crit_chance
@@ -986,14 +970,13 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 		local target = keys.target
 		local attacker = keys.attacker
 		local fatality = self:GetAbility():GetSpecialValueFor("fatality_chance")
-		if IsInToolsMode() then fatality = 25 end
+		-- if IsInToolsMode() then fatality = 25 end
 
 		-- Only apply if the attacker is the caster and it was a critical strike
 		if self:GetCaster() == attacker then
 			-- Prevent Fatality on buildings
-			if target:IsBuilding() or target:IsRoshan() then return end
-
-
+			if target:IsBuilding() or target:IsRoshan() or keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then return end
+			
 			-- Roll for fatality
 			if RandomInt(1, 100) <= fatality then
 				if target:GetHealthPercent() >= self:GetAbility():GetSpecialValueFor("fatality_threshold") then
@@ -1271,3 +1254,21 @@ function modifier_phantom_assassin_arcana:OnHeroKilled(params)
 		gravestone:SetMaterialGroup(tostring(style))
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_9", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_3", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_phantom_assassin_9	= modifier_special_bonus_imba_phantom_assassin_9 or class({})
+modifier_special_bonus_imba_phantom_assassin_3	= modifier_special_bonus_imba_phantom_assassin_3 or class({})
+
+function modifier_special_bonus_imba_phantom_assassin_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_phantom_assassin_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_phantom_assassin_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_phantom_assassin_3:IsHidden() 			return true end
+function modifier_special_bonus_imba_phantom_assassin_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_phantom_assassin_3:RemoveOnDeath() 	return false end

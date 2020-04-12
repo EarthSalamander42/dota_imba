@@ -53,16 +53,10 @@ function item_imba_veil_of_discord:OnSpellStart()
 		FIND_ANY_ORDER,
 		false)
 
-	local debuff_modifier = nil
-
 	-- Iterate through the unit table and give each unit its respective modifier
 	for _,enemy in pairs(enemies) do
 		-- Give enemies a debuff
-		debuff_modifier = enemy:AddNewModifier(caster, self, "modifier_veil_active_debuff", {duration = self:GetSpecialValueFor("resist_debuff_duration")})
-		
-		if debuff_modifier then
-			debuff_modifier:SetDuration(self:GetSpecialValueFor("resist_debuff_duration") * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(caster, self, "modifier_veil_active_debuff", {duration = self:GetSpecialValueFor("resist_debuff_duration") * (1 - enemy:GetStatusResistance())})
 	end
 end
 
@@ -119,11 +113,12 @@ end
 modifier_veil_passive = modifier_veil_passive or class({})
 
 -- Modifier properties
-function modifier_veil_passive:IsHidden() return true end
-function modifier_veil_passive:IsDebuff() return false end
-function modifier_veil_passive:IsPurgable() return false end
-function modifier_veil_passive:IsPermanent() return true end
-function modifier_veil_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_veil_passive:IsHidden()		return true end
+function modifier_veil_passive:IsPurgable()		return false end
+function modifier_veil_passive:RemoveOnDeath()	return false end
+function modifier_veil_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_veil_passive:IsAura() return true end
 
 function modifier_veil_passive:OnCreated()
@@ -172,7 +167,7 @@ function modifier_veil_passive:GetAuraRadius()
 end
 
 function modifier_veil_passive:OnDestroy()
-	if IsServer() then
+	if IsServer() and self and not self:IsNull() and self:GetParent() and not self:GetParent():IsNull() then
 		self:GetParent():RemoveModifierByName("modifier_veil_buff_aura")
 	end
 end
@@ -205,9 +200,8 @@ modifier_veil_buff_aura = modifier_veil_buff_aura or class({})
 
 -- Modifier properties
 function modifier_veil_buff_aura:IsHidden() return true end
-function modifier_veil_buff_aura:IsDebuff() return false end
 function modifier_veil_buff_aura:IsPurgable() return false end
-function modifier_veil_buff_aura:IsPermanent() return true end
+function modifier_veil_buff_aura:RemoveOnDeath() return false end
 function modifier_veil_buff_aura:IsAura() return true end
 
 function modifier_veil_buff_aura:GetAuraSearchTeam()
@@ -235,6 +229,8 @@ function modifier_veil_buff_aura_modifier:IsHidden() return false end
 function modifier_veil_buff_aura_modifier:IsPurgable() return true end
 
 function modifier_veil_buff_aura_modifier:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.aura_mana_regen	= self:GetAbility():GetSpecialValueFor("aura_mana_regen")
 	self.aura_spell_power	= self:GetAbility():GetSpecialValueFor("aura_spell_power")
 end

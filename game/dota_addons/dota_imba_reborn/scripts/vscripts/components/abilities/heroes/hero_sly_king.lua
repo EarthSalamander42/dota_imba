@@ -159,8 +159,8 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 			center_x = bump_point.x,
 			center_y = bump_point.y,
 			center_z = bump_point.z,
-			duration = knockup_duration,
-			knockback_duration = knockup_duration,
+			duration = knockup_duration * (1 - target:GetStatusResistance()),
+			knockback_duration = knockup_duration * (1 - target:GetStatusResistance()),
 			knockback_distance = push_distance,
 			knockback_height = knockup_height
 		}
@@ -169,7 +169,7 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 	target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
 
 	-- Stun the target
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 	-- Apply Caustic Finale to heroes, unless they already have it
 	--	if target:IsHero() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
@@ -429,7 +429,7 @@ function modifier_imba_frost_gale_debuff:OnCreated()
 		-- Make damage ticks change based on parent's status resistance (so it will always tick the same amount)
 		self.tick_interval = self.tick_interval_base * (1 - self:GetParent():GetStatusResistance())
 		self:StartIntervalThink(self.tick_interval)
-		self:GetParent():AddNewModifier(self:GetCaster(), nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("chill_duration")})
+		self:GetParent():AddNewModifier(self:GetCaster(), nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("chill_duration") * (1 - self:GetParent():GetStatusResistance())})
 		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
 	end
 end
@@ -527,7 +527,7 @@ function modifier_imba_frozen_skin_debuff:CheckState()			return {[MODIFIER_STATE
 function modifier_imba_frozen_skin_debuff:OnCreated( kv )
 	if IsServer() then
 		--Ability Specials
-		self.damage_interval = self:GetAbility():GetSpecialValueFor("damage_interval")
+		self.damage_interval = self:GetAbility():GetSpecialValueFor("damage_interval") * (1 - self:GetParent():GetStatusResistance())
 		self.damage_per_second = self:GetAbility():GetSpecialValueFor("damage_per_second")
 
 		-- Immediately proc the first damage instance
@@ -538,7 +538,7 @@ function modifier_imba_frozen_skin_debuff:OnCreated( kv )
 
 		-- Get thinkin
 		self:StartIntervalThink(self.damage_interval)
-		self:GetParent():AddNewModifier(self:GetCaster(), nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+		self:GetParent():AddNewModifier(self:GetCaster(), nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - self:GetParent():GetStatusResistance())})
 	end
 end
 
@@ -792,7 +792,7 @@ function modifier_imba_winterbringer_pulse:OnIntervalThink()
 			ApplyDamage(damageTable)
 
 			-- Apply slow
-			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_slow, {duration = self.slow_duration})
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
 		end
 
 		-- Find all nearby enemies in the pull radius
@@ -863,3 +863,15 @@ end
 function modifier_imba_winterbringer_slow:GetModifierAttackSpeedBonus_Constant()
 	return self.as_slow * (-1)
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sly_king_2", "components/abilities/heroes/hero_sly_king", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sly_king_2	= modifier_special_bonus_imba_sly_king_2 or class({})
+
+function modifier_special_bonus_imba_sly_king_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_sly_king_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_sly_king_2:RemoveOnDeath() 	return false end

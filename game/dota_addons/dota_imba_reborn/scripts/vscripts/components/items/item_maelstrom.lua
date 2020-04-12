@@ -219,7 +219,10 @@ function modifier_item_imba_static_charge:OnDestroy()
 end
 
 function modifier_item_imba_static_charge:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_TAKEDAMAGE}
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_TOOLTIP
+	}
 end
 
 function modifier_item_imba_static_charge:OnTakeDamage(keys)
@@ -229,7 +232,6 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 			
 		if (keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self.static_radius and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			local static_particle	= nil
-			local slow_modifier		= nil
 			
 			static_particle = ParticleManager:CreateParticle(self.particle_name_proc, PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
 			ParticleManager:SetParticleControlEnt(static_particle, 0, keys.attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.attacker:GetAbsOrigin(), true)
@@ -245,11 +247,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 				ability 		= self:GetAbility()
 			})
 			
-			slow_modifier = keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self.static_slow_duration * (1 - keys.attacker:GetStatusResistance()), true)
-			end
+			keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration * (1 - keys.attacker:GetStatusResistance())})
 		end
 		
 		local unit_count = 0
@@ -270,11 +268,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 					ability 		= self:GetAbility()
 				})
 				
-				slow_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration})
-				
-				if slow_modifier then
-					slow_modifier:SetDuration(self.static_slow_duration * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration * (1 - enemy:GetStatusResistance())})
 				
 				unit_count = unit_count + 1
 				
@@ -287,6 +281,10 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 		self.bStaticCooldown = true
 		self:StartIntervalThink(self.static_cooldown)
 	end
+end
+
+function modifier_item_imba_static_charge:OnTooltip()
+	return self.static_chance
 end
 
 -------------------------------------------
@@ -407,9 +405,8 @@ end
 ----------------------------------
 
 function modifier_item_imba_maelstrom:IsHidden()		return true end
-function modifier_item_imba_maelstrom:IsDebuff()		return false end
 function modifier_item_imba_maelstrom:IsPurgable()		return false end
-function modifier_item_imba_maelstrom:IsPermanent()		return true end
+function modifier_item_imba_maelstrom:RemoveOnDeath()	return false end
 function modifier_item_imba_maelstrom:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_maelstrom:OnCreated()
@@ -429,6 +426,8 @@ function modifier_item_imba_maelstrom:OnCreated()
 		self.cleave_starting_width	= self:GetAbility():GetSpecialValueFor("cleave_starting_width")
 		self.cleave_ending_width	= self:GetAbility():GetSpecialValueFor("cleave_ending_width")
 		self.cleave_distance		= self:GetAbility():GetSpecialValueFor("cleave_distance")
+		
+		self.bonus_range			= self:GetAbility():GetSpecialValueFor("bonus_range")
 	else
 		self.bonus_damage		= 0
 		self.bonus_attack_speed	= 0
@@ -445,9 +444,52 @@ function modifier_item_imba_maelstrom:OnCreated()
 		self.cleave_starting_width	= 0
 		self.cleave_ending_width	= 0
 		self.cleave_distance		= 0
+		
+		self.bonus_range			= 0
 	end
 	
 	self.bChainCooldown = false
+	
+	if not IsServer() then return end
+	
+	local maelstroms	= 0
+	local mjollnirs		= 0
+	local jarnbjorns	= 0
+	
+    -- Use Secondary Charges system to make attack range not stack with multiple Maelstrom series items
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		if mod:GetAbility():GetName() == "item_imba_maelstrom" then
+			mod:GetAbility():SetSecondaryCharges(maelstroms + 1)
+			maelstroms = maelstroms + 1
+		elseif mod:GetAbility():GetName() == "item_imba_mjollnir" then
+			mod:GetAbility():SetSecondaryCharges(mjollnirs + 1)
+			mjollnirs = mjollnirs + 1
+		elseif mod:GetAbility():GetName() == "item_imba_jarnbjorn" then
+			mod:GetAbility():SetSecondaryCharges(jarnbjorns + 1)
+			jarnbjorns = jarnbjorns + 1
+		end
+    end
+end
+
+function modifier_item_imba_maelstrom:OnDestroy()
+    if not IsServer() then return end
+    
+	local maelstroms	= 0
+	local mjollnirs		= 0
+	local jarnbjorns	= 0
+	
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		if mod:GetAbility():GetName() == "item_imba_maelstrom" then
+			mod:GetAbility():SetSecondaryCharges(maelstroms + 1)
+			maelstroms = maelstroms + 1
+		elseif mod:GetAbility():GetName() == "item_imba_mjollnir" then
+			mod:GetAbility():SetSecondaryCharges(mjollnirs + 1)
+			mjollnirs = mjollnirs + 1
+		elseif mod:GetAbility():GetName() == "item_imba_jarnbjorn" then
+			mod:GetAbility():SetSecondaryCharges(jarnbjorns + 1)
+			jarnbjorns = jarnbjorns + 1
+		end
+    end
 end
 
 function modifier_item_imba_maelstrom:OnIntervalThink()
@@ -461,6 +503,7 @@ function modifier_item_imba_maelstrom:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		
@@ -490,6 +533,19 @@ end
 
 function modifier_item_imba_maelstrom:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
+end
+
+function modifier_item_imba_maelstrom:GetModifierConstantManaRegen()
+	return self.bonus_mana_regen
+end
+
+function modifier_item_imba_maelstrom:GetModifierAttackRangeBonus()
+	if not self:GetParent():IsRangedAttacker() and 
+	((self:GetAbility():GetName() == "item_imba_maelstrom" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_mjollnir") and not self:GetParent():HasItemInInventory("item_imba_jarnbjorn") and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar")) or 
+	(self:GetAbility():GetName() == "item_imba_mjollnir" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_jarnbjorn") and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar")) or
+	(self:GetAbility():GetName() == "item_imba_jarnbjorn" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar"))) then
+		return self.bonus_range
+	end
 end
 
 function modifier_item_imba_maelstrom:OnAttackLanded(keys)

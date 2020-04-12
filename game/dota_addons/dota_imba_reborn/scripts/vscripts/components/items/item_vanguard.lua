@@ -38,21 +38,15 @@ function item_imba_stout_shield:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_stout_shield == nil then modifier_item_imba_stout_shield = class({}) end
-function modifier_item_imba_stout_shield:IsHidden() return true end
-function modifier_item_imba_stout_shield:IsDebuff() return false end
-function modifier_item_imba_stout_shield:IsPurgable() return false end
-function modifier_item_imba_stout_shield:IsPermanent() return true end
-function modifier_item_imba_stout_shield:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_stout_shield:IsHidden()		return true end
+function modifier_item_imba_stout_shield:IsPurgable()		return false end
+function modifier_item_imba_stout_shield:RemoveOnDeath()	return false end
+function modifier_item_imba_stout_shield:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- -- Custom unique damage block property
 -- function modifier_item_imba_stout_shield:GetCustomDamageBlockUnique()
 	-- return self:GetAbility():GetSpecialValueFor("damage_block") end
-
-function modifier_item_imba_stout_shield:OnCreated()
-	self.damage_block_melee		= self:GetAbility():GetSpecialValueFor("damage_block_melee")
-	self.damage_block_ranged	= self:GetAbility():GetSpecialValueFor("damage_block_ranged")
-	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
-end
 
 -- Declare modifier events/properties
 function modifier_item_imba_stout_shield:DeclareFunctions()
@@ -60,11 +54,11 @@ function modifier_item_imba_stout_shield:DeclareFunctions()
 end
 
 function modifier_item_imba_stout_shield:GetModifierPhysical_ConstantBlock()
-	if RollPseudoRandom(self.block_chance, self) then
+	if self:GetAbility() and RollPseudoRandom(self:GetAbility():GetSpecialValueFor("block_chance"), self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
+			return self:GetAbility():GetSpecialValueFor("damage_block_melee")
 		else
-			return self.damage_block_ranged
+			return self:GetAbility():GetSpecialValueFor("damage_block_ranged")
 		end
 	end
 end
@@ -91,11 +85,11 @@ function item_imba_poor_mans_shield:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_poor_mans_shield == nil then modifier_item_imba_poor_mans_shield = class({}) end
-function modifier_item_imba_poor_mans_shield:IsHidden() return true end
-function modifier_item_imba_poor_mans_shield:IsDebuff() return false end
-function modifier_item_imba_poor_mans_shield:IsPurgable() return false end
-function modifier_item_imba_poor_mans_shield:IsPermanent() return true end
-function modifier_item_imba_poor_mans_shield:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_poor_mans_shield:IsHidden()		return true end
+function modifier_item_imba_poor_mans_shield:IsPurgable()		return false end
+function modifier_item_imba_poor_mans_shield:RemoveOnDeath()	return false end
+function modifier_item_imba_poor_mans_shield:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_poor_mans_shield:OnCreated()
 	self.bonus_agility			= self:GetAbility():GetSpecialValueFor("bonus_agility")
@@ -143,7 +137,7 @@ end
 ------------------------------------------------
 
 function modifier_item_imba_poor_mans_shield_active:GetTexture()
-	return "custom/imba_poor_mans_shield"
+	return "modifiers/imba_poor_mans_shield"
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -165,19 +159,11 @@ function item_imba_vanguard:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_vanguard == nil then modifier_item_imba_vanguard = class({}) end
-function modifier_item_imba_vanguard:IsHidden() return true end
-function modifier_item_imba_vanguard:IsDebuff() return false end
-function modifier_item_imba_vanguard:IsPurgable() return false end
-function modifier_item_imba_vanguard:IsPermanent() return true end
-function modifier_item_imba_vanguard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_item_imba_vanguard:OnCreated()
-	self.health			= self:GetAbility():GetSpecialValueFor("health")
-	self.health_regen	= self:GetAbility():GetSpecialValueFor("health_regen")
-	self.damage_block_melee		= self:GetAbility():GetSpecialValueFor("damage_block_melee")
-	self.damage_block_ranged	= self:GetAbility():GetSpecialValueFor("damage_block_ranged")
-	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
-end
+function modifier_item_imba_vanguard:IsHidden()		return true end
+function modifier_item_imba_vanguard:IsPurgable()		return false end
+function modifier_item_imba_vanguard:RemoveOnDeath()	return false end
+function modifier_item_imba_vanguard:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- -- Custom unique damage block property
 -- function modifier_item_imba_vanguard:GetCustomDamageBlockUnique()
@@ -193,17 +179,25 @@ function modifier_item_imba_vanguard:DeclareFunctions()
 end
 
 function modifier_item_imba_vanguard:GetModifierHealthBonus()
-	return self.health end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("health")
+	end
+end
 
 function modifier_item_imba_vanguard:GetModifierConstantHealthRegen()
-	return self.health_regen end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("health_regen")
+	end
+end
 
 function modifier_item_imba_vanguard:GetModifierPhysical_ConstantBlock()
-	if RollPseudoRandom(self.block_chance, self) then
-		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
-		else
-			return self.damage_block_ranged
+	if self:GetAbility() then
+		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("block_chance"), self) then
+			if not self:GetParent():IsRangedAttacker() then
+				return self:GetAbility():GetSpecialValueFor("block_damage_melee")
+			else
+				return self:GetAbility():GetSpecialValueFor("block_damage_ranged")
+			end
 		end
 	end
 end
@@ -256,11 +250,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_crimson_guard == nil then modifier_item_imba_crimson_guard = class({}) end
-function modifier_item_imba_crimson_guard:IsHidden() return true end
-function modifier_item_imba_crimson_guard:IsDebuff() return false end
-function modifier_item_imba_crimson_guard:IsPurgable() return false end
-function modifier_item_imba_crimson_guard:IsPermanent() return true end
-function modifier_item_imba_crimson_guard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_crimson_guard:IsHidden()		return true end
+function modifier_item_imba_crimson_guard:IsPurgable()		return false end
+function modifier_item_imba_crimson_guard:RemoveOnDeath()	return false end
+function modifier_item_imba_crimson_guard:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_crimson_guard:OnCreated()
 	self.health					= self:GetAbility():GetSpecialValueFor("health")
@@ -283,7 +277,7 @@ function modifier_item_imba_crimson_guard:GetCustomIncomingDamageReductionUnique
 
 -- Declare modifier events/properties
 function modifier_item_imba_crimson_guard:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
@@ -292,7 +286,6 @@ function modifier_item_imba_crimson_guard:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
 	}
-	return funcs
 end
 
 function modifier_item_imba_crimson_guard:GetModifierHealthBonus()
@@ -316,9 +309,9 @@ function modifier_item_imba_crimson_guard:GetModifierBonusStats_Intellect()
 function modifier_item_imba_crimson_guard:GetModifierPhysical_ConstantBlock()
 	if RollPseudoRandom(self.block_chance, self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
+			return self.block_damage_melee
 		else
-			return self.damage_block_ranged
+			return self.block_damage_ranged
 		end
 	end
 end
@@ -357,12 +350,11 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_crimson_guard_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE,
 		MODIFIER_PROPERTY_TOOLTIP
 	}
-	return funcs
 end
 
 function modifier_item_imba_crimson_guard_buff:GetModifierPhysicalArmorBonusUniqueActive()
@@ -440,7 +432,6 @@ end
 -- function modifier_item_imba_greatwyrm_plate:IsHidden() return true end
 -- function modifier_item_imba_greatwyrm_plate:IsDebuff() return false end
 -- function modifier_item_imba_greatwyrm_plate:IsPurgable() return false end
--- function modifier_item_imba_greatwyrm_plate:IsPermanent() return true end
 -- function modifier_item_imba_greatwyrm_plate:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- function modifier_item_imba_greatwyrm_plate:OnCreated()

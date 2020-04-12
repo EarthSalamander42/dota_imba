@@ -177,11 +177,7 @@ function modifier_imba_static_remnant:OnDestroy( params )
 
 				-- cast shorter Electric Vortex
 				if pull_duration ~= 0 and not self.ballLightning then
-					local root_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z, electric_vortex_pull_distance = electric_vortex_pull_distance})
-					
-					if root_modifier then
-						root_modifier:SetDuration(pull_duration * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration * (1 - enemy:GetStatusResistance()), speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z, electric_vortex_pull_distance = electric_vortex_pull_distance})
 				end
 			end
 		end
@@ -263,7 +259,7 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 			if target:TriggerSpellAbsorb(self) then return end
 
 			-- Apply pull modifier on target
-			target:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance})
+			target:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration * (1 - target:GetStatusResistance()), speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance})
 		else
 			-- AGHANIM'S SCEPTER: Electric Vortex affects multiple targets around Storm.
 			--Find nearby enemies
@@ -281,7 +277,7 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 			for _,enemy in pairs(enemies) do
 				local direction 		= 	(caster:GetAbsOrigin() - enemy:GetAbsOrigin()):Normalized()
 				-- Apply vortex on enemy
-				enemy:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance} )
+				enemy:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration * (1 - enemy:GetStatusResistance()), speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance} )
 			end
 		end
 
@@ -695,7 +691,7 @@ function modifier_imba_overload_buff:OnAttackLanded(keys)
 					ApplyDamage(damageTable)
 
 					-- Apply debuff
-					enemy:AddNewModifier(parent, ability, "modifier_imba_overload_debuff",	{duration = slow_duration} )
+					enemy:AddNewModifier(parent, ability, "modifier_imba_overload_debuff",	{duration = slow_duration * (1 - enemy:GetStatusResistance())} )
 
 					-- Remove overload buff
 					self:Destroy()
@@ -985,16 +981,19 @@ function modifier_imba_ball_lightning:OnDestroy()
 	if not IsServer() then return end
 	
 	self:GetCaster():StopSound("Hero_StormSpirit.BallLightning.Loop")
+	
+	-- Disjoint projectiles
+	ProjectileManager:ProjectileDodge(self:GetParent())
 end
 
 
 
-function modifier_imba_ball_lightning:CheckState()
-	local state	=	{
---		[MODIFIER_STATE_MAGIC_IMMUNE] = true
-	}
-	return state
-end
+-- function modifier_imba_ball_lightning:CheckState()
+	-- local state	=	{
+-- --		[MODIFIER_STATE_MAGIC_IMMUNE] = true
+	-- }
+	-- return state
+-- end
 
 function modifier_imba_ball_lightning:GetEffectAttachType()
 	-- Yep, this is a thing.
@@ -1031,6 +1030,30 @@ end
 function imba_storm_spirit_static_remnant:IsHiddenWhenStolen() return false end
 function imba_storm_spirit_electric_vortex:IsHiddenWhenStolen() return false end
 function imba_storm_spirit_ball_lightning:IsHiddenWhenStolen() return false end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_6", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_1", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_7", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_storm_spirit_6	= modifier_special_bonus_imba_storm_spirit_6 or class({})
+modifier_special_bonus_imba_storm_spirit_1	= modifier_special_bonus_imba_storm_spirit_1 or class({})
+modifier_special_bonus_imba_storm_spirit_7	= modifier_special_bonus_imba_storm_spirit_7 or class({})
+
+function modifier_special_bonus_imba_storm_spirit_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_storm_spirit_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_storm_spirit_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_storm_spirit_1:IsHidden() 			return true end
+function modifier_special_bonus_imba_storm_spirit_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_storm_spirit_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_storm_spirit_7:IsHidden() 			return true end
+function modifier_special_bonus_imba_storm_spirit_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_storm_spirit_7:RemoveOnDeath() 	return false end
 
 -- CLient-side stuff
 

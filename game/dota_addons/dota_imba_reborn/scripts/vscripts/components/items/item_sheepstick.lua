@@ -95,12 +95,12 @@ function item_imba_sheepstick:OnSpellStart()
 				if enemy:IsIllusion() and (not enemy.Custom_IsStrongIllusion or (enemy.Custom_IsStrongIllusion and not enemy:Custom_IsStrongIllusion())) then
 					enemy:ForceKill(true)
 				else
-					enemy:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration})
+					enemy:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration * (1 - enemy:GetStatusResistance())})
 				end
 			end
 		else
 
-			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration})
+			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration * (1 - target:GetStatusResistance())})
 		end
 	end
 end
@@ -110,10 +110,10 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_sheepstick == nil then modifier_item_imba_sheepstick = class({}) end
+
 function modifier_item_imba_sheepstick:IsHidden() return true end
-function modifier_item_imba_sheepstick:IsDebuff() return false end
 function modifier_item_imba_sheepstick:IsPurgable() return false end
-function modifier_item_imba_sheepstick:IsPermanent() return true end
+function modifier_item_imba_sheepstick:RemoveOnDeath() return false end
 function modifier_item_imba_sheepstick:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Attribute bonuses

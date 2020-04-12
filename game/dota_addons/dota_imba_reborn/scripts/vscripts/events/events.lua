@@ -926,67 +926,6 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_techies_8"
 							}
 							upgraded = true
-						elseif string.find(text, 'windranger') and hero:GetName() == "npc_dota_hero_windrunner" then
-							ability_set = {
-								[0] = "imba_windranger_shackleshot",
-								[1] = "imba_windranger_powershot",
-								[2] = "imba_windranger_windrun",
-								[3] = "imba_windranger_advancement",
-								[4] = "imba_windranger_focusfire_vanilla_enhancer",
-								-- [5] = "imba_windranger_focusfire",
-								[5] = "windrunner_focusfire",
-								[6] = "special_bonus_mp_regen_4",
-								[7] = "special_bonus_imba_windranger_shackle_shot_cooldown",
-								[8] = "special_bonus_imba_windranger_powershot_damage",
-								[9] = "special_bonus_attack_range_125",
-								[10] = "special_bonus_imba_windranger_windrun_invisibility",
-								[11] = "special_bonus_imba_windranger_shackle_shot_duration",
-								[12] = "special_bonus_unique_windranger_8",
-								[13] = "special_bonus_cooldown_reduction_30",
-							}
-							upgraded = true
-						elseif string.find(text, 'templar') and hero:GetName() == "npc_dota_hero_templar_assassin" then
-							ability_set = {
-								[0] = "imba_templar_assassin_refraction",
-								[1] = "imba_templar_assassin_meld",
-								[2] = "imba_templar_assassin_psi_blades",
-								[3] = "imba_templar_assassin_trap",
-								[4] = "imba_templar_assassin_trap_teleport",
-								[5] = "imba_templar_assassin_psionic_trap",
-								[6] = "special_bonus_attack_speed_25",
-								[7] = "special_bonus_evasion_15",
-								[8] = "special_bonus_movement_speed_25",
-								[9] = "special_bonus_imba_templar_assassin_psionic_trap_damage",
-								[10] = "special_bonus_imba_templar_assassin_meld_dispels",
-								[11] = "special_bonus_imba_templar_assassin_meld_armor_reduction",
-								[12] = "special_bonus_imba_templar_assassin_meld_bash",
-								[13] = "special_bonus_imba_templar_assassin_refraction_instances"
-							}
-							upgraded = true
-						elseif string.find(text, 'slark') and hero:GetName() == "npc_dota_hero_slark" then
-							ability_set = {
-								[0] = "imba_slark_dark_pact",
-								[1] = "imba_slark_pounce",
-								[2] = "imba_slark_essence_shift",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_slark_shadow_dance",
-								[6] = "special_bonus_strength_10",
-								[7] = "special_bonus_agility_6",
-								[8] = "special_bonus_attack_speed_30",
-								[9] = "special_bonus_lifesteal_20",
-								[10] = "special_bonus_imba_slark_pounce_duration",
-								[11] = "special_bonus_imba_slark_dark_pact_damage",
-								[12] = "special_bonus_imba_slark_shadow_dance_duration",
-								[13] = "special_bonus_imba_slark_essence_shift_duration"
-							}
-							upgraded = true
-						elseif string.find(text, 'furion') and hero:GetName() == "npc_dota_hero_furion" then
-							ability_set = {
-								[5] = "imba_furion_wrath_of_nature",
-								[9] = "special_bonus_imba_furion_wrath_of_nature_boost",
-							}
-							upgraded = true
 						elseif string.find(text, 'brewmaster') and hero:GetName() == "npc_dota_hero_brewmaster" then
 							ability_set = {
 								[0] = "imba_brewmaster_thunder_clap",
@@ -1046,40 +985,82 @@ function GameMode:OnPlayerChat(keys)
 						elseif string.find(text, 'terror') and hero:GetName() == "npc_dota_hero_terrorblade" then
 							ability_set = {
 								[0] = "imba_terrorblade_reflection",
-								-- [1] = "imba_void_spirit_dissimilate",
-								-- [2] = "imba_void_spirit_resonant_pulse",
-								-- [3] = "imba_void_spirit_void_stasis",
-								-- [4] = "imba_void_spirit_astral_step_helper",
-								-- [5] = "imba_void_spirit_astral_step",
-								-- [6] = "special_bonus_attack_damage_25",
-								-- [7] = "special_bonus_hp_250",
-								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
-								-- [9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
-								-- [10] = "special_bonus_movement_speed_50",
-								-- [11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
-								-- [12] = "special_bonus_imba_void_spirit_astral_step_crit",
-								-- [13] = "special_bonus_imba_void_spirit_dissimilate_stun"
+								[1] = "imba_terrorblade_conjure_image",
+								[2] = "imba_terrorblade_metamorphosis",
+								[3] = "imba_terrorblade_terror_wave",
+								[4] = "imba_terrorblade_power_rend",
+								[5] = "imba_terrorblade_sunder",
+								[6] = "special_bonus_movement_speed_20",
+								[7] = "special_bonus_evasion_15",
+								[8] = "special_bonus_hp_250",
+								[9] = "special_bonus_attack_speed_25",
+								[10] = "special_bonus_all_stats_10",
+								[11] = "special_bonus_imba_terrorblade_reflection_cooldown",
+								[12] = "special_bonus_imba_terrorblade_sunder_cooldown",
+								[13] = "special_bonus_imba_terrorblade_metamorphosis_attack_range"
 							}
 							
 							upgraded = true
 						elseif string.find(text, 'undying') and hero:GetName() == "npc_dota_hero_undying" then
 							ability_set = {
 								[0] = "imba_undying_decay",
-								-- [1] = "imba_void_spirit_dissimilate",
-								-- [2] = "imba_void_spirit_resonant_pulse",
-								-- [3] = "imba_void_spirit_void_stasis",
-								-- [4] = "imba_void_spirit_astral_step_helper",
-								-- [5] = "imba_void_spirit_astral_step",
-								-- [6] = "special_bonus_attack_damage_25",
-								-- [7] = "special_bonus_hp_250",
-								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
-								-- [9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
-								-- [10] = "special_bonus_movement_speed_50",
-								-- [11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
-								-- [12] = "special_bonus_imba_void_spirit_astral_step_crit",
-								-- [13] = "special_bonus_imba_void_spirit_dissimilate_stun"
+								[1] = "imba_undying_soul_rip",
+								[2] = "imba_undying_tombstone",
+								[3] = "imba_undying_flesh_golem_grab",
+								[4] = "imba_undying_flesh_golem_throw",
+								[5] = "imba_undying_flesh_golem",
+								[6] = "special_bonus_cast_range_150",
+								[7] = "special_bonus_hp_regen_6",
+								[8] = "special_bonus_imba_undying_tombstone_zombie_damage",
+								[9] = "special_bonus_imba_undying_decay_duration",
+								[10] = "special_bonus_imba_undying_tombstone_on_death",
+								[11] = "special_bonus_imba_undying_flesh_golem_grab_allies",
+								[12] = "special_bonus_reincarnation_200",
+								[13] = "special_bonus_imba_undying_decay_cooldown"
 							}
 							
+							upgraded = true
+						elseif string.find(text, 'tinker') and hero:GetName() == "npc_dota_hero_tinker" then
+							ability_set = {
+								[0] = "imba_tinker_laser",
+								[1] = "imba_tinker_heat_seeking_missile",
+								[2] = "imba_tinker_march_of_the_machines",
+								[3] = "imba_tinker_technomancy",
+								[4] = "generic_hidden",
+								[5] = "imba_tinker_rearm",
+								[6] = "special_bonus_imba_tinker_1",
+								[7] = "special_bonus_imba_tinker_2",
+								[8] = "special_bonus_imba_tinker_3",
+								[9] = "special_bonus_imba_tinker_4",
+								[10] = "special_bonus_imba_tinker_5",
+								[11] = "special_bonus_imba_tinker_6",
+								[12] = "special_bonus_imba_tinker_7",
+								[13] = "special_bonus_imba_tinker_8"
+							}
+							upgraded = true
+						elseif string.find(text, 'treant') and hero:GetName() == "npc_dota_hero_treant" then
+							ability_set = {
+								[0] = "imba_treant_natures_grasp",
+								[1] = "imba_treant_leech_seed",
+								[2] = "imba_treant_living_armor",
+								[3] = "treant_eyes_in_the_forest",
+								[4] = "imba_treant_natures_guise",
+								[5] = "imba_treant_overgrowth",
+								[6] = "special_bonus_attack_damage_50",
+								[7] = "special_bonus_imba_treant_natures_guise_invisibility",
+								[8] = "special_bonus_imba_treant_natures_grasp_damage",
+								[9] = "special_bonus_imba_treant_living_armor_heal",
+								[10] = "special_bonus_cooldown_reduction_15",
+								[11] = "special_bonus_imba_treant_leech_seed_heal",
+								[12] = "special_bonus_imba_treant_living_armor_aoe",
+								[13] = "special_bonus_imba_treant_overgrowth_damage"
+							}
+							upgraded = true
+						elseif string.find(text, 'arc') and hero:GetName() == "npc_dota_hero_arc_warden" then
+							ability_set = {
+								[0] = "imba_arc_warden_flux",
+								[1] = "imba_arc_warden_magnetic_field",
+							}
 							upgraded = true
 						end
 						
@@ -1095,10 +1076,16 @@ function GameMode:OnPlayerChat(keys)
 								-- Remove this when done
 								if new_ability:GetName() == "imba_gyrocopter_lock_on" or
 								new_ability:GetName() == "imba_gyrocopter_gatling_guns" or 
-								new_ability:GetName() == "imba_void_spirit_void_stasis" then
+								new_ability:GetName() == "imba_void_spirit_void_stasis" or
+								new_ability:GetName() == "imba_tinker_technomancy" then
 									new_ability:SetLevel(1)
 								end
 							end
+						end
+						
+						-- Doing the switch with Undying gives him an infinite usage reincarnation which is...not good for field testing
+						if hero:GetName() == "npc_dota_hero_undying" then
+							hero:RemoveModifierByName("modifier_special_bonus_reincarnation")
 						end
 						
 						if hero:GetName() == "npc_dota_hero_void_spirit" and not hero:HasAbility("imba_void_spirit_aether_remnant_helper") then
@@ -1219,7 +1206,7 @@ function GameMode:OnPlayerChat(keys)
 					
 					DisplayError(caster:GetPlayerID(), "Destroyed "..obs_count.." observer wards and "..sentry_count.." sentry wards placed by "..PlayerResource:GetPlayerName(tonumber(text))..".")
 				else
-					DisplayError(caster:GetPlayerID(), "Invalid Unfreeze Target")
+					DisplayError(caster:GetPlayerID(), "Invalid Excavate Target")
 				end
 			elseif str == "-die" then
 				local pos = caster:GetAbsOrigin()
@@ -1227,6 +1214,28 @@ function GameMode:OnPlayerChat(keys)
 				caster:ForceKill(true)
 				caster:RespawnHero(false, false)
 				FindClearSpaceForUnit(caster, pos, false)
+			elseif str == "-addability" then
+				-- Mostly for vanilla ability testing
+			
+				-- Example: -addability 0:axe_berserkers_call
+			
+				text = string.gsub(text, str, "")
+				
+				local id = string.match(text, '%d+')
+				local ability_name = string.match(text, ":(.*)")
+				
+				if (type(tonumber(id)) == "number" and PlayerResource:GetPlayer(tonumber(id)) and PlayerResource:GetPlayer(tonumber(id)):GetAssignedHero()) then
+					local new_ability = PlayerResource:GetPlayer(tonumber(id)):GetAssignedHero():AddAbility(ability_name)
+					
+					if new_ability and ability_name then
+						for index = 3, 4 do
+							if PlayerResource:GetPlayer(tonumber(id)):GetAssignedHero():GetAbilityByIndex(index):GetName() == "generic_hidden" then
+								PlayerResource:GetPlayer(tonumber(id)):GetAssignedHero():SwapAbilities(ability_name, "generic_hidden", true, false)
+								break
+							end
+						end
+					end
+				end
 			end
 		end
 	end
@@ -1242,6 +1251,8 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
+	
+		-- Ban system that forces heroes into their fountain area and locks their position there (either through database or manual intervention)
 		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 or (IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())]) then
 			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
 				local pos = GetGroundPosition(Vector(-6700, -7165, 1509), nil)
@@ -1456,53 +1467,6 @@ function GameMode:OnTeamKillCredit(keys)
 			end
 		end
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Rancor logic
-	-------------------------------------------------------------------------------------------------
-
-	-- TODO: Format this into venge's hero file
-	-- Victim stack loss
-	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
-		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
-		if current_stacks <= 2 then
-			victim_hero:RemoveModifierByName("modifier_imba_rancor")
-		else
-			victim_hero:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
-		end
-	end
-
-	-- Killer stack gain
-	if victim_hero and VENGEFUL_RANCOR and PlayerResource:IsImbaPlayer(killer_id) and killer_team ~= VENGEFUL_RANCOR_TEAM then
-		local eligible_rancor_targets = FindUnitsInRadius(victim_hero:GetTeamNumber(), victim_hero:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
-		if eligible_rancor_targets[1] then
-			local rancor_stacks = 1
-
-			-- Double stacks if the killed unit was Venge
-			if victim_hero == VENGEFUL_RANCOR_CASTER then
-				rancor_stacks = rancor_stacks * 2
-			end
-
-			-- Add stacks and play particle effect
-			AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
-			local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
-			ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
-			ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Vengeance Aura logic
-	-------------------------------------------------------------------------------------------------
-
-	if victim_hero and PlayerResource:IsImbaPlayer(killer_id) then
-		local vengeance_aura_ability = victim_hero:FindAbilityByName("imba_vengeful_command_aura")
-		local killer_hero = PlayerResource:GetPlayer(killer_id):GetAssignedHero()
-		if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
-			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
-			victim_hero.vengeance_aura_target = killer_hero
-		end
-	end
 end
 
 -- A rune was activated by a player
@@ -1513,3 +1477,15 @@ function GameMode:OnRuneActivated(keys)
 		ImbaRunes:PickupRune("illusion", hero, false)
 	end
 end
+
+-- The game was paused
+-- This isn't working...
+-- function GameMode:OnPause(keys)
+	-- print("Game paused.")
+-- -- userid ( short )
+-- -- value ( short )
+-- -- message ( short )
+	-- print(keys.userid)
+	-- print(keys.value)
+	-- print(keys.message)
+-- end

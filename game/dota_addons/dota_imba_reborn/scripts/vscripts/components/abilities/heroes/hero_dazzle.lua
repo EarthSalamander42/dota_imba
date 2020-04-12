@@ -55,7 +55,7 @@ function imba_dazzle_poison_touch:OnProjectileHit(target, location)
 	if target:TriggerSpellAbsorb(self) then return end
 
 	EmitSoundOn("Hero_Dazzle.Poison_Touch", target)
-	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_setin", {duration = self:GetSpecialValueFor("set_in_time")})
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_setin", {duration = self:GetSpecialValueFor("set_in_time") * (1 - target:GetStatusResistance())})
 end
 
 -----------------------------------------------
@@ -87,11 +87,11 @@ function modifier_imba_dazzle_poison_touch_setin:OnDestroy()
 			local ability = self:GetAbility()
 
 			if ability:GetCaster():HasTalent("special_bonus_imba_dazzle_4") then
-				local slowMod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_talent_slow", {duration = ability:GetSpecialValueFor("poison_duration")})
+				local slowMod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_talent_slow", {duration = ability:GetSpecialValueFor("poison_duration") * (1 - parent:GetStatusResistance())})
 				slowMod:SetStackCount(parent:GetMaxHealth())
 			end
 
-			local mod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_debuff", {duration = ability:GetSpecialValueFor("poison_duration")})
+			local mod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_debuff", {duration = ability:GetSpecialValueFor("poison_duration") * (1 - parent:GetStatusResistance())})
 			mod:SetStackCount(self:GetStackCount())
 		end
 	end
@@ -110,7 +110,7 @@ function modifier_imba_dazzle_poison_touch_setin:OnIntervalThink()
 		local remaining = self:GetRemainingTime()
 		if remaining <= 1 then
 			local ability = self:GetAbility()
-			self:GetParent():AddNewModifier(ability:GetCaster(), ability, "modifier_stunned", {duration = 1})
+			self:GetParent():AddNewModifier(ability:GetCaster(), ability, "modifier_stunned", {duration = 1 * (1 - self:GetParent():GetStatusResistance())})
 			self:StartIntervalThink(-1)
 		end
 	end
@@ -214,7 +214,7 @@ function modifier_imba_dazzle_poison_touch_debuff:OnAbilityFullyCast( keys )
 		local originalAbility = self:GetAbility()
 		local originalCaster = originalAbility:GetCaster()
 		if ability:GetCursorTarget() == parent and caster:GetTeamNumber() == parent:GetTeamNumber() and not caster:FindModifierByName("modifier_imba_dazzle_poison_touch_debuff") and keys.ability:GetName() ~= "ability_capture" then
-			local mod = caster:AddNewModifier(originalAbility:GetCaster(), originalAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = originalAbility:GetSpecialValueFor("poison_duration")})
+			local mod = caster:AddNewModifier(originalAbility:GetCaster(), originalAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = originalAbility:GetSpecialValueFor("poison_duration") * (1 - caster:GetStatusResistance())})
 			mod:SetStackCount(self:GetStackCount())
 		end
 	end
@@ -967,6 +967,7 @@ if modifier_imba_dazzle_post_shallow_grave_buff == nil then modifier_imba_dazzle
 function modifier_imba_dazzle_post_shallow_grave_buff:IsPurgable() return true end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsHidden() return false end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsDebuff() return false end
+function modifier_imba_dazzle_post_shallow_grave_buff:DeclareFunctions()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_dazzle_post_shallow_grave_buff:GetTexture()
 	return "dazzle_shallow_grave" end
@@ -1376,11 +1377,10 @@ end
 function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local spellAmp = caster:GetSpellAmplification(false)
 		local damage = self:GetSpecialValueFor("damage")
 		local damageRadius = self:GetSpecialValueFor("damage_radius")
 
-		local totalHeal = damage * (1 + spellAmp * 0.01)
+		local totalHeal = damage
 		local targetTeam = DOTA_UNIT_TARGET_TEAM_FRIENDLY
 
 		if isAlly then
@@ -1402,7 +1402,7 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 			local oldMod = unit:FindModifierByName("modifier_imba_dazzle_poison_touch_debuff")
 			if poisonTouched and poisonTouchAbility then
 				if not oldMod or oldMod:GetStackCount() < poisonTouched then
-					local modifier = unit:AddNewModifier(caster, poisonTouchAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = poisonTouchAbility:GetSpecialValueFor("poison_duration")})
+					local modifier = unit:AddNewModifier(caster, poisonTouchAbility, "modifier_imba_dazzle_poison_touch_debuff", {duration = poisonTouchAbility:GetSpecialValueFor("poison_duration") * (1 - unit:GetStatusResistance())})
 					EmitSoundOn("Hero_Dazzle.Poison_Tick", unit)
 					modifier:SetStackCount(poisonTouched)
 				end
@@ -2018,17 +2018,36 @@ function modifier_imba_dazzle_bad_juju:OnAbilityFullyCast(params)
 
 			for _, unit in pairs(units) do
 				local modifier_name = "modifier_imba_dazzle_bad_juju_buff"
-
+				local duration		= self:GetAbility():GetSpecialValueFor("duration")
+				
 				if unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 					modifier_name = "modifier_imba_dazzle_bad_juju_debuff"
+					duration		= self:GetAbility():GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance())
 				end
 
 				if unit:HasModifier(modifier_name) then
 					local modifier = unit:FindModifierByName(modifier_name)
 					modifier:SetStackCount(modifier:GetStackCount() + 1)
-					modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration"), true)
+					modifier:SetDuration(duration, true)
 				else
-					unit:AddNewModifier(unit, self:GetAbility(), modifier_name, {duration=self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
+					unit:AddNewModifier(unit, self:GetAbility(), modifier_name, {duration = duration}):SetStackCount(1)
+				end
+			end
+			
+			-- Aghanim's Scepter logic (Patch 7.25)
+			if self:GetCaster():HasScepter() then
+				local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+				
+				local target_number = 0
+				
+				for _, enemy in pairs(enemies) do
+					self:GetParent():PerformAttack(enemy, false, true, true, false, true, false, false)
+					
+					target_number = target_number + 1
+					
+					if target_number >= self:GetAbility():GetSpecialValueFor("scepter_count") then
+						break
+					end
 				end
 			end
 		end
@@ -2086,6 +2105,24 @@ function modifier_imba_dazzle_bad_juju_debuff:GetModifierPhysicalArmorBonus()
 	local armor_reduction = self:GetAbility():GetSpecialValueFor("armor_reduction")
 	return armor_reduction * self:GetStackCount() * (-1)
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_damage", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_slow", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_dazzle_poison_touch_damage	= modifier_special_bonus_imba_dazzle_poison_touch_damage or class({})
+modifier_special_bonus_imba_dazzle_poison_touch_slow	= modifier_special_bonus_imba_dazzle_poison_touch_slow or class({})
+
+function modifier_special_bonus_imba_dazzle_poison_touch_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_dazzle_poison_touch_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_dazzle_poison_touch_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_dazzle_poison_touch_slow:IsHidden() 		return true end
+function modifier_special_bonus_imba_dazzle_poison_touch_slow:IsPurgable()		return false end
+function modifier_special_bonus_imba_dazzle_poison_touch_slow:RemoveOnDeath() 	return false end
 
 ----------------------
 -----	Talents	 -----

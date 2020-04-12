@@ -80,8 +80,10 @@ end
 -- AETHER OF SPECS MODIFIER --
 ------------------------------
 
-function modifier_item_imba_aether_specs:IsHidden()					return true end
-function modifier_item_imba_aether_specs:GetAttributes()			return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_aether_specs:IsHidden()			return true end
+function modifier_item_imba_aether_specs:IsPurgable()		return false end
+function modifier_item_imba_aether_specs:RemoveOnDeath()	return false end
+function modifier_item_imba_aether_specs:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_aether_specs:OnCreated()
 	if self:GetAbility() then
@@ -207,6 +209,8 @@ function modifier_item_imba_aether_specs:GetModifierAura()				return "modifier_i
 --------------------------------
 
 function modifier_item_imba_aether_specs_aura_bonus:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- AbilitySpecials
 	self.aura_mana_regen		= self:GetAbility():GetSpecialValueFor("aura_mana_regen")
 	self.aura_bonus_armor		= self:GetAbility():GetSpecialValueFor("aura_bonus_armor")
@@ -215,15 +219,13 @@ function modifier_item_imba_aether_specs_aura_bonus:OnCreated()
 end
 
 function modifier_item_imba_aether_specs_aura_bonus:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_BONUS_DAY_VISION,
 		MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
 		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING
 	}
-
-	return decFuncs
 end
 
 function modifier_item_imba_aether_specs_aura_bonus:GetModifierConstantManaRegenUnique()

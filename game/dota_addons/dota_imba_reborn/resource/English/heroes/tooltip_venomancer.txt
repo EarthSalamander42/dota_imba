@@ -68,7 +68,7 @@
 
 // Venomancer's Poison Nova
 "DOTA_Tooltip_ability_imba_venomancer_poison_nova"                      "Poison Nova"
-"DOTA_Tooltip_ability_imba_venomancer_poison_nova_Description"          "A spreading ring of poison that does damage over time to enemy units around Venomancer. Poison Nova cannot deal lethal damage; targets will be left with at least 1 health.\n<font color='#FF7800'>Bubonic AIDSbolapox:</font> Increases damage per second by %damage_pct%%% per %health_pct%%% of the target's current health above %health_threshold_pct%%%.\n<font color='#FF7800'>Contagion:</font> The poison will spread to uninfected enemies if they come too close to affected ones. It has the same duration of the infector or %contagion_min_duration% seconds, whichever is higher."
+"DOTA_Tooltip_ability_imba_venomancer_poison_nova_Description"          "A spreading ring of poison that does damage over time to enemy units around Venomancer. Poison Nova cannot deal lethal damage; targets will be left with at least 1 health.\n<font color='#FF7800'>Bubonic AIDSbolapox:</font> Increases damage by %damage_pct%%% per %health_pct%%% of the target's current health above %health_threshold_pct%%%.\n<font color='#FF7800'>Contagion:</font> The poison will spread to uninfected enemies if they come too close to affected ones. It has the same duration of the infector or %contagion_min_duration% seconds, whichever is higher."
 "DOTA_Tooltip_ability_imba_venomancer_poison_nova_Lore"                "The Venomancer's ultimate creation, this virulent poison only grows stronger as its host fights it."
 "DOTA_Tooltip_ability_imba_venomancer_poison_nova_aghanim_description"	"Increases damage and decreases cooldown."
 "DOTA_Tooltip_ability_imba_venomancer_poison_nova_Note0"                "Despite the animation, all targets in 900 range are affected immediately."
@@ -85,12 +85,12 @@
 "DOTA_Tooltip_modifier_imba_poison_nova_Description"                    "Taking extreme damage over time and spread to nearby allies."
 
 // Venomancer's Custom Talents
-"DOTA_Tooltip_ability_special_bonus_imba_venomancer_1"                  "+20% Venomous Gale Slow"
-"DOTA_Tooltip_ability_special_bonus_imba_venomancer_2"                  "Poison Sting adds +1% additional slow per stack"
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_1"                  "+{s:value}% Venomous Gale Slow"
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_2"                  "Poison Sting adds +{s:value}% additional slow per stack"
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_3"                  "+{s:value}% Compound Toxicity Magic Resistance Reduction"
-"DOTA_Tooltip_ability_special_bonus_imba_venomancer_4"                  "+4s Poison Nova Duration"
-"DOTA_Tooltip_ability_special_bonus_imba_venomancer_5"                  "+150% Scourge/Plague Ward health/damage"
-"DOTA_Tooltip_ability_special_bonus_imba_venomancer_6"                  "Poison Sting also applies/stacks when you're attacked"
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_4"                  "+{s:value}s Poison Nova Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_5"                  "+{s:value}% Scourge/Plague Ward health/damage"
+"DOTA_Tooltip_ability_special_bonus_imba_venomancer_6"                  "Poison Sting also applies when attacked"
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_7"                  "Venomous Gale 360° AOE"
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_8"                  "Scourge Ward has its own stacking Poison Sting"
 "DOTA_Tooltip_ability_special_bonus_imba_venomancer_8_Description"		"Does not reduce health regeneration."

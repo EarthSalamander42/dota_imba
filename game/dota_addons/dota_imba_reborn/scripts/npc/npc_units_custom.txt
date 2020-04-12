@@ -3796,9 +3796,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"100"
-		"BountyGoldMin"				"100"
-		"BountyGoldMax"				"100"
+		"BountyXP"					"50"
+		"BountyGoldMin"				"50"
+		"BountyGoldMax"				"50"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -3886,9 +3886,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"150"
-		"BountyGoldMin"				"150"
-		"BountyGoldMax"				"150"
+		"BountyXP"					"100"
+		"BountyGoldMin"				"100"
+		"BountyGoldMax"				"100"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -3941,7 +3941,6 @@
 		"Ability1"					"necronomicon_warrior_mana_burn"
 		"Ability2"					"necronomicon_warrior_last_will"
 		"Ability3"					"necronomicon_warrior_sight"
-		"Ability4"					"black_dragon_dragonhide_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -3978,9 +3977,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"200"
-		"BountyGoldMin"				"200"
-		"BountyGoldMax"				"200"
+		"BountyXP"					"150"
+		"BountyGoldMin"				"150"
+		"BountyGoldMax"				"150"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4072,9 +4071,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"250"
-		"BountyGoldMin"				"250"
-		"BountyGoldMax"				"250"
+		"BountyXP"					"200"
+		"BountyGoldMin"				"200"
+		"BountyGoldMax"				"200"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4167,9 +4166,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"300"
-		"BountyGoldMin"				"300"
-		"BountyGoldMax"				"300"
+		"BountyXP"					"250"
+		"BountyGoldMin"				"250"
+		"BountyGoldMax"				"250"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4256,9 +4255,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"100"
-		"BountyGoldMin"				"100"
-		"BountyGoldMax"				"100"
+		"BountyXP"					"50"
+		"BountyGoldMin"				"50"
+		"BountyGoldMax"				"50"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4345,9 +4344,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"150"
-		"BountyGoldMin"				"150"
-		"BountyGoldMax"				"150"
+		"BountyXP"					"100"
+		"BountyGoldMin"				"100"
+		"BountyGoldMax"				"100"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4399,7 +4398,6 @@
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_purge"
 		"Ability2"					"necronomicon_archer_aoe"
-		"Ability3"					"forest_troll_high_priest_mana_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4414,7 +4412,7 @@
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
-		"AttackAcquisitionRange"	"9000"
+		"AttackAcquisitionRange"	"900"
 		"AttackRange"				"550"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
@@ -4436,9 +4434,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"200"
-		"BountyGoldMin"				"200"
-		"BountyGoldMax"				"200"
+		"BountyXP"					"150"
+		"BountyGoldMin"				"150"
+		"BountyGoldMax"				"150"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4492,7 +4490,6 @@
 		"Ability1"					"necronomicon_archer_purge"
 		"Ability2"					"necronomicon_archer_aoe"
 		"Ability3"					"forest_troll_high_priest_mana_aura"
-		"Ability4"					"big_thunder_lizard_wardrums_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4529,9 +4526,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"250"
-		"BountyGoldMin"				"250"
-		"BountyGoldMax"				"250"
+		"BountyXP"					"200"
+		"BountyGoldMin"				"200"
+		"BountyGoldMax"				"200"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -4585,8 +4582,7 @@
 		"Ability1"					"necronomicon_archer_purge"
 		"Ability2"					"necronomicon_archer_aoe"
 		"Ability3"					"forest_troll_high_priest_mana_aura"
-		"Ability4"					"big_thunder_lizard_wardrums_aura"
-		"Ability5"					"imba_necronomicon_archer_multishot"
+		"Ability5"					"imba_necronomicon_archer_spread_shot"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4623,9 +4619,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"300"
-		"BountyGoldMin"				"300"
-		"BountyGoldMax"				"300"
+		"BountyXP"					"250"
+		"BountyGoldMin"				"250"
+		"BountyGoldMax"				"250"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -5432,290 +5428,30 @@
 
 	"npc_dota_unit_tombstone1"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_unit_undying_tombstone"	// Class of entity of link to.
-		"Model"						"models/heroes/undying/undying_tower.vmdl"	// Model.
-		"SoundSet"					"Undying_Tombstone"					// Name of sound set.
-		"ModelScale"				".8"
-		"Level"						"4"
-		"IsSummoned"				"1"
-		"IsAncient"					"1"
-		"IsOther"					"1"
-		"wearable"				"8630"
-				
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"neutral_spell_immunity"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"5"			// Physical protection.
-		"MagicalResistance"				"33"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"		// Experience earn.
-		"BountyGoldMin"				"125"		// Gold earned min.
-		"BountyGoldMax"				"125"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"250"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"		// Speed
-		"MovementTurnRate"			"0.0"		// Turning rate.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"8"		// Base health.
-		"StatusHealthRegen"			"0"		// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1800"		// Range of vision at night time.
+		"StatusHealth"				"20"		// Base health.
 	}
 
 	"npc_dota_unit_tombstone2"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_unit_undying_tombstone"	// Class of entity of link to.
-		"Model"						"models/heroes/undying/undying_tower.vmdl"	// Model.
-		"SoundSet"					"Undying_Tombstone"					// Name of sound set.
-		"ModelScale"				".8"
-		"Level"						"4"
-		"IsSummoned"				"1"
-		"IsAncient"					"1"
-		"IsOther"					"1"
-		"wearable"				"8630"
-				
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"neutral_spell_immunity"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"5"			// Physical protection.
-		"MagicalResistance"				"33"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"		// Experience earn.
-		"BountyGoldMin"				"150"		// Gold earned min.
-		"BountyGoldMax"				"150"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"250"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"		// Speed
-		"MovementTurnRate"			"0.0"		// Turning rate.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"10"		// Base health.
-		"StatusHealthRegen"			"0"		// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1800"		// Range of vision at night time.
+		"StatusHealth"				"28"		// Base health.
 	}
 
 	"npc_dota_unit_tombstone3"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_unit_undying_tombstone"	// Class of entity of link to.
-		"Model"						"models/heroes/undying/undying_tower.vmdl"	// Model.
-		"SoundSet"					"Undying_Tombstone"					// Name of sound set.
-		"ModelScale"				".8"
-		"Level"						"4"
-		"IsSummoned"				"1"
-		"IsAncient"					"1"
-		"IsOther"					"1"
-		"wearable"				"8630"
-				
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"neutral_spell_immunity"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"5"			// Physical protection.
-		"MagicalResistance"				"33"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"		// Experience earn.
-		"BountyGoldMin"				"175"		// Gold earned min.
-		"BountyGoldMax"				"175"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"250"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"		// Speed
-		"MovementTurnRate"			"0.0"		// Turning rate.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"12"		// Base health.
-		"StatusHealthRegen"			"0"		// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1800"		// Range of vision at night time.
+		"StatusHealth"				"36"		// Base health.
 	}
 
 	"npc_dota_unit_tombstone4"
 	{
-		// General
-		//
-		"BaseClass"					"npc_dota_unit_undying_tombstone"	// Class of entity of link to.
-		"Model"						"models/heroes/undying/undying_tower.vmdl"	// Model.
-		"SoundSet"					"Undying_Tombstone"					// Name of sound set.
-		"ModelScale"				".8"
-		"Level"						"4"
-		"IsSummoned"				"1"
-		"IsAncient"					"1"
-		"IsOther"					"1"
-		"wearable"				"8630"
-				
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"neutral_spell_immunity"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"5"			// Physical protection.
-		"MagicalResistance"				"33"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"		// Experience earn.
-		"BountyGoldMin"				"200"		// Gold earned min.
-		"BountyGoldMax"				"200"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"250"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-		"MovementSpeed"				"0"		// Speed
-		"MovementTurnRate"			"0.0"		// Turning rate.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"16"		// Base health.
-		"StatusHealthRegen"			"0"		// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1800"		// Range of vision at night time.
+		"StatusHealth"				"44"		// Base health.
 	}
 
 	"npc_dota_visage_familiar1"
@@ -6361,57 +6097,6 @@
 
 		//Inventory
 		"HasInventory"              "0"
-	}
-	
-	"npc_dota_shadow_shaman_ward_1"
-	{
-		// Attack
-		//----------------------------------------------------------------
-		"AttackDamageMin"			"50"			// Damage range min.
-		"AttackDamageMax"			"50"			// Damage range max.
-		
-		// Movement
-		//----------------------------------------------------------------
-		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air (this was for movement talent)
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"2"		// Base health.
-	}
-
-	"npc_dota_shadow_shaman_ward_2"
-	{
-		// Attack
-		//----------------------------------------------------------------
-		"AttackDamageMin"			"100"			// Damage range min.
-		"AttackDamageMax"			"100"			// Damage range max.
-		
-		// Movement
-		//----------------------------------------------------------------
-		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"3"		// Base health.
-	}
-
-	"npc_dota_shadow_shaman_ward_3"
-	{
-		// Attack
-		//----------------------------------------------------------------
-		"AttackDamageMin"			"150"			// Damage range min.
-		"AttackDamageMax"			"150"			// Damage range max.
-		
-		// Movement
-		//----------------------------------------------------------------
-		// "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"4"		// Base health.
 	}
 	
 	"npc_dota_rattletrap_cog"

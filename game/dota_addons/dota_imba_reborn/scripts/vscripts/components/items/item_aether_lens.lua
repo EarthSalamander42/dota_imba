@@ -21,14 +21,12 @@ end
 
 -------------------------------------------
 modifier_imba_aether_lens_passive = modifier_imba_aether_lens_passive or class({})
-function modifier_imba_aether_lens_passive:IsDebuff() return false end
-function modifier_imba_aether_lens_passive:IsHidden() return true end
-function modifier_imba_aether_lens_passive:IsPermanent() return true end
-function modifier_imba_aether_lens_passive:IsPurgable() return false end
-function modifier_imba_aether_lens_passive:IsPurgeException() return false end
-function modifier_imba_aether_lens_passive:IsStunDebuff() return false end
-function modifier_imba_aether_lens_passive:RemoveOnDeath() return false end
-function modifier_imba_aether_lens_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_aether_lens_passive:IsHidden()		return true end
+function modifier_imba_aether_lens_passive:IsPurgable()		return false end
+function modifier_imba_aether_lens_passive:RemoveOnDeath()	return false end
+function modifier_imba_aether_lens_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_aether_lens_passive:OnDestroy()
 	self:CheckUnique(false)
 end

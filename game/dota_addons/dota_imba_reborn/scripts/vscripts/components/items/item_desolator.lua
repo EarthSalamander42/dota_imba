@@ -37,11 +37,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_blight_stone == nil then modifier_item_imba_blight_stone = class({}) end
-function modifier_item_imba_blight_stone:IsHidden() return true end
-function modifier_item_imba_blight_stone:IsDebuff() return false end
-function modifier_item_imba_blight_stone:IsPurgable() return false end
-function modifier_item_imba_blight_stone:IsPermanent() return true end
-function modifier_item_imba_blight_stone:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_blight_stone:IsHidden()		return true end
+function modifier_item_imba_blight_stone:IsPurgable()		return false end
+function modifier_item_imba_blight_stone:RemoveOnDeath()	return false end
+function modifier_item_imba_blight_stone:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Possible projectile changes
 function modifier_item_imba_blight_stone:OnCreated()
@@ -199,7 +199,7 @@ function item_imba_desolator:OnProjectileHit(target, target_loc)
 
 		-- Apply the armor debuff, if applicable
 		if not target:HasModifier("modifier_item_imba_desolator_2_debuff") then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration")})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 		end
 
 		-- Fire the effect particle
@@ -218,11 +218,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_desolator == nil then modifier_item_imba_desolator = class({}) end
-function modifier_item_imba_desolator:IsHidden() return true end
-function modifier_item_imba_desolator:IsDebuff() return false end
-function modifier_item_imba_desolator:IsPurgable() return false end
-function modifier_item_imba_desolator:IsPermanent() return true end
-function modifier_item_imba_desolator:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_desolator:IsHidden()		return true end
+function modifier_item_imba_desolator:IsPurgable()		return false end
+function modifier_item_imba_desolator:RemoveOnDeath()	return false end
+function modifier_item_imba_desolator:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Possible projectile changes
 function modifier_item_imba_desolator:OnCreated()
@@ -239,20 +239,21 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_desolator:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-	return funcs
 end
 
 function modifier_item_imba_desolator:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("damage")
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("damage")
+	end
 end
 
 -- On attack landed, apply the debuff
 function modifier_item_imba_desolator:OnAttackLanded( keys )
-	if IsServer() then
+	if self:GetAbility() then
 		local owner = self:GetParent()
 
 		-- If this attack was not performed by the modifier's owner, do nothing
@@ -297,12 +298,11 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_desolator_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_BONUS_DAY_VISION,
 		MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
 	}
-	return funcs
 end
 
 function modifier_item_imba_desolator_debuff:GetModifierPhysicalArmorBonus()
@@ -400,7 +400,7 @@ function item_imba_desolator_2:OnProjectileHit(target, target_loc)
 
 		-- Apply the armor debuff, if applicable
 		if not target:HasModifier("modifier_item_imba_desolator_2_debuff") then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration")})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 		end
 
 		-- Fire the effect particle
@@ -419,11 +419,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_desolator_2 == nil then modifier_item_imba_desolator_2 = class({}) end
-function modifier_item_imba_desolator_2:IsHidden() return true end
-function modifier_item_imba_desolator_2:IsDebuff() return false end
-function modifier_item_imba_desolator_2:IsPurgable() return false end
-function modifier_item_imba_desolator_2:IsPermanent() return true end
-function modifier_item_imba_desolator_2:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_desolator_2:IsHidden()		return true end
+function modifier_item_imba_desolator_2:IsPurgable()		return false end
+function modifier_item_imba_desolator_2:RemoveOnDeath()	return false end
+function modifier_item_imba_desolator_2:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Possible projectile changes
 function modifier_item_imba_desolator_2:OnCreated()
@@ -525,5 +525,5 @@ function Desolate(attacker, target, ability, modifier_name, duration)
 	end
 
 	-- Apply the modifier
-	target:AddNewModifier(attacker, ability, modifier_name, {duration = duration})
+	target:AddNewModifier(attacker, ability, modifier_name, {duration = duration * (1 - target:GetStatusResistance())})
 end

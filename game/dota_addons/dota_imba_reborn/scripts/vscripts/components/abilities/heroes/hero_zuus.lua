@@ -8,185 +8,347 @@
 --------------------------------------
 --			Arc Lightning			--
 --------------------------------------
-imba_zuus_arc_lightning = class({})
+
+LinkLuaModifier("modifier_imba_zuus_arc_lightning", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+
+imba_zuus_arc_lightning				= imba_zuus_arc_lightning or class({})
+modifier_imba_zuus_arc_lightning	= modifier_imba_zuus_arc_lightning or class({})
+
+function imba_zuus_arc_lightning:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_zuus_2", "bonus_cast_range")
+end
+
 function imba_zuus_arc_lightning:OnSpellStart()
-	local caster 			= self:GetCaster()
-	local ability 			= self
-	local jump_delay 		= ability:GetSpecialValueFor("jump_delay")
-	local max_jump_count 	= ability:GetSpecialValueFor("jump_count")
-	local radius 			= ability:GetSpecialValueFor("radius")
-	local damage 			= ability:GetSpecialValueFor("arc_damage")
-	local static_chain_mult	= ability:GetSpecialValueFor("static_chain_mult")
-	local target 			= self:GetCursorTarget()
+	local target = self:GetCursorTarget()
+	
+	self:GetCaster():EmitSound("Hero_Zuus.ArcLightning.Cast")
+	
+	if not target:TriggerSpellAbsorb(self) then
+		local head_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_head.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:SetParticleControlEnt(head_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(head_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		-- No reason for this CP besides that I like colours
+		ParticleManager:SetParticleControl(head_particle, 62, Vector(2, 0, 2))
 
-	caster:EmitSound("Hero_Zuus.ArcLightning.Cast")
-
-	local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster, caster)
-	ParticleManager:SetParticleControl(lightningBolt, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y , caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))   
-	ParticleManager:SetParticleControl(lightningBolt, 1, Vector(target:GetAbsOrigin().x, target:GetAbsOrigin().y, target:GetAbsOrigin().z + target:GetBoundingMaxs().z ))
-
-	local nearby_enemy_units = FindUnitsInRadius(
-		caster:GetTeam(),
-		target:GetAbsOrigin(), 
-		nil, 
-		radius * static_chain_mult, 
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		--DOTA_UNIT_TARGET_FLAG_NONE, 
-		DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-		FIND_CLOSEST, 
-		false
-	)
-
-	--7.21 changes (why you gotta complicate things Valve)
-	if caster:HasModifier("modifier_imba_zuus_static_field") then
-		caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(target)
+		ParticleManager:ReleaseParticleIndex(head_particle)
+		
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_arc_lightning", {
+			starting_unit_entindex	= target:entindex()
+		})
 	end
+end
 
-	local damage_table 			= {}
-	damage_table.attacker 		= caster
-	damage_table.ability 		= ability
-	damage_table.damage_type 	= ability:GetAbilityDamageType() 
-	damage_table.damage			= damage
-	damage_table.victim 		= target
-	ApplyDamage(damage_table)
+--------------------------------------
+-- MODIFIER_IMBA_ZUUS_ARC_LIGHTNING --
+--------------------------------------
 
-	-- Add to list of targets allrdy hit.
-	local hit_list = {}
-	hit_list[target] = 1
+function modifier_imba_zuus_arc_lightning:IsHidden()		return true end
+function modifier_imba_zuus_arc_lightning:IsPurgable()		return false end
+function modifier_imba_zuus_arc_lightning:RemoveOnDeath()	return false end
+function modifier_imba_zuus_arc_lightning:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-	Timers:CreateTimer(jump_delay, function() 
-		-- Find targets to chain too
-		for _,enemy in pairs(nearby_enemy_units) do 
-			if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy and ((not enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= radius) or (enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= radius * static_chain_mult)) then
-				imba_zuus_arc_lightning:Chain(caster, target, enemy, ability, damage, radius, jump_delay, max_jump_count, 0, hit_list, static_chain_mult)
-				-- Abort when we find something to chain too
+function modifier_imba_zuus_arc_lightning:OnCreated(keys)
+	if not IsServer() or not self:GetAbility() then return end
+
+	self.arc_damage			= self:GetAbility():GetSpecialValueFor("arc_damage")
+	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
+	self.jump_count			= self:GetAbility():GetSpecialValueFor("jump_count")
+	self.jump_delay			= self:GetAbility():GetSpecialValueFor("jump_delay")
+	self.static_chain_mult	= self:GetAbility():GetSpecialValueFor("static_chain_mult")
+	
+	self.starting_unit_entindex	= keys.starting_unit_entindex
+	
+	self.units_affected			= {}
+	
+	if self.starting_unit_entindex and EntIndexToHScript(self.starting_unit_entindex) then
+		-- Using a previous unit and current unit variable to track n-1 and n-2 unit hit in current Arc Lightning jump, with previous unit being used for the Master of Lightning talent (can only chain if the next target is not current or previous target)
+		self.current_unit						= EntIndexToHScript(self.starting_unit_entindex)
+		self.units_affected[self.current_unit]	= 1
+		
+		if self:GetCaster():HasModifier("modifier_imba_zuus_static_field") then
+			self:GetCaster():FindModifierByName("modifier_imba_zuus_static_field"):Apply(self.current_unit)
+		end
+		
+		ApplyDamage({
+			victim 			= self.current_unit,
+			damage 			= self.arc_damage,
+			damage_type		= DAMAGE_TYPE_MAGICAL,
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self:GetAbility()
+		})
+	else
+		self:Destroy()
+		return
+	end
+	
+	self.unit_counter			= 0
+	
+	self:StartIntervalThink(self.jump_delay)
+end
+
+function modifier_imba_zuus_arc_lightning:OnIntervalThink()
+	self.zapped = false
+	
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.current_unit:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)) do
+		if not self.units_affected[enemy] or (self:GetCaster():HasTalent("special_bonus_imba_zuus_8") and self.units_affected[enemy] < self:GetCaster():FindTalentValue("special_bonus_imba_zuus_8", "additional_hits")) and enemy ~= self.current_unit and enemy ~= self.previous_unit then
+			enemy:EmitSound("Hero_Zuus.ArcLightning.Target")
+			
+			self.lightning_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.current_unit)
+			ParticleManager:SetParticleControlEnt(self.lightning_particle, 0, self.current_unit, PATTACH_POINT_FOLLOW, "attach_hitloc", self.current_unit:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.lightning_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(self.lightning_particle, 62, Vector(2, 0, 2))
+			ParticleManager:ReleaseParticleIndex(self.lightning_particle)
+		
+			self.unit_counter						= self.unit_counter + 1
+			self.previous_unit						= self.current_unit
+			self.current_unit						= enemy
+			
+			if self.units_affected[self.current_unit] then
+				self.units_affected[self.current_unit]	= self.units_affected[self.current_unit] + 1
+			else
+				self.units_affected[self.current_unit]	= 1
+			end
+			
+			self.zapped								= true
+			
+			if self:GetCaster():HasModifier("modifier_imba_zuus_static_field") then
+				self:GetCaster():FindModifierByName("modifier_imba_zuus_static_field"):Apply(enemy)
+			end
+			
+			ApplyDamage({
+				victim 			= enemy,
+				damage 			= self.arc_damage,
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self:GetAbility()
+			})
+			
+			break
+		end
+	end
+	
+	if (self.unit_counter >= self.jump_count and self.jump_count > 0) or not self.zapped then
+		-- IMBAfication: Static Chain (do the same loop as above but check additional range and only if they have the Static Field modifier
+		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.current_unit:GetAbsOrigin(), nil, self.radius * self.static_chain_mult, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)) do
+			if (not self.units_affected[enemy] or (self:GetCaster():HasTalent("special_bonus_imba_zuus_8") and self.units_affected[enemy] < self:GetCaster():FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))) and enemy ~= self.current_unit and enemy ~= self.previous_unit and enemy:HasModifier("modifier_imba_zuus_static_charge") then
+				enemy:EmitSound("Hero_Zuus.ArcLightning.Target")
+				
+				self.lightning_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.current_unit)
+				ParticleManager:SetParticleControlEnt(self.lightning_particle, 0, self.current_unit, PATTACH_POINT_FOLLOW, "attach_hitloc", self.current_unit:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(self.lightning_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControl(self.lightning_particle, 62, Vector(2, 0, 2))
+				ParticleManager:ReleaseParticleIndex(self.lightning_particle)
+				
+				self.unit_counter						= self.unit_counter + 1
+				self.previous_unit						= self.current_unit
+				self.current_unit						= enemy
+				
+				if self.units_affected[self.current_unit] then
+					self.units_affected[self.current_unit]	= self.units_affected[self.current_unit] + 1
+				else
+					self.units_affected[self.current_unit]	= 1
+				end
+				
+				self.zapped								= true
+				
+				-- if self:GetCaster():HasModifier("modifier_imba_zuus_static_field") then
+					-- self:GetCaster():FindModifierByName("modifier_imba_zuus_static_field"):Apply(enemy)
+				-- end
+				
+				ApplyDamage({
+					victim 			= enemy,
+					damage 			= self.arc_damage,
+					damage_type		= DAMAGE_TYPE_MAGICAL,
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self:GetAbility()
+				})
+				
 				break
 			end
 		end
-	end)
-end
-
-function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
-	if IsServer() then 
-		num_jumps_done 			 = num_jumps_done + 1
-		if hit_list[chained_target] == nil then
-			hit_list[chained_target] = 1	
-		else
-			hit_list[chained_target] = hit_list[chained_target] + 1
-		end
-
-		-- print("num_jumps_done", num_jumps_done, chained_target, hit_list[chained_target])
-
-		origin_target:EmitSound("Hero_Zuus.ArcLightning.Target")
-
-		local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, origin_target, caster)
-		ParticleManager:SetParticleControl(lightningBolt, 0, Vector(origin_target:GetAbsOrigin().x, origin_target:GetAbsOrigin().y , origin_target:GetAbsOrigin().z + origin_target:GetBoundingMaxs().z ))   
-		ParticleManager:SetParticleControl(lightningBolt, 1, Vector(chained_target:GetAbsOrigin().x, chained_target:GetAbsOrigin().y, chained_target:GetAbsOrigin().z + chained_target:GetBoundingMaxs().z ))
-
-		local nearby_enemy_units = FindUnitsInRadius(	
-			caster:GetTeam(), 
-			chained_target:GetAbsOrigin(), 
-			nil, 
-			radius, 
-			DOTA_UNIT_TARGET_TEAM_ENEMY, 
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			--DOTA_UNIT_TARGET_FLAG_NONE, 
-			DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-			FIND_CLOSEST, 
-			false
-		)
-
-		--7.21 changes (why you gotta complicate things Valve)
-		if caster:HasModifier("modifier_imba_zuus_static_field") then
-			caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(chained_target)
-		end
-
-		local damage_table 			= {}
-		damage_table.attacker 		= caster
-		damage_table.ability 		= ability
-		damage_table.damage_type 	= ability:GetAbilityDamageType() 
-		damage_table.damage			= damage
-		damage_table.victim 		= chained_target
-		ApplyDamage(damage_table)
-
-		if num_jumps_done < max_jump_count then
-			Timers:CreateTimer(jump_delay, function() 
-				local has_chained = false
-				-- Find targets to chain to
-				for _,enemy in pairs(nearby_enemy_units) do 
-					if origin_target ~= enemy and chained_target ~= enemy then
-						if imba_zuus_arc_lightning:HitCheck(caster, enemy, hit_list) then 
-							imba_zuus_arc_lightning:Chain(caster, chained_target, enemy, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
-							has_chained = true
-						end
-
-						-- Abort when we find something to chain too
-						break
-					end
-				end
-
-				-- If there are no targets left to chain to... but we have not hit max_jump cap...
-				if (#nearby_enemy_units == 0 or has_chained == false) then 
-					-- Get list of all heroes!
-					local heroes = HeroList:GetAllHeroes() 
-					local dist_ref = {
-						hero = nil,
-						-- Let's try and make this a bit more reasonable
-						distance = radius * static_chain_mult
-					}
-
-					-- Check if any of them heroes have a static charge... (and havent been hit yet)
-					for _,hero in pairs(heroes) do 
-						if hero:HasModifier("modifier_imba_zuus_static_charge") and origin_target ~= hero and chained_target ~= hero and hero:GetTeamNumber() ~= caster:GetTeamNumber() then
-							if imba_zuus_arc_lightning:HitCheck(caster, hero, hit_list) then 
-							-- Get the closest one!
-								local distance = (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D()
-								if distance < dist_ref.distance then 
-									dist_ref.hero = hero
-									dist_ref.distance = distance
-								end
-							end
-						end
-					end
-
-					-- Did we find an enemy?
-					if dist_ref.hero ~= nil then
-						imba_zuus_arc_lightning:Chain(caster, chained_target, dist_ref.hero, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
-					end
-				end
-			end)
+		
+		-- Check again...
+		if (self.unit_counter >= self.jump_count and self.jump_count > 0) or not self.zapped then
+			self:StartIntervalThink(-1)
+			self:Destroy()
 		end
 	end
 end
 
-function imba_zuus_arc_lightning:HitCheck(caster, enemy, hit_list)
-	if IsServer() then
-		if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() then 
-			if hit_list[enemy] == nil then
-				return true
-			end
+-- Gonna leave naowin's base code here for reference
 
-			if caster:HasTalent("special_bonus_imba_zuus_8") then 
-				-- print(caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))
-				if hit_list[enemy] < caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits") then
-					return true
-				end
-			end
-		end
+-- function imba_zuus_arc_lightning:OnSpellStart()
+	-- local caster 			= self:GetCaster()
+	-- local ability 			= self
+	-- local jump_delay 		= ability:GetSpecialValueFor("jump_delay")
+	-- local max_jump_count 	= ability:GetSpecialValueFor("jump_count")
+	-- local radius 			= ability:GetSpecialValueFor("radius")
+	-- local damage 			= ability:GetSpecialValueFor("arc_damage")
+	-- local static_chain_mult	= ability:GetSpecialValueFor("static_chain_mult")
+	-- local target 			= self:GetCursorTarget()
 
-		return false
-	end
-end
+	-- caster:EmitSound("Hero_Zuus.ArcLightning.Cast")
 
-function imba_zuus_arc_lightning:GetCastRange()
-	local bonus_cast_range = 0
-	if self:GetCaster():HasTalent("special_bonus_imba_zuus_2") then 
-		bonus_cast_range = self:GetCaster():FindTalentValue("special_bonus_imba_zuus_2", "bonus_cast_range")
-	end
+	-- local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster)
+	-- ParticleManager:SetParticleControl(lightningBolt, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y , caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))   
+	-- ParticleManager:SetParticleControl(lightningBolt, 1, Vector(target:GetAbsOrigin().x, target:GetAbsOrigin().y, target:GetAbsOrigin().z + target:GetBoundingMaxs().z ))
 
-	return self:GetSpecialValueFor("cast_range") + bonus_cast_range
-end
+	-- local nearby_enemy_units = FindUnitsInRadius(
+		-- caster:GetTeam(),
+		-- target:GetAbsOrigin(), 
+		-- nil, 
+		-- radius * static_chain_mult, 
+		-- DOTA_UNIT_TARGET_TEAM_ENEMY,
+		-- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+		-- --DOTA_UNIT_TARGET_FLAG_NONE, 
+		-- DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+		-- FIND_CLOSEST, 
+		-- false
+	-- )
+
+	-- --7.21 changes (why you gotta complicate things Valve)
+	-- if caster:HasModifier("modifier_imba_zuus_static_field") then
+		-- caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(target)
+	-- end
+
+	-- local damage_table 			= {}
+	-- damage_table.attacker 		= caster
+	-- damage_table.ability 		= ability
+	-- damage_table.damage_type 	= ability:GetAbilityDamageType() 
+	-- damage_table.damage			= damage
+	-- damage_table.victim 		= target
+	-- ApplyDamage(damage_table)
+
+	-- -- Add to list of targets allrdy hit.
+	-- local hit_list = {}
+	-- hit_list[target] = 1
+
+	-- Timers:CreateTimer(jump_delay, function() 
+		-- -- Find targets to chain too
+		-- for _,enemy in pairs(nearby_enemy_units) do 
+			-- if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy and ((not enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= radius) or (enemy:HasModifier("modifier_imba_zuus_static_charge") and (enemy:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= radius * static_chain_mult)) then
+				-- imba_zuus_arc_lightning:Chain(caster, target, enemy, ability, damage, radius, jump_delay, max_jump_count, 0, hit_list, static_chain_mult)
+				-- -- Abort when we find something to chain too
+				-- break
+			-- end
+		-- end
+	-- end)
+-- end
+
+-- function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
+	-- if IsServer() then 
+		-- num_jumps_done 			 = num_jumps_done + 1
+		-- if hit_list[chained_target] == nil then
+			-- hit_list[chained_target] = 1	
+		-- else
+			-- hit_list[chained_target] = hit_list[chained_target] + 1
+		-- end
+
+		-- -- print("num_jumps_done", num_jumps_done, chained_target, hit_list[chained_target])
+
+		-- origin_target:EmitSound("Hero_Zuus.ArcLightning.Target")
+
+		-- local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, origin_target)
+		-- ParticleManager:SetParticleControl(lightningBolt, 0, Vector(origin_target:GetAbsOrigin().x, origin_target:GetAbsOrigin().y , origin_target:GetAbsOrigin().z + origin_target:GetBoundingMaxs().z ))   
+		-- ParticleManager:SetParticleControl(lightningBolt, 1, Vector(chained_target:GetAbsOrigin().x, chained_target:GetAbsOrigin().y, chained_target:GetAbsOrigin().z + chained_target:GetBoundingMaxs().z ))
+
+		-- local nearby_enemy_units = FindUnitsInRadius(	
+			-- caster:GetTeam(), 
+			-- chained_target:GetAbsOrigin(), 
+			-- nil, 
+			-- radius, 
+			-- DOTA_UNIT_TARGET_TEAM_ENEMY, 
+			-- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			-- --DOTA_UNIT_TARGET_FLAG_NONE, 
+			-- DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+			-- FIND_CLOSEST, 
+			-- false
+		-- )
+
+		-- --7.21 changes (why you gotta complicate things Valve)
+		-- if caster:HasModifier("modifier_imba_zuus_static_field") then
+			-- caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(chained_target)
+		-- end
+
+		-- local damage_table 			= {}
+		-- damage_table.attacker 		= caster
+		-- damage_table.ability 		= ability
+		-- damage_table.damage_type 	= ability:GetAbilityDamageType() 
+		-- damage_table.damage			= damage
+		-- damage_table.victim 		= chained_target
+		-- ApplyDamage(damage_table)
+
+		-- if num_jumps_done < max_jump_count then
+			-- Timers:CreateTimer(jump_delay, function() 
+				-- local has_chained = false
+				-- -- Find targets to chain to
+				-- for _,enemy in pairs(nearby_enemy_units) do 
+					-- if origin_target ~= enemy and chained_target ~= enemy then
+						-- if imba_zuus_arc_lightning:HitCheck(caster, enemy, hit_list) then 
+							-- imba_zuus_arc_lightning:Chain(caster, chained_target, enemy, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
+							-- has_chained = true
+						-- end
+
+						-- -- Abort when we find something to chain too
+						-- break
+					-- end
+				-- end
+
+				-- -- If there are no targets left to chain to... but we have not hit max_jump cap...
+				-- if (#nearby_enemy_units == 0 or has_chained == false) then 
+					-- -- Get list of all heroes!
+					-- local heroes = HeroList:GetAllHeroes() 
+					-- local dist_ref = {
+						-- hero = nil,
+						-- -- Let's try and make this a bit more reasonable
+						-- distance = radius * static_chain_mult
+					-- }
+
+					-- -- Check if any of them heroes have a static charge... (and havent been hit yet)
+					-- for _,hero in pairs(heroes) do 
+						-- if hero:HasModifier("modifier_imba_zuus_static_charge") and origin_target ~= hero and chained_target ~= hero and hero:GetTeamNumber() ~= caster:GetTeamNumber() then
+							-- if imba_zuus_arc_lightning:HitCheck(caster, hero, hit_list) then 
+							-- -- Get the closest one!
+								-- local distance = (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D()
+								-- if distance < dist_ref.distance then 
+									-- dist_ref.hero = hero
+									-- dist_ref.distance = distance
+								-- end
+							-- end
+						-- end
+					-- end
+
+					-- -- Did we find an enemy?
+					-- if dist_ref.hero ~= nil then
+						-- imba_zuus_arc_lightning:Chain(caster, chained_target, dist_ref.hero, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
+					-- end
+				-- end
+			-- end)
+		-- end
+	-- end
+-- end
+
+-- function imba_zuus_arc_lightning:HitCheck(caster, enemy, hit_list)
+	-- if IsServer() then
+		-- if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() then 
+			-- if hit_list[enemy] == nil then
+				-- return true
+			-- end
+
+			-- if caster:HasTalent("special_bonus_imba_zuus_8") then 
+				-- -- print(caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits"))
+				-- if hit_list[enemy] < caster:FindTalentValue("special_bonus_imba_zuus_8", "additional_hits") then
+					-- return true
+				-- end
+			-- end
+		-- end
+
+		-- return false
+	-- end
+-- end
 
 
 
@@ -377,14 +539,14 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		elseif target ~= nil and target:GetTeam() ~= caster:GetTeam() then
 			
 			if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() then
-				local static_charge_modifier = target:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0})
+				local static_charge_modifier = target:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0 * (1 - target:GetStatusResistance())})
 				
 				if static_charge_modifier ~= nil then 
 					static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + ability:GetSpecialValueFor("static_charge_stacks"))
 				end
 			end
 				
-			target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+			target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 			if caster:HasTalent("special_bonus_imba_zuus_5") then 
 				local root_duration = 0.5
@@ -392,9 +554,8 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 				if thundergod_focus_modifier ~= nil then 
 					root_duration = 0.5 + (thundergod_focus_modifier:GetStackCount() * 0.25)
 				end
-
-				print("Root duration:", root_duration)
-				target:AddNewModifier(caster, ability, "modifier_rooted", {duration = root_duration})
+				
+				target:AddNewModifier(caster, ability, "modifier_rooted", {duration = root_duration * (1 - target:GetStatusResistance())})
 			end
 
 			--7.21 changes (why you gotta complicate things Valve)
@@ -582,7 +743,7 @@ function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 					ApplyDamage(damage_table)
 
 					-- Add a static charge 
-					local static_charge_modifier = unit:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration})
+					local static_charge_modifier = unit:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration * (1 - unit:GetStatusResistance())})
 					if static_charge_modifier ~= nil then
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)	
 					end
@@ -619,10 +780,9 @@ function modifier_imba_zuus_static_field:Apply(target)
 	ApplyDamage(damage_table)
 
 	-- Add a static charge 
-	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration})
+	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration * (1 - target:GetStatusResistance())})
 	if static_charge_modifier then
 		static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
-		static_charge_modifier:SetDuration(duration * (1 - target:GetStatusResistance()), true)
 	end
 end
 
@@ -631,7 +791,10 @@ end
 ------------------------------------------------------
 LinkLuaModifier("modifier_imba_zuus_static_charge", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_static_charge = class({})
-function modifier_imba_zuus_static_charge:IsDebuff() return true end
+
+function modifier_imba_zuus_static_charge:IsHidden()	return self:GetStackCount() <= 0 end
+function modifier_imba_zuus_static_charge:IsDebuff()	return true end
+
 function modifier_imba_zuus_static_charge:OnCreated()
 	local caster = self:GetCaster()
 	self.reduced_magic_resistance 	= self:GetAbility():GetSpecialValueFor("reduced_magic_resistance")
@@ -648,11 +811,9 @@ function modifier_imba_zuus_static_charge:GetTexture()
 end
 
 function modifier_imba_zuus_static_charge:DeclareFunctions()
-	decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_zuus_static_charge:CheckState()
@@ -1208,7 +1369,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 				-- Does not apply the static charge stacks on heroes that are greater than 2500 distance away
 				if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() and (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() <= 2500 then
 					-- Add static charges prior to inflicting the damage
-					local static_charge_modifier = hero:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0})
+					local static_charge_modifier = hero:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0 * (1 - hero:GetStatusResistance())})
 					
 					if static_charge_modifier ~= nil then
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
@@ -1250,7 +1411,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 				hero:EmitSound("Hero_Zuus.GodsWrath.Target")
 				hero:AddNewModifier(caster, ability, "modifier_imba_zuus_lightning_fow", {duration = sight_duration, radius = true_sight_radius})
 				
-				local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})
+				local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration * (1 - hero:GetStatusResistance())})
 				if true_sight ~= nil then
 					true_sight:SetStackCount(true_sight_radius)
 				end
@@ -1357,7 +1518,7 @@ LinkLuaModifier("modifier_imba_zuus_thundergods_awakening", "components/abilitie
 modifier_imba_zuus_thundergods_awakening = class({})
 function modifier_imba_zuus_thundergods_awakening:IsHidden() 	return false end
 function modifier_imba_zuus_thundergods_awakening:IsBuff() 		return true end
-function modifier_imba_zuus_thundergods_awakening:IsPurgable() 	return false end
+-- function modifier_imba_zuus_thundergods_awakening:IsPurgable() 	return false end
 function modifier_imba_zuus_thundergods_awakening:OnCreated()
 	if IsServer() then 
 		--self.static_field = ParticleManager:CreateParticle("particles/hero/zeus/awakening_zuus_static_field.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
@@ -1426,6 +1587,31 @@ function modifier_imba_zuus_thundergods_awakening:OnRemoved()
 		ParticleManager:DestroyParticle(self.static_field, true)
 	end
 end
+
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_zuus_4", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_zuus_9", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_zuus_8", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_zuus_4	= modifier_special_bonus_imba_zuus_4 or class({})
+modifier_special_bonus_imba_zuus_9	= modifier_special_bonus_imba_zuus_9 or class({})
+modifier_special_bonus_imba_zuus_8	= modifier_special_bonus_imba_zuus_8 or class({})
+
+function modifier_special_bonus_imba_zuus_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_zuus_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_zuus_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_zuus_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_zuus_8:RemoveOnDeath() 	return false end
 
 -- Client-side helper functions --
 

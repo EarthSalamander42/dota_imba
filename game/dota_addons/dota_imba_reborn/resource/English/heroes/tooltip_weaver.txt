@@ -37,7 +37,7 @@
 "DOTA_Tooltip_ability_imba_weaver_time_lapse_Lore"						"If Skitskurr does not deem the current reality of the world to fit his desires, he simply crawls back in time to right what was wronged."
 "DOTA_Tooltip_ability_imba_weaver_time_lapse_Note0"						"Removes most negative buffs from Weaver."
 "DOTA_Tooltip_ability_imba_weaver_time_lapse_Note1"						"Time Lapse disjoints projectiles."
-"DOTA_Tooltip_ability_imba_weaver_time_lapse_aghanim_description"		"Reduces cooldown, and allows Weaver to cast Time Lapse on an ally.\n<font color='#FF7800'>IMBA:</font> Time Lapse can also be cast on enemies."
+"DOTA_Tooltip_ability_imba_weaver_time_lapse_aghanim_description"		"Reduces cooldown, and allows Weaver to cast Time Lapse on an ally <font color='#FF7800'>or enemy</font>."
 
 "DOTA_Tooltip_modifier_imba_weaver_the_swarm_debuff"						"Swarm"
 "DOTA_Tooltip_modifier_imba_weaver_the_swarm_debuff_Description"			"Doing damage and reducing armor by %2fMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."

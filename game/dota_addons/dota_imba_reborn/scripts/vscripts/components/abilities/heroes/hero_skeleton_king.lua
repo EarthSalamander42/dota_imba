@@ -147,7 +147,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 		end
 
 		if caster:HasTalent("special_bonus_imba_skeleton_king_3") then
-			target:AddNewModifier(caster, ability, "modifier_imba_wraithfire_blast_debuff_talent", {duration = caster:FindTalentValue("special_bonus_imba_skeleton_king_3", "duration")})
+			target:AddNewModifier(caster, ability, "modifier_imba_wraithfire_blast_debuff_talent", {duration = caster:FindTalentValue("special_bonus_imba_skeleton_king_3", "duration") * (1 - target:GetStatusResistance())})
 		end
 
 		-- If it was a main blast, deal damage
@@ -161,7 +161,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 		ApplyDamage(damageTable)
 
 		-- Main stun the target
-		target:AddNewModifier(caster, ability, modifier_stun, {duration = main_target_stun_duration})
+		target:AddNewModifier(caster, ability, modifier_stun, {duration = main_target_stun_duration * (1 - target:GetStatusResistance())})
 		
 		-- IMBAfication: Behond the Wraith!
 		if extra_data.bTalent == 0 then
@@ -185,7 +185,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 
 	else
 		-- Otherwise, stun for short duration
-		target:AddNewModifier(caster, ability, modifier_stun, {duration = secondary_target_stun_duration})
+		target:AddNewModifier(caster, ability, modifier_stun, {duration = secondary_target_stun_duration * (1 - target:GetStatusResistance())})
 	end
 
 	-- If the enemy died, play the cast response
@@ -196,7 +196,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 	end)
 
 	-- Apply the debuff on the enemy
-	target:AddNewModifier(caster, ability, modifier_debuff, {duration = debuff_duration})
+	target:AddNewModifier(caster, ability, modifier_debuff, {duration = debuff_duration * (1 - target:GetStatusResistance())})
 
 	-- #7 Talent: Wraithfire Blast now summons Wraiths on all targets hit
 	if caster:HasTalent("special_bonus_imba_skeleton_king_7") and not bTalent then
@@ -303,10 +303,10 @@ function modifier_imba_wraithfire_blast_debuff:OnIntervalThink()
 end
 
 function modifier_imba_wraithfire_blast_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-					  MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_wraithfire_blast_debuff:GetModifierMoveSpeedBonus_Percentage()
@@ -523,6 +523,7 @@ function modifier_imba_vampiric_aura_buff:OnCreated()
 	self.caster_heal = self.ability:GetSpecialValueFor("caster_heal")
 	self.heal_delay = self.ability:GetSpecialValueFor("heal_delay")
 	self.damage	= self.ability:GetSpecialValueFor("damage")
+	self.self_bonus	= self.ability:GetSpecialValueFor("self_bonus")
 end
 
 function modifier_imba_vampiric_aura_buff:OnRefresh()
@@ -592,6 +593,11 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
 				-- Calculate lifesteal and heal the attacker
 				heal_amount = damage * lifesteal_pct * 0.01
+				
+				if self.parent == self.caster then
+					heal_amount = heal_amount * self.self_bonus
+				end
+				
 				self.parent:Heal(heal_amount, self.caster)
 
 			-- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
@@ -612,6 +618,11 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
 				-- Calculate lifesteal and heal the attacker
 				heal_amount = damage * self.spellsteal_pct * 0.01
+				
+				if self.parent == self.caster then
+					heal_amount = heal_amount * self.self_bonus
+				end
+				
 				self.parent:Heal(heal_amount, self.caster)
 			end
 
@@ -1073,18 +1084,15 @@ function modifier_imba_mortal_strike_buff:OnRefresh()
 end
 
 function modifier_imba_mortal_strike_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_HEALTH_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_HEALTH_BONUS}
 end
 
 function modifier_imba_mortal_strike_buff:GetModifierHealthBonus()
 	if self.caster:IsIllusion() then
 		return nil
 	end
-
-	local stacks = self:GetStackCount()
-	return stacks * self.stack_value
+	
+	return self:GetStackCount() * self.stack_value
 end
 
 
@@ -1226,7 +1234,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 	local unit = OnDeathKeys.unit
 	local reincarnate = OnDeathKeys.reincarnate
 	-- Check if it was a reincarnation death
-	if reincarnate and (not BuffInfo.caster:HasModifier("modifier_item_imba_aegis")) then
+	if reincarnate then -- and (not BuffInfo.caster:HasModifier("modifier_item_imba_aegis")) then
 		BuffInfo.reincarnation_death = true
 
 		-- Use the Reincarnation's ability cooldown
@@ -1371,12 +1379,12 @@ function modifier_imba_reincarnation:OnRefresh()
 end
 
 function modifier_imba_reincarnation:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_REINCARNATION,                      
-					  MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-					  MODIFIER_EVENT_ON_DEATH,
-					  MODIFIER_PROPERTY_RESPAWNTIME_STACKING}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_REINCARNATION,                      
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_PROPERTY_RESPAWNTIME_STACKING
+	}
 end
 
 function modifier_imba_reincarnation:ReincarnateTime()
@@ -1846,7 +1854,7 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
 		-- If this is a real hero, stun and deal damage to it
 		if self.parent:IsRealHero() then
 
-			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
+			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration * (1 - self.parent:GetStatusResistance())})
 
 			local damageTable = {victim = self.parent,
 								 attacker = self.caster, 
@@ -1923,7 +1931,7 @@ function imba_wraith_king_create_kingdom(keys)
 									 false)
 
 	for _,enemy_unit in pairs(enemy_units) do
-				enemy_unit:AddNewModifier(keys.caster, keys.ability, keys.modifier_slow, {duration = keys.slow_duration})
+		enemy_unit:AddNewModifier(keys.caster, keys.ability, keys.modifier_slow, {duration = keys.slow_duration * (1 - enemy_unit:GetStatusResistance())})
 	end
 
 	-- Play the Wraith Fire ring particle
@@ -1946,7 +1954,8 @@ end
 --------------------------------
 imba_wraith_king_wraith_soul_strike = class({})
 LinkLuaModifier("modifier_imba_wraith_soul_strike", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
-LinkLuaModifier("modifier_imba_wraith_soul_strike_slow", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
+LinkLuaModifier("modifier_imba_wraith_soul_strike_slow", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wraith_soul_strike_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_wraith_soul_strike:GetAbilityTextureName()
    return "ghost_frost_attack"
@@ -1972,14 +1981,18 @@ function modifier_imba_wraith_soul_strike:OnCreated()
 
 		-- Set starting stack count
 		self:SetStackCount(self.wraiths_attacks)
+		
+		if self.owner:HasTalent("special_bonus_imba_skeleton_king_4") then
+			self:GetParent():AddNewModifier(self.owner, self:GetAbility(), "modifier_imba_wraith_soul_strike_talent", {})
+		end
 	end
 end
 
 function modifier_imba_wraith_soul_strike:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK,
-					  MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_wraith_soul_strike:OnAttack(keys)
@@ -2033,7 +2046,7 @@ function modifier_imba_wraith_soul_strike:OnAttackLanded(keys)
 		if self.owner:HasTalent("special_bonus_imba_skeleton_king_4") then
 			local duration = self.owner:FindTalentValue("special_bonus_imba_skeleton_king_4", "duration")
 
-			target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = duration})
+			target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = duration * (1 - target:GetStatusResistance())})
 		end
 	end
 end
@@ -2053,7 +2066,7 @@ function modifier_imba_wraith_soul_strike_slow:OnCreated()
 		self.ms_slow_pct = self.owner:FindTalentValue("special_bonus_imba_skeleton_king_4", "ms_slow_pct")
 
 		-- Set server count
-		self:SetStackCount(self.ms_slow_pct)
+		self:SetStackCount(self.ms_slow_pct * (-1))
 
 		self.ability:SetRefCountsModifiers(true)
 	end
@@ -2064,23 +2077,57 @@ function modifier_imba_wraith_soul_strike_slow:IsPurgable() return false end
 function modifier_imba_wraith_soul_strike_slow:IsDebuff() return true end
 
 function modifier_imba_wraith_soul_strike_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
 function modifier_imba_wraith_soul_strike_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetStackCount() * (-1)
+	return self:GetStackCount()
 end
+
+---------------------------------------------
+-- MODIFIER_IMBA_WRAITH_SOUL_STRIKE_TALENT --
+---------------------------------------------
+
+-- This is just to display the wraith has the slowing talent, as requested by Flat...
+
+modifier_imba_wraith_soul_strike_talent	= modifier_imba_wraith_soul_strike_talent or class({})
+
+function modifier_imba_wraith_soul_strike_talent:IsPurgable()	return false end
 
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_1", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_4", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_9", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_10", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_skeleton_king_1		= modifier_special_bonus_imba_skeleton_king_1 or class({})
+modifier_special_bonus_imba_skeleton_king_4		= modifier_special_bonus_imba_skeleton_king_4 or class({})
+modifier_special_bonus_imba_skeleton_king_9		= modifier_special_bonus_imba_skeleton_king_9 or class({})
+modifier_special_bonus_imba_skeleton_king_10	= modifier_special_bonus_imba_skeleton_king_10 or class({})
+
+function modifier_special_bonus_imba_skeleton_king_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_1:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skeleton_king_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skeleton_king_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skeleton_king_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_10:RemoveOnDeath() 	return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_6", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_skeleton_king_6	= modifier_special_bonus_imba_skeleton_king_6 or class({})
 
-function modifier_special_bonus_imba_skeleton_king_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_skeleton_king_6:IsHidden() 		return true end
 function modifier_special_bonus_imba_skeleton_king_6:IsPurgable() 		return false end
 function modifier_special_bonus_imba_skeleton_king_6:RemoveOnDeath() 	return false end

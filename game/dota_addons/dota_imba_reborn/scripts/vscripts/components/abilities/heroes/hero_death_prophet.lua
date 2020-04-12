@@ -44,13 +44,13 @@ function imba_death_prophet_silence:OnSpellStart()
 		ParticleManager:SetParticleControl(pfx, 0, enemy:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(pfx)
 
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_death_prophet_silence", {duration = self:GetDuration()}):SetDuration(self:GetDuration() * (1 - enemy:GetStatusResistance()), true)
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_death_prophet_silence", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
 	end
 end
 
------------------------------
--- DIABOLIC EDICT MODIFIER --
------------------------------
+-----------------------------------------
+-- MODIFIER_IMBA_DEATH_PROPHET_SILENCE --
+-----------------------------------------
 
 modifier_imba_death_prophet_silence = class({})
 

@@ -168,7 +168,12 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
 		if bounces_left > 0 and target:IsRealHero() then
 			should_branch = true
 		end
-	end    
+	end
+
+	-- If target has Linken's Sphere off cooldown, do nothing
+	if self:GetSpecialValueFor("max_bounces_per_cast") == extra_data.bounces_left and target:TriggerSpellAbsorb(self) then
+		return nil
+	end
 	
 	-- If it can bounce, start a timer and look for bounce target
 	if should_branch then
@@ -251,24 +256,12 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
 		end)
 	end
 	
-	-- If target has magic immunity, do nothing
-	if target:IsMagicImmune() then
-		return nil
-	end
-
-	-- If target has Linken's Sphere off cooldown, do nothing
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
-		end
-	end     
-	
 	-- Immediately apply stun
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
 	
 	-- #7 Talent: Earth Spikes slows target by 25% and they take 30% more damage from Finger of Death
 	if caster:HasTalent("special_bonus_imba_lion_7") then
-	target:AddNewModifier(caster, ability, modifier_death_spike, {duration = knock_up_time + caster:FindTalentValue("special_bonus_imba_lion_7","duration")})
+		target:AddNewModifier(caster, ability, modifier_death_spike, {duration = (knock_up_time + caster:FindTalentValue("special_bonus_imba_lion_7","duration")) * (1 - target:GetStatusResistance())})
 	end
 
 	
@@ -279,8 +272,8 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
 		center_x = target.x,
 		center_y = target.y,
 		center_z = target.z,
-		duration = knock_up_time,
-		knockback_duration = knock_up_time,
+		duration = knock_up_time * (1 - target:GetStatusResistance()),
+		knockback_duration = knock_up_time * (1 - target:GetStatusResistance()),
 		knockback_distance = 0,
 		knockback_height = knock_up_height
 	}
@@ -406,7 +399,7 @@ function imba_lion_hex:OnSpellStart()
 			ParticleManager:ReleaseParticleIndex(particle_hex_fx)
 			
 			-- Transform your enemy into a frog
-			target:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+			target:AddNewModifier(caster, ability, modifier_hex, {duration = duration * (1 - target:GetStatusResistance())})
 		end
 	else
 		target = self:GetCursorPosition()
@@ -429,7 +422,7 @@ function imba_lion_hex:OnSpellStart()
 			ParticleManager:SetParticleControl(particle_hex_fx, 0, enemy:GetAbsOrigin())      
 			ParticleManager:ReleaseParticleIndex(particle_hex_fx)
 			
-			enemy:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(caster, ability, modifier_hex, {duration = duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 end
@@ -527,7 +520,7 @@ function modifier_imba_lion_hex:OnIntervalThink()
 				ParticleManager:ReleaseParticleIndex(self.particle_hex_fx)
 
 				-- Give it the hex modifier
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_hex, {duration = self.duration})                
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_hex, {duration = self.duration * (1 - enemy:GetStatusResistance())})
 
 				-- Increment count
 				hexed_enemies = hexed_enemies + 1
@@ -732,7 +725,7 @@ function imba_lion_mana_drain:OnSpellStart()
 			-- If there are any enemies, apply debuff modifier to them for the duration of the interval
 			if #enemies > 0 then
 				for _,enemy in pairs(enemies) do
-					enemy:AddNewModifier(caster, ability, modifier_manadrain, {duration = interval*2})                    
+					enemy:AddNewModifier(caster, ability, modifier_manadrain, {duration = interval*2})
 				end
 
 				return interval
@@ -1303,7 +1296,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 			return nil
 		end
 
-		target:AddNewModifier(caster, ability, "modifier_imba_finger_of_death_delay", {duration = kill_grace_duration})
+		target:AddNewModifier(caster, ability, "modifier_imba_finger_of_death_delay", {duration = kill_grace_duration * (1 - target:GetStatusResistance())})
 		
 		-- Play impact sound
 		EmitSoundOn(sound_impact, target)
@@ -1381,10 +1374,6 @@ end
 modifier_imba_finger_of_death_delay = class({})
 function modifier_imba_finger_of_death_delay:IsPurgable() 		return false end
 
--- function modifier_imba_finger_of_death_delay:OnCreated()
-	-- print("delay created.")
--- end
-
 function modifier_imba_finger_of_death_delay:OnRemoved()
 	if not IsServer() then return end
 	if not self:GetParent():IsAlive() and (self:GetParent():IsRealHero() or self:GetParent():IsClone()) and (not self:GetParent().IsReincarnating or (self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating())) then
@@ -1418,6 +1407,43 @@ end
 function modifier_imba_finger_of_death_counter:OnTooltip()
 	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("damage_per_kill")
 end
+
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_lion_3", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_5", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_8", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_7", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_2", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lion_3	= modifier_special_bonus_imba_lion_3 or class({})
+modifier_special_bonus_imba_lion_5	= modifier_special_bonus_imba_lion_5 or class({})
+modifier_special_bonus_imba_lion_8	= modifier_special_bonus_imba_lion_8 or class({})
+modifier_special_bonus_imba_lion_7	= modifier_special_bonus_imba_lion_7 or class({})
+modifier_special_bonus_imba_lion_2	= modifier_special_bonus_imba_lion_2 or class({})
+
+function modifier_special_bonus_imba_lion_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lion_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lion_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lion_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_lion_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_2:RemoveOnDeath() 	return false end
 
 -- Client-side helper functions --
 

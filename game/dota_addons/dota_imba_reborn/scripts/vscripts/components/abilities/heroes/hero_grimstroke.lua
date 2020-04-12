@@ -228,7 +228,7 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 		-- "Stroke of Fate first applies the damage, then the debuff."
 		local damageTable = {
 			victim 			= target,
-			damage 			= (self:GetSpecialValueFor("damage") + (self:GetSpecialValueFor("bonus_damage_per_target") * EntIndexToHScript(data.stroke_dummy).hit_units)) * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_grimstroke_stroke_of_fate_damage"), 1),
+			damage 			= (self:GetSpecialValueFor("damage") + (self:GetSpecialValueFor("bonus_damage_per_target") * EntIndexToHScript(data.stroke_dummy).hit_units)) * math.max(1 + (self:GetCaster():FindTalentValue("special_bonus_imba_grimstroke_stroke_of_fate_damage") * 0.01), 1),
 			damage_type		= self:GetAbilityDamageType(),
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			attacker 		= self:GetCaster(),
@@ -240,16 +240,12 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 		-- Increment the amount of hit units to deal more damage against further targets
 		EntIndexToHScript(data.stroke_dummy).hit_units = EntIndexToHScript(data.stroke_dummy).hit_units + 1
 		
-		local slow_debuff = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_dark_artistry_slow", {duration = self:GetSpecialValueFor("slow_duration")})
-		
-		if slow_debuff then
-			slow_debuff:SetDuration(self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance()), true)
-		end
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_grimstroke_dark_artistry_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance())})
 		
 		if data.bPrimary == 1 then
 			-- IMBAfication: Your Stain Spreads
 			if EntIndexToHScript(data.stroke_dummy).hit_units == 1 then
-				local counter = 0
+				-- local counter = 0
 			
 				local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetSpecialValueFor("stain_spread_max_distance"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_FARTHEST, false)
 
@@ -257,17 +253,17 @@ function imba_grimstroke_dark_artistry:OnProjectileHit_ExtraData(target, locatio
 					-- Using vanilla Soulbind modifier name for now
 					-- if target ~= enemy and ((target:GetAbsOrigin() - enemy:GetAbsOrigin()):Length2D() >= self:GetSpecialValueFor("stain_spread_min_distance") or (target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()))) then
 					
-					if target ~= enemy and target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
+					if target ~= enemy and target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) and enemy:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
 					
 						self:Stroke(target:GetAbsOrigin(), enemy:GetAbsOrigin(), false)
 						
-						if not target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
-							counter = counter + 1
-						end
+						-- if not target:FindModifierByNameAndCaster("modifier_grimstroke_soul_chain", self:GetCaster()) then
+							-- counter = counter + 1
+						-- end
 						
-						if counter >= self:GetSpecialValueFor("stain_spread_max_units") then
-							break
-						end
+						-- if counter >= self:GetSpecialValueFor("stain_spread_max_units") then
+							-- break
+						-- end
 					end
 				end
 			end
@@ -531,16 +527,12 @@ function imba_grimstroke_ink_creature:OnProjectileHit_ExtraData(target, location
 				target:EmitSound("Hero_Grimstroke.InkCreature.Attach")
 
 				-- Apply the silence modifier
-				local individual_modifier = target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature", 
+				target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature", 
 					{
-						duration 			= self:GetSpecialValueFor("latch_duration"),
+						duration 			= self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()),
 						latched_unit_offset	= self:GetSpecialValueFor("latched_unit_offset"),
 						ink_unit_entindex	= data.ink_unit_entindex
 					})
-				
-				if individual_modifier then
-					individual_modifier:SetDuration(self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()), true)
-				end
 				
 				-- Check the ink creature's own handler modifier
 				local ink_modifier	= EntIndexToHScript(data.ink_unit_entindex):FindModifierByNameAndCaster("modifier_imba_grimstroke_ink_creature_thinker", self:GetCaster())
@@ -551,14 +543,10 @@ function imba_grimstroke_ink_creature:OnProjectileHit_ExtraData(target, location
 				end
 				
 				-- Apply the silence counting modifier
-				local counter_modifier = target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature_debuff", 
+				target:AddNewModifier(EntIndexToHScript(data.ink_unit_entindex), self, "modifier_imba_grimstroke_ink_creature_debuff", 
 					{
-						duration 			= self:GetSpecialValueFor("latch_duration"),
+						duration 			= self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()),
 					})
-				
-				if counter_modifier then
-					counter_modifier:SetDuration(self:GetSpecialValueFor("latch_duration") * (1 - target:GetStatusResistance()), true)
-				end
 			end
 		else
 			-- Refresh cooldown
@@ -877,6 +865,20 @@ end
 -- INK SWELL --
 ---------------
 
+function imba_grimstroke_spirit_walk:CastFilterResultTarget(target)
+	if target:HasModifier("modifier_imba_grimstroke_ink_gods_incarnation") then
+		return UF_FAIL_CUSTOM
+	end
+	
+	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
+end
+
+function imba_grimstroke_spirit_walk:GetCustomCastErrorTarget(target)
+	if target:HasModifier("modifier_imba_grimstroke_ink_gods_incarnation") then
+		return "#dota_hud_error_target_has_ink_gods_incarnation"
+	end
+end
+
 function imba_grimstroke_spirit_walk:OnSpellStart()
 	-- Yes, this is needed so we don't get Soulbind errors (cause self:GetCursorTarget() goes nil on the duplication)
 	local target = self:GetCursorTarget()
@@ -1064,23 +1066,19 @@ function modifier_imba_grimstroke_spirit_walk_buff:OnDestroy()
 				ApplyDamage(damageTable)
 				
 				if not ink_gods_incarnation_modifier or (ink_gods_incarnation_modifier and ink_gods_incarnation_modifier.stunned and not ink_gods_incarnation_modifier.stunned[enemy]) then
-					local debuff_modifier	= enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_spirit_walk_debuff", {duration = (self.max_stun / self.total_ticks) * self.counter})
-					
-					if debuff_modifier then
-						debuff_modifier:SetDuration(((self.max_stun / self.total_ticks) * self.counter) * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_grimstroke_spirit_walk_debuff", {duration = ((self.max_stun / self.total_ticks) * self.counter) * (1 - enemy:GetStatusResistance())})
 					
 					stunned_table[enemy] = true
 				end
-				
-				if ink_gods_incarnation_modifier then
-					ink_gods_incarnation_modifier.stunned = stunned_table
-				end
-				
-				-- Clear the temp table after sending it to the other modifier
-				stunned_table = {}
 			end
 		end
+		
+		if ink_gods_incarnation_modifier then
+			ink_gods_incarnation_modifier.stunned = stunned_table
+		end
+		
+		-- Clear the temp table after sending it to the other modifier
+		stunned_table = {}
 	end
 end
 
@@ -1096,12 +1094,10 @@ function modifier_imba_grimstroke_spirit_walk_buff:CheckState()
 end
 
 function modifier_imba_grimstroke_spirit_walk_buff:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_grimstroke_spirit_walk_buff:GetModifierMoveSpeedBonus_Percentage()
@@ -1126,17 +1122,13 @@ end
 -------------------------------
 
 function modifier_imba_grimstroke_spirit_walk_debuff:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	
-	return state
+	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
 function modifier_imba_grimstroke_spirit_walk_debuff:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
     }
-
-    return decFuncs
 end
 
 function modifier_imba_grimstroke_spirit_walk_debuff:GetOverrideAnimation()
@@ -1208,11 +1200,9 @@ function modifier_imba_grimstroke_ink_gods_incarnation:OnDestroy()
 end
 
 function modifier_imba_grimstroke_ink_gods_incarnation:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MODEL_SCALE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_grimstroke_ink_gods_incarnation:GetModifierModelScale()
@@ -1555,9 +1545,36 @@ function modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow:GetModifierMo
 	return self.movement_slow * (-1)
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_grimstroke_ink_swell_max_damage", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_grimstroke_ink_swell_radius", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_grimstroke_ink_swell_max_damage	= modifier_special_bonus_imba_grimstroke_ink_swell_max_damage or class({})
+modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits	= modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits or class({})
+modifier_special_bonus_imba_grimstroke_ink_swell_radius	= modifier_special_bonus_imba_grimstroke_ink_swell_radius or class({})
+modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage	= modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage or class({})
+
+function modifier_special_bonus_imba_grimstroke_ink_swell_max_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_grimstroke_ink_swell_max_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_grimstroke_ink_swell_max_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits:IsHidden() 		return true end
+function modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits:IsPurgable()		return false end
+function modifier_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_grimstroke_ink_swell_radius:IsHidden() 		return true end
+function modifier_special_bonus_imba_grimstroke_ink_swell_radius:IsPurgable()		return false end
+function modifier_special_bonus_imba_grimstroke_ink_swell_radius:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_grimstroke_stroke_of_fate_damage:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_grimstroke_stroke_of_fate_cast_range", "components/abilities/heroes/hero_grimstroke", LUA_MODIFIER_MOTION_NONE)
 

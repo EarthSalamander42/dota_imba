@@ -82,3 +82,5 @@
 "DOTA_Tooltip_modifier_imba_huskar_inner_fire_raze_land_Description"	"Taking periodic damage and gaining Burning Spear stacks."
 
 "DOTA_Tooltip_ability_special_bonus_imba_huskar_life_break_cast_range"	"+400 Life Break Cast Range"
+"DOTA_Tooltip_ability_special_bonus_imba_huskar_pure_burning_spears"	"Burning Spears Pure Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_huskar_pure_burning_spears_Description"	"Pierces Spell Immunity."

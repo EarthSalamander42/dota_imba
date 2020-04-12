@@ -173,8 +173,8 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
          center_x = bump_point.x,
          center_y = bump_point.y,
          center_z = bump_point.z,
-         duration = knockup_duration,
-         knockback_duration = knockup_duration,
+         duration = knockup_duration * (1 - target:GetStatusResistance()),
+         knockback_duration = knockup_duration * (1 - target:GetStatusResistance()),
          knockback_distance = push_distance,
          knockback_height = knockup_height
     }
@@ -183,7 +183,7 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
     target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
 
     -- Stun the target
-    target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+    target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
 
     -- Apply Caustic Finale to heroes, unless they already have it
     if target:IsHero() and not target:IsIllusion() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
@@ -836,7 +836,9 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
         self.particle_explode_fx = ParticleManager:CreateParticle(self.particle_explode, PATTACH_ABSORIGIN, self.parent)
         ParticleManager:SetParticleControl(self.particle_explode_fx, 0, self.parent:GetAbsOrigin())
         ParticleManager:ReleaseParticleIndex(self.particle_explode_fx)
-
+		
+		local slow_modifier = nil
+		 
         -- Find all nearby enemies
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
         self.parent:GetAbsOrigin(),
@@ -867,7 +869,7 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
             end
 
             -- Apply slow
-            enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
+            slow_modifier = enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
         end
     end
 end
@@ -876,12 +878,15 @@ end
 modifier_imba_caustic_finale_debuff = class({})
 
 function modifier_imba_caustic_finale_debuff:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
     -- Ability properties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
 
     -- Ability specials
     self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
+	self.caustic_finale_slow_as	= self:GetAbility():GetSpecialValueFor("caustic_finale_slow_as")
 
     -- #5 Talent: Caustic Finale slow increase
     self.ms_slow_pct = self.ms_slow_pct + self.caster:FindTalentValue("special_bonus_imba_sand_king_5")
@@ -892,18 +897,19 @@ function modifier_imba_caustic_finale_debuff:IsPurgable() return true end
 function modifier_imba_caustic_finale_debuff:IsDebuff() return true end
 
 function modifier_imba_caustic_finale_debuff:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-    return decFuncs
+    return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_caustic_finale_debuff:GetModifierMoveSpeedBonus_Percentage()
     return self.ms_slow_pct * (-1)
 end
 
-
-
-
+function modifier_imba_caustic_finale_debuff:GetModifierAttackSpeedBonus_Constant()
+    return self.caustic_finale_slow_as
+end
 
 -------------------------------
 --         EPICENTER         --
@@ -1098,7 +1104,7 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
             ApplyDamage(damageTable)
 
             -- Apply Epicenter slow
-            enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
+            enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
 			
 			-- Nah too strong
 			-- if self.caster:HasTalent("special_bonus_imba_sand_king_4") then
@@ -1387,6 +1393,8 @@ function modifier_imba_sandking_sand_storm_720_thinker:GetModifierAura()		return
 -----------------------------------------------------
 
 function modifier_imba_sandking_sand_storm_720_thinker_aura:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.ability	= self:GetAbility()
 
 	self.coarse_vision_pct		= self.ability:GetSpecialValueFor("coarse_vision_pct")
@@ -1415,3 +1423,45 @@ end
 function modifier_imba_sandking_sand_storm_720_thinker_aura:GetModifierMiss_Percentage()
   	return self.coarse_miss_pct
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_1", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_2", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_9", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_4", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_6", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sand_king_8", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sand_king_1		= modifier_special_bonus_imba_sand_king_1 or class({})
+modifier_special_bonus_imba_sand_king_2		= modifier_special_bonus_imba_sand_king_2 or class({})
+modifier_special_bonus_imba_sand_king_9		= modifier_special_bonus_imba_sand_king_9 or class({})
+modifier_special_bonus_imba_sand_king_4		= modifier_special_bonus_imba_sand_king_4 or class({})
+modifier_special_bonus_imba_sand_king_6		= modifier_special_bonus_imba_sand_king_6 or class({})
+modifier_special_bonus_imba_sand_king_8		= modifier_special_bonus_imba_sand_king_8 or class({})
+
+function modifier_special_bonus_imba_sand_king_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sand_king_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_sand_king_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_sand_king_8:RemoveOnDeath() 	return false end

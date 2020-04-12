@@ -38,6 +38,10 @@ function imba_troll_warlord_berserkers_rage:OnOwnerSpawned()
 		self:ToggleAbility()
 		-- Yeah, volvo.
 	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_1") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_1"), "modifier_special_bonus_imba_troll_warlord_1", {})
+	end
 end
 
 function imba_troll_warlord_berserkers_rage:OnToggle()
@@ -88,7 +92,7 @@ function imba_troll_warlord_berserkers_rage:OnProjectileHit(hTarget, vLocation)
 		hTarget:EmitSound("n_creep_TrollWarlord.Ensnare")
 		
 		if hTarget:IsAlive() then
-			hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_berserkers_rage_ensnare", {duration = ensnare_duration}):SetDuration(ensnare_duration * (1 - hTarget:GetStatusResistance()), true)
+			hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_berserkers_rage_ensnare", {duration = ensnare_duration * (1 - hTarget:GetStatusResistance())})
 		end
 	end
 end
@@ -172,11 +176,7 @@ function modifier_imba_berserkers_rage_melee:OnAttackLanded( params )
 					local bash_damage = ability:GetSpecialValueFor("bash_damage")
 					local ensnare_duration = ability:GetSpecialValueFor("ensnare_duration")
 					ApplyDamage({victim = params.target, attacker = parent, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-					local bash_modifier = params.target:AddNewModifier(parent, ability, "modifier_stunned", {duration = ensnare_duration})
-					
-					if bash_modifier then
-						bash_modifier:SetDuration(ensnare_duration * (1 - params.target:GetStatusResistance()), true)
-					end
+					params.target:AddNewModifier(parent, ability, "modifier_stunned", {duration = ensnare_duration * (1 - params.target:GetStatusResistance())})
 					
 					params.target:EmitSound("DOTA_Item.SkullBasher")
 				end
@@ -272,7 +272,7 @@ function modifier_imba_berserkers_rage_ranged:OnAttackLanded( params )
 			local ability = self:GetAbility()
 			if RollPseudoRandom(ability:GetSpecialValueFor("ensnare_chance"), ability) then
 				local hamstring_duration = ability:GetSpecialValueFor("hamstring_duration")
-				params.target:AddNewModifier(parent, ability, "modifier_imba_berserkers_rage_slow", {duration = hamstring_duration})
+				params.target:AddNewModifier(parent, ability, "modifier_imba_berserkers_rage_slow", {duration = hamstring_duration * (1 - params.target:GetStatusResistance())})
 				params.target:EmitSound("DOTA_Item.Daedelus.Crit")
 			end
 		end
@@ -437,7 +437,7 @@ function imba_troll_warlord_whirling_axes_ranged:OnProjectileHit_ExtraData(targe
 		if RollPseudoRandom(ExtraData.on_hit_pct, self) then
 			caster:PerformAttack(target, true, true, true, true, false, true, true)
 		end
-		target:AddNewModifier(caster, self, "modifier_imba_whirling_axes_ranged", {duration = ExtraData.duration})
+		target:AddNewModifier(caster, self, "modifier_imba_whirling_axes_ranged", {duration = ExtraData.duration * (1 - target:GetStatusResistance())})
 		target:EmitSound("Hero_TrollWarlord.WhirlingAxes.Target")
 	else
 		self[ExtraData.index]["count"] = self[ExtraData.index]["count"] or 0
@@ -459,14 +459,14 @@ function modifier_imba_whirling_axes_ranged:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_whirling_axes_ranged:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_whirling_axes_ranged:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.slow = self:GetAbility():GetTalentSpecialValueFor("movement_speed") * (-1)
 end
 
@@ -590,7 +590,7 @@ function imba_troll_warlord_whirling_axes_melee:DoAxeStuff(index,range,caster_lo
 		ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 		-- Imbued Axes
 		caster:PerformAttack(enemy, true, true, true, true, false, true, true)
-		enemy:AddNewModifier(caster, self, "modifier_imba_whirling_axes_melee", {duration = blind_duration, blind_stacks = blind_stacks})
+		enemy:AddNewModifier(caster, self, "modifier_imba_whirling_axes_melee", {duration = blind_duration * (1 - enemy:GetStatusResistance()), blind_stacks = blind_stacks})
 		enemy:EmitSound("Hero_TrollWarlord.WhirlingAxes.Target")
 	end
 end
@@ -715,11 +715,9 @@ function modifier_imba_fervor_stacks:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_fervor_stacks:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_fervor_stacks:OnCreated()
@@ -1112,30 +1110,73 @@ end
 
 -- Client-side helper functions
 
+LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_7", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_troll_warlord_7		= modifier_special_bonus_imba_troll_warlord_7 or class({})
+
+function modifier_special_bonus_imba_troll_warlord_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_troll_warlord_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_troll_warlord_7:RemoveOnDeath() 	return false end
+
+LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_1", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_2", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_4", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_5", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_8", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_troll_warlord_5		= class({})
+modifier_special_bonus_imba_troll_warlord_1		= modifier_special_bonus_imba_troll_warlord_1 or class({})
+modifier_special_bonus_imba_troll_warlord_2		= modifier_special_bonus_imba_troll_warlord_2 or class({})
+modifier_special_bonus_imba_troll_warlord_4		= modifier_special_bonus_imba_troll_warlord_4 or class({})
+modifier_special_bonus_imba_troll_warlord_5		= modifier_special_bonus_imba_troll_warlord_5 or class({})
+modifier_special_bonus_imba_troll_warlord_8		= modifier_special_bonus_imba_troll_warlord_5 or class({})
 modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade	= modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade or class({})
 
---------------------------------
--- WHIRLING AXES CD REDUCTION --
---------------------------------
+function modifier_special_bonus_imba_troll_warlord_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_troll_warlord_1:IsPurgable() 		return false end
+function modifier_special_bonus_imba_troll_warlord_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_troll_warlord_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_troll_warlord_2:IsPurgable() 		return false end
+function modifier_special_bonus_imba_troll_warlord_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_troll_warlord_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_troll_warlord_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_troll_warlord_4:RemoveOnDeath() 	return false end
+
 function modifier_special_bonus_imba_troll_warlord_5:IsHidden() 		return true end
 function modifier_special_bonus_imba_troll_warlord_5:IsPurgable() 		return false end
 function modifier_special_bonus_imba_troll_warlord_5:RemoveOnDeath() 	return false end
 
-function imba_troll_warlord_whirling_axes_ranged:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_5") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_5"), "modifier_special_bonus_imba_troll_warlord_5", {})
-	end
-end
+function modifier_special_bonus_imba_troll_warlord_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_troll_warlord_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_troll_warlord_8:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade:IsHidden() 		return true end
 function modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade:IsPurgable() 		return false end
 function modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade:RemoveOnDeath() 	return false end
 
+function imba_troll_warlord_whirling_axes_ranged:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_2") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_2"), "modifier_special_bonus_imba_troll_warlord_2", {})
+	end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_5"), "modifier_special_bonus_imba_troll_warlord_5", {})
+	end
+end
+
+function imba_troll_warlord_fervor:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_4"), "modifier_special_bonus_imba_troll_warlord_4", {})
+	end
+end
+
 function imba_troll_warlord_battle_trance:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_8") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_8"), "modifier_special_bonus_imba_troll_warlord_8", {})
+	end
+
 	if self:GetCaster():HasTalent("special_bonus_imba_troll_warlord_battle_trance_upgrade") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_troll_warlord_battle_trance_upgrade"), "modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade", {})
 	end

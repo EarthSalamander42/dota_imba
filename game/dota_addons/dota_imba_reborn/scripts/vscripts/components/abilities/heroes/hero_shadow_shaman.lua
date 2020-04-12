@@ -110,15 +110,11 @@ function imba_shadow_shaman_ether_shock:OnSpellStart()
 			ApplyDamage(damageTable)
 			
 			-- IMBAfication: Joy Buzzer
-			local joy_buzzer_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_joy_buzzer", {duration = (self:GetSpecialValueFor("joy_buzzer_stun_duration") + self:GetSpecialValueFor("joy_buzzer_off_duration")) * self:GetSpecialValueFor("joy_buzzer_instances") - self:GetSpecialValueFor("joy_buzzer_stun_duration")})
+			local joy_buzzer_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_joy_buzzer", {duration = ((self:GetSpecialValueFor("joy_buzzer_stun_duration") + self:GetSpecialValueFor("joy_buzzer_off_duration")) * self:GetSpecialValueFor("joy_buzzer_instances") - self:GetSpecialValueFor("joy_buzzer_stun_duration")) * (1 - enemy:GetStatusResistance())})
 			
 			-- IMBAfication: Dramatic Entrance
 			if self == self:GetCaster():FindAbilityByName(self:GetName()) and dramatic_passive_modifier and dramatic_passive_modifier.dramatic and dramatic_passive_modifier.dramatic == true then
-				local dramatic_entrance_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_mute", {duration = self:GetSpecialValueFor("dramatic_mute_duration")})
-				
-				if dramatic_entrance_modifier then
-					dramatic_entrance_modifier:SetDuration(self:GetSpecialValueFor("dramatic_mute_duration") * (1 - enemy:GetStatusResistance()), true)
-				end
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_ether_shock_mute", {duration = self:GetSpecialValueFor("dramatic_mute_duration") * (1 - enemy:GetStatusResistance())})
 			end
 		
 			enemies_hit = enemies_hit + 1
@@ -260,11 +256,7 @@ function imba_shadow_shaman_voodoo:OnSpellStart()
 					self:GetCaster():EmitSound("shadowshaman_shad_ability_voodoo_0"..RandomInt(1, 4))
 				end
 				
-				local voodoo_modifier = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration")})
-				
-				if voodoo_modifier then
-					voodoo_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-				end
+				target:AddNewModifier(self:GetCaster(), self, "modifier_imba_shadow_shaman_voodoo", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 			end
 		end
 	else
@@ -312,11 +304,7 @@ function modifier_imba_shadow_shaman_voodoo_handler:OnAttackLanded(keys)
 			keys.target:EmitSound("Hero_ShadowShaman.Hex.Target")
 			keys.target:EmitSound("General.Illusion.Create")
 			
-			local voodoo_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shadow_shaman_voodoo", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks", "value2")})
-		
-			if voodoo_modifier then
-				voodoo_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks", "value2") * (1 - keys.target:GetStatusResistance()), true)
-			end
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shadow_shaman_voodoo", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_parlor_tricks", "value2") * (1 - keys.target:GetStatusResistance())})
 		end
 	end
 end
@@ -934,8 +922,8 @@ function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild, elaps
 	ward:SetHealth(new_hp)
 	
 	-- Update Damage
-	ward:SetBaseDamageMin(ward:GetBaseDamageMin() + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
-	ward:SetBaseDamageMax(ward:GetBaseDamageMax() + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
+	ward:SetBaseDamageMin(self:GetSpecialValueFor("damage_tooltip") + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
+	ward:SetBaseDamageMax(self:GetSpecialValueFor("damage_tooltip") + self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_3"))
 
 	-- Differentiate snake charmer wards
 	if bChild then
@@ -958,19 +946,19 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 	local caster    =   self:GetCaster()
 	local ability   =   self:GetAbility()
 	local parent    =   self:GetParent()
-
+	
+	self.scepter_additional_targets	= ability:GetSpecialValueFor("scepter_additional_targets")
+	
 	self.snake_charmer_creep_count	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_count")
 	self.snake_charmer_hero_count	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_count")
 	
-	snake_charmer_creep_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_bat_reduction_pct")
-	snake_charmer_hero_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_bat_reduction_pct")
+	self.snake_charmer_creep_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_creep_bat_reduction_pct")
+	self.snake_charmer_hero_bat_reduction_pct	= self:GetAbility():GetSpecialValueFor("snake_charmer_hero_bat_reduction_pct")
 
 	-- AGHANIM'S SCEPTER: Wards have more attack range
 	if caster:HasScepter() then
 		self.bonus_range    =   ability:GetSpecialValueFor("scepter_bonus_range")
 	end
-	-- Prevent some recursion with the scepter effect
-	self.main_attack    =   true
 	
 	if not IsServer() then return end
 	-- These things still get stuck sometimes (important for...reasons) so reassess the space again
@@ -1020,46 +1008,32 @@ function modifier_imba_mass_serpent_ward:OnAttackLanded(params) -- health handli
 	end
 end
 
-function modifier_imba_mass_serpent_ward:OnAttack(params)
-	if IsServer() then
-		if params.attacker == self:GetParent() and ability and not ability:IsNull() then
-			-- Ability properties
-			local parent    =   self:GetParent()
-			local caster    =   self:GetCaster()
-			local ability   =   self:GetAbility()
-			-- Ability parameters
-			local max_targets   =  ability:GetSpecialValueFor("scepter_additional_targets")
-
-			-- AGHANIM'S SCEPTER: Ward's attacks split shot
-			if caster:HasScepter() and self.main_attack then
-				self.main_attack = false
-
-				-- Look for a target in the attack range of the ward
-				local enemies = FindUnitsInRadius(parent:GetTeamNumber(),
-					parent:GetAbsOrigin(),
-					nil,
-					parent:Script_GetAttackRange(),
-					DOTA_UNIT_TARGET_TEAM_ENEMY,
-					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
-					DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE +DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-					FIND_ANY_ORDER,
-					false)
-
-				-- "skip" the iteration if the main target was chosen
-				if CheckIfInTable(enemies, params.target, max_targets) then
-					max_targets = max_targets + 1
-				end
-
-				-- Send a attack projectile to the chosen enemies
-				for i=1, max_targets do
-					if enemies[i] ~= params.target and i <= #enemies then
-						parent:PerformAttack(enemies[i], false, true, true, true, true, false, false)
-
-						-- Recursion handling
-						Timers:CreateTimer(FrameTime(), function()
-							self.main_attack = true
-						end)
-					end
+function modifier_imba_mass_serpent_ward:OnAttack(keys)
+	-- AGHANIM'S SCEPTER: Ward's attacks split shot
+	if keys.attacker == self:GetParent() and not keys.no_attack_cooldown and self:GetCaster() and not self:GetCaster():IsNull() and self:GetCaster():HasScepter() then
+		-- Look for a target in the attack range of the ward
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+			self:GetParent():GetAbsOrigin(),
+			nil,
+			self:GetParent():Script_GetAttackRange(),
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+			DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE,
+			FIND_ANY_ORDER,
+			false)
+			
+		local targets_aimed = 0
+		
+		-- Send a attack projectile to the chosen enemies
+		for i = 1, #enemies do
+			if enemies[i] ~= keys.target then
+				-- "Unlike most other instant attacks, the ones from the Serpent Wards do not proc any on-hit effects."
+				self:GetParent():PerformAttack(enemies[i], false, false, true, true, true, false, false)
+				
+				targets_aimed	= targets_aimed + 1
+				
+				if targets_aimed >= self.scepter_additional_targets then
+					break
 				end
 			end
 		end
@@ -1139,9 +1113,36 @@ function modifier_imba_mass_serpent_ward:OnDestroy()
 	end
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_shackles_duration", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_ether_shock_damage", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_3", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_shadow_shaman_shackles_duration	= modifier_special_bonus_imba_shadow_shaman_shackles_duration or class({})
+modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks	= modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks or class({})
+modifier_special_bonus_imba_shadow_shaman_ether_shock_damage	= modifier_special_bonus_imba_shadow_shaman_ether_shock_damage or class({})
+modifier_special_bonus_imba_shadow_shaman_3	= modifier_special_bonus_imba_shadow_shaman_3 or class({})
+
+function modifier_special_bonus_imba_shadow_shaman_shackles_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_shackles_duration:IsPurgable()		return false end
+function modifier_special_bonus_imba_shadow_shaman_shackles_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks:IsPurgable()		return false end
+function modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_shadow_shaman_ether_shock_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_ether_shock_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_shadow_shaman_ether_shock_damage:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_shadow_shaman_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_shadow_shaman_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_shadow_shaman_3:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)

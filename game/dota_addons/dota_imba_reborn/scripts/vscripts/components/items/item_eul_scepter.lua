@@ -31,11 +31,10 @@ end
 
 modifier_item_imba_cyclone = class({})
 
-function modifier_item_imba_cyclone:IsHidden() return true end
-function modifier_item_imba_cyclone:IsPurgable() return false end
-function modifier_item_imba_cyclone:IsDebuff() return false end
-function modifier_item_imba_cyclone:RemoveOnDeath() return false end
-function modifier_item_imba_cyclone:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_cyclone:IsHidden()		return true end
+function modifier_item_imba_cyclone:IsPurgable()		return false end
+function modifier_item_imba_cyclone:RemoveOnDeath()	return false end
+function modifier_item_imba_cyclone:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_cyclone:DeclareFunctions()
 	local funcs = {

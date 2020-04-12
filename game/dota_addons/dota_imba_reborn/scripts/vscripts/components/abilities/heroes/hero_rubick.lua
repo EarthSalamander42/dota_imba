@@ -37,9 +37,9 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 		-- Parameters
 		local maximum_distance
 		if self.target:GetTeam() == caster:GetTeam() then
-			maximum_distance = self:GetSpecialValueFor("ally_range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_rubick_4")
+			maximum_distance = self:GetSpecialValueFor("ally_range") + self:GetCaster():GetCastRangeBonus() + caster:FindTalentValue("special_bonus_imba_rubick_4")
 		else
-			maximum_distance = self:GetSpecialValueFor("enemy_range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_rubick_4")
+			maximum_distance = self:GetSpecialValueFor("enemy_range") + self:GetCaster():GetCastRangeBonus() + caster:FindTalentValue("special_bonus_imba_rubick_4")
 		end
 
 		if self.telekinesis_marker_pfx then
@@ -77,7 +77,7 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 				return nil
 			end
 
-			duration = self:GetSpecialValueFor("enemy_lift_duration")
+			duration = self:GetSpecialValueFor("enemy_lift_duration") * (1 - self.target:GetStatusResistance())
 			self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis_stun", { duration = duration })
 			is_ally = false
 		else
@@ -255,7 +255,7 @@ function modifier_imba_telekinesis:EndTransition()
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), parent_pos, nil, impact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
 			if enemy ~= parent then
-				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = impact_stun_duration})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = impact_stun_duration * (1 - enemy:GetStatusResistance())})
 			end
 			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
 		end
@@ -385,6 +385,10 @@ imba_rubick_fade_bolt = imba_rubick_fade_bolt or class({})
 LinkLuaModifier("modifier_imba_rubick_fade_bolt", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_fade_bolt_break", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
+function imba_rubick_fade_bolt:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_rubick_fade_bolt_cooldown")
+end
+
 function imba_rubick_fade_bolt:OnSpellStart()
 	if IsServer() then
 		local previous_unit = self:GetCaster()
@@ -394,7 +398,9 @@ function imba_rubick_fade_bolt:OnSpellStart()
 		local kaboom = false
 
 		EmitSoundOn("Hero_Rubick.FadeBolt.Cast", self:GetCaster())
-
+		
+		self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_3)
+		
 		-- Start bouncing with bounce delay
 		Timers:CreateTimer(function()
 			-- add entity in a table to not hit it twice!
@@ -459,7 +465,7 @@ function imba_rubick_fade_bolt:OnSpellStart()
 
 			-- turn particle to red if break talent is levelup
 			if self:GetCaster():HasTalent("special_bonus_imba_rubick_3") then
-				current_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_fade_bolt_break", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_rubick_3")})
+				current_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_fade_bolt_break", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_rubick_3") * (1 - current_target:GetStatusResistance())})
 --				self.fade_bolt_particle = "particles/units/heroes/hero_rubick/rubick_fade_bolt_red.vpcf"
 			end
 
@@ -471,7 +477,7 @@ function imba_rubick_fade_bolt:OnSpellStart()
 			-- Play cast sound
 			EmitSoundOn("Hero_Rubick.FadeBolt.Target", current_target)
 
-			current_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_fade_bolt", {duration = self:GetSpecialValueFor("duration")})
+			current_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_fade_bolt", {duration = self:GetSpecialValueFor("duration") * (1 - current_target:GetStatusResistance())})
 			current_target.damaged_by_fade_bolt = true
 
 			-- keep the last hero hit to play the particle for the next bounce
@@ -521,6 +527,12 @@ function modifier_imba_rubick_fade_bolt:GetEffectAttachType()
 end
 
 function modifier_imba_rubick_fade_bolt:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
+	self.hero_attack_damage_reduction	= self:GetAbility():GetSpecialValueFor("hero_attack_damage_reduction") * (-1)
+	self.creep_attack_damage_reduction	= self:GetAbility():GetSpecialValueFor("creep_attack_damage_reduction") * (-1)
+	self.frail_mana_cost_increase_pct	= self:GetAbility():GetSpecialValueFor("frail_mana_cost_increase_pct") * (-1)
+
 	if IsServer() then
 		self.effect_name = "particles/units/heroes/hero_rubick/rubick_fade_bolt_debuff.vpcf"
 
@@ -531,28 +543,30 @@ function modifier_imba_rubick_fade_bolt:OnCreated()
 end
 
 function modifier_imba_rubick_fade_bolt:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING
 	}
-	return funcs
 end
 
 function modifier_imba_rubick_fade_bolt:GetModifierPreAttack_BonusDamage()
-	if self:GetParent():IsHero() or self:GetParent():IsRoshan() then
-		return -self:GetAbility():GetSpecialValueFor("hero_attack_damage_reduction")
+	if self:GetParent():IsHero() or (self:GetParent().IsRoshan and self:GetParent():IsRoshan()) then
+		return self.hero_attack_damage_reduction
 	else
-		return -self:GetAbility():GetSpecialValueFor("creep_attack_damage_reduction")
+		return self.creep_attack_damage_reduction
 	end
+end
+
+function modifier_imba_rubick_fade_bolt:GetModifierPercentageManacostStacking()
+	return self.frail_mana_cost_increase_pct
 end
 
 modifier_imba_rubick_fade_bolt_break = class({})
 
 function modifier_imba_rubick_fade_bolt_break:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_PASSIVES_DISABLED] = true
 	}
-
-	return state
 end
 
 ------------------------------------
@@ -603,7 +617,7 @@ function modifier_imba_rubick_null_field_aura:IsAura() return true end
 function modifier_imba_rubick_null_field_aura:IsAuraActiveOnDeath() return false end
 function modifier_imba_rubick_null_field_aura:IsDebuff() return false end
 function modifier_imba_rubick_null_field_aura:IsHidden() return true end
-function modifier_imba_rubick_null_field_aura:IsPermanent() return true end
+function modifier_imba_rubick_null_field_aura:RemoveOnDeath() return false end
 function modifier_imba_rubick_null_field_aura:IsPurgable() return false end
 
 -- Aura properties
@@ -634,7 +648,7 @@ function modifier_imba_rubick_null_field_aura_debuff:IsAura() return true end
 function modifier_imba_rubick_null_field_aura_debuff:IsAuraActiveOnDeath() return false end
 function modifier_imba_rubick_null_field_aura_debuff:IsDebuff() return false end
 function modifier_imba_rubick_null_field_aura_debuff:IsHidden() return true end
-function modifier_imba_rubick_null_field_aura_debuff:IsPermanent() return true end
+function modifier_imba_rubick_null_field_aura_debuff:RemoveOnDeath() return false end
 function modifier_imba_rubick_null_field_aura_debuff:IsPurgable() return false end
 
 -- Aura properties
@@ -778,14 +792,14 @@ end
 function modifier_imba_rubick_arcane_supremacy:IsHidden()	return true end
 
 function modifier_imba_rubick_arcane_supremacy:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 		
-		MODIFIER_EVENT_ON_ABILITY_EXECUTED
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+		
+		MODIFIER_EVENT_ON_MODIFIER_ADDED
 	}
-
-	return funcs
 end
 
 -- This is innate
@@ -802,16 +816,31 @@ function modifier_imba_rubick_arcane_supremacy:GetModifierStatusResistanceStacki
 	end
 end
 
--- This handles the debuff amplification
-function modifier_imba_rubick_arcane_supremacy:OnAbilityExecuted(keys)
-	if not IsServer() or self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then return end
+-- -- This handles the debuff amplification
+-- function modifier_imba_rubick_arcane_supremacy:OnAbilityExecuted(keys)
+	-- if not IsServer() or self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then return end
 	
-	if keys.unit == self:GetParent() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then		
-		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rubick_arcane_supremacy_debuff", {})
+	-- if keys.unit == self:GetParent() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then		
+		-- keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rubick_arcane_supremacy_debuff", {})
 		
-		Timers:CreateTimer(FrameTime() * 2, function()
-			keys.target:RemoveModifierByNameAndCaster("modifier_imba_rubick_arcane_supremacy_debuff", self:GetCaster())
-		end)
+		-- Timers:CreateTimer(FrameTime() * 2, function()
+			-- keys.target:RemoveModifierByNameAndCaster("modifier_imba_rubick_arcane_supremacy_debuff", self:GetCaster())
+		-- end)
+	-- end
+-- end
+
+-- This handles the debuff amplification (in an extremely jank sense)
+function modifier_imba_rubick_arcane_supremacy:OnModifierAdded(keys)
+	if self:GetAbility() and not self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") and self:GetCaster().GetPlayerID and keys.issuer_player_index == self:GetCaster():GetPlayerID() and keys.unit and keys.unit:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and keys.unit.FindAllModifiers then
+		for _, modifier in pairs(keys.unit:FindAllModifiers()) do
+			if modifier.IsDebuff and modifier:IsDebuff() and modifier:GetDuration() > 0 and (not modifier.IgnoreTenacity or not modifier:IgnoreTenacity()) and ((modifier.GetCaster and modifier:GetCaster() == self:GetCaster()) or (modifier.GetAbility and modifier:GetAbility().GetCaster and modifier:GetAbility():GetCaster() == self:GetCaster())) and GameRules:GetGameTime() - modifier:GetCreationTime() <= FrameTime() then
+				Timers:CreateTimer(FrameTime() * 2, function()
+					if modifier and self and not self:IsNull() and self:GetAbility() then
+						modifier:SetDuration((modifier:GetRemainingTime() * (100 + self:GetAbility():GetSpecialValueFor("status_resistance")) * 0.01) - (FrameTime() * 2), true)
+					end
+				end)
+			end
+		end
 	end
 end
 
@@ -837,11 +866,9 @@ function modifier_imba_rubick_arcane_supremacy_flip_aura:GetModifierAura()		retu
 ------------------------------------
 
 function modifier_imba_rubick_arcane_supremacy_flip:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
 	}
-
-	return funcs
 end
 
 function modifier_imba_rubick_arcane_supremacy_flip:GetModifierSpellAmplify_Percentage()
@@ -859,11 +886,9 @@ function modifier_imba_rubick_arcane_supremacy_debuff:OnCreated()
 end
 
 function modifier_imba_rubick_arcane_supremacy_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
-
-	return funcs
 end
 
 function modifier_imba_rubick_arcane_supremacy_debuff:GetModifierStatusResistanceStacking()
@@ -894,13 +919,11 @@ function modifier_imba_rubick_clandestine_librarian:IsPurgable() return false en
 function modifier_imba_rubick_clandestine_librarian:IsPurgeException() return false end
 
 function modifier_imba_rubick_clandestine_librarian:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_EVENT_ON_DEATH
 	}
-
-	return funcs
 end
 
 function modifier_imba_rubick_clandestine_librarian:OnAbilityFullyCast( keys )
@@ -1054,7 +1077,8 @@ imba_rubick_spellsteal.banned_abilities =
 	"shredder_chakram_2",
 	"shredder_return_chakram",
 	"shredder_return_chakram_2",
-	"monkey_king_wukongs_command"
+	"monkey_king_wukongs_command",
+	"void_spirit_aether_remnant"
 }
 
 --------------------------------------------------------------------------------
@@ -1075,6 +1099,19 @@ function imba_rubick_spellsteal:CastFilterResultTarget( hTarget )
 	if IsServer() then
 		if self:GetLastSpell( hTarget ) == nil then
 			self.failState = "nevercast"
+			return UF_FAIL_CUSTOM
+		end
+		
+		-- Straight up do not allow stealing banned abilities so Rubick doesn't get blank garbage
+		for _, banned_ability in pairs(self.banned_abilities) do
+			if self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == banned_ability then
+				return UF_FAIL_CUSTOM
+			elseif self:GetLastSpell(hTarget).secondarySpell and self:GetLastSpell(hTarget).secondarySpell.GetName and self:GetLastSpell(hTarget).secondarySpell:GetName() == banned_ability then
+				return UF_FAIL_CUSTOM
+			end
+		end
+		
+		if self:GetCaster():HasAbility("monkey_king_primal_spring") and self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == "monkey_king_tree_dance" then
 			return UF_FAIL_CUSTOM
 		end
 	end
@@ -1100,7 +1137,17 @@ function imba_rubick_spellsteal:GetCustomCastErrorTarget( hTarget )
 		return "Target never casted an ability"
 	end
 	
-	return ""
+	for _, banned_ability in pairs(self.banned_abilities) do
+		if self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == banned_ability then
+			return "#dota_hud_error_spell_steal_banned_ability"
+		elseif self:GetLastSpell(hTarget).secondarySpell and self:GetLastSpell(hTarget).secondarySpell.GetName and self:GetLastSpell(hTarget).secondarySpell:GetName() == banned_ability then
+			return "#dota_hud_error_spell_steal_banned_ability"
+		end
+	end
+	
+	if self:GetCaster():HasAbility("monkey_king_primal_spring") and self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == "monkey_king_tree_dance" then
+		return "#dota_hud_error_spell_steal_monkey_king_tree_dance"
+	end
 end
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -1246,15 +1293,15 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 		secondary = hHero:FindAbilityByName(secondary_ability)
 	end
 
-	-- banned abilities from being stolen somehow
-	for _,banned_ability in pairs(self.banned_abilities) do
-		if primary ~= nil and primary:GetAbilityName() == banned_ability then
-			primary = nil
-		end
-		if secondary ~= nil and secondary:GetAbilityName() == banned_ability then
-			secondary = nil
-		end
-	end
+	-- -- banned abilities from being stolen somehow
+	-- for _,banned_ability in pairs(self.banned_abilities) do
+		-- if primary ~= nil and primary:GetAbilityName() == banned_ability then
+			-- primary = nil
+		-- end
+		-- if secondary ~= nil and secondary:GetAbilityName() == banned_ability then
+			-- secondary = nil
+		-- end
+	-- end
 	
 	-- find hero in list
 	local heroData = nil
@@ -1328,6 +1375,12 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	local primarySpell = spellData.primarySpell
 	local secondarySpell = spellData.secondarySpell
 	local linkedTalents = spellData.linkedTalents
+	
+	-- I have no idea wtf is going on but trying to get this ability to be (mostly) stolen correctly without abilities being out of slot
+	if self:GetCaster():HasAbility("monkey_king_primal_spring") then
+		self:GetCaster():RemoveAbility("monkey_king_primal_spring")
+	end
+	
 	-- Forget previous one
 	self:ForgetSpell()
 	-- print("Stolen spell: "..primarySpell:GetAbilityName())
@@ -1347,6 +1400,20 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self.vortex = self:GetCaster():AddAbility( "imba_storm_spirit_electric_vortex" )
 		self.vortex:SetLevel( 4 )
 		self.vortex:SetStolen( true )
+	end
+
+	if self:GetCaster():HasAbility("monkey_king_primal_spring_early") then
+		self:GetCaster():RemoveAbility("monkey_king_primal_spring_early")
+	end
+	
+	if primarySpell:GetAbilityName() == "monkey_king_tree_dance" then
+		self.CurrentSecondarySpell = self:GetCaster():AddAbility("monkey_king_primal_spring")
+		self.CurrentSecondarySpell:SetLevel(primarySpell:GetLevel())
+		self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )
+		
+		-- local spring_early_ability = self:GetCaster():AddAbility("monkey_king_primal_spring_early")
+		-- spring_early_ability:SetHidden(true)
+		-- spring_early_ability:SetActivated(true)
 	end
 	
 	-- Vanilla Leshrac has some scepter thinker associated with Pulse Nova/Lightning Storm that is required, otherwise the lightning storms strike every frame -_-
@@ -1409,6 +1476,19 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		end
 		self.CurrentSpellOwner = spellData.stolenFrom
 	end
+	
+	if self:GetCaster():HasAbility("monkey_king_primal_spring_early") then
+		self:GetCaster():FindAbilityByName("monkey_king_primal_spring_early"):SetHidden(true)
+	end
+	
+	-- One last check to see if the abilities are in the correct slots?
+	-- if self.CurrentPrimarySpell and self.CurrentPrimarySpell.GetAbilityIndex then
+		-- print(self.CurrentPrimarySpell:GetAbilityIndex())
+	-- end
+	
+	-- if self.CurrentSecondarySpell and self.CurrentSecondarySpell.GetAbilityIndex and self.CurrentSecondarySpell:GetAbilityIndex() ~= 4 then
+		-- self:GetCaster():SwapAbilities( self.CurrentSecondarySpell:GetAbilityName(), self:GetCaster():GetAbilityByIndex(4):GetAbilityName(), true, true )
+	-- end
 end
 -- Remove currently stolen spell
 function imba_rubick_spellsteal:ForgetSpell()
@@ -1541,19 +1621,14 @@ function modifier_imba_rubick_spellsteal:OnCreated( kv )
 	end
 	
 	self.stolen_spell_amp = kv.spell_amp * 100
-
-	if self:GetParent():HasScepter() then
-		-- print("Spell Amp:", self.stolen_spell_amp)
-		self:SetStackCount(self.stolen_spell_amp)
-	end
+	
+	self:SetStackCount(self.stolen_spell_amp)
 end
 
 function modifier_imba_rubick_spellsteal:OnRefresh( kv )
 	if IsClient() then return end
-	if self:GetParent():HasScepter() then
-		-- print("Spell Amp (refresh):", self.stolen_spell_amp)
-		self:SetStackCount(self.stolen_spell_amp)
-	end
+	
+	self:SetStackCount(self.stolen_spell_amp)
 end
 
 function modifier_imba_rubick_spellsteal:OnDestroy( kv )
@@ -1566,12 +1641,10 @@ end
 -- Modifier Effects
 --------------------------------------------------------------------------------
 function modifier_imba_rubick_spellsteal:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_ABILITY_START,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
-
-	return funcs
 end
 
 function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
@@ -1608,8 +1681,12 @@ function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
 	end
 end
 
-function modifier_imba_rubick_spellsteal:GetModifierSpellAmplify_Percentage()
-	return self:GetStackCount()
+function modifier_imba_rubick_spellsteal:GetModifierSpellAmplify_Percentage(keys)
+	if self:GetCaster():HasTalent("special_bonus_imba_rubick_spell_steal_spell_amp") and keys and keys.inflictor and keys.inflictor:IsStolen() then
+		return math.max(self:GetCaster():FindTalentValue("special_bonus_imba_rubick_spell_steal_spell_amp"), self:GetStackCount())
+	elseif self:GetCaster():HasScepter() then
+		return self:GetStackCount()
+	end
 end
 
 -------------------------------------------
@@ -1669,3 +1746,159 @@ function modifier_imba_rubick_spellsteal_animation:OnOrder( params )
 		end
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_rubick_fade_bolt_cooldown", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field_positive", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field_negative", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_rubick_fade_bolt_cooldown					= modifier_special_bonus_imba_rubick_fade_bolt_cooldown or class({})
+modifier_special_bonus_imba_rubick_remnants_of_null_field				= modifier_special_bonus_imba_rubick_remnants_of_null_field or class({})
+modifier_special_bonus_imba_rubick_remnants_of_null_field_positive		= modifier_special_bonus_imba_rubick_remnants_of_null_field_positive or class({})
+modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura	= modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura or class({})
+modifier_special_bonus_imba_rubick_remnants_of_null_field_negative		= modifier_special_bonus_imba_rubick_remnants_of_null_field_negative or class({})
+
+function modifier_special_bonus_imba_rubick_fade_bolt_cooldown:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_fade_bolt_cooldown:IsPurgable() 	return false end
+function modifier_special_bonus_imba_rubick_fade_bolt_cooldown:RemoveOnDeath() 	return false end
+
+---------------------------------------------------------------
+-- MODIFIER_SPECIAL_BONUS_IMBA_RUBICK_REMNANTS_OF_NULL_FIELD --
+---------------------------------------------------------------
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:IsPurgable() 	return false end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:OnCreated()
+	if not IsServer() then return end
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_rubick_remnants_of_null_field"), "modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura", {})
+end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:IsAura()						return true end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:IsAuraActiveOnDeath() 		return false end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:GetAuraRadius()				if self:GetCaster().FindTalentValue then return self:GetCaster():FindTalentValue("special_bonus_imba_rubick_remnants_of_null_field", "radius") end end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:GetModifierAura()			return "modifier_special_bonus_imba_rubick_remnants_of_null_field_positive" end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field:GetAuraEntityReject(target)	return not self:GetCaster().FindTalentValue or self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") end
+
+------------------------------------------------------------------------
+-- MODIFIER_SPECIAL_BONUS_IMBA_RUBICK_REMNANTS_OF_NULL_FIELD_POSITIVE --
+------------------------------------------------------------------------
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_positive:GetTexture()
+	return "rubick_null_field"
+end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_positive:OnCreated()
+	self.magic_resistance	= self:GetCaster():FindTalentValue("special_bonus_imba_rubick_remnants_of_null_field", "magic_resistance")
+end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_positive:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_positive:GetModifierMagicalResistanceBonus()
+	if not self:GetCaster() or self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then
+		self:Destroy()
+		return 0
+	else
+		return self.magic_resistance
+	end
+end
+
+-----------------------------------------------------------------------------
+-- MODIFIER_SPECIAL_BONUS_IMBA_RUBICK_REMNANTS_OF_NULL_FIELD_NEGATIVE_AURA --
+-----------------------------------------------------------------------------
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:IsPurgable() 		return false end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:IsAura()					return true end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:IsAuraActiveOnDeath() 		return false end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:GetAuraRadius()			if self:GetCaster().FindTalentValue then return self:GetCaster():FindTalentValue("special_bonus_imba_rubick_remnants_of_null_field", "radius") end end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:GetModifierAura()			return "modifier_special_bonus_imba_rubick_remnants_of_null_field_negative" end
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura:GetAuraEntityReject(target)	return not self:GetCaster().FindTalentValue or not self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") end
+
+------------------------------------------------------------------------
+-- MODIFIER_SPECIAL_BONUS_IMBA_RUBICK_REMNANTS_OF_NULL_FIELD_NEGATIVE --
+------------------------------------------------------------------------
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative:GetTexture()
+	return "rubick_null_field_offensive"
+end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative:OnCreated()
+	self.magic_resistance	= self:GetCaster():FindTalentValue("special_bonus_imba_rubick_remnants_of_null_field", "magic_resistance") * (-1)
+end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative:DeclareFunctions()
+	return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+end
+
+function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative:GetModifierMagicalResistanceBonus()
+	if not self:GetCaster() or not self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then
+		self:Destroy()
+		return 0
+	else
+		return self.magic_resistance
+	end
+end
+
+
+
+
+function imba_rubick_fade_bolt:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_rubick_fade_bolt_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_rubick_fade_bolt_cooldown") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_rubick_fade_bolt_cooldown"), "modifier_special_bonus_imba_rubick_fade_bolt_cooldown", {})
+	end
+end
+
+function imba_rubick_arcane_supremacy:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_rubick_remnants_of_null_field") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_rubick_remnants_of_null_field"), "modifier_special_bonus_imba_rubick_remnants_of_null_field", {})
+	end
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_rubick_2", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rubick_3", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rubick_spell_steal_spell_amp", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_rubick_2	= modifier_special_bonus_imba_rubick_2 or class({})
+modifier_special_bonus_imba_rubick_3	= modifier_special_bonus_imba_rubick_3 or class({})
+modifier_special_bonus_imba_rubick_spell_steal_spell_amp	= modifier_special_bonus_imba_rubick_spell_steal_spell_amp or class({})
+
+function modifier_special_bonus_imba_rubick_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_rubick_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rubick_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_rubick_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rubick_spell_steal_spell_amp:IsHidden() 		return true end
+function modifier_special_bonus_imba_rubick_spell_steal_spell_amp:IsPurgable()		return false end
+function modifier_special_bonus_imba_rubick_spell_steal_spell_amp:RemoveOnDeath() 	return false end

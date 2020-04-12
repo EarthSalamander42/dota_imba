@@ -10,23 +10,22 @@
 
 // Drow Ranger's Frost Arrows
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows"                    "Frost Arrows (Pre 7.23)"
-"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Description"                    "Adds a freezing effect to Drow's attacks, slowing enemy movement and attack speed.\n<font color='#FF7800'>Chill:</font> Adds a stack of Chill with each attack; when %stacks_to_freeze% stacks accumulate, the target will be frozen in place for a short duration."
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Description"                    "Adds a freezing effect to Drow's attacks, slowing enemy movement and attack speed.\n<font color='#FF7800'>Chill:</font> Adds a stack of Chill for %freeze_duration% seconds with each attack; when %stacks_to_freeze% stacks accumulate, the target will be frozen in place for a short duration."
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Note0"              "The movement slow lasts much longer on creeps."
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Note1"              "Stacks reset when freezing an enemy, but are not removed."
-"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Lore"              "Ice-encased arrows pierce the silence, chilling their victims to the core."
-"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_ms_slow_pct"                    "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Lore"				"Ice-encased arrows pierce the silence, chilling their victims to the core."
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_ms_slow_pct"		"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_as_slow"            "ATTACK SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_hero_duration"                  "HERO SLOW DURATION:"
-"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_creep_duration"                 "CREEP SLOW DURATION:"
-"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_freeze_duration"                "FREEZE DURATION:"
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_hero_duration"		"HERO SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_creep_duration"		"CREEP SLOW DURATION:"
 
-"DOTA_Tooltip_modifier_imba_frost_arrows_slow"                          "Chill"
-"DOTA_Tooltip_modifier_imba_frost_arrows_slow_Description"              "Movement slowed. Enough stacks will cause you to freeze!"
+"DOTA_Tooltip_modifier_imba_frost_arrows_slow"							"Frost Arrow Slow"
+"DOTA_Tooltip_modifier_imba_frost_arrows_slow_Description"				"Movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%. Enough stacks will cause you to freeze!"
 
 "DOTA_Tooltip_modifier_imba_frost_arrows_freeze"                        "Frozen"
 "DOTA_Tooltip_modifier_imba_frost_arrows_freeze_Description"            "Rooted in place."
 
-"DOTA_Tooltip_modifier_imba_frost_arrows_buff"                          "Hasting chill"
+"DOTA_Tooltip_modifier_imba_frost_arrows_buff"                          "Hasting Chill"
 "DOTA_Tooltip_modifier_imba_frost_arrows_buff_Description"              "Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT% extra movement speed from stacks of Chill applied to enemy heroes."
 
 //DROW RANGER
@@ -40,20 +39,17 @@
 
 // Drow Ranger's Gust
 "DOTA_Tooltip_ability_imba_drow_ranger_gust"                            "Gust"
-"DOTA_Tooltip_ability_imba_drow_ranger_gust_Description"                "Releases a gust of icy wind that silences and knocks back enemies.\n<font color='#FF7800'>Cold Shoulder:</font> Gust also deals minor damage.\n<font color='#FF7800'>Icy Wind:</font> Applies stacks of Frost Arrows's Chill debuff to targets hit by Gust."
+"DOTA_Tooltip_ability_imba_drow_ranger_gust_Description"                "Releases a gust of icy wind that silences and knocks back enemies.\n<font color='#FF7800'>Cold Shoulder:</font> Gust deals %damage% damage.\n<font color='#FF7800'>Icy Wind:</font> Applies %chill_stacks% stacks of Frost Arrows's Chill debuff."
 "DOTA_Tooltip_ability_imba_drow_ranger_gust_Lore"                      "Traxex is rather fond of the tranquility of physical combat, calling on her Drow heritage to end the incantations of opposing magi."
-"DOTA_Tooltip_ability_imba_drow_ranger_gust_Note0"                      "If the target is closer than 625 units, it will be pushed to 625 units away from Drow. When the target is farther, it will get pushed 50 distance back instead. "
 "DOTA_Tooltip_ability_imba_drow_ranger_gust_wave_width"                "WIDTH:"
-"DOTA_Tooltip_ability_imba_drow_ranger_gust_silence_duration"          "SILENCE DURATION:"
-"DOTA_Tooltip_ability_imba_drow_ranger_gust_knockback_duration"                     "KNOCKBACK DURATION:"
-"DOTA_Tooltip_ability_imba_drow_ranger_gust_chill_stacks"              "CHILL STACKS:"
-"DOTA_Tooltip_ability_imba_drow_ranger_gust_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_drow_ranger_gust_silence_duration"			"SILENCE DURATION:"
+"DOTA_Tooltip_ability_imba_drow_ranger_gust_knockback_duration"			"KNOCKBACK DURATION:"
 
 "DOTA_Tooltip_modifier_imba_gust_silence"                              "Gust"
 "DOTA_Tooltip_modifier_imba_gust_silence_Description"                  "Silenced."
 
-"DOTA_Tooltip_modifier_imba_gust_buff"                      "Humming Wind"
-"DOTA_Tooltip_modifier_imba_gust_buff_Description"                      "Your attacks will cast mini gust waves on the target hit, knocking it back."
+"DOTA_Tooltip_modifier_imba_gust_buff"							"Wind Repellent"
+"DOTA_Tooltip_modifier_imba_gust_buff_Description"				"Your attacks will cast mini gust waves on the target hit, knocking it back."
 
 // Drow Ranger's Trueshot Aura
 "DOTA_Tooltip_ability_imba_drow_ranger_trueshot"                        "Trueshot Aura"
@@ -66,7 +62,7 @@
 
 // Drow Ranger's Trueshot Aura (7.20)
 "DOTA_Tooltip_ability_imba_drow_ranger_trueshot_720"										"Precision Aura"
-"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_720_Description"							"Adds bonus attack speed to allied, ranged Hero units based on a percentage of Drow's agility.  Affects creeps for 30 seconds when cast.\n<font color='#FF7800'>Arrow Fencing:</font> Melee heroes also benefit from the aura, but only at %melee_fencing_efficiency%%% efficiency."
+"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_720_Description"							"Adds bonus attack speed to allied, ranged Hero units based on a percentage of Drow's agility.  Affects creeps for %abilityduration% seconds when cast.\n<font color='#FF7800'>Arrow Fencing:</font> Melee heroes also benefit from the aura, but only at %melee_fencing_efficiency%%% efficiency."
 "DOTA_Tooltip_ability_imba_drow_ranger_trueshot_720_Lore"								"Traxex' time spent alone in the forests of her Drow home has allowed her to teach other archers how to improve their bow skills."
 "DOTA_Tooltip_ability_imba_drow_ranger_trueshot_720_trueshot_ranged_attack_speed"				"%RANGE ATTACK SPEED:"
 
@@ -74,14 +70,14 @@
 "DOTA_Tooltip_modifier_imba_drow_ranger_trueshot_720_aura_Description"			"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 
-"DOTA_Tooltip_modifier_imba_trueshot"                      "Trueshot Aura"
-"DOTA_Tooltip_modifier_imba_trueshot_Description"                      "Gaining bonus damage based on Drow's agility."
+"DOTA_Tooltip_modifier_imba_trueshot"						"Trueshot Aura"
+"DOTA_Tooltip_modifier_imba_trueshot_Description"			"Gaining bonus damage based on Drow's agility."
 
 "DOTA_Tooltip_modifier_imba_trueshot_active"                            "Marksman's Presence"
 "DOTA_Tooltip_modifier_imba_trueshot_active_Description"                "Trueshot Aura is affecting creeps, and granting bonus agility to heroes."
 
-"DOTA_Tooltip_modifier_imba_trueshot_talent_buff"                      "Precision Frenzy"
-"DOTA_Tooltip_modifier_imba_trueshot_talent_buff_Description"          "Temporarily gaining a percentage of the total Agility of your teammates."
+"DOTA_Tooltip_modifier_imba_trueshot_talent_buff"                      "Trueshot Burst"
+"DOTA_Tooltip_modifier_imba_trueshot_talent_buff_Description"          "Gaining %dMODIFIER_PROPERTY_STATS_AGILITY_BONUS% bonus agility from teammates."
 
 "DOTA_Tooltip_ability_imba_drow_ranger_multishot"									"Multishot"
 "DOTA_Tooltip_ability_imba_drow_ranger_multishot_Description"						"Channeling. Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying longer duration Frost Arrows. Lasts up to %abilitychanneltime% seconds.\n<font color='#FF7800'>Chill Extension:</font> Also applies Frost Arrow's Chill IMBAfication."
@@ -105,10 +101,10 @@
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_aghanim_description"	"Causes your attacks to splinter, hitting all enemies in 375 radius of your target. Splinters deal 50% reduced damage, and cannot proc any on-hit effects, except Frost Arrows."
 
 "DOTA_Tooltip_modifier_imba_markmanship_buff"							"Silent Sentinel Blessing"
-"DOTA_Tooltip_modifier_imba_markmanship_buff_Description"				"Drow's presence infuse your auto attacks with a chilling effect that slows enemy units."
+"DOTA_Tooltip_modifier_imba_markmanship_buff_Description"				"Drow's presence infuses your attacks with a chilling effect that slows enemy units."
 
-"DOTA_Tooltip_modifier_imba_markmanship_slow"							"Lesser Chill"
-"DOTA_Tooltip_modifier_imba_markmanship_slow_Description"				"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% from Drow allies."
+"DOTA_Tooltip_modifier_imba_markmanship_slow"							"Silent Sentinel Blessing"
+"DOTA_Tooltip_modifier_imba_markmanship_slow_Description"				"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723"									"Marksmanship"
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_Description"						"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. Grants Drow and nearby ranged heroes with bonus agility based on Drow's current agility. This ability is disabled if there is an enemy hero within %disable_range% range.\n<font color='#FF7800'>Perfect Ranger:</font> Passively grants %range_bonus% bonus attack range.\n<font color='#FF7800'>Perfect Shot:</font> When Marksmanship procs, instantly kills targets if their health is below %instakill_threshold%%%."
@@ -128,19 +124,19 @@
 // Drow Ranger's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_1"                 "Gust Self Cast"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_1_Description"		"Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally."
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_2"                 "25% chance to instantly kill non-ancient creeps"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_2"                 "{s:value}% chance to instantly kill non-ancient creeps"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_3"					"Wind Repellent"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_3_Description"     "After casting Gust, all auto attacks for the next 4 seconds push the main target back 50 units over 0.3 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_3_Description"     "After casting Gust, all auto attacks for the next {s:buff_duration} seconds push the main target back {s:knockback_distance} units over {s:knockback_duration} seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_4"					"Chill Speed Bonus"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_4_Description"     "Each Chilled enemy grants Drow Ranger +10 flat movespeed bonus for the duration. Stacks with itself, depending on amount of Chilled stacks on enemies."
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_5"					"Marksmanship Chill Aura"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_5_Description"     "When Marksmanship is not disabled, it applies a 900 radius aura that grants allies attacks that reduce movespeed by 15%."
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_4_Description"     "Each Chilled enemy grants Drow Ranger +{s:bonus_movespeed} flat movespeed bonus for the duration. Stacks with itself, depending on amount of Chilled stacks on enemies."
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_5"					"Silent Sentinel Blessing"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_5_Description"     "When Marksmanship is enabled, it applies a {s:aura_radius} radius aura that grants allies attacks that reduce movement speed by {s:slow_pct}% for {s:duration} seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_6"					"Trueshot Burst"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_6_Description"     "While Precision Aura is cast/active, Drow gains agility equal to 3% of every allied hero's agility."
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_6_Description"     "While Precision Aura is cast/active, Drow gains agility equal to {s:agility_bonus_percent}% of every allied hero's agility."
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_7"                 "Deadeye passively affects allied heroes as well"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_8"                 "Marksmanship no longer disabled by distance"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_9"                 "+{s:value} Gust Distance/Knockback"
-"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_10"				"+25% Precision Aura Attack Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_10"				"+{s:value}% Precision Aura Attack Speed"
 "DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_frost_arrows_damage"				"+{s:value} Frost Arrows Bonus Damage"
 
 

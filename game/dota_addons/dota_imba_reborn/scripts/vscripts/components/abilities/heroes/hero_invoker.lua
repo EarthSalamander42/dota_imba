@@ -423,7 +423,6 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_aghanim_buff:IsPurgable()	return false end
 		function modifier_imba_invoker_aghanim_buff:IsHidden() 		return true  end
 		function modifier_imba_invoker_aghanim_buff:IsDebuff() 		return false end
-		function modifier_imba_invoker_aghanim_buff:IsPermanent() 	return true  end
 		function modifier_imba_invoker_aghanim_buff:RemoveOnDeath() return false end
 		function modifier_imba_invoker_aghanim_buff:OnCreated()
 			if IsServer() then
@@ -705,7 +704,6 @@ imba_invoker = imba_invoker or class({})
 	modifier_imba_invoker_invoke_buff = class({})
 	function modifier_imba_invoker_invoke_buff:IsPurgable()		return false end
 	function modifier_imba_invoker_invoke_buff:IsHidden() 		return true  end
-	function modifier_imba_invoker_invoke_buff:IsPermanent() 	return true  end
 	function modifier_imba_invoker_invoke_buff:RemoveOnDeath() 	return false end
 	function modifier_imba_invoker_invoke_buff:OnCreated()
 		if IsServer() then
@@ -1506,8 +1504,8 @@ imba_invoker = imba_invoker or class({})
 
 					-- Apply cold snap to target
 					target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap", {duration = cold_snap_duration})
-					target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = freeze_duration}) 
-					target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_cooldown", {duration = freeze_cooldown})
+					target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = freeze_duration * (1 - target:GetStatusResistance())}) 
+					target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_cooldown", {duration = freeze_cooldown * (1 - target:GetStatusResistance())})
 
 					-- Apply damage
 					local damage_table = {}
@@ -1534,6 +1532,7 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_cold_snap:IsHidden() 		return false end
 		function modifier_imba_invoker_cold_snap:IsDebuff() 		return true  end
 		function modifier_imba_invoker_cold_snap:IsPurgable() 		return false end
+		function modifier_imba_invoker_cold_snap:IgnoreTenacity()	return true end
 		function modifier_imba_invoker_cold_snap:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf" end
 		function modifier_imba_invoker_cold_snap:DeclareFunctions()
 			local funcs = {
@@ -1559,8 +1558,8 @@ imba_invoker = imba_invoker or class({})
 
 					-- If target is dealt enought damage to trigger cold_snap and the effect is not on cooldown...
 					if kv.damage >= damage_trigger and not target:HasModifier("modifier_imba_invoker_cold_snap_cooldown") and target:IsAlive() then
-						target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = freeze_duration}) 
-						target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_cooldown", {duration = freeze_cooldown})
+						target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = freeze_duration * (1 - target:GetStatusResistance())}) 
+						target:AddNewModifier(caster, ability, "modifier_imba_invoker_cold_snap_cooldown", {duration = freeze_cooldown * (1 - target:GetStatusResistance())})
 
 						-- Apply damage
 						local damage_table 			= {}
@@ -1637,7 +1636,7 @@ imba_invoker = imba_invoker or class({})
 				local target = kv.target
 
 				if target == self:GetParent() and attacker:GetTeam() ~= self:GetCaster():GetTeam() and attacker ~= self:GetParent() and not attacker:IsOther() and not attacker:IsBuilding() and not attacker:IsMagicImmune() then
-					attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = self.freeze_duration}) 
+					attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_invoker_cold_snap_stun_duration", {duration = self.freeze_duration * (1 - attacker:GetStatusResistance())}) 
 
 					-- Apply damage
 					local damage_table 			= {}
@@ -2387,7 +2386,7 @@ imba_invoker = imba_invoker or class({})
 							self.ability, 
 							"modifier_imba_forged_spirit_melting_strike", 
 							{
-								duration = self.melt_duration, 
+								duration = self.melt_duration * (1 - target:GetStatusResistance()), 
 								max_armor_removed = self.max_armor_removed,
 								melt_strike_mana_cost = self.melt_strike_mana_cost,
 								melt_armor_removed = self.melt_armor_removed
@@ -2631,7 +2630,7 @@ imba_invoker = imba_invoker or class({})
 						-- Save the target's forward vector so we can put them back facing in the same direction when they land.
 						target.invoker_tornado_forward_vector = target:GetForwardVector()
 						
-						target:AddNewModifier(caster, target, "modifier_imba_invoker_tornado_cyclone", {duration = tornado_lift_duration})
+						target:AddNewModifier(caster, target, "modifier_imba_invoker_tornado_cyclone", {duration = tornado_lift_duration * (1 - target:GetStatusResistance())})
 						local cyclone_effect = ParticleManager:CreateParticle(ExtraData.cyclone_effect_path, PATTACH_ABSORIGIN, target)
 
 						target:EmitSound("Hero_Invoker.Tornado.Target")
@@ -2731,7 +2730,7 @@ imba_invoker = imba_invoker or class({})
 
 								-- If we have empower tornado talent... apply disarm
 								if ExtraData.daze_duration > 0 then
-									target:AddNewModifier(caster, self, "modifier_imba_invoker_tornado_empower_debuff", {duration = ExtraData.daze_duration})
+									target:AddNewModifier(caster, self, "modifier_imba_invoker_tornado_empower_debuff", {duration = ExtraData.daze_duration * (1 - target:GetStatusResistance())})
 								end
 						end)		
 					end
@@ -3028,7 +3027,7 @@ imba_invoker = imba_invoker or class({})
 			
 			-- Restore some of the burnt mana to Invoker if the affected unit is a real hero.
 			if enemy:IsRealHero() then
-				enemy:AddNewModifier(caster, ability, "modifier_imba_invoker_emp_overload", {duration = after_shock_duration}) 
+				enemy:AddNewModifier(caster, ability, "modifier_imba_invoker_emp_overload", {duration = after_shock_duration * (1 - enemy:GetStatusResistance())}) 
 				caster:GiveMana(enemy_mana_to_burn * (mana_gain_per_mana_pct / 100))
 			end
 
@@ -3221,8 +3220,8 @@ imba_invoker = imba_invoker or class({})
 					if enemy ~= nil and enemy:IsAlive() then
 						local target_position = enemy:GetAbsOrigin()
 						if self:IsUnitInProximity(self.ice_wall_start_point, self.ice_wall_end_point, target_position, self.ice_wall_area_of_effect) then
-							enemy:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_invoker_ice_wall_slow", {duration = self.slow_duration, enemy_slow = self.ice_wall_slow})
-							enemy:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_invoker_ice_wall_attack_slow", {duration = self.slow_duration, enemy_slow = self.attack_slow})
+							enemy:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_invoker_ice_wall_slow", {duration = self.slow_duration, enemy_slow = self.ice_wall_slow * (1 - enemy:GetStatusResistance())})
+							enemy:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_invoker_ice_wall_attack_slow", {duration = self.slow_duration, enemy_slow = self.attack_slow * (1 - enemy:GetStatusResistance())})
 
 							-- Apply damage
 							local damage_table 			= {}
@@ -3672,6 +3671,7 @@ imba_invoker = imba_invoker or class({})
 		--------------------------------------------------------------------------------------------------------------------
 		modifier_imba_invoker_chaos_meteor_burn = class({})
 		function modifier_imba_invoker_chaos_meteor_burn:IsDebuff() return true end
+		function modifier_imba_invoker_chaos_meteor_burn:IgnoreTenacity()	return true end
 		function modifier_imba_invoker_chaos_meteor_burn:GetAttributes()
 			return MODIFIER_ATTRIBUTE_MULTIPLE
 		end
@@ -3709,6 +3709,7 @@ imba_invoker = imba_invoker or class({})
 		--------------------------------------------------------------------------------------------------------------------
 		modifier_imba_invoker_chaos_meteor_burn_effect = class({})
 		function modifier_imba_invoker_chaos_meteor_burn_effect:IsHidden() 		return true end
+		function modifier_imba_invoker_chaos_meteor_burn_effect:IgnoreTenacity()	return true end
 		function modifier_imba_invoker_chaos_meteor_burn_effect:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf" end
 
 
@@ -3921,8 +3922,8 @@ imba_invoker = imba_invoker or class({})
 
 		function imba_invoker_deafening_blast:KnockBackAndDisarm(caster, target, knockback_duration, disarm_duration, disarm_effect_path, knockback_effect_path)
 			-- Add knockback and frozen modifier
-			target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_knockback", {duration = knockback_duration, knockback_effect_path = knockback_effect_path})
-			target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_frozen", {duration = knockback_duration + disarm_duration})
+			target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_knockback", {duration = knockback_duration, knockback_effect_path = knockback_effect_path * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_frozen", {duration = knockback_duration + disarm_duration * (1 - target:GetStatusResistance())})
 		end
 
 		modifier_imba_invoker_deafening_blast = class({})

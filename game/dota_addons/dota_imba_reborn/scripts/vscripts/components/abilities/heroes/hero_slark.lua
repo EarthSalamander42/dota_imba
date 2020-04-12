@@ -487,14 +487,10 @@ function modifier_imba_slark_pounce:UpdateHorizontalMotion(me, dt)
 				self:GetParent():EmitSound("slark_slark_pounce_0"..RandomInt(1, 6))
 			end	
 
-			local pounce_modifier = enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_slark_pounce_leash", {
-				duration 		= self.leash_duration,
+			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_slark_pounce_leash", {
+				duration 		= self.leash_duration * (1 - enemy:GetStatusResistance()),
 				leash_radius	= self.leash_radius
 			})
-			
-			if pounce_modifier then
-				pounce_modifier:SetDuration(self.leash_duration * (1 - enemy:GetStatusResistance()), true)
-			end
 			
 			self:GetParent():MoveToTargetToAttack(enemy)
 			
@@ -759,20 +755,19 @@ function modifier_imba_slark_essence_shift:OnAttackLanded(keys)
 	if self:GetAbility():IsTrained() and keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and (keys.target:IsRealHero() or keys.target:IsClone()) and not keys.target:IsTempestDouble() then
 		self.shift_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_essence_shift.vpcf", PATTACH_POINT_FOLLOW, keys.target)
 		ParticleManager:ReleaseParticleIndex(self.shift_particle)
-	
+		
+		-- IMBAfication: Shivalry
 		table.insert(self.stack_table, {
 			apply_game_time	= GameRules:GetDOTATime(true, true),
+			-- duration		= self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())
 			duration		= self:GetAbility():GetTalentSpecialValueFor("duration")
 		})
 		
+		-- self:SetDuration(math.max(self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), self:GetRemainingTime()), true)
 		self:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration"), true)
 		self:IncrementStackCount()
 		
-		self.debuff_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_debuff_counter", {duration = self:GetAbility():GetTalentSpecialValueFor("duration")})
-		
-		if self.debuff_modifier then
-			self.debuff_modifier:SetDuration(self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
-		end
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_debuff_counter", {duration = self:GetAbility():GetTalentSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())})
 		
 		-- IMBAfication: Shivved
 		if self:GetAbility():IsCooldownReady() then

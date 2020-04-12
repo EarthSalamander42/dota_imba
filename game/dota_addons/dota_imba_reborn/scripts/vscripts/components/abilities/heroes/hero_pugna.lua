@@ -17,10 +17,7 @@ function imba_pugna_nether_blast:GetCastRange()
 end
 
 function imba_pugna_nether_blast:GetAOERadius()
-	local ability = self
-	local radius = ability:GetSpecialValueFor("main_blast_radius")
-
-	return radius
+	return self:GetSpecialValueFor("main_blast_radius")
 end
 
 function imba_pugna_nether_blast:IsNetherWardStealable()
@@ -123,7 +120,7 @@ function imba_pugna_nether_blast:OnSpellStart()
 
 			-- If the enemy doesn't have the modifier yet, apply it
 			if not enemy:HasModifier(modifier_magic_res) then
-				enemy:AddNewModifier(caster, ability, modifier_magic_res, {duration = magic_res_duration})
+				enemy:AddNewModifier(caster, ability, modifier_magic_res, {duration = magic_res_duration * (1 - enemy:GetStatusResistance())})
 			end
 
 			-- Increment stack count
@@ -203,9 +200,7 @@ function modifier_imba_nether_blast_magic_res:IsPurgable() return true end
 function modifier_imba_nether_blast_magic_res:IsDebuff() return true end
 
 function modifier_imba_nether_blast_magic_res:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
 end
 
 function modifier_imba_nether_blast_magic_res:GetModifierMagicalResistanceBonus()
@@ -259,6 +254,8 @@ function imba_pugna_decrepify:OnSpellStart()
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
 		end
+		
+		duration = duration * (1 - target:GetStatusResistance())
 	end
 
 	-- Apply decrepify modifier on target
@@ -267,6 +264,14 @@ end
 
 -- Decrepify modifier
 modifier_imba_decrepify = class({})
+
+function modifier_imba_decrepify:GetEffectName()
+	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+end
+
+function modifier_imba_decrepify:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
 
 function modifier_imba_decrepify:OnCreated()
 	-- Ability properties
@@ -319,18 +324,19 @@ function modifier_imba_decrepify:IsDebuff()
 end
 
 function modifier_imba_decrepify:CheckState()
-	local state = {[MODIFIER_STATE_ATTACK_IMMUNE] = true,
-		[MODIFIER_STATE_DISARMED] = true}
-	return state
+	return {
+		[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
+		[MODIFIER_STATE_DISARMED]		= true
+	}
 end
 
 function modifier_imba_decrepify:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_decrepify:GetModifierMagicalResistanceBonus()
@@ -353,24 +359,11 @@ function modifier_imba_decrepify:GetAbsoluteNoDamagePhysical()
 	return 1
 end
 
-function modifier_imba_decrepify:GetEffectName()
-	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-end
-
-function modifier_imba_decrepify:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-
 function modifier_imba_decrepify:OnTakeDamage(keys)
-	if IsServer() then
-		local unit = keys.unit
-		local damage = keys.damage
-
-		-- Only apply if the unit taking damage is the parent of this modifier
-		if unit == self.parent then
-			-- Add the current damage to the damage stored
-			self.damage_stored = self.damage_stored + damage
-		end
+	-- Only apply if the unit taking damage is the parent of this modifier
+	if keys.unit == self:GetParent() then
+		-- Add the current damage to the damage stored
+		self.damage_stored = self.damage_stored + keys.damage
 	end
 end
 
@@ -382,20 +375,12 @@ function modifier_imba_decrepify:OnDestroy()
 			return nil
 		end
 
-		-- Radius is equal to base radius + all damage stored
-		local total_radius = self.base_radius + self.damage_stored
-
-		-- Radius cannot exceed max radius
-		if total_radius > self.max_radius then
-			total_radius = self.max_radius
-		end
+		-- Radius is equal to base radius + all damage stored; cannot exceed max radius
+		local total_radius = math.min(self.base_radius + self.damage_stored, self.max_radius)
 
 		-- Calculate damage and heal
 		local damage = self.damage_stored * self.total_dmg_conversion_pct * 0.01
-
-		-- #4 Talent: Heal/damage increase at the end of Decrepify
-		damage = damage * 0.01
-
+		
 		-- Use the damage value as heal
 		local heal = damage
 
@@ -439,14 +424,13 @@ function modifier_imba_decrepify:OnDestroy()
 						SendOverheadEventMessage(unit, OVERHEAD_ALERT_HEAL, unit, heal, unit)
 					else
 						-- If the unit is an enemy, damage it
-						local damageTable = {victim = unit,
+						ApplyDamage({
+							victim = unit,
 							damage = damage,
 							damage_type = DAMAGE_TYPE_MAGICAL,
 							attacker = self.caster,
 							ability = self.ability
-						}
-
-						ApplyDamage(damageTable)
+						})
 					end
 				end
 		end)
@@ -855,6 +839,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"void_spirit_aether_remnant",
 			"imba_rubick_spellsteal",
 			"rubick_spell_steal",
+			"imba_bristleback_bristleback",
 			
 			"lone_druid_spirit_bear",
 			"imba_lone_druid_spirit_bear",
@@ -865,7 +850,10 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"undying_flesh_golem",
 			"imba_undying_flesh_golem",
 			"dragon_knight_elder_dragon_form",
-			"imba_dragon_knight_elder_dragon_form"			
+			"imba_dragon_knight_elder_dragon_form",
+			
+			"imba_alchemist_unstable_concoction",
+			"imba_alchemist_chemical_rage"
 		}
 
 		-- Ignore items
@@ -1187,7 +1175,7 @@ function imba_pugna_life_drain:CastFilterResultTarget(target)
 		return UF_FAIL_CUSTOM
 	end
 	
-	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, self:GetCaster():GetTeamNumber())
+	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, self:GetCaster():GetTeamNumber())
 end
 
 function imba_pugna_life_drain:GetCustomCastErrorTarget(target)
@@ -1251,14 +1239,6 @@ function modifier_imba_life_drain:OnCreated()
 	self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
 	self.break_distance_extend = self.ability:GetSpecialValueFor("break_distance_extend")
 
-
-	-- Play target sounds
-	EmitSoundOn(self.sound_target, self.parent)
-
-	-- Stop any ongoing looping sound on the target
-	StopSoundOn(self.sound_loop, self.parent)
-	EmitSoundOn(self.sound_loop, self.parent)
-
 	-- Decide whether it is an enemy or an ally
 	if self.parent:GetTeamNumber() == self.caster:GetTeamNumber() then
 		self.is_ally = true
@@ -1273,23 +1253,29 @@ function modifier_imba_life_drain:OnCreated()
 		self.drain_amount = self.health_drain
 	-- end
 
-
-	-- Add appropriate particle effect
-	if self.is_ally then
-		-- Play ally particle
-		self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_give, PATTACH_ABSORIGIN, self.caster)
-		ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-	else
-		-- Play enemy particle
-		self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, self.caster)
-		ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-	end
-
 	if IsServer() then
+		-- Play target sounds
+		EmitSoundOn(self.sound_target, self.parent)
+
+		-- Stop any ongoing looping sound on the target
+		StopSoundOn(self.sound_loop, self.parent)
+		EmitSoundOn(self.sound_loop, self.parent)
+	
+		-- Add appropriate particle effect
+		if self.is_ally then
+			-- Play ally particle
+			self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_give, PATTACH_ABSORIGIN, self.caster)
+			ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		else
+			-- Play enemy particle
+			self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, self.caster)
+			ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		end
+	
 		-- Extend break range by caster's Cast Range
-		self.break_distance_extend = self.break_distance_extend + GetCastRangeIncrease(self.caster)
+		self.break_distance_extend = self.break_distance_extend + self:GetCaster():GetCastRangeBonus()
 
 		-- Wait for the first tick, then start thinking
 		Timers:CreateTimer(self.tick_rate, function()
@@ -1452,7 +1438,11 @@ function modifier_imba_life_drain:IsDebuff()
 end
 
 function modifier_imba_life_drain:OnDestroy()
+	if not IsServer() then return end
+
 	-- Remove particles
+	print(self.particle_drain_fx)
+	
 	ParticleManager:DestroyParticle(self.particle_drain_fx, false)
 	ParticleManager:ReleaseParticleIndex(self.particle_drain_fx)
 
@@ -1520,3 +1510,63 @@ function imba_pugna_life_drain_end:OnSpellStart()
 		end
 	end
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_pugna_1", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pugna_2", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pugna_3", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pugna_4", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pugna_5", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pugna_6", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pugna_7", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pugna_8", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pugna_nether_ward_damage", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_pugna_1	= modifier_special_bonus_imba_pugna_1 or class({})
+modifier_special_bonus_imba_pugna_2	= modifier_special_bonus_imba_pugna_2 or class({})
+modifier_special_bonus_imba_pugna_3	= modifier_special_bonus_imba_pugna_3 or class({})
+modifier_special_bonus_imba_pugna_4	= modifier_special_bonus_imba_pugna_4 or class({})
+modifier_special_bonus_imba_pugna_5	= modifier_special_bonus_imba_pugna_5 or class({})
+modifier_special_bonus_imba_pugna_6	= modifier_special_bonus_imba_pugna_6 or class({})
+modifier_special_bonus_imba_pugna_7	= modifier_special_bonus_imba_pugna_7 or class({})
+modifier_special_bonus_imba_pugna_8	= modifier_special_bonus_imba_pugna_8 or class({})
+modifier_special_bonus_imba_pugna_nether_ward_damage	= modifier_special_bonus_imba_pugna_nether_ward_damage or class({})
+
+function modifier_special_bonus_imba_pugna_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pugna_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pugna_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pugna_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pugna_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pugna_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pugna_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pugna_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pugna_nether_ward_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_pugna_nether_ward_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_pugna_nether_ward_damage:RemoveOnDeath() 	return false end

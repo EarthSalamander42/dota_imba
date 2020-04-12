@@ -251,11 +251,7 @@ function imba_puck_waning_rift:OnSpellStart()
 
 		ApplyDamage(damageTable)
 		
-		local debuff_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_waning_rift", {duration = self:GetSpecialValueFor("silence_duration")})
-		
-		if debuff_modifier then
-			debuff_modifier:SetDuration(self:GetSpecialValueFor("silence_duration") * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_waning_rift", {duration = self:GetSpecialValueFor("silence_duration") * (1 - enemy:GetStatusResistance())})
 	end
 end
 
@@ -619,11 +615,7 @@ function imba_puck_dream_coil:OnSpellStart(refreshDuration)
 			ability 		= self
 		})
 		
-		local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")})
-		
-		if stun_modifier then
-			stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()), true)
-		end
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
 	
 		local coil_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_dream_coil", 
 		{
@@ -756,11 +748,7 @@ function modifier_imba_puck_dream_coil:OnIntervalThink()
 		end
 		
 		-- Putting the break stun modifier after the IMBAfication because it was getting overwritten by the basic lower duration stun
-		local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = stun_duration})
-		
-		if stun_modifier then
-			stun_modifier:SetDuration(stun_duration * (1 - self:GetParent():GetStatusResistance()), true)
-		end
+		local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = stun_duration * (1 - self:GetParent():GetStatusResistance())})
 		
 		self:Destroy()
 	end
@@ -811,9 +799,30 @@ function modifier_imba_puck_dream_coil_visionary:OnIntervalThink()
 	end
 end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_puck_phase_shift_attacks", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_puck_illusory_orb_speed", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_puck_dream_coil_targets", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_puck_phase_shift_attacks	= modifier_special_bonus_imba_puck_phase_shift_attacks or class({})
+modifier_special_bonus_imba_puck_illusory_orb_speed		= modifier_special_bonus_imba_puck_illusory_orb_speed or class({})
+modifier_special_bonus_imba_puck_dream_coil_targets		= modifier_special_bonus_imba_puck_dream_coil_targets or class({})
+
+function modifier_special_bonus_imba_puck_phase_shift_attacks:IsHidden() 		return true end
+function modifier_special_bonus_imba_puck_phase_shift_attacks:IsPurgable()		return false end
+function modifier_special_bonus_imba_puck_phase_shift_attacks:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_puck_illusory_orb_speed:IsHidden() 		return true end
+function modifier_special_bonus_imba_puck_illusory_orb_speed:IsPurgable()		return false end
+function modifier_special_bonus_imba_puck_illusory_orb_speed:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_puck_dream_coil_targets:IsHidden() 		return true end
+function modifier_special_bonus_imba_puck_dream_coil_targets:IsPurgable()		return false end
+function modifier_special_bonus_imba_puck_dream_coil_targets:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_range", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)

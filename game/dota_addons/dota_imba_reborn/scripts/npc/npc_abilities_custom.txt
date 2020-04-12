@@ -6,6 +6,7 @@
 
 #base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
+#base heroes/arc_warden/abilities.txt
 #base heroes/bane/abilities.txt
 #base heroes/batrider/abilities.txt
 #base heroes/bloodseeker/abilities.txt
@@ -50,6 +51,7 @@
 #base heroes/terrorblade/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
+#base heroes/treant/abilities.txt
 #base heroes/undying/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
@@ -458,6 +460,28 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Necronomicon Archer Spread Shot
+	//=================================================================================================================
+	"imba_necronomicon_archer_spread_shot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/other/imba_necronomicon_archer_spread_shot"
+		"AbilityTextureName"							"sniper_shrapnel_muh_keen_gun"
+		
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{			
+		
+		}
+	}
 
 	//=================================================================================================================
 	// Fountain: Danger Zone
@@ -575,7 +599,7 @@
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES_ENEMIES_NO"
 		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"abaddon_death_coil"
@@ -1315,6 +1339,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"scepter_damage_reduction"	"-30"
 				"CalculateSpellDamageTooltip"	"0"
+				"RequiresScepter"			"1"
 			}
 			"07"
 			{
@@ -1340,6 +1365,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_range"				"400"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -1395,11 +1421,17 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"proc_chance"							"20"
+				"LinkedSpecialBonus"					"special_bonus_imba_axe_5"
+				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_MULTIPLY"
+				"LinkedSpecialBonusField"				"proc_chance_multiplier"
 			}
 			"06"
 			{
-				"var_type"								"FIELD_INTEGER"
+				"var_type"								"FIELD_FLOAT"
 				"base_damage"							"70 120 170 220"
+				"LinkedSpecialBonus"					"special_bonus_imba_axe_5"
+				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_MULTIPLY"
+				"LinkedSpecialBonusField"				"damage_multiplier_tooltip"
 			}
 			"07"
 			{
@@ -1429,6 +1461,7 @@
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"axe_culling_blade"
 		"MaxLevel"						"3"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -1656,8 +1689,13 @@
 			}
 			"02"
 			{
+				"var_type"      				"FIELD_INTEGER"
+				"damage_multiplier"        		"66"
+			}
+			"03"
+			{
 				"var_type"      				"FIELD_FLOAT"
-				"damage_multiplier"        		"0.66"
+				"damage_multiplier_tooltip"		"0.66"
 			}
 		}
 	}
@@ -2151,6 +2189,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"str_damage_reduction"	"100"
 				"CalculateSpellDamageTooltip"	"0"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_1"
 			}
 		}
 	}
@@ -2354,7 +2393,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"100"
 			}
 		}
 	}
@@ -2388,7 +2427,7 @@
 	}
 
 	//=================================================================================================================
-	// Centaur Warrunner Talent 3 (Level 20): Centaur hoof stomp arena moves along with hero
+	// Centaur Warrunner Talent 3 (Level 20): Centaur hoof stomp arena moves along with hero (DISABLED, DO NOT USE THIS)
 	//=================================================================================================================
 	"special_bonus_imba_centaur_3"
 	{
@@ -2438,7 +2477,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"2"
+				"value"						"200"
 			}
 		}
 	}
@@ -3583,11 +3622,6 @@
 				"var_type"			"FIELD_FLOAT"
 				"duration"		"4 5 6 7"
 			}
-			"08"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"		"4 5 6 7"
-			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -3860,6 +3894,7 @@
 		"ScriptFile"									"components/abilities/heroes/hero_dazzle.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"FightRecapLevel"								"2"
+		"HasScepterUpgrade"								"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -3901,6 +3936,19 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"1200"
+			}
+			
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_radius"			"800"
+				"RequiresScepter"			"1"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_count"				"8"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -4675,6 +4723,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scepter_duration"		"10"
+				"RequiresScepter"		"1"
 			}
 			"04"
 			{
@@ -4695,6 +4744,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_max_damage"	"250 300 350"
+				"RequiresScepter"		"1"
 			}
 			"08"
 			{
@@ -5111,7 +5161,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"1.2"
+		"AbilityCastPoint"				"1.17" // Supposed to be 1.2 seconds, but the 0.03 difference is to allow instant spirit stomp combos to work
 		"AbilityCastRange"				"500"
 		"AbilityCooldown"				"14.0 13.0 12.0 11.0"
 		"AbilityManaCost"				"0"
@@ -5986,7 +6036,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_tick"			"50 125 200"
+				"damage_per_tick"			"100 150 200"
 			}
 			"05"
 			{
@@ -6281,7 +6331,27 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"40"
+				"value"			"100"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_demonic_conversion_attack_range"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"200"
 			}
 		}
 	}
@@ -6295,7 +6365,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_jakiro.lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
@@ -6352,6 +6422,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"40 60 80 100"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"		"fire_damage_increase"
 			}
 
 			"05"
@@ -6390,7 +6461,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_jakiro.lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
@@ -6454,12 +6525,14 @@
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"28 36 42 48"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"		"slow_increase"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_slow"				"28 36 42 48"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"		"slow_increase"
 			}
 			"08"
 			{
@@ -6473,6 +6546,126 @@
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Ability: Jakiro's Dual Breath
+	//=================================================================================================================
+	"imba_jakiro_dual_breath"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_jakiro"
+		"AbilityTextureName"			"jakiro_dual_breath"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Jakiro.DualBreath"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.55"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+		"AbilityDuration"				"5.0"
+
+		
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"135 140 155 170"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.25"	// Applies two modifiers 
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"start_radius"			"225"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_radius"			"275"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"750 750 750 750"
+				//"LinkedSpecialBonus"	"special_bonus_unique_jakiro_5"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1050"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fire_delay"			"0.3 0.3 0.3 0.3"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_damage"			"40 60 80 100"
+				//"LinkedSpecialBonus"	"special_bonus_unique_jakiro_2"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"		"fire_damage_increase"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_movement_speed_pct"	"-28 -36 -42 -48"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"	"slow_increase"
+				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_attack_speed_pct"		"-28 -36 -42 -48"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
+				"LinkedSpecialBonusField"	"slow_increase"
+				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_fire"			"1050"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
+			}
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_movement_speed_pct_fire"	"-10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"frost_damage"			"20 30 40 50"
+			}
+		}		
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
 
 	//=================================================================================================================
@@ -7870,7 +8063,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"60"
+				"value"						"80"
 			}
 		}
 	}	
@@ -8821,7 +9014,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"building_efficacy"			"10"
+				"building_efficiency"			"30"
 			}
 		}
 	}
@@ -9139,6 +9332,97 @@
 				"rings_distance"		"0.25"
 			}
 		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Lina Light Strike Array
+	//=================================================================================================================
+	"imba_lina_light_strike_array_v2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/heroes/hero_lina"
+		"AbilityTextureName"							"lina_light_strike_array"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Ability.LightStrikeArray"
+
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.45 0.45 0.45 0.45"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0 7.0 7.0 7.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 110 120 130"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"light_strike_array_aoe"	"225"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"light_strike_array_delay_time"	"0.5"
+			}
+						
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"light_strike_array_stun_duration"	"1.6 1.9 2.2 2.5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"light_strike_array_damage"	"100 155 210 265"
+				"LinkedSpecialBonus"		"special_bonus_unique_lina_3"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"secondary_delay"		"0.1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"array_count"			"1"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"array_rings_count"		"6"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rings_radius"			"150"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rings_delay"			"0.3"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rings_distance"		"0.25"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
 	//=================================================================================================================
@@ -10416,7 +10700,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"max_charges"					"2 2 2 3"
-				"LinkedSpecialBonus"			"special_bonus_imba_lycan_10"
 			}
 			"05"
 			{
@@ -10773,7 +11056,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"18"
+				"duration"					"22"
 			}
 			"07"
 			{
@@ -11340,11 +11623,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_distance"		"2000"
+				"RequiresScepter"		"1"
 			}
 			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_speed"		"1500"
+				"RequiresScepter"		"1"
 			}
 			"16"
 			{
@@ -11496,6 +11781,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius_scepter"		"1200"
+				"RequiresScepter"		"1"
 			}
 			"17"
 			{
@@ -13536,6 +13822,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/omniknight_hammer_of_virtue"
@@ -14915,6 +15202,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_hook_stacks"	"7 9 11 13" // gives 30/50/70/90 max stacks
+				"RequiresScepter"		"1"
 			}
 		}
 	}
@@ -14945,7 +15233,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastPoint"				"250"
+		"AbilityCastPoint"				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -14954,7 +15242,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"250"
+				"rot_radius"			"250"
 			}
 			"02"
 			{
@@ -14981,14 +15269,9 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"30"
+				"max_radius"			"500"
 			}
 			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_radius_tooltip"	"500"
-			}
-			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"1"
@@ -15053,7 +15336,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_health_regen"		"6 9 12 15"
+				"base_health_regen"		"6 9 12 15" // DISABLED
 			}
 			"08"
 			{
@@ -15755,7 +16038,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_reduction"	"0.3 0.7 1.1 1.5"
+				"mana_regen_reduction"	"0.6 0.9 1.2 1.5"
 			}
 
 			"04"
@@ -15894,9 +16177,10 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"				"SPELL_DISPELLABLE_NO"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"					"1"
 		"AbilityTextureName"				"pugna_life_drain"
 		"MaxLevel"							"3"
@@ -15910,7 +16194,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"22"
+		"AbilityCooldown"					"7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -15932,12 +16216,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_drain"				"175 275 375"
+				"health_drain"				"150 225 300"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_health_drain"		"180 300 360"
+				"scepter_health_drain"		"200 300 400"
 			}
 			"03"
 			{
@@ -16297,7 +16581,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"init_move_slow_pct"	"20 30 40 50"
+				"init_move_slow_pct"	"20 35 50 65"
 			}
 			"06"
 			{
@@ -16480,7 +16764,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"135"
+		"AbilityCooldown"				"125"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -18397,6 +18681,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cast_range_scepter"	"700 1000 1300 1600"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -18538,7 +18823,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_duration"				"3"
+				"slow_duration"				"3.0 3.5 4.0 4.5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"caustic_finale_slow_as"	"-15 -20 -25 -30"
 			}
 		}
 	}
@@ -18607,7 +18897,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"110"
+				"damage"				"110 120 130"
 			}
 
 			"05"
@@ -19076,6 +19366,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_search_radius"		"700"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -19184,7 +19475,7 @@
 			"10"
 			{
 				"var_type" 				"FIELD_INTEGER"
-				"vision_radius"			"300"
+				"vision_radius"			"400"
 			}
 
 			"11"
@@ -19197,6 +19488,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_search_radius"		"700"
+				"RequiresScepter"			"1"
+			}
+			
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_damage_pct"		"75"
 			}
 		}
 	}
@@ -19315,8 +19613,9 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint" 		 "0.1"
 		"AbilityCastRange"		 "1200"
+		"AbilityCastPoint" 		 "0.1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -22901,7 +23200,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"		
+		"AbilityCastPoint"				"0.4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -23627,7 +23926,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
+		"AbilityManaCost"				"80 100 120 140"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23922,12 +24221,14 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounces_scepter"		"4"
+				"bounces_scepter"		"9999"
+				"RequiresScepter"		"1"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_radius_scepter"	"650"
+				"RequiresScepter"		"1"
 			}
 		}
 	}
@@ -24418,6 +24719,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"6 12 18 24"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_bonus"			"1.5"
 			}
 		}
 	}
@@ -26160,6 +26466,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastRange"				"400 500 600 700"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"8"
 		"AbilityManaCost"				"120 125 130 135"
@@ -26230,16 +26537,18 @@
 				"scepter_throw_delay"		"1"
 				"RequiresScepter"		"1"
 			}
+			
 			"13"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"400 500 600 700"
+				"var_type"				"FIELD_INTEGER"
+				"scepter_cast_range"			"800"
+				"RequiresScepter"	"1"
 			}
 			"14"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_cast_range"	"800 900 1000 1100"
-				"RequiresScepter"		"1"
+				"var_type"				"FIELD_FLOAT"
+				"scepter_cooldown"			"6"
+				"RequiresScepter"	"1"
 			}
 		}
 	}
@@ -26287,7 +26596,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage"			"150"
+				"crit_damage"			"150" // DISABLED
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -26319,6 +26628,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_gold"			"15 25 35 45"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_9"
 			}
 		}
 	}
@@ -26929,23 +27239,18 @@
 				"var_type"				"FIELD_INTEGER"
 				"armor_reduction"		"3 4 5 6"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"neutral_level"		"3 4 5 6"
-			}
 
-			"08"
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"soul_high_hp_damage"		"10"
 			}
-			"09"
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"soul_high_hp_to_attack"	"66"
 			}
-			"10"
+			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"soul_high_duration"		"6.66"
@@ -28479,6 +28784,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"50"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 
 			"09"
@@ -28721,11 +29027,13 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"damage_reduction_scepter"			"50"
+				"RequiresScepter"					"1"	
 			}
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"splinter_radius_scepter"			"375"
+				"RequiresScepter"					"1"
 			}
 			"05"
 			{
@@ -30101,6 +30409,7 @@
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"60"
+		"AbilityDuration"				"25.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -30136,12 +30445,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 5 7 9"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"25"
+				"health"				"1 1 2 2"
 			}
 			"05"
 			{
@@ -30156,7 +30460,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_bonus_totem"	"6 7 8 9"
+				"health_totem"	"3 3 4 4"
 			}
 		}
 	}
@@ -30194,7 +30498,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 5 7 9"
+				"health"				"1 1 2 2"
 			}
 			"04"
 			{
@@ -30209,7 +30513,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_totem"			"9 9 9 9 12 15 18"
+				"health_totem"			"3 3 4 4"
 			}
 		}
 	}
@@ -30311,7 +30615,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityTextureName"			"juggernaut_omni_slash"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -30376,6 +30680,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"scepter_jump_amt"  	"6 9 12"
 				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_9"
+				"RequiresScepter"		"1"
 			}
 			"08"
 			{
@@ -30411,14 +30716,16 @@
 			"13"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"4 4.25 4.5"
+				"duration_scepter"			"4 4.25 4.5" // DISABLED
 				//"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_2"
 				"LinkedSpecialBonus"		"special_bonus_imba_juggernaut_10"
+				"RequiresScepter"		"1"
 			}
 			"14"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"cooldown_scepter"	"70"
+				"cooldown_scepter"	"70" // DISABLED
+				"RequiresScepter"		"1"
 			}
 		}
 	}
@@ -30907,7 +31214,7 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"base_damage"						"80 160 240 320"
+				"base_damage"						"90 170 250 330"
 			}
 			"02"
 			{
@@ -31785,6 +32092,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"		"nevermore_necromastery"
 		"ScriptFile"				"components/abilities/heroes/hero_nevermore.lua"
+		"HasScepterUpgrade"			"1"
 
 
 		// Precache
@@ -32193,7 +32501,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "0.5"
+				"value"	                    "0.3"
 			}
 		}
 	}
@@ -35469,6 +35777,9 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_charge_count"			"3"
+				"LinkedSpecialBonus"		"special_bonus_imba_sniper_4"
+				"LinkedSpecialBonusField"		"max_charge_mult"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 
 			"08"
@@ -35702,12 +36013,14 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"scepter_cast_time"			"1.0"
+				"scepter_cast_time"			"0.5"
+				"RequiresScepter"			"1"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"scepter_stun_duration"		"1.8"
+				"RequiresScepter"			"1"
 			}
 		}
 	}
@@ -36968,11 +37281,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"10 9 8 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"
+		"AbilityManaCost"				"55 60 65 70"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -37039,7 +37352,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_stack"		"15 20 25 30"
+				"damage_per_stack"		"10 20 30 40"
 			}
 
 			"02"
@@ -37091,7 +37404,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 50 40"
+		"AbilityCooldown"				"50 40 30"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -37099,13 +37412,14 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"4"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 4.5 5.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_cooldown"		"30 24 18"
+				"RequiresScepter"			"1"
 			}
 			"04"
 			{
@@ -37115,7 +37429,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"fury_swipes_multiplier"	"1.5 1.75 2.0"
+				"fury_swipes_multiplier"	"1.5 1.75 2.0" // DISABLED
 			}
 			"06"
 			{
@@ -37445,7 +37759,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
+		"AbilityCastRange"				"550"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 		"AOERadius"						"%split_radius"
@@ -37474,7 +37788,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"125 200 275 350"
+				"damage"				"100 200 300 400"
 				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_1"
 			}
 			"02"
@@ -37784,7 +38098,7 @@
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_ALL"
 		"MaxLevel"							"1"
 		"AbilityTextureName"				"custom/vengeful_rancor"
-		"ScriptFile"				"components/abilities/heroes/hero_vengefulspirit"
+		"ScriptFile"						"components/abilities/heroes/hero_vengefulspirit"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -37811,13 +38125,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stack_duration"			"0.5"
-			}
-
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"talent_radius"				"900"
+				"stack_duration"			"0.6"
 			}
 
 			"06"
@@ -42303,11 +42611,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"			"14 12 10 8"
+		"AbilityCooldown"			"11 10 9 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"			"110"
+		"AbilityManaCost"			"80 90 100 110"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -42594,7 +42902,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"1"		// placeholder value
+				"value"			"40"
 			}
 		}
 	}

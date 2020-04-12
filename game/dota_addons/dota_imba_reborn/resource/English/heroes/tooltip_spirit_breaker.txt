@@ -8,6 +8,9 @@
 "DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_Note3"				"Taxi passengers can freely act."
 "DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_movement_speed"		"CHARGE BONUS SPEED:"
 "DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_stun_duration"		"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_scepter_cooldown"		"SCEPTER COOLDOWN:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_scepter_speed"		"SCEPTER SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_aghanim_description"		"Increases Charge of Darkness movement speed and reduces cooldown."
 
 
 "DOTA_Tooltip_ability_imba_spirit_breaker_bulldoze"								"Bulldoze"
@@ -41,14 +44,14 @@
 
 "DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike"							"Nether Strike"
 "DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_Lore"					"Barathrum temporarily returns to the realm from where he came, bringing with him the retribution of both worlds."
-"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_Description"				"Spirit Breaker slips into the nether realm, reappearing next to his hapless victim. Upon reappearing, a Greater Bash of the current level occurs and deals bonus damage. Knocks back for double the normal distance. \n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>BIG DICK ENERGY:</font> Spirit Breaker receives %big_dmg_reduction%%% less damage during Nether Strike's original cast point.\n<font color='#FF7800'>Warp Beast:</font> Disjoints projectiles.\n<font color='#FF7800'>Planeswalker:</font> If auto-cast is on, after casting Nether Strike, all non-magic immune enemies within cast range around the original target are marked for dimensional warping for %planeswalker_duration% seconds. During this duration, Spirit Breaker can freely cast Nether Strike on the marked targets once each at %planeswalker_reduction%%% reduced cast point and mana cost."
+"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_Description"				"Spirit Breaker slips into the nether realm, reappearing next to his hapless victim. Upon reappearing, a Greater Bash of the current level occurs and deals bonus damage. Knocks back for double the normal distance.\n<font color='#FF7800'>BIG DICK ENERGY:</font> Spirit Breaker receives %big_dmg_reduction%%% less damage during Nether Strike's original cast point.\n<font color='#FF7800'>Warp Beast:</font> Disjoints projectiles.\n<font color='#FF7800'>Planeswalker:</font> If auto-cast is on, after casting Nether Strike, all non-magic immune enemies within cast range around the original target are marked for dimensional warping for %planeswalker_duration% seconds. During this duration, Spirit Breaker can freely cast Nether Strike on the marked targets once each at %planeswalker_reduction%%% reduced cast point and mana cost."
 "DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_Note0"					"Spirit Breaker appears behind the target to deliver the bash."
 "DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_damage"					"BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_tooltip_range"			"RANGE:"
-"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_cast_range_scepter"		"SCEPTER RANGE:"
-"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_bash_radius_scepter"		"SCEPTER BASH RADIUS:"
-"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_cooldown_scepter"		"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_aghanim_description"		"Causes the Greater Bash to hit an area around the initial target, decreases cooldown, and increases cast range."
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_cast_range_scepter"		"SCEPTER RANGE:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_bash_radius_scepter"		"SCEPTER BASH RADIUS:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_cooldown_scepter"		"SCEPTER COOLDOWN:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_aghanim_description"		"Causes the Greater Bash to hit an area around the initial target, decreases cooldown, and increases cast range."
 
 "DOTA_Tooltip_modifier_knockback"												"Greater Bash"
 "DOTA_Tooltip_modifier_knockback_Description"									"Stunned"

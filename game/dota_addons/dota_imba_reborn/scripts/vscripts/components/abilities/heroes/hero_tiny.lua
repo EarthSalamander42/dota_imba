@@ -585,8 +585,8 @@ function imba_tiny_tree_throw:KnockBack(caster, target,knockback_center)
 			center_x 			= knockback_center.x, 
 			center_y 			= knockback_center.y, 
 			center_z 			= knockback_center.z, 
-			duration 			= knockback_duration,
-			knockback_duration 	= knockback_duration,
+			duration 			= knockback_duration * (1 - target:GetStatusResistance()),
+			knockback_duration 	= knockback_duration * (1 - target:GetStatusResistance()),
 			knockback_distance 	= knockback_distance,
 			knockback_height 	= 0
 		})
@@ -866,7 +866,7 @@ if IsServer() then
 				
 				if enemy:IsAlive() then
 					-- Not affected by status resistance it seems
-					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration / (1 - math.min(enemy:GetStatusResistance(), 0.999)) })
+					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration})
 				end
 			end
 			hitLoc = hitLoc + offset / ticks
@@ -1493,12 +1493,12 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 					local craggy_targets = FindUnitsInRadius(caster:GetTeamNumber(), params.attacker:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 					for _,target in pairs(craggy_targets) do
 						ApplyDamage({victim = target, attacker = caster, damage = self.damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
-						target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.duration})
+						target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.duration * (1 - target:GetStatusResistance())})
 						EmitSoundOn("Hero_Tiny.CraggyExterior.Stun", params.attacker)
 					end
 				else
 					ApplyDamage({victim = params.attacker, attacker = caster, damage = self.damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
-					params.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.duration})
+					params.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.duration * (1 - params.attacker:GetStatusResistance())})
 					local craggy = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_craggy_hit.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
 					ParticleManager:SetParticleControl(craggy, 0, self:GetCaster():GetAbsOrigin())
 					ParticleManager:SetParticleControl(craggy, 1, params.attacker:GetAbsOrigin())
@@ -1511,7 +1511,7 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 			-- Bluntstone
 
 			if not params.attacker:HasModifier("modifier_craggy_exterior_blunt") then
-				params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration})
+				params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration * (1 - params.attacker:GetStatusResistance())})
 			end
 
 			local modifier_blunt_handler = params.attacker:FindModifierByName("modifier_craggy_exterior_blunt")
@@ -1659,6 +1659,36 @@ end
 function modifier_imba_tiny_grow_passive:GetModifierPhysicalArmorBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_armor")
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_tiny_1", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_tiny_2", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_tiny_6", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_tiny_7", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_tiny_1		= modifier_special_bonus_imba_tiny_1 or class({})
+modifier_special_bonus_imba_tiny_2		= modifier_special_bonus_imba_tiny_2 or class({})
+modifier_special_bonus_imba_tiny_6		= modifier_special_bonus_imba_tiny_6 or class({})
+modifier_special_bonus_imba_tiny_7		= modifier_special_bonus_imba_tiny_7 or class({})
+
+function modifier_special_bonus_imba_tiny_1:IsHidden() 			return true end
+function modifier_special_bonus_imba_tiny_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_tiny_2:IsHidden() 			return true end
+function modifier_special_bonus_imba_tiny_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_tiny_6:IsHidden() 			return true end
+function modifier_special_bonus_imba_tiny_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_tiny_7:IsHidden() 			return true end
+function modifier_special_bonus_imba_tiny_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_tiny_7:RemoveOnDeath() 	return false end
 
 --- Someone forgot to initialize this zzz
 

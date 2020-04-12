@@ -95,6 +95,11 @@ function modifier_item_imba_transient_boots_invis:OnIntervalThink()
 		if self.counter >= self.fade_delay then
 			self.parent:AddNewModifier(self.caster, self.ability, "modifier_invisible", {duration = self:GetRemainingTime(), cancelattack = false})
 			self.counter	= 0
+			
+			-- This ability is programmed kind of messed up...but at least have this block so units don't keep getting their attacks interrupted when this activates
+			if self:GetParent():GetAggroTarget() then
+				self:GetParent():MoveToTargetToAttack(self:GetParent():GetAggroTarget())
+			end
 		end
 	end
 end
@@ -143,7 +148,8 @@ function modifier_item_imba_transient_boots_break:RemoveOnDeath()	return false e
 ------------------------------
 
 function modifier_item_imba_transient_boots:IsHidden()		return true end
-function modifier_item_imba_transient_boots:IsPermanent()	return true end
+function modifier_item_imba_transient_boots:IsPurgable()		return false end
+function modifier_item_imba_transient_boots:RemoveOnDeath()	return false end
 function modifier_item_imba_transient_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_transient_boots:OnCreated()

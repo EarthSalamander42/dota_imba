@@ -105,16 +105,10 @@ end
 -- MODIFIER_ITEM_IMBA_VALIANCE --
 ---------------------------------
 
-function modifier_item_imba_valiance:IsHidden()			return true end
+function modifier_item_imba_valiance:IsHidden()		return true end
+function modifier_item_imba_valiance:IsPurgable()		return false end
+function modifier_item_imba_valiance:RemoveOnDeath()	return false end
 function modifier_item_imba_valiance:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-function modifier_item_imba_valiance:OnCreated()
-	self.bonus_health			= self:GetAbility():GetSpecialValueFor("bonus_health")
-	self.bonus_health_regen		= self:GetAbility():GetSpecialValueFor("bonus_health_regen")
-	self.block_damage_melee		= self:GetAbility():GetSpecialValueFor("block_damage_melee")
-	self.block_damage_ranged	= self:GetAbility():GetSpecialValueFor("block_damage_ranged")
-	self.block_chance			= self:GetAbility():GetSpecialValueFor("block_chance")
-end
 
 -- Declare modifier events/properties
 function modifier_item_imba_valiance:DeclareFunctions()
@@ -126,17 +120,23 @@ function modifier_item_imba_valiance:DeclareFunctions()
 end
 
 function modifier_item_imba_valiance:GetModifierHealthBonus()
-	return self.bonus_health end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
+end
 
 function modifier_item_imba_valiance:GetModifierConstantHealthRegen()
-	return self.bonus_health_regen end
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	end
+end
 
 function modifier_item_imba_valiance:GetModifierPhysical_ConstantBlock()
-	if RollPseudoRandom(self.block_chance, self) then
+	if self:GetAbility() and RollPseudoRandom(self:GetAbility():GetSpecialValueFor("block_chance"), self) then
 		if not self:GetParent():IsRangedAttacker() then
-			return self.block_damage_melee
+			return self:GetAbility():GetSpecialValueFor("block_damage_melee")
 		else
-			return self.block_damage_ranged
+			return self:GetAbility():GetSpecialValueFor("block_damage_ranged")
 		end
 	end
 end

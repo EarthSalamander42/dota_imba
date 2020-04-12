@@ -190,12 +190,10 @@ function modifier_item_imba_spirit_vessel_heal:OnCreated()
 end
 
 function modifier_item_imba_spirit_vessel_heal:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_EVENT_ON_TAKEDAMAGE
     }
-
-    return decFuncs
 end
 
 function modifier_item_imba_spirit_vessel_heal:GetModifierConstantHealthRegen()
@@ -306,58 +304,41 @@ function modifier_item_imba_spirit_vessel_damage:OnDestroy()
 	end
 end
 
-function modifier_item_imba_spirit_vessel_damage:DeclareFunctions()
-	-- local decFuncs = {
-		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
-		-- MODIFIER_PROPERTY_LIFESTEAL_AMPLIFY_PERCENTAGE -- Valve still not linking up their functions zzz...
-    -- }
-
-    -- return decFuncs
-	
-	return {MODIFIER_PROPERTY_TOOLTIP}
+function modifier_item_imba_spirit_vessel_damage:DeclareFunctions()	
+	return {
+		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_TOOLTIP
+	}
 end
 
--- function modifier_item_imba_spirit_vessel_damage:GetModifierHPRegenAmplify_Percentage()
-	-- return self.hp_regen_reduction_enemy
--- end
+function modifier_item_imba_spirit_vessel_damage:GetModifierHealAmplify_PercentageTarget()
+	return self.hp_regen_reduction_enemy
+end
 
--- function modifier_item_imba_spirit_vessel_damage:GetModifierLifestealRegenAmplify_Percentage()
-	-- return self.hp_regen_reduction_enemy
--- end
+function modifier_item_imba_spirit_vessel_damage:GetModifierHPRegenAmplify_Percentage()
+	return self.hp_regen_reduction_enemy
+end
 
 function modifier_item_imba_spirit_vessel_damage:OnTooltip()
 	return self.hp_regen_reduction_enemy
 end
 
-function modifier_item_imba_spirit_vessel_damage:Custom_AllHealAmplify_Percentage()
-	return self.hp_regen_reduction_enemy
-end
+-- function modifier_item_imba_spirit_vessel_damage:Custom_AllHealAmplify_Percentage()
+	-- return self.hp_regen_reduction_enemy
+-- end
 
 ----------------------------
 -- SPIRIT VESSEL MODIFIER --
 ----------------------------
 
-function modifier_item_imba_spirit_vessel:IsHidden()		return true end
-function modifier_item_imba_spirit_vessel:IsPermanent()		return true end
-function modifier_item_imba_spirit_vessel:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-function modifier_item_imba_spirit_vessel:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	self.parent		= self:GetParent()
-	
-	-- AbilitySpecials
-	self.bonus_health				=	self.ability:GetSpecialValueFor("bonus_health")
-	self.bonus_movement_speed		=	self.ability:GetSpecialValueFor("bonus_movement_speed")
-	self.bonus_mana_regen			=	self.ability:GetSpecialValueFor("bonus_mana_regen")
-	self.bonus_all_stats			=	self.ability:GetSpecialValueFor("bonus_all_stats")
-	self.bonus_armor				=	self.ability:GetSpecialValueFor("bonus_armor")
-	
-	self.soul_release_range_tooltip	=	self.ability:GetSpecialValueFor("soul_release_range_tooltip")
-end
+function modifier_item_imba_spirit_vessel:IsHidden() return true end
+function modifier_item_imba_spirit_vessel:IsPurgable() return false end
+function modifier_item_imba_spirit_vessel:RemoveOnDeath() return false end
+function modifier_item_imba_spirit_vessel:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_spirit_vessel:DeclareFunctions()
-    local decFuncs = {
+    return {
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
@@ -368,52 +349,61 @@ function modifier_item_imba_spirit_vessel:DeclareFunctions()
 		
 		MODIFIER_EVENT_ON_DEATH
     }
-	
-    return decFuncs
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierHealthBonus()
-	return self.bonus_health
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierMoveSpeedBonus_Constant()
-	return self.bonus_movement_speed
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierBonusStats_Strength()
-	return self.bonus_all_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierBonusStats_Agility()
-	return self.bonus_all_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierBonusStats_Intellect()
-	return self.bonus_all_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+	end
 end
 
 function modifier_item_imba_spirit_vessel:GetModifierPhysicalArmorBonus()
-	return self.bonus_armor
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_armor")
+	end
 end
 
 
 function modifier_item_imba_spirit_vessel:OnDeath(keys)
-	local caster		= self:GetCaster()
-	local soul_radius	= self.ability:GetSpecialValueFor("soul_radius")
-
 	-- First check: Is the unit within capture range and an enemy and not reincarnating?
-	if keys.unit:IsRealHero() and caster:IsRealHero() and caster:GetTeam() ~= keys.unit:GetTeam() and (not keys.unit.IsReincarnating or (keys.unit.IsReincarnating and not keys.unit:IsReincarnating())) and caster:IsAlive() and (caster:GetAbsOrigin() - keys.unit:GetAbsOrigin()):Length2D() <= soul_radius then
+	if self:GetAbility() and keys.unit:IsRealHero() and self:GetCaster():IsRealHero() and self:GetCaster():GetTeam() ~= keys.unit:GetTeam() and (not keys.unit.IsReincarnating or (keys.unit.IsReincarnating and not keys.unit:IsReincarnating())) and self:GetCaster():IsAlive() and (self:GetCaster():GetAbsOrigin() - keys.unit:GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("soul_radius") then
 	
 		-- Second check: Is there no one closer than the item owner that also has a Spirit Vessel?
-		local nearbyAllies = FindUnitsInRadius(caster:GetTeamNumber(), keys.unit:GetAbsOrigin(), nil, soul_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
+		local nearbyAllies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), keys.unit:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("soul_radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
 		
 		for _, ally in pairs(nearbyAllies) do
 			-- If the check reaches the item owner then break out of loop and continue checks
-			if ally == caster then
+			if ally == self:GetCaster() then
 				break
 			-- If anyone closer has the same item, the owner of this item will not get any charges
 			elseif ally:HasItemInInventory(self:GetAbility():GetName()) then
@@ -422,16 +412,16 @@ function modifier_item_imba_spirit_vessel:OnDeath(keys)
 		end
 		
 		-- If the parent has multiple Spirit Vessels, only apply the charge gain to the first one
-		if self == caster:FindAllModifiersByName("modifier_item_imba_spirit_vessel")[1] then
+		if self == self:GetCaster():FindAllModifiersByName("modifier_item_imba_spirit_vessel")[1] then
 			for itemSlot = 0, 5 do
-				local item = caster:GetItemInSlot(itemSlot)
+				local item = self:GetCaster():GetItemInSlot(itemSlot)
 			
 				if item and item:GetName() == self:GetAbility():GetName() then
 					-- 2 charges if current count is 0, 1 charge otherwise
 					if item:GetCurrentCharges() == 0 then
-						item:SetCurrentCharges(item:GetCurrentCharges() + self.ability:GetSpecialValueFor("soul_initial_charge"))
+						item:SetCurrentCharges(item:GetCurrentCharges() + self:GetAbility():GetSpecialValueFor("soul_initial_charge"))
 					else
-						item:SetCurrentCharges(item:GetCurrentCharges() + self.ability:GetSpecialValueFor("soul_additional_charges"))
+						item:SetCurrentCharges(item:GetCurrentCharges() + self:GetAbility():GetSpecialValueFor("soul_additional_charges"))
 					end
 					
 					-- Don't continue checking for any other Spirit Vessels cause it only adds to one

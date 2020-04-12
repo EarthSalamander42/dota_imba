@@ -97,10 +97,6 @@ function modifier_imba_ebb_and_flow_thinker:RemoveOnDeath()
 	return false
 end
 
-function modifier_imba_ebb_and_flow_thinker:IsPermanent()
-	return true
-end
-
 function modifier_imba_ebb_and_flow_thinker:IsPurgable()
 	return false
 end
@@ -461,12 +457,12 @@ function imba_kunkka_torrent:OnSpellStart()
 
 						-- Applies the slow
 						if torrent_count == 0 then
-							enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow", {duration = slow_duration})
+							enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 							if extra_slow then
-								enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow_tide", {duration = slow_duration})
+								enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow_tide", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 							end
 						else
-							enemy:AddNewModifier(caster, self, "modifier_imba_sec_torrent_slow", {duration = sec_torrent_slow_duration})
+							enemy:AddNewModifier(caster, self, "modifier_imba_sec_torrent_slow", {duration = sec_torrent_slow_duration * (1 - enemy:GetStatusResistance())})
 						end
 					end
 
@@ -809,7 +805,7 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnIntervalThink()
 						end)
 
 
-					enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_sec_torrent_slow", {duration = self.sec_torrent_slow_duration})
+					enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_sec_torrent_slow", {duration = self.sec_torrent_slow_duration * (1 - enemy:GetStatusResistance())})
 				end
 
 				-- Creates the post-ability sound effect
@@ -937,21 +933,15 @@ end
 modifier_imba_tidebringer = class({})
 
 function modifier_imba_tidebringer:DeclareFunctions()
-	local decFuncs =
-	{
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_tidebringer:OnCreated()
-	self.range = self:GetAbility():GetSpecialValueFor("range")
-	self.radius_start = self:GetAbility():GetSpecialValueFor("radius_start")
-	self.radius_end = self:GetAbility():GetSpecialValueFor("radius_end")
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	if IsServer() then
@@ -962,9 +952,6 @@ function modifier_imba_tidebringer:OnCreated()
 end
 
 function modifier_imba_tidebringer:OnRefresh()
-	self.range = self:GetAbility():GetSpecialValueFor("range")
-	self.radius_start = self:GetAbility():GetSpecialValueFor("radius_start")
-	self.radius_end = self:GetAbility():GetSpecialValueFor("radius_end")
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	if IsServer() then
@@ -975,7 +962,7 @@ function modifier_imba_tidebringer:OnRefresh()
 end
 
 function modifier_imba_tidebringer:OnAttackStart( params )
-	if IsServer() then
+	if self:GetAbility() then
 		local parent = self:GetParent()
 		local target = params.target
 		if (parent == params.attacker) and (target:GetTeamNumber() ~= parent:GetTeamNumber()) and (target.IsCreep or target.IsHero) then
@@ -1010,7 +997,7 @@ end
 
 function modifier_imba_tidebringer:OnAttackLanded( params )
 	local ability = self:GetAbility()
-	if IsServer() then
+	if self:GetAbility() then
 		local parent = self:GetParent()
 		local tidebringer_bonus_damage = self.bonus_damage
 		if params.attacker == parent and ( not parent:IsIllusion() ) and self.pass_attack then
@@ -1022,9 +1009,9 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 				return 0
 			end
 
-			local range = self.range
-			local radius_start = self.radius_start
-			local radius_end = self.radius_end
+			local range = self:GetAbility():GetSpecialValueFor("range")
+			local radius_start = self:GetAbility():GetSpecialValueFor("radius_start")
+			local radius_end = self:GetAbility():GetSpecialValueFor("radius_end")
 
 			parent:RemoveModifierByName("modifier_imba_tidebringer_sword_particle")
 
@@ -1155,7 +1142,7 @@ function modifier_imba_tidebringer:TidebringerEffects( target, ability )
 	self.hitCounter = self.hitCounter + 1
 	local attacker = self:GetCaster()
 	if ( self.tide_index == 1 or self.tide_index == 3 ) and not target:IsMagicImmune() then
-		target:AddNewModifier(attacker, ability, "modifier_imba_tidebringer_slow", {duration = ability:GetSpecialValueFor("tide_red_slow_duration")})
+		target:AddNewModifier(attacker, ability, "modifier_imba_tidebringer_slow", {duration = ability:GetSpecialValueFor("tide_red_slow_duration") * (1 - target:GetStatusResistance())})
 	end
 
 	if self.tide_index == 1 then
@@ -1184,7 +1171,7 @@ function modifier_imba_tidebringer:TidebringerEffects( target, ability )
 
 		-- Apply knockback on enemies hit
 		target:RemoveModifierByName("modifier_knockback")
-		target:AddNewModifier(self:GetParent(), ability, "modifier_knockback", knockback):SetDuration(ability:GetSpecialValueFor("tsunami_stun"), true)
+		target:AddNewModifier(self:GetParent(), ability, "modifier_knockback", knockback)
 	end
 end
 
@@ -1279,8 +1266,8 @@ function imba_kunkka_x_marks_the_spot:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
-		local duration = self:GetSpecialValueFor("duration")
-		local sec_duration = self:GetSpecialValueFor("sec_duration")
+		local duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())
+		local sec_duration = self:GetSpecialValueFor("sec_duration") * (1 - target:GetStatusResistance())
 		local talent_hits = false
 
 		if caster:HasTalent("special_bonus_imba_kunkka_5") then
@@ -1404,7 +1391,7 @@ function modifier_imba_x_marks_the_spot:OnDestroy( params )
 			-- #3 Talent: X Marks The Spot Return grants 10% movespeed for allies, 10% movespeed reduction for enemies
 			if caster:HasTalent("special_bonus_imba_kunkka_3") then
 				if caster:GetTeamNumber() ~= parent:GetTeamNumber() then
-					parent:AddNewModifier(caster,ability,"modifier_imba_x_marks_the_spot_talent_ms",{duration = ability:GetTalentSpecialValueFor("duration")})
+					parent:AddNewModifier(caster,ability,"modifier_imba_x_marks_the_spot_talent_ms",{duration = ability:GetTalentSpecialValueFor("duration") * (1 - parent:GetStatusResistance())})
 				else
 					parent:AddNewModifier(caster,ability,"modifier_imba_x_marks_the_spot_talent_ms",{duration = ability:GetTalentSpecialValueFor("allied_duration")})
 				end
@@ -1778,9 +1765,9 @@ function imba_kunkka_ghostship:OnSpellStart()
 						for k, enemy in pairs(enemies) do
 							ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 							if extra_slow then
-								enemy:AddNewModifier(caster, self, "modifier_imba_ghostship_tide_slow", { duration = stun_duration + self:GetSpecialValueFor("tide_red_slow_duration") })
+								enemy:AddNewModifier(caster, self, "modifier_imba_ghostship_tide_slow", { duration = stun_duration + self:GetSpecialValueFor("tide_red_slow_duration") * (1 - enemy:GetStatusResistance()) })
 							end
-							enemy:AddNewModifier(caster, self, "modifier_stunned", { duration = stun_duration })
+							enemy:AddNewModifier(caster, self, "modifier_stunned", { duration = stun_duration * (1 - enemy:GetStatusResistance()) })
 						end
 					end)
 			end)
@@ -2133,3 +2120,51 @@ end
 function modifier_imba_ghostship_tide_slow:RemoveOnDeath()
 	return true
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_1", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_2", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_3", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_4", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_6", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_8", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_kunkka_9", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_kunkka_1		= modifier_special_bonus_imba_kunkka_1 or class({})
+modifier_special_bonus_imba_kunkka_2		= modifier_special_bonus_imba_kunkka_2 or class({})
+modifier_special_bonus_imba_kunkka_3		= modifier_special_bonus_imba_kunkka_3 or class({})
+modifier_special_bonus_imba_kunkka_4		= modifier_special_bonus_imba_kunkka_4 or class({})
+modifier_special_bonus_imba_kunkka_6		= modifier_special_bonus_imba_kunkka_6 or class({})
+modifier_special_bonus_imba_kunkka_8		= modifier_special_bonus_imba_kunkka_8 or class({})
+modifier_special_bonus_imba_kunkka_9		= modifier_special_bonus_imba_kunkka_9 or class({})
+
+function modifier_special_bonus_imba_kunkka_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_8:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_kunkka_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_kunkka_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_kunkka_9:RemoveOnDeath() 	return false end

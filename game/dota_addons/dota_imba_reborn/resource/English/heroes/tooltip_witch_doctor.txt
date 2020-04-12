@@ -55,7 +55,7 @@
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_base_attack_time"                "WARD BASE ATTACK TIME:"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_attack_range"                    "WARD ATTACK RANGE:"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_channel_time_tooltip"            "MAX. CHANNEL TIME:"
-"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_bounces_scepter"                 "SCEPTER BOUNCES:"
+//"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_bounces_scepter"                 "SCEPTER BOUNCES:"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_bounce_radius_scepter"           "SCEPTER BOUNCE RADIUS:"
 
 // Witch Doctor's Custom Talents

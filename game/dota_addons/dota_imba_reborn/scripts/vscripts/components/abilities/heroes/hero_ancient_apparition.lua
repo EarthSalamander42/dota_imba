@@ -139,11 +139,7 @@ function modifier_imba_ancient_apparition_cold_feet:OnIntervalThink()
 				self.ticks = self.ticks + 1
 				self.counter = 0
 			else
-				local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet_freeze", {duration = self.stun_duration})
-				
-				if stun_modifier then
-					stun_modifier:SetDuration(self.stun_duration * (1 - self:GetParent():GetStatusResistance()), true)
-				end
+				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet_freeze", {duration = self.stun_duration * (1 - self:GetParent():GetStatusResistance())})
 				
 				self:Destroy()
 			end
@@ -154,11 +150,9 @@ function modifier_imba_ancient_apparition_cold_feet:OnIntervalThink()
 end
 
 function modifier_imba_ancient_apparition_cold_feet:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_ORDER
 	}
-	
-	return decFuncs
 end
 
 -- IMBAfication: Pole Transferral
@@ -336,12 +330,10 @@ function modifier_imba_ancient_apparition_ice_vortex:OnCreated()
 end
 
 function modifier_imba_ancient_apparition_ice_vortex:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-	}
-	
-	return decFuncs	
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+	}	
 end
 
 function modifier_imba_ancient_apparition_ice_vortex:GetModifierMoveSpeedBonus_Percentage()
@@ -352,7 +344,7 @@ function modifier_imba_ancient_apparition_ice_vortex:GetModifierMoveSpeedBonus_P
 	end
 end
 
-function modifier_imba_ancient_apparition_ice_vortex:GetModifierSpellAmplify_Percentage()
+function modifier_imba_ancient_apparition_ice_vortex:GetModifierMagicalResistanceBonus()
 	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		return self.spell_resist_pct
 	else
@@ -404,29 +396,19 @@ function imba_ancient_apparition_chilling_touch:OnOrbImpact( keys )
 
 	keys.target:EmitSound("Hero_Ancient_Apparition.ChillingTouch.Target")
 
-	local chilling_touch_modifier = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_chilling_touch_slow", { duration = self:GetSpecialValueFor("duration") })
-
-	if chilling_touch_modifier then
-		chilling_touch_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
-	end
+	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_chilling_touch_slow", { duration = self:GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())})
 	
 	-- IMBAfication: Packed Ice
-	local stun_modifier = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", { duration = self:GetSpecialValueFor("packed_ice_duration") })
-
-	if stun_modifier then
-		stun_modifier:SetDuration(self:GetSpecialValueFor("packed_ice_duration") * (1 - keys.target:GetStatusResistance()), true)
-	end
-
-	local damageTable = {
+	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", { duration = self:GetSpecialValueFor("packed_ice_duration") * (1 - keys.target:GetStatusResistance())})
+	
+	ApplyDamage({
 		victim 			= keys.target,
 		damage 			= self:GetTalentSpecialValueFor("damage"),
 		damage_type		= DAMAGE_TYPE_MAGICAL,
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 		attacker 		= self:GetCaster(),
 		ability 		= self
-	}
-
-	ApplyDamage(damageTable)
+	})
 	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, keys.target, self:GetTalentSpecialValueFor("damage"), nil)
 end
@@ -527,11 +509,9 @@ function modifier_imba_ancient_apparition_imbued_ice:OnRefresh()
 end
 
 function modifier_imba_ancient_apparition_imbued_ice:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-	
-	return decFuncs
 end
 
 -- "Does not work against buildings, but fully works against wards."
@@ -545,11 +525,7 @@ function modifier_imba_ancient_apparition_imbued_ice:OnAttackLanded(keys)
 		ApplyDamage(self.damage_table)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, keys.target, self.damage_per_attack, nil)
 		
-		local imbued_ice_slow_modifier = keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_imbued_ice_slow", {duration = self.move_speed_duration})
-		
-		if imbued_ice_slow_modifier then
-			imbued_ice_slow_modifier:SetDuration(self.move_speed_duration * (1 - keys.target:GetStatusResistance()), true)
-		end
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_imbued_ice_slow", {duration = self.move_speed_duration * (1 - keys.target:GetStatusResistance())})
 		
 		if self:GetStackCount() <= 0 then
 			self:Destroy()
@@ -576,12 +552,10 @@ function modifier_imba_ancient_apparition_imbued_ice_slow:OnCreated()
 end
 
 function modifier_imba_ancient_apparition_imbued_ice_slow:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_DISABLE_HEALING
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_ancient_apparition_imbued_ice_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -770,6 +744,7 @@ end
 -- ICE BLAST MODIFIER --
 ------------------------
 
+function modifier_imba_ancient_apparition_ice_blast:IsDebuff()		return true end
 function modifier_imba_ancient_apparition_ice_blast:IsPurgable()	return false end
 
 function modifier_imba_ancient_apparition_ice_blast:GetEffectName()
@@ -786,12 +761,18 @@ function modifier_imba_ancient_apparition_ice_blast:OnCreated(params)
 	self.dot_damage		= params.dot_damage
 	self.kill_pct		= params.kill_pct
 	
+	if params.caster_entindex then
+		self.caster = EntIndexToHScript(params.caster_entindex)
+	else
+		self.caster = self:GetCaster()
+	end
+	
 	self.damage_table	= {
 		victim 			= self:GetParent(),
 		damage 			= self.dot_damage,
 		damage_type		= DAMAGE_TYPE_MAGICAL,
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		attacker 		= self:GetCaster(),
+		attacker 		= self.caster,
 		ability 		= self:GetAbility()
 	}
 	
@@ -811,12 +792,10 @@ function modifier_imba_ancient_apparition_ice_blast:OnIntervalThink()
 end
 
 function modifier_imba_ancient_apparition_ice_blast:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_DISABLE_HEALING,
 		MODIFIER_EVENT_ON_TAKEDAMAGE_KILLCREDIT
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_ancient_apparition_ice_blast:GetDisableHealing()
@@ -825,8 +804,8 @@ end
 
 function modifier_imba_ancient_apparition_ice_blast:OnTakeDamageKillCredit(keys)
 	if keys.target == self:GetParent() and (self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) * 100 <= self.kill_pct then
-		if keys.attacker == self:GetParent() then
-			self:GetParent():Kill(self:GetAbility(), self:GetCaster())
+		if keys.attacker == self:GetParent() and not self:GetParent():IsInvulnerable() then
+			self:GetParent():Kill(self:GetAbility(), self.caster)
 		else
 			self:GetParent():Kill(self:GetAbility(), keys.attacker)
 		end
@@ -854,11 +833,9 @@ function modifier_imba_ancient_apparition_ice_blast_global_cooling:OnCreated()
 end
 
 function modifier_imba_ancient_apparition_ice_blast_global_cooling:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
 	}
-	
-	return decFuncs
 end
 
 function modifier_imba_ancient_apparition_ice_blast_global_cooling:GetModifierMoveSpeedBonus_Percentage()
@@ -980,7 +957,7 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileThink_ExtraData(l
 		AddFOWViewer(self:GetCaster():GetTeamNumber(), location, self.ice_blast_ability:GetSpecialValueFor("target_sight_radius"), 3, false)
 		
 		-- "The debuff can also be placed on spell immune or invulnerable, but not on hidden units."
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self.ice_blast_ability:GetSpecialValueFor("path_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self.ice_blast_ability:GetSpecialValueFor("path_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		
 		local duration		= self.ice_blast_ability:GetSpecialValueFor("frostbite_duration")
 		
@@ -988,18 +965,24 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileThink_ExtraData(l
 			duration		= self.ice_blast_ability:GetSpecialValueFor("frostbite_duration_scepter")
 		end
 
-		for _, enemy in pairs(enemies) do
-			-- IMBAfication: Absolute Freeze
-			local ice_blast_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
-				{
-					duration		= duration,
-					dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
-					kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct")
-				}
-			)
-			
-			if ice_blast_modifier then
-				ice_blast_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+		for _, enemy in pairs(enemies) do			
+			if enemy:IsInvulnerable() then
+				enemy:AddNewModifier(enemy, self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+					{
+						duration		= duration * (1 - enemy:GetStatusResistance()),
+						dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
+						kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct"),
+						caster_entindex	= self:GetCaster():entindex()
+					}
+				)
+			else
+				enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+					{
+						duration		= duration * (1 - enemy:GetStatusResistance()),
+						dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
+						kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct")
+					}
+				)
 			end
 		end
 	end
@@ -1015,7 +998,7 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(tar
 		end
 	
 		-- "The debuff can also be placed on spell immune or invulnerable, but not on hidden units."
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, data.final_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, data.final_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	
 		local damageTable = {
 			victim 			= nil,
@@ -1034,16 +1017,23 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(tar
 	
 		for _, enemy in pairs(enemies) do
 			-- IMBAfication: Absolute Freeze
-			local ice_blast_modifier = enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
-				{
-					duration		= duration,
-					dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
-					kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct")
-				}
-			)
-			
-			if ice_blast_modifier then
-				ice_blast_modifier:SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+			if enemy:IsInvulnerable() then
+				enemy:AddNewModifier(enemy, self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+					{
+						duration		= duration * (1 - enemy:GetStatusResistance()),
+						dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
+						kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct"),
+						caster_entindex	= self:GetCaster():entindex()
+					}
+				)
+			else
+				enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast", 
+					{
+						duration		= duration * (1 - enemy:GetStatusResistance()),
+						dot_damage		= self.ice_blast_ability:GetSpecialValueFor("dot_damage"),
+						kill_pct		= self.ice_blast_ability:GetTalentSpecialValueFor("kill_pct")
+					}
+				)
 			end
 		
 			if not enemy:IsMagicImmune() then
@@ -1080,12 +1070,14 @@ LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_r
 LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_ancient_apparition_chilling_touch_range		= modifier_special_bonus_imba_ancient_apparition_chilling_touch_range or class({})
 modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown		= class({})
 modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage	= class({})
 modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost			= class({})
+modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold	= modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold or class({})
 modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe			= class({})
 
 function modifier_special_bonus_imba_ancient_apparition_chilling_touch_range:IsHidden() 		return true end
@@ -1143,6 +1135,10 @@ function modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost:OnDestr
 		self.anti_abrasion_ability:SetHidden(true)
 	end
 end
+
+function modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold:IsHidden() 		return true end
+function modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold:IsPurgable() 		return false end
+function modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe:IsHidden() 		return true end
 function modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe:IsPurgable() 		return false end

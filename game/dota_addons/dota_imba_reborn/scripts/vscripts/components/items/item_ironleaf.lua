@@ -33,11 +33,11 @@ end
 -- STACKABLE IRONLEAF BOOTS STATS MODIFIER
 modifier_imba_ironleaf_boots = modifier_imba_ironleaf_boots or class({})
 
-function modifier_imba_ironleaf_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_ironleaf_boots:IsHidden() return true end
-function modifier_imba_ironleaf_boots:IsDebuff() return false end
-function modifier_imba_ironleaf_boots:IsPurgable() return false end
-function modifier_imba_ironleaf_boots:RemoveOnDeath() return false end
+function modifier_imba_ironleaf_boots:AllowIllusionDuplicate()	return false end
+function modifier_imba_ironleaf_boots:IsHidden()		return true end
+function modifier_imba_ironleaf_boots:IsPurgable()		return false end
+function modifier_imba_ironleaf_boots:RemoveOnDeath()	return false end
+function modifier_imba_ironleaf_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_ironleaf_boots:OnCreated()
 	-- Ability properties

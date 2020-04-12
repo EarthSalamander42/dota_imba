@@ -103,7 +103,8 @@ end
 --------------------------------------
 
 function modifier_item_imba_bloodstone_720:IsHidden()		return true end
-function modifier_item_imba_bloodstone_720:IsPermanent()	return true end
+function modifier_item_imba_bloodstone_720:IsPurgable()	return false end
+function modifier_item_imba_bloodstone_720:RemoveOnDeath()	return false end
 function modifier_item_imba_bloodstone_720:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_bloodstone_720:OnCreated()
@@ -279,3 +280,7 @@ function modifier_item_imba_bloodstone_min_health_null_720:IgnoreTenacity()	retu
 function modifier_item_imba_bloodstone_min_health_null_720:IsDebuff()		return true end
 function modifier_item_imba_bloodstone_min_health_null_720:IsPurgable()		return false end
 function modifier_item_imba_bloodstone_min_health_null_720:RemoveOnDeath()	return false end
+
+function modifier_item_imba_bloodstone_min_health_null_720:GetTexture()
+	return "item_bloodstone"
+end

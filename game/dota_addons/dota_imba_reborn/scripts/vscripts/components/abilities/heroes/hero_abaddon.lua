@@ -177,12 +177,9 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 
 				-- debuff_duration can be 0 if caster has ability but not learnt it yet
 				if debuff_duration > 0 and not caster:PassivesDisabled() then
-					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration * (1 - target:GetStatusResistance()) })
 				end
 			end
-
-			-- Apply the Mist
-			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_enemy", {duration = mist_duration})
 		else
 			--Apply spellpower to heal
 			-- local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
@@ -283,30 +280,33 @@ function modifier_imba_mist_coil_mist_ally:IsPurgable() return true end
 function modifier_imba_mist_coil_mist_ally:RemoveOnDeath() return true end
 ---------------------------------------------
 function modifier_imba_mist_coil_mist_ally:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+	
 	self.damage_heal_pct = self:GetAbility():GetSpecialValueFor("damage_heal_pct") / 100
-	self:SetStackCount(0)
-	self.caster = self:GetCaster()
-	self.parent = self:GetParent()
+end
+
+function modifier_imba_mist_coil_mist_ally:OnRefresh()
+	self:OnCreated()
 end
 
 function modifier_imba_mist_coil_mist_ally:OnDestroy(keys)
-	if self.parent and IsServer() and self.parent:IsAlive() then
-		self.parent:Heal(self:GetStackCount(), self.caster)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.parent, self:GetStackCount(), nil)
+	if not self:GetAbility() then return end
+	
+	if IsServer() and self:GetParent():IsAlive() then
+		self:GetParent():Heal(self:GetStackCount(), self:GetCaster())
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self:GetStackCount(), nil)
 	end
 end
 
 function modifier_imba_mist_coil_mist_ally:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_mist_coil_mist_ally:OnTakeDamage(keys)
-	if keys.target == self.parent then
-		self:SetStackCount(self:GetStackCount() + math.floor(keys.damage * self.damage_heal_pct + 0.5))
+	if keys.unit == self:GetParent() then
+		self:SetStackCount(self:GetStackCount() + math.floor(keys.damage * self.damage_heal_pct))
 	end
 end
 
@@ -464,7 +464,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 
 				if debuff_duration and debuff_duration > 0 then
 					if not caster:PassivesDisabled() and curse_of_avernus then
-						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration * (1 - unit:GetStatusResistance()) })
 					end
 
 					-- Show particle when hit
@@ -687,7 +687,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 					local ability = self:GetAbility()
 					if ability then
 						local debuff_duration = ability:GetSpecialValueFor("debuff_duration") -- Not possible for this to be 0 here
-						target:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+						target:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration * (1 - target:GetStatusResistance())})
 						local responses = {"abaddon_abad_frostmourne_01","abaddon_abad_frostmourne_02","abaddon_abad_frostmourne_03","abaddon_abad_frostmourne_04","abaddon_abad_frostmourne_05","abaddon_abad_frostmourne_06","abaddon_abad_frostmourne_06"}
 						caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 30,"curse_of_avernus")
 					end
@@ -964,7 +964,6 @@ modifier_over_channel_handler = modifier_over_channel_handler or class({
 	IsHidden				= function(self) return false end,
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
-	IsPermanent				= function(self) return false end,
 	RemoveOnDeath			= function(self) return true end,
 	AllowIllusionDuplicate	= function(self) return false end -- Allow illusions to carry this particle modifier
 })
@@ -995,7 +994,7 @@ end
 function modifier_over_channel_handler:OnAbilityExecuted( keys )
     if not IsServer() then return end
 	
-    if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" then
+    if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" and keys.ability:GetName() ~= "ability_capture" then
         self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")})
 		
 		local parent = self:GetParent()
@@ -1398,19 +1397,55 @@ end
 -- This is done to reget the behavior of the spell for client purposes
 -------------------------------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_1", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_abaddon_2", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_3", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_abaddon_4", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_5", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_6", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_7", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_8", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_abaddon_1 = modifier_special_bonus_imba_abaddon_1 or class({})
 modifier_special_bonus_imba_abaddon_2 = modifier_special_bonus_imba_abaddon_2 or class({})
+modifier_special_bonus_imba_abaddon_3 = modifier_special_bonus_imba_abaddon_3 or class({})
 modifier_special_bonus_imba_abaddon_4 = modifier_special_bonus_imba_abaddon_4 or class({})
+modifier_special_bonus_imba_abaddon_5 = modifier_special_bonus_imba_abaddon_5 or class({})
+modifier_special_bonus_imba_abaddon_6 = modifier_special_bonus_imba_abaddon_6 or class({})
+modifier_special_bonus_imba_abaddon_7 = modifier_special_bonus_imba_abaddon_7 or class({})
+modifier_special_bonus_imba_abaddon_8 = modifier_special_bonus_imba_abaddon_8 or class({})
+
+function modifier_special_bonus_imba_abaddon_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_1:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_1:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_abaddon_2:IsHidden() 		return true end
 function modifier_special_bonus_imba_abaddon_2:IsPurgable() 	return false end
 function modifier_special_bonus_imba_abaddon_2:RemoveOnDeath() 	return false end
 
+function modifier_special_bonus_imba_abaddon_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_3:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_3:RemoveOnDeath() 	return false end
+
 function modifier_special_bonus_imba_abaddon_4:IsHidden() 		return true end
 function modifier_special_bonus_imba_abaddon_4:IsPurgable() 	return false end
 function modifier_special_bonus_imba_abaddon_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_abaddon_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_5:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_abaddon_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_6:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_abaddon_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_7:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_abaddon_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_abaddon_8:IsPurgable() 	return false end
+function modifier_special_bonus_imba_abaddon_8:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_abaddon_4:OnCreated( params )
 	if IsServer() then

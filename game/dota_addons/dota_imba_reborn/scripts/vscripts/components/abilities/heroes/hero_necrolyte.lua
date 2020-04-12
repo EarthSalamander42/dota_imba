@@ -27,12 +27,10 @@ end
 
 modifier_imba_sadist = class({})
 function modifier_imba_sadist:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_DEATH,
-			MODIFIER_EVENT_ON_ATTACK_LANDED
-		}
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_sadist:OnCreated()
@@ -234,7 +232,6 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 		-- Parameters
 		local radius = self:GetTalentSpecialValueFor("radius")
 		local damage = self:GetSpecialValueFor("damage")
-		local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 		local base_heal = self:GetSpecialValueFor("base_heal")
 		local sec_heal_pct = self:GetSpecialValueFor("sec_heal_pct")
 		local enemy_speed = self:GetSpecialValueFor("enemy_speed")
@@ -263,7 +260,7 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 					--	iVisionRadius = vision_radius,
 					--	iVisionTeamNumber = caster:GetTeamNumber(),
 					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-					ExtraData = {sec_heal_pct = sec_heal_pct, heal_amp = heal_amp, radius = radius, ally_speed = ally_speed}
+					ExtraData = {sec_heal_pct = sec_heal_pct, radius = radius, ally_speed = ally_speed}
 				}
 
 			-- Create the projectile
@@ -286,7 +283,7 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 					--	iVisionRadius = vision_radius,
 					--	iVisionTeamNumber = caster:GetTeamNumber(),
 					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-					ExtraData = {base_heal = base_heal, heal_amp = heal_amp}
+					ExtraData = {base_heal = base_heal}
 				}
 			-- Create the projectile
 			ProjectileManager:CreateTrackingProjectile(ally_projectile)
@@ -300,15 +297,15 @@ function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation,
 
 		-- Base Heal
 		if extraData.base_heal then
-			target:Heal((extraData.base_heal * extraData.heal_amp), caster)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, extraData.base_heal * extraData.heal_amp, nil)
+			target:Heal(extraData.base_heal, caster)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, extraData.base_heal, nil)
 			return nil
 		end
 
 		local caster_loc = caster:GetAbsOrigin()
 
 		if not extraData.radius then
-			local heal = target:GetMaxHealth() * (extraData.sec_heal_pct / 100) * extraData.heal_amp
+			local heal = target:GetMaxHealth() * (extraData.sec_heal_pct / 100)
 			target:Heal(heal, caster)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 		end
@@ -330,7 +327,7 @@ function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation,
 						--	iVisionRadius = vision_radius,
 						--	iVisionTeamNumber = caster:GetTeamNumber(),
 						iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-						ExtraData = {sec_heal_pct = extraData.sec_heal_pct, heal_amp = extraData.heal_amp, ally_speed = extraData.ally_speed}
+						ExtraData = {sec_heal_pct = extraData.sec_heal_pct, ally_speed = extraData.ally_speed}
 					}
 
 				-- Create the projectile
@@ -388,7 +385,7 @@ function imba_necrolyte_ghost_shroud:OnSpellStart()
 end
 
 function imba_necrolyte_ghost_shroud:GetCastRange( location , target)
-	return self:GetTalentSpecialValueFor("radius")
+	return self:GetTalentSpecialValueFor("radius") - self:GetCaster():GetCastRangeBonus()
 end
 
 function imba_necrolyte_ghost_shroud:IsHiddenWhenStolen()
@@ -535,19 +532,24 @@ function modifier_imba_ghost_shroud_buff:OnCreated()
 	end
 end
 
--- function modifier_imba_ghost_shroud_buff:DeclareFunctions()
-	-- return {
-		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
-	-- }
--- end
+function modifier_imba_ghost_shroud_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_TARGET,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+	}
+end
 
--- function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
-	-- return self.healing_amp_pct
--- end
-
-function modifier_imba_ghost_shroud_buff:Custom_AllHealAmplify_Percentage()
+function modifier_imba_ghost_shroud_buff:GetModifierHealAmplify_PercentageTarget()
 	return self.healing_amp_pct
 end
+
+function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
+	return self.healing_amp_pct
+end
+
+-- function modifier_imba_ghost_shroud_buff:Custom_AllHealAmplify_Percentage()
+	-- return self.healing_amp_pct
+-- end
 
 ----------------------------------------
 -- Ghost Shroud Negative Aura Handler --
@@ -599,15 +601,15 @@ function modifier_imba_ghost_shroud_debuff:GetEffectName()
 end
 
 function modifier_imba_ghost_shroud_debuff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
 end
 
 function modifier_imba_ghost_shroud_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("slow_pct") * (-1)
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("slow_pct") * (-1)
+	end
 end
 
 -------------------------------------------
@@ -758,11 +760,9 @@ end
 
 
 function modifier_imba_heartstopper_aura_damage:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
-		}
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
+	}
 end
 
 function modifier_imba_heartstopper_aura_damage:GetModifierHPRegenAmplify_Percentage()
@@ -956,11 +956,9 @@ function modifier_imba_reapers_scythe_respawn:RemoveOnDeath()
 end
 
 function modifier_imba_reapers_scythe_respawn:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_RESPAWN,
-		}
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_RESPAWN
+	}
 end
 
 function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
@@ -968,7 +966,7 @@ function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
 		if self:GetParent() == params.unit then
 			if self.ability and not self.reincarnate_respawn then
 				local debuff_duration = self.ability:GetSpecialValueFor("debuff_duration")
-				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration})
+				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration * (1 - params.unit:GetStatusResistance())})
 			end
 
 			self:GetParent():RemoveModifierByName("modifier_imba_reapers_scythe_respawn")
@@ -978,25 +976,6 @@ end
 
 modifier_imba_reapers_scythe_debuff = modifier_imba_reapers_scythe_debuff or class({})
 
-function modifier_imba_reapers_scythe_debuff:GetStatusEffectName()
-	return "particles/hero/necrophos/status_effect_reaper_scythe_sickness.vpcf"
-end
-
-function modifier_imba_reapers_scythe_debuff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
-		}
-	return decFuncs
-end
-
-function modifier_imba_reapers_scythe_debuff:OnCreated( params )
-	local ability = self:GetAbility()
-	self.damage_reduction_pct = ability:GetTalentSpecialValueFor("damage_reduction_pct") * (-1)
-	self.spellpower_reduction = ability:GetTalentSpecialValueFor("spellpower_reduction") * (-1)
-end
-
 function modifier_imba_reapers_scythe_debuff:IsDebuff()
 	return true
 end
@@ -1005,10 +984,117 @@ function modifier_imba_reapers_scythe_debuff:IsPurgable()
 	return false
 end
 
+function modifier_imba_reapers_scythe_debuff:GetStatusEffectName()
+	return "particles/hero/necrophos/status_effect_reaper_scythe_sickness.vpcf"
+end
+
+function modifier_imba_reapers_scythe_debuff:OnCreated( params )
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.damage_reduction_pct = self:GetAbility():GetTalentSpecialValueFor("damage_reduction_pct") * (-1)
+	self.spellpower_reduction = self:GetAbility():GetTalentSpecialValueFor("spellpower_reduction") * (-1)
+end
+
+function modifier_imba_reapers_scythe_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+	}
+end
+
 function modifier_imba_reapers_scythe_debuff:GetModifierSpellAmplify_Percentage()
 	return self.spellpower_reduction
 end
 
 function modifier_imba_reapers_scythe_debuff:GetModifierBaseDamageOutgoing_Percentage()
 	return self.damage_reduction_pct
+end
+
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_2", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_3", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_6", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_8", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_necrolyte_2	= modifier_special_bonus_imba_necrolyte_2 or class({})
+modifier_special_bonus_imba_necrolyte_3	= modifier_special_bonus_imba_necrolyte_3 or class({})
+modifier_special_bonus_imba_necrolyte_6	= modifier_special_bonus_imba_necrolyte_6 or class({})
+modifier_special_bonus_imba_necrolyte_8	= modifier_special_bonus_imba_necrolyte_8 or class({})
+
+function modifier_special_bonus_imba_necrolyte_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_necrolyte_8:RemoveOnDeath() 	return false end
+
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_1", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_4", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_5", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_necrolyte_7", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_necrolyte_1				= modifier_special_bonus_imba_necrolyte_1 or class({})
+modifier_special_bonus_imba_necrolyte_4				= modifier_special_bonus_imba_necrolyte_4 or class({})
+modifier_special_bonus_imba_necrolyte_5				= modifier_special_bonus_imba_necrolyte_5 or class({})
+modifier_special_bonus_imba_necrolyte_7				= modifier_special_bonus_imba_necrolyte_7 or class({})
+
+function modifier_special_bonus_imba_necrolyte_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_1:IsPurgable() 		return false end
+function modifier_special_bonus_imba_necrolyte_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_necrolyte_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_necrolyte_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_necrolyte_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_necrolyte_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_necrolyte_7:RemoveOnDeath() 	return false end
+
+function imba_necrolyte_death_pulse:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_1") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_1"), "modifier_special_bonus_imba_necrolyte_1", {})
+	end
+end
+
+function imba_necrolyte_ghost_shroud:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_5"), "modifier_special_bonus_imba_necrolyte_5", {})
+	end
+end
+
+function imba_necrolyte_heartstopper_aura:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_4"), "modifier_special_bonus_imba_necrolyte_4", {})
+	end
+end
+
+function imba_necrolyte_reapers_scythe:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_7") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_7"), "modifier_special_bonus_imba_necrolyte_7", {})
+	end
 end

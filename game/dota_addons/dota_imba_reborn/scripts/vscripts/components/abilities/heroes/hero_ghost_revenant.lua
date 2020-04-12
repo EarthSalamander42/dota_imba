@@ -167,7 +167,7 @@ function ghost_revenant_blackjack:OnProjectileHit(target, target_loc)
 		if target then location = target:GetAbsOrigin() end
 
 		target:EmitSound("Item_Desolator.Target")
-		target:AddNewModifier(caster, self, "modifier_ghost_revenant_blackjack_debuff", {duration = stun_duration})
+		target:AddNewModifier(caster, self, "modifier_ghost_revenant_blackjack_debuff", {duration = stun_duration * (1 - target:GetStatusResistance())})
 
 		if not target.blackjack_hit or target.blackjack_hit == false then
 			ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = damage_type,})
@@ -250,7 +250,7 @@ function ghost_revenant_miasma:OnSpellStart()
 
 	local targets = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
 	for _,unit in pairs(targets) do
-		unit:AddNewModifier(caster, self, "modifier_ghost_revenant_miasma", {duration = duration})
+		unit:AddNewModifier(caster, self, "modifier_ghost_revenant_miasma", {duration = duration * (1 - unit:GetStatusResistance())})
 	end
 end
 
@@ -541,7 +541,7 @@ function ghost_revenant_exhaustion:OnSpellStart()
 
 	local targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
 	for _,unit in pairs(targets) do
-		unit:AddNewModifier(self:GetCaster(), self, "modifier_ghost_revenant_exhaustion", {duration = duration})
+		unit:AddNewModifier(self:GetCaster(), self, "modifier_ghost_revenant_exhaustion", {duration = duration * (1 - unit:GetStatusResistance())})
 	end
 end
 

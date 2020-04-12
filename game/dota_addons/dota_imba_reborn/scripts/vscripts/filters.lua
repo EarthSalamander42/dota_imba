@@ -40,7 +40,7 @@ function GameMode:GoldFilter(keys)
 
 		-- Hand of Midas gold bonus (let's make it not affect hero kills)
 		if hero:HasItemInInventory("item_imba_hand_of_midas") and hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.reason_const ~= DOTA_ModifyGold_HeroKill then
-			keys.gold = keys.gold * 1.05
+			keys.gold = keys.gold * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") * 0.01))
 		end
 
 		-- Lobby options adjustment
@@ -172,47 +172,49 @@ function GameMode:ModifierFilter( keys )
 		if keys.entindex_ability_const then
 			modifier_ability = EntIndexToHScript(keys.entindex_ability_const)
 		end
+		
+		-- This is causing too much grief with having to use SetDuration to just override times due to this filter not respecting refreshes, so I'm just going to nuke this once and for all and work from there...
+		-- if modifier_owner ~= nil then
+			-- modifier_class = modifier_owner:FindModifierByName(modifier_name)
+			-- if modifier_class == nil then return end
 
-		if modifier_owner ~= nil then
-			modifier_class = modifier_owner:FindModifierByName(modifier_name)
-			if modifier_class == nil then return end
+			-- -- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
+			-- local ignore_frantic = false
 
-			-- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
-			local ignore_frantic = false
+			-- for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
+				-- if modifier == modifier_name then
+					-- ignore_frantic = true
+				-- end
+			-- end
 
-			for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
-				if modifier == modifier_name then
-					ignore_frantic = true
-				end
-			end
+			-- if keys.entindex_ability_const and modifier_ability.GetAbilityName then
+				-- if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
+					-- local original_duration = keys.duration
+					-- local actual_duration = original_duration
+					-- local status_resistance = modifier_owner:GetStatusResistance()
+-- --					print("Old duration:", actual_duration)
 
-			if keys.entindex_ability_const and modifier_ability.GetAbilityName then
-				if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
-					local original_duration = keys.duration
-					local actual_duration = original_duration
-					local status_resistance = modifier_owner:GetStatusResistance()
---					print("Old duration:", actual_duration)
+					-- if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
+						-- actual_duration = actual_duration * (1 - status_resistance)
+					-- end
 
-					if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
-						actual_duration = actual_duration * (1 - status_resistance)
-					end
+-- --					print("New duration:", actual_duration)
 
---					print("New duration:", actual_duration)
+					-- keys.duration = actual_duration
+				-- else
+					-- -- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
+					-- if ignore_frantic == true then
+						-- local original_duration = keys.duration
+						-- local actual_duration = original_duration
+						-- local status_resistance = modifier_owner:GetStatusResistance()
 
-					keys.duration = actual_duration
-				else
-					-- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
-					if ignore_frantic == true then
-						local original_duration = keys.duration
-						local actual_duration = original_duration
-						local status_resistance = modifier_owner:GetStatusResistance()
-
-						actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
-						keys.duration = actual_duration
-					end
-				end
-			end
-		end
+						-- actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
+						-- keys.duration = actual_duration
+					-- end
+				-- end
+			-- end
+		-- end
+		
 		-- volvo bugfix
 		if modifier_name == "modifier_datadriven" then
 			return false
@@ -226,27 +228,28 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		-- Roshan special modifier rules
 		-------------------------------------------------------------------------------------------------
-		if modifier_owner:IsRoshan() then
-			-- Ignore stuns
---			print("Roshan modifier name:", modifier_name)
-			if modifier_name == "modifier_stunned" then
-				return false
-			end
 
-			-- Halve the duration of everything else
-			if modifier_caster ~= modifier_owner and keys.duration > 0 then
-				keys.duration = keys.duration / (100 / 50)
-			end
+		-- if modifier_owner:IsRoshan() then
+			-- -- Ignore stuns
+			-- print("Roshan modifier name:", modifier_name)
+			-- if modifier_name == "modifier_stunned" then
+				-- return false
+			-- end
 
-			-- Fury swipes capping
-			if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
-				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
-			end
+			-- -- Halve the duration of everything else
+			-- if modifier_caster ~= modifier_owner and keys.duration > 0 then
+				-- keys.duration = keys.duration / (100 / 50)
+			-- end
 
-			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
-				return false
-			end
-		end
+			-- -- Fury swipes capping
+			-- if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
+				-- modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+			-- end
+
+			-- if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
+				-- return false
+			-- end
+		-- end
 
 		-- -- add particle or sound playing to notify
 		-- if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
@@ -1191,15 +1194,6 @@ function GameMode:DamageFilter( keys )
 			end
 		end
 
-		-- Magic barrier (pipe/hood) damage mitigation
-		if victim:HasModifier("modifier_imba_hood_of_defiance_active_shield") and victim:GetTeam() ~= attacker:GetTeam() and damage_type == DAMAGE_TYPE_MAGICAL then
-			local shield_modifier = victim:FindModifierByName("modifier_imba_hood_of_defiance_active_shield")
-
-			if shield_modifier and shield_modifier.AbsorbDamage then
-				keys.damage = shield_modifier:AbsorbDamage(keys.damage)
-			end
-		end
-
 		-- Reaper's Scythe kill credit logic
 		if victim:HasModifier("modifier_imba_reapers_scythe") then
 
@@ -1279,7 +1273,7 @@ function GameMode:DamageFilter( keys )
 						local on_prow_crit_damage_pct = stun_ability:GetSpecialValueFor("on_prow_crit_damage_pct")
 
 						-- Increase damage and show the critical attack event
-						keys.damage = keys.damage * (1 + on_prow_crit_damage_pct * 0.01)
+						keys.damage = keys.damage * (1 + (on_prow_crit_damage_pct - 100) * 0.01)
 
 						-- Overhead critical event
 						SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)
@@ -1361,6 +1355,11 @@ function GameMode:BountyRuneFilter(keys)
 				table.insert(self.allies, unit)
 			end
 		end
+	end
+	
+	-- Hand of Midas gold bonus
+	if hero:HasItemInInventory("item_imba_hand_of_midas") and hero:HasModifier("modifier_item_imba_hand_of_midas") then
+		keys.gold_bounty = keys.gold_bounty * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") * 0.01))
 	end
 	
 	-- Okay now we should have the list of allies, so for each instance of BountyRuneFilter that is run, go through and check gold/exp; if Greevil's Greed owner, give an extra amount accordingly	

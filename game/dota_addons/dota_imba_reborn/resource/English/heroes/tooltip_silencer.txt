@@ -18,7 +18,7 @@
 // Silencer's Glaives of Wisdom
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom"                  "Glaives of Wisdom"
-"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Description"                  "Silencer enchants his glaives with his wisdom, dealing additional damage based on his Intelligence. Silencer temporarily steals his target's Intelligence with each hit.\n<font color='#FF7800'>Tranquility of Aeol Drias:</font> Every %hits_to_silence% hits, silences the target for %silence_duration% seconds."
+"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Description"		"Silencer enchants his glaives with his wisdom, dealing additional damage based on his Intelligence. Silencer temporarily steals his target's Intelligence with each hit.\n<font color='#FF7800'>Tranquility of Aeol Drias:</font> Every %hits_to_silence% hits, silences the target for %silence_duration% seconds. The glaive check debuff lasts for %hit_count_duration% seconds, and is refreshed on successful Glaives of Wisdom hits."
 
 //<font color='#FF7800'>Debate Me:</font> Each glaive hit on enemy heroes increases the strength of Nortrom's argument by decreasing the intelligence of the opponent by %int_reduction_pct%%% for %int_reduction_duration% seconds, up to a minimum of 1 intelligence point. Stacks and refreshes the duration each hit."
 //"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Note0"            "Target must be hit within 10 seconds from the last hit for the hit to count towards the silence requirement."
@@ -48,11 +48,14 @@
 "DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_debuff_counter"	"Glaives of Wisdom"
 "DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_debuff_counter_Description"	"Temporarily losing intelligence"
 
+"DOTA_Tooltip_modifier_imba_silencer_glaives_hit_counter"				"Tranquility of Aeol Drias"
+"DOTA_Tooltip_modifier_imba_silencer_glaives_hit_counter_Description"	"Will be silenced after %dMODIFIER_PROPERTY_TOOLTIP% hits from Glaives of Wisdom."
+
 ////===============================================================================================================
 // Silencer's Last Word
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_silencer_last_word"                          "Last Word"
-"DOTA_Tooltip_ability_imba_silencer_last_word_Description"              "Enchants a target, providing vision of them and causing them to be damaged and silenced if they cast a spell or if the enchantment timer expires. Deals extra damage based on the difference in intelligence between Silencer and the target if the timer expires naturally.\n<font color='#FF7800'>Damned If You Do:</font> If the target casts a spell, Last Word will be recast on them after the silence expires (or is purged).\n<font color='#FF7800'>Damned If You Don't:</font> Reduces the target's mana regeneration by %m_regen_reduct_pct%x for the duration of the initial cast."
+"DOTA_Tooltip_ability_imba_silencer_last_word_Description"              "Enchants a target, providing vision of them and causing them to be damaged and silenced if they cast a spell or if the enchantment timer expires. Deals extra damage based on the difference in intelligence between Silencer and the target if the timer expires naturally.\n<font color='#FF7800'>Damned If You Do:</font> If the target casts a spell, Last Word will be recast on them after the silence expires (or is purged).\n<font color='#FF7800'>Damned If You Don't:</font> Reduces the target's max mana regeneration by %m_regen_reduct_pct%%% for the duration of the initial cast."
 "DOTA_Tooltip_ability_imba_silencer_last_word_Lore"                    "Nortrom ensures that spells uttered by his opponents will be their last."
 "DOTA_Tooltip_ability_imba_silencer_last_word_duration"                "INITIAL DURATION:"
 "DOTA_Tooltip_ability_imba_silencer_last_word_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -62,7 +65,7 @@
 "DOTA_Tooltip_ability_imba_silencer_last_word_aghanim_description"				"Causes Last Word to become an AoE ability."
 
 "DOTA_Tooltip_modifier_imba_silencer_last_word_debuff"                  "Last Word"
-"DOTA_Tooltip_modifier_imba_silencer_last_word_debuff_Description"                  "Reducing mana regeneration by %fMODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE%%%. Casting spells will repeat Last Word after silence ends."
+"DOTA_Tooltip_modifier_imba_silencer_last_word_debuff_Description"		"Reducing max mana regeneration by %fMODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE%%%. Casting spells will repeat Last Word after silence ends."
 
 "DOTA_Tooltip_modifier_imba_silencer_last_word_repeat_thinker"          "Last Word"
 "DOTA_Tooltip_modifier_imba_silencer_last_word_repeat_thinker_Description"          "You immediately regret your decision. Last Word will be recast on you after this ends."
@@ -99,6 +102,22 @@
 
 "DOTA_Tooltip_modifier_imba_silencer_global_silence"                    "Global Silence"
 "DOTA_Tooltip_modifier_imba_silencer_global_silence_Description"                    "Casting a spell or being mid spell cast will silence you for the rest of the duration."
+
+////===============================================================================================================
+// Silencer's Global Silence v2
+////===============================================================================================================
+"DOTA_Tooltip_ability_imba_silencer_global_silence_v2"						"Global Silence"
+"DOTA_Tooltip_ability_imba_silencer_global_silence_v2_Lore"					"With a shock to the ground, all magic and sound pauses, and Nortrom fulfills his prophecy."
+"DOTA_Tooltip_ability_imba_silencer_global_silence_v2_Description"			"Silencer stops all sound, preventing enemy heroes and units on the map from casting spells.\n<font color='#FF7800'>Dissenter's Punishment:</font> Removing this debuff early will reduce the target's max mana by %max_mana_reduction_percentage%%% for %max_mana_remainder_duration_multiplier%x the debuff's remaining duration. This effect is unpurgable."
+"DOTA_Tooltip_ability_imba_silencer_global_silence_v2_Note0"				"This skill works on invisible and Spell Immune units, but gaining spell immunity will remove its effect."
+"DOTA_Tooltip_ability_imba_silencer_global_silence_v2_Note1"				"Dissenter's Punishment's max mana reduction does not dynamically update."
+"DOTA_Tooltip_ability_imba_silencer_global_silence_v2_abilityduration"		"DURATION:"
+
+"DOTA_Tooltip_modifier_imba_silencer_global_silence_v2"						"Global Silence"
+"DOTA_Tooltip_modifier_imba_silencer_global_silence_v2_Description"			"Silenced. Attempting to remove this debuff early will reduce your max mana by %dMODIFIER_PROPERTY_TOOLTIP%%% for %dMODIFIER_PROPERTY_TOOLTIP%x Global Silence's remaining duration. Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%% additional damage from all sources."
+
+"DOTA_Tooltip_modifier_imba_silencer_global_silence_v2_mana_reduction"						"Dissenter's Punishment"
+"DOTA_Tooltip_modifier_imba_silencer_global_silence_v2_mana_reduction_Description"			"Max mana reduced by %dMODIFIER_PROPERTY_MANA_BONUS%."
 
 ////===============================================================================================================
 // Silencer's Custom Talents

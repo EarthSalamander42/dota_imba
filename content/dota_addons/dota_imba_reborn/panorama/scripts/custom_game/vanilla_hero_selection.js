@@ -27,7 +27,7 @@ function InitHeroSelection()  {
 		pick_screen_title.text = ($.Localize("LobbySetting_GameMode") + ": " + $.Localize("vote_gamemode_" + gamemode[1])).toUpperCase();
 		pick_screen_title.style.marginTop = "30px";
 		pick_screen_title.style.height = "37px";
-		pick_screen_title.style.fontSize = "30px";
+		pick_screen_title.style.fontSize = "300px"; // This was originally 30px, but it was overlapping with the All Pick text; changing this to 300px seems extremely wrong, but it makes it aligned anyways?...
 		pick_screen_title.style.horizontalAlign = "left";
 		pick_screen_title.style.opacity = "1";
 	}

@@ -19,86 +19,7 @@
 --	Date: 			26.01.2015		<-- Dinosaurs roamed the earth
 --	Converted to lua by Firetoad
 --	Last Update:	26.03.2017
---	Arcane Boots, Mekansm, and Guardian Greaves
-
------------------------------------------------------------------------------------------------------------
---	Arcane Boots definition
------------------------------------------------------------------------------------------------------------
-
-if item_imba_arcane_boots == nil then item_imba_arcane_boots = class({}) end
-LinkLuaModifier( "modifier_item_imba_arcane_boots", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
-
-function item_imba_arcane_boots:GetIntrinsicModifierName()
-	return "modifier_item_imba_arcane_boots" end
-
-function item_imba_arcane_boots:OnAbilityPhaseStart()
-	if self:GetCaster():IsClone() then
-		return false
-	end
-
-	return true
-end
-
-function item_imba_arcane_boots:OnSpellStart()
-	if IsServer() then
-		-- Parameters
-		local replenish_mana = self:GetSpecialValueFor("base_replenish_mana") + self:GetSpecialValueFor("replenish_mana_pct") * self:GetCaster():GetMaxMana() * 0.01
-		local replenish_radius = self:GetSpecialValueFor("replenish_radius")
-
-		-- Play activation sound and particle
-		self:GetCaster():EmitSound("DOTA_Item.ArcaneBoots.Activate")
-		local arcane_pfx = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-		ParticleManager:ReleaseParticleIndex(arcane_pfx)
-
-		-- Iterate through nearby allies
-		local nearby_allies = FindUnitsInRadius(self:GetCaster():GetTeam(), self:GetCaster():GetAbsOrigin(), nil, replenish_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_ANY_ORDER, false)
-		for _, ally in pairs(nearby_allies) do
-
-			-- Grant the ally mana
-			ally:GiveMana(replenish_mana)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD , ally, replenish_mana, nil)
-
-			-- Play the "hit" particle
-			local arcane_target_pfx = ParticleManager:CreateParticle("particles/items_fx/arcane_boots_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, ally)
-			ParticleManager:ReleaseParticleIndex(arcane_target_pfx)
-		end
-	end
-end
-
------------------------------------------------------------------------------------------------------------
---	Arcane Boots owner bonus attributes (stackable)
------------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_arcane_boots == nil then modifier_item_imba_arcane_boots = class({}) end
-function modifier_item_imba_arcane_boots:IsHidden() return true end
-function modifier_item_imba_arcane_boots:IsDebuff() return false end
-function modifier_item_imba_arcane_boots:IsPurgable() return false end
-function modifier_item_imba_arcane_boots:IsPermanent() return true end
-function modifier_item_imba_arcane_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-function modifier_item_imba_arcane_boots:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
-
-	self.bonus_ms	= self:GetAbility():GetSpecialValueFor("bonus_ms")
-	self.bonus_mana	= self:GetAbility():GetSpecialValueFor("bonus_mana")
-end
-
--- Declare modifier events/properties
-function modifier_item_imba_arcane_boots:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MANA_BONUS,
-	}
-	return funcs
-end
-
-function modifier_item_imba_arcane_boots:GetModifierMoveSpeedBonus_Percentage()
-	return self.bonus_ms
-end
-
-function modifier_item_imba_arcane_boots:GetModifierManaBonus()
-	return self.bonus_mana
-end
+--	Mekansm and Guardian Greaves
 
 -----------------------------------------------------------------------------------------------------------
 --	Mekansm definition
@@ -173,11 +94,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_mekansm == nil then modifier_item_imba_mekansm = class({}) end
-function modifier_item_imba_mekansm:IsHidden() return true end
-function modifier_item_imba_mekansm:IsDebuff() return false end
-function modifier_item_imba_mekansm:IsPurgable() return false end
-function modifier_item_imba_mekansm:IsPermanent() return true end
-function modifier_item_imba_mekansm:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_mekansm:IsHidden()			return true end
+function modifier_item_imba_mekansm:IsPurgable()		return false end
+function modifier_item_imba_mekansm:RemoveOnDeath()	return false end
+function modifier_item_imba_mekansm:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the aura emitter to the caster when created
 function modifier_item_imba_mekansm:OnCreated(keys)
@@ -287,15 +208,16 @@ function modifier_item_imba_mekansm_aura:GetTexture()
 
 -- Stores the aura's parameters to prevent errors when the item is destroyed
 function modifier_item_imba_mekansm_aura:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.aura_health_regen = self:GetAbility():GetSpecialValueFor("aura_health_regen")
 end
 
 -- Declare modifier events/properties
 function modifier_item_imba_mekansm_aura:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 	}
-	return funcs
 end
 
 function modifier_item_imba_mekansm_aura:GetModifierConstantHealthRegen()
@@ -316,17 +238,18 @@ function modifier_item_imba_mekansm_heal:GetTexture()
 
 -- Stores the ability's parameters to prevent errors if the item is destroyed
 function modifier_item_imba_mekansm_heal:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+
 	self.heal_bonus_armor = self:GetAbility():GetSpecialValueFor("heal_bonus_armor")
 	self.heal_percentage = self:GetAbility():GetSpecialValueFor("heal_percentage")
 end
 
 -- Declare modifier events/properties
 function modifier_item_imba_mekansm_heal:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_mekansm_heal:GetModifierHealthRegenPercentage()
@@ -369,8 +292,8 @@ function item_imba_guardian_greaves:OnSpellStart()
 	if IsServer() then
 
 		-- Parameters
-		local heal_amount = self:GetSpecialValueFor("mend_base_health") * (1 + self:GetCaster():GetSpellAmplification(false) * 0.01)
-		local mana_amount = self:GetSpecialValueFor("mend_base_mana") + self:GetSpecialValueFor("mend_mana_pct") * self:GetCaster():GetMaxMana() * 0.01
+		local heal_amount = self:GetSpecialValueFor("replenish_health") * (1 + self:GetCaster():GetSpellAmplification(false) * 0.01)
+		local mana_amount = self:GetSpecialValueFor("replenish_mana") + self:GetSpecialValueFor("mend_mana_pct") * self:GetCaster():GetMaxMana() * 0.01
 		local heal_radius = self:GetSpecialValueFor("aura_radius")
 		local heal_duration = self:GetSpecialValueFor("mend_duration")
 
@@ -384,17 +307,17 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_guardian_greaves == nil then modifier_item_imba_guardian_greaves = class({}) end
-function modifier_item_imba_guardian_greaves:IsHidden() return true end
-function modifier_item_imba_guardian_greaves:IsDebuff() return false end
-function modifier_item_imba_guardian_greaves:IsPurgable() return false end
-function modifier_item_imba_guardian_greaves:IsPermanent() return true end
-function modifier_item_imba_guardian_greaves:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_guardian_greaves:IsHidden()			return true end
+function modifier_item_imba_guardian_greaves:IsPurgable()		return false end
+function modifier_item_imba_guardian_greaves:RemoveOnDeath()	return false end
+function modifier_item_imba_guardian_greaves:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the aura emitter to the caster when created
 function modifier_item_imba_guardian_greaves:OnCreated(keys)
 	if not self:GetAbility() then self:Destroy() return end
 
-	self.bonus_ms			= self:GetAbility():GetSpecialValueFor("bonus_ms")
+	self.bonus_movement		= self:GetAbility():GetSpecialValueFor("bonus_movement")
 	self.bonus_mana			= self:GetAbility():GetSpecialValueFor("bonus_mana")
 	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
@@ -438,7 +361,7 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
@@ -446,11 +369,10 @@ function modifier_item_imba_guardian_greaves:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_MANA_BONUS,
 	}
-	return funcs
 end
 
 function modifier_item_imba_guardian_greaves:GetModifierMoveSpeedBonus_Special_Boots()
-	return self.bonus_ms end
+	return self.bonus_movement end
 
 function modifier_item_imba_guardian_greaves:GetModifierManaBonus()
 	return self.bonus_mana end
@@ -479,9 +401,9 @@ function modifier_item_imba_guardian_greaves_aura_emitter:IsPurgable() return fa
 
 function modifier_item_imba_guardian_greaves_aura_emitter:OnCreated()
 	self.aura_radius			= self:GetAbility():GetSpecialValueFor("aura_radius")
-	self.min_health_threshold	= self:GetAbility():GetSpecialValueFor("min_health_threshold")
-	self.mend_base_health		= self:GetAbility():GetSpecialValueFor("mend_base_health")
-	self.mend_base_mana			= self:GetAbility():GetSpecialValueFor("mend_base_mana")
+	self.aura_bonus_threshold	= self:GetAbility():GetSpecialValueFor("aura_bonus_threshold")
+	self.replenish_health		= self:GetAbility():GetSpecialValueFor("replenish_health")
+	self.replenish_mana			= self:GetAbility():GetSpecialValueFor("replenish_mana")
 	self.mend_mana_pct			= self:GetAbility():GetSpecialValueFor("mend_mana_pct")
 	self.mend_duration			= self:GetAbility():GetSpecialValueFor("mend_duration")
 end
@@ -509,10 +431,9 @@ function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraRadius()
 
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves_aura_emitter:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
-	return funcs
 end
 
 -- Psssive activation when below the threshold
@@ -530,8 +451,8 @@ function modifier_item_imba_guardian_greaves_aura_emitter:OnTakeDamage( keys )
 
 		-- If the owner's health is below the threshold, and Mend is off cooldown, activate it
 		local ability = self:GetAbility()
-		if owner:GetHealthPercent() <= self.min_health_threshold and owner:GetHealthPercent() > 0 and ability:IsCooldownReady() and owner:GetMana() >= ability:GetManaCost(-1) then
-			GreavesActivate(owner, ability, self.mend_base_health, self.mend_base_mana + self.mend_mana_pct * owner:GetMaxMana() * 0.01, self.aura_radius, self.mend_duration)
+		if owner:GetHealthPercent() <= self.aura_bonus_threshold and owner:GetHealthPercent() > 0 and ability:IsCooldownReady() and owner:GetMana() >= ability:GetManaCost(-1) then
+			GreavesActivate(owner, ability, self.replenish_health, self.replenish_mana + self.mend_mana_pct * owner:GetMaxMana() * 0.01, self.aura_radius, self.mend_duration)
 		end
 	end
 end
@@ -551,22 +472,23 @@ function modifier_item_imba_guardian_greaves_aura:GetTexture()
 
 -- Stores the aura's parameters to prevent errors when the item is destroyed
 function modifier_item_imba_guardian_greaves_aura:OnCreated(keys)
+	if not self:GetAbility() then self:Destroy() return end
+
 	local ability = self:GetAbility()
-	if not ability then return end
-	self.aura_regen = ability:GetSpecialValueFor("aura_regen")
+	
+	self.aura_health_regen = ability:GetSpecialValueFor("aura_health_regen")
 	self.aura_armor = ability:GetSpecialValueFor("aura_armor")
-	self.aura_max_regen_bonus = ability:GetSpecialValueFor("aura_max_regen_bonus")
-	self.aura_max_armor_bonus = ability:GetSpecialValueFor("aura_max_armor_bonus")
-	self.min_health_threshold = ability:GetSpecialValueFor("min_health_threshold")
+	self.aura_health_regen_bonus = ability:GetSpecialValueFor("aura_health_regen_bonus")
+	self.aura_armor_bonus = ability:GetSpecialValueFor("aura_armor_bonus")
+	self.aura_bonus_threshold = ability:GetSpecialValueFor("aura_bonus_threshold")
 end
 
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves_aura:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 	}
-	return funcs
 end
 
 function modifier_item_imba_guardian_greaves_aura:GetModifierPhysicalArmorBonus()
@@ -574,8 +496,8 @@ function modifier_item_imba_guardian_greaves_aura:GetModifierPhysicalArmorBonus(
 
 	-- Hero-only health-scaling bonus
 	if owner:IsRealHero() then
-		local bonus_power = (1 - math.max(owner:GetHealthPercent(), self.min_health_threshold) * 0.01) / (1 - self.min_health_threshold * 0.01)
-		return self.aura_armor + (self.aura_max_armor_bonus - self.aura_armor) * bonus_power
+		local bonus_power = (1 - math.max(owner:GetHealthPercent(), self.aura_bonus_threshold) * 0.01) / (1 - self.aura_bonus_threshold * 0.01)
+		return self.aura_armor + (self.aura_armor_bonus - self.aura_armor) * bonus_power
 	end
 
 	return self.aura_armor
@@ -586,11 +508,11 @@ function modifier_item_imba_guardian_greaves_aura:GetModifierConstantHealthRegen
 
 	-- Hero-only health-scaling bonus
 	if owner:IsRealHero() then
-		local bonus_power = (1 - math.max(owner:GetHealthPercent(), self.min_health_threshold) * 0.01) / (1 - self.min_health_threshold * 0.01)
-		return self.aura_regen + (self.aura_max_regen_bonus - self.aura_regen) * bonus_power
+		local bonus_power = (1 - math.max(owner:GetHealthPercent(), self.aura_bonus_threshold) * 0.01) / (1 - self.aura_bonus_threshold * 0.01)
+		return self.aura_health_regen + (self.aura_health_regen_bonus - self.aura_health_regen) * bonus_power
 	end
 
-	return self.aura_regen
+	return self.aura_health_regen
 end
 
 -----------------------------------------------------------------------------------------------------------

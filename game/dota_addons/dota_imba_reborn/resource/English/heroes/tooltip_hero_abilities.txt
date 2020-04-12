@@ -205,7 +205,7 @@
 // Elder Titan's Echo Stomp
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp"                  "Echo Stomp"
-"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Description"            "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness.\n<font color='#FF7800'>Double Trouble:</font> Elder Titan's Echo Stomp and the Astral Spirit's Echo Stomp can both damage the same enemy."
+"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Description"            "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness."
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_Lore"               "The force of creation still echoes in the stomp of the Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_cast_time"            "CAST TIME:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_radius"             "#{DOTA_Tooltip_ability_filler_ability_radius}"
@@ -249,8 +249,8 @@
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_armor_reduction_pct"     "%BASE ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_magic_resistance_pct"      "%BASE MAGIC RESIST REDUCTION:"
 
-"DOTA_Tooltip_modifier_imba_elder_titan_natural_order"                "Natural Order"
-"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced. Status resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+"DOTA_Tooltip_modifier_imba_elder_titan_natural_order"					"Natural Order"
+"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"		"Reducing base magic damage resistance by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%, armor by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, and status resistance by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter"                "Earth Splitter"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After %crack_time% seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Also applies Break before the damage is dealt."
@@ -316,7 +316,8 @@
 
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse"                      "Death Pulse"
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Description"          "Necrophos drains the life essence from nearby enemies, while releasing a healing pulse to nearby allies.\n<font color='#FF7800'>Blight's Boon:</font> Redirects each affected enemy's essence through Necrophos, converting it into extra healing that spreads to nearby allies. Heals a percentage of each ally's maximum health."
-"DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Note0"                "Healing amount is affected by your spell amp."
+"DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Note0"					"Death Pulse can't be disjointed."
+"DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Note1"					"Can heal Spell Immune units."
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse_Lore"                  "Combining his monk heritage with his newfound affinity for plague has a menacing result."
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse_radius"                "EFFECT RADIUS:"
 "DOTA_Tooltip_ability_imba_necrolyte_death_pulse_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -368,7 +369,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe"								"Reaper's Scythe"
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their attack damage and spell amp."
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their base attack damage and spell ampification."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "<font color='#FF7800'>Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds.</font>"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"							"The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"							"DAMAGE PER MISSING HEALTH:"
@@ -380,20 +381,20 @@
 "DOTA_Tooltip_modifier_imba_reapers_scythe_Description"                "You're fucked."
 
 "DOTA_Tooltip_modifier_imba_reapers_scythe_debuff"                      "Reaper's Scythe"
-"DOTA_Tooltip_modifier_imba_reapers_scythe_debuff_Description"          "Attack damage reduced and spell amp severely reduced."
+"DOTA_Tooltip_modifier_imba_reapers_scythe_debuff_Description"          "Base attack damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%% and spell amplification reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Necrophos's Custom Talents
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_1"                   "+125 Death Pulse radius"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_1"                   "+{s:value} Death Pulse Radius"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_2"                   "Attacking enemy heroes now grants Sadist"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_3"                   "-2s Death Pulse cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_4"                   "+25% Heartstopper Aura healing reduction"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_5"                   "+300 Ghost Shroud effect radius"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_6"                   "+1% Sadist health/mana regen"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_7"                   "+50% Reaper's Scythe Death and Decay"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_8"                   "+{s:value}% Heartstopper Aura damage per second"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_3"                   "-{s:value}s Death Pulse Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_4"                   "+{s:value}% Heartstopper Aura healing reduction"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_5"                   "+{s:value} Ghost Shroud Radius"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_6"                   "+{s:value}% Sadist health/mana regen"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_7"                   "+{s:value}% Reaper's Scythe Death and Decay"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_8"                   "+{s:value}% Heartstopper Aura Health Loss Per Second"
 
 
 // Nyx Assassin
@@ -696,7 +697,7 @@
 // Pugna's Nether Blast
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_pugna_nether_blast"                          "Nether Blast"
-"DOTA_Tooltip_ability_imba_pugna_nether_blast_Description"              "An exploding pulse deals damage to enemies and structures in the area. Deals half damage to structures.\n<font color='#FF7800'>Nether Weakness:</font> Immediately blasts the surrounding area with small explosions that deals no damage, but reduce targets' magic resistance. Stacks with itself. Explosion count increases and blasts become closer to the target point as the skill is leveled, increasing possible overlaps on each target. Each new cast of Nether Blast clears the previous stack count."
+"DOTA_Tooltip_ability_imba_pugna_nether_blast_Description"              "An exploding pulse deals damage to enemies and structures in the area. Deals half damage to structures.\n<font color='#FF7800'>Nether Weakness:</font> Immediately blasts the surrounding area with small explosions that deal no damage, but reduce targets' magic resistance. Stacks with itself. Explosion count increases and blasts become closer to the target point as the skill is leveled, increasing possible overlaps on each target. Each new cast of Nether Blast clears the previous stack count. Buildings receive %magic_res_building_pct%%% of the effect."
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_Lore"                    "The Arts of Oblivion include a deafening blast of emerald flames from the Nether Reaches."
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_Note0"                    "Even though the debuff is stackable, it is cleared on each cast, then reapplied again."
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_mini_blast_count"                     "NETHER WEAKNESS BLASTS:"
@@ -705,14 +706,14 @@
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_pugna_nether_blast_cast_range"              "CAST RANGE:"
 
-"DOTA_Tooltip_modifier_imba_nether_blast_magic_res"                    "Nether Weakness"
-"DOTA_Tooltip_modifier_imba_nether_blast_magic_res_Description"                     "Suffers from reduced magic resistance."
+"DOTA_Tooltip_modifier_imba_nether_blast_magic_res"						"Nether Weakness"
+"DOTA_Tooltip_modifier_imba_nether_blast_magic_res_Description"			"Magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 ////===============================================================================================================
 // Pugna's Decrepify
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_pugna_decrepify"                            "Decrepify"
-"DOTA_Tooltip_ability_imba_pugna_decrepify_Description"                "A powerful banishing spell that renders the target unable to attack or be attacked. Afflicted units take extra magic damage.\n<font color='#FF7800'>From The Nether Reaches:</font> While Decrepified, all damage on the target is stored, and is released on a Nether Blast centered on the target location when the effect ends. The radius of the Nether Blast is %base_radius% + all damage stored for the duration. The Nether Blast deals damage to enemies equal to a percentage of damage stored, and heals allies in the area of effect for the same amount.\n<font color='#FF7800'>Masterful Banish:</font> Only enemies are slowed. Allies become less vulnerable to magic, while enemies suffer the full effect."
+"DOTA_Tooltip_ability_imba_pugna_decrepify_Description"                "A powerful banishing spell that renders the target unable to attack or be attacked. Afflicted units take extra magic damage.\n<font color='#FF7800'>From The Nether Reaches:</font> While Decrepified, all damage on the target is stored, and is released through a Nether Blast centered on the target location when the effect ends. The radius of the Nether Blast is equal to %base_radius% + all damage stored for the duration (up to %max_radius% radius). The Nether Blast deals damage to enemies and heals allies within the radius for %total_dmg_conversion_pct%%% of the damage stored.\n<font color='#FF7800'>Masterful Banish:</font> Only enemies are slowed, and allies do not take as much extra magic damage as enemies would."
 "DOTA_Tooltip_ability_imba_pugna_decrepify_Lore"                        "A now-mastered relic from his childhood, Pugna delights in banishing others into the Nether Realm, whether for good, evil, or simple enjoyment."
 "DOTA_Tooltip_ability_imba_pugna_decrepify_Note0"                      "From The Nether Reaches triggers on both allies and enemies."
 "DOTA_Tooltip_ability_imba_pugna_decrepify_Note1"                      "From The Nether Reaches will always trigger after Decrepify ends, even if the target dies or Decrepify is purged."
@@ -721,7 +722,6 @@
 "DOTA_Tooltip_ability_imba_pugna_decrepify_ally_res_reduction_pct"                  "%ALLY MAGIC RESISTANCE REDUCTION:"
 "DOTA_Tooltip_ability_imba_pugna_decrepify_enemy_res_reduction_pct"                 "%ENEMY MAGIC RESISTANCE REDUCTION:"
 "DOTA_Tooltip_ability_imba_pugna_decrepify_enemy_slow_pct"              "%ENEMY SLOW:"
-"DOTA_Tooltip_ability_imba_pugna_decrepify_total_dmg_conversion_pct"                "%STORED DAMAGE TO DAMAGE/HEAL:"
 
 "DOTA_Tooltip_modifier_imba_decrepify"                      "Decrepify"
 "DOTA_Tooltip_modifier_imba_decrepify_Description"                      "Banished, taking extra damage from spells. When Decrpify ends, the stored damage will be unleashed."
@@ -769,11 +769,11 @@
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Note0"                      "The link will break if the target becomes invisible, out of world, invulnerable, go into the fog of war, or goes farther than the break distance."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Note1"                      "Healing is proportional to the damage done, and can be reduced or amplified by magic damage reduction/amplification on the target."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_health_drain"              "HEALTH PER SECOND:"
-//"DOTA_Tooltip_ability_imba_pugna_life_drain_scepter_health_drain"                   "SCEPTER HEALTH PER SECOND:"
+"DOTA_Tooltip_ability_imba_pugna_life_drain_scepter_health_drain"		"SCEPTER DRAIN PER SECOND:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_duration"                  "MAX LENGTH:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_base_slow_pct"              "%BASE SLOW:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_slow_per_second"            "%SLOW PER SECOND:"
-"DOTA_Tooltip_ability_imba_pugna_life_drain_aghanim_description"		"Removes cooldown."
+"DOTA_Tooltip_ability_imba_pugna_life_drain_aghanim_description"		"Removes cooldown and increases damage."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_cast_range"                "CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_pugna_life_drain_end"                        "Life Drain Cancel"
@@ -846,16 +846,14 @@
 // Queen of Pain's Scream of Pain
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain"                  "Scream of Pain"
-"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Description"                  "The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies.\n<font color='#FF7800'>Overwhelming Pain:</font> Enemies hit by Scream of Pain are briefly wracked with overwhelming pain for %pain_duration% seconds, causing them to take part of the damage every time they deal some, up to a certain threshold."
-"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Note0"            "Damage type of Overwhelming pain is pure."
+"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Description"		"The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies.\n<font color='#FF7800'>Overwhelming Pain:</font> Enemies hit by Scream of Pain are briefly wracked with overwhelming pain for %pain_duration% seconds, causing them to take %pain_reflect_pct%%% of any damage they deal back as pure damage, up to Scream of Pain's base damage as threshold."
 "DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Lore"            "The sultry voice of Akasha beckons her opponents while stealing their souls."
+"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_Note0"            "Overwhelming Pain damage benefits from spell amplifcation and spell lifesteal."
 "DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_radius"          "#{DOTA_Tooltip_ability_filler_ability_radius}"
-"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_pain_duration"                "OVERWHELMING PAIN DURATION:"
-"DOTA_Tooltip_ability_imba_queenofpain_scream_of_pain_pain_reflect_pct"             "%OVERWHELMING PAIN REFLECTION PERCANTAGE:"
 
-"DOTA_Tooltip_modifier_imba_scream_of_pain_reflect"                    "Overwhelming Pain"
-"DOTA_Tooltip_modifier_imba_scream_of_pain_reflect_Description"                     "Reflecting part of his dealt damage to itself up to a threshold."
+"DOTA_Tooltip_modifier_imba_scream_of_pain_reflect"						"Overwhelming Pain"
+"DOTA_Tooltip_modifier_imba_scream_of_pain_reflect_Description"			"Reflecting a portion of damage dealt back to self."
 
 ////===============================================================================================================
 // Queen of Pain's Sonic Wave
@@ -1009,7 +1007,7 @@
 "DOTA_Tooltip_modifier_imba_riki_tricks_of_the_trade_primary_Description"			"Invulnerable and slashing enemies in the area."
 
 "DOTA_Tooltip_modifier_imba_martyrs_mark"                              "Martyr's Mark"
-"DOTA_Tooltip_modifier_imba_martyrs_mark_Description"                  "Increased chances of getting strike by Martyr's Strike."
+"DOTA_Tooltip_modifier_imba_martyrs_mark_Description"                  "Increased chances of getting struck by subsequent Martyr Strikes."
 
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723"									"Tricks of the Trade"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Description"						"Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed.\n<font color='#E03E2E'>This ability is not affected by Frantic's cooldown reduction.</font>"
@@ -1093,15 +1091,16 @@
 // Sand King's Caustic Finale
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale"                    "Caustic Finale"
-"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Description"                     "Sand King poisons his enemies with every attack. When the poison debuff expires, the poison inside the enemies' body explodes, slowing and dealing damage to all nearby enemies.\n<font color='#FF7800'>Potent Consistency:</font> Expiry damage is the same as the explosion damage.\n<font color='#FF7800'>Desert Poison:</font> When the poison explodes, any enemies that have been hit and are affected by Caustic Finale trigger their own poison immediately, causing a chain reaction."
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Description"			"Sand King's attacks inject a venom that causes enemy units to violently explode when its timer expires, or when the unit dies, damaging and slowing nearby enemies. <font color='#FF7800'>Expiry damage is the same as the explosion damage.</font>\n<font color='#FF7800'>Desert Poison:</font> When the poison explodes, any enemies that have been hit and are affected by Caustic Finale trigger their own poison immediately, causing a chain reaction."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Lore"                "An injection from Crixalis makes one as brittle as the sands of his home."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Note0"              "Also activates if the affected unit dies, or if the debuff is purged."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Note1"              "Damaging an unit already affected by Caustic Finale does not refresh the debuff."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_poison_duration"                 "POISON DURATION:"
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_damage"              "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_radius"              "EXPLOSION RADIUS:"
-"DOTA_Tooltip_ability_imba_sandking_caustic_finale_ms_slow_pct"                     "%MOVE SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_sandking_caustic_finale_slow_duration"                   "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_ms_slow_pct"			"%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_caustic_finale_slow_as"			"ATTACK SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_slow_duration"		"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 
 "DOTA_Tooltip_modifier_imba_caustic_finale_poison"                      "Caustic Finale Poison"
 "DOTA_Tooltip_modifier_imba_caustic_finale_poison_Description"          "A poison is brewing inside your body and will explode when it expires."
@@ -1206,15 +1205,14 @@
 // Shadow Fiend's Necromastery
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_necromastery"                      "Necromastery"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls. Can only store a percentage of the max souls."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain up to %max_temporary_souls_pct%%% more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls.\n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
 
-// \n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
-
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"                "Can't steal the soul of units which don't have one in the first place."
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"                "Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_damage_per_soul"                  "DAMAGE PER SOUL:"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_max_souls"            "MAX SOULS:"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_max_temporary_souls_pct"          "%TEMPORARY SOULS:"
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"					"Can't steal the soul of units which don't have one in the first place."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"						"Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_max_souls"				"MAX SOULS:"
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_damage_per_soul"			"DAMAGE PER SOUL:"
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_scepter_max_souls"		"SCEPTER MAX SOULS:"
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_aghanim_description"		"Increases max souls." 
 
 "DOTA_Tooltip_modifier_imba_necromastery_souls"					"Necromastery"
 "DOTA_Tooltip_modifier_imba_necromastery_souls_Description"		"Stored souls granting an additional %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage."
@@ -1236,16 +1234,19 @@
 // Shadow Fiend's Requiem of Souls
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_requiem"                          "Requiem of Souls"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Description"              "Shadow Fiend gathers his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will have its movement speed and attack damage reduced. Consumes all temporary souls, and creates lines of energy for every %souls_per_line% souls captured through Necromastery. Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.\n<font color='#FF7800'>Soul Frenzy:</font> After the Requiem ends, Shadow Fiend enters a state of Soul Frenzy, where razes have no cooldown. Lasts for %harvest_base_cd% seconds, and is increased by %harvest_line_duration_inc% seconds for every line that hits an enemy hero. If he misses a raze, Soul Frenzy ends."
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Lore"                      "The captured souls of those past slain are released to ravage their former allies."
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Note0"                    "When dying, the caster first loses souls due to dying, then consumes all leftover temporary souls for Requiem."
-"DOTA_Tooltip_ability_imba_nevermore_requiem_Note1"                    "When Requiem is stolen by either Rubick or Nether Ward, they also get the same Necromastery stacks as Shadow Fiend currently have, but cannot increase or lose stacks in any way."
-"DOTA_Tooltip_ability_imba_nevermore_requiem_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Description"             "Shadow Fiend gathers his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed reduced for %requiem_slow_duration% seconds for each line hit. Lines of energy are created for every %requiem_soul_conversion% souls captured through Necromastery. <br><br> Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.\n<font color='#FF7800'>Remnants of Requiem:</font> Also reduces attack damage by %damage_reduction_pct%%% for %slow_duration% seconds. The movement speed reduction also lasts for this duration.\n<font color='#FF7800'>Soul Frenzy:</font> After the Requiem ends, Shadow Fiend enters a state of Soul Frenzy, where razes have no cooldown. Lasts for %harvest_base_cd% seconds, and is increased by %harvest_line_duration_inc% seconds for every line that hits an enemy hero. If he misses a raze, Soul Frenzy ends."
 "DOTA_Tooltip_ability_imba_nevermore_requiem_damage_reduction_pct"                  "%ATTACK DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_ms_slow_pct"              "%MOVE SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_slow_duration"            "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_scepter_line_damage_pct"               "%SCEPTER RETURNING LINES DAMAGE:"
-"DOTA_Tooltip_ability_imba_nevermore_requiem_aghanim_description"                   "Souls now return to Shadow Fiend, damaging enemies again on their return, and healing him for all damage dealt. Also darkens the screens of enemy players hit by Requiem of Souls for the duration of the slow."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Lore"						"The captured souls of those past slain are released to ravage their former allies."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Note0"						"When dying, the caster first loses souls due to dying, then consumes all leftover temporary souls for Requiem."
+"DOTA_Tooltip_ability_imba_nevermore_requiem_Note1"						"When Requiem is stolen by either Rubick or Nether Ward, they also get the same Necromastery stacks as Shadow Fiend currently have, but cannot increase or lose stacks in any way."
+
+"DOTA_Tooltip_ability_imba_nevermore_requiem_abilitycastpoint"			"CAST DELAY:"
+"DOTA_Tooltip_ability_imba_nevermore_requiem_ms_slow_pct"				"%MOVEMENT REDUCTION:"
+"DOTA_Tooltip_ability_imba_nevermore_requiem_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_nevermore_requiem_scepter_line_damage_pct"	"%SCEPTER DAMAGE ON RETURN:"
+
+"DOTA_Tooltip_ability_imba_nevermore_requiem_aghanim_description"		"Causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend deals less damage, but heals Shadow Fiend for all the damage it dealt. <font color='#FF7800'>Also darkens the screens of enemy players hit by Requiem of Souls for the duration of the slow.</font>"
 
 "DOTA_Tooltip_modifier_imba_reqiuem_debuff"								"Requiem of Souls"
 "DOTA_Tooltip_modifier_imba_reqiuem_debuff_Description"					"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%."
@@ -1261,7 +1262,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_2_Description"		"Necromastery can be activated to consume souls and heal 80 hp/soul. Will spare souls if he don't need them all to heal completely. Has a 12s cooldown."
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_3"					"Necromastery Stack Cap Increase on Hero Kill"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_3_Description"       "Permanently increases your soul stacks cap on Necromastery by 1 each time you kill an enemy hero."
-"DOTA_Tooltip_ability_special_bonus_imba_nevermore_4"                   "+0.5% lifesteal per Necromastery soul"
+"DOTA_Tooltip_ability_special_bonus_imba_nevermore_4"                   "+{s:value}% lifesteal per Necromastery soul"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_5"                   "Presence gains a soul from affected heroes per second"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_6"                   "Shadowraze refreshes Requiem of Souls' debuff"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_7"                   "Necromastery souls are not lost when dying"
@@ -1272,13 +1273,13 @@
 // Skywrath Mage's Arcane Bolt
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt"                  "Arcane Bolt"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"                   "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane Wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases successive Arcane Bolts' projectile speed and increases the intelligence multiplier. Arcane Wrath stacks with and refreshes itself infinitely. Lasts %arcane_wrath_duration% seconds."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"                   "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane Wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases successive Arcane Bolts' projectile speed by %projectile_speed_per_stack% and increases the intelligence multiplier by %intelligence_bonus_per_stack%%% for %arcane_wrath_duration% seconds. Stacks with and refreshes itself."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Lore"              "Within the Ghastly Eyrie's endless intrigue, only the clever and calm can hope to survive."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Note0"				"The projectile's base speed is very slow (%projectile_speed% ms), providing %vision_radius% vision around it.  Upon impact, it will reveal the target area for %impact_vision_duration% seconds."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Note1"				"Arcane Bolt cannot be disjointed."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_base_damage"                   "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_pct"        "%INTELLIGENCE MULTIPLIER:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_projectile_speed_per_stack"    "BOLT SPEED PER STACK:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_per_stack"  "%INT MULTIPLIER PER STACK:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within 700 range willl be hit with the same ability. Heroes will take priority."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within %scepter_search_radius% range willl be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff"                          "Arcane Wrath"
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff_Description"              "Arcane Bolt intelligence multiplier increased by %dMODIFIER_PROPERTY_TOOLTIP%%%, and projectile speed increased by %dMODIFIER_PROPERTY_TOOLTIP%."
@@ -1287,50 +1288,51 @@
 // Skywrath Mage's Concussive Shot
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot"              "Concussive Shot"
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Lore"          "Those who serve the court of the Ghastly Eyrie are ever locked in covert war. One must always know where danger lurks nearest."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note0"                     "The slow debuff is always refreshed, and does not stacks with itself."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note1"                     "Scepter secondary shot is fully overridden by the level 40 Concussive Shot talent."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note2"                     "Concussive Shot will try to hit the nearest enemy, even if it magic immune."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius. Deals %creep_damage_pct%%% damage to creeps.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Lore"						"Those who serve the court of the Ghastly Eyrie are ever locked in covert war. One must always know where danger lurks nearest."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note0"                     "If no enemy heroes are in range or they are in fog, Concussive Shot targets the nearest enemy creep."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note1"                     "Damages creeps around the impact area."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note2"                     "Provides %vision_radius% vision around the projectile, and reveals the target area for %impact_vision_duration% seconds upon impact."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_ms_slow_pct"               "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_slow_duration"             "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_max_bounces"               "MAXIMUM GHASTLY PULSE BOUNCES:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_aghanim_description"       "When Skywrath Mage casts Concussive Shot, a different random target within cast range will be hit with the same ability. Heroes will take priority."
 
-"DOTA_Tooltip_modifier_imba_concussive_shot_slow"                      "Concussive Shot"
-"DOTA_Tooltip_modifier_imba_concussive_shot_slow_Description"          "Slowed."
+"DOTA_Tooltip_modifier_imba_concussive_shot_slow"						"Concussive Shot"
+"DOTA_Tooltip_modifier_imba_concussive_shot_slow_Description"			"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Skywrath Mage's Ancient Seal
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal"                  "Ancient Seal"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Description"                  "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.\n<font color='#FF7800'>Embedded Seal:</font> Skywrath pierces the Seal strongly through the target, marking the ground. The seal emnates an aura that applies the same effects as Ancient Seal for all enemies in its range. Lasts for the same duration as the regular seal."
+"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Description"                  "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells. <font color='#FF7800'>Magic resistance reduction affects non-hero units.</font>\n<font color='#FF7800'>Embedded Seal:</font> Skywrath pierces the Seal strongly through the target, marking the ground in a %sigil_radius% radius area. The seal emnates an aura that applies the same effects as Ancient Seal for all enemies in its range. Lasts for the same duration as the regular seal."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Lore"            "A holy incantation, whosoever finds themselves touched by Avilliva's sigil must suffer in penitent silence."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Note0"            "The ground seal ignores targets that has the regular seal on them, but can apply it if the seal gets purged."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_seal_duration"                "SEAL DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_mr_reduction_pct"             "%MAGIC AMPLIFICATION:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_sigil_radius"                 "EMBEDDED SEAL RADIUS:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_aghanim_description"          "Anytime Skywrath Mage casts Ancient Seal, a different random target within 700 range will be affected by the same ability. Heroes will take priority."
 
-"DOTA_Tooltip_modifier_imba_ancient_seal_main"                          "Ancient Seal"
-"DOTA_Tooltip_modifier_imba_ancient_seal_main_Description"              "Silenced, and taking increased magic damage."
+"DOTA_Tooltip_modifier_imba_ancient_seal_main"							"Ancient Seal"
+"DOTA_Tooltip_modifier_imba_ancient_seal_main_Description"				"Silenced and magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
-"DOTA_Tooltip_modifier_imba_ancient_seal_secondary"                    "Embedded Seal"
-"DOTA_Tooltip_modifier_imba_ancient_seal_secondary_Description"                     "Affected by the seal on the ground! Silenced and taking increased magic damage."
+"DOTA_Tooltip_modifier_imba_ancient_seal_secondary"						"Embedded Seal"
+"DOTA_Tooltip_modifier_imba_ancient_seal_secondary_Description"			"Affected by the seal on the ground! Silenced and magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 ////===============================================================================================================
 // Skywrath Mage's Mystic Flare
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare"                  "Mystic Flare"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"		"Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over a duration.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, a huge amount of arcane energy is unleashed, damaging nearby enemies. The damage is based on Skywrath's intelligence, and is increased by %int_increase_per_stack%%% for each Arcane Wrath stack he has at the moment of explosion."
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Lore"            "Only the most practiced of Skywrath sorcerers could hope to shape the skies into such a storm."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"		"Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over a duration.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, a huge amount of arcane energy is unleashed, damaging nearby enemies. The damage is based on %int_as_damage_pct%%% of Skywrath's intelligence, and is increased by %int_increase_per_stack%%% for each Arcane Wrath stack he has at the moment of explosion."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Lore"					"Only the most practiced of Skywrath sorcerers could hope to shape the skies into such a storm."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Note0"				"Mystic Flare only affects Heroes; it does not damage illusions or creep heroes."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Note1"				"Spell immune enemies do not count toward the damage distribution."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Note2"				"Mystic Flare will damage enemy creeps if no enemy heroes are present."
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_radius"                "FLARE RADIUS:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_duration"				"DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_explosion_radius"             "NOVA RADIUS:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_int_as_damage_pct"            "%INTELLIGENCE AS DAMAGE:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within 700 range (that is not inside the initial Mystic Flare). Heroes will take priority."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within %scepter_search_radius% range (that is not inside the initial Mystic Flare). Heroes will take priority."
 
 ////===============================================================================================================
 // Skywrath Mage's Custom Talents
@@ -1642,41 +1644,40 @@
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_movement_speed"       "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_duration"             "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 
-"DOTA_Tooltip_modifier_imba_whirling_axes_ranged"                      "Whirling Axes"
-"DOTA_Tooltip_modifier_imba_whirling_axes_ranged_Description"          "Movement speed slowed."
+"DOTA_Tooltip_modifier_imba_whirling_axes_ranged"						"Whirling Axes"
+"DOTA_Tooltip_modifier_imba_whirling_axes_ranged_Description"			"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Troll Warlord's Whirling Axes (Melee)
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee"          "Whirling Axes (Melee)"
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Description"           "Troll hurls <font color='#FF7800'>ten</font> axes around him in a close range area of effect, damaging enemy units and causing them to miss some attacks.\n<font color='#FF7800'>Imbued Axes:</font> Can trigger attack modifiers."
+"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee"					"Whirling Axes (Melee)"
+"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Description"		"Troll hurls <font color='#FF7800'>ten</font> axes around him in a close range area of effect, damaging enemy units and causing them to miss some attacks.\n<font color='#FF7800'>Imbued Axes:</font> Can trigger attack modifiers."
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Lore"                  "The Troll's attacks are obnoxious to the point of madness."
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Note0"                 "Cannot hit an enemy more than once with the same cast of the spell."
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Note1"                 "Melee Whirling Axes do not affect Roshan."
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_hit_radius"            "HIT RADIUS:"
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_max_range"             "SPIN RADIUS:"
+"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_max_range"             "RADIUS:"
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_blind_duration"        "BLIND DURATION:"
-"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_blind_stacks"          "NUMBER OF MISSES:"
+"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_blind_pct"				"%MISS CHANCE:"
 "DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_whirl_duration"        "WHIRL DURATION:"
 
-"DOTA_Tooltip_modifier_imba_whirling_axes_melee"                        "Blind Rage"
-"DOTA_Tooltip_modifier_imba_whirling_axes_melee_Description"            "Will miss attacks until the stacks are depleted."
+"DOTA_Tooltip_modifier_imba_whirling_axes_melee"                        "Whirling Axes Blind"
+"DOTA_Tooltip_modifier_imba_whirling_axes_melee_Description"            "Blinded, have a %dMODIFIER_PROPERTY_MISS_PERCENTAGE%%% chance to miss."
 
 ////===============================================================================================================
 // Troll Warlord's Fervor
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor"                        "Fervor"
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Description"            "With each continuous blow on the same target, Troll gains increased attack speed. If Troll changes targets, the stacks drop <font color='#FF7800'>by a percantage</font>.\n<font color='#FF7800'>Trolololol:</font> No max stack limit."
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Lore"                  "The Warlord's most common strategy is to insist until his opponent is too tired to fight back."
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Note0"                  "Break does not prevent gaining new stacks, but does nullifies bonus attack speed of already existing stacks."
-"DOTA_Tooltip_ability_imba_troll_warlord_fervor_bonus_as"              "BONUS ATTACK SPEED:"
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor"						"Fervor"
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Description"			"With each continuous blow on the same target, Troll gains increased attack speed. If Troll changes targets, the stacks drop <font color='#FF7800'>by a percantage</font>.\n<font color='#FF7800'>Trolololol:</font> No max stack limit.\n<font color='#FF7800'>Anger Beyond the Grave:</font> Stacks are not lost on death."
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Lore"					"The Warlord's most common strategy is to insist until his opponent is too tired to fight back."
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Note0"					"Break does not prevent gaining new stacks, but does nullifies bonus attack speed of already existing stacks."
+"DOTA_Tooltip_ability_imba_troll_warlord_fervor_bonus_as"				"ATTACK SPEED PER STACK:"
 "DOTA_Tooltip_ability_imba_troll_warlord_fervor_switch_lose_pct"		"%STACKS LOSS ON NEW TARGET:"
 
-"DOTA_Tooltip_modifier_imba_fervor_stacks"                              "Fervor"
-"DOTA_Tooltip_modifier_imba_fervor_stacks_Description"                  "Increased attack speed and each consecutive attack on the same target increases it. Hit'em already!"
+"DOTA_Tooltip_modifier_imba_fervor_stacks"								"Fervor"
+"DOTA_Tooltip_modifier_imba_fervor_stacks_Description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%. Each consecutive attack on the same target increases attack speed further. Hit'em already!"
 
 ////===============================================================================================================
 // Troll Warlord's Battle Trance
@@ -1689,7 +1690,7 @@
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_as"                    "ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_buff_duration"               "TRANCE DURATION:"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_bat"                   "BASE ATTACK TIME:"
-"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"         "<font color='#FF7800'>Standard: Allows Troll Warlord's allies to benefit from Fervor while Battle Trance is active. Fervor stacks are lost after the effect ends.\n Jesus Take the Wheel: Gives Troll Warlord free pathing while Battle Trance is active.</font>"
+"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"         "<font color='#FF7800'>Standard: Allows Troll Warlord's allies to benefit from Fervor while Battle Trance is active. Fervor stacks are lost after the effect ends.\n Jesus Take the Wheel: Gives Troll Warlord free pathing while Battle Trance is active and locked onto a target.</font>"
 
 "DOTA_Tooltip_modifier_imba_battle_trance"                              "Battle Trance"
 "DOTA_Tooltip_modifier_imba_battle_trance_Description"                  "Increased attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
@@ -1705,14 +1706,14 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_1"               "Ranged Proficiency"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_1_Description"	"Berserker's Rage grants +3 armor, +25 movespeed and 1.6 BAT while ranged."
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_2"               "+20% Whirling Axes (Ranged) Movement Slow"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_3"               "-15% Fervor stack loss on target change"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_4"               "+6 Fervor attack speed per stack"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_5"               "-7s Whirling Axes cooldown"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_6"               "+50% Battle Trance duration"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_7"              	"+10 Ranged Whirling Axes, +80 Spread Degrees"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_8"               "-0.2 Battle Trance BAT improvement"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_1_Description"	"Berserker's Rage grants +{s:armor} armor, +{s:movespeed_pct} movespeed and {s:bat} BAT in ranged mode."
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_2"               "+{s:value}% Whirling Axes (Ranged) Movement Slow"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_3"               "{s:value}% Fervor stack loss on target change"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_4"               "+{s:value} Fervor Attack Speed Per Stack"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_5"               "-{s:value}s Whirling Axes Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_6"               "+{s:value}% Battle Trance Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_7"              	"+{s:axe_count_increase} Ranged Whirling Axes, +{s:axe_spread_increase} Spread Degrees"
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_8"               "{s:value} Battle Trance BAT improvement"
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9"               "Remnants of Berserker's Rage"
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9_Description"	"Replaces ensnare with bash chance for 20/30/40/50 magical damage, piercing spell immunity. Can no longer use other passive bash abilities."
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_battle_trance_upgrade"					"Battle Trance True Sight"

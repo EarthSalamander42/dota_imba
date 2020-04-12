@@ -40,7 +40,11 @@ function imba_enchantress_untouchable:OnSpellStart()
 				-- enemy:Stop()
 			-- end
 			
-			enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
+			if self:GetCaster():HasTalent("special_bonus_imba_enchantress_5") then
+				enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
+			else
+				enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration * (1 - enemy:GetStatusResistance())})
+			end
 		end
 	end
 	
@@ -109,7 +113,7 @@ function modifier_imba_enchantress_untouchable_slow:OnCreated()
 	self.parent		= self:GetParent()
 	
 	-- AbilitySpecials
-	self.slow_attack_speed 			= self.ability:GetSpecialValueFor("slow_attack_speed") + self.caster:FindTalentValue("special_bonus_imba_enchantress_5")
+	self.slow_attack_speed 			= self.ability:GetSpecialValueFor("slow_attack_speed") + self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_enchantress_5")
 	--self.slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
 	self.stopgap_bat_increase 		= self.ability:GetSpecialValueFor("stopgap_bat_increase")
 	self.kindred_spirits_multiplier = self.ability:GetSpecialValueFor("kindred_spirits_multiplier")
@@ -128,13 +132,11 @@ function modifier_imba_enchantress_untouchable_slow:GetStatusEffectName()
 end
 
 function modifier_imba_enchantress_untouchable_slow:DeclareFunctions()
-    local decFuncs = {
+    return {
         MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT, -- IMBAfication: Stopgap
 		MODIFIER_EVENT_ON_ATTACK
     }
-
-    return decFuncs
 end
 
 function modifier_imba_enchantress_untouchable_slow:GetModifierAttackSpeedBonus_Constant()
@@ -168,7 +170,7 @@ end
 modifier_imba_enchantress_untouchable_peace_on_earth	= class({})
 
 function modifier_imba_enchantress_untouchable_peace_on_earth:IsDebuff()		return true end
-function modifier_imba_enchantress_untouchable_peace_on_earth:IgnoreTenacity()	return self:GetCaster():HasTalent("special_bonus_imba_enchantress_5") end
+-- function modifier_imba_enchantress_untouchable_peace_on_earth:IgnoreTenacity()	return self:GetCaster():HasTalent("special_bonus_imba_enchantress_5") end
 
 function modifier_imba_enchantress_untouchable_peace_on_earth:OnCreated()
 	self.parent	= self:GetParent()
@@ -299,7 +301,7 @@ function imba_enchantress_enchant:OnSpellStart()
 		-- Basic dispel (just buffs)
 		self.target:Purge(true, false, false, false, false)
 		
-		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_slow", {duration = self.tooltip_duration})
+		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_slow", {duration = self.tooltip_duration * (1 - self.target:GetStatusResistance())})
 	
 		if self.caster:GetName() == "npc_dota_hero_enchantress" then
 			self.caster:EmitSound("enchantress_ench_ability_enchant_0"..math.random(4,6))
@@ -624,7 +626,7 @@ function modifier_imba_enchantress_natures_attendants:OnIntervalThink()
 				hurt_allies[selected_unit]:GiveMana(self.cyan_mana_restore)			
 			end
 			
-			-- TODO: Rest for the Weary
+			-- IMBAfication: Rest for the Weary
 			if hurt_allies[selected_unit]:GetHealthPercent() < self.critical_health_pct and not hurt_allies[selected_unit]:HasModifier("modifier_imba_enchantress_natures_attendants_mini") then
 				hurt_allies[selected_unit]:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_natures_attendants_mini", {duration = self.ability.duration})
 			end
@@ -715,9 +717,14 @@ function modifier_imba_enchantress_natures_attendants_mini:OnCreated()
 	if not IsServer() then return end
 	
 	self.particle_name 	= "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl1.vpcf"
+	
+	if self.wisp_count_mini >= 5 then
+		self.particle_name 	= "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl2.vpcf"
+	end
+	
 	self.particle 		= ParticleManager:CreateParticle(self.particle_name, PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	
-	for wisp = 3, 5 do
+	for wisp = 3, 7 do
 		ParticleManager:SetParticleControlEnt(self.particle, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 	end
 	
@@ -1284,9 +1291,7 @@ function modifier_special_bonus_imba_enchantress_2_aura:OnCreated()
 end
 
 function modifier_special_bonus_imba_enchantress_2_aura:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
-
-  	return decFuncs
+  	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
 end
 
 function modifier_special_bonus_imba_enchantress_2_aura:GetModifierMoveSpeedBonus_Constant ()
@@ -1401,10 +1406,6 @@ function imba_enchantress_enchant:OnOwnerSpawned()
 end
 
 function imba_enchantress_natures_attendants:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_8") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_4"), "modifier_special_bonus_imba_enchantress_4", {})
-	end
-		
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_8") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_8"), "modifier_special_bonus_imba_enchantress_8", {})
 	end

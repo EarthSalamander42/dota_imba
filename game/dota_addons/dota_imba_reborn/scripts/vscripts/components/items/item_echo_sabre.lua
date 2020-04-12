@@ -39,36 +39,13 @@ function item_imba_echo_sabre:GetAbilityTextureName()
 	return "custom/imba_echo_sabre"
 end
 
-function item_imba_echo_sabre:GetCooldown( nLevel )
-	local cooldown = self.BaseClass.GetCooldown( self, nLevel )
-	return cooldown
-end
 -------------------------------------------
 modifier_imba_echo_sabre_passive = modifier_imba_echo_sabre_passive or class({})
-function modifier_imba_echo_sabre_passive:IsDebuff() return false end
-function modifier_imba_echo_sabre_passive:IsHidden() return true end
-function modifier_imba_echo_sabre_passive:IsPermanent() return true end
-function modifier_imba_echo_sabre_passive:IsPurgable() return false end
-function modifier_imba_echo_sabre_passive:IsPurgeException() return false end
-function modifier_imba_echo_sabre_passive:IsStunDebuff() return false end
-function modifier_imba_echo_sabre_passive:RemoveOnDeath() return false end
-function modifier_imba_echo_sabre_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_echo_sabre_passive:OnDestroy()
-	self:CheckUnique(false)
-end
 
-function modifier_imba_echo_sabre_passive:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-			MODIFIER_EVENT_ON_ATTACK
-		}
-	return decFuns
-end
+function modifier_imba_echo_sabre_passive:IsHidden()		return true end
+function modifier_imba_echo_sabre_passive:IsPurgable()		return false end
+function modifier_imba_echo_sabre_passive:RemoveOnDeath()	return false end
+function modifier_imba_echo_sabre_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_echo_sabre_passive:OnCreated()
 	local item = self:GetAbility()
@@ -80,9 +57,20 @@ function modifier_imba_echo_sabre_passive:OnCreated()
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
 		self.slow_duration = item:GetSpecialValueFor("slow_duration")
-		self:CheckUnique(true)
 	end
 end
+
+function modifier_imba_echo_sabre_passive:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK
+	}
+end
+
 
 function modifier_imba_echo_sabre_passive:GetModifierBonusStats_Intellect()
 	return self.bonus_intellect
@@ -108,15 +96,13 @@ function modifier_imba_echo_sabre_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
 	
-	if keys.attacker == parent and item and not parent:IsIllusion() then
+	if keys.attacker == parent and item and not parent:IsIllusion() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self and not self:GetParent():HasItemInInventory("item_imba_reverb_rapier") then
 		if not parent:IsRangedAttacker() then 
 			if item:IsCooldownReady() and not keys.no_attack_cooldown then
-				if self:CheckUniqueValue(1,{"modifier_imba_reverb_rapier_passive"}) == 1 then
-					item:UseResources(false,false,true)
-					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
-					if not keys.target:IsBuilding() and not keys.target:IsOther() then
-						keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
-					end
+				item:UseResources(false,false,true)
+				parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
+				if not keys.target:IsBuilding() and not keys.target:IsOther() then
+					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
 				end
 			end
 		end
@@ -153,35 +139,23 @@ function item_imba_reverb_rapier:GetAbilityTextureName()
 	return "custom/imba_reverb_rapier"
 end
 
-function item_imba_reverb_rapier:GetCooldown( nLevel )
-	local cooldown = self.BaseClass.GetCooldown( self, nLevel )
-	return cooldown
-end
 -------------------------------------------
 modifier_imba_reverb_rapier_passive = modifier_imba_reverb_rapier_passive or class({})
-function modifier_imba_reverb_rapier_passive:IsDebuff() return false end
-function modifier_imba_reverb_rapier_passive:IsHidden() return true end
-function modifier_imba_reverb_rapier_passive:IsPermanent() return true end
-function modifier_imba_reverb_rapier_passive:IsPurgable() return false end
-function modifier_imba_reverb_rapier_passive:IsPurgeException() return false end
-function modifier_imba_reverb_rapier_passive:IsStunDebuff() return false end
-function modifier_imba_reverb_rapier_passive:RemoveOnDeath() return false end
-function modifier_imba_reverb_rapier_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_reverb_rapier_passive:OnDestroy()
-	self:CheckUnique(false)
-end
+
+function modifier_imba_reverb_rapier_passive:IsHidden()		return true end
+function modifier_imba_reverb_rapier_passive:IsPurgable()		return false end
+function modifier_imba_reverb_rapier_passive:RemoveOnDeath()	return false end
+function modifier_imba_reverb_rapier_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_reverb_rapier_passive:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-			MODIFIER_EVENT_ON_ATTACK
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK
+	}
 end
 
 function modifier_imba_reverb_rapier_passive:OnCreated()
@@ -194,7 +168,6 @@ function modifier_imba_reverb_rapier_passive:OnCreated()
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
 		self.slow_duration = item:GetSpecialValueFor("slow_duration")
-		self:CheckUnique(true)
 	end
 end
 
@@ -222,15 +195,13 @@ function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
 	
-	if keys.attacker == parent and item and not parent:IsIllusion() then
+	if keys.attacker == parent and item and not parent:IsIllusion() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self then
 		if not parent:IsRangedAttacker() then 
 			if item:IsCooldownReady() and not keys.no_attack_cooldown then
-				if self:CheckUniqueValue(1,nil) == 1 then
-					item:UseResources(false,false,true)
-					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
-					if not keys.target:IsBuilding() and not keys.target:IsOther() then
-						keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
-					end
+				item:UseResources(false,false,true)
+				parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
+				if not keys.target:IsBuilding() and not keys.target:IsOther() then
+					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
 				end
 			end
 		end
@@ -283,17 +254,15 @@ function modifier_imba_echo_rapier_haste:OnRefresh()
 end
 
 function modifier_imba_echo_rapier_haste:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_EVENT_ON_ATTACK
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK
+	}
 end
 
 function modifier_imba_echo_rapier_haste:OnAttack(keys)
 	if self.parent == keys.attacker and not keys.target:IsBuilding() and not keys.target:IsOther() then
-		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration * (1 - keys.target:GetStatusResistance())})
 	end
 end
 
@@ -310,12 +279,10 @@ function modifier_imba_echo_rapier_debuff_slow:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_echo_rapier_debuff_slow:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_echo_rapier_debuff_slow:OnCreated()

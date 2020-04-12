@@ -2,7 +2,7 @@
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm"						"Sticky Napalm"
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm_Description"			"Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies in the area.  Additional casts of Sticky Napalm continue to increase damage, up to %max_stacks% stacks.  The extra damage is halved against creeps.\n<font color='#FF7800'>Oil Leak:</font> Can be set to auto-cast to automatically cast Sticky Napalm at the caster's location when off-cooldown and fully castable. Sticky Napalm has no cast point when activated in this fashion."
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm_Lore"					"It's not uncommon to hear the Rider cackle while he increases the flammability of his opponents."
-"DOTA_Tooltip_ability_imba_batrider_sticky_napalm_Note0"					"All damage from Batrider gets amplified, except for Radiance, Orb of Venom, and Urn of Shadows."
+"DOTA_Tooltip_ability_imba_batrider_sticky_napalm_Note0"					"All damage from Batrider gets amplified, except for Cloak of Flames, Radiance, Orb of Venom, Urn of Shadows, Spirit Vessel, Occult Mask, and Cultic Hammer."
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm_damage"				"EXTRA DAMAGE:"
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm_duration"				"DURATION:"
 "DOTA_Tooltip_ability_imba_batrider_sticky_napalm_movement_speed_pct"	"%MOVEMENT SLOW:"

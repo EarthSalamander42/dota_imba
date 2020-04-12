@@ -57,6 +57,9 @@ function modifier_item_imba_stonework_pendant:IsPurgable()
 	return false
 end
 
+function modifier_item_imba_stonework_pendant:RemoveOnDeath()	return false end
+function modifier_item_imba_stonework_pendant:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 ----------------------------------------
 
 function modifier_item_imba_stonework_pendant:OnCreated( kv )

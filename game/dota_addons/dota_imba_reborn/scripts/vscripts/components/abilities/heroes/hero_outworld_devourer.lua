@@ -167,9 +167,9 @@ function imba_outworld_devourer_astral_imprisonment:OnSpellStart()
 	end
 end
 
------------------------------------------------------------
--- modifier_imba_outworld_devourer_astral_imprisonment_prison --
------------------------------------------------------------
+----------------------------------------------------------------
+-- MODIFIER_IMBA_OUTWORLD_DEVOURER_ASTRAL_IMPRISONMENT_PRISON --
+----------------------------------------------------------------
 
 function modifier_imba_outworld_devourer_astral_imprisonment_prison:IsPurgable()	return false end
 
@@ -350,7 +350,7 @@ function modifier_imba_outworld_devourer_essence_flux_active:OnTakeDamage(keys)
 	if keys.attacker == self:GetCaster() then --and keys.damage_category == 0 then
 		keys.unit:EmitSound("Hero_ObsidianDestroyer.Equilibrium.Damage")
 		
-		keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_outworld_devourer_essence_flux_debuff", {duration = self.slow_duration})
+		keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_outworld_devourer_essence_flux_debuff", {duration = self.slow_duration * (1 - keys.unit:GetStatusResistance())})
 		
 		self:IncrementStackCount()
 	end
@@ -521,3 +521,21 @@ end
 function modifier_imba_outworld_devourer_sanity_eclipse_charge:GetModifierManaBonus()
 	return self:GetStackCount() * self.stack_mana
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier	= modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier or class({})
+modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage			= modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage or class({})
+
+function modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier:IsHidden() 		return true end
+function modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier:IsPurgable()		return false end
+function modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage:IsHidden() 		return true end
+function modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage:IsPurgable()		return false end
+function modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage:RemoveOnDeath() 	return false end

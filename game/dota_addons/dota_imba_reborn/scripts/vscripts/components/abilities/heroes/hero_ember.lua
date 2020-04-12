@@ -53,7 +53,7 @@ end
 -- Apply Searing Chains debuff
 function ApplySearingChains(caster, source, target, ability, duration)
 	target:EmitSound("Hero_EmberSpirit.SearingChains.Target")
-	target:AddNewModifier(caster, ability, "modifier_imba_searing_chains_debuff", {damage = ability:GetSpecialValueFor("damage_per_tick"), tick_interval = ability:GetSpecialValueFor("tick_interval"), duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+	target:AddNewModifier(caster, ability, "modifier_imba_searing_chains_debuff", {damage = ability:GetSpecialValueFor("damage_per_tick"), tick_interval = ability:GetSpecialValueFor("tick_interval"), duration = duration * (1 - target:GetStatusResistance())})
 	local impact_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_start.vpcf", PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControl(impact_pfx, 0, source:GetAbsOrigin())
 	ParticleManager:SetParticleControl(impact_pfx, 1, target:GetAbsOrigin())
@@ -99,13 +99,14 @@ end
 -- Flame Guard passive
 modifier_imba_flame_guard_passive = modifier_imba_flame_guard_passive or class ({})
 
-function modifier_imba_flame_guard_passive:IsDebuff() return false end
-function modifier_imba_flame_guard_passive:IsHidden() return false end
-function modifier_imba_flame_guard_passive:IsPurgable() return false end
+function modifier_imba_flame_guard_passive:IsHidden()		return false end
+function modifier_imba_flame_guard_passive:IsPurgable()		return false end
+function modifier_imba_flame_guard_passive:RemoveOnDeath()	return false end
 
-function modifier_imba_flame_guard_passive:GetAttributes()
-	return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
-end
+-- Are these necessary?
+-- function modifier_imba_flame_guard_passive:GetAttributes()
+	-- return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
+-- end
 
 function modifier_imba_flame_guard_passive:GetEffectName()
 	return "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
@@ -138,14 +139,15 @@ function modifier_imba_flame_guard_passive:OnIntervalThink()
 end
 
 function modifier_imba_flame_guard_passive:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-	return funcs
 end
 
 function modifier_imba_flame_guard_passive:GetModifierMagicalResistanceBonus()
-	return self:GetAbility():GetSpecialValueFor("absorb_amount")
+	if self:GetCaster():HasTalent("special_bonus_ember_permanent_guard") then
+		return self:GetCaster():FindTalentValue("special_bonus_ember_permanent_guard")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -195,21 +197,47 @@ function modifier_imba_flame_guard_aura:OnIntervalThink()
 	end
 end
 
+-- Firetoad's binary damage block system?...This isn't right at all
+-- function modifier_imba_flame_guard_aura:DeclareFunctions()
+	-- local funcs = {
+		-- MODIFIER_PROPERTY_AVOID_DAMAGE
+	-- }
+	-- return funcs
+-- end
+
+-- function modifier_imba_flame_guard_aura:GetModifierAvoidDamage(keys)
+	-- if IsServer() then
+		-- if keys.damage_type == DAMAGE_TYPE_MAGICAL then
+			-- self.remaining_health = self.remaining_health - keys.original_damage
+			-- self:SetStackCount(self.remaining_health)
+			-- return 1
+		-- else
+			-- return 0
+		-- end
+	-- end
+-- end
+
 function modifier_imba_flame_guard_aura:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_AVOID_DAMAGE
-	}
-	return funcs
+	return {MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT}
 end
 
-function modifier_imba_flame_guard_aura:GetModifierAvoidDamage(keys)
-	if IsServer() then
+function modifier_imba_flame_guard_aura:GetModifierIncomingSpellDamageConstant(keys)
+	if IsClient() then
+		return self.remaining_health
+	else
 		if keys.damage_type == DAMAGE_TYPE_MAGICAL then
-			self.remaining_health = self.remaining_health - keys.original_damage
-			self:SetStackCount(self.remaining_health)
-			return 1
-		else
-			return 0
+			if keys.original_damage >= self.remaining_health then
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), self.remaining_health, nil)
+			
+				self:Destroy()
+				return self.remaining_health * (-1)
+			else
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), keys.original_damage, nil)
+			
+				self.remaining_health = self.remaining_health - keys.original_damage
+				self:SetStackCount(self.remaining_health)
+				return keys.original_damage * (-1)
+			end
 		end
 	end
 end
@@ -359,7 +387,7 @@ function modifier_imba_searing_chains_debuff:OnCreated(keys)
 		self:StartIntervalThink(self.tick_interval)
 
 		-- Mini-stun
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 0.1 * (1 - self:GetParent():GetStatusResistance())})
 	end
 end
 
@@ -383,6 +411,9 @@ function modifier_imba_fire_remnant_charges:OnCreated(keys)
 	if IsServer() then
 		self:GetCaster().spirit_charges = 0
 		self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
+		
+		self.max_charges = self:GetStackCount()
+		
 		self.learned_charges_talent = false
 		self:StartIntervalThink(0.2)
 	end
@@ -394,13 +425,33 @@ function modifier_imba_fire_remnant_charges:OnIntervalThink()
 			local talent = self:GetParent():FindAbilityByName("special_bonus_ember_remnant_charges")
 			if talent and talent:GetLevel() > 0 then
 				self:SetStackCount(self:GetStackCount() + talent:GetSpecialValueFor("value"))
+				
+				self.max_charges = self:GetStackCount()
+				
 				self.learned_charges_talent = true
 			end
 		end
 		
 		if not self.learned_charges_scepter and self:GetCaster():HasScepter() then
 			self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("scepter_additional_charges"))
+			
+			self.max_charges = self:GetAbility():GetTalentSpecialValueFor("max_charges") + self:GetAbility():GetSpecialValueFor("scepter_additional_charges")
+			
 			self.learned_charges_scepter = true
+			
+			if self:GetStackCount() > 0 then
+				self:GetAbility():SetActivated(true)
+			end
+		elseif self.learned_charges_scepter and not self:GetCaster():HasScepter() then
+			self:SetStackCount(self:GetStackCount() - self:GetAbility():GetSpecialValueFor("scepter_additional_charges"))
+			
+			self.max_charges = self:GetAbility():GetTalentSpecialValueFor("max_charges")
+			
+			self.learned_charges_scepter = false
+			
+			if self:GetStackCount() <= 0 then
+				self:GetAbility():SetActivated(false)
+			end
 		end
 		
 		if self:GetParent():IsAlive() and self:GetCaster().spirit_charges > 0 then
@@ -408,6 +459,22 @@ function modifier_imba_fire_remnant_charges:OnIntervalThink()
 			self:GetCaster().spirit_charges = 0
 			self:GetAbility():SetActivated(true)
 		end
+	end
+end
+
+function modifier_imba_fire_remnant_charges:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
+	}
+end
+
+function modifier_imba_fire_remnant_charges:OnAbilityFullyCast( params )
+	if params.unit ~= self:GetParent() then return end
+	
+	-- Remove this modifier if the ability no longer exists
+	if params.ability:GetName() == "item_refresher" or params.ability:GetName() == "item_refresher_shard" then
+		self:SetStackCount(self.max_charges)
+		self:GetAbility():SetActivated(true)
 	end
 end
 
@@ -454,48 +521,49 @@ end
 function modifier_imba_fire_remnant_state:OnCreated(keys)
 	if IsServer() then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = self:GetDuration()})
-		if self:GetCaster():HasScepter() then
-			self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("attack_cd_scepter"))
-			self.has_scepter = true
-		else
-			self:StartIntervalThink(5.0)
-			self.has_scepter = false
-		end
+		
+		-- if self:GetCaster():HasScepter() then
+			-- self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("attack_cd_scepter"))
+			-- self.has_scepter = true
+		-- else
+			-- self:StartIntervalThink(5.0)
+			-- self.has_scepter = false
+		-- end
 	end
 end
 
-function modifier_imba_fire_remnant_state:OnIntervalThink()
-	if IsServer() then
-		if self.has_scepter then
-			local caster = self:GetCaster()
-			local remnant = self:GetParent()
+-- function modifier_imba_fire_remnant_state:OnIntervalThink()
+	-- if IsServer() then
+		-- if self.has_scepter then
+			-- local caster = self:GetCaster()
+			-- local remnant = self:GetParent()
 
-			-- Animate the slash
-			remnant:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK , 1)
+			-- -- Animate the slash
+			-- remnant:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK , 1)
 
-			print(caster:Script_GetAttackRange())
+			-- -- print(caster:Script_GetAttackRange())
 			
-			-- Pick a random enemy in range
-			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, caster:Script_GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
-			if nearby_enemies[1] then
-				caster:PerformAttack(nearby_enemies[1], true, true, true, false, false, false, true)
-			end
-		else
-			local rand = RandomInt(1, 10)
-			if rand == 1 then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_4 , 1)
---			elseif rand == 2 then
---				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_STATUE , 1)
-			elseif rand == 3 then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VICTORY_START , 1)
-			elseif rand == 4 then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VERSUS , 3)
---			elseif rand > 4 and rand < 7 then
---				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_REMNANT_STATUE , 1)
-			end
-		end
-	end
-end
+			-- -- Pick a random enemy in range
+			-- local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, caster:Script_GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
+			-- if nearby_enemies[1] then
+				-- caster:PerformAttack(nearby_enemies[1], true, true, true, false, false, false, true)
+			-- end
+		-- else
+			-- local rand = RandomInt(1, 10)
+			-- if rand == 1 then
+				-- self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_4 , 1)
+-- --			elseif rand == 2 then
+-- --				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_STATUE , 1)
+			-- elseif rand == 3 then
+				-- self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VICTORY_START , 1)
+			-- elseif rand == 4 then
+				-- self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VERSUS , 3)
+-- --			elseif rand > 4 and rand < 7 then
+-- --				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_REMNANT_STATUE , 1)
+			-- end
+		-- end
+	-- end
+-- end
 
 function modifier_imba_fire_remnant_state:OnDestroy()
 	if IsServer() then
@@ -521,7 +589,7 @@ end
 function modifier_imba_fire_remnant_cooldown:OnDestroy()
 	if IsServer() then
 		local charges_modifier = self:GetParent():FindModifierByName("modifier_imba_fire_remnant_charges")
-		charges_modifier:SetStackCount(charges_modifier:GetStackCount() + 1)
+		charges_modifier:SetStackCount(math.min(charges_modifier:GetStackCount() + 1, charges_modifier.max_charges))
 
 		self:GetAbility():SetActivated(true)
 	end
@@ -546,15 +614,13 @@ end
 
 function modifier_imba_fire_remnant_dash:CheckState()
 	if IsServer() then
-		local state = {
+		return {
 			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 			[MODIFIER_STATE_INVULNERABLE] = true,
 			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 			[MODIFIER_STATE_MAGIC_IMMUNE] = true,
 			[MODIFIER_STATE_COMMAND_RESTRICTED] = true
 		}
-
-		return state
 	end
 end
 

@@ -67,6 +67,10 @@ function modifier_item_imba_shadow_blade_invis:IsHidden() return false end
 function modifier_item_imba_shadow_blade_invis:IsPurgable() return false end
 
 function modifier_item_imba_shadow_blade_invis:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.bonus_attack_damage = self:GetAbility():GetSpecialValueFor("invis_damage")
+
 	-- Start flying if has not taken damage recently
 	if IsServer() then
 		if not self:GetParent():FindModifierByName("modifier_item_imba_shadow_blade_invis_flying_disabled") then
@@ -77,46 +81,39 @@ function modifier_item_imba_shadow_blade_invis:OnCreated()
 	if self:GetAbility() == nil then return end
 	if not self:GetParent():IsCreature() then
 		self.bonus_movespeed = self:GetAbility():GetSpecialValueFor("invis_ms_pct")
-		self.bonus_attack_damage = self:GetAbility():GetSpecialValueFor("invis_damage")
 	end
 end
 
+-- Phase invis and flying bonuses
+function modifier_item_imba_shadow_blade_invis:CheckState() 
+	return {
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_INVISIBLE] = true,
+	}
+end
+
+function modifier_item_imba_shadow_blade_invis:GetPriority()
+	return MODIFIER_PRIORITY_NORMAL
+end
+
 -- Damage and movespeed bonuses
-function modifier_item_imba_shadow_blade_invis:DeclareFunctions()
-	local funcs =   {
+function modifier_item_imba_shadow_blade_invis:DeclareFunctions() 
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE_POST_CRIT,
 		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 		-- Breaking invis handler
 		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED
 	}
-	return funcs
 end
 
 function modifier_item_imba_shadow_blade_invis:GetModifierMoveSpeedBonus_Percentage() return self.bonus_movespeed end
+
 function modifier_item_imba_shadow_blade_invis:GetModifierPreAttack_BonusDamagePostCrit(params)
-	-- Does not deal bonus damage to wards/buildings
-	if params.target:IsOther() or params.target:IsBuilding() then
-		return 0
-	else
+	if IsClient() or (not params.target:IsOther() and not params.target:IsBuilding()) then
 		return self.bonus_attack_damage
 	end
-end
-
-
--- Phase invis and flying bonuses
-function modifier_item_imba_shadow_blade_invis:CheckState()
-	local state =   {
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-		[MODIFIER_STATE_INVISIBLE] = true,
-	}
-	return state
-end
-
-function modifier_item_imba_shadow_blade_invis:GetPriority()
-	return MODIFIER_PRIORITY_NORMAL
 end
 
 function modifier_item_imba_shadow_blade_invis:GetModifierInvisibilityLevel()
@@ -131,7 +128,7 @@ function modifier_item_imba_shadow_blade_invis:OnAttack(params)
 			local debuff_duration  =   ability:GetSpecialValueFor("turnrate_slow_duration")
 
 			-- Apply turnrate debuff modifier
-			params.target:AddNewModifier(params.attacker, ability, "modifier_item_imba_shadow_blade_invis_turnrate_debuff", {duration = debuff_duration})
+			params.target:AddNewModifier(params.attacker, ability, "modifier_item_imba_shadow_blade_invis_turnrate_debuff", {duration = debuff_duration * (1 - params.target:GetStatusResistance())})
 
 			-- Remove the invis on attack
 			self:Destroy()
@@ -168,10 +165,10 @@ end
 modifier_item_imba_shadow_blade_passive = modifier_item_imba_shadow_blade_passive or class({})
 
 -- Modifier properties
-function modifier_item_imba_shadow_blade_passive:IsDebuff() return false end
+
 function modifier_item_imba_shadow_blade_passive:IsHidden() return true end
 function modifier_item_imba_shadow_blade_passive:IsPurgable() return false end
-function modifier_item_imba_shadow_blade_passive:IsPermanent() return true end
+function modifier_item_imba_shadow_blade_passive:RemoveOnDeath() return false end
 function modifier_item_imba_shadow_blade_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_shadow_blade_passive:OnCreated()
@@ -186,13 +183,12 @@ function modifier_item_imba_shadow_blade_passive:OnCreated()
 end
 
 -- Attack speed and damage bonuses
-function modifier_item_imba_shadow_blade_passive:DeclareFunctions()
-	local funcs =   {
+function modifier_item_imba_shadow_blade_passive:DeclareFunctions() 
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_EVENT_ON_TAKEDAMAGE            -- Flying disabler handler
 	}
-	return funcs
 end
 
 function modifier_item_imba_shadow_blade_passive:GetModifierPreAttack_BonusDamage() return self.attack_damage_bonus end
@@ -257,10 +253,9 @@ function modifier_item_imba_shadow_blade_invis_turnrate_debuff:OnCreated()
 end
 
 function modifier_item_imba_shadow_blade_invis_turnrate_debuff:DeclareFunctions()
-	local funcs =   {
+	return {
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE
 	}
-	return funcs
 end
 
 function modifier_item_imba_shadow_blade_invis_turnrate_debuff:GetModifierTurnRate_Percentage() return self.turnrate end

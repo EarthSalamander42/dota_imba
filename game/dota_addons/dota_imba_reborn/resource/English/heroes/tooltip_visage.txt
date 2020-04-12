@@ -9,9 +9,6 @@
 "DOTA_Tooltip_ability_imba_visage_grave_chill_attackspeed_bonus"		"ATTACK SPEED DRAIN:"
 "DOTA_Tooltip_ability_imba_visage_grave_chill_chill_duration"		"DURATION:"
 
-"DOTA_Tooltip_modifier_imba_visage_grave_chill_aura_modifier"				"Death's Enticement"
-"DOTA_Tooltip_modifier_imba_visage_grave_chill_aura_modifier_Description"	"Visage keeps count of lives down to the last second. This unit has lived for %dMODIFIER_PROPERTY_TOOLTIP% seconds since (re)spawn."
-
 "DOTA_Tooltip_ability_imba_visage_soul_assumption"					"Soul Assumption"
 "DOTA_Tooltip_ability_imba_visage_soul_assumption_Description"		"Visage gathers charges of soul essence each time nearby heroes take more than %damage_limit% damage. When the essence is released, it deals base damage as well as damage for each gathered soul charge.\n<font color='#FF7800'>Soul Accelerant:</font> Any stored damage above the max threshold is used to increase Soul Assumption's projectile speed, up to a maximum of %soul_accelerant_max% speed.\n<font color='#FF7800'>Familiar Flow:</font> Familiars can charge Soul Assumption off of any enemy."
 "DOTA_Tooltip_ability_imba_visage_soul_assumption_Lore"				"The collected souls of the dead reach out to bring another into their fold."
@@ -39,7 +36,7 @@
 "DOTA_Tooltip_modifier_imba_visage_gravekeepers_cloak_secondary_ally_Description"	"Gaining %dMODIFIER_PROPERTY_TOOLTIP%%% damage reduction."
 
 "DOTA_Tooltip_ability_imba_visage_summon_familiars"						"Summon Familiars"
-"DOTA_Tooltip_ability_imba_visage_summon_familiars_Description"			"Conjures %initial_familiar_count% <font color='#FF7800'>(%familiars_at_level_25% at level 25)</font> blind Familiars to fight for Visage.  Familiars possess the Stone Form ability, that allows them to turn into stone, stunning enemies upon landing.  While in Stone Form, Familiars are invulnerable, and rapidly regenerate their health.  Familiars grant high bounty when killed.\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Unfeeling Stone:</font> Familiars have %unfeeling_status_resistance%%% status resistance.\n<font color='#FF7800'>Petrifying Breath:</font> Familiar attacks reduce movement and attack speed by %petrifying_breath_reduction_per_stack% for %petrifying_breath_duration% seconds. Stacks with and refreshes itself, is unpurgable, and pierces magic immunity."
+"DOTA_Tooltip_ability_imba_visage_summon_familiars_Description"			"Conjures %initial_familiar_count% <font color='#FF7800'>(%familiars_at_level_25% at level 25)</font> blind Familiars to fight for Visage.  Familiars possess the Stone Form ability, that allows them to turn into stone, stunning enemies upon landing.  While in Stone Form, Familiars are invulnerable, and rapidly regenerate their health.  Familiars grant high bounty when killed.\n<font color='#FF7800'>Unfeeling Stone:</font> Familiars have %unfeeling_status_resistance%%% status resistance.\n<font color='#FF7800'>Petrifying Breath:</font> Familiar attacks reduce movement and attack speed by %petrifying_breath_reduction_per_stack% for %petrifying_breath_duration% seconds. Stacks with and refreshes itself, is unpurgable, and pierces magic immunity."
 "DOTA_Tooltip_ability_imba_visage_summon_familiars_Lore"					"Guardians of the Narrow Maze, Necro'lic's Familiars stand watch over his domain."
 "DOTA_Tooltip_ability_imba_visage_summon_familiars_Note0"				"Casting Summon Familiars will replace any existing Familiars."
 "DOTA_Tooltip_ability_imba_visage_summon_familiars_familiar_speed"		"FAMILIAR SPEED:"
@@ -70,7 +67,7 @@
 
 "DOTA_Tooltip_ability_imba_visage_become_familiar"					"Become Familiar"
 "DOTA_Tooltip_ability_imba_visage_become_familiar_Description"		"After a %familiar_transform_delay% second delay, Visage transforms into a familiar, gaining flying and phased movement with altered base movement speed and turn rate.\n<font color='#E03E2E'>Visage does not benefit from <font color='#FF7800'>Unfeeling Stone</font> or <font color='#FF7800'>Petrifying Breath</font>, and is muted while in the familiar state.</font>"
-"DOTA_Tooltip_ability_imba_visage_become_familiar_Lore"				"Fine, I'll do it myself."
+"DOTA_Tooltip_ability_imba_visage_become_familiar_Lore"				"\"Fine, I'll do it myself.\""
 "DOTA_Tooltip_ability_imba_visage_become_familiar_Note0"			"Visage keeps standard vision range."
 "DOTA_Tooltip_ability_imba_visage_become_familiar_familiar_speed"			"BASE MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_visage_become_familiar_familiar_movement_turn_rate"	"BASE TURN RATE:"

@@ -95,10 +95,10 @@
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_efficiency"		"SCEPTER EFFICIENCY:"
 
 "DOTA_Tooltip_modifier_imba_wisp_overcharge_721"								"Overcharged"
-"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%. Cast speed also increased by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
+"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% max health regeneration. Cast speed also increased by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
 
 "DOTA_Tooltip_modifier_imba_wisp_overcharge_721_aura"								"Overcharged Proxy"
-"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_aura_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%. Cast speed also increased by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
+"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_aura_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% max health regeneration. Cast speed also increased by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
 
 ////===============================================================================================================
 // Wisp's Relocate

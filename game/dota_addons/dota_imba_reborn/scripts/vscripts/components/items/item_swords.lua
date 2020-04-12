@@ -46,21 +46,19 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_sange == nil then modifier_item_imba_sange = class({}) end
-function modifier_item_imba_sange:IsHidden() return true end
-function modifier_item_imba_sange:IsDebuff() return false end
-function modifier_item_imba_sange:IsPurgable() return false end
-function modifier_item_imba_sange:IsPermanent() return true end
-function modifier_item_imba_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_sange:IsHidden()		return true end
+function modifier_item_imba_sange:IsPurgable()		return false end
+function modifier_item_imba_sange:RemoveOnDeath()	return false end
+function modifier_item_imba_sange:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_sange:GetModifierPreAttack_BonusDamage()
@@ -140,7 +138,7 @@ function item_imba_heavens_halberd:OnSpellStart(keys)
 			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_ally_buff", {duration = self:GetSpecialValueFor("buff_duration")})
 			self:GetCaster():EmitSound(active_sword_sound)
 		else
-			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_active_disarm", {duration = duration})
+			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_active_disarm", {duration = duration * (1 - target:GetStatusResistance())})
 			target:EmitSound("DOTA_Item.HeavensHalberd.Activate")
 		end
 	end
@@ -151,11 +149,12 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_heavens_halberd == nil then modifier_item_imba_heavens_halberd = class({}) end
-function modifier_item_imba_heavens_halberd:IsHidden() return true end
-function modifier_item_imba_heavens_halberd:IsDebuff() return false end
-function modifier_item_imba_heavens_halberd:IsPurgable() return false end
-function modifier_item_imba_heavens_halberd:IsPermanent() return true end
-function modifier_item_imba_heavens_halberd:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_heavens_halberd:IsHidden()		return true end
+function modifier_item_imba_heavens_halberd:IsPurgable()		return false end
+function modifier_item_imba_heavens_halberd:RemoveOnDeath()	return false end
+function modifier_item_imba_heavens_halberd:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 
 -- Declare modifier events/properties
 function modifier_item_imba_heavens_halberd:DeclareFunctions()
@@ -268,11 +267,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_yasha == nil then modifier_item_imba_yasha = class({}) end
-function modifier_item_imba_yasha:IsHidden() return true end
-function modifier_item_imba_yasha:IsDebuff() return false end
-function modifier_item_imba_yasha:IsPurgable() return false end
-function modifier_item_imba_yasha:IsPermanent() return true end
-function modifier_item_imba_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_yasha:IsHidden()		return true end
+function modifier_item_imba_yasha:IsPurgable()		return false end
+function modifier_item_imba_yasha:RemoveOnDeath()	return false end
+function modifier_item_imba_yasha:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_yasha:DeclareFunctions()
@@ -359,11 +358,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya == nil then modifier_item_imba_kaya = class({}) end
-function modifier_item_imba_kaya:IsHidden() return true end
-function modifier_item_imba_kaya:IsDebuff() return false end
-function modifier_item_imba_kaya:IsPurgable() return false end
-function modifier_item_imba_kaya:IsPermanent() return true end
-function modifier_item_imba_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_kaya:IsHidden()		return true end
+function modifier_item_imba_kaya:IsPurgable()		return false end
+function modifier_item_imba_kaya:RemoveOnDeath()	return false end
+function modifier_item_imba_kaya:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_kaya:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
@@ -446,6 +445,14 @@ function modifier_item_imba_kaya_active:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
+function modifier_item_imba_kaya_active:GetTexture()
+	if self:GetAbility():GetName() == "item_imba_kaya" then
+		return "item_kaya"
+	elseif self:GetAbility():GetName() == "item_imba_arcane_nexus" then
+		return "modifiers/imba_arcane_nexus"
+	end
+end
+
 function modifier_item_imba_kaya_active:OnCreated()
 	self.bonus_cdr_active = self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
 end
@@ -496,11 +503,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_sange_yasha == nil then modifier_item_imba_sange_yasha = class({}) end
-function modifier_item_imba_sange_yasha:IsHidden() return true end
-function modifier_item_imba_sange_yasha:IsDebuff() return false end
-function modifier_item_imba_sange_yasha:IsPurgable() return false end
-function modifier_item_imba_sange_yasha:IsPermanent() return true end
-function modifier_item_imba_sange_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_sange_yasha:IsHidden()		return true end
+function modifier_item_imba_sange_yasha:IsPurgable()		return false end
+function modifier_item_imba_sange_yasha:RemoveOnDeath()	return false end
+function modifier_item_imba_sange_yasha:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_yasha:DeclareFunctions()
@@ -614,11 +621,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya_and_sange == nil then modifier_item_imba_kaya_and_sange = class({}) end
-function modifier_item_imba_kaya_and_sange:IsHidden() return true end
-function modifier_item_imba_kaya_and_sange:IsDebuff() return false end
-function modifier_item_imba_kaya_and_sange:IsPurgable() return false end
-function modifier_item_imba_kaya_and_sange:IsPermanent() return true end
-function modifier_item_imba_kaya_and_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_kaya_and_sange:IsHidden()		return true end
+function modifier_item_imba_kaya_and_sange:IsPurgable()		return false end
+function modifier_item_imba_kaya_and_sange:RemoveOnDeath()	return false end
+function modifier_item_imba_kaya_and_sange:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_kaya_and_sange:OnCreated()
 	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
@@ -763,11 +770,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_yasha_and_kaya == nil then modifier_item_imba_yasha_and_kaya = class({}) end
-function modifier_item_imba_yasha_and_kaya:IsHidden() return true end
-function modifier_item_imba_yasha_and_kaya:IsDebuff() return false end
-function modifier_item_imba_yasha_and_kaya:IsPurgable() return false end
-function modifier_item_imba_yasha_and_kaya:IsPermanent() return true end
-function modifier_item_imba_yasha_and_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_yasha_and_kaya:IsHidden()		return true end
+function modifier_item_imba_yasha_and_kaya:IsPurgable()		return false end
+function modifier_item_imba_yasha_and_kaya:RemoveOnDeath()	return false end
+function modifier_item_imba_yasha_and_kaya:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_yasha_and_kaya:OnCreated()
 	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
@@ -807,23 +814,33 @@ function modifier_item_imba_yasha_and_kaya:DeclareFunctions()
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_attack_speed
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierMoveSpeedBonus_Percentage_Unique()
-	return self.bonus_ms
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_ms")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierBonusStats_Agility()
-	return self.bonus_agility
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_agility")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierPercentageManacost()
-	return self.bonus_cdr
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	end
 end
 
 -- As of 7.23, the items that Kaya's tree contains are as follows:
@@ -835,16 +852,19 @@ end
 --   - Arcane Nexus
 --   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_yasha_and_kaya:GetModifierPercentageCooldown()
-    if self:GetAbility():GetSecondaryCharges() == 1 and
+	if self:GetAbility() and
+    self:GetAbility():GetSecondaryCharges() == 1 and
 	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
 	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
 	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
-        return self.bonus_cdr
+        return self:GetAbility():GetSpecialValueFor("bonus_cdr")
     end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierSpellAmplify_PercentageUnique()
-	return self.spell_amp
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("spell_amp")
+	end
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -865,29 +885,32 @@ function modifier_item_imba_yasha_and_kaya_active:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
+function modifier_item_imba_yasha_and_kaya_active:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.bonus_cdr_active		= self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	self.bonus_evasion_active	= self:GetAbility():GetSpecialValueFor("bonus_evasion_active")
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_yasha_and_kaya_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_yasha_and_kaya_active:GetModifierPercentageCooldown()
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	return self.bonus_cdr_active
 end
 
 function modifier_item_imba_yasha_and_kaya_active:GetModifierPercentageManacost()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	return self.bonus_cdr_active
 end
 
 function modifier_item_imba_yasha_and_kaya_active:GetModifierEvasion_Constant()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_evasion_active")
+	return self.bonus_evasion_active
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -913,15 +936,15 @@ function item_imba_triumvirate:GetIntrinsicModifierName()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_triumvirate == nil then modifier_item_imba_triumvirate = class({}) end
-function modifier_item_imba_triumvirate:IsHidden() return true end
-function modifier_item_imba_triumvirate:IsDebuff() return false end
-function modifier_item_imba_triumvirate:IsPurgable() return false end
-function modifier_item_imba_triumvirate:IsPermanent() return true end
-function modifier_item_imba_triumvirate:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_triumvirate:IsHidden()		return true end
+function modifier_item_imba_triumvirate:IsPurgable()		return false end
+function modifier_item_imba_triumvirate:RemoveOnDeath()	return false end
+function modifier_item_imba_triumvirate:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
@@ -930,7 +953,6 @@ function modifier_item_imba_triumvirate:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-	return funcs
 end
 
 function modifier_item_imba_triumvirate:GetModifierPreAttack_BonusDamage()
@@ -1192,7 +1214,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		return end
 
 	-- Stack the maim up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1202,7 +1224,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 
 		-- Proc! Apply the disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		ability:UseResources(false, false, true)
 	end
@@ -1252,7 +1274,7 @@ function kayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 
 		-- Proc! Apply the silence modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
@@ -1283,13 +1305,13 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the maim up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1307,7 +1329,7 @@ function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_pr
 		return end
 
 	-- Stack the maim/amp up
-	local modifier_debuff = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_debuff = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_debuff and modifier_debuff:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_debuff:SetStackCount(modifier_debuff:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1318,7 +1340,7 @@ function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_pr
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 
 		-- Proc! Apply the disarm/silence modifier
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
@@ -1350,13 +1372,13 @@ function kayaYashaAttack(attacker, target, ability, modifier_enemy_stacks, modif
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the silence modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the magic amp up
-	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
 		target:EmitSound("Imba.kayaStack")
@@ -1388,14 +1410,14 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the silence/disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the maim/amp up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")

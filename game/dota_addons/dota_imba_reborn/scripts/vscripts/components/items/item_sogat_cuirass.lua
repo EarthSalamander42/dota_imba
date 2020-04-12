@@ -43,34 +43,15 @@ modifier_imba_sogat_cuirass = class({})
 
 function modifier_imba_sogat_cuirass:IsHidden() return true end
 function modifier_imba_sogat_cuirass:IsPurgable() return false end
-function modifier_imba_sogat_cuirass:IsDebuff() return false end
+function modifier_imba_sogat_cuirass:RemoveOnDeath() return false end
 function modifier_imba_sogat_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_sogat_cuirass:OnCreated()
-	-- Ability properties
-	self.modifier_self = "modifier_imba_sogat_cuirass"
-	self.modifier_aura_positive = "modifier_imba_sogat_cuirass_aura_positive"
-	self.modifier_aura_negative = "modifier_imba_sogat_cuirass_aura_negative"
-
-	if not self:GetAbility() then
-		self:Destroy()
-	end
-	
-	self.bonus_health 			= self:GetAbility():GetSpecialValueFor("bonus_health")
-	self.bonus_health_regen		= self:GetAbility():GetSpecialValueFor("bonus_health_regen")
-	self.bonus_stats			= self:GetAbility():GetSpecialValueFor("bonus_stats")
-	self.bonus_as				= self:GetAbility():GetSpecialValueFor("bonus_as")
-	self.bonus_armor			= self:GetAbility():GetSpecialValueFor("bonus_armor")
-	self.bonus_strength 		= self:GetAbility():GetSpecialValueFor("bonus_strength")
-	self.block_damage_melee 	= self:GetAbility():GetSpecialValueFor("block_damage_melee")
-	self.block_damage_ranged 	= self:GetAbility():GetSpecialValueFor("block_damage_ranged")
-	self.block_chance 			= self:GetAbility():GetSpecialValueFor("block_chance")
-
-	if IsServer() then
+	if IsServer() and self:GetAbility() then
 		-- If it is the first Assault Cuirass in the inventory, grant the Assault Cuirass aura
-		if not self:GetCaster():HasModifier(self.modifier_aura_positive) then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_aura_positive, {})
-			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_aura_negative, {})
+		if not self:GetCaster():HasModifier("modifier_imba_sogat_cuirass_aura_positive") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_sogat_cuirass_aura_positive", {})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_sogat_cuirass_aura_negative", {})
 		end
 	end
 end
@@ -78,9 +59,9 @@ end
 function modifier_imba_sogat_cuirass:OnDestroy()
 	if IsServer() then
 		-- If it is the last Assault Cuirass in the inventory, remove the aura
-		if not self:GetCaster():HasModifier(self.modifier_self) then
-			self:GetCaster():RemoveModifierByName(self.modifier_aura_positive)
-			self:GetCaster():RemoveModifierByName(self.modifier_aura_negative)
+		if not self:GetCaster():HasModifier("modifier_imba_sogat_cuirass") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_sogat_cuirass_aura_positive")
+			self:GetCaster():RemoveModifierByName("modifier_imba_sogat_cuirass_aura_negative")
 		end
 	end
 end
@@ -104,58 +85,68 @@ end
 -- end
 
 function modifier_imba_sogat_cuirass:GetModifierHealthBonus()
-	return self.bonus_health
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
 end
 
 function modifier_imba_sogat_cuirass:GetModifierConstantHealthRegen()
-	return self.bonus_health_regen
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	end
 end
 
 function modifier_imba_sogat_cuirass:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_as
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_as")
+	end
 end
 
 function modifier_imba_sogat_cuirass:GetModifierPhysicalArmorBonus()
-	return self.bonus_armor
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_armor")
+	end
 end
 
 function modifier_imba_sogat_cuirass:GetModifierBonusStats_Strength()
-	return self.bonus_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_stats")
+	end
 end
 
 function modifier_imba_sogat_cuirass:GetModifierBonusStats_Agility()
-	return self.bonus_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_stats")
+	end
 end
 
 function modifier_imba_sogat_cuirass:GetModifierBonusStats_Intellect()
-	return self.bonus_stats
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_stats")
+	end
 end
 
 function modifier_imba_sogat_cuirass:GetModifierPhysical_ConstantBlock()
-	if RollPseudoRandom(self.block_chance, self) then
-		if not self:GetParent():IsRangedAttacker() then
-			return self.damage_block_melee
-		else
-			return self.damage_block_ranged
+	if self:GetAbility() then
+		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("block_chance"), self) then
+			if not self:GetParent():IsRangedAttacker() then
+				return self:GetAbility():GetSpecialValueFor("block_damage_melee")
+			else
+				return self:GetAbility():GetSpecialValueFor("block_damage_ranged")
+			end
 		end
 	end
 end
 
 -- Custom unique damage reduction property
 function modifier_imba_sogat_cuirass:GetCustomIncomingDamageReductionUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_reduction_pct_passive")
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("damage_reduction_pct_passive")
+	end
 end
 
 -- Assault Cuirass positive aura
 modifier_imba_sogat_cuirass_aura_positive = class({})
-
-function modifier_imba_sogat_cuirass_aura_positive:OnCreated()
-	-- Ability properties
-	self.modifier_assault = "modifier_imba_sogat_cuirass_aura_positive_effect"
-
-	-- Ability specials
-	self.radius = self:GetAbility():GetSpecialValueFor("radius")
-end
 
 function modifier_imba_sogat_cuirass_aura_positive:IsDebuff() return false end
 function modifier_imba_sogat_cuirass_aura_positive:AllowIllusionDuplicate() return true end
@@ -163,7 +154,9 @@ function modifier_imba_sogat_cuirass_aura_positive:IsHidden() return true end
 function modifier_imba_sogat_cuirass_aura_positive:IsPurgable() return false end
 
 function modifier_imba_sogat_cuirass_aura_positive:GetAuraRadius()
-	return self.radius
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("radius")
+	end
 end
 
 function modifier_imba_sogat_cuirass_aura_positive:GetAuraEntityReject(target)
@@ -188,7 +181,7 @@ function modifier_imba_sogat_cuirass_aura_positive:GetAuraSearchType()
 end
 
 function modifier_imba_sogat_cuirass_aura_positive:GetModifierAura()
-	return self.modifier_assault
+	return "modifier_imba_sogat_cuirass_aura_positive_effect"
 end
 
 function modifier_imba_sogat_cuirass_aura_positive:IsAura()
@@ -214,10 +207,10 @@ function modifier_imba_sogat_cuirass_aura_positive_effect:IsPurgable() return fa
 function modifier_imba_sogat_cuirass_aura_positive_effect:IsDebuff() return false end
 
 function modifier_imba_sogat_cuirass_aura_positive_effect:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_sogat_cuirass_aura_positive_effect:GetModifierAttackSpeedBonus_Constant()
@@ -232,18 +225,15 @@ end
 -- Assault Cuirass negative aura
 modifier_imba_sogat_cuirass_aura_negative = class({})
 
-function modifier_imba_sogat_cuirass_aura_negative:OnCreated()
-	-- Ability specials
-	self.radius = self:GetAbility():GetSpecialValueFor("radius")
-end
-
 function modifier_imba_sogat_cuirass_aura_negative:IsDebuff() return false end
 function modifier_imba_sogat_cuirass_aura_negative:AllowIllusionDuplicate() return true end
 function modifier_imba_sogat_cuirass_aura_negative:IsHidden() return true end
 function modifier_imba_sogat_cuirass_aura_negative:IsPurgable() return false end
 
 function modifier_imba_sogat_cuirass_aura_negative:GetAuraRadius()
-	return self.radius
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("radius")
+	end
 end
 
 function modifier_imba_sogat_cuirass_aura_negative:GetAuraSearchFlags()

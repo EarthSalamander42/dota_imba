@@ -367,7 +367,67 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Silencer: Global Silence
+	//=================================================================================================================
+	"imba_silencer_global_silence_v2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_silencer"
+		"AbilityTextureName"			"silencer_global_silence"
+		
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_Silencer.GlobalSilence.Cast"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"130.0"
+		"AbilityDuration"				"4.5 5.5 6.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"300 450 600"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.5"	// Hits all units on the map.
+
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"abilityduration"		""
+				"LinkedSpecialBonus"	"special_bonus_unique_silencer_4"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_mana_reduction_percentage"		"80"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_mana_remainder_duration_multiplier"		"3"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Silencer Talents
@@ -655,7 +715,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "12"
+				"value"	                    "14"
 			}
 		}
 	}

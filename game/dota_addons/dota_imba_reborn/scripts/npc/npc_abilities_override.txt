@@ -148,7 +148,6 @@
 	"item_hurricane_pike"					"REMOVE"
 //	"item_travel_boots"						"REMOVE"
 //	"item_travel_boots_2"					"REMOVE"
-//	"item_cyclone"							"REMOVE"
 //	"item_recipe_cyclone"					"REMOVE"
 	"item_recipe_kaya_and_sange"			"REMOVE"
 	"item_kaya_and_sange"					"REMOVE"
@@ -180,7 +179,8 @@
 	"item_third_eye"						"REMOVE"
 	
 	"item_black_king_bar"					"REMOVE" // Not actually removed, but doing this and "remaking" it allows the shared bkb cooldown thing to work
-
+	"item_cyclone"							"REMOVE" // Not actually removed, but doing this and "remaking" it allows the shared cyclone cooldown thing to work
+	
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
 
@@ -250,58 +250,6 @@
 //				"var_type"				"FIELD_INTEGER"
 //				"bonus_damage"			"24"
 //			}
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Travel Boots
-	//=================================================================================================================
-	"item_recipe_travel_boots"
-	{
-		"ItemCost"						"2000"	
-		"ItemShopTags"					""
-		
-		"ItemRequirements"
-		{
-			"01"						"item_boots;"
-		}
-	}
-
-	//=================================================================================================================
-	// Travel Boots
-	//=================================================================================================================
-	"item_travel_boots"
-	{
-		"AbilityCooldown"				"40.0"
-		"AbilityChannelTime"			"3.0"
-		"AbilityManaCost"				"25"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"32"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Travel Boots II
-	//=================================================================================================================
-	"item_travel_boots_2"
-	{
-		"AbilityCooldown"				"40.0"
-		"AbilityChannelTime"			"3.0"
-		"AbilityManaCost"				"25"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"35"
-			}
 		}
 	}
 
@@ -826,9 +774,9 @@
 	//=================================================================================================================
 	"item_tome_of_knowledge"
 	{
-		"ItemCost"						"30"
+		"ItemCost"						"50"
 		"ItemInitialStockTime"			"390.0"
-		"ItemStockTime"					"120.0"
+		"ItemStockTime"					"60.0"
 		"ItemStockMax"					"5"
 
 		"ItemStackable"					"1"
@@ -972,14 +920,6 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Buckler
-	//=================================================================================================================
-	"item_recipe_buckler"
-	{
-		"ItemCost"						"245"
-	}
-
-	//=================================================================================================================
 	// Buckler
 	//=================================================================================================================
 	"item_buckler"
@@ -992,11 +932,7 @@
 	//=================================================================================================================
 	"item_dagon"
 	{
-		"AbilityCastRange"				"600"
-		"AbilityCooldown"				"35"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"120"		
-		"ItemCost"						"2565"
 		"UpgradesItems"					"item_dagon;item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
@@ -1004,38 +940,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
 
 	"item_dagon_2"
 	{
-		"AbilityCastRange"				"650"
-		"AbilityCooldown"				"30"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"140"
-		"ItemCost"						"3815"
 		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
@@ -1043,144 +960,72 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
 
 	"item_dagon_3"
 	{
-		"AbilityCastRange"				"700"
-		"AbilityCooldown"				"25"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"160"
-		"ItemCost"						"5065"
-		"UpgradesItems"					"item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
 
 	"item_dagon_4"
 	{
-		"AbilityCastRange"				"750"
-		"AbilityCooldown"				"20"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"180"
-		"ItemCost"						"6315"
-		"UpgradesItems"					"item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
 
 	"item_dagon_5"
 	{
-		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"15"
 		"MaxUpgradeLevel"				"10"
-		"AbilityManaCost"				"200"
-		"ItemCost"						"7565"
-		"UpgradesItems"					"item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18 21 24 27 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_intellect"		"18 21 24 27 30 33 36 39 42 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 600 700 800 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"120"
+				"damage"				"500 600 700 800 900 1000 1000 1000 1000 1000"
 			}
 		}
 	}
@@ -2218,7 +2063,7 @@
 	//=================================================================================================================
 	"chaos_knight_reality_rift"
 	{
-		"AbilityCastRange"				"500 750 1000 1250"
+		"AbilityCastRange"				"550 780 1010 1240"
 		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
@@ -2670,8 +2515,12 @@
 	//=================================================================================================================
 	"gyrocopter_flak_cannon"
 	{
-		"AbilityCooldown"				"30 25 20 15"
-
+		//Duration
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDuration"				"15"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"02"
@@ -2710,7 +2559,7 @@
 	"gyrocopter_call_down"
 	{
 		"AbilityCastRange"					"1000 1500 2000"
-		"AbilityCooldown"					"50 45 40"
+		"AbilityCooldown"					"65"
 
 		"AbilitySpecial"
 		{
@@ -2722,7 +2571,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_second"				"150 225 300"
+				"damage_second"				"200 275 350"
 			}
 			"05"
 			{
@@ -3227,6 +3076,16 @@
 				"value"				"3"
 			}
 		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Juggernaut Omni Slash (keeping these KVs around for the Swift Slash Aghanim's Scepter ability)
+	//=================================================================================================================
+	"juggernaut_omni_slash"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 	}
 	
 	//=================================================================================================================
@@ -4384,13 +4243,13 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"120 170 220"
 			}
-			"05"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_scepter"			"145 205 265"
 				"RequiresScepter"		"1"
 			}
-			"06"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_buffer"			"10"
@@ -5513,8 +5372,6 @@
 	//=================================================================================================================
 	"tinker_march_of_the_machines"
 	{
-		"AbilityDamage"					"24 36 48 60"
-		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -5528,6 +5385,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"machines_per_sec"		"36"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"24 36 48 60"
+				"LinkedSpecialBonus"	"special_bonus_unique_tinker_2"
 			}
 		}
 	}
@@ -7427,23 +7290,6 @@
 	}
 	
 	//=================================================================================================================
-	// Ability: Special Bonus
-	//=================================================================================================================
-	"special_bonus_unique_techies_4"
-	{	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-	
-	//=================================================================================================================
 	// Mutation: Death Explosion
 	//=================================================================================================================
 	"pugna_nether_blast"
@@ -7748,7 +7594,7 @@
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"scepter_cooldown"			"1.0"
+				"scepter_cooldown"			"3.0"
 				"RequiresScepter"			"1"
 			}
 		}
@@ -8245,5 +8091,72 @@
 		"ItemStockMax"					"2"
 		"ItemStockTime"					"210.0"
 //		"ItemInitialCharges"			"3"
+	}
+	
+	//=================================================================================================================
+	// Cyclone
+	//=================================================================================================================
+	"item_cyclone"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"100"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"FightRecapLevel"				"1"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"575"
+		"AbilityCastPoint"				"0.0"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"23.0"
+		
+		"AbilitySharedCooldown"			"cyclone"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"175"
+		"ItemCost"						"2725"
+		"ItemShopTags"					"int;regen_mana;move_speed;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"cyclone euls;eul's scepter of divinity"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cyclone_duration"		"2.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_drop_damage"	"50"
+			}
+		}
 	}
 }

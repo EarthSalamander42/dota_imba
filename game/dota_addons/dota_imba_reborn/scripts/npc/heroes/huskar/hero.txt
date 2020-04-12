@@ -26,7 +26,7 @@
 		"Ability14"		"special_bonus_strength_25"
 		"Ability15"		"special_bonus_imba_huskar_life_break_cast_range"
 		"Ability16"		"special_bonus_attack_range_200"
-		"Ability17"		"special_bonus_unique_huskar_5"
+		"Ability17"		"special_bonus_imba_huskar_pure_burning_spears"
 		
 		// Removed Abilities
 		// "Ability4"		"imba_huskar_inner_vitality"

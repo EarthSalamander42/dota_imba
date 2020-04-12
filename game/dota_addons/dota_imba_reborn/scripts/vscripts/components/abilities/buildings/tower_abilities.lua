@@ -4654,11 +4654,13 @@ function modifier_imba_tower_secondary_resistance:DeclareFunctions()
 end
 
 function modifier_imba_tower_secondary_resistance:GetModifierMagicalResistanceBonus()
-	return self:GetAbility():GetSpecialValueFor("magic_resistance")
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("magic_resistance")
+	end
 end
 
 function modifier_imba_tower_secondary_resistance:GetModifierPhysical_ConstantBlock(keys)
-	if keys.attacker:IsCreep() and keys.attacker.GetPlayerOwner and keys.attacker:GetPlayerOwner() then
+	if self:GetAbility() and keys.attacker:IsCreep() and keys.attacker.GetPlayerOwner and keys.attacker:GetPlayerOwner() then
 		return self:GetAbility():GetSpecialValueFor("damage_block")
 	end
 end

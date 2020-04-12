@@ -197,7 +197,7 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
 			end
 
-			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
+			-- enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
 			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
 		end
 	
@@ -274,16 +274,26 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 end
 
 modifier_imba_fountain_danger_zone_debuff = class({})
-function modifier_imba_fountain_danger_zone_debuff:IsDebuff() return false end
-function modifier_imba_fountain_danger_zone_debuff:IsHidden() return true end
+-- function modifier_imba_fountain_danger_zone_debuff:IsDebuff() return false end
+-- function modifier_imba_fountain_danger_zone_debuff:IsHidden() return true end
 function modifier_imba_fountain_danger_zone_debuff:IsPurgable() return false end
 function modifier_imba_fountain_danger_zone_debuff:IsPurgeException() return false end
 function modifier_imba_fountain_danger_zone_debuff:IsStunDebuff() return false end
 function modifier_imba_fountain_danger_zone_debuff:IgnoreTenacity()	return true end
 
+function modifier_imba_fountain_danger_zone_debuff:GetTexture()
+	return "nevermore_shadowraze3"
+end
+
+function modifier_imba_fountain_danger_zone_debuff:GetEffectName()
+	return "particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+end
+
 function modifier_imba_fountain_danger_zone_debuff:CheckState()
 	return {
-		[MODIFIER_STATE_DISARMED] = true,
-		[MODIFIER_STATE_PASSIVES_DISABLED] = true
+		[MODIFIER_STATE_SILENCED] 			= true,
+		[MODIFIER_STATE_MUTED]				= true,
+		[MODIFIER_STATE_DISARMED] 			= true,
+		[MODIFIER_STATE_PASSIVES_DISABLED]	= true
 	}
 end

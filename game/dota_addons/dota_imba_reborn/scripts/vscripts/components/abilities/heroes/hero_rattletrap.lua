@@ -107,7 +107,7 @@ function modifier_imba_rattletrap_battery_assault:OnIntervalThink()
 	
 	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_battery_shrapnel.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 	
 	if #enemies >= 1 then
 		enemies[1]:EmitSound("Hero_Rattletrap.Battery_Assault_Impact")
@@ -127,11 +127,7 @@ function modifier_imba_rattletrap_battery_assault:OnIntervalThink()
 
 			ApplyDamage(damageTable)
 		
-			local stun_modifier	= enemies[1]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(0.1 * (1 - enemies[1]:GetStatusResistance()), true)
-			end
+			enemies[1]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 0.1 * (1 - enemies[1]:GetStatusResistance())})
 		else
 			-- IMBAfication: Fragmentation Rend
 			local damageTable = {
@@ -145,11 +141,7 @@ function modifier_imba_rattletrap_battery_assault:OnIntervalThink()
 
 			ApplyDamage(damageTable)
 		
-			local fragmentation_modifier	= enemies[1]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_battery_assault_fragmentation_rend", {duration = self.fragmentation_duration})
-			
-			if fragmentation_modifier then
-				fragmentation_modifier:SetDuration(self.fragmentation_duration * (1 - enemies[1]:GetStatusResistance()), true)
-			end
+			enemies[1]:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_battery_assault_fragmentation_rend", {duration = self.fragmentation_duration * (1 - enemies[1]:GetStatusResistance())})
 		end
 	else
 		ParticleManager:SetParticleControl(particle2, 1, self:GetParent():GetAbsOrigin() + RandomVector(RandomInt(0, 128))) -- Arbitrary numbers
@@ -229,7 +221,7 @@ function modifier_imba_rattletrap_battery_assault_percussive_maint_aura:IsAuraAc
 function modifier_imba_rattletrap_battery_assault_percussive_maint_aura:GetAuraRadius()			return self:GetAbility():GetTalentSpecialValueFor("percussive_maint_radius") end
 function modifier_imba_rattletrap_battery_assault_percussive_maint_aura:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NONE end
 function modifier_imba_rattletrap_battery_assault_percussive_maint_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_imba_rattletrap_battery_assault_percussive_maint_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER end
+function modifier_imba_rattletrap_battery_assault_percussive_maint_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_OTHER end
 function modifier_imba_rattletrap_battery_assault_percussive_maint_aura:GetModifierAura()		return "modifier_imba_rattletrap_battery_assault_percussive_maint" end
 function modifier_imba_rattletrap_battery_assault_percussive_maint_aura:GetAuraEntityReject(hEntity) return self:GetCaster():PassivesDisabled() end
 
@@ -243,11 +235,9 @@ function modifier_imba_rattletrap_battery_assault_percussive_maint:OnCreated()
 end
 
 function modifier_imba_rattletrap_battery_assault_percussive_maint:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
     }
-
-    return decFuncs
 end
 
 function modifier_imba_rattletrap_battery_assault_percussive_maint:OnAttackLanded(keys)
@@ -255,10 +245,10 @@ function modifier_imba_rattletrap_battery_assault_percussive_maint:OnAttackLande
 
 	if keys.target == self:GetParent() then
 		if (not self:GetAbility() or not self:GetAbility():GetAutoCastState()) then
-			if RollPercentage(self.percussive_maint_base_chance) then
+			if RollPseudoRandom(self.percussive_maint_base_chance, self) then
 				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_battery_assault", {duration = FrameTime()})
 			end
-		elseif RollPercentage(self.percussive_maint_frag_chance) then
+		elseif RollPseudoRandom(self.percussive_maint_frag_chance, self) then
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_battery_assault", {duration = FrameTime()})
 		end
 	end
@@ -366,7 +356,7 @@ function imba_rattletrap_power_cogs:OnSpellStart()
 		self:GetCaster():EmitSound(responses[RandomInt(1, #responses)])
 	end		
 	
-	local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("cogs_radius") + 80, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("cogs_radius") + 80, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	
 	-- Set everyone nearby to get "sucked" into cogs, otherwise you sometimes have people stuck in-between cogs
 	for _, unit in pairs(units) do
@@ -466,7 +456,7 @@ function modifier_imba_rattletrap_power_cogs:OnIntervalThink()
 		end
 	end
 	
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.trigger_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_CLOSEST, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.trigger_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_CLOSEST, false)
 	
 	for _, enemy in pairs(enemies) do
 		-- QANGLES, HOW DO THEY WORK
@@ -476,7 +466,7 @@ function modifier_imba_rattletrap_power_cogs:OnIntervalThink()
 			-- The cog is the caster here, as its position will be passed into the modifier
 			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_rattletrap_cog_push", 
 			{
-				duration	= self.push_duration,
+				duration	= self.push_duration * (1 - enemy:GetStatusResistance()),
 				
 				damage		= self.damage,
 				mana_burn	= self.mana_burn,
@@ -739,7 +729,7 @@ function modifier_imba_rattletrap_power_cogs_charge_coil_counter:OnAttackLanded(
 		if #charge_coil_instances >= 1 then
 			keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_rattletrap_cog_push", 
 			{
-				duration	= self.push_duration,
+				duration	= self.push_duration * (1 - keys.target:GetStatusResistance()),
 					
 				damage		= self.damage,
 				mana_burn	= self.mana_burn,
@@ -979,7 +969,7 @@ function imba_rattletrap_rocket_flare:OnProjectileHit_ExtraData(hTarget, vLocati
 	ParticleManager:SetParticleControl(illumination_particle, 1, Vector(self:GetSpecialValueFor("duration"), 0, 0))
 	ParticleManager:ReleaseParticleIndex(illumination_particle)
 	
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vLocation, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vLocation, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
 	local damage = self:GetAbilityDamage()
 	
@@ -1009,7 +999,7 @@ function imba_rattletrap_rocket_flare:OnProjectileHit_ExtraData(hTarget, vLocati
 				-- enemy:SetMana(0)
 			-- end
 			
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_rocket_flare_critical", {duration = self:GetSpecialValueFor("system_duration")}):SetDuration(self:GetSpecialValueFor("system_duration") * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_rocket_flare_critical", {duration = self:GetSpecialValueFor("system_duration") * (1 - enemy:GetStatusResistance())})
 		end
 	
 		local damageTable = {
@@ -1146,10 +1136,10 @@ function imba_rattletrap_hookshot:OnSpellStart()
 		bReplaceExisting	= false,
 		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_BOTH,
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
 		fExpireTime 		= GameRules:GetGameTime() + 10.0,
 		bDeleteOnHit		= true,
-		vVelocity			= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed"),
+		vVelocity			= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
 		bProvidesVision		= false,
 		
 		ExtraData			= {hookshot_particle = hookshot_particle}
@@ -1186,7 +1176,7 @@ end
 function imba_rattletrap_hookshot:OnProjectileThink_ExtraData(vLocation, ExtraData)
 	if not IsServer() then return end
 	
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vLocation, nil, self:GetSpecialValueFor("razor_wind_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vLocation, nil, self:GetSpecialValueFor("razor_wind_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	
 	for _, enemy in pairs(enemies) do
 		local distance_vector = enemy:GetAbsOrigin() - vLocation
@@ -1195,7 +1185,7 @@ function imba_rattletrap_hookshot:OnProjectileThink_ExtraData(vLocation, ExtraDa
 		-- 60 to 120 degrees is just a safety deviation from the standard perpendicular angle (90 degrees) expected to pass by
 		if distance_vector:Length2D() > self:GetSpecialValueFor("latch_radius") and math.abs(math.abs(AngleDiff(VectorToAngles(distance_vector).y, VectorToAngles(self.direction).y)) - 90) <= 30 and not self.razor_wind[enemy:GetEntityIndex()] then
 			
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = 0.1}):SetDuration(0.1 * (1 - enemy:GetStatusResistance()), true)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = 0.1 * (1 - enemy:GetStatusResistance())})
 			
 			local damageTable = {
 				victim 			= enemy,
@@ -1218,8 +1208,9 @@ function imba_rattletrap_hookshot:OnProjectileHit_ExtraData(hTarget, vLocation, 
 	if not IsServer() then return end
 	
 	if hTarget then
-		if hTarget ~= self:GetCaster() and not hTarget:IsCourier() then
+		if hTarget ~= self:GetCaster() then
 			if not ExtraData.autocast then
+				-- No matter what I try, these god damn sounds won't consistently stop which is pissing me off
 				self:GetCaster():StopSound("Hero_Rattletrap.Hookshot.Fire")
 				hTarget:EmitSound("Hero_Rattletrap.Hookshot.Impact")
 				
@@ -1246,6 +1237,8 @@ function imba_rattletrap_hookshot:OnProjectileHit_ExtraData(hTarget, vLocation, 
 				-- This line is so Clockwerk doesn't pierce through everyone if there are multiple targets (although that would be pretty cool)
 				-- It may interfere with previous projectiles if you're shooting multiple at once (aka WTF mode) but come on now, vanilla arguably handles this even worse with lingering particles so no bulli
 				ProjectileManager:DestroyLinearProjectile(self.projectile)
+
+				return true
 			else
 				hTarget:EmitSound("Hero_Rattletrap.Hookshot.Impact")
 			
@@ -1255,7 +1248,7 @@ function imba_rattletrap_hookshot:OnProjectileHit_ExtraData(hTarget, vLocation, 
 			end
 			
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
+				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance())})
 			end
 		end
 	else
@@ -1292,7 +1285,7 @@ function modifier_imba_rattletrap_hookshot:IsPurgable()		return false end
 
 function modifier_imba_rattletrap_hookshot:OnCreated(params)
 	if not IsServer() then return end
-	
+
 	self.duration		= params.duration
 	self.latch_radius	= params.latch_radius
 	self.stun_radius	= params.stun_radius
@@ -1331,35 +1324,28 @@ end
 function modifier_imba_rattletrap_hookshot:UpdateHorizontalMotion( me, dt )
 	if not IsServer() then return end
 	
-	local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.stun_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
-	-- Secondary stun (whoever is passed by Clockwerk in close proximity)
-	for _, unit in pairs(units) do
-		if not unit:IsCourier() then
+	if self:GetCaster() == self:GetParent() then
+		-- Secondary stun (whoever is passed by Clockwerk in close proximity)
+		for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.stun_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)) do
 			-- Apply pass-by stun modifier to enemies
 			if unit:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not self.enemies_hit[unit:GetEntityIndex()] then
-				unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - unit:GetStatusResistance()), true)
+				unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration * (1 - unit:GetStatusResistance())})
 				
-				-- "Does not attempt to damage any spell immune enemy."
-				if not unit:IsMagicImmune() then
-					local damageTable = {
-						victim 			= unit,
-						damage 			= self.damage,
-						damage_type		= DAMAGE_TYPE_MAGICAL,
-						damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-						attacker 		= self:GetCaster(),
-						ability 		= self:GetAbility()
-					}
-				
-					ApplyDamage(damageTable)
-				end
+				ApplyDamage({
+					victim 			= unit,
+					damage 			= self.damage,
+					damage_type		= DAMAGE_TYPE_MAGICAL,
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self:GetAbility()
+				})
 				
 				self.enemies_hit[unit:GetEntityIndex()] = true
 			end
 			
 			-- Shish Kabob drags units (friend and foe) along with Clockwerk until he reaches the last target
 			-- Can be blocked by Disabling Help cause this can easily be a griefing ability
-			if self.shish_kabob and unit ~= self.target then
+			if self.shish_kabob and unit ~= self.target and not unit:IsMagicImmune() then
 				unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rattletrap_hookshot", 
 				{
 					duration 		= self:GetRemainingTime(),
@@ -1426,29 +1412,72 @@ function modifier_imba_rattletrap_hookshot:OnDestroy()
 	if self:GetCaster():GetName() == "npc_dota_hero_rattletrap" and self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON ) then
 		self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON ):RemoveEffects(EF_NODRAW)
 	end
+	
+	if self:GetCaster() == self:GetParent() then
+		for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)) do
+			if not self.enemies_hit[unit:GetEntityIndex()] then
+				unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration * (1 - unit:GetStatusResistance())})
+				
+				ApplyDamage({
+					victim 			= unit,
+					damage 			= self.damage,
+					damage_type		= DAMAGE_TYPE_MAGICAL,
+					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					attacker 		= self:GetCaster(),
+					ability 		= self:GetAbility()
+				})
+				
+				self.enemies_hit[unit:GetEntityIndex()] = true
+			end
+		end
+	end
 end
 
 function modifier_imba_rattletrap_hookshot:CheckState()
-	local state = {}
-	
 	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() or self:GetParent() == self:GetCaster() then
-		state = {
+		return {
 			[MODIFIER_STATE_SILENCED] = true,
 			[MODIFIER_STATE_DISARMED] = true,
 		}
 	end
-
-	return state
 end
 
 function modifier_imba_rattletrap_hookshot:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 	}
-
-	return funcs
 end
 
 function modifier_imba_rattletrap_hookshot:GetOverrideAnimation()
 	 return ACT_DOTA_RATTLETRAP_HOOKSHOT_LOOP
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_rattletrap_battery_assault_aura", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rattletrap_rocket_flare_truesight", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rattletrap_rocket_flare_speed", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_rattletrap_battery_assault_interval", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_rattletrap_battery_assault_aura		= modifier_special_bonus_imba_rattletrap_battery_assault_aura or class({})
+modifier_special_bonus_imba_rattletrap_rocket_flare_truesight	= modifier_special_bonus_imba_rattletrap_rocket_flare_truesight or class({})
+modifier_special_bonus_imba_rattletrap_rocket_flare_speed		= modifier_special_bonus_imba_rattletrap_rocket_flare_speed or class({})
+modifier_special_bonus_imba_rattletrap_battery_assault_interval	= modifier_special_bonus_imba_rattletrap_battery_assault_interval or class({})
+
+function modifier_special_bonus_imba_rattletrap_battery_assault_aura:IsHidden() 		return true end
+function modifier_special_bonus_imba_rattletrap_battery_assault_aura:IsPurgable()		return false end
+function modifier_special_bonus_imba_rattletrap_battery_assault_aura:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rattletrap_rocket_flare_truesight:IsHidden() 		return true end
+function modifier_special_bonus_imba_rattletrap_rocket_flare_truesight:IsPurgable()		return false end
+function modifier_special_bonus_imba_rattletrap_rocket_flare_truesight:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rattletrap_rocket_flare_speed:IsHidden() 		return true end
+function modifier_special_bonus_imba_rattletrap_rocket_flare_speed:IsPurgable()		return false end
+function modifier_special_bonus_imba_rattletrap_rocket_flare_speed:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_rattletrap_battery_assault_interval:IsHidden() 		return true end
+function modifier_special_bonus_imba_rattletrap_battery_assault_interval:IsPurgable()		return false end
+function modifier_special_bonus_imba_rattletrap_battery_assault_interval:RemoveOnDeath() 	return false end

@@ -11,6 +11,6 @@
 
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
-		"Ability2"					"imba_death_prophet_silence"
+		//"Ability2"					"imba_death_prophet_silence"
 	}
 }

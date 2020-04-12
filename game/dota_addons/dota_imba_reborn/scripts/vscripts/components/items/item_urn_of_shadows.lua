@@ -78,14 +78,11 @@ end
 -- Urn of Shadows stats + soul steal modifier
 ------------------------------------------------------------
 modifier_imba_urn_of_shadows_passive = modifier_imba_urn_of_shadows_passive or class({})
-function modifier_imba_urn_of_shadows_passive:IsDebuff() return false end
-function modifier_imba_urn_of_shadows_passive:IsHidden() return true end
-function modifier_imba_urn_of_shadows_passive:IsPermanent() return true end
-function modifier_imba_urn_of_shadows_passive:IsPurgable() return false end
-function modifier_imba_urn_of_shadows_passive:IsPurgeException() return false end
-function modifier_imba_urn_of_shadows_passive:IsStunDebuff() return false end
-function modifier_imba_urn_of_shadows_passive:RemoveOnDeath() return false end
-function modifier_imba_urn_of_shadows_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_urn_of_shadows_passive:IsHidden()		return true end
+function modifier_imba_urn_of_shadows_passive:IsPurgable()		return false end
+function modifier_imba_urn_of_shadows_passive:RemoveOnDeath()	return false end
+function modifier_imba_urn_of_shadows_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_urn_of_shadows_passive:OnCreated()
 	self.item = self:GetAbility()

@@ -7,27 +7,24 @@
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note2"					"Multitasker damage penalty does not apply to enemies that are not affected by Blade Fury's damage (ie. buildings and spell immune enemies)."
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_effect_radius"			"#{DOTA_Tooltip_ability_juggernaut_blade_fury_blade_fury_radius}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_damage_per_sec"		"DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_deflect_chance"		"%DEFLECT CHANCE:"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury"						"Blade Fury"
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_Description"			"Dealing damage every 0.2 seconds."
 
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_succ"					"Fury Siphon"
-"DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_succ_Description"		"You are being sucked towards Juggernaut. Run!"
+"DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_succ_Description"		"Being sucked in towards Juggernaut."
 
 // Juggernaut's Healing Ward
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward"						"#{DOTA_Tooltip_ability_juggernaut_healing_ward}"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Description"			"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Description}\n<font color='#FF7800'>Fortify:</font> Upgrades the ward into a Healing Totem. In this form, it cannot move, but gains bonus health, and heals faster, over a larger area."
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Description"			"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Description}\n<font color='#FF7800'>Fortify:</font> Upgrades the ward into a Healing Totem. In this form, it cannot move, but sets its current and total health to %health_totem%, increases its healing by %heal_bonus_totem%%%, and increases its healing radius by %radius_bonus_totem%."
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Lore"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Lore}"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Note0"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Note0}"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Note1"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Note1}"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Note2"				"Real heroes and towers deal 3 damage to the healing ward, while other units deal 1 damage."
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_radius"			"HEALING RADIUS:"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_per_sec"		"#{DOTA_Tooltip_ability_juggernaut_healing_ward_healing_ward_heal_amount}"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_health"				"WARD HEALTH:"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_health_bonus_totem"	"TOTEM BONUS HEALTH:"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_bonus_totem"	"%TOTEM BONUS HEALING:"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_radius_bonus_totem"	"TOTEM BONUS RADIUS:"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive"						"Healing Aura"
@@ -42,9 +39,12 @@
 "DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_aura"					"Healing Ward"
 "DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_aura_Description"		"Regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% of max health per second, and increasing attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
+"DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_totem"					"Fortify"
+"DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_totem_Description"		"Can no longer move. Health increased, and granting increased max health regeneration in a larger radius."
+
 // Juggernaut's Blade Dance
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance"						"#{DOTA_Tooltip_ability_juggernaut_blade_dance}"
-"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Description"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_Description}\n<font color='#FF7800'>Wind Dance:</font> Landing a critical hit grants a stack of Wind Dance, gaining %bonus_agi% bonus agility and %bonus_ms%%% move speed per stack for %bonus_duration% seconds. Attacking refreshes the bonus, even if a critical hit wasn't landed.\n<font color='#FF7800'>Secret Blade:</font> Attacking an enemy grants a stack of Secret Blade for %secret_blade_duration% seconds, refreshing duration on each hit. Reaching %active_min_stacks% stacks of Secret Blade allows Blade Dance to be activated to dash towards a target point up to %active_distance% distance. All stacks of Secret Blade are consumed and converted into attack counts, which are used to attack enemies once each during the dash, as well as multiple times at dash end. Each unit can be hit up to a total of %secret_blade_max_hits% times. Juggernaut is invulnerable while dashing.\nBlade Dance cannot gain Secret Blade stacks or be activated during Omnislash."
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Description"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_Description}\n<font color='#FF7800'>Wind Dance:</font> Landing a critical hit grants a stack of Wind Dance, gaining %bonus_agi% bonus agility and %bonus_ms%%% move speed per stack for %bonus_duration% seconds. Attacking refreshes the bonus, even if a critical hit wasn't landed.\n<font color='#FF7800'>Secret Blade:</font> Attacking an enemy grants a stack of Secret Blade for %secret_blade_duration% seconds, refreshing duration on each hit. Reaching %active_min_stacks% stacks of Secret Blade allows Blade Dance to be activated to dash towards a target point up to %active_distance% distance. All stacks of Secret Blade are consumed and converted into attack counts, which are used to attack enemies once each during the dash, as well as multiple times at dash end. Each unit can be hit up to a total of %secret_blade_max_hits% times. Juggernaut is invulnerable while dashing.\nBlade Dance cannot gain Wind Dance stacks, Secret Blade stacks, or be activated during Omnislash."
 
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Note0"				"Secret Blade cannot be used while disarmed."
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Note1"				"Cannot gain Wind Dance stacks while Secret Blade is in effect."
@@ -73,9 +73,9 @@
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_bonus_damage"				"BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_omni_slash_radius"			"SLASH JUMP RADIUS:"
-"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_duration_scepter"			"SCEPTER DURATION:"
-"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_cooldown_scepter"			"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_aghanim_description"		"Increases duration and decreases cooldown."
+//"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_duration_scepter"			"SCEPTER DURATION:"
+//"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_cooldown_scepter"			"SCEPTER COOLDOWN:"
+//"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_aghanim_description"		"Increases duration and decreases cooldown."
 
 "DOTA_Tooltip_modifier_imba_omni_slash_caster"                          "Omnislash"
 "DOTA_Tooltip_modifier_imba_omni_slash_caster_Description"              "Invulnerable. Attacking enemy units in an area."
@@ -103,3 +103,5 @@
 // Juggernaut's summoned unit: Healing Ward, Healing Totem
 "npc_imba_juggernaut_healing_ward"										"Healing Ward"
 "npc_imba_juggernaut_healing_totem"										"Healing Totem"
+
+"DOTA_Tooltip_ability_juggernaut_swift_slash_Description"			"Performs a quick Omnislash.\n<font color='#FF0000'>Does not benefit from any IMBAfications.</font>"

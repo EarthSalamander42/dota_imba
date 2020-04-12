@@ -380,3 +380,39 @@ end
 function modifier_imba_malfurion_living_tower:GetModifierAttackRangeBonus()
 	return self.attack_range
 end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_malfurion_1", "components/abilities/heroes/hero_malfurion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_malfurion_2", "components/abilities/heroes/hero_malfurion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_malfurion_5", "components/abilities/heroes/hero_malfurion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_malfurion_4", "components/abilities/heroes/hero_malfurion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_malfurion_3", "components/abilities/heroes/hero_malfurion", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_malfurion_1		= modifier_special_bonus_imba_malfurion_1 or class({})
+modifier_special_bonus_imba_malfurion_2		= modifier_special_bonus_imba_malfurion_2 or class({})
+modifier_special_bonus_imba_malfurion_5		= modifier_special_bonus_imba_malfurion_5 or class({})
+modifier_special_bonus_imba_malfurion_4		= modifier_special_bonus_imba_malfurion_4 or class({})
+modifier_special_bonus_imba_malfurion_3		= modifier_special_bonus_imba_malfurion_3 or class({})
+
+function modifier_special_bonus_imba_malfurion_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_malfurion_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_malfurion_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_malfurion_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_malfurion_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_malfurion_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_malfurion_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_malfurion_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_malfurion_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_malfurion_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_malfurion_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_malfurion_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_malfurion_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_malfurion_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_malfurion_3:RemoveOnDeath() 	return false end

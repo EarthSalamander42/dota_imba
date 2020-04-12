@@ -274,7 +274,7 @@ function Battlepass:GetHeroEffect(hero)
 		hero.counter_helix_pfx = "particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
 		hero.culling_blade_kill_pfx = "particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
 		hero.culling_blade_boost_pfx = "particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
-		hero.culling_blade_sprint_pfx = "particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
+		hero.culling_blade_sprint_pfx = "particles/units/heroes/hero_axe/axe_cullingblade_sprint_axe.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_centaur" then
 		hero.double_edge_pfx = "particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
 		hero.double_edge_body_pfx = "particles/units/heroes/hero_centaur/centaur_double_edge_body.vpcf"
@@ -446,24 +446,24 @@ function Battlepass:GetHeroEffect(hero)
 		local short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
 
 		if hero:GetUnitName() == "npc_dota_hero_axe" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["axe_immortal"] then
-				LinkLuaModifier("modifier_axe_arcana", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+			-- if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["axe_immortal"] then
+				-- LinkLuaModifier("modifier_axe_arcana", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 
-				Wearable:_WearProp(hero, "12964", "weapon")
-				Wearable:_WearProp(hero, "12965", "armor")
-				Wearable:_WearProp(hero, "12966", "belt")
-				Wearable:_WearProp(hero, "12968", "head")
+				-- Wearable:_WearProp(hero, "12964", "weapon")
+				-- Wearable:_WearProp(hero, "12965", "armor")
+				-- Wearable:_WearProp(hero, "12966", "belt")
+				-- Wearable:_WearProp(hero, "12968", "head")
 
-				hero.pre_attack_sound = "Hero_Axe.PreAttack.Jungle"
-				hero.attack_sound = "Hero_Axe.Attack.Jungle"
-				hero.counter_helix_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_attack_blur_counterhelix.vpcf"
-				hero.culling_blade_kill_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_kill.vpcf"
-				hero.culling_blade_boost_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_boost.vpcf"
-				hero.culling_blade_sprint_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_sprint.vpcf"
+				-- hero.pre_attack_sound = "Hero_Axe.PreAttack.Jungle"
+				-- hero.attack_sound = "Hero_Axe.Attack.Jungle"
+				-- hero.counter_helix_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_attack_blur_counterhelix.vpcf"
+				-- hero.culling_blade_kill_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_kill.vpcf"
+				-- hero.culling_blade_boost_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_boost.vpcf"
+				-- hero.culling_blade_sprint_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_sprint_axe.vpcf"
 
-				hero:AddNewModifier(hero, nil, "modifier_axe_arcana", {})
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
-			end
+				-- hero:AddNewModifier(hero, nil, "modifier_axe_arcana", {})
+				-- hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
+			-- end
 		elseif hero:GetUnitName() == "npc_dota_hero_bristleback" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["bristleback_rare2"] then
 				Wearable:_WearProp(hero, "9786", "back", "1")

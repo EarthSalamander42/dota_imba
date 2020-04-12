@@ -14,6 +14,9 @@
 
 -- first time a real hero spawn
 function GameMode:OnUnitFirstSpawn(unit)
+	-- Track the time the unit spawned (for IMBAfications or other custom checks)
+	unit.time_spawned = GameRules:GetGameTime()
+
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
 		-- Give the custom mechanics like damage block and lifesteal
 		unit:AddNewModifier(unit, nil, "modifier_custom_mechanics", {})
@@ -111,6 +114,9 @@ end
 
 -- everytime an unit respawn
 function GameMode:OnUnitSpawned(unit)
+	-- Track the time the unit spawned (for IMBAfications or other custom checks)
+	unit.time_spawned = GameRules:GetGameTime()
+	
 	-- levelup bear ability based on his level
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
 		for i = 0, 23 do

@@ -68,14 +68,11 @@ end
 -- Black Queen Cape stats + soul steal modifier
 ------------------------------------------------------------
 modifier_imba_black_queen_cape_passive = modifier_imba_black_queen_cape_passive or class({})
-function modifier_imba_black_queen_cape_passive:IsDebuff() return false end
-function modifier_imba_black_queen_cape_passive:IsHidden() return true end
-function modifier_imba_black_queen_cape_passive:IsPermanent() return true end
-function modifier_imba_black_queen_cape_passive:IsPurgable() return false end
-function modifier_imba_black_queen_cape_passive:IsPurgeException() return false end
-function modifier_imba_black_queen_cape_passive:IsStunDebuff() return false end
-function modifier_imba_black_queen_cape_passive:RemoveOnDeath() return false end
-function modifier_imba_black_queen_cape_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_black_queen_cape_passive:IsHidden()		return true end
+function modifier_imba_black_queen_cape_passive:IsPurgable()		return false end
+function modifier_imba_black_queen_cape_passive:RemoveOnDeath()	return false end
+function modifier_imba_black_queen_cape_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_black_queen_cape_passive:OnCreated()
 	self.item = self:GetAbility()
@@ -223,19 +220,23 @@ function modifier_imba_black_queen_cape_active_heal:IsStunDebuff() return false 
 function modifier_imba_black_queen_cape_active_heal:RemoveOnDeath() return true end
 
 function modifier_imba_black_queen_cape_active_heal:OnCreated( params )
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.heal = self:GetAbility():GetSpecialValueFor("heal")
+	self.heal_duration = self:GetAbility():GetSpecialValueFor("heal_duration")
+	
+	self.health_regen	= self.heal / self.heal_duration
+	
 	if IsServer() then
-		self.health_regen = params.heal / params.duration
 		self.bkb_modifier = params.bkb_modifier
 	end
 end
 
 function modifier_imba_black_queen_cape_active_heal:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_black_queen_cape_active_heal:GetEffectName()
@@ -280,10 +281,9 @@ function modifier_imba_black_queen_cape_active_bkb:RemoveOnDeath() return true e
 
 -- Declare modifier states
 function modifier_imba_black_queen_cape_active_bkb:CheckState()
-	local states = {
-		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+	return {
+		[MODIFIER_STATE_MAGIC_IMMUNE] = true
 	}
-	return states
 end
 
 function modifier_imba_black_queen_cape_active_bkb:GetEffectName()

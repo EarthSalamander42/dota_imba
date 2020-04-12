@@ -17,7 +17,7 @@
 
 item_imba_hood_of_defiance = item_imba_hood_of_defiance or class({})
 LinkLuaModifier("modifier_imba_hood_of_defiance_passive", "components/items/item_hood_of_defiance.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hood_of_defiance_active_shield", "components/items/item_hood_of_defiance.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hood_of_defiance_barrier", "components/items/item_hood_of_defiance.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hood_of_defiance_active_bonus", "components/items/item_hood_of_defiance.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_hood_of_defiance:GetIntrinsicModifierName()
@@ -25,15 +25,12 @@ function item_imba_hood_of_defiance:GetIntrinsicModifierName()
 end
 
 function item_imba_hood_of_defiance:OnSpellStart()
-	local caster = self:GetCaster()
-	local shield_health = self:GetSpecialValueFor("shield_health")
-	local duration = self:GetSpecialValueFor("duration")
-	local unreducable_magic_resist = self:GetSpecialValueFor("unreducable_magic_resist")
-
-	EmitSoundOn("DOTA_Item.Pipe.Activate", caster)
-
-	caster:AddNewModifier(caster, self, "modifier_imba_hood_of_defiance_active_shield", {duration = duration, shield_health = shield_health})
-	caster:AddNewModifier(caster, self, "modifier_imba_hood_of_defiance_active_bonus", {duration = duration, unreducable_magic_resist = unreducable_magic_resist})
+	self:GetCaster():EmitSound("DOTA_Item.Pipe.Activate")
+	
+	self:GetCaster():RemoveModifierByName("modifier_item_imba_hood_of_defiance_barrier")
+	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_hood_of_defiance_barrier", {duration = self:GetSpecialValueFor("duration"), shield_health = self:GetSpecialValueFor("shield_health")})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_hood_of_defiance_active_bonus", {duration = self:GetSpecialValueFor("duration"), unreducable_magic_resist = self:GetSpecialValueFor("unreducable_magic_resist")})
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -41,98 +38,109 @@ end
 -----------------------------------------------------------------------------------------------------------
 modifier_imba_hood_of_defiance_passive = modifier_imba_hood_of_defiance_passive or class({})
 
-function modifier_imba_hood_of_defiance_passive:IsDebuff() return false end
 function modifier_imba_hood_of_defiance_passive:IsHidden() return true end
 function modifier_imba_hood_of_defiance_passive:IsPurgable() return false end
-function modifier_imba_hood_of_defiance_passive:IsPurgeException() return false end
 function modifier_imba_hood_of_defiance_passive:RemoveOnDeath() return false end
 function modifier_imba_hood_of_defiance_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_hood_of_defiance_passive:OnCreated( params )
-	self.parent = self:GetParent()
-	self.passive_tenacity_pct = self:GetAbility():GetSpecialValueFor("passive_tenacity_pct")
 	self.active_tenacity_pct = self:GetAbility():GetSpecialValueFor("active_tenacity_pct")
-	self.bonus_health_regen = self:GetAbility():GetSpecialValueFor("bonus_health_regen")
-	self.bonus_magic_resist = self:GetAbility():GetSpecialValueFor("bonus_magic_resist")
-end
-
-function modifier_imba_hood_of_defiance_passive:GetModifierStatusResistanceStacking()
-	if self.parent:HasModifier("modifier_imba_hood_of_defiance_active_bonus") then
-		return self.active_tenacity_pct
-	end
-
-	return self.passive_tenacity_pct
 end
 
 function modifier_imba_hood_of_defiance_passive:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
-	return funcs
 end
 
 function modifier_imba_hood_of_defiance_passive:GetModifierConstantHealthRegen()
-	return self.bonus_health_regen
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	end
 end
 
 function modifier_imba_hood_of_defiance_passive:GetModifierMagicalResistanceBonus()
-	return self.bonus_magic_resist
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_magic_resist")
+	end
+end
+
+function modifier_imba_hood_of_defiance_passive:GetModifierStatusResistanceStacking()
+	if self:GetParent():HasModifier("modifier_imba_hood_of_defiance_active_bonus") then
+		return self.active_tenacity_pct
+	elseif self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("passive_tenacity_pct")
+	end
 end
 
 -----------------------------------------------------------------------------------------------------------
 --	Hood of Defiance active shield that protects from spell damage
 -----------------------------------------------------------------------------------------------------------
-modifier_imba_hood_of_defiance_active_shield = modifier_imba_hood_of_defiance_active_shield or class({})
+modifier_item_imba_hood_of_defiance_barrier = modifier_item_imba_hood_of_defiance_barrier or class({})
 
-function modifier_imba_hood_of_defiance_active_shield:IsDebuff() return false end
-function modifier_imba_hood_of_defiance_active_shield:IsHidden() return false end
-function modifier_imba_hood_of_defiance_active_shield:IsPurgable() return false end
-function modifier_imba_hood_of_defiance_active_shield:IsPurgeException() return false end
+function modifier_item_imba_hood_of_defiance_barrier:IsDebuff() return false end
+function modifier_item_imba_hood_of_defiance_barrier:IsHidden() return false end
+function modifier_item_imba_hood_of_defiance_barrier:IsPurgable() return false end
+function modifier_item_imba_hood_of_defiance_barrier:IsPurgeException() return false end
 
-function modifier_imba_hood_of_defiance_active_shield:OnCreated( params )
-	local barrier_particle = "particles/items2_fx/pipe_of_insight.vpcf"
-	self.parent = self:GetParent()
+function modifier_item_imba_hood_of_defiance_barrier:OnCreated( params )
+	if not self:GetAbility() then self:Destroy() return end
 
-	if IsServer() then
-		self.shield_health = params.shield_health
-
-		if not self.particle then
-			self.particle = ParticleManager:CreateParticle(barrier_particle, PATTACH_OVERHEAD_FOLLOW, self.parent)
-			ParticleManager:SetParticleControl(self.particle, 0, self.parent:GetAbsOrigin())
-			ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_origin", self.parent:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControl(self.particle, 2, Vector(self.parent:GetModelRadius() * 1.1,0,0))
-		end
-	end
+	self.barrier_block			= self:GetAbility():GetSpecialValueFor("barrier_block")
+	self.barrier_health			= self.barrier_block
+	
+	self.particle = ParticleManager:CreateParticle("particles/items2_fx/pipe_of_insight.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControlEnt(self.particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_origin", self:GetParent():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(self.particle, 2, Vector(self:GetParent():GetModelRadius() * 1.2, 0, 0))
+	self:AddParticle(self.particle, false, false, -1, false, false)
 end
 
-function modifier_imba_hood_of_defiance_active_shield:OnDestroy( params )
-	if self.particle and IsServer() then
-		ParticleManager:DestroyParticle(self.particle, false)
-		ParticleManager:ReleaseParticleIndex(self.particle)
-	end
+-- -- Don't override pipe's higher potency shield, unless it'c current health is lower than the new one
+-- function modifier_item_imba_hood_of_defiance_barrier:OnRefresh( params )
+	-- if IsServer() and self.shield_health < params.shield_health then
+		-- self.shield_health = params.shield_health
+	-- end
+-- end
+
+-- -- Shield absorption, returns damage to deal to the victim (in DamageFilter)
+-- function modifier_item_imba_hood_of_defiance_barrier:AbsorbDamage(damage)
+	-- if IsServer() then
+		-- local new_health = self.shield_health - damage
+		-- if new_health > 0 then
+			-- self.shield_health = new_health
+			-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self.parent, damage, nil)
+			-- return 0
+		-- else
+			-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self.parent, self.shield_health, nil)
+			-- self:Destroy()
+			-- return -(new_health)
+		-- end
+	-- end
+-- end
+
+function modifier_item_imba_hood_of_defiance_barrier:DeclareFunctions()
+	return {MODIFIER_PROPERTY_INCOMING_SPELL_DAMAGE_CONSTANT}
 end
 
--- Don't override pipe's higher potency shield, unless it'c current health is lower than the new one
-function modifier_imba_hood_of_defiance_active_shield:OnRefresh( params )
-	if IsServer() and self.shield_health < params.shield_health then
-		self.shield_health = params.shield_health
-	end
-end
-
--- Shield absorption, returns damage to deal to the victim (in DamageFilter)
-function modifier_imba_hood_of_defiance_active_shield:AbsorbDamage(damage)
-	if IsServer() then
-		local new_health = self.shield_health - damage
-		if new_health > 0 then
-			self.shield_health = new_health
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self.parent, damage, nil)
-			return 0
-		else
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self.parent, self.shield_health, nil)
-			self:Destroy()
-			return -(new_health)
+function modifier_item_imba_hood_of_defiance_barrier:GetModifierIncomingSpellDamageConstant(keys)
+	if IsClient() then
+		return self.barrier_block
+	else
+		if keys.damage_type == DAMAGE_TYPE_MAGICAL then
+			if keys.original_damage >= self.barrier_health then
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), self.barrier_health, nil)
+			
+				self:Destroy()
+				return self.barrier_health * (-1)
+			else
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), keys.original_damage, nil)
+			
+				self.barrier_health = self.barrier_health - keys.original_damage
+				return keys.original_damage * (-1)
+			end
 		end
 	end
 end
@@ -159,10 +167,9 @@ function modifier_imba_hood_of_defiance_active_bonus:OnCreated()
 end
 
 function modifier_imba_hood_of_defiance_active_bonus:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-	return funcs
 end
 
 function modifier_imba_hood_of_defiance_active_bonus:OnIntervalThink()
@@ -202,5 +209,9 @@ function modifier_imba_hood_of_defiance_active_bonus:OnIntervalThink()
 end
 
 function modifier_imba_hood_of_defiance_active_bonus:GetModifierMagicalResistanceBonus()
-	return self.magic_resist_compensation
+	if IsClient() then
+		return self.unreducable_magic_resist * 100
+	else
+		return self.magic_resist_compensation
+	end
 end

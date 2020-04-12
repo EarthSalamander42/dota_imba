@@ -89,28 +89,13 @@ if modifier_imba_plancks_artifact_basic == nil then
 	modifier_imba_plancks_artifact_basic = class({})
 end
 
+function modifier_imba_plancks_artifact_basic:IsHidden() return true end
+function modifier_imba_plancks_artifact_basic:IsPurgable() return false end
+function modifier_imba_plancks_artifact_basic:RemoveOnDeath() return false end
+function modifier_imba_plancks_artifact_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 if modifier_imba_plancks_artifact_unique == nil then
 	modifier_imba_plancks_artifact_unique = class({})
-end
-
-function modifier_imba_plancks_artifact_basic:IsHidden() return
-	true
-end
-
-function modifier_imba_plancks_artifact_basic:IsDebuff() return
-	false
-end
-
-function modifier_imba_plancks_artifact_basic:IsPurgable() return
-	false
-end
-
-function modifier_imba_plancks_artifact_basic:IsPermanent() return
-	true
-end
-
-function modifier_imba_plancks_artifact_basic:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
 function modifier_imba_plancks_artifact_basic:OnCreated()

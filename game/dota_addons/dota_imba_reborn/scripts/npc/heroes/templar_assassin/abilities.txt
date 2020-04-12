@@ -405,6 +405,32 @@
 				"var_type"					"FIELD_INTEGER"
 				"springboard_movement_slow_pct"		"20"
 			}
+			
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_attack_slow"			"50"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_attack_slow_pct"		"10"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_turn_rate_slow"		"-50"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_eyes_vision_reduction"		"-75"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"inhibit_nerves_ministun_duration"	"0.07"
+			}
 		}
 	}
 
@@ -430,7 +456,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-		"AbilityChannelTime"			"2.0"
+		"AbilityChannelTime"			"1.0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -492,6 +518,32 @@
 				"var_type"					"FIELD_INTEGER"
 				"tooltip_cooldown"			"30"
 				"RequiresScepter"		"1"
+			}
+			
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_attack_slow"			"50"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_attack_slow_pct"		"10"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_turn_rate_slow"		"-50"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_eyes_vision_reduction"		"-75"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"inhibit_nerves_ministun_duration"	"0.07"
 			}
 		}
 		
@@ -560,6 +612,32 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"trap_max_charge_duration"			"4"
+			}
+			
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_attack_slow"			"50"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_attack_slow_pct"		"10"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_limbs_turn_rate_slow"		"-50"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inhibit_eyes_vision_reduction"		"-75"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"inhibit_nerves_ministun_duration"	"0.07"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"

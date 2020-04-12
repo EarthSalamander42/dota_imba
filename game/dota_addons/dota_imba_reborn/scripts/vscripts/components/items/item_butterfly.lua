@@ -50,10 +50,10 @@ end
 -- Butterfly stacking modifier
 modifier_item_imba_butterfly = class({})
 
-function modifier_item_imba_butterfly:IsHidden() return true end
-function modifier_item_imba_butterfly:IsPurgable() return false end
-function modifier_item_imba_butterfly:IsDebuff() return false end
-function modifier_item_imba_butterfly:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_butterfly:IsHidden()		return true end
+function modifier_item_imba_butterfly:IsPurgable()	return false end
+function modifier_item_imba_butterfly:RemoveOnDeath()	return false end
+function modifier_item_imba_butterfly:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_butterfly:OnCreated()
 	-- Ability properties
@@ -112,7 +112,7 @@ end
 function modifier_item_imba_butterfly:OnDestroy()
 	if IsServer() then
 		-- Remove unique modifier if it is the last Butterfly in inventory
-		if not self.caster:HasModifier("modifier_item_imba_butterfly") then
+		if self.caster and not self.caster:IsNull() and not self.caster:HasModifier("modifier_item_imba_butterfly") then
 			self.caster:RemoveModifierByName("modifier_item_imba_butterfly_unique")
 		end
 	end
@@ -327,7 +327,7 @@ function modifier_item_imba_butterfly_wind_song_active:OnIntervalThink()
 		for _,enemy in pairs(enemies) do
 			if not enemy:HasModifier(self.modifier_slow) then
 				local remaining_time = self:GetRemainingTime()
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = remaining_time})
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = remaining_time * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end

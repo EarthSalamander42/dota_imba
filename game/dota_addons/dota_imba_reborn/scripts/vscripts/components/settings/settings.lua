@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.19f"
+GAME_VERSION = "7.19h"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -97,6 +97,8 @@ FORCE_PICKED_HERO = "npc_dota_hero_dummy_dummy"		-- What hero should we force al
 
 MAXIMUM_ATTACK_SPEED = 1000					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
+
+b_USE_MULTIPLE_COURIERS = true				-- Should we allow a courier for each player?
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: gameplay globals
@@ -592,9 +594,9 @@ UNIT_EQUIPMENT["npc_donator_companion_kiddo"] = {
 }
 
 IMBA_DISABLED_SKULL_BASHER = {
-	"npc_dota_hero_faceless_void",
-	"npc_dota_hero_slardar",
-	"npc_dota_hero_spirit_breaker"
+	["npc_dota_hero_faceless_void"] = true,
+	["npc_dota_hero_slardar"] = true,
+	["npc_dota_hero_spirit_breaker"] = true
 }
 
 IMBA_MODIFIER_IGNORE_FRANTIC = {
@@ -627,7 +629,7 @@ IMBA_PUNISHED = {
 IMBA_FIRST_BLOOD = false
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = true -- Should we use vanilla couriers? -- nil to use none of turbo or team couriers
+USE_TEAM_COURIER = nil -- Should we use vanilla couriers? -- nil to use none of turbo or team couriers
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?

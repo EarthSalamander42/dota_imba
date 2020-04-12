@@ -336,7 +336,7 @@ function imba_venomancer_venomous_gale:OnProjectileHit_ExtraData(target, locatio
 			table.insert(self[ExtraData.index],target)
 		end
 		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.strike_damage, damage_type = self:GetAbilityDamageType()})
-		target:AddNewModifier(caster, self, "modifier_imba_venomous_gale", {duration = ExtraData.duration})
+		target:AddNewModifier(caster, self, "modifier_imba_venomous_gale", {duration = ExtraData.duration * (1 - target:GetStatusResistance())})
 		target:EmitSound("Hero_Venomancer.VenomousGaleImpact")
 		
 		-- Talent: Gale Hero Impact Summons {s:value} Wards
@@ -509,7 +509,7 @@ function modifier_imba_poison_sting:OnAttack( params )
 			if not params.attacker:IsBuilding() and caster:HasTalent("special_bonus_imba_venomancer_6") then
 				local ability = self:GetAbility()
 				local duration = ability:GetSpecialValueFor("duration")
-				local mod = params.attacker:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration - FrameTime()})
+				local mod = params.attacker:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = (duration - FrameTime()) * (1 - params.attacker:GetStatusResistance())})
 				-- mod:IncrementStackCount()
 			end
 		end
@@ -526,7 +526,7 @@ function modifier_imba_poison_sting:OnAttackLanded( params )
 		
 		if (caster == params.attacker) and (params.target.IsCreep or params.target.IsHero) then
 			if not params.target:IsBuilding() and not params.target:IsMagicImmune() then
-				local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration - FrameTime()})
+				local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = (duration - FrameTime()) * (1 - params.target:GetStatusResistance())})
 				-- if mod then
 					-- mod:IncrementStackCount()
 				-- end
@@ -1030,7 +1030,7 @@ function modifier_imba_venomancer_plague_ward_v2:OnAttackLanded(keys)
 		end
 		
 		if self.poison_sting_ability and self:GetParent():GetOwner() and not self:GetParent():GetOwner():PassivesDisabled() then
-			keys.target:AddNewModifier(self:GetParent():GetOwner(), self.poison_sting_ability, "modifier_imba_poison_sting_v2_ward", {duration = self.poison_sting_ability:GetSpecialValueFor("duration") - FrameTime()})
+			keys.target:AddNewModifier(self:GetParent():GetOwner(), self.poison_sting_ability, "modifier_imba_poison_sting_v2_ward", {duration = (self.poison_sting_ability:GetSpecialValueFor("duration") - FrameTime()) * (1 - keys.target:GetStatusResistance())})
 		end
 	end
 end
@@ -1281,6 +1281,36 @@ end
 -- end
 
 -------------------------------------------
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_4", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_6", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_plague_ward_upgrade", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_venomancer_4	= modifier_special_bonus_imba_venomancer_4 or class({})
+modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards	= modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards or class({})
+modifier_special_bonus_imba_venomancer_6	= modifier_special_bonus_imba_venomancer_6 or class({})
+modifier_special_bonus_imba_venomancer_plague_ward_upgrade	= modifier_special_bonus_imba_venomancer_plague_ward_upgrade or class({})
+
+function modifier_special_bonus_imba_venomancer_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_venomancer_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards:IsPurgable()		return false end
+function modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_venomancer_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_venomancer_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_venomancer_plague_ward_upgrade:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_plague_ward_upgrade:IsPurgable()		return false end
+function modifier_special_bonus_imba_venomancer_plague_ward_upgrade:RemoveOnDeath() 	return false end
 
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_1", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)

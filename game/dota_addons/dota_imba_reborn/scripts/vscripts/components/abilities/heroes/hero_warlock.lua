@@ -64,7 +64,7 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 			
 		for _,enemy in pairs(enemies) do
 			if not linked_units[enemy:GetEntityIndex()] then
-				local bond_modifier = enemy:AddNewModifier(caster, ability, modifier_bonds, {duration = duration})
+				local bond_modifier = enemy:AddNewModifier(caster, ability, modifier_bonds, {duration = duration * (1 - enemy:GetStatusResistance())})
 				table.insert(modifier_table, bond_modifier)
 				
 				table.insert(bond_table, enemy)
@@ -654,7 +654,7 @@ function modifier_imba_upheaval:OnIntervalThink()
 		false)
 
 	for _,enemy in pairs(enemies) do
-		local modifier_debuff_handler = enemy:AddNewModifier(self.caster, self.ability, self.modifier_debuff, {duration = self.linger_duration})
+		local modifier_debuff_handler = enemy:AddNewModifier(self.caster, self.ability, self.modifier_debuff, {duration = self.linger_duration * (1 - enemy:GetStatusResistance())})
 		-- Insert the amount of slow in the new modifier
 		if modifier_debuff_handler then
 			modifier_debuff_handler.slow = self.slow
@@ -730,25 +730,21 @@ function modifier_imba_upheaval_debuff:OnIntervalThink()
 end
 
 function modifier_imba_upheaval_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_upheaval_debuff:GetModifierMoveSpeedBonus_Percentage()
-	local stacks = self:GetStackCount()
-	return stacks * (-1)
+	return self:GetStackCount() * (-1)
 end
 
 function modifier_imba_upheaval_debuff:GetModifierAttackSpeedBonus_Constant()
 	-- #2 Talent: Upheaval also reduces attack speed
 	if self.caster:HasTalent("special_bonus_imba_warlock_2") then
-		local stacks = self:GetStackCount()
-		return stacks * (-1)
+		return self:GetStackCount() * (-1)
 	end
-
-	return nil
 end
 
 -- Golem Upheaval buff
@@ -1047,7 +1043,7 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 			false)
 
 		for _,enemy in pairs(enemies) do
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rain_of_chaos_stun", {duration = self:GetSpecialValueFor("stun_duration")})
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_rain_of_chaos_stun", {duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
 		end
 
 		-- Summon the appropriate Golem unit based on the skill's level at the target point
@@ -1150,9 +1146,8 @@ end
 -- Stun modifier
 modifier_imba_rain_of_chaos_stun = class({})
 
-function modifier_imba_rain_of_chaos_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state
+function modifier_imba_rain_of_chaos_stun:CheckState() 
+	return {[MODIFIER_STATE_STUNNED] = true}
 end
 
 function modifier_imba_rain_of_chaos_stun:GetEffectName()
@@ -1291,9 +1286,8 @@ function modifier_imba_rain_of_chaos_demon_link:GetModifierIncomingDamage_Percen
 	return -100
 end
 
-function modifier_imba_rain_of_chaos_demon_link:GetModifierBaseDamageOutgoing_Percentage()
-	local stacks = self:GetStackCount()
-	return stacks * self.scepter_damage_per_demon_pct
+function modifier_imba_rain_of_chaos_demon_link:GetModifierBaseDamageOutgoing_Percentage() 
+	return self:GetStackCount() * self.scepter_damage_per_demon_pct
 end
 
 function modifier_imba_rain_of_chaos_demon_link:OnTakeDamage(keys)
@@ -1570,61 +1564,56 @@ function modifier_imba_permanent_immolation_aura:OnCreated()
 	self.particle_burn = "particles/hero/warlock/warlock_upheaval_golem_burn.vpcf"
 
 	-- Ability special
-	self.damage = self.ability:GetSpecialValueFor("damage")
 	self.radius = self.ability:GetSpecialValueFor("radius")
-	self.burn_interval = self.ability:GetSpecialValueFor("burn_interval")
 
 	-- Actual radius to use, in case of Upheaval burns
 	self.actual_radius = self.radius
 
 	if IsServer() then
 		-- Start thinking
-		self:StartIntervalThink(self.burn_interval)
+		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("burn_interval"))
 	end
 end
 
 function modifier_imba_permanent_immolation_aura:OnIntervalThink()
-	if IsServer() then
-		if self.caster:HasModifier(self.modifier_upheaval) then
-			local modifier_upheaval_handler = self.caster:FindModifierByName(self.modifier_upheaval)
-			if modifier_upheaval_handler and modifier_upheaval_handler.radius and modifier_upheaval_handler.center then
+	if self.caster:HasModifier(self.modifier_upheaval) then
+		local modifier_upheaval_handler = self.caster:FindModifierByName(self.modifier_upheaval)
+		if modifier_upheaval_handler and modifier_upheaval_handler.radius and modifier_upheaval_handler.center then
 
-				-- Set actual aura radius. Need to dramatically increase the radius of the immolation. This is remedied by rejecting enemies outside the radius
-				self.actual_radius = modifier_upheaval_handler.radius * 2
+			-- Set actual aura radius. Need to dramatically increase the radius of the immolation. This is remedied by rejecting enemies outside the radius
+			self.actual_radius = modifier_upheaval_handler.radius * 2
 
-				-- BURN!!!! effect
-				self.particle_burn_fx = ParticleManager:CreateParticle(self.particle_burn, PATTACH_WORLDORIGIN, self.caster)
-				ParticleManager:SetParticleControl(self.particle_burn_fx, 0, modifier_upheaval_handler.center)
-				ParticleManager:SetParticleControl(self.particle_burn_fx, 1, Vector(modifier_upheaval_handler.radius, 0, 0))
-				ParticleManager:ReleaseParticleIndex(self.particle_burn_fx)
-			end
-		else
-			self.actual_radius = self.radius
+			-- BURN!!!! effect
+			self.particle_burn_fx = ParticleManager:CreateParticle(self.particle_burn, PATTACH_WORLDORIGIN, self.caster)
+			ParticleManager:SetParticleControl(self.particle_burn_fx, 0, modifier_upheaval_handler.center)
+			ParticleManager:SetParticleControl(self.particle_burn_fx, 1, Vector(modifier_upheaval_handler.radius, 0, 0))
+			ParticleManager:ReleaseParticleIndex(self.particle_burn_fx)
 		end
+	else
+		self.actual_radius = self.radius
+	end
 
-		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
-			nil,
-			self.actual_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false)
+	-- Find nearby enemies
+	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+		self.caster:GetAbsOrigin(),
+		nil,
+		self.actual_radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 
-		for _,enemy in pairs(enemies) do
-			if enemy:HasModifier(self.modifier_burn) then
-				-- Damage enemies
-				local damageTable = {victim = enemy,
-					attacker = self.caster,
-					damage = self.damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = self.ability
-				}
-
-				ApplyDamage(damageTable)
-			end
+	for _,enemy in pairs(enemies) do
+		if enemy:HasModifier(self.modifier_burn) then
+			-- Damage enemies
+			ApplyDamage({
+				victim			= enemy,
+				attacker		= self.caster,
+				damage			= self:GetAbility():GetSpecialValueFor("damage"),
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				ability			= self.ability
+			})
 		end
 	end
 end
@@ -1651,11 +1640,8 @@ function modifier_imba_permanent_immolation_aura:GetAuraEntityReject(target)
 		return false
 	end
 
-	-- Calculate distance
-	local distance = (self.caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
-
 	-- If the distance is bigger than the Immolation Aura's radius, ignore it
-	if distance > self.radius then
+	if (self.caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() > self.radius then
 		return true
 	end
 
@@ -1716,17 +1702,49 @@ function modifier_imba_golem_spell_immunity:GetEffectName()
 end
 
 function modifier_imba_golem_spell_immunity:CheckState()
-	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
-	return state
+	return {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 end
 
 function modifier_imba_golem_spell_immunity:IsHidden() return false end
 function modifier_imba_golem_spell_immunity:IsPurgable() return false end
 function modifier_imba_golem_spell_immunity:IsDebuff() return false end
 
+
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_warlock_1", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_3", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_9", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_5", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_warlock_4", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_warlock_1	= modifier_special_bonus_imba_warlock_1 or class({})
+modifier_special_bonus_imba_warlock_3	= modifier_special_bonus_imba_warlock_3 or class({})
+modifier_special_bonus_imba_warlock_9	= modifier_special_bonus_imba_warlock_9 or class({})
+modifier_special_bonus_imba_warlock_5	= modifier_special_bonus_imba_warlock_5 or class({})
+modifier_special_bonus_imba_warlock_4	= modifier_special_bonus_imba_warlock_4 or class({})
+
+function modifier_special_bonus_imba_warlock_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_warlock_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_3:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_warlock_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_warlock_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_warlock_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_warlock_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_warlock_4:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
 

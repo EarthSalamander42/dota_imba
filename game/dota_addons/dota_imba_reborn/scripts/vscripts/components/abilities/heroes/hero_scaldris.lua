@@ -459,7 +459,7 @@ function imba_scaldris_cold_front:OnProjectileThink_ExtraData(location, extra_da
 			-- Apply root and damage modifiers to nearby enemies
 			local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self:GetSpecialValueFor("blast_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, enemy in pairs(enemies) do
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_cold_front_root", {duration = self:GetSpecialValueFor("root_duration")})
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_cold_front_root", {duration = self:GetSpecialValueFor("root_duration") * (1 - enemy:GetStatusResistance())})
 				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_cold_front_dps", {duration = self:GetSpecialValueFor("damage_duration"), dps = self:GetSpecialValueFor("dps")})
 			end
 		end
@@ -592,7 +592,7 @@ function imba_scaldris_scorch:OnSpellStart()
 		-- Apply blind and damage modifiers to nearby enemies
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, effect_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
-			enemy:AddNewModifier(caster, self, "modifier_imba_scorch_blind", {duration = self:GetSpecialValueFor("blind_duration")})
+			enemy:AddNewModifier(caster, self, "modifier_imba_scorch_blind", {duration = self:GetSpecialValueFor("blind_duration") * (1 - enemy:GetStatusResistance())})
 			enemy:AddNewModifier(caster, self, "modifier_imba_scorch_dps", {duration = self:GetSpecialValueFor("duration"), dps = self:GetSpecialValueFor("dps")})
 		end
 	end
@@ -753,7 +753,7 @@ end
 function imba_scaldris_freeze:OnProjectileHit(target, location)
 	if IsServer() then
 		if target then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_freeze_slow", {duration = self:GetSpecialValueFor("slow_duration")})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_freeze_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance())})
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_freeze_dps", {duration = self:GetSpecialValueFor("damage_duration"), dps = self:GetSpecialValueFor("dps")})
 		end
 	end
@@ -1138,7 +1138,7 @@ function imba_scaldris_ice_floes:OnProjectileThink_ExtraData(location, extra_dat
 			--local enemies = FindUnitsInLine(caster:GetTeamNumber(), caster:GetAbsOrigin(), location, nil, self:GetSpecialValueFor("effect_radius") * 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE)
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, self:GetSpecialValueFor("effect_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, enemy in pairs(enemies) do
-				enemy:AddNewModifier(caster, self, "modifier_imba_ice_floes_stun", {duration = self:GetSpecialValueFor("stun_duration")})
+				enemy:AddNewModifier(caster, self, "modifier_imba_ice_floes_stun", {duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
 				enemy:AddNewModifier(caster, self, "modifier_imba_ice_floes_dps", {duration = self:GetSpecialValueFor("damage_duration"), dps = self:GetSpecialValueFor("dps")})
 			end
 
@@ -1438,7 +1438,7 @@ function imba_scaldris_absolute_zero:OnProjectileHit(target, location)
 	if IsServer() then
 		if target then
 			target:EmitSound("Scaldris.AbsoluteZero.Impact")
-			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_absolute_zero_stun", {duration = self:GetSpecialValueFor("stun_duration"), initial_slow = self:GetSpecialValueFor("initial_slow")})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_absolute_zero_stun", {duration = self:GetSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance()), initial_slow = self:GetSpecialValueFor("initial_slow")})
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_absolute_zero_dps", {duration = self:GetSpecialValueFor("damage_duration"), dps = self:GetSpecialValueFor("dps")})
 		end
 	end
@@ -1461,7 +1461,7 @@ end
 
 function modifier_imba_absolute_zero_stun:OnDestroy()
 	if IsServer() then
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_absolute_zero_slow", {initial_slow = self.initial_slow})
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_absolute_zero_slow", {initial_slow = self.initial_slow * (1 - self:GetParent():GetStatusResistance())})
 	end
 end
 

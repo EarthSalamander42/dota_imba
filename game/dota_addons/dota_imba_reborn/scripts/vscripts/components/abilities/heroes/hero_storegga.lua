@@ -320,7 +320,7 @@ function storegga_grab_throw:OnProjectileHit( hTarget, vLocation )
 
 					EmitSoundOn( "Hero_PhantomAssassin.Spatter", self.hThrowTarget )
 				else
-					self.hThrowTarget:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.stun_duration } )
+					self.hThrowTarget:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.stun_duration * (1 - self.hThrowTarget:GetStatusResistance()) } )
 				end
 			end
 
@@ -363,7 +363,7 @@ function storegga_grab_throw:OnProjectileHit( hTarget, vLocation )
 								knockback_distance = self.knockback_distance,
 								knockback_height = self.knockback_height,
 							}
-						enemy:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.knockback_duration } )
+						enemy:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.knockback_duration * (1 - enemy:GetStatusResistance()) } )
 					end
 
 				end

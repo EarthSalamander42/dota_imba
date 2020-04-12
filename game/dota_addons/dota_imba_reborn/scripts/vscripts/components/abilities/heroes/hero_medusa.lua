@@ -135,15 +135,13 @@ end
 function modifier_imba_medusa_split_shot:IsHidden()	return true end
 
 function modifier_imba_medusa_split_shot:DeclareFunctions()
-	local decFuncs = {
+    return {
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		
 		MODIFIER_EVENT_ON_ORDER
     }
-
-    return decFuncs
 end
 
 function modifier_imba_medusa_split_shot:OnAttack(keys)
@@ -152,7 +150,7 @@ function modifier_imba_medusa_split_shot:OnAttack(keys)
 	-- "Secondary arrows are not released upon attacking allies."
 	-- The "not keys.no_attack_cooldown" clause seems to make sure the function doesn't trigger on PerformAttacks with that false tag so this thing doesn't crash
 	if keys.attacker == self:GetParent() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.no_attack_cooldown and not self:GetParent():PassivesDisabled() and self:GetAbility():IsTrained() then	
-		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():Script_GetAttackRange() + self:GetAbility():GetSpecialValueFor("split_shot_bonus_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():Script_GetAttackRange() + self:GetAbility():GetSpecialValueFor("split_shot_bonus_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
 		
 		local target_number = 0
 		
@@ -162,7 +160,7 @@ function modifier_imba_medusa_split_shot:OnAttack(keys)
 			if enemy ~= keys.target then
 				self.split_shot_target = true
 				
-				self:GetParent():PerformAttack(enemy, false, apply_modifiers, true, false, true, false, false)
+				self:GetParent():PerformAttack(enemy, false, apply_modifiers, true, true, true, false, false)
 				
 				self.split_shot_target = false
 				
@@ -489,15 +487,10 @@ function imba_medusa_mystic_snake:OnProjectileHit_ExtraData(hTarget, vLocation, 
 				end
 			end
 			
-			slow_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_mystic_snake_slow", {duration = self:GetSpecialValueFor("slow_duration")})
-			
-			if slow_modifier then
-				slow_modifier:SetDuration(self:GetSpecialValueFor("slow_duraton") * (1 - hTarget:GetStatusResistance()), true)
-			end
+			hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_mystic_snake_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - hTarget:GetStatusResistance())})
 			
 			-- This is an IMBAfication branching off a somewhat necessary modifier, as this is used to make sure one mystic snake doesn't hit the same target more than once
 			local tracker_modifier = hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_medusa_mystic_snake_tracker", {duration = self:GetSpecialValueFor("myotoxin_duration")})
-			
 			
 			if tracker_modifier then
 				tracker_modifier.number = ExtraData.particle_snake
@@ -1018,12 +1011,12 @@ function modifier_imba_medusa_stone_gaze_facing:OnIntervalThink()
 		
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_medusa_stone_gaze_stone", 
 			{
-				duration 					= self.stone_duration,
+				duration 					= self.stone_duration * (1 - self:GetParent():GetStatusResistance()),
 				bonus_physical_damage		= self.bonus_physical_damage
 			})
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_medusa_stone_gaze_stiff_joints", 
 			{
-				duration 					= self.stiff_joints_duration,
+				duration 					= self.stiff_joints_duration * (1 - self:GetParent():GetStatusResistance()),
 				bonus_physical_damage		= self.bonus_physical_damage
 			})			
 			self:StartIntervalThink(-1)
@@ -1191,7 +1184,7 @@ function modifier_imba_medusa_stone_gaze_red_eyes_facing:OnDestroy()
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_medusa_stone_gaze_stone", 
 		{
-			duration 					= self.red_eyes_stone_duration,
+			duration 					= self.red_eyes_stone_duration * (1 - self:GetParent():GetStatusResistance()),
 			bonus_physical_damage		= self.bonus_physical_damage
 		})
 	end
@@ -1268,9 +1261,33 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_mystic_snake_mana_steal", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_medusa_extra_split_shot_targets", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_medusa_stone_gaze_duration", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_medusa_split_shot_modifiers", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_medusa_bonus_mana", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_medusa_bonus_mana			= class({})
+modifier_special_bonus_imba_mystic_snake_mana_steal			= modifier_special_bonus_imba_mystic_snake_mana_steal or class({})
+modifier_special_bonus_imba_medusa_extra_split_shot_targets	= modifier_special_bonus_imba_medusa_extra_split_shot_targets or class({})
+modifier_special_bonus_imba_medusa_stone_gaze_duration		= modifier_special_bonus_imba_medusa_stone_gaze_duration or class({})
+modifier_special_bonus_imba_medusa_split_shot_modifiers		= modifier_special_bonus_imba_medusa_split_shot_modifiers or class({})
+modifier_special_bonus_imba_medusa_bonus_mana				= class({})
+
+function modifier_special_bonus_imba_mystic_snake_mana_steal:IsHidden() 		return true end
+function modifier_special_bonus_imba_mystic_snake_mana_steal:IsPurgable() 	return false end
+function modifier_special_bonus_imba_mystic_snake_mana_steal:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_medusa_extra_split_shot_targets:IsHidden() 		return true end
+function modifier_special_bonus_imba_medusa_extra_split_shot_targets:IsPurgable() 	return false end
+function modifier_special_bonus_imba_medusa_extra_split_shot_targets:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_medusa_stone_gaze_duration:IsHidden() 		return true end
+function modifier_special_bonus_imba_medusa_stone_gaze_duration:IsPurgable() 	return false end
+function modifier_special_bonus_imba_medusa_stone_gaze_duration:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_medusa_split_shot_modifiers:IsHidden() 		return true end
+function modifier_special_bonus_imba_medusa_split_shot_modifiers:IsPurgable() 	return false end
+function modifier_special_bonus_imba_medusa_split_shot_modifiers:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_medusa_bonus_mana:IsHidden() 		return true end
 function modifier_special_bonus_imba_medusa_bonus_mana:IsPurgable() 	return false end

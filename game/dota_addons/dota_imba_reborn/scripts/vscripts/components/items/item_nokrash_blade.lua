@@ -34,11 +34,10 @@ end
 
 modifier_item_nokrash_blade = class({})
 
-function modifier_item_nokrash_blade:IsHidden() return true end
-function modifier_item_nokrash_blade:IsDebuff() return false end
-function modifier_item_nokrash_blade:IsPurgable() return false end
-function modifier_item_nokrash_blade:IsPermanent() return true end
-function modifier_item_nokrash_blade:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_nokrash_blade:IsHidden()		return true end
+function modifier_item_nokrash_blade:IsPurgable()		return false end
+function modifier_item_nokrash_blade:RemoveOnDeath()	return false end
+function modifier_item_nokrash_blade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_nokrash_blade:DeclareFunctions()
 	local funcs = {

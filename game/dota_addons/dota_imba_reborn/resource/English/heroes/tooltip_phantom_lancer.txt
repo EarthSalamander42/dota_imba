@@ -37,7 +37,7 @@
 "DOTA_Tooltip_ability_imba_phantom_lancer_phantom_edge_aghanim_description"			"Removes cooldown and minimum distance."
 
 "DOTA_Tooltip_ability_imba_phantom_lancer_sun_catcher"								"Sun Catcher"
-"DOTA_Tooltip_ability_imba_phantom_lancer_sun_catcher_Description"					"Phantom Lancer launches a miniature sun from his lance, travelling forward and providing vision, while causing any affected enemies to miss 100% of their attacks. Spirit Lance and Phantom Edge are enhanced if used on enemies are inflicted with the Sun Catcher debuff."
+"DOTA_Tooltip_ability_imba_phantom_lancer_sun_catcher_Description"					"Phantom Lancer launches a miniature sun from his lance, travelling forward and providing vision, while causing any affected enemies to miss 100% of their attacks. Spirit Lance and Phantom Edge are enhanced if used on enemies who are inflicted with the Sun Catcher debuff."
 "DOTA_Tooltip_ability_imba_phantom_lancer_sun_catcher_Lore"							"Azwraith harnesses the infusion of light in a blinding spectacle, blurring the lines between intangibility and corporeality."
 "DOTA_Tooltip_ability_imba_phantom_lancer_sun_catcher_radius"						"SUN RADIUS:"
 "DOTA_Tooltip_ability_imba_phantom_lancer_sun_catcher_speed"						"SUN SPEED:"

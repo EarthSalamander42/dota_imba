@@ -60,6 +60,14 @@ function imba_spirit_breaker_charge_of_darkness:GetIntrinsicModifierName()
 	return "modifier_imba_spirit_breaker_charge_of_darkness_taxi_tracker"
 end
 
+function imba_spirit_breaker_charge_of_darkness:GetCooldown(level)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_cooldown")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
 function imba_spirit_breaker_charge_of_darkness:OnSpellStart()
 	-- Debug line
 	self.charge_cancel_reason = nil
@@ -69,7 +77,9 @@ function imba_spirit_breaker_charge_of_darkness:OnSpellStart()
 	if target:TriggerSpellAbsorb(self) then
 		return nil
 	end
-
+	
+	self:GetCaster():Interrupt()
+	
 	self:GetCaster():EmitSound("Hero_Spirit_Breaker.ChargeOfDarkness")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_spirit_breaker" and RollPercentage(10) then
@@ -106,6 +116,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:OnCreated(params)
 		self.movement_speed		= self:GetAbility():GetTalentSpecialValueFor("movement_speed")
 		self.stun_duration		= self:GetAbility():GetSpecialValueFor("stun_duration")
 		self.bash_radius		= self:GetAbility():GetSpecialValueFor("bash_radius")
+		self.scepter_speed		= self:GetAbility():GetSpecialValueFor("scepter_speed")
 		
 		-- These aren't used
 		-- self.vision_radius		= self:GetAbility():GetSpecialValueFor("vision_radius")
@@ -194,7 +205,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 		-- IMBAfication: Clothesline
 		if self:GetAbility():GetAutoCastState() and not self.clothesline_target and enemy ~= self.target and not enemy:IsRoshan() and enemy:IsHero() then
 			self.clothesline_target = enemy
-			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_clothesline", {duration = self.clothesline_duration})
+			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_spirit_breaker_charge_of_darkness_clothesline", {duration = self.clothesline_duration * (1 - enemy:GetStatusResistance())})
 			self.bashed_enemies[enemy] = true
 		elseif greater_bash_ability and greater_bash_ability:IsTrained() and enemy ~= self.target and not self.bashed_enemies[enemy] then
 			greater_bash_ability:Bash(enemy, me)
@@ -271,11 +282,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:UpdateHorizontalMotion(
 		end
 		
 		if not self.target:IsMagicImmune() and self:GetAbility() then
-			local stun_modifier = self.target:AddNewModifier(me, self:GetAbility(), "modifier_stunned", {duration = self.stun_duration})
-			
-			if stun_modifier then
-				stun_modifier:SetDuration(self.stun_duration * (1 - self.target:GetStatusResistance()), true)
-			end
+			self.target:AddNewModifier(me, self:GetAbility(), "modifier_stunned", {duration = self.stun_duration * (1 - self.target:GetStatusResistance())})
 		end
 		
 		-- IMBAfication: Mad Cow (if the target is NOT alive after the charge connects, the charge modifier is not necessarily destroyed)
@@ -379,7 +386,11 @@ function modifier_imba_spirit_breaker_charge_of_darkness:GetDisableAutoAttack()
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness:GetModifierMoveSpeedBonus_Constant()
-	return self.movement_speed + self:GetStackCount()
+	if self:GetCaster():HasScepter() then
+		return self.movement_speed + self:GetStackCount() + self.scepter_speed
+	else
+		return self.movement_speed + self:GetStackCount()
+	end
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness:GetOverrideAnimation()
@@ -436,19 +447,11 @@ function modifier_imba_spirit_breaker_charge_of_darkness_vision:OnCreated()
 	if not IsServer() then return end
 	
 	self.particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_spirit_breaker/spirit_breaker_charge_target.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetCaster():GetTeamNumber())
-end
-
-function modifier_imba_spirit_breaker_charge_of_darkness_vision:OnDestroy()
-	if not IsServer() then return end
-
-	ParticleManager:DestroyParticle(self.particle, false)
-	ParticleManager:ReleaseParticleIndex(self.particle)
+	self:AddParticle(self.particle, false, false, -1, false, true)
 end
 
 function modifier_imba_spirit_breaker_charge_of_darkness_vision:CheckState()
-	local state = {[MODIFIER_STATE_PROVIDES_VISION] = true}
-
-	return state
+	return {[MODIFIER_STATE_PROVIDES_VISION] = true}
 end
 
 ---------------------------------------------
@@ -799,8 +802,8 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 			 center_x 			= parent_loc.x,
 			 center_y 			= parent_loc.y,
 			 center_z 			= parent_loc.z,
-			 duration 			= self:GetSpecialValueFor("duration"),
-			 knockback_duration = self:GetSpecialValueFor("knockback_duration"),
+			 duration 			= self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()),
+			 knockback_duration = self:GetSpecialValueFor("knockback_duration") * (1 - target:GetStatusResistance()),
 			 knockback_distance = self:GetSpecialValueFor("knockback_distance"),
 			 knockback_height 	= self:GetSpecialValueFor("knockback_height"),
 		}
@@ -810,11 +813,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 		end
 		
 		-- Greater Bash first applies the debuff, then the damage, no matter whether it procs on attacks, or is applied by Spirit Breaker's abilities.
-		local knockback_modifier = target:AddNewModifier(parent, self, "modifier_knockback", knockback_properties)
-		
-		if knockback_modifier then
-			knockback_modifier:SetDuration(self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), true)
-		end
+		knockback_modifier = target:AddNewModifier(parent, self, "modifier_knockback", knockback_properties)
 	end
 	
 	local damageTable = {
@@ -915,19 +914,19 @@ function imba_spirit_breaker_nether_strike:OnUpgrade()
 end
 
 function imba_spirit_breaker_nether_strike:GetCooldown(nLevel)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("cooldown_scepter")
-	else
+	-- if self:GetCaster():HasScepter() then
+		-- return self:GetSpecialValueFor("cooldown_scepter")
+	-- else
 		return self.BaseClass.GetCooldown(self, nLevel)
-	end
+	-- end
 end
 
 function imba_spirit_breaker_nether_strike:GetCastRange(location, target)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("cast_range_scepter")
-	else
+	-- if self:GetCaster():HasScepter() then
+		-- return self:GetSpecialValueFor("cast_range_scepter")
+	-- else
 		return self.BaseClass.GetCastRange(self, location, target)
-	end
+	-- end
 end
 
 function imba_spirit_breaker_nether_strike:GetCastPoint()
@@ -1085,26 +1084,26 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 		
 	damage_dealt = ApplyDamage(damageTable)
 
-	if self:GetCaster():HasScepter() then
-		for _, enemy in pairs(enemies) do
-			if enemy ~= target then
-				if greater_bash_ability and greater_bash_ability:IsTrained() then
-					greater_bash_ability:Bash(enemy, self:GetCaster())
-				end
+	-- if self:GetCaster():HasScepter() then
+		-- for _, enemy in pairs(enemies) do
+			-- if enemy ~= target then
+				-- if greater_bash_ability and greater_bash_ability:IsTrained() then
+					-- greater_bash_ability:Bash(enemy, self:GetCaster())
+				-- end
 				
-				local damageTable = {
-					victim 			= target,
-					damage 			= self:GetSpecialValueFor("damage"),
-					damage_type		= self:GetAbilityDamageType(),
-					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-					attacker 		= self:GetCaster(),
-					ability 		= self
-				}
+				-- local damageTable = {
+					-- victim 			= target,
+					-- damage 			= self:GetSpecialValueFor("damage"),
+					-- damage_type		= self:GetAbilityDamageType(),
+					-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+					-- attacker 		= self:GetCaster(),
+					-- ability 		= self
+				-- }
 				
-				damage_dealt = ApplyDamage(damageTable)
-			end
-		end
-	end
+				-- damage_dealt = ApplyDamage(damageTable)
+			-- end
+		-- end
+	-- end
 	
 	-- IMBAfication: Planeswalker
 	if self:GetAutoCastState() then
@@ -1159,14 +1158,13 @@ end
 -- NETHER STRIKE VISION MODIFIER --
 -----------------------------------
 
+function modifier_imba_spirit_breaker_nether_strike_vision:IgnoreTenacity()	return true end
 function modifier_imba_spirit_breaker_nether_strike_vision:IsHidden()	return true end
 function modifier_imba_spirit_breaker_nether_strike_vision:IsPurgable()	return false end
 function modifier_imba_spirit_breaker_nether_strike_vision:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_spirit_breaker_nether_strike_vision:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
-	
-	return decFuncs
+	return {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
 end
 
 function modifier_imba_spirit_breaker_nether_strike_vision:GetModifierProvidesFOWVision()
@@ -1230,10 +1228,12 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bonus_health", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bash_chance", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_spirit_breaker_charge_speed					= class({})
 modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown			= class({})
 modifier_special_bonus_imba_spirit_breaker_bonus_health					= class({})
+modifier_special_bonus_imba_spirit_breaker_bash_chance					= modifier_special_bonus_imba_spirit_breaker_bash_chance or class({})
 
 function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsHidden() 		return true end
 function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsPurgable() 		return false end
@@ -1246,6 +1246,10 @@ function modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown:RemoveOnDe
 function modifier_special_bonus_imba_spirit_breaker_bonus_health:IsHidden() 		return true end
 function modifier_special_bonus_imba_spirit_breaker_bonus_health:IsPurgable() 		return false end
 function modifier_special_bonus_imba_spirit_breaker_bonus_health:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_spirit_breaker_bash_chance:IsHidden() 		return true end
+function modifier_special_bonus_imba_spirit_breaker_bash_chance:IsPurgable() 		return false end
+function modifier_special_bonus_imba_spirit_breaker_bash_chance:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_spirit_breaker_bonus_health:OnCreated()
 	self.bonus_health	= self:GetParent():FindTalentValue("special_bonus_imba_spirit_breaker_bonus_health")

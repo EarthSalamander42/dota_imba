@@ -51,6 +51,67 @@ function imba_elder_titan_echo_stomp:GetChannelTime()
 	end
 end
 
+function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
+	-- if self:GetCaster():HasScepter() then
+		-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_magic_immune", {duration = self:GetChannelTime()})
+	-- end
+	
+	if astral_spirit and not astral_spirit:IsNull() and astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit") then
+		Timers:CreateTimer(0.03, function()
+			astral_spirit:CastAbilityNoTarget(astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"), astral_spirit:GetPlayerOwnerID())
+		end)
+	else
+		self.combined_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cast_combined.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	end
+
+	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel", self:GetCaster())
+	
+	return true
+end
+
+-- -- There is no ability phase right now...
+-- function imba_elder_titan_echo_stomp:OnAbilityPhaseInterrupted()
+	-- if astral_spirit then
+		-- astral_spirit:Interrupt()
+	-- end
+
+	-- StopSoundOn("Hero_ElderTitan.EchoStomp.Channel", self:GetCaster())
+-- end
+
+function imba_elder_titan_echo_stomp:OnSpellStart()
+	-- Echo Stomp no longer channeling talent logic only
+	if not self:GetCaster():HasTalent("special_bonus_imba_elder_titan_7") then return end
+	
+	if IsServer() then
+		-- Ability properties
+		local caster = self:GetCaster()
+		local ability = self
+
+		-- Ability specials
+		local radius = ability:GetSpecialValueFor("radius")
+		local stun_duration = ability:GetSpecialValueFor("sleep_duration")
+		local stomp_damage = ability:GetSpecialValueFor("stomp_damage")
+
+		-- Play cast sound
+		EmitSoundOn("Hero_ElderTitan.EchoStomp", caster)
+
+		-- Find all nearby enemies
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+
+		for _, enemy in pairs(enemies) do
+			-- Deal damage to nearby non-magic immune enemies
+			if not enemy:IsMagicImmune() then
+				local damageTable = {victim = enemy, attacker = caster, damage = stomp_damage, damage_type = ability:GetAbilityDamageType(), ability = ability}
+
+				ApplyDamage(damageTable)
+
+				-- Stun them
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - enemy:GetStatusResistance())})
+			end
+		end
+	end
+end
+
 function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 
 	if IsServer() then
@@ -58,11 +119,17 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 			self:GetCaster():RemoveModifierByName("modifier_imba_elder_titan_magic_immune")
 		end
 	
+		if self.combined_particle then
+			ParticleManager:DestroyParticle(self.combined_particle, true)
+			ParticleManager:ReleaseParticleIndex(self.combined_particle)
+		end
+	
 		if interrupted then
 			if astral_spirit and not astral_spirit:IsNull() and not astral_spirit.is_returning then
 				astral_spirit:Interrupt()
 			end
-			StopSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
+			-- -- Vanilla doesn't stop the sound...
+			-- StopSoundOn("Hero_ElderTitan.EchoStomp.Channel", self:GetCaster())
 		else
 
 			-- Ability properties
@@ -79,11 +146,24 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 			EmitSoundOn("Hero_ElderTitan.EchoStomp.ti7_layer", caster)
 
 			-- Add stomp particle
-			local particle_stomp_fx = ParticleManager:CreateParticle("particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7_physical.vpcf", PATTACH_ABSORIGIN, caster)
+			local particle_stomp_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_physical.vpcf", PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(particle_stomp_fx, 0, caster:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle_stomp_fx, 1, Vector(radius, 1, 1))
 			ParticleManager:SetParticleControl(particle_stomp_fx, 2, caster:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle_stomp_fx)
+			
+			local magical_particle = nil
+			
+			if astral_spirit and not astral_spirit:IsNull() then
+				magical_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_magical.vpcf", PATTACH_ABSORIGIN, astral_spirit)
+				ParticleManager:SetParticleControl(magical_particle, 2, astral_spirit:GetAbsOrigin())
+			else
+				magical_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_magical.vpcf", PATTACH_ABSORIGIN, caster)
+				ParticleManager:SetParticleControl(magical_particle, 2, caster:GetAbsOrigin())
+			end
+			
+			ParticleManager:SetParticleControl(magical_particle, 1, Vector(radius, 1, 1))
+			ParticleManager:ReleaseParticleIndex(magical_particle)
 
 			-- Find all nearby enemies
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
@@ -94,12 +174,26 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 			for _, enemy in pairs(enemies) do
 				-- Deal damage to nearby non-magic immune enemies
 				if not enemy:IsMagicImmune() then
-					local damageTable = {victim = enemy, attacker = caster, damage = stomp_damage, damage_type = ability:GetAbilityDamageType(), ability = ability}
-
-					ApplyDamage(damageTable)
+					ApplyDamage({
+						victim = enemy,
+						attacker = caster,
+						damage = stomp_damage,
+						damage_type = ability:GetAbilityDamageType(),
+						ability = ability
+					})
+					
+					if not astral_spirit or astral_spirit:IsNull() then
+						ApplyDamage({
+							victim = enemy,
+							attacker = caster,
+							damage = stomp_damage,
+							damage_type = DAMAGE_TYPE_MAGICAL,
+							ability = ability
+						})
+					end
 
 					-- Stun them
-					enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+					enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - enemy:GetStatusResistance())})
 					
 					if enemy:IsRealHero() then
 						heroes_hit = heroes_hit + 1
@@ -110,68 +204,6 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 			-- if self:GetCaster():HasScepter() then
 				-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_magic_immune", {duration = heroes_hit * 2})
 			-- end
-		end
-	end
-end
-
-function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
-	-- if self:GetCaster():HasScepter() then
-		-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_titan_magic_immune", {duration = self:GetChannelTime()})
-	-- end
-
-	if astral_spirit and not astral_spirit:IsNull() and astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit") then
-		astral_spirit:CastAbilityNoTarget(astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"), astral_spirit:GetPlayerOwnerID())
-	end
-
-	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
-
-	return true
-end
-
-function imba_elder_titan_echo_stomp:OnAbilityPhaseInterrupted()
-	if astral_spirit then
-		astral_spirit:Interrupt()
-	end
-
-	StopSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
-end
-
-function imba_elder_titan_echo_stomp:OnSpellStart()
-	if not self:GetCaster():HasTalent("special_bonus_imba_elder_titan_7") then return end
-	if IsServer() then
-		-- Ability properties
-		local caster = self:GetCaster()
-		local ability = self
-
-		-- Ability specials
-		local radius = ability:GetSpecialValueFor("radius")
-		local stun_duration = ability:GetSpecialValueFor("sleep_duration")
-		local stomp_damage = ability:GetSpecialValueFor("stomp_damage")
-
-		-- Play cast sound
-		EmitSoundOn("Hero_ElderTitan.EchoStomp.ti7", caster)
-		EmitSoundOn("Hero_ElderTitan.EchoStomp.ti7_layer", caster)
-
-		-- Add stomp particle
-		local particle_stomp_fx = ParticleManager:CreateParticle("particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7_physical.vpcf", PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(particle_stomp_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_stomp_fx, 1, Vector(radius, 1, 1))
-		ParticleManager:SetParticleControl(particle_stomp_fx, 2, caster:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(particle_stomp_fx)
-
-		-- Find all nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-
-		for _, enemy in pairs(enemies) do
-			-- Deal damage to nearby non-magic immune enemies
-			if not enemy:IsMagicImmune() then
-				local damageTable = {victim = enemy, attacker = caster, damage = stomp_damage, damage_type = ability:GetAbilityDamageType(), ability = ability}
-
-				ApplyDamage(damageTable)
-
-				-- Stun them
-				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
-			end
 		end
 	end
 end
@@ -351,7 +383,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 		if not enemy_has_been_hit then
 			-- Play hit particle
 			local hit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_touch.vpcf", PATTACH_CUSTOMORIGIN, enemy)
-			ParticleManager:SetParticleControl(hit_pfx, 0, self:GetParent():GetOwner():GetAbsOrigin())
+			ParticleManager:SetParticleControl(hit_pfx, 0, self:GetParent():GetAbsOrigin())
 			ParticleManager:SetParticleControlEnt(hit_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 
 			ParticleManager:ReleaseParticleIndex(hit_pfx)
@@ -361,7 +393,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			
 			-- "Astral Spirit roots targets hit" talent
 			if self:GetParent():GetOwner():HasTalent("special_bonus_imba_elder_titan_3") then
-				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_rooted", {duration = duration})
+				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_rooted", {duration = duration * (1 - enemy:GetStatusResistance())})
 
 				local root_fx = ParticleManager:CreateParticle("particles/units/heroes/heroes_underlord/abyssal_underlord_pitofmalice_stun.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 				ParticleManager:SetParticleControl(root_fx, 0, enemy:GetAbsOrigin())
@@ -640,7 +672,7 @@ function modifier_imba_elder_titan_natural_order_aura:IsAura() return true end
 function modifier_imba_elder_titan_natural_order_aura:IsAuraActiveOnDeath() return false end
 function modifier_imba_elder_titan_natural_order_aura:IsDebuff() return false end
 function modifier_imba_elder_titan_natural_order_aura:IsHidden() return true end
-function modifier_imba_elder_titan_natural_order_aura:IsPermanent() return true end
+function modifier_imba_elder_titan_natural_order_aura:RemoveOnDeath() return false end
 function modifier_imba_elder_titan_natural_order_aura:IsPurgable() return false end
 
 function modifier_imba_elder_titan_natural_order_aura:OnCreated()
@@ -686,20 +718,20 @@ function modifier_imba_elder_titan_natural_order:GetEffectName()
 end
 
 function modifier_imba_elder_titan_natural_order:OnCreated()
-	local ability = self:GetAbility()
-	self.base_armor_reduction = ability:GetSpecialValueFor("armor_reduction_pct")
-	self.magic_resist_reduction = ability:GetSpecialValueFor("magic_resistance_pct")
-	self.status_resistance_pct	= ability:GetSpecialValueFor("status_resistance_pct")
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.base_armor_reduction = self:GetAbility():GetSpecialValueFor("armor_reduction_pct")
+	self.magic_resist_reduction = self:GetAbility():GetSpecialValueFor("magic_resistance_pct")
+	self.status_resistance_pct	= self:GetAbility():GetSpecialValueFor("status_resistance_pct")
 end
 
 function modifier_imba_elder_titan_natural_order:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-	return funcs
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierPhysicalArmorBonus()
@@ -826,7 +858,7 @@ function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 				ApplyDamage(damageTable)
 
 				-- Stun them
-				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration * (1 - enemy:GetStatusResistance())})
 			end
 		end
 		
@@ -916,9 +948,9 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 		local enemies = FindUnitsInLine(caster:GetTeamNumber(), caster_position, crack_ending, nil, crack_width, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags())
 		for _, enemy in pairs(enemies) do
 			enemy:Interrupt()
-			enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter", {duration = slow_duration})
+			enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 			if caster:HasScepter() then
-				enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter_scepter", {duration = slow_duration})
+				enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter_scepter", {duration = slow_duration * (1 - enemy:GetStatusResistance())})
 			end
 			ApplyDamage({victim = enemy, attacker = caster, damage = enemy:GetMaxHealth() * crack_damage * 0.01, damage_type = DAMAGE_TYPE_PHYSICAL, ability = self})
 			ApplyDamage({victim = enemy, attacker = caster, damage = enemy:GetMaxHealth() * crack_damage * 0.01, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})

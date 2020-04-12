@@ -12,5 +12,5 @@
 //"DOTA_Tooltip_ability_item_imba_ring_of_aquila_aura_mana_regen"			"AURA MANA REGEN:"
 //"DOTA_Tooltip_ability_item_imba_ring_of_aquila_aura_bonus_armor"			"AURA BONUS ARMOR:"
 
-"DOTA_Tooltip_modifier_item_imba_ring_of_aquila_aura_bonus"				"Ring of Aquila Aura"
-"DOTA_Tooltip_modifier_item_imba_ring_of_aquila_aura_bonus_Description"		"Mana regeneration increased by %fMODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE% and armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE%."
+"DOTA_Tooltip_modifier_item_imba_ring_of_aquila_aura_bonus"				"Aquila Aura"
+"DOTA_Tooltip_modifier_item_imba_ring_of_aquila_aura_bonus_Description"		"Mana regeneration increased by %fMODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE% and armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE%. Vision increased by %dMODIFIER_PROPERTY_BONUS_DAY_VISION%."

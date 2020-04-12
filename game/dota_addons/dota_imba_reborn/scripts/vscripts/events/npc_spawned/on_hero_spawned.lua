@@ -17,6 +17,9 @@
 function GameMode:OnHeroFirstSpawn(hero)
 	if not hero or hero:IsNull() then return end
 
+	-- Track the time the unit spawned (for IMBAfications or other custom checks)
+	hero.time_spawned = GameRules:GetGameTime()
+
 	if hero:IsIllusion() then
 		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 		return
@@ -147,6 +150,9 @@ end
 
 -- everytime a real hero respawn
 function GameMode:OnHeroSpawned(hero)
+	-- Track the time the unit spawned (for IMBAfications or other custom checks)
+	hero.time_spawned = GameRules:GetGameTime()
+	
 	-- Testing putting fountain invulnerability application here such that it will only apply on respawns in the fountain
 	Timers:CreateTimer(0.1, function()
 		if hero:HasModifier("modifier_fountain_aura_effect_lua") and IsNearFountain(hero:GetAbsOrigin(), 1200) then

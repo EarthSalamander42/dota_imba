@@ -129,7 +129,7 @@ function imba_ursa_earthshock:ApplyEarthShock()
 				ApplyDamage(damageTable)
 
 				-- Apply debuff to non-magic immune enemies
-				enemy:AddNewModifier(caster, ability, earthshock_debuff, {duration = duration})
+				enemy:AddNewModifier(caster, ability, earthshock_debuff, {duration = duration * (1 - enemy:GetStatusResistance())})
 			end
 		end
 
@@ -387,7 +387,7 @@ function modifier_imba_trembling_steps_buff:OnUnitMoved()
 			end
 
 			-- Apply trembling steps debuff to units
-			enemy:AddNewModifier(self.caster, self.ability, self.trembling_steps_debuff, {duration = self.trembling_steps_duration})
+			enemy:AddNewModifier(self.caster, self.ability, self.trembling_steps_debuff, {duration = self.trembling_steps_duration * (1 - enemy:GetStatusResistance())})
 		end
 	end
 end
@@ -580,7 +580,7 @@ function imba_ursa_overpower:DisarmEnemies(caster, ability)
 		-- Apply Disarm for the duration
 		for _,enemy in pairs(enemies) do
 			if not enemy:IsMagicImmune() then
-				enemy:AddNewModifier(caster, ability, disarm_debuff, {duration = disarm_duration})
+				enemy:AddNewModifier(caster, ability, disarm_debuff, {duration = disarm_duration * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end
@@ -829,6 +829,18 @@ function modifier_imba_fury_swipes_debuff:IsPurgable()
 	return false
 end
 
+function modifier_imba_fury_swipes_debuff:OnCreated()
+	if not IsServer() then return end
+
+	if self:GetAbility() and self:GetParent():IsRoshan() then
+		self:SetDuration(self:GetAbility():GetSpecialValueFor("roshan_stack_duration"), true)
+	end
+end
+
+function modifier_imba_fury_swipes_debuff:OnRefresh()
+	self:OnCreated()
+end
+
 -- Fury Swipes modifier buff
 modifier_imba_fury_swipes = class({})
 
@@ -887,17 +899,11 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 			if target:IsBuilding() or target:IsOther() or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 				return nil
 			end
-
-			-- Initialize variables
-			local fury_swipes_debuff_handler
-			local damage
+			
 			-- Add debuff/increment stacks if already exists
-			if target:HasModifier(fury_swipes_debuff) then
-				fury_swipes_debuff_handler = target:FindModifierByName(fury_swipes_debuff)
-				fury_swipes_debuff_handler:IncrementStackCount()
-			else
-				target:AddNewModifier(caster, ability, fury_swipes_debuff, {duration = stack_duration})
-				fury_swipes_debuff_handler = target:FindModifierByName(fury_swipes_debuff)
+			local fury_swipes_debuff_handler = target:AddNewModifier(caster, ability, fury_swipes_debuff, {duration = stack_duration * (1 - target:GetStatusResistance())})
+			
+			if fury_swipes_debuff_handler then
 				fury_swipes_debuff_handler:IncrementStackCount()
 			end
 
@@ -913,12 +919,12 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 			local fury_swipes_stacks = fury_swipes_debuff_handler:GetStackCount()
 
 			-- Calculate damage
-			damage = damage_per_stack * fury_swipes_stacks
+			local damage = damage_per_stack * fury_swipes_stacks
 
-			-- Check for Enrage's multiplier
-			if caster:HasModifier(enrage_buff) then
-				damage = damage * enrage_swipes_multiplier
-			end
+			-- -- Check for Enrage's multiplier
+			-- if caster:HasModifier(enrage_buff) then
+				-- damage = damage * enrage_swipes_multiplier
+			-- end
 
 			-- Check for Deep Strike modifier, modify damage, apply particle and play sound if present
 			if fury_swipes_stacks % deep_stack_attacks == 0 then --divides with no remainder
@@ -956,7 +962,7 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 
 					-- If the target doesn't have the armor debuff yet, add it to it
 					if not target:HasModifier("modifier_imba_fury_swipes_talent_ripper") then
-						target:AddNewModifier(caster, ability, "modifier_imba_fury_swipes_talent_ripper", {duration = talent_duration})
+						target:AddNewModifier(caster, ability, "modifier_imba_fury_swipes_talent_ripper", {duration = talent_duration * (1 - target:GetStatusResistance())})
 					end
 
 					-- Find handle, increase stacks
@@ -1590,6 +1596,38 @@ end
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_ursa_2", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ursa_4", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ursa_5", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ursa_6", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ursa_7", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_ursa_2	= modifier_special_bonus_imba_ursa_2 or class({})
+modifier_special_bonus_imba_ursa_4	= modifier_special_bonus_imba_ursa_4 or class({})
+modifier_special_bonus_imba_ursa_5	= modifier_special_bonus_imba_ursa_5 or class({})
+modifier_special_bonus_imba_ursa_6	= modifier_special_bonus_imba_ursa_6 or class({})
+modifier_special_bonus_imba_ursa_7	= modifier_special_bonus_imba_ursa_7 or class({})
+
+function modifier_special_bonus_imba_ursa_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ursa_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_4:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_4:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ursa_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ursa_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_6:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_6:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_ursa_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_ursa_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_ursa_7:RemoveOnDeath() 	return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_ursa_3", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 

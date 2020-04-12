@@ -96,6 +96,8 @@ end
 modifier_imba_siege_cuirass_active = class({})
 
 function modifier_imba_siege_cuirass_active:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -116,11 +118,11 @@ function modifier_imba_siege_cuirass_active:OnCreated()
 	self:AddParticle(particle_buff_fx, false, false, -1, false, false)
 end
 
-function modifier_imba_siege_cuirass_active:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+function modifier_imba_siege_cuirass_active:DeclareFunctions()	
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_siege_cuirass_active:GetModifierAttackSpeedBonus_Constant()
@@ -135,6 +137,11 @@ end
 -- Stats passive modifier (stacking)
 modifier_imba_siege_cuirass = class({})
 
+function modifier_imba_siege_cuirass:IsHidden() return true end
+function modifier_imba_siege_cuirass:IsPurgable() return false end
+function modifier_imba_siege_cuirass:RemoveOnDeath() return false end
+function modifier_imba_siege_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_siege_cuirass:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -143,16 +150,7 @@ function modifier_imba_siege_cuirass:OnCreated()
 	self.modifier_aura_positive = "modifier_imba_siege_cuirass_aura_positive"
 	self.modifier_aura_negative = "modifier_imba_siege_cuirass_aura_negative"
 
-	-- Abiltiy specials
-	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")
-	self.bonus_str = self.ability:GetSpecialValueFor("bonus_str")
-	self.bonus_agi = self.ability:GetSpecialValueFor("bonus_agi")
-	self.bonus_movement_speed = self.ability:GetSpecialValueFor("bonus_movement_speed")
-	self.bonus_as = self.ability:GetSpecialValueFor("bonus_as")
-	self.bonus_mana_regen_pct = self.ability:GetSpecialValueFor("bonus_mana_regen_pct")
-	self.bonus_armor = self.ability:GetSpecialValueFor("bonus_armor")
-
-	if IsServer() then
+	if self:GetAbility() and IsServer() then
 		-- If it is the first siege cuirass in the inventory, grant the siege cuirass aura
 		if not self.caster:HasModifier(self.modifier_aura_positive) then
 			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura_positive, {})
@@ -162,54 +160,63 @@ function modifier_imba_siege_cuirass:OnCreated()
 end
 
 function modifier_imba_siege_cuirass:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
-	return decFuncs
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_siege_cuirass:GetModifierBonusStats_Intellect()
-	return self.bonus_int
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_int")
+	end
 end
 
 function modifier_imba_siege_cuirass:GetModifierBonusStats_Strength()
-	return self.bonus_str
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_str")
+	end
 end
 
 function modifier_imba_siege_cuirass:GetModifierBonusStats_Agility()
-	return self.bonus_agi
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_agi")
+	end
 end
 
 function modifier_imba_siege_cuirass:GetModifierMoveSpeedBonus_Constant()
-	return self.bonus_movement_speed
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+	end
 end
 
 function modifier_imba_siege_cuirass:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_as
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_as")
+	end
 end
 
 function modifier_imba_siege_cuirass:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen_pct
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana_regen_pct")
+	end
 end
 
 function modifier_imba_siege_cuirass:GetModifierPhysicalArmorBonus()
-	return self.bonus_armor
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_armor")
+	end
 end
-
-
-function modifier_imba_siege_cuirass:IsHidden() return true end
-function modifier_imba_siege_cuirass:IsPurgable() return false end
-function modifier_imba_siege_cuirass:IsDebuff() return false end
-function modifier_imba_siege_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_siege_cuirass:OnDestroy()
 	if IsServer() then
 		-- If it is the last siege cuirass in the inventory, remove the aura
-		if not self.caster:HasModifier(self.modifier_self) then
+		if self.caster and not self.caster:IsNull() and not self.caster:HasModifier(self.modifier_self) then
 			self.caster:RemoveModifierByName(self.modifier_aura_positive)
 			self.caster:RemoveModifierByName(self.modifier_aura_negative)
 		end
@@ -220,6 +227,8 @@ end
 modifier_imba_siege_cuirass_aura_positive = class({})
 
 function modifier_imba_siege_cuirass_aura_positive:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -264,6 +273,8 @@ end
 modifier_imba_siege_cuirass_aura_positive_effect = class({})
 
 function modifier_imba_siege_cuirass_aura_positive_effect:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -279,11 +290,11 @@ function modifier_imba_siege_cuirass_aura_positive_effect:IsPurgable() return fa
 function modifier_imba_siege_cuirass_aura_positive_effect:IsDebuff() return false end
 
 function modifier_imba_siege_cuirass_aura_positive_effect:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
-
-	return decFuncs
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_siege_cuirass_aura_positive_effect:GetModifierAttackSpeedBonus_Constant()
@@ -305,6 +316,8 @@ end
 modifier_imba_siege_cuirass_aura_negative = class({})
 
 function modifier_imba_siege_cuirass_aura_negative:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -349,14 +362,16 @@ end
 modifier_imba_siege_cuirass_aura_negative_effect = class({})
 
 function modifier_imba_siege_cuirass_aura_negative_effect:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.aura_as_reduction_enemy = self.ability:GetSpecialValueFor("aura_as_reduction_enemy")
-	self.aura_ms_reduction_enemy = self.ability:GetSpecialValueFor("aura_ms_reduction_enemy")
-	self.aura_armor_reduction_enemy = self.ability:GetSpecialValueFor("aura_armor_reduction_enemy")
+	self.aura_as_reduction_enemy = self.ability:GetSpecialValueFor("aura_as_reduction_enemy") * (-1)
+	self.aura_ms_reduction_enemy = self.ability:GetSpecialValueFor("aura_ms_reduction_enemy") * (-1)
+	self.aura_armor_reduction_enemy = self.ability:GetSpecialValueFor("aura_armor_reduction_enemy") * (-1)
 end
 
 function modifier_imba_siege_cuirass_aura_negative_effect:IsHidden() return false end
@@ -364,21 +379,21 @@ function modifier_imba_siege_cuirass_aura_negative_effect:IsPurgable() return fa
 function modifier_imba_siege_cuirass_aura_negative_effect:IsDebuff() return true end
 
 function modifier_imba_siege_cuirass_aura_negative_effect:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
-
-	return decFuncs
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_siege_cuirass_aura_negative_effect:GetModifierAttackSpeedBonus_Constant()
-	return self.aura_as_reduction_enemy * (-1)
+	return self.aura_as_reduction_enemy
 end
 
 function modifier_imba_siege_cuirass_aura_negative_effect:GetModifierMoveSpeedBonus_Percentage()
-	return self.aura_ms_reduction_enemy * (-1)
+	return self.aura_ms_reduction_enemy
 end
 
 function modifier_imba_siege_cuirass_aura_negative_effect:GetModifierPhysicalArmorBonus()
-	return self.aura_armor_reduction_enemy * (-1)
+	return self.aura_armor_reduction_enemy
 end

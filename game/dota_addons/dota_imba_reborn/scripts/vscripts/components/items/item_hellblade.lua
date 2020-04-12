@@ -53,7 +53,7 @@ function item_imba_hellblade:OnSpellStart()
 		EmitSoundOn(sound_cast, caster)
 
 		-- Add the curse debuff to the target
-		target:AddNewModifier(caster, ability, debuff, {duration = duration})
+		target:AddNewModifier(caster, ability, debuff, {duration = duration * (1 - target:GetStatusResistance())})
 
 		-- Check for Linken's Sphere
 		if target:GetTeam() ~= caster:GetTeam() then
@@ -202,10 +202,10 @@ if modifier_item_imba_hellblade == nil then
 	modifier_item_imba_hellblade = class({})
 end
 
-function modifier_item_imba_hellblade:IsHidden() return true end
-function modifier_item_imba_hellblade:IsPurgable() return false end
-function modifier_item_imba_hellblade:IsDebuff() return false end
-function modifier_item_imba_hellblade:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_hellblade:IsHidden()		return true end
+function modifier_item_imba_hellblade:IsPurgable()		return false end
+function modifier_item_imba_hellblade:RemoveOnDeath()	return false end
+function modifier_item_imba_hellblade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_hellblade:OnCreated()
 	-- Ability properties

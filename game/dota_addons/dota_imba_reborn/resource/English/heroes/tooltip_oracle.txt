@@ -36,7 +36,7 @@
 "DOTA_Tooltip_ability_imba_oracle_alter_self_Note0"						"Read the descriptions of Oracle's other abilities to see how Alter Self changes them."
 
 "DOTA_Tooltip_ability_imba_oracle_false_promise_alter"							"False Promise Alter"
-"DOTA_Tooltip_ability_imba_oracle_false_promise_alter_Description"				"Only castable on enemy heroes. Temporarily alters the target's control on reality, delaying any damage dealt until False Promise Alter ends. Any healing received by units damaged by False Promise Alter targets reduce the delayed damage by %alter_heal_pct%%% of the heal amount. False Promise goes on a minimum %alter_cooldown% second cooldown (affected by cooldown reductions) if False Promise Alter is cast."
+"DOTA_Tooltip_ability_imba_oracle_false_promise_alter_Description"				"Only castable on enemy heroes. Temporarily alters the target's control on reality, delaying any damage they deal until False Promise Alter ends. Any healing received by units damaged by False Promise Alter targets reduce the delayed damage by %alter_heal_pct%%% of the heal amount. False Promise goes on a minimum %alter_cooldown% second cooldown (affected by cooldown reductions) if False Promise Alter is cast."
 "DOTA_Tooltip_ability_imba_oracle_false_promise_alter_Lore"					"Foes and false prophets oft make lies of men's fates."
 "DOTA_Tooltip_ability_imba_oracle_false_promise_alter_duration"				"DURATION:"
 "DOTA_Tooltip_ability_imba_oracle_false_promise_alter_Note0"					"Delayed damage and healing will take armor and magic resistance reductions into account when received."

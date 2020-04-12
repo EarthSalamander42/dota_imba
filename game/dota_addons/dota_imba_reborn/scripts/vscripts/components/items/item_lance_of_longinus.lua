@@ -35,7 +35,6 @@ LinkLuaModifier("modifier_item_imba_lance_of_longinus_attack_speed", "components
 
 LinkLuaModifier("modifier_item_imba_lance_of_longinus_god_piercing_ally", "components/items/item_lance_of_longinus", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_lance_of_longinus_god_piercing_enemy", "components/items/item_lance_of_longinus", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_lance_of_longinus_divergent_thrust", "components/items/item_lance_of_longinus", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_lance_of_longinus:GetIntrinsicModifierName()
 	return "modifier_item_imba_lance_of_longinus"
@@ -46,6 +45,14 @@ function item_imba_lance_of_longinus:CastFilterResultTarget(target)
 		return UF_SUCCESS
 	else
 		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_CUSTOM, DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES, self:GetCaster():GetTeamNumber())
+	end
+end
+
+function item_imba_lance_of_longinus:GetCastRange(location, target)
+	if not target or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self:GetSpecialValueFor("cast_range_enemy")
 	end
 end
 
@@ -112,35 +119,12 @@ end
 
 modifier_item_imba_lance_of_longinus = modifier_item_imba_lance_of_longinus or class({})
 
-function modifier_item_imba_lance_of_longinus:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus:IsPermanent() return true end
-function modifier_item_imba_lance_of_longinus:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_lance_of_longinus:IsHidden()		return true end
+function modifier_item_imba_lance_of_longinus:IsPurgable()		return false end
+function modifier_item_imba_lance_of_longinus:RemoveOnDeath()	return false end
+function modifier_item_imba_lance_of_longinus:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_lance_of_longinus:OnCreated()
-	self.ability	= self:GetAbility()
-	self.parent		= self:GetParent()
-	
-	-- AbilitySpecials
-	self.bonus_strength				= self.ability:GetSpecialValueFor("bonus_strength")
-	self.bonus_agility				= self.ability:GetSpecialValueFor("bonus_agility")
-	self.bonus_intellect			= self.ability:GetSpecialValueFor("bonus_intellect")
-	self.bonus_health_regen			= self.ability:GetSpecialValueFor("bonus_health_regen")
-
-	self.bonus_damage				= self.ability:GetSpecialValueFor("bonus_damage")
-	self.bonus_attack_speed_passive	= self.ability:GetSpecialValueFor("bonus_attack_speed_passive")
-	
-	self.base_attack_range			= self.ability:GetSpecialValueFor("base_attack_range")
-	self.base_attack_range_melee	= self.ability:GetSpecialValueFor("base_attack_range_melee")
-	
-	self.bonus_health				= self.ability:GetSpecialValueFor("bonus_health")
-	self.bonus_mana					= self.ability:GetSpecialValueFor("bonus_mana")
-	self.magic_resist				= self.ability:GetSpecialValueFor("magic_resist")	
-	self.heal_increase				= self.ability:GetSpecialValueFor("heal_increase")	
-	
-	-- Tracking when to give the true strike + bonus magical damage
-	self.pierce_proc 			= true
-	self.pierce_records			= {}
-	
 	if not IsServer() then return end
 	
     for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
@@ -171,35 +155,47 @@ function modifier_item_imba_lance_of_longinus:DeclareFunctions()
 end
 
 function modifier_item_imba_lance_of_longinus:GetModifierBonusStats_Strength()
-	return self.bonus_strength
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_strength")
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:GetModifierBonusStats_Agility()
-	return self.bonus_agility
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_agility")
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:GetModifierConstantHealthRegen()
-	return self.bonus_health_regen
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:GetModifierHealthBonus()
-	return self.bonus_health
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:GetModifierManaBonus()
-	return self.bonus_mana
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_mana")
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:GetModifierAttackRangeBonus()
-	if self:GetAbility():GetSecondaryCharges() == 1 then
+	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 then
 		if self.parent:IsRangedAttacker() then
-			return self.base_attack_range
+			return self:GetAbility():GetSpecialValueFor("base_attack_range")
 		else
-			return self.base_attack_range_melee
+			return self:GetAbility():GetSpecialValueFor("base_attack_range_melee")
 		end
 	end
 end
@@ -334,7 +330,7 @@ modifier_item_imba_lance_of_longinus_force_self_ranged = modifier_item_imba_lanc
 
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsDebuff() return true end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsPurgable() return false end
+-- function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsStunDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsMotionController()  return true end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
@@ -390,7 +386,7 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus_force_self_ranged:IsPurgable() return false end
+-- function modifier_item_imba_lance_of_longinus_force_self_ranged:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsStunDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IgnoreTenacity() return true end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsMotionController()  return true end
@@ -449,7 +445,7 @@ modifier_item_imba_lance_of_longinus_force_self_melee = modifier_item_imba_lance
 
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsDebuff() return true end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsPurgable() return false end
+-- function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsStunDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsMotionController()  return true end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
@@ -505,7 +501,7 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsHidden() return true end
-function modifier_item_imba_lance_of_longinus_force_self_melee:IsPurgable() return false end
+-- function modifier_item_imba_lance_of_longinus_force_self_melee:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsStunDebuff() return false end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IgnoreTenacity() return true end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsMotionController()  return true end
@@ -654,11 +650,9 @@ function modifier_item_imba_lance_of_longinus_god_piercing_ally:OnIntervalThink(
 end
 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_HEAL_RECEIVED
 	}
-
-	return decFuncs
 end
 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:OnHealReceived(keys)
@@ -679,30 +673,8 @@ end
 -- All this logic should be handled in ally modifier so this is just for visuals
 modifier_item_imba_lance_of_longinus_god_piercing_enemy = class ({})
 
+function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IsHidden()			return true end
 function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IsPurgable()		return false end
 function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IgnoreTenacity() 	return true end
 function modifier_item_imba_lance_of_longinus_god_piercing_enemy:RemoveOnDeath() 	return false end
 function modifier_item_imba_lance_of_longinus_god_piercing_enemy:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
-
----------------------------------------
--- DIVERGENT THRUST DISABLE MODIFIER --
----------------------------------------
-
-modifier_item_imba_lance_of_longinus_divergent_thrust = class({})
-
-function modifier_item_imba_lance_of_longinus_divergent_thrust:IgnoreTenacity() return true end
-
-function modifier_item_imba_lance_of_longinus_divergent_thrust:GetTexture()
-	return "custom/lance_of_longinus_divergent"
-end
-
-function modifier_item_imba_lance_of_longinus_divergent_thrust:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_DISABLE_HEALING 
-	}
-	return decFuncs
-end
-
-function modifier_item_imba_lance_of_longinus_divergent_thrust:GetDisableHealing()
-	return 1
-end

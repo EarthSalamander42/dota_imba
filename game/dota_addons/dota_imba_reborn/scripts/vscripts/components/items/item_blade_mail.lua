@@ -64,7 +64,10 @@ end
 -- BLADE MAIL MODIFIER --
 -------------------------
 
-function modifier_item_imba_blade_mail:IsHidden()	return true end
+function modifier_item_imba_blade_mail:IsHidden()		return true end
+function modifier_item_imba_blade_mail:IsPurgable()		return false end
+function modifier_item_imba_blade_mail:RemoveOnDeath()	return false end
+function modifier_item_imba_blade_mail:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_blade_mail:OnCreated()
 	self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
@@ -157,19 +160,20 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 			local reflectDamage = ApplyDamage(damageTable)
 			
 			-- IMBAfication: Lacerate
-			local lacerate_modifier = keys.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", {duration = self.lacerate_duration})
-			
-			if lacerate_modifier then
-				lacerate_modifier:SetDuration(self.lacerate_duration * (1 - keys.attacker:GetStatusResistance()), true)
-				-- Don't want to brick units into negative max health, so set an upper limit
-				lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct * 0.01), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
+			if reflectDamage * self.lacerate_pct * 0.01 >= 1 then
+				local lacerate_modifier = keys.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", {duration = self.lacerate_duration * (1 - keys.attacker:GetStatusResistance())})
 				
-				if keys.attacker.CalculateStatBonus then
-					keys.attacker:CalculateStatBonus()
-				end
-				
-				if keys.attacker:GetMaxHealth() <= 0 then
-					lacerate_modifier:Destroy()
+				if lacerate_modifier then
+					-- Don't want to brick units into negative max health, so set an upper limit
+					lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct * 0.01), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
+					
+					if keys.attacker.CalculateStatBonus then
+						keys.attacker:CalculateStatBonus()
+					end
+					
+					if keys.attacker:GetMaxHealth() <= 0 then
+						lacerate_modifier:Destroy()
+					end
 				end
 			end
 		end
@@ -190,19 +194,20 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 			local reflectDamage = ApplyDamage(damageTable)
 			
 			-- IMBAfication: Lacerate
-			local lacerate_modifier = keys.attacker:GetPlayerOwner():GetAssignedHero():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", {duration = self.lacerate_duration})
-			
-			if lacerate_modifier then
-				lacerate_modifier:SetDuration(self.lacerate_duration * (1 - keys.attacker:GetPlayerOwner():GetAssignedHero():GetStatusResistance()), true)
-				-- Don't want to brick units into negative max health, so set an upper limit
-				lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct * 0.01), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
+			if reflectDamage * self.lacerate_pct * 0.01 >= 1 then
+				local lacerate_modifier = keys.attacker:GetPlayerOwner():GetAssignedHero():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", {duration = self.lacerate_duration * (1 - keys.attacker:GetStatusResistance())})
 				
-				if keys.attacker:GetPlayerOwner():GetAssignedHero().CalculateStatBonus then
-					keys.attacker:GetPlayerOwner():GetAssignedHero():CalculateStatBonus()
-				end
-				
-				if keys.attacker:GetPlayerOwner():GetAssignedHero():GetMaxHealth() <= 0 then
-					lacerate_modifier:Destroy()
+				if lacerate_modifier then
+					-- Don't want to brick units into negative max health, so set an upper limit
+					lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct * 0.01), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
+					
+					if keys.attacker:GetPlayerOwner():GetAssignedHero().CalculateStatBonus then
+						keys.attacker:GetPlayerOwner():GetAssignedHero():CalculateStatBonus()
+					end
+					
+					if keys.attacker:GetPlayerOwner():GetAssignedHero():GetMaxHealth() <= 0 then
+						lacerate_modifier:Destroy()
+					end
 				end
 			end
 		end
@@ -228,14 +233,16 @@ function modifier_item_imba_blade_mail_lacerate:OnDestroy()
 end
 
 function modifier_item_imba_blade_mail_lacerate:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS
+	return {
+		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+		MODIFIER_PROPERTY_TOOLTIP
 	}
-	
-	return decFuncs
 end
 
 function modifier_item_imba_blade_mail_lacerate:GetModifierExtraHealthBonus()
 	return self:GetStackCount() * (-1)
 end
 
+function modifier_item_imba_blade_mail_lacerate:OnTooltip()
+	return self:GetStackCount()
+end

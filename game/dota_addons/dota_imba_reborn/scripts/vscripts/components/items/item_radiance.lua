@@ -47,10 +47,10 @@ end
 --	Basic modifier definition
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_cloak_of_flames_basic == nil then modifier_imba_cloak_of_flames_basic = class({}) end
+
 function modifier_imba_cloak_of_flames_basic:IsHidden() return true end
-function modifier_imba_cloak_of_flames_basic:IsDebuff() return false end
 function modifier_imba_cloak_of_flames_basic:IsPurgable() return false end
-function modifier_imba_cloak_of_flames_basic:IsPermanent() return true end
+function modifier_imba_cloak_of_flames_basic:RemoveOnDeath() return false end
 function modifier_imba_cloak_of_flames_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the owner when created
@@ -115,19 +115,28 @@ function modifier_imba_cloak_of_flames_burn:IsHidden() return false end
 function modifier_imba_cloak_of_flames_burn:IsDebuff() return true end
 function modifier_imba_cloak_of_flames_burn:IsPurgable() return false end
 
+function modifier_imba_cloak_of_flames_burn:GetTexture()
+	return "modifiers/cloak_of_flames"
+end
+
 function modifier_imba_cloak_of_flames_burn:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.base_damage	= self:GetAbility():GetSpecialValueFor("base_damage")
+	self.think_interval	= self:GetAbility():GetSpecialValueFor("think_interval")
+
 	if IsServer() then
-		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("think_interval"))
+		self:StartIntervalThink(self.think_interval)
 	end
 end
 
 function modifier_imba_cloak_of_flames_burn:OnIntervalThink()
-	if IsServer() and not self:GetCaster():HasItemInInventory("item_imba_radiance") then
+	if self:GetAbility() and not self:GetCaster():HasItemInInventory("item_imba_radiance") then
 		ApplyDamage({
 			victim = self:GetParent(),
 			attacker = self:GetCaster(),
 			ability = self:GetAbility(),
-			damage = self:GetAbility():GetSpecialValueFor("base_damage"),
+			damage = self.base_damage,
 			damage_type = DAMAGE_TYPE_MAGICAL
 		})
 	end
@@ -168,10 +177,10 @@ end
 --	Basic modifier definition
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_radiance_basic == nil then modifier_imba_radiance_basic = class({}) end
+
 function modifier_imba_radiance_basic:IsHidden() return true end
-function modifier_imba_radiance_basic:IsDebuff() return false end
 function modifier_imba_radiance_basic:IsPurgable() return false end
-function modifier_imba_radiance_basic:IsPermanent() return true end
+function modifier_imba_radiance_basic:RemoveOnDeath() return false end
 function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the owner when created
@@ -308,6 +317,14 @@ function modifier_imba_radiance_burn:IsHidden() return false end
 function modifier_imba_radiance_burn:IsDebuff() return true end
 function modifier_imba_radiance_burn:IsPurgable() return false end
 
+function modifier_imba_radiance_burn:GetTexture()
+	if self:GetCaster().radiance_icon_client then
+		return "custom/imba_radiance"..self:GetCaster().radiance_icon_client
+	else
+		return "item_radiance"
+	end
+end
+
 function modifier_imba_radiance_burn:DeclareFunctions()
 	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, } end
 
@@ -414,6 +431,14 @@ function modifier_imba_radiance_afterburn:IsHidden() return false end
 function modifier_imba_radiance_afterburn:IsDebuff() return true end
 function modifier_imba_radiance_afterburn:IsPurgable() return false end
 
+function modifier_imba_radiance_afterburn:GetTexture()
+	if self:GetCaster().radiance_icon_client then
+		return "custom/imba_radiance"..self:GetCaster().radiance_icon_client
+	else
+		return "item_radiance"
+	end
+end
+
 function modifier_imba_radiance_afterburn:OnCreated()
 	if IsServer() then
 
@@ -477,7 +502,7 @@ function modifier_imba_radiance_afterburn:OnIntervalThink()
 end
 
 function modifier_imba_radiance_afterburn:DeclareFunctions()
-	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, }
+	return {MODIFIER_PROPERTY_MISS_PERCENTAGE}
 end
 
 function modifier_imba_radiance_afterburn:GetModifierMiss_Percentage()

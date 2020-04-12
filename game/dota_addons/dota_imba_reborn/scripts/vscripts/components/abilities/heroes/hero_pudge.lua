@@ -102,7 +102,9 @@ function modifier_imba_hook_sharp_stack:DeclareFunctions() return {
 } end
 
 function modifier_imba_hook_sharp_stack:OnTooltip()
-	return self:GetAbility():GetSpecialValueFor("stack_damage") * self:GetStackCount()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stack_damage") * self:GetStackCount()
+	end
 end
 
 function modifier_imba_hook_light_stack:IsDebuff() return false end
@@ -138,11 +140,15 @@ function modifier_imba_hook_light_stack:DeclareFunctions() return {
 } end
 
 function modifier_imba_hook_light_stack:OnTooltip()
-	return self:GetAbility():GetSpecialValueFor("stack_speed") * self:GetStackCount()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stack_speed") * self:GetStackCount()
+	end
 end
 
 function modifier_imba_hook_light_stack:OnTooltip2()
-	return self:GetAbility():GetSpecialValueFor("stack_range") * self:GetStackCount()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("stack_range") * self:GetStackCount()
+	end
 end
 
 LinkLuaModifier("modifier_imba_pudge_meat_hook_caster_root","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
@@ -745,10 +751,12 @@ end
 --// Pudge's Rot
 --//=================================================================================================================
 
-imba_pudge_rot = imba_pudge_rot or class({})
+LinkLuaModifier("modifier_imba_pudge_rot","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_rot_slow","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("imba_pudge_rot_active","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rot_slow","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+imba_pudge_rot					= imba_pudge_rot or class({})
+modifier_imba_pudge_rot			= modifier_imba_pudge_rot or class({})
+modifier_imba_pudge_rot_slow	= modifier_imba_pudge_rot_slow or class({})
 
 function imba_pudge_rot:IsHiddenWhenStolen() 	return false end
 function imba_pudge_rot:IsRefreshable() 		return true  end
@@ -757,134 +765,145 @@ function imba_pudge_rot:IsNetherWardStealable() return false end
 function imba_pudge_rot:ResetToggleOnRespawn()	return true end
 
 function imba_pudge_rot:GetCastRange()
-	--"modifier_imba_flesh_heap_stacks"
-	local caster = self:GetCaster()
-	local ability = self
-	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_flesh_heap_stacks", self:GetCaster())
-	local stack_radius = ability:GetSpecialValueFor("stack_radius")
-	local radius = ability:GetSpecialValueFor("base_radius") + charges * stack_radius
-	if radius > ability:GetSpecialValueFor("max_radius_tooltip") then
-		radius = ability:GetSpecialValueFor("max_radius_tooltip")
+	if self:GetCaster():HasModifier("modifier_imba_flesh_heap_stacks") then
+		return math.min(self:GetSpecialValueFor("rot_radius") + (self:GetCaster():GetModifierStackCount("modifier_imba_flesh_heap_stacks", self:GetCaster()) * self:GetSpecialValueFor("stack_radius")), self:GetSpecialValueFor("max_radius")) - self:GetCaster():GetCastRangeBonus()
+	else
+		return self:GetSpecialValueFor("rot_radius") - self:GetCaster():GetCastRangeBonus()
 	end
-	return radius
 end
 
 function imba_pudge_rot:OnToggle()
-	local toggle = self:GetToggleState()  --true为打开 false为关闭
-	local caster = self:GetCaster()
-	if toggle then
-		caster:AddNewModifier(caster, self, "imba_pudge_rot_active", {})
+	if self:GetToggleState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_rot", {})
 	else
-		local buff = caster:FindModifierByName("imba_pudge_rot_active")
-		if buff then
-			buff:Destroy()
-		end
+		self:GetCaster():RemoveModifierByName("modifier_imba_pudge_rot")
 	end
 end
 
-imba_pudge_rot_active = imba_pudge_rot_active or class({})
+function imba_pudge_rot:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().arcana_style then return "pudge_rot" end
+	return "custom/pudge_rot_arcana_style"..self:GetCaster().arcana_style
+end
 
-function imba_pudge_rot_active:IsDebuff()				return false end
-function imba_pudge_rot_active:IsHidden() 				return true end
-function imba_pudge_rot_active:IsPurgable() 			return false end
-function imba_pudge_rot_active:IsPurgeException() 		return false end
-function imba_pudge_rot_active:IsStunDebuff() 			return false end
+-----------------------------
+-- MODIFIER_IMBA_PUDGE_ROT --
+-----------------------------
 
-function imba_pudge_rot_active:OnCreated()
-	if IsServer() then
-		local ability = self:GetAbility()
-		local caster = self:GetCaster()
-		local buff = caster:FindModifierByName("modifier_imba_flesh_heap_stacks")
-		self.radius = ability:GetSpecialValueFor("base_radius")
---		print("Rot radius:", self.radius)
+function modifier_imba_pudge_rot:IsPurgable() 			return false end
 
-		if buff then
-			local stack_radius = ability:GetSpecialValueFor("stack_radius")
-			self.radius = self.radius + buff:GetStackCount() * stack_radius
-		end
+function modifier_imba_pudge_rot:OnCreated()
+	if not IsServer() then return end
+	
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.rot_radius			= self:GetAbility():GetSpecialValueFor("rot_radius")
+	self.rot_tick			= self:GetAbility():GetSpecialValueFor("rot_tick")
+	self.rot_damage			= self:GetAbility():GetTalentSpecialValueFor("rot_damage")
+	self.stack_radius		= self:GetAbility():GetSpecialValueFor("stack_radius")
+	self.max_radius			= self:GetAbility():GetSpecialValueFor("max_radius")
+	self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
+	
+	if self:GetCaster():HasModifier("modifier_imba_flesh_heap_stacks") then
+		self.radius = math.min(self.rot_radius + (self:GetCaster():GetModifierStackCount("modifier_imba_flesh_heap_stacks", self:GetCaster()) * self.stack_radius), self.max_radius)
+	else
+		self.radius = self.rot_radius
+	end
+	
+	self.damage_per_tick	= (self.rot_damage + (self:GetCaster():GetMaxHealth() * self.bonus_damage * 0.01)) * self.rot_tick
+	
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_rot.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(self.pfx, 1, Vector(self.radius, 0, 0))
+	self:AddParticle(self.pfx, false, false, -1, false, false)	
+	
+	self:StartIntervalThink(self.rot_tick)
+	
+	EmitSoundOn("Hero_Pudge.Rot", self:GetParent())
+	self:GetParent():StartGesture(ACT_DOTA_CHANNEL_ABILITY_2)
+end
 
-		if self.radius > ability:GetSpecialValueFor("max_radius_tooltip") then
-			self.radius = ability:GetSpecialValueFor("max_radius_tooltip")
-		end
-
-		self:OnIntervalThink()
-		self:StartIntervalThink(ability:GetSpecialValueFor("rot_tick"))
-		self:GetParent():StartGesture(ACT_DOTA_CHANNEL_ABILITY_2)
-		EmitSoundOn("Hero_Pudge.Rot", caster)
-
-		local pfx_name = "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
-		self.pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_ABSORIGIN_FOLLOW, caster, caster)
+function modifier_imba_pudge_rot:OnIntervalThink()
+	if not self:GetAbility() then self:Destroy() return end
+	
+	self.rot_radius			= self:GetAbility():GetSpecialValueFor("rot_radius")
+	self.rot_tick			= self:GetAbility():GetSpecialValueFor("rot_tick")
+	self.rot_damage			= self:GetAbility():GetTalentSpecialValueFor("rot_damage")
+	self.stack_radius		= self:GetAbility():GetSpecialValueFor("stack_radius")
+	self.max_radius			= self:GetAbility():GetSpecialValueFor("max_radius")
+	self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
+	
+	-- Self-damage
+	if self:GetCaster():HasModifier("modifier_imba_flesh_heap_stacks") then
+		self.radius = math.min(self.rot_radius + (self:GetCaster():GetModifierStackCount("modifier_imba_flesh_heap_stacks", self:GetCaster()) * self.stack_radius), self.max_radius)
+	else
+		self.radius = self.rot_radius
+	end
+	
+	self.damage_per_tick	= (self.rot_damage + (self:GetCaster():GetMaxHealth() * self.bonus_damage * 0.01)) * self.rot_tick
+	
+	if self.pfx then
 		ParticleManager:SetParticleControl(self.pfx, 1, Vector(self.radius, 0, 0))
 	end
+	
+	ApplyDamage({
+		victim 			= self:GetParent(),
+		damage 			= self.damage_per_tick,
+		damage_type		= DAMAGE_TYPE_MAGICAL,
+		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+		attacker 		= self:GetCaster(),
+		ability 		= self:GetAbility()
+	})
+		
+	-- Area damage
+	
+	-- Global radius due to Rot being able to damage units from anywhere as long as they have the debuff
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		if enemy:FindModifierByNameAndCaster("modifier_imba_pudge_rot_slow", self:GetCaster()) then
+			ApplyDamage({
+				victim 			= enemy,
+				damage 			= self.damage_per_tick,
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetCaster(),
+				ability 		= self:GetAbility()
+			})
+		end
+	end
 end
 
-function imba_pudge_rot_active:OnIntervalThink()
+function modifier_imba_pudge_rot:OnDestroy()
 	if not IsServer() then return end
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	local dmg = (ability:GetSpecialValueFor("rot_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") / 100 + caster:FindTalentValue("special_bonus_imba_pudge_6")) / (1 / ability:GetSpecialValueFor("rot_tick"))
-	local selfDamageTable = {
-		victim = caster,
-		attacker = caster,
-		damage = dmg,
-		damage_type = DAMAGE_TYPE_MAGICAL,
-		damage_flags = DOTA_DAMAGE_FLAG_NONE,
-		ability = ability,
+	
+	StopSoundOn("Hero_Pudge.Rot", self:GetParent())
+	self:GetParent():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_2)
+end
+
+function modifier_imba_pudge_rot:IsAura()						return true end
+function modifier_imba_pudge_rot:IsAuraActiveOnDeath() 			return false end
+
+function modifier_imba_pudge_rot:GetAuraRadius()				if self.radius then return self.radius end end
+function modifier_imba_pudge_rot:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_pudge_rot:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_pudge_rot:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_pudge_rot:GetModifierAura()				return "modifier_imba_pudge_rot_slow" end
+
+----------------------------------
+-- MODIFIER_IMBA_PUDGE_ROT_SLOW --
+----------------------------------
+
+function modifier_imba_pudge_rot_slow:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
 	}
-	ApplyDamage(selfDamageTable)
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-		caster:GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
-	for _, enemy in pairs(enemies) do
-		local DamageTable = {
-			victim = enemy,
-			attacker = caster,
-			damage = dmg,
-			damage_type = DAMAGE_TYPE_MAGICAL,
-			damage_flags = DOTA_DAMAGE_FLAG_NONE,
-			ability = ability,
-		}
-		ApplyDamage(DamageTable)
-		local stick = ability:GetSpecialValueFor("rot_stickyness")
-		enemy:AddNewModifier(caster, ability, "modifier_imba_rot_slow", {duration = stick})
-	end
 end
 
-function imba_pudge_rot_active:OnDestroy()
-	local caster = self:GetCaster()
-	StopSoundOn("Hero_Pudge.Rot", caster)
+function modifier_imba_pudge_rot_slow:GetModifierMoveSpeedBonus_Percentage()
+	if not self:GetAbility() then self:Destroy() return end
 
-	if IsServer() then
-		self:GetParent():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_2)
+	self.rot_slow			= self:GetAbility():GetTalentSpecialValueFor("rot_slow")
 
-		ParticleManager:DestroyParticle(self.pfx, false)
-		ParticleManager:ReleaseParticleIndex(self.pfx)
-	end
+	return self.rot_slow
 end
-
-modifier_imba_rot_slow = modifier_imba_rot_slow or class({})
-
-function modifier_imba_rot_slow:IsDebuff() return true end
-function modifier_imba_rot_slow:IsHidden() return false end
-function modifier_imba_rot_slow:IsPurgable() return true end
-function modifier_imba_rot_slow:IsStunDebuff() return false end
-
-function modifier_imba_rot_slow:DeclareFunctions()
-	local funcs =
-	{
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-	}
-
-	return funcs
-end
-
-function modifier_imba_rot_slow:GetModifierMoveSpeedBonus_Percentage() return self:GetAbility():GetTalentSpecialValueFor("rot_slow") end
 
 --//=================================================================================================================
 --// Pudge's Flesh Heap
@@ -906,11 +925,9 @@ function modifier_imba_pudge_flesh_heap_handler:IsPurgable() return false end
 function modifier_imba_pudge_flesh_heap_handler:RemoveOnDeath() return false end
 
 function modifier_imba_pudge_flesh_heap_handler:DeclareFunctions()
-	local decfuncs = {
+	return {
 		MODIFIER_EVENT_ON_DEATH
 	}
-
-	return decfuncs
 end
 
 function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
@@ -918,7 +935,7 @@ function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
 	local target = params.unit
 		
 	-- Checks to make sure death is an enemy hero
-	if target:IsRealHero() and caster:GetTeamNumber() ~= target:GetTeamNumber() then
+	if self:GetCaster():IsRealHero() and target:IsRealHero() and caster:GetTeamNumber() ~= target:GetTeamNumber() and (not params.unit.IsReincarnating or not params.unit:IsReincarnating()) then
 			
 		local flesh_heap_range = self:GetAbility():GetSpecialValueFor("range")
 		if flesh_heap_range == 0 then
@@ -948,62 +965,62 @@ function modifier_imba_flesh_heap_stacks:OnCreated()
 		if not self:GetCaster():HasModifier("modifier_imba_pudge_flesh_heap_handler") then
 			self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_imba_pudge_flesh_heap_handler", {})
 		end
+		
+		-- Check for illusions to give them the owner's flesh heap stacks if applicable
+		if self:GetParent():IsIllusion() and self:GetParent():GetPlayerOwner():GetAssignedHero():HasModifier("modifier_imba_flesh_heap_stacks") then
+			self:SetStackCount(self:GetParent():GetPlayerOwner():GetAssignedHero():FindModifierByName("modifier_imba_flesh_heap_stacks"):GetStackCount())
+		end
+		
+		if not self:GetParent():IsIllusion() then
+			self:StartIntervalThink(0.1)
+		end
 	end
-
-	self:StartIntervalThink(0.1)
 end
 
 function modifier_imba_flesh_heap_stacks:OnIntervalThink()
-	if not IsServer() then return end
-	local buff = self:GetCaster():FindModifierByName("modifier_imba_pudge_flesh_heap_handler")
-	if not buff then return end
-	self:SetStackCount(buff:GetStackCount())
+	if self:GetCaster():HasModifier("modifier_imba_pudge_flesh_heap_handler") then
+		self:SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_pudge_flesh_heap_handler"):GetStackCount())
+	end
 end
 
 function modifier_imba_flesh_heap_stacks:DeclareFunctions()
-	local funcs = {
-		--MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_MODEL_SCALE,
 	}
-
-	return funcs
 end
 
--- function modifier_imba_flesh_heap_stacks:GetModifierMagicalResistanceBonus()
-	-- if self:GetCaster():PassivesDisabled() then return end
-	-- local base = self:GetAbility():GetSpecialValueFor("base_magic_resist")
-	-- local stack_magic_resist = self:GetAbility():GetSpecialValueFor("stack_magic_resist")
-	-- local stacks = self:GetStackCount()
-	-- local max_stack = self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
-	-- if stacks > max_stack then stacks = max_stack end
-	-- return base + stack_magic_resist * stacks
--- end
+function modifier_imba_flesh_heap_stacks:GetModifierMagicalResistanceBonus()
+	if self:GetAbility() and not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetSpecialValueFor("base_magic_resist")
+	end
+end
 
 function modifier_imba_flesh_heap_stacks:GetModifierConstantHealthRegen()
-	if self:GetCaster():PassivesDisabled() then return end
-	local base = self:GetAbility():GetSpecialValueFor("base_health_regen")
-	local stack_health_regen = self:GetAbility():GetSpecialValueFor("stack_health_regen")
-	local stacks = self:GetStackCount()
-	local max_stack = self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
-	if stacks > max_stack then stacks = max_stack end
-	return base + stack_health_regen * stacks
+	if self:GetAbility() then
+		if self:GetParent():PassivesDisabled() then
+			-- return self:GetAbility():GetSpecialValueFor("base_health_regen")
+			return 0 -- Non-vanilla interaction
+		else
+			return self:GetAbility():GetSpecialValueFor("stack_health_regen") * math.min(self:GetStackCount(), self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4"))
+		end
+	end
 end
 
 function modifier_imba_flesh_heap_stacks:GetModifierBonusStats_Strength()
-	if self:GetCaster():PassivesDisabled() then return end
-	local stacks = self:GetStackCount()
-	local bonusStr = self:GetAbility():GetSpecialValueFor("stack_str")
-	return stacks * bonusStr
+	if self:GetAbility() and not self:GetParent():IsIllusion() and not self:GetParent():PassivesDisabled() then -- Non-vanilla interaction
+		return self:GetAbility():GetSpecialValueFor("stack_str") * self:GetStackCount()
+	end
 end
 
 function modifier_imba_flesh_heap_stacks:GetModifierModelScale()
-	if self:GetCaster():PassivesDisabled() then return end
-	local stacks = self:GetStackCount()
-	local max_stack = self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
-	if stacks > max_stack then stacks = max_stack end
-	return stacks * 1.75
+	if self:GetAbility() then
+		if not self:GetParent():PassivesDisabled() then 
+			return math.min(self:GetStackCount(), self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")) * 1.75
+		end
+	end
 end
 
 --=================================================================================================================
@@ -1426,15 +1443,33 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
+LinkLuaModifier("modifier_special_bonus_imba_pudge_4", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_pudge_5", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pudge_7", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_pudge_8", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_pudge_9", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_pudge_4	= class({})
 modifier_special_bonus_imba_pudge_5	= class({})
+modifier_special_bonus_imba_pudge_7	= class({})
+modifier_special_bonus_imba_pudge_8	= class({})
 modifier_special_bonus_imba_pudge_9	= class({})
+
+function modifier_special_bonus_imba_pudge_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_pudge_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_pudge_4:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_pudge_5:IsHidden() 		return true end
 function modifier_special_bonus_imba_pudge_5:IsPurgable() 		return false end
 function modifier_special_bonus_imba_pudge_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pudge_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_pudge_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_pudge_7:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_pudge_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_pudge_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_pudge_8:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_pudge_9:IsHidden() 		return true end
 function modifier_special_bonus_imba_pudge_9:IsPurgable() 		return false end

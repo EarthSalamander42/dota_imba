@@ -68,10 +68,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_spell_fencer == nil then modifier_item_imba_spell_fencer = class({}) end
+
 function modifier_item_imba_spell_fencer:IsHidden() return true end
-function modifier_item_imba_spell_fencer:IsDebuff() return false end
 function modifier_item_imba_spell_fencer:IsPurgable() return false end
-function modifier_item_imba_spell_fencer:IsPermanent() return true end
+function modifier_item_imba_spell_fencer:RemoveOnDeath() return false end
+function modifier_item_imba_spell_fencer:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the bearer when created
 function modifier_item_imba_spell_fencer:OnCreated(keys)

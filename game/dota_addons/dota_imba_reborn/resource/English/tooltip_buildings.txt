@@ -29,14 +29,6 @@
 // Ancients abilities
 //=================================================================================================================
 
-// Ancient Defense
-"DOTA_Tooltip_Ability_imba_fountain_danger_zone"						"Danger Zone"
-"DOTA_Tooltip_Ability_imba_fountain_danger_zone_description"			"Dooms enemies near the Fountain, dealing extreme damage per second while they stay there."
-//"DOTA_Tooltip_Ability_imba_fountain_danger_zone_Note0"				""
-//"DOTA_Tooltip_Ability_imba_fountain_danger_zone_Lore"					""
-"DOTA_Tooltip_Ability_imba_fountain_danger_zone_damage_pct"				"%DAMAGE:"
-"DOTA_Tooltip_Ability_imba_fountain_danger_zone_kill_radius"			"KILL RADIUS:"
-
 // Cursed Fountain
 "DOTA_Tooltip_modifier_imba_cursed_fountain"							"Cursed Fountain"
 "DOTA_Tooltip_modifier_imba_cursed_fountain_Description"				"Killing a hero while inside the fountain area increments a stack. If this reaches 2 or more stacks, attack damage, spell amplification, and stats are reverted to base, and the aggressor's vision becomes shared with the enemy.<br><br>Additionally, outgoing damage is reduced by 10%% for each stack of Cursed Fountain.<br><br>Dying or getting a kill while not under the fountain's effect removes the debuff."
@@ -438,3 +430,34 @@
 "DOTA_Tooltip_ability_imba_tower_secondary_resistance_Description"			"Adds magic resistance and player-controlled creep damage block."
 "DOTA_Tooltip_ability_imba_tower_secondary_resistance_magic_resistance"		"%MAGIC RESISTANCE:"
 "DOTA_Tooltip_ability_imba_tower_secondary_resistance_damage_block"			"PLAYER-CONTROLLED CREEP DAMAGE BLOCK:"
+
+//=================================================================================================================
+// Fountain
+//=================================================================================================================
+"DOTA_Tooltip_ability_imba_fountain_grievous_wounds"					"Grievous Wounds"
+"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_Description"		"Inflicts additional damage on each attack."
+"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_Lore"				"The fountain is evil. Don't piss off the fountain."
+"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_damage_increase"	"%DAMAGE INCREASE:"
+"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_debuff_duration"	"#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_abilityduration}"
+
+"DOTA_Tooltip_ability_imba_fountain_relief"								"Relief Aura"
+"DOTA_Tooltip_ability_imba_fountain_relief_Description"					"Relieves the tension on nearby units, drastically increasing their Tenacity and their damage reduction. Dealing damage in any way to an enemy unit or hero rejects the buff from the attacker for %aura_reject_time% seconds.\n<font color='#FF7800'>Relieved From Command:</font> Disconnected players get %disconnected_dmg_reduction%% damage reduction, and cannot be harmed. However, they're still suspectible for the aura rejection."
+"DOTA_Tooltip_ability_imba_fountain_relief_Lore"						"Everyone loves to be near the fountain. Even the bad guys."
+"DOTA_Tooltip_ability_imba_fountain_relief_tenacity"					"%TENACITY BONUS:"
+"DOTA_Tooltip_ability_imba_fountain_relief_aura_radius"					"#{DOTA_Tooltip_ability_filler_ability_radius}"
+
+"DOTA_Tooltip_modifier_imba_fountain_relief_aura_buff"					"Relief Aura"
+"DOTA_Tooltip_modifier_imba_fountain_relief_aura_buff_Description"		"Massively increases your Tenacity and damage reduction as long as you don't deal damage to enemies."
+
+"DOTA_Tooltip_modifier_imba_fountain_relief_aura_reject"				"Relief Aura Cooldown"
+"DOTA_Tooltip_modifier_imba_fountain_relief_aura_reject_Description"	"Recently dealt damage to an enemy, causing tension. You cannot gain Relief Aura's buff again for a few seconds."
+
+"DOTA_Tooltip_modifier_fountain_passive"								"Fountain"
+"DOTA_Tooltip_modifier_fountain_passive_Description"					"I have no idea what this modifier is for."
+
+"DOTA_Tooltip_Ability_imba_fountain_danger_zone"						"Danger Zone"
+"DOTA_Tooltip_Ability_imba_fountain_danger_zone_description"			"Breaks, disarms, mutes, silences, and deals %damage_pct%%% of enemies' max health as damage per second while near the Fountain."
+"DOTA_Tooltip_Ability_imba_fountain_danger_zone_kill_radius"			"KILL RADIUS:"
+
+"DOTA_Tooltip_modifier_imba_fountain_danger_zone_debuff"				"Danger Zone"
+"DOTA_Tooltip_modifier_imba_fountain_danger_zone_debuff_Description"	"Broken, disarmed, muted, silenced, and taking heavy damage."

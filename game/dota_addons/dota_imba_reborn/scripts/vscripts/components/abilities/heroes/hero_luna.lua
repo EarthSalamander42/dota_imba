@@ -6,6 +6,7 @@ LinkLuaModifier("modifier_imba_luna_moon_glaive", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_luna_lunar_blessing_aura", "components/abilities/heroes/hero_luna", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_luna_lunar_blessing_aura_723", "components/abilities/heroes/hero_luna", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_luna_lunar_blessing_723", "components/abilities/heroes/hero_luna", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_luna_eclipse", "components/abilities/heroes/hero_luna", LUA_MODIFIER_MOTION_NONE)
 
@@ -19,6 +20,7 @@ modifier_imba_luna_lunar_blessing_aura			= class({})
 
 imba_luna_lunar_blessing_723					= class({})
 modifier_imba_luna_lunar_blessing_aura_723		= class({})
+modifier_imba_luna_lunar_blessing_723			= modifier_imba_luna_lunar_blessing_723 or class({})
 
 imba_luna_eclipse								= class({})
 modifier_imba_luna_eclipse						= class({})
@@ -91,11 +93,7 @@ function imba_luna_lucent_beam:OnSpellStart()
 	
 	ApplyDamage(damageTable)
 	
-	local stun_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration")})
-	
-	if stun_modifier then
-		stun_modifier:SetDuration(self:GetSpecialValueFor("stun_duration") * (1 - self:GetCursorTarget():GetStatusResistance()), true)
-	end
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration") * (1 - self:GetCursorTarget():GetStatusResistance())})
 	
 	if self:GetAutoCastState() then
 		-- IMBAfication: Atmospheric Refraction	
@@ -193,7 +191,7 @@ function imba_luna_moon_glaive:OnProjectileHit_ExtraData(hTarget, vLocation, Ext
 	
 	local glaive_launched = false
 	
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vLocation, nil, self:GetSpecialValueFor("range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vLocation, nil, self:GetSpecialValueFor("range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 	
 	if ExtraData.bounces < self:GetSpecialValueFor("bounces") and #enemies > 1 then
 		-- First, check if all enemies haven't been bounced on yet
@@ -276,12 +274,11 @@ function modifier_imba_luna_moon_glaive:GetModifierProcAttack_Feedback(keys)
 	if not IsServer() then return end
 	
 	if keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() then
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), keys.target:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), keys.target:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 		
 		local crescents = 0
 		
 		for _, enemy in pairs(enemies) do
-		
 			if enemy ~= keys.target then
 				local glaive =
 				{
@@ -316,7 +313,7 @@ function modifier_imba_luna_moon_glaive:GetModifierProcAttack_Feedback(keys)
 			end
 		end
 		
-		if self:GetAbility():IsCooldownReady() then
+		if self:GetAbility():IsCooldownReady() and #enemies > 1 then
 			self:GetAbility():UseResources(false, false, true)
 		end
 	end
@@ -464,9 +461,8 @@ end
 -- MODIFIER_IMBA_LUNA_LUNAR_BLESSING_AURA_723 --
 ------------------------------------------------
 
-function modifier_imba_luna_lunar_blessing_aura_723:IsHidden()						return not (self:GetAbility() and self:GetAbility():GetLevel() >= 1) end
-
-function modifier_imba_luna_lunar_blessing_aura_723:IsAura()						return self:GetParent() == self:GetCaster() end
+function modifier_imba_luna_lunar_blessing_aura_723:IsHidden()						return true end
+function modifier_imba_luna_lunar_blessing_aura_723:IsAura()						return true end
 function modifier_imba_luna_lunar_blessing_aura_723:IsAuraActiveOnDeath() 			return false end
 
 function modifier_imba_luna_lunar_blessing_aura_723:GetAuraRadius()
@@ -482,25 +478,29 @@ end
 function modifier_imba_luna_lunar_blessing_aura_723:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
 function modifier_imba_luna_lunar_blessing_aura_723:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_luna_lunar_blessing_aura_723:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
-function modifier_imba_luna_lunar_blessing_aura_723:GetModifierAura()				return "modifier_imba_luna_lunar_blessing_aura_723" end
+function modifier_imba_luna_lunar_blessing_aura_723:GetModifierAura()				return "modifier_imba_luna_lunar_blessing_723" end
 function modifier_imba_luna_lunar_blessing_aura_723:GetAuraEntityReject(hEntity)	return (not hEntity.GetPlayerID and not hEntity:GetOwnerEntity()) or (not hEntity:IsRangedAttacker() and not ((self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration")))) end
 
-function modifier_imba_luna_lunar_blessing_aura_723:GetEffectName()
-	if self:GetAbility() and self:GetAbility():GetLevel() >= 1 and (self:GetParent() == self:GetCaster() or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) then return "particles/units/heroes/hero_luna/luna_ambient_lunar_blessing.vpcf" end
-end
+-- function modifier_imba_luna_lunar_blessing_aura_723:GetEffectName()
+	-- if self:GetAbility() and self:GetAbility():GetLevel() >= 1 and (self:GetParent() == self:GetCaster() or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) then return "particles/units/heroes/hero_luna/luna_ambient_lunar_blessing.vpcf" end
+-- end
 
-function modifier_imba_luna_lunar_blessing_aura_723:OnCreated()
+-------------------------------------------
+-- MODIFIER_IMBA_LUNA_LUNAR_BLESSING_723 --
+-------------------------------------------
+
+function modifier_imba_luna_lunar_blessing_723:OnCreated()
 	self.armor = self:GetParent():GetPhysicalArmorValue(false)
 
 	self:StartIntervalThink(0.1)
 end
 
-function modifier_imba_luna_lunar_blessing_aura_723:OnIntervalThink()
+function modifier_imba_luna_lunar_blessing_723:OnIntervalThink()
 	self.armor = 0
 	self.armor = self:GetParent():GetPhysicalArmorValue(false)
 end
 
-function modifier_imba_luna_lunar_blessing_aura_723:DeclareFunctions()
+function modifier_imba_luna_lunar_blessing_723:DeclareFunctions()
 	return {
 		-- MODIFIER_PROPERTY_PHYSICAL_ARMOR_TOTAL_PERCENTAGE, -- Doesn't seem to be working right now...
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
@@ -511,19 +511,19 @@ function modifier_imba_luna_lunar_blessing_aura_723:DeclareFunctions()
 	}
 end
 
--- function modifier_imba_luna_lunar_blessing_aura_723:GetModifierPhysicalArmorTotal_Percentage()
+-- function modifier_imba_luna_lunar_blessing_723:GetModifierPhysicalArmorTotal_Percentage()
 	-- if self:GetAbility() and not self:GetCaster():PassivesDisabled() then
 		-- return self:GetAbility():GetSpecialValueFor("armor_pct")
 	-- end
 -- end
 
-function modifier_imba_luna_lunar_blessing_aura_723:GetModifierPhysicalArmorBonus()
+function modifier_imba_luna_lunar_blessing_723:GetModifierPhysicalArmorBonus()
 	if self:GetAbility() and not self:GetCaster():PassivesDisabled() and self.armor then
 		return self.armor * self:GetAbility():GetSpecialValueFor("armor_pct") * 0.01
 	end
 end
 
-function modifier_imba_luna_lunar_blessing_aura_723:OnTooltip()
+function modifier_imba_luna_lunar_blessing_723:OnTooltip()
 	if self:GetAbility() and not self:GetCaster():PassivesDisabled() then
 		return self:GetAbility():GetSpecialValueFor("armor_pct")
 	else
@@ -531,13 +531,13 @@ function modifier_imba_luna_lunar_blessing_aura_723:OnTooltip()
 	end
 end
 
-function modifier_imba_luna_lunar_blessing_aura_723:GetModifierBaseDamageOutgoing_Percentage()
+function modifier_imba_luna_lunar_blessing_723:GetModifierBaseDamageOutgoing_Percentage()
 	if self:GetAbility() and not self:GetCaster():PassivesDisabled() then
 		return self:GetAbility():GetSpecialValueFor("damage_pct")
 	end
 end
 
-function modifier_imba_luna_lunar_blessing_aura_723:GetBonusNightVision()
+function modifier_imba_luna_lunar_blessing_723:GetBonusNightVision()
 	if self:GetAbility() and (self:GetParent() == self:GetCaster() or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) and not self:GetCaster():PassivesDisabled() then
 		return self:GetAbility():GetSpecialValueFor("bonus_night_vision")
 	end
@@ -738,11 +738,7 @@ function modifier_imba_luna_eclipse:OnIntervalThink()
 				ApplyDamage(damageTable)
 				
 				if self:GetCaster():HasTalent("special_bonus_unique_luna_5") then
-					local stun_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_unique_luna_5")})
-					
-					if stun_modifier then
-						stun_modifier:SetDuration(self:GetCaster():FindTalentValue("special_bonus_unique_luna_5") * (1 - enemy:GetStatusResistance()), true)
-					end
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetCaster():FindTalentValue("special_bonus_unique_luna_5") * (1 - enemy:GetStatusResistance())})
 				end
 				
 				-- -- IMBAfication: Dark Moon

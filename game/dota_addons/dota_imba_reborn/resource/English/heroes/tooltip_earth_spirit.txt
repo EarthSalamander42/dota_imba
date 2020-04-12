@@ -1,5 +1,5 @@
 "DOTA_Tooltip_modifier_imba_earths_mark"								"Earth's Mark"
-"DOTA_Tooltip_modifier_imba_earths_mark_Description"					"Susceptible to extra effects from Earth Spirit's spells"
+"DOTA_Tooltip_modifier_imba_earths_mark_Description"					"Susceptible to extra effects from Earth Spirit's spells. Magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
 
 "DOTA_Tooltip_modifier_imba_earth_spirit_stone_caller_charge_counter"	"Stone Remnant Charges"
 "DOTA_Tooltip_modifier_imba_earth_spirit_stone_caller_charge_counter_Description"	"Amount of no cost remnants available before Overdraw. Charges slowly restore over time."
@@ -66,8 +66,8 @@
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_remnant_refresh_radius"			"REMNANT EXPLODE RADIUS:"
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_aghanim_description"				"<font color='#FF7800'>Magnetize becomes auto-castable. When auto-cast is on, exploding remnants pull enemies with Earth's Mark to their location.</font>"
 
-"DOTA_Tooltip_Ability_imba_earth_spirit_petrify"									"#{DOTA_Tooltip_ability_earth_spirit_petrify}\n<font color='#FF7800'>Potent Stone:</font> Ignores status resistance and spell absorb."
-"DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Description"						"#{DOTA_Tooltip_ability_earth_spirit_petrify_Description}"
+"DOTA_Tooltip_Ability_imba_earth_spirit_petrify"									"#{DOTA_Tooltip_ability_earth_spirit_petrify}"
+"DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Description"						"#{DOTA_Tooltip_ability_earth_spirit_petrify_Description}\n<font color='#FF7800'>Potent Stone:</font> Ignores status resistance and spell absorb."
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_Lore"								"#{DOTA_Tooltip_ability_earth_spirit_petrify_Lore}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_duration"							"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_damage"								"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -82,7 +82,8 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3"                    "Mineral Healing"
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3_Description"		"Magnetized enemies heal you for (5 * Earth Marks) every damage tick."
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_4"					"Earth's Mark reduces magic resistance by 5% per stack"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_4"					"Earth's Mark Upgrade"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_4_Description"		"Earth's Mark reduces magic resistance by {s:value}% per stack."
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_5"					"-10s Overdraw Cooldown"
 

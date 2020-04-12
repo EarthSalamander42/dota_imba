@@ -60,13 +60,12 @@ end
 
 -------------------------------------------
 modifier_rapier_base_class = class({})
-function modifier_rapier_base_class:IsDebuff() return false end
+
 function modifier_rapier_base_class:IsHidden() return true end
 function modifier_rapier_base_class:IsPurgable() return false end
-function modifier_rapier_base_class:IsPurgeException() return false end
-function modifier_rapier_base_class:IsStunDebuff() return false end
 function modifier_rapier_base_class:RemoveOnDeath() return false end
 function modifier_rapier_base_class:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_rapier_base_class:OnDestroy()
 	if IsServer() then
 		self:StartIntervalThink(-1)
@@ -273,18 +272,6 @@ function item_imba_rapier_cursed:GetAbilityTextureName()
 end
 -------------------------------------------
 modifier_imba_rapier_cursed = ShallowCopy( modifier_rapier_base_class )
-function modifier_imba_rapier_cursed:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-			MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP,
-			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-			MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
-		}
-	return decFuns
-end
 
 function modifier_imba_rapier_cursed:OnCreated()
 	local item = self:GetAbility()
@@ -315,6 +302,21 @@ function modifier_imba_rapier_cursed:OnDestroy()
 		self.parent:RemoveModifierByName("modifier_imba_rapier_cursed_damage_reduction")
 		self.parent:RemoveModifierByName("modifier_imba_rapier_cursed_curse")
 	end
+end
+
+function modifier_imba_rapier_cursed:CheckState()
+	return {[MODIFIER_STATE_CANNOT_MISS] = true}
+end
+
+function modifier_imba_rapier_cursed:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+		MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
 end
 
 function modifier_imba_rapier_cursed:GetModifierStatusResistanceStacking()
@@ -400,6 +402,6 @@ end
 function modifier_imba_rapier_cursed_curse:OnIntervalThink()
 	self.corruption_total_time = self.corruption_total_time + FrameTime()
 	local total_corruption = self.base_corruption * self.parent:GetMaxHealth() * (self.corruption_total_time / self.time_to_double) * 0.01 * FrameTime()
-	ApplyDamage({attacker = self.parent, victim = self.parent, ability = self:GetAbility(), damage = total_corruption, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS+DOTA_DAMAGE_FLAG_NON_LETHAL+DOTA_DAMAGE_FLAG_REFLECTION})
+	ApplyDamage({attacker = self.parent, victim = self.parent, ability = self:GetAbility(), damage = total_corruption, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL + DOTA_DAMAGE_FLAG_REFLECTION})
 end
 -------------------------------------------

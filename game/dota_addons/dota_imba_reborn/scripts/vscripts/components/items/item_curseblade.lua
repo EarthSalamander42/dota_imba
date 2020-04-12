@@ -64,7 +64,7 @@ function item_imba_curseblade:OnSpellStart()
 		end
 
 		-- Add the curse debuff to the target
-		target:AddNewModifier(caster, ability, debuff, {duration = duration})
+		target:AddNewModifier(caster, ability, debuff, {duration = duration * (1 - target:GetStatusResistance())})
 
 		-- Find all modifiers on caster
 		local modifiers = caster:FindAllModifiers()
@@ -205,6 +205,11 @@ if modifier_item_imba_curseblade == nil then
 	modifier_item_imba_curseblade = class({})
 end
 
+function modifier_item_imba_curseblade:IsHidden()		return true end
+function modifier_item_imba_curseblade:IsPurgable()		return false end
+function modifier_item_imba_curseblade:RemoveOnDeath()	return false end
+function modifier_item_imba_curseblade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_item_imba_curseblade:OnCreated()
 	if IsServer() then
 		--Apply aura
@@ -240,18 +245,14 @@ function modifier_item_imba_curseblade:OnDestroy()
 		end
 	end
 end
-function modifier_item_imba_curseblade:IsHidden() return true end
-function modifier_item_imba_curseblade:IsPurgable() return false end
-function modifier_item_imba_curseblade:IsDebuff() return false end
-function modifier_item_imba_curseblade:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_curseblade:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
-
-	return decFuncs
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
+	}
 end
 
 function modifier_item_imba_curseblade:GetModifierBonusStats_Agility()

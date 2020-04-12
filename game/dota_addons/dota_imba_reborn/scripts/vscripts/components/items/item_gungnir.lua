@@ -92,9 +92,10 @@ end
 
 modifier_item_imba_gungnir = modifier_item_imba_gungnir or class({})
 
-function modifier_item_imba_gungnir:IsHidden() return true end
-function modifier_item_imba_gungnir:IsPermanent() return true end
-function modifier_item_imba_gungnir:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_gungnir:IsHidden()		return true end
+function modifier_item_imba_gungnir:IsPurgable()		return false end
+function modifier_item_imba_gungnir:RemoveOnDeath()	return false end
+function modifier_item_imba_gungnir:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_gungnir:OnCreated()
 	self.ability	= self:GetAbility()

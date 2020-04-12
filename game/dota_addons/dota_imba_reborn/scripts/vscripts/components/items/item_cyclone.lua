@@ -59,13 +59,22 @@ end
 ----------------------------------
 
 function modifier_item_imba_cyclone_2:IsHidden()		return true end
+function modifier_item_imba_cyclone_2:IsPurgable()		return false end
+function modifier_item_imba_cyclone_2:RemoveOnDeath()	return false end
 function modifier_item_imba_cyclone_2:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_cyclone_2:OnCreated()
-	self.bonus_intellect		= self:GetAbility():GetSpecialValueFor("bonus_intellect")
-	self.bonus_mana_regen		= self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
-	self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
-	self.bonus_spell_amp		= self:GetAbility():GetSpecialValueFor("bonus_spell_amp")
+	if self:GetAbility() then
+		self.bonus_intellect		= self:GetAbility():GetSpecialValueFor("bonus_intellect")
+		self.bonus_mana_regen		= self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+		self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
+		self.bonus_spell_amp		= self:GetAbility():GetSpecialValueFor("bonus_spell_amp")
+	else
+		self.bonus_intellect		= 0
+		self.bonus_mana_regen		= 0
+		self.bonus_movement_speed	= 0
+		self.bonus_spell_amp		= 0
+	end
 	
 	if not IsServer() then return end
 	
@@ -153,6 +162,9 @@ end
 
 function modifier_item_imba_cyclone_2_movement:OnDestroy()
 	if not IsServer() then return end
+
+	-- To prevent projectiles that were swirling around with Violent Displacement to land at the end
+	ProjectileManager:ProjectileDodge(self:GetParent())
 	
 	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
 	

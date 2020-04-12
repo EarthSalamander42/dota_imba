@@ -27,7 +27,7 @@
 "DOTA_Tooltip_modifier_imba_grimstroke_ink_creature_debuff_Description"	"A phantom is silencing and damaging this unit."
 
 "DOTA_Tooltip_ability_imba_grimstroke_spirit_walk"						"Ink Swell"
-"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_Description"			"Grimstroke shrouds an allied unit in ink, increasing its movement speed. Enemies in range of the allied unit are damaged with inky tendrils over time. After %buff_duration% seconds it triggers, applying damage and stun in an area around the unit in proportion to how how long ink tendril was near any hero.\n<font color='#FF7800'>A Coat of Armor:</font> Increases armor by %coat_of_armor_amount%.\n<font color='#FF7800'>Unburdened:</font> Provides flying movement. Does not provide flying vision.\n<font color='#FF7800'>Indiscriminate Encasement:</font> Can also be cast on enemies, instead reducing movement speed and armor by similar values. Does not damage the Ink Swelled unit."
+"DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_Description"			"Grimstroke shrouds an allied unit in ink, increasing its movement speed. Enemies in range of the allied unit are damaged with inky tendrils over time. After %buff_duration% seconds it triggers, applying damage and stun in an area around the unit in proportion to how how long ink tendril was near any hero.\n<font color='#FF7800'>A Coat of Armor:</font> Increases armor by %coat_of_armor_amount%.\n<font color='#FF7800'>Unburdened:</font> Provides flying movement. Does not provide flying vision.\n<font color='#FF7800'>Indiscriminate Encasement:</font> Can also be cast on enemies, instead reducing movement speed and armor by similar values. Does not damage the Ink Swelled unit.\n<font color='#FF7800'>Eventual Burst:</font> Ink Swell's burst will still trigger if the modifier is removed prematurely."
 "DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_Lore"			"Now that the rise of the ink tide no longer threatens to overwhelm Grimstroke, its tendrils of power are never far from his hand."
 "DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_buff_duration"			"BUFF DURATION:"
 "DOTA_Tooltip_ability_imba_grimstroke_spirit_walk_movespeed_bonus_pct"	"%MOVESPEED BONUS:"
@@ -52,6 +52,8 @@
 "DOTA_Tooltip_modifier_imba_grimstroke_ink_gods_incarnation"				"Ink God's Incarnation"
 "DOTA_Tooltip_modifier_imba_grimstroke_ink_gods_incarnation_Description"	"Strokes of Fate cast in a cross pattern, and constantly applying Ink Swell on self."
 
+"dota_hud_error_target_has_ink_gods_incarnation"					"Cannot cast Ink Swell on units under Ink God's Incarnation"
+
 "DOTA_Tooltip_ability_imba_grimstroke_soul_chain"					"Soulbind"
 "DOTA_Tooltip_ability_imba_grimstroke_soul_chain_Description"		"Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius."
 "DOTA_Tooltip_ability_imba_grimstroke_soul_chain_Note0"				"Blinking or teleporting can break the ink bind."
@@ -72,7 +74,7 @@
 "DOTA_Tooltip_modifier_imba_grimstroke_soul_chain_vanilla_enhancer_slow_Description"	"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_ability_special_bonus_imba_grimstroke_ink_swell_max_damage"				"+{s:value} Ink Swell Max Damage"
-"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_cast_range"			"+600 Stroke of Fate Cast Range"
-"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits"		"+1 Hits to Kill Phantom"
-"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_ink_swell_radius"					"+200 Ink Swell Radius"
-"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_damage"				"+50% Stroke of Fate Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_cast_range"			"+{s:value} Stroke of Fate Cast Range"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_phantoms_embrace_extra_hits"		"+{s:value} Hits to Kill Phantom"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_ink_swell_radius"					"+{s:value} Ink Swell Radius"
+"DOTA_Tooltip_ability_special_bonus_imba_grimstroke_stroke_of_fate_damage"				"+{s:value}% Stroke of Fate Damage"

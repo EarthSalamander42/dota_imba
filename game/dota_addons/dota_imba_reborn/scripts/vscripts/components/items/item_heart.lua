@@ -19,8 +19,8 @@
 -- Date: 04/08/2017
 
 item_imba_heart = item_imba_heart or class({})
+
 LinkLuaModifier("modifier_item_imba_heart", "components/items/item_heart", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_heart_unique", "components/items/item_heart", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_heart_aura_buff", "components/items/item_heart", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_heart:GetIntrinsicModifierName()
@@ -35,158 +35,130 @@ function item_imba_heart:GetCooldown(level)
 	end
 end
 
-
 -- Stats modifier (stackable)
 modifier_item_imba_heart = modifier_item_imba_heart or class({})
 
-function modifier_item_imba_heart:IsHidden() return true end
-function modifier_item_imba_heart:IsPurgable() return false end
-function modifier_item_imba_heart:IsDebuff() return false end
-function modifier_item_imba_heart:RemoveOnDeath() return false end
-function modifier_item_imba_heart:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_heart:IsHidden()		return true end
+function modifier_item_imba_heart:IsPurgable()		return false end
+function modifier_item_imba_heart:RemoveOnDeath()	return false end
+function modifier_item_imba_heart:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_heart:OnCreated()
-	-- Ability properties
-	self.modifier_self = "modifier_item_imba_heart"
-	self.modifier_unique = "modifier_item_imba_heart_unique"
+	if not IsServer() then return end
+	
+    -- Use Secondary Charges system to make CDR not stack with multiple Kayas
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
+	
+	self:StartIntervalThink(FrameTime())
+end
 
-	-- Ability specials
-	self.bonus_strength = self:GetAbility():GetSpecialValueFor("bonus_strength")
-	self.bonus_health = self:GetAbility():GetSpecialValueFor("bonus_health")
-	self.fixed_health_regen	= self:GetAbility():GetSpecialValueFor("fixed_health_regen")
+function modifier_item_imba_heart:OnIntervalThink()
+	if not self:GetAbility() then
+		self:StartIntervalThink(-1)
+		self:Destroy()
+		return nil
+	end
 
-	if IsServer() then
-		-- If this is the first heart, add the unique modifier
-		if not self:GetCaster():HasModifier(self.modifier_unique) then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_unique, {})
-		end
+	if self:GetAbility():GetCooldownTimeRemaining() == 0 then
+		self:SetStackCount(self:GetAbility():GetSpecialValueFor("noncombat_regen"))
+	else
+		self:SetStackCount(self:GetAbility():GetSpecialValueFor("base_regen"))
 	end
 end
 
 function modifier_item_imba_heart:OnDestroy()
-	if IsServer() then
-		-- if this is the last heart, remove the unique modifier
-		if not self:GetCaster():HasModifier(self.modifier_self) then
-			self:GetCaster():RemoveModifierByName(self.modifier_unique)
-		end
-	end
+    if not IsServer() then return end
+    
+    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+        mod:GetAbility():SetSecondaryCharges(_)
+    end
 end
 
 function modifier_item_imba_heart:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_BONUS,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
 	}
 end
 
 function modifier_item_imba_heart:GetModifierBonusStats_Strength()
-	return self.bonus_strength
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_strength")
+	end
 end
 
 function modifier_item_imba_heart:GetModifierHealthBonus()
-	return self.bonus_health
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("bonus_health")
+	end
 end
 
 function modifier_item_imba_heart:GetModifierConstantHealthRegen()
-	return self.fixed_health_regen
-end
-
--- Strength aura modifier, regenerations
-modifier_item_imba_heart_unique = modifier_item_imba_heart_unique or class({})
-
-function modifier_item_imba_heart_unique:IsHidden() return true end
-function modifier_item_imba_heart_unique:IsPurgable() return false end
-function modifier_item_imba_heart_unique:IsDebuff() return false end
-function modifier_item_imba_heart_unique:RemoveOnDeath() return false end
-
-function modifier_item_imba_heart_unique:OnCreated()
-	-- Ability properties
-	-- Ability specials	
-	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
-	self.base_regen = self:GetAbility():GetSpecialValueFor("base_regen")
-	self.noncombat_regen = self:GetAbility():GetSpecialValueFor("noncombat_regen")
-	self.hp_regen_amp = self:GetAbility():GetSpecialValueFor("hp_regen_amp")
-	self.alive_illusion_pct	= self:GetAbility():GetSpecialValueFor("alive_illusion_pct")
-	
-	self:StartIntervalThink(FrameTime())
-end
-
-function modifier_item_imba_heart_unique:OnIntervalThink()
-	if not IsServer() then return end
-
-	if self:GetAbility():GetCooldownTimeRemaining() == 0 then
-		self:SetStackCount(self.noncombat_regen)
-	else
-		self:SetStackCount(self.base_regen)
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("fixed_health_regen")
 	end
 end
 
-function modifier_item_imba_heart_unique:IsAura() return true end
-function modifier_item_imba_heart_unique:GetAuraRadius() return self.aura_radius end
-function modifier_item_imba_heart_unique:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
-function modifier_item_imba_heart_unique:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_item_imba_heart_unique:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO end
-function modifier_item_imba_heart_unique:GetModifierAura() return "modifier_item_imba_heart_aura_buff" end
-
-function modifier_item_imba_heart_unique:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE }
-
-	return decFuncs
-end
-
-function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
-	if not self:GetParent():IsIllusion() then
-		return self:GetStackCount()
-	else
-		-- IMBAfication: We Are All Alive
-		return self:GetStackCount() * self.alive_illusion_pct * 0.01
-	end
-end
-
-function modifier_item_imba_heart_unique:OnTakeDamage(keys)
-	if IsServer() then
-		local unit = keys.unit
-		local attacker = keys.attacker
-
-		-- Only apply if the unit taking damage is the caster
-		if unit == self:GetCaster() then
-			-- If the attacker wasn't an enemy hero or Roshan, do nothing
-			if attacker:IsHero() or attacker:IsRoshan() then
-				if attacker == unit then
-					-- don't trigger cd with self damage
-					return
-				end
-
-				local cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_melee")
-				if self:GetCaster():IsRangedAttacker() then
-					cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_ranged")
-				end
-
-				self:GetAbility():StartCooldown(cooldown)
-			end
+function modifier_item_imba_heart:GetModifierHealthRegenPercentage()
+	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 then
+		if not self:GetParent():IsIllusion() then
+			return self:GetStackCount()
+		else
+			-- IMBAfication: We Are All Alive
+			return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("alive_illusion_pct") * 0.01
 		end
 	end
 end
 
-function modifier_item_imba_heart_unique:GetModifierHPRegenAmplify_Percentage()
-	return self.hp_regen_amp
+function modifier_item_imba_heart:OnTakeDamage(keys)
+	-- "Damage greater than 0 from any player (including allies, excluding self) or Roshan puts the regeneration on a 5/7-second cooldown. "
+	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 and keys.unit == self:GetParent() and keys.damage > 0 and keys.attacker ~= keys.unit and (keys.attacker:IsHero() or keys.attacker:IsRoshan()) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+		if self:GetParent():IsRangedAttacker() then
+			self:GetAbility():StartCooldown(self:GetAbility():GetSpecialValueFor("regen_cooldown_ranged") * self:GetParent():GetCooldownReduction())
+		else
+			self:GetAbility():StartCooldown(self:GetAbility():GetSpecialValueFor("regen_cooldown_melee") * self:GetParent():GetCooldownReduction())
+		end
+	end
 end
+
+function modifier_item_imba_heart:GetModifierHPRegenAmplify_Percentage()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("hp_regen_amp")
+	end
+end
+
+function modifier_item_imba_heart:IsAura() return true end
+
+function modifier_item_imba_heart:GetAuraRadius()
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("aura_radius")
+	end
+end
+
+function modifier_item_imba_heart:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_item_imba_heart:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_item_imba_heart:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO end
+function modifier_item_imba_heart:GetModifierAura()		return "modifier_item_imba_heart_aura_buff" end
 
 -- Aura buff
 modifier_item_imba_heart_aura_buff = modifier_item_imba_heart_aura_buff or class({})
 
 function modifier_item_imba_heart_aura_buff:OnCreated()
+	if not self:GetAbility() then self:Destroy() return end
+
 	-- Ability specials	
 	self.aura_str = self:GetAbility():GetSpecialValueFor("aura_str")	
 end
 
 function modifier_item_imba_heart_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
-
-	return decFuncs
+	return {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
 end
 
 function modifier_item_imba_heart_aura_buff:GetModifierBonusStats_Strength()
