@@ -49,7 +49,7 @@
 "DOTA_Tooltip_modifier_imba_snapfire_lil_shredder_debuff_Description"				"#{DOTA_Tooltip_modifier_snapfire_lil_shredder_debuff_Description}"
 
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses"								"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses}"
-"DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Description"					"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Description}"
+"DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Description"					"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Description} <font color='#FF7800'>Fiery Splash Impact:</font> Blobs' slow increases the further they traveled before reaching their target area."
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Note0"							"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Note0}"
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Note1"							"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Note1}"
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Lore"							"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Lore}"

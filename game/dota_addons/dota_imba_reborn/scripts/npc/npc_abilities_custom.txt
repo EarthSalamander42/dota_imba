@@ -37334,7 +37334,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"ursa_fury_swipes"
-		"ScriptFile"				"components/abilities/heroes/hero_ursa"
+		"ScriptFile"					"components/abilities/heroes/hero_ursa"
 		"FightRecapLevel"				"1"
 
 		"precache"
@@ -37364,7 +37364,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"roshan_stack_duration"	"6"
+				"roshan_stack_duration"	"10"
 			}
 
 			"04"
