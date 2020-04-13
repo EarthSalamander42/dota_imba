@@ -213,6 +213,7 @@
 	"item_imba_curseblade"					"REMOVE"
 	"item_recipe_imba_hellblade"			"REMOVE"
 	"item_imba_hellblade"					"REMOVE"
+	"item_imba_white_queen_cape"			"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -1098,7 +1099,7 @@
 
 		"ItemRequirements"
 		{
-			"01"						"item_ogre_axe;item_mithril_hammer;item_imba_white_queen_cape"
+			"01"						"item_ogre_axe;item_mithril_hammer;item_minotaur_horn"
 		}
 	}
 	
@@ -1135,12 +1136,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"16"
+				"bonus_strength"		"20"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"32"
+				"bonus_damage"			"24"
 			}
 			"03"
 			{
@@ -8156,6 +8157,45 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_drop_damage"	"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Minotaur Horn
+	//=================================================================================================================
+	"item_minotaur_horn"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"377"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1450"
+		"ItemIsNeutralDrop"				"0"
+		"ItemPurchasable"				"1"
+
+		"Model"							"models/props_gameplay/neutral_box.vmdl"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5"
 			}
 		}
 	}

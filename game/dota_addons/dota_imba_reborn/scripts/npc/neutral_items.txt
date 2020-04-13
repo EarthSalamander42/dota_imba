@@ -112,7 +112,7 @@
 			"item_havoc_hammer"				  "1"
 			"item_panic_button"				  "1"
 			"item_the_leveller"				  "1"
-			"item_minotaur_horn"			  "1"
+//			"item_minotaur_horn"			  "1"
 		}
 	}
 	"5"
@@ -132,10 +132,10 @@
 		{
 			"item_force_boots"				  "1"
 //			"item_desolator_2"				  "1"
-//			"item_phoenix_ash"				  "1"
+			"item_phoenix_ash"				  "1"
 			"item_seer_stone"				  "1"
 			"item_mirror_shield"			  "1"
-//			"item_fusion_rune"				  "1"
+			"item_fusion_rune"				  "1"
 			"item_apex"						  "1"
 			"item_ballista"					  "1"
 			"item_woodland_striders"		  "1"

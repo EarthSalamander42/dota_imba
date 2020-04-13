@@ -130,6 +130,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_skadi",
 				"item_sphere",
 				"item_imba_plancks_artifact",
+				"item_minotaur_horn",
 				"item_imba_white_queen_cape",
 				"item_imba_black_queen_cape",
 				"item_helm_of_the_dominator",

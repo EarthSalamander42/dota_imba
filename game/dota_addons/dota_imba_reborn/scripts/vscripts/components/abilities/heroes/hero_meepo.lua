@@ -133,7 +133,7 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 		local modifier_duration		= nil
 	
 		-- Garbage case-by-case basis here
-		if keys.ability:GetName() == "item_black_king_bar" or keys.ability:GetName() == "item_imba_white_queen_cape" then
+		if keys.ability:GetName() == "item_black_king_bar" or keys.ability:GetName() == "item_imba_white_queen_cape" or keys.ability:GetName() == "item_minotaur_horn" then
 			modifier_name		= "modifier_black_king_bar_immune"
 			modifier_duration	= keys.ability:GetLevelSpecialValueFor("duration", keys.ability:GetLevel() - 1)
 		elseif keys.ability:GetName() == "item_imba_black_queen_cape" then

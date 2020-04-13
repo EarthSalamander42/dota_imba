@@ -81,7 +81,7 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(Dynamic_Wrap(GameMode, "ItemAddedFilter"), self)
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter(Dynamic_Wrap(GameMode, "BountyRuneFilter"), self)
 	GameRules:GetGameModeEntity():SetThink("OnThink", self, 1)
-	GameRules:GetGameModeEntity():SetPauseEnabled(not IMBA_PICK_SCREEN)
+	GameRules:GetGameModeEntity():SetPauseEnabled(false)
 	
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter(Dynamic_Wrap(GameMode, "RuneSpawnFilter"), self)
 

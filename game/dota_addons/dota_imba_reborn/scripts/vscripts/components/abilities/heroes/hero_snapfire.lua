@@ -1,9 +1,10 @@
--- Original Lua Abilityes created by Elfansoer: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities
+-- Original Lua Abilites created by Elfansoer: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities
 -- IMBAfied by EarthSalamander
+-- Date: February 2020
 
 --------------------------------------------------------------------------------
 imba_snapfire_scatterblast = imba_snapfire_scatterblast or class({})
-LinkLuaModifier( "modifier_imba_snapfire_scatterblast", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_snapfire_scatterblast_slow", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_generic_custom_indicator", "components/modifiers/generic/modifier_generic_custom_indicator", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
@@ -118,6 +119,7 @@ function imba_snapfire_scatterblast:OnProjectileHit_ExtraData( target, location,
 	local point_blank_mult = self:GetSpecialValueFor( "point_blank_dmg_bonus_pct" )/100
 	local damage = self:GetSpecialValueFor( "damage" )
 	local slow = self:GetSpecialValueFor( "debuff_duration" )
+	local modifier_name = "modifier_imba_snapfire_scatterblast_slow"
 
 	-- check position
 	local origin = Vector( extraData.pos_x, extraData.pos_y, 0 )
@@ -127,7 +129,11 @@ function imba_snapfire_scatterblast:OnProjectileHit_ExtraData( target, location,
 	-- if length>self:GetCastRange( location, nil )+150 then return end
 
 	local point_blank = (length<=point_blank_range)
-	if point_blank then damage = damage + point_blank_mult*damage end
+	if point_blank then
+		damage = damage + point_blank_mult*damage
+		-- 12-Gauge IMBAfication
+		modifier_name = "modifier_stunned"
+	end
 
 	-- damage
 	local damageTable = {
@@ -143,7 +149,7 @@ function imba_snapfire_scatterblast:OnProjectileHit_ExtraData( target, location,
 	target:AddNewModifier(
 		caster, -- player source
 		self, -- ability source
-		"modifier_imba_snapfire_scatterblast", -- modifier name
+		modifier_name, -- modifier name
 		{ duration = slow } -- kv
 	)
 
@@ -196,47 +202,47 @@ function imba_snapfire_scatterblast:PlayEffects( target, point_blank )
 end
 
 --------------------------------------------------------------------------------
-modifier_snapfire_scatterblast_lua = class({})
+modifier_imba_snapfire_scatterblast_slow = class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_snapfire_scatterblast_lua:IsHidden()
+function modifier_imba_snapfire_scatterblast_slow:IsHidden()
 	return false
 end
 
-function modifier_snapfire_scatterblast_lua:IsDebuff()
+function modifier_imba_snapfire_scatterblast_slow:IsDebuff()
 	return true
 end
 
-function modifier_snapfire_scatterblast_lua:IsStunDebuff()
+function modifier_imba_snapfire_scatterblast_slow:IsStunDebuff()
 	return false
 end
 
-function modifier_snapfire_scatterblast_lua:IsPurgable()
+function modifier_imba_snapfire_scatterblast_slow:IsPurgable()
 	return true
 end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_snapfire_scatterblast_lua:OnCreated( kv )
+function modifier_imba_snapfire_scatterblast_slow:OnCreated( kv )
 	-- references
 	self.slow = -self:GetAbility():GetSpecialValueFor( "movement_slow_pct" )
 end
 
-function modifier_snapfire_scatterblast_lua:OnRefresh( kv )
+function modifier_imba_snapfire_scatterblast_slow:OnRefresh( kv )
 	-- references
 	self.slow = -self:GetAbility():GetSpecialValueFor( "movement_slow_pct" )	
 end
 
-function modifier_snapfire_scatterblast_lua:OnRemoved()
+function modifier_imba_snapfire_scatterblast_slow:OnRemoved()
 end
 
-function modifier_snapfire_scatterblast_lua:OnDestroy()
+function modifier_imba_snapfire_scatterblast_slow:OnDestroy()
 end
 
 --------------------------------------------------------------------------------
 -- Modifier Effects
-function modifier_snapfire_scatterblast_lua:DeclareFunctions()
+function modifier_imba_snapfire_scatterblast_slow:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
@@ -244,25 +250,25 @@ function modifier_snapfire_scatterblast_lua:DeclareFunctions()
 	return funcs
 end
 
-function modifier_snapfire_scatterblast_lua:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_snapfire_scatterblast_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self.slow
 end
 
 --------------------------------------------------------------------------------
 -- Graphics & Animations
-function modifier_snapfire_scatterblast_lua:GetEffectName()
+function modifier_imba_snapfire_scatterblast_slow:GetEffectName()
 	return "particles/units/heroes/hero_snapfire/hero_snapfire_shotgun_debuff.vpcf"
 end
 
-function modifier_snapfire_scatterblast_lua:GetEffectAttachType()
+function modifier_imba_snapfire_scatterblast_slow:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_snapfire_scatterblast_lua:GetStatusEffectName()
+function modifier_imba_snapfire_scatterblast_slow:GetStatusEffectName()
 	return "particles/status_fx/status_effect_snapfire_slow.vpcf"
 end
 
-function modifier_snapfire_scatterblast_lua:StatusEffectPriority()
+function modifier_imba_snapfire_scatterblast_slow:StatusEffectPriority()
 	return MODIFIER_PRIORITY_NORMAL
 end
 
@@ -429,7 +435,7 @@ function imba_snapfire_firesnap_cookie:OnProjectileHit( target, location )
 		self:PlayEffects3( target, radius )
 	end
 
---	knockback:SetEndCallback( callback )
+	knockback:SetEndCallback( callback )
 end
 
 --------------------------------------------------------------------------------

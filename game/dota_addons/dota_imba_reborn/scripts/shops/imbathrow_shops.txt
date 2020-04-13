@@ -32,7 +32,7 @@
 		"item"		"item_blade_of_alacrity"
 		"item" 		"item_staff_of_wizardry"
 		"item"		"item_imba_cloak_of_flames"
-		"item"		"item_imba_white_queen_cape"
+		"item"		"item_minotaur_horn"
 	}
 
 	"weapons_armor"
@@ -91,7 +91,7 @@
 		"item"		"item_imba_hand_of_midas"
 		"item"		"item_travel_boots"
 		"item"		"item_imba_iron_talon"
-		"item"		"item_imba_white_queen_cape"
+		"item"		"item_minotaur_horn"
 		"item"		"item_imba_shotgun"
 	}
 

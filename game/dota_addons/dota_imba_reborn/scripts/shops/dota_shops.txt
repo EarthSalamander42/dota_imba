@@ -33,7 +33,7 @@
 		"item"		"item_blade_of_alacrity"
 		"item" 		"item_staff_of_wizardry"
 		"item"		"item_imba_cloak_of_flames"
-		"item"		"item_imba_white_queen_cape"
+		"item"		"item_minotaur_horn"
 	}
 
 	"weapons_armor"

@@ -10324,7 +10324,7 @@
 		"ItemResult"					"item_imba_black_queen_cape"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_white_queen_cape;item_ring_of_health;item_imba_urn_of_shadows"
+			"01"						"item_minotaur_horn;item_ring_of_health;item_imba_urn_of_shadows"
 		}
 	}
 
@@ -10375,7 +10375,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_strength"				"9"
+				"bonus_strength"				"13"
 			}
 			"02"
 			{
@@ -10400,7 +10400,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"10"
+				"bonus_damage"					"0"
 			}
 			"07"
 			{

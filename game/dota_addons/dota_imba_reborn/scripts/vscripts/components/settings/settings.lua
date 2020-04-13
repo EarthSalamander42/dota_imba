@@ -100,6 +100,11 @@ MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
 
 b_USE_MULTIPLE_COURIERS = true				-- Should we allow a courier for each player?
 
+-- in case we stop using vanilla couriers, keep using them for overthrow
+if IsOverthrowMap() then
+	b_USE_MULTIPLE_COURIERS = true
+end
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: gameplay globals
 -------------------------------------------------------------------------------------------------
