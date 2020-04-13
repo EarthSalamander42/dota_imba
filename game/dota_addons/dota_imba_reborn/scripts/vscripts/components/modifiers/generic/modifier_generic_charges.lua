@@ -33,22 +33,32 @@ end
 function modifier_generic_charges:OnCreated()
 	if not IsServer() then return end
 
-	CustomGameEventManager:Send_ServerToAllClients("init_charge_ui", {
-		unit_index = self:GetParent():entindex(),
-		ability_index = self:GetAbility():GetAbilityIndex(),
-		charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time"),
-		scepter_charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter"),
-	})
+	Timers:CreateTimer(1.0, function()
+		if self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 then
+			self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter"))
 
-	if self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 then
-		self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter"))
+			self:CalculateCharge()
+		elseif self:GetAbility():GetTalentSpecialValueFor("max_charges") > 0 then
+			self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges"))
 
-		self:CalculateCharge()
-	elseif self:GetAbility():GetTalentSpecialValueFor("max_charges") > 0 then
-		self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges"))
+			self:CalculateCharge()
+		end
 
-		self:CalculateCharge()
-	end
+		-- ignore init if not wearing scepter
+		if self:GetAbility():GetAbilityName() == "imba_void_spirit_resonant_pulse" and not self.initialized then
+			return
+		end
+
+		print(self:GetParent():entindex(), self:GetAbility():GetAbilityIndex(), self:GetAbility():GetTalentSpecialValueFor("charge_restore_time"), self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter"))
+
+		CustomGameEventManager:Send_ServerToAllClients("init_charge_ui", {
+			unit_index = self:GetParent():entindex(),
+			ability_index = self:GetRightfulAbilityIndex(),
+			charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time"),
+			scepter_charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter"),
+			ability_name = self:GetAbility():GetAbilityName(),
+		})
+	end)
 end
 
 function modifier_generic_charges:OnRefresh(params)
@@ -65,6 +75,19 @@ function modifier_generic_charges:OnRefresh(params)
 	end
 
 	self:CalculateCharge()
+end
+
+function modifier_generic_charges:GetRightfulAbilityIndex()
+	if not IsServer() then return end
+
+	local ab_index = self:GetAbility():GetAbilityIndex()
+
+	-- temporary stuff to make it work properly
+	if self:GetAbility():GetAbilityName() == "imba_void_spirit_astral_step" then
+		ab_index = 4
+	end
+
+	return ab_index
 end
 
 --------------------------------------------------------------------------------
@@ -105,19 +128,19 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 				end
 			end
 		end
-		
+
 		if wtf_mode == false then
 			self:DecrementStackCount()
 
 			Timers:CreateTimer(FrameTime() * 2, function()
 				CustomGameEventManager:Send_ServerToAllClients("update_charge_count", {
 					unit_index = self:GetParent():entindex(),
-					ability_index = self:GetAbility():GetAbilityIndex(),
+					ability_index = self:GetRightfulAbilityIndex(),
 				})
 
 				CustomGameEventManager:Send_ServerToAllClients("update_charge_loading", {
 					unit_index = self:GetParent():entindex(),
-					ability_index = self:GetAbility():GetAbilityIndex(),
+					ability_index = self:GetRightfulAbilityIndex(),
 				})
 			end)
 
@@ -134,6 +157,7 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 		end
 	end
 end
+
 --------------------------------------------------------------------------------
 -- Interval Effects
 function modifier_generic_charges:OnIntervalThink()
@@ -154,11 +178,11 @@ function modifier_generic_charges:CalculateCharge()
 		if self:GetRemainingTime() <= 0.05 then
 			-- start charging
 			local charge_time	= self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction()
-			
+
 			if self:GetParent():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") and self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") > 0 then
 				charge_time		= self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") * self:GetParent():GetCooldownReduction()
 			end
-			
+
 			self:StartIntervalThink( charge_time )
 			self:SetDuration( charge_time, true )
 		end
@@ -169,7 +193,7 @@ function modifier_generic_charges:CalculateCharge()
 			self:GetAbility():StartCooldown(self:GetRemainingTime())
 		else
 			self:GetAbility():EndCooldown()
-			
+
 			if self:GetAbility():GetName() ~= "imba_gyrocopter_homing_missile" and self:GetAbility():GetName() ~= "imba_void_spirit_astral_step" and self:GetAbility():GetName() ~= "imba_void_spirit_astral_step_helper_2" then
 				self:GetAbility():StartCooldown(0.25)
 			end
@@ -179,7 +203,7 @@ function modifier_generic_charges:CalculateCharge()
 	Timers:CreateTimer(FrameTime() * 2, function()
 		CustomGameEventManager:Send_ServerToAllClients("update_charge_count", {
 			unit_index = self:GetParent():entindex(),
-			ability_index = self:GetAbility():GetAbilityIndex(),
+			ability_index = self:GetRightfulAbilityIndex(),
 		})
 	end)
 end

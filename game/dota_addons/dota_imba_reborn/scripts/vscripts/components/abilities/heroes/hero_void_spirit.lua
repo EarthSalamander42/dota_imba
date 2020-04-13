@@ -359,8 +359,8 @@ function imba_void_spirit_resonant_pulse:OnInventoryContentsChanged()
 	if self:GetCaster():HasScepter() then
 		for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
 			if mod:GetAbility() == self and not mod.initialized then
-				mod:OnCreated()
 				mod.initialized = true
+				mod:OnCreated()
 			end
 		end
 	end
