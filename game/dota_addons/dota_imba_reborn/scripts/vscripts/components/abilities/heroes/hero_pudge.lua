@@ -410,6 +410,9 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 			rune:SetAbsOrigin(GetGroundPosition(vLocation, self:GetCaster()))
 		else
 			local target = EntIndexToHScript(ExtraData.hooked_target)
+			
+			if not target or not target.IsNull or target:IsNull() then return end
+			
 			local location = vLocation + (self:GetCaster():GetAbsOrigin() - target:GetAbsOrigin()):Normalized() * (ExtraData.hook_spd / (1 / FrameTime()))
 			target:SetAbsOrigin(GetGroundPosition(vLocation, target))
 
@@ -563,6 +566,32 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		ParticleManager:ReleaseParticleIndex(ExtraData.pfx_index)
 
 		local target = EntIndexToHScript(ExtraData.hooked_target)
+		
+		if not target or not target.IsNull or target:IsNull() then
+			self:GetCaster():StopSound("Hero_Pudge.AttackHookExtend")
+			self:GetCaster():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_1)
+
+			if self:GetCaster() and self:GetCaster():IsHero() then
+				local hHook = self:GetCaster().hook_wearable
+				if hHook ~= nil and not hHook:IsNull() then
+					hHook:RemoveEffects( EF_NODRAW )
+				end
+
+				StopSoundOn( "Hero_Pudge.AttackHookRetract", self:GetCaster())
+				StopSoundOn( "Hero_Pudge.AttackHookExtend", self:GetCaster())
+				StopSoundOn( "Hero_Pudge.AttackHookRetractStop", self:GetCaster())
+			end
+			
+			self.launched = false
+
+			if self.RuptureFX then
+				ParticleManager:DestroyParticle(self.RuptureFX, true)
+				ParticleManager:ReleaseParticleIndex(self.RuptureFX)
+			end
+		
+			return
+		end
+		
 		target:SetUnitOnClearGround()
 		EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), "Hero_Pudge.AttackHookRetractStop", target)
 		self:GetCaster():StopSound("Hero_Pudge.AttackHookExtend")

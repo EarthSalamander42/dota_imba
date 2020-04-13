@@ -474,29 +474,22 @@ function imba_juggernaut_healing_ward:OnSpellStart()
 	-- Play cast sound
 	caster:EmitSound("Hero_Juggernaut.HealingWard.Cast")
 
-	-- -- Spawn the Healing Ward
-	-- local healing_ward = CreateUnitByName("npc_imba_juggernaut_healing_ward", targetPoint, true, caster, caster, caster:GetTeam())
-
-	-- -- Make the ward immediately follow its caster
-	-- healing_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
-	-- Timers:CreateTimer(0.1, function()
-		-- healing_ward:MoveToNPC(caster)
-	-- end)
-
-	CreateUnitByNameAsync("npc_dota_juggernaut_healing_ward", targetPoint, true, caster, caster, caster:GetTeamNumber(), function(healing_ward)
-		-- Increase the ward's health, if appropriate
-		SetCreatureHealth(healing_ward, self:GetTalentSpecialValueFor("health"), true)
-		-- Apply the Healing Ward duration modifier
-		healing_ward:AddNewModifier(caster, self, "modifier_kill", {duration = self:GetDuration()})
-		-- Grant the Healing Ward its abilities
-		healing_ward:AddAbility("imba_juggernaut_healing_ward_passive"):SetLevel( self:GetLevel() )
+	local healing_ward = CreateUnitByName("npc_dota_juggernaut_healing_ward", targetPoint, true, caster, caster, caster:GetTeamNumber())
+	
+	-- Increase the ward's health, if appropriate
+	SetCreatureHealth(healing_ward, self:GetTalentSpecialValueFor("health"), true)
+	-- Apply the Healing Ward duration modifier
+	healing_ward:AddNewModifier(caster, self, "modifier_kill", {duration = self:GetDuration()})
+	-- Grant the Healing Ward its abilities
+	healing_ward:AddAbility("imba_juggernaut_healing_ward_passive"):SetLevel( self:GetLevel() )
+	
+	healing_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
 		
-		healing_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
+	healing_ward:SetContextThink(DoUniqueString(self:GetName()), function()
+		healing_ward:MoveToNPC(caster)
 		
-		Timers:CreateTimer(0.1, function()
-			healing_ward:MoveToNPC(caster)
-		end)
-	end)
+		return nil
+	end, FrameTime())
 end
 
 imba_juggernaut_healing_ward_passive = imba_juggernaut_healing_ward_passive or class({})
@@ -1953,7 +1946,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter(first_slash)
 
 			-- If the target is not Roshan or a hero, instantly kill it
 			if enemy:IsConsideredHero() or enemy:IsRoshan() or enemy:GetUnitName() == "npc_dota_mutation_golem" then
-				if not enemy:IsAlive() then
+				if not enemy:IsAlive() and self:GetAbility().omnislash_kill_count then
 					self:GetAbility().omnislash_kill_count = self:GetAbility().omnislash_kill_count + 1
 				end
 			else
@@ -2069,7 +2062,7 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 
 		if Battlepass:HasArcana(self.caster:GetPlayerID(), "juggernaut") then
 			Timers:CreateTimer(0.1, function()
-				if self.ability.omnislash_kill_count > 0 then
+				if self.ability.omnislash_kill_count and self.ability.omnislash_kill_count > 0 then
 					ArcanaKill(self.caster, self.ability.omnislash_kill_count)
 					self.ability.omnislash_kill_count = 0
 				end

@@ -1078,14 +1078,8 @@ function imba_void_spirit_astral_step:OnSpellStart(recastVector, warpVector, bIn
 	
 	local bHeroHit	= false
 	
-	local target_flags = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP
-	
-	if self:GetCaster():HasTalent("special_bonus_imba_void_spirit_astral_step_crit") and not warpVector and then
-		target_flags = target_flags + DOTA_UNIT_TARGET_BUILDING
-	end
-	
 	-- Logically speaking it doesn't make sense for it to check for enemies hit before Void Spirit actually moves, but it makes more sense without creating more variables
-	for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), final_position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, target_flags, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)) do
+	for _, enemy in pairs(FindUnitsInLine(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), final_position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)) do
 		-- enemy:EmitSound("Hero_VoidSpirit.AstralStep.MarkExplosionAOE")
 		-- enemy:EmitSound("Hero_VoidSpirit.AstralStep.Target")
 		

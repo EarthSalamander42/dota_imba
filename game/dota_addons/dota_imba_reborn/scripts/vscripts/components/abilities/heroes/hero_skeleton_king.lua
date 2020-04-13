@@ -753,42 +753,46 @@ function imba_wraith_king_mortal_strike:OnSpellStart()
 	self.skeletons_per_charge	=	self:GetSpecialValueFor("skeletons_per_charge")
 	
 	if self.caster:HasModifier("modifier_imba_mortal_strike") then
+		local skeleton = nil
 		local skeleton_modifier = self.caster:FindModifierByName("modifier_imba_mortal_strike")
 		
-		for unit = 0, skeleton_modifier:GetStackCount() - 1 do
-			Timers:CreateTimer(unit * self.spawn_interval, function()
+		for unit = 0, skeleton_modifier:GetStackCount() - 1 do	
+			self:GetCaster():SetContextThink(DoUniqueString(self:GetName()), function()	
 				for units_per_charge = 1, self.skeletons_per_charge do
-					CreateUnitByNameAsync("npc_dota_wraith_king_skeleton_warrior", self.caster:GetAbsOrigin() + RandomVector(100), true, self.caster, self.caster, self.caster:GetTeam(), function(skeleton) -- IDK how accurate 100 is but w/e I don't want too much overlap
-						skeleton:AddNewModifier(self.caster, self, "modifier_kill", {duration = self.skeleton_duration})
-						skeleton:AddNewModifier(self.caster, self, "modifier_imba_mortal_strike_skeleton", {duration = self.skeleton_duration - FrameTime()})
-						skeleton:SetControllableByPlayer( self.caster:GetPlayerID(),  true )
-						skeleton:SetOwner(self.caster)
+					skeleton = CreateUnitByName("npc_dota_wraith_king_skeleton_warrior", self.caster:GetAbsOrigin() + RandomVector(100), true, self.caster, self.caster, self.caster:GetTeamNumber()) -- IDK how accurate 100 is but w/e I don't want too much overlap
+					skeleton:AddNewModifier(self.caster, self, "modifier_kill", {duration = self.skeleton_duration})
+					skeleton:AddNewModifier(self.caster, self, "modifier_imba_mortal_strike_skeleton", {duration = self.skeleton_duration - FrameTime()})
+					skeleton:SetControllableByPlayer( self.caster:GetPlayerID(),  true )
+					skeleton:SetOwner(self.caster)
+					
+					-- Resolve NPC positions to try and make sure skeletons don't get stuck on each other
+					ResolveNPCPositions(skeleton:GetAbsOrigin(), skeleton:GetHullRadius())
+					
+					-- No gold/exp on first death
+					skeleton:SetMaximumGoldBounty(0)
+					skeleton:SetMinimumGoldBounty(0)
+					skeleton:SetDeathXP(0)
+					
+					-- First spawn, so it will reincarnate if it dies once
+					skeleton.fresh	= true
+					
+					-- Issue one aggressive move command to the enemy's ancient and that's it					
+					skeleton:SetContextThink(DoUniqueString(self:GetName()), function()
+						if self.caster:GetTeam() == DOTA_TEAM_GOODGUYS then
+							skeleton:MoveToPositionAggressive(Vector(5654, 4939, 0))
+						elseif self.caster:GetTeam() == DOTA_TEAM_BADGUYS then
+							skeleton:MoveToPositionAggressive(Vector(-5864, -5340, 0))
+						end
 						
-						-- Resolve NPC positions to try and make sure skeletons don't get stuck on each other
-						ResolveNPCPositions(skeleton:GetAbsOrigin(), skeleton:GetHullRadius())
-						
-						-- No gold/exp on first death
-						skeleton:SetMaximumGoldBounty(0)
-						skeleton:SetMinimumGoldBounty(0)
-						skeleton:SetDeathXP(0)
-						
-						-- First spawn, so it will reincarnate if it dies once
-						skeleton.fresh	= true
-						
-						-- Issue one aggressive move command to the enemy's ancient and that's it
-						Timers:CreateTimer(FrameTime(), function()
-							if self.caster:GetTeam() == DOTA_TEAM_GOODGUYS then
-								skeleton:MoveToPositionAggressive(Vector(5654, 4939, 0))
-							elseif self.caster:GetTeam() == DOTA_TEAM_BADGUYS then
-								skeleton:MoveToPositionAggressive(Vector(-5864, -5340, 0))
-							end
-						end)
-					end)
+						return nil
+					end, FrameTime())
 				end
 				
 				skeleton_modifier.skeleton_counter = skeleton_modifier.skeleton_counter - 1
 				skeleton_modifier:DecrementStackCount()
-			end)
+				
+				return nil
+			end, unit * self.spawn_interval)
 		end
 	end
 	
@@ -813,9 +817,7 @@ function modifier_imba_mortal_strike_skeleton:OnCreated()
 end
 
 function modifier_imba_mortal_strike_skeleton:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_DEATH}
-
-	return decFuncs
+	return {MODIFIER_EVENT_ON_DEATH}
 end
 
 function modifier_imba_mortal_strike_skeleton:OnDeath(keys)
@@ -828,22 +830,23 @@ function modifier_imba_mortal_strike_skeleton:OnDeath(keys)
 end
 
 function modifier_imba_mortal_strike_skeleton:OnIntervalThink()
-	CreateUnitByNameAsync("npc_dota_wraith_king_skeleton_warrior", self.parent:GetOrigin(), true, self.caster, self.caster, self.caster:GetTeam(), function(skeleton)
-		skeleton:AddNewModifier(self.caster, self.ability, "modifier_kill", {duration = self.remaining_time})
-		skeleton:AddNewModifier(self.caster, self.ability, "modifier_imba_mortal_strike_skeleton", {duration = self.remaining_time - FrameTime()})
-		skeleton:SetControllableByPlayer( self.caster:GetPlayerID(),  true )
-		skeleton:SetOwner(self.caster)
-		skeleton.fresh	= false
+	self.skeleton = CreateUnitByName("npc_dota_wraith_king_skeleton_warrior", self.parent:GetOrigin(), true, self.caster, self.caster, self.caster:GetTeamNumber())
+	
+	self.skeleton:AddNewModifier(self.caster, self.ability, "modifier_kill", {duration = self.remaining_time})
+	self.skeleton:AddNewModifier(self.caster, self.ability, "modifier_imba_mortal_strike_skeleton", {duration = self.remaining_time - FrameTime()})
+	self.skeleton:SetControllableByPlayer( self.caster:GetPlayerID(),  true)
+	self.skeleton:SetOwner(self.caster)
+	self.skeleton.fresh	= false
+
+	self.skeleton:SetContextThink(DoUniqueString(self:GetName()), function()
+		if self.caster:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+			self.skeleton:MoveToPositionAggressive(Vector(5654, 4939, 0))
+		elseif self.caster:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+			self.skeleton:MoveToPositionAggressive(Vector(-5864, -5340, 0))
+		end
 		
-		-- Issue one aggressive move command to the enemy's ancient and that's it
-		Timers:CreateTimer(FrameTime(), function()
-			if self.caster:GetTeam() == DOTA_TEAM_GOODGUYS then
-				skeleton:MoveToPositionAggressive(Vector(5654, 4939, 0))
-			elseif self.caster:GetTeam() == DOTA_TEAM_BADGUYS then
-				skeleton:MoveToPositionAggressive(Vector(-5864, -5340, 0))
-			end
-		end)
-	end)
+		return nil
+	end, FrameTime())
 	
 	self:StartIntervalThink(-1)
 end

@@ -1105,14 +1105,14 @@ function imba_keeper_of_the_light_will_o_wisp:OnSpellStart()
 	if not IsServer() then return end
 
 	-- Issue: This thing actually has a slightly larger hitbox than the standard wisp -_-
-	CreateUnitByNameAsync("npc_dota_ignis_fatuus", self.position, true, self.caster, self.caster, self.caster:GetTeam(), function(ignis_fatuus)
-		-- Add the hypnotizing aura modifier
-		ignis_fatuus:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_will_o_wisp", {duration = self.duration})
-		
-		-- Set up gold bounty
-		ignis_fatuus:SetMaximumGoldBounty(self.bounty)
-		ignis_fatuus:SetMinimumGoldBounty(self.bounty)
-	end)
+	local ignis_fatuus = CreateUnitByName("npc_dota_ignis_fatuus", self.position, true, self.caster, self.caster, self.caster:GetTeamNumber())
+	
+	-- Add the hypnotizing aura modifier
+	ignis_fatuus:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_will_o_wisp", {duration = self.duration})
+	
+	-- Set up gold bounty
+	ignis_fatuus:SetMaximumGoldBounty(self.bounty)
+	ignis_fatuus:SetMinimumGoldBounty(self.bounty)
 	
 	if self.caster:GetName() == "npc_dota_hero_keeper_of_the_light" then
 		-- 6 responses, but #4 is unused
