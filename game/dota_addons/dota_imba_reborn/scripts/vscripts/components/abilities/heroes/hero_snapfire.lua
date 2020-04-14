@@ -1129,7 +1129,6 @@ function modifier_imba_snapfire_mortimer_kisses:OnCreated( kv )
 	self.max_travel = self:GetAbility():GetSpecialValueFor( "max_lob_travel_time" )
 	self.travel_range = self.max_travel-self.min_travel
 
-	self.projectile_speed = self:GetAbility():GetSpecialValueFor( "projectile_speed" ) + self:GetCaster():FindTalentValue("special_bonus_imba_snapfire_1")
 	local projectile_vision = self:GetAbility():GetSpecialValueFor( "projectile_vision" )
 
 	self.turn_rate = self:GetAbility():GetSpecialValueFor( "turn_rate" )
@@ -1137,6 +1136,7 @@ function modifier_imba_snapfire_mortimer_kisses:OnCreated( kv )
 	if not IsServer() then return end
 
 	-- load data
+	local projectile_speed = self:GetAbility():GetSpecialValueFor( "projectile_speed" ) + self:GetCaster():FindTalentValue("special_bonus_imba_snapfire_1")
 	local projectile_count = self:GetAbility():GetSpecialValueFor( "projectile_count" ) + self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_1")
 	local interval = self:GetAbility():GetDuration() / projectile_count + 0.01 -- so it only have 8 projectiles instead of 9
 	self:SetValidTarget( Vector( kv.pos_x, kv.pos_y, 0 ) )
@@ -1150,7 +1150,7 @@ function modifier_imba_snapfire_mortimer_kisses:OnCreated( kv )
 		Ability = self:GetAbility(),	
 		
 		EffectName = "particles/units/heroes/hero_snapfire/snapfire_lizard_blobs_arced.vpcf",
-		iMoveSpeed = self.projectile_speed,
+		iMoveSpeed = projectile_speed,
 		bDodgeable = false,                           -- Optional
 	
 		vSourceLoc = self:GetCaster():GetOrigin(),                -- Optional (HOW)

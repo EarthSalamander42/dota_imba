@@ -80,5 +80,4 @@
 //"DOTA_Tooltip_ability_special_bonus_unique_snapfire_6"		"Lil' Shredder Uses Your Attack Damage"
 //"DOTA_Tooltip_ability_special_bonus_unique_snapfire_7"		"+{s:value} Scatterblast Damage"
 
-"DOTA_Tooltip_ability_special_bonus_imba_snapfire_1"		"+{s:value}% Mortimer Kisses projectile speed"
-"DOTA_Tooltip_ability_special_bonus_imba_snapfire_2"		"+{s:value}% +3s Scatterblast debuff duration"
+"DOTA_Tooltip_ability_special_bonus_imba_snapfire_1"		"+{s:value} Mortimer Kisses projectile speed"

@@ -7,11 +7,12 @@
 	{
 		//Picking Screen
 		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_broodmother_spawn_spiderlings"
 		"Ability2"					"imba_broodmother_spin_web"
 		"Ability3"					"imba_broodmother_incapacitating_bite"
-		"Ability4"					"generic_hidden"
+		"Ability4"					"imba_broodmother_spawn_spiderking"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_broodmother_insatiable_hunger"
 
