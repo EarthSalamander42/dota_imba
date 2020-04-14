@@ -17145,7 +17145,7 @@
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"item_manta_2"
 		"ScriptFile"					"components/items/item_manta"
-		
+
 		"ID"							"2355"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -17168,7 +17168,7 @@
 		"ItemAliases"					"manta style"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		"ShouldBeSuggested"				"1"
-		
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -17399,7 +17399,7 @@
 		"ItemStackable"					"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"3"
+		"ItemInitialCharges"			"4"
 		"ShouldBeSuggested"				"1"
 		"IsTempestDoubleClonable"		"0"
 		
@@ -17409,7 +17409,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen"				"7"
+				"hp_regen"				"12"
 			}
 
 			"02"
@@ -17492,7 +17492,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen"				"7"
+				"hp_regen"				"12"
 			}
 
 			"02"
@@ -17648,7 +17648,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"250"
+		"AbilityCastRange"				"400"
 		"AbilityCastPoint"				"0.0"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		
@@ -17658,7 +17658,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen"				"50"
+				"hp_regen"				"80"
 			}
 
 			"02"
@@ -17694,7 +17694,7 @@
 			"07"
 			{
 				"var_type"				 "FIELD_INTEGER"
-				"cast_range_tooltip"	 "250"
+				"cast_range_tooltip"	 "400"
 			}
 		}
 	}
@@ -17720,7 +17720,6 @@
 		"AbilityCooldown"				"1"
 		"AbilityCastRange"				"1200"
 
-
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"80"
@@ -17733,11 +17732,10 @@
 		"ItemInitialCharges"			"1"
 		"ItemDisplayCharges"			"1"
 		"ItemStockMax"					"2"
-		"ItemStockTime"					"420"
+		"ItemStockTime"					"90.0"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"		
 		"ItemAlertable"					"1"
 		"IsTempestDoubleClonable"		"0"
-
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------

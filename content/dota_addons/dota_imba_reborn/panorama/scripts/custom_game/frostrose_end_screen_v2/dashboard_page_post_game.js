@@ -284,6 +284,9 @@ function EndScoreboard(args) {
 	$("#DetailsScoreboardContainer").style.opacity = "1";
 	$("#PinnedHeroes").style.opacity = "1";
 
+	// Bring chat on top of end screen
+	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel())
+
 	// Set game time
 //	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
 
