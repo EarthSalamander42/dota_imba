@@ -52,7 +52,7 @@
 "DOTA_Tooltip_modifier_imba_snapfire_lil_shredder_debuff_Description"				"#{DOTA_Tooltip_modifier_snapfire_lil_shredder_debuff_Description}"
 
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses"								"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses}"
-"DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Description"					"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Description} \n\n<font color='#FF7800'>Fiery Splash Impact:</font> Blobs' slow increases the further they traveled before reaching their target area.\n<font color='#FF7800'>Mortimer Hugs:</font> Blobs' releases an additional sets of %blob_rings_count% mini-blobs in a radius outside of the initial blob after a delay."
+"DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Description"					"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Description} \n\n<font color='#FF7800'>Fiery Splash Impact:</font> Blobs' slow increases the further they traveled before reaching their target area.\n<font color='#FF7800'>Mortimer Hugs:</font> Blobs' releases an additional sets of %blob_rings_count% mini-blobs after %mini_blob_counter% blobs sent, in a radius outside of the initial blob after a delay."
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Note0"							"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Note0}"
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Note1"							"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Note1}"
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_Lore"							"#{DOTA_Tooltip_ability_snapfire_mortimer_kisses_Lore}"
@@ -65,6 +65,7 @@
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_min_slow_pct"					"%MIN SLOW:"
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_max_slow_pct"					"%MAX SLOW:"
 "DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_blob_rings_count"				"MINI-BLOBS COUNT:"
+"DOTA_Tooltip_ability_imba_snapfire_mortimer_kisses_mini_blob_counter"				"MINI-BLOBS INTERVAL:"
 
 "DOTA_Tooltip_modifier_imba_snapfire_mortimer_kisses"								"#{DOTA_Tooltip_modifier_snapfire_mortimer_kisses}"
 "DOTA_Tooltip_modifier_imba_snapfire_mortimer_kisses_Description"					"#{DOTA_Tooltip_modifier_snapfire_mortimer_kisses_Description}"

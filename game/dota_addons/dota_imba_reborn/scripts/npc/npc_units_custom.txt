@@ -1,4 +1,4 @@
-#base heroes/broodmother/units.txt
+// #base heroes/broodmother/units.txt
 #base heroes/invoker/units.txt
 
 #base custom_heroes/hell_empress/hero.txt

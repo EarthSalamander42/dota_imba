@@ -476,7 +476,7 @@
 			"21"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"rings_radius"			"100" // pfx do not have radius control
+				"rings_radius"			"275" // pfx do not have radius control
 			}
 			"22"
 			{
@@ -486,7 +486,12 @@
 			"23"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"rings_distance"		"250"
+				"rings_distance"		"550"
+			}
+			"24"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mini_blob_counter"			"4"
 			}
 		}
 	}

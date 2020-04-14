@@ -12,7 +12,7 @@
 #base heroes/bloodseeker/abilities.txt
 #base heroes/brewmaster/abilities.txt
 #base heroes/bristleback/abilities.txt
-#base heroes/broodmother/abilities.txt
+// #base heroes/broodmother/abilities.txt
 #base heroes/chen/abilities.txt
 #base heroes/dark_seer/abilities.txt
 #base heroes/death_prophet/abilities.txt

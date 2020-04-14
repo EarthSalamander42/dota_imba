@@ -2,7 +2,7 @@
 #base heroes/batrider/hero.txt
 #base heroes/brewmaster/hero.txt
 #base heroes/bristleback/hero.txt
-#base heroes/broodmother/hero.txt
+// #base heroes/broodmother/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt
 #base heroes/death_prophet/hero.txt
