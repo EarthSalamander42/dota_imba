@@ -7,7 +7,7 @@
 	"average_mmr" "Средний MMR:"
 	"ay_ay_ay" "Ай-ай-ай-ай-ай, что сейчас произошло!"
 	"bai_tuo_shei_qu" "拜托谁去杀了他吧"
-	"battlepass" "Боевой проп."
+	"battlepass" "Боевой пропуск"
 	"battlepass2019" "Боевой Пропуск 2019"
 	"battlepass_alchemist_taunt" "Насмешка: Ogre Hop"
 	"battlepass_axe_immortal" "Axe Unleashed"

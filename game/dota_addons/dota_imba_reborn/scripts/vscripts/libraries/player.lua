@@ -904,16 +904,6 @@ CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nP
 	-- call the original function
 	local response = original_CreateIllusions(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 
-	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
-		if v.asset == sParticleName and v.parent == hCaster then
-			sParticleName = v.modifier
-			break
-		end
-	end
-
-	-- call the original function
-	local response = original_CreateParticleForPlayer(self, sParticleName, iAttachType, hParent, hPlayer)
-
 	for i = 1, #response do
 		local illusion = response[i]
 

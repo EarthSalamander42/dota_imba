@@ -1,3 +1,5 @@
+"npc_dota_hero_brewmaster"							"Brewmaster (IMBA)"
+
 //BREWMASTER
 "DOTA_Tooltip_ability_imba_brewmaster_thunder_clap"								"Thunder Clap"
 "DOTA_Tooltip_ability_imba_brewmaster_thunder_clap_Lore"							"A slam of Mangix' mighty keg starts the festivities."
