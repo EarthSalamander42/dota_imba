@@ -16,7 +16,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"1"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -31,7 +31,6 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"25"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles" // this is the only item id where this is not required as the script can get the info in vanilla file, but yeah screw it
@@ -46,7 +45,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"50"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -61,7 +60,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"75"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -76,7 +75,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"100"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink5" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -91,7 +90,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"125"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -106,7 +105,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"150"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink7" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -121,7 +120,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"175"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink8" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -136,7 +135,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"200"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink9" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -151,7 +150,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"225"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink10" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -166,7 +165,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"250"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink11" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -181,7 +180,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"275"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink12" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -196,7 +195,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"300"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink13" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"
@@ -211,7 +210,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"325"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/blink14" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
 		"particles"

@@ -1,0 +1,195 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 128
+	m_ConstantColor = [ 66, 66, 66, 255 ]
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderRopes"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_hTexture = resource:"materials/particle/snapfire/beam_magma.vtex"
+			m_flTextureVWorldSize = 1000.0
+			m_nMaxTesselation = 2
+			m_nMinTesselation = 2
+			m_nHSVShiftControlPoint = 62
+			m_nOrientationType = 2
+			m_bAdditive = true
+		},
+		{
+			_class = "C_OP_RenderRopes"
+			m_nMinTesselation = 2
+			m_nMaxTesselation = 2
+			m_flTextureVWorldSize = 500.0
+			m_nOrientationType = 2
+			m_bSaturateColorPreAlphaBlend = false
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_bAdditive = true
+			m_flOverbrightFactor = 2.0
+			m_hTexture = resource:"materials/particle/beam_plasma_04.vtex"
+			m_nHSVShiftControlPoint = 62
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_EndCapTimedDecay"
+			m_flDecayTime = 0.6
+		},
+		{
+			_class = "C_OP_PositionLock"
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 255, 0, 0, 255 ]
+			m_flFadeEndTime = 0.6
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+		},
+		{
+			_class = "C_OP_SetFloat"
+			m_InputValue = 
+			{
+				m_nType = "PF_TYPE_PARTICLE_AGE_NORMALIZED"
+				m_nMapType = "PF_MAP_TYPE_CURVE"
+				m_flLiteralValue = 0.0
+				m_nControlPoint = 0
+				m_nScalarAttribute = 3
+				m_nVectorAttribute = 6
+				m_nVectorComponent = 0
+				m_flRandomMin = 0.0
+				m_flRandomMax = 1.0
+				m_nRandomMode = "PF_RANDOM_MODE_CONSTANT"
+				m_nInputMode = "PF_INPUT_MODE_CLAMPED"
+				m_flMultFactor = 1.0
+				m_flInput0 = 0.0
+				m_flInput1 = 1.0
+				m_flOutput0 = 0.0
+				m_flOutput1 = 1.0
+				m_nBiasType = "PF_BIAS_TYPE_STANDARD"
+				m_flBiasParameter = 0.0
+				m_Curve = 
+				{
+					m_spline = 
+					[
+						{
+							x = 0.0
+							y = 39.438103
+							m_flSlopeIncoming = 61.780773
+							m_flSlopeOutgoing = 61.780773
+						},
+						{
+							x = 0.170958
+							y = 50.0
+							m_flSlopeIncoming = 4.013293
+							m_flSlopeOutgoing = 4.013293
+						},
+						{
+							x = 1.0
+							y = 0.0
+							m_flSlopeIncoming = 5.693317
+							m_flSlopeOutgoing = 5.693317
+						},
+					]
+					m_tangents = 
+					[
+						{
+							m_nIncomingTangent = "CURVE_TANGENT_SPLINE"
+							m_nOutgoingTangent = "CURVE_TANGENT_SPLINE"
+						},
+						{
+							m_nIncomingTangent = "CURVE_TANGENT_FREE"
+							m_nOutgoingTangent = "CURVE_TANGENT_MIRROR"
+						},
+						{
+							m_nIncomingTangent = "CURVE_TANGENT_FREE"
+							m_nOutgoingTangent = "CURVE_TANGENT_MIRROR"
+						},
+					]
+					m_vDomainMins = [ 0.0, 0.0 ]
+					m_vDomainMaxs = [ 1.0, 50.0 ]
+				}
+			}
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 0.5
+			m_fLifetimeMax = 0.5
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 3
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_INIT_CreateInEpitrochoid"
+			m_nComponent1 = 1
+			m_nComponent2 = 2
+			m_nControlPointNumber = 3
+			m_flOffset = 1.0
+			m_flRadius1 = 4.0
+			m_flRadius2 = 2.0
+			m_bUseLocalCoords = true
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 25.0
+			m_flRadiusMax = 25.0
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 255, 237, 165, 255 ]
+			m_ColorMax = [ 255, 237, 165, 255 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 30.0
+			}
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 3
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iControlPoint = 62
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 3
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+}

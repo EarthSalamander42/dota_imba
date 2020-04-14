@@ -1,0 +1,117 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 64
+	m_flConstantRadius = 64.0
+	m_ConstantColor = [ 225, 132, 132, 255 ]
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_bBlendFramesSeq0 = false
+			m_hTexture = resource:"materials/particle/lava_blasts/lava_drops.vtex"
+			m_flAnimationRate = 2.0
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.15
+			m_Gravity = [ 0.0, 0.0, 160.0 ]
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 3
+			m_flStartTime_min = 0.0
+			m_flStartTime_max = 0.0
+			m_flEndTime_min = 0.25
+			m_flEndTime_max = 0.5
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndScale = 0.0
+			m_flBias = 0.25
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_nFieldOutput = "22"
+			m_ColorFade = [ 0, 0, 0, 255 ]
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 3
+			m_fRadiusMax = 8.0
+			m_fSpeedMax = 900.0
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 0.265
+			m_fLifetimeMin = 0.235
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 63
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 8.0
+			m_flRadiusMax = 16.0
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 64.0
+			}
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_snapfire/hero_snapfire_cookie_enemy_end_b.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_snapfire/hero_snapfire_cookie_enemy_end_c.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_snapfire/hero_snapfire_cookie_enemy_end_flash.vpcf"
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 5
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iControlPoint = 3
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+}

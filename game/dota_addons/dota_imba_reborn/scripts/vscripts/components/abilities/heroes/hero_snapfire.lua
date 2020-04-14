@@ -5,6 +5,7 @@
 --------------------------------------------------------------------------------
 imba_snapfire_scatterblast = imba_snapfire_scatterblast or class({})
 LinkLuaModifier( "modifier_imba_snapfire_scatterblast_slow", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_snapfire_scatterblast_silence", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_generic_custom_indicator", "components/modifiers/generic/modifier_generic_custom_indicator", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
@@ -66,6 +67,7 @@ function imba_snapfire_scatterblast:OnSpellStart()
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
 	local origin = caster:GetOrigin()
+	self.first_target = nil
 
 	-- load data
 	local projectile_name = "particles/units/heroes/hero_snapfire/hero_snapfire_shotgun.vpcf"
@@ -117,8 +119,8 @@ function imba_snapfire_scatterblast:OnProjectileHit_ExtraData( target, location,
 	local location = target:GetOrigin()
 	local point_blank_range = self:GetSpecialValueFor( "point_blank_range" )
 	local point_blank_mult = self:GetSpecialValueFor( "point_blank_dmg_bonus_pct" )/100
-	local damage = self:GetSpecialValueFor( "damage" )
-	local slow = self:GetSpecialValueFor( "debuff_duration" )
+	local damage = self:GetSpecialValueFor( "damage" ) + self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_7")
+	local slow = self:GetSpecialValueFor( "slow_duration" )
 	local modifier_name = "modifier_imba_snapfire_scatterblast_slow"
 
 	-- check position
@@ -152,6 +154,24 @@ function imba_snapfire_scatterblast:OnProjectileHit_ExtraData( target, location,
 		modifier_name, -- modifier name
 		{ duration = slow } -- kv
 	)
+
+	if not self.first_target then
+		self.first_target = true
+
+		local debuff_modifier = "modifier_disarmed"
+
+		-- Russian Roulette: either silence or disarm, does not require AbilitySpecial value
+		if RollPercentage(50) then
+			debuff_modifier = "modifier_imba_snapfire_scatterblast_silence"
+		end
+
+		target:AddNewModifier(
+			caster, -- player source
+			self, -- ability source
+			debuff_modifier, -- modifier name
+			{ duration = self:GetSpecialValueFor("debuff_duration") } -- kv
+		)
+	end
 
 	-- effect
 	self:PlayEffects( target, point_blank )
@@ -273,6 +293,37 @@ function modifier_imba_snapfire_scatterblast_slow:StatusEffectPriority()
 end
 
 --------------------------------------------------------------------------------
+modifier_imba_snapfire_scatterblast_silence = class({})
+
+--------------------------------------------------------------------------------
+-- Classifications
+function modifier_imba_snapfire_scatterblast_silence:IsHidden()
+	return false
+end
+
+function modifier_imba_snapfire_scatterblast_silence:IsDebuff()
+	return true
+end
+
+function modifier_imba_snapfire_scatterblast_silence:IsStunDebuff()
+	return false
+end
+
+function modifier_imba_snapfire_scatterblast_silence:IsPurgable()
+	return true
+end
+
+--------------------------------------------------------------------------------
+-- Modifier Effects
+function modifier_imba_snapfire_scatterblast_silence:CheckState()
+	local funcs = {
+		[MODIFIER_STATE_SILENCED] = true,
+	}
+
+	return funcs
+end
+
+--------------------------------------------------------------------------------
 imba_snapfire_firesnap_cookie = imba_snapfire_firesnap_cookie or class({})
 
 LinkLuaModifier("modifier_generic_knockback_lua", "components/modifiers/generic/modifier_generic_knockback_lua", LUA_MODIFIER_MOTION_BOTH)
@@ -295,7 +346,7 @@ function imba_snapfire_firesnap_cookie:CastFilterResultTarget( hTarget )
 
 	local nResult = UnitFilter(
 		hTarget,
-		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_TEAM_BOTH,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
 		0,
 		self:GetCaster():GetTeamNumber()
@@ -315,6 +366,15 @@ function imba_snapfire_firesnap_cookie:GetCustomCastErrorTarget( hTarget )
 	return ""
 end
 
+-- Spicy Spicy Cookie IMBAfication
+function imba_snapfire_firesnap_cookie:GetCastRange(location, target)
+--	if self:GetAutoCastState() then
+--		return self.BaseClass.GetCastRange(self, location, target) * self:GetSpecialValueFor("auto_cast_range_increase") / 100
+--	else
+		return self.BaseClass.GetCastRange(self, location, target)
+--	end
+end
+
 --------------------------------------------------------------------------------
 -- Ability Phase Start
 function imba_snapfire_firesnap_cookie:OnAbilityPhaseInterrupted()
@@ -324,6 +384,9 @@ function imba_snapfire_firesnap_cookie:OnAbilityPhaseStart()
 	if self:GetCursorTarget()==self:GetCaster() then
 		self:PlayEffects1()
 	end
+
+	-- prevent fast toggling to fuck things up by storing state pre-cast
+	self.toggle_state = self:GetAutoCastState()
 
 	return true -- if success
 end
@@ -338,6 +401,10 @@ function imba_snapfire_firesnap_cookie:OnSpellStart()
 	-- load data
 	local projectile_name = "particles/units/heroes/hero_snapfire/hero_snapfire_cookie_projectile.vpcf"
 	local projectile_speed = self:GetSpecialValueFor( "projectile_speed" )
+
+	if caster:GetTeam() ~= target:GetTeam() then
+		projectile_name = "particles/units/heroes/hero_snapfire/hero_snapfire_cookie_enemy_projectile.vpcf"
+	end
 
 	-- create projectile
 	local info = {
@@ -355,12 +422,21 @@ function imba_snapfire_firesnap_cookie:OnSpellStart()
 	local sound_cast = "Hero_Snapfire.FeedCookie.Cast"
 	EmitSoundOn( sound_cast, self:GetCaster() )
 end
+
 --------------------------------------------------------------------------------
 -- Projectile
 function imba_snapfire_firesnap_cookie:OnProjectileHit( target, location )
 	if not target then return end
 
 	if target:IsChanneling() or target:IsOutOfGame() then return end
+
+	-- Firesnap Cookie heals
+	if self:GetCaster():HasTalent("special_bonus_unique_snapfire_5") then
+		if target:GetTeam() == self:GetCaster():GetTeam() then
+			target:Heal(self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_5"), self:GetCaster())
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_5"), nil)
+		end
+	end
 
 	-- load data
 	local duration = self:GetSpecialValueFor( "jump_duration" )
@@ -369,6 +445,10 @@ function imba_snapfire_firesnap_cookie:OnProjectileHit( target, location )
 	local stun = self:GetSpecialValueFor( "impact_stun_duration" )
 	local damage = self:GetSpecialValueFor( "impact_damage" )
 	local radius = self:GetSpecialValueFor( "impact_radius" )
+
+	if self.toggle_state then
+		distance = distance + distance * self:GetSpecialValueFor("auto_cast_range_increase") / 100
+	end
 
 	-- play effects2
 	local effect_cast = self:PlayEffects2( target )
@@ -417,13 +497,15 @@ function imba_snapfire_firesnap_cookie:OnProjectileHit( target, location )
 			damageTable.victim = enemy
 			ApplyDamage(damageTable)
 
-			-- stun
-			enemy:AddNewModifier(
-				self:GetCaster(), -- player source
-				self, -- ability source
-				"modifier_stunned", -- modifier name
-				{ duration = stun } -- kv
-			)
+			if not self.toggle_state then
+				-- stun
+				enemy:AddNewModifier(
+					self:GetCaster(), -- player source
+					self, -- ability source
+					"modifier_stunned", -- modifier name
+					{ duration = stun } -- kv
+				)
+			end
 		end
 
 		-- destroy trees
@@ -485,6 +567,7 @@ end
 imba_snapfire_lil_shredder = class({})
 LinkLuaModifier( "modifier_imba_snapfire_lil_shredder", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_snapfire_lil_shredder_debuff", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_imba_fury_swipes_debuff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -534,11 +617,22 @@ function modifier_imba_snapfire_lil_shredder:OnCreated( kv )
 	self.as_bonus = self:GetAbility():GetSpecialValueFor( "attack_speed_bonus" )
 	self.range_bonus = self:GetAbility():GetSpecialValueFor( "attack_range_bonus" )
 	self.bat = self:GetAbility():GetSpecialValueFor( "base_attack_time" )
-
 	self.slow = self:GetAbility():GetSpecialValueFor( "slow_duration" )
 
+	if self:GetCaster():HasTalent("special_bonus_unique_snapfire_6") then
+		self.damage = self:GetCaster():GetAttackDamage()
+	end
+
 	if not IsServer() then return end
-	self:SetStackCount( self.attacks )
+
+	self.toggle_state = self:GetAbility():GetAutoCastState()
+
+	if self.toggle_state then
+		self:SetStackCount( 1 )
+		self.damage = self.damage * self:GetAbility():GetSpecialValueFor( "buffed_attacks" )
+	else
+		self:SetStackCount( self.attacks )
+	end
 
 	self.records = {}
 
@@ -590,6 +684,8 @@ function modifier_imba_snapfire_lil_shredder:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+
+		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL
 	}
 
 	return funcs
@@ -662,6 +758,49 @@ end
 function modifier_imba_snapfire_lil_shredder:GetModifierBaseAttackTimeConstant()
 	if self:GetStackCount()<=0 then return end
 	return self.bat
+end
+
+-- Shredder FUry IMBAfication
+function modifier_imba_snapfire_lil_shredder:GetModifierProcAttack_BonusDamage_Physical( keys )
+	-- Ability properties
+	if IsServer() then
+		local target = keys.target
+
+		-- Ability specials
+		local damage_per_stack = self:GetAbility():GetSpecialValueFor("damage_per_stack")
+		local stack_duration = self:GetAbility():GetSpecialValueFor("stack_duration")
+
+		if keys.attacker == self:GetCaster() then
+			-- "Does not work against buildings, wards and allied units when attacking them."
+			-- If the target is a building, do nothing
+			if target:IsBuilding() or target:IsOther() or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+				return nil
+			end
+			
+			-- Add debuff/increment stacks if already exists
+			local fury_swipes_debuff_handler = target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_fury_swipes_debuff", {duration = stack_duration * (1 - target:GetStatusResistance())})
+			
+			if fury_swipes_debuff_handler then
+				fury_swipes_debuff_handler:IncrementStackCount()
+			end
+
+			-- Refresh stack duration
+			fury_swipes_debuff_handler:ForceRefresh()
+
+			-- Add fury swipe impact particle
+			local swipes_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf", PATTACH_ABSORIGIN, target)
+			ParticleManager:SetParticleControl(swipes_particle_fx, 0, target:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(swipes_particle_fx)
+
+			-- Get stack count
+			local fury_swipes_stacks = fury_swipes_debuff_handler:GetStackCount()
+
+			-- Calculate damage
+			local damage = damage_per_stack * fury_swipes_stacks
+
+			return damage
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -823,6 +962,10 @@ function imba_snapfire_mortimer_kisses:OnProjectileHit( target, location )
 	local damage = self:GetSpecialValueFor( "damage_per_impact" )
 	local duration = self:GetSpecialValueFor( "burn_ground_duration" )
 	local impact_radius = self:GetSpecialValueFor( "impact_radius" )
+
+	if target.secondary then
+		impact_radius = self:GetSpecialValueFor("rings_radius")
+	end
 	local vision = self:GetSpecialValueFor( "projectile_vision" )
 
 	-- precache damage
@@ -852,7 +995,7 @@ function imba_snapfire_mortimer_kisses:OnProjectileHit( target, location )
 	end
 
 	-- start aura on thinker
-	target:AddNewModifier(
+	local mod = target:AddNewModifier(
 		self:GetCaster(), -- player source
 		self, -- ability source
 		"modifier_imba_snapfire_mortimer_kisses_thinker", -- modifier name
@@ -869,7 +1012,66 @@ function imba_snapfire_mortimer_kisses:OnProjectileHit( target, location )
 	AddFOWViewer( self:GetCaster():GetTeamNumber(), location, vision, duration, false )
 
 	-- play effects
-	self:PlayEffects( target:GetOrigin() )
+	self:PlayEffects( location )
+
+	if target.secondary then return end
+
+	-- Mortimer Hugs IMBAfication (unable to set ground blob pfx size, need custom one)
+	local forward = target:GetForwardVector()
+	local blob_rings_count = self:GetSpecialValueFor("blob_rings_count")
+	local rings_distance = self:GetSpecialValueFor("rings_distance")
+	local angle_diff = 360 / blob_rings_count
+	local blob_pos = {}
+
+	for i = 1, blob_rings_count do
+		blob_pos[i] = RotatePosition(location, QAngle(0, angle_diff * i, 0), location + (forward * rings_distance))
+
+		local target_pos = GetGroundPosition( blob_pos[i], nil )
+		local travel_time = self:GetSpecialValueFor("rings_delay")
+
+		-- create target thinker
+		local thinker = CreateModifierThinker(
+			self:GetCaster(), -- player source
+			self, -- ability source
+			"modifier_imba_snapfire_mortimer_kisses_thinker", -- modifier name
+			{ travel_time = travel_time }, -- kv
+			target_pos,
+			self:GetCaster():GetTeamNumber(),
+			false
+		)
+
+		thinker.secondary = true
+
+		local min_range = self:GetSpecialValueFor( "min_range" )
+		local max_range = self:GetCastRange( Vector(0,0,0), nil )
+		local vec = (location - target_pos):Length2D()
+
+		local info = {
+			Target = thinker,
+			Source = target,
+			Ability = self,	
+			iMoveSpeed = vec / travel_time,
+			EffectName = "particles/units/heroes/hero_snapfire/snapfire_lizard_blobs_arced.vpcf",
+			bDodgeable = false,                           -- Optional
+
+			vSourceLoc = location,                -- Optional (HOW)
+
+			bDrawsOnMinimap = false,                          -- Optional
+			bVisibleToEnemies = true,                         -- Optional
+			bProvidesVision = true,                           -- Optional
+			iVisionRadius = self:GetSpecialValueFor( "projectile_vision" ),                              -- Optional
+			iVisionTeamNumber = self:GetCaster():GetTeamNumber()        -- Optional
+		}
+
+		-- launch projectile
+		ProjectileManager:CreateTrackingProjectile( info )
+
+		-- create FOW
+		AddFOWViewer( self:GetCaster():GetTeamNumber(), thinker:GetOrigin(), 100, 1, false )
+
+		-- play sound
+		EmitSoundOn( "Hero_Snapfire.MortimerBlob.Launch", target )
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -922,22 +1124,22 @@ function modifier_imba_snapfire_mortimer_kisses:OnCreated( kv )
 	self.min_range = self:GetAbility():GetSpecialValueFor( "min_range" )
 	self.max_range = self:GetAbility():GetCastRange( Vector(0,0,0), nil )
 	self.range = self.max_range-self.min_range
-	
+
 	self.min_travel = self:GetAbility():GetSpecialValueFor( "min_lob_travel_time" )
 	self.max_travel = self:GetAbility():GetSpecialValueFor( "max_lob_travel_time" )
 	self.travel_range = self.max_travel-self.min_travel
-	
-	self.projectile_speed = self:GetAbility():GetSpecialValueFor( "projectile_speed" )
+
+	self.projectile_speed = self:GetAbility():GetSpecialValueFor( "projectile_speed" ) + self:GetCaster():FindTalentValue("special_bonus_imba_snapfire_1")
 	local projectile_vision = self:GetAbility():GetSpecialValueFor( "projectile_vision" )
-	
+
 	self.turn_rate = self:GetAbility():GetSpecialValueFor( "turn_rate" )
 
 	if not IsServer() then return end
 
 	-- load data
-	local interval = self:GetAbility():GetDuration()/self:GetAbility():GetSpecialValueFor( "projectile_count" ) + 0.01 -- so it only have 8 projectiles instead of 9
+	local projectile_count = self:GetAbility():GetSpecialValueFor( "projectile_count" ) + self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_1")
+	local interval = self:GetAbility():GetDuration() / projectile_count + 0.01 -- so it only have 8 projectiles instead of 9
 	self:SetValidTarget( Vector( kv.pos_x, kv.pos_y, 0 ) )
-	local projectile_name = "particles/units/heroes/hero_snapfire/snapfire_lizard_blobs_arced.vpcf"
 	local projectile_start_radius = 0
 	local projectile_end_radius = 0
 
@@ -947,7 +1149,7 @@ function modifier_imba_snapfire_mortimer_kisses:OnCreated( kv )
 		Source = self:GetCaster(),
 		Ability = self:GetAbility(),	
 		
-		EffectName = projectile_name,
+		EffectName = "particles/units/heroes/hero_snapfire/snapfire_lizard_blobs_arced.vpcf",
 		iMoveSpeed = self.projectile_speed,
 		bDodgeable = false,                           -- Optional
 	
@@ -1030,19 +1232,36 @@ end
 --------------------------------------------------------------------------------
 -- Interval Effects
 function modifier_imba_snapfire_mortimer_kisses:OnIntervalThink()
+	self:CreateBlob(kv)
+end
+
+function modifier_imba_snapfire_mortimer_kisses:CreateBlob(kv)
+	if not kv then kv = {} end
+
+	local travel_time = self.travel_time
+	local target_pos = self.target
+
+	if kv.pos then
+		target_pos = GetGroundPosition( self.target + kv.pos, nil )
+	end
+
+	if kv.travel_time then
+		travel_time = kv.travel_time
+	end
+
 	-- create target thinker
 	local thinker = CreateModifierThinker(
 		self:GetParent(), -- player source
 		self:GetAbility(), -- ability source
 		"modifier_imba_snapfire_mortimer_kisses_thinker", -- modifier name
-		{ travel_time = self.travel_time }, -- kv
-		self.target,
+		{ travel_time = travel_time }, -- kv
+		target_pos,
 		self:GetParent():GetTeamNumber(),
 		false
 	)
 
 	-- set projectile
-	self.info.iMoveSpeed = self.vector:Length2D()/self.travel_time
+	self.info.iMoveSpeed = self.vector:Length2D() / travel_time
 	self.info.Target = thinker
 
 	-- launch projectile
@@ -1052,8 +1271,7 @@ function modifier_imba_snapfire_mortimer_kisses:OnIntervalThink()
 	AddFOWViewer( self:GetParent():GetTeamNumber(), thinker:GetOrigin(), 100, 1, false )
 
 	-- play sound
-	local sound_cast = "Hero_Snapfire.MortimerBlob.Launch"
-	EmitSoundOn( sound_cast, self:GetParent() )
+	EmitSoundOn( "Hero_Snapfire.MortimerBlob.Launch", self:GetParent() )
 end
 
 --------------------------------------------------------------------------------
@@ -1101,11 +1319,19 @@ end
 -- Initializations
 function modifier_imba_snapfire_mortimer_kisses_debuff:OnCreated( kv )
 	-- references
-	self.slow = -self:GetAbility():GetSpecialValueFor( "move_slow_pct" )
 	self.dps = self:GetAbility():GetSpecialValueFor( "burn_damage" )
 	local interval = self:GetAbility():GetSpecialValueFor( "burn_interval" )
 
 	if not IsServer() then return end
+
+	-- Fiery Slash Impact IMBAfication
+	local distance = (self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D()
+--	local distance_travel = math.min(distance / self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()), 1)
+	-- fuck you, hardcoded for now
+	local distance_travel = math.min(distance / 3000, 1)
+	local min_slow = self:GetAbility():GetSpecialValueFor("min_slow_pct") + self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_4")
+	local max_slow = self:GetAbility():GetSpecialValueFor("max_slow_pct") + self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_4")
+	self:SetStackCount(math.max(max_slow * distance_travel, min_slow))
 
 	-- precache damage
 	self.damageTable = {
@@ -1142,7 +1368,7 @@ function modifier_imba_snapfire_mortimer_kisses_debuff:DeclareFunctions()
 end
 
 function modifier_imba_snapfire_mortimer_kisses_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return self.slow
+	return self:GetStackCount() * (-1)
 end
 
 --------------------------------------------------------------------------------
@@ -1225,7 +1451,7 @@ function modifier_imba_snapfire_mortimer_kisses_thinker:IsAura()
 end
 
 function modifier_imba_snapfire_mortimer_kisses_thinker:GetModifierAura()
-	return "modifier_snapfire_mortimer_kisses_lua_debuff"
+	return "modifier_imba_snapfire_mortimer_kisses_debuff"
 end
 
 function modifier_imba_snapfire_mortimer_kisses_thinker:GetAuraRadius()

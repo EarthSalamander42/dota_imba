@@ -5,8 +5,14 @@ modifier_generic_charges = class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
+--[[
 function modifier_generic_charges:IsHidden()
 	return self:GetAbility():GetLevel() <= 0 or (self:GetAbility():GetLevel() >= 1 and self:GetAbility():GetSpecialValueFor("max_charges") == 0 and self:GetAbility():GetSpecialValueFor("max_charges_scepter") ~= 0 and not self:GetCaster():HasScepter())
+end
+--]]
+
+function modifier_generic_charges:IsHidden()
+	return not IsInToolsMode()
 end
 
 function modifier_generic_charges:IsDebuff()
