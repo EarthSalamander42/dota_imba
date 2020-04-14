@@ -149,22 +149,22 @@ function modifier_item_imba_cyclone_2_movement:OnCreated()
 	self.angle			= self:GetParent():GetForwardVector()
 	self.rotation		= (360 / self:GetDuration()) * self:GetAbility():GetSpecialValueFor("tornado_self_rotations")
 	
-	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-		self:StartIntervalThink(FrameTime())
-	end
+	-- if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		-- self:StartIntervalThink(FrameTime())
+	-- end
 end
 
-function modifier_item_imba_cyclone_2_movement:OnIntervalThink()
-	self:GetParent():SetAbsOrigin(self:GetParent():GetAbsOrigin() + self.angle * self:GetElapsedTime() * self.displacement_distance)
+-- function modifier_item_imba_cyclone_2_movement:OnIntervalThink()
+	-- self:GetParent():SetAbsOrigin(self:GetParent():GetAbsOrigin() + self.angle * self:GetElapsedTime() * self.displacement_distance)
 	
-	self.angle	= RotatePosition(Vector(0, 0, 0), QAngle(0, self.interval * self.rotation, 0), self.angle)
-end
+	-- self.angle	= RotatePosition(Vector(0, 0, 0), QAngle(0, self.interval * self.rotation, 0), self.angle)
+-- end
 
 function modifier_item_imba_cyclone_2_movement:OnDestroy()
 	if not IsServer() then return end
 
-	-- To prevent projectiles that were swirling around with Violent Displacement to land at the end
-	ProjectileManager:ProjectileDodge(self:GetParent())
+	-- -- To prevent projectiles that were swirling around with Violent Displacement to land at the end
+	-- ProjectileManager:ProjectileDodge(self:GetParent())
 	
 	FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
 	

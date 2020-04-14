@@ -1622,12 +1622,10 @@ SelectVO = function(keys)
 			else
 				EmitGlobalSound("soundboard.ceb.start")
 				
-				PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero():SetContextThink(DoUniqueString("ceb"), function()
+				Timers:CreateTimer(2.0, function()
 					StopGlobalSound("soundboard.ceb.start")
 					EmitGlobalSound("soundboard.ceb.stop")
-					
-					return nil
-				end, 2.0)
+				end)
 			end
 			
 			--GameRules:SendCustomMessage("<font color='#70EA72'>".."test".."</font>",-1,0)

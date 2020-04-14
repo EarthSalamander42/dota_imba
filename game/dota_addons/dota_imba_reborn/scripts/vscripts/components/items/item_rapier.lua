@@ -363,11 +363,9 @@ function modifier_imba_rapier_cursed_damage_reduction:OnCreated()
 end
 
 function modifier_imba_rapier_cursed_damage_reduction:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+	}
 end
 
 function modifier_imba_rapier_cursed_damage_reduction:GetModifierIncomingDamage_Percentage()
@@ -385,11 +383,17 @@ function modifier_imba_rapier_cursed_curse:RemoveOnDeath() return false end
 
 function modifier_imba_rapier_cursed_curse:OnCreated()
 	self.parent = self:GetParent()
-	self.base_corruption = self:GetAbility():GetSpecialValueFor("base_corruption")
-	self.time_to_double = self:GetAbility():GetSpecialValueFor("time_to_double")
-	self.corruption_total_time = 0
+	
 	if IsServer() then
-		self:StartIntervalThink(FrameTime())
+		self.interval = 0.1
+	
+		if self:GetAbility().owner_entindex ~= self:GetParent():entindex() then
+			self:GetAbility().corruption_total_time = 0
+		end
+		
+		self:GetAbility().owner_entindex = self:GetParent():entindex()
+		
+		self:StartIntervalThink(self.interval)
 	end
 end
 
@@ -400,8 +404,17 @@ function modifier_imba_rapier_cursed_curse:OnDestroy()
 end
 
 function modifier_imba_rapier_cursed_curse:OnIntervalThink()
-	self.corruption_total_time = self.corruption_total_time + FrameTime()
-	local total_corruption = self.base_corruption * self.parent:GetMaxHealth() * (self.corruption_total_time / self.time_to_double) * 0.01 * FrameTime()
-	ApplyDamage({attacker = self.parent, victim = self.parent, ability = self:GetAbility(), damage = total_corruption, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL + DOTA_DAMAGE_FLAG_REFLECTION})
+	if self:GetAbility() then
+		self:GetAbility().corruption_total_time = self:GetAbility().corruption_total_time + self.interval
+		
+		ApplyDamage({
+			attacker = self.parent,
+			victim = self.parent,
+			ability = self:GetAbility(),
+			damage = self:GetAbility():GetSpecialValueFor("base_corruption") * self.parent:GetMaxHealth() * (self:GetAbility().corruption_total_time / self:GetAbility():GetSpecialValueFor("time_to_double")) * 0.01 * self.interval,
+			damage_type = DAMAGE_TYPE_PURE,
+			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL + DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL
+		})
+	end
 end
 -------------------------------------------

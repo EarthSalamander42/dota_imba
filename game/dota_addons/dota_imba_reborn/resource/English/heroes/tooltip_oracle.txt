@@ -26,7 +26,7 @@
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_heal_per_second"		"HEAL PER SECOND:"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_total_heal_tooltip"		"TOTAL HEAL:"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_duration"				"DURATION:"
-"DOTA_Tooltip_ability_imba_oracle_purifying_flames_cooldown_scepter"		"SCEPTER COOLDOWN:"
+//"DOTA_Tooltip_ability_imba_oracle_purifying_flames_cooldown_scepter"		"SCEPTER COOLDOWN:"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_castpoint_scepter"		"SCEPTER CAST POINT:"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_Note0"						"The healing from Purifying Flames can be stacked with itself."
 

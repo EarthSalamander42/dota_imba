@@ -72,7 +72,7 @@
 
 		"items"
 		{
-			//"item_helm_of_the_undying"		  "1"
+			"item_helm_of_the_undying"		  "1"
 			"item_repair_kit"				  "1"
 			"item_craggy_coat"				  "1"
 			"item_greater_faerie_fire"		  "1"

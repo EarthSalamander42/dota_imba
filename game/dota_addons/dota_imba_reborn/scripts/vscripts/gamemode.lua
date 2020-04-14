@@ -81,10 +81,12 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(Dynamic_Wrap(GameMode, "ItemAddedFilter"), self)
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter(Dynamic_Wrap(GameMode, "BountyRuneFilter"), self)
 	GameRules:GetGameModeEntity():SetThink("OnThink", self, 1)
-	GameRules:GetGameModeEntity():SetPauseEnabled(false)
+	-- GameRules:GetGameModeEntity():SetPauseEnabled(not IMBA_PICK_SCREEN)
 	
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter(Dynamic_Wrap(GameMode, "RuneSpawnFilter"), self)
-
+	
+	GameRules:GetGameModeEntity():SetPauseEnabled(false)
+	
 	if IsInToolsMode() then
 		Convars:RegisterCommand('events_test', function() GameMode:StartEventTest() end, "events test", FCVAR_CHEAT)
 	end
@@ -385,7 +387,7 @@ end
 -- 5: Same Hero Selection
 
 ListenToGameEvent('game_rules_state_change', function(keys)
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then		
 		-- If no one voted, default to IMBA 10v10 gamemode
 		GameRules:SetCustomGameDifficulty(2)
 		
@@ -452,6 +454,8 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 			print(category .. ": " .. highest_key)
 		end
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
+		GameRules:GetGameModeEntity():SetPauseEnabled(true)
 	end
 end, nil)
 

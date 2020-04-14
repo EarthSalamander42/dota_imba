@@ -99,18 +99,17 @@ modifier_imba_breathe_fire_debuff = class({})
 function modifier_imba_breathe_fire_debuff:OnCreated()
 	self.strength_reduction = 0
 
-	if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_3") then
+	if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_3") and self:GetParent().GetStrength then
 		self.strength_reduction = self:GetCaster():FindTalentValue("special_bonus_imba_dragon_knight_3") / 100
 		self.strength_reduction = -self:GetParent():GetStrength() * self.strength_reduction
 	end
 end
 
 function modifier_imba_breathe_fire_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 	}
-	return funcs
 end
 
 function modifier_imba_breathe_fire_debuff:GetModifierBaseDamageOutgoing_Percentage()

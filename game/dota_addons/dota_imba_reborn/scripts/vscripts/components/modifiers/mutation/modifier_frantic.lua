@@ -29,6 +29,10 @@ function modifier_frantic:OnCreated()
 		["imba_riki_tricks_of_the_trade_723"] 	= true
 	}
 	
+	-- self.ignore_frantic_sr_abilities = {
+		-- ["modifier_legion_commander_duel"]			= true
+	-- }
+	
 	-- This may get updated by Valve over-time, in which case it will have to manually updated...zzz
 	self.cdr_talents = {
 		"special_bonus_cooldown_reduction_8",
@@ -106,6 +110,8 @@ function modifier_frantic:DeclareFunctions()
 		
 		-- MODIFIER_EVENT_ON_ABILITY_START,
 		-- MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
+		
+		-- MODIFIER_EVENT_ON_MODIFIER_ADDED
 	}
 end
 
@@ -169,6 +175,12 @@ end
 -- function modifier_frantic:OnAbilityFullyCast(keys)
 	-- if keys.ability and keys.ability:GetName() and IMBA_ABILITIES_IGNORE_FRANTIC_CDR and IMBA_ABILITIES_IGNORE_FRANTIC_CDR[keys.ability:GetName()] then
 		-- self:SetStackCount(self.stack_count)
+	-- end
+-- end
+
+-- function modifier_frantic:OnModifierAdded(keys)
+	-- if keys.unit == self:GetParent() and self.ignore_frantic_sr_abilities and self:GetParent().FindAllModifiers and #self:GetParent():FindAllModifiers() > 0 and self.ignore_frantic_sr_abilities[self:GetParent():FindAllModifiers()[#self:GetParent():FindAllModifiers()]:GetName()] then
+		-- self:GetParent():FindAllModifiers()[#self:GetParent():FindAllModifiers()]:SetDuration(self:GetParent():FindAllModifiers()[#self:GetParent():FindAllModifiers()]:GetDuration() / ((100 - self:GetStackCount()) * 0.01), true)
 	-- end
 -- end
 

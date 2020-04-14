@@ -136,7 +136,7 @@ function modifier_custom_mechanics:OnAttackStart( keys )
 	if not IsServer() then return end
 	
 	-- Don't know if this is going to work but might as well try something to remedy the illusion issue
-	if (self:GetParent():IsIllusion() and self:GetParent():GetHealth() <= 0) or (self:GetParent().GetPlayerID and self:GetParent():GetPlayerID() == -1) then
+	if keys.attacker == self:GetParent() and (self:GetParent():IsIllusion() and self:GetParent():GetHealth() <= 0) or (self:GetParent().GetPlayerID and self:GetParent():GetPlayerID() == -1 and not self:GetParent():GetName() == "npc_dota_target_dummy") then
 		self:GetParent():ForceKill(false)
 		self:GetParent():RemoveSelf()
 	end
