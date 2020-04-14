@@ -250,7 +250,7 @@
 .VoteGameModeText {
 	margin-left: 27px;
 	font-size: 16px;
-	letter-spacing: 1px;
+/*	letter-spacing: 1px; */
 	text-shadow: 2px 2px 2px black;
 	visibility: collapse;
 }

@@ -213,7 +213,7 @@
 	font-size: 20px;
 	color: #888888;
 	text-transform: uppercase;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	text-align: left;
 	min-width: 100%;
 	text-overflow: shrink;
@@ -382,7 +382,7 @@
 	font-weight: thin;
 	vertical-align: middle;
 	text-transform: none;
-	letter-spacing: 0px;
+//	letter-spacing: 0px;
 }
 
 .Category .DemoButton:hover
@@ -817,7 +817,7 @@
 {
 	color: white;
 	font-size: 48px;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-transform: uppercase;
 	font-weight: bold;
 	text-align: right;
@@ -959,7 +959,7 @@
 	horizontal-align: middle;
 	font-size: 50px;
 	color: dotaPlusLightGold;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	font-weight: bold;
 	text-shadow: 0px 0px 4px dotaPlusLightGold;
 }
@@ -1119,7 +1119,7 @@
 	font-weight: thin;
 	vertical-align: middle;
 	text-transform: none;
-	letter-spacing: 0px;
+//	letter-spacing: 0px;
 	horizontal-align: middle;
 }
 

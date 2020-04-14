@@ -448,7 +448,7 @@
 }
 .sub_nav_tab Label {
 	text-transform: uppercase;
-	letter-spacing: 0.5px;
+//	letter-spacing: 0.5px;
 	color: #606366;
 }
 .sub_nav_tab.active Label,
@@ -521,7 +521,7 @@
 #DonatorTabButton .text,
 #LeaderboardTabButton .text {
 	font-size: 19px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	text-transform: uppercase;
 	align: left center;
 	padding-left: 30px;
@@ -663,7 +663,7 @@
 	horizontal-align: right;
 	text-align: right;
 	opacity: 1;
-	letter-spacing: 0.5px;
+//	letter-spacing: 0.5px;
 	text-shadow: 1px 1px 2px 2.0 #00000030;
 }
 
@@ -680,7 +680,7 @@
 	text-align: center;
 
 	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-overflow: clip;
 
 	align: center center;
@@ -698,7 +698,7 @@
 
 	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
 	font-size: 14px;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-overflow: clip;
 
 	horizontal-align: center;
@@ -723,7 +723,7 @@
 	text-shadow: 1px 1px 2px 2.0 #00000011;
 
 	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-overflow: clip;
 
 	text-align: center;
@@ -768,7 +768,7 @@
 	font-size: 14px;
 	color: #a2a99e;
 	vertical-align: top;
-	letter-spacing: 1.5px;
+//	letter-spacing: 1.5px;
 	text-transform: uppercase;
 	text-align: center center;
 	text-shadow: 0px 0px 3px 2 #00000050;
@@ -837,7 +837,7 @@
 
 .BattlepassRewardLabel {
 	font-size: 11px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	text-transform: uppercase;
 	text-align: center center;
 	text-shadow: 0px 0px 3px 3 #00000070;
@@ -863,7 +863,7 @@
 	horizontal-align: left;
 	font-size: 11px;
 	vertical-align: top;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	align: center center;
 	text-transform: uppercase;
 	text-overflow: shrink;
@@ -882,7 +882,7 @@
 
 .BattlepassRewardLabelUnlocked {
 	font-size: 11px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	padding: 0 5px;
 	align: center center;
 	text-transform: uppercase;
@@ -940,7 +940,7 @@
 	color:  #b1b1b1;
 	margin: 2px;
 	font-size: 13px;
-	letter-spacing: 0.4px;
+//	letter-spacing: 0.4px;
 	box-shadow: none;
 }
 
@@ -1091,7 +1091,7 @@
 	text-align: center center;
 	font-size: 19px;
 	font-weight: normal;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	margin-top: 2px;
 	text-transform: uppercase;
 	text-shadow: 1px 1px 3px 2.0 #00000025;
@@ -1255,7 +1255,7 @@
 	text-align: center center;
 	font-size: 14px;
 	font-weight: normal;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	margin-top: 2px;
 	text-transform: uppercase;
 	text-shadow: 1px 1px 3px 2.0 #00000025;

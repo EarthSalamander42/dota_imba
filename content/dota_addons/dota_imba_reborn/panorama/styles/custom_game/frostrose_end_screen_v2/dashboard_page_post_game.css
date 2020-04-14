@@ -469,7 +469,7 @@ DOTAPostGame.MatchDataLoaded #ContainerLoaded
 .DetailsSelector Label
 {
 	font-size: 19px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	color: #8e9795;
 	text-transform: uppercase;
 	margin-left: 0px;
@@ -674,7 +674,7 @@ DOTAPostGame.MatchDataLoaded #ContainerLoaded
 {
 	text-transform: uppercase;
 	color: white;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-align: center;
 	horizontal-align: center;
 	margin-bottom: 6px;
@@ -955,7 +955,7 @@ Panel.TeamIdentificationRow Label
 {
 	font-size: 20px;
 	font-weight: bold;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 }
 
 #RadiantTeamName
@@ -1664,7 +1664,7 @@ Panel.CustomGamePlayerRow Label.Assists
 	vertical-align: center;
 	horizontal-align: right;
 	font-size: 20px;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 }
 
 #WatchReplayHighlightsButton
@@ -1687,7 +1687,7 @@ DOTAPostGame.ReplayExistenceNotExpected #ReplayExistenceNotExpected
 #ReplayExistenceRequestedNotification Label
 {
 	font-size: 18px;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-overflow: shrink;
 }
 
@@ -2647,7 +2647,7 @@ DOTAAbilityImage.AbilityMaxLevel.AbilityIsUltimate
 	horizontal-align: center;
 	vertical-align: middle;
 	text-align: left;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	color: #768E8D;
 }
 
@@ -2725,10 +2725,9 @@ DOTAAbilityImage.AbilityMaxLevel.AbilityIsUltimate
 	color: #697881;
 	margin-top: 4px;
 	font-size: 16px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	text-align: right;
 	text-transform: uppercase;
-	letter-spacing: 2px;
 	vertical-align: center;
 	margin-right: 30px;
 }
@@ -2772,7 +2771,7 @@ DOTAAbilityImage.AbilityMaxLevel.AbilityIsUltimate
 	font-size: 20px;
 	margin-left: 7px;
 	font-weight: bold;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	margin-left: 148px;
 }
 
@@ -2799,7 +2798,7 @@ DOTAAbilityImage.AbilityMaxLevel.AbilityIsUltimate
 	text-shadow: 0px 0px 6px 1.0 #9BE40C8F;
 	margin-top: 87px;
 	font-size: 26px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	font-weight: thin;
 }
 
@@ -2809,7 +2808,7 @@ DOTAAbilityImage.AbilityMaxLevel.AbilityIsUltimate
 	text-shadow: 0px 0px 6px 1.0 #E74D088F;
 	margin-top: 640px;
 	font-size: 26px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	font-weight: thin;
 }
 
@@ -2992,7 +2991,7 @@ DOTAPostGame.LocalVoteNegative Image.VotingButtonNegative
 {
 	text-align: center;
 	font-size: 18px;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-transform: uppercase;
 	margin-left: 4px;
 	width: 300px;
@@ -4424,7 +4423,7 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	horizontal-align: center;
 	font-size: 14px;
 	font-weight: thin;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-align: center;
 }
 
@@ -4819,7 +4818,7 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 #OverviewHeroContractButton Label
 {
 	text-transform: uppercase;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	text-align: center;
 	font-size: 14px;
 }
@@ -5094,7 +5093,7 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 	width: 78px;
 	height: 78px;
 	margin-right: 10px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 }
 
 .DetailsDamageHeader Label.DamageTotal
@@ -5114,7 +5113,7 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 	padding-right: 0px;
 	text-transform: uppercase;
 	font-size: 15px;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 }
 
 .DetailsDamageRow Image,
@@ -5996,7 +5995,7 @@ DOTAPostGameKillMatrixRow.Victim_4_Active #VictimDeathCount9
 {
 	text-transform: uppercase;
 	//margin-left: 16px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	horizontal-align: center;
 	font-size: 14px;
 	color: #99B3B3;
@@ -7159,7 +7158,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	padding-right: 12px;
 	font-size: 22px;
 	font-weight: thin;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 }
 
 .LocalPlayer .NameAndHero Label
@@ -7211,7 +7210,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	color: white;
 	margin-top: 6px;
 	font-size: 26px;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	font-weight: thin;
 	vertical-align: middle;
 	width: 174px;
@@ -7577,7 +7576,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	font-size: 14px;
 	font-weight: bold;
 	text-transform: uppercase;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	color: black;
 	text-shadow: 0px 0px 8px 1 #000000;
 	background-color: #CAD3E7;
@@ -7961,7 +7960,7 @@ DOTAPostGameOverviewHero.Expanded #HeroItemsContainer
 {
 	text-transform: uppercase;
 	font-size: 18px;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 
 	color: #6A9561;
 	opacity: 0;
@@ -8241,7 +8240,7 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 .RankTierContainer #RankLeaderboard
 {
 	color: #F7E5c3;
-	letter-spacing: 1px;
+//	letter-spacing: 1px;
 	font-size: 18px;
 	text-align: center;
 	text-shadow: 2px 2px #00000080;

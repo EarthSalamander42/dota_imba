@@ -42,7 +42,8 @@ var link_targets = "";
 
 function ucwords (str) {
 	return (str + '').replace(/^(.)|\s+(.)/g, function ($1) {
-		return $1.toUpperCase();
+//		return $1.toUpperCase();
+		return $1;
 	});
 }
 
@@ -121,7 +122,8 @@ function fetch() {
 //	$.Msg("Fetching and setting loading screen data");
 
 	var mapInfo = Game.GetMapInfo();
-	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
+//	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
+	var map_name = mapInfo.map_display_name.replace('_', " ");
 
 	view.map.text = map_name;
 /*

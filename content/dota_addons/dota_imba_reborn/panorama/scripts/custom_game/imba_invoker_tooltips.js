@@ -159,7 +159,7 @@ function ColorizeInvokerTooltip(slot_number)
 					else
 					{
 						extra_attributes = $.CreatePanel('Label', parent_container, 'imba_invoker_tooltip')
-						extra_attributes.style['letter-spacing'] = '0px';
+//						extra_attributes.style['letter-spacing'] = '0px';
 					    extra_attributes.style['padding-left'] = '8px';
 					    extra_attributes.style['color'] = '#596e89';
 					    extra_attributes.style['font-size'] = '16px';

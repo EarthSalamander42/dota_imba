@@ -37,7 +37,7 @@
     font-size: 42px;
     horizontal-align: middle;
     text-align: center;
-	letter-spacing: 2px;
+//	letter-spacing: 2px;
 	color: gradient( linear, 0% 0%, 0% 100%, from( #E7D291 ), to( #965D01 ) );
 	text-shadow: 0px 2px 2px 4 black;
 }
