@@ -57,11 +57,11 @@ function modifier_generic_charges:OnCreated()
 
 		print(self:GetParent():entindex(), self:GetAbility():GetAbilityIndex(), self:GetAbility():GetTalentSpecialValueFor("charge_restore_time"), self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter"))
 
-		CustomGameEventManager:Send_ServerToAllClients("init_charge_ui", {
+		CustomGameEventManager:Send_ServerToPlayer(self:GetParent():GetPlayerOwner(), "init_charge_ui", {
 			unit_index = self:GetParent():entindex(),
 			ability_index = self:GetRightfulAbilityIndex(),
 			charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time"),
-			scepter_charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter"),
+			scepter_charge_duration = self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") or 0,
 			ability_name = self:GetAbility():GetAbilityName(),
 		})
 	end)
@@ -139,12 +139,12 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 			self:DecrementStackCount()
 
 			Timers:CreateTimer(FrameTime() * 2, function()
-				CustomGameEventManager:Send_ServerToAllClients("update_charge_count", {
+				CustomGameEventManager:Send_ServerToPlayer(self:GetParent():GetPlayerOwner(), "update_charge_count", {
 					unit_index = self:GetParent():entindex(),
 					ability_index = self:GetRightfulAbilityIndex(),
 				})
 
-				CustomGameEventManager:Send_ServerToAllClients("update_charge_loading", {
+				CustomGameEventManager:Send_ServerToPlayer(self:GetParent():GetPlayerOwner(), "update_charge_loading", {
 					unit_index = self:GetParent():entindex(),
 					ability_index = self:GetRightfulAbilityIndex(),
 				})
@@ -207,7 +207,7 @@ function modifier_generic_charges:CalculateCharge()
 	end
 
 	Timers:CreateTimer(FrameTime() * 2, function()
-		CustomGameEventManager:Send_ServerToAllClients("update_charge_count", {
+		CustomGameEventManager:Send_ServerToPlayer(self:GetParent():GetPlayerOwner(), "update_charge_count", {
 			unit_index = self:GetParent():entindex(),
 			ability_index = self:GetRightfulAbilityIndex(),
 		})
