@@ -343,6 +343,7 @@ end
 -- IMBA_VOID_SPIRIT_RESONANT_PULSE --
 -------------------------------------
 
+--[[
 function imba_void_spirit_resonant_pulse:GetIntrinsicModifierName()
 	return "modifier_generic_charges"
 end
@@ -369,6 +370,7 @@ end
 function imba_void_spirit_resonant_pulse:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
+--]]
 
 function imba_void_spirit_resonant_pulse:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_VoidSpirit.Pulse.Cast")
