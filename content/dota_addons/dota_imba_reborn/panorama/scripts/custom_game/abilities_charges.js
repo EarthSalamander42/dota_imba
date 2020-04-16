@@ -63,7 +63,7 @@ function UpdateLoadingCharge(args) {
 
 //		$.Msg(Duration)
 
-		if (Duration != -1 || charge_duration > timeElapsed - 0.1) {
+//		if (Duration != -1 || charge_duration > timeElapsed - 0.1) {
 			var timeRemaining = Buffs.GetRemainingTime(args.unit_index, buff_id);
 			degreesCooldownRemaining = ((timeRemaining / charge_duration) * 360) * -1;
 //			$.Msg(timeRemaining)
@@ -71,9 +71,9 @@ function UpdateLoadingCharge(args) {
 //			$.Msg(degreesCooldownRemaining)
 
 			$.Schedule(1 / 10, fun);
-		} else {
-			run_loop = false; // gotta find the right condition to prevent running timer if charges are fullfilled
-		}
+//		} else {
+//			run_loop = false; // gotta find the right condition to prevent running timer if charges are fullfilled
+//		}
 
 		var clipString = stringStart + degreesCooldownRemaining + stringEnd;
 //		$.Msg(clipString)
@@ -92,13 +92,9 @@ function GetBuffIDByName(selectedEntityID, buff_name, ability_name) {
 	if (num_buffs) {
 		for (var i = 0; i <= num_buffs + 100; i++) {
 			var buff = Buffs.GetName(selectedEntityID, i);
-//			$.Msg(buff)
+
 			if (buff && buff == buff_name) {
 				if (ability_name) {
-					$.Msg("Buff Ability")
-					$.Msg(Abilities.GetAbilityName(Buffs.GetAbility(selectedEntityID, i)))
-					$.Msg(ability_name)
-
 					if (Abilities.GetAbilityName(Buffs.GetAbility(selectedEntityID, i)) == ability_name)
 						return i;
 				} else {

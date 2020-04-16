@@ -48,7 +48,7 @@
 #base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
 #base heroes/templar_assassin/abilities.txt
-#base heroes/terrorblade/abilities.txt
+// #base heroes/terrorblade/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
 #base heroes/treant/abilities.txt

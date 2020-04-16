@@ -150,7 +150,7 @@
 "npc_dota_hero_sven"                                        "Sven (IMBA)"
 "npc_dota_hero_techies"                                    "Techies"
 "npc_dota_hero_templar_assassin"                            "Templar Assassin (IMBA)"
-"npc_dota_hero_terrorblade"                                "Terrorblade (IMBA)"
+"npc_dota_hero_terrorblade"                                "Terrorblade"
 "npc_dota_hero_tidehunter"                                  "Tidehunter (IMBA)"
 "npc_dota_hero_tinker"                                      "Tinker"
 "npc_dota_hero_shredder"                                    "Timbersaw (IMBA)"

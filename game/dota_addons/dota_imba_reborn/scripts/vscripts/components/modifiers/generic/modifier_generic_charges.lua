@@ -109,8 +109,8 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 	
 	-- Remove this modifier if the ability no longer exists
 	if not self:GetAbility() or self:GetAbility():IsNull() then self:Destroy() return end
-	
-	if params.ability == self:GetAbility() then
+
+	if params.ability == self:GetAbility() or params.ability:GetAbilityName() == self:GetAbility():GetAssociatedPrimaryAbilities() then
 		-- All this garbage is just to try and check for WTF mode to not expend charges and yet it's still bypassable
 --		local wtf_mode = true
 		local wtf_mode = false

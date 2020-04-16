@@ -836,25 +836,23 @@ end
 -- IMBA_GYROCOPTER_FLAK_CANNON --
 ---------------------------------
 
--- Already built into hero as vanilla so this isn't required
+function imba_gyrocopter_flak_cannon:GetIntrinsicModifierName()
+	return "modifier_imba_gyrocopter_flak_cannon_side_gunner"
+end
 
--- function imba_gyrocopter_flak_cannon:GetIntrinsicModifierName()
-	-- return "modifier_imba_gyrocopter_flak_cannon_side_gunner"
--- end
+function imba_gyrocopter_flak_cannon:OnInventoryContentsChanged()
+	if self:GetIntrinsicModifierName() and self:GetCaster():HasModifier(self:GetIntrinsicModifierName()) then
+		if self:GetCaster():HasScepter() then
+			self:GetCaster():FindModifierByName(self:GetIntrinsicModifierName()):StartIntervalThink(self:GetSpecialValueFor("fire_rate"))
+		else
+			self:GetCaster():FindModifierByName(self:GetIntrinsicModifierName()):StartIntervalThink(-1)
+		end
+	end
+end
 
--- function imba_gyrocopter_flak_cannon:OnInventoryContentsChanged()
-	-- if self:GetIntrinsicModifierName() and self:GetCaster():HasModifier(self:GetIntrinsicModifierName()) then
-		-- if self:GetCaster():HasScepter() then
-			-- self:GetCaster():FindModifierByName(self:GetIntrinsicModifierName()):StartIntervalThink(self:GetSpecialValueFor("fire_rate"))
-		-- else
-			-- self:GetCaster():FindModifierByName(self:GetIntrinsicModifierName()):StartIntervalThink(-1)
-		-- end
-	-- end
--- end
-
--- function imba_gyrocopter_flak_cannon:OnHeroCalculateStatBonus()
-	-- self:OnInventoryContentsChanged()
--- end
+function imba_gyrocopter_flak_cannon:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
+end
 
 function imba_gyrocopter_flak_cannon:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Gyrocopter.FlackCannon.Activate")
