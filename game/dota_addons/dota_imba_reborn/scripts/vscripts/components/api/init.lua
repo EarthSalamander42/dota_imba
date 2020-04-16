@@ -364,12 +364,15 @@ function api:GetDisabledHeroes()
 	end
 
 	self:Request("disabled-heroes", function(data)
-		print(data)
-		api.disabled_heroes = data
+		local disabled_heroes = {}
 
-		if callback ~= nil then
-			callback(data)
+		for k, v in pairs(data) do
+			if v.map == GetMapName() then
+				disabled_heroes[v.hero_name] = v.is_disabled
+			end
 		end
+
+		api.disabled_heroes = disabled_heroes
 	end, nil, "POST", {
 		map = GetMapName(),
 	});

@@ -209,19 +209,23 @@ function init_invoker_tooltips() {
 	
 	// Handle Invoked spell in slot 5
 	var ability4 = DotaHud.FindChildTraverse("Ability4");
-	ability4.SetPanelEvent(
-	  	"onmouseover", 
-	  	function(){
-	  		ColorizeInvokerTooltip(4)
-		}
-	)
+	if (ability4) {
 
-	ability4.SetPanelEvent(
-		"onmouseout", 
-	  	function(){
-	  		ToggleInvokerTooltip()
-	  	}
-	)
+		ability4.SetPanelEvent(
+		  	"onmouseover", 
+		  	function(){
+		  		ColorizeInvokerTooltip(4)
+			}
+		)
+
+		ability4.SetPanelEvent(
+			"onmouseout", 
+		  	function(){
+		  		ToggleInvokerTooltip()
+		  	}
+		)
+
+	}
 
 	// Toggle Visibility for Invokers invoke spell list
 	DotaHud.FindChildTraverse("Ability5").Children()[1].style.visibility = "visible"

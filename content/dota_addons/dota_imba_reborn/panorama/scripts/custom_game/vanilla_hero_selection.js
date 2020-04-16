@@ -32,9 +32,6 @@ function InitHeroSelection()  {
 		pick_screen_title.style.opacity = "1";
 	}
 
-	$.Msg("Disabled hero List (backend):")
-	$.Msg(herolist.hotdisabledlist)
-
 	var i = 0;
 
 	while (i < GridCategories.GetChildCount()) {
@@ -46,7 +43,7 @@ function InitHeroSelection()  {
 			if (GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j)) {
 				var hero_panel = GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j).GetChild(0).GetChild(0);
 
-				if (herolist.hotdisabledlist && typeof(herolist.hotdisabledlist) == "table" && herolist.hotdisabledlist["npc_dota_hero_" + hero_panel.heroname]) {
+				if (herolist.hotdisabledlist && typeof(herolist.hotdisabledlist) == "object" && herolist.hotdisabledlist["npc_dota_hero_" + hero_panel.heroname]) {
 					hero_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
 					hero_panel.GetParent().GetParent().AddClass("Banned")
 					hero_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});

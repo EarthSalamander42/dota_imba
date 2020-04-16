@@ -46,8 +46,6 @@ function HeroSelection:Init()
 		assert(key ~= FORCE_PICKED_HERO, "FORCE_PICKED_HERO cannot be a pickable hero")
 	end
 
-	print(api:GetDisabledHeroes())
-
 	CustomNetTables:SetTableValue("hero_selection", "herolist", {
 		gametype = GetMapName(),
 		herolist = herolist,

@@ -1,6 +1,7 @@
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
+
 		api:RegisterGame(function(data)
 			for k, v in pairs(data.players) do
 				local payload = {
@@ -14,6 +15,8 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				end, nil, "POST", payload);
 			end
 		end)
+
+		api:GetDisabledHeroes()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		api:InitDonatorTableJS()
 

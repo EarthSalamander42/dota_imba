@@ -281,7 +281,7 @@
 
 		"item"		"item_imba_clarity"
 		"item"		"item_faerie_fire"
-		"item"		"item_enchanted_mango"
+		"item"		"item_imba_enchanted_mango"
 		"item"		"item_imba_tango"
 		"item"		"item_imba_flask"
 		"item"		"item_imba_imba_smoke_of_deceit"

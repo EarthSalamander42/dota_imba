@@ -3922,7 +3922,7 @@ imba_invoker = imba_invoker or class({})
 
 		function imba_invoker_deafening_blast:KnockBackAndDisarm(caster, target, knockback_duration, disarm_duration, disarm_effect_path, knockback_effect_path)
 			-- Add knockback and frozen modifier
-			target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_knockback", {duration = knockback_duration, knockback_effect_path = knockback_effect_path * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_knockback", {duration = knockback_duration * (1 - target:GetStatusResistance())})
 			target:AddNewModifier(caster, self, "modifier_imba_invoker_deafening_blast_frozen", {duration = knockback_duration + disarm_duration * (1 - target:GetStatusResistance())})
 		end
 
