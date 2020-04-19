@@ -12,7 +12,7 @@ end
 --]]
 
 function modifier_generic_charges:IsHidden()
-	return not IsInToolsMode()
+	return true
 end
 
 function modifier_generic_charges:IsDebuff()
@@ -173,7 +173,7 @@ function modifier_generic_charges:OnIntervalThink()
 end
 
 function modifier_generic_charges:CalculateCharge()
-	if self:IsHidden() then return end
+--	if self:IsHidden() then return end
 
 	if (self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 and self:GetStackCount() >= self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter")) or (self:GetAbility():GetTalentSpecialValueFor("max_charges") > 0 and self:GetStackCount() >= self:GetAbility():GetTalentSpecialValueFor("max_charges")) then
 		-- stop charging

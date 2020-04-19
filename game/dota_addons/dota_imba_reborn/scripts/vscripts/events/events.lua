@@ -84,7 +84,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			if IsInToolsMode() then
 				for i = 1, PlayerResource:GetPlayerCount() - 1 do
 					if PlayerResource:IsValidPlayer(i) then
-						PlayerResource:GetPlayer(i):MakeRandomHeroSelection()
+						PreventBannedHeroToBeRandomed(i)
 						PlayerResource:SetCanRepick(i, false)
 					end
 				end
@@ -99,9 +99,18 @@ function GameMode:OnGameRulesStateChange(keys)
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
-			if PlayerResource:IsValidPlayer(i) and not PlayerResource:HasSelectedHero(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
-				PlayerResource:GetPlayer(i):MakeRandomHeroSelection()
-				PlayerResource:SetCanRepick(i, false)
+			if PlayerResource:IsValidPlayer(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
+				if not PlayerResource:HasSelectedHero(i) then
+					PreventBannedHeroToBeRandomed(i)
+					PlayerResource:SetCanRepick(i, false)
+				else
+					local new_hero = PlayerResource:GetSelectedHeroName(i)
+
+					if api.disabled_heroes[new_hero] then
+						PreventBannedHeroToBeRandomed(i)
+						PlayerResource:SetCanRepick(i, false)
+					end
+				end
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then

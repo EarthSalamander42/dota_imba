@@ -1230,6 +1230,42 @@ GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(function(ctx, event)
 end, GameMode)
 --]]
 
+function PreventBannedHeroToBeRandomed(iPlayerID)
+	if PlayerResource:GetSelectedHeroName(iPlayerID) and api.disabled_heroes[PlayerResource:GetSelectedHeroName(iPlayerID)] then
+		local herolist = LoadKeyValues("scripts/npc/npc_heroes.txt")
+		local hero_table = {}
+
+		for k, v in pairs(herolist) do
+			table.insert(hero_table, k)
+		end
+
+		local new_hero = hero_table[RandomInt(1, #hero_table)]
+
+--		print(new_hero)
+
+		if api.disabled_heroes[new_hero] then
+			PreventBannedHeroToBeRandomed(iPlayerID)
+			return true
+		end
+
+		PlayerResource:GetPlayer(iPlayerID):SetSelectedHero(new_hero)
+
+		local old_hero = PlayerResource:GetSelectedHeroEntity(iPlayerID)
+
+		PrecacheUnitByNameAsync(new_hero, function()
+			PlayerResource:ReplaceHeroWith(iPlayerID, new_hero, HERO_INITIAL_GOLD[GetMapName()], 0)
+
+			Timers:CreateTimer(1.0, function()
+				if old_hero then
+					UTIL_Remove(old_hero)
+				end
+			end)
+		end)
+
+--		print("banned hero randomed, re-random:", PlayerResource:GetSelectedHeroName(iPlayerID))
+	end
+end
+
 -- credits to yahnich for the following
 function ParticleManager:FireParticle(effect, attach, owner, cps)
 	local FX = ParticleManager:CreateParticle(effect, attach, owner)
