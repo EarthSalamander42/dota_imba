@@ -11,8 +11,8 @@ function modifier_generic_charges:IsHidden()
 end
 --]]
 
-function modifier_generic_charges:IsHidden()
-	return true
+function modifier_generic_charges:IsHidden()	
+	return false
 end
 
 function modifier_generic_charges:IsDebuff()
@@ -48,14 +48,24 @@ function modifier_generic_charges:OnCreated()
 			self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges"))
 
 			self:CalculateCharge()
-		end
+		end		
 
-		-- ignore init if not wearing scepter
-		if self:GetAbility():GetAbilityName() == "imba_void_spirit_resonant_pulse" and not self.initialized then
-			return
-		end
+		-- Check if the ability requires a scepter to have the charges
+		if self:GetAbility().RequiresScepterForCharges and self:GetAbility():RequiresScepterForCharges() then
+			Timers:CreateTimer(1, function()				
+				if self:GetCaster():HasScepter() then
 
-		print(self:GetParent():entindex(), self:GetAbility():GetAbilityIndex(), self:GetAbility():GetTalentSpecialValueFor("charge_restore_time"), self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter"))
+					-- If target has a permanent scepter buff that isn't being given to him by a droppable Aghs Scepter, we can stop checking.
+					if not self:GetCaster():HasItemInInventory("item_ultimate_scepter") then
+						return
+					end
+
+					return 1
+				else
+					self:Destroy()
+				end
+			end)
+		end
 
 		CustomGameEventManager:Send_ServerToPlayer(self:GetParent():GetPlayerOwner(), "init_charge_ui", {
 			unit_index = self:GetParent():entindex(),
@@ -109,8 +119,8 @@ function modifier_generic_charges:OnAbilityFullyCast( params )
 	
 	-- Remove this modifier if the ability no longer exists
 	if not self:GetAbility() or self:GetAbility():IsNull() then self:Destroy() return end
-
-	if params.ability == self:GetAbility() or params.ability:GetAbilityName() == self:GetAbility():GetAssociatedPrimaryAbilities() then
+	
+	if params.ability == self:GetAbility() then
 		-- All this garbage is just to try and check for WTF mode to not expend charges and yet it's still bypassable
 --		local wtf_mode = true
 		local wtf_mode = false
@@ -173,7 +183,7 @@ function modifier_generic_charges:OnIntervalThink()
 end
 
 function modifier_generic_charges:CalculateCharge()
---	if self:IsHidden() then return end
+	if self:IsHidden() then return end
 
 	if (self:GetCaster():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter") ~= 0 and self:GetStackCount() >= self:GetAbility():GetTalentSpecialValueFor("max_charges_scepter")) or (self:GetAbility():GetTalentSpecialValueFor("max_charges") > 0 and self:GetStackCount() >= self:GetAbility():GetTalentSpecialValueFor("max_charges")) then
 		-- stop charging

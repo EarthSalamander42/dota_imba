@@ -192,7 +192,7 @@ end
 
 function modifier_item_imba_lance_of_longinus:GetModifierAttackRangeBonus()
 	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 then
-		if self.parent:IsRangedAttacker() then
+		if self:GetParent():IsRangedAttacker() then
 			return self:GetAbility():GetSpecialValueFor("base_attack_range")
 		else
 			return self:GetAbility():GetSpecialValueFor("base_attack_range_melee")

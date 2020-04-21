@@ -105,8 +105,8 @@ function modifier_imba_initiate_robe_passive:GetModifierTotal_ConstantBlock(keys
 	local blocked = self:GetStackCount()
 	
 	-- Block for the smaller value between total current stacks and total damage
-	if blocked > 0 then 
-		SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), min(self:GetStackCount(), keys.damage), self:GetParent())
+	if blocked > 0 and keys.damage > 0 then 		
+		SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), min(self:GetStackCount(), keys.damage), self:GetParent())				
 		self:SetStackCount(max(self:GetStackCount() - keys.damage, 0))
 	end
 

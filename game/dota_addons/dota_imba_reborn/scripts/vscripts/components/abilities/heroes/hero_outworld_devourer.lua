@@ -107,10 +107,7 @@ end
 -- IMBA_OUTWORLD_DEVOURER_ASTRAL_IMPRISONMENT --
 ------------------------------------------------
 
-function imba_outworld_devourer_astral_imprisonment:GetIntrinsicModifierName()
-	return "modifier_generic_charges"
-end
-
+function imba_outworld_devourer_astral_imprisonment:RequiresScepterForCharges() return true end
 function imba_outworld_devourer_astral_imprisonment:GetAssociatedSecondaryAbilities()
 	return "imba_outworld_devourer_astral_imprisonment_movement"
 end
@@ -132,13 +129,9 @@ function imba_outworld_devourer_astral_imprisonment:GetCooldown(level)
 end
 
 function imba_outworld_devourer_astral_imprisonment:OnInventoryContentsChanged()
-	if self:GetCaster():HasScepter() then
-		for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
-			if mod:GetAbility() == self and not mod.initialized then
-				mod:OnCreated()
-				mod.initialized = true
-			end
-		end
+	-- Caster got scepter
+	if self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_generic_charges") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})		
 	end
 end
 

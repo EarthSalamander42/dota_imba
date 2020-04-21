@@ -343,10 +343,7 @@ end
 -- IMBA_VOID_SPIRIT_RESONANT_PULSE --
 -------------------------------------
 
---[[
-function imba_void_spirit_resonant_pulse:GetIntrinsicModifierName()
-	return "modifier_generic_charges"
-end
+function imba_void_spirit_resonant_pulse:RequiresScepterForCharges() return true end
 
 function imba_void_spirit_resonant_pulse:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
@@ -357,20 +354,15 @@ function imba_void_spirit_resonant_pulse:GetCooldown(level)
 end
 
 function imba_void_spirit_resonant_pulse:OnInventoryContentsChanged()
-	if self:GetCaster():HasScepter() then
-		for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
-			if mod:GetAbility() == self and not mod.initialized then
-				mod.initialized = true
-				mod:OnCreated()
-			end
-		end
+	-- Caster got scepter
+	if self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_generic_charges") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})		
 	end
 end
 
 function imba_void_spirit_resonant_pulse:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
---]]
 
 function imba_void_spirit_resonant_pulse:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_VoidSpirit.Pulse.Cast")

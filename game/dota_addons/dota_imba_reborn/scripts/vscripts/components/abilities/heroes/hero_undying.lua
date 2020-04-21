@@ -263,6 +263,10 @@ function modifier_imba_undying_decay_buff:IsPurgable()		return false end
 function modifier_imba_undying_decay_buff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_undying_decay_buff:OnCreated()
+	if IsServer() then
+		if not self:GetAbility() then self:Destroy() end
+	end	
+
 	self.str_steal			= self:GetAbility():GetSpecialValueFor("str_steal")
 	self.str_steal_scepter	= self:GetAbility():GetSpecialValueFor("str_steal_scepter")
 	
@@ -270,12 +274,14 @@ function modifier_imba_undying_decay_buff:OnCreated()
 	
 	if not self:GetCaster():HasScepter() then
 		self:SetStackCount(self:GetStackCount() + self.str_steal)
+		self.strength_gain = self.str_steal
 	else
 		self:SetStackCount(self:GetStackCount() + self.str_steal_scepter)
+		self.strength_gain = self.str_steal_scepter
 	end
 	
-	-- "The strength gain on Undying does not keep the current health percentage either, and instead adds 20 health per strength to the current health pool."
-	self:GetParent():SetHealth(self:GetParent():GetHealth() + (self:GetStackCount() * 20))
+	-- "The strength gain on Undying does not keep the current health percentage either, and instead adds 20 health per strength to the current health pool."	
+	self:GetCaster():Heal(self.strength_gain * 20, self:GetCaster())
 end
 
 function modifier_imba_undying_decay_buff:OnDestroy()
@@ -283,9 +289,7 @@ function modifier_imba_undying_decay_buff:OnDestroy()
 	
 	if self:GetParent():HasModifier("modifier_imba_undying_decay_buff_counter") then
 		self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):GetStackCount() - self:GetStackCount())
-	end
-	
-	self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetStackCount() * 20))
+	end	
 end
 
 function modifier_imba_undying_decay_buff:OnStackCountChanged(stackCount)
@@ -297,12 +301,17 @@ function modifier_imba_undying_decay_buff:OnStackCountChanged(stackCount)
 end
 
 function modifier_imba_undying_decay_buff:DeclareFunctions()
-	return {MODIFIER_PROPERTY_MODEL_SCALE}
+	return {MODIFIER_PROPERTY_MODEL_SCALE,
+			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
 end
 
 -- "Each status buff of Decay increases Undying's model size by 2%. This has no impact on his collision size."
 function modifier_imba_undying_decay_buff:GetModifierModelScale()
 	return 2
+end
+
+function modifier_imba_undying_decay_buff:GetModifierBonusStats_Strength()
+	return self:GetStackCount()
 end
 
 ----------------------------------------------
@@ -315,13 +324,6 @@ function modifier_imba_undying_decay_buff_counter:GetEffectName()
 	return "particles/units/heroes/hero_undying/undying_decay_strength_buff.vpcf"
 end
 
-function modifier_imba_undying_decay_buff_counter:DeclareFunctions()
-	return {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
-end
-
-function modifier_imba_undying_decay_buff_counter:GetModifierBonusStats_Strength()
-	return self:GetStackCount()
-end
 
 ----------------------------------------
 -- MODIFIER_IMBA_UNDYING_DECAY_DEBUFF --
@@ -332,26 +334,41 @@ function modifier_imba_undying_decay_debuff:IsPurgable()	return false end
 function modifier_imba_undying_decay_debuff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_undying_decay_debuff:OnCreated()
-	self.str_steal			= self:GetAbility():GetSpecialValueFor("str_steal")
-	self.str_steal_scepter	= self:GetAbility():GetSpecialValueFor("str_steal_scepter")
-
-	if not IsServer() then return end
-	
-	if not self:GetCaster():HasScepter() then
-		self:SetStackCount(self:GetStackCount() + self.str_steal)
-	else
-		self:SetStackCount(self:GetStackCount() + self.str_steal_scepter)
+	if IsServer() then
+		if not self:GetAbility() then self:Destroy() end
 	end
 
-	-- "The strength loss on the target does not keep the current health percentage, but instead removes 20 health per strength from the current health pool."
-	self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetStackCount() * 20))
+	self.str_steal			= self:GetAbility():GetSpecialValueFor("str_steal")
+	self.str_steal_scepter	= self:GetAbility():GetSpecialValueFor("str_steal_scepter")
+	self.brains_int_pct	= self:GetAbility():GetSpecialValueFor("brains_int_pct")
+	self.hp_removal_per_str = 20
+
+	if not IsServer() then return end
+
+	if not self:GetCaster():HasScepter() then
+		self:SetStackCount(self:GetStackCount() + self.str_steal)
+		self.strength_reduction = self.str_steal
+	else
+		self:SetStackCount(self:GetStackCount() + self.str_steal_scepter)
+		self.strength_reduction = self.str_steal_scepter
+	end
+
+	-- "The strength loss on the target does not keep the current health percentage, but instead removes 20 health per strength from the current health pool."	
+	local damageTable = {victim = self:GetParent(),
+		attacker = self:GetCaster(),
+		damage = self.hp_removal_per_str * self.strength_reduction,
+		damage_type = DAMAGE_TYPE_PURE,
+		damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NON_LETHAL,
+		ability = self:GetAbility()}
+
+	ApplyDamage(damageTable)
 end
 
 function modifier_imba_undying_decay_debuff:OnDestroy()
 	if not IsServer() then return end
 	
-	if self:GetParent():HasModifier("modifier_imba_undying_decay_buff_counter") then
-		self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_undying_decay_buff_counter"):GetStackCount() - self:GetStackCount())
+	if self:GetParent():HasModifier("modifier_imba_undying_decay_debuff_counter") then
+		self:GetParent():FindModifierByName("modifier_imba_undying_decay_debuff_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_undying_decay_debuff_counter"):GetStackCount() - self:GetStackCount())
 	end
 	
 	if self:GetAbility() and self:GetAbility().debuff_modifier_table then
@@ -359,9 +376,7 @@ function modifier_imba_undying_decay_debuff:OnDestroy()
 			-- Remember that you return what you want to KEEP, which is kinda contradictory to the function name...
 			return self:GetAbility().debuff_modifier_table[i] ~= self
 		end)
-	end
-	
-	self:GetParent():SetHealth(self:GetParent():GetHealth() + (self:GetStackCount() * 20))
+	end	
 end
 
 function modifier_imba_undying_decay_debuff:OnStackCountChanged(stackCount)
@@ -372,17 +387,7 @@ function modifier_imba_undying_decay_debuff:OnStackCountChanged(stackCount)
 	end
 end
 
-------------------------------------------------
--- MODIFIER_IMBA_UNDYING_DECAY_DEBUFF_COUNTER --
-------------------------------------------------
-
-function modifier_imba_undying_decay_debuff_counter:IsPurgable()	return false end
-
-function modifier_imba_undying_decay_debuff_counter:OnCreated()
-	self.brains_int_pct	= self:GetAbility():GetSpecialValueFor("brains_int_pct")
-end
-
-function modifier_imba_undying_decay_debuff_counter:DeclareFunctions()
+function modifier_imba_undying_decay_debuff:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		-- IMBAfication: Braiiiinssss...
@@ -390,13 +395,19 @@ function modifier_imba_undying_decay_debuff_counter:DeclareFunctions()
 	}
 end
 
-function modifier_imba_undying_decay_debuff_counter:GetModifierBonusStats_Strength()
+function modifier_imba_undying_decay_debuff:GetModifierBonusStats_Strength()
 	return self:GetStackCount() * (-1)
 end
 
-function modifier_imba_undying_decay_debuff_counter:GetModifierBonusStats_Intellect()
+function modifier_imba_undying_decay_debuff:GetModifierBonusStats_Intellect()
 	return math.ceil(self:GetStackCount() * self.brains_int_pct * 0.01) * (-1)
 end
+
+------------------------------------------------
+-- MODIFIER_IMBA_UNDYING_DECAY_DEBUFF_COUNTER --
+------------------------------------------------
+
+function modifier_imba_undying_decay_debuff_counter:IsPurgable()	return false end
 
 ---------------------------
 -- IMBA_UNDYING_SOUL_RIP --
@@ -1058,8 +1069,8 @@ end
 -- IMBA_UNDYING_FLESH_GOLEM_GRAB --
 -----------------------------------
 
-function imba_undying_flesh_golem_grab:IsInnateAbility()	return true end
 function imba_undying_flesh_golem_grab:IsStealable()		return false end
+function imba_undying_flesh_golem_grab:IsNetherWardStealable() return false end	
 
 function imba_undying_flesh_golem_grab:GetAssociatedSecondaryAbilities()
 	return "imba_undying_flesh_golem_throw"
@@ -1180,7 +1191,6 @@ end
 -- IMBA_UNDYING_FLESH_GOLEM_THROW --
 ------------------------------------
 
-function imba_undying_flesh_golem_throw:IsInnateAbility()	return true end
 function imba_undying_flesh_golem_throw:IsStealable()		return false end
 
 function imba_undying_flesh_golem_throw:GetAssociatedPrimaryAbilities()
@@ -1219,6 +1229,25 @@ end
 
 function imba_undying_flesh_golem:GetIntrinsicModifierName()
 	return "modifier_imba_undying_flesh_golem_illusion_check"
+end
+
+function imba_undying_flesh_golem:OnUpgrade()
+	-- Only relevant for the first level of the upgrade
+	if self:GetLevel() == 1 then
+
+		local caster = self:GetCaster()
+		local ability_grab = "imba_undying_flesh_golem_grab"
+		local ability_throw = "imba_undying_flesh_golem_throw"
+
+
+		if caster:HasAbility(ability_grab) then 
+			caster:FindAbilityByName(ability_grab):SetLevel(1)
+		end
+
+		if caster:HasAbility(ability_throw) then 
+			caster:FindAbilityByName(ability_throw):SetLevel(1)
+		end
+	end
 end
 
 function imba_undying_flesh_golem:OnSpellStart()
