@@ -73,8 +73,9 @@ var DotaHud = GetDotaHud();
 function ColorizeInvokerTooltip(slot_number) 
 {
 	if(DotaHud.FindChildTraverse("AbilitiesAndStatBranch").BHasClass("npc_dota_hero_invoker"))
-	{	
+	{
 		var invoker = Entities.GetAllEntitiesByName("npc_dota_hero_invoker")[0] || null
+
 		if (invoker != null) 
 		{
 			if (slot_number > 0)
@@ -83,6 +84,7 @@ function ColorizeInvokerTooltip(slot_number)
 				if(ability_slot) 
 				{
 					var ability_name = Abilities.GetAbilityName(ability_slot);
+
 					if (ability_name && ability_name.indexOf('invoker_empty1') > -1) 
 					{
 						return
@@ -105,9 +107,10 @@ function ColorizeInvokerTooltip(slot_number)
 			var wex_lvl = Abilities.GetLevel(Entities.GetAbility(invoker, 1))
 			var exort_lvl = Abilities.GetLevel(Entities.GetAbility(invoker, 2))
 
-			//print("Q: " + quas_lvl + " W: " + wex_lvl + " E: " + exort_lvl)
+//			print("Q: " + quas_lvl + " W: " + wex_lvl + " E: " + exort_lvl)
 
 			var AbilityTooltip = DotaHud.FindChildTraverse("DOTAAbilityTooltip")
+
 			if(AbilityTooltip != null)
 			{
 				var AbilityExtraAttributes = AbilityTooltip.FindChildTraverse('AbilityExtraAttributes')
@@ -120,37 +123,38 @@ function ColorizeInvokerTooltip(slot_number)
 					for(var i = 0; i < ability_text_rows.length; i++) {
 						var text_row = ability_text_rows[i]
 						var orb_text = false
-							if (text_row.indexOf("(" + $.Localize("DOTA_Tooltip_ability_invoker_quas").toUpperCase() + ")") > -1) 
-							{
-								orb_text = true
-								new_ability_text = new_ability_text + AddOrbColor("QUAS", ability_text_rows[i]) + AddDamageValue(quas_lvl, ability_text_rows[i + 1]) 
-								i = i + 1
-							}
 
-							if (text_row.indexOf("(" + $.Localize("DOTA_Tooltip_ability_invoker_wex").toUpperCase() + ")") > -1) 
-							{
-								orb_text = true
-								new_ability_text = new_ability_text + AddOrbColor("WEX", ability_text_rows[i]) + AddDamageValue(wex_lvl, ability_text_rows[i + 1]) 
-								i = i + 1
-							}
+						if (text_row.indexOf("(" + $.Localize("DOTA_Tooltip_ability_invoker_quas").toUpperCase() + ")") > -1) 
+						{
+							orb_text = true
+							new_ability_text = new_ability_text + AddOrbColor("QUAS", ability_text_rows[i]) + AddDamageValue(quas_lvl, ability_text_rows[i + 1]) 
+							i++
+						}
 
-							if (text_row.indexOf("(" + $.Localize("DOTA_Tooltip_ability_invoker_exort").toUpperCase() + ")") > -1) 
-							{
-								orb_text = true
-								new_ability_text = new_ability_text + AddOrbColor("EXORT", ability_text_rows[i]) + AddDamageValue(exort_lvl, ability_text_rows[i + 1]) 
-								i = i + 1
-							}
+						if (text_row.indexOf("(" + $.Localize("DOTA_Tooltip_ability_invoker_wex").toUpperCase() + ")") > -1) 
+						{
+							orb_text = true
+							new_ability_text = new_ability_text + AddOrbColor("WEX", ability_text_rows[i]) + AddDamageValue(wex_lvl, ability_text_rows[i + 1]) 
+							i++
+						}
 
-							if (!orb_text) {
+						if (text_row.indexOf("(" + $.Localize("DOTA_Tooltip_ability_invoker_exort").toUpperCase() + ")") > -1) 
+						{
+							orb_text = true
+							new_ability_text = new_ability_text + AddOrbColor("EXORT", ability_text_rows[i]) + AddDamageValue(exort_lvl, ability_text_rows[i + 1]) 
+							i++
+						}
 
-								new_ability_text = new_ability_text + PlainText(ability_text_rows[i])
-							}
+						if (!orb_text) {
+							new_ability_text = new_ability_text + PlainText(ability_text_rows[i])
+						}
 					}
 
 					var container = DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityExtraAttributes')
 					var parent_container = container.GetParent()					
-					var extra_attributes = DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityCoreDetails').GetChild(6)
-					if (extra_attributes.id == 'imba_invoker_tooltip')
+					var extra_attributes = DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityCoreDetails').FindChildTraverse("imba_invoker_tooltip")
+
+					if (extra_attributes)
 					{
 						extra_attributes.text = new_ability_text
 						extra_attributes.style.visibility = "visible";
@@ -182,11 +186,11 @@ function ColorizeInvokerTooltip(slot_number)
 }
 
 function ToggleInvokerTooltip() {
-	var invoker_tooltip = DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityCoreDetails').GetChild(6)
-	if(invoker_tooltip.id == 'imba_invoker_tooltip')
+	var extra_attributes = DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityCoreDetails').FindChildTraverse("imba_invoker_tooltip")
+	if(extra_attributes)
 	{
-		invoker_tooltip.style.visibility = "collapse";
-		DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityCoreDetails').GetChild(7).style.visibility = "visible"
+		extra_attributes.style.visibility = "collapse";
+//		DotaHud.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse('AbilityCoreDetails').GetChild(7).style.visibility = "visible"
 	}
 }
 
@@ -228,7 +232,8 @@ function init_invoker_tooltips() {
 	}
 
 	// Toggle Visibility for Invokers invoke spell list
-	DotaHud.FindChildTraverse("Ability5").Children()[1].style.visibility = "visible"
+	if (DotaHud.FindChildTraverse("Ability5") && DotaHud.FindChildTraverse("Ability5").Children() && DotaHud.FindChildTraverse("Ability5").Children()[1])
+		DotaHud.FindChildTraverse("Ability5").Children()[1].style.visibility = "visible"
 
 	// Remove onmouseover tooltips from Inokver's Spell list... they bug out completely 
 	var spell_card_icons = DotaHud.FindChildTraverse("lower_hud").FindChildTraverse("SpellRowContainer").FindChildrenWithClassTraverse("AbilityMaxLevel")

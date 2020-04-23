@@ -1,29 +1,19 @@
 BATTLEPASS_LEVEL_REWARD = {}
-BATTLEPASS_LEVEL_REWARD[2]		= {"vengefulspirit_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[6]		= {"bristleback_rare", "rare"}
-BATTLEPASS_LEVEL_REWARD[7]		= {"slark_taunt", "immortal"}
 -- BATTLEPASS_LEVEL_REWARD[10]		= {"sohei_arcana", "arcana"}
 BATTLEPASS_LEVEL_REWARD[11]		= {"chen_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[14]		= {"alchemist_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[15]		= {"vengefulspirit_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[23]		= {"enigma_taunt", "rare"}
 BATTLEPASS_LEVEL_REWARD[28]		= {"dark_seer_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[33]		= {"skywrath_mage_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[38]		= {"lion_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[39]		= {"bristleback_rare2", "rare"}
 BATTLEPASS_LEVEL_REWARD[46]		= {"nyx_assassin_immortal", "immortal"}
 -- BATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
 BATTLEPASS_LEVEL_REWARD[52]		= {"enigma_mythical", "mythical"}
 BATTLEPASS_LEVEL_REWARD[56]		= {"huskar_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
-BATTLEPASS_LEVEL_REWARD[62]		= {"dark_willow_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[68]		= {"axe_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[71]		= {"zuus_taunt", "mythical"}
-BATTLEPASS_LEVEL_REWARD[84]		= {"pangolier_taunt", "immortal"}
-BATTLEPASS_LEVEL_REWARD[95]		= {"furion_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[97]		= {"life_stealer_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[106]	= {"death_prophet_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[110]	= {"invoker_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[116]	= {"centaur_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[133]	= {"skywrath_mage_immortal2", "immortal"}
@@ -40,9 +30,7 @@ if IsInToolsMode() then
 end
 BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[225]	= {"invoker_legendary", "legendary"}
-BATTLEPASS_LEVEL_REWARD[275]	= {"leshrac_taunt", "immortal"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[295]	= {"windrunner_taunt", "immortal"}
 -- BATTLEPASS_LEVEL_REWARD[310]	= {"dragon_knight_mythical", "mythical"}
 BATTLEPASS_LEVEL_REWARD[400]	= {"ursa_immortal", "immortal"}
 

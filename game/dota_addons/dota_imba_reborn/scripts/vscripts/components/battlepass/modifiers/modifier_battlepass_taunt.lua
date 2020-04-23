@@ -19,8 +19,12 @@ function modifier_battlepass_taunt:DeclareFunctions()
 	}
 end
 
-function modifier_battlepass_taunt:OnCreated()
+function modifier_battlepass_taunt:OnCreated(params)
 	if IsServer() then
+		CustomNetTables:SetTableValue("player_table", "bp_taunt_translate_anim_"..self:GetParent():GetPlayerOwnerID(), {params.taunt_anim_translate})
+
+		print(CustomNetTables:GetTableValue("player_table", "bp_taunt_translate_anim_"..self:GetParent():GetPlayerOwnerID())["1"])
+--[[
 		local table = {}
 		table["npc_dota_hero_invoker"] = 1
 		table["npc_dota_hero_leshrac"] = 2
@@ -32,10 +36,17 @@ function modifier_battlepass_taunt:OnCreated()
 		if table[self:GetParent():GetUnitName()] then
 			self:SetStackCount(table[self:GetParent():GetUnitName()])
 		end
+--]]
 	end
 end
 
 function modifier_battlepass_taunt:GetActivityTranslationModifiers()
+	if CustomNetTables:GetTableValue("player_table", "bp_taunt_translate_anim_"..self:GetParent():GetPlayerOwnerID()) then
+		return CustomNetTables:GetTableValue("player_table", "bp_taunt_translate_anim_"..self:GetParent():GetPlayerOwnerID())["1"]
+	else
+		return ""
+	end
+--[[
 	local table = {}
 	table[0] = ""
 	table[1] = "juggle_gesture"
@@ -46,6 +57,7 @@ function modifier_battlepass_taunt:GetActivityTranslationModifiers()
 	table[6] = "rope"
 
 	return table[self:GetStackCount()]
+--]]
 end
 
 function modifier_battlepass_taunt:GetOverrideAnimation()

@@ -65,6 +65,7 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_quas:IsHidden() 		return false end
 		function modifier_imba_invoker_quas:IsDebuff() 		return false end
 		function modifier_imba_invoker_quas:IsPurgable() 	return false end
+		function modifier_imba_invoker_quas:RemoveOnDeath() return false end
 		function modifier_imba_invoker_quas:DeclareFunctions()
 			local funcs = {
 				MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
@@ -76,12 +77,12 @@ imba_invoker = imba_invoker or class({})
 
 		function modifier_imba_invoker_quas:OnCreated(kv)
 			if IsServer() then 
-			 	self.bonus_strength = kv.bonus_strength
-			 	self.health_regen_per_instance = kv.health_regen_per_instance
+				self.bonus_strength = kv.bonus_strength
+				self.health_regen_per_instance = kv.health_regen_per_instance
 			else
 				local net_table = CustomNetTables:GetTableValue("player_table", "quas"..self:GetParent():GetPlayerOwnerID()) or {}
 				self.bonus_strength = net_table.quas_bonus_strength
-			 	self.health_regen_per_instance = net_table.quas_health_regen_per_instance
+				self.health_regen_per_instance = net_table.quas_health_regen_per_instance
 			end
 		end
 
@@ -94,7 +95,7 @@ imba_invoker = imba_invoker or class({})
 		end
 
 		function modifier_imba_invoker_quas:GetAttributes()
-		 	return MODIFIER_ATTRIBUTE_MULTIPLE
+			return MODIFIER_ATTRIBUTE_MULTIPLE
 		end
 
 
@@ -137,10 +138,11 @@ imba_invoker = imba_invoker or class({})
 		--	Invoker: Wex Orb modifier
 		---------------------------------------------------------------------------------------------------------------------
 		modifier_imba_invoker_wex = modifier_imba_invoker_wex or class({})
-		function modifier_imba_invoker_wex:IsBuff() 	return true  end
-		function modifier_imba_invoker_wex:IsHidden() 	return false end
-		function modifier_imba_invoker_wex:IsDebuff() 	return false end
-		function modifier_imba_invoker_wex:IsPurgable() return false end
+		function modifier_imba_invoker_wex:IsBuff() 		return true  end
+		function modifier_imba_invoker_wex:IsHidden() 		return false end
+		function modifier_imba_invoker_wex:IsDebuff() 		return false end
+		function modifier_imba_invoker_wex:IsPurgable() 	return false end
+		function modifier_imba_invoker_wex:RemoveOnDeath()	return false end
 		function modifier_imba_invoker_wex:DeclareFunctions()
 			local funcs = {
 				MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
@@ -154,13 +156,13 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_wex:OnCreated(kv)
 			if IsServer() then 
 				self.bonus_agility 				= kv.bonus_agility
-			 	self.move_speed_per_instance 	= kv.move_speed_per_instance
-			 	self.attack_speed_per_instance 	= kv.attack_speed_per_instance
+				self.move_speed_per_instance 	= kv.move_speed_per_instance
+				self.attack_speed_per_instance 	= kv.attack_speed_per_instance
 			else
 				local net_table 				= CustomNetTables:GetTableValue("player_table", "wex"..self:GetParent():GetPlayerOwnerID()) or {}
 				self.bonus_agility 				= net_table.wex_bonus_agility
 				self.move_speed_per_instance 	= net_table.wex_move_speed_per_instance
-			 	self.attack_speed_per_instance 	= net_table.wex_attack_speed_per_instance
+				self.attack_speed_per_instance 	= net_table.wex_attack_speed_per_instance
 			end
 		end
 
@@ -178,7 +180,7 @@ imba_invoker = imba_invoker or class({})
 		end
 
 		function modifier_imba_invoker_wex:GetAttributes()
-		 	return MODIFIER_ATTRIBUTE_MULTIPLE
+			return MODIFIER_ATTRIBUTE_MULTIPLE
 		end
 
 
@@ -221,10 +223,11 @@ imba_invoker = imba_invoker or class({})
 		--	Invoker: Exort Orb modifier
 		---------------------------------------------------------------------------------------------------------------------
 		modifier_imba_invoker_exort = modifier_imba_invoker_exort or class({})
-		function modifier_imba_invoker_exort:IsBuff() 		return true  end
-		function modifier_imba_invoker_exort:IsHidden() 	return false end
-		function modifier_imba_invoker_exort:IsDebuff() 	return false end
-		function modifier_imba_invoker_exort:IsPurgable() 	return false end
+		function modifier_imba_invoker_exort:IsBuff() 			return true  end
+		function modifier_imba_invoker_exort:IsHidden() 		return false end
+		function modifier_imba_invoker_exort:IsDebuff() 		return false end
+		function modifier_imba_invoker_exort:IsPurgable() 		return false end
+		function modifier_imba_invoker_exort:RemoveOnDeath()	return false end
 		function modifier_imba_invoker_exort:DeclareFunctions()
 			local funcs = {
 				MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -236,12 +239,12 @@ imba_invoker = imba_invoker or class({})
 
 		function modifier_imba_invoker_exort:OnCreated(kv)
 			if IsServer() then 
-			 	self.bonus_intelligence = kv.bonus_intelligence
-			 	self.bonus_damage_per_instance = kv.bonus_damage_per_instance
+				self.bonus_intelligence = kv.bonus_intelligence
+				self.bonus_damage_per_instance = kv.bonus_damage_per_instance
 			else
 				local net_table = CustomNetTables:GetTableValue("player_table", "exort"..self:GetParent():GetPlayerOwnerID()) or {}
 				self.bonus_intelligence = net_table.exort_bonus_intelligence
-			 	self.bonus_damage_per_instance = net_table.exort_bonus_damage_per_instance
+				self.bonus_damage_per_instance = net_table.exort_bonus_damage_per_instance
 			end
 		end
 
@@ -254,7 +257,7 @@ imba_invoker = imba_invoker or class({})
 		end
 
 		function modifier_imba_invoker_exort:GetAttributes()
-		  	return MODIFIER_ATTRIBUTE_MULTIPLE
+			return MODIFIER_ATTRIBUTE_MULTIPLE
 		end
 
 	---------------------------------------------------------------------------------------------------------------------
@@ -339,8 +342,8 @@ imba_invoker = imba_invoker or class({})
 					if oldest == nil then 
 						oldest = modifiers[i]
 					elseif modifiers[i] ~= nil and modifiers[i]:GetCreationTime() > oldest:GetCreationTime() then
-		 				oldest = modifiers[i]
-		 			end
+						oldest = modifiers[i]
+					end
 				end
 				
 				if oldest then
@@ -788,7 +791,7 @@ imba_invoker = imba_invoker or class({})
 		modifier_imba_invoker_sun_strike_thinker	= modifier_imba_invoker_sun_strike_thinker or class({})
 		
 		function imba_invoker_sun_strike:GetCastAnimation()
-		 	return ACT_DOTA_CAST_SUN_STRIKE
+			return ACT_DOTA_CAST_SUN_STRIKE
 		end
 
 		function imba_invoker_sun_strike:GetBehavior()
@@ -881,9 +884,9 @@ imba_invoker = imba_invoker or class({})
 
 			local bCataclysm = self:GetCursorTarget() == self:GetCaster()
 
-			if bCataclysm and self:GetCaster():HasScepter() then
+			if bCataclysm and self:GetCaster():HasTalent("imba_special_bonus_unique_invoker_5") then
 				bCataclysm = 1
-				self:StartCooldown(self:GetSpecialValueFor("cataclysm_cooldown") * self:GetCaster():GetCooldownReduction())
+				self:StartCooldown(self:GetCaster():FindTalentValue("imba_special_bonus_unique_invoker_5", "cooldown") * self:GetCaster():GetCooldownReduction())
 			else
 				bCataclysm = 0
 			end
@@ -930,7 +933,7 @@ imba_invoker = imba_invoker or class({})
 								ability, 
 								"modifier_imba_invoker_sun_strike", 	
 								{
-							 		duration 			= delay,
+									duration 			= delay,
 									area_of_effect 		= area_of_effect,
 									target 				= hero:entindex()
 								}, 
@@ -943,7 +946,7 @@ imba_invoker = imba_invoker or class({})
 								ability, 
 								"modifier_imba_invoker_sun_strike_beam_only", 	
 								{
-							 		duration 			= delay,
+									duration 			= delay,
 									area_of_effect 		= area_of_effect,
 									target 				= hero:entindex(),
 									show_beam			= "true",
@@ -959,7 +962,7 @@ imba_invoker = imba_invoker or class({})
 								ability, 
 								"modifier_imba_invoker_sun_strike_beam_only", 	
 								{
-							 		duration 			= delay,
+									duration 			= delay,
 									area_of_effect 		= area_of_effect,
 									target 				= hero:entindex(),
 									show_crater 		= "true"
@@ -1001,7 +1004,7 @@ imba_invoker = imba_invoker or class({})
 					-- That is not on our team...
 					if hero:GetPlayerID() and hero:GetTeam() ~= caster:GetTeam() and hero:IsAlive() then
 						-- Create 2 random sunstrike locations
-					 	local target_point1 = hero:GetAbsOrigin()  + RandomVector(math.random(minimum_range, maximum_range))
+						local target_point1 = hero:GetAbsOrigin()  + RandomVector(math.random(minimum_range, maximum_range))
 						local target_point2 = hero:GetAbsOrigin()  - RandomVector(math.random(minimum_range, maximum_range))
 
 						ability:CreateVisibilityNode(target_point1, vision_distance, vision_duration)
@@ -1019,7 +1022,7 @@ imba_invoker = imba_invoker or class({})
 									ability, 
 									"modifier_imba_invoker_sun_strike_cataclysm", 	
 									{
-								 		duration 			= delay,
+										duration 			= delay,
 										area_of_effect 		= area_of_effect,
 										target 				= hero2:entindex()
 									}, 
@@ -1031,7 +1034,7 @@ imba_invoker = imba_invoker or class({})
 									ability, 
 									"modifier_imba_invoker_sun_strike_cataclysm", 	
 									{
-								 		duration 			= delay,
+										duration 			= delay,
 										area_of_effect 		= area_of_effect,
 										target 				= hero2:entindex()
 									}, 
@@ -1043,7 +1046,7 @@ imba_invoker = imba_invoker or class({})
 									ability, 
 									"modifier_imba_invoker_sun_strike_beam_only", 	
 									{
-								 		duration 			= delay,
+										duration 			= delay,
 										area_of_effect 		= area_of_effect,
 										target 				= hero2:entindex(),
 										show_beam			= "true",
@@ -1057,7 +1060,7 @@ imba_invoker = imba_invoker or class({})
 									ability, 
 									"modifier_imba_invoker_sun_strike_beam_only", 	
 									{
-								 		duration 			= delay,
+										duration 			= delay,
 										area_of_effect 		= area_of_effect,
 										target 				= hero2:entindex(),
 										show_beam			= "true",
@@ -1319,8 +1322,8 @@ imba_invoker = imba_invoker or class({})
 			self.damage					= self:GetAbility():GetLevelSpecialValueFor("damage", self:GetCaster():FindAbilityByName("imba_invoker_exort"):GetLevel())
 			self.vision_distance		= self:GetAbility():GetSpecialValueFor("vision_distance")
 			self.vision_duration		= self:GetAbility():GetSpecialValueFor("vision_duration")
-			self.cataclysm_min_range	= self:GetAbility():GetSpecialValueFor("cataclysm_min_range")
-			self.cataclysm_max_range	= self:GetAbility():GetSpecialValueFor("cataclysm_max_range")
+			self.cataclysm_min_range	= self:GetCaster():FindTalentValue("imba_special_bonus_unique_invoker_5", "minimum_range")
+			self.cataclysm_max_range	= self:GetCaster():FindTalentValue("imba_special_bonus_unique_invoker_5", "maximum_range")
 			
 			self.incinerate_duration	= self:GetAbility():GetSpecialValueFor("incinerate_duration")
 			self.mini_beam_radius 		= self:GetAbility():GetSpecialValueFor("incinerate_beam_radius")
@@ -1474,7 +1477,7 @@ imba_invoker = imba_invoker or class({})
 		LinkLuaModifier("modifier_imba_invoker_cold_snap_cooldown", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_cold_snap_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		function imba_invoker_cold_snap:GetCastAnimation()
-		 	return ACT_DOTA_CAST_COLD_SNAP
+			return ACT_DOTA_CAST_COLD_SNAP
 		end
 
 		function imba_invoker_cold_snap:OnSpellStart()
@@ -1531,7 +1534,7 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_cold_snap:IsBuff() 			return false end
 		function modifier_imba_invoker_cold_snap:IsHidden() 		return false end
 		function modifier_imba_invoker_cold_snap:IsDebuff() 		return true  end
-		function modifier_imba_invoker_cold_snap:IsPurgable() 		return false end
+		function modifier_imba_invoker_cold_snap:IsPurgable() 		return true end
 		function modifier_imba_invoker_cold_snap:IgnoreTenacity()	return true end
 		function modifier_imba_invoker_cold_snap:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf" end
 		function modifier_imba_invoker_cold_snap:DeclareFunctions()
@@ -1676,7 +1679,7 @@ imba_invoker = imba_invoker or class({})
 		end
 
 		function imba_invoker_ghost_walk:GetCastAnimation()
-		 	return ACT_DOTA_CAST_GHOST_WALK
+			return ACT_DOTA_CAST_GHOST_WALK
 		end
 
 		function imba_invoker_ghost_walk:OnSpellStart()
@@ -1948,7 +1951,7 @@ imba_invoker = imba_invoker or class({})
 		imba_invoker_alacrity.buff_effect_path 		= "particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
 		LinkLuaModifier("modifier_imba_invoker_alacrity", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		function imba_invoker_alacrity:GetCastAnimation()
-		 	return ACT_DOTA_CAST_ALACRITY
+			return ACT_DOTA_CAST_ALACRITY
 		end
 
 		function imba_invoker_alacrity:OnSpellStart()
@@ -1970,9 +1973,8 @@ imba_invoker = imba_invoker or class({})
 				if caster:HasTalent("imba_special_bonus_unique_invoker_6") and target == caster then 
 					for _,hero in pairs(HeroList:GetAllHeroes()) do
 						if hero == caster then 
-							local double_duraiton = alacrity_duration * 2
 							hero:AddNewModifier(caster, ability, "modifier_imba_invoker_alacrity", {
-							duration = double_duraiton, 
+							duration = alacrity_duration * 2, 
 							bonus_attack_speed = bonus_attack_speed, 
 							bonus_damage = bonus_damage})
 						elseif hero:GetTeam() == caster:GetTeam() then
@@ -2012,7 +2014,7 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_alacrity:DeclareFunctions()
 			local funcs = {
 				MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-				MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
+				MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 				MODIFIER_EVENT_ON_ATTACK_LANDED
 			}
 
@@ -2031,7 +2033,7 @@ imba_invoker = imba_invoker or class({})
 				self.bonus_attack_speed = kv.bonus_attack_speed
 
 			else
-				local net_table 		= CustomNetTables:GetTableValue("player_table", tostring(self:GetParent():GetPlayerOwnerID())) or {}
+				local net_table 		= CustomNetTables:GetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID())) or {}
 				self.bonus_damage 		= net_table.alacrity_bonus_damage or 0
 				self.bonus_attack_speed = net_table.alacrity_attack_speed or 0
 			end
@@ -2185,7 +2187,7 @@ imba_invoker = imba_invoker or class({})
 				self.bonus_damage 		= kv.bonus_damage
 				self.bonus_attack_speed = kv.bonus_attack_speed
 			else
-				local net_table 		= CustomNetTables:GetTableValue("player_table", tostring(self:GetParent():GetPlayerOwnerID())) or {}
+				local net_table 		= CustomNetTables:GetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID())) or {}
 				self.bonus_damage 		= net_table.alacrity_bonus_damage or 0
 				self.bonus_attack_speed = net_table.alacrity_attack_speed or 0
 			end
@@ -2196,7 +2198,7 @@ imba_invoker = imba_invoker or class({})
 			return self.bonus_attack_speed 
 		end
 
-		function modifier_imba_invoker_alacrity:GetModifierBaseAttack_BonusDamage()
+		function modifier_imba_invoker_alacrity:GetModifierPreAttack_BonusDamage()
 			return self.bonus_damage
 		end
 
@@ -2216,7 +2218,7 @@ imba_invoker = imba_invoker or class({})
 		end
 
 		function imba_invoker_forge_spirit:GetCastAnimation()
-		 	return ACT_DOTA_CAST_FORGE_SPIRIT
+			return ACT_DOTA_CAST_FORGE_SPIRIT
 		end
 
 		function imba_invoker_forge_spirit:OnSpellStart()
@@ -2582,7 +2584,7 @@ imba_invoker = imba_invoker or class({})
 												cyclone_effect_path 	= imba_invoker_tornado.ability_effect_cyclone_path,
 												vision_distance 		= vision_distance,
 												tornado_dummy_unit 		= tornado_dummy_unit:entindex()
-										  	}
+											}
 				}
 
 				-- Get cast and target-points and make sure they are at ground level.
@@ -2736,14 +2738,14 @@ imba_invoker = imba_invoker or class({})
 					end
 				else 
 					EntIndexToHScript(ExtraData.tornado_dummy_unit):StopSound("Hero_Invoker.Tornado")
-		    		EntIndexToHScript(ExtraData.tornado_dummy_unit):RemoveSelf()
-		    		self:CreateVisibilityNode(location, ExtraData.vision_distance, ExtraData.end_vision_duration)
+					EntIndexToHScript(ExtraData.tornado_dummy_unit):RemoveSelf()
+					self:CreateVisibilityNode(location, ExtraData.vision_distance, ExtraData.end_vision_duration)
 				end
 			end
 		end
 
 		function imba_invoker_tornado:spinn(kv)
-		    local target = kv.target
+			local target = kv.target
 			local total_degrees = 20
 
 			--Rotate as close to 20 degrees per x.x seconds (666.666 degrees per second) as possible, so that the target lands facing their initial direction.
@@ -2872,7 +2874,7 @@ imba_invoker = imba_invoker or class({})
 		LinkLuaModifier("modifier_imba_invoker_emp_overload", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 
 		function imba_invoker_emp:GetCastAnimation()
-	 		return ACT_DOTA_CAST_EMP
+			return ACT_DOTA_CAST_EMP
 		end
 
 		function imba_invoker_emp:GetAOERadius()
@@ -2884,7 +2886,7 @@ imba_invoker = imba_invoker or class({})
 			 
 				self:GetCaster():StartGesture(ACT_DOTA_CAST_EMP)
 			 
-			 	local target_point = self:GetCursorPosition()
+				local target_point = self:GetCursorPosition()
 
 				self:CastEMP(
 				{	
@@ -3067,7 +3069,7 @@ imba_invoker = imba_invoker or class({})
 		LinkLuaModifier("modifier_imba_invoker_ice_wall_slow", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_ice_wall_attack_slow", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		function imba_invoker_ice_wall:GetCastAnimation()
-		 	return ACT_DOTA_CAST_ICE_WALL
+			return ACT_DOTA_CAST_ICE_WALL
 		end
 
 		function imba_invoker_ice_wall:OnSpellStart()
@@ -3156,7 +3158,7 @@ imba_invoker = imba_invoker or class({})
 						ability, 
 						"modifier_imba_invoker_ice_wall", 	
 						{
-					 		duration 							= ice_wall_duration,
+							duration 							= ice_wall_duration,
 							ice_wall_damage_interval 			= ice_wall_damage_interval,
 							ice_wall_slow_duration 				= ice_wall_slow_duration,
 							ice_wall_slow 						= ice_wall_slow,
@@ -3241,13 +3243,13 @@ imba_invoker = imba_invoker or class({})
 			if self.ice_wall_particle_effect ~= nil then
 				for effect in string.gmatch(self.ice_wall_particle_effect, "([^ ]+)") do
 					ParticleManager:DestroyParticle(tonumber(effect), false)                
-		        end
+				end
 			end
 
 			if self.ice_wall_particle_effect_spikes ~= nil then
 				for effect in string.gmatch(self.ice_wall_particle_effect_spikes, "([^ ]+)") do
 					ParticleManager:DestroyParticle(tonumber(effect), false)
-		        end
+				end
 			end
 		end
 
@@ -3343,7 +3345,6 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_ice_wall_attack_slow:IsPurgable() 		return true  end
 		function modifier_imba_invoker_ice_wall_attack_slow:IsPurgeException() 	return true  end
 		function modifier_imba_invoker_ice_wall_attack_slow:IsStunDebuff() 		return false end
-		function modifier_imba_invoker_ice_wall_attack_slow:RemoveOnDeath() 	return true  end
 		function modifier_imba_invoker_ice_wall_attack_slow:DeclareFunctions()
 			local funcs = {
 				MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
@@ -3386,7 +3387,7 @@ imba_invoker = imba_invoker or class({})
 		LinkLuaModifier("modifier_imba_invoker_chaos_meteor_burn_effect", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		LinkLuaModifier("modifier_imba_invoker_chaos_meteor_aura", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 		function imba_invoker_chaos_meteor:GetCastAnimation()
-		 	return ACT_DOTA_CAST_CHAOS_METEOR
+			return ACT_DOTA_CAST_CHAOS_METEOR
 		end
 
 		function imba_invoker_chaos_meteor:OnSpellStart()
@@ -3437,7 +3438,7 @@ imba_invoker = imba_invoker or class({})
 					ability, 
 					"modifier_imba_invoker_chaos_meteor", 	
 					{
-				 		duration = chaos_meteor_land_time
+						duration = chaos_meteor_land_time
 					}, 
 					target_point, 
 					caster:GetTeamNumber(), 
@@ -3475,7 +3476,8 @@ imba_invoker = imba_invoker or class({})
 				self.caster:EmitSound("Hero_Invoker.ChaosMeteor.Cast")
 				
 				self.meteor_dummy = CreateModifierThinker(self.caster, self.ability, nil, {}, self.target_point, self.caster:GetTeamNumber(), false)
-				
+				self.meteor_dummy:EmitSound("Hero_Invoker.ChaosMeteor.Loop")
+
 				-- Create start_point of the meteor 1000z up in the air! Meteors velocity is same while falling through the air as it is rolling on the ground.
 				local chaos_meteor_fly_original_point = (self.target_point - (self.chaos_meteor_velocity * self.chaos_meteor_land_time)) + Vector(0, 0, 1000)
 				--Create the particle effect consisting of the meteor falling from the sky and landing at the target point.
@@ -3488,7 +3490,6 @@ imba_invoker = imba_invoker or class({})
 
 		function modifier_imba_invoker_chaos_meteor:OnRemoved()
 			if IsServer() then 
-
 				self.meteor_dummy:EmitSound("Hero_Invoker.ChaosMeteor.Impact")
 				self.meteor_dummy:AddNewModifier(	
 					self.caster, 
@@ -3545,15 +3546,16 @@ imba_invoker = imba_invoker or class({})
 
 		function imba_invoker_chaos_meteor:OnProjectileThink_ExtraData(location, ExtraData)
 			if IsServer() then
-				 EntIndexToHScript(ExtraData.meteor_dummy):SetAbsOrigin(location)
+				EntIndexToHScript(ExtraData.meteor_dummy):SetAbsOrigin(location)
 			end
 		end
 
 		function imba_invoker_chaos_meteor:OnProjectileHit_ExtraData(target, location, ExtraData)
 			if IsServer() then 
 				if target == nil then 
-				    EntIndexToHScript(ExtraData.meteor_dummy):RemoveSelf()
-				    self:CreateVisibilityNode(location, ExtraData.vision_distance, ExtraData.vision_duration)
+					EntIndexToHScript(ExtraData.meteor_dummy):StopSound("Hero_Invoker.ChaosMeteor.Loop")
+					EntIndexToHScript(ExtraData.meteor_dummy):RemoveSelf()
+					self:CreateVisibilityNode(location, ExtraData.vision_distance, ExtraData.vision_duration)
 				end
 			end 
 		end
@@ -3731,7 +3733,7 @@ imba_invoker = imba_invoker or class({})
 		LinkLuaModifier("modifier_imba_invoker_deafening_blast_disarm", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 
 		function imba_invoker_deafening_blast:GetCastAnimation()
-		 	return ACT_DOTA_CAST_DEAFENING_BLAST
+			return ACT_DOTA_CAST_DEAFENING_BLAST
 		end
 
 		function imba_invoker_deafening_blast:OnSpellStart()
@@ -4037,7 +4039,7 @@ imba_invoker = imba_invoker or class({})
 		end
 
 		function modifier_imba_invoker_deafening_blast_knockback:GetOverrideAnimation()
-		  	return ACT_DOTA_DISABLED
+			return ACT_DOTA_DISABLED
 		end
 
 		function modifier_imba_invoker_deafening_blast_knockback:OnCreated(kv)

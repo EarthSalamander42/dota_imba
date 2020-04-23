@@ -7,7 +7,7 @@
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_Note2"					"The unslowable portion of Demonic Haste is purgable."
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_Lore"					"Boots that drain the energy of those caught gazing at it. With a flicker, a travel through the ether drains the souls of those caught in the wearer's path."
 
-"DOTA_Tooltip_Ability_item_imba_lifesteal_boots_bonus_movement_speed"	"%+$move_speed"
+"DOTA_Tooltip_Ability_item_imba_lifesteal_boots_bonus_movement_speed"	"+$move_speed"
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_bonus_damage"			"+$damage"
 "DOTA_Tooltip_Ability_item_imba_lifesteal_boots_armor"					"+$armor"
 

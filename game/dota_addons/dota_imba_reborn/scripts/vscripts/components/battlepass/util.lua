@@ -54,6 +54,7 @@ function Battlepass:AddItemEffects(hero)
 			Battlepass:SetItemEffects(hero)
 		elseif CUSTOM_GAME_TYPE ~= "POG" then
 			Battlepass:SetItemEffects(hero:GetPlayerID())
+			Battlepass:RegisterHeroTaunt(hero)
 		end
 	end
 
@@ -192,6 +193,22 @@ function Battlepass:PlayerXP(keys)
 	})
 end
 
+function Battlepass:RegisterHeroTaunt(hero)
+	for k, v in pairs(ItemsGame.custom_kv) do
+		if v.item_type == "taunt" then
+			if hero:GetUnitName() == ItemsGame:GetItemHero(k) and Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= v.item_unlock_level then
+				if ItemsGame:GetItemVisuals(k).asset_modifier0 then
+					hero.bp_taunt = ItemsGame:GetItemVisuals(k)["asset_modifier0"].modifier
+				elseif ItemsGame:GetItemVisuals(k).asset_modifier then
+					hero.bp_taunt = ItemsGame:GetItemVisuals(k)["asset_modifier"].modifier
+				end
+
+				return
+			end
+		end
+	end
+end
+
 function Battlepass:PlayHeroTaunt(keys)
 	local hero = PlayerResource:GetSelectedHeroEntity(keys.ID)
 
@@ -201,24 +218,9 @@ function Battlepass:PlayHeroTaunt(keys)
 		return
 	end
 
-	if not Battlepass or not Battlepass.GetRewardUnlocked or not BATTLEPASS_LEVEL_REWARD then
-		return
-	end
-
 	local hero_short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
-	local taunt_unlocked = false
 
-	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
-		if v[1] == hero_short_name.."_taunt" then
-			if Battlepass:GetRewardUnlocked(keys.ID) >= k then
-				taunt_unlocked = true
-
-				break
-			end
-		end
-	end
-
-	if taunt_unlocked == false then
+	if hero.bp_taunt == nil then
 		-- Notification: you're level is too low or this hero have no taunt!
 
 		return
@@ -230,7 +232,8 @@ function Battlepass:PlayHeroTaunt(keys)
 
 	if hero.can_cast_taunt == true then
 		hero.can_cast_taunt = false
-		hero:AddNewModifier(hero, nil, "modifier_battlepass_taunt", {duration=7.0})
+		hero:AddNewModifier(hero, nil, "modifier_battlepass_taunt", {duration=7.0, taunt_anim_translate = hero.bp_taunt})
+--		ActivityModifier:AddWearableActivity(hero, hero.bp_taunt, sItemDef)
 
 		Timers:CreateTimer(8.0, function()
 			hero.can_cast_taunt = true

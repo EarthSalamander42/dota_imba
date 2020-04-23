@@ -564,7 +564,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"15"
+				"bonus_ms"				"45"
 			}
 			"02"
 			{
@@ -763,7 +763,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement"		"17"
+				"bonus_movement"		"60"
 			}
 			"02"
 			{
@@ -8328,7 +8328,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"20"
+				"bonus_movement_speed"		"60"
 			}
 			"04"
 			{
@@ -12755,7 +12755,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"20"
+				"bonus_movement_speed"	"45"
 			}
 			"02"
 			{
@@ -15215,7 +15215,7 @@
 			}			
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Transient Boots Recipe
 	//=================================================================================================================
@@ -15226,14 +15226,14 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
 		"Model"							"models/props_gameplay/recipe.mdl"		
-		
+
 		"ID"							"2325"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"500"
 		"ItemShopTags"					""
-		
+
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -15243,7 +15243,7 @@
 			"01"						"item_tranquil_boots;item_glimmer_cape"
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Transient Boots
 	//=================================================================================================================
@@ -15255,7 +15255,7 @@
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"custom/imba_transient_boots"
 		"ScriptFile"					"components/items/item_transient_boots"
-		
+
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -15272,7 +15272,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"3400"
 		"ItemQuality"					"rare"
-		
+
 		"ItemShopTags"					"move_speed;regen_health;armor"
 		"ItemAliases"					"transient boots"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -15285,7 +15285,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"30"
+				"bonus_movement_speed"	"75"
 			}
 			"02"
 			{
@@ -15300,10 +15300,8 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"broken_movement_speed"	"20"
+				"broken_movement_speed"	"50"
 			}
-			
-			
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -15317,7 +15315,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"fade_delay"				"0.6"
+				"fade_delay"			"0.6"
 			}
 			"08"
 			{
@@ -15327,7 +15325,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"	"5"
+				"duration"				"5"
 			}
 			"10"
 			{
@@ -15336,7 +15334,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Ogre Seal Totem Recipe
 	//=================================================================================================================

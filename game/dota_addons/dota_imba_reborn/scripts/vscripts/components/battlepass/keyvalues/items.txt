@@ -230,7 +230,7 @@
 		"item_type"					"bottle"
 		"item_unlock_level"			"110"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/bottle" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
 		"particles"
@@ -244,7 +244,7 @@
 		"item_type"					"bottle"
 		"item_unlock_level"			"210"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/bottle2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
 		"particles"
@@ -258,7 +258,7 @@
 		"item_type"					"bottle"
 		"item_unlock_level"			"310"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/bottle3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
 		"particles"
@@ -272,7 +272,7 @@
 		"item_type"					"bottle"
 		"item_unlock_level"			"410"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/bottle4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
 		"particles"
@@ -286,7 +286,7 @@
 		"item_type"					"bottle"
 		"item_unlock_level"			"510"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/bottle5" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
 		"particles"
@@ -300,7 +300,7 @@
 		"item_type"					"bottle"
 		"item_unlock_level"			"610"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/bottle6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
 		"particles"
@@ -319,7 +319,7 @@
 		"item_type"					"force_staff"
 		"item_unlock_level"			"120"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/force_staff" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
 		"particles"
@@ -333,7 +333,7 @@
 		"item_type"					"force_staff"
 		"item_unlock_level"			"240"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/force_staff2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
 		"particles"
@@ -347,7 +347,7 @@
 		"item_type"					"force_staff"
 		"item_unlock_level"			"360"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/force_staff3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
 		"particles"
@@ -361,7 +361,7 @@
 		"item_type"					"force_staff"
 		"item_unlock_level"			"480"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/force_staff4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
 		"particles"
@@ -375,7 +375,7 @@
 		"item_type"					"force_staff"
 		"item_unlock_level"			"600"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/force_staff5" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
 		"particles"
@@ -389,7 +389,7 @@
 		"item_type"					"force_staff"
 		"item_unlock_level"			"720"
 		"item_rarity"				"rare"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/force_staff6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
 		"particles"
@@ -408,7 +408,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"1"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -423,7 +423,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"35"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -438,7 +438,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"70"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -453,7 +453,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"105"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -468,7 +468,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"140"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain5" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -483,7 +483,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"175"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -498,7 +498,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"210"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain7" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -513,7 +513,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"245"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain8" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -528,7 +528,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"280"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain9" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -543,7 +543,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"315"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain10" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -558,7 +558,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"350"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain11" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -573,7 +573,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"385"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain12" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -588,7 +588,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"420"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain13" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -603,7 +603,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"455"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain14" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -618,7 +618,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"490"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain15" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -633,7 +633,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"525"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain16" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -648,7 +648,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"560"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain17" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -663,7 +663,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"595"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain18" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -678,7 +678,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"630"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain19" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -693,7 +693,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"665"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain20" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -708,7 +708,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"700"
 		"item_rarity"				"uncommon"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/fountain21" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
 		"particles"
@@ -816,7 +816,7 @@
 		"item_type"					"mekansm"
 		"item_unlock_level"			"120"
 		"item_rarity"				"mythical"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/mekansm" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
 		"particles"
@@ -835,7 +835,7 @@
 		"item_type"					"mekansm"
 		"item_unlock_level"			"360"
 		"item_rarity"				"mythical"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/mekansm2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
 		"particles"
@@ -854,7 +854,7 @@
 		"item_type"					"mekansm"
 		"item_unlock_level"			"600"
 		"item_rarity"				"mythical"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/mekansm3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
 		"particles"
@@ -873,7 +873,7 @@
 		"item_type"					"mekansm"
 		"item_unlock_level"			"840"
 		"item_rarity"				"mythical3"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+//		"image_inventory"			"custom_game/battlepass/mekansm4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
 		"particles"
@@ -896,7 +896,7 @@
 		"item_type"					"radiance"
 		"item_unlock_level"			"150"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/radiance" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"radiance"
 
 		"particles"
@@ -912,7 +912,7 @@
 		"item_type"					"radiance"
 		"item_unlock_level"			"450"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/radiance2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"radiance"
 
 		"particles"
@@ -928,7 +928,7 @@
 		"item_type"					"radiance"
 		"item_unlock_level"			"750"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/radiance3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"radiance"
 
 		"particles"
@@ -944,7 +944,7 @@
 		"item_type"					"radiance"
 		"item_unlock_level"			"1050"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+//		"image_inventory"			"custom_game/battlepass/radiance4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"radiance"
 
 		"particles"
@@ -955,7 +955,7 @@
 	}
 
 	////////////////////////////////////////////////////////
-	// RADIANCE EFFECTS
+	// SCYTHE OF VYSE EFFECTS
 	////////////////////////////////////////////////////////
 
 	"61" // 
@@ -964,7 +964,7 @@
 		"item_type"					"sheepstick"
 		"item_unlock_level"			"320"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/sheepstick" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"sheepstick"
 
 		"particles"
@@ -980,7 +980,7 @@
 		"item_type"					"sheepstick"
 		"item_unlock_level"			"640"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/sheepstick2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"sheepstick"
 
 		"particles"
@@ -1000,7 +1000,7 @@
 		"item_type"					"shiva"
 		"item_unlock_level"			"400"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/shiva" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
 		"particles"
@@ -1016,7 +1016,7 @@
 		"item_type"					"shiva"
 		"item_unlock_level"			"800"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/shiva2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
 		"particles"
@@ -1032,7 +1032,7 @@
 		"item_type"					"shiva"
 		"item_unlock_level"			"1200"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/shiva3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
 		"particles"
@@ -1048,7 +1048,7 @@
 		"item_type"					"shiva"
 		"item_unlock_level"			"1600"
 		"item_rarity"				"legendary"
-		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/shiva4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
 		"particles"
@@ -1106,6 +1106,92 @@
 		"item_unlock_level"			"500"
 		"modifier"					"modifier_phantom_assassin_arcana"
 	}
+
+	"72" // Vengeful Spirit Taunt: The Royal Raspberry
+	{
+		"item_id"					"7595"
+		"item_type"					"taunt"
+		"item_unlock_level"			"1"
+	}
+
+	"73" // Slark Taunt: RazorFlip!
+	{
+		"item_id"					"7667"
+		"item_type"					"taunt"
+		"item_unlock_level"			"4"
+	}
+
+	"74" // Alchemist Taunt: Ogre Hop!
+	{
+		"item_id"					"7660"
+		"item_type"					"taunt"
+		"item_unlock_level"			"7"
+	}
+
+	"75" // Enigma Taunt: Enigmatic Style
+	{
+		"item_id"					"9682"
+		"item_type"					"taunt"
+		"item_unlock_level"			"10"
+	}
+
+	"76" // Lion Taunt: To Hell and Back!
+	{
+		"item_id"					"7594"
+		"item_type"					"taunt"
+		"item_unlock_level"			"14"
+	}
+
+	"77" // Dark Willow Taunt: Thorns and All
+	{
+		"item_id"					"9211"
+		"item_type"					"taunt"
+		"item_unlock_level"			"17"
+	}
+
+	"78" // Zeus Taunt: Heavenly Jump!
+	{
+		"item_id"					"8069"
+		"item_type"					"taunt"
+		"item_unlock_level"			"20"
+	}
+
+	"79" // Pangolier Taunt: Foolish Gallantry
+	{
+		"item_id"					"9461"
+		"item_type"					"taunt"
+		"item_unlock_level"			"23"
+	}
+
+	"80" // Nature's Prophet Taunt: Make It Rain
+	{
+		"item_id"					"8057"
+		"item_type"					"taunt"
+		"item_unlock_level"			"26"
+	}
+
+	"81" // Invoker Taunt: The Master Juggles
+	{
+		"item_id"					"7582"
+		"item_type"					"taunt"
+		"item_unlock_level"			"29"
+	}
+
+	"82" // Leshrac Taunt: Party On?  Party Off!
+	{
+		"item_id"					"7596"
+		"item_type"					"taunt"
+		"item_unlock_level"			"32"
+	}
+
+	"83" // Windrunner Taunt: You Prefer Arrows?
+	{
+		"item_id"					"7668"
+		"item_type"					"taunt"
+		"item_unlock_level"			"35"
+	}
+
+
 
 //	"2" // Antipode Couriers (Radiant)
 //	{

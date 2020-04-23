@@ -345,6 +345,7 @@ end
 
 function imba_void_spirit_resonant_pulse:RequiresScepterForCharges() return true end
 
+--[[
 function imba_void_spirit_resonant_pulse:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
 		return self.BaseClass.GetCooldown(self, level)
@@ -352,6 +353,7 @@ function imba_void_spirit_resonant_pulse:GetCooldown(level)
 		return 0
 	end
 end
+--]]
 
 function imba_void_spirit_resonant_pulse:OnInventoryContentsChanged()
 	-- Caster got scepter
