@@ -233,15 +233,13 @@ end
 ----------------------------------------------------
 -- Glaives of Wisdom
 ----------------------------------------------------
+LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_buff", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_debuff", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_silencer_glaives_of_wisdom_buff = modifier_imba_silencer_glaives_of_wisdom_buff or class({})
+modifier_imba_silencer_glaives_of_wisdom_debuff = modifier_imba_silencer_glaives_of_wisdom_debuff or class({})
+
 imba_silencer_glaives_of_wisdom = imba_silencer_glaives_of_wisdom or class({})
-
-LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_multiple", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_buff_counter", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_debuff_counter", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-
-modifier_imba_silencer_glaives_of_wisdom_multiple		= modifier_imba_silencer_glaives_of_wisdom_multiple or class({})
-modifier_imba_silencer_glaives_of_wisdom_buff_counter	= modifier_imba_silencer_glaives_of_wisdom_buff_counter or class({})
-modifier_imba_silencer_glaives_of_wisdom_debuff_counter	= modifier_imba_silencer_glaives_of_wisdom_debuff_counter or class({})
 
 function imba_silencer_glaives_of_wisdom:GetAbilityTextureName()
 	return "silencer_glaives_of_wisdom"
@@ -296,6 +294,9 @@ function modifier_imba_silencer_glaives_of_wisdom:OnCreated()
 	self.modifier_int_damage = "modifier_imba_silencer_glaives_int_damage"
 	self.modifier_hit_counter = "modifier_imba_silencer_glaives_hit_counter"
 	self.scepter_damage_multiplier = self.ability:GetSpecialValueFor("scepter_damage_multiplier")
+
+	-- Ability specials
+	self.int_steal = self.ability:GetSpecialValueFor("int_steal")
 end
 
 function modifier_imba_silencer_glaives_of_wisdom:OnAttackStart(keys)
@@ -394,16 +395,17 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 			if target:IsAlive() and self.glaive_attack then
 				
 				if keys.target.IsRealHero and (keys.target:IsRealHero() or keys.target:IsTempestDouble()) and not keys.target:IsClone() then
-					self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
-						duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
-						int_steal	= self:GetAbility():GetSpecialValueFor("int_steal")
-					})
+					local modifier_buff = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_buff", {duration = self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance())})
+					local modifier_debuff = target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_debuff", {duration = self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance())})
+
+					for i = 1, self.int_steal do 
+						if modifier_buff and modifier_debuff then
+							modifier_buff:IncrementStackCount()
+							modifier_debuff:IncrementStackCount()
+						end
+					end
 				end
 
-				target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_multiple", {
-					duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance()),
-					int_steal	= self:GetAbility():GetSpecialValueFor("int_steal")
-				})
 			
 				local glaive_pure_damage = attacker:GetIntellect() * self.intellect_damage_pct / 100
 
@@ -752,90 +754,147 @@ end
 function modifier_imba_silencer_glaives_talent_effect_procced:GetModifierBonusStats_Intellect()
 	return -9999999999 end
 
--------------------------------------------------------
--- MODIFIER_IMBA_SILENCER_GLAIVES_OF_WISDOM_MULTIPLE --
--------------------------------------------------------
 
-function modifier_imba_silencer_glaives_of_wisdom_multiple:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_silencer_glaives_of_wisdom_multiple:IgnoreTenacity()	return true end
-function modifier_imba_silencer_glaives_of_wisdom_multiple:IsHidden()		return true end
-function modifier_imba_silencer_glaives_of_wisdom_multiple:IsPurgable()		return false end
+-----------------------------------------------------------
+-- modifier_imba_silencer_glaives_of_wisdom_buff --
+-----------------------------------------------------------
 
-function modifier_imba_silencer_glaives_of_wisdom_multiple:OnCreated(params)
+function modifier_imba_silencer_glaives_of_wisdom_buff:IsPurgable()	return false end
+function modifier_imba_silencer_glaives_of_wisdom_buff:IsHidden() return false end
+function modifier_imba_silencer_glaives_of_wisdom_buff:IsDebuff() return false end
+
+function modifier_imba_silencer_glaives_of_wisdom_buff:OnCreated(params)
 	if not IsServer() then return end
-	
-	self.int_steal	= params.int_steal
-	
-	if self:GetCaster() == self:GetParent() then
-		self.buff_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_buff_counter", {
-			duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration"),
-			int_steal	= self.int_steal
-		})
-	else
-		self.debuff_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_debuff_counter", {
-			duration	= self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - self:GetParent():GetStatusResistance()),
-			int_steal	= self.int_steal
-		})
+	if not self:GetAbility() then self:Destroy() end
+
+	self.duration = self:GetAbility():GetSpecialValueFor("int_steal_duration")
+
+	-- Initialize stacks table
+	self.stack_table = {}
+
+	self:StartIntervalThink(1)
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_buff:OnStackCountChanged(prev_stacks)
+	if not IsServer() then return end
+
+	local stacks = self:GetStackCount()
+
+	-- We only care about stack incrementals
+	if stacks > prev_stacks then
+		-- Insert the current game time of the stack that was just added to the stack table
+		table.insert(self.stack_table, GameRules:GetGameTime())
+
+		-- Refresh timer
+		self:ForceRefresh()
 	end
 end
 
-function modifier_imba_silencer_glaives_of_wisdom_multiple:OnDestroy()
-	if not IsServer() then return end
-	
-	if self.buff_modifier and not self.buff_modifier:IsNull() then
-		self.buff_modifier:SetStackCount(self.buff_modifier:GetStackCount() - self.int_steal)
-	elseif self.debuff_modifier and not self.debuff_modifier:IsNull() then
-		self.debuff_modifier:SetStackCount(self.debuff_modifier:GetStackCount() - self.int_steal)
+function modifier_imba_silencer_glaives_of_wisdom_buff:OnIntervalThink()	
+	local repeat_needed = true
+
+	-- We''ll repeat the table removal check and remove as many expired items from it as needed.
+	while repeat_needed do
+		-- Check if the firstmost entry in the table has expired
+		local item_time = self.stack_table[1]
+
+		-- If the difference between times is longer, it's time to get rid of a stack
+		if GameRules:GetGameTime() - item_time >= self.duration then
+
+			-- Check if there is only one stack, which would mean bye bye debuff
+			if self:GetStackCount() == 1 then
+				self:Destroy()
+				break
+			else
+				-- Remove the entry from the table
+				table.remove(self.stack_table, 1)
+
+				-- Decrement a stack
+				self:DecrementStackCount()
+			end
+		else
+			-- If no more items need to be removed, no need to repeat the table
+			repeat_needed = false
+		end
 	end
 end
 
------------------------------------------------------------
--- MODIFIER_IMBA_SILENCER_GLAIVES_OF_WISDOM_BUFF_COUNTER --
------------------------------------------------------------
-
-function modifier_imba_silencer_glaives_of_wisdom_buff_counter:IgnoreTenacity()	return true end
-function modifier_imba_silencer_glaives_of_wisdom_buff_counter:IsPurgable()		return false end
-
-function modifier_imba_silencer_glaives_of_wisdom_buff_counter:OnCreated(params)
-	if not IsServer() then return end
-	
-	self:SetStackCount(self:GetStackCount() + params.int_steal)
-end
-
-function modifier_imba_silencer_glaives_of_wisdom_buff_counter:OnRefresh(params)
-	self:OnCreated(params)
-end
-
-function modifier_imba_silencer_glaives_of_wisdom_buff_counter:DeclareFunctions()
+function modifier_imba_silencer_glaives_of_wisdom_buff:DeclareFunctions()
 	return {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
 end
 
-function modifier_imba_silencer_glaives_of_wisdom_buff_counter:GetModifierBonusStats_Intellect()
+function modifier_imba_silencer_glaives_of_wisdom_buff:GetModifierBonusStats_Intellect()
 	return self:GetStackCount()
 end
 
 -------------------------------------------------------------
--- MODIFIER_IMBA_SILENCER_GLAIVES_OF_WISDOM_DEBUFF_COUNTER --
+-- modifier_imba_silencer_glaives_of_wisdom_debuff --
 -------------------------------------------------------------
+function modifier_imba_silencer_glaives_of_wisdom_debuff:IsPurgable() return false end
+function modifier_imba_silencer_glaives_of_wisdom_debuff:IsHidden() return false end
+function modifier_imba_silencer_glaives_of_wisdom_debuff:IsDebuff() return true end
 
-function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:IgnoreTenacity()	return true end
-function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:IsPurgable()		return false end
+function modifier_imba_silencer_glaives_of_wisdom_debuff:OnCreated(params)
+	if not IsServer() then return end	
+	if not self:GetAbility() then self:Destroy() end
 
-function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:OnCreated(params)
+	self.duration = self:GetAbility():GetSpecialValueFor("int_steal_duration")
+
+	-- Initialize stacks table
+	self.stack_table = {}
+
+	self:StartIntervalThink(1)
+end
+
+function modifier_imba_silencer_glaives_of_wisdom_debuff:OnStackCountChanged(prev_stacks)
 	if not IsServer() then return end
-	
-	self:SetStackCount(self:GetStackCount() + params.int_steal)
+
+	local stacks = self:GetStackCount()
+
+	-- We only care about stack incrementals
+	if stacks > prev_stacks then
+		-- Insert the current game time of the stack that was just added to the stack table
+		table.insert(self.stack_table, GameRules:GetGameTime())
+
+		-- Refresh timer
+		self:ForceRefresh()
+	end
 end
 
-function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:OnRefresh(params)
-	self:OnCreated(params)
+function modifier_imba_silencer_glaives_of_wisdom_debuff:OnIntervalThink()	
+	local repeat_needed = true
+
+	-- We''ll repeat the table removal check and remove as many expired items from it as needed.
+	while repeat_needed do
+		-- Check if the firstmost entry in the table has expired
+		local item_time = self.stack_table[1]
+
+		-- If the difference between times is longer, it's time to get rid of a stack
+		if GameRules:GetGameTime() - item_time >= self.duration then
+
+			-- Check if there is only one stack, which would mean bye bye debuff
+			if self:GetStackCount() == 1 then
+				self:Destroy()
+				break
+			else
+				-- Remove the entry from the table
+				table.remove(self.stack_table, 1)
+
+				-- Decrement a stack
+				self:DecrementStackCount()
+			end
+		else
+			-- If no more items need to be removed, no need to repeat the table
+			repeat_needed = false
+		end
+	end
 end
 
-function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:DeclareFunctions()
+function modifier_imba_silencer_glaives_of_wisdom_debuff:DeclareFunctions()
 	return {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
 end
 
-function modifier_imba_silencer_glaives_of_wisdom_debuff_counter:GetModifierBonusStats_Intellect()
+function modifier_imba_silencer_glaives_of_wisdom_debuff:GetModifierBonusStats_Intellect()
 	return self:GetStackCount() * (-1)
 end
 
