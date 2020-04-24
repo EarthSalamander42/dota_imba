@@ -32,7 +32,8 @@ var api = {
 
 var view = {
 	title: $("#loading-title-text"),
-	text: $("#loading-content-text"),
+	subtitle: $("#loading-subtitle-text"),
+	text: $("#loading-description-text"),
 	map: $("#loading-map-text"),
 	link: $("#loading-link"),
 	link_text:  $("#loading-link-text")
@@ -91,7 +92,8 @@ function fetch() {
 	if (isInt(game_version))
 		game_version = game_version.toString() + ".0";
 
-//	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
+	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
+	view.subtitle.text = "Outlanders Rising";
 
 	api.getLoadingScreenMessage(function(data) {
 		var found_lang = false;
@@ -103,7 +105,7 @@ function fetch() {
 
 			if (info.lang == $.Localize("lang")) {
 				view.text.text = info.content;
-				view.link_text.text = info.link_text;
+//				view.link_text.text = info.link_text;
 				found_lang = true;
 				break;
 			} else if (info.lang == "en") {
@@ -113,7 +115,7 @@ function fetch() {
 
 		if (found_lang == false) {
 			view.text.text = english_row.content;
-			view.link_text.text = english_row.link_text;
+//			view.link_text.text = english_row.link_text;
 		}
 	}, function() {
 		// error callback
@@ -173,7 +175,6 @@ function AllPlayersLoaded() {
 	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
 		//$.Msg("Game Mode: ", i)
 		var panel = $("#vote-container").GetChild(i);
-		$.Msg(panel)
 		var gamemode = panel.id.replace("VoteGameModeText", "");
 
 		if (!panel.BHasClass("Active"))

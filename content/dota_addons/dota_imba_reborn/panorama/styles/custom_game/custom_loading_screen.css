@@ -20,6 +20,8 @@
 @define COLOR_INFO_BACKGROUND_DARK_GREY: #333333;
 @define COLOR_INFO_TEXT_GREY: #ff0000;
 
+@define maximum_length: 77%;
+
 .addon-root {
 	width: 100%;
 	height: 100%;
@@ -31,9 +33,8 @@
 
 .header {
 	flow-children: right;
-	width: 77%;
+	width: maximum_length;
 	height: 60%;
-	box-shadow: 0px 0px 10px #111;
 	margin: 10px 20px;
 }
 
@@ -104,6 +105,52 @@
 	width: 60%;
 	height: 100%;
 	box-shadow: 0px 0px 10px #111;
+	flow-children: down;
+}
+
+.description-background {
+	width: 100%;
+	height: 55%;
+	background-image: url("file://{images}/custom_game/loading_screen/outlanders_rising.jpg");
+	background-position: 50%;
+	background-size: cover;
+}
+
+.description-text-container {
+	width: 100%;
+	height: 45%;
+	background-color: #0B0B27;
+	flow-children: down;
+}
+
+#loading-title-text {
+	margin-top: 5%;
+	width: 100%;
+	font-size: 60px;
+	text-align: center center;
+	text-shadow: 2px 2px 4px black;
+	text-transform: uppercase;
+	color: gradient( linear, 0% 0%, 0% 100%, from( white ), color-stop( 0.5, #ffef8a ), to( #CFC26E ) );
+}
+
+#loading-subtitle-text {
+	margin-top: 5%;
+	width: 100%;
+	font-size: 40px;
+	text-align: center center;
+	text-shadow: 2px 2px 4px black;
+	text-transform: uppercase;
+	color: gradient( linear, 0% 0%, 0% 100%, from( white ), color-stop( 0.5, #6E93CF ), to( #4C658D ) );
+}
+
+#loading-description-text {
+	margin-top: 5%;
+	width: 100%;
+	font-size: 20px;
+	text-align: center center;
+	text-shadow: 2px 2px 4px black;
+	font-weight: thin;
+	color: white;
 }
 
 .battlepass-container {
@@ -114,15 +161,14 @@
 }
 
 .separator {
-	width: 77%;
+	width: maximum_length;
 	height: 5%;
 }
 
 .footer {
 	flow-children: right;
-	width: 77%;
+	width: maximum_length;
 	height: 35%;
-	box-shadow: 0px 0px 10px #111;
 	margin: 10px 20px;
 }
 
@@ -140,60 +186,7 @@
 	box-shadow: 0px 0px 10px #111;
 }
 
-.large {
-	font-size: 28px;
-}
-
-.huge {
-	font-size: 36px;
-}
-
-.normal {
-	font-size: 20px;
-}
-
-.small {
-	font-size: 12px;
-}
-
-#imba-loading {
-	flow-children: down;
-	width: 79.3%;
-	height: 100%;
-	z-index: 1; /* Should fix buttons not hoverable/clickable in pick screen, if it hides players loading please comment this line */
-}
-
-#imba-loading-title,
-#imba-loading-title-patreon,
-#imba-loading-title-promote,
-#imba-loading-title-vote {
-	width: 1400px;
-	margin-top: 20px;
-	margin-left: 70px;
-	flow-children: right;
-}
-
-#imba-loading-title {
-	background-color: COLOR_INFO_BACKGROUND_GREY;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
-}
-
-#imba-loading-title-patreon {
-	background-color: COLOR_INFO_BACKGROUND_GREY;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
-}
-
-#imba-loading-title-promote, {
-	background-color: COLOR_INFO_BACKGROUND_GREY;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
-}
-
-#imba-loading-title-vote, {
-	background-color: COLOR_INFO_BACKGROUND_GREY;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
-	flow-children: none;
-}
-
+/*
 #loading-title-text,
 #loading-title-text-patreon,
 #loading-title-text-promote,
@@ -217,6 +210,7 @@
 #loading-title-text-vote {
 	color: COLOR_INFO_TEXT_RED;
 }
+*/
 
 #loading-content-text,
 .loading-content-text-patreon,

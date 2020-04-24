@@ -38,7 +38,17 @@
 			</Panel>
 
 			<Panel class="description-container">
+				<Panel class="description-background">
 
+				</Panel>
+
+				<Panel class="description-text-container">
+					<Label id="loading-title-text"/>
+
+					<Label id="loading-subtitle-text" />
+
+					<Label id="loading-description-text" />
+				</Panel>
 			</Panel>
 
 			<Panel class="battlepass-container">
