@@ -361,10 +361,6 @@ function api:GetArmory(player_id)
 end
 
 function api:GetDisabledHeroes()
-	if self.disabled_heroes then
-		return self.disabled_heroes
-	end
-
 	self:Request("disabled-heroes", function(data)
 		local disabled_heroes = {}
 
