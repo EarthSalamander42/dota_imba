@@ -86,12 +86,12 @@ function fetch() {
 	else if (Game.GetMapInfo().map_display_name == "imbathrow_3v3v3v3")
 		DisableRankingVoting();
 
-	var game_version = game_options.value
+	var game_version = game_options.value;
 
 	if (isInt(game_version))
 		game_version = game_version.toString() + ".0";
 
-	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
+//	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
 
 	api.getLoadingScreenMessage(function(data) {
 		var found_lang = false;
@@ -125,7 +125,7 @@ function fetch() {
 //	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
 	var map_name = mapInfo.map_display_name.replace('_', " ");
 
-	view.map.text = map_name;
+//	view.map.text = map_name;
 /*
 	api.resolve_map_name(mapInfo.map_display_name).then(function (data) {
 		view.map.text = data;
@@ -170,10 +170,11 @@ function fetch() {
 
 function AllPlayersLoaded() {
 //	$.Msg("ALL PLAYERS LOADED IN!")
-	for (var i = 1; i <= $("#vote-content").GetChildCount(); i++) {
+	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
 		//$.Msg("Game Mode: ", i)
-		var panel = $("#vote-content").GetChild(i - 1);
-		var gamemode = panel.GetChild(0).id.replace("VoteGameMode", "");
+		var panel = $("#vote-container").GetChild(i);
+		$.Msg(panel)
+		var gamemode = panel.id.replace("VoteGameModeText", "");
 
 		if (!panel.BHasClass("Active"))
 			panel.AddClass("Active");
@@ -182,49 +183,21 @@ function AllPlayersLoaded() {
 			panel.SetPanelEvent("onactivate", function () {
 				OnVoteButtonPressed('gamemode', gamemode);
 			})
+
+			panel.SetPanelEvent("onmouseover", function () {
+				$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("description_gamemode_" + gamemode));
+			})
+
+			panel.SetPanelEvent("onmouseout", function () {
+				$.DispatchEvent("UIHideTextTooltip", panel);
+			})
 		})(panel, gamemode);
 	}
+
 
 //	$("#VoteGameMode1").checked = true;
 //	OnVoteButtonPressed("gamemode", 1);
 
-	// Maybe Cookies will clean this up or something...kappa
-	
-	// Ranked
-	$("#VotePanel1").SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel1"), $.Localize("description_gamemode_1"));
-	})
-
-	$("#VotePanel1").SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel1"));
-	})
-	
-	// Mutation
-	$("#VotePanel2").SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel2"), $.Localize("description_gamemode_2"));
-	})
-
-	$("#VotePanel2").SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel2"));
-	})
-	
-	// (Super) Frantic
-	$("#VotePanel3").SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel3"), $.Localize("description_gamemode_3"));
-	})
-
-	$("#VotePanel3").SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel3"));
-	})
-	
-	// Same Heroes
-	$("#VotePanel5").SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel5"), $.Localize("description_gamemode_5"));
-	})
-
-	$("#VotePanel5").SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel5"));
-	})
 }
 
 function HoverableLoadingScreen() {
@@ -336,6 +309,7 @@ function DisableRankingVoting() {
 (function(){
 	HoverableLoadingScreen();
 	fetch();
+	AllPlayersLoaded()
 
 	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);

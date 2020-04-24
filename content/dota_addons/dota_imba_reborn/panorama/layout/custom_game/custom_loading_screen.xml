@@ -10,127 +10,54 @@
 	</scripts>
 
 	<Panel class="addon-root">
-		<Panel id="imba-loading">
-			<Panel id="imba-loading-title">
-				<Panel class="down">
-					<Label id="loading-title-text" text="Dota IMBA 42.0 - Leaked EarthSalamander sextape"/>
-					<Label id="loading-map-text" text="Loading ..."/>
-					<Label id="loading-content-text" html="true" text="#loading_screen_description" />
-					<Button id="loading-link" onactivate="DOTADisplayURL('http://www.dota2imba.fr/home');">
-						<Label id="loading-link-text" text="#loading_screen_button" />
-					</Button>
-				</Panel>
-			</Panel>
+		<Panel class="header">
+			<Panel class="top-left-container">
+				<Panel class="profile-container">
 
-			<Panel id="TopButtonBar" class="LoadingButtons">
-				<Panel class="Row">
-					<Button id="ImbaLoadingSocialOfficialWebsite" class="SocialButtons" onactivate="DOTADisplayURL('http://frostrose-studio.com/ranking');">
-						<Label text="Official Website" />
-					</Button>
-					<Button id="ImbaLoadingSocialSteamWorkshop" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
-						<Label text="Frostrose Workshop" />
-					</Button>
-					<!-- <Button id="ImbaLoadingSocialSteamChat" class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://s.team/chat/OgFfP2Rx');"> -->
-						<!-- <Label text="Official Steam Chat" /> -->
-					<!-- </Button> -->
-					<Button id="ImbaLoadingSocialFacebook" class="SocialButtons" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
-						<Label text="Facebook" />
-					</Button>
-					<Button id="ImbaLoadingSocialTwitter" class="SocialButtons" onactivate="DOTADisplayURL('https://twitter.com/dota2imba');">
-						<Label text="Twitter" />
-					</Button>
-					<Button id="ImbaLoadingSocialReddit" class="SocialButtons" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');">
-						<Label text="Reddit" />
-					</Button>
-					<Button id="ImbaLoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('https://invite.gg/dotaimba');">
-						<Label text="Discord" />
-					</Button>
 				</Panel>
-			</Panel>
 
-			<Panel id="imba-loading-title-vote">
-				<Panel class="down">
-					<Label id="loading-title-text-vote" text="#vote_gamemode"/>
-					<Panel id="vote-content">
-						<Panel id="VotePanel1" class="VoteButton" hittest="false">
-							<RadioButton id="VoteGameMode1" class="CGSRadio" group="GameLength"/>
-							<Label id="VoteGameModeText1" class="VoteGameModeText" text="#vote_gamemode_1" />
-						</Panel>
-						<Panel id="VotePanel2" class="VoteButton" hittest="false">
-							<RadioButton id="VoteGameMode2" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 2)" />
-							<Label id="VoteGameModeText2" class="VoteGameModeText" text="#vote_gamemode_2" />
-						</Panel>
-						<Panel id="VotePanel3" class="VoteButton" hittest="false">
-							<RadioButton id="VoteGameMode3" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 3)" />
-							<Label id="VoteGameModeText3" class="VoteGameModeText" text="#vote_gamemode_3" />
-						</Panel>
+				<Panel id="vote-container" class="vote-container">
+					<Label class="vote-title" text="GAME MODE"/>
+
+					<Label id="VoteGameModeText1" class="vote-label" text="#vote_gamemode_1" />
+
+					<Label id="VoteGameModeText2" class="vote-label" text="#vote_gamemode_2" />
+
+					<Label id="VoteGameModeText3" class="vote-label" text="#vote_gamemode_3" />
 <!--
-						<Panel class="VoteButton" hittest="false">
-							<RadioButton id="VoteGameMode4" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 4)" />
-							<Label id="VoteGameModeText4" class="VoteGameModeText" text="#vote_gamemode_4" />
-						</Panel>
+					<Label id="VoteGameModeText4" class="vote-label" text="#vote_gamemode_4" />
 -->
-						<Panel id="VotePanel5" class="VoteButton" hittest="false">
-							<RadioButton id="VoteGameMode5" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 5)" />
-							<Label id="VoteGameModeText5" class="VoteGameModeText" text="#vote_gamemode_5" />
-						</Panel>
-					</Panel>
-				</Panel>
-			</Panel>
+					<Label id="VoteGameModeText5" class="vote-label" text="#vote_gamemode_5" />
 
-			<Panel id="imba-loading-title-promote">
-				<Panel class="down">
-					<Label id="loading-title-text-promote" text="#loading_screen_promote"/>
-					<Label id="loading-content-text-promote" html="true" text="#loading_screen_promote_description" />
-					<Button id="loading-link-promote" onactivate="DOTADisplayURL('https://www.transifex.com/frostrose-studio/dota-imba/dashboard/');">
-						<Label id="loading-link-text-promote" text="#loading_screen_promote_button" />
+					<Label id="VoteGameModeCheck" class="vote-label vote-check" text="You have not voted yet." />
+
+					<Button class="vote-change" onactivate="DOTADisplayURL('http://www.dota2imba.fr/home');">
+						<Label class="vote-change-label" text="Change Vote" />
 					</Button>
 				</Panel>
 			</Panel>
 
-			<Panel id="imba-loading-title-patreon" class="loading-title">
-				<Panel class="down">
-					<Label id="loading-title-text-patreon" text="#loading_screen_patreon"/>
-					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_description" />
-					<Button id="loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
-					</Button>
-					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_description_bottom" />
-				</Panel>
+			<Panel class="description-container">
+
 			</Panel>
 
-			<Panel id="BottomButtonBar" class="LoadingButtons">
-				<Panel class="Row">
-					<Button class="SocialButtons DarkBlue">
-						<Label text="#loading_screen_patreon_modlist1" />
-					</Button>
-					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=1350425247');">
-						<Label text="#loading_screen_patreon_modlist2" />
-					</Button>
-					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=536682348');">
-						<Label text="#loading_screen_patreon_modlist3" />
-					</Button>
-					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');">
-						<Label text="#loading_screen_patreon_modlist4" />
-					</Button>
-					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');">
-						<Label text="#loading_screen_patreon_modlist5" />
-					</Button>
-					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=544075277');">
-						<Label text="#loading_screen_patreon_modlist6" />
-					</Button>
-				</Panel>
+			<Panel class="battlepass-container">
+
 			</Panel>
-<!--
-			<Panel id="imba-loading-title-promote">
-				<Panel class="down">
-					<Label id="loading-title-text-promote" text="X Hero Siege now have an experience system!"/>
-					<Label id="loading-content-text-promote" html="true" text="You can now earn experience when playing X Hero Siege! A custom battlepass will be implented soon to unlock cosmetics." />
-					<Button id="loading-link-promote" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
-						<Label id="loading-link-text-promote" text="Click here to download X Hero Siege!" />
-					</Button>
-				</Panel>
+		</Panel>
+
+		<Panel class="separator">
+
+		</Panel>
+
+		<Panel class="footer">
+			<Panel class="transifex-container">
+
 			</Panel>
--->
+
+			<Panel class="mods-container">
+
+			</Panel>
 		</Panel>
 	</Panel>
 </root>
