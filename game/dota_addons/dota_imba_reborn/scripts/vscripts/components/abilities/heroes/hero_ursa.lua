@@ -888,6 +888,11 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 			return nil
 		end
 
+		-- If the caster is an illusion, do nothing
+		if caster:IsIllusion() then
+			return nil
+		end
+
 		if keys.attacker == caster then
 			-- Adjust duration if target is Roshan
 			if target:IsRoshan() then
