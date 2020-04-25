@@ -980,13 +980,17 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.Activate", self) end
 
-	local blink_pfx
+	local blink_pfx = "particles/items_fx/blink_dagger_start.vpcf"
+
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"] then
+		blink_pfx = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect1"]
+	end
 
 	if bTeamOnlyParticle == true then
-		blink_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber(), self)
+		blink_pfx = ParticleManager:CreateParticleForTeam(blink_pfx, PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber(), self)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	else
-		blink_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self)
+		blink_pfx = ParticleManager:CreateParticle(blink_pfx, PATTACH_CUSTOMORIGIN, nil, self)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	end
 
@@ -994,12 +998,16 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	FindClearSpaceForUnit(self, position, true)
 	ProjectileManager:ProjectileDodge( self )
 
-	local blink_end_pfx
+	local blink_end_pfx = "particles/items_fx/blink_dagger_end.vpcf"
+
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"] then
+		blink_end_pfx = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetPlayerOwnerID()))["blink"]["effect2"]
+	end
 
 	if bTeamOnlyParticle == true then
-		blink_end_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self:GetTeamNumber(), self)
+		blink_end_pfx = ParticleManager:CreateParticleForTeam(blink_end_pfx, PATTACH_ABSORIGIN, self, self:GetTeamNumber(), self)
 	else
-		blink_end_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self)
+		blink_end_pfx = ParticleManager:CreateParticle(blink_end_pfx, PATTACH_ABSORIGIN, self, self)
 	end
 
 	ParticleManager:ReleaseParticleIndex(blink_end_pfx)

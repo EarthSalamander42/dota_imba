@@ -53,7 +53,6 @@ function Battlepass:AddItemEffects(hero)
 		if CUSTOM_GAME_TYPE == "PW" then
 			Battlepass:SetItemEffects(hero)
 		elseif CUSTOM_GAME_TYPE ~= "POG" then
-			Battlepass:SetItemEffects(hero:GetPlayerID())
 			Battlepass:RegisterHeroTaunt(hero)
 		end
 	end

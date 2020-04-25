@@ -136,7 +136,7 @@ function modifier_item_imba_force_staff_active:OnCreated()
 	end
 	
 	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
+
 	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
 		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
 	end

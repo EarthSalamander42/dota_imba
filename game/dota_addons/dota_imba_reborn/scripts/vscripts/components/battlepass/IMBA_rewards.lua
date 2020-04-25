@@ -102,111 +102,6 @@ function Battlepass:IsHeroName(hero_name)
 end
 --]]
 
-function Battlepass:GetBlinkEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/items_fx/blink_dagger_start.vpcf"
-	effect_table[2] = "particles/items_fx/blink_dagger_end.vpcf"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:GetBottleEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/items_fx/bottle.vpcf"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:GetForceStaffEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/items_fx/force_staff.vpcf"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:GetFountainEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/generic_gameplay/radiant_fountain_regen.vpcf"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:GetMaelstormEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/items2_fx/mjollnir_shield.vpcf"
-	effect_table[2] = "particles/item/mjollnir/static_lightning_bolt.vpcf"
-	effect_table[3] = "particles/items_fx/chain_lightning.vpcf"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:GetMekansmEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/items2_fx/mekanism.vpcf"
-	effect_table[2] = "particles/items2_fx/mekanism_recipient.vpcf"
-	effect_table[3] = "particles/items3_fx/warmage.vpcf"
-	effect_table[4] = "particles/items3_fx/warmage_recipient.vpcf"
-	effect_table[5] = "particles/items3_fx/warmage_mana_nonhero.vpcf"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:GetRadianceEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/items2_fx/radiance_owner.vpcf"
-	effect_table[2] = "particles/items2_fx/radiance.vpcf"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:GetSheepstickEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/items_fx/item_sheepstick.vpcf"
-	effect_table[2] = "models/props_gameplay/pig.vmdl"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:GetShivaEffect(ID)
-	local effect_table = {}
-	effect_table[1] = "particles/items2_fx/shivas_guard_active.vpcf"
-	effect_table[2] = "particles/items2_fx/shivas_guard_impact.vpcf"
-
-	-- todo: http request to get equipped effect
-
-	return effect_table
-end
-
-function Battlepass:SetItemEffects(ID)
-	CustomNetTables:SetTableValue("battlepass_item_effects", tostring(ID), {
-		blink = Battlepass:GetBlinkEffect(ID),
-		bottle = Battlepass:GetBottleEffect(ID),
-		force_staff = Battlepass:GetForceStaffEffect(ID),
-		fountain = Battlepass:GetFountainEffect(ID),
-		maelstorm = Battlepass:GetMaelstormEffect(ID),
-		mekansm = Battlepass:GetMekansmEffect(ID),
-		radiance = Battlepass:GetRadianceEffect(ID),
-		sheepstick = Battlepass:GetSheepstickEffect(ID),
-		shiva = Battlepass:GetShivaEffect(ID),
-	})
-end
-
 local function failduh()
 	print("CALLBACK FAIL")
 end
@@ -381,9 +276,20 @@ function Battlepass:GetHeroEffect(hero)
 
 		CustomNetTables:SetTableValue("battlepass", "rewards_"..hero:GetPlayerID(), armory)
 
+		local battlepass_items = {}
+		battlepass_items["blink"] = ""
+		battlepass_items["bottle"] = ""
+		battlepass_items["force_staff"] = ""
+		battlepass_items["fountain"] = ""
+		battlepass_items["maelstrom"] = ""
+		battlepass_items["mekansm"] = ""
+		battlepass_items["radiance"] = ""
+		battlepass_items["sheepstick"] = ""
+		battlepass_items["shiva"] = ""
+
 		for k, v in pairs(armory) do
+			-- HEROES HANDLE
 			if hero:GetUnitName() == v.hero then
---				print(ItemsGame:GetItemWearables(v.item_id))
 				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id)) do
 					if type(item_id) == "number" then item_id = tostring(item_id) end
 
@@ -417,8 +323,14 @@ function Battlepass:GetHeroEffect(hero)
 						Battlepass:SetOverrideAssets(hero, modifier, Wearable.asset_modifier[item_id])
 					end
 				end
+			else -- ITEMS HANDLE
+				if battlepass_items[v.hero] then
+					battlepass_items[v.hero] = ItemsGame:GetItemEffects(v.item_id)
+				end
 			end
 		end
+
+		CustomNetTables:SetTableValue("battlepass_item_effects", tostring(hero:GetPlayerID()), battlepass_items)
 
 --		print(CScriptParticleManager.PARTICLES_OVERRIDE)
 --		print("---------------------------------")

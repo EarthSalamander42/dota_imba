@@ -1021,8 +1021,8 @@
 
 		"particles"
 		{
-			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			"effect1"					"particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
+			"effect2"					"particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
 		}
 	}
 
@@ -1037,8 +1037,8 @@
 
 		"particles"
 		{
-			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti8.vpcf"
+			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti8.vpcf"
 		}
 	}
 
@@ -1053,8 +1053,8 @@
 
 		"particles"
 		{
-			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti9.vpcf"
+			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti9.vpcf"
 		}
 	}
 

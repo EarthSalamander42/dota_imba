@@ -206,4 +206,8 @@ function ItemsGame:GetItemModel(item_id)
 	return nil
 end
 
+function ItemsGame:GetItemEffects(item_id)
+	return self:GetItemInfo(item_id, "particles")
+end
+
 ItemsGame:Init()
