@@ -817,7 +817,7 @@ end
 modifier_vardor_graceful_jump_root = modifier_vardor_graceful_jump_root or class({})
 
 function modifier_vardor_graceful_jump_root:GetTexture()
-	return "slark_pounce"
+	return "custom/vardor/vardor_graceful_jump"
 end
 
 function modifier_vardor_graceful_jump_root:IsHidden() return false end

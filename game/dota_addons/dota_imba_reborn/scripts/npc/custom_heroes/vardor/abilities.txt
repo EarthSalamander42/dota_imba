@@ -9,7 +9,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
-		"AbilityTextureName"			"phantom_lancer_spirit_lance"
+		"AbilityTextureName"			"custom/vardor/vardor_piercing_shot"
 		"AbilityBehavior"    			"DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"FightRecapLevel"				"1"
 
@@ -145,7 +145,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
-		"AbilityTextureName" 			"slark_pounce"
+		"AbilityTextureName" 			"custom/vardor/vardor_graceful_jump"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"FightRecapLevel"				"1"
 
@@ -295,7 +295,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
-		"AbilityTextureName"			"legion_commander_overwhelming_odds"
+		"AbilityTextureName"			"custom/vardor/vardor_celestial_rain_of_yari"
 		"AbilityBehavior"    			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"FightRecapLevel"				"2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
