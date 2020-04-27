@@ -1533,6 +1533,15 @@
 				"modifier"		"custom/imba_shiva2"
 			}
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva2"
+			}
+		}
 	}
 
 	"65" // 
@@ -1558,6 +1567,15 @@
 				"modifier"		"custom/imba_shiva3"
 			}
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva3"
+			}
+		}
 	}
 
 	"66" // 
@@ -1573,6 +1591,15 @@
 		{
 			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
 			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva4"
+			}
 		}
 
 		"inventory_icons"
