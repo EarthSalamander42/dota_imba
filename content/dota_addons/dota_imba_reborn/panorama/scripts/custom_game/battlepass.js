@@ -267,10 +267,10 @@ var api = {
 			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
 				if (obj.error) {
-					$.Msg("Error updating armory");
+//					$.Msg("Error updating armory");
 					error_callback();
 				} else {
-					$.Msg("Updated armory");
+//					$.Msg("Updated armory");
 					success_callback();
 				}
 			},
@@ -636,26 +636,28 @@ function SetArmory(hero, slot_id, item_id) {
 		item_id		: item_id,
 		custom_game	: game_type,
 	}, function(data) {
-		$.Msg(data)
+//		$.Msg(data)
 		$("#CompanionNotification").AddClass("success");
-		var text = $.Localize("bp_reward_equip_success") + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
 
-//		if (equip == 0)
-//			text = $.Localize("bp_reward_unequip_success") + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
-
-		$("#CompanionNotificationLabel").text = text;
+		var text = "";
 
 		if ($("#reward_equipped_" + item_id)) {
 			$("#reward_equipped_" + item_id).DeleteAsync(0);
+			text = $.Localize("bp_reward_unequip_success") + " " + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
 		} else {
+			text = $.Localize("bp_reward_equip_success") + " " + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
 			SetRewardEquipped(item_id, hero);
 		}
+
+		$("#CompanionNotificationLabel").text = text.toLowerCase();
+
 /*
 		GameEvents.SendCustomGameEventToServer("change_emblem", {
 			ID : Players.GetLocalPlayer(),
 			unit : emblem
 		});
 */
+
 		$.Schedule(6.0, function() {
 			$("#CompanionNotification").RemoveClass("success");
 			companion_changed = false;
@@ -882,6 +884,10 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 			var bp_item_id = BattlepassRewards[i].item_id;
 			var bp_slot_id = BattlepassRewards[i].slot_id;
 			var bp_hero = BattlepassRewards[i].hero;
+
+			// terrible fix
+			if (bp_type == "taunt")
+				bp_slot_id = "taunt";
 
 			if (!$("#container_level_" + bp_level)) {
 				var level_container = $.CreatePanel("Panel", reward_row, "container_level_" + bp_level);

@@ -111,13 +111,7 @@ LinkLuaModifier( "modifier_item_imba_mekansm_aura", "components/items/item_mekan
 LinkLuaModifier( "modifier_item_imba_mekansm_heal", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Heal buff
 
 function item_imba_mekansm:GetIntrinsicModifierName()
-	return "modifier_item_imba_mekansm" end
-
-function item_imba_mekansm:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().mekansm_icon_client then return "item_mekansm" end
-
-	return "custom/imba_mekansm"..self:GetCaster().mekansm_icon_client
+	return "modifier_item_imba_mekansm"
 end
 
 function item_imba_mekansm:OnSpellStart()
@@ -347,15 +341,9 @@ LinkLuaModifier( "modifier_item_imba_guardian_greaves_aura_emitter", "components
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_aura", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_heal", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Heal buff
 
-function item_imba_guardian_greaves:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().mekansm_icon_client then return "item_guardian_greaves" end
-
-	return "custom/imba_guardian_greaves"..self:GetCaster().mekansm_icon_client
-end
-
 function item_imba_guardian_greaves:GetIntrinsicModifierName()
-	return "modifier_item_imba_guardian_greaves" end
+	return "modifier_item_imba_guardian_greaves"
+end
 
 function item_imba_guardian_greaves:OnAbilityPhaseStart()
 	if self:GetCaster():IsClone() then

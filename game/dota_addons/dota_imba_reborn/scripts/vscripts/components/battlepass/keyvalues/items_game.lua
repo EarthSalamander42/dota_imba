@@ -249,4 +249,12 @@ function ItemsGame:GetItemModel(item_id)
 	return nil
 end
 
+function ItemsGame:GetItemEffects(item_id)
+	return self:GetItemInfo(item_id, "particles") or {}
+end
+
+function ItemsGame:GetItemImages(item_id)
+	return self:GetItemInfo(item_id, "inventory_icons") or {}
+end
+
 ItemsGame:Init()

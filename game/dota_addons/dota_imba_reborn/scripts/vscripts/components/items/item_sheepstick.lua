@@ -28,13 +28,6 @@ LinkLuaModifier( "modifier_item_imba_sheepstick", "components/items/item_sheepst
 LinkLuaModifier( "modifier_item_imba_sheepstick_debuff", "components/items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )	-- Enemy debuff
 LinkLuaModifier( "modifier_item_imba_sheepstick_buff", "components/items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )		-- Self-use buff
 
-function item_imba_sheepstick:GetAbilityTextureName()
-	if not IsClient() then return end
-	local caster = self:GetCaster()
-	if not caster.sheepstick_icon_client then return "custom/imba_sheepstick" end
-	return "custom/imba_sheepstick"..caster.sheepstick_icon_client
-end
-
 function item_imba_sheepstick:GetIntrinsicModifierName()
 	return "modifier_item_imba_sheepstick" end
 

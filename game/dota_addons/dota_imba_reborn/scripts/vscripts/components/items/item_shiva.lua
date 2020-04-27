@@ -131,12 +131,6 @@ function item_imba_shivas_guard:OnSpellStart()
 	end)
 end
 
-function item_imba_shivas_guard:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().shiva_icon_client then return "custom/imba_shiva" end
-	return "custom/imba_shiva"..self:GetCaster().shiva_icon_client
-end
-
 -----------------------------------------------------------------------------------------------------------
 --	Shiva Handler
 -----------------------------------------------------------------------------------------------------------
