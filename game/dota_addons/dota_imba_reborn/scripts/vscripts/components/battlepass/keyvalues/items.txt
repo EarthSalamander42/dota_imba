@@ -19,10 +19,26 @@
 		"image_inventory"			"custom_game/battlepass/blink" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
+		// todo: rework this format and inventory_icons to add it in a single "visuals" table?
 		"particles"
 		{
 			"effect1"					"particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
 			"effect2"					"particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink1"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots1"
+//			}
 		}
 	}
 	"2" // PC Bang Compendium 2015 Blink
@@ -37,6 +53,21 @@
 		{
 			"effect1"					"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
 			"effect2"					"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink2"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots2"
+//			}
 		}
 	}
 	"3" // 
@@ -53,6 +84,21 @@
 			"effect1"					"particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
 			"effect2"					"particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink3"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots3"
+//			}
+		}
 	}
 	"4" // 
 	{
@@ -67,6 +113,21 @@
 		{
 			"effect1"					"particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
 			"effect2"					"particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink4"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots4"
+//			}
 		}
 	}
 	"5" // 
@@ -83,6 +144,21 @@
 			"effect1"					"particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
 			"effect2"					"particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink5"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"custom/imba_blink_boots"
+				"modifier"		"custom/imba_blink_boots5"
+			}
+		}
 	}
 	"6" // TI 4 Blink
 	{
@@ -97,6 +173,21 @@
 		{
 			"effect1"					"particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
 			"effect2"					"particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink6"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots6"
+//			}
 		}
 	}
 	"7" // 
@@ -113,6 +204,21 @@
 			"effect1"					"particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
 			"effect2"					"particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink7"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots7"
+//			}
+		}
 	}
 	"8" // 
 	{
@@ -127,6 +233,21 @@
 		{
 			"effect1"					"particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
 			"effect2"					"particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink8"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots8"
+//			}
 		}
 	}
 	"9" // 
@@ -143,6 +264,21 @@
 			"effect1"					"particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
 			"effect2"					"particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink9"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots9"
+//			}
+		}
 	}
 	"10" // 
 	{
@@ -157,6 +293,21 @@
 		{
 			"effect1"					"particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
 			"effect2"					"particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink10"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots10"
+//			}
 		}
 	}
 	"11" // 
@@ -173,6 +324,21 @@
 			"effect1"					"particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
 			"effect2"					"particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink11"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots11"
+//			}
+		}
 	}
 	"12" // 
 	{
@@ -187,6 +353,21 @@
 		{
 			"effect1"					"particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
 			"effect2"					"particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink12"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots12"
+//			}
 		}
 	}
 	"13" // 
@@ -203,6 +384,21 @@
 			"effect1"					"particles/econ/events/ti9/blink_dagger_ti9_start.vpcf"
 			"effect2"					"particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink13"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots13"
+//			}
+		}
 	}
 	"14" // 
 	{
@@ -217,6 +413,21 @@
 		{
 			"effect1"					"particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf"
 			"effect2"					"particles/econ/events/ti9/blink_dagger_ti9_lvl2_end.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink14"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots14"
+//			}
 		}
 	}
 
@@ -326,6 +537,27 @@
 		{
 			"effect1"					"particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff1"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike1"
+			}
+
+//			"asset_modifier0"
+//			{
+//				"asset"			"item_lance_of_longinus"
+//				"modifier"		"custom/imba_lance_of_longinus1"
+//			}
+		}
 	}
 	"22" // 
 	{
@@ -339,6 +571,21 @@
 		"particles"
 		{
 			"effect1"					"particles/econ/events/ti7/force_staff_ti7.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff2"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike2"
+			}
 		}
 	}
 	"23" // 
@@ -354,6 +601,21 @@
 		{
 			"effect1"					"particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff3"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike3"
+			}
+		}
 	}
 	"24" // 
 	{
@@ -367,6 +629,21 @@
 		"particles"
 		{
 			"effect1"					"particles/econ/events/ti6/force_staff_ti6.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff4"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike4"
+			}
 		}
 	}
 	"25" // 
@@ -382,6 +659,21 @@
 		{
 			"effect1"					"particles/econ/events/ti8/force_staff_ti8.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff5"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike5"
+			}
+		}
 	}
 	"26" // 
 	{
@@ -395,6 +687,21 @@
 		"particles"
 		{
 			"effect1"					"particles/econ/events/ti9/force_staff_ti9.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff6"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike6"
+			}
 		}
 	}
 
@@ -736,6 +1043,15 @@
 			"effect2"					"particles/item/jarnbjorn/static_lightning_bolt.vpcf"
 			"effect3"					"particles/items_fx/chain_lightning_jarnbjorn.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom1"
+			}
+		}
 	}
 
 	"49" // 
@@ -752,6 +1068,15 @@
 			"effect1"					"particles/econ/events/ti6/mjollnir_shield_ti6.vpcf"
 			"effect2"					"particles/econ/events/ti6/maelstorm_ti6.vpcf"
 			"effect3"					"particles/econ/events/ti6/maelstorm_ti6.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom2"
+			}
 		}
 	}
 
@@ -770,6 +1095,15 @@
 			"effect2"					"particles/econ/events/ti7/maelstorm_ti7.vpcf"
 			"effect3"					"particles/econ/events/ti7/maelstorm_ti7.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom3"
+			}
+		}
 	}
 
 	"51" // 
@@ -787,6 +1121,15 @@
 			"effect2"					"particles/econ/events/ti8/maelstorm_ti8.vpcf"
 			"effect3"					"particles/econ/events/ti8/maelstorm_ti8.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom4"
+			}
+		}
 	}
 
 	"52" // 
@@ -803,6 +1146,15 @@
 			"effect1"					"particles/econ/events/ti9/mjollnir_shield_ti9.vpcf"
 			"effect2"					"particles/econ/events/ti9/maelstorm_ti9.vpcf"
 			"effect3"					"particles/econ/events/ti9/maelstorm_ti9.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom5"
+			}
 		}
 	}
 
@@ -827,6 +1179,21 @@
 			"effect4"					"particles/items3_fx/warmage1_recipient.vpcf"
 			"effect5"					"particles/items3_fx/warmage1_mana_nonhero.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_mekansm"
+				"modifier"		"custom/imba_mekansm1"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_guardian_greaves"
+				"modifier"		"custom/imba_guardian_greaves1"
+			}
+		}
 	}
 
 	"54" // 
@@ -845,6 +1212,21 @@
 			"effect3"					"particles/items3_fx/warmage2.vpcf"
 			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
 			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_mekansm"
+				"modifier"		"custom/imba_mekansm2"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_guardian_greaves"
+				"modifier"		"custom/imba_guardian_greaves2"
+			}
 		}
 	}
 
@@ -865,6 +1247,21 @@
 			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
 			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_mekansm"
+				"modifier"		"custom/imba_mekansm3"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_guardian_greaves"
+				"modifier"		"custom/imba_guardian_greaves3"
+			}
+		}
 	}
 
 	"56" // 
@@ -873,7 +1270,7 @@
 		"item_type"					"mekansm"
 		"item_unlock_level"			"840"
 		"item_rarity"				"mythical3"
-//		"image_inventory"			"custom_game/battlepass/mekansm4" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/mekansm4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
 		"particles"
@@ -883,6 +1280,21 @@
 			"effect3"					"particles/items3_fx/warmage2.vpcf"
 			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
 			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_mekansm"
+				"modifier"		"custom/imba_mekansm4"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_guardian_greaves"
+				"modifier"		"custom/imba_guardian_greaves4"
+			}
 		}
 	}
 
@@ -904,6 +1316,21 @@
 			"effect1"					"particles/econ/events/ti7/radiance_owner_ti7.vpcf"
 			"effect2"					"particles/econ/events/ti7/radiance_ti7.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_radiance"
+				"modifier"		"custom/imba_radiance1"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_radiance_inactive"
+				"modifier"		"custom/imba_radiance1_inactive"
+			}
+		}
 	}
 
 	"58" // 
@@ -919,6 +1346,21 @@
 		{
 			"effect1"					"particles/econ/events/ti6/radiance_owner_ti6.vpcf"
 			"effect2"					"particles/econ/events/ti6/radiance_ti6.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_radiance"
+				"modifier"		"custom/imba_radiance2"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_radiance_inactive"
+				"modifier"		"custom/imba_radiance2_inactive"
+			}
 		}
 	}
 
@@ -936,6 +1378,21 @@
 			"effect1"					"particles/econ/events/ti8/radiance_owner_ti8.vpcf"
 			"effect2"					"particles/econ/events/ti8/radiance_ti8.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_radiance"
+				"modifier"		"custom/imba_radiance3"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_radiance_inactive"
+				"modifier"		"custom/imba_radiance3_inactive"
+			}
+		}
 	}
 
 	"60" // 
@@ -951,6 +1408,21 @@
 		{
 			"effect1"					"particles/econ/events/ti9/radiance_owner_ti9.vpcf"
 			"effect2"					"particles/econ/events/ti9/radiance_ti9.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_radiance"
+				"modifier"		"custom/imba_radiance4"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_radiance_inactive"
+				"modifier"		"custom/imba_radiance4_inactive"
+			}
 		}
 	}
 
@@ -972,6 +1444,15 @@
 			"effect1"					"particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
 			"effect2"					"models/props_gameplay/pig_blue.vmdl"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_sheepstick"
+				"modifier"		"custom/imba_sheepstick1"
+			}
+		}
 	}
 
 	"62" // 
@@ -987,6 +1468,15 @@
 		{
 			"effect1"					"particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
 			"effect2"					"models/props_gameplay/roquelaire/roquelaire.vmdl"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_sheepstick"
+				"modifier"		"custom/imba_sheepstick2"
+			}
 		}
 	}
 
@@ -1008,6 +1498,15 @@
 			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
 			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva1"
+			}
+		}
 	}
 
 	"64" // 
@@ -1023,6 +1522,24 @@
 		{
 			"effect1"					"particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
 			"effect2"					"particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva2"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva2"
+			}
 		}
 	}
 
@@ -1040,6 +1557,24 @@
 			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti8.vpcf"
 			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti8.vpcf"
 		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva3"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva3"
+			}
+		}
 	}
 
 	"66" // 
@@ -1055,6 +1590,24 @@
 		{
 			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti9.vpcf"
 			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti9.vpcf"
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva4"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva4"
+			}
 		}
 	}
 
@@ -1191,7 +1744,85 @@
 		"item_unlock_level"			"35"
 	}
 
+	"84" // TI6 Level up
+	{
+		"item_id"					"16315"
+		"item_type"					"levelup"
+		"item_unlock_level"			"50"
+		"item_rarity"				"legendary"
+		"image_inventory"			"custom_game/battlepass/levelup_fx_1" // USE GAMEPEDIA WEBM VIDEO
+		"used_by_heroes"			"levelup"
 
+		"visuals"
+		{
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
+				"modifier"		"particles/econ/events/ti6/hero_levelup_ti6.vpcf"
+			}
+		}
+	}
+
+	"85" // TI7 Level up
+	{
+		"item_id"					"16315"
+		"item_type"					"levelup"
+		"item_unlock_level"			"350"
+		"item_rarity"				"legendary"
+		"image_inventory"			"custom_game/battlepass/levelup_fx_4" // USE GAMEPEDIA WEBM VIDEO
+		"used_by_heroes"			"levelup"
+
+		"visuals"
+		{
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
+				"modifier"		"particles/econ/events/ti7/hero_levelup_ti7.vpcf"
+			}
+		}
+	}
+
+	"86" // TI8 Level up
+	{
+		"item_id"					"16315"
+		"item_type"					"levelup"
+		"item_unlock_level"			"650"
+		"item_rarity"				"legendary"
+		"image_inventory"			"custom_game/battlepass/levelup_fx_2" // USE GAMEPEDIA WEBM VIDEO
+		"used_by_heroes"			"levelup"
+
+		"visuals"
+		{
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
+				"modifier"		"particles/econ/events/ti8/hero_levelup_ti8.vpcf"
+			}
+		}
+	}
+
+	"87" // TI9 Level up
+	{
+		"item_id"					"16315"
+		"item_type"					"levelup"
+		"item_unlock_level"			"950"
+		"item_rarity"				"legendary"
+		"image_inventory"			"custom_game/battlepass/levelup_fx_3" // USE GAMEPEDIA WEBM VIDEO
+		"used_by_heroes"			"levelup"
+
+		"visuals"
+		{
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
+				"modifier"		"particles/econ/events/ti9/hero_levelup_ti9.vpcf"
+			}
+		}
+	}
 
 //	"2" // Antipode Couriers (Radiant)
 //	{

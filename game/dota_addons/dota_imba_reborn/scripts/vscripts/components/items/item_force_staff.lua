@@ -59,13 +59,6 @@ function item_imba_force_staff:OnSpellStart()
 	target:AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_force_staff_active", {duration = ability:GetSpecialValueFor("duration")})
 end
 
-function item_imba_force_staff:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().force_staff_icon_client then return "item_force_staff" end
-
-	return "custom/imba_force_staff"..self:GetCaster().force_staff_icon_client
-end
-
 -------------------------------------
 --------- STATE MODIFIER ------------
 -------------------------------------
@@ -137,8 +130,8 @@ function modifier_item_imba_force_staff_active:OnCreated()
 	
 	local particle_name = "particles/items_fx/force_staff.vpcf"
 
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["force_staff"]["effect1"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["force_staff"]["effect1"]
 	end
 	
 	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -192,12 +185,6 @@ LinkLuaModifier("modifier_item_imba_hurricane_pike_force_ally", "components/item
 LinkLuaModifier("modifier_item_imba_hurricane_pike_force_enemy", "components/items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_hurricane_pike_force_self", "components/items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_hurricane_pike_attack_speed", "components/items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
-
-function item_imba_hurricane_pike:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().force_staff_icon_client then return "item_hurricane_pike" end
-	return "custom/imba_hurricane_pike"..self:GetCaster().force_staff_icon_client
-end
 
 function item_imba_hurricane_pike:GetIntrinsicModifierName()
 	return "modifier_item_imba_hurricane_pike"
@@ -358,10 +345,10 @@ function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
 	end
 	
 	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
+
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["force_staff"]["effect1"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["force_staff"]["effect1"]
+	end
 	
 	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
@@ -418,10 +405,10 @@ function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
 	if not IsServer() then return end
 	
 	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
+
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["force_staff"]["effect1"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["force_staff"]["effect1"]
+	end
 	
 	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
@@ -475,10 +462,10 @@ function modifier_item_imba_hurricane_pike_force_self:OnCreated()
 	if not IsServer() then return end
 	
 	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
+
+	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["force_staff"]["effect1"] then
+		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["force_staff"]["effect1"]
+	end
 	
 	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)

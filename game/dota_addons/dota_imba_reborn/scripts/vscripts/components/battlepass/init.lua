@@ -73,3 +73,17 @@ ListenToGameEvent('npc_spawned', function(event)
 		end
 	end
 end, nil)
+
+ListenToGameEvent('dota_player_gained_level', function(keys)
+	if not keys.player then return end
+
+	local player = EntIndexToHScript(keys.player)
+	local hero = player:GetAssignedHero()
+	if hero == nil then
+		return
+	end
+	local level = keys.level
+
+	local particleID = ParticleManager:CreateParticle("particles/generic_hero_status/hero_levelup_vanilla.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+	ParticleManager:ReleaseParticleIndex(particleID)
+end, nil)

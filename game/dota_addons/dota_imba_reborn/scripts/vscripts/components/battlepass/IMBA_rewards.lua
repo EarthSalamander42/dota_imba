@@ -290,7 +290,7 @@ function Battlepass:GetHeroEffect(hero)
 		for k, v in pairs(armory) do
 			-- HEROES HANDLE
 			if hero:GetUnitName() == v.hero then
-				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id)) do
+				for item_id, slot_id in pairs(ItemsGame:GetItemWearables(v.item_id) or {}) do
 					if type(item_id) == "number" then item_id = tostring(item_id) end
 
 					local modifier = ItemsGame:GetItemModifier(v.item_id)
@@ -323,9 +323,18 @@ function Battlepass:GetHeroEffect(hero)
 						Battlepass:SetOverrideAssets(hero, modifier, Wearable.asset_modifier[item_id])
 					end
 				end
-			else -- ITEMS HANDLE
+			else
+				if v.hero == "levelup" then
+					Battlepass:SetOverrideAssets(hero, nil, ItemsGame:GetItemVisuals(v.item_id))
+				end
+
 				if battlepass_items[v.hero] then
 					battlepass_items[v.hero] = ItemsGame:GetItemEffects(v.item_id)
+					local images = ItemsGame:GetItemImages(v.item_id)
+
+					for k, v in pairs(images) do
+						CustomNetTables:SetTableValue("battlepass", v.asset..'_'..hero:GetPlayerID(), {v.modifier}) 
+					end
 				end
 			end
 		end

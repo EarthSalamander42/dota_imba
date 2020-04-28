@@ -207,7 +207,11 @@ function ItemsGame:GetItemModel(item_id)
 end
 
 function ItemsGame:GetItemEffects(item_id)
-	return self:GetItemInfo(item_id, "particles")
+	return self:GetItemInfo(item_id, "particles") or {}
+end
+
+function ItemsGame:GetItemImages(item_id)
+	return self:GetItemInfo(item_id, "inventory_icons") or {}
 end
 
 ItemsGame:Init()
