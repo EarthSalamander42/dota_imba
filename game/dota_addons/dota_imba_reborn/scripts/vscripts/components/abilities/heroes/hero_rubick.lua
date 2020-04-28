@@ -1078,7 +1078,7 @@ imba_rubick_spellsteal.banned_abilities =
 	"shredder_return_chakram",
 	"shredder_return_chakram_2",
 	"monkey_king_wukongs_command",
-	"void_spirit_aether_remnant"
+	"void_spirit_aether_remnant",	
 }
 
 --------------------------------------------------------------------------------
@@ -1374,7 +1374,7 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 
 	local primarySpell = spellData.primarySpell
 	local secondarySpell = spellData.secondarySpell
-	local linkedTalents = spellData.linkedTalents
+	local linkedTalents = spellData.linkedTalents	
 	
 	-- I have no idea wtf is going on but trying to get this ability to be (mostly) stolen correctly without abilities being out of slot
 	if self:GetCaster():HasAbility("monkey_king_primal_spring") then
@@ -1414,7 +1414,7 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		-- local spring_early_ability = self:GetCaster():AddAbility("monkey_king_primal_spring_early")
 		-- spring_early_ability:SetHidden(true)
 		-- spring_early_ability:SetActivated(true)
-	end
+	end	
 	
 	-- Vanilla Leshrac has some scepter thinker associated with Pulse Nova/Lightning Storm that is required, otherwise the lightning storms strike every frame -_-
 	if self:GetCaster():HasModifier("modifier_leshrac_lightning_storm_scepter_thinker") then
@@ -1423,7 +1423,8 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	
 	if secondarySpell~=nil and not secondarySpell:IsNull() and secondarySpell:GetName() == "leshrac_lightning_storm" then
 		self:GetCaster():AddNewModifier(self:GetCaster(), secondarySpell, "modifier_leshrac_lightning_storm_scepter_thinker", {})
-	end
+	end	
+
 	
 	-- Add new spell
 	if primarySpell~=nil and not primarySpell:IsNull() then
@@ -1455,10 +1456,15 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentSecondarySpell:IsHiddenWhenStolen() then
 			self.CurrentSecondarySpell:SetHidden(true)
+		end		
+
+		self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )		
+
+		-- Tiny's Tree Throw needs to be hidden on Rubick otherwise Rubick can abuse it forever
+		if self.CurrentSecondarySpell:GetAbilityName() == "tiny_toss_tree" then
+			self.CurrentSecondarySpell:SetHidden(true)
 		end
-		--else
-			self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )
-		--end
+		
 	end
 	
 	-- Add Linked Talents 
@@ -1526,7 +1532,7 @@ function imba_rubick_spellsteal:ForgetSpell()
 			--print("forgetting secondary")
 			self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), true, false )
 			self:GetCaster():RemoveAbility( self.CurrentSecondarySpell:GetAbilityName() )
-		end
+		end		
 
 		--GetAbility	
 		self.CurrentPrimarySpell = nil
