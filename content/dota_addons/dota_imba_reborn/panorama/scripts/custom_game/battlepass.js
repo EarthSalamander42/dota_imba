@@ -210,7 +210,7 @@ var api = {
 			timeout : 5000,
 			headers : {'X-Dota-Server-Key' : secret_key, 'X-Dota-Game-Type' : game_type},
 			success : function(obj) {
-				if (obj.error || !obj.data || !obj.data.players)
+				if (!obj.data || !obj.data.players)
 					$.Msg("Error finding top xp");
 				else {
 					callback(obj.data.players);
@@ -627,9 +627,9 @@ function SetEmblem(emblem, name, id, required_status) {
 	companion_changed = true;
 }
 
-function SetArmory(hero, slot_id, item_id) {
-	if (companion_changed === true) {
-//		$.Msg("SLOW DOWN BUDDY!");
+function SetArmory(hero, slot_id, item_id, bForceUnequip) {
+	if (companion_changed === true && bForceUnequip == undefined) {
+		$.Msg("SLOW DOWN BUDDY!");
 		return;
 	}
 
@@ -642,7 +642,7 @@ function SetArmory(hero, slot_id, item_id) {
 		item_id		: item_id,
 		custom_game	: game_type,
 	}, function(data) {
-//		$.Msg(data)
+		$.Msg(data)
 		$("#CompanionNotification").AddClass("success");
 
 		var text = "";
@@ -930,7 +930,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 			}
 */
 			if (plyData != null || bRewardsDisabled & bRewardsDisabled == true) {
-				if (i <= plyData.Lvl) {
+				if (bp_level <= plyData.Lvl) {
 					var reward_panel_unlocked = $.CreatePanel("Panel", reward, "");
 					reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
 
@@ -951,6 +951,12 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 							if (item && item.item_id == bp_item_id) {
 //								$.Msg(item)
 								SetRewardEquipped(bp_item_id, bp_hero);
+
+								// rough fix to unequip rewards if somehow a player equip higher tiers rewards
+								if (plyData.Lvl < bp_level) {
+									SetArmory(bp_hero, slot_id, bp_item_id, false)
+								}
+
 								break;
 							}
 

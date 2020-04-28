@@ -102,14 +102,8 @@ function Battlepass:IsHeroName(hero_name)
 end
 --]]
 
-local function failduh()
-	print("CALLBACK FAIL")
-end
-
 function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 	for i, j in pairs(table_name) do
-		print(i, j)
-
 		if i ~= "skip_model_combine" then
 			if (j.type == "particle" and j.style == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("Particle:", j)
@@ -128,7 +122,7 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 
 				table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
 			elseif (j.type == "ability_icon" and j.style == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
-				print("ability icon:", j)
+--				print("ability icon:", j)
 				CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
 			elseif (j.type == "icon_replacement_hero" and j.style == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("topbar icon:", j)

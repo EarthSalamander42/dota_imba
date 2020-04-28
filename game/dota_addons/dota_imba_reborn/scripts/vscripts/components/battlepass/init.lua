@@ -84,6 +84,6 @@ ListenToGameEvent('dota_player_gained_level', function(keys)
 	end
 	local level = keys.level
 
-	local particleID = ParticleManager:CreateParticle("particles/generic_hero_status/hero_levelup_vanilla.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+	local particleID = ParticleManager:CreateParticle("particles/generic_hero_status/hero_levelup_vanilla.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, hero)
 	ParticleManager:ReleaseParticleIndex(particleID)
 end, nil)
