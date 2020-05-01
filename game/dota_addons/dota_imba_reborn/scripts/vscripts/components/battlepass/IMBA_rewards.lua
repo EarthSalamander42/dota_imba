@@ -1,14 +1,6 @@
 BATTLEPASS_LEVEL_REWARD = {}
-BATTLEPASS_LEVEL_REWARD[6]		= {"bristleback_rare", "rare"}
 -- BATTLEPASS_LEVEL_REWARD[10]		= {"sohei_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[11]		= {"chen_mythical", "mythical"}
-BATTLEPASS_LEVEL_REWARD[15]		= {"vengefulspirit_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[28]		= {"dark_seer_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[33]		= {"skywrath_mage_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[39]		= {"bristleback_rare2", "rare"}
-BATTLEPASS_LEVEL_REWARD[46]		= {"nyx_assassin_immortal", "immortal"}
 -- BATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
-BATTLEPASS_LEVEL_REWARD[52]		= {"enigma_mythical", "mythical"}
 BATTLEPASS_LEVEL_REWARD[56]		= {"huskar_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
 BATTLEPASS_LEVEL_REWARD[68]		= {"axe_immortal", "immortal"}
@@ -105,7 +97,7 @@ end
 function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 	for i, j in pairs(table_name) do
 		if i ~= "skip_model_combine" then
-			if (j.type == "particle" and j.style == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+			if (j.type == "particle" and modifier == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("Particle:", j)
 				local particle_table = {}
 				particle_table.asset = j.asset
@@ -113,7 +105,7 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 				particle_table.parent = hero
 
 				table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
-			elseif (j.type == "sound" and j.style == nil) or (j.type == "sound" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+			elseif (j.type == "sound" and modifier == nil) or (j.type == "sound" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("Sound:", j)
 				local sound_table = {}
 				sound_table.asset = j.asset
@@ -121,15 +113,18 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 				sound_table.parent = hero
 
 				table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
-			elseif (j.type == "ability_icon" and j.style == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+			elseif (j.type == "ability_icon" and modifier == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("ability icon:", j)
 				CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
-			elseif (j.type == "icon_replacement_hero" and j.style == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+			elseif (j.type == "icon_replacement_hero" and modifier == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("topbar icon:", j)
 				CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
 					player_id = hero:GetPlayerID(),
 					icon_path = j.modifier,
 				})
+			elseif (j.type == "entity_model" and modifier == nil) or (j.type == "entity_model" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+--				print("entity model:", j)
+				ENTITY_MODEL_OVERRIDE[j.asset] = j.modifier
 			end
 		end
 	end
@@ -309,12 +304,14 @@ function Battlepass:GetHeroEffect(hero)
 						end
 					end
 
---					print(item_id, slot_id)
 					Wearable:_WearProp(hero, item_id, slot_id, style)
+
+					if Wearable.asset_modifier[item_id] then
+						Battlepass:SetOverrideAssets(hero, modifier, Wearable.asset_modifier[item_id])
+					end
 
 					if Wearable.items_game["items"][item_id] and Wearable.items_game["items"][item_id]["visuals"] then
 						Battlepass:SetOverrideAssets(hero, modifier, Wearable.items_game["items"][item_id]["visuals"])
-						Battlepass:SetOverrideAssets(hero, modifier, Wearable.asset_modifier[item_id])
 					end
 				end
 			else
@@ -367,20 +364,6 @@ function Battlepass:GetHeroEffect(hero)
 				-- hero:AddNewModifier(hero, nil, "modifier_axe_arcana", {})
 				-- hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
 			-- end
-		elseif hero:GetUnitName() == "npc_dota_hero_bristleback" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["bristleback_rare2"] then
-				Wearable:_WearProp(hero, "9786", "back", "1")
-				Wearable:_WearProp(hero, "9787", "arms", "1")
-				Wearable:_WearProp(hero, "9788", "head", "1")
-				Wearable:_WearProp(hero, "9789", "neck", "1")
-				Wearable:_WearProp(hero, "9790", "weapon", "1")
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["bristleback_rare"] then
-				Wearable:_WearProp(hero, "9786", "back", "0")
-				Wearable:_WearProp(hero, "9787", "arms", "0")
-				Wearable:_WearProp(hero, "9788", "head", "0")
-				Wearable:_WearProp(hero, "9789", "neck", "0")
-				Wearable:_WearProp(hero, "9790", "weapon", "0")
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_centaur" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["centaur_immortal"] then
 				hero.double_edge_pfx = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_ti9.vpcf"
@@ -390,30 +373,6 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "12945", "weapon")
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_chen" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["chen_mythical"] then
-				Wearable:_WearProp(hero, "9950", "head")
-				Wearable:_WearProp(hero, "9951", "weapon")
-				Wearable:_WearProp(hero, "9952", "mount")
-				Wearable:_WearProp(hero, "9953", "shoulder")
-				Wearable:_WearProp(hero, "9954", "arms")
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_dark_seer" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["dark_seer_immortal2"] then
-				Wearable:_WearProp(hero, "12299", "arms")
-				hero.ion_shell_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_golden.vpcf"
-				hero.ion_shell_damage_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_dmg_golden.vpcf"
-				hero.ion_shell_icon = 2
-				hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start.TI8"
-				hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end.TI8"
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["dark_seer_immortal"] then
-				Wearable:_WearProp(hero, "9740", "arms")
-				hero.ion_shell_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell.vpcf"
-				hero.ion_shell_damage_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_dmg.vpcf"
-				hero.ion_shell_icon = 1
-				hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start.TI8"
-				hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end.TI8"
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_death_prophet" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["death_prophet_immortal"] then
@@ -485,19 +444,6 @@ function Battlepass:GetHeroEffect(hero)
 --					hero:AddNewModifier(hero, nil, "modifier_earthshaker_arcana", {})
 --				end
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["enigma_immortal"] then
-				Wearable:_WearProp(hero, "8326", "arms")
-
-				hero.black_hole_effect = "particles/hero/enigma/enigma_blackhole_ti5_scaleable.vpcf"
-				hero.black_hole_sound = "Imba.EnigmaBlackHoleTi5"
-				hero.black_hole_icon = 1
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["enigma_mythical"] then
-				Wearable:_WearProp(hero, "12329", "arms")
-				Wearable:_WearProp(hero, "12330", "armor")
-				Wearable:_WearProp(hero, "12332", "head")
-				hero.eidolon_model = "models/items/enigma/eidolon/absolute_zero_updated_eidolon/absolute_zero_updated_eidolon.vmdl"
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_huskar" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["huskar_immortal"] then
 				Wearable:_WearProp(hero, "8188", "head")
@@ -559,32 +505,6 @@ function Battlepass:GetHeroEffect(hero)
 					Wearable:_WearProp(hero, "6996", "head")
 				end
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["nyx_assassin_immortal"] then
-				hero.spiked_carapace_pfx = "particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_carapace.vpcf"
-				hero.spiked_carapace_debuff_pfx = "particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_carapace_hit.vpcf"
-
-				Wearable:_WearProp(hero, "12957", "back")
-			end
-
-			-- custom icons
-			hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-		elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["skywrath_mage_immortal2"] then
-				hero.arcane_bolt_pfx = "particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_arcane_bolt_golden.vpcf"
-
-				Wearable:_WearProp(hero, "12993", "back")
-
-				-- custom icons
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["skywrath_mage_immortal"] then
-				hero.arcane_bolt_pfx = "particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_arcane_bolt.vpcf"
-
-				Wearable:_WearProp(hero, "12926", "back")
-
-				-- custom icons
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
 			if IsInToolsMode() then
 --				if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["terrorblade_arcana"] then
@@ -639,14 +559,6 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "4213", "back")
 				Wearable:_WearProp(hero, "4214", "belt")
 				Wearable:_WearProp(hero, "4215", "arms")
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["vengefulspirit_immortal"] then
-				Wearable:_WearProp(hero, "9749", "back")
-				hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
-				hero.magic_missile_icon = 1
-				hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
-				hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["wisp_arcana"] then

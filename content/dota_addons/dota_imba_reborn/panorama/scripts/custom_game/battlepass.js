@@ -641,8 +641,7 @@ function SetArmory(hero, slot_id, item_id, bForceUnequip) {
 		slot_id		: slot_id,
 		item_id		: item_id,
 		custom_game	: game_type,
-	}, function(data) {
-		$.Msg(data)
+	}, function() {
 		$("#CompanionNotification").AddClass("success");
 
 		var text = "";
@@ -938,7 +937,21 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 
 					var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, "");
 					reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked");
-					reward_label_unlocked.text = $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+
+					if (bp_type == "bundle" || bp_type == "wearable" || bp_type == "taunt") {
+						var hero_tooltip = $.Localize(bp_hero);
+						var new_hero_tooltip = undefined;
+
+						if (hero_tooltip.indexOf(" (IMBA)") !== -1) {
+							new_hero_tooltip = hero_tooltip.replace(" (IMBA)", "");
+						}
+
+						if (new_hero_tooltip)
+							reward_label_unlocked.text = new_hero_tooltip + ": " +  $.Localize(bp_name);
+						else
+							reward_label_unlocked.text = hero_tooltip + ": " +  $.Localize(bp_name);
+					} else
+						reward_label_unlocked.text = $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 
 					var armory = CustomNetTables.GetTableValue("battlepass", "rewards_" + player);
 

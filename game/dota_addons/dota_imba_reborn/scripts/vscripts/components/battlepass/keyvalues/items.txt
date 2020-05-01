@@ -1,7 +1,3 @@
-// If any of the following lines are commented, defaults to items_game.txt value
-//	"item_name"					"Angelic Recruit" // When commented out
-//	"item_rarity"				"mythical" // not required if item rarity is same than vanilla
-//	"item_team"					"radiant" // radiant or dire
 // ID 16315 for empty icon
 
 "BattlepassHeroes"
@@ -1822,6 +1818,81 @@
 				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
 				"modifier"		"particles/econ/events/ti9/hero_levelup_ti9.vpcf"
 			}
+		}
+	}
+
+	"88" // Bristleback: Violent Precipitate
+	{
+		"item_id"					"21189"
+		"item_type"					"bundle"
+		"item_unlock_level"			"5"
+
+		"wearables"
+		{
+			"9786"			"back"
+			"9787"			"arms"
+			"9788"			"head"
+			"9789"			"neck"
+			"9790"			"weapon"
+		}
+	}
+
+	"89" // Chen: The Rat King
+	{
+		"item_id"					"21209"
+		"item_type"					"bundle"
+		"item_unlock_level"			"10"
+
+		"wearables"
+		{
+			"9950" 			"head"
+			"9951" 			"weapon"
+			"9952" 			"mount"
+			"9953" 			"shoulder"
+			"9954" 			"arms"
+		}
+	}
+
+	"90" // Vengeful Spirit: Mournful Reverie
+	{
+		"item_id"					"9749"
+		"item_type"					"wearable"
+		"item_unlock_level"			"20"
+	}
+
+	"91" // Dark Seer: Bracers of Forlorn Precipice
+	{
+		"item_id"					"9740"
+		"item_type"					"wearable"
+		"item_unlock_level"			"30"
+	}
+
+	"92" // Skywrath Mage: Flight of Epiphany
+	{
+		"item_id"					"12926"
+		"item_type"					"wearable"
+		"item_unlock_level"			"40"
+	}
+
+	"93" // Nyx Assassin: Latticean Hierarchy
+	{
+		"item_id"					"12957"
+		"item_type"					"wearable"
+		"item_unlock_level"			"50"
+	}
+
+	"94" // Enigma: Twisted Maelstrom
+	{
+		"item_id"					"21235"
+		"item_type"					"bundle"
+		"item_unlock_level"			"60"
+
+		"wearables"
+		{
+			"12329"			"arms"
+			"12330"			"armor"
+			"12331"			"eidolon"
+			"12332"			"head"
 		}
 	}
 

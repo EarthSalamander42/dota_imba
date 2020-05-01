@@ -25939,17 +25939,52 @@
 			"modifier"		"ti8"
 			"style"		"0"
 		}
+		"asset_modifier1"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+			"modifier"		"particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier2"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
+			"modifier"		"particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_dmg.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier3"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_dark_seer/dark_seer_ambient_hands.vpcf"
+			"modifier"		"particles/error/null.vpcf"
+			"style"		"0"
+		}
 		"asset_modifier4"
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ambient.vpcf"
 			"style"		"0"
 		}
-		"asset_modifier3"
+		"asset_modifier5"
 		{
-			"type"		"particle_replace"
-			"asset"		"particles/units/heroes/hero_dark_seer/dark_seer_ambient_hands.vpcf"
-			"modifier"		"particles/error/null.vpcf"
+			"type"		"ability_icon"
+			"asset"		"dark_seer_ion_shell"
+			"modifier"		"dark_seer/ti8_immortal_arm/dark_seer_ion_shell_immortal"
+			"style"		"0"
+		}
+		"asset_modifier6"
+		{
+			"type"		"sound"
+			"asset"		"Hero_Dark_Seer.Ion_Shield_Start"
+			"modifier"		"Hero_Dark_Seer.Ion_Shield_Start.TI8"
+			"style"		"0"
+		}
+		"asset_modifier7"
+		{
+			"type"		"sound"
+			"asset"		"Hero_Dark_Seer.Ion_Shield_end"
+			"modifier"		"Hero_Dark_Seer.Ion_Shield_end.TI8"
 			"style"		"0"
 		}
 	}
@@ -26138,6 +26173,34 @@
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+			"modifier"		"particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier2"
+		{
+			"type"		"sound"
+			"asset"		"Hero_VengefulSpirit.MagicMissile"
+			"modifier"		"Hero_VengefulSpirit.MagicMissile.TI8"
+			"style"		"0"
+		}
+		"asset_modifier3"
+		{
+			"type"		"sound"
+			"asset"		"Hero_VengefulSpirit.MagicMissileImpact"
+			"modifier"		"Hero_VengefulSpirit.MagicMissileImpact.TI8"
+			"style"		"0"
+		}
+		"asset_modifier4"
+		{
+			"type"		"ability_icon"
+			"asset"		"vengefulspirit_magic_missile"
+			"modifier"		"vengefulspirit/ti8_immortal_back/vengefulspirit_magic_missile_immortal"
 			"style"		"0"
 		}
 		"skip_model_combine"		"1"
@@ -43409,13 +43472,27 @@
 	}
 	"12926"
 	{
+		"asset_modifier"
+		{
+			"type"		"ability_icon"
+			"asset"		"skywrath_mage_arcane_bolt"
+			"modifier"		"skywrath_mage_arcane_bolt_ti9"
+			"style"		"0"
+		}
 		"asset_modifier2"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
+			"modifier"		"particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_arcane_bolt.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier3"
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/skywrath_mage/skywrath_ti9_immortal_back/skywrath_mage_ti9_ambient.vpcf"
 			"style"		"0"
 		}
-		"asset_modifier3"
+		"asset_modifier4"
 		{
 			"type"		"activity"
 			"asset"		"ALL"
@@ -43593,7 +43670,35 @@
 	"12957"
 	{
 		"skip_model_combine"		"1"
+		"asset_modifier"
+		{
+			"type"		"ability_icon"
+			"asset"		"nyx_assassin_spiked_carapace"
+			"modifier"		"nyx_assassin_spiked_carapace_ti9"
+			"style"		"0"
+		}
+		"asset_modifier2"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
+			"modifier"		"particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_carapace.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier3"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_nyx_assassin/status_effect_nyx_assassin_spiked_carapace.vpcf"
+			"modifier"		"particles/econ/items/nyx_assassin/nyx_ti9_immortal/status_effect_nyx_ti9_carapace.vpcf"
+			"style"		"0"
+		}
 		"asset_modifier4"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+			"modifier"		"particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_carapace_hit.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier5"
 		{
 			"type"		"particle_create"
 			"modifier"		"particles/econ/items/nyx_assassin/nyx_ti9_immortal/nyx_ti9_ambient.vpcf"

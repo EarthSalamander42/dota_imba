@@ -90,7 +90,7 @@ end
 function ItemsGame:GetItemInfo(item_id, category, return_override)
 	if type(item_id) ~= "string" then item_id = tostring(item_id) end
 
-	if ItemsGame:GetItemKV(item_id)[category] then
+	if ItemsGame:GetItemKV(item_id) and ItemsGame:GetItemKV(item_id)[category] then
 		return ItemsGame:GetItemKV(item_id)[category]
 	end
 

@@ -944,12 +944,6 @@ imba_nyx_assassin_spiked_carapace = class({})
 LinkLuaModifier("modifier_imba_spiked_carapace", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_spiked_carapace_stun", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
-function imba_nyx_assassin_spiked_carapace:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "nyx_assassin_spiked_carapace" end
-	return "nyx_assassin_spiked_carapace_ti9"
-end
-
 function imba_nyx_assassin_spiked_carapace:IsHiddenWhenStolen()
 	return false
 end
@@ -1019,7 +1013,7 @@ function modifier_imba_spiked_carapace:OnCreated()
 		end
 
 		-- Add spikes particles
-		self.particle_spikes_fx = ParticleManager:CreateParticle(self.caster.spiked_carapace_pfx, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)
+		self.particle_spikes_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, self.caster, self.caster)
 		ParticleManager:SetParticleControlEnt(self.particle_spikes_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
 		self:AddParticle(self.particle_spikes_fx, false, false, -1, false, false)
 
@@ -1265,10 +1259,9 @@ modifier_imba_spiked_carapace_stun = class({})
 function modifier_imba_spiked_carapace_stun:OnCreated()
 	if IsServer() then
 		self.parent = self:GetParent()
-		self.sound_hit = "Hero_NyxAssassin.SpikedCarapace.Stun"
 
 		-- Play hit sound
-		EmitSoundOn(self.sound_hit, self.parent)
+		EmitSoundOn("Hero_NyxAssassin.SpikedCarapace.Stun", self.parent)
 
 		-- Add spikes hit particle
 		self.particle_spike_hit_fx = ParticleManager:CreateParticle(self:GetCaster().spiked_carapace_debuff_pfx, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)

@@ -809,12 +809,6 @@ function imba_pudge_rot:OnToggle()
 	end
 end
 
-function imba_pudge_rot:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "pudge_rot" end
-	return "custom/pudge_rot_arcana_style"..self:GetCaster().arcana_style
-end
-
 -----------------------------
 -- MODIFIER_IMBA_PUDGE_ROT --
 -----------------------------

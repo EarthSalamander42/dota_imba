@@ -959,6 +959,23 @@ EmitSoundOn = function(sSoundName, hParent)
 	return response
 end
 
+original_EmitSoundOnLocationWithCaster = EmitSoundOnLocationWithCaster
+EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hCaster)
+--	print("Create Particle (override):", sSoundName)
+
+	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
+		if v.asset == sSoundName and v.parent == hCaster then
+			sSoundName = v.modifier
+			break
+		end
+	end
+
+	-- call the original function
+	local response = original_EmitSoundOnLocationWithCaster(vLocation, sSoundName, hCaster)
+
+	return response
+end
+
 ----------------------------------------------------------------------------------
 -- credits to yahnich for every functions below
 ----------------------------------------------------------------------------------
