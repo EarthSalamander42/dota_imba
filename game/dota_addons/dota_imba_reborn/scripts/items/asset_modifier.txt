@@ -44047,31 +44047,128 @@
 	}
 	"12964"
 	{
-		"skip_model_combine"		"1"
-		"asset_modifier"
-		{
-			"type"		"entity_model"
-			"asset"		"npc_dota_hero_axe"
-			"modifier"		"models/items/axe/ti9_jungle_axe/axe_bare.vmdl"
-		}
-		"asset_modifier1"
-		{
-			"type"		"entity_scale"
-			"asset"		"npc_dota_hero_axe"
-			"scale_size"		"1.030000"
-		}
-		"asset_modifier2"
-		{
-			"type"		"activity"
-			"asset"		"ALL"
-			"modifier"		"ti9"
-		}
-		"asset_modifier14"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_misc_ambient.vpcf"
-			"style"		"0"
-		}
+				"skip_model_combine"		"1"
+				"asset_modifier"
+				{
+					"type"		"entity_model"
+					"asset"		"npc_dota_hero_axe"
+					"modifier"		"models/items/axe/ti9_jungle_axe/axe_bare.vmdl"
+				}
+				"asset_modifier2"
+				{
+					"type"		"entity_scale"
+					"asset"		"npc_dota_hero_axe"
+					"scale_size"		"1.030000"
+				}
+				"asset_modifier3"
+				{
+					"type"		"activity"
+					"asset"		"ALL"
+					"modifier"		"ti9"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_kill.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_attack_blur_counterhelix.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_sprint.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier7"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_axe/axe_cullingblade_sprint_creep.vpcf"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_sprint_creep.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier8"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_boost.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier9"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_axe/axe_loadout.vpcf"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_loadout.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier10"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Axe.PreAttack"
+					"modifier"		"Hero_Axe.PreAttack.Jungle"
+					"style"		"0"
+				}
+				"asset_modifier11"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Axe.Attack"
+					"modifier"		"Hero_Axe.Attack.Jungle"
+					"style"		"0"
+				}
+				"asset_modifier12"
+				{
+					"type"		"response_criteria"
+					"asset"		"jungle_axe"
+				}
+				"asset_modifier13"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_axe/axe_culling_blade_hero_effect.vpcf"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_hero_effect.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier14"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_axe/axe_cullingblade_sprint_axe.vpcf"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_cullingblade_sprint_axe.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier15"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_misc_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier16"
+				{
+					"type"		"icon_replacement_hero"
+					"asset"		"npc_dota_hero_axe"
+					"modifier"		"npc_dota_hero_axe_alt"
+					"force_display"		"1"
+					"style"		"0"
+				}
+				"asset_modifier17"
+				{
+					"type"		"ability_icon"
+					"asset"		"axe_counter_helix"
+					"modifier"		"axe_counter_helix_unleashed"
+					"style"		"0"
+				}
+				"asset_modifier18"
+				{
+					"type"		"ability_icon"
+					"asset"		"axe_culling_blade"
+					"modifier"		"axe_culling_blade_unleashed"
+					"style"		"0"
+				}
 	}
 	"12965"
 	{
@@ -44802,23 +44899,55 @@
 			"scale_size"		"1"
 		}
 	}
-	"12998"
+	"12934"
 	{
-		"asset_modifier4"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_immortal_ambient_gold.vpcf"
-			"style"		"0"
-		}
-		"asset_modifier5"
-		{
-			"type"		"activity"
-			"asset"		"ALL"
-			"modifier"		"ti9_arms"
-			"style"		"0"
-		}
-		"skin"		"1"
-		"skip_model_combine"		"0"
+				"asset_modifier"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds_impact.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"ability_icon"
+					"asset"		"life_stealer_open_wounds"
+					"modifier"		"life_stealer_open_wounds_ti9"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/status_fx/status_effect_life_stealer_open_wounds.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/status_effect_ls_ti9_open_wounds.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_immortal_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier6"
+				{
+					"type"		"activity"
+					"asset"		"ALL"
+					"modifier"		"ti9_arms"
+					"style"		"0"
+				}
+				"asset_modifier7"
+				{
+					"type"		"sound"
+					"asset"		"Hero_LifeStealer.OpenWounds"
+					"modifier"		"Hero_LifeStealer.OpenWounds.TI9"
+				}
 	}
 	"13000"
 	{

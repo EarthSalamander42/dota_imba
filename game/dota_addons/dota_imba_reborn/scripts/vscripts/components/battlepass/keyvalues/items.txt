@@ -1878,7 +1878,7 @@
 	{
 		"item_id"					"12957"
 		"item_type"					"wearable"
-		"item_unlock_level"			"50"
+		"item_unlock_level"			"80"
 	}
 
 	"94" // Enigma: Twisted Maelstrom
@@ -1894,6 +1894,36 @@
 			"12331"			"eidolon"
 			"12332"			"head"
 		}
+	}
+
+	"95" // Huskar: Searing Dominator
+	{
+		"item_id"					"8188"
+		"item_type"					"wearable"
+		"item_unlock_level"			"70"
+	}
+
+	"96" // Axe: Unleashed
+	{
+		"item_id"					"21325"
+		"item_type"					"bundle"
+		"item_unlock_level"			"50"
+		"modifier"					"modifier_axe_arcana"
+
+		"wearables"
+		{
+			"12964" 		"weapon"
+			"12965" 		"armor"
+			"12966" 		"belt"
+			"12968" 		"head"
+		}
+	}
+
+	"97" // Lifestealer: Dread Requisition
+	{
+		"item_id"					"12998"
+		"item_type"					"wearable"
+		"item_unlock_level"			"90"
 	}
 
 //	"2" // Antipode Couriers (Radiant)

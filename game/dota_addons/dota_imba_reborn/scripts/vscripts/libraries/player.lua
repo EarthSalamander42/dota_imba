@@ -929,11 +929,11 @@ CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 		caster = hCaster
 	end
 
-	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
-		if v.asset == sSoundName and v.parent == caster then
-			sSoundName = v.modifier
-			break
-		end
+	local override_sound = CustomNetTables:GetTableValue("battlepass", sSoundName..'_'..caster:GetPlayerOwnerID()) 
+
+	if override_sound then
+		print("EmitSound (override):", sSoundName, override_sound["1"])
+		sSoundName = override_sound["1"]
 	end
 
 	-- call the original function
@@ -946,11 +946,11 @@ original_EmitSoundOn = EmitSoundOn
 EmitSoundOn = function(sSoundName, hParent)
 --	print("Create Particle (override):", sSoundName)
 
-	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
-		if v.asset == sSoundName and v.parent == hParent then
-			sSoundName = v.modifier
-			break
-		end
+	local override_sound = CustomNetTables:GetTableValue("battlepass", sSoundName..'_'..hParent:GetPlayerOwnerID()) 
+
+	if override_sound then
+		print("EmitSoundOn (override):", sSoundName, override_sound["1"])
+		sSoundName = override_sound["1"]
 	end
 
 	-- call the original function
@@ -963,11 +963,11 @@ original_EmitSoundOnLocationWithCaster = EmitSoundOnLocationWithCaster
 EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hCaster)
 --	print("Create Particle (override):", sSoundName)
 
-	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
-		if v.asset == sSoundName and v.parent == hCaster then
-			sSoundName = v.modifier
-			break
-		end
+	local override_sound = CustomNetTables:GetTableValue("battlepass", sSoundName..'_'..hCaster:GetPlayerOwnerID()) 
+
+	if override_sound then
+		print("EmitSoundOnLocationWithCaster (override):", sSoundName, override_sound["1"])
+		sSoundName = override_sound["1"]
 	end
 
 	-- call the original function

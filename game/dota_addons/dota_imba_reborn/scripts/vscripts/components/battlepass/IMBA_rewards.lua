@@ -1,10 +1,6 @@
 BATTLEPASS_LEVEL_REWARD = {}
 -- BATTLEPASS_LEVEL_REWARD[10]		= {"sohei_arcana", "arcana"}
 -- BATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
-BATTLEPASS_LEVEL_REWARD[56]		= {"huskar_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[60]		= {"sheepstick", "common"}
-BATTLEPASS_LEVEL_REWARD[68]		= {"axe_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[97]		= {"life_stealer_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[106]	= {"death_prophet_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[116]	= {"centaur_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[128]	= {"dark_seer_immortal2", "immortal"}
@@ -20,7 +16,6 @@ if IsInToolsMode() then
 --	BATTLEPASS_LEVEL_REWARD[195]	= {"terrorblade_arcana", "arcana"}
 	BATTLEPASS_LEVEL_REWARD[195]	= {"nevermore_arcana", "arcana"}
 end
-BATTLEPASS_LEVEL_REWARD[197]	= {"life_stealer_immortal2", "immortal"}
 BATTLEPASS_LEVEL_REWARD[225]	= {"invoker_legendary", "legendary"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
 -- BATTLEPASS_LEVEL_REWARD[310]	= {"dragon_knight_mythical", "mythical"}
@@ -98,7 +93,7 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 	for i, j in pairs(table_name) do
 		if i ~= "skip_model_combine" then
 			if (j.type == "particle" and modifier == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("Particle:", j)
+				print("Particle:", j)
 				local particle_table = {}
 				particle_table.asset = j.asset
 				particle_table.modifier = j.modifier
@@ -106,24 +101,19 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 
 				table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
 			elseif (j.type == "sound" and modifier == nil) or (j.type == "sound" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("Sound:", j)
-				local sound_table = {}
-				sound_table.asset = j.asset
-				sound_table.modifier = j.modifier
-				sound_table.parent = hero
-
-				table.insert(CDOTA_BaseNPC.SOUNDS_OVERRIDE, sound_table)
+				print("Sound:", j)
+				CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
 			elseif (j.type == "ability_icon" and modifier == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("ability icon:", j)
+				print("ability icon:", j)
 				CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
 			elseif (j.type == "icon_replacement_hero" and modifier == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("topbar icon:", j)
+				print("topbar icon:", j)
 				CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
 					player_id = hero:GetPlayerID(),
 					icon_path = j.modifier,
 				})
 			elseif (j.type == "entity_model" and modifier == nil) or (j.type == "entity_model" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("entity model:", j)
+				print("entity model:", j)
 				ENTITY_MODEL_OVERRIDE[j.asset] = j.modifier
 			end
 		end
@@ -140,14 +130,7 @@ end
 
 -- todo: use values in items_game.txt instead
 function Battlepass:GetHeroEffect(hero)
-	if hero:GetUnitName() == "npc_dota_hero_axe" then
-		hero.pre_attack_sound = "Hero_Axe.PreAttack"
-		hero.attack_sound = "Hero_Axe.Attack"
-		hero.counter_helix_pfx = "particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
-		hero.culling_blade_kill_pfx = "particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
-		hero.culling_blade_boost_pfx = "particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
-		hero.culling_blade_sprint_pfx = "particles/units/heroes/hero_axe/axe_cullingblade_sprint_axe.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_centaur" then
+	if hero:GetUnitName() == "npc_dota_hero_centaur" then
 		hero.double_edge_pfx = "particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
 		hero.double_edge_body_pfx = "particles/units/heroes/hero_centaur/centaur_double_edge_body.vpcf"
 		hero.double_edge_phase_pfx = "particles/units/heroes/hero_centaur/centaur_double_edge_phase.vpcf"
@@ -184,10 +167,6 @@ function Battlepass:GetHeroEffect(hero)
 --		hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_cast.vpcf"
 --		hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_ti6_combined.vpcf"
 --		hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_ti6_combined_v2.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_huskar" then
-		hero.life_break_cast_effect = "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
-		hero.life_break_start_effect = "particles/units/heroes/hero_huskar/huskar_life_break_spellstart.vpcf"
-		hero.life_break_effect = "particles/units/heroes/hero_huskar/huskar_life_break.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
 		hero.quas_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
 		hero.wex_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
@@ -207,13 +186,6 @@ function Battlepass:GetHeroEffect(hero)
 			open_wounds = "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf",
 			open_wounds_status_effect = "particles/status_fx/status_effect_life_stealer_open_wounds.vpcf",
 		})
-	elseif hero:GetUnitName() == "npc_dota_hero_nyx_assassin" then
-		hero.spiked_carapace_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
-		hero.spiked_carapace_debuff_pfx = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_skywrath_mage" then
-		hero.arcane_bolt_pfx = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_terrorblade" then
-
 	elseif hero:GetUnitName() == "npc_dota_hero_tiny" then
 		hero.ambient_pfx_effect = "particles/units/heroes/hero_tiny/tiny_ambient.vpcf"
 		hero.death_pfx = "particles/units/heroes/hero_tiny/tiny01_death.vpcf"
@@ -345,26 +317,7 @@ function Battlepass:GetHeroEffect(hero)
 	if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
 		local short_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
 
-		if hero:GetUnitName() == "npc_dota_hero_axe" then
-			-- if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["axe_immortal"] then
-				-- LinkLuaModifier("modifier_axe_arcana", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
-
-				-- Wearable:_WearProp(hero, "12964", "weapon")
-				-- Wearable:_WearProp(hero, "12965", "armor")
-				-- Wearable:_WearProp(hero, "12966", "belt")
-				-- Wearable:_WearProp(hero, "12968", "head")
-
-				-- hero.pre_attack_sound = "Hero_Axe.PreAttack.Jungle"
-				-- hero.attack_sound = "Hero_Axe.Attack.Jungle"
-				-- hero.counter_helix_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_attack_blur_counterhelix.vpcf"
-				-- hero.culling_blade_kill_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_kill.vpcf"
-				-- hero.culling_blade_boost_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_boost.vpcf"
-				-- hero.culling_blade_sprint_pfx = "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_sprint_axe.vpcf"
-
-				-- hero:AddNewModifier(hero, nil, "modifier_axe_arcana", {})
-				-- hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = style})
-			-- end
-		elseif hero:GetUnitName() == "npc_dota_hero_centaur" then
+		if hero:GetUnitName() == "npc_dota_hero_centaur" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["centaur_immortal"] then
 				hero.double_edge_pfx = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_ti9.vpcf"
 				hero.double_edge_body_pfx = "particles/econ/items/centaur/centaur_ti9/centaur_double_edge_body_ti9.vpcf"
@@ -444,14 +397,6 @@ function Battlepass:GetHeroEffect(hero)
 --					hero:AddNewModifier(hero, nil, "modifier_earthshaker_arcana", {})
 --				end
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_huskar" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["huskar_immortal"] then
-				Wearable:_WearProp(hero, "8188", "head")
-				hero.life_break_cast_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_lifebreak_cast.vpcf"
-				hero.life_break_start_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_lifebreak_spellstart.vpcf"
-				hero.life_break_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_life_break.vpcf"
-				hero.life_break_icon = 1
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["invoker_legendary"] then
 				Wearable:_WearProp(hero, "13042", "persona_selector")
@@ -476,28 +421,6 @@ function Battlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "12933", "head")
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_life_stealer" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["life_stealer_immortal2"] then
-				CustomNetTables:SetTableValue("battlepass", "life_stealer", {
-					open_wounds_impact = "particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_open_wounds_gold_impact.vpcf",
-					open_wounds = "particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_open_wounds_gold.vpcf",
-					open_wounds_status_effect = "particles/econ/items/lifestealer/ls_ti9_immortal_gold/status_effect_ls_ti9_open_wounds_gold.vpcf",
-				})
-
-				Wearable:_WearProp(hero, "12998", "weapon")
-
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
-			elseif Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["life_stealer_immortal"] then
-				CustomNetTables:SetTableValue("battlepass", "life_stealer", {
-					open_wounds_impact = "particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds_impact.vpcf",
-					open_wounds = "particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds.vpcf",
-					open_wounds_status_effect = "particles/econ/items/lifestealer/ls_ti9_immortal/status_effect_ls_ti9_open_wounds.vpcf",
-				})
-
-				Wearable:_WearProp(hero, "12934", "weapon")
-
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_nevermore" then
 			if IsInToolsMode() then

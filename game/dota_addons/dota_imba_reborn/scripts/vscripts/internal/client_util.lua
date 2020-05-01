@@ -135,6 +135,22 @@ C_DOTA_Item_Lua.GetAbilityTextureName = function(self)
 end
 
 --[[
+
+-- Call custom functions whenever GetAttackSound is being called anywhere
+original_GetAttackSound = C_DOTA_Ability_Lua.GetAttackSound
+C_DOTA_Ability_Lua.GetAttackSound = function(self)
+	-- call the original function
+	local response = original_GetAttackSound(self)
+	local override_sound = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+
+	if override_sound then
+		print("GetAttackSound (override):", response, override_sound["1"])
+		response = override_sound["1"]
+	end
+
+	return response
+end
+
 -- Call custom functions whenever GetHeroEffectName is being called anywhere
 original_GetHeroEffectName = C_DOTA_Ability_Lua.GetHeroEffectName
 C_DOTA_Ability_Lua.GetHeroEffectName = function(self)
