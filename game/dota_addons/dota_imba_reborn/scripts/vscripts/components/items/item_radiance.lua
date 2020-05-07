@@ -173,45 +173,18 @@ function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_
 
 -- Adds the unique modifier to the owner when created
 function modifier_imba_radiance_basic:OnCreated(keys)
-	self.effect_name = "particles/items2_fx/radiance_owner.vpcf"
-
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
-		self.effect_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
-	end
-
 	if IsServer() then
 		if not self:GetParent():HasModifier("modifier_imba_radiance_aura") then
 			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_radiance_aura", {})
 		end
 
 		if self:GetParent():HasModifier("modifier_imba_radiance_aura") then
-			self.particle	= ParticleManager:CreateParticle(self.effect_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			self.particle	= ParticleManager:CreateParticle("particles/items2_fx/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 			self:AddParticle(self.particle, false, false, -1, true, false)
 		end
 	end
 
 	self:StartIntervalThink(1.0)
-end
-
-function modifier_imba_radiance_basic:OnIntervalThink()
-	if self:GetCaster():IsIllusion() then return end
-
-	if IsServer() then
-		if (string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") or self:GetParent():IsTempestDouble()) and self:GetParent():GetOwnerEntity().radiance_icon then
-			self:SetStackCount(self:GetParent():GetOwnerEntity().radiance_icon)
-		elseif self:GetCaster().radiance_icon then
-			self:SetStackCount(self:GetCaster().radiance_icon)
-		end
-	end
-
-	if IsClient() then
-		local icon = self:GetStackCount()
-		if icon == 0 then
-			self:GetCaster().radiance_icon_client = nil
-		else
-			self:GetCaster().radiance_icon_client = icon
-		end
-	end
 end
 
 -- Removes the unique modifier from the owner if this is the last Radiance in its inventory
@@ -228,7 +201,8 @@ function modifier_imba_radiance_basic:DeclareFunctions()
 end
 
 function modifier_imba_radiance_basic:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Aura definition
@@ -258,13 +232,13 @@ end
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
 		-- local particle_name = "particles/items2_fx/radiance_owner.vpcf"
-		
+
 		-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
 			-- particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
 		-- end
-	
+
 		-- self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-				
+
 		self:StartIntervalThink(FrameTime())
 	end
 end
@@ -272,8 +246,8 @@ end
 -- All this just to have glitched stacking radiance visuals...
 function modifier_imba_radiance_aura:OnIntervalThink()
 	for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_imba_radiance_basic")) do
-		if modifier.effect_name and not modifier.particle then
-			modifier.particle	= ParticleManager:CreateParticle(modifier.effect_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		if not modifier.particle then
+			modifier.particle	= ParticleManager:CreateParticle("particles/items2_fx/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 			modifier:AddParticle(modifier.particle, false, false, -1, true, false)
 		end
 	end
@@ -288,7 +262,7 @@ function modifier_imba_radiance_aura:OnDestroy()
 		-- ParticleManager:ReleaseParticleIndex(self.particle)
 		
 		for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_imba_radiance_basic")) do
-			if modifier.effect_name and modifier.particle then
+			if modifier.particle then
 				ParticleManager:DestroyParticle(modifier.particle, false)
 				ParticleManager:ReleaseParticleIndex(modifier.particle)
 				modifier.particle = nil
@@ -305,28 +279,12 @@ function modifier_imba_radiance_burn:IsHidden() return false end
 function modifier_imba_radiance_burn:IsDebuff() return true end
 function modifier_imba_radiance_burn:IsPurgable() return false end
 
-function modifier_imba_radiance_burn:GetTexture()
-	if self:GetCaster().radiance_icon_client then
-		return "custom/imba_radiance"..self:GetCaster().radiance_icon_client
-	else
-		return "item_radiance"
-	end
-end
-
 function modifier_imba_radiance_burn:DeclareFunctions()
 	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, } end
 
 function modifier_imba_radiance_burn:OnCreated()
 	if IsServer() then
-
-		-- Particle creation
-		local particle_name = "particles/items2_fx/radiance.vpcf"
-
-		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect2"] then
-			particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect2"]
-		end		
-
-		self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.particle = ParticleManager:CreateParticle("particles/items2_fx/radiance.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 		ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle, 1, self:GetCaster():GetAbsOrigin())
 
@@ -419,14 +377,6 @@ function modifier_imba_radiance_afterburn:IsHidden() return false end
 function modifier_imba_radiance_afterburn:IsDebuff() return true end
 function modifier_imba_radiance_afterburn:IsPurgable() return false end
 
-function modifier_imba_radiance_afterburn:GetTexture()
-	if self:GetCaster().radiance_icon_client then
-		return "custom/imba_radiance"..self:GetCaster().radiance_icon_client
-	else
-		return "item_radiance"
-	end
-end
-
 function modifier_imba_radiance_afterburn:OnCreated()
 	if IsServer() then
 
@@ -436,15 +386,8 @@ function modifier_imba_radiance_afterburn:OnCreated()
 		self.base_damage = ability:GetSpecialValueFor("base_damage")
 		self.extra_damage = ability:GetSpecialValueFor("extra_damage")
 		self.miss_chance = ability:GetSpecialValueFor("miss_chance")
-
-		-- Particle creation
-		local particle_name = "particles/items2_fx/radiance.vpcf"
 		
-		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect2"] then
-			particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect2"]
-		end				
-		
-		self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.particle = ParticleManager:CreateParticle("particles/items2_fx/radiance.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 		ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle, 1, self:GetCaster():GetAbsOrigin())
 

@@ -24120,13 +24120,198 @@
 	}
 	"9235"
 	{
-		"skip_model_combine"		"1"
-		"asset_modifier7"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/wisp/wisp_ambient_ti7.vpcf"
-			"style"		"0"
-		}
+				"skip_model_combine"		"1"
+				"asset_modifier0"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_guardian.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_guardian_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier1"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_overcharge_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_relocate_channel_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_relocate_marker_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_relocate_teleport_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier8"
+				{
+					"type"		"particle"
+					"modifier"		"particles/econ/items/wisp/wisp_relocate_teleport_ti7_out.vpcf"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport_out.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_tether_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_relocate_channel_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier7"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_relocate_marker_ti7_endpoint.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier9"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/wisp/wisp_ambient_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier10"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_death.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_death_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier11"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_guardian_explosion_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier12"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_guardian_explosion_small_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier13"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_relocate_timer_buff.vpcf"
+					"modifier"		"particles/econ/items/wisp/wisp_relocate_timer_buff_ti7.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier14"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Wisp.TeleportOut"
+					"modifier"		"Hero_Wisp.TeleportOut.Arc"
+					"style"		"0"
+				}
+				"asset_modifier15"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Wisp.TeleportIn"
+					"modifier"		"Hero_Wisp.TeleportIn.Arc"
+					"style"		"0"
+				}
+				"asset_modifier16"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Wisp.Return"
+					"modifier"		"Hero_Wisp.Return.Arc"
+					"style"		"0"
+				}
+				"asset_modifier17"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Wisp.Relocate"
+					"modifier"		"Hero_Wisp.Relocate.Arc"
+					"style"		"0"
+				}
+				"asset_modifier18"
+				{
+					"type"		"ability_icon"
+					"asset"		"wisp_overcharge"
+					"modifier"		"wisp/wisp_overcharge_alt"
+					"style"		"0"
+				}
+				"asset_modifier19"
+				{
+					"type"		"ability_icon"
+					"asset"		"wisp_relocate"
+					"modifier"		"wisp/wisp_relocate_alt"
+					"style"		"0"
+				}
+				"asset_modifier20"
+				{
+					"type"		"ability_icon"
+					"asset"		"wisp_spirits"
+					"modifier"		"wisp/wisp_spirits_alt"
+					"style"		"0"
+				}
+				"asset_modifier21"
+				{
+					"type"		"ability_icon"
+					"asset"		"wisp_spirits_in"
+					"modifier"		"wisp/wisp_spirits_in_alt"
+					"style"		"0"
+				}
+				"asset_modifier22"
+				{
+					"type"		"ability_icon"
+					"asset"		"wisp_spirits_out"
+					"modifier"		"wisp/wisp_spirits_out_alt"
+					"style"		"0"
+				}
+				"asset_modifier23"
+				{
+					"type"		"ability_icon"
+					"asset"		"wisp_tether"
+					"modifier"		"wisp/wisp_tether_alt"
+					"style"		"0"
+				}
+				"asset_modifier24"
+				{
+					"type"		"arcana_level"
+					"level"		"1"
+				}
+				"asset_modifier25"
+				{
+					"type"		"icon_replacement_hero"
+					"asset"		"npc_dota_hero_wisp"
+					"modifier"		"npc_dota_hero_wisp_alt"
+					"force_display"		"1"
+				}
+				"asset_modifier26"
+				{
+					"type"		"icon_replacement_hero_minimap"
+					"asset"		"npc_dota_hero_wisp"
+					"modifier"		"npc_dota_hero_wisp_alt"
+					"force_display"		"1"
+				}
+				"asset_modifier27"
+				{
+					"type"		"response_criteria"
+					"asset"		"cubelife"
+				}
 	}
 	"9236"
 	{
@@ -43519,11 +43704,46 @@
 	}
 	"12931"
 	{
-		"asset_modifier0"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_ambient_hair_ti9.vpcf"
-		}
+				"asset_modifier"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_ambient_hair_ti9.vpcf"
+				}
+				"asset_modifier1"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+					"modifier"		"particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_ti9.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+					"modifier"		"particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_impact_ti9.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/generic_gameplay/generic_silenced.vpcf"
+					"modifier"		"particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_custom_ti9_overhead_model.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_death_prophet/death_prophet_silence_custom.vpcf"
+					"modifier"		"particles/econ/items/death_prophet/death_prophet_ti9/death_prophet_silence_custom_ti9.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"ability_icon"
+					"asset"		"death_prophet_silence"
+					"modifier"		"death_prophet_silence_ti9"
+					"style"		"0"
+				}
 	}
 	"12933"
 	{
@@ -43543,19 +43763,53 @@
 	}
 	"12934"
 	{
-		"asset_modifier4"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_immortal_ambient.vpcf"
-			"style"		"0"
-		}
-		"asset_modifier5"
-		{
-			"type"		"activity"
-			"asset"		"ALL"
-			"modifier"		"ti9_arms"
-			"style"		"0"
-		}
+				"asset_modifier"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds_impact.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"ability_icon"
+					"asset"		"life_stealer_open_wounds"
+					"modifier"		"life_stealer_open_wounds_ti9"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/status_fx/status_effect_life_stealer_open_wounds.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/status_effect_ls_ti9_open_wounds.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_immortal_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier6"
+				{
+					"type"		"activity"
+					"asset"		"ALL"
+					"modifier"		"ti9_arms"
+					"style"		"0"
+				}
+				"asset_modifier7"
+				{
+					"type"		"sound"
+					"asset"		"Hero_LifeStealer.OpenWounds"
+					"modifier"		"Hero_LifeStealer.OpenWounds.TI9"
+				}
 	}
 	"12939"
 	{
@@ -43584,18 +43838,58 @@
 	}
 	"12945"
 	{
-		"asset_modifier"
-		{
-			"type"		"activity"
-			"asset"		"ALL"
-			"modifier"		"ti9_weapon"
-		}
-		"asset_modifier5"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/centaur/centaur_ti9/centaur_ti9_ambient.vpcf"
-			"style"		"0"
-		}
+				"asset_modifier"
+				{
+					"type"		"activity"
+					"asset"		"ALL"
+					"modifier"		"ti9_weapon"
+				}
+				"asset_modifier1"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
+					"modifier"		"particles/econ/items/centaur/centaur_ti9/centaur_double_edge_ti9.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_centaur/centaur_double_edge_body.vpcf"
+					"modifier"		"particles/econ/items/centaur/centaur_ti9/centaur_double_edge_body_ti9.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_centaur/centaur_double_edge_phase.vpcf"
+					"modifier"		"particles/econ/items/centaur/centaur_ti9/centaur_double_edge_phase_ti9.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier4"
+				{
+					"type"		"ability_icon"
+					"asset"		"centaur_double_edge"
+					"modifier"		"centaur_double_edge_ti9"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/centaur/centaur_ti9/centaur_ti9_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier6"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Centaur.DoubleEdge"
+					"modifier"		"Hero_Centaur.DoubleEdge.TI9"
+				}
+				"asset_modifier7"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Centaur.DoubleEdge.Precast"
+					"modifier"		"Hero_Centaur.DoubleEdge.Precast.TI9"
+				}
 	}
 	"12946"
 	{
@@ -44899,40 +45193,40 @@
 			"scale_size"		"1"
 		}
 	}
-	"12934"
+	"12998"
 	{
 				"asset_modifier"
 				{
 					"type"		"particle"
 					"asset"		"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf"
-					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds_impact.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_open_wounds_gold_impact.vpcf"
 					"style"		"0"
 				}
 				"asset_modifier2"
 				{
 					"type"		"ability_icon"
 					"asset"		"life_stealer_open_wounds"
-					"modifier"		"life_stealer_open_wounds_ti9"
+					"modifier"		"life_stealer_open_wounds_ti9_gold"
 					"style"		"0"
 				}
 				"asset_modifier3"
 				{
 					"type"		"particle"
 					"asset"		"particles/status_fx/status_effect_life_stealer_open_wounds.vpcf"
-					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/status_effect_ls_ti9_open_wounds.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal_gold/status_effect_ls_ti9_open_wounds_gold.vpcf"
 					"style"		"0"
 				}
 				"asset_modifier4"
 				{
 					"type"		"particle"
 					"asset"		"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
-					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_open_wounds.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_open_wounds_gold.vpcf"
 					"style"		"0"
 				}
 				"asset_modifier5"
 				{
 					"type"		"particle_create"
-					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal/ls_ti9_immortal_ambient.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti9_immortal_gold/ls_ti9_immortal_ambient_gold.vpcf"
 					"style"		"0"
 				}
 				"asset_modifier6"
@@ -44942,6 +45236,8 @@
 					"modifier"		"ti9_arms"
 					"style"		"0"
 				}
+				"skin"		"1"
+				"skip_model_combine"		"0"
 				"asset_modifier7"
 				{
 					"type"		"sound"

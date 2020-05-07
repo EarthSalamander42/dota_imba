@@ -124,18 +124,18 @@ C_DOTA_Item_Lua.GetAbilityTextureName = function(self)
 
 	local override_image = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
 
---	print(response, override_image)
+--	print(response)
 
 	if override_image then
 --		print("GetAbilityTextureName (override):", response, override_image["1"])
 		response = override_image["1"]
+--		print("New image:", response)
 	end
 
 	return response
 end
 
 --[[
-
 -- Call custom functions whenever GetAttackSound is being called anywhere
 original_GetAttackSound = C_DOTA_Ability_Lua.GetAttackSound
 C_DOTA_Ability_Lua.GetAttackSound = function(self)

@@ -29,7 +29,8 @@ LinkLuaModifier( "modifier_item_imba_sheepstick_debuff", "components/items/item_
 LinkLuaModifier( "modifier_item_imba_sheepstick_buff", "components/items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )		-- Self-use buff
 
 function item_imba_sheepstick:GetIntrinsicModifierName()
-	return "modifier_item_imba_sheepstick" end
+	return "modifier_item_imba_sheepstick"
+end
 
 function item_imba_sheepstick:CastFilterResultTarget(target)
 	-- Can't cast on allies, except for yourself
@@ -92,7 +93,6 @@ function item_imba_sheepstick:OnSpellStart()
 				end
 			end
 		else
-
 			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration * (1 - target:GetStatusResistance())})
 		end
 	end
@@ -123,22 +123,6 @@ end
 function modifier_item_imba_sheepstick:OnCreated()
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
-end
-
-function modifier_item_imba_sheepstick:OnIntervalThink()
-	local caster = self:GetCaster()
-	if caster:IsIllusion() then return end
-	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"] then
-		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["level"])
-	end
-	if IsClient() then
-		local icon = self:GetStackCount()
-		if icon == 0 then
-			caster.sheepstick_icon_client = nil
-		else
-			caster.sheepstick_icon_client = icon
-		end
-	end
 end
 
 function modifier_item_imba_sheepstick:GetModifierBonusStats_Strength()
@@ -174,20 +158,17 @@ end
 
 function modifier_item_imba_sheepstick_debuff:OnCreated()
 	if IsServer() then
-		local particle_name = "particles/items_fx/item_sheepstick.vpcf"
-
-		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["sheepstick"]["effect1"] then
-			particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["sheepstick"]["effect1"]
-			model			= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["sheepstick"]["effect2"]
-		end
-
-		self.sheep_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.sheep_pfx = ParticleManager:CreateParticle("particles/items_fx/item_sheepstick.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 		ParticleManager:SetParticleControl(self.sheep_pfx, 0, self:GetParent():GetAbsOrigin())
 
-		if model == "models/props_gameplay/pig_blue.vmdl" then
-			self:SetStackCount(1)
-		elseif model == "models/props_gameplay/roquelaire/roquelaire.vmdl" then
-			self:SetStackCount(2)
+		print(self:GetCaster().sheepstick_model)
+
+		if self:GetCaster().sheepstick_model then
+			if self:GetCaster().sheepstick_model == "models/props_gameplay/pig_blue.vmdl" then
+				self:SetStackCount(1)
+			elseif self:GetCaster().sheepstick_model == "models/props_gameplay/roquelaire/roquelaire.vmdl" then
+				self:SetStackCount(2)
+			end
 		end
 	end
 end
@@ -246,14 +227,7 @@ function modifier_item_imba_sheepstick_buff:IsPurgable() return true end
 
 function modifier_item_imba_sheepstick_buff:OnCreated()
 	if IsServer() then
-		-- Play the target particle
-		local particle_name = "particles/items_fx/item_sheepstick.vpcf"
-		
-		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"] then
-			particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["sheepstick"]["effect1"]
-		end
-		
-		self.sheep_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.sheep_pfx = ParticleManager:CreateParticle("particles/items_fx/item_sheepstick.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 		ParticleManager:SetParticleControl(self.sheep_pfx, 0, self:GetParent():GetAbsOrigin())
 	end
 end

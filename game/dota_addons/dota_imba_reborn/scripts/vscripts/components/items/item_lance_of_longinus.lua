@@ -221,14 +221,8 @@ function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
 		self:Destroy()
 		return
 	end
-	
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
@@ -338,13 +332,8 @@ function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IgnoreTenacity(
 
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:OnCreated()
 	if not IsServer() then return end
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
@@ -394,13 +383,8 @@ function modifier_item_imba_lance_of_longinus_force_self_ranged:GetMotionControl
 
 function modifier_item_imba_lance_of_longinus_force_self_ranged:OnCreated()
 	if not IsServer() then return end
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
@@ -453,13 +437,8 @@ function modifier_item_imba_lance_of_longinus_force_enemy_melee:IgnoreTenacity()
 
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:OnCreated()
 	if not IsServer() then return end
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized()
@@ -509,13 +488,8 @@ function modifier_item_imba_lance_of_longinus_force_self_melee:GetMotionControll
 
 function modifier_item_imba_lance_of_longinus_force_self_melee:OnCreated()
 	if not IsServer() then return end
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized()
