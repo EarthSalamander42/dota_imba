@@ -51,6 +51,10 @@ function modifier_imba_initiate_robe_passive:DeclareFunctions()
 end
 
 function modifier_imba_initiate_robe_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if IsServer() then 
 		local item = self:GetAbility()
 		self.parent = self:GetParent()

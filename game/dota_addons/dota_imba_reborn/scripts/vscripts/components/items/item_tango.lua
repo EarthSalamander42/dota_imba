@@ -197,6 +197,10 @@ function modifier_imba_tango:GetTexture()
 end
 
 function modifier_imba_tango:OnCreated(params)
+    if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+    
     -- Ability properties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()

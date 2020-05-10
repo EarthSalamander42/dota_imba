@@ -77,6 +77,10 @@ function modifier_item_manta_passive:RemoveOnDeath()	return false end
 function modifier_item_manta_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_manta_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not self:GetAbility() then return end
 
 	self.bonus_strength		= self:GetAbility():GetSpecialValueFor("bonus_strength")
@@ -267,6 +271,10 @@ end
 function modifier_item_imba_manta_abyss_boost:IsPurgable()	return false end
 
 function modifier_item_imba_manta_abyss_boost:OnCreated(keys)
+	if IsServer() then
+       if not self:GetAbility() then self:Destroy() end
+	end
+
 	self.abyss_boost_pct	= self:GetAbility():GetSpecialValueFor("abyss_boost_pct")
 
 	if not IsServer() then return end

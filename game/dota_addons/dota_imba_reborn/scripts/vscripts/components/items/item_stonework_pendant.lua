@@ -63,6 +63,10 @@ function modifier_item_imba_stonework_pendant:GetAttributes()	return MODIFIER_AT
 ----------------------------------------
 
 function modifier_item_imba_stonework_pendant:OnCreated( kv )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.spell_lifesteal 	= self:GetAbility():GetSpecialValueFor( "spell_lifesteal" )
 	self.mana_to_hp_pct	= (100 + self:GetAbility():GetSpecialValueFor("mana_to_hp_pct")) / 100
 	self.mana_to_hp_damage	= self:GetAbility():GetSpecialValueFor("mana_to_hp_damage")

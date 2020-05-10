@@ -49,6 +49,10 @@ function modifier_item_imba_ring_of_aquila:RemoveOnDeath() return false end
 function modifier_item_imba_ring_of_aquila:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_ring_of_aquila:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- AbilitySpecials
 	if self:GetAbility() then
 		self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
@@ -126,6 +130,10 @@ function modifier_item_imba_ring_of_aquila_aura_bonus:GetTexture()
 end
 
 function modifier_item_imba_ring_of_aquila_aura_bonus:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if self:GetAbility() then
 		-- AbilitySpecials
 		self.aura_mana_regen	= self:GetAbility():GetSpecialValueFor("aura_mana_regen")

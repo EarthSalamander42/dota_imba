@@ -148,6 +148,10 @@ function modifier_imba_shiva_handler:RemoveOnDeath() return false end
 function modifier_imba_shiva_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shiva_handler:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if self:GetAbility() then
 		self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
 	else
@@ -265,6 +269,10 @@ function modifier_imba_shiva_debuff:GetTexture()
 end
 
 function modifier_imba_shiva_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	self.parent = self:GetParent()
 	
@@ -305,6 +313,10 @@ function modifier_item_imba_shivas_blast_slow:GetTexture()
 end
 
 function modifier_item_imba_shivas_blast_slow:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.slow_stack	= self:GetAbility():GetSpecialValueFor("slow_stack")
 
 	if not IsServer() then return end
@@ -379,6 +391,10 @@ function modifier_item_imba_shiva_frost_goddess_breath:GetTexture()
 end
 
 function modifier_item_imba_shiva_frost_goddess_breath:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.aura_intellect	= self:GetAbility():GetSpecialValueFor("aura_intellect")
 end
 

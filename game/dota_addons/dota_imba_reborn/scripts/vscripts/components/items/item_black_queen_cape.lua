@@ -75,6 +75,10 @@ function modifier_imba_black_queen_cape_passive:RemoveOnDeath()	return false end
 function modifier_imba_black_queen_cape_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_black_queen_cape_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	self.soultrap_range = self.item:GetSpecialValueFor("soultrap_range")

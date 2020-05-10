@@ -85,6 +85,10 @@ function modifier_imba_urn_of_shadows_passive:RemoveOnDeath()	return false end
 function modifier_imba_urn_of_shadows_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_urn_of_shadows_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	self.soultrap_range = self.item:GetSpecialValueFor("soultrap_range")
@@ -256,6 +260,10 @@ function modifier_imba_urn_of_shadows_active_ally:RemoveOnDeath() return true en
 
 function modifier_imba_urn_of_shadows_active_ally:OnCreated( params )
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		self.health_regen = (params.heal or self:GetAbility():GetSpecialValueFor("heal")) / params.duration
 	end
 end
@@ -326,6 +334,10 @@ end
 
 if IsServer() then
 	function modifier_imba_urn_of_shadows_active_enemy:OnCreated( params )
+		if IsServer() then
+       		if not self:GetAbility() then self:Destroy() end
+    	end
+
 		self.damage_per_second = params.damage / params.duration
 		self:StartIntervalThink(1)
 	end

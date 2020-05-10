@@ -256,6 +256,10 @@ function modifier_item_imba_silver_edge_passive:RemoveOnDeath() return false end
 function modifier_item_imba_silver_edge_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_silver_edge_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local ability   =   self:GetAbility()
 
 	-- Ability parameters
@@ -329,6 +333,10 @@ function modifier_item_imba_silver_edge_invis_flying_disabled:IsHidden() return 
 function modifier_item_imba_silver_edge_invis_flying_disabled:IsPurgable() return false end
 
 function modifier_item_imba_silver_edge_invis_flying_disabled:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 		-- flying disabled
 		self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
@@ -463,6 +471,10 @@ function modifier_item_imba_silver_edge_invis_attack_cleave_particle:IsHidden() 
 function modifier_item_imba_silver_edge_invis_attack_cleave_particle:IsPurgable() return false end
 
 function modifier_item_imba_silver_edge_invis_attack_cleave_particle:OnCreated(params)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if IsServer() then
 		-- Make the dummy face towards the target for the cleave effect particle
 		local direction = Vector(params.direction_x, params.direction_y, params.direction_z)

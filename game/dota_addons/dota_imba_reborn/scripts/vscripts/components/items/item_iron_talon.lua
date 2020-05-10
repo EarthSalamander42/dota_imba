@@ -111,6 +111,9 @@ function modifier_item_imba_iron_talon:RemoveOnDeath()	return false end
 function modifier_item_imba_iron_talon:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_iron_talon:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end	
 	
 	-- AbilitySpecials
 	self.damage_bonus			= self:GetAbility():GetSpecialValueFor("damage_bonus")

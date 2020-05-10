@@ -44,6 +44,10 @@ function modifier_imba_flask:GetTexture()
 end
 
 function modifier_imba_flask:OnCreated()
+    if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
     -- Ability properties
     self.caster = self:GetCaster() 
     self.ability = self:GetAbility()

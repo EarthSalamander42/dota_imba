@@ -69,6 +69,10 @@ function modifier_imba_aeon_disk_basic:RemoveOnDeath()	return false end
 function modifier_imba_aeon_disk_basic:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_aeon_disk_basic:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if self:GetAbility() then
 		self.bonus_health	= self:GetAbility():GetSpecialValueFor("bonus_health")
 		self.bonus_mana		= self:GetAbility():GetSpecialValueFor("bonus_mana")
@@ -140,6 +144,10 @@ function modifier_imba_aeon_disk:DeclareFunctions()
 end
 
 function modifier_imba_aeon_disk:OnCreated(kv)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.damage_reduction	= self:GetAbility():GetSpecialValueFor("damage_reduction")
 	self.status_resistance	= self:GetAbility():GetSpecialValueFor("status_resistance")
 

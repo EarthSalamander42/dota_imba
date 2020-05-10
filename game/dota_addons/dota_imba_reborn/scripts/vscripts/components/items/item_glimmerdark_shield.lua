@@ -100,6 +100,10 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_item_imba_glimmerdark_shield_prism:OnCreated( kv )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.prism_bonus_magic_dmg = self:GetAbility():GetSpecialValueFor( "prism_bonus_magic_dmg" )
 	
 	self.luminate_radius = self:GetAbility():GetSpecialValueFor( "luminate_radius" )
@@ -192,6 +196,10 @@ function modifier_item_imba_glimmerdark_shield:GetAttributes()	return MODIFIER_A
 --------------------------------------------------------------------------------
 
 function modifier_item_imba_glimmerdark_shield:OnCreated( kv )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.bonus_strength = self:GetAbility():GetSpecialValueFor( "bonus_strength" )
 	self.bonus_agility = self:GetAbility():GetSpecialValueFor( "bonus_agility" )
 	self.bonus_intellect = self:GetAbility():GetSpecialValueFor( "bonus_intellect" )

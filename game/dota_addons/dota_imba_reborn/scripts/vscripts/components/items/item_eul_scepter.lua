@@ -82,6 +82,10 @@ function modifier_item_imba_cyclone_active:IsMotionController()  return true end
 function modifier_item_imba_cyclone_active:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH end
 
 function modifier_item_imba_cyclone_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self:StartIntervalThink(FrameTime())
 	EmitSoundOn("DOTA_Item.Cyclone.Activate", self:GetParent())
 	if IsServer() then
@@ -160,6 +164,10 @@ function modifier_item_imba_cyclone_active_debuff:IsMotionController()  return t
 function modifier_item_imba_cyclone_active_debuff:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH end
 
 function modifier_item_imba_cyclone_active_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self:StartIntervalThink(FrameTime())
 	EmitSoundOn("DOTA_Item.Cyclone.Activate", self:GetParent())
 	if IsServer() then

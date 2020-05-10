@@ -70,6 +70,10 @@ function modifier_item_imba_blade_mail:RemoveOnDeath()	return false end
 function modifier_item_imba_blade_mail:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_blade_mail:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
 	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
 	self.bonus_intellect	= self:GetAbility():GetSpecialValueFor("bonus_intellect")
@@ -122,6 +126,10 @@ function modifier_item_imba_blade_mail_active:DeclareFunctions()
 end
 
 function modifier_item_imba_blade_mail_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.level				= self:GetAbility():GetLevel()
 	
 	self.lacerate_pct		= self:GetAbility():GetSpecialValueFor("lacerate_pct")

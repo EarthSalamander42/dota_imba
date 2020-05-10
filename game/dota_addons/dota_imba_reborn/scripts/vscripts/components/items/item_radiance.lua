@@ -56,6 +56,10 @@ function modifier_imba_cloak_of_flames_basic:GetAttributes() return MODIFIER_ATT
 -- Adds the unique modifier to the owner when created
 function modifier_imba_cloak_of_flames_basic:OnCreated(keys)
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		if not self:GetParent():HasModifier("modifier_imba_cloak_of_flames_aura") then
 			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_cloak_of_flames_aura", {})
 		end
@@ -185,6 +189,10 @@ function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_
 
 -- Adds the unique modifier to the owner when created
 function modifier_imba_radiance_basic:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.effect_name = "particles/items2_fx/radiance_owner.vpcf"
 	
 	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
@@ -269,6 +277,10 @@ end
 -- Create the glow particle and start thinking
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		-- local particle_name = "particles/items2_fx/radiance_owner.vpcf"
 		
 		-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
@@ -329,6 +341,10 @@ function modifier_imba_radiance_burn:DeclareFunctions()
 	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, } end
 
 function modifier_imba_radiance_burn:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 
 		-- Particle creation
@@ -440,6 +456,10 @@ function modifier_imba_radiance_afterburn:GetTexture()
 end
 
 function modifier_imba_radiance_afterburn:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 
 		-- Parameter storage

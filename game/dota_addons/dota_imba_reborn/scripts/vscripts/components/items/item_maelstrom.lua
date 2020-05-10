@@ -56,6 +56,10 @@ function modifier_item_imba_chain_lightning:RemoveOnDeath()	return false end
 function modifier_item_imba_chain_lightning:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_chain_lightning:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 
 	if self:GetAbility() then
@@ -165,6 +169,10 @@ function modifier_item_imba_static_charge:GetStatusEffectName()
 end
 
 function modifier_item_imba_static_charge:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if self:GetAbility() then
 		self.static_chance	 	= self:GetAbility():GetSpecialValueFor("static_chance")
 		self.static_strikes	 	= self:GetAbility():GetSpecialValueFor("static_strikes")
@@ -302,6 +310,10 @@ function modifier_item_imba_static_charge_slow:GetTexture()
 end
 
 function modifier_item_imba_static_charge_slow:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if self:GetAbility() then
 		self.static_slow			= self:GetAbility():GetSpecialValueFor("static_slow") * (-1)
 	else
@@ -410,6 +422,10 @@ function modifier_item_imba_maelstrom:RemoveOnDeath()	return false end
 function modifier_item_imba_maelstrom:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_maelstrom:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if self:GetAbility() then
 		self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
 		self.bonus_attack_speed	= self:GetAbility():GetSpecialValueFor("bonus_attack_speed")

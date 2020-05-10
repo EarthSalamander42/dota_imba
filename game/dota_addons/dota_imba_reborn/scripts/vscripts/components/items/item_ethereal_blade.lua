@@ -124,6 +124,10 @@ function modifier_item_imba_ethereal_blade_ethereal:GetStatusEffectName()
 end
 
 function modifier_item_imba_ethereal_blade_ethereal:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.ability					= self:GetAbility()
 	self.caster						= self:GetCaster()
 	self.parent						= self:GetParent()

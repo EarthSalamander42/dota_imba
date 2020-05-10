@@ -44,6 +44,10 @@ function modifier_imba_hood_of_defiance_passive:RemoveOnDeath() return false end
 function modifier_imba_hood_of_defiance_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_hood_of_defiance_passive:OnCreated( params )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.active_tenacity_pct = self:GetAbility():GetSpecialValueFor("active_tenacity_pct")
 end
 
@@ -157,6 +161,10 @@ function modifier_imba_hood_of_defiance_active_bonus:IsPurgable() return false e
 function modifier_imba_hood_of_defiance_active_bonus:IsPurgeException() return false end
 
 function modifier_imba_hood_of_defiance_active_bonus:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.magic_resist_compensation = 0
 	self.precision = 0.5 / 100 -- margin of 0.5% magic resistance. This is to prevent rounding-related errors/recalculations
 	self.parent = self:GetParent()

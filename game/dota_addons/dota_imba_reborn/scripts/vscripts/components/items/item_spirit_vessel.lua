@@ -161,6 +161,10 @@ function modifier_item_imba_spirit_vessel_heal:GetEffectName()
 end
 
 function modifier_item_imba_spirit_vessel_heal:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
@@ -225,6 +229,10 @@ function modifier_item_imba_spirit_vessel_damage:IgnoreTenacity()
 end
 
 function modifier_item_imba_spirit_vessel_damage:OnCreated(params)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()

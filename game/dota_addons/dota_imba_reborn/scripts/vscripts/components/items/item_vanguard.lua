@@ -92,6 +92,10 @@ function modifier_item_imba_poor_mans_shield:RemoveOnDeath()	return false end
 function modifier_item_imba_poor_mans_shield:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_poor_mans_shield:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.bonus_agility			= self:GetAbility():GetSpecialValueFor("bonus_agility")
 	self.damage_block_melee		= self:GetAbility():GetSpecialValueFor("damage_block_melee")
 	self.damage_block_ranged	= self:GetAbility():GetSpecialValueFor("damage_block_ranged")
@@ -257,6 +261,10 @@ function modifier_item_imba_crimson_guard:RemoveOnDeath()	return false end
 function modifier_item_imba_crimson_guard:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_crimson_guard:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.health					= self:GetAbility():GetSpecialValueFor("health")
 	self.health_regen			= self:GetAbility():GetSpecialValueFor("health_regen")
 	self.bonus_stats			= self:GetAbility():GetSpecialValueFor("bonus_stats")
@@ -326,6 +334,10 @@ function modifier_item_imba_crimson_guard_buff:IsPurgable() return false end
 
 -- Particle creation and value storage
 function modifier_item_imba_crimson_guard_buff:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.active_armor 					= self:GetAbility():GetSpecialValueFor("active_armor")
 	self.block_damage_melee_active 		= self:GetAbility():GetSpecialValueFor("block_damage_melee_active")
 	self.block_damage_ranged_active 	= self:GetAbility():GetSpecialValueFor("block_damage_ranged_active")

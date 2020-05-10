@@ -122,6 +122,10 @@ function modifier_item_imba_skadi:GetAttributes() return MODIFIER_ATTRIBUTE_MULT
 -- Adds the unique modifier to the caster when created
 function modifier_item_imba_skadi:OnCreated(keys)
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
@@ -220,6 +224,10 @@ function modifier_item_imba_skadi_unique:RemoveOnDeath() return false end
 -- Changes the caster's attack projectile, if applicable
 function modifier_item_imba_skadi_unique:OnCreated(keys)
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		ChangeAttackProjectileImba(self:GetParent())
 
 		-- Store ability KVs for later usage
@@ -299,6 +307,10 @@ function modifier_item_imba_skadi_slow:StatusEffectPriority()
 
 -- Ability KV storage
 function modifier_item_imba_skadi_slow:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.slow_as = self:GetAbility():GetSpecialValueFor("slow_as")
 	self.slow_ms = self:GetAbility():GetSpecialValueFor("slow_ms")
 end

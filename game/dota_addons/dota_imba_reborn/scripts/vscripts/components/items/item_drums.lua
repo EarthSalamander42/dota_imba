@@ -79,6 +79,10 @@ end
 modifier_imba_drums_active = class({})
 
 function modifier_imba_drums_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.particle_buff = "particles/items_fx/drum_of_endurance_buff.vpcf"
 
@@ -197,7 +201,7 @@ end
 -- Drum aura modifier effect
 modifier_imba_drums_aura_effect = class({})
 
-function modifier_imba_drums_aura_effect:OnCreated()
+function modifier_imba_drums_aura_effect:OnCreated()	
 	if not self:GetAbility() then self:Destroy() return end
 
 	-- Ability specials

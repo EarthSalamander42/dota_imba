@@ -252,6 +252,10 @@ function modifier_item_imba_rod_of_atos:RemoveOnDeath() return false end
 function modifier_item_imba_rod_of_atos:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_rod_of_atos:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 	
 	-- Need to do this instead of using the "ItemInitialCharges" KV because the latter messes with sell prices

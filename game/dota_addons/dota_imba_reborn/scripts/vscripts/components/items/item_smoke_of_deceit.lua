@@ -69,6 +69,10 @@ function modifier_imba_smoke_of_deceit:GetEffectAttachType()
 end
 
 function modifier_imba_smoke_of_deceit:OnCreated()
+    if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
     -- Ability properties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
@@ -232,6 +236,10 @@ function modifier_imba_smoke_of_deceit_surprise:GetTexture()
 end
 
 function modifier_imba_smoke_of_deceit_surprise:OnCreated()
+    if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
     -- Ability properties
     self.caster = self:GetCaster()
     self.parent = self:GetParent()

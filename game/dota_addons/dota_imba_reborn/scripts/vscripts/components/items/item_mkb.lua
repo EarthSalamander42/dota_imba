@@ -53,6 +53,10 @@ function modifier_item_imba_javelin:RemoveOnDeath()	return false end
 function modifier_item_imba_javelin:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_javelin:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.parent		= self:GetParent()
 	
@@ -163,6 +167,10 @@ function modifier_item_imba_monkey_king_bar:RemoveOnDeath()	return false end
 function modifier_item_imba_monkey_king_bar:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_monkey_king_bar:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.ability	= self:GetAbility()
 	self.parent		= self:GetParent()
 	

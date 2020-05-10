@@ -173,6 +173,10 @@ function modifier_imba_pipe_active_bonus:IsPurgable() return false end
 function modifier_imba_pipe_active_bonus:IsPurgeException() return false end
 
 function modifier_imba_pipe_active_bonus:OnCreated( params )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+    
 	self.magic_resist_compensation = 0
 	self.precision = 0.5 / 100 -- margin of 0.5% magic resistance. This is to prevent rounding-related errors/recalculations
 	self.parent = self:GetParent()

@@ -55,6 +55,10 @@ function modifier_item_the_caustic_finale:GetAttributes()	return MODIFIER_ATTRIB
 --------------------------------------------------------------------------------
 
 function modifier_item_the_caustic_finale:OnCreated( kv )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.bonus_damage = self:GetAbility():GetSpecialValueFor( "bonus_damage" )
 	self.bonus_attack_speed = self:GetAbility():GetSpecialValueFor( "bonus_attack_speed" )
 	self.caustic_duration = self:GetAbility():GetSpecialValueFor( "caustic_duration" )
@@ -137,6 +141,10 @@ end
 -----------------------------------------------------------------------------------------
 
 function modifier_sand_king_boss_caustic_finale:OnCreated( kv )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.caustic_radius = self:GetAbility():GetSpecialValueFor( "caustic_radius" )
 	self.caustic_damage = self:GetAbility():GetSpecialValueFor( "caustic_damage" )
 	self.nArmorReductionPerStack = math.max( math.floor( self:GetAbility():GetSpecialValueFor( "caustic_armor_reduction_pct" ) * self:GetParent():GetPhysicalArmorValue(false) / 100 ), 1 )

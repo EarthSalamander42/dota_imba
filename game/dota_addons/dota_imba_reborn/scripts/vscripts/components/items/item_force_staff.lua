@@ -78,6 +78,10 @@ function modifier_item_imba_force_staff:RemoveOnDeath()	return false end
 function modifier_item_imba_force_staff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_force_staff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
 end
@@ -129,6 +133,10 @@ function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  re
 function modifier_item_imba_force_staff_active:IgnoreTenacity()	return true end
 
 function modifier_item_imba_force_staff_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
@@ -261,6 +269,10 @@ function modifier_item_imba_hurricane_pike:GetAttributes()	return MODIFIER_ATTRI
 
 function modifier_item_imba_hurricane_pike:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_hurricane_pike_unique") then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_hurricane_pike_unique", {})
@@ -351,6 +363,10 @@ function modifier_item_imba_hurricane_pike_force_ally:IsMotionController()  retu
 function modifier_item_imba_hurricane_pike_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
@@ -415,6 +431,10 @@ function modifier_item_imba_hurricane_pike_force_enemy:GetMotionControllerPriori
 function modifier_item_imba_hurricane_pike_force_enemy:IgnoreTenacity()	return true end
 
 function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
 	local particle_name = "particles/items_fx/force_staff.vpcf"
@@ -472,6 +492,10 @@ function modifier_item_imba_hurricane_pike_force_self:IsMotionController()  retu
 function modifier_item_imba_hurricane_pike_force_self:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_self:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
 	local particle_name = "particles/items_fx/force_staff.vpcf"
@@ -529,6 +553,10 @@ function modifier_item_imba_hurricane_pike_attack_speed:IsStunDebuff() return fa
 function modifier_item_imba_hurricane_pike_attack_speed:IgnoreTenacity() return true end
 
 function modifier_item_imba_hurricane_pike_attack_speed:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 	self.as = 0
 	self.ar = 0

@@ -79,6 +79,10 @@ function modifier_imba_armlet_basic:RemoveOnDeath()	return false end
 function modifier_imba_armlet_basic:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_armlet_basic:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 
 	-- Check for illusions to add Unoly Strength to if active (there's probably a less convoluted way to do this...)

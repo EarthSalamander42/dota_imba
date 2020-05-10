@@ -48,6 +48,10 @@ function modifier_imba_echo_sabre_passive:RemoveOnDeath()	return false end
 function modifier_imba_echo_sabre_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_echo_sabre_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and item then
@@ -159,6 +163,10 @@ function modifier_imba_reverb_rapier_passive:DeclareFunctions()
 end
 
 function modifier_imba_reverb_rapier_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and item then
@@ -233,6 +241,10 @@ function modifier_imba_echo_rapier_haste:IsStunDebuff() return false end
 function modifier_imba_echo_rapier_haste:RemoveOnDeath() return true end
 -------------------------------------------
 function modifier_imba_echo_rapier_haste:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if item then
@@ -286,6 +298,10 @@ function modifier_imba_echo_rapier_debuff_slow:DeclareFunctions()
 end
 
 function modifier_imba_echo_rapier_debuff_slow:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	local item = self:GetAbility()
 	if item then
 		self.movement_slow = item:GetSpecialValueFor("movement_slow") * (-1)

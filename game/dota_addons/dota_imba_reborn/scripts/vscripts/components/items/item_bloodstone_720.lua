@@ -53,6 +53,10 @@ end
 -------------------------------------
 
 function modifier_item_imba_bloodstone_active_720:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.parent		= self:GetParent()
 	
@@ -247,6 +251,10 @@ function modifier_item_imba_bloodstone_active_cdr_720:GetEffectName()
 end
 
 function modifier_item_imba_bloodstone_active_cdr_720:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.active_cdr	= self:GetAbility():GetSpecialValueFor("active_cdr")
 end
 

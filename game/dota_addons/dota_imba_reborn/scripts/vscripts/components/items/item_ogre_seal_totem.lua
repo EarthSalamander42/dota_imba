@@ -197,6 +197,10 @@ end
 
 function modifier_ogreseal_flop:OnCreated( kv )
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		if self.nHopCount == nil then
 			self.nHopCount = 1
 			self.flop_distances = {200, 400, 400}
@@ -415,6 +419,10 @@ function modifier_item_imba_ogre_seal_totem:GetAttributes()	return MODIFIER_ATTR
 ----------------------------------------
 
 function modifier_item_imba_ogre_seal_totem:OnCreated( kv )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.bonus_strength = self:GetAbility():GetSpecialValueFor( "bonus_strength" )
 	self.bonus_hp = self:GetAbility():GetSpecialValueFor( "bonus_hp" )
 end

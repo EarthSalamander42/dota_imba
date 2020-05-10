@@ -98,6 +98,10 @@ end
 
 function modifier_imba_power_treads_2:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
+	if IsServer() then
 		if self:GetParent():IsClone() then return end
 		if self:GetParent():IsHero() then
 			local ability = self:GetAbility()

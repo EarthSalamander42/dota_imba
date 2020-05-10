@@ -128,6 +128,10 @@ function modifier_item_imba_sheepstick:DeclareFunctions()
 end
 
 function modifier_item_imba_sheepstick:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
 end
@@ -180,6 +184,10 @@ function modifier_item_imba_sheepstick_debuff:DeclareFunctions()
 end
 
 function modifier_item_imba_sheepstick_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 		local particle_name = "particles/items_fx/item_sheepstick.vpcf"
 		local level 		= 0
@@ -248,6 +256,10 @@ function modifier_item_imba_sheepstick_buff:IsDebuff() return false end
 function modifier_item_imba_sheepstick_buff:IsPurgable() return true end
 
 function modifier_item_imba_sheepstick_buff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if IsServer() then
 		-- Play the target particle
 		local particle_name = "particles/items_fx/item_sheepstick.vpcf"

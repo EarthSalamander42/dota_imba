@@ -125,6 +125,10 @@ function modifier_item_imba_lance_of_longinus:RemoveOnDeath()	return false end
 function modifier_item_imba_lance_of_longinus:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_lance_of_longinus:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
     for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
@@ -214,6 +218,10 @@ function modifier_item_imba_lance_of_longinus_force_ally:IsMotionController()  r
 function modifier_item_imba_lance_of_longinus_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
 	-- This doesn't seem like a proper way to do things but w/e MouJiao's legacy code
@@ -337,6 +345,10 @@ function modifier_item_imba_lance_of_longinus_force_enemy_ranged:GetMotionContro
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IgnoreTenacity()  return true end
 
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	local particle_name = "particles/items_fx/force_staff.vpcf"
 	
@@ -393,6 +405,10 @@ function modifier_item_imba_lance_of_longinus_force_self_ranged:IsMotionControll
 function modifier_item_imba_lance_of_longinus_force_self_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_lance_of_longinus_force_self_ranged:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	local particle_name = "particles/items_fx/force_staff.vpcf"
 	
@@ -452,6 +468,10 @@ function modifier_item_imba_lance_of_longinus_force_enemy_melee:GetMotionControl
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IgnoreTenacity()  return true end
 
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	local particle_name = "particles/items_fx/force_staff.vpcf"
 	
@@ -508,6 +528,10 @@ function modifier_item_imba_lance_of_longinus_force_self_melee:IsMotionControlle
 function modifier_item_imba_lance_of_longinus_force_self_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_lance_of_longinus_force_self_melee:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	local particle_name = "particles/items_fx/force_staff.vpcf"
 	
@@ -564,6 +588,10 @@ function modifier_item_imba_lance_of_longinus_attack_speed:IsStunDebuff() return
 function modifier_item_imba_lance_of_longinus_attack_speed:IgnoreTenacity() return true end
 
 function modifier_item_imba_lance_of_longinus_attack_speed:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	self.as = 0
 	self.ar = 0
@@ -635,6 +663,10 @@ function modifier_item_imba_lance_of_longinus_god_piercing_ally:RemoveOnDeath() 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:OnCreated(params)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 	
 	self.total_gained_health = 0

@@ -50,6 +50,10 @@ end
 -------------------------------------
 
 function modifier_item_imba_the_triumvirate_v2_sange:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability			= self:GetAbility()
 	self.sange_extension	= self.ability:GetSpecialValueFor("sange_extension")
 	
@@ -100,6 +104,10 @@ end
 ------------------------------------------
 
 function modifier_item_imba_the_triumvirate_v2_yasha:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability			= self:GetAbility()
 	self.yasha_extension	= self.ability:GetSpecialValueFor("yasha_extension")
 	
@@ -150,6 +158,10 @@ end
 -----------------------------------------
 
 function modifier_item_imba_the_triumvirate_v2_kaya:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability				= self:GetAbility()
 	self.kaya_extension			= self.ability:GetSpecialValueFor("kaya_extension")
 	self.kaya_min_health_dmg	= self.ability:GetSpecialValueFor("kaya_min_health_dmg")
@@ -215,6 +227,10 @@ function modifier_item_imba_the_triumvirate_v2:RemoveOnDeath()	return false end
 function modifier_item_imba_the_triumvirate_v2:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_the_triumvirate_v2:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()

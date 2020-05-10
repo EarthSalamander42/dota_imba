@@ -47,6 +47,10 @@ function modifier_imba_sogat_cuirass:RemoveOnDeath() return false end
 function modifier_imba_sogat_cuirass:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_sogat_cuirass:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() and self:GetAbility() then
 		-- If it is the first Assault Cuirass in the inventory, grant the Assault Cuirass aura
 		if not self:GetCaster():HasModifier("modifier_imba_sogat_cuirass_aura_positive") then
@@ -264,6 +268,10 @@ function modifier_imba_sogat_cuirass_aura_negative_effect:GetTexture()
 end
 
 function modifier_imba_sogat_cuirass_aura_negative_effect:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if self:GetAbility() then
 		self.aura_armor_reduction_enemy = self:GetAbility():GetSpecialValueFor("aura_armor_reduction_enemy") * (-1)
 	else
@@ -290,6 +298,10 @@ function modifier_item_imba_sogat_cuirass_buff:IsPurgable() return false end
 
 -- Particle creation and value storage
 function modifier_item_imba_sogat_cuirass_buff:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.active_armor 					= self:GetAbility():GetSpecialValueFor("active_armor")
 	self.block_damage_melee_active 		= self:GetAbility():GetSpecialValueFor("block_damage_melee_active")
 	self.block_damage_ranged_active 	= self:GetAbility():GetSpecialValueFor("block_damage_ranged_active")

@@ -164,6 +164,10 @@ function modifier_item_imba_moon_shard:IsPurgable() return false end
 function modifier_item_imba_moon_shard:RemoveOnDeath() return false end
 
 function modifier_item_imba_moon_shard:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	self:StartIntervalThink(0.2)
 end
@@ -220,6 +224,10 @@ function modifier_item_imba_moon_shard_active:RemoveOnDeath() return false end
 function modifier_item_imba_moon_shard_active:GetTexture() return "item_moon_shard" end
 
 function modifier_item_imba_moon_shard_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if self:GetAbility() then
 		self.consume_as_1		= self:GetAbility():GetSpecialValueFor("consume_as_1")
 		self.consume_vision_1	= self:GetAbility():GetSpecialValueFor("consume_vision_1")

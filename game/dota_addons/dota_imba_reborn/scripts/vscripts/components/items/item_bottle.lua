@@ -63,6 +63,10 @@ function modifier_item_imba_bottle_texture_controller:GetAttributes()	return MOD
 
 function modifier_item_imba_bottle_texture_controller:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_bottle_texture_controller_2", {})
 	end
 
@@ -123,6 +127,10 @@ function modifier_item_imba_bottle_texture_controller_2:IsDebuff() return false 
 function modifier_item_imba_bottle_texture_controller_2:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_bottle_texture_controller_2:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if self:GetParent().bottle_icon then
 		self:SetStackCount(self:GetParent().bottle_icon)
 		self:GetAbility().bottle_icon = self:GetStackCount()
@@ -147,6 +155,10 @@ function modifier_item_imba_bottle_heal:DeclareFunctions()
 end
 
 function modifier_item_imba_bottle_heal:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- the ability is added in ModifierFilter, using vanilla bottle. Clientside is not called OnCreated, and CustomNetTables are sending values to client to show on UI, but it doesn't show up on UI somehow.
 	self.health_restore = self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
 	self.mana_restore = self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")

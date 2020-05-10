@@ -56,6 +56,10 @@ function modifier_item_imba_butterfly:RemoveOnDeath()	return false end
 function modifier_item_imba_butterfly:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_butterfly:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -123,6 +127,10 @@ end
 modifier_item_imba_butterfly_unique = class({})
 
 function modifier_item_imba_butterfly_unique:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -185,6 +193,10 @@ modifier_item_imba_butterfly_flutter = class({})
 function modifier_item_imba_butterfly_flutter:IsPurgable()	return false end
 
 function modifier_item_imba_butterfly_flutter:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -236,6 +248,10 @@ end
 modifier_item_imba_butterfly_wind_song_stacks = class({})
 
 function modifier_item_imba_butterfly_wind_song_stacks:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -276,6 +292,10 @@ function modifier_item_imba_butterfly_wind_song_active:GetEffectAttachType()
 end
 
 function modifier_item_imba_butterfly_wind_song_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -336,6 +356,10 @@ end
 modifier_item_imba_butterfly_wind_song_slow = class({})
 
 function modifier_item_imba_butterfly_wind_song_slow:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()

@@ -454,6 +454,10 @@ function modifier_item_imba_kaya_active:GetTexture()
 end
 
 function modifier_item_imba_kaya_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.bonus_cdr_active = self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
 end
 
@@ -628,6 +632,10 @@ function modifier_item_imba_kaya_and_sange:RemoveOnDeath()	return false end
 function modifier_item_imba_kaya_and_sange:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_kaya_and_sange:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
 	self.bonus_cdr					= self:GetAbility():GetSpecialValueFor("bonus_cdr")
 	self.bonus_intellect			= self:GetAbility():GetSpecialValueFor("bonus_intellect")
@@ -777,6 +785,10 @@ function modifier_item_imba_yasha_and_kaya:RemoveOnDeath()	return false end
 function modifier_item_imba_yasha_and_kaya:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_yasha_and_kaya:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
 	self.bonus_cdr					= self:GetAbility():GetSpecialValueFor("bonus_cdr")
 	self.bonus_intellect			= self:GetAbility():GetSpecialValueFor("bonus_intellect")
@@ -1018,6 +1030,10 @@ end
 
 -- Modifier property storage
 function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability = self:GetAbility()
 
 	if not self.ability then
@@ -1118,6 +1134,10 @@ end
 
 -- Modifier property storage
 function modifier_item_imba_triumvirate_stacks_buff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.as_stack = self:GetAbility():GetSpecialValueFor("as_stack")
 
 	-- Inherit stacks from lower-tier modifiers
@@ -1171,6 +1191,10 @@ end
 
 -- Modifier property storage
 function modifier_item_imba_triumvirate_proc_buff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.proc_ms = self:GetAbility():GetSpecialValueFor("proc_ms")
 
 	-- Remove lower-tier modifiers
