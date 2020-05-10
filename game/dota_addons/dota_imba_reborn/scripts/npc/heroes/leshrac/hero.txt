@@ -11,6 +11,6 @@
 		
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
-		"Ability2"					"imba_leshrac_diabolic_edict"
+		//"Ability2"					"imba_leshrac_diabolic_edict"
 	}
 }

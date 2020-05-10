@@ -5053,6 +5053,7 @@
 			{
 				"var_type"									"FIELD_INTEGER"
 				"illusion_duration"							"34 36 38 40"
+				"LinkedSpecialBonus"	"special_bonus_unique_terrorblade_5"
 			}
 			"02"
 			{
