@@ -5052,7 +5052,7 @@
 			"01"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"illusion_duration"							"34 36 38 40"
+				"illusion_duration"							"34.0 36.0 38.0 40.0"
 			}
 			"02"
 			{
