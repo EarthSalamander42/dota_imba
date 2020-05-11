@@ -1314,7 +1314,7 @@ function modifier_imba_sandking_sand_storm_720_thinker:OnIntervalThink()
 			local damageTable = {
 				victim 			= enemy,
 				damage 			= self.sand_storm_damage * self.damage_tick_rate,
-				damage_type		= DAMAGE_TYPE_PHYSICAL,
+				damage_type		= DAMAGE_TYPE_MAGICAL,
 				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 				attacker 		= self.caster,
 				ability 		= self.ability
