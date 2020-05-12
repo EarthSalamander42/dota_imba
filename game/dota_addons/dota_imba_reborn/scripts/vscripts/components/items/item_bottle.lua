@@ -162,16 +162,10 @@ function modifier_item_imba_bottle_heal:OnCreated()
 	-- the ability is added in ModifierFilter, using vanilla bottle. Clientside is not called OnCreated, and CustomNetTables are sending values to client to show on UI, but it doesn't show up on UI somehow.
 	self.health_restore = self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
 	self.mana_restore = self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
-	
+
 	if not IsServer() then return end
 
-	local particle_name = "particles/items_fx/bottle.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["bottle"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["bottle"]["effect1"]
-	end
-
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/bottle.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantHealthRegen() return self.health_restore end

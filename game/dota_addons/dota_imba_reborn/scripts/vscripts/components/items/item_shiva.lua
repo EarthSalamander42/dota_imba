@@ -49,14 +49,7 @@ function item_imba_shivas_guard:OnSpellStart()
 	-- Play cast sound
 	self:GetCaster():EmitSound("DOTA_Item.ShivasGuard.Activate")
 
-	-- Play particle
-	local particle_name = "particles/items2_fx/shivas_guard_active.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect1"]
-	end
-	
-	local blast_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	local blast_pfx = ParticleManager:CreateParticle("particles/items2_fx/shivas_guard_active.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 	ParticleManager:SetParticleControl(blast_pfx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, blast_duration * 1.33, blast_speed))
 	ParticleManager:ReleaseParticleIndex(blast_pfx)
@@ -91,14 +84,7 @@ function item_imba_shivas_guard:OnSpellStart()
 
 			-- If not, blast it
 			if not enemy_has_been_hit then
-				-- Play hit particle
-				local particle_name = "particles/items2_fx/shivas_guard_impact.vpcf"
-				
-				if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect2"] then
-					particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect2"]
-				end
-				
-				local hit_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, enemy)
+				local hit_pfx = ParticleManager:CreateParticle("particles/items2_fx/shivas_guard_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
 				ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
 				ParticleManager:SetParticleControl(hit_pfx, 1, enemy:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(hit_pfx)
@@ -131,12 +117,6 @@ function item_imba_shivas_guard:OnSpellStart()
 	end)
 end
 
-function item_imba_shivas_guard:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().shiva_icon_client then return "custom/imba_shiva" end
-	return "custom/imba_shiva"..self:GetCaster().shiva_icon_client
-end
-
 -----------------------------------------------------------------------------------------------------------
 --	Shiva Handler
 -----------------------------------------------------------------------------------------------------------
@@ -164,30 +144,6 @@ function modifier_imba_shiva_handler:OnCreated()
 
 	if IsServer() then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shiva_aura", {})
-	end
-end
-
-function modifier_imba_shiva_handler:OnIntervalThink()
-	local particle_name	= "particles/items2_fx/shivas_guard_impact.vpcf"
-	local level			= 0
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect2"] and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["level"] then
-		particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["effect2"]
-		level			= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["shiva"]["level"]
-	end
-
-	if self:GetCaster():IsIllusion() then return end
-	if IsServer() then
-		self:SetStackCount(level)
-	end
-
-	if IsClient() then
-		local icon = self:GetStackCount()
-		if icon == 0 then
-			self:GetCaster().shiva_icon_client = nil
-		else
-			self:GetCaster().shiva_icon_client = icon
-		end
 	end
 end
 
@@ -381,14 +337,6 @@ end
 ---------------------------------------------------
 
 modifier_item_imba_shiva_frost_goddess_breath	= modifier_item_imba_shiva_frost_goddess_breath or class({})
-
-function modifier_item_imba_shiva_frost_goddess_breath:GetTexture()
-	if not self:GetCaster().shiva_icon_client then
-		return "item_shivas_guard"
-	else
-		return "custom/imba_shiva"..self:GetCaster().shiva_icon_client
-	end
-end
 
 function modifier_item_imba_shiva_frost_goddess_breath:OnCreated()
 	if IsServer() then

@@ -341,10 +341,6 @@ function imba_enigma_demonic_conversion:CreateEidolon(hParent, vLocation, iWave,
 	local caster = self:GetCaster()
 	hParent = hParent or caster
 	local eidolon = CreateUnitByName("npc_imba_enigma_eidolon_"..math.min(4,self:GetLevel()), vLocation, true, caster, caster, caster:GetTeamNumber())
-	if caster.eidolon_model then
-		eidolon:SetOriginalModel(caster.eidolon_model)
-		eidolon:SetModel(caster.eidolon_model)
-	end
 	eidolon:AddNewModifier(caster, self, "modifier_kill", {duration = fDuration})
 	eidolon:SetOwner(caster)
 	eidolon:SetControllableByPlayer(caster:GetPlayerID(), true)

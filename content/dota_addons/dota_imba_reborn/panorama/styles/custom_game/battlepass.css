@@ -325,11 +325,12 @@
 	background-color: #303848;
 }
 
-.LeaderboardRank,
-.LeaderboardXP,
-.LeaderboardAvatar,
-.LeaderboardAvatar_alt
+.LeaderboardRankLabel,
+.LeaderboardXPLabel,
+.LeaderboardAvatarLabel,
+.LeaderboardAvatar_altLabel
 {
+	width: 100%;
 	height: 100%;
 	text-align: center;
 	font-size: 19px;
@@ -350,10 +351,6 @@
 	color:#daebff;
 }
 
-.LeaderboardXP, {
-	padding: 3px 10px 3px 10px;
-}
-
 /* Leaderboard Legend */
 .LeaderboardLegend {
 	width: 100%;
@@ -372,18 +369,22 @@
 
 .LeaderboardRank {
 	width: 10%;	
-	align:  center center;
+	height: 90%;
+	align:  center top;
+	text-align:  center center;
 }
 
 .LeaderboardAvatar {
 	width: 15%;
+	height: 90%;
 	border: 0;
-	align:  center center;
+	align:  center top;
 }
 
 .LeaderboardXP {
-	width: 50%;	
+	width: 50%;
 	align:  center center;
+	padding: 3px 10px 3px 10px;
 }
 
 .LeaderboardIMR {
@@ -832,7 +833,7 @@
 }
 
 .BattlepassReward:hover .BattlepassRewardPanelUnlocked {
-	opacity: 1;
+	opacity: 0;
 }
 
 .BattlepassRewardLabel {
@@ -874,10 +875,9 @@
 }
 
 .BattlepassRewardPanelUnlocked {
-	opacity: 0;
 	width: 100%;
 	height: 100%;
-	background-color: #000000db;
+	background-color: #000000ba;
 }
 
 .BattlepassRewardLabelUnlocked {

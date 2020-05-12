@@ -3,7 +3,7 @@ var hide_panel = true;
 var i = 0;
 
 function UpdateTooltip(args) {
-	$.Msg(args)
+//	$.Msg(args)
 //	$.Msg(args.victim)
 //	$.Msg(hide_panel)
 	i = 3;
@@ -51,8 +51,8 @@ function Countdown() {
 		ClosePanel(FindDotaHudElement("QueryUnit"));
 		hide_panel = true;
 		i = 0;
-	} else {
-		$.Msg("i = " + i)
+//	} else {
+//		$.Msg("i = " + i)
 	}
 
 	$.Schedule(1.0, function(i){

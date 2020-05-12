@@ -7893,7 +7893,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"20"
+				"bonus_movement_speed"		"70"
 			}
 			"02"
 			{
@@ -11392,7 +11392,7 @@
 		"ItemCost"						"10900"
 		"ItemShopTags"					"damage;attack_speed;unique"
 		"ItemQuality"					"artifact"
-		"ItemAliases"					"jarnbjorn"
+		"ItemAliases"					"storm breaker thor strongest avenger"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 

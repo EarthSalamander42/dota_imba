@@ -93,11 +93,13 @@ function C_DOTA_BaseNPC:IsInRiver()
 end
 
 -- Call custom functions whenever GetAbilityTextureName is being called anywhere
-original_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureName
+original_Ability_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureName
 C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
 	-- call the original function
-	local response = original_GetAbilityTextureName(self)
+	local response = original_Ability_GetAbilityTextureName(self)
 	local override_image = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+
+--	print(response, override_image)
 
 	if override_image then
 --		print("GetAbilityTextureName (override):", response, override_image["1"])
@@ -107,7 +109,48 @@ C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
 	return response
 end
 
+-- Call custom functions whenever GetAbilityTextureName is being called anywhere
+original_Item_GetAbilityTextureName = C_DOTA_Item_Lua.GetAbilityTextureName
+C_DOTA_Item_Lua.GetAbilityTextureName = function(self)
+	-- call the original function
+	local response = original_Item_GetAbilityTextureName(self)
+
+	-- special rules for specific items
+	if response == "item_radiance" then
+		if not self:GetCaster():HasModifier("modifier_imba_radiance_aura") then
+			response = "item_radiance_inactive"
+		end
+	end
+
+	local override_image = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+
+--	print(response)
+
+	if override_image then
+--		print("GetAbilityTextureName (override):", response, override_image["1"])
+		response = override_image["1"]
+--		print("New image:", response)
+	end
+
+	return response
+end
+
 --[[
+-- Call custom functions whenever GetAttackSound is being called anywhere
+original_GetAttackSound = C_DOTA_Ability_Lua.GetAttackSound
+C_DOTA_Ability_Lua.GetAttackSound = function(self)
+	-- call the original function
+	local response = original_GetAttackSound(self)
+	local override_sound = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+
+	if override_sound then
+		print("GetAttackSound (override):", response, override_sound["1"])
+		response = override_sound["1"]
+	end
+
+	return response
+end
+
 -- Call custom functions whenever GetHeroEffectName is being called anywhere
 original_GetHeroEffectName = C_DOTA_Ability_Lua.GetHeroEffectName
 C_DOTA_Ability_Lua.GetHeroEffectName = function(self)

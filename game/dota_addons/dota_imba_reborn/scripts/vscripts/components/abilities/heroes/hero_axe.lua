@@ -52,7 +52,7 @@ function imba_axe_berserkers_call:OnSpellStart()
 	-- On cast, hit no unit
 	local responses_zero_enemy = "axe_axe_anger_0"..math.random(1,3)
 
-	local particle = ParticleManager:CreateParticle("particles/econ/items/axe/axe_helm_shoutmask/axe_beserkers_call_owner_shoutmask.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	local particle = ParticleManager:CreateParticle("particles/econ/items/axe/axe_helm_shoutmask/axe_beserkers_call_owner_shoutmask.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster, caster)
 	ParticleManager:SetParticleControl(particle, 2, Vector(radius, radius, radius))
 	ParticleManager:ReleaseParticleIndex(particle)
 
@@ -152,7 +152,7 @@ end
 function modifier_imba_berserkers_call_buff_armor:OnCreated()
 	if not IsServer() then return end
 
-	local caster_particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	local caster_particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 	ParticleManager:SetParticleControl(caster_particle, 2, Vector(0, 0, 0))
 	ParticleManager:ReleaseParticleIndex(caster_particle)
 	return true
@@ -336,7 +336,7 @@ function imba_axe_battle_hunger:GetAOERadius()
 end
 
 function imba_axe_battle_hunger:OnAbilityPhaseStart()
-	local cast_particle = ParticleManager:CreateParticle("particles/econ/items/axe/axe_cinder/axe_cinder_battle_hunger_cast.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+	local cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_battle_hunger_cast.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster(), self:GetCaster())
 	ParticleManager:SetParticleControlEnt(cast_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(cast_particle)
 
@@ -488,7 +488,7 @@ function modifier_imba_battle_hunger_debuff_dot:OnCreated( params )
 	self.kill_count = 0
 	self.last_damage_time = GameRules:GetGameTime()
 	
-	self.enemy_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_battle_hunger.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	self.enemy_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_battle_hunger.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetCaster())
 	ParticleManager:SetParticleControl(self.enemy_particle, 2, Vector(0, 0, 0))
 	self:AddParticle(self.enemy_particle, false, false, -1, false, false)
 	
@@ -729,12 +729,6 @@ function imba_axe_counter_helix:GetCastRange()
 	return self:GetSpecialValueFor("radius")
 end
 
-function imba_axe_counter_helix:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "axe_counter_helix" end
-	return "axe_counter_helix_unleashed"
-end
-
 function imba_axe_counter_helix:GetIntrinsicModifierName()
 	return "modifier_imba_counter_helix_passive"
 end
@@ -818,7 +812,7 @@ function modifier_imba_counter_helix_passive:OnAttackLanded(keys)
 end
 
 function modifier_imba_counter_helix_passive:Spin( repeat_allowed )
-	self.helix_pfx_1 = ParticleManager:CreateParticle(self.caster.counter_helix_pfx or "particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster)
+	self.helix_pfx_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
 	ParticleManager:SetParticleControl(self.helix_pfx_1, 0, self.caster:GetAbsOrigin())
 	if Battlepass and Battlepass:HasArcana(self.caster:GetPlayerID(), "axe") then
 		ParticleManager:SetParticleControlEnt(self.helix_pfx_1, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
@@ -921,14 +915,6 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_culling_blade_motion"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_axe_culling_blade = imba_axe_culling_blade or class({})
-
-function imba_axe_culling_blade:GetAbilityTextureName()
-	if not self:GetCaster().arcana_style then
-		return "axe_culling_blade"
-	else
-		return "axe_culling_blade_unleashed"
-	end
-end
 
 function imba_axe_culling_blade:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_axe_8")
@@ -1069,12 +1055,11 @@ function imba_axe_culling_blade:OnSpellStart()
 end
 
 function imba_axe_culling_blade:KillUnit(target)
-
 	TrueKill(self.caster, target, self)
 	self.heal_amount = (self.caster:GetMaxHealth() / 100) * self.max_health_kill_heal_pct
 	self.caster:Heal(self.heal_amount, self.caster)
 	-- Play the kill particle
-	self.culling_kill_particle = ParticleManager:CreateParticle(self.caster.culling_blade_kill_pfx or "particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf", PATTACH_CUSTOMORIGIN, self.caster)
+	self.culling_kill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf", PATTACH_CUSTOMORIGIN, self.caster, self.caster)
 	--ParticleManager:SetParticleControlEnt(self.culling_kill_particle, 0, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target_location, true)
 	--ParticleManager:SetParticleControlEnt(self.culling_kill_particle, 1, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target_location, true)
 	--ParticleManager:SetParticleControlEnt(self.culling_kill_particle, 2, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target_location, true)
@@ -1082,7 +1067,6 @@ function imba_axe_culling_blade:KillUnit(target)
 	ParticleManager:SetParticleControl(self.culling_kill_particle, 4, self.target_location)
 	-- ParticleManager:SetParticleControlEnt(self.culling_kill_particle, 8, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target_location, true)
 	ParticleManager:ReleaseParticleIndex(self.culling_kill_particle)
-
 end
 
 function imba_axe_culling_blade:GetCastAnimation()
@@ -1107,6 +1091,7 @@ function modifier_imba_culling_blade_cull_stacks:OnStackCountChanged( oldstacks 
 		self:SetStackCount(self.stack_limit)
 	end
 end
+
 -------------------------------------------
 -- Culling Blade sprint modifier
 -------------------------------------------
@@ -1115,14 +1100,12 @@ modifier_imba_culling_blade_buff_haste = modifier_imba_culling_blade_buff_haste 
 
 function modifier_imba_culling_blade_buff_haste:OnCreated()
 	-- I know that's a terrible workaround
-	if self:GetCaster().culling_blade_boost_pfx == "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_boost.vpcf" then
-		self:SetStackCount(1)
-	end
+	if not IsServer() then return end
 
-	self.axe_culling_blade_boost = ParticleManager:CreateParticle(self:GetCaster().culling_blade_boost_pfx or "particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
+	self.axe_culling_blade_boost = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster(), self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(self.axe_culling_blade_boost)
 	
-	self.pfx = ParticleManager:CreateParticle(self:GetCaster().culling_blade_sprint_pfx or "particles/units/heroes/hero_axe/axe_cullingblade_sprint_axe.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_cullingblade_sprint_axe.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 	self:AddParticle(self.pfx, false, false, -1, false, false)
 end
 
@@ -1155,7 +1138,7 @@ end
 
 -- Pretty sure these effects are not working at all. Maybe they're not status effects
 function modifier_imba_culling_blade_buff_haste:GetStatusEffectName()
-	if self:GetStackCount() == 1 then
+	if self:GetCaster():HasModifier("modifier_axe_arcana") then
 		return "particles/econ/items/axe/ti9_jungle_axe/ti9_jungle_axe_culling_blade_hero_effect.vpcf"
 	else
 		return "particles/units/heroes/hero_axe/axe_culling_blade_hero_effect.vpcf"
@@ -1185,7 +1168,6 @@ function modifier_imba_culling_blade_motion:RemoveOnDeath() return false end
 function modifier_imba_culling_blade_motion:IgnoreTenacity() return true end
 function modifier_imba_culling_blade_motion:IsMotionController() return true end
 function modifier_imba_culling_blade_motion:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH end
-
 
 function modifier_imba_culling_blade_motion:OnCreated(kv)
 	if IsServer() then
@@ -1295,6 +1277,8 @@ for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_axe", MotionController)
 end
 
+LinkLuaModifier("modifier_axe_arcana", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
+
 -- Arcana handler
 modifier_axe_arcana = modifier_axe_arcana or class({})
 
@@ -1312,20 +1296,8 @@ function modifier_axe_arcana:DeclareFunctions()
 	}
 end
 
-function modifier_axe_arcana:OnCreated()
-	if IsServer() then
-		if Battlepass and Battlepass:HasArcana(self:GetParent():GetPlayerID(), "axe") then
-			self:SetStackCount(1)
-		end
-	end
-end
-
 function modifier_axe_arcana:GetAttackSound()
-	if self:GetStackCount() == 1 then
-		return "Hero_Axe.Attack.Jungle"
-	else
-		return "Hero_Axe.Attack"
-	end
+	return "Hero_Axe.Attack.Jungle"
 end
 
 ---------------------

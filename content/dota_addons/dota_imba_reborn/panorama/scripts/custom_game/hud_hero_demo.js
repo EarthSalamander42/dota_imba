@@ -72,7 +72,7 @@ function SwitchWearable(itemDef, itemStyle) {
 		GameEvents.SendCustomGameEventToServer("SwitchWearable", { "unit": unit, "itemDef": itemDef, "itemStyle": itemStyle });
 	}
 };
-
+/*
 // åˆ‡æ¢ä¿¡ä½¿é—­åŒ…
 function SwitchCourier(itemDef, itemStyle, bFlying, bDire) {
 	return function () {
@@ -385,7 +385,6 @@ function CreateSelectCosmeticsForUnit(unit) {
 		EquipContainer.SetHasClass("NotWearable", true);
 	}
 }
-
 function SetEconItemButtons(econItemID, itemDef, itemStyle) {
 	var EconItem = $("#" + econItemID);
 	var EconItemSlot = EconItem.GetParent()
@@ -480,6 +479,7 @@ function SetEconItemButtons(econItemID, itemDef, itemStyle) {
 		}
 	}
 }
+*/
 
 function SortSlots(AvailableItems) {
 	var SlotArray = [];
@@ -501,7 +501,7 @@ function SortSlots(AvailableItems) {
 	}
 	return SlotArray;
 }
-
+/*
 function ToggleSelectCosmetics() {
 	$('#SelectCosmeticsContainer').ToggleClass('CosmeticsContainerVisible');
 	if (!$('#SelectCosmeticsContainer').BHasClass('CosmeticsContainerVisible')) {
@@ -524,7 +524,7 @@ function ToggleSelectCosmetics() {
 
 	}
 }
-
+*/
 function ToggleStyleMenu(StyleMenu) {
 	return function () {
 		StyleMenu.ToggleClass("Hidden");
@@ -593,7 +593,7 @@ function GetEconItem(EconItemSlot) {
 	}
 	return EconItem
 }
-
+/*
 function UpdateWearable(params) {
 	// $.Msg("UpdateWearable ", params);
 	Game.EmitSound('inventory.wear');
@@ -625,7 +625,7 @@ function UpdateWearable(params) {
 		}
 	}
 }
-
+*/
 function RespawnWear(data) {
 	$.Msg("RespawnWear ", data);
 	var old_unit = data.old_unit;
@@ -641,7 +641,7 @@ function RespawnWear(data) {
 	HeroImagePanel.SetPanelEvent("onactivate", function () {
 		SelectAndLookUnit(new_unit);
 	});
-
+/*
 	if (bundle) {
 		for (var i in bundle) {
 			var subItem = bundle[i];
@@ -650,8 +650,9 @@ function RespawnWear(data) {
 	} else {
 		UpdateWearable(item);
 	}
+*/
 }
-
+/*
 function OnSelectionChangeForCosmetics(unit, old_unit) {
 	if ($('#SelectCosmeticsContainer').BHasClass('CosmeticsContainerVisible')) {
 		if (old_unit) {
@@ -673,7 +674,7 @@ function OnSelectionChangeForCosmetics(unit, old_unit) {
 		ZoomInCamera();
 	}
 }
-
+*/
 function ShowDemoPanel() {
 //	$.Msg("Enter Function ShowDemoPanel");
 	$.GetContextPanel().FindChildTraverse('ControlPanel').AddClass("visible");
@@ -682,7 +683,7 @@ function ShowDemoPanel() {
 (function () {
 	$.RegisterEventHandler('DOTAUIHeroPickerHeroSelected', $('#SelectEnemyHeroContainer'), SpawnEnemyNewHero);
 	$.RegisterEventHandler('DOTAUIHeroPickerHeroSelected', $('#SelectAllyHeroContainer'), SpawnAllyNewHero);
-	GameEvents.Subscribe('UpdateWearable', UpdateWearable);
+//	GameEvents.Subscribe('UpdateWearable', UpdateWearable);
 	GameEvents.Subscribe('AllySpawned', AllySpawned);
 	GameEvents.Subscribe('AllyRemoved', AllyRemoved);
 	GameEvents.Subscribe('RespawnWear', RespawnWear);

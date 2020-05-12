@@ -61,7 +61,7 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				donator_color = DONATOR_COLOR[0]
 			end
 
-			CustomNetTables:SetTableValue("battlepass", tostring(ID),
+			CustomNetTables:SetTableValue("battlepass_player", tostring(ID),
 			{
 				XP = api.players[steamid].xp_in_level,
 				MaxXP = api.players[steamid].xp_next_level,

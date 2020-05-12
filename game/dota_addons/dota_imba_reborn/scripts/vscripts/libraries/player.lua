@@ -929,11 +929,11 @@ CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 		caster = hCaster
 	end
 
-	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
-		if v.asset == sSoundName and v.parent == caster then
-			sSoundName = v.modifier
-			break
-		end
+	local override_sound = CustomNetTables:GetTableValue("battlepass", sSoundName..'_'..caster:GetPlayerOwnerID()) 
+
+	if override_sound then
+--		print("EmitSound (override):", sSoundName, override_sound["1"])
+		sSoundName = override_sound["1"]
 	end
 
 	-- call the original function
@@ -946,15 +946,32 @@ original_EmitSoundOn = EmitSoundOn
 EmitSoundOn = function(sSoundName, hParent)
 --	print("Create Particle (override):", sSoundName)
 
-	for k, v in pairs(CDOTA_BaseNPC.SOUNDS_OVERRIDE) do
-		if v.asset == sSoundName and v.parent == hParent then
-			sSoundName = v.modifier
-			break
-		end
+	local override_sound = CustomNetTables:GetTableValue("battlepass", sSoundName..'_'..hParent:GetPlayerOwnerID()) 
+
+	if override_sound then
+--		print("EmitSoundOn (override):", sSoundName, override_sound["1"])
+		sSoundName = override_sound["1"]
 	end
 
 	-- call the original function
 	local response = original_EmitSoundOn(sSoundName, hParent)
+
+	return response
+end
+
+original_EmitSoundOnLocationWithCaster = EmitSoundOnLocationWithCaster
+EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hCaster)
+--	print("Create Particle (override):", sSoundName)
+
+	local override_sound = CustomNetTables:GetTableValue("battlepass", sSoundName..'_'..hCaster:GetPlayerOwnerID()) 
+
+	if override_sound then
+--		print("EmitSoundOnLocationWithCaster (override):", sSoundName, override_sound["1"])
+		sSoundName = override_sound["1"]
+	end
+
+	-- call the original function
+	local response = original_EmitSoundOnLocationWithCaster(vLocation, sSoundName, hCaster)
 
 	return response
 end
@@ -981,12 +998,13 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.Activate", self) end
 
 	local blink_pfx
+	local blink_pfx_name = "particles/items_fx/blink_dagger_start.vpcf"
 
 	if bTeamOnlyParticle == true then
-		blink_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber(), self)
+		blink_pfx = ParticleManager:CreateParticleForTeam(blink_pfx_name, PATTACH_CUSTOMORIGIN, nil, self:GetTeamNumber(), self)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	else
-		blink_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil, self)
+		blink_pfx = ParticleManager:CreateParticle(blink_pfx_name, PATTACH_CUSTOMORIGIN, nil, self)
 		ParticleManager:SetParticleControl(blink_pfx, 0, self:GetAbsOrigin())
 	end
 
@@ -995,11 +1013,12 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	ProjectileManager:ProjectileDodge( self )
 
 	local blink_end_pfx
+	local blink_end_pfx_name = "particles/items_fx/blink_dagger_end.vpcf"
 
 	if bTeamOnlyParticle == true then
-		blink_end_pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self:GetTeamNumber(), self)
+		blink_end_pfx = ParticleManager:CreateParticleForTeam(blink_end_pfx_name, PATTACH_ABSORIGIN, self, self:GetTeamNumber(), self)
 	else
-		blink_end_pfx = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, self, self)
+		blink_end_pfx = ParticleManager:CreateParticle(blink_end_pfx_name, PATTACH_ABSORIGIN, self, self)
 	end
 
 	ParticleManager:ReleaseParticleIndex(blink_end_pfx)

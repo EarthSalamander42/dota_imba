@@ -210,7 +210,7 @@ var api = {
 			timeout : 5000,
 			headers : {'X-Dota-Server-Key' : secret_key, 'X-Dota-Game-Type' : game_type},
 			success : function(obj) {
-				if (obj.error || !obj.data || !obj.data.players)
+				if (!obj.data || !obj.data.players)
 					$.Msg("Error finding top xp");
 				else {
 					callback(obj.data.players);
@@ -267,10 +267,10 @@ var api = {
 			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
 				if (obj.error) {
-					$.Msg("Error updating armory");
+//					$.Msg("Error updating armory");
 					error_callback();
 				} else {
-					$.Msg("Updated armory");
+//					$.Msg("Updated armory");
 					success_callback();
 				}
 			},
@@ -627,9 +627,9 @@ function SetEmblem(emblem, name, id, required_status) {
 	companion_changed = true;
 }
 
-function SetArmory(hero, slot_id, item_id) {
-	if (companion_changed === true) {
-//		$.Msg("SLOW DOWN BUDDY!");
+function SetArmory(hero, slot_id, item_id, bForceUnequip) {
+	if (companion_changed === true && bForceUnequip == undefined) {
+		$.Msg("SLOW DOWN BUDDY!");
 		return;
 	}
 
@@ -641,27 +641,28 @@ function SetArmory(hero, slot_id, item_id) {
 		slot_id		: slot_id,
 		item_id		: item_id,
 		custom_game	: game_type,
-	}, function(data) {
-		$.Msg(data)
+	}, function() {
 		$("#CompanionNotification").AddClass("success");
-		var text = $.Localize("bp_reward_equip_success") + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
 
-//		if (equip == 0)
-//			text = $.Localize("bp_reward_unequip_success") + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
-
-		$("#CompanionNotificationLabel").text = text.toLowerCase();
+		var text = "";
 
 		if ($("#reward_equipped_" + item_id)) {
 			$("#reward_equipped_" + item_id).DeleteAsync(0);
+			text = $.Localize("bp_reward_unequip_success") + " " + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
 		} else {
+			text = $.Localize("bp_reward_equip_success") + " " + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
 			SetRewardEquipped(item_id, hero);
 		}
+
+		$("#CompanionNotificationLabel").text = text.toLowerCase();
+
 /*
 		GameEvents.SendCustomGameEventToServer("change_emblem", {
 			ID : Players.GetLocalPlayer(),
 			unit : emblem
 		});
 */
+
 		$.Schedule(6.0, function() {
 			$("#CompanionNotification").RemoveClass("success");
 			$("#CompanionNotificationLabel").text = "";
@@ -872,8 +873,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 	if (BattlepassRewards["1"] == undefined) return;
 	BattlepassRewards = BattlepassRewards["1"];
 
-	var plyData = CustomNetTables.GetTableValue("battlepass", player);
-	var battlepass_hero_icon = CustomNetTables.GetTableValue("battlepass", "hero_rewards");
+	var plyData = CustomNetTables.GetTableValue("battlepass_player", player);
 
 	var reward_row = $("#BattlepassRewardRow");
 
@@ -892,6 +892,10 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 			var bp_item_id = BattlepassRewards[i].item_id;
 			var bp_slot_id = BattlepassRewards[i].slot_id;
 			var bp_hero = BattlepassRewards[i].hero;
+
+			// terrible fix
+			if (bp_type == "taunt")
+				bp_slot_id = "taunt";
 
 			if (!$("#container_level_" + bp_level)) {
 				var level_container = $.CreatePanel("Panel", reward_row, "container_level_" + bp_level);
@@ -915,16 +919,15 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 			reward.AddClass("BattlepassRewardIcon");
 			reward.AddClass(bp_rarity + "_border");
 			reward.hero_type = bp_hero;
-
 /*
-			if (battlepass_hero_icon != undefined && battlepass_hero_icon[hero_name]) {
-				var reward_hero_icon = $.CreatePanel("Panel", reward, bp_reward + "_icon");
-				reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name + '.png")';
+			if (bp_hero != undefined && bp_hero.indexOf("npc_dota_hero_") !== -1) {
+				var reward_hero_icon = $.CreatePanel("Panel", reward, "");
+				reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/' + bp_hero + '.png")';
 				reward_hero_icon.AddClass("BattlepassRewardHeroIcon");
 			}
 */
 			if (plyData != null || bRewardsDisabled & bRewardsDisabled == true) {
-				if (i <= plyData.Lvl) {
+				if (bp_level <= plyData.Lvl) {
 					var reward_panel_unlocked = $.CreatePanel("Panel", reward, "");
 					reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
 
@@ -932,9 +935,23 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 
 					var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, "");
 					reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked");
-					reward_label_unlocked.text = $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 
-					var armory = CustomNetTables.GetTableValue("battlepass", "rewards_" + player);
+					if (bp_type == "bundle" || bp_type == "wearable" || bp_type == "taunt") {
+						var hero_tooltip = $.Localize(bp_hero);
+						var new_hero_tooltip = undefined;
+
+						if (hero_tooltip.indexOf(" (IMBA)") !== -1) {
+							new_hero_tooltip = hero_tooltip.replace(" (IMBA)", "");
+						}
+
+						if (new_hero_tooltip)
+							reward_label_unlocked.text = new_hero_tooltip + ": " +  $.Localize(bp_name);
+						else
+							reward_label_unlocked.text = hero_tooltip + ": " +  $.Localize(bp_name);
+					} else
+						reward_label_unlocked.text = $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+
+					var armory = CustomNetTables.GetTableValue("battlepass_rewards", "rewards_" + player);
 
 					if (armory) {
 						var j = 1;
@@ -945,6 +962,12 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 							if (item && item.item_id == bp_item_id) {
 //								$.Msg(item)
 								SetRewardEquipped(bp_item_id, bp_hero);
+
+								// rough fix to unequip rewards if somehow a player equip higher tiers rewards
+								if (plyData.Lvl < bp_level) {
+									SetArmory(bp_hero, slot_id, bp_item_id, false)
+								}
+
 								break;
 							}
 
@@ -1005,7 +1028,7 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 	donator_row.AddClass("DonatorRow");
 
 	// Companion Generator
-	var plyData = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
+	var plyData = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer());
 
 	/*
 	 * if (plyData.companion_enabled == 1) { if
@@ -1120,8 +1143,8 @@ function CompanionSkin(unit, j) {
 
 function SettingsIngameTag() {
 	var tag = false;
-	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).in_game_tag != undefined) {
-		tag = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).in_game_tag
+	if (CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).in_game_tag != undefined) {
+		tag = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).in_game_tag
 
 		if (tag == 1)
 			tag = 0
@@ -1155,9 +1178,9 @@ function SettingsIngameTag() {
 
 function SettingsBattlepassRewards() {
 	var toggle_rewards = false;
-//	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards)
-	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards != undefined) {
-		toggle_rewards = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).bp_rewards
+//	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).bp_rewards)
+	if (CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).bp_rewards != undefined) {
+		toggle_rewards = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).bp_rewards
 		if (toggle_rewards == 1)
 			toggle_rewards = 0
 		else
@@ -1193,9 +1216,9 @@ function SettingsBattlepassRewards() {
 
 function SettingsPlayerXP() {
 	var toggle = false;
-//	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp)
-	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp != undefined) {
-		toggle = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).player_xp
+//	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).player_xp)
+	if (CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).player_xp != undefined) {
+		toggle = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).player_xp
 		if (toggle == 1)
 			toggle = 0
 		else
@@ -1230,9 +1253,9 @@ function SettingsPlayerXP() {
 
 function SettingsWinrate() {
 	var toggle = 0;
-	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle)
-	if (CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle != undefined) {
-		toggle = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer()).winrate_toggle
+	$.Msg("BP Rewards :" + CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).winrate_toggle)
+	if (CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).winrate_toggle != undefined) {
+		toggle = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer()).winrate_toggle
 		if (toggle == 1)
 			toggle = 0
 		else
@@ -1336,7 +1359,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 */
 
 	// xp shown fix (temporary?)
-	var player_info = CustomNetTables.GetTableValue("battlepass", playerId.toString())
+	var player_info = CustomNetTables.GetTableValue("battlepass_player", playerId.toString())
 
 	if (!player_info || player_info.player_xp == 0) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, "N/A");
@@ -1358,7 +1381,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 }
 
 function SetupPanel() {
-	var ply_table = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
+	var ply_table = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer());
 
 //	$.Msg(ply_table.winrate_toggle)
 	if (ply_table) {
@@ -1403,7 +1426,7 @@ function SetupPanel() {
 	if (ImbaXP_Panel != null) {
 
 		// get player data
-		var plyData = CustomNetTables.GetTableValue("battlepass", playerId.toString());
+		var plyData = CustomNetTables.GetTableValue("battlepass_player", playerId.toString());
 
 
 		if (plyData != null) {

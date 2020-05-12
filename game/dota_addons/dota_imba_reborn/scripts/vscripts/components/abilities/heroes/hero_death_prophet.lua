@@ -10,12 +10,6 @@ function imba_death_prophet_silence:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
-function imba_death_prophet_silence:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "death_prophet_silence" end
-	return "death_prophet_silence_ti9"
-end
-
 function imba_death_prophet_silence:OnSpellStart()
 	if IsClient() then return end
 
@@ -33,14 +27,13 @@ function imba_death_prophet_silence:OnSpellStart()
 		false
 	)
 
-	local pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass", "death_prophet").silence, PATTACH_CUSTOMORIGIN, nil)
+	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf", PATTACH_CUSTOMORIGIN, nil, self:GetCaster())
 	ParticleManager:SetParticleControl(pfx, 0, self:GetCursorPosition())
 	ParticleManager:SetParticleControl(pfx, 1, Vector(self:GetSpecialValueFor("radius"), 0, 1))
 	ParticleManager:ReleaseParticleIndex(pfx)
 
 	for _, enemy in pairs(enemies) do
-		print(enemy:GetUnitName())
-		local pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass", "death_prophet").silence_impact, PATTACH_ABSORIGIN_FOLLOW, enemy)
+		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
 		ParticleManager:SetParticleControl(pfx, 0, enemy:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(pfx)
 
@@ -54,21 +47,19 @@ end
 
 modifier_imba_death_prophet_silence = class({})
 
-function modifier_imba_death_prophet_silence:GetEffectName() return CustomNetTables:GetTableValue("battlepass", "death_prophet").silence_overhead end
-function modifier_imba_death_prophet_silence:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
-
-function modifier_imba_death_prophet_silence:CheckState()
-	return {
-		[MODIFIER_STATE_SILENCED] = true,
-	}
-end
+function modifier_imba_death_prophet_silence:CheckState() return {
+	[MODIFIER_STATE_SILENCED] = true,
+} end
 
 function modifier_imba_death_prophet_silence:OnCreated()
 	if IsClient() then return end
 
-	self.pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass", "death_prophet").silence_custom, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_silence_custom.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	ParticleManager:SetParticleControl(self.pfx, 0, self:GetParent():GetAbsOrigin())
 --	ParticleManager:SetParticleControl(self.pfx, 1, self:GetParent():GetAbsOrigin())
+
+	self.pfx2 = ParticleManager:CreateParticle("particles/generic_gameplay/generic_silenced.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetCaster())
+	ParticleManager:SetParticleControl(self.pfx2, 0, self:GetParent():GetAbsOrigin())
 end
 
 function modifier_imba_death_prophet_silence:OnDestroy()
@@ -77,5 +68,10 @@ function modifier_imba_death_prophet_silence:OnDestroy()
 	if self.pfx then
 		ParticleManager:DestroyParticle(self.pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
+
+	if self.pfx2 then
+		ParticleManager:DestroyParticle(self.pfx2, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx2)
 	end
 end

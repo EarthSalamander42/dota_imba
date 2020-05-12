@@ -725,37 +725,6 @@ end
 -- LIFE BREAK --
 ----------------
 
-LinkLuaModifier("modifier_imba_huskar_life_break_handler", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
-
-if modifier_imba_huskar_life_break_handler == nil then modifier_imba_huskar_life_break_handler = class({}) end
-
-function modifier_imba_huskar_life_break_handler:IsHidden() return true end
-function modifier_imba_huskar_life_break_handler:RemoveOnDeath() return false end
-
-function modifier_imba_huskar_life_break_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().life_break_icon == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().life_break_icon)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().life_break_icon = self:GetStackCount()
-	end
-end
-
-function imba_huskar_life_break:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().life_break_icon then return "huskar_life_break" end
-	return "custom/imba_huskar_life_break_immortal_"..self:GetCaster().life_break_icon
-end
-
-function imba_huskar_life_break:GetIntrinsicModifierName()
-	return "modifier_imba_huskar_life_break_handler"
-end
-
 function imba_huskar_life_break:CastFilterResultTarget(target)
 	if IsServer() then
 		if target == self:GetCaster() and self:GetAutoCastState() then
@@ -867,37 +836,37 @@ function modifier_imba_huskar_life_break:OnDestroy()
 	if not IsServer() then return end
 
 	self.parent:RemoveHorizontalMotionController( self )
-	
+
 	if self.parent:HasModifier("modifier_imba_huskar_life_break_charge") then
 		self.parent:RemoveModifierByName("modifier_imba_huskar_life_break_charge")
 	end
-	
+
 	-- Assumption is that if the caster's within range when the modifier is destroyed, then the cast landed (probably some extreme edge cases but like come on now)
 	if (self.target:GetOrigin() - self.parent:GetOrigin()):Length2D() <= 128 then
 		-- Do nothing else if blocked
 		if self.target:TriggerSpellAbsorb(self.ability) then
 			return nil
 		end
-		
+
 		-- Play ending cast animation if applicable
 		if self.parent:GetName() == "npc_dota_hero_huskar" then
 			self.parent:StartGesture(ACT_DOTA_CAST_LIFE_BREAK_END)
 		end
-		
+
 		-- Emit sound
 		self.target:EmitSound("Hero_Huskar.Life_Break.Impact")
-		
+
 		-- Emit particle
-		local particle = ParticleManager:CreateParticle(self.parent.life_break_effect, PATTACH_ABSORIGIN_FOLLOW, self.target)
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_life_break.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.target, self.caster)
 		ParticleManager:SetParticleControl(particle, 1, self.target:GetOrigin())
 		ParticleManager:ReleaseParticleIndex(particle)
 
-		local particle = ParticleManager:CreateParticle(self.parent.life_break_start_effect, PATTACH_ABSORIGIN_FOLLOW, self.target)
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_life_break_spellstart.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.target, self.caster)
 		ParticleManager:SetParticleControl(particle, 1, self.target:GetOrigin())
 		ParticleManager:ReleaseParticleIndex(particle)
 
 		local enemy_damage_to_use = self.health_damage
-		
+
 		-- if self.parent:HasScepter() then
 			-- enemy_damage_to_use = self.health_damage_scepter
 		-- end
@@ -943,7 +912,7 @@ function modifier_imba_huskar_life_break:OnDestroy()
 				taunt_modifier:SetDuration(self.taunt_duration * (1 - self.target:GetStatusResistance()), true)
 			end
 		end
-		
+
 		-- IMBAfication: Sacrificial Dagger
 		local random_angle	= RandomInt(0, 359)
 
@@ -1010,7 +979,7 @@ function modifier_imba_huskar_life_break_charge:OnCreated()
 	if IsServer() then
 		if BATTLEPASS_HUSKAR and Battlepass:GetRewardUnlocked(self:GetParent():GetPlayerID()) >= BATTLEPASS_HUSKAR["huskar_immortal"] then
 			self:SetStackCount(1)
-			self.pfx = ParticleManager:CreateParticle(self:GetCaster().life_break_cast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+			self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 --			ParticleManager:SetParticleControl(self.pfx, 0, self:GetCaster():GetAbsOrigin())
 		end
 	end

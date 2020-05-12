@@ -90,7 +90,7 @@ end
 function ItemsGame:GetItemInfo(item_id, category, return_override)
 	if type(item_id) ~= "string" then item_id = tostring(item_id) end
 
-	if ItemsGame:GetItemKV(item_id)[category] then
+	if ItemsGame:GetItemKV(item_id) and ItemsGame:GetItemKV(item_id)[category] then
 		return ItemsGame:GetItemKV(item_id)[category]
 	end
 
@@ -204,6 +204,14 @@ function ItemsGame:GetItemModel(item_id)
 	end
 
 	return nil
+end
+
+function ItemsGame:GetItemEffects(item_id)
+	return self:GetItemInfo(item_id, "particles") or {}
+end
+
+function ItemsGame:GetItemImages(item_id)
+	return self:GetItemInfo(item_id, "inventory_icons") or {}
 end
 
 ItemsGame:Init()

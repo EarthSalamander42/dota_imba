@@ -252,8 +252,12 @@
 			<Panel id="LeaderboardInfoContainer" hittest="false">
 				<Panel id="LeaderboardExperienceTableWrapper" class="LeaderboardTableWrapper" hittest="false">
 					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
-						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
-						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Button id="Rank" class="LeaderboardRank" onactivate="">
+							<Label id="Rank" class="LeaderboardRankLabel" text="#leaderboard_rank" />
+						</Button>
+						<Button id="SteamAvatar" class="LeaderboardAvatar" onactivate="">
+							<Label id="SteamAvatar" class="LeaderboardAvatarLabel" text="#leaderboard_steam_avatar" />
+						</Button>
 						<Button id="XP" class="LeaderboardXP" onactivate="">
 							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
 						</Button>
@@ -269,8 +273,12 @@
 
 				<Panel id="LeaderboardDonatorTableWrapper" class="LeaderboardTableWrapper" hittest="false">
 					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
-						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
-						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Button id="Rank" class="LeaderboardRank" onactivate="">
+							<Label id="Rank" class="LeaderboardRankLabel" text="#leaderboard_rank" />
+						</Button>
+						<Button id="SteamAvatar" class="LeaderboardAvatar" onactivate="">
+							<Label id="SteamAvatar" class="LeaderboardAvatarLabel" text="#leaderboard_steam_avatar" />
+						</Button>
 						<Button id="XP" class="LeaderboardXP" onactivate="">
 							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
 						</Button>

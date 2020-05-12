@@ -572,27 +572,17 @@ end
 -- OPEN WOUNDS --
 -----------------
 
-function imba_life_stealer_open_wounds:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "life_stealer_open_wounds" end
-	if self:GetCaster().arcana_style == 0 then
-		return "life_stealer_open_wounds_ti9"
-	elseif self:GetCaster().arcana_style == 1 then
-		return "life_stealer_open_wounds_ti9_gold"
-	end
-end
-
 function imba_life_stealer_open_wounds:OnSpellStart()
 	if not IsServer() then return end
-	
+
 	local target = self:GetCursorTarget()
-	
+
 	if target:TriggerSpellAbsorb(self) then return nil end
 
-	self:GetCaster():EmitSound("Hero_LifeStealer.OpenWounds.Cast")
-	
-	target:EmitSound("Hero_LifeStealer.OpenWounds")
-	
+	self:GetCaster():EmitSound("Hero_LifeStealer.OpenWounds.Cast", self:GetCaster())
+
+	target:EmitSound("Hero_LifeStealer.OpenWounds", self:GetCaster())
+
 	if self:GetCaster():GetName() == "npc_dota_hero_life_stealer" and RollPercentage(75) then
 		if not self.responses then
 			self.responses = 
@@ -605,7 +595,7 @@ function imba_life_stealer_open_wounds:OnSpellStart()
 				["life_stealer_lifest_ability_openwound_06"] = 0
 			}
 		end
-		
+
 		for response, timer in pairs(self.responses) do
 			if GameRules:GetDOTATime(true, true) - timer >= 60 then
 				self:GetCaster():EmitSound(response)
@@ -615,11 +605,11 @@ function imba_life_stealer_open_wounds:OnSpellStart()
 		end
 	end	
 
-	local impact_particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds_impact, PATTACH_ABSORIGIN_FOLLOW, target)
+	local impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(impact_particle)
-	
+
 	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
-	
+
 	-- IMBAfication: Cross-Contamination
 	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds_cross_contamination", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 end
@@ -628,26 +618,25 @@ end
 -- OPEN WOUNDS MODIFIER --
 --------------------------
 
-function modifier_imba_life_stealer_open_wounds:GetEffectName()
-	return CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds
-end
-
 function modifier_imba_life_stealer_open_wounds:GetStatusEffectName()
-	return CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds_status_effect
+	return "particles/status_fx/status_effect_life_stealer_open_wounds.vpcf"
 end
 
 function modifier_imba_life_stealer_open_wounds:OnCreated()
 	self.heal_percent	= self:GetAbility():GetTalentSpecialValueFor("heal_percent")
-	
+
 	if not IsServer() then return end
-	
+
+	local impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(impact_particle)
+
 	self.slow_steps = {}
-	
+
 	-- GetLevelSpecialValueFor is a server only function so I'm using stack counts to show on client (which means I'm using another modifier for the Cross-Contamination IMBAfication)
 	for step = 0, self:GetAbility():GetSpecialValueFor("duration") - 1 do
 		table.insert(self.slow_steps, self:GetAbility():GetLevelSpecialValueFor("slow_steps", step))
 	end
-	
+
 	self:SetStackCount(self.slow_steps[math.floor(self:GetElapsedTime()) + 1])
 
 	self:StartIntervalThink(0.1)

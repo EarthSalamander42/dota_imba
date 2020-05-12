@@ -232,7 +232,7 @@ function Wearable:Init()
 		end
 	end
 
-	Wearable:UICacheAvailableWards()
+--	Wearable:UICacheAvailableWards()
 
 	-- 棱彩宝石
 	Wearable.prismatics = {}
@@ -1040,13 +1040,14 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 	end
 
 	local unit_id = hUnit:GetEntityIndex()
+--[[
 	if Wearable:IsDisplayInLoadout(hUnit:GetUnitName(), sSlotName) then
 		CustomGameEventManager:Send_ServerToAllClients(
 			"UpdateWearable",
 			{unit = unit_id, itemDef = sItemDef, itemStyle = sStyle, slotName = sSlotName}
 		)
 	end
-
+--]]
 	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_id), hUnit.Slots)
 end
 
@@ -1479,6 +1480,7 @@ function Wearable:UICacheAvailableItems(sUnitName)
 	-- PrintTable(CustomNetTables:GetTableValue("hero_available_items", sUnitName))
 end
 
+--[[
 -- 预读取信使饰品
 function Wearable:UICacheAvailableCouriers()
 	if not CustomNetTables:GetTableValue("other_available_items", "courier") then
@@ -1494,6 +1496,7 @@ function Wearable:UICacheAvailableWards()
 	end
 	-- PrintTable(CustomNetTables:GetTableValue("other_available_items", "courier"))
 end
+--]]
 
 -- 复制英雄饰品
 function Wearable:WearLike(hUnitOrigin, hUnitNew)

@@ -631,6 +631,9 @@ IMBA_PUNISHED = {
 	[925061111] = false,
 }
 
+-- BP rewards overriding unit models
+ENTITY_MODEL_OVERRIDE = {}
+
 IMBA_FIRST_BLOOD = false
 
 -- IMBA override vanilla systems

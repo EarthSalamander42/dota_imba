@@ -563,7 +563,7 @@
 "DOTA_Tooltip_modifier_imba_ironleaf_boots_magic_res_Description"         "Grants huge amounts of magic resistance to the wielder."
 
 // Jarnbjorn
-"DOTA_Tooltip_Ability_item_imba_jarnbjorn"                  "Jarnbjorn"
+"DOTA_Tooltip_Ability_item_imba_jarnbjorn"                  "Storm Breaker"
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_Description"		"<h1>Active: Static Charge</h1>Same as Mjollnir (%static_chance%%% chance).\n<h1>Active: Chop Trees</h1> Destroy a target tree and all trees within %chop_tree_radius% radius.<br><br>Cast Range: %chop_tree_cast_range%<br>Cooldown: %chop_tree_cooldown% seconds\n<h1><h1>Passive: Chain Lightning</h1>Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between all targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.<br><br>Stacks with the Chain Lightning of other Maelstrom series items.\n<h1>Passive: Quell</h1> Increases attack damage against non-hero units by %quelling_bonus% for melee heroes, and %quelling_bonus_ranged% for ranged. \n<h1>Passive: Cleave</h1> Deals %cleave_damage_percent%%% of attack damage as physical damage in a cone up to %cleave_distance% around the target. (Melee Only)\n<h1>Passive: Long Reach</h1> Increases attack range of melee heroes by %bonus_range%."
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_Lore"               "Thor's magical hammer, made for him by the dwarves Brok and Eitri."
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_Note0"					"Static Charge cannot trigger more than once per %static_cooldown% seconds."
@@ -576,7 +576,7 @@
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_bonus_health_regen"		"+$hp_regen"
 "DOTA_Tooltip_ability_item_imba_jarnbjorn_bonus_mana_regen"			"+$mana_regen"
 
-"DOTA_Tooltip_modifier_item_imba_jarnbjorn_static"					"Jarnbjorn Static Charge"
+"DOTA_Tooltip_modifier_item_imba_jarnbjorn_static"					"Storm Breaker Static Charge"
 "DOTA_Tooltip_modifier_item_imba_jarnbjorn_static_Description"		"Countering incoming damage with lightning bolts"
 
 "DOTA_Tooltip_modifier_item_imba_jarnbjorn_slow"             		 "Static Charge"

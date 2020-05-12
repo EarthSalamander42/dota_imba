@@ -84,14 +84,7 @@ function modifier_item_imba_chain_lightning:OnCreated(keys)
 		self:Destroy()
 		return
 	end
-	
-	-- IMBApass Lightning Cosmetics
-	if self:GetCaster().GetPlayerID and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect3"] then
-		self.particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect3"]
-	else
-		self.particle_name = "particles/items_fx/chain_lightning.vpcf"
-	end
-	
+
 	self.units_affected			= {}
 	self.unit_counter			= 0
 	
@@ -106,7 +99,7 @@ function modifier_item_imba_chain_lightning:OnIntervalThink()
 		if not self.units_affected[enemy] then
 			enemy:EmitSound("Item.Maelstrom.Chain_Lightning.Jump")
 			
-			self.zap_particle = ParticleManager:CreateParticle(self.particle_name, PATTACH_ABSORIGIN_FOLLOW, self.current_unit)
+			self.zap_particle = ParticleManager:CreateParticle("particles/items_fx/chain_lightning.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.current_unit, self:GetCaster())
 			
 			if self.unit_counter == 0 then
 				ParticleManager:SetParticleControlEnt(self.zap_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
@@ -179,7 +172,7 @@ function modifier_item_imba_static_charge:OnCreated()
 		self.static_damage	 	= self:GetAbility():GetSpecialValueFor("static_damage")
 		self.static_radius		= self:GetAbility():GetSpecialValueFor("static_radius")
 		self.static_cooldown	= self:GetAbility():GetSpecialValueFor("static_cooldown")
-		
+
 		self.static_slow			= self:GetAbility():GetSpecialValueFor("static_slow")
 		self.static_slow_duration	= self:GetAbility():GetSpecialValueFor("static_slow_duration")
 	else
@@ -188,29 +181,16 @@ function modifier_item_imba_static_charge:OnCreated()
 		self.static_damage	 	= 0
 		self.static_radius		= 0
 		self.static_cooldown	= 0
-		
+
 		self.static_slow			= 0
 		self.static_slow_duration	= 0
 	end
 
 	if not IsServer() then return end
-	
+
 	self.bStaticCooldown = false
-	
-	if self:GetCaster().GetPlayerID and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"] then
-		self.particle_name_shield = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"]
-	else
-		self.particle_name_shield = "particles/items2_fx/mjollnir_shield.vpcf"
-	end
-	
-	if self:GetCaster().GetPlayerID and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"] then
-		self.particle_name_proc = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"]
-	else
-		-- Why is this using a custom particle effect...
-		self.particle_name_proc = "particles/item/mjollnir/static_lightning_bolt.vpcf"
-	end
-	
-	self.shield_particle = ParticleManager:CreateParticle(self.particle_name_shield, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.shield_particle = ParticleManager:CreateParticle("particles/items2_fx/mjollnir_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:AddParticle(self.shield_particle, false, false, -1, false, false)
 end
 
@@ -241,7 +221,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 		if (keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self.static_radius and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			local static_particle	= nil
 			
-			static_particle = ParticleManager:CreateParticle(self.particle_name_proc, PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
+			static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker, self:GetCaster())
 			ParticleManager:SetParticleControlEnt(static_particle, 0, keys.attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.attacker:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(static_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(static_particle)
@@ -262,7 +242,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 		
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.static_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
 			if enemy ~= keys.attacker then
-				static_particle = ParticleManager:CreateParticle(self.particle_name_proc, PATTACH_ABSORIGIN_FOLLOW, enemy)
+				static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
 				ParticleManager:SetParticleControlEnt(static_particle, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(static_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(static_particle)
@@ -711,8 +691,8 @@ end
 		-- if not self.pfx then
 			-- local particle_name = "particles/items2_fx/mjollnir_shield.vpcf"
 			
-			-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"] then
-				-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"]
+			-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstrom"]["effect1"] then
+				-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstrom"]["effect1"]
 			-- end
 		
 			-- self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -780,8 +760,8 @@ end
 				-- -- Play particle
 				-- local particle_name = "particles/item/mjollnir/static_lightning_bolt.vpcf"
 				
-				-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"] then
-					-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"]
+				-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstrom"]["effect2"] then
+					-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstrom"]["effect2"]
 				-- end
 				
 				-- local static_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, shield_owner)
@@ -1000,8 +980,8 @@ end
 		-- if not self.pfx then
 			-- local particle_name = "particles/items2_fx/mjollnir_shield.vpcf"
 			
-			-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"] then
-				-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect1"]
+			-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstrom"]["effect1"] then
+				-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstrom"]["effect1"]
 			-- end
 		
 			-- self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -1068,8 +1048,8 @@ end
 				-- -- Play particle
 				-- local particle_name = "particles/item/mjollnir/static_lightning_bolt.vpcf"
 				
-				-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"] then
-					-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstorm"]["effect2"]
+				-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstrom"]["effect2"] then
+					-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerID()))["maelstrom"]["effect2"]
 				-- end
 				
 				-- local static_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, shield_owner)
@@ -1188,8 +1168,8 @@ end
 		-- caster = caster:GetOwner()
 	-- end
 	
-	-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstorm"]["effect3"] then
-		-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstorm"]["effect3"]
+	-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstrom"]["effect3"] then
+		-- particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerID()))["maelstrom"]["effect3"]
 	-- end
 
 	-- local bounce_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, source)
