@@ -1,5 +1,7 @@
-NEUTRAL_CREEPS_START_TIME = 30.0
-NEUTRAL_CREEPS_SPAWN_INTERVAL = 60.0
+Neutrals = Neutrals or class({})
+
+Neutrals.start_time = 30.0
+Neutrals.spawn_interval = 60.0
 
 Neutrals.Creeps = {}
 Neutrals.Creeps["small"] = {}
@@ -11,16 +13,30 @@ Neutrals.Creeps["small"][5] = {"npc_dota_neutral_forest_troll_berserker", "npc_d
 Neutrals.Creeps["small"][6] = {"npc_dota_neutral_kobold_taskmaster", "npc_dota_neutral_kobold_tunneler", "npc_dota_neutral_kobold", "npc_dota_neutral_kobold", "npc_dota_neutral_kobold"}
 
 Neutrals.Creeps["medium"] = {}
+Neutrals.Creeps["medium"][1] = {"npc_dota_neutral_centaur_outrunner", "npc_dota_neutral_centaur_khan"}
+Neutrals.Creeps["medium"][2] = {"npc_dota_neutral_alpha_wolf", "npc_dota_neutral_giant_wolf", "npc_dota_neutral_giant_wolf"}
+Neutrals.Creeps["medium"][3] = {"npc_dota_neutral_satyr_trickster", "npc_dota_neutral_satyr_trickster", "npc_dota_neutral_satyr_soulstealer", "npc_dota_neutral_satyr_soulstealer"}
+Neutrals.Creeps["medium"][4] = {"npc_dota_neutral_ogre_mauler", "npc_dota_neutral_ogre_mauler", "npc_dota_neutral_ogre_magi"}
+Neutrals.Creeps["medium"][5] = {"npc_dota_neutral_mud_golem", "npc_dota_neutral_mud_golem"}
 
 Neutrals.Creeps["big"] = {}
+Neutrals.Creeps["big"][1] = {"npc_dota_neutral_centaur_outrunner", "npc_dota_neutral_centaur_outrunner", "npc_dota_neutral_centaur_khan"}
+Neutrals.Creeps["big"][2] = {"npc_dota_neutral_satyr_hellcaller", "npc_dota_neutral_satyr_trickster", "npc_dota_neutral_satyr_soulstealer"}
+Neutrals.Creeps["big"][3] = {"npc_dota_neutral_polar_furbolg_champion", "npc_dota_neutral_polar_furbolg_ursa_warrior"}
+Neutrals.Creeps["big"][4] = {"npc_dota_neutral_wildkin", "npc_dota_neutral_wildkin", "npc_dota_neutral_enraged_wildkin"}
+Neutrals.Creeps["big"][5] = {"npc_dota_neutral_dark_troll", "npc_dota_neutral_dark_troll", "npc_dota_neutral_dark_troll_warlord"}
 
 Neutrals.Creeps["ancient"] = {}
+Neutrals.Creeps["ancient"][1] = {"npc_dota_neutral_black_dragon", "npc_dota_neutral_black_drake", "npc_dota_neutral_black_drake"}
+Neutrals.Creeps["ancient"][2] = {"npc_dota_neutral_granite_golem", "npc_dota_neutral_rock_golem", "npc_dota_neutral_rock_golem"}
+Neutrals.Creeps["ancient"][3] = {"npc_dota_neutral_big_thunder_lizard", "npc_dota_neutral_small_thunder_lizard", "npc_dota_neutral_small_thunder_lizard"}
+Neutrals.Creeps["ancient"][4] = {"npc_dota_neutral_prowler_shaman", "npc_dota_neutral_prowler_acolyte", "npc_dota_neutral_prowler_acolyte"}
 
 Neutrals.Triggers = {}
 Neutrals.Triggers["neutralcamp_good_1"] = "small"
 Neutrals.Triggers["neutralcamp_good_2"] = "big"
 Neutrals.Triggers["neutralcamp_good_3"] = "ancient"
-Neutrals.Triggers["neutralcamp_good_4"] = "big"
+Neutrals.Triggers["neutralcamp_good_4"] = "medium"
 Neutrals.Triggers["neutralcamp_good_5"] = "big"
 Neutrals.Triggers["neutralcamp_good_6"] = "big"
 Neutrals.Triggers["neutralcamp_good_7"] = "medium"
@@ -32,41 +48,42 @@ Neutrals.Triggers["neutralcamp_evil_2"] = "small"
 Neutrals.Triggers["neutralcamp_evil_3"] = "medium"
 Neutrals.Triggers["neutralcamp_evil_4"] = "big"
 Neutrals.Triggers["neutralcamp_evil_5"] = "big"
-Neutrals.Triggers["neutralcamp_evil_6"] = "big"
+Neutrals.Triggers["neutralcamp_evil_6"] = "medium"
 Neutrals.Triggers["neutralcamp_evil_7"] = "medium"
 Neutrals.Triggers["neutralcamp_evil_8"] = "ancient"
 Neutrals.Triggers["neutralcamp_evil_9"] = "big"
 
-Neutrals = Neutrals or class({})
+Neutrals.spawn_point = {}
 
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
-		local vanilla_spawners = Entities:FindAllByClassname("npc_dota_neutral_spawner")
-
 		for trigger_name, camp_size in pairs(Neutrals.Triggers) do
-			local trigger = Entities:FindByName(nil, trigger_name)
+			for _, spawner in pairs(Entities:FindAllByClassname("npc_dota_neutral_spawner") or {}) do
+				local trigger = Entities:FindByName(nil, trigger_name)
 
-			for _, spawner in pairs(vanilla_spawners) do
---				if trigger:IsTouching(spawner) then
-				if (spawner:GetAbsOrigin() - trigger:GetAbsOrigin()):Length2D() < 600 then
-					print("WELL HELLO THERE")
-					trigger.spawn_point = spawner:GetAbsOrigin()
-					UTIL_Remove(spawner)
-					break
+				if spawner and trigger then
+--					if trigger:IsTouching(spawner) then
+					-- Not the greatest way to do it, but it works
+					if (spawner:GetAbsOrigin() - trigger:GetAbsOrigin()):Length2D() < 1000 then
+						print(trigger:GetName())
+						Neutrals.spawn_point[trigger:GetName()] = spawner:GetAbsOrigin()
+						UTIL_Remove(spawner)
+						break
+					end
 				end
 			end
 		end
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		if NEUTRAL_CREEPS_START_TIME < NEUTRAL_CREEPS_SPAWN_INTERVAL then
-			Timers:CreateTimer(NEUTRAL_CREEPS_START_TIME, function()
+		if Neutrals.start_time < Neutrals.spawn_interval then
+			Timers:CreateTimer(Neutrals.start_time, function()
 				Neutrals:CheckForSpawn()
 			end)
 		end
 
-		Timers:CreateTimer(NEUTRAL_CREEPS_SPAWN_INTERVAL, function()
+		Timers:CreateTimer(Neutrals.spawn_interval, function()
 			Neutrals:CheckForSpawn()
 
-			return NEUTRAL_CREEPS_SPAWN_INTERVAL
+			return Neutrals.spawn_interval
 		end)
 	end
 end, nil)
@@ -88,20 +105,33 @@ function Neutrals:CheckForSpawn()
 			end
 		end
 
+		local pos = Neutrals.spawn_point[trigger:GetName()]
+
 		print("Creep count in "..trigger_name..":", creeps_in_trigger)
+		print("trigger name:", trigger:GetName())
+		print("spawn pos:", pos)
+
+		local pfx_name = "particles/world_environmental_fx/radiant_creep_spawn.vpcf"
+
+		if string.find(trigger:GetName(), "evil") then
+			pfx_name = "particles/world_environmental_fx/dire_creep_spawn.vpcf"
+		end
+
+		local pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_WORLDORIGIN, nil)
+		ParticleManager:SetParticleControl(pfx, 0, pos)
+		ParticleManager:ReleaseParticleIndex(pfx)
 
 		if creeps_in_trigger == 0 then
-			Neutrals:Spawn(trigger, camp_size)
+			Neutrals:Spawn(trigger, pos, camp_size)
 		end
 	end
 end
 
-function Neutrals:Spawn(trigger, camp_size)
+function Neutrals:Spawn(trigger, pos, camp_size)
 	print("Neutrals:Spawn()")
 	local neutrals = Neutrals.Creeps[camp_size][RandomInt(1, #Neutrals.Creeps[camp_size])]
 
 	for _, neutral in pairs(neutrals) do
-		local unit = CreateUnitByName(neutral, trigger.spawn_point, true, nil, nil, 4)
-		unit.return_point = trigger.spawn_point 
+		local unit = CreateUnitByName(neutral, pos, true, nil, nil, 4)
 	end
 end
