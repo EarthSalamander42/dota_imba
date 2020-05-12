@@ -134,7 +134,7 @@
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_strength"            "+$str"
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_agility"             "+$agi"
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_intelligence"        "+$int"
-"DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_damage"              "+$damage"
+// "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_damage"              "+$damage"
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_armor"               "+$armor"
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_mana_regen"          "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_black_queen_cape_bonus_health_regen"        "+$hp_regen"
