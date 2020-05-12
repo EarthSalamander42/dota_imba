@@ -351,7 +351,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"clinkz_burning_army"
 		
-		"Ability9"					"imba_form_change_clinkz"
+//		"Ability9"					"imba_form_change_clinkz"
 
 		"Ability10"					"special_bonus_magic_resistance_15"
 		"Ability11"					"special_bonus_armor_6"
@@ -548,7 +548,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_drow_ranger_marksmanship_723"
 		
-		"Ability9"					"imba_form_change_drow_ranger"
+//		"Ability9"					"imba_form_change_drow_ranger"
 
 		"Ability10"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
 		"Ability11"					"special_bonus_all_stats_6"
@@ -1369,7 +1369,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_riki_cloak_and_dagger_723"
 		
-		"Ability9"					"imba_form_change_riki"
+//		"Ability9"					"imba_form_change_riki"
 
 		"Ability10"					"special_bonus_hp_regen_8"
 		"Ability11"					"special_bonus_attack_speed_25"

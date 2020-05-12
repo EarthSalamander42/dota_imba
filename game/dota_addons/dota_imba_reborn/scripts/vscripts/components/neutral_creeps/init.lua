@@ -89,8 +89,6 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 end, nil)
 
 function Neutrals:CheckForSpawn()
-	print("Neutrals:CheckForSpawn()")
-
 	for trigger_name, camp_size in pairs(Neutrals.Triggers) do
 		local trigger = Entities:FindByName(nil, trigger_name)
 		local length = (trigger:GetBoundingMins() - trigger:GetBoundingMaxs()):Length2D()
@@ -107,9 +105,9 @@ function Neutrals:CheckForSpawn()
 
 		local pos = Neutrals.spawn_point[trigger:GetName()]
 
-		print("Creep count in "..trigger_name..":", creeps_in_trigger)
-		print("trigger name:", trigger:GetName())
-		print("spawn pos:", pos)
+--		print("Creep count in "..trigger_name..":", creeps_in_trigger)
+--		print("trigger name:", trigger:GetName())
+--		print("spawn pos:", pos)
 
 		local pfx_name = "particles/world_environmental_fx/radiant_creep_spawn.vpcf"
 
@@ -128,7 +126,6 @@ function Neutrals:CheckForSpawn()
 end
 
 function Neutrals:Spawn(trigger, pos, camp_size)
-	print("Neutrals:Spawn()")
 	local neutrals = Neutrals.Creeps[camp_size][RandomInt(1, #Neutrals.Creeps[camp_size])]
 
 	for _, neutral in pairs(neutrals) do

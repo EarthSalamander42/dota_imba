@@ -53,7 +53,7 @@ function modifier_imba_leshrac_diabolic_edict:OnIntervalThink()
 	)
 
 	-- Create Particle
-	local pfx = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass", "leshrac").diabolic_edict, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	local position_cast
 	local enemy = enemies[RandomInt(1, #enemies)]
 
