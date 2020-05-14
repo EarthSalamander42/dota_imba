@@ -30,6 +30,7 @@
 #base heroes/snapfire/hero.txt
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
+#base heroes/shadow_demon/hero.txt
 // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
 #base heroes/templar_assassin/hero.txt
 // #base heroes/terrorblade/hero.txt

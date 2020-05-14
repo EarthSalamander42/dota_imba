@@ -110,8 +110,19 @@ end
 -- Modifier Effects
 function modifier_generic_charges:DeclareFunctions()
 	return {
-		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		MODIFIER_PROPERTY_TOOLTIP
 	}
+end
+
+function modifier_generic_charges:OnTooltip()
+	local charge_time	= self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction()
+
+	if self:GetParent():HasScepter() and self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") and self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") > 0 then
+		charge_time		= self:GetAbility():GetTalentSpecialValueFor("charge_restore_time_scepter") * self:GetParent():GetCooldownReduction()
+	end
+
+	return charge_time
 end
 
 function modifier_generic_charges:OnAbilityFullyCast( params )

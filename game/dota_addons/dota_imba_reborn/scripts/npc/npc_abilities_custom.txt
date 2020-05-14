@@ -42,6 +42,7 @@
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/slark/abilities.txt
+#base heroes/shadow_demon/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
 #base heroes/snapfire/abilities.txt
 #base heroes/spectre/abilities.txt
