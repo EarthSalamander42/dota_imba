@@ -550,7 +550,15 @@ function SetupTower(tower)
 end
 
 function GetReductionFromArmor(armor)
-	return ( 0.052 * armor ) / ( 0.9 + 0.048 * armor)
+	return (0.052 * armor) / (0.9 + 0.048 * math.abs(armor))
+end
+
+function CalculateDamageIgnoringArmor(damage, armor)
+	return 1 / (1 - GetReductionFromArmor(armor)) * damage
+end
+
+function CalculatePhysicalDamageNegatedByArmor(damage, armor)
+	return (1 - GetReductionFromArmor(armor)) * damage
 end
 
 function CalculateReductionFromArmor_Percentage(armorOffset, armor)
