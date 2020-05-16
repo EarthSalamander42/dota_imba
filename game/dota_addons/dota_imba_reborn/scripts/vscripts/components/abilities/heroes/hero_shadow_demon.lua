@@ -1332,7 +1332,7 @@ function modifier_imba_demonic_purge_debuff:OnCreated()
     self.parent = self:GetParent()
     self.impact_sound = "Hero_ShadowDemon.DemonicPurge.Impact"
     self.damage_sound = "Hero_ShadowDemon.DemonicPurge.Damage"
-    self.particle_modifier = "particles/units/heroes/hero_shadow_demon/shadow_demon_demonic_purge.vpcf" -- cp0 location, cp1 location, cp3 direction forward vector of caster, cp4 location    
+    self.particle_modifier = "particles/hero/shadow_demon/shadow_demon_demonic_purge.vpcf" -- cp0 location, cp1 location, cp3 direction forward vector of caster, cp4 location    
     self.particle_break = "particles/generic_gameplay/generic_break.vpcf" --cp location
     self.modifier_slow_freeze = "modifier_imba_demonic_purge_slow_freeze"
     self.modifier_poison = "modifier_shadow_poison_debuff"
@@ -1348,7 +1348,6 @@ function modifier_imba_demonic_purge_debuff:OnCreated()
 
     -- Play impact sound
     EmitSoundOn(self.impact_sound, self.parent)
-
 
     -- Create particles on the target. Need its direction for cp3
     local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
