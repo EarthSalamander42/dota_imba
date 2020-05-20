@@ -402,6 +402,19 @@ end
 -- Charge counter modifier
 modifier_imba_fire_remnant_charges = modifier_imba_fire_remnant_charges or class ({})
 
+function modifier_imba_fire_remnant_charges:OnStackCountChanged(stack)
+	if not IsServer() then return end
+
+	local max_charges = self:GetAbility():GetTalentSpecialValueFor("max_charges")
+	if self:GetCaster():HasScepter() then
+		max_charges = max_charges + self:GetAbility():GetSpecialValueFor("scepter_additional_charges")
+	end
+
+	if self:GetStackCount() > max_charges then
+		self:SetStackCount(max_charges)
+	end
+end
+
 function modifier_imba_fire_remnant_charges:IsDebuff() return false end
 function modifier_imba_fire_remnant_charges:IsHidden() return false end
 function modifier_imba_fire_remnant_charges:IsPurgable() return false end
@@ -410,7 +423,13 @@ function modifier_imba_fire_remnant_charges:RemoveOnDeath() return false end
 function modifier_imba_fire_remnant_charges:OnCreated(keys)
 	if IsServer() then
 		self:GetCaster().spirit_charges = 0
-		self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
+		
+
+		if self:GetCaster():HasScepter() then
+			self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges") + self:GetAbility():GetSpecialValueFor("scepter_additional_charges"))
+		else
+			self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
+		end
 		
 		self.max_charges = self:GetStackCount()
 		
