@@ -201,7 +201,7 @@ function onPlayerStatChange(table, key, data) {
 		var agilityholder = FindDotaHudElement('AgilityHeroes');
 		var intelligenceholder = FindDotaHudElement('IntelligenceHeroes');
 
-		var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
+		var ply_battlepass = CustomNetTables.GetTableValue("battlepass_player", Game.GetLocalPlayerID());
 
 		if (Game.GetMapInfo().map_display_name == "mutation_5v5" || Game.GetMapInfo().map_display_name == "mutation_10v10") {
 			if (data.mutation["negative"] == "all_random_deathmatch") {
@@ -309,7 +309,7 @@ function onPlayerStatChange(table, key, data) {
 				var player_color = "#DDDDDD";
 				if (typeof data[nkey].id != 'undefined') {
 					// $('#MyEntry').SetFocus();
-					var player_table = CustomNetTables.GetTableValue("battlepass", data[nkey].id.toString());
+					var player_table = CustomNetTables.GetTableValue("battlepass_player", data[nkey].id.toString());
 					if (player_table) {
 						if (currentMap == "ranked_5v5") {
 							if (player_table.IMR_5v5_calibrating) {
@@ -533,7 +533,7 @@ function SetupIMRAverage() {
 	var dire_count = 0
 
 	$.Each( radiantPlayers, function( player ) {
-		var plyData = CustomNetTables.GetTableValue("battlepass", player)
+		var plyData = CustomNetTables.GetTableValue("battlepass_player", player)
 		if (currentMap == "ranked_5v5") {
 			radiant_imr = radiant_imr + plyData.IMR_5v5
 			radiant_count = radiant_count + 1
@@ -544,7 +544,7 @@ function SetupIMRAverage() {
 	})
 
 	$.Each( direPlayers, function( player ) {
-		var plyData = CustomNetTables.GetTableValue("battlepass", player)
+		var plyData = CustomNetTables.GetTableValue("battlepass_player", player)
 		if (currentMap == "ranked_5v5") {
 			dire_imr = dire_imr + plyData.IMR_5v5
 			dire_count = dire_count + 1
@@ -815,7 +815,7 @@ function PreviewHero(name) {
 			$('#SectionTitle').text = $.Localize('#' + name, $('#SectionTitle'));
 			$('#SectionTitle').text = $('#SectionTitle').text.toUpperCase();
 			var current_hero_image = $('#CurrentHero');
-			var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
+			var ply_battlepass = CustomNetTables.GetTableValue("battlepass_player", Game.GetLocalPlayerID());
 			var newheroimage = $.CreatePanel('DOTAHeroImage', current_hero_image, '');
 			newheroimage.hittest = false;
 			newheroimage.heroname = name;
@@ -853,7 +853,7 @@ function PreviewHeroCM (name) {
 }
 
 function SelectHero(hero) {
-	var player_table = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID().toString());
+	var player_table = CustomNetTables.GetTableValue("battlepass_player", Game.GetLocalPlayerID().toString());
 	if (player_table)
 		if (player_table.donator_level == 10)
 			return;

@@ -404,7 +404,7 @@ function EndScoreboard(args) {
 //				$.Msg("Player ID " + id + " in team " + team_number)
 				var player_info = Game.GetPlayerInfo(id);
 				var player_items = Game.GetPlayerItems(id);
-				var player_table = CustomNetTables.GetTableValue("battlepass", id.toString());
+				var player_table = CustomNetTables.GetTableValue("battlepass_player", id.toString());
 				var player_result = args.players[player_info.player_steamid];
 				var player_backend_result = args.data.players[player_info.player_steamid];
 

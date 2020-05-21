@@ -691,7 +691,7 @@ function HallOfFame(type, retainSubTab) {
 
 	// temporary, implement in the for loop later
 	// local player stats
-	var plyData = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer());
+	var plyData = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer());
 //	$.Msg(plyData)
 
 	var player = $.CreatePanel("Panel", $('#LocalPlayerInfo'), "player_local");

@@ -190,7 +190,7 @@ function EndScoreboard(args) {
 		values.level.text = player.info.player_level;
 
 		// XP
-		var ply_table = CustomNetTables.GetTableValue("battlepass", player.id.toString());
+		var ply_table = CustomNetTables.GetTableValue("battlepass_player", player.id.toString());
 
 		var player_xp = ply_table.XP;
 		var player_max_xp_in_level = ply_table.MaxXP

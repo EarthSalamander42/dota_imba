@@ -17,6 +17,7 @@ ListenToGameEvent('game_rules_state_change', function()
 		end)
 
 		api:GetDisabledHeroes()
+		print("Disabled heroes:", api.disabled_heroes)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		api:InitDonatorTableJS()
 

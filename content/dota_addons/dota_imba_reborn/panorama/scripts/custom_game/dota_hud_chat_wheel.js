@@ -318,7 +318,7 @@ function OnSelect(num) {
 	var newnum = rings[nowselect][2][num];
 //	$.Msg(newnum)
 
-	var ply_bp = CustomNetTables.GetTableValue("battlepass", Players.GetLocalPlayer().toString());
+	var ply_bp = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer().toString());
 //	$.Msg(ply_bp);
 
 	if (Game.IsInToolsMode())
