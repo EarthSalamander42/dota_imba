@@ -139,7 +139,6 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	var playerPanel = playersContainer.FindChild(playerPanelName);
 
 	var player_table = CustomNetTables.GetTableValue("battlepass_player", playerId.toString());
-	$.Msg(player_table)
 
 	if (playerPanel === null) {
 		playerPanel = $.CreatePanel("Panel", playersContainer, playerPanelName);
@@ -151,7 +150,6 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 
 		if (ImbaXP_Panel != null) {
 			// get player data
-			$.Msg(playerId)
 
 			if (player_table != null) {
 				// set xp values
