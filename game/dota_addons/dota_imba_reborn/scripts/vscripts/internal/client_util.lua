@@ -97,7 +97,7 @@ original_Ability_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureNam
 C_DOTA_Ability_Lua.GetAbilityTextureName = function(self)
 	-- call the original function
 	local response = original_Ability_GetAbilityTextureName(self)
-	local override_image = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+	local override_image = CustomNetTables:GetTableValue("battlepass_player", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
 
 --	print(response, override_image)
 
@@ -122,7 +122,7 @@ C_DOTA_Item_Lua.GetAbilityTextureName = function(self)
 		end
 	end
 
-	local override_image = CustomNetTables:GetTableValue("battlepass", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+	local override_image = CustomNetTables:GetTableValue("battlepass_player", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
 
 --	print(response)
 

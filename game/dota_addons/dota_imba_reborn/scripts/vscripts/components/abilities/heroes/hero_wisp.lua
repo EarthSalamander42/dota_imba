@@ -49,12 +49,6 @@ function imba_wisp_tether:GetCustomCastErrorTarget(target)
 	end
 end
 
-function imba_wisp_tether:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "wisp_tether" end
-	return "custom/imba_wisp_tether_arcana"
-end
-
 function imba_wisp_tether:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -362,7 +356,7 @@ function modifier_imba_wisp_tether_ally:IsPurgable() return false end
 
 function modifier_imba_wisp_tether_ally:OnCreated()
 	if IsServer() then
-		self.pfx = ParticleManager:CreateParticle(self:GetCaster().tether_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_tether.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 		ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.pfx, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 
@@ -388,7 +382,7 @@ function modifier_imba_wisp_tether_ally:OnIntervalThink()
 		local projectile = 
 		{
 			Ability				= self:GetAbility(),
-			EffectName			= "particles/hero/ghost_revenant/blackjack_projectile.vpcf",
+--			EffectName			= "particles/hero/ghost_revenant/blackjack_projectile.vpcf",
 			vSpawnOrigin		= self:GetCaster():GetAbsOrigin(),
 			fDistance			= velocity:Length2D(),
 			fStartRadius		= 100,
@@ -707,12 +701,6 @@ LinkLuaModifier("modifier_imba_wisp_spirits_slow", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_wisp_spirit_damage_handler", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirits_true_sight", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_wisp_spirits:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "wisp_spirits" end
-	return "custom/imba_wisp_spirits_arcana"
-end
-
 function imba_wisp_spirits:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_wisp_10", "cdr_mult"), 1)
 end
@@ -878,7 +866,7 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 				local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_silence_a.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
 				newSpirit.spirit_pfx_silence = pfx
 			else -- Just for Rubick...since he's not stealing the silence/disarm skill right now
-				local pfx = ParticleManager:CreateParticle(caster.spirits_effect, PATTACH_ABSORIGIN_FOLLOW, newSpirit)
+				local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit, caster)
 				newSpirit.spirit_pfx_silence = pfx
 			end
 
@@ -985,7 +973,7 @@ end
 function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, explosion_damage, ability)
 	if IsServer() then
 		EmitSoundOn("Hero_Wisp.Spirits.Target", spirit)
-		ParticleManager:CreateParticle(caster.spirits_explosion_effect, PATTACH_ABSORIGIN_FOLLOW, spirit)
+		ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, spirit, caster)
 
 		-- Check if we hit stuff
 		local nearby_enemy_units = FindUnitsInRadius(
@@ -1099,7 +1087,7 @@ function modifier_imba_wisp_spirits_creep_hit:OnCreated()
 	if IsServer() then
 		local target = self:GetParent()
 		EmitSoundOn("Hero_Wisp.Spirits.TargetCreep", target)
-		self.pfx = ParticleManager:CreateParticle(self:GetCaster().spirits_explosion_small_effect, PATTACH_ABSORIGIN_FOLLOW, target)
+		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self:GetCaster())
 	end
 end
 
@@ -1282,12 +1270,6 @@ end
 --------------------------------------
 imba_wisp_spirits_toggle = class({})
 
-function imba_wisp_spirits_toggle:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "wisp_spirits_in" end
-	return "custom/imba_wisp_spirits_in_arcana"
-end
-
 function imba_wisp_spirits_toggle:IsStealable() return false end
 
 function imba_wisp_spirits_toggle:OnSpellStart()
@@ -1336,7 +1318,6 @@ end
 function imba_wisp_swap_spirits:GetIntrinsicModifierName()
 	return "modifier_imba_wisp_swap_spirits_silence"
 end
-
 
 function imba_wisp_swap_spirits:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
@@ -1418,12 +1399,6 @@ LinkLuaModifier("modifier_imba_wisp_overcharge", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_wisp_overcharge_drain", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_overcharge_regen_talent", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_overcharge_aura", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_wisp_overcharge:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "wisp_overcharge" end
-	return "custom/imba_wisp_overcharge_arcana"
-end
 
 function imba_wisp_overcharge:IsNetherWardStealable()
 	return false
@@ -1599,7 +1574,7 @@ end
 
 function modifier_imba_wisp_overcharge:OnCreated(params)
 	if IsServer() then
-		self.overcharge_pfx 		= ParticleManager:CreateParticle(self:GetCaster().overcharge_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.overcharge_pfx 		= ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_overcharge.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 		self.bonus_attack_speed 	= params.bonus_attack_speed
 		self.bonus_cast_speed 		= params.bonus_cast_speed
 		self.bonus_missile_speed 	= params.bonus_missile_speed
@@ -1696,12 +1671,6 @@ LinkLuaModifier("modifier_imba_wisp_relocate", "components/abilities/heroes/hero
 LinkLuaModifier("modifier_imba_wisp_relocate_cast_delay", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_relocate_talent", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_wisp_relocate:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "wisp_relocate" end
-	return "custom/imba_wisp_relocate_arcana"
-end
-
 function imba_wisp_relocate:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_wisp_9")
 end
@@ -1724,7 +1693,7 @@ function imba_wisp_relocate:OnSpellStart()
 		local return_time 			= self:GetSpecialValueFor("return_time")
 		local destroy_tree_radius	= self:GetSpecialValueFor("destroy_tree_radius")
 	
-		EmitSoundOn(self:GetCaster().relocate_sound, self:GetCaster())
+		EmitSoundOn("Hero_Wisp.Relocate", self:GetCaster())
 
 		if unit == self:GetCaster() then
 			if self:GetCaster():GetTeam() == DOTA_TEAM_GOODGUYS then
@@ -1736,10 +1705,10 @@ function imba_wisp_relocate:OnSpellStart()
 			end
 		end
 
-		local channel_pfx = ParticleManager:CreateParticle(self:GetCaster().relocate_channel_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		local channel_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 		ParticleManager:SetParticleControl(channel_pfx, 0, self:GetCaster():GetAbsOrigin())
 
-		local endpoint_pfx = ParticleManager:CreateParticle(self:GetCaster().relocate_marker_endpoint_effect, PATTACH_WORLDORIGIN, self:GetCaster())
+		local endpoint_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf", PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster())
 		ParticleManager:SetParticleControl(endpoint_pfx, 0, self.relocate_target_point)
 
 		-- Create vision
@@ -1762,7 +1731,7 @@ function imba_wisp_relocate:OnSpellStart()
 				ParticleManager:DestroyParticle(endpoint_pfx, false)
 
 				if not imba_wisp_relocate:InterruptRelocate(self:GetCaster(), self, tether_ability) then
-					EmitSoundOn(self:GetCaster().relocate_return_in_sound, self:GetCaster())
+					EmitSoundOn("Hero_Wisp.Return", self:GetCaster())
 					EmitSoundOn("Hero_Wisp.ReturnCounter", self:GetCaster())
 					
 					GridNav:DestroyTreesAroundPoint(self.relocate_target_point, destroy_tree_radius, false)
@@ -1831,25 +1800,30 @@ function modifier_imba_wisp_relocate:OnCreated(params)
 		self.eject_cooldown_mult	= self:GetAbility():GetSpecialValueFor("eject_cooldown_mult")
 
 		-- Create marker at origin
-		self.caster_origin_pfx = ParticleManager:CreateParticle(caster.relocate_marker_effect, PATTACH_WORLDORIGIN, caster)
+		self.caster_origin_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf", PATTACH_WORLDORIGIN, caster, caster)
 		ParticleManager:SetParticleControl(self.caster_origin_pfx, 0, caster:GetAbsOrigin())
 
 		-- Add teleport effect
-		local caster_teleport_pfx = ParticleManager:CreateParticle(caster.relocate_teleport_effect, PATTACH_CUSTOMORIGIN, caster)
+		local caster_teleport_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, caster, caster)
 		ParticleManager:SetParticleControl(caster_teleport_pfx, 0, caster:GetAbsOrigin())
 
 		-- Move units
 		FindClearSpaceForUnit(caster, ability.relocate_target_point, true)
 		caster:Interrupt()
 
+		local teleport_out_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
+--		ParticleManager:SetParticleControl(teleport_out_pfx, 0, self:GetCaster():GetAbsOrigin())
+		ParticleManager:DestroyParticle(teleport_out_pfx, false)
+		ParticleManager:ReleaseParticleIndex(teleport_out_pfx)
+
 		if caster:HasModifier("modifier_imba_wisp_tether") and ally ~= nil and ally:IsHero() then
-			self.ally_teleport_pfx = ParticleManager:CreateParticle(caster.relocate_teleport_effect, PATTACH_CUSTOMORIGIN, ally)
+			self.ally_teleport_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, ally, caster)
 			ParticleManager:SetParticleControl(self.ally_teleport_pfx, 0, ally:GetAbsOrigin())
 			FindClearSpaceForUnit(ally, ability.relocate_target_point + Vector( 100, 0, 0 ), true)
 			ally:Interrupt()
 		end
 
-		self.timer_buff = ParticleManager:CreateParticle(caster.relocate_timer_buff, PATTACH_ABSORIGIN_FOLLOW, caster)
+		self.timer_buff = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_timer_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster, caster)
 		ParticleManager:SetParticleControlEnt(self.timer_buff, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.timer_buff, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 
@@ -1871,11 +1845,11 @@ end
 
 function modifier_imba_wisp_relocate:OnRemoved()
 	if IsServer() then
-		EmitSoundOn(self:GetCaster().relocate_return_out_sound, self:GetCaster())
+		EmitSoundOn("Hero_Wisp.TeleportOut", self:GetCaster())
 		StopSoundOn("Hero_Wisp.ReturnCounter", self:GetCaster())
 
 		-- Add teleport effect
-		local caster_teleport_pfx = ParticleManager:CreateParticle(self:GetCaster().relocate_teleport_effect, PATTACH_CUSTOMORIGIN, self:GetCaster())
+		local caster_teleport_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster(), self:GetCaster())
 		ParticleManager:SetParticleControl(caster_teleport_pfx, 0, self:GetCaster():GetAbsOrigin())
 
 		-- remove origin marker + delay timer
@@ -1888,9 +1862,9 @@ function modifier_imba_wisp_relocate:OnRemoved()
 
 		local tether_ability 	= self:GetCaster():FindAbilityByName("imba_wisp_tether")
 		if self:GetCaster():HasModifier("modifier_imba_wisp_tether") and tether_ability.target ~= nil and tether_ability.target:IsHero() and self:GetCaster():IsAlive() then
-			self.ally_teleport_pfx 	= ParticleManager:CreateParticle(self:GetCaster().relocate_teleport_effect, PATTACH_CUSTOMORIGIN, tether_ability.target)
-			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, tether_ability.target, PATTACH_POINT, "attach_hitloc", tether_ability.target:GetAbsOrigin(), true)
 			tether_ability.target:SetAbsOrigin(self.return_point + Vector( 100, 0, 0 ) )
+			self.ally_teleport_pfx 	= ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, tether_ability.target, self:GetCaster())
+			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, tether_ability.target, PATTACH_POINT, "attach_hitloc", tether_ability.target:GetAbsOrigin(), true)
 			tether_ability.target:Interrupt()
 		end
 
@@ -1978,12 +1952,6 @@ end
 
 function imba_wisp_overcharge_721:GetIntrinsicModifierName()
 	return "modifier_imba_wisp_overcharge_721_handler"
-end
-
-function imba_wisp_overcharge_721:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "wisp_overcharge" end
-	return "custom/imba_wisp_overcharge_arcana"
 end
 
 function imba_wisp_overcharge_721:OnSpellStart()
@@ -2294,5 +2262,32 @@ end
 function imba_wisp_relocate:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_wisp_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_wisp_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_wisp_9"), "modifier_special_bonus_imba_wisp_9", {})
+	end
+end
+
+-- Arcana death pfx handler
+modifier_wisp_death = modifier_wisp_death or class({})
+
+function modifier_wisp_death:RemoveOnDeath()
+	return false
+end
+
+function modifier_wisp_death:IsHidden()
+	return true
+end
+
+function modifier_wisp_death:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_DEATH
+	}
+end
+
+function modifier_wisp_death:OnDeath(params)
+	if not IsServer() then return end
+
+	if params.unit == self:GetParent() then
+		print("WISP IS DEAD!")
+		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_death_override.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetParent())
+--		ParticleManager:SetParticleControl(pfx, 0, Vector(self:GetParent():GetAbsOrigin().x, self:GetParent():GetAbsOrigin().y, self:GetParent():GetAbsOrigin().z + 100))
 	end
 end

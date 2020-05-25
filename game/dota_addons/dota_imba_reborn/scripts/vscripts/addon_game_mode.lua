@@ -28,6 +28,9 @@ function Precache( context )
 	LinkLuaModifier("modifier_item_imba_bottle_heal", "components/items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE) -- imba bottle using vanilla replacing modifier in ModifierFilter
 	LinkLuaModifier("modifier_item_imba_aegis", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE) -- using vanilla aegis item with imba aegis modifier to keep combat events notifications on pickup/steal/deny
 
+	-- control wisp death pfx
+	LinkLuaModifier("modifier_wisp_death", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
+
 	-- Battlepass precaching
 --	Wearables:PrecacheWearables(context)
 

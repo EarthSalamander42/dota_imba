@@ -31,7 +31,7 @@ ListenToGameEvent('npc_spawned', function(event)
 	elseif npc:IsRealHero() then
 		Battlepass:AddItemEffects(npc)
 
-		local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(npc:GetPlayerID()))
+		local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(npc:GetPlayerID()))
 
 		if ply_table and ply_table.bp_rewards == 0 then
 			return

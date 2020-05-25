@@ -5,14 +5,14 @@
 		"game_options",
 		"player_table",
 		"shared_unit_control",
-		"game_state",
 		"hero_selection",
 		"battlepass",
+		"battlepass_js_builder", 
+		"battlepass_js_builder_2", 
 		"battlepass_rewards",
 		"battlepass_player",
 		"mutations",
 		"mutation_info",
-		"hero_wearables",
 		"selection",
 	]
 }

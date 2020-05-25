@@ -1,0 +1,123 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 16
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_flStartFadeSize = 2.0
+			m_flEndFadeSize = 3.0
+			m_flOverbrightFactor = 2.5
+			m_flAddSelfAmount = 2.25
+			m_bSaturateColorPreAlphaBlend = false
+			m_hTexture = resource:"materials/particle/particle_flares/particle_flare_001.vtex"
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_VectorNoise"
+			m_fl4NoiseScale = 0.8
+			m_nFieldOutput = 0
+			m_vecOutputMin = [ -1.0, -1.0, 0.0 ]
+			m_vecOutputMax = [ 1.0, 1.0, 0.0 ]
+			m_bAdditive = true
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.05
+		},
+		{
+			_class = "C_OP_MovementRotateParticleAroundAxis"
+			m_vecRotAxis = [ 3.0, 1.7, 1.0 ]
+			m_flRotRate = 32.0
+		},
+		{
+			_class = "C_OP_OscillateVector"
+			m_bOffset = true
+			m_RateMin = [ -32.0, -32.0, -32.0 ]
+			m_RateMax = [ 32.0, 32.0, 32.0 ]
+			m_FrequencyMin = [ 0.125, 0.125, 0.125 ]
+			m_bProportional = false
+			m_flEndTime_min = 999999986991104.0
+			m_flEndTime_max = 999999986991104.0
+			m_bProportionalOp = false
+		},
+		{
+			_class = "C_OP_Noise"
+			m_nFieldOutput = 16
+		},
+		{
+			_class = "C_OP_PositionLock"
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 0.5
+			m_fLifetimeMax = 1.0
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 8.0
+			m_flRadiusMax = 15.0
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_fRadiusMin = 32.0
+			m_fRadiusMax = 32.0
+			m_fSpeedMax = 1200.0
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMax = [ 160, 249, 255, 255 ]
+			m_ColorMin = [ 118, 163, 255, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 16.0
+			}
+		},
+	]
+	m_ForceGenerators = 
+	[
+		{
+			_class = "C_OP_RandomForce"
+			m_MinForce = [ -128.0, -128.0, -128.0 ]
+			m_MaxForce = [ 128.0, 128.0, 128.0 ]
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_wisp/wisp_death_c.vpcf"
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 5
+	m_nFirstMultipleOverride_BackwardCompat = 5
+}

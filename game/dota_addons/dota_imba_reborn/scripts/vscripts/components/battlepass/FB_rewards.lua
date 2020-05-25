@@ -21,7 +21,7 @@ BATTLEPASS_LEVEL_REWARD[280]	= {"blink12", "common"}
 BATTLEPASS_LEVEL_REWARD[320]	= {"blink13", "common"}
 BATTLEPASS_LEVEL_REWARD[340]	= {"blink14", "common"}
 
-CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = BATTLEPASS_LEVEL_REWARD})
+-- CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = BATTLEPASS_LEVEL_REWARD})
 
 function Battlepass:Init()
 	CustomGameEventManager:RegisterListener("change_ingame_tag", Dynamic_Wrap(self, 'DonatorTag'))
@@ -222,7 +222,7 @@ function Battlepass:GetHeroEffect(hero)
 		hero.arcane_bolt_pfx = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
 	end
 
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(hero:GetPlayerID()))
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(hero:GetPlayerID()))
 
 	if ply_table and ply_table.bp_rewards == 0 then
 		return

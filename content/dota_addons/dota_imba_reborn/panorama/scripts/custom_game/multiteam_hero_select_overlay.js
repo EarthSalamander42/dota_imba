@@ -71,7 +71,7 @@ function UpdatePlayer( teamPanel, playerId )
 	var playerContainer = teamPanel.FindChildInLayoutFile( "PlayersContainer" );
 	var playerPanelName = "player_" + playerId;
 	var playerPanel = playerContainer.FindChild( playerPanelName );
-	var player_table = CustomNetTables.GetTableValue("battlepass", playerId.toString());
+	var player_table = CustomNetTables.GetTableValue("battlepass_player", playerId.toString());
 	var playerIMR = playerContainer.FindChild( playerPanelName + "_imr");
 
 	if ( playerPanel === null )
@@ -256,7 +256,7 @@ function UpdateTimer()
 
 		for (var i = 0; i < Game.GetPlayerIDsOnTeam(teamId).length; i++) {
 			var player_id = Game.GetPlayerIDsOnTeam(teamId)[i];
-			var player_table = CustomNetTables.GetTableValue("battlepass", player_id.toString());
+			var player_table = CustomNetTables.GetTableValue("battlepass_player", player_id.toString());
 
 //			if (Game.IsInToolsMode())
 //				mmr_calculation += 3000;

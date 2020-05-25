@@ -108,7 +108,7 @@ function api:GetPlayerCompanion(player_id)
 	end
 
 	if self.players[steamid] ~= nil then
-		return CustomNetTables:GetTableValue("battlepass", "companions")["1"][tostring(self.players[steamid].companion_id)]
+		return CustomNetTables:GetTableValue("battlepass_player", "companions")["1"][tostring(self.players[steamid].companion_id)]
 	else
 		native_print("api:GetPlayerCompanion: api players steamid not valid!")
 		return false
@@ -130,7 +130,7 @@ function api:GetPlayerStatue(player_id)
 	end
 
 	if self.players[steamid] ~= nil then
-		return CustomNetTables:GetTableValue("battlepass", "statues")["1"][tostring(self.players[steamid].statue_id)]
+		return CustomNetTables:GetTableValue("battlepass_player", "statues")["1"][tostring(self.players[steamid].statue_id)]
 	else
 		native_print("api:GetPlayerStatue: api players steamid not valid!")
 		return false
@@ -152,8 +152,8 @@ function api:GetPlayerEmblem(player_id)
 	end
 
 	if self.players[steamid] ~= nil then
-		if type(self.players[steamid].emblem_id) == "number" and CustomNetTables:GetTableValue("battlepass", "emblems") then
-			return CustomNetTables:GetTableValue("battlepass", "emblems")["1"][tostring(self.players[steamid].emblem_id)].file
+		if type(self.players[steamid].emblem_id) == "number" and CustomNetTables:GetTableValue("battlepass_player", "emblems") then
+			return CustomNetTables:GetTableValue("battlepass_player", "emblems")["1"][tostring(self.players[steamid].emblem_id)].file
 		else
 			return ""
 		end
@@ -579,7 +579,7 @@ function api:RegisterGame(callback)
 				table.insert(cool_hat[j], data[k]["id"], data[k])
 			end
 
-			CustomNetTables:SetTableValue("battlepass", j, {cool_hat[j]})
+			CustomNetTables:SetTableValue("battlepass_player", j, {cool_hat[j]})
 		end)
 	end
 

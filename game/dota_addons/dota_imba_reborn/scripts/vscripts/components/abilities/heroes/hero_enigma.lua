@@ -637,7 +637,7 @@ function imba_enigma_black_hole:OnSpellStart()
 	self.pull_radius = base_pull_radius + extra_pull_radius * caster:FindModifierByName("modifier_imba_singularity"):GetStackCount()
 	local duration = self:GetSpecialValueFor("duration")
 	self.thinker = CreateModifierThinker(caster, self, "modifier_imba_enigma_black_hole_thinker", {duration = duration}, pos, caster:GetTeamNumber(), false)
-	
+
 	-- Force a minimum CD for sanity
 	if not GameRules:IsCheatMode() and self:GetCooldownTimeRemaining() <= self:GetSpecialValueFor("min_cd_cap") then
 		self:EndCooldown()
@@ -647,7 +647,7 @@ end
 
 function imba_enigma_black_hole:OnChannelFinish( bInterrupted )
 	StopSoundOn("Hero_Enigma.Black_Hole", self.thinker)
-	StopSoundOn("Imba.EnigmaBlackHoleTi5", self.thinker)
+	StopSoundOn("Hero_Enigma.BlackHole.Cast", self.thinker)
 	if bInterrupted then		
 		self.thinker:FindModifierByName("modifier_imba_enigma_black_hole_thinker"):Destroy()
 		
@@ -676,12 +676,6 @@ function imba_enigma_black_hole:OnOwnerDied()
 	end
 end
 
-function imba_enigma_black_hole:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().black_hole_icon then return "enigma_black_hole" end
-	return "custom/imba_enigma_black_hole_immortal"..self:GetCaster().black_hole_icon
-end
-
 modifier_imba_enigma_black_hole_thinker = modifier_imba_enigma_black_hole_thinker or class({})
 modifier_imba_enigma_black_hole = modifier_imba_enigma_black_hole or class({})
 modifier_imba_enigma_black_hole_pull = modifier_imba_enigma_black_hole_pull or class({})
@@ -698,12 +692,8 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 	self.radius = self:GetAbility().radius
 	self.pull_radius = self:GetAbility().pull_radius
 	if not IsServer() then return end
-	local pfx_name = "particles/hero/enigma/enigma_blackhole_scaleable.vpcf"
-	self.sound = "Hero_Enigma.Black_Hole"
 
 	if self:GetCaster().black_hole_effect then
-		pfx_name = self:GetCaster().black_hole_effect
-
 		self.pfx_ulti = ParticleManager:CreateParticle("particles/econ/items/slark/slark_ti6_blade/slark_ti6_pounce_leash_gold_body_energy_pull.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 		ParticleManager:SetParticleControlEnt(self.pfx_ulti, 0, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), false)
 		ParticleManager:SetParticleControlEnt(self.pfx_ulti, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), false)
@@ -737,20 +727,19 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 		--end
 	end
 
-	EmitSoundOn(self.sound, self:GetParent())
-	if self:GetCaster().black_hole_sound then
-		EmitSoundOn(self:GetCaster().black_hole_sound, self:GetParent())
-	end
+	EmitSoundOn("Hero_Enigma.Black_Hole", self:GetParent())
+	EmitSoundOn("Hero_Enigma.BlackHole.Cast", self:GetParent())
+
 	local dummy = self:GetParent()
-	self:GetParent():SetContextThink("StopBHsound", function()
+	self:GetParent():SetContextThink(DoUniqueString("StopBHsound"), function()
 		StopSoundOn("Hero_Enigma.Black_Hole", dummy)
-		StopSoundOn("Imba.EnigmaBlackHoleTi5", dummy)
+		StopSoundOn("Hero_Enigma.BlackHole.Cast", dummy)
 		return nil
 	end, 4.0)
-	
+
 	-- Break trees. Because fuck trees.
 	GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self.pull_radius, false)
-	
+
 	-- Create an FoW viewer for all teams so everyone sees it
 	for i = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
 		if i == self:GetParent():GetTeamNumber() then
@@ -759,8 +748,8 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 			AddFOWViewer(i, self:GetParent():GetAbsOrigin(), 10, FrameTime()*2, false)
 		end
 	end
-	
-	self.particle = ParticleManager:CreateParticle(pfx_name, PATTACH_WORLDORIGIN, nil)
+
+	self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_blackhole_scaleable.vpcf", PATTACH_WORLDORIGIN, nil, self:GetCaster())
 	ParticleManager:SetParticleControl(self.particle, 0, Vector(self:GetParent():GetAbsOrigin().x,self:GetParent():GetAbsOrigin().y,self:GetParent():GetAbsOrigin().z+64))
 	ParticleManager:SetParticleControl(self.particle, 10, Vector(self.radius, self.pull_radius, 0))
 
@@ -836,10 +825,9 @@ end
 
 function modifier_imba_enigma_black_hole_thinker:OnDestroy()
 	if not IsServer() then return end
-	StopSoundOn(self.sound, self:GetParent())
-	if self:GetCaster().black_hole_sound then
-		StopSoundOn(self:GetCaster().black_hole_sound, self:GetParent())
-	end
+	StopSoundOn("Hero_Enigma.Black_Hole", self:GetParent())
+	StopSoundOn("Hero_Enigma.BlackHole.Cast", self:GetParent())
+	StopSoundOn("Hero_Enigma.BlackHole.Cast.Chasm", self:GetParent())
 	EmitSoundOn("Hero_Enigma.Black_Hole.Stop", self:GetParent())
 	ParticleManager:DestroyParticle(self.particle, false)
 	ParticleManager:ReleaseParticleIndex(self.particle)
@@ -992,12 +980,6 @@ function modifier_imba_singularity:DeclareFunctions()
 	}
 end
 
-function modifier_imba_singularity:OnCreated()
-	if IsServer() then
-		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_black_hole_handler", {})
-	end
-end
-
 function modifier_imba_singularity:OnDeath(keys)
 	if IsServer() and keys.unit == self:GetParent() and self:GetParent():HasTalent("special_bonus_imba_enigma_4") and self:GetParent():IsRealHero() then
 		local ability = self:GetAbility()
@@ -1012,43 +994,6 @@ function modifier_imba_singularity:OnDeath(keys)
 		Timers:CreateTimer(FrameTime(), function()
 			ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker", {duration = duration, talent = 1}, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
 		end)
-	end
-end
-
-LinkLuaModifier("modifier_imba_enigma_black_hole_handler","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-
-if modifier_imba_enigma_black_hole_handler == nil then modifier_imba_enigma_black_hole_handler = class({}) end
-
-function modifier_imba_enigma_black_hole_handler:IsHidden() return true end
-function modifier_imba_enigma_black_hole_handler:RemoveOnDeath() return false end
-
-function modifier_imba_enigma_black_hole_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().black_hole_icon == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().black_hole_icon)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().black_hole_icon = self:GetStackCount()
-	end
-end
-
-function modifier_imba_enigma_black_hole_handler:GetActivityTranslationModifiers()
---	print(self:GetCaster().successful_hooks)
-	if self:GetCaster().successful_hooks == nil then self:GetCaster().successful_hooks = 0 end
-
-	if self:GetCaster().successful_hooks >= 1 and self:GetCaster().successful_hooks < 3 then
---		print("Small Streak!")
-		return "hook_streak_small"
-	elseif self:GetCaster().successful_hooks >= 3 and self:GetCaster().successful_hooks < 5 then
---		print("Medium Streak!")
-		return "hook_streak_medium"
-	elseif self:GetCaster().successful_hooks >= 5 then
---		print("Large Streak!")
-		return "hook_streak_large"
 	end
 end
 

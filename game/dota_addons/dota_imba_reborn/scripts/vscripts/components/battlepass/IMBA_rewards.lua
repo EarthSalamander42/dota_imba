@@ -1,12 +1,7 @@
 BATTLEPASS_LEVEL_REWARD = {}
 -- BATTLEPASS_LEVEL_REWARD[10]		= {"sohei_arcana", "arcana"}
 -- BATTLEPASS_LEVEL_REWARD[50]	= {"tidehunter_ancient", "ancient"}
-BATTLEPASS_LEVEL_REWARD[145]	= {"wisp_arcana", "arcana"} -- try multiple modifiers to add multiple animation translation activities
-BATTLEPASS_LEVEL_REWARD[146]	= {"earthshaker_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[152]	= {"leshrac_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[165]	= {"earthshaker_arcana", "arcana"}
-BATTLEPASS_LEVEL_REWARD[170]	= {"enigma_immortal", "immortal"}
-BATTLEPASS_LEVEL_REWARD[180]	= {"drow_ranger_immortal", "immortal"}
 BATTLEPASS_LEVEL_REWARD[190]	= {"tiny_immortal", "immortal"}
 if IsInToolsMode() then
 --	BATTLEPASS_LEVEL_REWARD[195]	= {"terrorblade_arcana", "arcana"}
@@ -21,36 +16,18 @@ BATTLEPASS_LEVEL_REWARD[400]	= {"ursa_immortal", "immortal"}
 
 function Battlepass:Init()
 	BattlepassHeroes = {}
-	BattlepassHeroes["ancient_apparition"] = {}
-	BattlepassHeroes["axe"] = {}
-	BattlepassHeroes["bristleback"] = {}
-	BattlepassHeroes["centaur"] = {}
-	BattlepassHeroes["chen"] = {}
-	BattlepassHeroes["dark_seer"] = {}
-	BattlepassHeroes["death_prophet"] = {}
-	BattlepassHeroes["drow_ranger"] = {}
 	BattlepassHeroes["earthshaker"] = {}
-	BattlepassHeroes["enigma"] = {}
-	BattlepassHeroes["huskar"] = {}
 	BattlepassHeroes["invoker"] = {}
-	BattlepassHeroes["juggernaut"] = {}
-	BattlepassHeroes["leshrac"] = {}
-	BattlepassHeroes["life_stealer"] = {}
 	BattlepassHeroes["lina"] = {}
 	if IsInToolsMode() then
 		BattlepassHeroes["nevermore"] = {}
 	end
-	BattlepassHeroes["nyx_assassin"] = {}
 	BattlepassHeroes["phantom_assassin"] = {}
 	BattlepassHeroes["pudge"] = {}
-	BattlepassHeroes["skywrath_mage"] = {}
 --	BattlepassHeroes["terrorblade"] = {}
 --	BattlepassHeroes["tidehunter"] = {}
 	BattlepassHeroes["tiny"] = {}
 	BattlepassHeroes["ursa"] = {}
-	BattlepassHeroes["vengefulspirit"] = {}
-	BattlepassHeroes["wisp"] = {}
-	BattlepassHeroes["zuus"] = {}
 
 	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
 		local required_level = k
@@ -69,23 +46,10 @@ function Battlepass:Init()
 	end
 end
 
---[[ -- instead of a flat BattlepassHeroes[hero_name] value, generate it by finding if there's a hero name in all reward names
-function Battlepass:IsHeroName(hero_name)
-	local herolist = LoadKeyValues("scripts/npc/herolist.txt")
-
-	print(herolist[hero_name])
-	if herolist[hero_name] then
-		return true
-	end
-
-	return false
-end
---]]
-
 function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 	for i, j in pairs(table_name) do
 		if i ~= "skip_model_combine" and type(j) ~= "number" then
-			if (j.type == "particle" and modifier == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+			if (j.type == "particle" and modifier == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("Particle:", j)
 				local particle_table = {}
 				particle_table.asset = j.asset
@@ -93,19 +57,19 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 				particle_table.parent = hero
 
 				table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
-			elseif (j.type == "sound" and modifier == nil) or (j.type == "sound" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+			elseif (j.type == "sound" and modifier == nil) or (j.type == "sound" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("Sound:", j)
-				CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
-			elseif (j.type == "ability_icon" and modifier == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+				CustomNetTables:SetTableValue("battlepass_player", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+			elseif (j.type == "ability_icon" and modifier == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("ability icon:", j)
-				CustomNetTables:SetTableValue("battlepass", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
-			elseif (j.type == "icon_replacement_hero" and modifier == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+				CustomNetTables:SetTableValue("battlepass_player", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+			elseif (j.type == "icon_replacement_hero" and modifier == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("topbar icon:", j)
 				CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
 					player_id = hero:GetPlayerID(),
 					icon_path = j.modifier,
 				})
-			elseif (j.type == "entity_model" and modifier == nil) or (j.type == "entity_model" and j.style and modifier and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
+			elseif (j.type == "entity_model" and modifier == nil) or (j.type == "entity_model" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
 --				print("entity model:", j)
 				ENTITY_MODEL_OVERRIDE[j.asset] = j.modifier
 			elseif j.type == "sheepstick_model" then
@@ -130,22 +94,6 @@ function Battlepass:GetHeroEffect(hero)
 		hero.frost_arrows_debuff_pfx = "particles/units/heroes/hero_drow/drow_frost_arrow_debuff.vpcf"
 		hero.marksmanship_arrow_pfx = "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
 		hero.marksmanship_frost_arrow_pfx = "particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_earthshaker" then
-		hero.fissure_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
-		hero.enchant_totem_leap_blur_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_totem_leap_blur.vpcf"
-		hero.enchant_totem_buff_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_totem_buff.vpcf"
-		hero.enchant_totem_cast_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_totem_cast.vpcf"
-		hero.aftershock_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_aftershock.vpcf"
-		hero.echo_slam_start_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start.vpcf"
-		hero.echo_slam_tgt_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_tgt.vpcf"
-		hero.echo_slam_pfx = "particles/units/heroes/hero_earthshaker/earthshaker_echoslam.vpcf"
-
-		-- if earthshaker have ti6 totem + arcana, use this particles
---		hero.enchant_totem_buff_pfx = "particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_buff.vpcf"
---		hero.enchant_totem_buff_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff_ti6_combined.vpcf"
---		hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_totem_ti6/earthshaker_totem_ti6_cast.vpcf"
---		hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_ti6_combined.vpcf"
---		hero.enchant_totem_cast_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_cast_ti6_combined_v2.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
 		hero.quas_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
 		hero.wex_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
@@ -155,10 +103,6 @@ function Battlepass:GetHeroEffect(hero)
 		hero.quas_orb = "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
 		hero.wex_orb = "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
 		hero.exort_orb = "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
---		CustomNetTables:SetTableValue("battlepass", "leshrac", {
---			diabolic_edict = "particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf",
---		})
 	elseif hero:GetUnitName() == "npc_dota_hero_tiny" then
 		hero.ambient_pfx_effect = "particles/units/heroes/hero_tiny/tiny_ambient.vpcf"
 		hero.death_pfx = "particles/units/heroes/hero_tiny/tiny01_death.vpcf"
@@ -180,7 +124,7 @@ function Battlepass:GetHeroEffect(hero)
 		hero.tree_cleave_effect = "particles/units/heroes/hero_tiny/tiny_craggy_cleave.vpcf"
 	end
 
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(hero:GetPlayerID()))
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(hero:GetPlayerID()))
 
 	if ply_table and ply_table.bp_rewards == 0 then
 		return
@@ -260,7 +204,7 @@ function Battlepass:GetHeroEffect(hero)
 					local images = ItemsGame:GetItemImages(v.item_id)
 
 					for k, v in pairs(images) do
-						CustomNetTables:SetTableValue("battlepass", v.asset..'_'..hero:GetPlayerID(), {v.modifier}) 
+						CustomNetTables:SetTableValue("battlepass_player", v.asset..'_'..hero:GetPlayerID(), {v.modifier}) 
 					end
 				end
 			end
@@ -292,13 +236,6 @@ function Battlepass:GetHeroEffect(hero)
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_earthshaker" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["earthshaker_immortal"] then
-				hero.fissure_pfx = "particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_fissure_ti9.vpcf"
-
-				Wearable:_WearProp(hero, "12969", "weapon")
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
-
 			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["earthshaker_arcana2"] then
 				hero.enchant_totem_leap_blur_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_leap_v2.vpcf"
 				hero.enchant_totem_buff_pfx = "particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_totem_buff.vpcf"
@@ -350,16 +287,6 @@ function Battlepass:GetHeroEffect(hero)
 				hero.exort_orb = "particles/units/heroes/hero_invoker_kid/invoker_kid_exort_orb.vpcf"
 
 				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_leshrac" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["leshrac_immortal"] then
---				CustomNetTables:SetTableValue("battlepass", "leshrac", {
---					diabolic_edict = "particles/econ/items/leshrac/leshrac_ti9_immortal_head/leshrac_ti9_immortal_edict.vpcf",
---				})
-
-				Wearable:_WearProp(hero, "12933", "head")
-
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = 1})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_nevermore" then
 			if IsInToolsMode() then

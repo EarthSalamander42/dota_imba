@@ -6,12 +6,6 @@ LinkLuaModifier("modifier_imba_leshrac_diabolic_edict", "components/abilities/he
 
 imba_leshrac_diabolic_edict = class({})
 
-function imba_leshrac_diabolic_edict:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "leshrac_diabolic_edict" end
-	return "leshrac_diabolic_edict_ti9"
-end
-
 function imba_leshrac_diabolic_edict:OnSpellStart()
 	if IsClient() then return end
 	local num_explosions = self:GetSpecialValueFor("num_explosions") + self:GetCaster():FindTalentValue("special_bonus_unique_leshrac_1")

@@ -17616,18 +17616,54 @@
 	}
 	"8326"
 	{
-		"asset_modifier3"
+				"asset_modifier0"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+					"modifier"		"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
+				}
+				"asset_modifier1"
+				{
+					"type"		"particle"
+					"asset"		"particles/status_fx/status_effect_enigma_blackhole_tgt.vpcf"
+					"modifier"		"particles/econ/items/enigma/enigma_world_chasm/status_effect_enigma_blackhole_tgt_ti5.vpcf"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_enigma/enigma_blackhole_target.vpcf"
+					"modifier"		"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
+				}
+				"asset_modifier3"
+				{
+					"type"		"activity"
+					"asset"		"ALL"
+					"modifier"		"chasm"
+				}
+				"asset_modifier4"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Enigma.BlackHole.Cast"
+					"modifier"		"Hero_Enigma.BlackHole.Cast.Chasm"
+				}
+				"skip_model_combine"		"1"
+				"asset_modifier5"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/enigma/enigma_world_chasm/enigma_world_chasm_ambient.vpcf"
+				}
+		"asset_modifier6"
 		{
-			"type"		"activity"
-			"asset"		"ALL"
-			"modifier"		"chasm"
+			"type"		"particle"
+			"asset"		"particles/hero/enigma/enigma_blackhole_scaleable.vpcf"
+			"modifier"		"particles/hero/enigma/enigma_blackhole_ti5_scaleable.vpcf"
 		}
-		"skip_model_combine"		"1"
-		"asset_modifier5"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/enigma/enigma_world_chasm/enigma_world_chasm_ambient.vpcf"
-		}
+			"asset_modifier7"
+			{
+				"type"		"ability_icon"
+				"asset"		"enigma_black_hole"
+				"modifier"		"enigma/worldchasm/enigma_black_hole_worldchasm"
+			}
 	}
 	"8327"
 	{
@@ -24193,7 +24229,7 @@
 				"asset_modifier10"
 				{
 					"type"		"particle"
-					"asset"		"particles/units/heroes/hero_wisp/wisp_death.vpcf"
+					"asset"		"particles/units/heroes/hero_wisp/wisp_death_override.vpcf"
 					"modifier"		"particles/econ/items/wisp/wisp_death_ti7.vpcf"
 					"style"		"0"
 				}
@@ -24311,6 +24347,13 @@
 				{
 					"type"		"response_criteria"
 					"asset"		"cubelife"
+				}
+				"asset_modifier28"
+				{
+					"type"		"entity_model"
+					"asset"		"npc_dota_hero_wisp"
+					"modifier"	"models/items/io/io_ti7/io_ti7.vmdl"
+					"style"		"0"
 				}
 	}
 	"9236"
@@ -43747,19 +43790,33 @@
 	}
 	"12933"
 	{
-		"asset_modifier2"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/leshrac/leshrac_ti9_immortal_head/leshrac_ti9_immortal_ambient.vpcf"
-			"style"		"0"
-		}
-		"asset_modifier3"
-		{
-			"type"		"activity"
-			"asset"		"ALL"
-			"modifier"		"ti9_head"
-			"style"		"0"
-		}
+				"asset_modifier"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf"
+					"modifier"		"particles/econ/items/leshrac/leshrac_ti9_immortal_head/leshrac_ti9_immortal_edict.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"ability_icon"
+					"asset"		"leshrac_diabolic_edict"
+					"modifier"		"leshrac_diabolic_edict_ti9"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/leshrac/leshrac_ti9_immortal_head/leshrac_ti9_immortal_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier4"
+				{
+					"type"		"activity"
+					"asset"		"ALL"
+					"modifier"		"ti9_head"
+					"style"		"0"
+				}
 	}
 	"12934"
 	{
@@ -43893,20 +43950,55 @@
 	}
 	"12946"
 	{
-		"skip_model_combine"		"0"
-		"asset_modifier4"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_ambient.vpcf"
-			"style"		"0"
-		}
-		"asset_modifier"
-		{
-			"type"		"particle_projectile"
-			"asset"		"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
-			"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_base_attack.vpcf"
-			"style"		"0"
-		}
+				"skip_model_combine"		"0"
+				"asset_modifier"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
+					"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_base_attack.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_drow/drow_frost_arrow_debuff.vpcf"
+					"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_frost_arrow_debuff.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/status_fx/status_effect_drow_frost_arrow.vpcf"
+					"modifier"		"particles/econ/items/drow/drow_ti9_immortal/status_effect_drow_ti9_frost_arrow.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier4"
+				{
+					"type"		"ability_icon"
+					"asset"		"drow_ranger_marksmanship"
+					"modifier"		"drow_ranger_marksmanship_ti9"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
+					"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_marksman.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier7"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
+					"modifier"		"particles/econ/items/drow/drow_ti9_immortal/drow_ti9_marksman_frost.vpcf"
+					"style"		"0"
+				}
 	}
 	"12947"
 	{
@@ -44496,55 +44588,79 @@
 	}
 	"12969"
 	{
-		"skip_model_combine"		"1"
-		"asset_modifier"
-		{
-			"type"		"activity"
-			"asset"		"ALL"
-			"modifier"		"ti9_totem"
-		}
-		"hide_styles_from_ui"		"0"
-		"styles"
-		{
-			"0"
-			{
-				"name"		"#DOTA_Style_Judgement_of_the_Fallen_0"
-				"skin"		"0"
-				"alternate_icon"		"0"
-				"auto_style_rule"		"arcana_level < 2"
-			}
-			"1"
-			{
-				"name"		"#DOTA_Style_Judgement_of_the_Fallen_1"
-				"skin"		"1"
-				"alternate_icon"		"1"
-				"auto_style_rule"		"arcana_level > 1"
-				"auto_style_reason"		"#DOTA_Style_Judgement_of_the_Fallen_1_Reason"
-			}
-		}
-		"asset_modifier5"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_ti9_ambient.vpcf"
-			"style"		"0"
-		}
-		"asset_modifier6"
-		{
-			"type"		"particle_create"
-			"modifier"		"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_ti9_ambient_lvl2.vpcf"
-			"style"		"1"
-		}
-		"alternate_icons"
-		{
-			"0"
-			{
-				"icon_path"		"econ/items/earthshaker/ti9_immortal/ti9_immortal"
-			}
-			"1"
-			{
-				"icon_path"		"econ/items/earthshaker/ti9_immortal/ti9_immortal_style1"
-			}
-		}
+				"skip_model_combine"		"1"
+				"asset_modifier"
+				{
+					"type"		"activity"
+					"asset"		"ALL"
+					"modifier"		"ti9_totem"
+				}
+				"styles"
+				{
+					"0"
+					{
+						"name"		"#DOTA_Style_Judgement_of_the_Fallen_0"
+						"skin"		"0"
+						"alternate_icon"		"0"
+					}
+					"1"
+					{
+						"name"		"#DOTA_Style_Judgement_of_the_Fallen_1"
+						"skin"		"1"
+						"alternate_icon"		"1"
+					}
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
+					"modifier"		"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_fissure_ti9.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
+					"modifier"		"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_fissure_ti9_lvl2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier4"
+				{
+					"type"		"ability_icon"
+					"asset"		"earthshaker_fissure"
+					"modifier"		"earthshaker_fissure_ti9"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"ability_icon"
+					"asset"		"earthshaker_fissure"
+					"modifier"		"earthshaker_fissure_ti9_style1"
+					"style"		"1"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_ti9_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier7"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_ti9_ambient_lvl2.vpcf"
+					"style"		"1"
+				}
+				"alternate_icons"
+				{
+					"0"
+					{
+						"icon_path"		"econ/items/earthshaker/ti9_immortal/ti9_immortal"
+					}
+					"1"
+					{
+						"icon_path"		"econ/items/earthshaker/ti9_immortal/ti9_immortal_style1"
+					}
+				}
 	}
 	"12973"
 	{

@@ -1,5 +1,7 @@
 if not Wearables then Wearables = {} end
 
+--[[
+
 local cool_hats = LoadKeyValues("scripts/kv/wearables.kv")
 
 function Wearables:SwapWearable(unit, new_model, material_group)
@@ -49,7 +51,6 @@ function Wearables:SwapWearable(unit, new_model, material_group)
 	end
 end
 
---[[
 function Wearables:SwapWearable( unit, target_model, new_model )
 	local wearable = unit:FirstMoveChild()
 	while wearable ~= nil do

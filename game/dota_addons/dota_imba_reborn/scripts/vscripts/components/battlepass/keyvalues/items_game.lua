@@ -40,12 +40,14 @@ ItemsGame = ItemsGame or class({})
 function ItemsGame:Init()
 	ItemsGame.custom_kv = LoadKeyValues("scripts/vscripts/components/battlepass/keyvalues/items.txt")
 	ItemsGame.battlepass = {}
+	ItemsGame.battlepass2 = {}
 	ItemsGame.companions = {}
 
 	local count = 1
 	local bp_reward_table = {}
+	local bp_reward_table2 = {}
 
-	while ItemsGame.custom_kv[tostring(count)] do
+	while ItemsGame.custom_kv[tostring(count)] and count < 100 do
 		local itemKV = ItemsGame.custom_kv[tostring(count)]
 
 		if itemKV.item_type == "courier" then
@@ -72,10 +74,47 @@ function ItemsGame:Init()
 	end
 
 	-- bubble sort by level
-	ItemsGame.battlepass = BubbleSortByElement(bp_reward_table, "level")
+--	ItemsGame.battlepass = BubbleSortByElement(bp_reward_table, "level")
+	ItemsGame.battlepass = bp_reward_table
 
-	CustomNetTables:SetTableValue("battlepass", "rewards", {ItemsGame.battlepass})
-	CustomNetTables:SetTableValue("battlepass", "companions", {ItemsGame.companions})
+	-- max nettable limit :(
+	CustomNetTables:SetTableValue("battlepass_js_builder", "rewards", {ItemsGame.battlepass})
+
+	while ItemsGame.custom_kv[tostring(count)] and count >= 100 do
+		local itemKV = ItemsGame.custom_kv[tostring(count)]
+
+		if itemKV.item_type == "courier" then
+			if not itemKV.item_name then
+				itemKV.item_name = ItemsGame:GetItemName(count)
+			end
+
+			table.insert(ItemsGame.companions, itemKV)
+		else
+			local reward_table = {}
+			reward_table.image = ItemsGame:GetItemImage(count)
+			reward_table.level = ItemsGame:GetItemUnlockLevel(count)
+			reward_table.name = ItemsGame:GetItemName(count)
+			reward_table.rarity = ItemsGame:GetItemRarity(count)
+			reward_table.type = ItemsGame:GetItemType(count)
+			reward_table.item_id = tostring(count)
+			reward_table.slot_id = ItemsGame:GetItemSlot(count)
+			reward_table.hero = ItemsGame:GetItemHero(count)
+
+			table.insert(bp_reward_table2, count - 99, reward_table)
+		end
+
+		count = count + 1
+	end
+
+--	ItemsGame.battlepass2 = BubbleSortByElement(bp_reward_table2, "level")
+	ItemsGame.battlepass2 = bp_reward_table2
+
+	Timers:CreateTimer(1.0, function()
+		print(ItemsGame.battlepass2)
+	end)
+
+	CustomNetTables:SetTableValue("battlepass_js_builder_2", "rewards", {ItemsGame.battlepass2})
+	CustomNetTables:SetTableValue("battlepass_player", "companions", {ItemsGame.companions})
 end
 
 function ItemsGame:GetItemKV(item_id)

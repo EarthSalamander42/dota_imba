@@ -28,21 +28,9 @@ modifier_imba_earthshaker_enchant_totem_leap		= modifier_imba_earthshaker_enchan
 -- Enchant Totem: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/earthshaker_enchant_totem_lua/modifier_earthshaker_enchant_totem_lua.lua
 
 earthshaker_fissure_lua = class({})
+
 LinkLuaModifier( "modifier_earthshaker_fissure_lua_thinker", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_earthshaker_fissure_lua_prevent_movement", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
-
-function earthshaker_fissure_lua:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "earthshaker_fissure" end
---	print(self:GetCaster().arcana_style)
-	if self:GetCaster().arcana_style == 0 then
-		return "earthshaker_fissure_ti9"
-	elseif self:GetCaster().arcana_style == 1 then
-		return "earthshaker/earthshaker_arcana/earthshaker_fissure"
-	elseif self:GetCaster().arcana_style == 2 then
-		return "earthshaker/earthshaker_arcana/earthshaker_fissure_alt2"
-	end
-end
 
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -148,24 +136,16 @@ end
 
 --------------------------------------------------------------------------------
 function earthshaker_fissure_lua:PlayEffects( start_pos, end_pos, duration )
-	-- Get Resources
-	local particle_cast = "particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
-	local sound_cast = "Hero_EarthShaker.Fissure"
-
-	-- generate data
-	local caster = self:GetCaster()
-
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( caster.fissure_pfx or particle_cast, PATTACH_WORLDORIGIN, caster )
---	local effect_cast = assert(loadfile("lua_abilities/rubick_spell_steal_lua/rubick_spell_steal_lua_arcana"))(self, particle_cast, PATTACH_WORLDORIGIN, caster )
+	local effect_cast = ParticleManager:CreateParticle("particles/econ/items/earthshaker/earthshaker_ti9/earthshaker_fissure_ti9.vpcf", PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster())
 	ParticleManager:SetParticleControl( effect_cast, 0, start_pos )
 	ParticleManager:SetParticleControl( effect_cast, 1, end_pos )
 	ParticleManager:SetParticleControl( effect_cast, 2, Vector( duration, 0, 0 ) )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	EmitSoundOnLocationWithCaster( start_pos, sound_cast, caster )
-	EmitSoundOnLocationWithCaster( end_pos, sound_cast, caster )
+	EmitSoundOnLocationWithCaster( start_pos, "Hero_EarthShaker.Fissure", self:GetCaster())
+	EmitSoundOnLocationWithCaster( end_pos, "Hero_EarthShaker.Fissure", self:GetCaster())
 end
 
 modifier_earthshaker_fissure_lua_thinker = class({})
@@ -265,16 +245,6 @@ LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_leap", "components/abil
 -- LinkLuaModifier( "modifier_earthshaker_enchant_totem_lua_leap", "components/abilities/heroes/hero_earthshaker", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
-
-function earthshaker_enchant_totem_lua:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "earthshaker_enchant_totem" end
-	if self:GetCaster().arcana_style == 2 then
-		return "earthshaker/earthshaker_arcana/earthshaker_enchant_totem_alt2"
-	elseif self:GetCaster().arcana_style == 1 then
-		return "earthshaker/earthshaker_arcana/earthshaker_enchant_totem"
-	end
-end
 
 function earthshaker_enchant_totem_lua:GetBehavior()
 	if self:GetCaster():HasScepter() then
@@ -780,16 +750,6 @@ LinkLuaModifier( "modifier_earthshaker_aftershock_lua", "components/abilities/he
 
 earthshaker_aftershock_lua = class({})
 
-function earthshaker_aftershock_lua:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "earthshaker_aftershock" end
-	if self:GetCaster().arcana_style == 2 then
-		return "earthshaker/earthshaker_arcana/earthshaker_aftershock_alt2"
-	elseif self:GetCaster().arcana_style == 1 then
-		return "earthshaker/earthshaker_arcana/earthshaker_aftershock"
-	end
-end
-
 --------------------------------------------------------------------------------
 -- Passive Modifier
 function earthshaker_aftershock_lua:GetIntrinsicModifierName()
@@ -918,16 +878,6 @@ end
 ---------------
 
 imba_earthshaker_echo_slam	= class({})
-
-function imba_earthshaker_echo_slam:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "earthshaker_echo_slam" end
-	if self:GetCaster().arcana_style == 2 then
-		return "earthshaker/earthshaker_arcana/earthshaker_echo_slam_alt2"
-	elseif self:GetCaster().arcana_style == 1 then
-		return "earthshaker/earthshaker_arcana/earthshaker_echo_slam"
-	end
-end
 
 function imba_earthshaker_echo_slam:OnSpellStart()
 	-- First part checks for how many heroes are around for appropriate sounds/responses

@@ -2526,12 +2526,40 @@
 		"item_unlock_level"			"120"
 	}
 
-//	"100" // Io: Benevolent Companion
-//	{
-//		"item_id"					"9235"
-//		"item_type"					"wearable"
-//		"item_unlock_level"			"600"
-//	}
+	"100" // Io: Benevolent Companion
+	{
+		"item_id"					"9235"
+		"item_type"					"wearable"
+		"item_unlock_level"			"600"
+	}
+
+	"101" // Earthshaker: Judgement of the Fallen
+	{
+		"item_id"					"12969"
+		"item_type"					"wearable"
+		"item_unlock_level"			"130"
+	}
+
+	"102" // Leshrac: Tormented Crown
+	{
+		"item_id"					"12933"
+		"item_type"					"wearable"
+		"item_unlock_level"			"140"
+	}
+
+	"103" // Enigma: World Chasm Artifact
+	{
+		"item_id"					"8326"
+		"item_type"					"wearable"
+		"item_unlock_level"			"150"
+	}
+
+	"104" // Drow Ranger: Reaper's Wreath
+	{
+		"item_id"					"12946"
+		"item_type"					"wearable"
+		"item_unlock_level"			"160"
+	}
 
 //	"2" // Antipode Couriers (Radiant)
 //	{

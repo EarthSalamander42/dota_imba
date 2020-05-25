@@ -30,6 +30,8 @@ function GameMode:OnHeroFirstSpawn(hero)
 	if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() then
 		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_meepo_divided_we_stand_lua", {})
 		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_custom_mechanics", {})
+	elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
+		hero:AddNewModifier(hero, nil, "modifier_wisp_death", {})
 	end
 	
 	if hero == nil or hero:IsFakeHero() then return end

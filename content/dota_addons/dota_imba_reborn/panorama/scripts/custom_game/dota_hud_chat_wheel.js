@@ -451,7 +451,7 @@ function OnMouseOut(num) {
 
 (function() {
 	GameUI.CustomUIConfig().chatWheelLoaded = true;
-
+/*
 	SubscribeToNetTableKey('game_state', 'patreon_bonuses', function(patreonBonuses) {
 		var localStats = patreonBonuses[Game.GetLocalPlayerID()];
 		if (!localStats) return;
@@ -459,7 +459,7 @@ function OnMouseOut(num) {
 		favourites = Object.values(localStats.chatWheelFavorites || {});
 		UpdateFavourites();
 	});
-
+*/
 	//var hero = Players.GetPlayerSelectedHero(Game.GetLocalPlayerID());
 	//$("#HeroImage").heroname = hero;
 	for ( var i = 0; i < 8; i++ )
