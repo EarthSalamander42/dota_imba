@@ -47,42 +47,55 @@ function Battlepass:Init()
 end
 
 function Battlepass:SetOverrideAssets(hero, modifier, table_name)
+	local asset_style = 0
+
+	if modifier and hero:HasModifier(modifier) and hero:FindModifierByName(modifier):GetStackCount() then
+		asset_style = hero:FindModifierByName(modifier):GetStackCount()
+	end
+
 	for i, j in pairs(table_name) do
 		if i ~= "skip_model_combine" and type(j) ~= "number" then
-			if (j.type == "particle" and modifier == nil) or (j.type == "particle" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("Particle:", j)
-				local particle_table = {}
-				particle_table.asset = j.asset
-				particle_table.modifier = j.modifier
-				particle_table.parent = hero
+			if j.type == "particle" then
+				if j.style == nil or j.style == asset_style then
+					if j.asset == GetKeyValueByHeroName(hero:GetUnitName(), "ProjectileModel") then
+						print("Range attack particle:", j)
+						hero:SetRangedProjectileName(j.modifier)
+					else
+						print("Particle:", j)
+						local particle_table = {}
+						particle_table.asset = j.asset
+						particle_table.modifier = j.modifier
+						particle_table.parent = hero
 
-				table.insert(CScriptParticleManager.PARTICLES_OVERRIDE, particle_table)
-			elseif (j.type == "sound" and modifier == nil) or (j.type == "sound" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("Sound:", j)
-				CustomNetTables:SetTableValue("battlepass_player", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
-			elseif (j.type == "ability_icon" and modifier == nil) or (j.type == "ability_icon" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("ability icon:", j)
-				CustomNetTables:SetTableValue("battlepass_player", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
-			elseif (j.type == "icon_replacement_hero" and modifier == nil) or (j.type == "icon_replacement_hero" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("topbar icon:", j)
-				CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
-					player_id = hero:GetPlayerID(),
-					icon_path = j.modifier,
-				})
-			elseif (j.type == "entity_model" and modifier == nil) or (j.type == "entity_model" and j.style and modifier and hero:FindModifierByName(modifier) and hero:FindModifierByName(modifier):GetStackCount() == j.style) then
---				print("entity model:", j)
-				ENTITY_MODEL_OVERRIDE[j.asset] = j.modifier
+						CustomNetTables:SetTableValue("battlepass_player", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+					end
+				end
+			elseif j.type == "sound" then
+				if j.style == nil or j.style == asset_style then
+--					print("Sound:", j)
+					CustomNetTables:SetTableValue("battlepass_player", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+				end
+			elseif j.type == "ability_icon" then
+				if j.style == nil or j.style == asset_style then
+--					print("ability icon:", j)
+					CustomNetTables:SetTableValue("battlepass_player", j.asset..'_'..hero:GetPlayerID(), {j.modifier}) 
+				end
+			elseif j.type == "icon_replacement_hero" then
+				if j.style == nil or j.style == asset_style then
+--					print("topbar icon:", j)
+					CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+						player_id = hero:GetPlayerID(),
+						icon_path = j.modifier,
+					})
+				end
+			elseif j.type == "entity_model" then
+				if j.style == nil or j.style == asset_style then
+--					print("entity model:", j)
+					ENTITY_MODEL_OVERRIDE[j.asset] = j.modifier
+				end
 			elseif j.type == "sheepstick_model" then
 				hero.sheepstick_model = j.modifier				
 			end
-		end
-	end
-
-	-- override attack projectile
-	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
-		if v.asset == GetKeyValueByHeroName(hero:GetUnitName(), "ProjectileModel") and v.parent == hero then
-			hero:SetRangedProjectileName(v.modifier)
-			break
 		end
 	end
 end
@@ -155,12 +168,11 @@ function Battlepass:GetHeroEffect(hero)
 					if type(item_id) == "number" then item_id = tostring(item_id) end
 
 					local modifier = ItemsGame:GetItemModifier(v.item_id)
+					local style = 0
 
 					if modifier then
 --						print("Add cosmetic modifier:", modifier)
 						hero:AddNewModifier(hero, nil, modifier, {})
-
-						local style = 0
 
 						if v.hero == "npc_dota_hero_phantom_assassin" then
 --							print("Arcana kills:")

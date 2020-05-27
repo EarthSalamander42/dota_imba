@@ -46738,6 +46738,388 @@
 			"style"		"0"
 		}
 	}
+	"13767"
+	{
+				"skip_model_combine"		"1"
+				"asset_modifier"
+				{
+					"type"		"ability_icon"
+					"asset"		"puck_dream_coil"
+					"modifier"		"puck/puck_ti10_immortal_ability_icons/puck_dream_coil_ti10"
+					"style"		"0"
+				}
+//				"asset_modifier2"
+//				{
+//					"type"		"activity"
+//					"asset"		"ALL"
+//					"modifier"		"puck_ti10_immortal_wings"
+//				}
+				"asset_modifier3"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/puck/puck_ti10_immortal/puck_ti10_ambient.vpcf"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_puck/puck_dreamcoil.vpcf"
+					"modifier"		"particles/econ/items/puck/puck_ti10_immortal/puck_ti10_ult.vpcf"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_puck/puck_dreamcoil_tether.vpcf"
+					"modifier"		"particles/econ/items/puck/puck_ti10_immortal/puck_ti10_tether.vpcf"
+				}
+				"asset_modifier6"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Puck.Dream_Coil"
+					"modifier"		"Hero_Puck.Dream_Coil.TI10"
+				}
+	}
+	"13773"
+	{
+				"asset_modifier"
+				{
+					"type"		"particle"
+					"modifier"		"particles/econ/items/keeper_of_the_light/kotl_ti10_immortal/kotl_ti10_ambient.vpcf"
+					"asset"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_ambient.vpcf"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf"
+					"modifier"		"particles/econ/items/keeper_of_the_light/kotl_ti10_immortal/kotl_ti10_blinding_light.vpcf"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/keeper_of_the_light/kotl_ti10_immortal/kotl_ti10_ambient_trace.vpcf"
+				}
+				"asset_modifier4"
+				{
+					"type"		"ability_icon"
+					"asset"		"keeper_of_the_light_blinding_light"
+					"modifier"		"keeper_of_the_light/kotl_ti10_immortal/keeper_of_the_light_blinding_light_immortal"
+				}		
+	}
+	"13776"
+	{
+				"asset_modifier"
+				{
+					"type"		"ability_icon"
+					"asset"		"night_stalker_crippling_fear"
+					"modifier"		"night_stalker/ns_ti10_immortal_ability_icons/night_stalker_crippling_fear_ti10"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/nightstalker/nightstalker_ti10_silence/nightstalker_ti10_ambient.vpcf"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear_aura.vpcf"
+					"modifier"		"particles/econ/items/nightstalker/nightstalker_ti10_silence/nightstalker_ti10.vpcf"
+				}
+				"asset_modifier4"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Nightstalker.CripplingFear.Aura"
+					"modifier"		"Hero_Nightstalker.CripplingFear.Aura.TI10"
+				}
+	}
+	"13777"
+	{
+				"skip_model_combine"		"1"
+				"asset_modifier"
+				{
+					"type"		"ability_icon"
+					"asset"		"tinker_laser"
+					"modifier"		"tinker/tinker_ti10_immortal_ability_icons/tinker_laser_ti10"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+					"modifier"		"particles/econ/items/tinker/tinker_ti10_immortal_laser/tinker_ti10_immortal_laser.vpcf"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_tinker/tinker_laser_aghs.vpcf"
+					"modifier"		"particles/econ/items/tinker/tinker_ti10_immortal_laser/tinker_ti10_immortal_laser_aghs.vpcf"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/tinker/tinker_ti10_immortal_laser/tinker_ti10_immortal_ambient.vpcf"
+				}
+	}
+	"13778"
+	{
+				"asset_modifier"
+				{
+					"type"		"ability_icon"
+					"asset"		"medusa_mystic_snake"
+					"modifier"		"medusa/medusa_ti10_immortal_ability_icons/medusa_mystic_snake_ti10"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_medusa/medusa_mystic_snake_projectile.vpcf"
+					"modifier"		"particles/econ/items/medusa/medusa_ti10_immortal_tail/medusa_ti10_projectile.vpcf"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_medusa/medusa_mystic_snake_projectile_return.vpcf"
+					"modifier"		"particles/econ/items/medusa/medusa_ti10_immortal_tail/medusa_ti10_projectile_return.vpcf"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_medusa/medusa_mystic_snake_projectile_initial.vpcf"
+					"modifier"		"particles/econ/items/medusa/medusa_ti10_immortal_tail/medusa_ti10_projectile.vpcf"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_medusa/medusa_mystic_snake_cast.vpcf"
+					"modifier"		"particles/econ/items/medusa/medusa_ti10_immortal_tail/medusa_ti10_mystic_cast.vpcf"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/medusa/medusa_ti10_immortal_tail/medusa_ti10_ambient.vpcf"
+				}
+				"skip_model_combine"		"1"
+	}
+	"13787"
+	{
+				"asset_modifier"
+				{
+					"type"		"ability_icon"
+					"asset"		"life_stealer_infest"
+					"modifier"		"life_stealer/ls_ti10_immortal_ability_icons/life_stealer_infest_ti10"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"ability_icon"
+					"asset"		"life_stealer_consume"
+					"modifier"		"life_stealer/ls_ti10_immortal_ability_icons/life_stealer_consume_ti10"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti10_immortal/ls_ti10_immortal_head.vpcf"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti10_immortal/ls_ti10_immortal_infest_icon_glow.vpcf"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf"
+					"modifier"		"particles/econ/items/lifestealer/ls_ti10_immortal/ls_ti10_immortal_infest.vpcf"
+				}
+//				"asset_modifier6"
+//				{
+//					"type"		"activity"
+//					"asset"		"ALL"
+//					"modifier"		"ti10_head"
+//				}
+				"asset_modifier7"
+				{
+					"type"		"sound"
+					"asset"		"Hero_LifeStealer.Consume"
+					"modifier"		"Hero_LifeStealer.Consume.TI10"
+				}
+	}
+	"13788"
+	{
+				"skip_model_combine"		"1"
+//				"asset_modifier"
+//				{
+//					"type"		"activity"
+//					"asset"		"ALL"
+//					"modifier"		"ti10_hook"
+//				}
+				"asset_modifier2"
+				{
+					"type"		"additional_wearable"
+					"asset"		"models/items/pudge/ti10_immortal_armhook/pudge_ti10_immortal_arm_bracer_model.vmdl"
+					"style"		"0"
+					"skin"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"additional_wearable"
+					"asset"		"models/items/pudge/ti10_immortal_armhook/pudge_ti10_immortal_arm_bracer_model.vmdl"
+					"style"		"1"
+					"skin"		"1"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+					"modifier"		"particles/econ/items/pudge/pudge_ti10_immortal/pudge_ti10_immortal_meathook.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_pudge/pudge_ambient_chain_right.vpcf"
+					"modifier"		"particles/error/null.vpcf"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/pudge/pudge_ti10_immortal/pudge_ti10_immortal_claw_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier7"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+					"modifier"		"particles/econ/items/pudge/pudge_ti10_immortal/pudge_ti10_immortal_meathook_arcana_green.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier8"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/pudge/pudge_ti10_immortal/pudge_ti10_immortal_claw_ambient_arcana_green.vpcf"
+					"style"		"1"
+				}
+				"styles"
+				{
+					"0"
+					{
+						"name"		"#DOTA_Style_Pudges_TI10_Hook_Base"
+						"skin"		"0"
+						"alternate_icon"		"0"
+					}
+					"1"
+					{
+						"name"		"#DOTA_Style_Pudges_TI10_Hook_Arcana_Alt_Style"
+						"skin"		"1"
+						"alternate_icon"		"1"
+					}
+				}
+				"asset_modifier9"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Pudge.AttackHookImpact"
+					"modifier"		"Hero_Pudge.Hook.Target.TI10"
+				}
+				"asset_modifier10"
+				{
+					"type"		"ability_icon"
+					"asset"		"pudge_meat_hook"
+					"modifier"		"pudge/ti_10_pudge_immortal_hook/pudge_meat_hook_immortal"
+					"style"		"0"
+				}
+				"asset_modifier11"
+				{
+					"type"		"ability_icon"
+					"asset"		"pudge_meat_hook"
+					"modifier"		"pudge/ti_10_pudge_immortal_hook/pudge_meat_hook_immortal_alt"
+					"style"		"1"
+				}
+				"alternate_icons"
+				{
+					"0"
+					{
+						"icon_path"		"econ/items/pudge/ti10_immortal_armhook/pudge_ti10_immortal_arm_hook"
+					}
+					"1"
+					{
+						"icon_path"		"econ/items/pudge/ti10_immortal_armhook/pudge_ti10_immortal_arm_hook_style1"
+					}
+				}
+	}
+	"13809"
+	{
+				"skip_model_combine"		"0"
+				"asset_modifier"
+				{
+					"type"		"ability_icon"
+					"asset"		"warlock_fatal_bonds"
+					"modifier"		"warlock/warlock_ti10_immortal_ability_icons/warlock_fatal_bonds_ti10"
+					"style"		"0"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+					"modifier"		"particles/econ/items/warlock/warlock_ti10_head/warlock_ti_10_fatal_bonds_icon.vpcf"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf"
+					"modifier"		"particles/econ/items/warlock/warlock_ti10_head/warlock_ti_10_fatal_bonds_pulse.vpcf"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit.vpcf"
+					"modifier"		"particles/econ/items/warlock/warlock_ti10_head/warlock_ti_10_fatal_bonds_pulse_flame.vpcf"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/warlock/warlock_ti10_head/warlock_ti_10_ambient_glyph.vpcf"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/warlock/warlock_ti10_head/warlock_ti_10_ambient_hair.vpcf"
+				}
+				"asset_modifier7"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit_parent.vpcf"
+					"modifier"		"particles/econ/items/warlock/warlock_ti10_head/warlock_ti_10_fatal_bonds_cast.vpcf"
+				}
+	}
+	"13813"
+	{
+				"asset_modifier"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/nightstalker/nightstalker_ti10_silence/nightstalker_ti10_ambient_gold.vpcf"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear_aura.vpcf"
+					"modifier"		"particles/econ/items/nightstalker/nightstalker_ti10_silence/nightstalker_ti10_gold.vpcf"
+				}
+				"skip_model_combine"		"0"
+				"asset_modifier3"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Nightstalker.CripplingFear.Aura"
+					"modifier"		"Hero_Nightstalker.CripplingFear.Aura.TI10"
+				}
+				"skin"		"1"
+				"asset_modifier4"
+				{
+					"type"		"ability_icon"
+					"asset"		"night_stalker_crippling_fear"
+					"modifier"		"night_stalker/ns_ti10_immortal_ability_icons/night_stalker_crippling_fear_ti10_gold"
+				}
+	}
 	"15869"
 	{
 		"player_card"

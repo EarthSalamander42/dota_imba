@@ -8,10 +8,6 @@
 imba_warlock_fatal_bonds = class({})
 LinkLuaModifier("modifier_imba_fatal_bonds", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_warlock_fatal_bonds:GetAbilityTextureName()
-	return "warlock_fatal_bonds"
-end
-
 function imba_warlock_fatal_bonds:IsHiddenWhenStolen()
 	return false
 end
@@ -21,7 +17,6 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	local caster = self:GetCaster()
 	local ability = self
 	local target = self:GetCursorTarget()
-	local sound_cast = "Hero_Warlock.FatalBonds"
 	local particle_base = "particles/units/heroes/hero_warlock/warlock_fatal_bonds_base.vpcf"
 	local particle_hit = "particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit.vpcf"
 	local modifier_bonds = "modifier_imba_fatal_bonds"
@@ -32,7 +27,7 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	local link_search_radius = ability:GetSpecialValueFor("link_search_radius")
 
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOn("Hero_Warlock.FatalBonds", caster)
 	
 	-- Initialize variables
 	local targets_linked = 0
@@ -72,13 +67,12 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 
 				-- If it was the main target, link from Warlock to it - otherwise, link from the target to them
 				if enemy == target then
-					local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+					local particle_hit_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit_parent.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster, caster)
 					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), true)
 					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
-
 				else
-					local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+					local particle_hit_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit_parent.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster, caster)
 					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, bond_target, PATTACH_POINT_FOLLOW, "attach_hitloc", bond_target:GetAbsOrigin(), true)
 					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
@@ -109,18 +103,12 @@ function modifier_imba_fatal_bonds:IsPurgable() return true end
 function modifier_imba_fatal_bonds:IsDebuff() return true end
 function modifier_imba_fatal_bonds:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_fatal_bonds:GetEffectName() return "particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf" end
-function modifier_imba_fatal_bonds:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
-function modifier_imba_fatal_bonds:ShouldUseOverheadOffset() return true end
-
 function modifier_imba_fatal_bonds:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 	self.sound_damage = "Hero_Warlock.FatalBondsDamage"
-	self.particle_icon = "particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
-	self.particle_hit = "particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit.vpcf"
 	self.modifier_bonds = "modifier_imba_fatal_bonds"
 	self.modifier_word = "modifier_imba_shadow_word"
 	self.ability_word = "imba_warlock_shadow_word"
@@ -141,12 +129,21 @@ function modifier_imba_fatal_bonds:OnCreated()
 		if self.caster:HasAbility(self.ability_word) then
 			self.ability_word_handler = self.caster:FindAbilityByName(self.ability_word)
 		end
+
+		self.pfx_overhead = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent, self.caster)
+--		ParticleManager:SetParticleControlEnt(self.pfx_overhead, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), true)
+--		ParticleManager:SetParticleControlEnt(self.pfx_overhead, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	end
 end
 
 function modifier_imba_fatal_bonds:OnDestroy()
 	if not IsServer() or self:GetParent():IsAlive() then return end
-	
+
+	if self.pfx_overhead then
+		ParticleManager:DestroyParticle(self.pfx_overhead, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx_overhead)
+	end
+
 	-- Check every unit that was linked by this modifier
 	for _, enemy in pairs(self.bond_table) do
 		if enemy ~= self:GetParent() then
@@ -200,7 +197,7 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 					ApplyDamage(damageTable)
 				
 					-- Add particle hit effect
-					local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
+					local particle_hit_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, self.parent, self:GetCaster())
 					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
@@ -242,7 +239,7 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 				ApplyDamage(damageTable)
 				
 				-- Add particle hit effect
-				local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
+				local particle_hit_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, self.parent, self:GetCaster())
 				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
@@ -284,10 +281,6 @@ end
 -----------------------------
 imba_warlock_shadow_word = class({})
 LinkLuaModifier("modifier_imba_shadow_word", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_warlock_shadow_word:GetAbilityTextureName()
-	return "warlock_shadow_word"
-end
 
 function imba_warlock_shadow_word:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
@@ -503,10 +496,6 @@ imba_warlock_upheaval = class({})
 LinkLuaModifier("modifier_imba_upheaval", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_upheaval_debuff", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_upheaval_buff", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_warlock_upheaval:GetAbilityTextureName()
-	return "warlock_upheaval"
-end
 
 function imba_warlock_upheaval:IsHiddenWhenStolen()
 	return false
@@ -768,10 +757,6 @@ LinkLuaModifier("modifier_imba_rain_of_chaos_golem_as", "components/abilities/he
 LinkLuaModifier("modifier_imba_rain_of_chaos_golem_ms", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_of_chaos_demon_link", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_of_chaos_demon_visible", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_warlock_rain_of_chaos:GetAbilityTextureName()
-	return "warlock_rain_of_chaos"
-end
 
 function imba_warlock_rain_of_chaos:IsHiddenWhenStolen()
 	return false

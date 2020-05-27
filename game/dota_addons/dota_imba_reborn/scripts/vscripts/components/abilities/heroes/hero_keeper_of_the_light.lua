@@ -516,7 +516,7 @@ function imba_keeper_of_the_light_blinding_light:Pulse(position)
 	-- Emit sound
 	self.caster:EmitSound("Hero_KeeperOfTheLight.BlindingLight")
 	
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf", PATTACH_POINT_FOLLOW, self.caster)
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf", PATTACH_POINT_FOLLOW, self.caster, self.caster)
 	ParticleManager:SetParticleControl(particle, 0, position)
 	ParticleManager:SetParticleControl(particle, 1, position)
 	ParticleManager:SetParticleControl(particle, 2, Vector(self.radius, 0, 0))

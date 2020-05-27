@@ -109,6 +109,7 @@
 	"battlepass_refresh" "Refresh"
 	"battlepass_reward_description" "You've reached level "
 	"battlepass_reward_locked" "Locked!"
+	"battlepass_reward_unreleased" "Coming Soon!"
 	"battlepass_sheepstick" "Scythe of Vyse"
 	"battlepass_sheepstick2" "Bird Sheepstick"
 	"battlepass_shiva" "Shiva"

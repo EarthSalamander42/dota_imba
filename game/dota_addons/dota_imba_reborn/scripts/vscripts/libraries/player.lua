@@ -799,24 +799,20 @@ function CDOTA_BaseNPC:GetIllusionBounty()
 	return self:GetLevel() * 2
 end
 
-CScriptParticleManager.PARTICLES_OVERRIDE = {}
-
 -- Call custom functions whenever CreateLinearProjectile is being called anywhere
 original_CreateLinearProjectile = ProjectileManager.CreateLinearProjectile
 ProjectileManager.CreateLinearProjectile = function(self, hHandle)
---	print("CreateLinearProjectile (override):", hHandle)
-
-	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
-		if v.asset == hHandle.EffectName and v.parent == hHandle.Ability:GetCaster() then
---			print("Create Particle (override):", hHandle)
-			hHandle.EffectName = v.modifier
---			print("New particle:", hHandle.EffectName)
-			break
-		end
-	end
-
 	-- call the original function
 	local response = original_CreateLinearProjectile(self, hHandle)
+
+--	print("CreateLinearProjectile (override):", hHandle)
+	if not hHandle.EffectName then return response end
+
+	local override = CustomNetTables:GetTableValue("battlepass_player", hHandle.EffectName..'_'..hHandle.Ability:GetCaster():GetPlayerOwnerID()) 
+
+	if override then
+		hHandle.EffectName = override
+	end
 
 	return response
 end
@@ -824,19 +820,17 @@ end
 -- Call custom functions whenever CreateTrackingProjectile is being called anywhere
 original_CreateTrackingProjectile = ProjectileManager.CreateTrackingProjectile
 ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
---	print("CreateTrackingProjectile (override):", hHandle)
-
-	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
-		if v.asset == hHandle.EffectName and v.parent == hHandle.Ability:GetCaster() then
---			print("Create Particle (override):", hHandle)
-			hHandle.EffectName = v.modifier
---			print("New particle:", hHandle.EffectName)
-			break
-		end
-	end
-
 	-- call the original function
 	local response = original_CreateTrackingProjectile(self, hHandle)
+
+--	print("CreateTrackingProjectile (override):", hHandle)
+	if not hHandle.EffectName then return response end
+
+	local override = CustomNetTables:GetTableValue("battlepass_player", hHandle.EffectName..'_'..hHandle.Ability:GetCaster():GetPlayerOwnerID()) 
+
+	if override then
+		hHandle.EffectName = override
+	end
 
 	return response
 end
@@ -845,13 +839,14 @@ end
 original_CreateParticle = CScriptParticleManager.CreateParticle
 CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent, hCaster)
 
-	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
-		if v.asset == sParticleName and v.parent == hCaster then
---			print("Create Particle (override):", sParticleName, iAttachType, hParent, hCaster)
-			sParticleName = v.modifier
---			print("New particle:", sParticleName)
-			break
-		end
+	local override = nil
+
+	if hCaster then
+		override = CustomNetTables:GetTableValue("battlepass_player", sParticleName..'_'..hCaster:GetPlayerOwnerID()) 
+	end
+
+	if override then
+		sParticleName = override["1"]
 	end
 
 	-- call the original function
@@ -865,11 +860,14 @@ original_CreateParticleForTeam = CScriptParticleManager.CreateParticleForTeam
 CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAttachType, hParent, iTeamNumber, hCaster)
 --	print("Create Particle (override):", sParticleName, iAttachType, hParent, iTeamNumber, hCaster)
 
-	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
-		if v.asset == sParticleName and v.parent == hCaster then
-			sParticleName = v.modifier
-			break
-		end
+	local override = nil
+
+	if hCaster then
+		override = CustomNetTables:GetTableValue("battlepass_player", sParticleName..'_'..hCaster:GetPlayerOwnerID()) 
+	end
+
+	if override then
+		sParticleName = override["1"]
 	end
 
 	-- call the original function
@@ -883,11 +881,14 @@ original_CreateParticleForPlayer = CScriptParticleManager.CreateParticleForPlaye
 CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, iAttachType, hParent, hPlayer, hCaster)
 --	print("Create Particle (override):", sParticleName, iAttachType, hParent, hPlayer, hCaster)
 
-	for k, v in pairs(CScriptParticleManager.PARTICLES_OVERRIDE) do
-		if v.asset == sParticleName and v.parent == hCaster then
-			sParticleName = v.modifier
-			break
-		end
+	local override = nil
+
+	if hCaster then
+		override = CustomNetTables:GetTableValue("battlepass_player", sParticleName..'_'..hCaster:GetPlayerOwnerID()) 
+	end
+
+	if override then
+		sParticleName = override["1"]
 	end
 
 	-- call the original function
@@ -923,17 +924,20 @@ original_EmitSound = CDOTA_BaseNPC.EmitSound
 CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 --	print("Create Particle (override):", sSoundName)
 
-	local caster = self
-
-	if hCaster then
-		caster = hCaster
-	end
-
-	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..caster:GetPlayerOwnerID()) 
+	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..self:GetPlayerOwnerID()) 
 
 	if override_sound then
---		print("EmitSound (override):", sSoundName, override_sound["1"])
+--		print("EmitSoundOn (override):", sSoundName, override_sound["1"])
 		sSoundName = override_sound["1"]
+	else
+		if hCaster then
+			local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hCaster:GetPlayerOwnerID()) 
+
+			if override_sound then
+--				print("EmitSoundOn (override):", sSoundName, override_sound["1"])
+				sSoundName = override_sound["1"]
+			end
+		end
 	end
 
 	-- call the original function
@@ -969,14 +973,22 @@ EmitSoundOn = function(sSoundName, hParent, hCaster)
 end
 
 original_EmitSoundOnLocationWithCaster = EmitSoundOnLocationWithCaster
-EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hCaster)
+EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hParent, hCaster)
 --	print("Create Particle (override):", sSoundName)
-
-	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hCaster:GetPlayerOwnerID()) 
+	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hParent:GetPlayerOwnerID()) 
 
 	if override_sound then
---		print("EmitSoundOnLocationWithCaster (override):", sSoundName, override_sound["1"])
+--		print("EmitSoundOn (override):", sSoundName, override_sound["1"])
 		sSoundName = override_sound["1"]
+	else
+		if hCaster then
+			local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hCaster:GetPlayerOwnerID()) 
+
+			if override_sound then
+--				print("EmitSoundOn (override):", sSoundName, override_sound["1"])
+				sSoundName = override_sound["1"]
+			end
+		end
 	end
 
 	-- call the original function
@@ -984,6 +996,25 @@ EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hCaster)
 
 	return response
 end
+
+--[[ Should be ready to work, not required yet
+original_Ability_GetProjectileName = CDOTA_Ability_Lua.GetProjectileName
+CDOTA_Ability_Lua.GetProjectileName = function(self)
+	-- call the original function
+	local response = original_Ability_GetProjectileName(self)
+	local override = CustomNetTables:GetTableValue("battlepass_player", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+
+	print("GetProjectileName (vanilla):", response)
+
+	if override then
+		print("GetProjectileName (override):", override)
+		return override
+	end
+
+	return response
+end
+
+--]]
 
 ----------------------------------------------------------------------------------
 -- credits to yahnich for every functions below

@@ -49,7 +49,7 @@ function imba_tinker_rearm:IsHiddenWhenStolen()
 end
 
 function imba_tinker_rearm:GetIntrinsicModifierName()
-    return "modifier_imba_rearm_overdrive"
+	return "modifier_imba_rearm_overdrive"
 end
 
 function imba_tinker_rearm:GetChannelAnimation()
@@ -394,22 +394,19 @@ end
 --			   LASER
 -------------------------------------------
 LinkLuaModifier("modifier_imba_laser_blind", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-imba_tinker_laser = class({})
 
-function imba_tinker_laser:GetAbilityTextureName()
-   return "tinker_laser"
-end
+imba_tinker_laser = imba_tinker_laser or class({})
 
 function imba_tinker_laser:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
 		local technomancy_ability_name = "imba_tinker_technomancy"
-		
+
 		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
-		
+
 		if RollPercentage(15) and (caster:GetName() == "npc_dota_hero_tinker") then
 			caster:EmitSound("tinker_tink_ability_laser_0"..math.random(1,4))
 		end
@@ -422,8 +419,10 @@ function imba_tinker_laser:OnSpellStart()
 		-- Create initial laser
 		local start_pos = caster:GetAbsOrigin()
 		local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()		
+
 		self:CreateLaser(start_pos, direction)
 
+--[[
 		-- Technomancy laser upgrades
 		local technomancy_ability
 		if caster:HasAbility(technomancy_ability_name) then
@@ -489,42 +488,43 @@ function imba_tinker_laser:OnSpellStart()
 				end)
 			end
 		end
+--]]
 	end
 end
 
 function imba_tinker_laser:CreateLaser(start_pos, laser_direction)
 	if IsServer() then		
 		local caster = self:GetCaster()		
-		
+
 		local travel_speed = self:GetSpecialValueFor("travel_speed")
 		local radius = self:GetSpecialValueFor("radius")
 		local distance = self:GetCastRange(caster:GetAbsOrigin(),caster) + GetCastRangeIncrease(caster) 		
 
 		-- Create the particle index
 		local laser_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, caster)	
-		
+
 		-- Create Laser Projectile
 		local laser_projectile = 
-			{
-				Ability				= self,
-				EffectName			= "particles/units/heroes/hero_tinker/tinker_laser.vpcf",
-				Source 				= caster,
-				vSpawnOrigin		= start_pos,
-				fDistance			= distance,
-				fStartRadius		= radius,
-				fEndRadius			= radius,				
-				bHasFrontalCone		= false,
-				bReplaceExisting	= false,
-				iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-				iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				fExpireTime 		= GameRules:GetGameTime() + 10.0,
-				bDeleteOnHit		= false,
-				vVelocity			= Vector(laser_direction.x,laser_direction.y,0) * travel_speed,
-				bProvidesVision		= false,
-				ExtraData			= {source_loc_x = start_pos.x, source_loc_y = start_pos.y, source_loc_z = start_pos.z, particle_index = laser_pfx, distance = distance}
-			}
-			
+		{
+			Ability				= self,
+			EffectName			= "particles/units/heroes/hero_tinker/tinker_laser.vpcf",
+			Source 				= caster,
+			vSpawnOrigin		= start_pos,
+			fDistance			= distance,
+			fStartRadius		= radius,
+			fEndRadius			= radius,				
+			bHasFrontalCone		= false,
+			bReplaceExisting	= false,
+			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			fExpireTime 		= GameRules:GetGameTime() + 10.0,
+			bDeleteOnHit		= false,
+			vVelocity			= Vector(laser_direction.x,laser_direction.y,0) * travel_speed,
+			bProvidesVision		= false,
+			ExtraData			= {source_loc_x = start_pos.x, source_loc_y = start_pos.y, source_loc_z = start_pos.z, particle_index = laser_pfx, distance = distance}
+		}
+
 		ProjectileManager:CreateLinearProjectile(laser_projectile)
 	end
 end
@@ -1051,7 +1051,7 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 					  bGroundLock = true,
 					  bProvidesVision = false,
 					  OnThink = function(self) 
-					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration})
+						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration})
 					  end,
 					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
 					  OnUnitHit = function(self, unit) 
@@ -1085,7 +1085,7 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 					  bGroundLock = true,
 					  bProvidesVision = false,
 					  OnThink = function(self) 
-					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration})
+						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration})
 					  end,
 					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
 					  OnUnitHit = function(self, unit) 
@@ -1121,7 +1121,7 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 					  bGroundLock = true,
 					  bProvidesVision = false,
 					  OnThink = function(self) 
-					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration})
+						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration})
 					  end,
 					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
 					  OnUnitHit = function(self, unit) 
@@ -1155,7 +1155,7 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 					  bGroundLock = true,
 					  bProvidesVision = false,
 					  OnThink = function(self) 
-					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration})
+						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration})
 					  end,
 					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
 					  OnUnitHit = function(self, unit) 
@@ -1189,7 +1189,7 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 					  bGroundLock = true,
 					  bProvidesVision = false,
 					  OnThink = function(self) 
-					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration})
+						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration})
 					  end,
 					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
 					  OnUnitHit = function(self, unit) 
@@ -1225,7 +1225,7 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 					  bGroundLock = true,
 					  bProvidesVision = false,
 					  OnThink = function(self) 
-					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y})
+						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y})
 					  end,
 					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
 					  OnUnitHit = function(self, unit) 
@@ -1562,11 +1562,11 @@ function modifier_imba_march_drone:OnIntervalThink()
 end
 
 function modifier_imba_march_drone:CheckState()
-    local state = 
+	local state = 
 	{
 		[MODIFIER_STATE_COMMAND_RESTRICTED] = true
 	}
-    return state 
+	return state 
 end
 
 -------------------------------------------

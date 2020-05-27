@@ -66,6 +66,7 @@ function ItemsGame:Init()
 			reward_table.item_id = tostring(count)
 			reward_table.slot_id = ItemsGame:GetItemSlot(count)
 			reward_table.hero = ItemsGame:GetItemHero(count)
+			reward_table.item_unreleased = ItemsGame:GetItemReleaseState(count)
 
 			table.insert(bp_reward_table, count, reward_table)
 		end
@@ -108,10 +109,6 @@ function ItemsGame:Init()
 
 --	ItemsGame.battlepass2 = BubbleSortByElement(bp_reward_table2, "level")
 	ItemsGame.battlepass2 = bp_reward_table2
-
-	Timers:CreateTimer(1.0, function()
-		print(ItemsGame.battlepass2)
-	end)
 
 	CustomNetTables:SetTableValue("battlepass_js_builder_2", "rewards", {ItemsGame.battlepass2})
 	CustomNetTables:SetTableValue("battlepass_player", "companions", {ItemsGame.companions})
@@ -188,6 +185,10 @@ end
 
 function ItemsGame:GetItemModifier(item_id)
 	return self:GetItemInfo(item_id, "modifier")
+end
+
+function ItemsGame:GetItemReleaseState(item_id)
+	return self:GetItemInfo(item_id, "item_unreleased") or nil
 end
 
 function ItemsGame:GetItemWearables(item_id)

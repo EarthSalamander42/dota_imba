@@ -135,6 +135,24 @@ C_DOTA_Item_Lua.GetAbilityTextureName = function(self)
 	return response
 end
 
+--[[ -- not procing somehow, leaving it there in case
+original_Ability_GetEffectName = C_DOTA_Modifier_Lua.GetEffectName
+C_DOTA_Modifier_Lua.GetEffectName = function(self)
+	-- call the original function
+	local response = original_Ability_GetEffectName(self)
+	local override = CustomNetTables:GetTableValue("battlepass_player", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
+
+	print("GetEffectName (vanilla):", response)
+
+	if override then
+		print("GetEffectName (override):", override)
+		return override
+	end
+
+	return response
+end
+--]]
+
 --[[
 -- Call custom functions whenever GetAttackSound is being called anywhere
 original_GetAttackSound = C_DOTA_Ability_Lua.GetAttackSound

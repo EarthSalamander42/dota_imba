@@ -237,10 +237,10 @@ end
 
 function SetArrowAttackProjectile(caster, frost_attack, marksmanship_attack)
 	if marksmanship_attack then
-		local marksmanship_arrow = caster.marksmanship_arrow
+		local marksmanship_arrow = "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
 
 		if frost_attack then
-			marksmanship_arrow = caster.marksmanship_frost_arrow_pfx
+			marksmanship_arrow = "particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
 		end
 
 		caster:SetRangedProjectileName(marksmanship_arrow)
@@ -265,7 +265,7 @@ function SetArrowAttackProjectile(caster, frost_attack, marksmanship_attack)
 	local lifesteal_projectile = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
 
 	-- Frost arrow projectiles
-	local basic_arrow = caster.base_attack_projectile
+	local basic_arrow = "particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	local frost_arrow = "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
 
 	local frost_lifesteal_projectile = "particles/hero/drow/lifesteal_arrows/drow_lifedrain_frost_arrow.vpcf"
@@ -1628,7 +1628,7 @@ end
 
 function modifier_imba_marksmanship:GetModifierProjectileName()
 	if self:GetStackCount() == 1 then
-		return self:GetParent().marksmanship_arrow_pfx
+		return "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
 	end
 end
 

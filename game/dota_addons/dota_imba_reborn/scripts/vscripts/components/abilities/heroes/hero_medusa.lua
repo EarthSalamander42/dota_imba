@@ -368,11 +368,11 @@ function imba_medusa_mystic_snake:OnSpellStart()
 		self:GetCaster():EmitSound("medusa_medus_mysticsnake_0"..random_response)
 	end
 	
-	local particle_cast = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mystic_snake_cast.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+	local particle_cast = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mystic_snake_cast.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster(), self:GetCaster())
 	ParticleManager:SetParticleControlEnt(particle_cast, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(particle_cast)
 	
-	local particle_snake = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mystic_snake_projectile.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+	local particle_snake = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mystic_snake_projectile.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster(), self:GetCaster())
 	ParticleManager:SetParticleControlEnt(particle_snake, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(particle_snake, 1, self:GetCursorTarget():GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_snake, 2, Vector(self:GetSpecialValueFor("initial_speed"), 0, 0))
@@ -578,7 +578,7 @@ function imba_medusa_mystic_snake:Return(hTarget, vLocation, ExtraData)
 	ParticleManager:DestroyParticle(ExtraData.particle_snake, false)
 	ParticleManager:ReleaseParticleIndex(ExtraData.particle_snake)
 
-	local particle_snake = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mystic_snake_projectile_return.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+	local particle_snake = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mystic_snake_projectile_return.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster(), self:GetCaster())
 	ParticleManager:SetParticleControlEnt(particle_snake, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(particle_snake, 1, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_snake, 2, Vector(self:GetSpecialValueFor("return_speed"), 0, 0))

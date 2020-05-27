@@ -2561,6 +2561,85 @@
 		"item_unlock_level"			"160"
 	}
 
+	"105" // Tinker: Arcanic Resonance Beam
+	{
+		"item_id"					"13777"
+		"item_type"					"wearable"
+		"item_unlock_level"			"210"
+		"item_unreleased"			"1" // not sent to js somehow
+	}
+
+	"106" // Night Stalker: Shadow of the Dark Age
+	{
+		"item_id"					"13776"
+		"item_type"					"wearable"
+		"item_unlock_level"			"220"
+	}
+
+	"107" // Warlock: Warden of the Hellborn
+	{
+		"item_id"					"13809"
+		"item_type"					"wearable"
+		"item_unlock_level"			"230"
+	}
+
+	"108" // Lifestealer: Dark Maw Inhibitor
+	{
+		"item_id"					"13787"
+		"item_type"					"wearable"
+		"item_unlock_level"			"240"
+	}
+
+	"109" // Keeper of the Light: Prominence
+	{
+		"item_id"					"13773"
+		"item_type"					"wearable"
+		"item_unlock_level"			"250"
+	}
+
+	"110" // Medusa: Fate of Hydrophiinae
+	{
+		"item_id"					"13778"
+		"item_type"					"wearable"
+		"item_unlock_level"			"260"
+	}
+
+	"111" // Puck: Blossom of the Merry Wanderer
+	{
+		"item_id"					"13767"
+		"item_type"					"wearable"
+		"item_unlock_level"			"410"
+	}
+
+	"112" // Pudge: The Abscesserator Bundle
+	{
+		"item_id"					"21426"
+		"item_type"					"bundle"
+		"item_unlock_level"			"550"
+
+		"wearables"
+		{
+			"13788"			"weapon" // The Abscesserator
+			"13789"			"arms" // Pudge's Bare Arm
+		}
+	}
+
+
+	// TODO: UI support for different styles
+//	"112" // Night Stalker: Golden Shadow of the Dark Age
+//	{
+//		"item_id"					"13813"
+//		"item_type"					"wearable"
+//		"item_unlock_level"			"440"
+//	}
+
+//	"113" // Lifestealer: Golden Dark Maw Inhibitor
+//	{
+//		"item_id"					"13818"
+//		"item_type"					"wearable"
+//		"item_unlock_level"			"450"
+//	}
+
 //	"2" // Antipode Couriers (Radiant)
 //	{
 //		"item_id"					"10888"

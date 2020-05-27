@@ -22,6 +22,7 @@ function OnUpdateHeroSelection()
 	var friends_and_foes = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("FriendsAndFoes");
 
 	if (friends_and_foes && hero_bio == null) {
+		friends_and_foes.style.visibility = "visible";
 		hero_bio = $.CreatePanel('Label', friends_and_foes, 'HeroBio');
 		hero_bio.style.height = "100%";
 		hero_bio.style.paddingLeft = "4%";
