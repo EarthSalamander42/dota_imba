@@ -113,7 +113,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_aeon_disk",
 				"item_imba_aether_specs",
 				"item_imba_arcane_boots",
-				"item_black_king_bar",
+				"item_imba_black_king_bar",
 				"item_imba_bloodstone",
 				"item_imba_guardian_greaves",
 				"item_imba_hand_of_midas",

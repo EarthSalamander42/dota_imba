@@ -1266,7 +1266,7 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 	end
 end
 
--- credits to yahnich for the following
+-- FireParticle credits: yahnich
 function ParticleManager:FireParticle(effect, attach, owner, cps)
 	local FX = ParticleManager:CreateParticle(effect, attach, owner)
 	if cps then
@@ -1283,7 +1283,7 @@ function ParticleManager:FireParticle(effect, attach, owner, cps)
 	ParticleManager:ReleaseParticleIndex(FX)
 end
 
--- credits to darklord (Dota 12v12) for the following
+-- custom event listeners credits: darklord (Dota 12v12)
 for _, listenerId in ipairs(registeredCustomEventListeners or {}) do
 	CustomGameEventManager:UnregisterListener(listenerId)
 end
@@ -1389,4 +1389,15 @@ function CDOTA_BaseNPC:Custom_HasAnyAvailableInventorySpace()
 		-- If we got here, then we don't have a free space
 		return false
 	end
+end
+
+-- Gets all Ethereal abilities
+function GetEtherealAbilities()
+	local abilities = {
+		"modifier_imba_ghost_shroud_active",
+		"modifier_imba_ghost_state",
+		"modifier_item_imba_ethereal_blade_ethereal"
+	}
+
+	return abilities
 end

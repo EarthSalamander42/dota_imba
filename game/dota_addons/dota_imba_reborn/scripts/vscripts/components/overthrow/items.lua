@@ -116,7 +116,7 @@ function COverthrowGameMode:SpecialItemAdd( event )
 		"item_pipe",
 		"item_heavens_halberd",
 		"item_crimson_guard",
-		"item_black_king_bar",
+		"item_imba_black_king_bar",
 		"item_bloodstone",
 		"item_lotus_orb",
 		"item_guardian_greaves",
