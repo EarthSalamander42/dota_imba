@@ -1398,3 +1398,11 @@ function CDOTA_BaseNPC:Custom_HasAnyAvailableInventorySpace()
 		return false
 	end
 end
+
+-- Gets all Ethereal abilities
+function GetEtherealAbilities()
+	local abilities = {"modifier_imba_ghost_shroud_active",
+					   "modifier_imba_ghost_state",
+					   "modifier_item_imba_ethereal_blade_ethereal"}
+	return abilities
+end

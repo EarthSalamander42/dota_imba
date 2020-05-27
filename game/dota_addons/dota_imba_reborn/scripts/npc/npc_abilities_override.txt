@@ -177,8 +177,8 @@
 	"item_manta"							"REMOVE"
 	"item_third_eye"						"REMOVE"
 	"item_third_eye"						"REMOVE"
+	"item_black_king_bar"					"REMOVE" 
 	
-	"item_black_king_bar"					"REMOVE" // Not actually removed, but doing this and "remaking" it allows the shared bkb cooldown thing to work
 	"item_cyclone"							"REMOVE" // Not actually removed, but doing this and "remaking" it allows the shared cyclone cooldown thing to work
 	
 	//Banned items
@@ -1007,78 +1007,8 @@
 				"bonus_health_regen"	"8"
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Black King Bar
-	//=================================================================================================================
-	"item_recipe_black_king_bar"
-	{
-		"ItemCost"						"0"	
-
-		"ItemRequirements"
-		{
-			"01"						"item_ogre_axe;item_mithril_hammer;item_minotaur_horn"
-		}
-	}
+	}	
 	
-	//=================================================================================================================
-	// Black King Bar
-	//=================================================================================================================
-	"item_black_king_bar"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"116"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"FightRecapLevel"				"2"
-
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"65 60 55 50 45 40"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4050"
-		"ItemShopTags"					"str;damage;hard_to_tag"
-		"ItemQuality"					"epic"
-		"ItemAliases"					"bkb;black king bar"
-		"ItemSellable"					"1"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ShouldBeSuggested"				"1"
-		"AbilitySharedCooldown"			"bkb"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"20"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"11.0 10.0 9.0 8.0 7.0 6.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_level"				"6"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"model_scale"			"60 58 56 52 50"     // Percentage over model scale
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Linken's Sphere
