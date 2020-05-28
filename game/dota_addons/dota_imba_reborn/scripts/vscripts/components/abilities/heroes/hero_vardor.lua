@@ -735,7 +735,7 @@ function vardor_graceful_jump:OnProjectileHit(target, location)
 
 	-- Show hit particle
 	local particle = ParticleManager:CreateParticle("particles/hero/vardor/vardor_graceful_jump_ground.vpcf", PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(particle, 0, location)
+	ParticleManager:SetParticleControl(particle, 1, location)
 	ParticleManager:ReleaseParticleIndex(particle)
 
 	-- Set the caster on the hit location and give it a valid space to land on
