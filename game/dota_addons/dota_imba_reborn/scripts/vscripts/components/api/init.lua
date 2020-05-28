@@ -107,8 +107,10 @@ function api:GetPlayerCompanion(player_id)
 		return false
 	end
 
-	if self.players[steamid] ~= nil then
-		return CustomNetTables:GetTableValue("battlepass_player", "companions")["1"][tostring(self.players[steamid].companion_id)]
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", "companions")
+
+	if self.players[steamid] ~= nil and ply_table and ply_table["1"] and ply_table["1"][tostring(self.players[steamid].companion_id)] then
+		return ply_table["1"][tostring(self.players[steamid].companion_id)]
 	else
 		native_print("api:GetPlayerCompanion: api players steamid not valid!")
 		return false
