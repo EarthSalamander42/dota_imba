@@ -671,7 +671,7 @@ function modifier_imba_puck_dream_coil:OnCreated(params)
 	self.coil_thinker				= EntIndexToHScript(params.coil_thinker)
 	self.coil_thinker_location		= self.coil_thinker:GetAbsOrigin()
 
-	local coil_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_dreamcoil_tether.vpcf", PATTACH_ABSORIGIN, self.coil_thinker)
+	local coil_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_dreamcoil_tether.vpcf", PATTACH_ABSORIGIN, self.coil_thinker, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(coil_particle, 0, self.coil_thinker, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self.coil_thinker_location, true)
 	ParticleManager:SetParticleControlEnt(coil_particle, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	self:AddParticle(coil_particle, false, false, -1, false, false)
@@ -762,17 +762,21 @@ end
 -- DREAM COIL THINKER MODIFIER --
 ---------------------------------
 
-function modifier_imba_puck_dream_coil_thinker:GetEffectName()
-	return "particles/units/heroes/hero_puck/puck_dreamcoil.vpcf"
-end
+function modifier_imba_puck_dream_coil_thinker:OnCreated()
+	if not IsServer() then return end
 
--- function modifier_imba_puck_dream_coil_thinker:OnCreated()
-	-- if not IsServer() then return end
--- end
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_dreamcoil.vpcf", PATTACH_WORLDORIGIN, nil, self:GetCaster())
+	ParticleManager:SetParticleControl(self.pfx, 0, self:GetParent():GetAbsOrigin())
+end
 
 function modifier_imba_puck_dream_coil_thinker:OnDestroy()
 	if not IsServer() then return end
-	
+
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
+
 	self:GetParent():RemoveSelf()
 end
 

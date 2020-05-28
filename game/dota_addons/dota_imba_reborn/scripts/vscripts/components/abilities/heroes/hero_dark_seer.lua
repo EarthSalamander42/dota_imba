@@ -589,37 +589,6 @@ end
 -- ION SHELL --
 ---------------
 
-LinkLuaModifier("modifier_imba_dark_seer_ion_shell_handler", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
-
-if modifier_imba_dark_seer_ion_shell_handler == nil then modifier_imba_dark_seer_ion_shell_handler = class({}) end
-
-function modifier_imba_dark_seer_ion_shell_handler:IsHidden() return true end
-function modifier_imba_dark_seer_ion_shell_handler:RemoveOnDeath() return false end
-
-function modifier_imba_dark_seer_ion_shell_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().ion_shell_icon == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().ion_shell_icon)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().ion_shell_icon = self:GetStackCount()
-	end
-end
-
-function imba_dark_seer_ion_shell:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().ion_shell_icon then return "dark_seer_ion_shell" end
-	return "custom/imba_dark_seer_ion_shell_immortal_"..self:GetCaster().ion_shell_icon
-end
-
-function imba_dark_seer_ion_shell:GetIntrinsicModifierName()
-	return "modifier_imba_dark_seer_ion_shell_handler"
-end
-
 function imba_dark_seer_ion_shell:GetBehavior()
 	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST 
 end
@@ -627,7 +596,7 @@ end
 function imba_dark_seer_ion_shell:OnSpellStart()
 	if not IsServer() then return end
 	
-	self:GetCursorTarget():EmitSound(self:GetCaster().ion_shell_sound or "Hero_Dark_Seer.Ion_Shield_Start")
+	self:GetCursorTarget():EmitSound("Hero_Dark_Seer.Ion_Shield_Start")
 	
 	if self:GetCaster():GetName() == "npc_dota_hero_dark_seer" and RollPercentage(50) then
 		self:GetCaster():EmitSound("dark_seer_dkseer_ability_surge_0"..math.random(1,2))
@@ -657,12 +626,10 @@ function modifier_imba_dark_seer_ion_shell:OnCreated()
 	
 	self:GetParent():EmitSound("Hero_Dark_Seer.Ion_Shield_lp")
 	
-	self.particle			= ParticleManager:CreateParticle(self:GetCaster().ion_shell_effect or "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	self.particle			= ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf", PATTACH_POINT_FOLLOW, self:GetParent(), self:GetCaster())
 	ParticleManager:SetParticleControlEnt(self.particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(50, 50, 50)) -- Arbitrary
 	self:AddParticle(self.particle, false, false, -1, false, false)
-	
-	print(self.particle)
 	
 	self:SetStackCount(0)
 	
@@ -689,7 +656,7 @@ function modifier_imba_dark_seer_ion_shell:OnIntervalThink()
 	for _, enemy in pairs(enemies) do
 		if enemy ~= self:GetParent() then
 	
-			local particle = ParticleManager:CreateParticle(self:GetCaster().ion_shell_damage_effect, PATTACH_POINT, self:GetParent())
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf", PATTACH_POINT, self:GetParent(), self:GetCaster())
 			ParticleManager:SetParticleControlEnt(particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(particle)
@@ -719,7 +686,7 @@ end
 function modifier_imba_dark_seer_ion_shell:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():EmitSound(self:GetCaster().ion_shell_end_sound or "Hero_Dark_Seer.Ion_Shield_end")
+	self:GetParent():EmitSound("Hero_Dark_Seer.Ion_Shield_end")
 	
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():EmitSound("Hero_Abaddon.AphoticShield.Destroy")
@@ -797,7 +764,7 @@ function modifier_imba_dark_seer_ion_shell_negation:OnCreated()
 	
 	self:GetParent():EmitSound("Hero_Dark_Seer.Ion_Shield_lp")
 	
-	self.particle			= ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+	self.particle			= ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf", PATTACH_POINT_FOLLOW, self:GetParent(), self:GetCaster())
 	ParticleManager:SetParticleControlEnt(self.particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, self.radius, self.radius))
 	self:AddParticle(self.particle, false, false, -1, false, false)
@@ -827,7 +794,7 @@ function modifier_imba_dark_seer_ion_shell_negation:OnIntervalThink()
 	
 	for _, unit in pairs(units) do
 		if unit ~= self:GetParent() then
-			local particle = ParticleManager:CreateParticle(self:GetCaster().ion_shell_damage_effect, PATTACH_POINT, self:GetParent())
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf", PATTACH_POINT, self:GetParent(), self:GetCaster())
 			ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(particle)

@@ -35,6 +35,10 @@ function item_imba_aegis:GetAbilityTextureName()
 end
 
 function modifier_item_imba_aegis:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 
 	-- Parameters
@@ -119,6 +123,10 @@ function modifier_item_imba_aegis_pfx:DeclareFunctions() return {
 } end
 
 function modifier_item_imba_aegis_pfx:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 
 	self.reincarnate_time = GetAbilitySpecial("item_imba_aegis", "reincarnate_time")

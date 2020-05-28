@@ -46,6 +46,10 @@ function modifier_item_imba_blight_stone:GetAttributes()	return MODIFIER_ATTRIBU
 -- Possible projectile changes
 function modifier_item_imba_blight_stone:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
@@ -99,6 +103,10 @@ function modifier_item_imba_blight_stone_debuff:IsPurgable() return true end
 
 -- Store modifier values in case the original ability is missing
 function modifier_item_imba_blight_stone_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local ability = self:GetAbility()
 
 	if not ability then
@@ -226,6 +234,10 @@ function modifier_item_imba_desolator:GetAttributes()	return MODIFIER_ATTRIBUTE_
 
 -- Possible projectile changes
 function modifier_item_imba_desolator:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 		ChangeAttackProjectileImba(self:GetParent())
 	end
@@ -428,6 +440,10 @@ function modifier_item_imba_desolator_2:GetAttributes()	return MODIFIER_ATTRIBUT
 -- Possible projectile changes
 function modifier_item_imba_desolator_2:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
@@ -485,6 +501,10 @@ function modifier_item_imba_desolator_2_debuff:IsPurgable() return true end
 
 -- Store modifier values in case the original ability is missing
 function modifier_item_imba_desolator_2_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local ability = self:GetAbility()
 	if ability then
 		self.armor_reduction = (-1) * ability:GetSpecialValueFor("armor_reduction")

@@ -171,6 +171,10 @@ end
 
 function modifier_imba_skull_basher_skull_break:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
+	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local parent = self:GetParent()

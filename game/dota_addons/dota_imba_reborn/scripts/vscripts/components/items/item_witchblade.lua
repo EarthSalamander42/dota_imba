@@ -132,7 +132,11 @@ function modifier_item_imba_witchblade_slow:GetEffectName()
 	return "particles/items_fx/diffusal_slow.vpcf"
 end
 
-function modifier_item_imba_witchblade_slow:OnCreated()
+function modifier_item_imba_witchblade_slow:OnCreated()	
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	
 	if not self.ability then return end

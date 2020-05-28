@@ -76,6 +76,10 @@ end
 
 function modifier_diretide_candy_hp_loss:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
+	if IsServer() then
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()    

@@ -139,6 +139,10 @@ function modifier_item_imba_nullifier:RemoveOnDeath()	return false end
 function modifier_item_imba_nullifier:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_nullifier:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
@@ -198,6 +202,10 @@ function modifier_item_imba_nullifier_dispel:GetStatusEffectName()
 end
 
 function modifier_item_imba_nullifier_dispel:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.level	= self:GetAbility():GetLevel()
 
 	if self:GetAbility() then
@@ -260,6 +268,10 @@ function modifier_item_imba_nullifier_dispel:GetStatusEffectName()
 end
 
 function modifier_item_imba_nullifier_slow:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.slow_pct	= 0
 	
 	if self:GetAbility() then

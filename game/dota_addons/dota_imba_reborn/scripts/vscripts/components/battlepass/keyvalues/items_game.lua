@@ -40,12 +40,48 @@ ItemsGame = ItemsGame or class({})
 function ItemsGame:Init()
 	ItemsGame.custom_kv = LoadKeyValues("scripts/vscripts/components/battlepass/keyvalues/items.txt")
 	ItemsGame.battlepass = {}
+	ItemsGame.battlepass2 = {}
 	ItemsGame.companions = {}
 
 	local count = 1
 	local bp_reward_table = {}
+	local bp_reward_table2 = {}
 
-	while ItemsGame.custom_kv[tostring(count)] do
+	while ItemsGame.custom_kv[tostring(count)] and count < 100 do
+		local itemKV = ItemsGame.custom_kv[tostring(count)]
+
+		if itemKV.item_type == "courier" then
+			if not itemKV.item_name then
+				itemKV.item_name = ItemsGame:GetItemName(count)
+			end
+
+			table.insert(ItemsGame.companions, itemKV)
+		else
+			local reward_table = {}
+			reward_table.image = ItemsGame:GetItemImage(count)
+			reward_table.level = ItemsGame:GetItemUnlockLevel(count)
+			reward_table.name = ItemsGame:GetItemName(count)
+			reward_table.rarity = ItemsGame:GetItemRarity(count)
+			reward_table.type = ItemsGame:GetItemType(count)
+			reward_table.item_id = tostring(count)
+			reward_table.slot_id = ItemsGame:GetItemSlot(count)
+			reward_table.hero = ItemsGame:GetItemHero(count)
+			reward_table.item_unreleased = ItemsGame:GetItemReleaseState(count)
+
+			table.insert(bp_reward_table, count, reward_table)
+		end
+
+		count = count + 1
+	end
+
+	-- bubble sort by level
+--	ItemsGame.battlepass = BubbleSortByElement(bp_reward_table, "level")
+	ItemsGame.battlepass = bp_reward_table
+
+	-- max nettable limit :(
+	CustomNetTables:SetTableValue("battlepass_js_builder", "rewards", {ItemsGame.battlepass})
+
+	while ItemsGame.custom_kv[tostring(count)] and count >= 100 do
 		local itemKV = ItemsGame.custom_kv[tostring(count)]
 
 		if itemKV.item_type == "courier" then
@@ -65,17 +101,17 @@ function ItemsGame:Init()
 			reward_table.slot_id = ItemsGame:GetItemSlot(count)
 			reward_table.hero = ItemsGame:GetItemHero(count)
 
-			table.insert(bp_reward_table, count, reward_table)
+			table.insert(bp_reward_table2, count - 99, reward_table)
 		end
 
 		count = count + 1
 	end
 
-	-- bubble sort by level
-	ItemsGame.battlepass = BubbleSortByElement(bp_reward_table, "level")
+--	ItemsGame.battlepass2 = BubbleSortByElement(bp_reward_table2, "level")
+	ItemsGame.battlepass2 = bp_reward_table2
 
-	CustomNetTables:SetTableValue("battlepass", "rewards", {ItemsGame.battlepass})
-	CustomNetTables:SetTableValue("battlepass", "companions", {ItemsGame.companions})
+	CustomNetTables:SetTableValue("battlepass_js_builder_2", "rewards", {ItemsGame.battlepass2})
+	CustomNetTables:SetTableValue("battlepass_player", "companions", {ItemsGame.companions})
 end
 
 function ItemsGame:GetItemKV(item_id)
@@ -90,7 +126,7 @@ end
 function ItemsGame:GetItemInfo(item_id, category, return_override)
 	if type(item_id) ~= "string" then item_id = tostring(item_id) end
 
-	if ItemsGame:GetItemKV(item_id)[category] then
+	if ItemsGame:GetItemKV(item_id) and ItemsGame:GetItemKV(item_id)[category] then
 		return ItemsGame:GetItemKV(item_id)[category]
 	end
 
@@ -151,6 +187,10 @@ function ItemsGame:GetItemModifier(item_id)
 	return self:GetItemInfo(item_id, "modifier")
 end
 
+function ItemsGame:GetItemReleaseState(item_id)
+	return self:GetItemInfo(item_id, "item_unreleased") or nil
+end
+
 function ItemsGame:GetItemWearables(item_id)
 	if self:GetItemType(item_id) == "bundle" then
 		return self:GetItemInfo(item_id, "wearables", {})
@@ -204,6 +244,14 @@ function ItemsGame:GetItemModel(item_id)
 	end
 
 	return nil
+end
+
+function ItemsGame:GetItemEffects(item_id)
+	return self:GetItemInfo(item_id, "particles") or {}
+end
+
+function ItemsGame:GetItemImages(item_id)
+	return self:GetItemInfo(item_id, "inventory_icons") or {}
 end
 
 ItemsGame:Init()

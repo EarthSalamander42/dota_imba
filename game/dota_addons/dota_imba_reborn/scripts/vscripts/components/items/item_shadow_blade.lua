@@ -172,6 +172,10 @@ function modifier_item_imba_shadow_blade_passive:RemoveOnDeath() return false en
 function modifier_item_imba_shadow_blade_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_shadow_blade_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local ability   =   self:GetAbility()
 
 	-- Ability parameters
@@ -218,6 +222,10 @@ function modifier_item_imba_shadow_blade_invis_flying_disabled:IsPurgable() retu
 
 function modifier_item_imba_shadow_blade_invis_flying_disabled:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		-- flying disabled
 		self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 
@@ -247,6 +255,10 @@ function modifier_item_imba_shadow_blade_invis_turnrate_debuff:IsPurgable() retu
 
 -- Turnrate slow
 function modifier_item_imba_shadow_blade_invis_turnrate_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	local ability   =   self:GetAbility()
 
 	self.turnrate   =   ability:GetSpecialValueFor("turnrate_slow")

@@ -38,6 +38,10 @@ function modifier_imba_occult_mask:RemoveOnDeath()	return false end
 function modifier_imba_occult_mask:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_occult_mask:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.modifier_self = "modifier_imba_occult_mask"
@@ -85,6 +89,10 @@ end
 modifier_imba_occult_mask_unique = modifier_imba_occult_mask_unique or class({})
 
 function modifier_imba_occult_mask_unique:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 

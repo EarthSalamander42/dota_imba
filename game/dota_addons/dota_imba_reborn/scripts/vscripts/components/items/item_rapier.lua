@@ -94,6 +94,10 @@ function modifier_imba_divine_rapier:DeclareFunctions()
 end
 
 function modifier_imba_divine_rapier:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local item = self:GetAbility()
 	if item and not self:GetParent():IsCourier() and not self:GetParent():IsIllusion() then
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
@@ -144,6 +148,10 @@ function modifier_imba_divine_rapier_2:GetModifierProvidesFOWVision()
 end
 
 function modifier_imba_divine_rapier_2:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if item and not self:GetParent():IsCourier() and not self:GetParent():IsIllusion() then
@@ -194,6 +202,10 @@ function modifier_imba_arcane_rapier:DeclareFunctions()
 end
 
 function modifier_imba_arcane_rapier:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local item = self:GetAbility()
 	if item and not self:GetParent():IsCourier() and not self:GetParent():IsIllusion() then
 		self.spell_power = item:GetSpecialValueFor("spell_power")
@@ -230,6 +242,10 @@ function modifier_imba_arcane_rapier_2:DeclareFunctions()
 end
 
 function modifier_imba_arcane_rapier_2:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if item and not self:GetParent():IsCourier() and not self:GetParent():IsIllusion() then
@@ -274,6 +290,10 @@ end
 modifier_imba_rapier_cursed = ShallowCopy( modifier_rapier_base_class )
 
 function modifier_imba_rapier_cursed:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if item and not self:GetParent():IsCourier() and not self:GetParent():IsIllusion() then
@@ -359,6 +379,10 @@ function modifier_imba_rapier_cursed_damage_reduction:IsStunDebuff() return fals
 function modifier_imba_rapier_cursed_damage_reduction:RemoveOnDeath() return false end
 
 function modifier_imba_rapier_cursed_damage_reduction:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.damage_reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
 end
 
@@ -382,6 +406,10 @@ function modifier_imba_rapier_cursed_curse:IsStunDebuff() return false end
 function modifier_imba_rapier_cursed_curse:RemoveOnDeath() return false end
 
 function modifier_imba_rapier_cursed_curse:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.parent = self:GetParent()
 	
 	if IsServer() then

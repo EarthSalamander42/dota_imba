@@ -32,13 +32,7 @@ LinkLuaModifier( "modifier_item_imba_mekansm_aura", "components/items/item_mekan
 LinkLuaModifier( "modifier_item_imba_mekansm_heal", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Heal buff
 
 function item_imba_mekansm:GetIntrinsicModifierName()
-	return "modifier_item_imba_mekansm" end
-
-function item_imba_mekansm:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().mekansm_icon_client then return "item_mekansm" end
-
-	return "custom/imba_mekansm"..self:GetCaster().mekansm_icon_client
+	return "modifier_item_imba_mekansm"
 end
 
 function item_imba_mekansm:OnSpellStart()
@@ -50,35 +44,22 @@ function item_imba_mekansm:OnSpellStart()
 
 		-- Play activation sound and particle
 		self:GetCaster():EmitSound("DOTA_Item.Mekansm.Activate")
-		
-		local particle_name = "particles/items2_fx/mekanism.vpcf"
-		
-		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect1"] then
-			particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect1"]
-		end
-		
-		local mekansm_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+
+		local mekansm_pfx = ParticleManager:CreateParticle("particles/items2_fx/mekanism.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 		ParticleManager:ReleaseParticleIndex(mekansm_pfx)
 
 		-- Iterate through nearby allies
 		local caster_loc = self:GetCaster():GetAbsOrigin()
 		local nearby_allies = FindUnitsInRadius(self:GetCaster():GetTeam(), caster_loc, nil, heal_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _, ally in pairs(nearby_allies) do
-
 			-- Heal the ally
 			ally:Heal(heal_amount, self:GetCaster())
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, heal_amount, nil)
 
 			-- Play healing sound & particle
 			ally:EmitSound("DOTA_Item.Mekansm.Target")
-			
-			local particle_name = "particles/items2_fx/mekanism_recipient.vpcf"
-			
-			if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect2"] then
-				particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["effect2"]
-			end
-			
-			local mekansm_target_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, ally)
+
+			local mekansm_target_pfx = ParticleManager:CreateParticle("particles/items2_fx/mekanism_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, ally, self:GetCaster())
 			ParticleManager:SetParticleControl(mekansm_target_pfx, 0, caster_loc)
 			ParticleManager:SetParticleControl(mekansm_target_pfx, 1, ally:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(mekansm_target_pfx)
@@ -102,6 +83,10 @@ function modifier_item_imba_mekansm:GetAttributes()	return MODIFIER_ATTRIBUTE_MU
 
 -- Adds the aura emitter to the caster when created
 function modifier_item_imba_mekansm:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
 
@@ -114,21 +99,6 @@ function modifier_item_imba_mekansm:OnCreated(keys)
 
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
-end
-
-function modifier_item_imba_mekansm:OnIntervalThink()
-	if self:GetCaster():IsIllusion() then return end
-	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["mekansm"]["level"] then
-		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["mekansm"]["level"])
-	end
-	if IsClient() then
-		local icon = self:GetStackCount()
-		if icon == 0 then
-			self:GetCaster().mekansm_icon_client = nil
-		else
-			self:GetCaster().mekansm_icon_client = icon
-		end
-	end
 end
 
 -- Removes the aura emitter from the caster if this is the last mekansm in its inventory
@@ -270,15 +240,9 @@ LinkLuaModifier( "modifier_item_imba_guardian_greaves_aura_emitter", "components
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_aura", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_heal", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Heal buff
 
-function item_imba_guardian_greaves:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().mekansm_icon_client then return "item_guardian_greaves" end
-
-	return "custom/imba_guardian_greaves"..self:GetCaster().mekansm_icon_client
-end
-
 function item_imba_guardian_greaves:GetIntrinsicModifierName()
-	return "modifier_item_imba_guardian_greaves" end
+	return "modifier_item_imba_guardian_greaves"
+end
 
 function item_imba_guardian_greaves:OnAbilityPhaseStart()
 	if self:GetCaster():IsClone() then
@@ -333,22 +297,6 @@ function modifier_item_imba_guardian_greaves:OnCreated(keys)
 	self:StartIntervalThink(1.0)
 end
 
-function modifier_item_imba_guardian_greaves:OnIntervalThink()
-	if self:GetCaster():IsIllusion() then return end
-	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["level"] then
-		local server_icon = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetCaster():GetPlayerOwnerID()))["mekansm"]["level"]
-		self:SetStackCount(server_icon)
-	end
-	if IsClient() then
-		local icon = self:GetStackCount()
-		if icon == 0 then
-			self:GetCaster().mekansm_icon_client = nil
-		else
-			self:GetCaster().mekansm_icon_client = icon
-		end
-	end
-end
-
 -- Removes the aura emitter from the caster if this is the last greaves in its inventory
 function modifier_item_imba_guardian_greaves:OnDestroy(keys)
 	if IsServer() then
@@ -400,6 +348,10 @@ function modifier_item_imba_guardian_greaves_aura_emitter:IsDebuff() return fals
 function modifier_item_imba_guardian_greaves_aura_emitter:IsPurgable() return false end
 
 function modifier_item_imba_guardian_greaves_aura_emitter:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.aura_radius			= self:GetAbility():GetSpecialValueFor("aura_radius")
 	self.aura_bonus_threshold	= self:GetAbility():GetSpecialValueFor("aura_bonus_threshold")
 	self.replenish_health		= self:GetAbility():GetSpecialValueFor("replenish_health")
@@ -531,6 +483,10 @@ end
 
 -- Stores the ability's parameters to prevent errors if the item is destroyed
 function modifier_item_imba_guardian_greaves_heal:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.mend_regen = self:GetAbility():GetSpecialValueFor("mend_regen")
 end
 
@@ -557,13 +513,7 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 	-- Play activation sound and particle
 	caster:EmitSound("Item.GuardianGreaves.Activate")
 
-	local particle_name = "particles/items3_fx/warmage.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect3"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect3"]
-	end
-	
-	local cast_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, caster)
+	local cast_pfx = ParticleManager:CreateParticle("particles/items3_fx/warmage.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster, caster)
 	ParticleManager:ReleaseParticleIndex(cast_pfx)
 
 	-- Iterate through nearby allies
@@ -582,11 +532,6 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 
 		local particle_name 		= "particles/items3_fx/warmage_mana_nonhero.vpcf"
 		local particle_name_hero	= "particles/items3_fx/warmage_recipient.vpcf"
-		
-		if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect5"] and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect4"] then
-			particle_name		= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect5"]
-			particle_name_hero	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(caster:GetPlayerOwnerID()))["mekansm"]["effect4"]
-		end
 
 		-- Choose target particle
 		local particle_target = particle_name
@@ -595,7 +540,7 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 		end
 
 		-- Play target particle
-		local target_pfx = ParticleManager:CreateParticle(particle_target, PATTACH_ABSORIGIN_FOLLOW, ally)
+		local target_pfx = ParticleManager:CreateParticle(particle_target, PATTACH_ABSORIGIN_FOLLOW, ally, caster)
 		ParticleManager:SetParticleControl(target_pfx, 0, ally:GetAbsOrigin())
 
 		-- Apply heal over time buff

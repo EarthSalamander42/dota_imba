@@ -59,6 +59,10 @@ function modifier_item_imba_armlet_of_dementor_active:GetEffectName()
 end
 
 function modifier_item_imba_armlet_of_dementor_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()	
@@ -119,6 +123,10 @@ function modifier_item_imba_armlet_of_dementor:RemoveOnDeath()	return false end
 function modifier_item_imba_armlet_of_dementor:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_armlet_of_dementor:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()

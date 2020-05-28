@@ -42,6 +42,10 @@ function modifier_imba_assault_cuirass:RemoveOnDeath()	return false end
 function modifier_imba_assault_cuirass:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_assault_cuirass:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
 	-- If it is the first Assault Cuirass in the inventory, grant the Assault Cuirass aura
@@ -151,6 +155,10 @@ end
 modifier_imba_assault_cuirass_aura_positive_effect = class({})
 
 function modifier_imba_assault_cuirass_aura_positive_effect:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- Ability specials
 	self.aura_as_ally = self:GetAbility():GetSpecialValueFor("aura_as_ally")
 	self.aura_armor_ally = self:GetAbility():GetSpecialValueFor("aura_armor_ally")

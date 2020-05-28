@@ -313,9 +313,10 @@ function imba_pudge_meat_hook:OnSpellStart()
 	ParticleManager:SetParticleControl(hook_particle, 3, vKillswitch)
 	ParticleManager:SetParticleControl(hook_particle, 4, Vector( 1, 0, 0 ) )
 	ParticleManager:SetParticleControl(hook_particle, 5, Vector( 0, 0, 0 ) )
+--	ParticleManager:SetParticleControl(hook_particle, 7, Vector(1, 0, 0))
 	
 --	if self:GetCaster().hook_pfx == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
-		ParticleManager:SetParticleControlEnt(hook_particle, 7, self:GetCaster(), PATTACH_CUSTOMORIGIN, nil, self:GetCaster():GetOrigin(), true)
+--		ParticleManager:SetParticleControlEnt(hook_particle, 7, self:GetCaster(), PATTACH_CUSTOMORIGIN, nil, self:GetCaster():GetOrigin(), true)
 --	end
 
 	local projectile_info = {
@@ -353,7 +354,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 		end
 	end
 
-	EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.AttackHookExtend", caster)
+	EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.AttackHookExtend", self:GetCaster())
 end
 
 local hooked_loc
@@ -461,7 +462,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		ParticleManager:SetParticleControlEnt(ExtraData.pfx_index, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin() + Vector(0,0,96), true)
 
 		if hTarget then
-			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookImpact", hTarget)
+			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookImpact", hTarget, self:GetCaster())
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookRetract", hTarget)
 			local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget, self:GetCaster())
 			ParticleManager:SetParticleControlEnt(nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin() + Vector( 0, 0, 96 ), true)
@@ -588,6 +589,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			target:ForceKill(false)
 		else
 			target:StopSound("Hero_Pudge.AttackHookImpact")
+			target:StopSound("Hero_Pudge.Hook.Target.TI10")
 			target:StopSound("Hero_Pudge.AttackHookRetract")
 		end
 
@@ -807,12 +809,6 @@ function imba_pudge_rot:OnToggle()
 	else
 		self:GetCaster():RemoveModifierByName("modifier_imba_pudge_rot")
 	end
-end
-
-function imba_pudge_rot:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "pudge_rot" end
-	return "custom/pudge_rot_arcana_style"..self:GetCaster().arcana_style
 end
 
 -----------------------------

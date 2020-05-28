@@ -142,6 +142,10 @@ function modifier_imba_helldrain:GetModifierAura() return "modifier_imba_helldra
 -- Start aura
 function modifier_imba_helldrain:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval") )
 	end
 end
@@ -208,6 +212,10 @@ function modifier_item_imba_hellblade:RemoveOnDeath()	return false end
 function modifier_item_imba_hellblade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_hellblade:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -281,6 +289,9 @@ function modifier_item_imba_hellblade_unique:IsDebuff() return false end
 
 
 function modifier_item_imba_hellblade_unique:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end	
 
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -430,6 +441,10 @@ function modifier_item_imba_hellblade_debuff:IsPurgable()
 end
 
 function modifier_item_imba_hellblade_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.parent = self:GetParent()

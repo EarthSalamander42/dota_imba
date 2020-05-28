@@ -76,6 +76,10 @@ function modifier_imba_dust_of_appearance:GetTexture()
 end
 
 function modifier_imba_dust_of_appearance:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.invisible_slow	= self:GetAbility():GetSpecialValueFor("invisible_slow")
 	
 	self.invisModifiers = {

@@ -58,6 +58,10 @@ function modifier_imba_satanic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPL
 
 function modifier_imba_satanic:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		-- Change to lifesteal projectile, if there's nothing "stronger"
 		ChangeAttackProjectileImba(self:GetCaster())
 	end
@@ -170,6 +174,10 @@ function modifier_imba_satanic_soul_slaughter_stack:IsHidden()		return true end
 function modifier_imba_satanic_soul_slaughter_stack:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_satanic_soul_slaughter_stack:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 	
 	self:SetStackCount(keys.stacks)

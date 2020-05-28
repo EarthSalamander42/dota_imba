@@ -40,6 +40,7 @@ require("components/diretide/diretide")
 require('components/gold')
 require('components/hero_selection/init')
 require('components/mutation/init')
+-- require('components/neutral_creeps/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')

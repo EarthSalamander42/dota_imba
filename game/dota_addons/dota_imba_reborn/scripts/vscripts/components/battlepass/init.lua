@@ -31,7 +31,7 @@ ListenToGameEvent('npc_spawned', function(event)
 	elseif npc:IsRealHero() then
 		Battlepass:AddItemEffects(npc)
 
-		local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(npc:GetPlayerID()))
+		local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(npc:GetPlayerID()))
 
 		if ply_table and ply_table.bp_rewards == 0 then
 			return
@@ -72,4 +72,18 @@ ListenToGameEvent('npc_spawned', function(event)
 			})
 		end
 	end
+end, nil)
+
+ListenToGameEvent('dota_player_gained_level', function(keys)
+	if not keys.player then return end
+
+	local player = EntIndexToHScript(keys.player)
+	local hero = player:GetAssignedHero()
+	if hero == nil then
+		return
+	end
+	local level = keys.level
+
+	local particleID = ParticleManager:CreateParticle("particles/generic_hero_status/hero_levelup_vanilla.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, hero)
+	ParticleManager:ReleaseParticleIndex(particleID)
 end, nil)

@@ -70,7 +70,7 @@ function modifier_item_imba_cheese_death_prevention:OnTakeDamage(keys)
 	if keys.unit:IsIllusion() or (keys.unit ~= self:GetParent() and not keys.unit:IsClone()) then return end
 	if keys.unit:HasModifier("modifier_imba_dazzle_shallow_grave") then return end
 
-	if keys.unit:HasModifier("modifier_imba_dazzle_nothl_protection") then
+	if keys.unit:HasModifier("modifier_imba_dazzle_nothl_protection") and not keys.unit:PassivesDisabled() then
 		if keys.unit:FindModifierByName("modifier_imba_dazzle_nothl_protection"):GetStackCount() == 0 then
 			return
 		end

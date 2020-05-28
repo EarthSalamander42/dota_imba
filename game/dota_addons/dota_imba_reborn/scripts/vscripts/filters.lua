@@ -1011,7 +1011,7 @@ function GameMode:OrderFilter( keys )
 			-- for m = 1, #meepo_table do
 				-- if meepo_table[m]:GetTeamNumber() == unit:GetTeamNumber() then
 					-- if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
-						-- if ability:GetName() == "item_black_king_bar" then
+						-- if ability:GetName() == "item_imba_black_king_bar" then
 							-- local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
 							-- meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
 						-- elseif ability:GetName() == "item_imba_white_queen_cape" then

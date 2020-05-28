@@ -71,6 +71,10 @@ function modifier_imba_octarine_core_basic:GetAttributes()	return MODIFIER_ATTRI
 
 
 function modifier_imba_octarine_core_basic:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 
 	self:SetStackCount(2)

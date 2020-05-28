@@ -156,6 +156,10 @@ function modifier_item_imba_valiance_guard:GetStatusEffectName()
 end
 
 function modifier_item_imba_valiance_guard:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.guard_damage_reduction		= self:GetAbility():GetSpecialValueFor("guard_damage_reduction") * (-1)
 	self.guard_angle				= self:GetAbility():GetSpecialValueFor("guard_angle")
 	self.guard_status_resistance	= self:GetAbility():GetSpecialValueFor("guard_status_resistance")
@@ -249,6 +253,10 @@ function modifier_item_imba_valiance_counter:GetTexture()
 end
 
 function modifier_item_imba_valiance_counter:OnCreated(params)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
 	self.damage_counter	= params.damage_counter
@@ -280,6 +288,10 @@ function modifier_item_imba_valiance_dash:GetStatusEffectName()
 end
 
 function modifier_item_imba_valiance_dash:OnCreated(params)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.guard_angle				= self:GetAbility():GetSpecialValueFor("guard_angle")
 	self.counter_cast_range			= self:GetAbility():GetSpecialValueFor("counter_cast_range")
 	self.counter_dash_speed			= self:GetAbility():GetSpecialValueFor("counter_dash_speed")

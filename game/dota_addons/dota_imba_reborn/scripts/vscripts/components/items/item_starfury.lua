@@ -48,6 +48,10 @@ function modifier_imba_shotgun_passive:OnDestroy()
 end
 
 function modifier_imba_shotgun_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
@@ -226,6 +230,10 @@ function modifier_imba_starfury_passive:OnDestroy()
 end
 
 function modifier_imba_starfury_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
@@ -324,6 +332,10 @@ function modifier_imba_starfury_buff_increase:IsStunDebuff() return false end
 function modifier_imba_starfury_buff_increase:RemoveOnDeath() return true end
 -------------------------------------------
 function modifier_imba_starfury_buff_increase:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	local hItem = self:GetAbility()
 	local hParent = self:GetParent()
 	if hItem and hParent and IsServer() then

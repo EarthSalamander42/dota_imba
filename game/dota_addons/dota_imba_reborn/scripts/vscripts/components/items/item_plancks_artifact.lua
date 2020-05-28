@@ -100,6 +100,10 @@ end
 
 function modifier_imba_plancks_artifact_basic:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 
 		self.modifier_self = "modifier_imba_plancks_artifact_basic"
 		self.modifier_unique = "modifier_imba_plancks_artifact_unique"
@@ -153,6 +157,10 @@ end
 
 -- CDR / Spell Lifesteal
 function modifier_imba_plancks_artifact_unique:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 		self:GetAbility():set_respawn_time()
 	end

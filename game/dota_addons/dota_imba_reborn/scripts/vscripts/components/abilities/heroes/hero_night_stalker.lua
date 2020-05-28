@@ -8,10 +8,6 @@
 imba_night_stalker_stalker_in_the_night = class({})
 LinkLuaModifier("modifier_imba_stalker_in_the_night", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
-function imba_night_stalker_stalker_in_the_night:GetAbilityTextureName()
-   return "custom/stalker_in_the_night"
-end
-
 function imba_night_stalker_stalker_in_the_night:GetIntrinsicModifierName()
 	return "modifier_imba_stalker_in_the_night"
 end
@@ -145,10 +141,6 @@ end
 imba_night_stalker_void = class({})
 LinkLuaModifier("modifier_imba_void_ministun", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_void_slow", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
-
-function imba_night_stalker_void:GetAbilityTextureName()
-   return "night_stalker_void"
-end
 
 function imba_night_stalker_void:GetBehavior()
 	if self:GetCaster():HasScepter() then
@@ -476,10 +468,6 @@ end
 imba_night_stalker_crippling_fear = class({})
 LinkLuaModifier("modifier_imba_crippling_fear_silence", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
-function imba_night_stalker_crippling_fear:GetAbilityTextureName()
-   return "night_stalker_crippling_fear"
-end
-
 function imba_night_stalker_crippling_fear:IsHiddenWhenStolen()
 	return false
 end
@@ -668,11 +656,9 @@ LinkLuaModifier("modifier_imba_hunter_in_the_night_thinker", "components/abiliti
 LinkLuaModifier("modifier_imba_hunter_in_the_night", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hunter_in_the_night_flying", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
-function imba_night_stalker_hunter_in_the_night:GetAbilityTextureName()
-   return "night_stalker_hunter_in_the_night" end
-
 function imba_night_stalker_hunter_in_the_night:GetIntrinsicModifierName()
-	return "modifier_imba_hunter_in_the_night_thinker" end
+	return "modifier_imba_hunter_in_the_night_thinker"
+end
 
 function imba_night_stalker_hunter_in_the_night:OnUpgrade()
 	local caster = self:GetCaster()
@@ -1009,10 +995,6 @@ LinkLuaModifier("modifier_imba_darkness_fogvision", "components/abilities/heroes
 
 function imba_night_stalker_darkness:IsNetherWardStealable()	return false end
 function imba_night_stalker_darkness:IsHiddenWhenStolen() 		return false end
-
-function imba_night_stalker_darkness:GetAbilityTextureName()
-   return "night_stalker_darkness"
-end
 
 function imba_night_stalker_darkness:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_night_stalker_10")
@@ -1382,11 +1364,18 @@ function modifier_imba_night_stalker_crippling_fear_aura_720:OnCreated()
 		ParticleManager:ReleaseParticleIndex(self.particle)
 	end
 	
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent, self:GetCaster())
 	self:AddParticle(self.particle, false, false, -1, false, false)
+	ParticleManager:SetParticleControl(self.particle, 1, self.parent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle, 2, Vector(self.radius, self.radius, self.radius))
+	ParticleManager:SetParticleControl(self.particle, 3, self.parent:GetAbsOrigin())
+	self:StartIntervalThink(FrameTime())
 end
-
+--[[
+function modifier_imba_night_stalker_crippling_fear_720:OnIntervalThink()
+	ParticleManager:SetParticleControl(self.particle, 1, self.parent:GetAbsOrigin())
+end
+--]]
 function modifier_imba_night_stalker_crippling_fear_aura_720:OnRefresh()
 	self:OnCreated()
 end

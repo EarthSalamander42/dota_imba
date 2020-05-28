@@ -32,6 +32,10 @@ function modifier_imba_aether_lens_passive:OnDestroy()
 end
 
 function modifier_imba_aether_lens_passive:OnCreated()
+    if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+    
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and item then

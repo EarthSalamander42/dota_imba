@@ -55,6 +55,10 @@ function modifier_item_imba_aether_specs_ward:IsHidden()	return true end
 function modifier_item_imba_aether_specs_ward:IsPurgable()	return false end
 
 function modifier_item_imba_aether_specs_ward:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
 	self.radius		= self:GetAbility():GetSpecialValueFor("radius")
@@ -86,6 +90,10 @@ function modifier_item_imba_aether_specs:RemoveOnDeath()	return false end
 function modifier_item_imba_aether_specs:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_aether_specs:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if self:GetAbility() then
 		-- AbilitySpecials
 		self.bonus_mana 		= self:GetAbility():GetSpecialValueFor("bonus_mana")

@@ -44,6 +44,10 @@ function modifier_item_imba_heart:RemoveOnDeath()	return false end
 function modifier_item_imba_heart:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_heart:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
     -- Use Secondary Charges system to make CDR not stack with multiple Kayas
@@ -151,6 +155,10 @@ function modifier_item_imba_heart:GetModifierAura()		return "modifier_item_imba_
 modifier_item_imba_heart_aura_buff = modifier_item_imba_heart_aura_buff or class({})
 
 function modifier_item_imba_heart_aura_buff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not self:GetAbility() then self:Destroy() return end
 
 	-- Ability specials	

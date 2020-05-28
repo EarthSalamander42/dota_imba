@@ -22,6 +22,10 @@ function modifier_imba_circlet:IsPurgable() return false end
 function modifier_imba_circlet:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_circlet:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- Ability properties
 	self.caster = self:GetCaster() 
 	self.ability = self:GetAbility()

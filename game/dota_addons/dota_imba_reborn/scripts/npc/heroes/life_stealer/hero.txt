@@ -20,7 +20,7 @@
 		"Ability6"		"imba_life_stealer_infest_723"
 		"Ability7"		"imba_life_stealer_control"
 		"Ability8"		"imba_life_stealer_consume"
-		"Ability9"		"imba_form_change_life_stealer"
+//		"Ability9"		"imba_form_change_life_stealer"
 		
 		// Form Change Abilities
 		// "Ability1"		"imba_life_stealer_rage"

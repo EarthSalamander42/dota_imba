@@ -44,6 +44,10 @@ function modifier_imba_clarity:GetTexture()
 end
 
 function modifier_imba_clarity:OnCreated()
+	if IsServer() then
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	-- Ability properties
 	self.caster = self:GetCaster() 
 	self.ability = self:GetAbility()
@@ -154,6 +158,10 @@ function modifier_imba_clarity_mana_reserves:GetTexture()
 end
 
 function modifier_imba_clarity_mana_reserves:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- Ability properties	
 	self.parent = self:GetParent()		
 

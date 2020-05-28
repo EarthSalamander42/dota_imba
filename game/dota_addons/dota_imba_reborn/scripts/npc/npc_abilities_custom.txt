@@ -21580,7 +21580,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"tinker_laser"
-		"ScriptFile"				"components/abilities/heroes/hero_tinker"
+		"ScriptFile"					"components/abilities/heroes/hero_tinker"
 		"MaxLevel"						"4"
 		"LevelsBetweenUpgrades"			"2"
 
@@ -21614,32 +21614,30 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 240 330 350"
+				"damage"				"100 225 350 475"
+				"LinkedSpecialBonus"	"special_bonus_unique_tinker"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"blind_duration"		"3.0 3.5 4.0 4.5"
+				"blind_duration"		"3.5 4.0 4.5 5.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_tinker_4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"miss_chance_pct"		"100"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"travel_speed"			"2500"
+				"travel_speed"			"10000"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"100"
-			}			
-
+			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"

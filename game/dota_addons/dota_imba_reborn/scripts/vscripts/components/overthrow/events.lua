@@ -16,7 +16,7 @@ ListenToGameEvent("game_rules_state_change", function()
 		end
 		--print( "Kills to win = " .. tostring(self.TEAM_KILLS_TO_WIN) )
 
-		CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = self.TEAM_KILLS_TO_WIN } );
+--		CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = self.TEAM_KILLS_TO_WIN } );
 
 		self._fPreGameStartTime = GameRules:GetGameTime()
 

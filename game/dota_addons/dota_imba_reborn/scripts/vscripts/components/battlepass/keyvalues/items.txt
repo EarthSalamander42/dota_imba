@@ -1,7 +1,3 @@
-// If any of the following lines are commented, defaults to items_game.txt value
-//	"item_name"					"Angelic Recruit" // When commented out
-//	"item_rarity"				"mythical" // not required if item rarity is same than vanilla
-//	"item_team"					"radiant" // radiant or dire
 // ID 16315 for empty icon
 
 "BattlepassHeroes"
@@ -19,10 +15,35 @@
 		"image_inventory"			"custom_game/battlepass/blink" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
-			"effect2"					"particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink1"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots1"
+//			}
 		}
 	}
 	"2" // PC Bang Compendium 2015 Blink
@@ -31,12 +52,38 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"25"
 		"item_rarity"				"uncommon"
+		"image_inventory"			"custom_game/battlepass/blink2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles" // this is the only item id where this is not required as the script can get the info in vanilla file, but yeah screw it
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
-			"effect2"					"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"articles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink2"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots2"
+//			}
 		}
 	}
 	"3" // 
@@ -48,10 +95,35 @@
 		"image_inventory"			"custom_game/battlepass/blink3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink3"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots3"
+//			}
 		}
 	}
 	"4" // 
@@ -63,10 +135,35 @@
 		"image_inventory"			"custom_game/battlepass/blink4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
-			"effect2"					"particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink4"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots4"
+//			}
 		}
 	}
 	"5" // 
@@ -78,10 +175,35 @@
 		"image_inventory"			"custom_game/battlepass/blink5" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
-			"effect2"					"particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink5"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"custom/imba_blink_boots"
+				"modifier"		"custom/imba_blink_boots5"
+			}
 		}
 	}
 	"6" // TI 4 Blink
@@ -93,10 +215,35 @@
 		"image_inventory"			"custom_game/battlepass/blink6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
-			"effect2"					"particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink6"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots6"
+//			}
 		}
 	}
 	"7" // 
@@ -108,10 +255,35 @@
 		"image_inventory"			"custom_game/battlepass/blink7" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
-			"effect2"					"particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink7"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots7"
+//			}
 		}
 	}
 	"8" // 
@@ -123,10 +295,35 @@
 		"image_inventory"			"custom_game/battlepass/blink8" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
-			"effect2"					"particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink8"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots8"
+//			}
 		}
 	}
 	"9" // 
@@ -138,10 +335,35 @@
 		"image_inventory"			"custom_game/battlepass/blink9" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
-			"effect2"					"particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink9"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots9"
+//			}
 		}
 	}
 	"10" // 
@@ -153,10 +375,35 @@
 		"image_inventory"			"custom_game/battlepass/blink10" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-			"effect2"					"particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink10"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots10"
+//			}
 		}
 	}
 	"11" // 
@@ -168,10 +415,35 @@
 		"image_inventory"			"custom_game/battlepass/blink11" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
-			"effect2"					"particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink11"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots11"
+//			}
 		}
 	}
 	"12" // 
@@ -183,10 +455,35 @@
 		"image_inventory"			"custom_game/battlepass/blink12" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
-			"effect2"					"particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink12"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots12"
+//			}
 		}
 	}
 	"13" // 
@@ -198,10 +495,35 @@
 		"image_inventory"			"custom_game/battlepass/blink13" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/blink_dagger_ti9_start.vpcf"
-			"effect2"					"particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti9/blink_dagger_ti9_start.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti9/blink_dagger_ti9_end.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink13"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots13"
+//			}
 		}
 	}
 	"14" // 
@@ -213,10 +535,35 @@
 		"image_inventory"			"custom_game/battlepass/blink14" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf"
-			"effect2"					"particles/econ/events/ti9/blink_dagger_ti9_lvl2_end.vpcf"
+			"asset_modifier0"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_start.vpcf"
+				"modifier"		"particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf"
+			}
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/blink_dagger_end.vpcf"
+				"modifier"		"particles/econ/events/ti9/blink_dagger_ti9_lvl2_end.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_blink"
+				"modifier"		"custom/imba_blink14"
+			}
+
+//			"asset_modifier1"
+//			{
+//				"asset"			"custom/imba_blink_boots"
+//				"modifier"		"custom/imba_blink_boots14"
+//			}
 		}
 	}
 
@@ -233,9 +580,14 @@
 		"image_inventory"			"custom_game/battlepass/bottle" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti4/bottle_ti4.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/bottle.vpcf"
+				"modifier"		"particles/econ/events/ti4/bottle_ti4.vpcf"
+			}
 		}
 	}
 	"16" // 
@@ -247,9 +599,14 @@
 		"image_inventory"			"custom_game/battlepass/bottle2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti5/bottle_ti5.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/bottle.vpcf"
+				"modifier"		"particles/econ/events/ti5/bottle_ti5.vpcf"
+			}
 		}
 	}
 	"17" // 
@@ -261,9 +618,14 @@
 		"image_inventory"			"custom_game/battlepass/bottle3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/bottle_ti6.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/bottle.vpcf"
+				"modifier"		"particles/econ/events/ti6/bottle_ti6.vpcf"
+			}
 		}
 	}
 	"18" // 
@@ -275,9 +637,14 @@
 		"image_inventory"			"custom_game/battlepass/bottle4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/bottle_ti7.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/bottle.vpcf"
+				"modifier"		"particles/econ/events/ti7/bottle_ti7.vpcf"
+			}
 		}
 	}
 	"19" // 
@@ -289,9 +656,14 @@
 		"image_inventory"			"custom_game/battlepass/bottle5" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/bottle_ti8.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/bottle.vpcf"
+				"modifier"		"particles/econ/events/ti8/bottle_ti8.vpcf"
+			}
 		}
 	}
 	"20" // 
@@ -303,9 +675,14 @@
 		"image_inventory"			"custom_game/battlepass/bottle6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/bottle_ti9.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/bottle.vpcf"
+				"modifier"		"particles/econ/events/ti9/bottle_ti9.vpcf"
+			}
 		}
 	}
 
@@ -322,9 +699,35 @@
 		"image_inventory"			"custom_game/battlepass/force_staff" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/force_staff.vpcf"
+				"modifier"		"particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff1"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike1"
+			}
+
+//			"asset_modifier0"
+//			{
+//				"asset"			"item_lance_of_longinus"
+//				"modifier"		"custom/imba_lance_of_longinus1"
+//			}
 		}
 	}
 	"22" // 
@@ -336,9 +739,29 @@
 		"image_inventory"			"custom_game/battlepass/force_staff2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/force_staff_ti7.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/force_staff.vpcf"
+				"modifier"		"particles/econ/events/ti7/force_staff_ti7.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff2"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike2"
+			}
 		}
 	}
 	"23" // 
@@ -350,9 +773,29 @@
 		"image_inventory"			"custom_game/battlepass/force_staff3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/force_staff.vpcf"
+				"modifier"		"particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff3"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike3"
+			}
 		}
 	}
 	"24" // 
@@ -364,9 +807,29 @@
 		"image_inventory"			"custom_game/battlepass/force_staff4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/force_staff_ti6.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/force_staff.vpcf"
+				"modifier"		"particles/econ/events/ti6/force_staff_ti6.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff4"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike4"
+			}
 		}
 	}
 	"25" // 
@@ -378,9 +841,29 @@
 		"image_inventory"			"custom_game/battlepass/force_staff5" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/force_staff_ti8.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/force_staff.vpcf"
+				"modifier"		"particles/econ/events/ti8/force_staff_ti8.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff5"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike5"
+			}
 		}
 	}
 	"26" // 
@@ -392,9 +875,29 @@
 		"image_inventory"			"custom_game/battlepass/force_staff6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"force_staff"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/force_staff_ti9.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/force_staff.vpcf"
+				"modifier"		"particles/econ/events/ti9/force_staff_ti9.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_force_staff"
+				"modifier"		"custom/imba_force_staff6"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_hurricane_pike"
+				"modifier"		"custom/imba_hurricane_pike6"
+			}
 		}
 	}
 
@@ -411,9 +914,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
+			}
 		}
 	}
 
@@ -426,9 +934,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
+			}
 		}
 	}
 
@@ -441,9 +954,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
+			}
 		}
 	}
 
@@ -456,9 +974,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/fountain_regen_ti7.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti7/fountain_regen_ti7.vpcf"
+			}
 		}
 	}
 
@@ -471,9 +994,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain5" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
+			}
 		}
 	}
 
@@ -486,9 +1014,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
+			}
 		}
 	}
 
@@ -501,9 +1034,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain7" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
+			}
 		}
 	}
 
@@ -516,9 +1054,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain8" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
+			}
 		}
 	}
 
@@ -531,9 +1074,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain9" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
+			}
 		}
 	}
 
@@ -546,9 +1094,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain10" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
+			}
 		}
 	}
 
@@ -561,9 +1114,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain11" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
+			}
 		}
 	}
 
@@ -576,9 +1134,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain12" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
+			}
 		}
 	}
 
@@ -591,9 +1154,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain13" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
+			}
 		}
 	}
 
@@ -606,9 +1174,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain14" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
+			}
 		}
 	}
 
@@ -621,9 +1194,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain15" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
+			}
 		}
 	}
 
@@ -636,9 +1214,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain16" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/fountain_regen_ti8.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti8/fountain_regen_ti8.vpcf"
+			}
 		}
 	}
 
@@ -651,9 +1234,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain17" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
+			}
 		}
 	}
 
@@ -666,9 +1254,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain18" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
+			}
 		}
 	}
 
@@ -681,9 +1274,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain19" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/fountain_regen_ti9.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti9/fountain_regen_ti9.vpcf"
+			}
 		}
 	}
 
@@ -696,9 +1294,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain20" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/fountain_regen_ti9_lvl2.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti9/fountain_regen_ti9_lvl2.vpcf"
+			}
 		}
 	}
 
@@ -711,9 +1314,14 @@
 		"image_inventory"			"custom_game/battlepass/fountain21" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/fountain_regen_ti9_lvl3.vpcf"
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_gameplay/radiant_fountain_regen.vpcf"
+				"modifier"		"particles/econ/events/ti9/fountain_regen_ti9_lvl3.vpcf"
+			}
 		}
 	}
 
@@ -730,11 +1338,35 @@
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"maelstrom"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/items2_fx/jarnbjorn_shield.vpcf"
-			"effect2"					"particles/item/jarnbjorn/static_lightning_bolt.vpcf"
-			"effect3"					"particles/items_fx/chain_lightning_jarnbjorn.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mjollnir_shield.vpcf"
+				"modifier"		"particles/items2_fx/jarnbjorn_shield.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/item/mjollnir/static_lightning_bolt.vpcf"
+				"modifier"		"particles/item/jarnbjorn/static_lightning_bolt.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/chain_lightning.vpcf"
+				"modifier"		"particles/items_fx/chain_lightning_jarnbjorn.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom1"
+			}
 		}
 	}
 
@@ -753,6 +1385,37 @@
 			"effect2"					"particles/econ/events/ti6/maelstorm_ti6.vpcf"
 			"effect3"					"particles/econ/events/ti6/maelstorm_ti6.vpcf"
 		}
+
+		"visuals"
+		{
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mjollnir_shield.vpcf"
+				"modifier"		"particles/econ/events/ti6/mjollnir_shield_ti6.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/item/mjollnir/static_lightning_bolt.vpcf"
+				"modifier"		"particles/econ/events/ti6/maelstorm_ti6.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/chain_lightning.vpcf"
+				"modifier"		"particles/econ/events/ti6/maelstorm_ti6.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom2"
+			}
+		}
 	}
 
 	"50" // 
@@ -764,11 +1427,35 @@
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"maelstrom"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/mjollnir_shield_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/maelstorm_ti7.vpcf"
-			"effect3"					"particles/econ/events/ti7/maelstorm_ti7.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mjollnir_shield.vpcf"
+				"modifier"		"particles/econ/events/ti7/mjollnir_shield_ti7.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/item/mjollnir/static_lightning_bolt.vpcf"
+				"modifier"		"particles/econ/events/ti7/maelstorm_ti7.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/chain_lightning.vpcf"
+				"modifier"		"particles/econ/events/ti7/maelstorm_ti7.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom3"
+			}
 		}
 	}
 
@@ -781,11 +1468,35 @@
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"maelstrom"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/mjollnir_shield_ti8.vpcf"
-			"effect2"					"particles/econ/events/ti8/maelstorm_ti8.vpcf"
-			"effect3"					"particles/econ/events/ti8/maelstorm_ti8.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mjollnir_shield.vpcf"
+				"modifier"		"particles/econ/events/ti8/mjollnir_shield_ti8.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/item/mjollnir/static_lightning_bolt.vpcf"
+				"modifier"		"particles/econ/events/ti8/maelstorm_ti8.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/chain_lightning.vpcf"
+				"modifier"		"particles/econ/events/ti8/maelstorm_ti8.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom4"
+			}
 		}
 	}
 
@@ -798,11 +1509,35 @@
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"maelstrom"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/mjollnir_shield_ti9.vpcf"
-			"effect2"					"particles/econ/events/ti9/maelstorm_ti9.vpcf"
-			"effect3"					"particles/econ/events/ti9/maelstorm_ti9.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mjollnir_shield.vpcf"
+				"modifier"		"particles/econ/events/ti9/mjollnir_shield_ti9.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/item/mjollnir/static_lightning_bolt.vpcf"
+				"modifier"		"particles/econ/events/ti9/maelstorm_ti9.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/chain_lightning.vpcf"
+				"modifier"		"particles/econ/events/ti9/maelstorm_ti9.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_maelstrom"
+				"modifier"		"custom/imba_maelstrom5"
+			}
 		}
 	}
 
@@ -819,13 +1554,53 @@
 		"image_inventory"			"custom_game/battlepass/mekansm" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/mekanism_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
-			"effect3"					"particles/items3_fx/warmage1.vpcf"
-			"effect4"					"particles/items3_fx/warmage1_recipient.vpcf"
-			"effect5"					"particles/items3_fx/warmage1_mana_nonhero.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mekanism.vpcf"
+				"modifier"		"particles/econ/events/ti7/mekanism_ti7.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mekanism_recipient.vpcf"
+				"modifier"		"particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage.vpcf"
+				"modifier"		"particles/items3_fx/warmage1.vpcf"
+			}
+			"asset_modifier4"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage_recipient.vpcf"
+				"modifier"		"particles/items3_fx/warmage1_recipient.vpcf"
+			}
+			"asset_modifier5"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage_mana_nonhero.vpcf"
+				"modifier"		"particles/items3_fx/warmage1_mana_nonhero.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_mekansm"
+				"modifier"		"custom/imba_mekansm1"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_guardian_greaves"
+				"modifier"		"custom/imba_guardian_greaves1"
+			}
 		}
 	}
 
@@ -838,13 +1613,53 @@
 		"image_inventory"			"custom_game/battlepass/mekansm2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/mekanism_ti6.vpcf"
-			"effect2"					"particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
-			"effect3"					"particles/items3_fx/warmage2.vpcf"
-			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
-			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mekanism.vpcf"
+				"modifier"		"particles/econ/events/ti6/mekanism_ti6.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mekanism_recipient.vpcf"
+				"modifier"		"particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage.vpcf"
+				"modifier"		"particles/items3_fx/warmage2.vpcf"
+			}
+			"asset_modifier4"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage_recipient.vpcf"
+				"modifier"		"particles/items3_fx/warmage2_recipient.vpcf"
+			}
+			"asset_modifier5"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage_mana_nonhero.vpcf"
+				"modifier"		"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_mekansm"
+				"modifier"		"custom/imba_mekansm2"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_guardian_greaves"
+				"modifier"		"custom/imba_guardian_greaves2"
+			}
 		}
 	}
 
@@ -857,13 +1672,53 @@
 		"image_inventory"			"custom_game/battlepass/mekansm3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/mekanism_ti8.vpcf"
-			"effect2"					"particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
-			"effect3"					"particles/items3_fx/warmage2.vpcf"
-			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
-			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mekanism.vpcf"
+				"modifier"		"particles/econ/events/ti8/mekanism_ti8.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mekanism_recipient.vpcf"
+				"modifier"		"particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage.vpcf"
+				"modifier"		"particles/items3_fx/warmage2.vpcf"
+			}
+			"asset_modifier4"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage_recipient.vpcf"
+				"modifier"		"particles/items3_fx/warmage2_recipient.vpcf"
+			}
+			"asset_modifier5"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage_mana_nonhero.vpcf"
+				"modifier"		"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_mekansm"
+				"modifier"		"custom/imba_mekansm3"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_guardian_greaves"
+				"modifier"		"custom/imba_guardian_greaves3"
+			}
 		}
 	}
 
@@ -873,16 +1728,56 @@
 		"item_type"					"mekansm"
 		"item_unlock_level"			"840"
 		"item_rarity"				"mythical3"
-//		"image_inventory"			"custom_game/battlepass/mekansm4" // USE GAMEPEDIA WEBM VIDEO
+		"image_inventory"			"custom_game/battlepass/mekansm4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"mekansm"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/mekanism_ti9.vpcf"
-			"effect2"					"particles/econ/events/ti9/mekanism_recipient_ti9.vpcf"
-			"effect3"					"particles/items3_fx/warmage2.vpcf"
-			"effect4"					"particles/items3_fx/warmage2_recipient.vpcf"
-			"effect5"					"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mekanism.vpcf"
+				"modifier"		"particles/econ/events/ti9/mekanism_ti9.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/mekanism_recipient.vpcf"
+				"modifier"		"particles/econ/events/ti9/mekanism_recipient_ti9.vpcf"
+			}
+			"asset_modifier3"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage.vpcf"
+				"modifier"		"particles/items3_fx/warmage2.vpcf"
+			}
+			"asset_modifier4"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage_recipient.vpcf"
+				"modifier"		"particles/items3_fx/warmage2_recipient.vpcf"
+			}
+			"asset_modifier5"
+			{
+				"type"			"particle"
+				"asset"			"particles/items3_fx/warmage_mana_nonhero.vpcf"
+				"modifier"		"particles/items3_fx/warmage2_mana_nonhero.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_mekansm"
+				"modifier"		"custom/imba_mekansm4"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_guardian_greaves"
+				"modifier"		"custom/imba_guardian_greaves4"
+			}
 		}
 	}
 
@@ -899,10 +1794,35 @@
 		"image_inventory"			"custom_game/battlepass/radiance" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"radiance"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/radiance_owner_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/radiance_ti7.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/radiance_owner.vpcf"
+				"modifier"		"particles/econ/events/ti7/radiance_owner_ti7.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/radiance.vpcf"
+				"modifier"		"particles/econ/events/ti7/radiance_ti7.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_radiance"
+				"modifier"		"custom/imba_radiance1"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_radiance_inactive"
+				"modifier"		"custom/imba_radiance1_inactive"
+			}
 		}
 	}
 
@@ -915,10 +1835,35 @@
 		"image_inventory"			"custom_game/battlepass/radiance2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"radiance"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti6/radiance_owner_ti6.vpcf"
-			"effect2"					"particles/econ/events/ti6/radiance_ti6.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/radiance_owner.vpcf"
+				"modifier"		"particles/econ/events/ti6/radiance_owner_ti6.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/radiance.vpcf"
+				"modifier"		"particles/econ/events/ti6/radiance_ti6.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_radiance"
+				"modifier"		"custom/imba_radiance2"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_radiance_inactive"
+				"modifier"		"custom/imba_radiance2_inactive"
+			}
 		}
 	}
 
@@ -931,10 +1876,35 @@
 		"image_inventory"			"custom_game/battlepass/radiance3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"radiance"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti8/radiance_owner_ti8.vpcf"
-			"effect2"					"particles/econ/events/ti8/radiance_ti8.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/radiance_owner.vpcf"
+				"modifier"		"particles/econ/events/ti8/radiance_owner_ti8.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/radiance.vpcf"
+				"modifier"		"particles/econ/events/ti8/radiance_ti8.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_radiance"
+				"modifier"		"custom/imba_radiance3"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_radiance_inactive"
+				"modifier"		"custom/imba_radiance3_inactive"
+			}
 		}
 	}
 
@@ -947,10 +1917,35 @@
 //		"image_inventory"			"custom_game/battlepass/radiance4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"radiance"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti9/radiance_owner_ti9.vpcf"
-			"effect2"					"particles/econ/events/ti9/radiance_ti9.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/radiance_owner.vpcf"
+				"modifier"		"particles/econ/events/ti9/radiance_owner_ti9.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/radiance.vpcf"
+				"modifier"		"particles/econ/events/ti9/radiance_ti9.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_radiance"
+				"modifier"		"custom/imba_radiance4"
+			}
+
+			"asset_modifier1"
+			{
+				"asset"			"item_radiance_inactive"
+				"modifier"		"custom/imba_radiance4_inactive"
+			}
 		}
 	}
 
@@ -967,10 +1962,29 @@
 		"image_inventory"			"custom_game/battlepass/sheepstick" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"sheepstick"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
-			"effect2"					"models/props_gameplay/pig_blue.vmdl"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/item_sheepstick.vpcf"
+				"modifier"		"particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"sheepstick_model"
+				"asset"			"models/props_gameplay/pig.vmdl"
+				"modifier"		"models/props_gameplay/pig_blue.vmdl"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_sheepstick"
+				"modifier"		"custom/imba_sheepstick1"
+			}
 		}
 	}
 
@@ -983,10 +1997,29 @@
 		"image_inventory"			"custom_game/battlepass/sheepstick2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"sheepstick"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
-			"effect2"					"models/props_gameplay/roquelaire/roquelaire.vmdl"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items_fx/item_sheepstick.vpcf"
+				"modifier"		"particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"sheepstick_model"
+				"asset"			"models/props_gameplay/pig.vmdl"
+				"modifier"		"models/props_gameplay/roquelaire/roquelaire.vmdl"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_sheepstick"
+				"modifier"		"custom/imba_sheepstick2"
+			}
 		}
 	}
 
@@ -1003,10 +2036,29 @@
 		"image_inventory"			"custom_game/battlepass/shiva" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/shivas_guard_active.vpcf"
+				"modifier"		"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/shivas_guard_impact.vpcf"
+				"modifier"		"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva1"
+			}
 		}
 	}
 
@@ -1019,10 +2071,38 @@
 		"image_inventory"			"custom_game/battlepass/shiva2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/shivas_guard_active.vpcf"
+				"modifier"		"particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/shivas_guard_impact.vpcf"
+				"modifier"		"particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva2"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva2"
+			}
 		}
 	}
 
@@ -1035,10 +2115,38 @@
 		"image_inventory"			"custom_game/battlepass/shiva3" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/shivas_guard_active.vpcf"
+				"modifier"		"particles/econ/events/ti7/shivas_guard_active_ti8.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/shivas_guard_impact.vpcf"
+				"modifier"		"particles/econ/events/ti7/shivas_guard_impact_ti8.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva3"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva3"
+			}
 		}
 	}
 
@@ -1051,10 +2159,38 @@
 		"image_inventory"			"custom_game/battlepass/shiva4" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
-		"particles"
+		"visuals"
 		{
-			"effect1"					"particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-			"effect2"					"particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			"asset_modifier1"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/shivas_guard_active.vpcf"
+				"modifier"		"particles/econ/events/ti7/shivas_guard_active_ti9.vpcf"
+			}
+			"asset_modifier2"
+			{
+				"type"			"particle"
+				"asset"			"particles/items2_fx/shivas_guard_impact.vpcf"
+				"modifier"		"particles/econ/events/ti7/shivas_guard_impact_ti9.vpcf"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva4"
+			}
+		}
+
+		"inventory_icons"
+		{
+			"asset_modifier0"
+			{
+				"asset"			"item_shivas_guard"
+				"modifier"		"custom/imba_shiva4"
+			}
 		}
 	}
 
@@ -1191,7 +2327,318 @@
 		"item_unlock_level"			"35"
 	}
 
+	"84" // TI6 Level up
+	{
+		"item_id"					"16315"
+		"item_type"					"levelup"
+		"item_unlock_level"			"50"
+		"item_rarity"				"legendary"
+		"image_inventory"			"custom_game/battlepass/levelup_fx" // USE GAMEPEDIA WEBM VIDEO
+		"used_by_heroes"			"levelup"
 
+		"visuals"
+		{
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
+				"modifier"		"particles/econ/events/ti6/hero_levelup_ti6.vpcf"
+			}
+		}
+	}
+
+	"85" // TI7 Level up
+	{
+		"item_id"					"16315"
+		"item_type"					"levelup"
+		"item_unlock_level"			"350"
+		"item_rarity"				"legendary"
+		"image_inventory"			"custom_game/battlepass/levelup_fx_2" // USE GAMEPEDIA WEBM VIDEO
+		"used_by_heroes"			"levelup"
+
+		"visuals"
+		{
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
+				"modifier"		"particles/econ/events/ti7/hero_levelup_ti7.vpcf"
+			}
+		}
+	}
+
+	"86" // TI8 Level up
+	{
+		"item_id"					"16315"
+		"item_type"					"levelup"
+		"item_unlock_level"			"650"
+		"item_rarity"				"legendary"
+		"image_inventory"			"custom_game/battlepass/levelup_fx_3" // USE GAMEPEDIA WEBM VIDEO
+		"used_by_heroes"			"levelup"
+
+		"visuals"
+		{
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
+				"modifier"		"particles/econ/events/ti8/hero_levelup_ti8.vpcf"
+			}
+		}
+	}
+
+	"87" // TI9 Level up
+	{
+		"item_id"					"16315"
+		"item_type"					"levelup"
+		"item_unlock_level"			"950"
+		"item_rarity"				"legendary"
+		"image_inventory"			"custom_game/battlepass/levelup_fx_4" // USE GAMEPEDIA WEBM VIDEO
+		"used_by_heroes"			"levelup"
+
+		"visuals"
+		{
+			"asset_modifier"
+			{
+				"type"			"particle"
+				"asset"			"particles/generic_hero_status/hero_levelup_vanilla.vpcf"
+				"modifier"		"particles/econ/events/ti9/hero_levelup_ti9.vpcf"
+			}
+		}
+	}
+
+	"88" // Bristleback: Violent Precipitate
+	{
+		"item_id"					"21189"
+		"item_type"					"bundle"
+		"item_unlock_level"			"5"
+
+		"wearables"
+		{
+			"9786"			"back"
+			"9787"			"arms"
+			"9788"			"head"
+			"9789"			"neck"
+			"9790"			"weapon"
+		}
+	}
+
+	"89" // Chen: The Rat King
+	{
+		"item_id"					"21209"
+		"item_type"					"bundle"
+		"item_unlock_level"			"10"
+
+		"wearables"
+		{
+			"9950" 			"head"
+			"9951" 			"weapon"
+			"9952" 			"mount"
+			"9953" 			"shoulder"
+			"9954" 			"arms"
+		}
+	}
+
+	"90" // Vengeful Spirit: Mournful Reverie
+	{
+		"item_id"					"9749"
+		"item_type"					"wearable"
+		"item_unlock_level"			"20"
+	}
+
+	"91" // Dark Seer: Bracers of Forlorn Precipice
+	{
+		"item_id"					"9740"
+		"item_type"					"wearable"
+		"item_unlock_level"			"30"
+	}
+
+	"92" // Skywrath Mage: Flight of Epiphany
+	{
+		"item_id"					"12926"
+		"item_type"					"wearable"
+		"item_unlock_level"			"40"
+	}
+
+	"93" // Nyx Assassin: Latticean Hierarchy
+	{
+		"item_id"					"12957"
+		"item_type"					"wearable"
+		"item_unlock_level"			"80"
+	}
+
+	"94" // Enigma: Twisted Maelstrom
+	{
+		"item_id"					"21235"
+		"item_type"					"bundle"
+		"item_unlock_level"			"60"
+
+		"wearables"
+		{
+			"12329"			"arms"
+			"12330"			"armor"
+			"12331"			"eidolon"
+			"12332"			"head"
+		}
+	}
+
+	"95" // Huskar: Searing Dominator
+	{
+		"item_id"					"8188"
+		"item_type"					"wearable"
+		"item_unlock_level"			"70"
+	}
+
+	"96" // Axe: Unleashed
+	{
+		"item_id"					"21325"
+		"item_type"					"bundle"
+		"item_unlock_level"			"50"
+		"modifier"					"modifier_axe_arcana"
+
+		"wearables"
+		{
+			"12964" 		"weapon"
+			"12965" 		"armor"
+			"12966" 		"belt"
+			"12968" 		"head"
+		}
+	}
+
+	"97" // Lifestealer: Dread Requisition
+	{
+		"item_id"					"12998"
+		"item_type"					"wearable"
+		"item_unlock_level"			"90"
+	}
+
+	"98" // Death Prophet: Mask of Mortis
+	{
+		"item_id"					"12931"
+		"item_type"					"wearable"
+		"item_unlock_level"			"110"
+	}
+
+	"99" // Centaur: Infernal Menace
+	{
+		"item_id"					"12945"
+		"item_type"					"wearable"
+		"item_unlock_level"			"120"
+	}
+
+	"100" // Io: Benevolent Companion
+	{
+		"item_id"					"9235"
+		"item_type"					"wearable"
+		"item_unlock_level"			"600"
+	}
+
+	"101" // Earthshaker: Judgement of the Fallen
+	{
+		"item_id"					"12969"
+		"item_type"					"wearable"
+		"item_unlock_level"			"130"
+	}
+
+	"102" // Leshrac: Tormented Crown
+	{
+		"item_id"					"12933"
+		"item_type"					"wearable"
+		"item_unlock_level"			"140"
+	}
+
+	"103" // Enigma: World Chasm Artifact
+	{
+		"item_id"					"8326"
+		"item_type"					"wearable"
+		"item_unlock_level"			"150"
+	}
+
+	"104" // Drow Ranger: Reaper's Wreath
+	{
+		"item_id"					"12946"
+		"item_type"					"wearable"
+		"item_unlock_level"			"160"
+	}
+
+	"105" // Tinker: Arcanic Resonance Beam
+	{
+		"item_id"					"13777"
+		"item_type"					"wearable"
+		"item_unlock_level"			"210"
+		"item_unreleased"			"1" // not sent to js somehow
+	}
+
+	"106" // Night Stalker: Shadow of the Dark Age
+	{
+		"item_id"					"13776"
+		"item_type"					"wearable"
+		"item_unlock_level"			"220"
+	}
+
+	"107" // Warlock: Warden of the Hellborn
+	{
+		"item_id"					"13809"
+		"item_type"					"wearable"
+		"item_unlock_level"			"230"
+	}
+
+	"108" // Lifestealer: Dark Maw Inhibitor
+	{
+		"item_id"					"13787"
+		"item_type"					"wearable"
+		"item_unlock_level"			"240"
+	}
+
+	"109" // Keeper of the Light: Prominence
+	{
+		"item_id"					"13773"
+		"item_type"					"wearable"
+		"item_unlock_level"			"250"
+	}
+
+	"110" // Medusa: Fate of Hydrophiinae
+	{
+		"item_id"					"13778"
+		"item_type"					"wearable"
+		"item_unlock_level"			"260"
+	}
+
+	"111" // Puck: Blossom of the Merry Wanderer
+	{
+		"item_id"					"13767"
+		"item_type"					"wearable"
+		"item_unlock_level"			"410"
+	}
+
+	"112" // Pudge: The Abscesserator Bundle
+	{
+		"item_id"					"21426"
+		"item_type"					"bundle"
+		"item_unlock_level"			"550"
+
+		"wearables"
+		{
+			"13788"			"weapon" // The Abscesserator
+			"13789"			"arms" // Pudge's Bare Arm
+		}
+	}
+
+
+	// TODO: UI support for different styles
+//	"112" // Night Stalker: Golden Shadow of the Dark Age
+//	{
+//		"item_id"					"13813"
+//		"item_type"					"wearable"
+//		"item_unlock_level"			"440"
+//	}
+
+//	"113" // Lifestealer: Golden Dark Maw Inhibitor
+//	{
+//		"item_id"					"13818"
+//		"item_type"					"wearable"
+//		"item_unlock_level"			"450"
+//	}
 
 //	"2" // Antipode Couriers (Radiant)
 //	{

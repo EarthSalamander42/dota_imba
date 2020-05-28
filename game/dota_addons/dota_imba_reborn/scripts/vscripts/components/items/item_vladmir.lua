@@ -277,7 +277,9 @@ function modifier_item_imba_vladmir_blood_aura:GetTexture()
 
 -- Stores the aura's parameters to prevent errors when the item is unequipped
 function modifier_item_imba_vladmir_blood_aura:OnCreated(keys)
-	if self:GetAbility() == nil then self:Destroy() return end
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
 	
 	self.damage_aura		= self:GetAbility():GetSpecialValueFor("damage_aura")
 	self.armor_aura			= self:GetAbility():GetSpecialValueFor("armor_aura")

@@ -62,17 +62,9 @@ function modifier_fountain_aura_effect_lua:OnCreated()
 
 	self:StartIntervalThink(0.1)
 
-	local particle_name
-
-	if self:GetParent():IsCourier() or not (CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]) then
-		particle_name = "particles/generic_gameplay/radiant_fountain_regen.vpcf"
-	else
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["fountain"]["effect1"]
-	end
-
 	Timers:CreateTimer(1.0, function()
 		if self and not self:IsNull() and self.GetParent and self:GetParent() and not self:GetParent():IsNull() then
-			self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			self.pfx = ParticleManager:CreateParticle("particles/generic_gameplay/radiant_fountain_regen.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetParent())
 		end
 	end)
 end

@@ -51,7 +51,11 @@ function modifier_imba_mask_of_madness:IsPurgable()		return false end
 function modifier_imba_mask_of_madness:RemoveOnDeath()	return false end
 function modifier_imba_mask_of_madness:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_mask_of_madness:OnCreated()
+function modifier_imba_mask_of_madness:OnCreated()	
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -111,6 +115,10 @@ end
 modifier_imba_mask_of_madness_berserk = class({})
 
 function modifier_imba_mask_of_madness_berserk:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()

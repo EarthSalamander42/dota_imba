@@ -145,6 +145,10 @@ end
 -- Start aura
 function modifier_imba_souldrain:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval"))
 	end
 end
@@ -211,6 +215,10 @@ function modifier_item_imba_curseblade:RemoveOnDeath()	return false end
 function modifier_item_imba_curseblade:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_curseblade:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 		--Apply aura
 		local parent = self:GetParent()
@@ -287,6 +295,10 @@ function modifier_item_imba_curseblade_debuff:IsPurgable()
 end
 
 function modifier_item_imba_curseblade_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.parent = self:GetParent()

@@ -77,6 +77,10 @@ function modifier_veil_active_debuff:IsHidden() return false end
 function modifier_veil_active_debuff:IsPurgable() return true end
 
 function modifier_veil_active_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.spell_amp    =   self:GetAbility():GetSpecialValueFor("spell_amp")
 end
 
@@ -122,6 +126,10 @@ function modifier_veil_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPL
 function modifier_veil_passive:IsAura() return true end
 
 function modifier_veil_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	local ability   =   self:GetAbility()
 	if IsServer() then
 		-- Give buff aura modifier
@@ -181,6 +189,10 @@ function modifier_veil_debuff_aura_modifier:IsHidden() return false end
 function modifier_veil_debuff_aura_modifier:IsPurgable() return false end
 
 function modifier_veil_debuff_aura_modifier:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.aura_resist    =   self:GetAbility():GetSpecialValueFor("aura_resist")
 end
 function modifier_veil_debuff_aura_modifier:DeclareFunctions()  

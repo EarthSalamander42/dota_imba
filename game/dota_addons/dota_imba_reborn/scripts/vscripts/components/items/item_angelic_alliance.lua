@@ -105,6 +105,10 @@ function modifier_imba_angelic_alliance_passive_effect:RemoveOnDeath()	return fa
 function modifier_imba_angelic_alliance_passive_effect:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_angelic_alliance_passive_effect:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.bonus_strength		= self:GetAbility():GetSpecialValueFor("bonus_strength")
 	self.bonus_agility		= self:GetAbility():GetSpecialValueFor("bonus_agility")
 	self.bonus_intellect	= self:GetAbility():GetSpecialValueFor("bonus_intellect")

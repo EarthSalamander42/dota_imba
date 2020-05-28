@@ -32,9 +32,9 @@ CustomGameEventManager:RegisterListener("change_winrate", Dynamic_Wrap(Battlepas
 
 function Battlepass:GetRewardUnlocked(ID)
 	if IsInToolsMode() then return 1000 end
-	if CustomNetTables:GetTableValue("battlepass", tostring(ID)) then
-		if CustomNetTables:GetTableValue("battlepass", tostring(ID)).Lvl then
-			return CustomNetTables:GetTableValue("battlepass", tostring(ID)).Lvl
+	if CustomNetTables:GetTableValue("battlepass_player", tostring(ID)) then
+		if CustomNetTables:GetTableValue("battlepass_player", tostring(ID)).Lvl then
+			return CustomNetTables:GetTableValue("battlepass_player", tostring(ID)).Lvl
 		end
 	end
 
@@ -46,14 +46,13 @@ end
 function Battlepass:AddItemEffects(hero)
 	if hero.GetPlayerID == nil then return end
 
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(hero:GetPlayerID()))
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(hero:GetPlayerID()))
 
 	if ply_table and ply_table.bp_rewards == 0 then
 	else
 		if CUSTOM_GAME_TYPE == "PW" then
 			Battlepass:SetItemEffects(hero)
 		elseif CUSTOM_GAME_TYPE ~= "POG" then
-			Battlepass:SetItemEffects(hero:GetPlayerID())
 			Battlepass:RegisterHeroTaunt(hero)
 		end
 	end
@@ -97,7 +96,7 @@ end
 
 -- vanilla extension
 function CDOTA_BaseNPC:SetupHealthBarLabel()
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(self:GetPlayerOwnerID()))
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(self:GetPlayerOwnerID()))
 
 	if ply_table and ply_table.in_game_tag == 0 then
 		self:SetCustomHealthLabel("", 0, 0, 0)
@@ -132,9 +131,9 @@ end
 
 function Battlepass:DonatorTag(keys)
 	local hero = PlayerResource:GetPlayer(keys.ID):GetAssignedHero()
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(keys.ID))
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(keys.ID))
 
-	CustomNetTables:SetTableValue("battlepass", tostring(keys.ID), {
+	CustomNetTables:SetTableValue("battlepass_player", tostring(keys.ID), {
 		XP = ply_table.XP,
 		MaxXP = ply_table.MaxXP,
 		Lvl = ply_table.Lvl,
@@ -154,9 +153,9 @@ function Battlepass:DonatorTag(keys)
 end
 
 function Battlepass:BattlepassRewards(keys)
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(keys.ID))
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(keys.ID))
 
-	CustomNetTables:SetTableValue("battlepass", tostring(keys.ID), {
+	CustomNetTables:SetTableValue("battlepass_player", tostring(keys.ID), {
 		XP = ply_table.XP,
 		MaxXP = ply_table.MaxXP,
 		Lvl = ply_table.Lvl,
@@ -174,9 +173,9 @@ function Battlepass:BattlepassRewards(keys)
 end
 
 function Battlepass:PlayerXP(keys)
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(keys.ID))
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(keys.ID))
 
-	CustomNetTables:SetTableValue("battlepass", tostring(keys.ID), {
+	CustomNetTables:SetTableValue("battlepass_player", tostring(keys.ID), {
 		XP = ply_table.XP,
 		MaxXP = ply_table.MaxXP,
 		Lvl = ply_table.Lvl,
@@ -194,13 +193,19 @@ function Battlepass:PlayerXP(keys)
 end
 
 function Battlepass:RegisterHeroTaunt(hero)
-	for k, v in pairs(ItemsGame.custom_kv) do
-		if v.item_type == "taunt" then
-			if hero:GetUnitName() == ItemsGame:GetItemHero(k) and Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= v.item_unlock_level then
-				if ItemsGame:GetItemVisuals(k).asset_modifier0 then
-					hero.bp_taunt = ItemsGame:GetItemVisuals(k)["asset_modifier0"].modifier
-				elseif ItemsGame:GetItemVisuals(k).asset_modifier then
-					hero.bp_taunt = ItemsGame:GetItemVisuals(k)["asset_modifier"].modifier
+	local armory = api:GetArmory(hero:GetPlayerID()) or {}
+
+--	print("Armory:", armory)
+
+	for k, v in pairs(armory) do
+		if v.slot_id == "taunt" then
+			if hero:GetUnitName() == v.hero and Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= ItemsGame:GetItemUnlockLevel(v.item_id) then
+				if ItemsGame:GetItemVisuals(v.item_id)["asset_modifier1"] then
+					hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier1"].modifier
+				elseif ItemsGame:GetItemVisuals(v.item_id)["asset_modifier0"] then
+					hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier0"].modifier
+				elseif ItemsGame:GetItemVisuals(v.item_id)["asset_modifier"] then
+					hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier"].modifier
 				end
 
 				return
@@ -242,9 +247,9 @@ function Battlepass:PlayHeroTaunt(keys)
 end
 
 function Battlepass:Winrate(keys)
-	local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(keys.ID))
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(keys.ID))
 
-	CustomNetTables:SetTableValue("battlepass", tostring(keys.ID), {
+	CustomNetTables:SetTableValue("battlepass_player", tostring(keys.ID), {
 		XP = ply_table.XP,
 		MaxXP = ply_table.MaxXP,
 		Lvl = ply_table.Lvl,

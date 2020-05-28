@@ -236,19 +236,13 @@ end
 
 imba_centaur_double_edge = class({})
 
-function imba_centaur_double_edge:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "centaur_double_edge" end
-	return "centaur_double_edge_ti9"
-end
-
 function imba_centaur_double_edge:IsHiddenWhenStolen()
 	return false
 end
 
 function imba_centaur_double_edge:OnAbilityPhaseStart()
 	if IsServer() then
-		self.phase_double_edge_pfx = ParticleManager:CreateParticle(self:GetCaster().double_edge_phase_pfx, PATTACH_CUSTOMORIGIN, self:GetCaster())
+		self.phase_double_edge_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_centaur/centaur_double_edge_phase.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster(), self:GetCaster())
 		ParticleManager:SetParticleControl(self.phase_double_edge_pfx, 0, self:GetCaster():GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.phase_double_edge_pfx, 3, self:GetCaster():GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.phase_double_edge_pfx, 9, self:GetCaster():GetAbsOrigin())
@@ -315,7 +309,7 @@ function imba_centaur_double_edge:OnSpellStart()
 		end
 
 		-- Add double edge particle
-		local particle_edge_fx = ParticleManager:CreateParticle(caster.double_edge_pfx, PATTACH_ABSORIGIN, caster)
+		local particle_edge_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_centaur/centaur_double_edge.vpcf", PATTACH_ABSORIGIN, caster, caster)
 		ParticleManager:SetParticleControl(particle_edge_fx, 0, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_edge_fx, 1, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_edge_fx, 2, target:GetAbsOrigin())
@@ -347,6 +341,13 @@ function imba_centaur_double_edge:OnSpellStart()
 				}
 
 				ApplyDamage(damageTable)
+
+				local particle_edge_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_centaur/centaur_double_edge_body.vpcf", PATTACH_ABSORIGIN, caster, caster)
+				ParticleManager:SetParticleControl(particle_edge_fx, 2, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(particle_edge_fx, 4, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(particle_edge_fx, 5, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(particle_edge_fx, 9, enemy:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(particle_edge_fx)
 
 				-- Check if an enemy died from the damage, and check if it should play a kill response
 				if not enemy:IsIllusion() and not enemy:IsAlive() then

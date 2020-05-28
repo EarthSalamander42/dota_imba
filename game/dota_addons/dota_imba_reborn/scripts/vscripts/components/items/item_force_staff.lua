@@ -59,13 +59,6 @@ function item_imba_force_staff:OnSpellStart()
 	target:AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_force_staff_active", {duration = ability:GetSpecialValueFor("duration")})
 end
 
-function item_imba_force_staff:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().force_staff_icon_client then return "item_force_staff" end
-
-	return "custom/imba_force_staff"..self:GetCaster().force_staff_icon_client
-end
-
 -------------------------------------
 --------- STATE MODIFIER ------------
 -------------------------------------
@@ -78,25 +71,12 @@ function modifier_item_imba_force_staff:RemoveOnDeath()	return false end
 function modifier_item_imba_force_staff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_force_staff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
-end
-
-function modifier_item_imba_force_staff:OnIntervalThink()
-	if self:GetCaster():IsIllusion() then return end
-
-	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["level"] then
-		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["level"])
-	end
-
-	if IsClient() then
-		local icon = self:GetStackCount()
-		if icon == 0 then
-			self:GetCaster().force_staff_icon_client = nil
-		else
-			self:GetCaster().force_staff_icon_client = icon
-		end
-	end
 end
 
 function modifier_item_imba_force_staff:DeclareFunctions()
@@ -129,19 +109,17 @@ function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  re
 function modifier_item_imba_force_staff_active:IgnoreTenacity()	return true end
 
 function modifier_item_imba_force_staff_active:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
 		return
 	end
-	
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
@@ -192,12 +170,6 @@ LinkLuaModifier("modifier_item_imba_hurricane_pike_force_ally", "components/item
 LinkLuaModifier("modifier_item_imba_hurricane_pike_force_enemy", "components/items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_hurricane_pike_force_self", "components/items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_hurricane_pike_attack_speed", "components/items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
-
-function item_imba_hurricane_pike:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().force_staff_icon_client then return "item_hurricane_pike" end
-	return "custom/imba_hurricane_pike"..self:GetCaster().force_staff_icon_client
-end
 
 function item_imba_hurricane_pike:GetIntrinsicModifierName()
 	return "modifier_item_imba_hurricane_pike"
@@ -261,6 +233,10 @@ function modifier_item_imba_hurricane_pike:GetAttributes()	return MODIFIER_ATTRI
 
 function modifier_item_imba_hurricane_pike:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_hurricane_pike_unique") then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_hurricane_pike_unique", {})
@@ -268,23 +244,6 @@ function modifier_item_imba_hurricane_pike:OnCreated()
 	end
 
 	self:StartIntervalThink(1.0)
-end
-
-function modifier_item_imba_hurricane_pike:OnIntervalThink()
-	if self:GetCaster():IsIllusion() then return end
-
-	if IsServer() and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["level"] then
-		self:SetStackCount(CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["level"])
-	end
-
-	if IsClient() then
-		local icon = self:GetStackCount()
-		if icon == 0 then
-			self:GetCaster().force_staff_icon_client = nil
-		else
-			self:GetCaster().force_staff_icon_client = icon
-		end
-	end
 end
 
 function modifier_item_imba_hurricane_pike:OnDestroy()
@@ -351,19 +310,18 @@ function modifier_item_imba_hurricane_pike_force_ally:IsMotionController()  retu
 function modifier_item_imba_hurricane_pike_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
+
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
 		return
 	end
 	
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
@@ -415,15 +373,13 @@ function modifier_item_imba_hurricane_pike_force_enemy:GetMotionControllerPriori
 function modifier_item_imba_hurricane_pike_force_enemy:IgnoreTenacity()	return true end
 
 function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
-	
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
@@ -472,15 +428,13 @@ function modifier_item_imba_hurricane_pike_force_self:IsMotionController()  retu
 function modifier_item_imba_hurricane_pike_force_self:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_self:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
-	
-	local particle_name = "particles/items_fx/force_staff.vpcf"
-	
-	if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"] then
-		particle_name = CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["force_staff"]["effect1"]
-	end	
-	
-	self.pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+
+	self.pfx = ParticleManager:CreateParticle("particles/items_fx/force_staff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
@@ -529,6 +483,10 @@ function modifier_item_imba_hurricane_pike_attack_speed:IsStunDebuff() return fa
 function modifier_item_imba_hurricane_pike_attack_speed:IgnoreTenacity() return true end
 
 function modifier_item_imba_hurricane_pike_attack_speed:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 	self.as = 0
 	self.ar = 0

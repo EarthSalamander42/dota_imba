@@ -177,7 +177,7 @@
 //				$.Msg(dire_player)
 
 				if (radiant_player) {
-					var radiant_ply_table = CustomNetTables.GetTableValue("battlepass", radiant_player.player_id);
+					var radiant_ply_table = CustomNetTables.GetTableValue("battlepass_player", radiant_player.player_id);
 
 //					$.Msg(radiant_ply_table)
 
@@ -208,7 +208,7 @@
 				}
 
 				if (dire_player != undefined) {
-					var dire_ply_table = CustomNetTables.GetTableValue("battlepass", dire_player.player_id);
+					var dire_ply_table = CustomNetTables.GetTableValue("battlepass_player", dire_player.player_id);
 
 //					$.Msg(dire_ply_table)
 

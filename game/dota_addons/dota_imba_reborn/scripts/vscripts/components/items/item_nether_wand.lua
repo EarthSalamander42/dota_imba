@@ -51,6 +51,10 @@ function modifier_imba_item_nether_wand_passive:OnDestroy()
 end
 
 function modifier_imba_item_nether_wand_passive:OnCreated()
+    if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
@@ -129,6 +133,10 @@ function modifier_item_imba_arcane_nexus_passive:OnDestroy()
 end
 
 function modifier_item_imba_arcane_nexus_passive:OnCreated()
+    if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+    
 	if not IsServer() then return end
 	
     -- Use Secondary Charges system to make mana loss reduction and CDR not stack with multiples

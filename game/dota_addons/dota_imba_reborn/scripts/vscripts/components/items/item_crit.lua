@@ -85,6 +85,10 @@ function modifier_item_imba_greater_crit:GetAttributes()	return MODIFIER_ATTRIBU
 
 -- Adds the damage increase counter when created
 function modifier_item_imba_greater_crit:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not self:GetAbility() or not IsServer() then return end
 
 	if not self:GetParent():HasModifier("modifier_item_imba_greater_crit_buff") then

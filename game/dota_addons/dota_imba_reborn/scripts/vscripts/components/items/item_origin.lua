@@ -127,6 +127,10 @@ function modifier_item_imba_origin_health:GetTexture()
 end
 
 function modifier_item_imba_origin_health:OnCreated(params)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
@@ -194,6 +198,10 @@ function modifier_item_imba_origin_power:GetTexture()
 end
 
 function modifier_item_imba_origin_power:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
@@ -247,6 +255,10 @@ function modifier_item_imba_origin_chaos:GetTexture()
 end
 
 function modifier_item_imba_origin_chaos:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
@@ -312,6 +324,10 @@ function modifier_item_imba_origin:RemoveOnDeath()	return false end
 function modifier_item_imba_origin:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_origin:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()

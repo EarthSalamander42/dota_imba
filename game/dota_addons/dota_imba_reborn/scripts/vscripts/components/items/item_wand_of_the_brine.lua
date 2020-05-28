@@ -73,6 +73,10 @@ modifier_item_imba_wand_of_the_brine_bubble = class({})
 
 function modifier_item_imba_wand_of_the_brine_bubble:OnCreated( kv )
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		self.bubble_heal_per_tick = self:GetAbility():GetSpecialValueFor( "bubble_heal_per_tick" )
 		self.heal_tick_interval = self:GetAbility():GetSpecialValueFor( "heal_tick_interval" )
 
@@ -150,6 +154,10 @@ function modifier_item_imba_wand_of_the_brine:GetAttributes()	return MODIFIER_AT
 --------------------------------------------------------------------------------
 
 function modifier_item_imba_wand_of_the_brine:OnCreated( kv )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.bonus_intelligence = self:GetAbility():GetSpecialValueFor( "bonus_intelligence" )
 	self.bonus_mana_regen_pct = self:GetAbility():GetSpecialValueFor( "bonus_mana_regen_pct" )
 end

@@ -67,6 +67,10 @@ function modifier_imba_soul_of_truth_buff:IsStunDebuff() return false end
 function modifier_imba_soul_of_truth_buff:RemoveOnDeath() return false end
 -------------------------------------------
 function modifier_imba_soul_of_truth_buff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	local hItem = self:GetAbility()
 
 	if hItem then

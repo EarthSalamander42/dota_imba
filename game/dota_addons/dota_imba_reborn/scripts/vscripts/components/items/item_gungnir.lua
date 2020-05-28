@@ -97,7 +97,11 @@ function modifier_item_imba_gungnir:IsPurgable()		return false end
 function modifier_item_imba_gungnir:RemoveOnDeath()	return false end
 function modifier_item_imba_gungnir:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_item_imba_gungnir:OnCreated()
+function modifier_item_imba_gungnir:OnCreated()	
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.ability	= self:GetAbility()
 	self.parent		= self:GetParent()
 	
@@ -227,6 +231,10 @@ function modifier_item_imba_gungnir_force_ally:IsMotionController()  return true
 function modifier_item_imba_gungnir_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_ally:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
 	-- This doesn't seem like a proper way to do things but w/e MouJiao's legacy code
@@ -310,6 +318,10 @@ function modifier_item_imba_gungnir_force_enemy_ranged:GetMotionControllerPriori
 function modifier_item_imba_gungnir_force_enemy_ranged:IgnoreTenacity()  return true end
 
 function modifier_item_imba_gungnir_force_enemy_ranged:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	self.effect = self:GetCaster().force_staff_effect or "particles/items_fx/force_staff.vpcf"
 	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -354,6 +366,10 @@ function modifier_item_imba_gungnir_force_self_ranged:IsMotionController()  retu
 function modifier_item_imba_gungnir_force_self_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_self_ranged:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	self.effect = self:GetCaster().force_staff_effect or "particles/items_fx/force_staff.vpcf"
 	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -401,6 +417,10 @@ function modifier_item_imba_gungnir_force_enemy_melee:GetMotionControllerPriorit
 function modifier_item_imba_gungnir_force_enemy_melee:IgnoreTenacity()  return true end
 
 function modifier_item_imba_gungnir_force_enemy_melee:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	self.effect = self:GetCaster().force_staff_effect or "particles/items_fx/force_staff.vpcf"
 	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -445,6 +465,10 @@ function modifier_item_imba_gungnir_force_self_melee:IsMotionController()  retur
 function modifier_item_imba_gungnir_force_self_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_self_melee:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	self.effect = self:GetCaster().force_staff_effect or "particles/items_fx/force_staff.vpcf"
 	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -489,6 +513,10 @@ function modifier_item_imba_gungnir_attack_speed:IsStunDebuff() return false end
 function modifier_item_imba_gungnir_attack_speed:IgnoreTenacity() return true end
 
 function modifier_item_imba_gungnir_attack_speed:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	self.as = 0
 	self.ar = 0

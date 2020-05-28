@@ -232,7 +232,7 @@ function Wearable:Init()
 		end
 	end
 
-	Wearable:UICacheAvailableWards()
+--	Wearable:UICacheAvailableWards()
 
 	-- 棱彩宝石
 	Wearable.prismatics = {}
@@ -393,7 +393,7 @@ function Wearable:WearDefaults(hUnit)
 		end
 	end
 	local unit_index = hUnit:GetEntityIndex()
-	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnit.Slots)
+--	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnit.Slots)
 end
 
 function Wearable:WearDefaultsPersona(hUnit)
@@ -413,7 +413,7 @@ function Wearable:WearDefaultsPersona(hUnit)
 		end
 	end
 	local unit_index = hUnit:GetEntityIndex()
-	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnit.Slots)
+--	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnit.Slots)
 end
 
 function Wearable:GetSlotName(sItemDef)
@@ -585,7 +585,7 @@ function Wearable:WearAfterRespawn(hUnit, hNewWears)
 	end
 
 	local unit_index = hUnit:GetEntityIndex()
-	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnit.Slots)
+--	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnit.Slots)
 end
 
 -- 通过重生带饰品的新单位来换多件饰品
@@ -641,9 +641,9 @@ function Wearable:_WearItemsRespawn(hUnitOrigin, hNewWears)
 				CustomNetTables:GetTableValue("hero_ethereals", tostring(hUnitOrigin:GetEntityIndex()))
 			)
 
-			CustomNetTables:SetTableValue("hero_wearables", tostring(hUnitOrigin:GetEntityIndex()), nil)
-			CustomNetTables:SetTableValue("hero_prismatic", tostring(hUnitOrigin:GetEntityIndex()), nil)
-			CustomNetTables:SetTableValue("hero_ethereals", tostring(hUnitOrigin:GetEntityIndex()), nil)
+--			CustomNetTables:SetTableValue("hero_wearables", tostring(hUnitOrigin:GetEntityIndex()), nil)
+--			CustomNetTables:SetTableValue("hero_prismatic", tostring(hUnitOrigin:GetEntityIndex()), nil)
+--			CustomNetTables:SetTableValue("hero_ethereals", tostring(hUnitOrigin:GetEntityIndex()), nil)
 
 			hUnitNew.nOriginID = nUnitIndexOld
 			hUnitNew.prismatic = hUnitOrigin.prismatic
@@ -784,7 +784,7 @@ end
 function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 	if not hUnit.Slots then
 		hUnit.Slots = {}
-		CustomNetTables:SetTableValue("hero_wearables", tostring(hUnit:GetEntityIndex()), hUnit.Slots)
+--		CustomNetTables:SetTableValue("hero_wearables", tostring(hUnit:GetEntityIndex()), hUnit.Slots)
 	end
 
 	if type(sItemDef) ~= "string" then
@@ -816,6 +816,11 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 	Wearable:TakeOffSlot(hUnit, sSlotName)
 
 	hWear["style"] = sStyle
+
+	-- IO Arcana fix
+	if sItemDef == "9235" then
+		sModel_player = nil
+	end
 
 	-- 生成饰品模型
 	if sModel_player then
@@ -1040,14 +1045,15 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 	end
 
 	local unit_id = hUnit:GetEntityIndex()
+--[[
 	if Wearable:IsDisplayInLoadout(hUnit:GetUnitName(), sSlotName) then
 		CustomGameEventManager:Send_ServerToAllClients(
 			"UpdateWearable",
 			{unit = unit_id, itemDef = sItemDef, itemStyle = sStyle, slotName = sSlotName}
 		)
 	end
-
-	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_id), hUnit.Slots)
+--]]
+--	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_id), hUnit.Slots)
 end
 
 function Wearable:Wear(hUnit, sItemDef, sStyle)
@@ -1479,6 +1485,7 @@ function Wearable:UICacheAvailableItems(sUnitName)
 	-- PrintTable(CustomNetTables:GetTableValue("hero_available_items", sUnitName))
 end
 
+--[[
 -- 预读取信使饰品
 function Wearable:UICacheAvailableCouriers()
 	if not CustomNetTables:GetTableValue("other_available_items", "courier") then
@@ -1494,6 +1501,7 @@ function Wearable:UICacheAvailableWards()
 	end
 	-- PrintTable(CustomNetTables:GetTableValue("other_available_items", "courier"))
 end
+--]]
 
 -- 复制英雄饰品
 function Wearable:WearLike(hUnitOrigin, hUnitNew)
@@ -1505,7 +1513,7 @@ function Wearable:WearLike(hUnitOrigin, hUnitNew)
 	end
 
 	local unit_index = hUnitNew:GetEntityIndex()
-	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnitNew.Slots)
+--	CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnitNew.Slots)
 end
 
 -- 隐藏英雄饰品
@@ -1589,8 +1597,8 @@ function Wearable:WearCombination(hUnit, sCombinationID)
 				Wearable:_WearProp(hUnit, tostring(nItemDef), sSlotName, sStyle)
 			end
 		end
-		local unit_index = hUnit:GetEntityIndex()
-		CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnit.Slots)
+--		local unit_index = hUnit:GetEntityIndex()
+--		CustomNetTables:SetTableValue("hero_wearables", tostring(unit_index), hUnit.Slots)
 	end
 end
 

@@ -67,6 +67,10 @@ function modifier_item_imba_orchid:OnDestroy()
 end
 
 function modifier_item_imba_orchid:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
@@ -126,6 +130,10 @@ end
 
 -- Reset damage storage tracking, track debuff parameters to prevent errors if the item is unequipped
 function modifier_item_imba_orchid_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 		local owner = self:GetParent()
 		owner.orchid_damage_storage = owner.orchid_damage_storage or 0
@@ -245,6 +253,10 @@ function modifier_item_imba_bloodthorn:GetAttributes()	return MODIFIER_ATTRIBUTE
 
 -- Adds the unique modifier when created
 function modifier_item_imba_bloodthorn:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
@@ -324,6 +336,10 @@ end
 
 -- Reset damage storage tracking, track debuff parameters to prevent errors if the item is unequipped
 function modifier_item_imba_bloodthorn_debuff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 		local owner = self:GetParent()
 		if not owner.orchid_damage_storage then
@@ -415,6 +431,10 @@ function modifier_item_imba_bloodthorn_attacker_crit:IsPurgable() return false e
 
 -- Track parameters to prevent errors if the item is unequipped
 function modifier_item_imba_bloodthorn_attacker_crit:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if IsServer() then
 		self.target_crit_multiplier = keys.target_crit_multiplier
 	end

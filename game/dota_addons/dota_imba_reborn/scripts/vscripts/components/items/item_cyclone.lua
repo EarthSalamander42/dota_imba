@@ -64,6 +64,10 @@ function modifier_item_imba_cyclone_2:RemoveOnDeath()	return false end
 function modifier_item_imba_cyclone_2:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_cyclone_2:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if self:GetAbility() then
 		self.bonus_intellect		= self:GetAbility():GetSpecialValueFor("bonus_intellect")
 		self.bonus_mana_regen		= self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
@@ -138,6 +142,10 @@ function modifier_item_imba_cyclone_2_movement:IsHidden()		return true end
 function modifier_item_imba_cyclone_2_movement:IgnoreTenacity()	return true end
 
 function modifier_item_imba_cyclone_2_movement:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.tornado_aura_duration	= self:GetAbility():GetSpecialValueFor("tornado_aura_duration")
 	self.disorient_duration		= self:GetAbility():GetSpecialValueFor("disorient_duration")
 	self.displacement_distance	= self:GetAbility():GetSpecialValueFor("displacement_distance") / self:GetDuration()
@@ -183,6 +191,10 @@ function modifier_item_imba_cyclone_2_thinker:GetEffectName()
 end
 
 function modifier_item_imba_cyclone_2_thinker:OnCreated(params)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.effect_table = {
 		"particles/econ/events/ti5/cyclone_ti5.vpcf",
 		"particles/econ/events/ti6/cyclone_ti6.vpcf",
@@ -218,6 +230,10 @@ function modifier_item_imba_cyclone_2_thinker:GetAuraEntityReject(hEntity)	retur
 function modifier_item_imba_cyclone_2_thinker_aura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_cyclone_2_thinker_aura:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.tornado_pull_speed	= self:GetAbility():GetSpecialValueFor("tornado_pull_speed")
 
 	if not IsServer() then return end
@@ -249,6 +265,10 @@ function modifier_item_imba_cyclone_2_disorient:GetStatusEffectName()
 end
 
 function modifier_item_imba_cyclone_2_disorient:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.disorient_status_resistance	= self:GetAbility():GetSpecialValueFor("disorient_status_resistance") * (-1)
 end
 

@@ -77,6 +77,10 @@ function modifier_item_imba_spell_fencer:GetAttributes() return MODIFIER_ATTRIBU
 -- Adds the unique modifier to the bearer when created
 function modifier_item_imba_spell_fencer:OnCreated(keys)
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_spell_fencer_passive_silence") then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_spell_fencer_passive_silence", {})
@@ -142,6 +146,10 @@ function modifier_item_imba_spell_fencer_unique:IsPurgable() return false end
 function modifier_item_imba_spell_fencer_unique:IsPermanent() return true end
 
 function modifier_item_imba_spell_fencer_unique:OnCreated( params )
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.damage_reduce_pct = self:GetAbility():GetSpecialValueFor("damage_reduce_pct")
 end
 
@@ -313,6 +321,10 @@ end
 
 -- Modifier property storage
 function modifier_item_imba_spell_fencer_soul_rend:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.amp_stack = self:GetAbility():GetSpecialValueFor("amp_stack")
 
 	-- Remove this if higher tier modifiers are present

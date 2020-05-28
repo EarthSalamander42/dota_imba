@@ -48,6 +48,10 @@ function modifier_item_imba_banana:GetTexture()
 end
 
 function modifier_item_imba_banana:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if self:GetAbility() then
 		self.int_gain	= self:GetAbility():GetSpecialValueFor("int_gain")
 	else
@@ -76,6 +80,10 @@ end
 ---------------------------------------
 
 function modifier_item_imba_banana_thinker:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.banana_peel_radius		= self:GetAbility():GetSpecialValueFor("banana_peel_radius")
 	self.banana_flying_vision	= self:GetAbility():GetSpecialValueFor("banana_flying_vision")
 	
@@ -122,6 +130,10 @@ function modifier_item_imba_banana_thinker:GetAuraEntityReject(hTarget)	return h
 function modifier_item_imba_banana_thinker_aura:IsHidden()	return true end
 
 function modifier_item_imba_banana_thinker_aura:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not IsServer() then return end
 	
 	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_banana_stun", {duration = 1})
@@ -141,6 +153,10 @@ end
 
 -- Due to the ability probably not existing when this modifier would apply, I'm just going to hard-code the values here
 function modifier_item_imba_banana_stun:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	if not IsServer() then return end
 	
 	self.banana_slide_duration		= 1

@@ -325,11 +325,12 @@
 	background-color: #303848;
 }
 
-.LeaderboardRank,
-.LeaderboardXP,
-.LeaderboardAvatar,
-.LeaderboardAvatar_alt
+.LeaderboardRankLabel,
+.LeaderboardXPLabel,
+.LeaderboardAvatarLabel,
+.LeaderboardAvatar_altLabel
 {
+	width: 100%;
 	height: 100%;
 	text-align: center;
 	font-size: 19px;
@@ -350,10 +351,6 @@
 	color:#daebff;
 }
 
-.LeaderboardXP, {
-	padding: 3px 10px 3px 10px;
-}
-
 /* Leaderboard Legend */
 .LeaderboardLegend {
 	width: 100%;
@@ -372,18 +369,22 @@
 
 .LeaderboardRank {
 	width: 10%;	
-	align:  center center;
+	height: 90%;
+	align:  center top;
+	text-align:  center center;
 }
 
 .LeaderboardAvatar {
 	width: 15%;
+	height: 90%;
 	border: 0;
-	align:  center center;
+	align:  center top;
 }
 
 .LeaderboardXP {
-	width: 50%;	
+	width: 50%;
 	align:  center center;
+	padding: 3px 10px 3px 10px;
 }
 
 .LeaderboardIMR {
@@ -824,6 +825,11 @@
 	brightness: 0.6;
 }
 
+.BattlepassRewardIcon_unreleased {
+	wash-color: #000000a0;
+	brightness: 0.6;
+}
+
 .BattlepassRewardHeroIcon {
 	width: 25px;
 	height: 25px;
@@ -832,7 +838,7 @@
 }
 
 .BattlepassReward:hover .BattlepassRewardPanelUnlocked {
-	opacity: 1;
+	opacity: 0;
 }
 
 .BattlepassRewardLabel {
@@ -857,6 +863,18 @@
 	border-color: #1c2328;
 	margin-top:  -2px;
 }
+.BattlepassRewardLabel.unreleased {
+	background-color: #282a2d;
+	border-color: #1c2328;
+	margin-top:  -2px;
+}
+
+.BattlepassRewardPanelUnlocked {
+	width: 100%;
+	height: 100%;
+	background-color: #000000ba;
+}
+
 
 .BattlepassRewardLabelLocked {
 	width: 100%;
@@ -868,16 +886,10 @@
 	text-transform: uppercase;
 	text-overflow: shrink;
 	text-align: center center;
-	text-shadow: 0px 0px 3px 3 #000000a5;
+	text-shadow: 0px 0px 4px 4 #000000a5;
 	color: red;
 	brightness:  1.5;
-}
-
-.BattlepassRewardPanelUnlocked {
-	opacity: 0;
-	width: 100%;
-	height: 100%;
-	background-color: #000000db;
+	line-height: 14px;
 }
 
 .BattlepassRewardLabelUnlocked {
@@ -891,6 +903,22 @@
 	text-shadow: 0px 0px 4px 4 #000000a5;
 	color: #b8c5ca;
 	align: center center;
+	line-height: 14px;
+}
+
+.BattlepassRewardLabelUnreleased {
+	width: 100%;
+	horizontal-align: left;
+	font-size: 11px;
+	vertical-align: top;
+//	letter-spacing: 1px;
+	align: center center;
+	text-transform: uppercase;
+	text-overflow: shrink;
+	text-align: center center;
+	text-shadow: 0px 0px 4px 4 #000000a5;
+	color: orange;
+	brightness:  1.5;
 	line-height: 14px;
 }
 

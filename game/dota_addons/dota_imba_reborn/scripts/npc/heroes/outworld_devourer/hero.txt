@@ -18,7 +18,7 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_outworld_devourer_sanity_eclipse"
 		
-		"Ability9"					"imba_form_change_obsidian_destroyer"
+//		"Ability9"					"imba_form_change_obsidian_destroyer"
 
 		"Ability10"					"special_bonus_hp_250"
 		"Ability11"					"special_bonus_attack_speed_20"

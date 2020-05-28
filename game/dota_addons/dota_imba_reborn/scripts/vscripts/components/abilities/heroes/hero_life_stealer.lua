@@ -572,27 +572,17 @@ end
 -- OPEN WOUNDS --
 -----------------
 
-function imba_life_stealer_open_wounds:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "life_stealer_open_wounds" end
-	if self:GetCaster().arcana_style == 0 then
-		return "life_stealer_open_wounds_ti9"
-	elseif self:GetCaster().arcana_style == 1 then
-		return "life_stealer_open_wounds_ti9_gold"
-	end
-end
-
 function imba_life_stealer_open_wounds:OnSpellStart()
 	if not IsServer() then return end
-	
+
 	local target = self:GetCursorTarget()
-	
+
 	if target:TriggerSpellAbsorb(self) then return nil end
 
-	self:GetCaster():EmitSound("Hero_LifeStealer.OpenWounds.Cast")
-	
-	target:EmitSound("Hero_LifeStealer.OpenWounds")
-	
+	self:GetCaster():EmitSound("Hero_LifeStealer.OpenWounds.Cast", self:GetCaster())
+
+	target:EmitSound("Hero_LifeStealer.OpenWounds", self:GetCaster())
+
 	if self:GetCaster():GetName() == "npc_dota_hero_life_stealer" and RollPercentage(75) then
 		if not self.responses then
 			self.responses = 
@@ -605,7 +595,7 @@ function imba_life_stealer_open_wounds:OnSpellStart()
 				["life_stealer_lifest_ability_openwound_06"] = 0
 			}
 		end
-		
+
 		for response, timer in pairs(self.responses) do
 			if GameRules:GetDOTATime(true, true) - timer >= 60 then
 				self:GetCaster():EmitSound(response)
@@ -615,11 +605,11 @@ function imba_life_stealer_open_wounds:OnSpellStart()
 		end
 	end	
 
-	local impact_particle = ParticleManager:CreateParticle(CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds_impact, PATTACH_ABSORIGIN_FOLLOW, target)
+	local impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(impact_particle)
-	
+
 	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
-	
+
 	-- IMBAfication: Cross-Contamination
 	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_life_stealer_open_wounds_cross_contamination", {duration = self:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 end
@@ -628,26 +618,25 @@ end
 -- OPEN WOUNDS MODIFIER --
 --------------------------
 
-function modifier_imba_life_stealer_open_wounds:GetEffectName()
-	return CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds
-end
-
 function modifier_imba_life_stealer_open_wounds:GetStatusEffectName()
-	return CustomNetTables:GetTableValue("battlepass", "life_stealer").open_wounds_status_effect
+	return "particles/status_fx/status_effect_life_stealer_open_wounds.vpcf"
 end
 
 function modifier_imba_life_stealer_open_wounds:OnCreated()
 	self.heal_percent	= self:GetAbility():GetTalentSpecialValueFor("heal_percent")
-	
+
 	if not IsServer() then return end
-	
+
+	local impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(impact_particle)
+
 	self.slow_steps = {}
-	
+
 	-- GetLevelSpecialValueFor is a server only function so I'm using stack counts to show on client (which means I'm using another modifier for the Cross-Contamination IMBAfication)
 	for step = 0, self:GetAbility():GetSpecialValueFor("duration") - 1 do
 		table.insert(self.slow_steps, self:GetAbility():GetLevelSpecialValueFor("slow_steps", step))
 	end
-	
+
 	self:SetStackCount(self.slow_steps[math.floor(self:GetElapsedTime()) + 1])
 
 	self:StartIntervalThink(0.1)
@@ -783,20 +772,19 @@ end
 
 function imba_life_stealer_infest:OnSpellStart()
 	local target = self:GetCursorTarget()
-	
+
 	-- Some really messy stuff happening if this line isn't in...
 	if not target:IsAlive() or target:IsInvulnerable() or target:IsOutOfGame() then 
 		self:RefundManaCost()
 		self:EndCooldown()
 		return
 	end
-	
+
 	self:GetCaster():EmitSound("Hero_LifeStealer.Infest")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_life_stealer" and RollPercentage(75) then
 		if not self.responses then
-			self.responses = 
-			{
+			self.responses = {
 				["life_stealer_lifest_ability_infest_cast_01"] = 0,
 				["life_stealer_lifest_ability_infest_cast_02"] = 0,
 				["life_stealer_lifest_ability_infest_cast_03"] = 0,
@@ -809,11 +797,10 @@ function imba_life_stealer_infest:OnSpellStart()
 				["life_stealer_lifest_ability_infest_burst_03"] = 0,
 				["life_stealer_lifest_ability_infest_hero_02"] = 0,
 				["life_stealer_lifest_ability_infest_hero_03"] = 0,
-				["life_stealer_lifest_ability_infest_hero_04"] = 0,
-				
+				["life_stealer_lifest_ability_infest_hero_04"] = 0,	
 			}
 		end
-		
+
 		for response, timer in pairs(self.responses) do
 			if GameRules:GetDOTATime(true, true) - timer >= 60 then
 				self:GetCaster():EmitSound(response)
@@ -966,7 +953,7 @@ function modifier_imba_life_stealer_infest:OnDestroy()
 
 		self:GetParent():EmitSound("Hero_LifeStealer.Consume")
 		
-		local infest_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		local infest_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 		ParticleManager:ReleaseParticleIndex(infest_particle)
 		
 		self:GetParent():StartGesture(ACT_DOTA_LIFESTEALER_INFEST_END)
@@ -1118,9 +1105,9 @@ function modifier_imba_life_stealer_infest_effect:OnCreated()
 	local infest_overhead_particle
 	
 	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() and not self:GetParent():IsOther() then
-		infest_overhead_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetParent():GetTeamNumber())
+		infest_overhead_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetParent():GetTeamNumber(), self:GetCaster())
 	else
-		infest_overhead_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+		infest_overhead_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetCaster())
 	end
 	
 	self:AddParticle(infest_overhead_particle, false, false, -1, true, false)
@@ -1656,7 +1643,7 @@ function modifier_imba_life_stealer_assimilate:OnDestroy()
 	
 	self:GetParent():EmitSound("Hero_LifeStealer.Consume")
 	
-	local assimilate_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	local assimilate_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(assimilate_particle)
 	
 	self:GetCaster():StartGesture(ACT_DOTA_LIFESTEALER_EJECT)

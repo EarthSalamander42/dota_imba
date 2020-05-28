@@ -40,6 +40,10 @@ function modifier_imba_ironleaf_boots:RemoveOnDeath()	return false end
 function modifier_imba_ironleaf_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_ironleaf_boots:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -110,6 +114,10 @@ function modifier_imba_ironleaf_boots_unique:IsPurgable() return false end
 function modifier_imba_ironleaf_boots_unique:RemoveOnDeath() return false end
 
 function modifier_imba_ironleaf_boots_unique:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if IsServer() then
 		-- Ability properties
 		self.caster = self:GetCaster()
@@ -284,6 +292,10 @@ function modifier_imba_ironleaf_boots_meditate:IsDebuff() return false end
 function modifier_imba_ironleaf_boots_meditate:RemoveOnDeath() return false end
 
 function modifier_imba_ironleaf_boots_meditate:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -392,6 +404,10 @@ function modifier_imba_ironleaf_boots_leafwalk:IsDebuff() return false end
 
 function modifier_imba_ironleaf_boots_leafwalk:OnCreated()
 	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
+	if IsServer() then
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
@@ -452,6 +468,10 @@ function modifier_imba_ironleaf_boots_magic_res:IsPurgable() return true end
 function modifier_imba_ironleaf_boots_magic_res:IsDebuff() return false end
 
 function modifier_imba_ironleaf_boots_magic_res:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()

@@ -57,6 +57,13 @@ function item_imba_black_queen_cape:OnSpellStart()
 	target:AddNewModifier(caster, self, bkb_modifier, {duration = bkb_duration})
 	target:Purge(false, true, false, false, false)
 
+	-- Remove ethereal abilities
+    for _, modifier_name in pairs(GetEtherealAbilities()) do
+        if target:HasModifier(modifier_name) then
+            target:RemoveModifierByName(modifier_name)
+        end
+    end
+
 	if self:GetCurrentCharges() > 0 and not target:IsBuilding() then
 		EmitSoundOn("DOTA_Item.UrnOfShadows.Activate", target)
 		target:AddNewModifier(caster, self, heal_modifier, {duration = heal_duration, heal = heal, bkb_modifier = bkb_modifier})
@@ -75,6 +82,10 @@ function modifier_imba_black_queen_cape_passive:RemoveOnDeath()	return false end
 function modifier_imba_black_queen_cape_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_black_queen_cape_passive:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	self.soultrap_range = self.item:GetSpecialValueFor("soultrap_range")

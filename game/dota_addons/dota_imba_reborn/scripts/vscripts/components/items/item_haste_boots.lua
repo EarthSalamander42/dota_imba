@@ -54,6 +54,10 @@ function modifier_imba_haste_boots:RemoveOnDeath()	return false end
 function modifier_imba_haste_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_haste_boots:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 
@@ -91,6 +95,10 @@ function modifier_imba_haste_boots_buff:IsPurgable() return false end
 function modifier_imba_haste_boots_buff:IsDebuff() return false end
 
 function modifier_imba_haste_boots_buff:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()

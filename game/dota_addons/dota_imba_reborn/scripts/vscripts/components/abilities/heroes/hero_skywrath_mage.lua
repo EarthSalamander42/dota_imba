@@ -6,22 +6,12 @@
 ----------------------------
 imba_skywrath_mage_arcane_bolt = class({})
 LinkLuaModifier("modifier_imba_arcane_bolt_buff", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skywrath_flying_movement", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_skywrath_mage_arcane_bolt:GetAbilityTextureName()
-	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "skywrath_mage_arcane_bolt" end
-	if self:GetCaster().arcana_style == 0 then
-		return "skywrath_mage_arcane_bolt_ti9"
-	elseif self:GetCaster().arcana_style == 1 then
-		return "skywrath_mage_arcane_bolt_ti9_gold"
-	end
-end
+-- LinkLuaModifier("modifier_imba_skywrath_flying_movement", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_skywrath_mage_arcane_bolt:IsHiddenWhenStolen()
 	return false
 end
-
+--[[
 function imba_skywrath_mage_arcane_bolt:GetIntrinsicModifierName()
 	return "modifier_imba_skywrath_flying_movement"
 end
@@ -30,6 +20,7 @@ function imba_skywrath_mage_arcane_bolt:OnUnStolen()
 	-- Remove modifier to lessen load. Not that it would ever do something.
 	self:GetCaster():RemoveModifierByName("modifier_imba_skywrath_flying_movement")
 end
+--]]
 
 function imba_skywrath_mage_arcane_bolt:GetManaCost(level)
 	return self.BaseClass.GetManaCost(self,level) - self:GetCaster():FindTalentValue("special_bonus_imba_skywrath_mage_1")
@@ -1181,11 +1172,12 @@ function modifier_imba_mystic_flare:OnIntervalThink()
 	end
 end
 
+--[[
+
 --------------------------------
 -- PERMANENT FLYING MOVEMENT  --
 --------------------------------
 modifier_imba_skywrath_flying_movement = class({})
-
 function modifier_imba_skywrath_flying_movement:CheckState()
 	local caster = self:GetCaster()
 	local state
@@ -1202,6 +1194,7 @@ function modifier_imba_skywrath_flying_movement:IsHidden() return true end
 function modifier_imba_skywrath_flying_movement:IsPurgable() return false end
 function modifier_imba_skywrath_flying_movement:IsDebuff() return false end
 
+--]]
 
 ---------------------
 -- TALENT HANDLERS --

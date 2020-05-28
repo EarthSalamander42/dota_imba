@@ -127,6 +127,10 @@ function modifier_item_imba_cultic_hammer:RemoveOnDeath()	return false end
 function modifier_item_imba_cultic_hammer:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_cultic_hammer:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not self:GetAbility() then return end
 
 	self.bonus_str		= self:GetAbility():GetSpecialValueFor("bonus_str")
@@ -166,6 +170,10 @@ function modifier_item_imba_cultic_hammer_aura:GetEffectName()
 end
 
 function modifier_item_imba_cultic_hammer_aura:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	if not self:GetAbility() then return end
 
 	self.soul_drain_health	= self:GetAbility():GetSpecialValueFor("soul_drain_health")
@@ -220,6 +228,10 @@ function modifier_item_imba_cultic_pull:GetEffectName()
 end
 
 function modifier_item_imba_cultic_pull:OnCreated(keys)
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+
 	self.wretched_pull_speed	= self:GetAbility():GetSpecialValueFor("wretched_pull_speed")
 
 	if not IsServer() then return end
@@ -261,6 +273,10 @@ function modifier_item_imba_cultic_status_resistance:GetStatusEffectName()
 end
 
 function modifier_item_imba_cultic_status_resistance:OnCreated()
+	if IsServer() then
+        if not self:GetAbility() then self:Destroy() end
+    end
+	
 	self.wretched_status_resistance	= self:GetAbility():GetSpecialValueFor("wretched_status_resistance") * (-1)
 end
 
