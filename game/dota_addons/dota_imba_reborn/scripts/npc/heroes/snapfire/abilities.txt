@@ -312,12 +312,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_per_stack"			"20"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stack_duration"			"3.0"
-			}
+			}			
 		}
 	}
 
