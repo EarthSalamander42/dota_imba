@@ -1,6 +1,6 @@
 <root>
     <styles>
- 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/dotastyles.css" />
         <include src="s2r://panorama/styles/custom_game/multiteam_end_screen.vcss_c" />
     </styles>
 	<Panel class="PlayerRow">

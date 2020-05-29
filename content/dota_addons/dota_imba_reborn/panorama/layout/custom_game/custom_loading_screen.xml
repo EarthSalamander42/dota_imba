@@ -1,6 +1,6 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/dotastyles.vcss_c"/>
+		<include src="file://{resources}/styles/dotastyles.css" />
 		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css"/>
 	</styles>
 
@@ -12,12 +12,18 @@
 	<Panel class="addon-root">
 		<Panel class="header">
 			<Panel class="top-left-container">
-				<Panel class="profile-container">
-
+				<Panel id="HomeProfileContainer" onactivate="DOTAShowProfilePage( 0 )">
+					<Panel id="HomeProfileHeader" class="TodayPageHeader">
+						<Panel id="PopoutArrow" class="DemoArrow" />
+						<Panel class="LeftRightFlow">
+							<Label id="ProfileHeaderTitle" text="#DOTA_Profile_WindowTitle" />
+						</Panel>
+					</Panel>
+					<DOTAProfileCard id="ProfileCard" class="FixedSize"/>
 				</Panel>
 
 				<Panel id="vote-container" class="vote-container">
-					<Label class="vote-title" text="GAME MODE"/>
+					<Label class="vote-title" text="GAMEMODE"/>
 
 					<Label id="VoteGameModeText1" class="vote-label" text="#vote_gamemode_1" />
 
@@ -56,17 +62,89 @@
 			</Panel>
 		</Panel>
 
-		<Panel class="separator">
-
-		</Panel>
-
 		<Panel class="footer">
-			<Panel class="transifex-container">
-
+			<Panel class="bottom-button-container" hittest="false">
+				<RadioButton class="bottom-radio-button" text="Custom Games" />
+				<Label class="bottom-radio-separator" text="/" />
+				<RadioButton class="bottom-radio-button" text="Transifex" />
+				<Label class="bottom-radio-separator" text="/" />
+				<RadioButton class="bottom-radio-button" text="Patreon" />
 			</Panel>
 
-			<Panel class="mods-container">
+			<Panel class="bottom-mods-container">
+				<!-- Frostrose Battlefield -->
+				<Button class="mod-cell">
+					<Panel class="mod-image-container">
+						<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist1.jpg"/>
+						<Panel class="mod-background"/>
+					</Panel>
 
+					<Panel class="mod-footer">
+						<Label class="mod-name" text="#loading_screen_patreon_modlist1"/>
+					</Panel>
+				</Button>
+
+				<!-- Dota IMBA -->
+				<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=1350425247');">
+					<Panel class="mod-image-container">
+						<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist2.jpg"/>
+						<Panel class="mod-background"/>
+					</Panel>
+
+					<Panel class="mod-footer">
+						<Label class="mod-name" text="#loading_screen_patreon_modlist2"/>
+					</Panel>
+				</Button>
+
+				<!-- X Hero Siege -->
+				<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=536682348');">
+					<Panel class="mod-image-container">
+						<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist3.jpg"/>
+						<Panel class="mod-background"/>
+					</Panel>
+
+					<Panel class="mod-footer">
+						<Label class="mod-name" text="#loading_screen_patreon_modlist3"/>
+					</Panel>
+				</Button>
+
+				<!-- Pudge Wars -->
+				<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');">
+					<Panel class="mod-image-container">
+						<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist4.jpg"/>
+						<Panel class="mod-background"/>
+					</Panel>
+
+					<Panel class="mod-footer">
+						<Label class="mod-name" text="#loading_screen_patreon_modlist4"/>
+					</Panel>
+				</Button>
+
+				<!-- Hero Line Wars -->
+<!--
+				<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');">
+					<Panel class="mod-image-container">
+						<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist1.jpg"/>
+						<Panel class="mod-background"/>
+					</Panel>
+
+					<Panel class="mod-footer">
+						<Label class="mod-name" text="#loading_screen_patreon_modlist5"/>
+					</Panel>
+				</Button>
+-->
+
+				<!-- Diretide -->
+				<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=544075277');">
+					<Panel class="mod-image-container">
+						<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist6.jpg"/>
+						<Panel class="mod-background"/>
+					</Panel>
+
+					<Panel class="mod-footer">
+						<Label class="mod-name" text="#loading_screen_patreon_modlist6"/>
+					</Panel>
+				</Button>
 			</Panel>
 		</Panel>
 	</Panel>

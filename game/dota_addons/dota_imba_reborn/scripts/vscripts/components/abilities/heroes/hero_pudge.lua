@@ -313,7 +313,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 	ParticleManager:SetParticleControl(hook_particle, 3, vKillswitch)
 	ParticleManager:SetParticleControl(hook_particle, 4, Vector( 1, 0, 0 ) )
 	ParticleManager:SetParticleControl(hook_particle, 5, Vector( 0, 0, 0 ) )
---	ParticleManager:SetParticleControl(hook_particle, 7, Vector(1, 0, 0))
+	ParticleManager:SetParticleControl(hook_particle, 7, Vector(1, 0, 0))
 	
 --	if self:GetCaster().hook_pfx == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
 --		ParticleManager:SetParticleControlEnt(hook_particle, 7, self:GetCaster(), PATTACH_CUSTOMORIGIN, nil, self:GetCaster():GetOrigin(), true)

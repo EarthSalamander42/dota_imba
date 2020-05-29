@@ -1,5 +1,6 @@
 <root>
 	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
 		<include src="file://{resources}/styles/custom_game/hero_selection.css" />
 	</styles>
 

@@ -275,7 +275,7 @@ function OnVotesReceived(data)
 	for (var i = 1; i <= 5; i++) {
 		vote_count[i] = 0;
 		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
+			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i);
 	}
 
 	// Check number of votes for each gamemodes
@@ -291,7 +291,7 @@ function OnVotesReceived(data)
 			vote_tooltip = "votes"
 
 		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
 	}
 
 //	if (data.category == "random_tower_abilities") {
@@ -308,6 +308,11 @@ function DisableRankingVoting() {
 }
 
 (function(){
+	if ($("#HomeProfileContainer") && $("#HomeProfileContainer").FindChildTraverse("UserName") && $("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0)) {
+		$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).text = Players.GetPlayerName(Game.GetLocalPlayerID());
+		$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).style.textOverflow = "shrink";
+	}
+
 	HoverableLoadingScreen();
 	fetch();
 	AllPlayersLoaded()
