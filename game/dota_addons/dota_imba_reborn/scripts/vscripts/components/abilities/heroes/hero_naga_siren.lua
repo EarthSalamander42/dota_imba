@@ -503,7 +503,7 @@ end
 imba_naga_siren_song_of_the_siren_cancel = imba_naga_siren_song_of_the_siren_cancel or class({})
 
 function imba_naga_siren_song_of_the_siren_cancel:IsInnateAbility()	return true end
-
+function imba_naga_siren_song_of_the_siren_cancel:ProcsMagicStick() return false end
 function imba_naga_siren_song_of_the_siren_cancel:OnSpellStart()
 	if not IsServer() then return end
 

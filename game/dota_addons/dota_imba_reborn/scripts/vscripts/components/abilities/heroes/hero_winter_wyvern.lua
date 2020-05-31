@@ -36,6 +36,8 @@ function imba_winter_wyvern_arctic_burn:GetCooldown( nLevel )
 	end
 end
 
+function imba_winter_wyvern_arctic_burn:ProcsMagicStick() return false end
+
 function imba_winter_wyvern_arctic_burn:GetBehavior()
 	local caster = self:GetCaster()
 	if caster:HasScepter() == true then 

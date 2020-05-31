@@ -679,6 +679,7 @@ end
 --------------------------
 
 function imba_visage_stone_form_self_cast:IsStealable()	return false end
+function imba_visage_stone_form_self_cast:ProcsMagicStick() return false end
 
 function imba_visage_stone_form_self_cast:GetAssociatedSecondaryAbilities()
 	return "imba_visage_summon_familiars"
@@ -994,6 +995,8 @@ end
 -- function imba_visage_summon_familiars_stone_form:GetPlaybackRateOverride()
 	-- return self:GetSpecialValueFor("stun_delay") / 0.55
 -- end
+
+function imba_visage_summon_familiars_stone_form:ProcsMagicStick() return false end
 
 function imba_visage_summon_familiars_stone_form:OnSpellStart()
 	-- Remove this block when done with testing and the whole thing is properly ported over

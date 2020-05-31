@@ -1425,6 +1425,8 @@ function imba_life_stealer_consume:GetAssociatedPrimaryAbilities()
 	return "imba_life_stealer_infest"
 end
 
+function imba_life_stealer_consume:ProcsMagicStick() return false end
+
 function imba_life_stealer_consume:OnUpgrade()
 	local infest_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_infest")
 	

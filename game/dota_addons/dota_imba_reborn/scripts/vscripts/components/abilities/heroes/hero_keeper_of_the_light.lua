@@ -413,6 +413,8 @@ function imba_keeper_of_the_light_illuminate_end:GetAssociatedPrimaryAbilities()
 	return "imba_keeper_of_the_light_illuminate"
 end
 
+function imba_keeper_of_the_light_illuminate_end:ProcsMagicStick() return false end
+
 function imba_keeper_of_the_light_illuminate_end:OnSpellStart()
 	if not IsServer() then return end
 

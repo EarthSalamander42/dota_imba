@@ -629,6 +629,7 @@ end
 function imba_elder_titan_return_spirit:IsStealable() return false end
 function imba_elder_titan_return_spirit:IsHiddenWhenStolen() return true end
 function imba_elder_titan_return_spirit:IsNetherWardStealable() return false end
+function imba_elder_titan_return_spirit:ProcsMagicStick() return false end
 
 function imba_elder_titan_return_spirit:GetAssociatedPrimaryAbilities()
 	return "imba_elder_titan_ancestral_spirit"

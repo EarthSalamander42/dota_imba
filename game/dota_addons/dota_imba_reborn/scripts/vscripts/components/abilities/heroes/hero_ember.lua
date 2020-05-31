@@ -835,6 +835,7 @@ end
 imba_ember_spirit_fire_remnant = imba_ember_spirit_fire_remnant or class ({})
 
 function imba_ember_spirit_fire_remnant:GetAssociatedPrimaryAbilities() return "imba_ember_spirit_activate_fire_remnant" end
+function imba_ember_spirit_fire_remnant:ProcsMagicStick() return false end
 
 function imba_ember_spirit_fire_remnant:OnStolen(self)
 	local caster = self:GetCaster()

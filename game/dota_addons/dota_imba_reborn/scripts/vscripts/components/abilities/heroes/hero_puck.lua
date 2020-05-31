@@ -319,6 +319,8 @@ function imba_puck_phase_shift:CastFilterResultTarget(target)
 	end
 end
 
+function imba_puck_phase_shift:ProcsMagicStick() return false end
+
 -- function imba_puck_phase_shift:GetAbilityTargetFlags()
 	-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
 		-- return DOTA_UNIT_TARGET_FLAG_NONE
@@ -511,6 +513,8 @@ end
 function imba_puck_ethereal_jaunt:GetAssociatedPrimaryAbilities()
 	return "imba_puck_illusory_orb"
 end
+
+function imba_puck_ethereal_jaunt:ProcsMagicStick() return false end
 
 -- IMBAfication: Eternal Jaunt
 -- Putting mana cost on this so it doesn't get (too) out of hand
