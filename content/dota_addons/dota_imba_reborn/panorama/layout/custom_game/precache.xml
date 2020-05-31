@@ -66,7 +66,6 @@
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm3.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/pudge_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance3.png" hittest="false" />
@@ -75,37 +74,12 @@
 			<Image src="file://panorama/images/custom_game/battlepass/shiva.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/shiva2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/shiva3.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/vengefulspirit_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike4.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike5.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/enigma_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/enigma_mythical.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/pudge_arcana.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/pudge_arcana2.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/wisp_arcana.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/chen_mythical.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/dark_seer_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/dark_seer_immortal2.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/huskar_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/bristleback_rare.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/bristleback_rare2.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/axe_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/centaur_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/drow_ranger_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/nyx_assassin_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/skywrath_mage_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/skywrath_mage_immortal2.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/earthshaker_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/leshrac_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/death_prophet_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/life_stealer_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/life_stealer_immortal2.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/earthshaker_arcana.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/earthshaker_arcana2.png" hittest="false" />
-
+	
 			<Image src="file://panorama/images/heroes/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sohei.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_hell_empress.png" hittest="false" />
@@ -115,17 +89,6 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_dummy_dummy.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_nian.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_vardor.png" hittest="false" />
-
-			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana0.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana1.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana0.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana1.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_lina_arcana0.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_wisp_arcana0.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_zuus_arcana0.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_earthshaker_arcana0.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_earthshaker_arcana1.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_phantom_assassin_arcana0.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />
@@ -149,31 +112,10 @@
 
 			<Image src="file://panorama/images/custom_game/patreon.png" hittest="false" />
 
-			<Image src="file://panorama/images/custom_game/battlepass/alchemist_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/dark_willow_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/invoker_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/leshrac_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/lion_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/furion_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/pangolier_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/slark_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/vengefulspirit_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/windrunner_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/zuus_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/enigma_taunt.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/ursa_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/invoker_legendary.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/tiny_immortal.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/phantom_assassin_arcana.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/battlepass/nevermore_arcana.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/tidehunter_ancient.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/tiny_ancient.png" hittest="false" />
 
-			<Image src="file://{images}/spellicons/custom/pudge_flesh_heap_arcana_style0.png" hittest="false" />
-			<Image src="file://{images}/spellicons/custom/pudge_flesh_heap_arcana_style1.png" hittest="false" />
-			<Image src="file://{images}/spellicons/custom/arcane_supremacy.png" hittest="false" />
-			<Image src="file://{images}/spellicons/custom/imba_enigma_black_hole_immortal1.png" hittest="false" />
-			<Image src="file://{images}/spellicons/custom/imba_rubick_clandestine_librarian.png" hittest="false" />
-			<Image src="file://{images}/spellicons/custom/timbersaw/chakram_3.png" hittest="false" />
-		-->
+			-->
 		</Panel>
 	</Panel>
 </root>

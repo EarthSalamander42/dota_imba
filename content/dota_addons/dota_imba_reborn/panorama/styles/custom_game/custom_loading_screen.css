@@ -22,13 +22,25 @@
 
 @define maximum_length: 77%;
 
+@keyframes 'VoteVisible'
+{
+	0%
+	{
+		opacity: 0;
+	}
+
+	100%
+	{
+		opacity: 1;
+	}
+}
+
 .addon-root {
 	width: 100%;
 	height: 100%;
 	background-position: center center;
 	background-size: cover;
 	background-image: url("file://{images}/custom_game/loading_screen/bg.jpg");
-	flow-children: down;
 }
 
 .header {
@@ -118,6 +130,7 @@
 
 #ProfileCard
 {
+	height: 100%;
 	margin-top: 30px;
 }
 
@@ -147,7 +160,7 @@
 	font-size: 20px;
 /*	letter-spacing: 1px; */
 	text-shadow: 2px 2px 2px black;
-	color: #aaa;
+	color: white;
 }
 
 .vote-check {
@@ -173,7 +186,7 @@
 }
 
 .description-container {
-	width: 60%;
+	width: 80%;
 	height: 100%;
 	box-shadow: 0px 0px 10px #111;
 	flow-children: down;
@@ -222,14 +235,6 @@
 	text-shadow: 2px 2px 4px black;
 	font-weight: thin;
 	color: white;
-}
-
-.battlepass-container {
-	width: 20%;
-	height: 100%;
-	margin-left: 1%;
-	box-shadow: -2px -2px 4px 4px #000000aa;
-	background-color: #000000aa;
 }
 
 .footer {
@@ -353,6 +358,107 @@
 	font-weight: normal;
 	text-transform: none;
 	color: #aaaaaa;
+}
+
+.container-main {
+	width: 100%;
+	height: 100%;
+	flow-children: down;	
+}
+
+.vote-container-main {
+	width: 100%;
+	height: 100%;
+	background-color: #000000ba;
+	z-index: 10;
+	opacity: 0;
+}
+
+.Visible {
+	opacity: 1;
+
+/*
+	animation-name: VoteVisible;
+	animation-duration: 1s;
+	animation-delay: 0s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+*/
+}
+
+.vote-content {
+	width: 55%;
+	height: 55%;
+	padding: 0% 5% 0% 5%;
+	align: center center;
+	flow-children: down;
+	background-image: url("file://{images}/custom_game/gg/gg_background.png");
+	background-size: 100% 100%;
+}
+
+.vote-content-title {
+	width: 100%;
+	height: 10%;
+	margin-top: 10%;
+	margin-bottom: 20%;
+	font-size: 50px;
+	text-align: center center;
+	text-shadow: 2px 2px 4px black;
+	text-transform: uppercase;
+	color: gradient( linear, 0% 0%, 0% 100%, from( white ), color-stop( 0.5, #ffef8a ), to( #CFC26E ) );
+}
+
+.vote-select-panel-container {
+	width: 100%;
+	height: 100%;
+	flow-children: right;
+}
+
+.vote-select-panel {
+	width: 23%;
+	height: 80%;
+	margin-left: 1%;
+	margin-right: 1%;
+	flow-children: down;
+}
+
+.vote-select-title {
+	align: center top;
+	height: 10%;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	font-size: 20px;
+	text-align: center center;
+	text-shadow: 2px 2px 4px black;
+	color: gradient( linear, 0% 0%, 0% 100%, from( #6E93CF ), color-stop( 0.5, #6E93CF ), to( #4C658D ) );
+	text-transform: uppercase;
+	text-overflow: shrink;
+}
+
+.vote-select-description {
+	padding: 0px 10px 0px 10px;
+	align: center center;
+	text-shadow: 2px 2px 4px black;
+	color: #6E93CF;
+	text-align: center center;
+}
+
+.vote-select-description {
+	height: 60%;
+	align: center top;
+}
+
+.vote-button {
+	width: 80%;
+	height: 15%;
+	align: center center;
+	background-color: black;
+}
+
+.vote-button-label {
+	font-size: 20px;
+	align: center center;
+	text-shadow: 2px 2px 2px black;
 }
 
 /*
@@ -501,12 +607,6 @@
 
 .DarkBlue {
 	background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111));
-}
-
-#vote-content {
-	width: 100%;
-	height: 50px;
-	flow-children: right;
 }
 
 .VoteGameModeText {

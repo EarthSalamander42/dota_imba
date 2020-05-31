@@ -68,11 +68,14 @@ function fetch() {
 		return;
 	}
 
+	$("#HomeProfileContainer").FindChildTraverse("AvatarImage").steamid = Game.GetLocalPlayerInfo(Players.GetLocalPlayer()).player_steamid;
+
 	var game_options = CustomNetTables.GetTableValue("game_options", "game_version");
 	if (game_options == undefined) {
 		$.Schedule(0.1, fetch);
 		return;
 	}
+
 
 	secret_key = CustomNetTables.GetTableValue("game_options", "server_key");
 	if (secret_key == undefined) {
@@ -171,7 +174,7 @@ function fetch() {
 };
 
 function AllPlayersLoaded() {
-//	$.Msg("ALL PLAYERS LOADED IN!")
+	$.Msg("ALL PLAYERS LOADED IN!")
 	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
 		//$.Msg("Game Mode: ", i)
 		var panel = $("#vote-container").GetChild(i);
@@ -181,10 +184,6 @@ function AllPlayersLoaded() {
 			panel.AddClass("Active");
 
 		(function (panel, gamemode) {
-			panel.SetPanelEvent("onactivate", function () {
-				OnVoteButtonPressed('gamemode', gamemode);
-			})
-
 			panel.SetPanelEvent("onmouseover", function () {
 				$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("description_gamemode_" + gamemode));
 			})
@@ -195,10 +194,88 @@ function AllPlayersLoaded() {
 		})(panel, gamemode);
 	}
 
+	var player_table = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer().toString());
+
+	if (player_table && player_table.mmr_title) {
+		var short_title = player_table.mmr_title;
+		var title_stars = player_table.mmr_title.substring(player_table.mmr_title.length - 1, player_table.mmr_title.length)
+
+		// if last character is a number (horrible hack, look away please)
+		if (parseInt(title_stars)) {
+			short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
+			title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
+		} else {
+			short_title = player_table.mmr_title;
+			title_stars = "_empty";
+		}
+
+		var mmr_rank_to_medals = {
+			Herald: 1,
+			Guardian: 2,
+			Crusader: 3,
+			Archon: 4,
+			Legend: 5,
+			Ancient: 6,
+			Divine: 7,
+			Immortal: 8,
+		}
+
+		$.GetContextPanel().FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
+		$.GetContextPanel().FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
+/*
+		rank_panel.SetPanelEvent("onmouseover", function () {
+			$.DispatchEvent("DOTAShowTextTooltip", rank_panel, player_table.mmr_title);
+		})
+		rank_panel.SetPanelEvent("onmouseout", function () {
+			$.DispatchEvent("DOTAHideTextTooltip", rank_panel);
+		})
+*/
+	}
+
+	ToggleVoteContainer(true);
+
+	var vote_panel = $.GetContextPanel().FindChildrenWithClassTraverse("vote-select-panel-container");
+
+	if (vote_panel && vote_panel[0]) {
+		for (var i = 0; i <= vote_panel[0].GetChildCount() - 1; i++) {
+			var panel = vote_panel[0].GetChild(i);
+			var gamemode = undefined;
+			var button = undefined;
+
+			if (panel.GetChild(2)) {
+				gamemode = panel.GetChild(2).id.replace("VoteGameModeMainText", "");
+				button = panel.GetChild(2);
+
+				panel.GetChild(0).text = $.Localize("vote_gamemode_" + gamemode);
+				panel.GetChild(1).text = $.Localize("description_gamemode_" + gamemode);
+			}
+
+			$.Msg("Game Mode: ", gamemode)
+
+//			if (!panel.BHasClass("Active"))
+//				panel.AddClass("Active");
+
+			if (gamemode) {
+				(function (button, gamemode) {
+					button.SetPanelEvent("onactivate", function () {
+						OnVoteButtonPressed('gamemode', gamemode);
+						ToggleVoteContainer(false);
+					})
+				})(button, gamemode);
+			}
+		}
+	}
 
 //	$("#VoteGameMode1").checked = true;
 //	OnVoteButtonPressed("gamemode", 1);
+}
 
+function ToggleVoteContainer(bBoolean) {
+	var vote_container = $.GetContextPanel().FindChildrenWithClassTraverse("vote-container-main");
+
+	if (vote_container && vote_container[0]) {
+		vote_container[0].SetHasClass("Visible", bBoolean);
+	}
 }
 
 function HoverableLoadingScreen() {
@@ -213,6 +290,8 @@ function OnVoteButtonPressed(category, vote)
 //	$.Msg("Category: ", category);
 //	$.Msg("Vote: ", vote);
 	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote, "PlayerID":Game.GetLocalPlayerID() } );
+	var gamemode_name = $.Localize("vote_gamemode_" + vote)
+	$("#VoteGameModeCheck").text = "You have voted for " + gamemode_name + "."
 }
 
 /* new system, double votes for donators
@@ -308,14 +387,24 @@ function DisableRankingVoting() {
 }
 
 (function(){
+	var bottom_button_container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-button-container");
+
+	if (bottom_button_container && bottom_button_container[0] && bottom_button_container[0].GetChild(0))
+		bottom_button_container[0].GetChild(0).checked = true;
+
 	if ($("#HomeProfileContainer") && $("#HomeProfileContainer").FindChildTraverse("UserName") && $("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0)) {
 		$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).text = Players.GetPlayerName(Game.GetLocalPlayerID());
 		$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).style.textOverflow = "shrink";
+
+		$("#HomeProfileContainer").FindChildTraverse("RankTierContainer").style.marginTop = "21px";
+		$("#HomeProfileContainer").FindChildTraverse("RankTierContainer").style.marginRight = "-15px";
 	}
 
 	HoverableLoadingScreen();
 	fetch();
-	AllPlayersLoaded()
+
+	if (Game.IsInToolsMode())
+		AllPlayersLoaded();
 
 	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);

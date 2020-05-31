@@ -585,8 +585,9 @@ function api:RegisterGame(callback)
 		end)
 	end
 
-	print("ALL PLAYERS LOADED IN!")
-	CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
+	-- call in BP scripts after battlepass_player is set to show mmr medal in loading screen
+--	print("ALL PLAYERS LOADED IN!")
+--	CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 end
 
 function api:CompleteGame(successCallback, failCallback)
