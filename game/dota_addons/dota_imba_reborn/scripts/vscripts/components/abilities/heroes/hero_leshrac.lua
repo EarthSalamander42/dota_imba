@@ -1174,14 +1174,16 @@ function modifier_imba_leshrac_lightning_storm_tormented_cloud_aura:OnCreated()
 	-- Ability specials
 	self.tormented_soul_cast_aura_radius = self.ability:GetSpecialValueFor("tormented_soul_cast_aura_radius")	
 
-	-- Create particle		
-	self.particle_storm_cloud_fx = ParticleManager:CreateParticle(self.particle_storm_cloud, PATTACH_WORLDORIGIN, nil, self.caster)
-	ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 0, self.parent:GetAbsOrigin())
-	ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 1, self.parent:GetAbsOrigin())
-	ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 2, self.parent:GetAbsOrigin())
-	ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 3, Vector(self.tormented_soul_cast_aura_radius, 0, 0))
-	ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 62, Vector(1,1,1))
-	self:AddParticle(self.particle_storm_cloud_fx, false, false, -1, false, false)
+	if IsServer() then
+		-- Create particle		
+		self.particle_storm_cloud_fx = ParticleManager:CreateParticle(self.particle_storm_cloud, PATTACH_WORLDORIGIN, nil, self.caster)
+		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 0, self.parent:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 1, self.parent:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 2, self.parent:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 3, Vector(self.tormented_soul_cast_aura_radius, 0, 0))
+		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 62, Vector(1,1,1))
+		self:AddParticle(self.particle_storm_cloud_fx, false, false, -1, false, false)
+	end	
 end	
 
 function modifier_imba_leshrac_lightning_storm_tormented_cloud_aura:DeclareFunctions()
