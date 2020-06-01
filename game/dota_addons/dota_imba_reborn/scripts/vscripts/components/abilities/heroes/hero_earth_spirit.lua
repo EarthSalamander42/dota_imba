@@ -29,6 +29,7 @@ LinkLuaModifier("modifier_imba_earth_spirit_stone_caller_charge_counter", "compo
 function imba_earth_spirit_stone_remnant:IsNetherWardStealable() return false end
 function imba_earth_spirit_stone_remnant:IsInnateAbility() return true end
 function imba_earth_spirit_stone_remnant:IsStealable() return false end
+function imba_earth_spirit_stone_remnant:ProcsMagicStick() return false end
 
 function imba_earth_spirit_stone_remnant:GetManaCost()
 	return self:GetSpecialValueFor("overdraw_base_cost") * ((self:GetCaster():GetModifierStackCount("modifier_imba_earth_spirit_remnant_handler", self:GetCaster()) - 1) ^ self:GetSpecialValueFor("overdraw_cost_multiplier"))

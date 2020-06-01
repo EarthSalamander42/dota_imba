@@ -35,6 +35,8 @@ imba_invoker = imba_invoker or class({})
 			return "invoker_quas_persona1"
 		end
 
+		function imba_invoker_quas:ProcsMagicStick() return false end
+
 		function imba_invoker_quas:OnSpellStart()
 			if IsServer() then
 				local caster = self:GetCaster()
@@ -105,6 +107,8 @@ imba_invoker = imba_invoker or class({})
 	---------------------------------------------------------------------------------------------------------------------
 		imba_invoker_wex = class({})
 		LinkLuaModifier("modifier_imba_invoker_wex", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
+		function imba_invoker_wex:ProcsMagicStick() return false end
 
 		function imba_invoker_wex:GetAbilityTextureName()
 			if not IsClient() then return end
@@ -190,6 +194,8 @@ imba_invoker = imba_invoker or class({})
 	---------------------------------------------------------------------------------------------------------------------
 		imba_invoker_exort = class({})
 		LinkLuaModifier("modifier_imba_invoker_exort", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
+		function imba_invoker_exort:ProcsMagicStick() return false end
 
 		function imba_invoker_exort:GetAbilityTextureName()
 			if not IsClient() then return end

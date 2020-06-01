@@ -567,7 +567,6 @@ end
 imba_snapfire_lil_shredder = class({})
 LinkLuaModifier( "modifier_imba_snapfire_lil_shredder", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_snapfire_lil_shredder_debuff", "components/abilities/heroes/hero_snapfire", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier("modifier_imba_fury_swipes_debuff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -618,9 +617,10 @@ function modifier_imba_snapfire_lil_shredder:OnCreated( kv )
 	self.range_bonus = self:GetAbility():GetSpecialValueFor( "attack_range_bonus" )
 	self.bat = self:GetAbility():GetSpecialValueFor( "base_attack_time" )
 	self.slow = self:GetAbility():GetSpecialValueFor( "slow_duration" )
+	self.damage_per_stack = self:GetAbility():GetSpecialValueFor("damage_per_stack")
 
 	if self:GetCaster():HasTalent("special_bonus_unique_snapfire_6") then
-		self.damage = self:GetCaster():GetAttackDamage()
+		self.damage = self:GetCaster():GetAverageTrueAttackDamage(nil) 
 	end
 
 	if not IsServer() then return end
@@ -649,6 +649,7 @@ function modifier_imba_snapfire_lil_shredder:OnRefresh( kv )
 	self.as_bonus = self:GetAbility():GetSpecialValueFor( "attack_speed_bonus" )
 	self.range_bonus = self:GetAbility():GetSpecialValueFor( "attack_range_bonus" )
 	self.bat = self:GetAbility():GetSpecialValueFor( "base_attack_time" )
+	self.damage_per_stack = self:GetAbility():GetSpecialValueFor("damage_per_stack")
 
 	self.slow = self:GetAbility():GetSpecialValueFor( "slow_duration" )
 
@@ -678,14 +679,11 @@ function modifier_imba_snapfire_lil_shredder:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY,
-
 		MODIFIER_PROPERTY_PROJECTILE_NAME,
 		MODIFIER_PROPERTY_OVERRIDE_ATTACK_DAMAGE,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
-
-		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,		
 	}
 
 	return funcs
@@ -740,9 +738,30 @@ function modifier_imba_snapfire_lil_shredder:GetModifierProjectileName()
 	return "particles/units/heroes/hero_snapfire/hero_snapfire_shells_projectile.vpcf"
 end
 
-function modifier_imba_snapfire_lil_shredder:GetModifierOverrideAttackDamage()
-	if self:GetStackCount()<=0 then return end
-	return self.damage
+function modifier_imba_snapfire_lil_shredder:GetModifierOverrideAttackDamage(keys)
+	if self:GetStackCount() <= 0 then return end
+	if not IsServer() then return end
+	
+	local target = keys.target
+		
+	-- Calculate bonus damage from Fury Shredder
+	local bonus_damage = 0
+
+	-- "Does not work against buildings, wards and allied units when attacking them."			
+	if target:IsBuilding() or target:IsOther() or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
+		return nil
+	end
+
+	local fury_shredder_handle = target:FindModifierByName("modifier_imba_snapfire_lil_shredder_debuff")
+	if fury_shredder_handle then
+		-- Get stack count
+		local fury_shredder_stacks = fury_shredder_handle:GetStackCount()				
+
+		-- Calculate damage
+		bonus_damage = self.damage_per_stack * fury_shredder_stacks				
+	end
+	
+	return self.damage + bonus_damage
 end
 
 function modifier_imba_snapfire_lil_shredder:GetModifierAttackRangeBonus()
@@ -758,49 +777,6 @@ end
 function modifier_imba_snapfire_lil_shredder:GetModifierBaseAttackTimeConstant()
 	if self:GetStackCount()<=0 then return end
 	return self.bat
-end
-
--- Shredder FUry IMBAfication
-function modifier_imba_snapfire_lil_shredder:GetModifierProcAttack_BonusDamage_Physical( keys )
-	-- Ability properties
-	if IsServer() then
-		local target = keys.target
-
-		-- Ability specials
-		local damage_per_stack = self:GetAbility():GetSpecialValueFor("damage_per_stack")
-		local stack_duration = self:GetAbility():GetSpecialValueFor("stack_duration")
-
-		if keys.attacker == self:GetCaster() then
-			-- "Does not work against buildings, wards and allied units when attacking them."
-			-- If the target is a building, do nothing
-			if target:IsBuilding() or target:IsOther() or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-				return nil
-			end
-			
-			-- Add debuff/increment stacks if already exists
-			local fury_swipes_debuff_handler = target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_fury_swipes_debuff", {duration = stack_duration * (1 - target:GetStatusResistance())})
-			
-			if fury_swipes_debuff_handler then
-				fury_swipes_debuff_handler:IncrementStackCount()
-			end
-
-			-- Refresh stack duration
-			fury_swipes_debuff_handler:ForceRefresh()
-
-			-- Add fury swipe impact particle
-			local swipes_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf", PATTACH_ABSORIGIN, target)
-			ParticleManager:SetParticleControl(swipes_particle_fx, 0, target:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(swipes_particle_fx)
-
-			-- Get stack count
-			local fury_swipes_stacks = fury_swipes_debuff_handler:GetStackCount()
-
-			-- Calculate damage
-			local damage = damage_per_stack * fury_swipes_stacks
-
-			return damage
-		end
-	end
 end
 
 --------------------------------------------------------------------------------

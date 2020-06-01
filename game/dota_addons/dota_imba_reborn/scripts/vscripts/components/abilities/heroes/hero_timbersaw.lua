@@ -955,6 +955,7 @@ function modifier_imba_timbersaw_reactive_armor_debuff:RemoveOnDeath()	return fa
 -- end
 
 function imba_timbersaw_chakram_2:IsInnateAbility()	return true end
+function imba_timbersaw_chakram_2:ProcsMagicStick() return false end
 
 function imba_timbersaw_chakram_2:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
@@ -1528,6 +1529,7 @@ function imba_timbersaw_return_chakram:GetAssociatedPrimaryAbilities()
 	return "imba_timbersaw_chakram"
 end
 
+function imba_timbersaw_return_chakram:ProcsMagicStick() return false end
 function imba_timbersaw_return_chakram:IsStealable()		return false end
 
 function imba_timbersaw_return_chakram:OnSpellStart()
@@ -2018,6 +2020,7 @@ end
 
 function imba_timbersaw_chakram_3:IsInnateAbility()	return true end
 function imba_timbersaw_chakram_3:IsStealable()		return false end
+function imba_timbersaw_chakram_3:ProcsMagicStick() return false end
 
 function imba_timbersaw_chakram_3:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) + math.max(self:GetCaster():GetModifierStackCount("modifier_imba_timbersaw_chakram_3", self:GetCaster()) - self:GetSpecialValueFor("trees_to_activate"), 0)

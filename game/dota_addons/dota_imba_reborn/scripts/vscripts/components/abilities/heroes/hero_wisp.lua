@@ -604,6 +604,7 @@ end
 imba_wisp_tether_break = class({})
 function imba_wisp_tether_break:IsInnateAbility() return true end
 function imba_wisp_tether_break:IsStealable() return false end
+function imba_wisp_tether_break:ProcsMagicStick() return false end
 
 function imba_wisp_tether_break:OnSpellStart()
 
@@ -1271,7 +1272,7 @@ end
 imba_wisp_spirits_toggle = class({})
 
 function imba_wisp_spirits_toggle:IsStealable() return false end
-
+function imba_wisp_spirits_toggle:ProcsMagicStick() return false end
 function imba_wisp_spirits_toggle:OnSpellStart()
 	if IsServer() then
 		

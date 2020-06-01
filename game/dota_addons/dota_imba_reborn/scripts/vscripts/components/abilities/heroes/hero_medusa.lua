@@ -697,6 +697,8 @@ function imba_medusa_mana_shield:GetIntrinsicModifierName()
 	return "modifier_imba_medusa_mana_shield_meditate"
 end
 
+function imba_medusa_mana_shield:ProcsMagicStick() return false end
+
 function imba_medusa_mana_shield:OnOwnerSpawned()
 	if self.toggle_state then
 		self:ToggleAbility()

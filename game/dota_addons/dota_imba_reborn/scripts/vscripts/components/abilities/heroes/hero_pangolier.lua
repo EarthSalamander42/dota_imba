@@ -2165,6 +2165,7 @@ imba_pangolier_gyroshell_stop = class ({})
 function imba_pangolier_gyroshell_stop:IsInnateAbility()				return true end
 function imba_pangolier_gyroshell_stop:IsStealable()					return false end
 function imba_pangolier_gyroshell_stop:GetAssociatedPrimaryAbilities()	return "imba_pangolier_gyroshell" end
+function imba_pangolier_gyroshell_stop:ProcsMagicStick() return false end
 
 -- Attempts to stop this ability from getting bricked?
 function imba_pangolier_gyroshell_stop:OnOwnerSpawned()
