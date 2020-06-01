@@ -1,0 +1,101 @@
+// SHADOW DEMON
+
+
+// ----------------------------
+// SHADOW DEMON'S DISRUPTION --
+// ----------------------------
+
+
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption"             "Disruption"
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_Description" "Banishes the targeted unit from the battlefield for a short duration. Upon returning, %illusion_count% illusions of the banished unit are created under Shadow Demon's control. \n<font color='#FF7800'>Soul Illusions:</font> Illusions created by Disruption are linked to the hero they are based on. When attacking, Soul Illusions deal %soul_illusion_curr_hp_target_damage%%% of their linked hero's current health as bonus damage. If Soul Illusion attacks its linked target, the bonus increases to %soul_illusion_curr_hp_damage%%% of its current health. \n<font color='#FF7800'>Disrupted Reality:</font> Enemies inside Disruption take %disrupted_reality_damage_per_stack% each second in %disrupted_reality_interval% intervals per stack of Shadow Poison they have. After Disruption ends, the target enemy is slowed by %disrupted_reality_ms_slow_stack%%% move speed and %disrupted_reality_as_slow_stack% attack speed for %disrupted_reality_duration% seconds."
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_Lore"        "The pain of deception comes not while it happens, but when it is revealed."
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_Note0"       "Soul Illusions damage bonus is removed if their linked target is dead. If the Soul Illusion's linked target comes back to life, Soul Illusions continue to benefit from the bonus damage derived from it."
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_Note1"       "Enemies under Disruption take no damage and aren't slowed from Disrupted Reality if they are not afflicted with at least one stack of Shadow Poison."
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_Note2"       "All of Shadow Demon's abilities can target enemies under Disruption."
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_duration"            "BANISH DURATION:"
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_illusion_duration"           "ILLUSION DURATION:"
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_illusion_outgoing_tooltip"   "%ILLUSION DAMAGE:"
+"DOTA_Tooltip_ability_imba_shadow_demon_disruption_tooltip_total_illusion_incoming_damage"      "%ILLUSION DAMAGE TAKEN:"
+
+"DOTA_Tooltip_modifier_imba_disruption_hidden"                  "Disruption"
+"DOTA_Tooltip_modifier_imba_disruption_hidden_Description"      "Banished. If afflicted with Shadow Poison, you will take damage periodically and become slowed after Disruption ends."
+
+"DOTA_Tooltip_modifier_imba_disruption_soul_illusion"           "Soul Illusion"
+"DOTA_Tooltip_modifier_imba_disruption_soul_illusion_Description"   "Gains %dMODIFIER_PROPERTY_TOOLTIP% bonus pure damage, based on the illusion's origin's current health."
+
+"DOTA_Tooltip_modifier_imba_disruption_disrupted_reality_debuff"    "Disrupted Reality"
+"DOTA_Tooltip_modifier_imba_disruption_disrupted_reality_debuff_Description"    "Move speed reduced by %dMODIFIER_PROPERTY_TOOLTIP%%% and attack speed reduced by %dMODIFIER_PROPERTY_TOOLTIP2%."
+
+
+// ------------------------------
+// SHADOW DEMON'S SOUL CATCHER --
+// ------------------------------
+
+
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher"           "Soul Catcher"  
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_Description"   "Captures the soul of enemy units in the area, causing them to lose a percentage of their current health. When the debuff is removed, the units gain half of the lost health back. Units under the effects of Disruption can still be affected by Soul Catcher. \n<font color='#FF7800'>Your Soul is Mine:</font> Casting Soul Catcher on an enemy under the effect of Disruption causes Soul Catcher to not restore health to that unit when Soul Catcher's debuff ends. \n<font color='#FF7800'>Here, Have Some Soul:</font> Health stolen by Soul Catcher's debuff is given to allies in the form of bonus health and max health. Allies lose half of that health when the effects on enemies end. \n<font color='#FF7800'>Unleashed Grudges:</font> When an enemy hero with Soul Catcher's debuff dies, it fires %unleashed_projectile_count% Shadow Poison projectiles in a circle around the dead target. Each Shadow Poison purges targets hit and deals additional %unleashed_hit_damage% magical damage, in addition to the regular Shadow Poison functionality."
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_Lore"      "Trying to resist the Shadow Demon's corruption is mostly a useless endeavor."
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_Note0"     "Your Soul is Mine only triggers when casting Soul Catcher on an enemy with Disruption. The effect does nothing on Disruption casts while Soul Catcher debuff is active."
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_Note1"     "The entire sum of stolen health is calculated and distributed between allies evenly."
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_Note2"     "If an ally's health would be above the max health after the buff disappears, the max health is considered part of the health taken."
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_health_lost"   "%HEALTH LOST:"
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_radius"        "RADIUS:"
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_duration"      "DURATION:"
+"DOTA_Tooltip_ability_imba_shadow_demon_soul_catcher_health_returned_pct"   "%HEALTH RETURNED:"     
+
+"DOTA_Tooltip_modifier_imba_soul_catcher_buff"                  "Soul Catcher"
+"DOTA_Tooltip_modifier_imba_soul_catcher_buff_Description"      "Healed and max health by %dMODIFIER_PROPERTY_EXTRA_HEALTH_BONUS%. Will lose half the health gained when the buff is lost."
+
+"DOTA_Tooltip_modifier_imba_soul_catcher_debuff"                "Soul Catcher"
+"DOTA_Tooltip_modifier_imba_soul_catcher_debuff_Description"    "Lost %dMODIFIER_PROPERTY_TOOLTIP% health. Half of it will be returned to you when the debuff ends."
+
+// -------------------------------
+// SHADOW DEMON'S SHADOW POISON --
+// -------------------------------
+
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison"                  "Shadow Poison"
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_Description"      "Deals damage in a line, and afflicts enemy units with a poison effect. The poison deals 1/2/4/8/16 times the stack damage based on the number of stacks on the target, up to %max_multiply_stacks% stacks. This deferred damage is dealt when Shadow Poison's duration is expired, or the Release sub-ability is used. \n<font color='#FF7800'>Growing Shadows:</font> Upon reaching the max stack count, the damage multiplier continues increasing for each stack on the target. However, the multiplier increments are reduced to %efficient_multiplier% instead.\n<font color='#FF7800'>Linked Pain:</font> Shadow Demon's Soul Illusions are also affected by Shadow Poison. When Shadow Poison is triggered, Soul Illusions do not take damage, but instead spread that damage around them, dealing %linked_pain_dmg_spread_pct%%% of the damage in a radius of %linked_pain_radius% around them. Soul Illusions' origin target take full damage from this damage instance instead. \n<font color='#FF7800'>Efficient Outburst:</font> When manually triggering Shadow Poison by using Shadow Poison Release, the highest stack count is calculated. All enemies afflicted with Shadow Poison take damage as though their stack count was of the highest stack. This stack count increase can only scale up to %efficient_upwards_limit% stacks between a unit's actual stacks and the highest stack."
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_Lore"                     "The ever growing influence of the Shadow Demon can pollute the most valiant and pure of heroes."
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_Note0"                        "Shadow Poison can affect units under Disruption."
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_hit_damage"               "DAMAGE ON HIT:"
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_stack_damage"             "STACK DAMAGE:"
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_tooltip_duration"         "DURATION:"
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_radius"                   "RADIUS:"
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_max_multiply_stacks"      "MAX STACKS TO MULTIPLY:"
+
+"DOTA_Tooltip_modifier_shadow_poison_debuff"                        "Shadow Poison"
+"DOTA_Tooltip_modifier_shadow_poison_debuff_Description"            "About to take %dMODIFIER_PROPERTY_TOOLTIP% damage."
+
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_release"                  "Shadow Poison Release"
+"DOTA_Tooltip_ability_imba_shadow_demon_shadow_poison_release_Description"      "Releases the poison to do damage on all affected enemies. Units under the effect of Disruption can still be affected by Shadow Poison."
+
+// -------------------------------
+// SHADOW DEMON'S DEMONIC PURGE --
+// -------------------------------
+
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge"                          "Demonic Purge"
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_Description"              "Constantly purges the target enemy unit, removing positive buffs, and slowing the target for the duration. The unit slowly regains its speed until the end of the duration, upon which damage is dealt. Units under the effect of Disruption can still be affected by Demonic Purge. \n<font color='#FF7800'>Painful Purgation:</font> While Demonic Purge is active, each buff that was purged by it deals %painful_purge_damage% to the target unit and resets the slow to %max_slow%%% for %painful_slow_reset_duration% seconds. \n<font color='#FF7800'>Associative Darkness:</font> Soul Catcher and Shadow Poison pierce spell immunity to targets afflicted with Demonic Purge. In addition, Soul Catcher and Shadow Poison debuff timers pause, and they cannot be dispelled by any means. \n<font color='#FF7800'>Elated Demon:</font> Each time Demonic Purge is cast, Shadow Demon gains a stack of Elated Demon. Each stack causes Shadow Poison's first target hit to gain an additional stack of Shadow Poison. Stacks last %elated_demon_duration% seconds, and each stack has its own independent duration.\n\nUpgradable by Aghanim's Scepter.\nDISPEL TYPE: Basic Dispel"
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_Lore"                     "Once Shadow Demon no longer has any need for his collected cultist, he releases it from its subservience - and its life."
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_Note0"                    "Demonic Purge will slow Spell Immune units."
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_Note1"                    "After Painful Purgation max slow wears off, the rate movement speed is restored scales based on the remaining duration of the debuff."
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_Note2"                    "Even in cases where Shadow Demon has two or more stacks of Elated Demon, it still is only the first target hit that gets the increased stacks."
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_duration"                 "DURATION:"
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_purge_damage"             "PURGE DAMAGE:"
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_charge_restore_time"      "SCEPTER CHARGE RESTORE TIME:"
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_aghanim_description"      "Cooldown is removed, replaced with %max_charges_scepter% charges that replenish every %charge_restore_time% seconds. Also causes Demonic Purge to break its target's passive abilities while active."
+
+"DOTA_Tooltip_modifier_imba_demonic_purge_debuff"                               "Demonic Purge"
+"DOTA_Tooltip_modifier_imba_demonic_purge_debuff_Description"                   "Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE% and constantly being purged. Soul Catcher and Shadow Poison cannot be dispelled, pierce spell immunity, and have their durations paused."
+
+"DOTA_Tooltip_modifier_imba_demonic_purge_elated_demon_buff"                    "Elated Demon"
+"DOTA_Tooltip_modifier_imba_demonic_purge_elated_demon_buff_Description"        "Grants %dMODIFIER_PROPERTY_TOOLTIP% additional stacks on the first target hit by each cast of Shadow Poison."
+
+// ------------------------
+// SHADOW DEMON'S TALENS --
+// ------------------------
+
+"DOTA_tooltip_ability_special_bonus_imba_shadow_demon_shadow_poison_damage"     "+{s:value} Shadow Poison damage"
+"DOTA_tooltip_ability_special_bonus_imba_shadow_demon_shadow_poison_cd"         "-{s:value} Shadow Poison cooldown"
+"DOTA_tooltip_ability_special_bonus_imba_shadow_demon_soul_catcher_cd"          "-{s:value} Soul Catcher cooldown"
+"DOTA_tooltip_ability_special_bonus_imba_shadow_demon_demonic_purge_damage"     "+{s:value} Demonic Purge damage"
+"DOTA_tooltip_ability_special_bonus_imba_shadow_demon_disruption_charges"       "+{s:value} Disruption Charges"

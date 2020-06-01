@@ -1,22 +1,34 @@
 "DOTAAbilities"
 {
+	//=================================================================================================================
+	// Vardor: Piercing Shot
+	//=================================================================================================================
 	"vardor_piercing_shot"
 	{
-		"BaseClass"     					"ability_lua"
-		"ScriptFile"    					"components/abilities/heroes/hero_vardor.lua"
-		"AbilityBehavior"    				"DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"   			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"   			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"   			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"  				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"    				"1"
-		"AbilityTextureName" 				"phantom_lancer_spirit_lance"
-		"AbilityCastRange"					"750"
-		"AbilityCastPoint"   				"0.3 0.3 0.3 0.3"
-		"AbilityCooldown"    				"18 16 14 12"
-		"AbilityDamage" 					"%damage"
-		"AbilityManaCost"    				"70 80 90 100"
-		"AOERadius"     					"%AOE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
+		"AbilityTextureName"			"custom/vardor/vardor_piercing_shot"
+		"AbilityBehavior"    			"DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"FightRecapLevel"				"1"
+
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"   		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"   		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"   		"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"  			"SPELL_IMMUNITY_ENEMIES_NO"		
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"   			"0.3"
+		"AbilityCooldown"    			"0"
+		"AbilityManaCost"    			"70 80 90 100"				
+		
 
 		//Precache
 		//-------------------------------------------------------------------------------
@@ -38,69 +50,124 @@
 			"01"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"damage" 						"75 150 225 300"
+				"direct_damage"					"120 180 240 300"
 			}
+
 			"02"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"slow_pct" 						"10 20 30 40"
+			}
+
+			"03"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"mind_bleed_stacks"  			"1 1 2 2"
+			}
+
+			"04"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"damage_over_time_target"		"15 30 45 60"
+			}
+
+			"05"
 			{
 				"var_type"    					"FIELD_INTEGER"
 				"damage_ground" 				"75 125 175 225"
 			}
-			"03"
-			{
-				"var_type"    					"FIELD_FLOAT"
-				"spear_duration"   				"7.0"
-			}
-			"04"
-			{
-				"var_type"    					"FIELD_FLOAT"
-				"think_interval"   				"1.0"
-			}
-			"05"
+
+			"06"
 			{
 				"var_type"    					"FIELD_INTEGER"
 				"radius" 						"300"
 			}
-			"06"
-			{
-				"var_type"    					"FIELD_INTEGER"
-				"slow"   						"-10 -20 -30 -40"
-			}
+
 			"07"
 			{
 				"var_type"    					"FIELD_FLOAT"
-				"root_duration"    				"1.0 1.5 2.0 2.5"
+				"root_duration"    				"2"
 			}
+
 			"08"
 			{
 				"var_type"    					"FIELD_FLOAT"
+				"spear_duration"   				"7"
+			}
+
+			"09"
+			{
+				"var_type"    					"FIELD_FLOAT"
+				"think_interval"   				"1.0"
+			}
+
+			"10"
+			{
+				"var_type"    					"FIELD_FLOAT"
 				"spawn_delay"    				"0.2"
+			}						
+
+			"11"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"initial_yari_count"			"1 2 3 4"
+				"LinkedSpecialBonus" 			"special_bonus_vardor_bonus_yari"
+			}
+
+			"12"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"hit_radius"					"200"
+			}
+
+			"13"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"projectile_speed"				"800"
+			}
+
+			"14"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"vision_radius"					"300"
 			}
 		}
 	}
 
+
+	//=================================================================================================================
+	// Vardor: Graceful Jump
+	//=================================================================================================================
 	"vardor_graceful_jump"
 	{
-		"BaseClass"     					"ability_lua"
-		"ScriptFile"    					"components/abilities/heroes/hero_vardor.lua"
-//		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityBehavior" 					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"   			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"   			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"   			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"  				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"    				"1"
-		"AbilityTextureName" 				"slark_pounce"
-		"AbilityCastRange"					"1200"
-		"AbilityCastPoint"   				"0.0"
-		"AbilityCooldown"    				"5.0"
-		"AbilityManaCost"    				"25"
-		"AbilityDamage" 					"%damage"
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
+		"AbilityTextureName" 			"custom/vardor/vardor_graceful_jump"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"FightRecapLevel"				"1"
+
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"   		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"   		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"   		"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"  			"SPELL_IMMUNITY_ENEMIES_YES"		
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"   			"0.0"
+		"AbilityCooldown"    			"5.0"
+		"AbilityManaCost"    			"25"		
 
 		//Precache
 		//-------------------------------------------------------------------------------
 		"precache"
-		{
-			"particle"     					"particles/units/heroes/hero_warlock/warlock_rainofchaos_start_ripple_fb_mid.vpcf"
+		{			
 			"particle"     					"particles/generic_gameplay/generic_stunned.vpcf"
 			"soundfile"    					"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
 		}
@@ -109,57 +176,62 @@
 		//-------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-//			"01"
-//			{
-//				"var_type"    					"FIELD_FLOAT"
-//				"short_range"  					"400 500 600 700"
-//			}
-//			"02"
-//			{
-//				"var_type"    					"FIELD_FLOAT"
-//				"max_range"   					"1200 1500 1800 2100"
-//			}
-			"03"
+			"01"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"spear_damage" 					"65 130 195 260"
-			}
-			"04"
-			{
-				"var_type"    					"FIELD_INTEGER"
-				"low_damage"     				"30 60 90 120"
-			}
-			"05"
+				"damage"	 					"80 120 180 240"
+			}			
+			"02"
 			{
 				"var_type"    					"FIELD_INTEGER"
 				"damage_radius"     			"300"
 			}
-			"06"
+			"03"
 			{
 				"var_type"    					"FIELD_INTEGER"
 				"jump_speed"					"1500"
+			}
+
+			"04"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"yari_search_radius"			"300"
+			}
+
+			"05"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"max_charges"					"3"
+			}
+
+			"06"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"charge_restore_time"			"5"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Hero: Vardor
-	// Ability: Mental Thrusts
-	// Author: Nibuja
-	// Date: 02.09.2018
+	// Vardor's Mental Thrusts
 	//=================================================================================================================
 	"vardor_mental_thrusts"
-	{
+	{	
+
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass" 					"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"		 "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		 "DOTA_UNIT_TARGET_HERO"	  
+		"BaseClass" 					"ability_lua"
+		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
 		"AbilityTextureName"			"custom/vardor/vardor_mental_thrusts"
-		"SpellImmunityType"			 "SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityDamageType"			 "DAMAGE_TYPE_PURE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"   	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"   	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
+		"SpellImmunityType"			 "SPELL_IMMUNITY_ENEMIES_NO"		
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
 		"precache"
 		{
 			"particle" "particles/mental_thrusts_debuff.vpcf"
@@ -169,402 +241,171 @@
 
 		//Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastAnimation"				  		"ACT_DOTA_ATTACK"
+		"AbilityCastAnimation"				  		"ACT_DOTA_ATTACK"		
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"			    "FIELD_INTEGER"
-				"reduction"				"-5 -10 -15 -20"
-				"LinkedSpecialBonus"    "special_bonus_vardor_8"
+				"var_type"			    "FIELD_FLOAT"
+				"aspd_rdct_stack"		"0.65 0.8 1.05 1.2"
+				"LinkedSpecialBonus"	"special_bonus_vardor_ground_yaris_mind_bleed"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
+
 			"02"
 			{
 				"var_type"			    "FIELD_FLOAT"
-				"duration"			    "5.0"
+				"cast_point_inc_stack"	"0.15 0.30 0.45 0.6"				
+				"LinkedSpecialBonus"	"special_bonus_vardor_ground_yaris_mind_bleed"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"components/abilities/heroes/hero_vardor.lua"
-				"Function"	  "LevelUp"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_mental_thrusts_caster"
-				{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-	
-			
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"components/abilities/heroes/hero_vardor.lua"
-						"Function"		"MentalThrustsHit"
-						"HealthManaLost"	"%reduction"
-					}
-				}
-			}
-			"modifier_mental_thrusts_debuff"
-			{
-				"Passive"			 "0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-			
-				"EffectName"				"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
-				"EffectAttachType"		  "follow_overhead"
-				
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
-						"EffectAttachType"	  "follow_overhead"
-					}
-				}
-			}
-		}
-	}
 
-	"vardor_return_of_the_yari"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName"			"phantom_lancer_spirit_lance"
-		"MaxLevel"						"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"initial_yari_count"	"2"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"components/abilities/heroes/hero_vardor.lua"
-				"Function"		"ReturnYari"
-			}
-		}
-	}
-
-	"vardor_celestial_yari"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "ability_datadriven"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"            "clinkz_searing_arrows"
-		"AbilityCooldown"               "80.0 70.0 60.0"
-
-		"HasScepterUpgrade"         "1"
-
-		"precache"
-		{
-			"particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-			"particle"  "particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff_b.vpcf"
-			"particle"  "particles/econ/events/coal/coal_projectile_explosion_e.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
-
-		"AbilityManaCost"               "100 150 200"
-
-		//Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"              "FIELD_FLOAT"
-				"duration"              "10.0 15.0 20.0"
-				"LinkedSpecialBonus"    "special_bonus_vardor_5"
-			}
-			"02"
-			{
-				"var_type"              "FIELD_INTEGER"
-				"bonus_yari"            "1 1 2"
-				"LinkedSpecialBonus"    "special_bonus_vardor_7"
-			}
 			"03"
 			{
-				"var_type"              "FIELD_INTEGER"
-				"bonus_yari_scepter"    "2 2 3"
-				"LinkedSpecialBonus"    "special_bonus_vardor_7"
+				"var_type"			    "FIELD_FLOAT"
+				"main_att_rdct_stack"	"0.3 0.45 0.6 0.75"				
+				"LinkedSpecialBonus"	"special_bonus_vardor_ground_yaris_mind_bleed"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
+
+			"04"
+			{
+				"var_type"			    "FIELD_FLOAT"
+				"incoming_dmg_inc_stack" "2 2.25 2.5 2.75"				
+				"LinkedSpecialBonus"	"special_bonus_vardor_ground_yaris_mind_bleed"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+
+			"05"
+			{
+				"var_type"			    "FIELD_FLOAT"
+				"duration"			    "12"
+			}
+		}	
+	}
+
+
+	//=================================================================================================================
+	// Vardor: Celestial Rain of Yari
+	//=================================================================================================================
+	"vardor_celestial_rain_of_yari"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
+		"AbilityTextureName"			"custom/vardor/vardor_celestial_rain_of_yari"
+		"AbilityBehavior"    			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"FightRecapLevel"				"2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"HasScepterUpgrade"			"1"
+
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"   		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"   		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"   		"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"  			"SPELL_IMMUNITY_ENEMIES_NO"		
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"   			"0.5"
+		"AbilityCooldown"    			"90"
+		"AbilityManaCost"    			"150 200 250"				
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+		
+
+		//Precache
+		//-------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"     					"particles/piercing_shot_ground_slow.vpcf"
+			"particle"     					"particles/piercing_shot_ground_root.vpcf"
+			"particle"  					"particles/piercing_shot_ground_impact.vpcf"
+			"particle"  					"particles/piercing_shot_debuff.vpcf"
+			"model"							"models/items/phantom_lancer/immortal_ti6/mesh/phantom_lancer_immortal_spear_mdoel.vmdl"
+			"model"							"models/spear.vmdl"
+			"soundfile"    					"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
 		}
 
-		"OnUpgrade"
+		//AbilitySpecial
+		//-------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-				"Function"      "InitYari"
+				"var_type"    					"FIELD_INTEGER"
+				"aoe_radius"					"800"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
+			"02"
 			{
-				"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-				"Function"      "AddYari"
+				"var_type"    					"FIELD_INTEGER"
+				"initial_yari"					"1"
 			}
-		}
 
-		"OnUpgrade"
-		{
-			"RunScript"
+			"03"
 			{
-				"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-				"Function"      "ChangeSpear"
+				"var_type"    					"FIELD_INTEGER"
+				"additional_rings"				"2"
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_celestial_yari_bonus"
+			"04"
 			{
-				"Passive"            "0"
-				"IsHidden"            "0"
-				"IsDebuff"            "0"
+				"var_type"    					"FIELD_INTEGER"
+				"additional_yaris_per_ring"		"2"				
+			}
+
+			"04"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"ring_distance"					"300"
+			}
+
+			"05"
+			{
+				"var_type"    					"FIELD_FLOAT"
+				"yari_fall_delay"				"0.25"
+			}
+
+			"06"
+			{
+				"var_type"    					"FIELD_FLOAT"
+				"scepter_additional_rings"		"3"
+				"RequiresScepter"		"1"
+			}
+
+			"07"
+			{
+				"var_type"    					"FIELD_INTEGER"
+				"scepter_aoe_radius"			"1200"
+				"RequiresScepter"		"1"
+			}
+		}
+	}
+
+
+
+
+	//=================================================================================================================
+	// Vardor's Talent: +1 Yari charge
+	//=================================================================================================================
+	"special_bonus_vardor_bonus_yari"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"vardor_piercing_shot"
+		}
 		
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-						"Function"        "ShowYari"
-					}
-				}
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "components/abilities/heroes/hero_vardor.lua"
-						"Function"        "RemoveYari"
-					}
-				}
-			}
-		}
-	}
-	
-	"special_bonus_vardor_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_bonus"		"20"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_special_bonus_vardor_1_attack_speed_bonus"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus"
-				}
-			}
-		}
-	}
-	
-	"special_bonus_vardor_2" // Coil Unleashed
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		"LinkedAbility"
-		{
-			"01" 	"vardor"			
-		}
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_resistance_bonus"	"12"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_special_bonus_vardor_2_magic_resistance_bonus"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" "%magic_resistance_bonus"
-				}
-			}
-		}
-	}
-	
-	"special_bonus_vardor_3" // +250 range for Piercing Shot
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		"LinkedAbility"
-		{
-			"01" 	"vardor_piercing_shot"			
-		}
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"250"
-			}
-		}
-	}
-	
-	"special_bonus_vardor_4" // Coil Unleashed
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"move_speed_bonus"			"40"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_special_bonus_vardor_4_move_speed_bonus"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%move_speed_bonus"
-				}
-			}
-		}
-	}
-	
-	"special_bonus_vardor_5" // Coil Unleashed
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		"LinkedAbility"
-		{
-			"01" 	"vardor_celesital_yari"			
-		}
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"10"
-			}
-		}
-	}
-	
-	"special_bonus_vardor_6" // Coil Unleashed
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		"LinkedAbility"
-		{
-			"01" 	"vardor_graceful_jump_lua"			
-		}
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"2"
-			}
-		}
-	}
-	
-	"special_bonus_vardor_7" // Coil Unleashed
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		"LinkedAbility"
-		{
-			"01" 	"vardor_celestial_yari"			
-		}
-	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -576,20 +417,24 @@
 			}
 		}
 	}
-	
-	"special_bonus_vardor_8" // Coil Unleashed
+
+	//=================================================================================================================
+	// Vardor's Talent: Grounded Yaris inflict 1 mind bleed per second during their root aura
+	//=================================================================================================================
+	"special_bonus_vardor_ground_yaris_mind_bleed"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_undefined"
+		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
+
 		"LinkedAbility"
 		{
-			"01" 	"vardor_mental_thrusts"			
+			"01" 	"vardor_piercing_shot"
 		}
-	
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -597,7 +442,77 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"-15"
+				"value"						"1"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"interval"					"1"
+			}
+
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"radius"					"300"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vardor's Talent: Graceful Jump roots all nearby units for 2 seconds
+	//=================================================================================================================
+	"special_bonus_vardor_graceful_jump_root"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"vardor_graceful_jump"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vardor's Talent: Mind Bleed stacks are 2x as effective
+	//=================================================================================================================
+	"special_bonus_vardor_mental_thrusts_bonus"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"ScriptFile"   					"components/abilities/heroes/hero_vardor.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"vardor_mental_thrusts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"2"
 			}
 		}
 	}

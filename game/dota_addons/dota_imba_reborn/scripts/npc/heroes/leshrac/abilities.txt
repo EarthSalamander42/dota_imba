@@ -2,6 +2,148 @@
 
 "DOTAAbilities"
 {
+
+	//=================================================================================================================
+	// Leshrac: Split Earth
+	//=================================================================================================================
+	"imba_leshrac_split_earth"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------		
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_leshrac.lua"
+		"AbilityTextureName"			"leshrac_split_earth"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Leshrac.Split_Earth"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"650"
+		"AbilityCastPoint"				"0.7 0.7 0.7 0.7"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"9 9 9 9"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 100 120 140"				
+
+		"precache"
+		{
+			"particle"					"particles/hero/leshrac/leshrac_splitter_blast_projectile.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"delay"				"0.35"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"150 175 200 225"
+			}
+			
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"2"
+			}
+
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"120 180 240 300"
+			}
+
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"empowered_split_duration"	"20"
+				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_empowered_split_earth_duration"
+			}			
+
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"empowered_split_radius"	"25 50 75 100"
+			}
+
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"empowered_split_damage"	"15 30 45 60"
+			}
+
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"splitter_blast_radius"	"400"
+			}
+
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"splitter_blast_unit_energy_count" "3"
+			}
+
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"splitter_blast_hero_energy_count" "12"
+			}
+
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"splitter_blast_damage" "30"
+			}
+
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"splitter_blast_projectile_speed" "450"
+			}
+
+			"13"
+			{
+				"var_type"			"FIELD_FIELD"
+				"splitter_blast_delay" "0.1"
+			}
+
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tormented_form_cast_cd_cut_pct" "50"
+			}
+
+			"15"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tormented_form_cd_rdct_pct" 	"50"
+			}
+
+			"16"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tormented_form_trusight_duration" 	"5"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
 	//=================================================================================================================
 	// Leshrac: Diabolic Edict
 	//=================================================================================================================
@@ -30,12 +172,14 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"95 120 135 155"
+		"AbilityManaCost"				"95 120 135 155"		
 
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"11 22 33 44"
-		"AbilityDuration"				"10"
+		"precache"
+		{
+			"particle"					"particles/hero/leshrac/leshrac_diabolic_edict.vpcf"
+			"particle"					"particles/hero/leshrac/leshrac_purity_casing_ring.vpcf"
+			"particle"					"particles/hero/leshrac/leshrac_purity_casing_hit.vpcf"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -44,24 +188,671 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"num_explosions"		"40 48 56 64"
-				"LinkedSpecialBonus"	"special_bonus_unique_leshrac_1"
+				"num_explosions"		"40"
+				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_diabolic_edict_explosions"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"500 550 600 650"
+				"radius"				"500"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tower_bonus"			"40"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_tooltip"		"10"
+				"duration"		"10"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"8 20 32 44"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"diabolic_adapt_radius_inc" "2 4 6 8"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"diabolic_adapt_duration_inc" "0.03 0.06 0.09 0.12"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tormented_soul_cast_exp_count" "10"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tormented_soul_cast_exp_delay" "0.1"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tormented_soul_phys_armor_rdct" "0.4"
+			}
+
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tormented_soul_magic_resist_rdct" "1"
+			}
+
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tormented_soul_weakening_duration"	 "8"
+			}
+
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"purity_casing_radius" 	"1200"
+			}
+
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"purity_casing_fixed_dmg" 	"50"
+			}
+
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"purity_casing_dmg_per_stack" 	"8 12 16 20"
+			}
+
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"purity_casing_ring_duration" 	"0.3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Leshrac: Lightning Storm
+	//=================================================================================================================
+	"imba_leshrac_lightning_storm"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_leshrac.lua"
+		"AbilityTextureName"			"leshrac_lightning_storm"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Leshrac.Lightning_Storm"
+
+		"HasScepterUpgrade"			"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"650"
+		"AbilityCastPoint"				"0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 100 120 140"
+		
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"90 130 170 210"
+
+		"precache"
+		{
+			"particle"					"particles/hero/leshrac/leshrac_tormented_lightning_storm_cloud.vpcf"			
+			"particle"					"particles/hero/leshrac/leshrac_lightning_storm_tormented_mark.vpcf"			
+		}
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"jump_count"		"4 6 8 10"
+			}			
+
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"475"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"jump_delay"			"0.25 0.25 0.25 0.25"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_movement_speed"	"75"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"0.4 0.6 0.8 1.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_lightning_storm_duration"
+			}	
+
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval_scepter"		"1.75"
+				"RequiresScepter"		"1"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_scepter"		"750"
+				"RequiresScepter"		"1"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rider_ms_per_stack_pct" "1 2 3 4"				
+			}
+
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rider_stack_duration"	"4"				
+			}			
+
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rider_static_ms_limit"	"600"				
+			}
+
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rider_static_limit_per_stack" "10"				
+			}
+
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tormented_soul_cast_aura_radius"	"600"				
+			}			
+
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tormented_soul_cast_zap_chance"	"40"				
+			}
+
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tormented_soul_cast_interval"	"1"				
+			}
+
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tormented_soul_cast_duration"	"12"				
+			}
+
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tormented_soul_aoe_radius"		"375"				
+			}
+
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tormented_soul_mark_duration"	"5"				
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+
+	//=================================================================================================================
+	// Leshrac: Pulse Nova
+	//=================================================================================================================
+	"imba_leshrac_pulse_nova"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_leshrac.lua"
+		"AbilityTextureName"			"leshrac_pulse_nova"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost_per_second"	"20 40 60"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"450"
+				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_pulse_nova_radius"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100 150 200"				
+			}
+
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"interval"			"1"
+			}
+
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ese_stacks_threshold"	"5"
+			}
+
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ese_earth_proc_chance"	"20"
+			}
+
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ese_earth_radius"	"50 100 150"
+			}
+
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ese_edict_proc_chance"	"50"
+			}
+
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ese_edict_exp_count" "3 4 5"
+			}
+
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ese_storm_proc_chance"	"30"
+			}
+
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ese_storm_jumps"	"1 2 3"
+			}
+
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ese_debuff_duration" "8"
+			}
+
+			"13"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"tormented_soul_cast_range_mult"	"3"
+			}
+
+			"14"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"tormented_soul_interval_rdct_pct"	"25"
+			}
+
+			"15"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"nova_circulation_radius_per_hit"	"1"
+			}
+
+			"16"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"nova_circulation_max_radius"	"300"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Leshrac: Tormented Soul Form
+	//=================================================================================================================
+	"imba_leshrac_tormented_soul_form"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_leshrac.lua"
+		"AbilityTextureName"			"custom/tormented_soul_form"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"		
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90"		
+
+		"precache"
+		{
+			"particle"					"particles/hero/leshrac/leshrac_tormented_soulrocks.vpcf"
+			"particle"					"particles/hero/leshrac/totalsteal_lifesteal.vpcf"										
+		}
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_hp_mp_cost_pct" "35"
+			}					
+
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"totalsteal_convertion_pct" "9 11 13 15"
+				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			 "12 13 14 15"
+				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_tormented_soul_form_duration"
+			}			
+		}
+
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Talent: +X Empowered Split Earth stack duration
+	//=================================================================================================================
+	"special_bonus_unique_imba_leshrac_empowered_split_earth_duration" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_leshrac_split_earth"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Pulse Nova damage per enemy in radius
+	//=================================================================================================================
+	"special_bonus_unique_imba_leshrac_pulse_nova_damage" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_leshrac_pulse_nova"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Lightning Storm slow duration
+	//=================================================================================================================
+	"special_bonus_unique_imba_leshrac_lightning_storm_duration" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_leshrac_lightning_storm"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Tormented Soul Form buff duration
+	//=================================================================================================================
+	"special_bonus_unique_imba_leshrac_tormented_soul_form_duration" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_leshrac_tormented_soul_form"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Pulse Nova Radius
+	//=================================================================================================================
+	"special_bonus_unique_imba_leshrac_pulse_nova_radius" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_leshrac_pulse_nova"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"150"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Diabolic Edict explosions
+	//=================================================================================================================
+	"special_bonus_unique_imba_leshrac_diabolic_edict_explosions" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_leshrac_diabolic_edict"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: +X Tormented Soul Form Totalsteal
+	//=================================================================================================================
+	"special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_leshrac_tormented_soul_form"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: Earth Edict and Storm trigger threshold reduction
+	//=================================================================================================================
+	"special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_leshrac_pulse_nova"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"3"
 			}
 		}
 	}
 }
+
