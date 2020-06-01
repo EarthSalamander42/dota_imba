@@ -91,7 +91,7 @@
 "DOTA_Tooltip_modifier_imba_demonic_purge_elated_demon_buff_Description"        "Grants %dMODIFIER_PROPERTY_TOOLTIP% additional stacks on the first target hit by each cast of Shadow Poison."
 
 // ------------------------
-// SHADOW DEMON'S TALENS --
+// SHADOW DEMON'S TALENTS --
 // ------------------------
 
 "DOTA_tooltip_ability_special_bonus_imba_shadow_demon_shadow_poison_damage"     "+{s:value} Shadow Poison damage"

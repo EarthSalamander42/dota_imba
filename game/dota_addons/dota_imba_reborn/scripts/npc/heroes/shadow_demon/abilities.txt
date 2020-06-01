@@ -212,7 +212,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"unleashed_hit_damage"	 "100 150 200"
+				"unleashed_hit_damage"	 "100 150 200 250"
 			}
 			
 		}

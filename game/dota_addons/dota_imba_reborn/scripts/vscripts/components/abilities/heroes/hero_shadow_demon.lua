@@ -186,7 +186,6 @@ function modifier_imba_disruption_hidden:OnDestroy()
             illusion:AddNewModifier(self.caster, self.ability, self.modifier_illusion_soul, {soul_target = self.parent:entindex()})
         end
 
-
         -- IMBAfication: Disrupted Reality
         local stacks
         if self.parent:HasModifier(self.modifier_shadow_poison) then

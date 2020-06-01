@@ -113,7 +113,7 @@ function imba_leshrac_split_earth:OnSpellStart(ese_location, ese_radius) -- proc
 		EmitSoundOnLocationWithCaster(target_point, cast_sound, caster)
 
 		-- Create particle effects
-		local particle_spikes_fx = ParticleManager:CreateParticle(particle_spikes, PATTACH_WORLDORIGIN, nil)
+		local particle_spikes_fx = ParticleManager:CreateParticle(particle_spikes, PATTACH_WORLDORIGIN, nil, caster)
 		ParticleManager:SetParticleControl(particle_spikes_fx, 0, target_point)
 		ParticleManager:SetParticleControl(particle_spikes_fx, 1, Vector(radius, 1, 1))
 		ParticleManager:ReleaseParticleIndex(particle_spikes_fx)
@@ -544,7 +544,7 @@ end
 
 function modifier_imba_leshrac_diabolic_edict:DiabolicEditExplosion(target)
 	-- Create Particle	
-	local pfx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+	local pfx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
 	local position_cast	
 
 	if target then	
@@ -634,7 +634,7 @@ function modifier_imba_leshrac_diabolic_edict:OnDestroy()
 	if self:GetStackCount() <= 0 then return end
 
 	-- Fire particle
-	self.particle_ring_fx = ParticleManager:CreateParticle(self.particle_ring, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+	self.particle_ring_fx = ParticleManager:CreateParticle(self.particle_ring, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
 	ParticleManager:SetParticleControl(self.particle_ring_fx, 0, self.caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_ring_fx, 1, Vector(100, 0, self.purity_casing_radius))
 	ParticleManager:ReleaseParticleIndex(self.particle_ring_fx)
@@ -663,7 +663,7 @@ function modifier_imba_leshrac_diabolic_edict:OnDestroy()
 		ApplyDamage(damageTable)
 
 		-- Fire hit particles
-		self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN_FOLLOW, enemy)
+		self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN_FOLLOW, enemy, self.caster)
 		ParticleManager:SetParticleControl(self.particle_hit_fx, 0, enemy:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(self.particle_hit_fx)
 	end		
@@ -866,7 +866,7 @@ function imba_leshrac_lightning_storm:LaunchLightningBoltOnTarget(target)
 	EmitSoundOn(hit_sound, target)
 
 	-- Play lightning particle
-	local particle_bolt_fx = ParticleManager:CreateParticle(particle_bolt, PATTACH_ABSORIGIN, target)
+	local particle_bolt_fx = ParticleManager:CreateParticle(particle_bolt, PATTACH_ABSORIGIN, target, caster)
 	ParticleManager:SetParticleControlEnt(particle_bolt_fx, 0, target, PATTACH_ABSORIGIN, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(particle_bolt_fx, 1, target:GetAbsOrigin() + Vector(0,0,2000))
 	ParticleManager:SetParticleControl(particle_bolt_fx, 2, target:GetAbsOrigin())
@@ -944,7 +944,7 @@ function modifier_imba_leshrac_lightning_storm_slow:OnCreated()
 	self.slow_movement_speed = self.ability:GetSpecialValueFor("slow_movement_speed")
 
 	-- Create particle effect
-	self.particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent)	
+	self.particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent, self.caster)	
 	ParticleManager:SetParticleControl(self.particle_slow_fx, 0, self.parent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_slow_fx, 1, self.parent:GetAbsOrigin())
 	self:AddParticle(self.particle_slow_fx, false, false, -1, false, false)
@@ -1175,7 +1175,7 @@ function modifier_imba_leshrac_lightning_storm_tormented_cloud_aura:OnCreated()
 	self.tormented_soul_cast_aura_radius = self.ability:GetSpecialValueFor("tormented_soul_cast_aura_radius")	
 
 	-- Create particle		
-	self.particle_storm_cloud_fx = ParticleManager:CreateParticle(self.particle_storm_cloud, PATTACH_WORLDORIGIN, nil)
+	self.particle_storm_cloud_fx = ParticleManager:CreateParticle(self.particle_storm_cloud, PATTACH_WORLDORIGIN, nil, self.caster)
 	ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 0, self.parent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 1, self.parent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 2, self.parent:GetAbsOrigin())
@@ -1451,7 +1451,7 @@ function modifier_imba_leshrac_pulse_nova:OnIntervalThink(tormented_radius)
 		EmitSoundOn(self.sound_hit, enemy)
 
 		-- Apply particle effect on enemy
-		self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN, enemy)
+		self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN, enemy, self.caster)
 		ParticleManager:SetParticleControl(self.particle_hit_fx, 0, enemy:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle_hit_fx, 1, Vector(1,0,0))
 		ParticleManager:ReleaseParticleIndex(self.particle_hit_fx)
@@ -1902,7 +1902,7 @@ function modifier_imba_tormented_soul_form:OnCreated()
 	end
 	
 	-- Create particle sysetm for the buff
-	self.particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+	self.particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
 	ParticleManager:SetParticleControl(self.particle_buff_fx, 0, self.caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_buff_fx, 5, self.caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_buff_fx, 6, self.caster:GetAbsOrigin())
@@ -1952,7 +1952,7 @@ function modifier_imba_tormented_soul_form:OnTakeDamage(keys)
 		local replenish = damage * self.totalsteal_convertion_pct * 0.01
 
 		-- Apply the particle effect
-		local particle_totalsteal_fx = ParticleManager:CreateParticle(self.particle_totalsteal, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+		local particle_totalsteal_fx = ParticleManager:CreateParticle(self.particle_totalsteal, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
 		ParticleManager:SetParticleControl(particle_totalsteal_fx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle_totalsteal_fx)
 
