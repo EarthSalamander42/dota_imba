@@ -1,0 +1,23 @@
+"dota_tooltip_modifier_item_imba_origin_treads_chaos" "Origin Treads Chaotic Intelligence"
+"dota_tooltip_modifier_item_imba_origin_treads_chaos_description" "%dMODIFIER_PROPERTY_TOOLTIP%%% of all magical damage received is dealt to units (allies if debuff, enemies if buff) within %dMODIFIER_PROPERTY_TOOLTIP% radius, and magical damage against you increases by %dMODIFIER_PROPERTY_TOOLTIP%%%."
+"dota_tooltip_modifier_item_imba_origin_treads_health" "Origin Treads Healthy Strength"
+"dota_tooltip_modifier_item_imba_origin_treads_health_description" "Cannot regenerate or heal. Taking %dMODIFIER_PROPERTY_TOOLTIP% + %fMODIFIER_PROPERTY_TOOLTIP%%% of current health as damage every tick."
+"dota_tooltip_modifier_item_imba_origin_treads_power" "Origin Treads Agile Power"
+"dota_tooltip_modifier_item_imba_origin_treads_power_description" "All stats reduced by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS% and damage reduced by %dMODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE%%%."
+
+"dota_tooltip_ability_item_imba_origin_treads" "Origin Treads"      
+"dota_tooltip_ability_item_imba_origin_treads_all_stats"    "+$all"
+"dota_tooltip_ability_item_imba_origin_treads_bonus_movement_speed" "+$move_speed"
+"dota_tooltip_ability_item_imba_origin_treads_bonus_attack_speed"   "+$attack"
+"dota_tooltip_ability_item_imba_origin_treads_bonus_health" "+$health"      
+"dota_tooltip_ability_item_imba_origin_treads_bonus_mana" "+$mana"              
+"dota_tooltip_ability_item_imba_origin_treads_stat_bonus_state" "+$selected_attribute"
+
+"dota_tooltip_ability_item_imba_origin_treads_description" "<h1>Active: Return to Loss</h1>Applies a debuff on the target for %debuff_duration% seconds, based on Origin's state:<br><font color='#FF6347'><b>Healthy Strength:</b></font> Disables all healing, and deals %str_cast_static_damage% + %str_cast_current_hp_pct_dmg%%% of the enemy's current health as damage per second.</b></font><br><font color='#32CD32'><b>Agile Power:</b></font> Reduces all stats of the enemy by %agi_cast_stat_reduction_pct%%% of the its primary stat, and its attack damage by %agi_cast_damage_reduction_pct%%%.<br><font color='#00BFFF'><b>Chaotic Intelligence:</b></font> %int_cast_dmg_spread_pct%%% of damage dealt to the enemy is also dealt to enemies within %int_cast_dmg_spread_radius% radius of the target.\n<h1>Passive: Alter State</h1> Self-cast to change between states:<br><font color='#FF6347'><b>Healthy Strength: </b></font>Increases health regen by %str_hp_regen% and health regen amp by %str_hp_regen_amp_pct%%%.</b></font><br><font color='#32CD32'><b>Agile Power: </b></font>Increases damage by %agi_damage_bonus% and grants %agi_armor_ignore_chance_pct%%% chance to ignore base armor on attack.<br><font color='#00BFFF'><b>Chaotic Intelligence: </b></font>Increases cast range by %int_cast_range% and duplicates %int_magical_damage_return_pct%%% of magical damage taken to the attacker."
+"dota_tooltip_ability_item_imba_origin_treads_lore" "Earth to earth, ashes to ashes, dust to dust. As the amulet sees countless ends, so too shall it see your beginning."
+"dota_tooltip_ability_item_imba_origin_treads_note0" "Return to Loss pierces magic immunity and its debuff is undispellable."
+"dota_tooltip_ability_item_imba_origin_treads_note1" "Chaotic Intelligence's debuff can also be cast on allies, which reflects at half the damage."
+"dota_tooltip_ability_item_imba_origin_treads_note2" "If Return to Loss is spell reflected, it will apply the Health state modifier. If the target also possess an Origin, the modifier will instead match that item's state."
+"dota_tooltip_ability_item_imba_origin_treads_note3" "Damage instances scale with status resistance"
+
+"dota_ability_variable_selected_attribute"      "Selected Attribute"

@@ -9,7 +9,7 @@
 		"IMBA Boots"
 		{	
 			"item"		"item_imba_lifesteal_boots"
-			"item"		"item_imba_power_treads_2"
+			"item"		"item_imba_origin_treads"
 			"item"		"item_imba_transient_boots"
 			"item"		"item_imba_blink_boots"
 		}

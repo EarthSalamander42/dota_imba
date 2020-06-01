@@ -177,8 +177,10 @@
 	"item_manta"							"REMOVE"
 	"item_third_eye"						"REMOVE"
 	"item_third_eye"						"REMOVE"
-	"item_black_king_bar"					"REMOVE"
+	"item_black_king_bar"					"REMOVE" 
 
+	"item_cyclone"							"REMOVE" // Not actually removed, but doing this and "remaking" it allows the shared cyclone cooldown thing to work
+	
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
 
