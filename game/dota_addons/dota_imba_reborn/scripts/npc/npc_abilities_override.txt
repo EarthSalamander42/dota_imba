@@ -5589,7 +5589,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"450"
+				"crit_multiplier"			"500"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
 			"03"

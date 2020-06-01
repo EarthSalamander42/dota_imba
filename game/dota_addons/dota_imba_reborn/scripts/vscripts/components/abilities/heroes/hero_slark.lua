@@ -1163,32 +1163,33 @@ function modifier_imba_slark_shadow_dance_aura:OnCreated(params)
 
 	if (not params or params and params.bAutoCast ~= 1) then
 		ParticleManager:SetParticleControlEnt(self.shadow_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
-	
+
 		local visual_unit = CreateUnitByName("npc_dota_slark_visual", self:GetCaster():GetAbsOrigin(), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 		visual_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_visual", {})
 		-- Add aura duration of 0.5 seconds so the visual can attach long enough for the particle below to stick
 		visual_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = self:GetAbility():GetTalentSpecialValueFor("duration") + 0.5})
-	
+
 		local shadow_particle_name = "particles/units/heroes/hero_slark/slark_shadow_dance_dummy.vpcf"
-	
+
 		-- if not self:GetCaster():HasScepter() then
 			self.aoe	= 0
 		-- else
 			-- self.aoe = self:GetAbility():GetSpecialValueFor("scepter_aoe")
 			-- shadow_particle_name = "particles/units/heroes/hero_slark/slark_shadow_dance_dummy_sceptor.vpcf"
 		-- end
-		
+
 		self.shadow_dummy_particle = ParticleManager:CreateParticle(shadow_particle_name, PATTACH_ABSORIGIN_FOLLOW, visual_unit)
 		ParticleManager:SetParticleControlEnt(self.shadow_dummy_particle, 1, visual_unit, PATTACH_POINT_FOLLOW, nil, visual_unit:GetAbsOrigin(), true)
 		self:AddParticle(self.shadow_dummy_particle, false, false, -1, false, false)
 	else
 		ParticleManager:SetParticleControlEnt(self.shadow_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "", self:GetParent():GetAbsOrigin(), true)
-		
+
 		-- IMBAfication: Welcome to Dark Reef
 		self.aoe	= self:GetAbility():GetSpecialValueFor("dark_reef_radius")
-		
+
 		-- Okay so...
 		-- While this can be done in one clean loop, I'm going to purposefully leave this as a bunch of garbage for-loops for now because I don't think this will even survive testing phase (yeah cause making 300+ particles all at once is going to end well -_-)
+--[[
 		for arr = 1, 50 do
 			self.shadow_dummy_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_shadow_dance_dummy_sceptor.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 			ParticleManager:SetParticleControl(self.shadow_dummy_particle, 1, GetGroundPosition(self:GetParent():GetAbsOrigin() + RotatePosition(Vector(0, 0, 0), QAngle(0, (360/50) * arr, 0), Vector(2300, 0, 0)), nil))
@@ -1206,13 +1207,13 @@ function modifier_imba_slark_shadow_dance_aura:OnCreated(params)
 			ParticleManager:SetParticleControl(self.shadow_dummy_particle, 1, GetGroundPosition(self:GetParent():GetAbsOrigin() + RotatePosition(Vector(0, 0, 0), QAngle(0, (360/30) * arr, 0), Vector(1300, 0, 0)), nil))
 			self:AddParticle(self.shadow_dummy_particle, false, false, -1, false, false)
 		end
-		
+--]]
 		for arr = 1, 20 do
 			self.shadow_dummy_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_shadow_dance_dummy_sceptor.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 			ParticleManager:SetParticleControl(self.shadow_dummy_particle, 1, GetGroundPosition(self:GetParent():GetAbsOrigin() + RotatePosition(Vector(0, 0, 0), QAngle(0, (360/20) * arr, 0), Vector(800, 0, 0)), nil))
 			self:AddParticle(self.shadow_dummy_particle, false, false, -1, false, false)
 		end
-		
+
 		for arr = 1, 10 do
 			self.shadow_dummy_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_shadow_dance_dummy_sceptor.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 			ParticleManager:SetParticleControl(self.shadow_dummy_particle, 1, GetGroundPosition(self:GetParent():GetAbsOrigin() + RotatePosition(Vector(0, 0, 0), QAngle(0, (360/10) * arr, 0), Vector(300, 0, 0)), nil))
@@ -1235,7 +1236,7 @@ function modifier_imba_slark_shadow_dance_aura:GetAuraSearchTeam()
 	end
 end
 
-function modifier_imba_slark_shadow_dance_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_slark_shadow_dance_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING end
 function modifier_imba_slark_shadow_dance_aura:GetModifierAura()		return "modifier_imba_slark_shadow_dance" end
 
 function modifier_imba_slark_shadow_dance_aura:GetAuraEntityReject(target)
