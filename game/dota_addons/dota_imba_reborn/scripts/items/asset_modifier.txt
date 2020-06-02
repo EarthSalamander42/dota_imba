@@ -43793,8 +43793,8 @@
 				"asset_modifier"
 				{
 					"type"		"particle"
-					"asset"		"particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf"
-					"modifier"		"particles/econ/items/leshrac/leshrac_ti9_immortal_head/leshrac_ti9_immortal_edict.vpcf"
+					"asset"		"particles/units/hero/leshrac/leshrac_diabolic_edict.vpcf"
+					"modifier"		"particles/hero/leshrac/leshrac_ti9_immortal_edict.vpcf"
 					"style"		"0"
 				}
 				"asset_modifier2"
