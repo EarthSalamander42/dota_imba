@@ -2115,3 +2115,29 @@ modifier_special_bonus_imba_skeleton_king_6	= modifier_special_bonus_imba_skelet
 function modifier_special_bonus_imba_skeleton_king_6:IsHidden() 		return true end
 function modifier_special_bonus_imba_skeleton_king_6:IsPurgable() 		return false end
 function modifier_special_bonus_imba_skeleton_king_6:RemoveOnDeath() 	return false end
+
+modifier_skeleton_king_ambient = modifier_skeleton_king_ambient or class({})
+
+function modifier_skeleton_king_ambient:IsHidden() return true end
+function modifier_skeleton_king_ambient:RemoveOnDeath() return false end
+function modifier_skeleton_king_ambient:IsPurgable() return false end
+function modifier_skeleton_king_ambient:IsPurgeException() return false end
+
+function modifier_skeleton_king_ambient:GetTexture()
+	return "phantom_assassin_arcana_coup_de_grace"
+end
+
+function modifier_skeleton_king_ambient:OnCreated()
+	if not IsServer() then return end
+
+	self.ambient_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
+end
+
+function modifier_skeleton_king_ambient:OnDestroy()
+	if not IsServer() then return end
+
+	if self.ambient_pfx then
+		ParticleManager:DestroyParticle(self.ambient_pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.ambient_pfx)
+	end
+end

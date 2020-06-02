@@ -2702,6 +2702,7 @@
 		"item_id"					"21402"
 		"item_type"					"bundle"
 		"item_unlock_level"			"800"
+//		"modifier"					"modifier_skeleton_king_arcana"
 
 		"wearables"
 		{

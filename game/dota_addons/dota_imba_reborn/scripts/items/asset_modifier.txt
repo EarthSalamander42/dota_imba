@@ -493,7 +493,7 @@
 		"asset_modifier0"
 		{
 			"type"		"particle_create"
-			"modifier"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+			"modifier"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 		}
 	}
 	"487"
@@ -10568,7 +10568,7 @@
 		"asset_modifier5"
 		{
 			"type"		"particle_replace"
-			"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+			"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 			"modifier"		"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_witness_ambient_body.vpcf"
 			"style"		"0"
 		}
@@ -16331,7 +16331,7 @@
 		"asset_modifier5"
 		{
 			"type"		"particle_replace"
-			"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+			"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 			"modifier"		"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_ambient_default.vpcf"
 			"style"		"0"
 		}
@@ -46370,7 +46370,7 @@
 				"asset_modifier9"
 				{
 					"type"		"particle"
-					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_ambient.vpcf"
 					"style"		"0"
 				}
@@ -46410,7 +46410,7 @@
 				"asset_modifier11"
 				{
 					"type"		"particle"
-					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_style_ambient.vpcf"
 					"style"		"1"
 				}
