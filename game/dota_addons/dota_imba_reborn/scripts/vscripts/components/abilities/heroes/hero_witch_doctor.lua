@@ -211,6 +211,8 @@ function imba_witch_doctor_voodoo_restoration:GetAbilityTextureName()
 	return "witch_doctor_voodoo_restoration"
 end
 
+function imba_witch_doctor_voodoo_restoration:ProcsMagicStick() return false end
+
 LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_6", "components/abilities/heroes/hero_witch_doctor.lua", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_witch_doctor_6 = modifier_special_bonus_imba_witch_doctor_6 or class({})

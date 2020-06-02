@@ -2709,7 +2709,7 @@
 			}
 		}
 	}
-	"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+	"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 	{
 		"attach_type"		"absorigin_follow"
 		"attach_entity"		"parent"

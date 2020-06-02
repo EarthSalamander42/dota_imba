@@ -493,7 +493,7 @@
 		"asset_modifier0"
 		{
 			"type"		"particle_create"
-			"modifier"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+			"modifier"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 		}
 	}
 	"487"
@@ -10568,7 +10568,7 @@
 		"asset_modifier5"
 		{
 			"type"		"particle_replace"
-			"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+			"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 			"modifier"		"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_witness_ambient_body.vpcf"
 			"style"		"0"
 		}
@@ -16331,7 +16331,7 @@
 		"asset_modifier5"
 		{
 			"type"		"particle_replace"
-			"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient.vpcf"
+			"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
 			"modifier"		"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_ambient_default.vpcf"
 			"style"		"0"
 		}
@@ -46315,6 +46315,325 @@
 			"style"		"0"
 		}
 	}
+	"13456"
+	{
+				"skip_model_combine"		"0"
+				"asset_modifier"
+				{
+					"type"		"entity_model"
+					"asset"		"npc_dota_hero_skeleton_king"
+					"modifier"		"models/items/wraith_king/arcana/wraith_king_arcana.vmdl"
+				}
+				"asset_modifier2"
+				{
+					"type"		"model_skin"
+					"style"		"0"
+					"skin"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"model_skin"
+					"style"		"1"
+					"skin"		"1"
+				}
+				"asset_modifier4"
+				{
+					"type"		"arcana_level"
+					"level"		"1"
+					"style"		"0"
+				}
+				"asset_modifier5"
+				{
+					"type"		"arcana_level"
+					"level"		"2"
+					"style"		"1"
+				}
+				"asset_modifier6"
+				{
+					"type"		"hero_scale"
+					"asset"		"npc_dota_hero_skeleton_king"
+					"ModelScale"		"0.970000"
+					"VersusScale"		"0.928700"
+					"LoadoutScale"		"0.949400"
+				}
+				"asset_modifier7"
+				{
+					"type"		"portrait_background_model"
+					"asset"		"models/items/wraith_king/arcana/wk_arc_throne_model.vmdl"
+				}
+				"asset_modifier8"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_new_loadout.vpcf"
+					"modifier"		"particles/error/null.vpcf"
+				}
+				"asset_modifier9"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_ambient.vpcf"
+					"style"		"0"
+				}
+				"styles"
+				{
+					"0"
+					{
+						"name"		"#DOTA_Style_Wraith_King_Arcana_Skeleton_King_Head_0"
+						"skin"		"0"
+						"alternate_icon"		"0"
+					}
+					"1"
+					{
+						"name"		"#DOTA_Style_Wraith_King_Arcana_Skeleton_King_Head_1"
+						"skin"		"1"
+						"alternate_icon"		"1"
+						"unlock"
+						{
+							"gem"
+							{
+								"def_index"		"3028"
+								"type_field"		"strange_type"
+								"type_value"		"272"
+								"unlock_field"		"strange_value"
+								"unlock_value"		"100"
+							}
+						}
+					}
+				}
+				"asset_modifier10"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_reincarn.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier11"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_style_ambient.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier12"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_slow_debuff.vpcf"
+				}
+				"asset_modifier13"
+				{
+					"type"		"buff_modifier"
+					"modifier"		"modifier_wraith_king_arcana"
+				}
+				"asset_modifier14"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_wraithfireblast.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier15"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_wraithfireblast_debuff.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier16"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_wraithfireblast_style2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier17"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_wraithfireblast_debuff_style2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier18"
+				{
+					"type"		"response_criteria"
+					"asset"		"wraith_arc_skel"
+				}
+				"asset_modifier19"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_ambient_head.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier20"
+				{
+					"type"		"sound"
+					"asset"		"Hero_SkeletonKing.Reincarnate"
+					"modifier"		"Hero_SkeletonKing.Reincarnate.Arcana"
+				}
+				"asset_modifier21"
+				{
+					"type"		"particle"
+					"asset"		"particles/generic_hero_status/death_tombstone.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_reincarn_tombstone.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier22"
+				{
+					"type"		"icon_replacement_hero_minimap"
+					"asset"		"npc_dota_hero_skeleton_king"
+					"modifier"		"npc_dota_hero_skeleton_king_alt1"
+					"force_display"		"1"
+				}
+				"asset_modifier23"
+				{
+					"type"		"ability_icon"
+					"asset"		"skeleton_king_hellfire_blast"
+					"modifier"		"skeleton_king/arcana/skeleton_king_hellfire_blast_arcana"
+					"style"		"0"
+				}
+				"asset_modifier24"
+				{
+					"type"		"ability_icon"
+					"asset"		"skeleton_king_vampiric_aura"
+					"modifier"		"skeleton_king/arcana/skeleton_king_vampiric_aura_arcana"
+					"style"		"0"
+				}
+				"asset_modifier25"
+				{
+					"type"		"ability_icon"
+					"asset"		"skeleton_king_reincarnation"
+					"modifier"		"skeleton_king/arcana/skeleton_king_reincarnation_arcana"
+					"style"		"0"
+				}
+				"asset_modifier26"
+				{
+					"type"		"ability_icon"
+					"asset"		"skeleton_king_hellfire_blast"
+					"modifier"		"skeleton_king/arcana/skeleton_king_hellfire_blast_arcana_alt"
+					"style"		"1"
+				}
+				"asset_modifier27"
+				{
+					"type"		"ability_icon"
+					"asset"		"skeleton_king_vampiric_aura"
+					"modifier"		"skeleton_king/arcana/skeleton_king_vampiric_aura_arcana_alt"
+					"style"		"1"
+				}
+				"asset_modifier28"
+				{
+					"type"		"ability_icon"
+					"asset"		"skeleton_king_reincarnation"
+					"modifier"		"skeleton_king/arcana/skeleton_king_reincarnation_arcana_alt"
+					"style"		"1"
+				}
+				"asset_modifier29"
+				{
+					"type"		"particle"
+					"asset"		"particles/generic_hero_status/death_tombstone.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_style2_reincarn_tombstone.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier30"
+				{
+					"type"		"default_idle_expression"
+					"asset"		"scenes/skeleton_king/skeleton_king_exp_idle_01.vcd"
+					"modifier"		"scenes/skeleton_king/skeleton_king_arcana_exp_idle_01.vcd"
+				}
+				"asset_modifier31"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_reincarn_style2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier32"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_blur_attack.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_blur_attack_style2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier33"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_blur_critical.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_style2_blur_critical.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier34"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_blur_attack2_reverse.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_blur_attack2_reverse_style2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier35"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_run_alt_weapon_blur.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_style2_run_alt_weapon_blur.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier36"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_blur_attack3_stab.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weap_style2on_blur_attack3_stab.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier37"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_blur_attack4_kick.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon_style2_blur_attack4_kick.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier38"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/events/ti10/high_five/high_five_lvl1_overhead.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/arcana/high_five_wk_arcana_overhead.vpcf"
+				}
+				"asset_modifier39"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/events/ti10/high_five/high_five_lvl1_travel.vpcf"
+					"modifier"		"particles/econ/items/wraith_king/arcana/high_five_wk_arcana_travel.vpcf"
+				}
+				"asset_modifier40"
+				{
+					"type"		"activity"
+					"modifier"		"arcana"
+					"asset"		"ALL"
+				}
+				"asset_modifier41"
+				{
+					"type"		"icon_replacement_hero"
+					"asset"		"npc_dota_hero_skeleton_king"
+					"modifier"		"npc_dota_hero_skeleton_king_alt1"
+					"force_display"		"1"
+					"style"		"0"
+				}
+				"asset_modifier42"
+				{
+					"type"		"icon_replacement_hero"
+					"asset"		"npc_dota_hero_skeleton_king"
+					"modifier"		"npc_dota_hero_skeleton_king_alt2"
+					"style"		"1"
+					"force_display"		"1"
+				}
+				"alternate_icons"
+				{
+					"0"
+					{
+						"icon_path"		"econ/items/wraith_king/arcana/wraith_king_arcana_head"
+					}
+					"1"
+					{
+						"icon_path"		"econ/items/wraith_king/arcana/wraith_king_arcana_head_style1"
+					}
+				}		
+	}
 	"13457"
 	{
 		"skip_model_combine"		"1"
@@ -46738,6 +47057,69 @@
 			"style"		"0"
 		}
 	}
+	"13760"
+	{
+				"skip_model_combine"		"1"
+				"hide_styles_from_ui"		"1"
+				"asset_modifier"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/wraith_king/wraith_king_arcana/wk_arc_weapon.vpcf"
+				}
+				"asset_modifier2"
+				{
+					"type"		"entity_model"
+					"asset"		"npc_dota_wraith_king_skeleton_warrior"
+					"modifier"		"models/items/wraith_king/arcana/wk_arcana_skeleton.vmdl"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/neutral_fx/skeleton_spawn.vpcf"
+					"modifier"		"particles/wk_arc_minion_ambient.vpcf"
+				}
+				"asset_modifier4"
+				{
+					"type"		"ability_icon"
+					"asset"		"skeleton_king_mortal_strike"
+					"modifier"		"skeleton_king/arcana/skeleton_king_mortal_strike_arcana"
+					"style"		"0"
+				}
+				"styles"
+				{
+					"0"
+					{
+						"name"		"#DOTA_Style_Wraith_King_Arcana_Sword_0"
+						"skin"		"0"
+						"auto_style_rule"		"arcana_level <= 0"
+					}
+					"1"
+					{
+						"name"		"#DOTA_Style_Wraith_King_Arcana_Sword_1"
+						"skin"		"1"
+						"auto_style_rule"		"arcana_level > 0"
+					}
+				}
+				"alternate_icons"
+				{
+					"0"
+					{
+						"icon_path"		"econ/items/wraith_king/arcana/wraith_king_arcana_weapon"
+					}
+					"1"
+					{
+						"icon_path"		"econ/items/wraith_king/arcana/wraith_king_arcana_weapon"
+					}
+				}
+				"asset_modifier5"
+				{
+					"type"		"ability_icon"
+					"asset"		"skeleton_king_mortal_strike"
+					"modifier"		"skeleton_king/arcana/skeleton_king_mortal_strike_arcana_alt"
+					"style"		"1"
+				}		
+	}
+
 	"13767"
 	{
 				"skip_model_combine"		"1"

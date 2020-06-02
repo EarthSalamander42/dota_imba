@@ -948,9 +948,8 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 			}
 
 			var reward = $.CreatePanel("Button", $("#reward_container_level_" + bp_level), "reward_button_" + bp_item_id);
-			reward.AddClass("BattlepassReward");
+			reward.BLoadLayoutSnippet('BattlePassReward');
 			reward.style.backgroundImage = 'url("s2r://panorama/images/' + bp_image + '.png")';
-			reward.AddClass("BattlepassRewardIcon");
 			reward.AddClass(bp_rarity + "_border");
 			reward.hero_type = bp_hero;
 /*
@@ -962,7 +961,7 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 */
 			if (plyData != null && bp_item_unreleased == undefined || bRewardsDisabled & bRewardsDisabled == true) {
 				// Disable tinker immortal for now until fixed
-				if (bp_item_id != "105") {
+				if (bp_item_id != "105" && bp_item_id != "113" && bp_item_id != "114" && bp_item_id != "115" && bp_item_id != "116" && bp_item_id != "117" && bp_item_id != "118" && bp_item_id != "119" && bp_item_id != "120" && bp_item_id != "121" && bp_item_id != "122") {
 					if (bp_level <= plyData.Lvl) {
 						var reward_panel_unlocked = $.CreatePanel("Panel", reward, "");
 						reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
@@ -1119,7 +1118,7 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		companionpreview.style.width = "132px";
 		companionpreview.style.height = "135px";
 
-		companionpreview.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_emblem_' + i + '.png")';
+//		companionpreview.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_emblem_' + i + '.png")';
 		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
 		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 

@@ -139,7 +139,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"900 1200 1500 1800"
+				"range"				"1000 1400 1800 2200"
 				//"LinkedSpecialBonus"	"special_bonus_unique_timbersaw_3"
 				"LinkedSpecialBonus"	"special_bonus_imba_timbersaw_timber_chain_range"
 			}

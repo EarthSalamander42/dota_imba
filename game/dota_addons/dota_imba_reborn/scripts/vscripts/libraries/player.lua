@@ -802,37 +802,33 @@ end
 -- Call custom functions whenever CreateLinearProjectile is being called anywhere
 original_CreateLinearProjectile = ProjectileManager.CreateLinearProjectile
 ProjectileManager.CreateLinearProjectile = function(self, hHandle)
-	-- call the original function
-	local response = original_CreateLinearProjectile(self, hHandle)
-
 --	print("CreateLinearProjectile (override):", hHandle)
-	if not hHandle.EffectName then return response end
+	if not hHandle.EffectName then return original_CreateLinearProjectile(self, hHandle) end
 
 	local override = CustomNetTables:GetTableValue("battlepass_player", hHandle.EffectName..'_'..hHandle.Ability:GetCaster():GetPlayerOwnerID()) 
 
 	if override then
-		hHandle.EffectName = override
+		hHandle.EffectName = override["1"]
 	end
 
-	return response
+	return original_CreateLinearProjectile(self, hHandle)
 end
 
 -- Call custom functions whenever CreateTrackingProjectile is being called anywhere
 original_CreateTrackingProjectile = ProjectileManager.CreateTrackingProjectile
 ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
-	-- call the original function
-	local response = original_CreateTrackingProjectile(self, hHandle)
-
 --	print("CreateTrackingProjectile (override):", hHandle)
-	if not hHandle.EffectName then return response end
+--	print(hHandle.EffectName)
+	if not hHandle.EffectName then return original_CreateTrackingProjectile(self, hHandle) end
 
 	local override = CustomNetTables:GetTableValue("battlepass_player", hHandle.EffectName..'_'..hHandle.Ability:GetCaster():GetPlayerOwnerID()) 
 
 	if override then
-		hHandle.EffectName = override
+--		print(override["1"])
+		hHandle.EffectName = override["1"]
 	end
 
-	return response
+	return original_CreateTrackingProjectile(self, hHandle)
 end
 
 -- Call custom functions whenever CreateParticle is being called anywhere

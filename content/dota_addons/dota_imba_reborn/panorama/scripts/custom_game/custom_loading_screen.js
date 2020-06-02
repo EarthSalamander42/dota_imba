@@ -32,20 +32,14 @@ var api = {
 
 var view = {
 	title: $("#loading-title-text"),
-	text: $("#loading-content-text"),
+	subtitle: $("#loading-subtitle-text"),
+	text: $("#loading-description-text"),
 	map: $("#loading-map-text"),
 	link: $("#loading-link"),
 	link_text:  $("#loading-link-text")
 };
 
 var link_targets = "";
-
-function ucwords (str) {
-	return (str + '').replace(/^(.)|\s+(.)/g, function ($1) {
-//		return $1.toUpperCase();
-		return $1;
-	});
-}
 
 function info_already_available() {
 	return Game.GetMapInfo().map_name != "";
@@ -58,6 +52,61 @@ function isInt(n) {
 function LoadingScreenDebug(args) {
 	$.Msg(args)
 	view.text.text = view.text.text + ". \n\n" + args.text;
+}
+
+function SwitchTab(count) {
+	var container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-footer-container");
+
+	if (container && container[0]) {
+		for (var i = 0; i < container[0].GetChildCount(); i++) {
+			var panel = container[0].GetChild(i);
+			var new_panel = container[0].GetChild(count - 1);
+
+			if (panel == new_panel)
+				panel.style.visibility = "visible";
+			else
+				panel.style.visibility = "collapse";
+		}
+	}
+
+	var label = $("#BottomLabel");
+
+	if (label) {
+		label.text = $.Localize("#loading_screen_custom_games_" + count);
+	}
+}
+
+function SetProfile() {
+	var check = false;
+
+	if ($("#HomeProfileContainer")) {
+		if ($("#HomeProfileContainer").FindChildTraverse("AvatarImage") && Game.GetLocalPlayerInfo(Players.GetLocalPlayer())) {
+			if ($("#HomeProfileContainer").FindChildTraverse("UserName") && $("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0)) {
+				if ($("#HomeProfileContainer").FindChildTraverse("UserNickname") && $("#HomeProfileContainer").FindChildTraverse("UserNickname").GetChild(0)) {
+					var player_table = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer().toString());
+
+					if (player_table && player_table.Lvl) {
+						$("#HomeProfileContainer").FindChildTraverse("UserNickname").GetChild(0).text = "Level: " + player_table.Lvl;
+
+						$("#HomeProfileContainer").FindChildTraverse("AvatarImage").steamid = Game.GetLocalPlayerInfo(Players.GetLocalPlayer()).player_steamid;
+
+						$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).text = Players.GetPlayerName(Game.GetLocalPlayerID());
+						$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).style.textOverflow = "shrink";
+
+						$("#HomeProfileContainer").FindChildTraverse("RankTierContainer").style.marginTop = "21px";
+						$("#HomeProfileContainer").FindChildTraverse("RankTierContainer").style.marginRight = "-15px";
+
+						check = true;
+					}
+				}
+			}
+		}
+	}
+
+	if (check == false) {
+		$.Schedule(0.1, SetProfile);
+		return;
+	}
 }
 
 function fetch() {
@@ -86,12 +135,13 @@ function fetch() {
 	else if (Game.GetMapInfo().map_display_name == "imbathrow_3v3v3v3")
 		DisableRankingVoting();
 
-	var game_version = game_options.value
+	var game_version = game_options.value;
 
 	if (isInt(game_version))
 		game_version = game_version.toString() + ".0";
 
 	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
+	view.subtitle.text = "Outlanders Rising";
 
 	api.getLoadingScreenMessage(function(data) {
 		var found_lang = false;
@@ -103,7 +153,7 @@ function fetch() {
 
 			if (info.lang == $.Localize("lang")) {
 				view.text.text = info.content;
-				view.link_text.text = info.link_text;
+//				view.link_text.text = info.link_text;
 				found_lang = true;
 				break;
 			} else if (info.lang == "en") {
@@ -113,118 +163,116 @@ function fetch() {
 
 		if (found_lang == false) {
 			view.text.text = english_row.content;
-			view.link_text.text = english_row.link_text;
+//			view.link_text.text = english_row.link_text;
 		}
 	}, function() {
 		// error callback
+		$.Msg("Unable to retrieve loading screen info.")
 	});
-
-//	$.Msg("Fetching and setting loading screen data");
-
-	var mapInfo = Game.GetMapInfo();
-//	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
-	var map_name = mapInfo.map_display_name.replace('_', " ");
-
-	view.map.text = map_name;
-/*
-	api.resolve_map_name(mapInfo.map_display_name).then(function (data) {
-		view.map.text = data;
-	}).catch(function (err) {
-		$.Msg("Failed to resolve map name: " + err.message);
-		view.map.text = map_name;
-	});
-
-	api.loading_screen().then(function (data) {
-		var lang = $.Language();
-		var rdata = data.languages["en"];
-
-		if (data.languages[lang] !== undefined)
-			rdata = data.languages["en"];
-
-		view.title.text = rdata.title;
-		view.text.text = rdata.text;
-		view.link_text.text = rdata.link_text;
-
-		view.link.SetPanelEvent("onactivate", function() {
-			$.DispatchEvent("DOTADisplayURL", rdata.link_value || "");
-		});
-		
-	}).catch(function (reason) {
-		$.Msg("Loading Loading screen information failed");
-		$.Msg(reason);
-
-		view.text.text = "News currently unavailable.";
-	});
-	*/
-	/*
-	var player_info = Game.GetPlayerInfo(Game.GetLocalPlayerID());
-	
-	api.player_info(player_info.player_steamid).then(function (data) {
-		// TODO: do sth with the data
-	}).catch(function (reason) {
-		$.Msg("Loading player info for loading screen failed!")
-		$.Msg(reason);
-	});
-	*/
 };
 
 function AllPlayersLoaded() {
-//	$.Msg("ALL PLAYERS LOADED IN!")
-	for (var i = 1; i <= $("#vote-content").GetChildCount(); i++) {
+	$.Msg("ALL PLAYERS LOADED IN!")
+
+	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
 		//$.Msg("Game Mode: ", i)
-		var panel = $("#vote-content").GetChild(i - 1);
-		var gamemode = panel.GetChild(0).id.replace("VoteGameMode", "");
+		var panel = $("#vote-container").GetChild(i);
+		var gamemode = panel.id.replace("VoteGameModeText", "");
 
 		if (!panel.BHasClass("Active"))
 			panel.AddClass("Active");
 
 		(function (panel, gamemode) {
-			panel.SetPanelEvent("onactivate", function () {
-				OnVoteButtonPressed('gamemode', gamemode);
+			panel.SetPanelEvent("onmouseover", function () {
+				$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("description_gamemode_" + gamemode));
+			})
+
+			panel.SetPanelEvent("onmouseout", function () {
+				$.DispatchEvent("UIHideTextTooltip", panel);
 			})
 		})(panel, gamemode);
 	}
 
+	var player_table = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer().toString());
+
+	if (player_table && player_table.mmr_title) {
+		var short_title = player_table.mmr_title;
+		var title_stars = player_table.mmr_title.substring(player_table.mmr_title.length - 1, player_table.mmr_title.length)
+
+		// if last character is a number (horrible hack, look away please)
+		if (parseInt(title_stars)) {
+			short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
+			title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
+		} else {
+			short_title = player_table.mmr_title;
+			title_stars = "_empty";
+		}
+
+		var mmr_rank_to_medals = {
+			Herald: 1,
+			Guardian: 2,
+			Crusader: 3,
+			Archon: 4,
+			Legend: 5,
+			Ancient: 6,
+			Divine: 7,
+			Immortal: 8,
+		}
+
+		$.GetContextPanel().FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
+		$.GetContextPanel().FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
+/*
+		rank_panel.SetPanelEvent("onmouseover", function () {
+			$.DispatchEvent("DOTAShowTextTooltip", rank_panel, player_table.mmr_title);
+		})
+		rank_panel.SetPanelEvent("onmouseout", function () {
+			$.DispatchEvent("DOTAHideTextTooltip", rank_panel);
+		})
+*/
+	}
+
+	ToggleVoteContainer(true);
+
+	var vote_panel = $.GetContextPanel().FindChildrenWithClassTraverse("vote-select-panel-container");
+
+	if (vote_panel && vote_panel[0]) {
+		for (var i = 0; i <= vote_panel[0].GetChildCount() - 1; i++) {
+			var panel = vote_panel[0].GetChild(i);
+			var gamemode = undefined;
+			var button = undefined;
+
+			if (panel.GetChild(2)) {
+				gamemode = panel.GetChild(2).id.replace("VoteGameModeMainText", "");
+				button = panel.GetChild(2);
+
+				panel.GetChild(0).text = $.Localize("vote_gamemode_" + gamemode);
+				panel.GetChild(1).text = $.Localize("description_gamemode_" + gamemode);
+			}
+
+//			if (!panel.BHasClass("Active"))
+//				panel.AddClass("Active");
+
+			if (gamemode) {
+				(function (button, gamemode) {
+					button.SetPanelEvent("onactivate", function () {
+						OnVoteButtonPressed('gamemode', gamemode);
+						ToggleVoteContainer(false);
+					})
+				})(button, gamemode);
+			}
+		}
+	}
+
 //	$("#VoteGameMode1").checked = true;
 //	OnVoteButtonPressed("gamemode", 1);
+}
 
-	// Maybe Cookies will clean this up or something...kappa
-	
-	// Ranked
-	$("#VotePanel1").SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel1"), $.Localize("description_gamemode_1"));
-	})
+function ToggleVoteContainer(bBoolean) {
+	var vote_container = $.GetContextPanel().FindChildrenWithClassTraverse("vote-container-main");
 
-	$("#VotePanel1").SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel1"));
-	})
-	
-	// Mutation
-	$("#VotePanel2").SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel2"), $.Localize("description_gamemode_2"));
-	})
-
-	$("#VotePanel2").SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel2"));
-	})
-	
-	// (Super) Frantic
-	$("#VotePanel3").SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel3"), $.Localize("description_gamemode_3"));
-	})
-
-	$("#VotePanel3").SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel3"));
-	})
-	
-	// Same Heroes
-	$("#VotePanel5").SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", $("#VotePanel5"), $.Localize("description_gamemode_5"));
-	})
-
-	$("#VotePanel5").SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", $("#VotePanel5"));
-	})
+	if (vote_container && vote_container[0]) {
+		vote_container[0].SetHasClass("Visible", bBoolean);
+	}
 }
 
 function HoverableLoadingScreen() {
@@ -239,6 +287,8 @@ function OnVoteButtonPressed(category, vote)
 //	$.Msg("Category: ", category);
 //	$.Msg("Vote: ", vote);
 	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote, "PlayerID":Game.GetLocalPlayerID() } );
+	var gamemode_name = $.Localize("vote_gamemode_" + vote)
+	$("#VoteGameModeCheck").text = "You have voted for " + gamemode_name + "."
 }
 
 /* new system, double votes for donators
@@ -293,7 +343,7 @@ function OnVotesReceived(data)
 //	$.Msg(data.table)
 //	$.Msg(data.table[id])
 
-	var vote_count = []
+	var vote_count = [];
 
 	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
@@ -301,7 +351,7 @@ function OnVotesReceived(data)
 	for (var i = 1; i <= 5; i++) {
 		vote_count[i] = 0;
 		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
+			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i);
 	}
 
 	// Check number of votes for each gamemodes
@@ -316,13 +366,26 @@ function OnVotesReceived(data)
 		if (vote_count[i] > 1)
 			vote_tooltip = "votes"
 
-		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+		if ($("#VoteGameModeText" + i)) {
+			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+			$("#VoteGameModeText" + i).style.color = "white";
+		}
 	}
 
-//	if (data.category == "random_tower_abilities") {
+	// calculate number of people who voted
+	var highest_vote = 0;
+	for (var i in vote_count) {
+		if (vote_count[i] > highest_vote)
+			highest_vote = i;
+	}
 
-//	}
+	if ($("#VoteGameModeText" + highest_vote)) {
+		if (highest_vote != 1 && vote_count[highest_vote] < 5) {
+			$("#VoteGameModeText1").style.color = "green";
+		} else {
+			$("#VoteGameModeText" + highest_vote).style.color = "green";
+		}
+	}
 }
 
 function DisableVoting() {
@@ -334,8 +397,52 @@ function DisableRankingVoting() {
 }
 
 (function(){
+	var vote_info = $.GetContextPanel().FindChildrenWithClassTraverse("vote-info");
+
+	if (vote_info && vote_info[0]) {
+		vote_info[0].SetPanelEvent("onmouseover", function () {
+			$.DispatchEvent("UIShowTextTooltip", vote_info[0], $.Localize("vote_gamemode"));
+		})
+
+		vote_info[0].SetPanelEvent("onmouseout", function () {
+			$.DispatchEvent("UIHideTextTooltip", vote_info[0]);
+		})
+	}
+
+	var bottom_button_container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-button-container");
+
+	if (bottom_button_container && bottom_button_container[0] && bottom_button_container[0].GetChild(0))
+		bottom_button_container[0].GetChild(0).checked = true;
+
+	var bottom_patreon_container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-patreon-sub");
+
+	if (bottom_patreon_container && bottom_patreon_container[0]) {
+		var companion_list = [
+			"npc_donator_companion_chocobo",
+			"npc_donator_companion_mega_greevil",
+			"npc_donator_companion_butch",
+			"npc_donator_companion_hollow_jack",
+			"npc_donator_companion_tory",
+			"npc_donator_companion_frog",
+		];
+
+		for (var i in companion_list) {
+			var companion = $.CreatePanel("Panel", bottom_patreon_container[0], "");
+			companion.AddClass("DonatorReward");
+			companion.style.width = 100 / companion_list.length + "%";
+
+			var companionpreview = $.CreatePanel("Button", companion, "");
+			companionpreview.style.width = "100%";
+			companionpreview.style.height = "100%";
+
+			companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_list[i] + '"/></Panel></root>', false, false);
+			companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+		}
+	}
+
 	HoverableLoadingScreen();
 	fetch();
+	SetProfile();
 
 	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);

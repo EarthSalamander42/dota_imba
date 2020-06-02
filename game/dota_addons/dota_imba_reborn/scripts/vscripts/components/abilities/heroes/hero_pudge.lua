@@ -313,7 +313,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 	ParticleManager:SetParticleControl(hook_particle, 3, vKillswitch)
 	ParticleManager:SetParticleControl(hook_particle, 4, Vector( 1, 0, 0 ) )
 	ParticleManager:SetParticleControl(hook_particle, 5, Vector( 0, 0, 0 ) )
---	ParticleManager:SetParticleControl(hook_particle, 7, Vector(1, 0, 0))
+	ParticleManager:SetParticleControl(hook_particle, 7, Vector(1, 0, 0))
 	
 --	if self:GetCaster().hook_pfx == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
 --		ParticleManager:SetParticleControlEnt(hook_particle, 7, self:GetCaster(), PATTACH_CUSTOMORIGIN, nil, self:GetCaster():GetOrigin(), true)
@@ -794,6 +794,7 @@ function imba_pudge_rot:IsRefreshable() 		return true  end
 function imba_pudge_rot:IsStealable() 			return true  end
 function imba_pudge_rot:IsNetherWardStealable() return false end
 function imba_pudge_rot:ResetToggleOnRespawn()	return true end
+function imba_pudge_rot:ProcsMagicStick() return false end
 
 function imba_pudge_rot:GetCastRange()
 	if self:GetCaster():HasModifier("modifier_imba_flesh_heap_stacks") then
@@ -1426,7 +1427,7 @@ end
 imba_pudge_eject = imba_pudge_eject or class({})
 
 function imba_pudge_eject:IsInnateAbility() return true end
-
+function imba_pudge_eject:ProcsMagicStick() return false end
 function imba_pudge_eject:OnSpellStart()
 	if not IsServer() then return end
 

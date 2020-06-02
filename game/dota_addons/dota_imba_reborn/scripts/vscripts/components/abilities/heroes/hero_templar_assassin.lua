@@ -712,7 +712,7 @@ end
 --------------------------------
 
 function imba_templar_assassin_trap:GetAssociatedSecondaryAbilities()	return "imba_templar_assassin_psionic_trap" end
-
+function imba_templar_assassin_trap:ProcsMagicStick() return false end
 function imba_templar_assassin_trap:GetBehavior()
 	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
@@ -1032,6 +1032,7 @@ end
 -----------------------------------------
 
 function imba_templar_assassin_trap_teleport:GetAssociatedSecondaryAbilities()	return "imba_templar_assassin_psionic_trap" end
+function imba_templar_assassin_trap_teleport:ProcsMagicStick() return false end
 
 function imba_templar_assassin_trap_teleport:OnInventoryContentsChanged()
 	if self:GetCaster():HasScepter() then
@@ -1373,6 +1374,7 @@ end
 -------------------------------------
 
 function imba_templar_assassin_self_trap:IsStealable()	return false end
+function imba_templar_assassin_self_trap:ProcsMagicStick() return false end
 
 function imba_templar_assassin_self_trap:OnSpellStart()
 	if self:GetCaster():GetOwner() then

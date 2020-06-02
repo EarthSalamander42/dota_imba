@@ -44,6 +44,8 @@ function Battlepass:Init()
 			end
 		end
 	end
+
+	Battlepass:GetPlayerInfoXP()
 end
 
 function Battlepass:SetOverrideAssets(hero, modifier, table_name)

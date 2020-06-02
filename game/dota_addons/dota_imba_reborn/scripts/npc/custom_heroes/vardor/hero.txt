@@ -48,21 +48,20 @@
 		"Ability1"					"vardor_piercing_shot"			// Ability 1
 		"Ability2"					"vardor_graceful_jump"			// Ability 2
 		"Ability3"					"vardor_mental_thrusts"			// Ability 3
-		"Ability4"					"vardor_return_of_the_yari"		// Bonus Ability
+		"Ability4"					"generic_hidden"				
 		"Ability5"					"generic_hidden"
-		"Ability6"					"vardor_celestial_yari"			// Ultimate
+		"Ability6"					"vardor_celestial_rain_of_yari"			// Ultimate
 
 		// Talents
 		//-------------------------------------------------------------------------------------------------------------
-		"Ability10"					"special_bonus_attack_damage_20"
-		"Ability11"					"special_bonus_magic_resistance_12"
-		"Ability12"					"special_bonus_vardor_3"
-		"Ability13"					"special_bonus_movement_speed_30"
-		"Ability14"					"special_bonus_vardor_5"
-//		"Ability15"					"special_bonus_vardor_6"
-		"Ability15"					"special_bonus_hp_600"
-		"Ability16"					"special_bonus_vardor_7"
-		"Ability17"					"special_bonus_vardor_8"
+		"Ability10"					"special_bonus_mp_350"
+		"Ability11"					"special_bonus_agility_12"
+		"Ability12"					"special_bonus_cast_range_150"
+		"Ability13"					"special_bonus_attack_speed_40"
+		"Ability14"					"special_bonus_vardor_ground_yaris_mind_bleed"
+		"Ability15"					"special_bonus_vardor_bonus_yari"		
+		"Ability16"					"special_bonus_vardor_graceful_jump_root"
+		"Ability17"					"special_bonus_vardor_mental_thrusts_bonus"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------

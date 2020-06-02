@@ -177,8 +177,8 @@
 	"item_manta"							"REMOVE"
 	"item_third_eye"						"REMOVE"
 	"item_third_eye"						"REMOVE"
-	"item_black_king_bar"					"REMOVE"
-
+	"item_black_king_bar"					"REMOVE" 
+	
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
 
@@ -222,6 +222,7 @@
 	"item_imba_mantle"						"REMOVE"
 	"item_imba_enchanted_mango"				"REMOVE"
 	"item_imba_faerie_fire"					"REMOVE"
+	"item_banana"							"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -5589,7 +5590,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"450"
+				"crit_multiplier"			"500"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
 			"03"

@@ -150,21 +150,13 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 					return nil
 				end
 
+                -- Ignore abilities that do not proc magic stick
+                if not params.ability:ProcsMagicStick() then
+                    return false
+                end
+
 				-- List of abilities that shouldn't get triggered by Arcane Curse
-				local uneffected_spells = {
-					"invoker_quas",
-					"invoker_wex",
-					"invoker_exort",
-					"ancient_apparition_ice_blast_release",
-					"earth_spirit_stone_caller",
-					"elder_titan_return_spirit",
-					"ember_spirit_fire_remnant",
-					"wisp_tether_break",
-					"keeper_of_the_light_illuminate_end",
-					"keeper_of_the_light_spirit_form_illuminate_end",
-					"life_stealer_control",
-					"life_stealer_consume",
-					"life_stealer_assimilate_eject",
+				local uneffected_spells = {															
 					"monkey_king_tree_dance",
 					"monkey_king_primal_spring_early",
 					"monkey_king_mischief",
@@ -172,18 +164,9 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 					"naga_siren_song_of_the_siren_cancel",
 					"nyx_assassin_burrow",
 					"nyx_assassin_unburrow",
-					"phoenix_icarus_dive_stop",
-					"phoenix_launch_fire_spirit",
-					"phoenix_sun_ray_stop",
-					"puck_ethereal_jaunt",
-					"puck_phase_shift",
-					"shadow_demon_shadow_poison_release",
-					"spectre_reality",
+					"shadow_demon_shadow_poison_release",					
 					"imba_techies_minefield_sign",
-					"techies_focused_detonate",
-					"templar_assassin_trap",
-					"shredder_return_chakram",
-					"shredder_return_chakram_2",
+					"techies_focused_detonate",					
 					"imba_drow_ranger_frost_arrows",
 					"imba_jakiro_liquid_fire",
 					"imba_obsidian_destroyer_arcane_orb",

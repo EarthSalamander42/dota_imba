@@ -4,6 +4,7 @@
 		<include src="file://{resources}/scripts/custom_game/util.js" />
 	</scripts>
 	<styles>
+		<include src="file://{resources}/styles/dotastyles.vcss_c" />
 		<include src="file://{resources}/styles/custom_game/mutation.css" />
 	</styles>
 

@@ -42,6 +42,7 @@
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/slark/abilities.txt
+#base heroes/shadow_demon/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
 #base heroes/snapfire/abilities.txt
 #base heroes/spectre/abilities.txt
@@ -3596,7 +3597,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"targets"					"2 4 6 8"
+				"targets"					"10"
 			}
 			"05"
 			{	
@@ -3773,7 +3774,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage"								"80 120 160 200"
+				"damage"								"100 140 180 220"
 				// and heal
 			}
 			"03"
@@ -10321,7 +10322,7 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_kill"				"25"
+				"damage_per_kill"				"40"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"13"
@@ -22636,7 +22637,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_range"				"350"
+				"attack_range"				"350 360 370 380"
 			}
 			"05"
 			{
@@ -22651,7 +22652,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"splash_damage"				"30 40 50 60"
+				"splash_damage"				"40 60 80 100"
 				"CalculateSpellDamageTooltip"   "0"
 			}
 		}
@@ -24914,13 +24915,13 @@
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"skeleton_king_reincarnation"
 		"MaxLevel"						"3"
-		"ScriptFile"				"components/abilities/heroes/hero_skeleton_king.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_skeleton_king.lua"
 
 		"HasScepterUpgrade"				"1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"200 120 40"
+		"AbilityCooldown"				"160 100 40"
 		"AbilityCastRange"				"900"
 
 		// Precache
@@ -29851,61 +29852,51 @@
 				"var_type"							"FIELD_FLOAT"
 				"duration"							"4 4.5 5"
 			}
-
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"base_radius"						"450"
+				"base_radius"						"550"
 			}
-
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"chronocharge_radius"				"5"
 			}
-
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"chronocharge_attackspeed"			"2 3 4"
 			}
-
 			"05"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"movement_speed"					"1000"
 			}
-
 			"06"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"cd_increase_per_enemy"				"1.0"
 			}
-			
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_cooldown"					"90"
 			}
-
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_as_slow"				"200"
 			}
-
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_ms_slow_pcnt"			"100"
 			}
-
 			"10"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_projectile_slow"		"50"
 			}
-
 			"11"
 			{
 				"var_type"							"FIELD_INTEGER"
@@ -32115,62 +32106,51 @@
 				"var_type"						"FIELD_INTEGER"
 				"creep_kill_soul_count"			"1"
 			}
-
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"hero_kill_soul_count"			"12"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"hero_attack_soul_count"		"1"
 			}
-
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"shadowraze_soul_count"			"1"
 			}
-
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_per_soul"				"3"
 			}
-
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"max_souls"						"18 24 30 36"
 			}
-
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_max_souls"				"22 32 42 48"
 			}
-
-
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"temporary_soul_duration"		"18 22 26 30"
+				"temporary_soul_duration"		"16"
 			}
-
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"max_temporary_souls_pct"		"100"
 			}
-
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
 			}
-
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"

@@ -238,7 +238,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_puck"
 		"AbilityTextureName"			"puck_dream_coil"	
-		
+
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
@@ -262,7 +262,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100 150 200"
-				
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityModifierSupportValue"	"0.5"	// Does two modifiers 
@@ -304,7 +304,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_radius"				"375 400 425"
+				"coil_radius"				"400 500 600"
 			}			
 			"08"
 			{
@@ -324,7 +324,6 @@
 				"coil_stun_duration_scepter"		"3.0 4.2 5.4"
 				"RequiresScepter"			"1"
 			}
-			
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"

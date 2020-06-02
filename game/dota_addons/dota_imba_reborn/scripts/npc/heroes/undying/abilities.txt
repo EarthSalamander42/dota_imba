@@ -196,13 +196,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tombstone_health"		"10 14 28 22"
+				"tombstone_health"		"20 28 36 44"
+				"LinkedSpecialBonus"	"special_bonus_imba_undying_tombstone_health"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hits_to_destroy_tooltip"	"5 7 9 11"
-				//"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
+				"hits_to_destroy_tooltip"	"5 7 9 11"				
 				"LinkedSpecialBonus"		"special_bonus_imba_undying_tombstone_health"
 			}
 			"03"
@@ -225,13 +225,69 @@
 				"var_type"				"FIELD_FLOAT"
 				"zombie_interval"		"4.0 3.5 3.0 2.5"
 			}
+
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"trees_destroy_radius"	"300"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Undying: Tombstone Aura
+	//=================================================================================================================
+	"imba_undying_tombstone_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_undying"
+		"AbilityTextureName"			"undying_tombstone"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+		
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{						
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"no_home_duration"		"30"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"zombie_interval"		"4.0 3.5 3.0 2.5"
+			}							
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tombstone_damage_hero"	"4"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tombstone_damage_creep"	"1"
+			}
 		}
 	}
 
 	//=================================================================================================================
 	// Undying: Tombstone Zombie Deathlust
 	//=================================================================================================================
-	"imba_undying_tombstone_zombie_deathstrike"
+	"imba_undying_tombstone_zombie_deathlust"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -255,35 +311,45 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-7"
+				"slow"					"7"
 			}
-			"03"
+
+			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"health_threshold_pct"	"40"
 			}
-			"04"
+
+			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"2.5"
 			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_move_speed_pct"	"35 40 45 50"
+			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_move_speed"			"35 40 45 50"
-			}
+				"bonus_attack_speed"	"200"
+			}		
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"200"
+				"hero_tower_damage"		"2"
 			}
+
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"other_damage"			"1"
 			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+		}		
 	}
 	
 	//=================================================================================================================

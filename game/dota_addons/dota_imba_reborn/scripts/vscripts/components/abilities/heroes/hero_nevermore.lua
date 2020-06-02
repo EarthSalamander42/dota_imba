@@ -1586,7 +1586,7 @@ function imba_nevermore_requiem:OnAbilityPhaseInterrupted()
 	end
 end
 
-function imba_nevermore_requiem:OnSpellStart(death_cast)
+function imba_nevermore_requiem:OnSpellStart(death_cast)	
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -1709,6 +1709,7 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 	local modifier_debuff = "modifier_imba_reqiuem_debuff"
 	local modifier_harvest = "modifier_imba_reqiuem_harvest"
 	local scepter_line = extra_data.scepter_line
+	local death_cast = extra_data.death_cast
 
 	-- Ability specials
 	local damage = ability:GetSpecialValueFor("damage")
@@ -1755,11 +1756,13 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 		caster:Heal(damage_dealt, caster)
 	end
 	
-	-- F.E.A.R.
-	if not target:HasModifier("modifier_nevermore_requiem_fear") then
-		target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance())})
-	else
-		target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
+	-- F.E.A.R.	
+	if not death_cast then
+		if not target:HasModifier("modifier_nevermore_requiem_fear") then
+			target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance())})
+		else
+			target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
+		end
 	end
 end
 
@@ -1798,7 +1801,7 @@ function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 					   bDeleteOnHit = false,
 					   vVelocity = velocity,
 					   bProvidesVision = false,
-					   ExtraData = {scepter_line = false}
+					   ExtraData = {scepter_line = false, death_cast = death_cast}
 					   }
 
 	-- Create the projectile

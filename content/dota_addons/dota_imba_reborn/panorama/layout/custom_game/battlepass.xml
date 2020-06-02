@@ -10,6 +10,20 @@
 		<include src="file://{resources}/scripts/custom_game/battlepass.js" />
 	</scripts>
 
+	<snippets>
+		<snippet name="BattlePassReward">
+			<Panel class="BattlepassReward BattlepassRewardIcon">
+				<Panel id="SlashContainer" hittest="false" hittestchildren="false">
+					<Panel id="TeamColorBar" />
+				</Panel>
+
+				<Panel id="ToastElements" >
+					<Label id="ToastLabel" html="true" />
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
 	<Panel class="Battlepass" hittest="false">
 		<Panel id="BattlepassButtonContainer">
 			<Panel id="SafeToLeave">

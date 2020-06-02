@@ -1,5 +1,6 @@
 <root>
 	<styles>
+		<include src="file://{resources}/styles/dotastyles.vcss_c" />
 		<include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
 		<include src="file://{resources}/styles/custom_game/multiteam_flyout_scoreboard.css" />
 	</styles>

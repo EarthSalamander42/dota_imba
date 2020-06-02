@@ -7836,9 +7836,9 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Mega Treads
+	// Recipe: Origin Treads
 	//=================================================================================================================
-	"item_recipe_imba_power_treads_2"
+	"item_recipe_imba_origin_treads"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -7849,41 +7849,50 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"1400"
 		"ItemShopTags"					""
 
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_power_treads_2"
+		"ItemResult"					"item_imba_origin_treads"
 		"ItemRequirements"
 		{
-			"01"						"item_power_treads;item_ogre_axe;item_belt_of_strength;item_gloves"
-			"02"						"item_power_treads;item_blade_of_alacrity;item_boots_of_elves;item_gloves"
-			"03"						"item_power_treads;item_staff_of_wizardry;item_robe;item_gloves"
+			"01"						"item_power_treads;item_soul_booster;item_ultimate_orb"			
 		}
 	}
 
 	//=================================================================================================================
-	// Mega Treads
+	// Origin Treads
 	//=================================================================================================================
-	"item_imba_power_treads_2"
+	"item_imba_origin_treads"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2187"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_mega_treads_0"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"ScriptFile"                    "components/items/item_power_treads.lua"
+		"AbilityTextureName" 			"custom/origin_treads_str"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"ScriptFile"                    "components/items/item_origin_treads.lua"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+
+        // Stats
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "950"
+        "AbilityCastPoint"              "0.0"
+        "AbilityCooldown"               "25.0"
+        "AbilityManaCost"               "100"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3300"
-		"ItemShopTags"					"attack_speed;move_speed;int;agi;str;damage"
-		"ItemQuality"					"magic"
-		"ItemAliases"					"power treads; mega; mega treads"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemCost"						"8050"
+		"ItemShopTags"					"damage;attack_speed;int;str;agi;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"power treads;origin;origin treads"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"             "1"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 
 		// Special
@@ -7893,32 +7902,127 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"70"
+				"bonus_health"				"625"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_stat"				"30"
+				"bonus_mana"				"625"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"40"
+				"all_stats"					"10"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_mode_tenacity"			"15"
+				"bonus_movement_speed"		"60"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"agi_mode_evasion"			"15"
+				"bonus_attack_speed"		"25"
 			}
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"int_mode_cast_range"		"200"
+				"stat_bonus_state"			"15"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"str_hp_regen"				"10"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"str_hp_regen_amp_pct"		"15"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agi_damage_bonus"			"10"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agi_armor_ignore_chance_pct" "15"
+			}
+
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_cast_range"			 "150"
+			}
+
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_magical_damage_return_pct"	"10"
+			}
+
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"str_cast_static_damage"	"50"
+			}
+
+			"14"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"str_cast_current_hp_pct_dmg" "3.5"
+			}			
+
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agi_cast_stat_reduction_pct" "25"
+			}
+
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agi_cast_damage_reduction_pct" "15"
+			}
+
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_cast_dmg_spread_pct" 	"135"
+			}
+
+			"18"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_cast_dmg_spread_radius" "600"
+			}
+
+			"19"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_cast_magic_damage_inc_pct" "10"
+			}
+
+			"20"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"debuff_duration"			"7"
+			}
+
+			"21"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_cast_ally_dmg_rdction_pct"	"50"
 			}
 		}
 	}
@@ -15721,168 +15825,8 @@
 			}
 		}
 	}
-	//=================================================================================================================
-	// Recipe: Origin
-	//=================================================================================================================
-	"item_recipe_imba_origin"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
-		
-		"ID"							"2333"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_origin"
-		"ItemRequirements"
-		{
-			"01"						"item_soul_booster;item_ultimate_orb;item_oblivion_staff;item_platemail"
-		}
-	}
 	
-	//=================================================================================================================
-	// Origin
-	//=================================================================================================================
-	"item_imba_origin"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"item_lua"
-		"ScriptFile"					"components/items/item_origin.lua"
-		"AbilityTextureName"			"custom/origin_health"
 		
-		"ID"							"2334"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES" // For Power state (Health and Chaos are caught in unit filter)
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"950"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"25.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-		"ItemCost"						"10000"
-		"ItemShopTags"					"damage;attack_speed;int;str;agi;hard_to_tag"
-		"ItemQuality"					"artifact"
-		"ItemAliases"					"origin"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ShouldBeSuggested"				"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"10"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"10"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"10"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_aspd"			"10"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"10"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"625"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"625"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"1.25"
-			}
-			
-			
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_passive"		"10"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"power_passive"			"12"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chaos_passive"			"10"
-			}
-			
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"active_duration"		"7"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_damage_amount"	"50"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"enemy_hp_drain"		"5.5"
-			}
-			
-			"16"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"power_stat_reduction"	"35"
-			}
-			
-			"17"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chaos_radius"			"600"
-			}
-			"18"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chaos_dmg_pct"			"160"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Recipe: Iron Talon

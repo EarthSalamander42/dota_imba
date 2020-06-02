@@ -3,22 +3,19 @@
 
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		if _G.Battlepass == nil then
-			_G.Battlepass = class({})
-			require('components/battlepass/constants')
-			require('components/battlepass/util')
-			require('components/battlepass/donator_settings')
-			require('components/battlepass/donator')
-			require('components/battlepass/experience')
-			require('components/battlepass/keyvalues/items_game')
+		_G.Battlepass = _G.Battlepass or class({})
 
-			if CUSTOM_GAME_TYPE ~= "POG" then
-				require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
-				Battlepass:Init()
-			end
+		require('components/battlepass/constants')
+		require('components/battlepass/util')
+		require('components/battlepass/donator_settings')
+		require('components/battlepass/donator')
+		require('components/battlepass/experience')
+		require('components/battlepass/keyvalues/items_game')
+
+		if CUSTOM_GAME_TYPE ~= "POG" then
+			require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
+			Battlepass:Init()
 		end
-	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		Battlepass:GetPlayerInfoXP()
 	end
 end, nil)
 
