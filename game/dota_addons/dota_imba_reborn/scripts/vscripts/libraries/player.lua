@@ -818,13 +818,13 @@ end
 original_CreateTrackingProjectile = ProjectileManager.CreateTrackingProjectile
 ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
 --	print("CreateTrackingProjectile (override):", hHandle)
-	print(hHandle.EffectName)
+--	print(hHandle.EffectName)
 	if not hHandle.EffectName then return original_CreateTrackingProjectile(self, hHandle) end
 
 	local override = CustomNetTables:GetTableValue("battlepass_player", hHandle.EffectName..'_'..hHandle.Ability:GetCaster():GetPlayerOwnerID()) 
 
 	if override then
-		print(override["1"])
+--		print(override["1"])
 		hHandle.EffectName = override["1"]
 	end
 

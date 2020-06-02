@@ -1075,14 +1075,14 @@ function modifier_imba_mortal_strike_buff:DeclareFunctions()
 end
 
 function modifier_imba_mortal_strike_buff:GetModifierHealthBonus()
-	if self.caster and self.caster:IsIllusion() then
+	if self == nil or self.caster == nil then return nil end
+
+	if self.caster:IsIllusion() then
 		return nil
 	end
 	
 	return self:GetStackCount() * self.stack_value
 end
-
-
 
 -- Bonus strength modifier
 modifier_imba_mortal_strike_buff_talent = class({})
@@ -1111,7 +1111,6 @@ function modifier_imba_mortal_strike_buff_talent:IsDebuff() return false end
 
 function modifier_imba_mortal_strike_buff_talent:OnIntervalThink()
 	if IsServer() then
-
 		-- Check if there are any stacks left on the table
 		if #self.stacks_table > 0 then
 
