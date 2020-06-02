@@ -20,6 +20,11 @@ ListenToGameEvent("npc_spawned", function(keys)
 				Wearable:_WearProp(npc, "7746", "arms")
 				npc.spear_wearable = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/vardor/spear_normal.vmdl"})
 				npc:SetRenderColor(255, 0, 0)
+
+				local tempParticle = ParticleManager:CreateParticle("particles/hero/vardor/vardor_yari_weak.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, npc)
+				ParticleManager:SetParticleControlEnt(tempParticle, 1, npc, PATTACH_POINT_FOLLOW, "attach_weapon", npc:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(tempParticle, 2, npc, PATTACH_POINT_FOLLOW, "attach_spear_end", npc:GetAbsOrigin(), true)
+				npc.weaponParticle = tempParticle
 			end, 0.2)
 		end
 	end
@@ -125,6 +130,7 @@ end
 -------------------
 -- PIERCING SHOT --
 -------------------
+LinkLuaModifier("modifier_vardor_yari_dummy", "components/abilities/heroes/hero_vardor", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_vardor_piercing_shot_charges", "components/abilities/heroes/hero_vardor", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_vardor_piercing_shot_target_debuff", "components/abilities/heroes/hero_vardor", LUA_MODIFIER_MOTION_NONE)
@@ -365,10 +371,19 @@ function modifier_vardor_piercing_shot_charges:OnCreated()
 		-- Ability properties
 		self.initial_yari_count = self.ability:GetTalentSpecialValueFor("initial_yari_count")
 
-		-- Set initial stacks of the yari
-		self:SetStackCount(self.initial_yari_count)		
+		-- Create a dummy unit to hold the yari particles
+		local yariHolder = CreateUnitByName("spearholder_unit", self.caster:GetAbsOrigin(), false, self.caster, self.caster, self.caster:GetTeam())
+		-- yariHolder:SetModel("models/dummy.vmdl")
+		yariHolder:SetAbsOrigin(self.caster:GetAbsOrigin())
+		yariHolder:AddNewModifier(self.caster, self.ability, "modifier_vardor_yari_dummy", {EntIndex = self.caster:entindex(), Count = self.initial_yari_count})
+		self.yariHolder = yariHolder
+		self.yariHolder:SetModelScale(1.4)
+		self.yariManager =  self.yariHolder:FindModifierByName("modifier_vardor_yari_dummy")
 
-		self:StartIntervalThink(60)
+		-- Set initial stacks of the yari
+		self:SetStackCount(self.initial_yari_count)
+
+		self:StartIntervalThink(10)
 	end
 end
 
@@ -404,7 +419,7 @@ function modifier_vardor_piercing_shot_charges:OnIntervalThink()
 	end
 
 	-- Get how much yaris are currently unused
-	local stacks = self:GetStackCount() 
+	local stacks = self:GetStackCount()
 
 	-- At the end of this check, the amount of found yaris should be equal to the expected amount
 	local found_yaris = yaris + stacks
@@ -425,6 +440,204 @@ function modifier_vardor_piercing_shot_charges:OnStackCountChanged(previous_stac
 	-- If the ability is disabled and the stacks is now on at least one, activate it.
 	elseif not self.ability:IsActivated() then
 		self.ability:SetActivated(true)
+	end
+
+	local caster = self:GetCaster()
+	local casterLoc = caster:GetAbsOrigin()
+
+	-- Destroy other weapon effect
+	if caster.weaponParticle then
+		ParticleManager:DestroyParticle(caster.weaponParticle, true)
+		caster.weaponParticle = false
+	end
+
+	-- If there are no available yaris, change the weapon to weak version
+	if self:GetStackCount() == 0 then
+
+		local tempParticle = ParticleManager:CreateParticle("particles/hero/vardor/vardor_yari_weak.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControlEnt(tempParticle, 1, caster, PATTACH_POINT_FOLLOW, "attach_weapon", casterLoc, true)
+		ParticleManager:SetParticleControlEnt(tempParticle, 2, caster, PATTACH_POINT_FOLLOW, "attach_spear_end", casterLoc, true)
+		caster.weaponParticle = tempParticle
+
+	-- If there is atleast one yari swap to normal version
+	elseif self:GetStackCount() > 0 then
+
+		-- check if the return effect should be oppressed (e.g. when jumping)
+		local ret = 1
+		if caster.oppressReturn then
+			if caster.oppressReturn == true then
+				ret = 0
+			end
+		end
+		if previous_stacks > 0 then
+			ret = 0
+		end
+
+		local tempParticle = ParticleManager:CreateParticle("particles/hero/vardor/vardor_yari_normal.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControl(tempParticle, 10, Vector(ret, 0, 0))
+		ParticleManager:SetParticleControlEnt(tempParticle, 1, caster, PATTACH_POINT_FOLLOW, "attach_weapon", casterLoc, true)
+		ParticleManager:SetParticleControlEnt(tempParticle, 2, caster, PATTACH_POINT_FOLLOW, "attach_spear_end", casterLoc, true)
+		caster.weaponParticle = tempParticle
+
+	end
+	if self.yariManager then
+		self.yariManager:ChangeCount(self:GetStackCount())
+	end
+end
+
+modifier_vardor_yari_dummy = class({})
+
+function modifier_vardor_yari_dummy:CheckState()   
+	local state = {
+					[MODIFIER_STATE_UNSELECTABLE] = true,
+					[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+					[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+					[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+					[MODIFIER_STATE_ATTACK_IMMUNE] = true,
+					[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+				}
+	return state
+end
+
+function modifier_vardor_yari_dummy:OnCreated(event)
+	if IsServer() then
+		self.target = EntIndexToHScript(event.EntIndex)
+		self:StartIntervalThink(0.005)
+
+		-- Init particle table for yaris
+		self.particles = {}
+		self:ChangeCount(event.Count)
+		self.currentCount = event.Count
+		if not self.currentCount then self.currentCount = 0 end
+		self.lastCount = self.currentCount
+	end
+end
+
+function modifier_vardor_yari_dummy:ChangeCount(newCount, reapply)
+
+	local parent = self:GetParent()
+	local attachment = self.target:ScriptLookupAttachment("attach_hitloc")
+	local targetLoc = self.target:GetAttachmentOrigin(attachment)
+	local targetVec = self.target:GetForwardVector()
+
+	parent:SetAbsOrigin(targetLoc)
+	parent:SetForwardVector(targetVec)
+
+	-- check if the return effect should be oppressed (e.g. when jumping)
+	local ret = 1
+	if self.target.oppressReturn then
+		if self.target.oppressReturn == true then
+			ret = 0
+		end
+	end
+
+	-- start checks
+	local startIndex = 2
+	if not self.currentCount then self.currentCount = 0 end
+	if not newCount then newCount = 0 end
+
+	if reapply then
+		-- Remove all yari particles
+		for _,particle in pairs(self.particles) do
+			ParticleManager:DestroyParticle(particle, true)
+		end
+		self.particles = {}
+	else
+		if newCount == self.currentCount then
+			-- return, since we don't change anything
+			return
+
+		elseif newCount > self.currentCount then
+			-- add a new yari, so just set the startIndex
+			startIndex = self.currentCount + 1
+			if startIndex < 2 then
+				self.currentCount = newCount
+				return
+			end
+
+		else
+			-- remove old yari effects
+			for i=newCount + 1,10 do
+				if self.particles[i] then
+					ParticleManager:DestroyParticle(self.particles[i], true)
+				end
+			end
+			self.currentCount = newCount
+			return
+
+		end
+	end
+
+	-- Add new belt yaris, if the new count is atleast 2 (so one is stored on the back)
+	for i=startIndex, newCount do
+		local particleIndex = tostring(i - 1)
+
+		local tempParticle = ParticleManager:CreateParticle("particles/hero/vardor/vardor_yari_belt_smoother.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
+		ParticleManager:SetParticleControl(tempParticle, 10, Vector(ret, 0, 0))
+		ParticleManager:SetParticleControlEnt(tempParticle, 6, parent, PATTACH_POINT_FOLLOW, "spear_pos_"..particleIndex.."_end", parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(tempParticle, 7, parent, PATTACH_POINT_FOLLOW, "spear_pos_"..particleIndex, parent:GetAbsOrigin(), true)
+		
+		self.particles[i] = tempParticle
+	end
+
+	self.currentCount = newCount
+end
+
+function modifier_vardor_yari_dummy:Hide(refresh)
+	-- Remove all yari particles
+	for _,particle in pairs(self.particles) do
+		ParticleManager:DestroyParticle(particle, true)
+	end
+	self.particles = {}
+	self.lastCount = self.currentCount
+	self.currentCount = 0
+
+	-- if refresh is given, EndHide immidiatly
+	if refresh then
+		self:EndHide()
+	end
+end
+
+function modifier_vardor_yari_dummy:EndHide(stackCount)
+	-- Reapply the yari particles after a short delay
+	Timers:CreateTimer({
+		endTime = 0.05,
+		callback = function()
+			if not stackCount then
+				stackCount = self.lastCount or self.currentCount
+			end
+
+			self:ChangeCount(stackCount, true)
+		end
+	})
+end
+
+function modifier_vardor_yari_dummy:OnIntervalThink()
+	if IsServer() then
+		if self.target then
+			-- Move the dummy alongside the hero
+			local attachment = self.target:ScriptLookupAttachment("attach_hitloc")
+			local targetLoc = self.target:GetAttachmentOrigin(attachment)
+			local targetVec = self.target:GetForwardVector()
+
+			-- if the distance is too big, hide and teleport the yari particles
+			local oldLoc = self:GetParent():GetAbsOrigin()
+			local distance = (oldLoc - targetLoc):Length2D()
+			if distance > 600 then
+				self:Hide(true)
+			end
+
+			self:GetParent():SetAbsOrigin(targetLoc)
+			self:GetParent():SetForwardVector(targetVec)
+		end
+	end
+end
+
+function modifier_vardor_yari_dummy:OnDestroy()
+	if IsServer() then
+		for _,particle in pairs(self.particles) do
+			ParticleManager:DestroyParticle(particle, true)
+		end
 	end
 end
 
@@ -773,9 +986,9 @@ function vardor_graceful_jump:OnProjectileHit(target, location)
 	-- If target was an enemy hero, find if he has Yari stacks and consume one stack.
 	else
 		if target:HasModifier(modifier_yari_debuff) and caster:HasModifier(modifier_charges) then
-			local modifier_debuff = target:FindModifierByName(modifier_yari_debuff)			
-			local modifier_charges_buff = caster:FindModifierByName(modifier_charges)			
-			if modifier_debuff and modifier_charges_buff then									
+			local modifier_debuff = target:FindModifierByName(modifier_yari_debuff)
+			local modifier_charges_buff = caster:FindModifierByName(modifier_charges)
+			if modifier_debuff and modifier_charges_buff then
 				 if modifier_debuff:GetStackCount() > 1 then
 					-- If a stack was reduced without the modifier being destroyed, a stack needs to be given back to the caster				 	
 					modifier_debuff:DecrementStackCount()
@@ -786,7 +999,19 @@ function vardor_graceful_jump:OnProjectileHit(target, location)
 				 end
 			end
 		end
-	end	
+	end
+
+	-- Find the yari count modifier
+	local yariModifier = caster:FindModifierByName(modifier_charges)
+	if yariModifier then
+
+		-- Hide the additional yaris for the jump
+		caster.oppressReturn = false
+
+		if yariModifier.yariManager then
+			yariModifier.yariManager:EndHide(yariModifier:GetStackCount())
+		end
+	end
 end
 
 
@@ -804,6 +1029,18 @@ function modifier_vardor_graceful_jump:OnCreated()
 	if not IsServer() then return end
 
 	self:GetParent():AddNoDraw()
+
+	-- Find the yari count modifier
+	local yariModifier = self:GetParent():FindModifierByName("modifier_vardor_piercing_shot_charges")
+	if yariModifier then
+
+		-- Hide the additional yaris for the jump
+		self:GetParent().oppressReturn = true
+
+		if yariModifier.yariManager then
+			yariModifier.yariManager:Hide()
+		end
+	end
 end
 
 function modifier_vardor_graceful_jump:CheckState()
