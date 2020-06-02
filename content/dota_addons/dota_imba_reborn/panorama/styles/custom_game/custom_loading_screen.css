@@ -484,7 +484,7 @@
 	text-align: center center;
 	text-shadow: 2px 2px 4px black;
 	color: gradient( linear, 0% 0%, 0% 100%, from( #6E93CF ), color-stop( 0.5, #6E93CF ), to( #4C658D ) );
-	text-transform: uppercase;
+/*	text-transform: uppercase; */
 	text-overflow: shrink;
 }
 

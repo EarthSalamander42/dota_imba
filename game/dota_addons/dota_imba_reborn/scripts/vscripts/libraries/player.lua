@@ -808,7 +808,7 @@ ProjectileManager.CreateLinearProjectile = function(self, hHandle)
 	local override = CustomNetTables:GetTableValue("battlepass_player", hHandle.EffectName..'_'..hHandle.Ability:GetCaster():GetPlayerOwnerID()) 
 
 	if override then
-		hHandle.EffectName = override
+		hHandle.EffectName = override["1"]
 	end
 
 	return original_CreateLinearProjectile(self, hHandle)
@@ -817,18 +817,15 @@ end
 -- Call custom functions whenever CreateTrackingProjectile is being called anywhere
 original_CreateTrackingProjectile = ProjectileManager.CreateTrackingProjectile
 ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
-	print("CreateTrackingProjectile (override):")
+--	print("CreateTrackingProjectile (override):", hHandle)
 	print(hHandle.EffectName)
-	print(hHandle.Ability:GetCaster():GetPlayerOwnerID())
-
 	if not hHandle.EffectName then return original_CreateTrackingProjectile(self, hHandle) end
 
 	local override = CustomNetTables:GetTableValue("battlepass_player", hHandle.EffectName..'_'..hHandle.Ability:GetCaster():GetPlayerOwnerID()) 
 
-	print(override)
-
 	if override then
-		hHandle.EffectName = override
+		print(override["1"])
+		hHandle.EffectName = override["1"]
 	end
 
 	return original_CreateTrackingProjectile(self, hHandle)
@@ -837,6 +834,7 @@ end
 -- Call custom functions whenever CreateParticle is being called anywhere
 original_CreateParticle = CScriptParticleManager.CreateParticle
 CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent, hCaster)
+
 	local override = nil
 
 	if hCaster then
