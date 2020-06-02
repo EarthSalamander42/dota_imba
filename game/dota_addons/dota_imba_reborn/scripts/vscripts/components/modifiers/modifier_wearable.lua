@@ -51,13 +51,13 @@ function modifier_wearable:OnIntervalThink()
 			self.render_color = true
 			cosmetic:SetRenderColor(255, 220, 220)
 		elseif hero:GetUnitName() == "npc_dota_hero_vardor" then
-			print("Vardor, Color wearables!")
+--			print("Vardor, Color wearables!")
 			self.render_color = true
-			cosmetic:SetRenderColor(255, 0, 0) -- not turning to red somehow :(
+			cosmetic:SetRenderColor(255, 0, 0)
 		end
 	end
 
-	for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
+	for _, v in pairs(IMBA_INVISIBLE_MODIFIERS) do
 		if not hero:HasModifier(v) then
 			if cosmetic:HasModifier(v) then
 				cosmetic:RemoveModifierByName(v)
@@ -66,6 +66,28 @@ function modifier_wearable:OnIntervalThink()
 			if not cosmetic:HasModifier(v) then
 				cosmetic:AddNewModifier(cosmetic, nil, v, {})
 				break -- remove this break if you want to add multiple modifiers at the same time
+			end
+		end
+	end
+
+	for _, v in pairs(IMBA_NODRAW_MODIFIERS) do
+		if hero:HasModifier(v) then
+			if not cosmetic.model then
+--				print("ADD NODRAW TO COSMETICS")
+				cosmetic.model = cosmetic:GetModelName()
+			end
+
+			if cosmetic.model and cosmetic:GetModelName() ~= "models/development/invisiblebox.vmdl" then
+				cosmetic:SetOriginalModel("models/development/invisiblebox.vmdl")
+				cosmetic:SetModel("models/development/invisiblebox.vmdl")
+				break
+			end
+		else
+			if cosmetic.model and cosmetic:GetModelName() ~= cosmetic.model then
+--				print("REMOVE NODRAW TO COSMETICS")
+				cosmetic:SetOriginalModel(cosmetic.model)
+				cosmetic:SetModel(cosmetic.model)
+				break
 			end
 		end
 	end

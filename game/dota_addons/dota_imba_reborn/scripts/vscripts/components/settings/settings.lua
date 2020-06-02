@@ -436,7 +436,11 @@ IMBA_INVISIBLE_MODIFIERS = {
 	"modifier_imba_invisibility_rune",
 	"modifier_imba_blur_smoke",
 	"modifier_windrunner_windrun_invis",
-	"modifier_imba_windranger_windrun_invis"
+	"modifier_imba_windranger_windrun_invis",
+}
+
+IMBA_NODRAW_MODIFIERS = {
+	"modifier_vardor_graceful_jump",
 }
 
 IMBA_REINCARNATION_MODIFIERS = {

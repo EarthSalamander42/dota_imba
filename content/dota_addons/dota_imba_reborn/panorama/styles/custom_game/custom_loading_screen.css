@@ -745,3 +745,7 @@
 .DonatorReward {
 	height: 100%;
 }
+
+#MainVoteButton {
+	opacity: 0;
+}

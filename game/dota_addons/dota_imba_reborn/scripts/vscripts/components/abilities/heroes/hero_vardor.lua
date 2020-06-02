@@ -14,7 +14,7 @@ ListenToGameEvent("npc_spawned", function(keys)
 		if npc.yari == nil then
 			npc:SetContextThink(DoUniqueString("init_vardor"), function()
 				Wearable:_WearProp(npc, "127", "body_head")
-				Wearable:_WearProp(npc, "7749", "shoulder")
+--				Wearable:_WearProp(npc, "7749", "shoulder")
 				Wearable:_WearProp(npc, "9460", "head")
 				Wearable:_WearProp(npc, "7747", "belt")
 				Wearable:_WearProp(npc, "7746", "arms")
@@ -377,7 +377,7 @@ function modifier_vardor_piercing_shot_charges:OnCreated()
 		yariHolder:SetAbsOrigin(self.caster:GetAbsOrigin())
 		yariHolder:AddNewModifier(self.caster, self.ability, "modifier_vardor_yari_dummy", {EntIndex = self.caster:entindex(), Count = self.initial_yari_count})
 		self.yariHolder = yariHolder
-		self.yariHolder:SetModelScale(1.4)
+		self.yariHolder:SetModelScale(0.7)
 		self.yariManager =  self.yariHolder:FindModifierByName("modifier_vardor_yari_dummy")
 
 		-- Set initial stacks of the yari

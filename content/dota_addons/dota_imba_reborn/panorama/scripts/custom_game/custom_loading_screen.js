@@ -174,6 +174,8 @@ function fetch() {
 function AllPlayersLoaded() {
 	$.Msg("ALL PLAYERS LOADED IN!")
 
+	$("#MainVoteButton").style.opacity = "1";
+
 	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
 		//$.Msg("Game Mode: ", i)
 		var panel = $("#vote-container").GetChild(i);

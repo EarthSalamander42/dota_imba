@@ -55,7 +55,7 @@
 		{
 			_class = "C_OP_DampenToCP"
 			m_nControlPointNumber = 6
-			m_flRange = 5.0
+			m_flRange = 0.3
 		},
 		{
 			_class = "C_OP_Decay"

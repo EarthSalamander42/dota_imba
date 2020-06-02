@@ -90,7 +90,7 @@
 
 						<Label id="VoteGameModeCheck" class="vote-label vote-check" text="You have not voted yet." />
 
-						<Button class="vote-button" onactivate="ToggleVoteContainer(true);">
+						<Button id="MainVoteButton" class="vote-button" onactivate="ToggleVoteContainer(true);">
 							<Label class="vote-button-label" text="Change Vote" />
 						</Button>
 					</Panel>
