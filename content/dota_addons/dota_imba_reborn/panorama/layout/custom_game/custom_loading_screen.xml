@@ -209,9 +209,12 @@
 					</Panel>
 
 					<Panel class="bottom-patreon-container">
-						<Panel class="bottom-patreon-container">
+						<Button class="loading-link-patreon">
+							<Label class="vote-button-label" />
+						</Button>
 
-						</Panel>
+						<!-- Filled Dynamically -->
+						<Panel class="bottom-patreon-sub"/>
 					</Panel>
 				</Panel>
 			</Panel>

@@ -414,12 +414,35 @@ function DisableRankingVoting() {
 	if (bottom_button_container && bottom_button_container[0] && bottom_button_container[0].GetChild(0))
 		bottom_button_container[0].GetChild(0).checked = true;
 
+	var bottom_patreon_container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-patreon-sub");
+
+	if (bottom_patreon_container && bottom_patreon_container[0]) {
+		var companion_list = [
+			"npc_donator_companion_chocobo",
+			"npc_donator_companion_mega_greevil",
+			"npc_donator_companion_butch",
+			"npc_donator_companion_hollow_jack",
+			"npc_donator_companion_tory",
+			"npc_donator_companion_frog",
+		];
+
+		for (var i in companion_list) {
+			var companion = $.CreatePanel("Panel", bottom_patreon_container[0], "");
+			companion.AddClass("DonatorReward");
+			companion.style.width = 100 / companion_list.length + "%";
+
+			var companionpreview = $.CreatePanel("Button", companion, "");
+			companionpreview.style.width = "100%";
+			companionpreview.style.height = "100%";
+
+			companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_list[i] + '"/></Panel></root>', false, false);
+			companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+		}
+	}
+
 	HoverableLoadingScreen();
 	fetch();
 	SetProfile();
-
-	if (Game.IsInToolsMode())
-		AllPlayersLoaded();
 
 	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);

@@ -536,6 +536,12 @@
 	width: 100%;
 	height: 100%;
 	visibility: collapse;
+	flow-children: down;
+}
+
+.bottom-patreon-sub {
+	width: 100%;
+	height: 100%;
 	flow-children: right;
 }
 
@@ -599,7 +605,7 @@
 	box-shadow: 0 0 10px #111;
 }
 
-#loading-link-patreon {
+.loading-link-patreon {
 	width: 340px;
 	height: 80px;
 	background-image: url("file://{images}/custom_game/patreon.png");
@@ -608,9 +614,10 @@
 	box-shadow: 0 0 10px #111;
 	transition-duration: 0.25s;
 	transition-property: box-shadow;
+	align: center center;
 }
 
-#loading-link-patreon:hover {
+.loading-link-patreon:hover {
 	box-shadow: 0 0 10px orange;
 }
 
@@ -733,4 +740,8 @@
 
 .Active .CGSRadio {
 	visibility: visible;
+}
+
+.DonatorReward {
+	height: 100%;
 }

@@ -1568,6 +1568,7 @@
 {
 	background-color: gradient( linear,  100% 0%, 0 0 , from (#3e3060), color-stop( 0.5, #58418b ), to(#3e3060));
 	border-radius: 50px 0 0 50px;
+	border-top: 0px;
 }
 
 #XPProgressBar0_Right,
