@@ -1,0 +1,216 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 32
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_nOrientationType = 3
+			m_bBlendFramesSeq0 = false
+			m_hTexture = resource:"materials/particle/impact/fleks.vtex"
+			m_flAnimationRate = 1.0
+			m_bTintByGlobalLight = true
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.25
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_flEndTime_min = 0.7
+			m_flStartTime_max = 0.4
+			m_flStartTime_min = 0.1
+		},
+		{
+			_class = "C_OP_EndCapTimedDecay"
+			m_flDecayTime = 0.25
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_flOutput = 0.0
+			m_flLerpTime = 0.25
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flBias = 0.25
+			m_flEndScale = 0.0
+			m_nOpEndCapState = 0
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+			m_flFadeInTime = 0.125
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_flOutput = 0.0
+			m_nFieldOutput = "16"
+			m_flLerpTime = 0.2
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 1.25
+			m_fLifetimeMin = 0.25
+		},
+		{
+			_class = "C_INIT_CreateSpiralSphere"
+			m_nDensity = 25
+			m_flInitialRadius = 30.0
+			m_flInitialSpeedMin = 40.0
+			m_flInitialSpeedMax = 10.0
+		},
+		{
+			_class = "C_INIT_RemapInitialDirectionToCPToVector"
+			m_bNormalize = true
+			m_nFieldOutput = "21"
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 4
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 181, 34, 134, 255 ]
+			m_ColorMax = [ 121, 17, 95, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 6.0
+			m_flRadiusMax = 15.0
+			m_flRadiusRandExponent = 0.5
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flEmissionDuration = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_nMapType = "PF_MAP_TYPE_DIRECT"
+				m_flLiteralValue = 0.25
+				m_nControlPoint = 0
+				m_nScalarAttribute = 3
+				m_nVectorAttribute = 6
+				m_nVectorComponent = 0
+				m_flRandomMin = 0.0
+				m_flRandomMax = 1.0
+				m_nRandomMode = "PF_RANDOM_MODE_CONSTANT"
+				m_flMultFactor = 1.0
+				m_flInput0 = 0.0
+				m_flInput1 = 1.0
+				m_flOutput0 = 0.0
+				m_flOutput1 = 1.0
+				m_nBiasType = "PF_BIAS_TYPE_STANDARD"
+				m_flBiasParameter = 0.0
+				m_Curve = 
+				{
+					m_spline = [  ]
+					m_tangents = [  ]
+					m_vDomainMins = [ 0.0, 0.0 ]
+					m_vDomainMaxs = [ 0.0, 0.0 ]
+				}
+			}
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_nMapType = "PF_MAP_TYPE_DIRECT"
+				m_flLiteralValue = 0.125
+				m_nControlPoint = 0
+				m_nScalarAttribute = 3
+				m_nVectorAttribute = 6
+				m_nVectorComponent = 0
+				m_flRandomMin = 0.0
+				m_flRandomMax = 1.0
+				m_nRandomMode = "PF_RANDOM_MODE_CONSTANT"
+				m_flMultFactor = 1.0
+				m_flInput0 = 0.0
+				m_flInput1 = 1.0
+				m_flOutput0 = 0.0
+				m_flOutput1 = 1.0
+				m_nBiasType = "PF_BIAS_TYPE_STANDARD"
+				m_flBiasParameter = 0.0
+				m_Curve = 
+				{
+					m_spline = [  ]
+					m_tangents = [  ]
+					m_vDomainMins = [ 0.0, 0.0 ]
+					m_vDomainMaxs = [ 0.0, 0.0 ]
+				}
+			}
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_nMapType = "PF_MAP_TYPE_DIRECT"
+				m_flLiteralValue = 150.0
+				m_nControlPoint = 0
+				m_nScalarAttribute = 3
+				m_nVectorAttribute = 6
+				m_nVectorComponent = 0
+				m_flRandomMin = 0.0
+				m_flRandomMax = 1.0
+				m_nRandomMode = "PF_RANDOM_MODE_CONSTANT"
+				m_flMultFactor = 1.0
+				m_flInput0 = 0.0
+				m_flInput1 = 1.0
+				m_flOutput0 = 0.0
+				m_flOutput1 = 1.0
+				m_nBiasType = "PF_BIAS_TYPE_STANDARD"
+				m_flBiasParameter = 0.0
+				m_Curve = 
+				{
+					m_spline = [  ]
+					m_tangents = [  ]
+					m_vDomainMins = [ 0.0, 0.0 ]
+					m_vDomainMaxs = [ 0.0, 0.0 ]
+				}
+			}
+		},
+	]
+	m_PreEmissionOperators = 
+	[
+		{
+			_class = "C_OP_SetControlPointOrientation"
+			m_vecRotation = [ 90.0, 0.0, 0.0 ]
+			m_nCP = 0
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_ForceGenerators = 
+	[
+		{
+			_class = "C_OP_CurlNoiseForce"
+			m_useCurl = true
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_bShouldSort = false
+}
