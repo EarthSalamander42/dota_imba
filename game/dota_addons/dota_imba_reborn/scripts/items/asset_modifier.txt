@@ -46631,8 +46631,8 @@
 				"asset_modifier44"
 				{
 					"type"		"ability_icon"
-					"asset"		"wraith_king_wraithfire_aura"
-					"modifier"		"wraith_king_wraithfire_aura_arcana"
+					"asset"		"custom/wraith_king_wraithfire_aura"
+					"modifier"		"custom/wraith_king_wraithfire_aura_arcana"
 				}
 				"alternate_icons"
 				{

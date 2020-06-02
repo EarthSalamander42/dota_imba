@@ -1672,10 +1672,6 @@ function imba_wraith_king_kingdom_come:IsHiddenWhenStolen()        return true e
 function imba_wraith_king_kingdom_come:IsRefreshable()             return true end
 function imba_wraith_king_kingdom_come:IsStealable()               return true end
 
-function imba_wraith_king_kingdom_come:GetAbilityTextureName()
-   return "custom/wraith_king_wraithfire_aura"
-end
-
 function imba_wraith_king_kingdom_come:GetCastAnimation()
 	return ACT_DOTA_VICTORY
 end
