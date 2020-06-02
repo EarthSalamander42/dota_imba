@@ -46622,6 +46622,18 @@
 					"style"		"1"
 					"force_display"		"1"
 				}
+				"asset_modifier43"
+				{
+					"type"		"particle"
+					"asset"		"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell.vpcf"
+					"modifier"		"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell_arcana.vpcf"
+				}
+				"asset_modifier44"
+				{
+					"type"		"ability_icon"
+					"asset"		"wraith_king_wraithfire_aura"
+					"modifier"		"wraith_king_wraithfire_aura_arcana"
+				}
 				"alternate_icons"
 				{
 					"0"

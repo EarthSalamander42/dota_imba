@@ -2702,7 +2702,7 @@
 		"item_id"					"21402"
 		"item_type"					"bundle"
 		"item_unlock_level"			"800"
-//		"modifier"					"modifier_skeleton_king_arcana"
+		"modifier"					"modifier_wraith_king_arcana" // vanilla modifier for crit on kill pfx
 
 		"wearables"
 		{
