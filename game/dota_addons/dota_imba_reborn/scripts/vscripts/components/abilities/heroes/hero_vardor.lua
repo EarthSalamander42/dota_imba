@@ -1,27 +1,27 @@
--- Author: Nibuja: https://steamcommunity.com/profiles/76561198068804194/
+ -- Author: Nibuja: https://steamcommunity.com/profiles/76561198068804194/
 -- Editor: EarthSalamander
 
 ListenToGameEvent("npc_spawned", function(keys)
-    local npc = EntIndexToHScript(keys.entindex)
+	local npc = EntIndexToHScript(keys.entindex)
 
-    if not IsValidEntity(npc) then
-        return
-    end
+	if not IsValidEntity(npc) then
+		return
+	end
 
-    if npc:GetUnitName() == "npc_dota_hero_vardor" then
-        if npc.yari == nil then
-            Timers:CreateTimer(0.2, function()                
-        		if IsServer() then
-	                -- Wearable:_WearProp(npc, "127", "body_head")
-	                -- Wearable:_WearProp(npc, "7749", "shoulder")
-	                -- Wearable:_WearProp(npc, "9460", "head")
-	                -- Wearable:_WearProp(npc, "7747", "belt")
-	                -- Wearable:_WearProp(npc, "7746", "arms")
-	                npc:SetRenderColor(255, 0, 0)
-	            end
-            end)
-        end
-    end
+	if npc:GetUnitName() == "npc_dota_hero_vardor" then
+		if npc.yari == nil then
+			Timers:CreateTimer(0.2, function()                
+				if IsServer() then
+					-- Wearable:_WearProp(npc, "127", "body_head")
+					-- Wearable:_WearProp(npc, "7749", "shoulder")
+					-- Wearable:_WearProp(npc, "9460", "head")
+					-- Wearable:_WearProp(npc, "7747", "belt")
+					-- Wearable:_WearProp(npc, "7746", "arms")
+					npc:SetRenderColor(255, 0, 0)
+				end
+			end)
+		end
+	end
 end, nil)
 
 
@@ -205,7 +205,8 @@ function vardor_piercing_shot:PierceTargetUnit(target)
 	-- Calculate direction
 	local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
 
-	local particleName = "particles/units/heroes/hero_mars/mars_spear.vpcf"   	
+	-- local particleName = "particles/units/heroes/hero_mars/mars_spear.vpcf"
+	local particleName = "particles/hero/vardor/vardor_piercing_shot_linear.vpcf"
 	local spear_projectile = {
 		Ability = ability,
 		EffectName = particleName,
@@ -274,6 +275,7 @@ function vardor_piercing_shot:OnProjectileHit(target, location)
 		return true
 	else
 		-- If the projectile reached its max range without hitting anything, make it 
+		location = GetGroundPosition(location, nil)
 		self:PierceTargetLocation(location, true)
 		return true
 	end
@@ -293,23 +295,27 @@ function vardor_piercing_shot:PierceTargetLocation(target_point, is_charge_yari)
 	local spawn_delay = ability:GetSpecialValueFor("spawn_delay")
 	local spear_duration = ability:GetSpecialValueFor("spear_duration")	
 
-	-- Emit Sound
-	EmitSoundOnLocationWithCaster(target_point, "Hero_EarthSpirit.StoneRemnant.Impact", caster)	
+	-- Summon Yari on target location and give it yari properties, kill duration and give it the root aura
+	local dummy = CreateUnitByName("npc_dota_vardor_spear_dummy" , target_point, false, caster, caster, caster:GetTeamNumber())        
+	dummy:AddNewModifier(caster, self, "modifier_kill", {duration = spear_duration})
+	dummy:AddNewModifier(caster, ability, modifier_yari_properties, {is_charge_yari = is_charge_yari})
+
+	dummy:SetModelScale(0)
 
 	-- Apply particles on target area
-	local particle = ParticleManager:CreateParticle("particles/piercing_shot_ground_impact.vpcf", PATTACH_ABSORIGIN, caster)
-    ParticleManager:SetParticleControl(particle, 0, target_point)
-    ParticleManager:ReleaseParticleIndex(particle)
+	local particle = ParticleManager:CreateParticle("particles/hero/vardor/vardor_piercing_shot_ground.vpcf", PATTACH_CUSTOMORIGIN, dummy)
+	ParticleManager:SetParticleControl(particle, 0, target_point)
+	ParticleManager:SetParticleControl(particle, 2, Vector(radius,0,0))
+	ParticleManager:SetParticleControl(particle, 3, Vector(spear_duration,0,0))
+	ParticleManager:ReleaseParticleIndex(particle)
 
 	-- Wait for the delay
-	Timers:CreateTimer(spawn_delay, function()		
+	Timers:CreateTimer(spawn_delay, function()
 		if IsServer() then
+			-- Emit Sound
+			EmitSoundOnLocationWithCaster(target_point, "Hero_EarthSpirit.StoneRemnant.Impact", caster)	
 
-	    	-- Summon Yari on target location and give it yari properties, kill duration and give it the root aura
-	    	local dummy = CreateUnitByName("npc_dota_vardor_spear_dummy" , target_point, false, caster, caster, caster:GetTeamNumber())        
-	        dummy:AddNewModifier(caster, self, "modifier_kill", {duration = spear_duration})
-	        dummy:AddNewModifier(caster, ability, modifier_yari_properties, {is_charge_yari = is_charge_yari})
-	        dummy:AddNewModifier(caster, ability, modifier_root_aura, {duration = root_duration})
+			dummy:AddNewModifier(caster, ability, modifier_root_aura, {duration = root_duration})
 
 			-- Find all enemies in around the target point
 			local enemies = FindUnitsInRadius(  caster:GetTeamNumber(),
@@ -455,8 +461,12 @@ function modifier_vardor_piercing_shot_target_debuff:OnCreated()
 
 	if IsServer() then
 		-- Add pierced shot particle on target
-		self.debuffParticle = ParticleManager:CreateParticle("particles/piercing_shot_debuff.vpcf", PATTACH_POINT_FOLLOW, self.parent)		
-        ParticleManager:SetParticleControlEnt(self.debuffParticle, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		local particleName = "particles/hero/vardor/vardor_piercing_shot_debuff.vpcf"
+		if self.parent:IsHero() then particleName = "particles/hero/vardor/vardor_piercing_shot_debuff_hero.vpcf" end
+		self.debuffParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, self.parent)		
+		ParticleManager:SetParticleControlEnt(self.debuffParticle, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.debuffParticle, 2, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.debuffParticle, 3, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 
 		-- Start thinking!	
 		self:StartIntervalThink(self.think_interval)
@@ -588,13 +598,12 @@ function modifier_vardor_piercing_shot_root_debuff:CheckState()
 end
 
 function modifier_vardor_piercing_shot_root_debuff:GetEffectName()
-    return "particles/piercing_shot_ground_root.vpcf"
+	return "particles/hero/vardor/vardor_piercing_shot_root.vpcf"
 end
 
 function modifier_vardor_piercing_shot_root_debuff:GetEffectAttachType()
-    return PATTACH_ABSORIGIN_FOLLOW
+	return PATTACH_ABSORIGIN_FOLLOW
 end
-
 
 -------------------
 -- GRACEFUL JUMP --
@@ -683,24 +692,24 @@ function vardor_graceful_jump:OnSpellStart()
 	caster:AddNewModifier(caster, ability, modifier_ball, {})
 
 	-- Fire yourself as a projectile!
-	local particleName = "particles/graceful_jump/graceful_jump_projectile.vpcf"
-    local projectileTable = {
-                Source = caster,
-                Target = target,
-                Ability = self,  
-                EffectName = particleName,
-                iMoveSpeed = jump_speed,
-                vSourceLoc= caster:GetAbsOrigin(),             -- Optional (HOW)
-                bDrawsOnMinimap = false,                          -- Optional
-                bDodgeable = true,                             -- Optional
-                bIsAttack = false,                              -- Optional
-                bVisibleToEnemies = true,                        -- Optional
-                bReplaceExisting = false,                        -- Optional
-                bProvidesVision = true,                        -- Optional
-                iVisionRadius = 400,                              -- Optional
-                iVisionTeamNumber = caster:GetTeamNumber()      -- Optional
-            }      
-    ProjectileManager:CreateTrackingProjectile(projectileTable)
+	local particleName = "particles/hero/vardor/vardor_graceful_jump_projectile.vpcf"
+	local projectileTable = {
+				Source = caster,
+				Target = target,
+				Ability = self,  
+				EffectName = particleName,
+				iMoveSpeed = jump_speed,
+				vSourceLoc= caster:GetAbsOrigin(),             -- Optional (HOW)
+				bDrawsOnMinimap = false,                          -- Optional
+				bDodgeable = true,                             -- Optional
+				bIsAttack = false,                              -- Optional
+				bVisibleToEnemies = true,                        -- Optional
+				bReplaceExisting = false,                        -- Optional
+				bProvidesVision = true,                        -- Optional
+				iVisionRadius = 400,                              -- Optional
+				iVisionTeamNumber = caster:GetTeamNumber()      -- Optional
+			}      
+	ProjectileManager:CreateTrackingProjectile(projectileTable)
 end
 
 function vardor_graceful_jump:OnProjectileHit(target, location)	
@@ -725,9 +734,9 @@ function vardor_graceful_jump:OnProjectileHit(target, location)
 	EmitSoundOnLocationWithCaster(location, "Hero_SkywrathMage.ConcussiveShot.Target", caster)
 
 	-- Show hit particle
-	local particle = ParticleManager:CreateParticle("particles/graceful_jump_ground.vpcf", PATTACH_ABSORIGIN, caster)
-    ParticleManager:SetParticleControl(particle, 0, location)
-    ParticleManager:ReleaseParticleIndex(particle)
+	local particle = ParticleManager:CreateParticle("particles/hero/vardor/vardor_graceful_jump_ground.vpcf", PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(particle, 1, location)
+	ParticleManager:ReleaseParticleIndex(particle)
 
 	-- Set the caster on the hit location and give it a valid space to land on
 	FindClearSpaceForUnit(caster, location, true)
@@ -768,12 +777,12 @@ function vardor_graceful_jump:OnProjectileHit(target, location)
 			local modifier_charges_buff = caster:FindModifierByName(modifier_charges)			
 			if modifier_debuff and modifier_charges_buff then									
 				 if modifier_debuff:GetStackCount() > 1 then
-				 	-- If a stack was reduced without the modifier being destroyed, a stack needs to be given back to the caster				 	
-				 	modifier_debuff:DecrementStackCount()
-				 	modifier_charges_buff:IncrementStackCount()
+					-- If a stack was reduced without the modifier being destroyed, a stack needs to be given back to the caster				 	
+					modifier_debuff:DecrementStackCount()
+					modifier_charges_buff:IncrementStackCount()
 				 else
-				 	-- No stacks left, modifier can be destroyed.
-				 	modifier_debuff:Destroy()
+					-- No stacks left, modifier can be destroyed.
+					modifier_debuff:Destroy()
 				 end
 			end
 		end
@@ -829,11 +838,11 @@ function modifier_vardor_graceful_jump_root:CheckState()
 end
 
 function modifier_vardor_graceful_jump_root:GetEffectName()
-    return "particles/piercing_shot_ground_root.vpcf"
+	return "particles/piercing_shot_ground_root.vpcf"
 end
 
 function modifier_vardor_graceful_jump_root:GetEffectAttachType()
-    return PATTACH_ABSORIGIN_FOLLOW
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 --------------------
@@ -967,7 +976,7 @@ function modifier_vardor_mental_thrusts_debuff:OnCreated()
 	self.stack_table = {}
 
 	if IsServer() then
-		self.debuff_particle = ParticleManager:CreateParticle("particles/mental_thrusts_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent) 
+		self.debuff_particle = ParticleManager:CreateParticle("particles/hero/vardor/vardor_mind_bleed_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent) 
 		ParticleManager:SetParticleControl(self.debuff_particle, 0, self.parent:GetAbsOrigin())
 		self:AddParticle(self.debuff_particle, false, false, -1, false, true)
 
@@ -988,6 +997,10 @@ function modifier_vardor_mental_thrusts_debuff:OnStackCountChanged(prev_stacks)
 
 		-- Refresh timer
 		self:ForceRefresh()
+	end
+
+	if self.parent:IsHero() then
+		self.parent:CalculateStatBonus()
 	end
 end
 
@@ -1023,11 +1036,11 @@ end
 function modifier_vardor_mental_thrusts_debuff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 					  MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
-				      MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-				      MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-				  	  MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-				  	  MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-				  	  MODIFIER_PROPERTY_TOOLTIP}
+					  MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+					  MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+					  MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+					  MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+					  MODIFIER_PROPERTY_TOOLTIP}
 
 	return decFuncs
 end
@@ -1152,7 +1165,8 @@ function vardor_celestial_rain_of_yari:OnSpellStart()
 
 			angle = QAngle(0, (j-1) * (360/yari_count), 0)
 			new_point = target_point + distance_from_center * direction			
-			new_point = RotatePosition(target_point, angle, new_point)	
+			new_point = RotatePosition(target_point, angle, new_point)
+			new_point = GetGroundPosition(new_point, nil)	
 			
 			-- Insert point to the table
 			table.insert(yari_drop_points, new_point)
