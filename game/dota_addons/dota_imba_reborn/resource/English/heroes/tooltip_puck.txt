@@ -5,12 +5,14 @@
 "DOTA_Tooltip_ability_imba_puck_illusory_orb_Note0"									"The Illusory Orb grants unobstructed vision around its location while it travels."
 "DOTA_Tooltip_ability_imba_puck_illusory_orb_Note1"									"Jaunting to the Orb will disjoint projectiles."
 "DOTA_Tooltip_ability_imba_puck_illusory_orb_max_distance"							"MAX DISTANCE:"
+
 "DOTA_Tooltip_ability_imba_puck_waning_rift"											"Waning Rift"
 "DOTA_Tooltip_ability_imba_puck_waning_rift_Description"								"Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.\n<font color='#FF7800'>Pocket Glitter:</font> Also reduces vision by %glitter_vision_reduction%%%.\n<font color='#FF7800'>Trickster's Inhibition:</font> The next %trickster_null_instances% damage instance inflicted while affected by Waning Rift have its damage reduced by 100%."
 "DOTA_Tooltip_ability_imba_puck_waning_rift_Lore"									"With a mischievous grin, Puck spreads its enchanted powder which disrupts magical flow."
 "DOTA_Tooltip_ability_imba_puck_waning_rift_radius"									"RADIUS:"
 "DOTA_Tooltip_ability_imba_puck_waning_rift_silence_duration"						"DURATION:"
 "DOTA_Tooltip_ability_imba_puck_waning_rift_damage"									"DAMAGE:"
+
 "DOTA_Tooltip_ability_imba_puck_phase_shift"											"Phase Shift"
 "DOTA_Tooltip_ability_imba_puck_phase_shift_Description"								"Puck briefly shifts into another dimension where it is immune from harm.\n<font color='#FF7800'>Sinusoid:</font> Can be set to auto-cast to make Phase Shift a %sinusoid_cast_range% range ground-targeted ability. Casting Phase Shift in this fashion immediately ports Puck to the targeted position before shifting into another dimension.\n<font color='#FF7800'>Grab a Friend!</font> Auto-cast also has a unit-targeted portion, which shifts a friendly unit into another dimension as well for the duration of the channel.\n<font color='#FF0000'>Not affected by cast range modifying abilities.</font>\n<font color='#E03E2E'>This ability is not affected by Frantic's cooldown reduction.</font>"
 "DOTA_Tooltip_ability_imba_puck_phase_shift_Lore"									"With a quip and flash, Puck returns to the alien dimension from whence it came."
@@ -18,10 +20,12 @@
 "DOTA_Tooltip_ability_imba_puck_phase_shift_Note1"									"Issuing any action will cancel Phase Shift."
 "DOTA_Tooltip_ability_imba_puck_phase_shift_Note2"									"Puck is invulnerable during Phase Shift."
 "DOTA_Tooltip_ability_imba_puck_phase_shift_duration"								"DURATION:"
+
 "DOTA_Tooltip_ability_imba_puck_dream_coil"											"Dream Coil"
 "DOTA_Tooltip_ability_imba_puck_dream_coil_Description"								"Creates a coil of volatile magic that latches onto enemy Heroes, stunning them for %stun_duration% seconds, damaging and leashing them.  If the enemy hero stretches the coil by moving too far away, it snaps, stunning and dealing additional damage.\n<font color='#FF7800'>Visionary:</font> Enemies caught in Dream Coil have the remaining cooldown of their ultimate abilities revealed to Puck for the full latch duration (no status resistance). The ability cooldowns are shown as individual stack counts on Puck.\n<font color='#FF7800'>Midsummer's Nightmare:</font> Breaking the leash automatically recasts Dream Coil at the offender's location for the remaining latch duration plus the stun duration.\n<font color='#FF7800'>Rapid Fire:</font> Puck performs instant attacks through Dream Coil's center on all leashed enemies at a static interval, as long as Puck stays within %rapid_fire_max_distance% radius of the targeted area."
 "DOTA_Tooltip_ability_imba_puck_dream_coil_Lore"										"The Faerie Dragon sows confusion by forcing its enemies to vividly dream about their own mortality."
 "DOTA_Tooltip_ability_imba_puck_dream_coil_coil_duration"							"COIL DURATION:"
+"DOTA_Tooltip_ability_imba_puck_dream_coil_coil_radius"								"COIL RADIUS:"
 "DOTA_Tooltip_ability_imba_puck_dream_coil_coil_initial_damage"						"INITIAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_puck_dream_coil_coil_break_radius"						"BREAK RADIUS:"
 "DOTA_Tooltip_ability_imba_puck_dream_coil_coil_stun_duration"						"BREAK STUN DURATION:"
@@ -31,6 +35,7 @@
 "DOTA_Tooltip_ability_imba_puck_dream_coil_coil_stun_duration_scepter"				"SCEPTER BREAK STUN DURATION:"
 "DOTA_Tooltip_ability_imba_puck_dream_coil_coil_break_damage_scepter"				"SCEPTER BREAK DAMAGE:"
 "DOTA_Tooltip_ability_imba_puck_dream_coil_aghanim_description"						"Increases damage from coil breaks, increases coil duration, coil break stun goes through spell immunity."
+
 "DOTA_Tooltip_ability_imba_puck_ethereal_jaunt"										"Ethereal Jaunt"
 "DOTA_Tooltip_ability_imba_puck_ethereal_jaunt_Description"							"Teleports Puck to a flying Illusory Orb."
 

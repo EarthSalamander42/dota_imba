@@ -1,0 +1,35 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 4
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/hero/shadow_demon/shadow_demon_soul_catcher_cast_ally_cast.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/shadow_demon/shadow_demon_soul_catcher_cast_ally_shake.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/shadow_demon/shadow_demon_soul_catcher_cast_ally_v2_projected_ground.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/shadow_demon/shadow_demon_soul_catcher_cast_ally_v2_impact_volsmoke.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/shadow_demon/shadow_demon_soul_catcher_cast_ally_v2_impact_aura.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/shadow_demon/shadow_demon_soul_catcher_cast_ally_spiral03.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/shadow_demon/shadow_demon_soul_catcher_cast_ally_spiral04.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/shadow_demon/shadow_demon_soul_catcher_cast_ally_spiral05.vpcf"
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+}

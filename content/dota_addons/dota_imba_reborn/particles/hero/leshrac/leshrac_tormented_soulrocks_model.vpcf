@@ -1,0 +1,131 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 1
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderModels"
+			m_ModelList = 
+			[
+				{
+					m_model = resource:"models/particle/tiny_rocks.vmdl"
+				},
+			]
+			m_bOrientZ = true
+			m_nBodyGroupField = "19"
+			m_nSubModelField = "9"
+			m_bForceLoopingAnimation = true
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_SpinUpdate"
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 6
+			m_bLockRot = true
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_Rate = 0.5
+			m_flEndTime = 9999999999999.0
+			m_nField = "12"
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_Rate = 0.25
+			m_flEndTime = 9999999999999.0
+			m_nField = "4"
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_Rate = -5.0
+			m_flEndTime = 9999999999999.0
+			m_nOpEndCapState = 1
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 1.0
+			m_fLifetimeMin = 1.0
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 6
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 0.1
+			m_flRadiusRandExponent = 0.5
+			m_flRadiusMax = 0.5
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 1
+		},
+		{
+			_class = "C_INIT_InheritFromParentParticles"
+			m_flScale = 0.02
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 184, 24, 220, 255 ]
+			m_ColorMax = [ 179, 15, 220, 255 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 1.0
+			}
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_ConstantColor = [ 29, 223, 0, 255 ]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/hero/leshrac/leshrac_tormented_soulstars.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/leshrac/leshrac_tormented_souldetail.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/leshrac/leshrac_tormented_soulrocks_endcap.vpcf"
+			m_bEndCap = true
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 5
+}

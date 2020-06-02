@@ -36,6 +36,8 @@ function imba_spectre_reality:GetAssociatedSecondaryAbilities()
 	return "imba_spectre_haunt"
 end
 
+function imba_spectre_reality:ProcsMagicStick() return false end
+
 function imba_spectre_reality:OnSpellStart()
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
 	

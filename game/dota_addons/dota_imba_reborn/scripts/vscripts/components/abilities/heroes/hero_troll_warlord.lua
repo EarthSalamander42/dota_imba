@@ -17,6 +17,8 @@ function imba_troll_warlord_berserkers_rage:IsStealable() return false end
 function imba_troll_warlord_berserkers_rage:IsNetherWardStealable() return false end
 function imba_troll_warlord_berserkers_rage:ResetToggleOnRespawn() return true end
 
+function imba_troll_warlord_berserkers_rage:ProcsMagicStick() return false end
+
 -- Always have one of the buffs
 function imba_troll_warlord_berserkers_rage:OnUpgrade()
 	if IsServer() then

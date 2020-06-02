@@ -472,7 +472,7 @@ function imba_phoenix_icarus_dive_stop:IsRefreshable() 			return true  end
 function imba_phoenix_icarus_dive_stop:IsStealable() 			return false end
 function imba_phoenix_icarus_dive_stop:IsNetherWardStealable() 	return false end
 function imba_phoenix_icarus_dive_stop:GetAssociatedPrimaryAbilities()  return "imba_phoenix_icarus_dive" end
-
+function imba_phoenix_icarus_dive_stop:ProcsMagicStick() return false end
 function imba_phoenix_icarus_dive_stop:GetAbilityTextureName()
 	return "phoenix_icarus_dive_stop"
 end
@@ -666,6 +666,7 @@ function imba_phoenix_launch_fire_spirit:IsRefreshable() 			return true  end
 function imba_phoenix_launch_fire_spirit:IsStealable() 				return false end
 function imba_phoenix_launch_fire_spirit:IsNetherWardStealable() 	return false end
 function imba_phoenix_launch_fire_spirit:GetAssociatedPrimaryAbilities() return "imba_phoenix_fire_spirits" end
+function imba_phoenix_launch_fire_spirit:ProcsMagicStick() return false end
 
 function imba_phoenix_launch_fire_spirit:GetAbilityTextureName()   return "phoenix_launch_fire_spirit" end
 
@@ -1625,6 +1626,7 @@ function imba_phoenix_sun_ray_stop:IsHiddenWhenStolen() 	return true end
 function imba_phoenix_sun_ray_stop:IsRefreshable() 			return true end
 function imba_phoenix_sun_ray_stop:IsStealable() 			return false end
 function imba_phoenix_sun_ray_stop:IsNetherWardStealable() 	return false end
+function imba_phoenix_sun_ray_stop:ProcsMagicStick() return false end
 -- function imba_phoenix_sun_ray_stop:GetAssociatedPrimaryAbilities() return "imba_phoenix_sun_ray" end
 
 function imba_phoenix_sun_ray_stop:GetAbilityTextureName()   return "phoenix_sun_ray_stop" end
@@ -1649,6 +1651,7 @@ function imba_phoenix_sun_ray_toggle_move:IsHiddenWhenStolen() 		return false en
 function imba_phoenix_sun_ray_toggle_move:IsRefreshable() 			return true end
 function imba_phoenix_sun_ray_toggle_move:IsStealable() 			return false end
 function imba_phoenix_sun_ray_toggle_move:IsNetherWardStealable() 	return false end
+function imba_phoenix_sun_ray_toggle_move:ProcsMagicStick() return false end
 -- function imba_phoenix_sun_ray_toggle_move:GetAssociatedPrimaryAbilities() return "imba_phoenix_sun_ray" end
 
 function imba_phoenix_sun_ray_toggle_move:GetAbilityTextureName()   return "phoenix_sun_ray_toggle_move" end

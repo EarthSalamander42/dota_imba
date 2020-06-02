@@ -177,8 +177,8 @@
 	"item_manta"							"REMOVE"
 	"item_third_eye"						"REMOVE"
 	"item_third_eye"						"REMOVE"
-	"item_black_king_bar"					"REMOVE"
-
+	"item_black_king_bar"					"REMOVE" 
+	
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
 
@@ -5589,7 +5589,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"450"
+				"crit_multiplier"			"500"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
 			"03"

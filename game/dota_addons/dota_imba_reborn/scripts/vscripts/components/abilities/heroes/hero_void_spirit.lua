@@ -345,7 +345,6 @@ end
 
 function imba_void_spirit_resonant_pulse:RequiresScepterForCharges() return true end
 
---[[
 function imba_void_spirit_resonant_pulse:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
 		return self.BaseClass.GetCooldown(self, level)
@@ -353,7 +352,6 @@ function imba_void_spirit_resonant_pulse:GetCooldown(level)
 		return 0
 	end
 end
---]]
 
 function imba_void_spirit_resonant_pulse:OnInventoryContentsChanged()
 	-- Caster got scepter
@@ -382,15 +380,7 @@ function imba_void_spirit_resonant_pulse:OnSpellStart()
 		duration 			= self:GetSpecialValueFor("radius") / self:GetSpecialValueFor("speed"),
 		thinker_entindex	= self.pulse_thinker:entindex()
 	})
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_resonant_pulse_physical_buff", {duration = self:GetSpecialValueFor("buff_duration")})
-	
-	-- -- Random testing (I don't know how to control both positions)
-	-- -- Also do NOT use this because it crashes the game if you switch heroes
-	-- if self:GetCaster():HasAbility("void_spirit_aether_remnant") then
-		-- self:GetCaster():SetCursorPosition(self:GetCaster():GetAbsOrigin() + Vector(100, 100, 0))
-		-- self:GetCaster():SetCursorPosition(self:GetCaster():GetAbsOrigin() - Vector(100, 100, 0))
-		-- self:GetCaster():FindAbilityByName("void_spirit_aether_remnant"):OnSpellStart()
-	-- end
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_resonant_pulse_physical_buff", {duration = self:GetSpecialValueFor("buff_duration")})	
 end
 
 function imba_void_spirit_resonant_pulse:OnProjectileHit(target, location)
@@ -429,17 +419,18 @@ function modifier_imba_void_spirit_resonant_pulse_ring:OnCreated(keys)
 	self.return_projectile_speed	= self:GetAbility():GetSpecialValueFor("return_projectile_speed")
 	self.equal_exchange_duration	= self:GetAbility():GetSpecialValueFor("equal_exchange_duration")
 	
-	self.thickness = 50
-	
 	if not IsServer() then return end
 	
 	self.damage		= self:GetAbility():GetTalentSpecialValueFor("damage")
+	self.radius 	= self:GetAbility():GetSpecialValueFor("radius")
+	self.thickness = 120
 	
 	self.damage_type	= self:GetAbility():GetAbilityDamageType()
 	
 	self.hit_enemies	= {}
 	self.interval		= FrameTime()
 	self.ring_size		= 0
+	self.center 		= self:GetParent():GetAbsOrigin()
 	
 	self.thinker_entindex	= keys.thinker_entindex
 	
@@ -449,9 +440,14 @@ end
 
 function modifier_imba_void_spirit_resonant_pulse_ring:OnIntervalThink()
 	self.ring_size = self:GetElapsedTime() * self.speed
+
+	if self.ring_size > self.radius then
+		self.ring_size = self.radius
+	end
 	
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.ring_size, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		if not self.hit_enemies[enemy:entindex()] and ((enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()) * Vector(1, 1, 0)):Length2D() >= self.ring_size - self.thickness then
+	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.center, nil, self.ring_size, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		local distance = CalculateDistance(enemy, self.center)		
+		if not self.hit_enemies[enemy:entindex()] and distance < self.ring_size + self.thickness and distance > self.ring_size - self.thickness then
 		
 			enemy:EmitSound("Hero_VoidSpirit.Pulse.Target")
 			

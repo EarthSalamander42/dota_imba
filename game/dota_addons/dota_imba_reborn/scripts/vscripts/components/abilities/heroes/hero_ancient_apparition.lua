@@ -366,6 +366,8 @@ function imba_ancient_apparition_chilling_touch:OnUpgrade()
 	end
 end
 
+function imba_ancient_apparition_chilling_touch:ProcsMagicStick() return false end
+
 function imba_ancient_apparition_chilling_touch:GetIntrinsicModifierName()
 	return "modifier_generic_orb_effect_lua"
 end
@@ -876,6 +878,7 @@ end
 
 function imba_ancient_apparition_ice_blast_release:IsStealable()	return false end
 function imba_ancient_apparition_ice_blast_release:GetAssociatedPrimaryAbilities()	return "imba_ancient_apparition_ice_blast" end
+function imba_ancient_apparition_ice_blast_release:ProcsMagicStick() return false end
 
 function imba_ancient_apparition_ice_blast_release:OnSpellStart()
 	if not self.ice_blast_ability then

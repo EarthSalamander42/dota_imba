@@ -789,6 +789,8 @@ function imba_bane_nightmare_end:OnSpellStart()
 	end
 end
 
+function imba_bane_nightmare_end:ProcsMagicStick() return false end
+
 function imba_bane_nightmare_end:GetAssociatedPrimaryAbilities()
 	return "imba_bane_nightmare"
 end
