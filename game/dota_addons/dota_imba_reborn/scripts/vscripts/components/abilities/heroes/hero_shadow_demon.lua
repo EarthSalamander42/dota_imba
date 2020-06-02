@@ -1001,7 +1001,7 @@ function modifier_shadow_poison_debuff:OnDestroy()
     if not self.parent:IsIllusion() and self.parent:IsAlive() then 
 
         -- Play impact sound
-        EmitSoundOn(self.impact_soundr, self.caster)         
+        EmitSoundOn(self.impact_sound, self.caster)         
                
         -- Calculate damage and deal it
         damage = self:CalculateShadowPoisonDamage()
@@ -1026,7 +1026,7 @@ function modifier_shadow_poison_debuff:OnDestroy()
     elseif self.parent:HasModifier("modifier_imba_disruption_soul_illusion") then
 
         -- Play impact sound
-        EmitSoundOn(self.impact_soundr, self.caster)
+        EmitSoundOn(self.impact_sound, self.caster)
 
         -- IMBAfication: If this is a Soul Illusion, deal lower damage to surrounding enemy units. Linked target gets full damage
         -- Get linked target

@@ -1902,16 +1902,16 @@ function modifier_imba_tormented_soul_form:OnCreated()
 	if self.caster:HasTalent("special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal") then
 		self.totalsteal_convertion_pct = self.totalsteal_convertion_pct + self.caster:FindTalentValue("special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal")
 	end
-	
-	-- Create particle sysetm for the buff
-	self.particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
-	ParticleManager:SetParticleControl(self.particle_buff_fx, 0, self.caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(self.particle_buff_fx, 5, self.caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(self.particle_buff_fx, 6, self.caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(self.particle_buff_fx, 7, Vector(1,0,0))
-	self:AddParticle(self.particle_buff_fx, false, false, -1, false, false)
 
 	if IsServer() then
+		-- Create particle sysetm for the buff
+		self.particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
+		ParticleManager:SetParticleControl(self.particle_buff_fx, 0, self.caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_buff_fx, 5, self.caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_buff_fx, 6, self.caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_buff_fx, 7, Vector(1,0,0))
+		self:AddParticle(self.particle_buff_fx, false, false, -1, false, false)
+
 		-- Calculate the max health and mana values to be reduced
 		self.max_hp_reduction = self.caster:GetMaxHealth() * self.max_hp_mp_cost_pct * 0.01
 		self.max_mp_reduction = self.caster:GetMaxMana() * self.max_hp_mp_cost_pct * 0.01
