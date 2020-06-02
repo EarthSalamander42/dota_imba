@@ -38,10 +38,6 @@ LinkLuaModifier("modifier_imba_wraithfire_blast_stun", "components/abilities/her
 LinkLuaModifier("modifier_imba_wraithfire_blast_debuff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wraithfire_blast_debuff_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_wraith_king_wraithfire_blast:GetAbilityTextureName()
-   return "skeleton_king_hellfire_blast"
-end
-
 function imba_wraith_king_wraithfire_blast:IsHiddenWhenStolen()
 	return false
 end
@@ -71,7 +67,7 @@ function imba_wraith_king_wraithfire_blast:OnSpellStart()
 	EmitSoundOn(sound_cast, caster)
 
 	-- Add warmup particle
-	local particle_warmup_fx = ParticleManager:CreateParticle(particle_warmup, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+	local particle_warmup_fx = ParticleManager:CreateParticle(particle_warmup, PATTACH_CUSTOMORIGIN_FOLLOW, caster, caster)
 	ParticleManager:SetParticleControlEnt(particle_warmup_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(particle_warmup_fx)
 
@@ -268,13 +264,13 @@ function modifier_imba_wraithfire_blast_debuff:OnCreated()
 	self.attacker_lifesteal_pct = self.ability:GetSpecialValueFor("attacker_lifesteal_pct")
 	self.damage_interval = self.ability:GetSpecialValueFor("damage_interval")
 
-	-- Add debuff particle    
-	self.particle_debuff_fx = ParticleManager:CreateParticle(self.particle_debuff, PATTACH_ABSORIGIN_FOLLOW, self.parent)    
-	ParticleManager:SetParticleControl(self.particle_debuff_fx, 0, self.parent:GetAbsOrigin())    
-	self:AddParticle(self.particle_debuff_fx, false, false, -1, false, false)
-
 	-- Start thinking
 	if IsServer() then
+		-- Add debuff particle    
+		self.particle_debuff_fx = ParticleManager:CreateParticle(self.particle_debuff, PATTACH_ABSORIGIN_FOLLOW, self.parent, self.caster)    
+		ParticleManager:SetParticleControl(self.particle_debuff_fx, 0, self.parent:GetAbsOrigin())    
+		self:AddParticle(self.particle_debuff_fx, false, false, -1, false, false)
+
 		self:SetStackCount(self.ms_slow_pct * (1 - self.parent:GetStatusResistance()))
 	
 		self:StartIntervalThink(self.damage_interval)
@@ -332,7 +328,7 @@ function modifier_imba_wraithfire_blast_debuff:OnAttackLanded(keys)
 		end
 
 		-- Add lifesteal particle
-		self.particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, attacker)
+		self.particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, attacker, self.caster)
 		ParticleManager:SetParticleControl(self.particle_lifesteal_fx, 0, attacker:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle_lifesteal_fx, 1, attacker:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(self.particle_lifesteal_fx)
@@ -428,10 +424,6 @@ end
 imba_wraith_king_vampiric_aura = class({})
 LinkLuaModifier("modifier_imba_vampiric_aura", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vampiric_aura_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_wraith_king_vampiric_aura:GetAbilityTextureName()
-   return "skeleton_king_vampiric_aura"
-end
 
 function imba_wraith_king_vampiric_aura:OnToggle() return nil end
 function imba_wraith_king_vampiric_aura:IsStealable() return false end
@@ -578,7 +570,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
 			-- If the damage was physical, use the lifesteal particle, and heal using the lifesteal values
 			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker)
+				local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker, self.caster)
 				ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)                
 				ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)                                
 				ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)                
@@ -599,11 +591,10 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 				end
 				
 				self.parent:Heal(heal_amount, self.caster)
-
 			-- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
 			else
 				if not self.delay_particle_time or (GameRules:GetGameTime() - self.delay_particle_time > 1) then
-					local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker)
+					local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker, self.caster)
 					ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)                
 					ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)                
 					ParticleManager:ReleaseParticleIndex(particle_spellsteal_fx)
@@ -639,13 +630,11 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 												  false)
 
 				for _,caster in pairs(casters) do
-
 					-- Ignore everyone that are not the same name as the caster
 					if caster:GetUnitName() == self.caster:GetUnitName() and attacker:GetUnitName() ~= self.caster:GetUnitName() then
-
 						-- If any healing was done by anyone that is not the caster, show a transition to the aura bearer(s)            
 						if heal_amount > 0 and caster ~= attacker then
-							local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+							local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, caster, self.caster)
 							ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)                
 							ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)                                
 							ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)                                        
@@ -701,10 +690,9 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
 					-- Ignore everyone that are not the same name as the caster
 					if caster:GetUnitName() == self.caster:GetUnitName() and attacker:GetUnitName() ~= self.caster:GetUnitName() then
-
 						-- If any healing was done by anyone that is not the caster, show a transition to the aura bearer(s)            
 						if heal_amount > 0 and caster ~= attacker then
-							local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+							local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, caster, self.caster)
 							ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)                
 							ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)                                
 							ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)                                        
@@ -733,10 +721,6 @@ LinkLuaModifier("modifier_imba_mortal_strike", "components/abilities/heroes/hero
 LinkLuaModifier("modifier_imba_mortal_strike_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_skeleton", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_wraith_king_mortal_strike:GetAbilityTextureName()
-   return "skeleton_king_mortal_strike"
-end
 
 function imba_wraith_king_mortal_strike:GetIntrinsicModifierName()
 	return "modifier_imba_mortal_strike"
@@ -1091,7 +1075,7 @@ function modifier_imba_mortal_strike_buff:DeclareFunctions()
 end
 
 function modifier_imba_mortal_strike_buff:GetModifierHealthBonus()
-	if self.caster:IsIllusion() then
+	if self.caster and self.caster:IsIllusion() then
 		return nil
 	end
 	
@@ -1192,10 +1176,6 @@ LinkLuaModifier("modifier_imba_reincarnation", "components/abilities/heroes/hero
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_wraith_king_reincarnation:GetAbilityTextureName()
-   return "skeleton_king_reincarnation"
-end
-
 function imba_wraith_king_reincarnation:GetManaCost(level)
 	if not self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_6") then
 		return self:GetSpecialValueFor("reincarnate_mana_cost")
@@ -1265,7 +1245,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 		end
 
 		-- Add particle effects
-		local particle_death_fx = ParticleManager:CreateParticle(BuffInfo.particle_death, PATTACH_CUSTOMORIGIN, OnDeathKeys.unit)
+		local particle_death_fx = ParticleManager:CreateParticle(BuffInfo.particle_death, PATTACH_CUSTOMORIGIN, OnDeathKeys.unit, OnDeathKeys.unit)
 		ParticleManager:SetParticleAlwaysSimulate(particle_death_fx)
 		ParticleManager:SetParticleControl(particle_death_fx, 0, OnDeathKeys.unit:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_death_fx, 1, Vector(BuffInfo.reincarnate_delay, 0, 0))
@@ -1819,10 +1799,12 @@ function modifier_imba_kingdom_come_slow:OnCreated()
 	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.wraith_duration = self.ability:GetSpecialValueFor("wraith_duration")
 
-	-- Add particle effect
-	local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent)
-	ParticleManager:SetParticleControl(particle_slow_fx, 0, self.parent:GetAbsOrigin())
-	self:AddParticle(particle_slow_fx, false, false, -1, false, false)    
+	if IsServer() then
+		-- Add particle effect
+		local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent, self.caster)
+		ParticleManager:SetParticleControl(particle_slow_fx, 0, self.parent:GetAbsOrigin())
+		self:AddParticle(particle_slow_fx, false, false, -1, false, false)    
+	end
 end
 
 function modifier_imba_kingdom_come_slow:DeclareFunctions()
@@ -1938,7 +1920,7 @@ function imba_wraith_king_create_kingdom(keys)
 	end
 
 	-- Play the Wraith Fire ring particle
-	local particle_kingdom_fx = ParticleManager:CreateParticle(keys.particle_kingdom, PATTACH_ABSORIGIN, keys.caster)
+	local particle_kingdom_fx = ParticleManager:CreateParticle(keys.particle_kingdom, PATTACH_ABSORIGIN, keys.caster, keys.caster)
 	ParticleManager:SetParticleControl(particle_kingdom_fx, 0, keys.caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_kingdom_fx, 1, Vector(keys.radius, 1, 1))
 

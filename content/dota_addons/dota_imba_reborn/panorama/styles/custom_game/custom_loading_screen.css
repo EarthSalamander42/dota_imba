@@ -26,12 +26,32 @@
 {
 	0%
 	{
-		opacity: 0;
+		opacity: 0.0;
+	}
+
+	50%
+	{
+		opacity: 1;
 	}
 
 	100%
 	{
-		opacity: 1;
+		opacity: 1.0;
+	}
+}
+
+@keyframes 'VoteButtonAnim'
+{
+	0%
+	{
+		pre-transform-scale2d: 1.0;
+		saturation: 1.0;
+	}
+
+	100%
+	{
+		pre-transform-scale2d: 1.1;
+		saturation: 0.5;
 	}
 }
 
@@ -143,9 +163,16 @@
 	flow-children: down;
 }
 
-.vote-title {
+.vote-header-container {
 	width: 100%;
 	height: 20%;
+	flow-children: right;
+}
+
+.vote-title {
+	margin-left: 10%;
+	width: 80%;
+	height: 100%;
 	text-align: center center;
 	font-size: 35px;
 	text-shadow: 2px 2px 2px black;
@@ -166,6 +193,7 @@
 .vote-check {
 	margin-top: 10%;
 	margin-left: 0px;
+	text-overflow: shrink;
 	text-align: center center;
 }
 
@@ -176,13 +204,26 @@
 	background-color: black;
 }
 
-.vote-change-label {
+.vote-change Label {
 	width: 100%;
 	height: 100%;
 	font-size: 20px;
 	margin-top: 9px;
 	text-align: center center;
 	text-shadow: 2px 2px 2px black;
+}
+
+.vote-info {
+	width: 32px;
+	height: 32px;
+	margin-right: 5px;
+	background-image: url("s2r://panorama/images/status_icons/information_psd.vtex");
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: contain;
+	tooltip-position: right;
+	tooltip-body-position: 50% 10%;
+	wash-color: #888888;
 }
 
 .description-container {
@@ -287,9 +328,22 @@
 	visibility: collapse;
 }
 
+.bottom-footer-container {
+	width: 100%;
+	height: 100%;
+}
+
 .bottom-mods-container {
 	flow-children: right;
 	height: 100%;
+}
+
+.bottom-label {
+	width: 90%;
+	padding: 10% 3% 0% 3%;
+	font-size: 20px;
+	align: center center;
+	color: #aaa;
 }
 
 .mod-cell {
@@ -376,14 +430,10 @@
 
 .Visible {
 	opacity: 1;
-
-/*
+	animation-duration: .41s;
 	animation-name: VoteVisible;
-	animation-duration: 1s;
-	animation-delay: 0s;
-	animation-timing-function: ease-in-out;
-	animation-iteration-count: 1;
-*/
+	transition-duration: .2s;
+	transition-property: opacity;
 }
 
 .vote-content {
@@ -419,6 +469,9 @@
 	height: 80%;
 	margin-left: 1%;
 	margin-right: 1%;
+	box-shadow: 0 0 10px #111;
+	border-radius: 10px;
+	background-color: #000000aa;
 	flow-children: down;
 }
 
@@ -451,14 +504,39 @@
 .vote-button {
 	width: 80%;
 	height: 15%;
+	border-radius: 10px;
+	saturation: 1.0;
 	align: center center;
 	background-color: black;
+}
+
+.vote-button:hover {
+	pre-transform-scale2d: 1.1;
+	saturation: 0.5;
+	animation-duration: .2s;
+	animation-name: VoteButtonAnim;
+	transition-duration: .2s;
+	transition-property: saturation, pre-transform-scale2d;
 }
 
 .vote-button-label {
 	font-size: 20px;
 	align: center center;
+	color: gradient( linear, 0% 0%, 0% 100%, from( #6E93CF ), color-stop( 0.5, #6E93CF ), to( #4C658D ) );
 	text-shadow: 2px 2px 2px black;
+}
+
+.bottom-transifex-container {
+	width: 100%;
+	height: 100%;
+	visibility: collapse;
+}
+
+.bottom-patreon-container {
+	width: 100%;
+	height: 100%;
+	visibility: collapse;
+	flow-children: right;
 }
 
 /*

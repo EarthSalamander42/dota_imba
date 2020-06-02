@@ -2202,7 +2202,7 @@
 	{
 		"item_id"					"20844"
 		"item_type"					"bundle"
-		"item_unlock_level"			"100"
+		"item_unlock_level"			"50"
 
 		"wearables"
 		{
@@ -2216,14 +2216,14 @@
 	{
 		"item_id"					"4794"
 		"item_type"					"wearable"
-		"item_unlock_level"			"200"
+		"item_unlock_level"			"100"
 	}
 
 	"69" // Bladeform Legacy
 	{
 		"item_id"					"9059"
 		"item_type"					"wearable"
-		"item_unlock_level"			"300"
+		"item_unlock_level"			"150"
 		"modifier"					"modifier_juggernaut_arcana"
 	}
 
@@ -2231,7 +2231,7 @@
 	{
 		"item_id"					"7756"
 		"item_type"					"wearable"
-		"item_unlock_level"			"400"
+		"item_unlock_level"			"200"
 		"modifier"					"modifier_pudge_arcana"
 	}
 
@@ -2239,7 +2239,7 @@
 	{
 		"item_id"					"7247"
 		"item_type"					"wearable"
-		"item_unlock_level"			"500"
+		"item_unlock_level"			"250"
 		"modifier"					"modifier_phantom_assassin_arcana"
 	}
 
@@ -2530,7 +2530,7 @@
 	{
 		"item_id"					"9235"
 		"item_type"					"wearable"
-		"item_unlock_level"			"600"
+		"item_unlock_level"			"300"
 	}
 
 	"101" // Earthshaker: Judgement of the Fallen
@@ -2624,52 +2624,109 @@
 		}
 	}
 
+	"113" // Earthshaker: Planetfall
+	{
+		"item_id"					"12692"
+		"item_type"					"wearable"
+		"item_unlock_level"			"350"
+	}
+
+	"114" // Shadow Fiend: Demon Eater
+	{
+		"item_id"					"6996"
+		"item_type"					"wearable"
+		"item_unlock_level"			"400"
+	}
+
+	"115" // Legion Commander: Blades of Voth Domosh
+	{
+		"item_id"					"5810"
+		"item_type"					"wearable"
+		"item_unlock_level"			"450"
+	}
+
+	"116" // Terrorblade: Fractal Horns of Inner Abysm
+	{
+		"item_id"					"5957"
+		"item_type"					"wearable"
+		"item_unlock_level"			"500"
+	}
+
+	"117" // Crystal Maiden: Frost Avalanche
+	{
+		"item_id"					"7385"
+		"item_type"					"wearable"
+		"item_unlock_level"			"550"
+	}
+
+	"118" // Techies: Swine of the Sunken Galley Bundle
+	{
+		"item_id"					"20610"
+		"item_type"					"bundle"
+		"item_unlock_level"			"600"
+
+		"wearables"
+		{
+			"6879"			"mount"		// Swine of the Sunken Galley
+			"6911"			"shoulder"	// Swine Helmet
+			"7011"			"back"		// Swine Powder Barrel
+			"7009"			"head"		// Swine Visor
+			"6908"			"arms"		// Swine Arsenal
+			"6946"			"belt"	// Mark of the Taunting Swine
+		}
+	}
+
+	"119" // Monkey King: Great Sage's Reckoning
+	{
+		"item_id"					"9050"
+		"item_type"					"wearable"
+		"item_unlock_level"			"650"
+	}
+
+	"120" // Rubick: The Magus Cypher
+	{
+		"item_id"					"12451"
+		"item_type"					"wearable"
+		"item_unlock_level"			"700"
+	}
+
+	"121" // Ogre Magi: Flockheart's Gamble
+	{
+		"item_id"					"13670"
+		"item_type"					"wearable"
+		"item_unlock_level"			"750"
+	}
+
+	"122" // Skeleton King: The One True King (Bundle)
+	{
+		"item_id"					"21402"
+		"item_type"					"bundle"
+		"item_unlock_level"			"800"
+
+		"wearables"
+		{
+			"13456"			"head" // Crown of the one true king
+			"13473"			"back" // Cloak of the one true king
+			"13569"			"armor" // Armor of the one true king
+			"13571"			"shoulder" // Pauldrons of the one true king
+			"13743"			"arms" // Bracers of the one true king
+			"13760"			"weapon" // Sword of the one true king
+		}
+	}
+
+//	"123" // Queen of Pain: Eminence of Ristul
+//	{
+//		"item_id"					"13670"
+//		"item_type"					"wearable"
+//		"item_unlock_level"			"850"
+//	}
+
+//	"124" // Windrunner: Compass of the Rising Gale
+//	{
+//		"item_id"					"13670"
+//		"item_type"					"wearable"
+//		"item_unlock_level"			"900"
+//	}
 
 	// TODO: UI support for different styles
-//	"112" // Night Stalker: Golden Shadow of the Dark Age
-//	{
-//		"item_id"					"13813"
-//		"item_type"					"wearable"
-//		"item_unlock_level"			"440"
-//	}
-
-//	"113" // Lifestealer: Golden Dark Maw Inhibitor
-//	{
-//		"item_id"					"13818"
-//		"item_type"					"wearable"
-//		"item_unlock_level"			"450"
-//	}
-
-//	"2" // Antipode Couriers (Radiant)
-//	{
-//		"item_id"					"10888"
-//		"item_cost"					"1500" // poggers cost
-//		"item_name"					"Angelic Recruit" // todo: string in addon_english.txt
-//		"item_rarity"				"mythical" // not required if item rarity is same than vanilla
-//		"item_type"					"companion"
-//		"item_team"					"radiant" // radiant or dire
-//		"item_unit_name"			"npc_donator_companion_angelic_recruit"
-//	}
-//	"30"
-//	{
-//		"item_id"					"15"
-//		"item_cost"					"4000" // poggers cost
-//		"item_name"					"Ethereal Flame" // todo: string in addon_english.txt
-//		"item_rarity"				"legendary" // not required if item rarity is same than vanilla
-//		"item_type"					"companion particle"
-//		"default_color"
-//		{
-//			"r"		"208"
-//			"g"		"61"
-//			"b"		"51"
-//		}
-//	}
-//	"32"
-//	{
-//		"item_id"					"15"
-//		"item_cost"					"4000" // poggers cost
-//		"item_name"					"Trail of Burning Doom" // todo: string in addon_english.txt
-//		"item_rarity"				"legendary" // not required if item rarity is same than vanilla
-//		"item_type"					"companion particle"
-//	}
 }

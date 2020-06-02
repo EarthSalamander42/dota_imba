@@ -73,7 +73,10 @@
 					</Panel>
 
 					<Panel id="vote-container" class="vote-container">
-						<Label class="vote-title" text="GAMEMODE"/>
+						<Panel class="vote-header-container">
+							<Label class="vote-title" text="GAMEMODE"/>
+							<Panel class="vote-info"/>
+						</Panel>
 
 						<Label id="VoteGameModeText1" class="vote-label" text="#vote_gamemode_1" />
 
@@ -87,8 +90,8 @@
 
 						<Label id="VoteGameModeCheck" class="vote-label vote-check" text="You have not voted yet." />
 
-						<Button class="vote-change" onactivate="ToggleVoteContainer(true);">
-							<Label class="vote-change-label" text="Change Vote" />
+						<Button class="vote-button" onactivate="ToggleVoteContainer(true);">
+							<Label class="vote-button-label" text="Change Vote" />
 						</Button>
 					</Panel>
 				</Panel>
@@ -103,93 +106,113 @@
 						<Label id="loading-subtitle-text" />
 
 						<Label id="loading-description-text" />
+
+						<Button class="vote-button">
+							<Label class="vote-button-label" text="#loading_screen_button" />
+						</Button>
 					</Panel>
 				</Panel>
 			</Panel>
 
 			<Panel class="footer">
 				<Panel class="bottom-button-container" hittest="false">
-					<RadioButton class="bottom-radio-button" text="Custom Games" />
+					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(1)" text="Custom Games" />
 					<Label class="bottom-radio-separator" text="/" />
-					<RadioButton class="bottom-radio-button" text="Transifex" />
+					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(2)" text="Transifex" />
 					<Label class="bottom-radio-separator" text="/" />
-					<RadioButton class="bottom-radio-button" text="Patreon" />
+					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(3)" text="#loading_screen_patreon" />
 				</Panel>
 
-				<Panel class="bottom-mods-container">
-					<!-- Frostrose Battlefield -->
-					<Button class="mod-cell">
-						<Panel class="mod-image-container">
-							<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist1.jpg"/>
-							<Panel class="mod-background"/>
-						</Panel>
+				<Label id="BottomLabel" class="bottom-label" text="#loading_screen_custom_games_1"/>
 
-						<Panel class="mod-footer">
-							<Label class="mod-name" text="#loading_screen_patreon_modlist1"/>
-						</Panel>
-					</Button>
+				<Panel class="bottom-footer-container">
+					<Panel class="bottom-mods-container">
+						<!-- Frostrose Battlefield -->
+						<Button class="mod-cell">
+							<Panel class="mod-image-container">
+								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist1.jpg"/>
+								<Panel class="mod-background"/>
+							</Panel>
 
-					<!-- Dota IMBA -->
-					<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=1350425247');">
-						<Panel class="mod-image-container">
-							<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist2.jpg"/>
-							<Panel class="mod-background"/>
-						</Panel>
+							<Panel class="mod-footer">
+								<Label class="mod-name" text="#loading_screen_patreon_modlist1"/>
+							</Panel>
+						</Button>
 
-						<Panel class="mod-footer">
-							<Label class="mod-name" text="#loading_screen_patreon_modlist2"/>
-						</Panel>
-					</Button>
+						<!-- Dota IMBA -->
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=1350425247');">
+							<Panel class="mod-image-container">
+								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist2.jpg"/>
+								<Panel class="mod-background"/>
+							</Panel>
 
-					<!-- X Hero Siege -->
-					<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=536682348');">
-						<Panel class="mod-image-container">
-							<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist3.jpg"/>
-							<Panel class="mod-background"/>
-						</Panel>
+							<Panel class="mod-footer">
+								<Label class="mod-name" text="#loading_screen_patreon_modlist2"/>
+							</Panel>
+						</Button>
 
-						<Panel class="mod-footer">
-							<Label class="mod-name" text="#loading_screen_patreon_modlist3"/>
-						</Panel>
-					</Button>
+						<!-- X Hero Siege -->
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=536682348');">
+							<Panel class="mod-image-container">
+								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist3.jpg"/>
+								<Panel class="mod-background"/>
+							</Panel>
 
-					<!-- Pudge Wars -->
-					<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');">
-						<Panel class="mod-image-container">
-							<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist4.jpg"/>
-							<Panel class="mod-background"/>
-						</Panel>
+							<Panel class="mod-footer">
+								<Label class="mod-name" text="#loading_screen_patreon_modlist3"/>
+							</Panel>
+						</Button>
 
-						<Panel class="mod-footer">
-							<Label class="mod-name" text="#loading_screen_patreon_modlist4"/>
-						</Panel>
-					</Button>
+						<!-- Pudge Wars -->
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');">
+							<Panel class="mod-image-container">
+								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist4.jpg"/>
+								<Panel class="mod-background"/>
+							</Panel>
 
-					<!-- Hero Line Wars -->
+							<Panel class="mod-footer">
+								<Label class="mod-name" text="#loading_screen_patreon_modlist4"/>
+							</Panel>
+						</Button>
+
+						<!-- Hero Line Wars -->
 <!--
-					<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');">
-						<Panel class="mod-image-container">
-							<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist1.jpg"/>
-							<Panel class="mod-background"/>
-						</Panel>
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');">
+							<Panel class="mod-image-container">
+								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist1.jpg"/>
+								<Panel class="mod-background"/>
+							</Panel>
 
-						<Panel class="mod-footer">
-							<Label class="mod-name" text="#loading_screen_patreon_modlist5"/>
-						</Panel>
-					</Button>
+							<Panel class="mod-footer">
+								<Label class="mod-name" text="#loading_screen_patreon_modlist5"/>
+							</Panel>
+						</Button>
 -->
 
-					<!-- Diretide -->
-					<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=544075277');">
-						<Panel class="mod-image-container">
-							<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist6.jpg"/>
-							<Panel class="mod-background"/>
-						</Panel>
+						<!-- Diretide -->
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=544075277');">
+							<Panel class="mod-image-container">
+								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist6.jpg"/>
+								<Panel class="mod-background"/>
+							</Panel>
 
-						<Panel class="mod-footer">
-							<Label class="mod-name" text="#loading_screen_patreon_modlist6"/>
+							<Panel class="mod-footer">
+								<Label class="mod-name" text="#loading_screen_patreon_modlist6"/>
+							</Panel>
+						</Button>
+					</Panel>
+
+					<Panel class="bottom-transifex-container">
+						<Button class="vote-button">
+							<Label class="vote-button-label" text="#loading_screen_promote_button" />
+						</Button>
+					</Panel>
+
+					<Panel class="bottom-patreon-container">
+						<Panel class="bottom-patreon-container">
+
 						</Panel>
-					</Button>
+					</Panel>
 				</Panel>
 			</Panel>
 		</Panel>

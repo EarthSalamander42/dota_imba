@@ -41,13 +41,6 @@ var view = {
 
 var link_targets = "";
 
-function ucwords (str) {
-	return (str + '').replace(/^(.)|\s+(.)/g, function ($1) {
-//		return $1.toUpperCase();
-		return $1;
-	});
-}
-
 function info_already_available() {
 	return Game.GetMapInfo().map_name != "";
 }
@@ -61,6 +54,61 @@ function LoadingScreenDebug(args) {
 	view.text.text = view.text.text + ". \n\n" + args.text;
 }
 
+function SwitchTab(count) {
+	var container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-footer-container");
+
+	if (container && container[0]) {
+		for (var i = 0; i < container[0].GetChildCount(); i++) {
+			var panel = container[0].GetChild(i);
+			var new_panel = container[0].GetChild(count - 1);
+
+			if (panel == new_panel)
+				panel.style.visibility = "visible";
+			else
+				panel.style.visibility = "collapse";
+		}
+	}
+
+	var label = $("#BottomLabel");
+
+	if (label) {
+		label.text = $.Localize("#loading_screen_custom_games_" + count);
+	}
+}
+
+function SetProfile() {
+	var check = false;
+
+	if ($("#HomeProfileContainer")) {
+		if ($("#HomeProfileContainer").FindChildTraverse("AvatarImage") && Game.GetLocalPlayerInfo(Players.GetLocalPlayer())) {
+			if ($("#HomeProfileContainer").FindChildTraverse("UserName") && $("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0)) {
+				if ($("#HomeProfileContainer").FindChildTraverse("UserNickname") && $("#HomeProfileContainer").FindChildTraverse("UserNickname").GetChild(0)) {
+					var player_table = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer().toString());
+
+					if (player_table && player_table.Lvl) {
+						$("#HomeProfileContainer").FindChildTraverse("UserNickname").GetChild(0).text = "Level: " + player_table.Lvl;
+
+						$("#HomeProfileContainer").FindChildTraverse("AvatarImage").steamid = Game.GetLocalPlayerInfo(Players.GetLocalPlayer()).player_steamid;
+
+						$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).text = Players.GetPlayerName(Game.GetLocalPlayerID());
+						$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).style.textOverflow = "shrink";
+
+						$("#HomeProfileContainer").FindChildTraverse("RankTierContainer").style.marginTop = "21px";
+						$("#HomeProfileContainer").FindChildTraverse("RankTierContainer").style.marginRight = "-15px";
+
+						check = true;
+					}
+				}
+			}
+		}
+	}
+
+	if (check == false) {
+		$.Schedule(0.1, SetProfile);
+		return;
+	}
+}
+
 function fetch() {
 	// if data is not available yet, reschedule
 	if (!info_already_available()) {
@@ -68,14 +116,11 @@ function fetch() {
 		return;
 	}
 
-	$("#HomeProfileContainer").FindChildTraverse("AvatarImage").steamid = Game.GetLocalPlayerInfo(Players.GetLocalPlayer()).player_steamid;
-
 	var game_options = CustomNetTables.GetTableValue("game_options", "game_version");
 	if (game_options == undefined) {
 		$.Schedule(0.1, fetch);
 		return;
 	}
-
 
 	secret_key = CustomNetTables.GetTableValue("game_options", "server_key");
 	if (secret_key == undefined) {
@@ -122,59 +167,13 @@ function fetch() {
 		}
 	}, function() {
 		// error callback
+		$.Msg("Unable to retrieve loading screen info.")
 	});
-
-//	$.Msg("Fetching and setting loading screen data");
-
-	var mapInfo = Game.GetMapInfo();
-//	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
-	var map_name = mapInfo.map_display_name.replace('_', " ");
-
-//	view.map.text = map_name;
-/*
-	api.resolve_map_name(mapInfo.map_display_name).then(function (data) {
-		view.map.text = data;
-	}).catch(function (err) {
-		$.Msg("Failed to resolve map name: " + err.message);
-		view.map.text = map_name;
-	});
-
-	api.loading_screen().then(function (data) {
-		var lang = $.Language();
-		var rdata = data.languages["en"];
-
-		if (data.languages[lang] !== undefined)
-			rdata = data.languages["en"];
-
-		view.title.text = rdata.title;
-		view.text.text = rdata.text;
-		view.link_text.text = rdata.link_text;
-
-		view.link.SetPanelEvent("onactivate", function() {
-			$.DispatchEvent("DOTADisplayURL", rdata.link_value || "");
-		});
-		
-	}).catch(function (reason) {
-		$.Msg("Loading Loading screen information failed");
-		$.Msg(reason);
-
-		view.text.text = "News currently unavailable.";
-	});
-	*/
-	/*
-	var player_info = Game.GetPlayerInfo(Game.GetLocalPlayerID());
-	
-	api.player_info(player_info.player_steamid).then(function (data) {
-		// TODO: do sth with the data
-	}).catch(function (reason) {
-		$.Msg("Loading player info for loading screen failed!")
-		$.Msg(reason);
-	});
-	*/
 };
 
 function AllPlayersLoaded() {
 	$.Msg("ALL PLAYERS LOADED IN!")
+
 	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
 		//$.Msg("Game Mode: ", i)
 		var panel = $("#vote-container").GetChild(i);
@@ -249,8 +248,6 @@ function AllPlayersLoaded() {
 				panel.GetChild(0).text = $.Localize("vote_gamemode_" + gamemode);
 				panel.GetChild(1).text = $.Localize("description_gamemode_" + gamemode);
 			}
-
-			$.Msg("Game Mode: ", gamemode)
 
 //			if (!panel.BHasClass("Active"))
 //				panel.AddClass("Active");
@@ -346,7 +343,7 @@ function OnVotesReceived(data)
 //	$.Msg(data.table)
 //	$.Msg(data.table[id])
 
-	var vote_count = []
+	var vote_count = [];
 
 	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
@@ -369,13 +366,26 @@ function OnVotesReceived(data)
 		if (vote_count[i] > 1)
 			vote_tooltip = "votes"
 
-		if ($("#VoteGameModeText" + i))
+		if ($("#VoteGameModeText" + i)) {
 			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+			$("#VoteGameModeText" + i).style.color = "white";
+		}
 	}
 
-//	if (data.category == "random_tower_abilities") {
+	// calculate number of people who voted
+	var highest_vote = 0;
+	for (var i in vote_count) {
+		if (vote_count[i] > highest_vote)
+			highest_vote = i;
+	}
 
-//	}
+	if ($("#VoteGameModeText" + highest_vote)) {
+		if (highest_vote != 1 && vote_count[highest_vote] < 5) {
+			$("#VoteGameModeText1").style.color = "green";
+		} else {
+			$("#VoteGameModeText" + highest_vote).style.color = "green";
+		}
+	}
 }
 
 function DisableVoting() {
@@ -387,21 +397,26 @@ function DisableRankingVoting() {
 }
 
 (function(){
+	var vote_info = $.GetContextPanel().FindChildrenWithClassTraverse("vote-info");
+
+	if (vote_info && vote_info[0]) {
+		vote_info[0].SetPanelEvent("onmouseover", function () {
+			$.DispatchEvent("UIShowTextTooltip", vote_info[0], $.Localize("vote_gamemode"));
+		})
+
+		vote_info[0].SetPanelEvent("onmouseout", function () {
+			$.DispatchEvent("UIHideTextTooltip", vote_info[0]);
+		})
+	}
+
 	var bottom_button_container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-button-container");
 
 	if (bottom_button_container && bottom_button_container[0] && bottom_button_container[0].GetChild(0))
 		bottom_button_container[0].GetChild(0).checked = true;
 
-	if ($("#HomeProfileContainer") && $("#HomeProfileContainer").FindChildTraverse("UserName") && $("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0)) {
-		$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).text = Players.GetPlayerName(Game.GetLocalPlayerID());
-		$("#HomeProfileContainer").FindChildTraverse("UserName").GetChild(0).style.textOverflow = "shrink";
-
-		$("#HomeProfileContainer").FindChildTraverse("RankTierContainer").style.marginTop = "21px";
-		$("#HomeProfileContainer").FindChildTraverse("RankTierContainer").style.marginRight = "-15px";
-	}
-
 	HoverableLoadingScreen();
 	fetch();
+	SetProfile();
 
 	if (Game.IsInToolsMode())
 		AllPlayersLoaded();

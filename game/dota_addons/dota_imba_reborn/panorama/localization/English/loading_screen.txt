@@ -5,11 +5,10 @@
 "loading_screen_frostrose_battlefield_2"	"(Frostrose Battlefield is a custom game where you fight in an arena with revisited dota 2 heroes. All heroes have a skillshot ability and an ultimate. The ultimate can be cast only if enough damage are inflicted to enemies.)"
 
 "loading_screen_promote"				"Translate Dota IMBA in your native language!"
-"loading_screen_promote_description"	"You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forget to request your Discord role! (English Discord only)"
+"loading_screen_promote_description"	"You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forget to request your Discord role!"
 "loading_screen_promote_button"			"Click here to redirect to Transifex!"
 
 "loading_screen_patreon"						"Patreon"
-"loading_screen_patreon_description"			"Support Frostrose Studio on Patreon and get in-game rewards! Battlepass XP boosters, companion following you on the battlefield, and more!"
 "loading_screen_patreon_description_bottom"		"Donations support the development of the following mods:"
 "loading_screen_patreon_modlist1"				"Frostrose Battlefield (unreleased)"
 "loading_screen_patreon_modlist2"				"Dota IMBA"
@@ -30,3 +29,7 @@
 "description_gamemode_3"				"The de facto chaotic experience. 40% cooldown/mana cost/respawn time/status resistance reduction."
 "description_gamemode_4"				"Collect candy, feed your bucket, and work together to take down Roshan as many times as you can before the timer runs out."
 "description_gamemode_5"				"Duplicate heroes allowed."
+
+"loading_screen_custom_games_1"			"This is the list of every custom games currently managed by Frostrose Studio:"
+"loading_screen_custom_games_2"			"You can translate Dota IMBA in your native language on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forget to request your Discord role!"
+"loading_screen_custom_games_3"			"Support Frostrose Studio on Patreon and get in-game rewards! Battlepass XP boosters, companion following you on the battlefield, and more!"
