@@ -544,7 +544,7 @@ end
 
 function modifier_imba_leshrac_diabolic_edict:DiabolicEditExplosion(target)
 	-- Create Particle	
-	local pfx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
+	local pfx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_ABSORIGIN_FOLLOW, nil, self.caster)
 	local position_cast	
 
 	if target then	
