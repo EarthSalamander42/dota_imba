@@ -2628,42 +2628,42 @@
 	{
 		"item_id"					"12692"
 		"item_type"					"wearable"
-		"item_unlock_level"			"350"
+		"item_unlock_level"			"400"
 	}
 
 	"114" // Shadow Fiend: Demon Eater
 	{
 		"item_id"					"6996"
 		"item_type"					"wearable"
-		"item_unlock_level"			"400"
+		"item_unlock_level"			"450"
 	}
 
 	"115" // Legion Commander: Blades of Voth Domosh
 	{
 		"item_id"					"5810"
 		"item_type"					"wearable"
-		"item_unlock_level"			"450"
+		"item_unlock_level"			"500"
 	}
 
 	"116" // Terrorblade: Fractal Horns of Inner Abysm
 	{
 		"item_id"					"5957"
 		"item_type"					"wearable"
-		"item_unlock_level"			"500"
+		"item_unlock_level"			"550"
 	}
 
 	"117" // Crystal Maiden: Frost Avalanche
 	{
 		"item_id"					"7385"
 		"item_type"					"wearable"
-		"item_unlock_level"			"550"
+		"item_unlock_level"			"600"
 	}
 
 	"118" // Techies: Swine of the Sunken Galley Bundle
 	{
 		"item_id"					"20610"
 		"item_type"					"bundle"
-		"item_unlock_level"			"600"
+		"item_unlock_level"			"650"
 
 		"wearables"
 		{
@@ -2680,28 +2680,28 @@
 	{
 		"item_id"					"9050"
 		"item_type"					"wearable"
-		"item_unlock_level"			"650"
+		"item_unlock_level"			"700"
 	}
 
 	"120" // Rubick: The Magus Cypher
 	{
 		"item_id"					"12451"
 		"item_type"					"wearable"
-		"item_unlock_level"			"700"
+		"item_unlock_level"			"750"
 	}
 
 	"121" // Ogre Magi: Flockheart's Gamble
 	{
 		"item_id"					"13670"
 		"item_type"					"wearable"
-		"item_unlock_level"			"750"
+		"item_unlock_level"			"800"
 	}
 
 	"122" // Skeleton King: The One True King (Bundle)
 	{
 		"item_id"					"21402"
 		"item_type"					"bundle"
-		"item_unlock_level"			"800"
+		"item_unlock_level"			"350"
 		"modifier"					"modifier_wraith_king_arcana" // vanilla modifier for crit on kill pfx
 
 		"wearables"
