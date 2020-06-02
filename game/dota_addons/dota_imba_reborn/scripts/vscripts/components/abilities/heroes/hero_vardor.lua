@@ -2,6 +2,8 @@
 -- Editor: EarthSalamander
 
 ListenToGameEvent("npc_spawned", function(keys)
+	if not IsServer() then return end
+
 	local npc = EntIndexToHScript(keys.entindex)
 
 	if not IsValidEntity(npc) then
@@ -10,20 +12,18 @@ ListenToGameEvent("npc_spawned", function(keys)
 
 	if npc:GetUnitName() == "npc_dota_hero_vardor" then
 		if npc.yari == nil then
-			Timers:CreateTimer(0.2, function()                
-				if IsServer() then
-					-- Wearable:_WearProp(npc, "127", "body_head")
-					-- Wearable:_WearProp(npc, "7749", "shoulder")
-					-- Wearable:_WearProp(npc, "9460", "head")
-					-- Wearable:_WearProp(npc, "7747", "belt")
-					-- Wearable:_WearProp(npc, "7746", "arms")
-					npc:SetRenderColor(255, 0, 0)
-				end
-			end)
+			npc:SetContextThink(DoUniqueString("init_vardor"), function()
+				Wearable:_WearProp(npc, "127", "body_head")
+				Wearable:_WearProp(npc, "7749", "shoulder")
+				Wearable:_WearProp(npc, "9460", "head")
+				Wearable:_WearProp(npc, "7747", "belt")
+				Wearable:_WearProp(npc, "7746", "arms")
+				npc.spear_wearable = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/vardor/spear_normal.vmdl"})
+				npc:SetRenderColor(255, 0, 0)
+			end, 0.2)
 		end
 	end
 end, nil)
-
 
 LinkLuaModifier("modifier_vardor_yari_unit", "components/abilities/heroes/hero_vardor", LUA_MODIFIER_MOTION_NONE)
 
