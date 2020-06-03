@@ -527,7 +527,7 @@ function GetCastRangeIncrease( unit )
 	end
 
 	for _, parent_modifier in pairs(unit:FindAllModifiers()) do        
-		if parent_modifier.GetModifierCastRangeBonusStacking then
+		if parent_modifier.GetModifierCastRangeBonusStacking and parent_modifier:GetModifierCastRangeBonusStacking() then
 			cast_range_increase = cast_range_increase + parent_modifier:GetModifierCastRangeBonusStacking()
 		end
 	end
