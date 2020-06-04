@@ -355,8 +355,23 @@ end
 
 function imba_void_spirit_resonant_pulse:OnInventoryContentsChanged()
 	-- Caster got scepter
-	if self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_generic_charges") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})		
+	if self:GetCaster():HasScepter() then
+		if self:GetCaster():HasModifier("modifier_generic_charges") then
+			local has_rightful_modifier = false
+
+			for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
+				if mod:GetAbility():GetAbilityName() == self:GetAbilityName() then
+					has_rightful_modifier = true
+					break
+				end
+			end
+
+			if has_rightful_modifier == false then
+				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})		
+			end
+		else
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})		
+		end
 	end
 end
 
