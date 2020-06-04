@@ -150,14 +150,17 @@ function imba_leshrac_split_earth:OnSpellStart(ese_location, ese_radius) -- proc
 			ApplyDamage(damageTable)
 
 			-- Add Empowered Split modifier/stack
-			if not caster:HasModifier(modifier_empowered) then
-				caster:AddNewModifier(caster, ability, modifier_empowered, {duration = empowered_split_duration})
-			end
+			-- Only granted from hitting heroes
+			if enemy:IsRealHero() then			
+				if not caster:HasModifier(modifier_empowered) then
+					caster:AddNewModifier(caster, ability, modifier_empowered, {duration = empowered_split_duration})
+				end
 
-			local modifier_empowered_handle = caster:FindModifierByName(modifier_empowered)
-			if modifier_empowered_handle then
-				modifier_empowered_handle:IncrementStackCount()
-			end		
+				local modifier_empowered_handle = caster:FindModifierByName(modifier_empowered)
+				if modifier_empowered_handle then
+					modifier_empowered_handle:IncrementStackCount()
+				end		
+			end
 
 			if enemy:IsRealHero() or enemy:IsConsideredHero() then
 				energy_orb_count = energy_orb_count + splitter_blast_hero_energy_count
