@@ -653,25 +653,26 @@ function GameMode:OnPlayerLearnedAbility(keys)
 	if abilityname == "lone_druid_savage_roar" and not hero.savage_roar then
 		hero.savage_roar = true
 	end
-	
+
 	-- Due to issues with the death illusion spawning without a certain talent being leveled up, there's some messy stuff here involving giving Venge the vanilla Command Aura ability but hidden and un-levelable, so this secretely levels it up to the side while the IMBA version only provides the negative daeth aura and nothing else
 	if abilityname == "imba_vengefulspirit_command_aura_723" and hero:HasAbility("vengefulspirit_command_aura") then
 		hero:FindAbilityByName("vengefulspirit_command_aura"):SetLevel(hero:FindAbilityByName(abilityname):GetLevel())
 	end
 
---[[
+	-- Don't let Invoker level up Q/W/E to level 8, hack for Aghanim's Scepter granting level 8
 	if hero:GetUnitName() == "npc_dota_hero_invoker" then
 		if not hero:HasScepter() then
 			for i = 0, 3 do
-				if ability:GetAbilityIndex() == i and then
-					ability:SetLevel(ability:GetLevel() -1)
-					hero:SetAbilityPoints(hero:GetAbilityPoints() +1)
-					SendErrorMessage(hero:GetPlayerID(), "#error_cant_lvlup")
+				local ability = hero:GetAbilityByIndex(i)
+				-- + 1 because this functions runs post levelled up
+				if ability and ability:GetLevel() == 7 + 1 then
+					ability:SetLevel(ability:GetLevel() - 1)
+					hero:SetAbilityPoints(hero:GetAbilityPoints() + 1)
+					DisplayError(hero:GetPlayerID(), "#dota_hud_error_ability_cant_upgrade_at_max")
 				end
 			end
 		end
 	end
---]]
 
 	--	if hero then
 	--		api.imba.event(api.events.ability_learned, {

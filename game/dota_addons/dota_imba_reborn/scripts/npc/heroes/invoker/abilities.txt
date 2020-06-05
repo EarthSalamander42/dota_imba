@@ -12,7 +12,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"invoker_quas"
-		"MaxLevel"						"7"
+		"MaxLevel"						"8"
 		"levelkey"						"quaslevel"
 
 		//-------------------------------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"invoker_wex"
-		"MaxLevel"						"7"
+		"MaxLevel"						"8"
 
 		//-------------------------------------------------------------------------------------------------------------
 		// Stats
@@ -115,7 +115,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"invoker_exort"
-		"MaxLevel"						"7"
+		"MaxLevel"						"8"
 
 		//-------------------------------------------------------------------------------------------------------------
 		// Stats

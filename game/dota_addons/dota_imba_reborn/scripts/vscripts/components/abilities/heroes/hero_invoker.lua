@@ -434,10 +434,6 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_aghanim_buff:IsDebuff() 		return false end
 		function modifier_imba_invoker_aghanim_buff:RemoveOnDeath() return false end
 
-		function modifier_imba_invoker_aghanim_buff:DeclareFunctions() return {
-			MODIFIER_EVENT_ON_ORDER,
-		} end
-
 		function modifier_imba_invoker_aghanim_buff:OnCreated()
 			if IsServer() then
 				local caster 	= self:GetCaster()
@@ -448,20 +444,6 @@ imba_invoker = imba_invoker or class({})
 				quas:SetLevel(quas:GetLevel() + 1)
 				wex:SetLevel(wex:GetLevel() + 1)
 				exort:SetLevel(exort:GetLevel() + 1)
-			end
-		end
-
-		function modifier_imba_invoker_aghanim_buff:OnOrder(params)
-			if not IsServer() then return end
-
-			print(params)
-
-			if params.order_type == DOTA_UNIT_ORDER_TRAIN_ABILITY then
-				local quas 		= caster:FindAbilityByName("imba_invoker_quas")
-				local wex 		= caster:FindAbilityByName("imba_invoker_wex")
-				local exort 	= caster:FindAbilityByName("imba_invoker_exort")
-
-
 			end
 		end
 
@@ -482,9 +464,21 @@ imba_invoker = imba_invoker or class({})
 --	Invoker's Invoke
 -------------------------------------------------------------------------------------------------------------------------
 	imba_invoker_invoke = class({})
+
 	LinkLuaModifier("modifier_imba_invoker_invoke_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_invoker_aghanim_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
 	function imba_invoker_invoke:IsInnateAbility() return true end
+
+	function imba_invoker_invoke:OnInventoryContentsChanged() 
+		if IsServer() then
+			if self:GetCaster():HasScepter() and (not self:GetCaster():HasModifier("modifier_imba_invoker_aghanim_buff")) then 
+				self:GetCaster():AddNewModifier(self:GetCaster(), {}, "modifier_imba_invoker_aghanim_buff", {duration = -1})
+			elseif not self:GetCaster():HasScepter() and self:GetCaster():HasModifier("modifier_imba_invoker_aghanim_buff") then
+				self:GetCaster():RemoveModifierByName("modifier_imba_invoker_aghanim_buff")
+			end
+		end
+	end
 
 	function imba_invoker_invoke:OnSpellStart()
 		if IsServer() then
