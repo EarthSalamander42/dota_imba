@@ -46,7 +46,7 @@
 		"Ability18"					"imba_special_bonus_unique_invoker_2"
 		"Ability19"					"imba_special_bonus_unique_invoker_3"
 		"Ability20"					"imba_special_bonus_unique_invoker_4"
-		"Ability21"					"imba_special_bonus_unique_invoker_5"
+		"Ability21"					"special_bonus_spell_amplify_15"
 		"Ability22"					"imba_special_bonus_unique_invoker_6"
 		"Ability23"					"imba_special_bonus_unique_invoker_7"
 		"Ability24"					"imba_special_bonus_unique_invoker_8"

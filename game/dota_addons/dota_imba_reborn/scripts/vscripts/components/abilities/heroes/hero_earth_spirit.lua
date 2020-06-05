@@ -1254,7 +1254,7 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 				-- checking for modifier instead of isRemnant because enchant remnant retains movement qualities after expiring, but doesnt damage anymore
 				if self.parent:HasModifier("modifier_imba_stone_remnant") then
 					ApplyDamage({victim = target, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
-					EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Cast", Damage)
+					EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Cast", self.caster)
 					
 					-- Earths mark effect
 					local mark = target:FindModifierByName("modifier_imba_earths_mark")

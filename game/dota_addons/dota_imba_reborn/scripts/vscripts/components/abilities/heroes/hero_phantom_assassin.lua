@@ -231,13 +231,16 @@ end
 
 modifier_imba_stifling_dagger_slow = class({})
 
+function modifier_imba_stifling_dagger_slow:GetModifierProvidesFOWVision()	return true end
+function modifier_imba_stifling_dagger_slow:IsDebuff()		return true end
+function modifier_imba_stifling_dagger_slow:IsPurgable()	return true end
+
 function modifier_imba_stifling_dagger_slow:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local dagger_vision = self:GetAbility():GetSpecialValueFor("dagger_vision")
 		local duration = self:GetAbility():GetSpecialValueFor("slow_duration")
-		local stifling_dagger_modifier_slow_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), caster)
-		ParticleManager:ReleaseParticleIndex(stifling_dagger_modifier_slow_particle)
+		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), caster)
 
 		-- Add vision for the duration
 		-- "This vision lingers for 3.34 seconds at the target's location upon successfully hitting it."
@@ -254,11 +257,14 @@ function modifier_imba_stifling_dagger_slow:GetModifierMoveSpeedBonus_Percentage
 	return self:GetAbility():GetSpecialValueFor("move_slow");
 end
 
-function modifier_imba_stifling_dagger_slow:GetModifierProvidesFOWVision()	return true end
+function modifier_imba_stifling_dagger_slow:OnDestroy()
+	if not IsServer() then return end
 
-function modifier_imba_stifling_dagger_slow:IsDebuff()		return true end
-
-function modifier_imba_stifling_dagger_slow:IsPurgable()	return true end
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
+end
 
 -------------------------------------------
 -- Stifling Dagger silence modifier

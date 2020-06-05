@@ -433,6 +433,11 @@ imba_invoker = imba_invoker or class({})
 		function modifier_imba_invoker_aghanim_buff:IsHidden() 		return true  end
 		function modifier_imba_invoker_aghanim_buff:IsDebuff() 		return false end
 		function modifier_imba_invoker_aghanim_buff:RemoveOnDeath() return false end
+
+		function modifier_imba_invoker_aghanim_buff:DeclareFunctions() return {
+			MODIFIER_EVENT_ON_ORDER,
+		} end
+
 		function modifier_imba_invoker_aghanim_buff:OnCreated()
 			if IsServer() then
 				local caster 	= self:GetCaster()
@@ -445,7 +450,21 @@ imba_invoker = imba_invoker or class({})
 				exort:SetLevel(exort:GetLevel() + 1)
 			end
 		end
-		
+
+		function modifier_imba_invoker_aghanim_buff:OnOrder(params)
+			if not IsServer() then return end
+
+			print(params)
+
+			if params.order_type == DOTA_UNIT_ORDER_TRAIN_ABILITY then
+				local quas 		= caster:FindAbilityByName("imba_invoker_quas")
+				local wex 		= caster:FindAbilityByName("imba_invoker_wex")
+				local exort 	= caster:FindAbilityByName("imba_invoker_exort")
+
+
+			end
+		end
+
 		function modifier_imba_invoker_aghanim_buff:OnDestroy()
 			if not IsServer() then return end
 			
@@ -466,14 +485,6 @@ imba_invoker = imba_invoker or class({})
 	LinkLuaModifier("modifier_imba_invoker_invoke_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_invoker_aghanim_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 	function imba_invoker_invoke:IsInnateAbility() return true end
-
-	function imba_invoker_invoke:GetCooldown(invoke_level)
-		if self:GetCaster():HasScepter() then 
-			return self:GetSpecialValueFor("cooldown_scepter")
-		else
-			return self.BaseClass.GetCooldown(self, invoke_level)
-		end
-	end
 
 	function imba_invoker_invoke:OnSpellStart()
 		if IsServer() then
@@ -565,14 +576,10 @@ imba_invoker = imba_invoker or class({})
 					if spell_to_be_invoked == invoker_slot1 and invoker_slot2 == invoker_empty2 then
 						ability:EndCooldown()
 						caster:GiveMana(ability:GetManaCost(-1))
-
 					-- if we just switched spells... then dont trigger cooldown
 					elseif spell_to_be_invoked == invoker_slot2 then
 						ability:EndCooldown()
 						caster:GiveMana(ability:GetManaCost(-1))
-					elseif caster:HasScepter() then 
-						ability:EndCooldown()
-						ability:StartCooldown(ability:GetLevelSpecialValueFor("cooldown_scepter", ability_level))
 					end
 				else
 					-- if we invoked same spell again... then dont trigger cooldown
@@ -608,16 +615,6 @@ imba_invoker = imba_invoker or class({})
 			end
 
 			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_invoker_invoke_buff", {duration = -1})
-		end
-	end
-
-	function imba_invoker_invoke:OnInventoryContentsChanged() 
-		if IsServer() then
-			if self.caster:HasScepter() and (not self.caster:HasModifier("modifier_imba_invoker_aghanim_buff")) then 
-				self.caster:AddNewModifier(self.caster, {}, "modifier_imba_invoker_aghanim_buff", {duration = -1})
-			elseif not self.caster:HasScepter() and self.caster:HasModifier("modifier_imba_invoker_aghanim_buff") then
-				self.caster:RemoveModifierByName("modifier_imba_invoker_aghanim_buff")
-			end
 		end
 	end
 
@@ -890,9 +887,9 @@ imba_invoker = imba_invoker or class({})
 
 			local bCataclysm = self:GetCursorTarget() == self:GetCaster()
 
-			if bCataclysm and self:GetCaster():HasTalent("imba_special_bonus_unique_invoker_5") then
+			if bCataclysm and self:GetCaster():HasScepter() then
 				bCataclysm = 1
-				self:StartCooldown(self:GetCaster():FindTalentValue("imba_special_bonus_unique_invoker_5", "cooldown") * self:GetCaster():GetCooldownReduction())
+				self:StartCooldown(self:GetSpecialValueFor("cataclysm_cooldown") * self:GetCaster():GetCooldownReduction())
 			else
 				bCataclysm = 0
 			end
@@ -1320,39 +1317,39 @@ imba_invoker = imba_invoker or class({})
 		----------------------------------------------
 		-- MODIFIER_IMBA_INVOKER_SUN_STRIKE_THINKER --
 		----------------------------------------------
-		
+
 		function modifier_imba_invoker_sun_strike_thinker:OnCreated(kv)
 			if not IsServer() then return end
-			
+
 			self.area_of_effect 		= self:GetAbility():GetSpecialValueFor("area_of_effect")
 			self.damage					= self:GetAbility():GetLevelSpecialValueFor("damage", self:GetCaster():FindAbilityByName("imba_invoker_exort"):GetLevel())
 			self.vision_distance		= self:GetAbility():GetSpecialValueFor("vision_distance")
 			self.vision_duration		= self:GetAbility():GetSpecialValueFor("vision_duration")
-			self.cataclysm_min_range	= self:GetCaster():FindTalentValue("imba_special_bonus_unique_invoker_5", "minimum_range")
-			self.cataclysm_max_range	= self:GetCaster():FindTalentValue("imba_special_bonus_unique_invoker_5", "maximum_range")
-			
+			self.cataclysm_min_range	= self:GetAbility():GetSpecialValueFor("cataclysm_min_range")
+			self.cataclysm_max_range	= self:GetAbility():GetSpecialValueFor("cataclysm_max_range")
+
 			self.incinerate_duration	= self:GetAbility():GetSpecialValueFor("incinerate_duration")
 			self.mini_beam_radius 		= self:GetAbility():GetSpecialValueFor("incinerate_beam_radius")
-			
+
 			self.bCataclysm				= kv.bCataclysm
-			
+
 			self.sun_strike_points		= {}
-			
+
 			if (kv.target_point_x and kv.target_point_y and kv.target_point_z) then
 				self.target_point = Vector(kv.target_point_x, kv.target_point_y, kv.target_point_z)
 			end
-			
+
 			if not self.target_point or self.target_point == self:GetCaster():GetAbsOrigin() then
 				self.target_point = self:GetCaster():GetAbsOrigin() + self:GetCaster():GetForwardVector()
 			end
-			
+
 			if not self.bCataclysm or self.bCataclysm == 0 then
 				EmitSoundOnLocationForAllies(self.target_point, "Hero_Invoker.SunStrike.Charge", self:GetCaster())
-				
+
 				AddFOWViewer(self:GetCaster():GetTeamNumber(), self.target_point, self.vision_distance, self.vision_duration, false)
-				
+
 				local sun_strike_beam = nil
-				
+
 				if self.target_point then
 					sun_strike_beam = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self:GetCaster(), self:GetCaster():GetTeamNumber())
 					ParticleManager:SetParticleControl(sun_strike_beam, 0, self.target_point) 
@@ -1361,11 +1358,11 @@ imba_invoker = imba_invoker or class({})
 					
 					table.insert(self.sun_strike_points, self.target_point)
 				else
-					
+
 				end
 			else
 				self.cataclysm_point	= nil
-				
+
 				for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)) do
 					if (enemy:IsRealHero() or enemy:IsTempestDouble()) and not enemy:IsClone() then
 						for beam = 1, 2 do

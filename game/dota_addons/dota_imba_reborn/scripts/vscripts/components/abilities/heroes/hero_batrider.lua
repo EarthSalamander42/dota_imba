@@ -632,8 +632,13 @@ function modifier_imba_batrider_firefly:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_BONUS_DAY_VISION,
 		MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
-		MODIFIER_EVENT_ON_ORDER
+		MODIFIER_EVENT_ON_ORDER,
+		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
 	}
+end
+
+function modifier_imba_batrider_firefly:GetVisualZDelta()
+	return 240
 end
 
 function modifier_imba_batrider_firefly:GetModifierMoveSpeedBonus_Percentage()
@@ -677,24 +682,20 @@ end
 -- MODIFIER_IMBA_BATRIDER_FIREFLY_THINKER --
 --------------------------------------------
 
-function modifier_imba_batrider_firefly_thinker:IsPurgable()	return false end
+function modifier_imba_batrider_firefly_thinker:IsPurgable() return false end
 
--- "Minor" issue: Particles instantly vanish when modifier ends, unlike vanilla which has flames gradually vanish
--- function modifier_imba_batrider_firefly_thinker:GetEffectName()
-	-- return "particles/units/heroes/hero_batrider/batrider_firefly.vpcf"
--- end
+function modifier_imba_batrider_firefly_thinker:CheckState() return {
+	-- keep thinker visible by everyone, so the firefly ground pfx don't disappear when batrider is no longer visible
+	[MODIFIER_STATE_PROVIDES_VISION] = true,
+} end
 
 function modifier_imba_batrider_firefly_thinker:OnCreated()
 	if not IsServer() then return end
 	
-	self.firefly_particle = ParticleManager:CreateParticle("particles/hero/batrider/batrider_ti8_immortal_firefly_300_radius.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.firefly_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_firefly.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
 	ParticleManager:SetParticleControl(self.firefly_particle, 11, Vector(1, 0, 0))
 	self:AddParticle(self.firefly_particle, false, false, -1, false, false)
-	
-	-- This seems better than a FrameTime() interval thinker to change origin? Wonder if there's any negative consequences...
-	-- ...YEAH THE NEGATIVE CONSEQUENCE IS THE GOD DAMN INVIS = INVIS PARTICLES
-	-- self:GetParent():FollowEntity(self:GetCaster(), false)
 	
 	self:StartIntervalThink(0.1)
 end

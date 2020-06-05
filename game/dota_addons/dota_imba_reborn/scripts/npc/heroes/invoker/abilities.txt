@@ -166,7 +166,6 @@
 		"MaxLevel"						"4"
 		"AbilityTextureName"			"invoker_invoke"
 		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
-		"HasScepterUpgrade"				"1"
 		
 		//-------------------------------------------------------------------------------------------------------------
 		// Stats
@@ -324,6 +323,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"invoker_sun_strike"
 		"ScriptFile"					"components/abilities/heroes/hero_invoker.lua"
+		"HasScepterUpgrade"				"1"
 
 		//-------------------------------------------------------------------------------------------------------------
 		// Precache
@@ -402,9 +402,33 @@
 			}
 			"12"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"incinerate_beam_radius"		"175"
+				"var_type"					"FIELD_INTEGER"
+				"incinerate_beam_radius"	"175"
 			}
+			"13"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"cataclysm_cooldown"		"90"
+				"RequiresScepter"			"1"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cataclysm_min_range"		"150"
+				"RequiresScepter"			"1"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cataclysm_max_range"		"200"
+				"RequiresScepter"			"1"
+			}
+//			"16"
+//			{
+//				"var_type"						"FIELD_FLOAT"
+//				"scepter_bonus_area_of_effect"	"50"
+//				"RequiresScepter"			"1"
+//			}
 		}
 	}	
 

@@ -117,7 +117,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_void_spirit"
 		"AbilityTextureName"			"void_spirit_dissimilate"
-		
+
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -184,7 +184,6 @@
 				//"var_type"						"FIELD_INTEGER"
 				//"second_ring_distance_offset"	"1040"
 			//}
-			
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -199,7 +198,7 @@
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
-	
+
 	//=================================================================================================================
 	// Ability: Void Spirit Pulse
 	//=================================================================================================================
@@ -210,14 +209,14 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_void_spirit"
 		"AbilityTextureName"			"void_spirit_resonant_pulse"
-		
+
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_VoidSpirit.Pulse.Cast"
-		
+
 		"HasScepterUpgrade"								"1"
 	
 		// Casting

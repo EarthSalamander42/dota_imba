@@ -10,6 +10,7 @@
 "DOTA_Tooltip_ability_imba_invoker_sun_strike_area_of_effect"      		    	"#{DOTA_Tooltip_ability_invoker_sun_strike_area_of_effect}"
 "DOTA_Tooltip_ability_imba_invoker_sun_strike_delay"							"#{DOTA_Tooltip_ability_invoker_sun_strike_delay}"
 "DOTA_Tooltip_ability_imba_invoker_sun_strike_damage"             				"#{DOTA_Tooltip_ability_invoker_sun_strike_damage}"
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_aghanim_description"				"#{DOTA_Tooltip_ability_invoker_sun_strike_aghanim_description}"
 
 "DOTA_Tooltip_modifier_imba_invoker_sun_strike_incinerate"						"Incinerated"
 "DOTA_Tooltip_modifier_imba_invoker_sun_strike_incinerate_description"			"Sun Strike deals 10%% increased damage per stack."
@@ -154,7 +155,6 @@
 "DOTA_Tooltip_Ability_imba_invoker_invoke_lore"									"#{DOTA_Tooltip_ability_invoker_invoke_Lore}"
 "DOTA_Tooltip_Ability_imba_invoker_invoke_note0"								"#{DOTA_Tooltip_ability_invoker_invoke_Note0}"
 "DOTA_Tooltip_Ability_imba_invoker_invoke_note1"								"#{DOTA_Tooltip_ability_invoker_invoke_Note1}"
-// "DOTA_Tooltip_Ability_imba_invoker_invoke_aghanim_description"					"#{DOTA_Tooltip_ability_invoker_invoke_aghanim_description}"
 "DOTA_Tooltip_Ability_imba_invoker_invoke_max_invoked_spells"					"MAX SPELLS:"
 "DOTA_Tooltip_Ability_imba_invoker_invoke_bonus_intellect"						"BONUS INTELLIGENCE:"
 "DOTA_Tooltip_Ability_imba_invoker_invoke_magic_resistance_pct"					"%MAGIC RESISTANCE:"

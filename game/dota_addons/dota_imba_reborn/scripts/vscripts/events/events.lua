@@ -659,6 +659,20 @@ function GameMode:OnPlayerLearnedAbility(keys)
 		hero:FindAbilityByName("vengefulspirit_command_aura"):SetLevel(hero:FindAbilityByName(abilityname):GetLevel())
 	end
 
+--[[
+	if hero:GetUnitName() == "npc_dota_hero_invoker" then
+		if not hero:HasScepter() then
+			for i = 0, 3 do
+				if ability:GetAbilityIndex() == i and then
+					ability:SetLevel(ability:GetLevel() -1)
+					hero:SetAbilityPoints(hero:GetAbilityPoints() +1)
+					SendErrorMessage(hero:GetPlayerID(), "#error_cant_lvlup")
+				end
+			end
+		end
+	end
+--]]
+
 	--	if hero then
 	--		api.imba.event(api.events.ability_learned, {
 	--			tostring(abilityname),
