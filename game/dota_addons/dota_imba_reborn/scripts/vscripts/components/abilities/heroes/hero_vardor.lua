@@ -880,9 +880,6 @@ function vardor_graceful_jump:OnSpellStart()
 	local yari_search_radius = ability:GetSpecialValueFor("yari_search_radius")
 	local jump_speed = ability:GetSpecialValueFor("jump_speed")	
 
-	-- Emit sound
-	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_SkywrathMage.ConcussiveShot.Cast", caster)
-
 	-- If no target was found and the ability still started, that means there is a Yari around the cast point
 	if not target then
 		-- Look for a Yari in the cast range + search radius to ease using nearby Yaris
@@ -900,6 +897,30 @@ function vardor_graceful_jump:OnSpellStart()
 			end	
 		end
 	end
+
+	-- If SOMEHOW there's still no targets, fail to cast and refund
+	if not target then
+		print("NO YARI I TOLD YOU WTF IS WRONG WITH YOU")
+		self:EndCooldown()
+		self:RefundManaCost()
+
+		-- refund charge (todo: modifier_generic_charges:RefreshCharges() helper)
+		if self:GetCaster():HasModifier("modifier_generic_charges") then
+			for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
+				if mod:GetAbility():GetAbilityName() == self:GetAbilityName() then
+					mod:SetStackCount(mod:GetStackCount() + 1)
+					break
+				end
+			end
+		end
+
+		DisplayError(self:GetCaster():GetPlayerID(), "#dota_hud_error_vardor_no_yaris_in_range")
+
+		return
+	end
+
+	-- Emit sound
+	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_SkywrathMage.ConcussiveShot.Cast", caster)
 
 	-- Become a ball of light and travel quickly towards the target!
 	caster:AddNewModifier(caster, ability, modifier_ball, {})
