@@ -1377,44 +1377,44 @@ function GameMode:BountyRuneFilter(keys)
 	if self.player_counter == 1 then
 		local heroes = HeroList:GetAllHeroes()
 		self.allies = {}
-		
+
 		for _, unit in pairs(heroes) do
 			if unit:GetTeam() == hero:GetTeam() and unit:IsRealHero() and not unit:IsClone() and not unit:IsTempestDouble() then
 				table.insert(self.allies, unit)
 			end
 		end
 	end
-	
+
 	-- Hand of Midas gold bonus
 	if hero:HasItemInInventory("item_imba_hand_of_midas") and hero:HasModifier("modifier_item_imba_hand_of_midas") then
 		keys.gold_bounty = keys.gold_bounty * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") * 0.01))
 	end
-	
+
 	-- Okay now we should have the list of allies, so for each instance of BountyRuneFilter that is run, go through and check gold/exp; if Greevil's Greed owner, give an extra amount accordingly	
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
-	
+--	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
+
 	-- Base gold and EXP; if the hero does not have Greevil's Greed this is basically the end
 	keys.gold_bounty = keys.gold_bounty * (custom_gold_bonus / 100)
-	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
-	
+--	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
+
 	-- Testing first bounty runes giving bonus gold
 	if GameRules:GetDOTATime(false, false) < 120 then -- less than 2 min = first bounty rune
 		keys.gold_bounty = keys.gold_bounty * 1.5
 	end
-	
+
 	-- Greevil's Greed  logic
 	local target = self.allies[self.player_counter]
-	
+
 	if target:FindAbilityByName("imba_alchemist_goblins_greed") and target:FindAbilityByName("imba_alchemist_goblins_greed"):IsTrained() then
 		local alchemy_bounty = 0
-	
+
 		-- #7 Talent: Moar gold from bounty runes (should return 0 for that if the owner doesn't have it)
 		alchemy_bounty = keys.gold_bounty * (target:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") + target:FindTalentValue("special_bonus_imba_alchemist_7")) / 100
-		
+
 		-- Return the DIFFERENCE between the calculated boost and the standard bounty rune amount since the Greevil's Greed owner is already getting keys.gold_bounty
 		local additional_bounty = alchemy_bounty - keys.gold_bounty
-		
+
 		target:ModifyGold(additional_bounty, false, DOTA_ModifyGold_Unspecified)
 		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, target, additional_bounty, nil)
 	end
@@ -1425,7 +1425,7 @@ function GameMode:BountyRuneFilter(keys)
 	else
 		self.player_counter = self.player_counter + 1
 	end
-	
+
 	-- I don't even think this return statement does anything
 	return true
 end

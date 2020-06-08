@@ -195,24 +195,24 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			-- I'm led to believe this block doesn't work anyways, but just in case...I'm commenting it out.
 			-- Bounty Rune logic is handled in filters.lua
 		
-			-- -- Bounty rune parameters
-			-- local base_bounty = GetAbilitySpecial("item_imba_rune_bounty", "base_bounty")
-			-- local bounty_per_minute = GetAbilitySpecial("item_imba_rune_bounty", "bounty_increase_per_minute")
-			-- local xp_per_minute = GetAbilitySpecial("item_imba_rune_bounty", "xp_increase_per_minute")
-			-- local game_time = GameRules:GetDOTATime(false, false)
-			-- local current_bounty = base_bounty + (bounty_per_minute * game_time / 60)
-			-- local current_xp = xp_per_minute * game_time / 60
+			-- Bounty rune parameters
+			local base_bounty = GetAbilitySpecial("item_imba_rune_bounty", "base_bounty")
+			local bounty_per_minute = GetAbilitySpecial("item_imba_rune_bounty", "bounty_increase_per_minute")
+			local xp_per_minute = GetAbilitySpecial("item_imba_rune_bounty", "xp_increase_per_minute")
+			local game_time = GameRules:GetDOTATime(false, false)
+			local current_bounty = base_bounty + (bounty_per_minute * game_time / 60)
+			local current_xp = xp_per_minute * game_time / 60
 
-			-- -- Adjust value for lobby options
-			-- local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-			-- current_bounty = current_bounty * (custom_gold_bonus * 0.01)
+			-- Adjust value for lobby options
+			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+			current_bounty = current_bounty * (custom_gold_bonus * 0.01)
 
-			-- if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
-				-- current_bounty = current_bounty * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
-				-- current_xp = current_xp * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
-			-- end
+			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+				current_bounty = current_bounty * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
+				current_xp = current_xp * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
+			end
 
-			-- -- #3 Talent: Bounty runes give gold bags
+			-- #3 Talent: Bounty runes give gold bags
 			-- if unit:HasTalent("special_bonus_imba_alchemist_3") then
 				-- local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3") / 100 )  / 5
 				-- local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() + (current_bounty * stacks_to_gold)
@@ -229,49 +229,49 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 				-- end
 			-- end
 
-			-- -- global bounty rune
-			-- for _, hero in pairs(HeroList:GetAllHeroes()) do
-				-- if hero:GetTeam() == unit:GetTeam() then					
-					-- if hero:IsFakeHero() then
-						-- -- don't give gold to mk and meepo clones or illusions
-					-- elseif hero:GetUnitName() == "npc_dota_hero_alchemist" then 
-						-- local alchemy_bounty = 0
-						-- if unit:FindAbilityByName("imba_alchemist_goblins_greed") and unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
-							-- alchemy_bounty = current_bounty * (unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
+			-- global bounty rune
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if hero:GetTeam() == unit:GetTeam() then					
+					if hero:IsFakeHero() then
+						-- don't give gold to mk and meepo clones or illusions
+					elseif hero:GetUnitName() == "npc_dota_hero_alchemist" then 
+						local alchemy_bounty = 0
+						if unit:FindAbilityByName("imba_alchemist_goblins_greed") and unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
+							alchemy_bounty = current_bounty * (unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
 
-							-- -- #7 Talent: Moar gold from bounty runes
-							-- if unit:HasTalent("special_bonus_imba_alchemist_7") then
-								-- alchemy_bounty = alchemy_bounty * (unit:FindTalentValue("special_bonus_imba_alchemist_7") / 100)
-							-- end		
-						-- else 
-							-- alchemy_bounty = current_bounty
-						-- end
+							-- #7 Talent: Moar gold from bounty runes
+							if unit:HasTalent("special_bonus_imba_alchemist_7") then
+								alchemy_bounty = alchemy_bounty * (unit:FindTalentValue("special_bonus_imba_alchemist_7") / 100)
+							end		
+						else 
+							alchemy_bounty = current_bounty
+						end
 
-						-- -- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
-						-- if api:GetCustomGamemode() > 1 then
-							-- local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
-							-- -- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
-							-- alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
-						-- end
+						-- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
+						if api:GetCustomGamemode() > 1 then
+							local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
+							-- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
+							alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
+						end
 
-						-- hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
-						-- SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
+						hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
 
-						-- -- Grant the unit experience
-						-- hero:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
-						-- SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, current_xp, nil)
-					-- else
-						-- hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
-						-- SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
+						-- Grant the unit experience
+						hero:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, current_xp, nil)
+					else
+						hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
 
-						-- -- Grant the unit experience
-						-- hero:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
-						-- SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, current_xp, nil)
-					-- end
-				-- end
-			-- end
+						-- Grant the unit experience
+						hero:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, current_xp, nil)
+					end
+				end
+			end
 
-			-- EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
+			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 		elseif rune_name == "arcane" then
 			unit:AddNewModifier(unit, item, "modifier_imba_arcane_rune", {duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Arcane", unit)

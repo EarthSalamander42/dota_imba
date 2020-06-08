@@ -12237,17 +12237,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"base_bounty"					"100"
+				"base_bounty"					"40"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bounty_increase_per_minute"	"4"
+				"bounty_increase_per_minute"	"2"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"xp_increase_per_minute"		"10"
+				"xp_increase_per_minute"		"0"
 			}
 			"04"
 			{
@@ -18124,5 +18124,66 @@
 		}
 	}
 
-	//next free ID: 2369
+	//=================================================================================================================
+	// Trusty Shovel (Luafied)
+	//=================================================================================================================
+	"item_imba_trusty_shovel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2369"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"                     "item_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityCastAnimation"			"ACT_DOTA_GENERIC_CHANNEL_1"
+        "ScriptFile"                    "components/items/item_trusty_shovel"
+        "AbilityTextureName"            "item_trusty_shovel"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"250"
+		"AbilityCooldown"				"55.0"
+		"AbilityCastPoint"				"0.1"
+		"AbilityChannelTime"			"1"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemIsNeutralDrop"				"1"
+		"ItemPurchasable"				"0"
+
+		"Model"							"models/props_gameplay/neutral_box.vmdl"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounty_rune_chance"	"16"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"flask_chance"			"28"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tp_chance"				"28"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"kobold_chance"			"28"
+			}
+		}
+	}
+
+	//next free ID: 2370
 }

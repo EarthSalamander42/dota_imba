@@ -13,7 +13,7 @@
 "DOTA_Tooltip_ability_item_imba_rune_stone"				"Stone Artifact"
 
 "DOTA_Tooltip_ability_item_imba_rune_arcane_Description"		"Reduces cooldowns by 30% and mana costs by 40%."
-"DOTA_Tooltip_ability_item_imba_rune_bounty_Description"		"Grants bonus Gold and XP."
+"DOTA_Tooltip_ability_item_imba_rune_bounty_Description"		"Grants bonus Gold. <font color='#FF7800'>Multiplied by IMBA global gold multiplier.</font>"
 "DOTA_Tooltip_ability_item_imba_rune_doubledamage_Description"	"Base damage multiplied by 2.\nMain attribute multiplied by 2."
 "DOTA_Tooltip_ability_item_imba_rune_haste_Description"			"Attack speed increased by 80.\nMovement speed increased by 60%.\nNo movement speed limit!"
 "DOTA_Tooltip_ability_item_imba_rune_illusion_Description"		"Conjures 2 illusions of your hero which deal 35% damage.  Melee illusions take 200% damage.  Ranged illusions take 300% damage.  Illusions last 75 seconds."

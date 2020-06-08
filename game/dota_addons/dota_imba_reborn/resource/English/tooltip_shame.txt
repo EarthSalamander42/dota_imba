@@ -103,7 +103,7 @@
 "npc_dota_hero_keeper_of_the_light"                        "Keeper of the Light (IMBA)"
 "npc_dota_hero_kunkka"                                      "Kunkka (IMBA)"
 "npc_dota_hero_legion_commander"                            "Legion Commander"
-"npc_dota_hero_leshrac"                                    "Leshrac"
+"npc_dota_hero_leshrac"                                    "Leshrac (IMBA)"
 "npc_dota_hero_life_stealer"                                "Lifestealer (IMBA)"
 "npc_dota_hero_lich"                                        "Lich (IMBA)"
 "npc_dota_hero_lina"                                        "Lina (IMBA)"
