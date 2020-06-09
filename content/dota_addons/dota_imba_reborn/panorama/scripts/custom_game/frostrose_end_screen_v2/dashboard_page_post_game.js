@@ -139,6 +139,7 @@ function SetDonatorRow(panel, playerId, player_table) {
 //					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.color = "#FFFFFF";
 //					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.opacity = 0.7;
 
+/*
 					if (!panel.FindChildTraverse("particle-holder")) {
 						panel.BCreateChildren('<Panel id="particle-holder" />');
 						var holder = panel.FindChildTraverse("particle-holder");
@@ -163,6 +164,7 @@ function SetDonatorRow(panel, playerId, player_table) {
 							);
 						}
 					}
+*/
 				}
 			} else {
 				if (is_donator_set.indexOf( playerId.toString() ) != -1) {
@@ -445,7 +447,7 @@ function EndScoreboard(args) {
 							title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
 						} else {
 							short_title = player_table.mmr_title;
-							title_stars = "_empty";
+							title_stars = "1";
 						}
 
 						PinnedPlayerRow.FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
@@ -614,11 +616,10 @@ function EndScoreboard(args) {
 
 				PlayerRowContainer.FindChildTraverse("PermanentBuffs").AddClass("PermanentBuffs" + buff_length);
 
-				PlayerRowContainer.FindChildrenWithClassTraverse("LastHits")[0].text = Players.GetLastHits(id);;
-				PlayerRowContainer.FindChildrenWithClassTraverse("Denies")[0].text = Players.GetDenies(id);;
+				PlayerRowContainer.FindChildrenWithClassTraverse("LastHits")[0].text = Players.GetLastHits(id);
+				PlayerRowContainer.FindChildrenWithClassTraverse("Denies")[0].text = Players.GetDenies(id);
 				PlayerRowContainer.FindChildrenWithClassTraverse("GoldPerMin")[0].text = Players.GetGoldPerMin(id).toFixed(0);
-				PlayerRowContainer.FindChildrenWithClassTraverse("XPPerMin")[0].text = Players.GetTotalEarnedXP(id) / Players.GetLevel(id);
-
+				PlayerRowContainer.FindChildrenWithClassTraverse("XPPerMin")[0].text = (Players.GetTotalEarnedXP(id) / Players.GetLevel(id)).toFixed(0);
 
 				var DamageDealtContainer = $.CreatePanel('Panel', player_damage_dealt_row_container, '');
 				DamageDealtContainer.BLoadLayoutSnippet('DetailsDamageDealtPlayerRow');

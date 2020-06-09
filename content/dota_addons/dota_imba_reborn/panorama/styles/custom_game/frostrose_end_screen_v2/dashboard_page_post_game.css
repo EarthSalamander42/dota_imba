@@ -793,12 +793,12 @@ DOTAPostGame.EventGame #EventGameOverview
 	horizontal-align: center;
 }
 
-#NormalMatchPlayers					{ width: 2182px; }
-#NormalMatchPlayers.PermanentBuffs1 { width: 2290px; }
-#NormalMatchPlayers.PermanentBuffs2 { width: 2290px; }
-#NormalMatchPlayers.PermanentBuffs3 { width: 2340px; }
-#NormalMatchPlayers.PermanentBuffs4 { width: 2390px; }
-#NormalMatchPlayers.PermanentBuffs5 { width: 2440px; }
+#NormalMatchPlayers					{ width: 2322px; }
+#NormalMatchPlayers.PermanentBuffs1 { width: 2430px; }
+#NormalMatchPlayers.PermanentBuffs2 { width: 2430px; }
+#NormalMatchPlayers.PermanentBuffs3 { width: 2480px; }
+#NormalMatchPlayers.PermanentBuffs4 { width: 2530px; }
+#NormalMatchPlayers.PermanentBuffs5 { width: 2590px; }
 
 .GameModeAbilityDraft #NormalMatchPlayers				  { width: 1944px; }
 .GameModeAbilityDraft #NormalMatchPlayers.PermanentBuffs1 { width: 1952px; }
