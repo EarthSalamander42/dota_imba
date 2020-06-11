@@ -137,12 +137,12 @@ function modifier_imba_fatal_bonds:OnCreated()
 end
 
 function modifier_imba_fatal_bonds:OnDestroy()
-	if not IsServer() or self:GetParent():IsAlive() then return end
-
 	if self.pfx_overhead then
 		ParticleManager:DestroyParticle(self.pfx_overhead, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx_overhead)
 	end
+
+	if not IsServer() or self:GetParent():IsAlive() then return end
 
 	-- Check every unit that was linked by this modifier
 	for _, enemy in pairs(self.bond_table) do

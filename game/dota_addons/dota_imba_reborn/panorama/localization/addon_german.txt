@@ -4,7 +4,7 @@
 	"all_dead" "Sie sind alle tot!"
 	"announcers" "Ansager"
 	"average_ixp" "Average IXP:"
-	"average_mmr" "Durchschnitts MMR"
+	"average_mmr" "Durchschnitts MMR:"
 	"ay_ay_ay" "Ай-ай-ай-ай-ай, что сейчас произошло!"
 	"bai_tuo_shei_qu" "拜托谁去杀了他吧"
 	"battlepass" "Battlepass"

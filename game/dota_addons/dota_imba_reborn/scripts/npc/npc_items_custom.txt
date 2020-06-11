@@ -14689,15 +14689,14 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
-		
+		"Model"							"models/props_gameplay/recipe.mdl"
 		"ID"							"2316"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"1"
 		"ItemShopTags"					""
-		
+
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -14709,7 +14708,7 @@
 			"03"						"item_imba_yasha_and_kaya;item_imba_sange"
 		}
 	}
-	
+
 	//=================================================================================================================
 	// The Triumvirate v2
 	//=================================================================================================================
@@ -14719,8 +14718,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_the_triumvirate_v2.lua"
-		"AbilityTextureName"			"custom/imba_the_triumvirate"		
-		
+		"AbilityTextureName"			"item_trident"
 		"ID"							"2317"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
@@ -14735,7 +14733,7 @@
 		"ItemCost"						"6151"
 		"ItemShopTags"					"damage;str;agi;int;unique"
 		"ItemQuality"					"artifact"
-		"ItemAliases"					"triumvirate;sky;kys"
+		"ItemAliases"					"triumvirate;trident;sky;kys"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

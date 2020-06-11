@@ -139,7 +139,7 @@
 			"item_apex"						  "1"
 			"item_ballista"					  "1"
 			"item_woodland_striders"		  "1"
-			"item_recipe_trident"			  "1"
+//			"item_recipe_trident"			  "1"
 			"item_demonicon"				  "1"
 			"item_fallen_sky"				  "1"
 			"item_pirate_hat"				  "1"
