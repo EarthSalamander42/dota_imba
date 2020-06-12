@@ -123,7 +123,7 @@ end
 
 function modifier_item_imba_heart:OnTakeDamage(keys)
 	-- "Damage greater than 0 from any player (including allies, excluding self) or Roshan puts the regeneration on a 5/7-second cooldown. "
-	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 and keys.unit == self:GetParent() and keys.damage > 0 and keys.attacker ~= keys.unit and (keys.attacker:IsHero() or keys.attacker:IsRoshan()) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 and keys.unit == self:GetParent() and keys.damage > 0 and keys.attacker ~= keys.unit and (keys.attacker:IsHero() or keys.attacker:IsCreepHero() or keys.attacker:IsRoshan()) and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 		if self:GetParent():IsRangedAttacker() then
 			self:GetAbility():StartCooldown(self:GetAbility():GetSpecialValueFor("regen_cooldown_ranged") * self:GetParent():GetCooldownReduction())
 		else
