@@ -35,23 +35,24 @@ function GameMode:OnHeroFirstSpawn(hero)
 	elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
 		hero:AddNewModifier(hero, nil, "modifier_wisp_death", {})
 	end
-	
+
 	if hero == nil or hero:IsFakeHero() then return end
 
 	-- Set up initial level
 	local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
 	if starting_level == nil then starting_level = 1 end
+
 	if starting_level and starting_level > 1 then
 		-- for level = 2, starting_level do
 			-- hero:HeroLevelUp(true)
 		-- end
-		
+
 		hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_Unspecified, false, true)
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[starting_level])
 	else
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
 	end
-	
+
 	-- add modifier for custom mechanics handling
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 
@@ -60,23 +61,13 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 	HeroSelection:Attachments(hero)
 
-	if IMBA_PICK_SCREEN == true then
-		-- Set up initial gold
-		-- local has_randomed = PlayerResource:HasRandomed(playerId)
-		--	local has_randomed = HeroSelection.playerPickState[playerId].random_state
-		local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1400
+	-- Set starting gold
+	PlayerResource:SetGold(hero:GetPlayerID(), IMBA_GetHeroStartingGold(), false)
 
-		if has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-			PlayerResource:SetGold(playerId, initial_gold + 200, false)
-		else
-			PlayerResource:SetGold(playerId, initial_gold, false)
-		end
-	else
-		-- Give players an additional 250 boost in gold if they random
-		if PlayerResource:HasRandomed(hero:GetPlayerID()) then
-			PlayerResource:SetGold(hero:GetPlayerID(), hero:GetGold() + 250, false)
-		end
-	end
+	-- Give players an additional 250 boost in gold if they random
+--	if PlayerResource:HasRandomed(hero:GetPlayerID()) then
+--		PlayerResource:SetGold(hero:GetPlayerID(), hero:GetGold() + 250, false)
+--	end
 
 	local deathEffects = hero:Attribute_GetIntValue("effectsID", -1)
 	if deathEffects ~= -1 then
@@ -124,10 +115,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 				hero:AddNewModifier(hero, flesh_heap_ability, "modifier_imba_pudge_flesh_heap_handler", {})
 			elseif hero:GetUnitName() == "npc_dota_hero_tiny" then
 				hero:AddNewModifier(hero, nil, "modifier_imba_tiny_death_handler", {})
-			elseif hero:GetUnitName() == "npc_dota_hero_troll_warlord" then -- troll warlord weird fix needed
-				hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
-				hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
-				hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
 			elseif hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
 				if hero:IsAlive() and hero:HasTalent("special_bonus_imba_witch_doctor_6") then
 					if not hero:HasModifier("modifier_imba_voodoo_restoration") then

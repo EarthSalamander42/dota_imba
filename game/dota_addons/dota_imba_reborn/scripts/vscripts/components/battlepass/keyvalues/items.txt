@@ -2672,7 +2672,7 @@
 			"7011"			"back"		// Swine Powder Barrel
 			"7009"			"head"		// Swine Visor
 			"6908"			"arms"		// Swine Arsenal
-			"6946"			"belt"	// Mark of the Taunting Swine
+			"6946"			"belt"		// Mark of the Taunting Swine
 		}
 	}
 
@@ -2713,6 +2713,23 @@
 			"13743"			"arms" // Bracers of the one true king
 			"13760"			"weapon" // Sword of the one true king
 		}
+	}
+
+	"123" // Invoker: Acolyte of the Lost Arts
+	{
+		"item_id"					"13042"
+		"item_type"					"wearable"
+		"item_unlock_level"			"225"
+
+//		"wearables"
+//		{
+//			"13443"			"head_persona_1" // Invoker Kid's Head
+//			"13444"			"shoulder_persona_1" // Invoker Kid's Shoulder
+//			"13445"			"back_persona_1" // Invoker Kid's Back
+//			"13446"			"arms_persona_1" // Invoker Kid's Arms
+//			"13047"			"summon_persona_1" // Invoker Kid's Forge Spirits
+//			"13049"			"armor_persona_1" // Invoker Kid's Armor
+//		}
 	}
 
 //	"123" // Queen of Pain: Eminence of Ristul

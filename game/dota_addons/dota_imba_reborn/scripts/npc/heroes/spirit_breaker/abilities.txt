@@ -8,7 +8,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_spirit_breaker.lua"
 		"AbilityTextureName"			"spirit_breaker_charge_of_darkness"		
-	
+
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
@@ -103,7 +103,7 @@
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
-	
+
 	//=================================================================================================================
 	// Ability: Bulldoze
 	//=================================================================================================================
@@ -135,18 +135,18 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"movement_speed"				"16 22 28 34"
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed"			"12 18 24 30"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"status_resistance"			"35 50 65 80"
+				"var_type"					"FIELD_INTEGER"
+				"status_resistance"			"34 46 58 70"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"	"8"
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8.0"
 			}
 			
 			"04"
@@ -156,7 +156,7 @@
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"						"FIELD_INTEGER"
 				"empowering_aura_move_speed"	"4 6 8 10"
 			}
 		}

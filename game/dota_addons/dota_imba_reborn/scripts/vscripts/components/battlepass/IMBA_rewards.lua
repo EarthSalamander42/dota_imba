@@ -7,7 +7,6 @@ if IsInToolsMode() then
 --	BATTLEPASS_LEVEL_REWARD[195]	= {"terrorblade_arcana", "arcana"}
 	BATTLEPASS_LEVEL_REWARD[195]	= {"nevermore_arcana", "arcana"}
 end
-BATTLEPASS_LEVEL_REWARD[225]	= {"invoker_legendary", "legendary"}
 BATTLEPASS_LEVEL_REWARD[280]	= {"pudge_immortal", "immortal"}
 -- BATTLEPASS_LEVEL_REWARD[310]	= {"dragon_knight_mythical", "mythical"}
 BATTLEPASS_LEVEL_REWARD[400]	= {"ursa_immortal", "immortal"}
@@ -17,7 +16,6 @@ BATTLEPASS_LEVEL_REWARD[400]	= {"ursa_immortal", "immortal"}
 function Battlepass:Init()
 	BattlepassHeroes = {}
 	BattlepassHeroes["earthshaker"] = {}
-	BattlepassHeroes["invoker"] = {}
 	BattlepassHeroes["lina"] = {}
 	if IsInToolsMode() then
 		BattlepassHeroes["nevermore"] = {}
@@ -109,15 +107,6 @@ function Battlepass:GetHeroEffect(hero)
 		hero.frost_arrows_debuff_pfx = "particles/units/heroes/hero_drow/drow_frost_arrow_debuff.vpcf"
 		hero.marksmanship_arrow_pfx = "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
 		hero.marksmanship_frost_arrow_pfx = "particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
-	elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
-		hero.quas_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
-		hero.wex_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
-		hero.exort_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
-		hero.all_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
-
-		hero.quas_orb = "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
-		hero.wex_orb = "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
-		hero.exort_orb = "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_tiny" then
 		hero.ambient_pfx_effect = "particles/units/heroes/hero_tiny/tiny_ambient.vpcf"
 		hero.death_pfx = "particles/units/heroes/hero_tiny/tiny01_death.vpcf"
@@ -286,21 +275,6 @@ function Battlepass:GetHeroEffect(hero)
 --				if not hero:HasModifier("modifier_earthshaker_arcana") then -- need to change name, this is the vanilla modifier name
 --					hero:AddNewModifier(hero, nil, "modifier_earthshaker_arcana", {})
 --				end
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_invoker" then
-			if Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= BattlepassHeroes[short_name]["invoker_legendary"] then
-				Wearable:_WearProp(hero, "13042", "persona_selector")
-
-				hero.quas_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_quas.vpcf"
-				hero.wex_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_wex.vpcf"
-				hero.exort_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_exort.vpcf"
-				hero.all_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf"
-
-				hero.quas_orb = "particles/units/heroes/hero_invoker_kid/invoker_kid_quas_orb.vpcf"
-				hero.wex_orb = "particles/units/heroes/hero_invoker_kid/invoker_kid_wex_orb.vpcf"
-				hero.exort_orb = "particles/units/heroes/hero_invoker_kid/invoker_kid_exort_orb.vpcf"
-
-				hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_nevermore" then
 			if IsInToolsMode() then

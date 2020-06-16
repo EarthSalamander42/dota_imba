@@ -106,7 +106,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				else
 					local new_hero = PlayerResource:GetSelectedHeroName(i)
 
-					if api.disabled_heroes[new_hero] then
+					if new_hero and api.disabled_heroes[new_hero] then
 						PreventBannedHeroToBeRandomed(i)
 						PlayerResource:SetCanRepick(i, false)
 					end

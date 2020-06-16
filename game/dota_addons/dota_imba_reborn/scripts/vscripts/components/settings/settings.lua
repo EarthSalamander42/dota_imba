@@ -256,16 +256,8 @@ MAX_LEVEL[MapTournament()] = global_max_level
 MAX_LEVEL[MapOverthrow()] = global_max_level
 MAX_LEVEL["imba_demo"] = global_max_level
 
-local starting_gold_5v5 = 2300
-local starting_gold_10v10 = 2300
-HERO_INITIAL_GOLD = {}
-HERO_INITIAL_GOLD[Map1v1()] = starting_gold_5v5
-HERO_INITIAL_GOLD["dota"] = starting_gold_5v5
-HERO_INITIAL_GOLD["imba_5v5"] = starting_gold_5v5
-HERO_INITIAL_GOLD[Map10v10()] = starting_gold_10v10
-HERO_INITIAL_GOLD[MapTournament()] = starting_gold_5v5
-HERO_INITIAL_GOLD[MapOverthrow()] = starting_gold_10v10
-HERO_INITIAL_GOLD["imba_demo"] = 99999
+-- vanilla, keep it as a static value for reasons
+HERO_INITIAL_GOLD = 600
 
 local global_gold_tick_time = 0.6
 local global_10v10_gold_tick_time = 0.4

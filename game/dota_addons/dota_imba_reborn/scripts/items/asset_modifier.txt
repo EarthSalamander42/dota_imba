@@ -45443,23 +45443,149 @@
 	}
 	"13042"
 	{
-		"asset_modifier"
-		{
-			"type"		"persona"
-			"persona"		"1"
-		}
-		"asset_modifier1"
-		{
-			"type"		"entity_model"
-			"asset"		"npc_dota_hero_invoker"
-			"modifier"		"models/heroes/invoker_kid/invoker_kid.vmdl"
-		}
-		"asset_modifier2"
-		{
-			"type"		"entity_scale"
-			"asset"		"npc_dota_hero_invoker"
-			"scale_size"		"1"
-		}
+				"asset_modifier"
+				{
+					"type"		"persona"
+					"persona"		"1"
+				}
+				"asset_modifier1"
+				{
+					"type"		"entity_model"
+					"asset"		"npc_dota_hero_invoker"
+					"modifier"		"models/heroes/invoker_kid/invoker_kid.vmdl"
+				}
+				"asset_modifier2"
+				{
+					"type"		"hero_scale"
+					"asset"		"npc_dota_hero_invoker"
+					"ModelScale"		"1.000000"
+				}
+				"asset_modifier3"
+				{
+					"type"		"icon_replacement_hero_minimap"
+					"asset"		"npc_dota_hero_invoker"
+					"modifier"		"npc_dota_hero_invoker_persona1"
+					"force_display"		"1"
+				}
+				"asset_modifier4"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
+					"modifier"		"particles/units/heroes/hero_invoker_kid/invoker_kid_quas_orb.vpcf"
+				}
+				"asset_modifier5"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
+					"modifier"		"particles/units/heroes/hero_invoker_kid/invoker_kid_wex_orb.vpcf"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
+					"modifier"		"particles/units/heroes/hero_invoker_kid/invoker_kid_exort_orb.vpcf"
+				}
+				"asset_modifier7"
+				{
+					"type"		"response_criteria"
+					"asset"		"kid_persona"
+				}
+				"asset_modifier8"
+				{
+					"type"		"default_idle_expression"
+					"asset"		"scenes/invoker/invoker_exp_idle_01.vcd"
+					"modifier"		"scenes/invoker/invoker_kidvoker_exp_idle_01.vcd"
+				}
+				"asset_modifier9"
+				{
+					"type"		"ability_icon"
+					"asset"		"invoker_quas"
+					"modifier"		"invoker_quas_persona1"
+				}
+				"asset_modifier10"
+				{
+					"type"		"ability_icon"
+					"asset"		"invoker_wex"
+					"modifier"		"invoker_wex_persona1"
+				}
+				"asset_modifier11"
+				{
+					"type"		"ability_icon"
+					"asset"		"invoker_exort"
+					"modifier"		"invoker_exort_persona1"
+				}
+				"asset_modifier12"
+				{
+					"type"		"ability_icon"
+					"asset"		"invoker_ghost_walk"
+					"modifier"		"invoker_ghost_walk_persona1"
+				}
+				"asset_modifier13"
+				{
+					"type"		"ability_icon"
+					"asset"		"invoker_forge_spirit"
+					"modifier"		"invoker_forge_spirit_persona1"
+				}
+				"asset_modifier14"
+				{
+					"type"		"chatwheel"
+					"asset"		"invoker_invo_laugh_06"
+					"modifier"		"invoker_kidvo_la_laugh_06"
+				}
+				"asset_modifier15"
+				{
+					"type"		"chatwheel"
+					"asset"		"invoker_invo_purch_01"
+					"modifier"		"invoker_kidvo_la_purch_01"
+				}
+				"asset_modifier16"
+				{
+					"type"		"chatwheel"
+					"asset"		"invoker_invo_ability_invoke_01"
+					"modifier"		"invoker_kidvo_la_ability_invoke_01"
+				}
+				"asset_modifier17"
+				{
+					"type"		"chatwheel"
+					"asset"		"invoker_invo_kill_01"
+					"modifier"		"invoker_kidvo_la_kill_01"
+				}
+				"asset_modifier18"
+				{
+					"type"		"chatwheel"
+					"asset"		"invoker_invo_attack_05"
+					"modifier"		"invoker_kidvo_la_attack_05"
+				}
+				"asset_modifier19"
+				{
+					"type"		"chatwheel"
+					"asset"		"invoker_invo_failure_06"
+					"modifier"		"invoker_kidvo_la_failure_06"
+				}
+				"asset_modifier20"
+				{
+					"type"		"chatwheel"
+					"asset"		"invoker_invo_lasthit_06"
+					"modifier"		"invoker_kidvo_la_lasthit_06_02"
+				}
+				"asset_modifier21"
+				{
+					"type"		"chatwheel"
+					"asset"		"invoker_invo_rare_04"
+					"modifier"		"invoker_kidvo_la_rare_04"
+				}
+				"asset_modifier22"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_invoker/invoker_death.vpcf"
+					"modifier"		"particles/units/heroes/hero_invoker_kid/invoker_kid_death.vpcf"
+				}
+				"asset_modifier23"
+				{
+					"type"		"icon_replacement_hero"
+					"asset"		"npc_dota_hero_invoker"
+					"modifier"		"npc_dota_hero_invoker_persona1"
+				}
 	}
 	"13043"
 	{
@@ -45477,12 +45603,24 @@
 	}
 	"13047"
 	{
-		"asset_modifier"
-		{
-			"type"		"entity_model"
-			"asset"		"npc_dota_invoker_forged_spirit"
-			"modifier"		"models/heroes/invoker_kid/invoker_kid_trainer_dragon.vmdl"
-		}
+				"asset_modifier"
+				{
+					"type"		"entity_model"
+					"asset"		"npc_dota_invoker_forged_spirit"
+					"modifier"		"models/heroes/invoker_kid/invoker_kid_trainer_dragon.vmdl"
+				}
+				"asset_modifier2"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
+					"modifier"		"particles/units/heroes/hero_invoker_kid/invoker_kid_forge_spirit_ambient.vpcf"
+				}
+				"asset_modifier3"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+					"modifier"		"particles/units/heroes/hero_invoker_kid/invoker_kid_forged_spirit_projectile.vpcf"
+				}
 	}
 	"13060"
 	{

@@ -1244,7 +1244,19 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 		local hero_table = {}
 
 		for k, v in pairs(herolist) do
-			table.insert(hero_table, k)
+			local picked_heroes = {}
+
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				if PlayerResource:GetPlayer(i) and PlayerResource:GetPlayer(i):GetSelectedHeroName(i) then
+					picked_heroes[PlayerResource:GetPlayer(i):GetSelectedHeroName(i)] = true
+					break
+				end
+			end
+
+			-- only add non-picked heroes
+			if not picked_heroes[k] then
+				table.insert(hero_table, k)
+			end
 		end
 
 		local new_hero = hero_table[RandomInt(1, #hero_table)]
@@ -1261,7 +1273,7 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 		local old_hero = PlayerResource:GetSelectedHeroEntity(iPlayerID)
 
 		PrecacheUnitByNameAsync(new_hero, function()
-			PlayerResource:ReplaceHeroWith(iPlayerID, new_hero, HERO_INITIAL_GOLD[GetMapName()], 0)
+			PlayerResource:ReplaceHeroWith(iPlayerID, new_hero, IMBA_GetHeroStartingGold(), 0)
 
 			Timers:CreateTimer(1.0, function()
 				if old_hero then
@@ -1408,4 +1420,16 @@ function GetEtherealAbilities()
 	}
 
 	return abilities
+end
+
+function IMBA_GetHeroStartingGold()
+	-- could use dynamic vanilla starting gold, but then some bugs raises like re-random feature if a backend banned hero is picked
+	local hero_gold = HERO_INITIAL_GOLD
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
+
+	if custom_gold_bonus > 100 then
+		hero_gold = hero_gold * custom_gold_bonus / 100
+	end
+
+	return hero_gold
 end

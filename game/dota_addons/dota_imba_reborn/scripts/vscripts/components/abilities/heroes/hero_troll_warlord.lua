@@ -23,6 +23,11 @@ function imba_troll_warlord_berserkers_rage:ProcsMagicStick() return false end
 function imba_troll_warlord_berserkers_rage:OnUpgrade()
 	if IsServer() then
 		local caster = self:GetCaster()
+
+		if self:GetLevel() == 1 then
+			caster:FindAbilityByName("imba_troll_warlord_whirling_axes_melee"):SetActivated(false)
+		end
+
 		if not (caster:HasModifier("modifier_imba_berserkers_rage_ranged") or caster:HasModifier("modifier_imba_berserkers_rage_melee")) then
 			if self:GetToggleState() then
 				caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_melee", {})
@@ -58,17 +63,23 @@ function imba_troll_warlord_berserkers_rage:OnToggle()
 				caster.beserk_sound = nil
 			end)
 		end
+
 		caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+
 		if caster:HasModifier("modifier_imba_berserkers_rage_ranged") and self:GetToggleState() then
 			caster:RemoveModifierByName("modifier_imba_berserkers_rage_ranged")
 			caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_melee", {})
-			caster:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
+--			caster:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
+			caster:FindAbilityByName("imba_troll_warlord_whirling_axes_melee"):SetActivated(true)
+			caster:FindAbilityByName("imba_troll_warlord_whirling_axes_ranged"):SetActivated(false)
 			caster:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
 			self.mode = 2
 		else
 			caster:RemoveModifierByName("modifier_imba_berserkers_rage_melee")
 			caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_ranged", {})
-			caster:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+--			caster:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+			caster:FindAbilityByName("imba_troll_warlord_whirling_axes_melee"):SetActivated(false)
+			caster:FindAbilityByName("imba_troll_warlord_whirling_axes_ranged"):SetActivated(true)
 			caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
 			self.mode = 1
 		end

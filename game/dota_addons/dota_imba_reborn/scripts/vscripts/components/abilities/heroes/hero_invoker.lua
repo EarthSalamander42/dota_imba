@@ -29,12 +29,6 @@ imba_invoker = imba_invoker or class({})
 		imba_invoker_quas = class({})
 		LinkLuaModifier("modifier_imba_invoker_quas", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 
-		function imba_invoker_quas:GetAbilityTextureName()
-			if not IsClient() then return end
-			if not self:GetCaster().arcana_style then return "invoker_quas" end
-			return "invoker_quas_persona1"
-		end
-
 		function imba_invoker_quas:ProcsMagicStick() return false end
 
 		function imba_invoker_quas:OnSpellStart()
@@ -47,17 +41,9 @@ imba_invoker = imba_invoker or class({})
 					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 				end
 
-				imba_invoker:update_orbs(caster, self, "imba_invoker_quas", caster.quas_orb)
+				imba_invoker:update_orbs(caster, self, "imba_invoker_quas", "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf")
 			end
 		end
-
-		-- function imba_invoker_quas:OnUpgrade() 
-			-- if IsServer() then
-				-- if self:GetLevel() == 7 and self:GetCaster():HasScepter() then  
-					-- self:SetLevel(8)
-				-- end
-			-- end
-		-- end
 
 		---------------------------------------------------------------------------------------------------------------------
 		--	Invoker: Quas Orb modifier
@@ -110,12 +96,6 @@ imba_invoker = imba_invoker or class({})
 
 		function imba_invoker_wex:ProcsMagicStick() return false end
 
-		function imba_invoker_wex:GetAbilityTextureName()
-			if not IsClient() then return end
-			if not self:GetCaster().arcana_style then return "invoker_wex" end
-			return "invoker_wex_persona1"
-		end
-
 		function imba_invoker_wex:OnSpellStart()
 			if IsServer() then
 				local caster = self:GetCaster()
@@ -126,17 +106,9 @@ imba_invoker = imba_invoker or class({})
 					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 				end
 
-				imba_invoker:update_orbs(caster, self, "imba_invoker_wex", caster.wex_orb)
+				imba_invoker:update_orbs(caster, self, "imba_invoker_wex", "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf")
 			end
 		end
-
-		-- function imba_invoker_wex:OnUpgrade() 
-			-- if IsServer() then
-				-- if self:GetLevel() == 7 and self:GetCaster():HasScepter() then  
-					-- self:SetLevel(8)
-				-- end
-			-- end
-		-- end
 
 		---------------------------------------------------------------------------------------------------------------------
 		--	Invoker: Wex Orb modifier
@@ -197,12 +169,6 @@ imba_invoker = imba_invoker or class({})
 
 		function imba_invoker_exort:ProcsMagicStick() return false end
 
-		function imba_invoker_exort:GetAbilityTextureName()
-			if not IsClient() then return end
-			if not self:GetCaster().arcana_style then return "invoker_exort" end
-			return "invoker_exort_persona1"
-		end
-
 		function imba_invoker_exort:OnSpellStart()
 			if IsServer() then
 				local caster = self:GetCaster()
@@ -213,17 +179,9 @@ imba_invoker = imba_invoker or class({})
 					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 				end
 
-				imba_invoker:update_orbs(caster, self, "imba_invoker_exort", caster.exort_orb)
+				imba_invoker:update_orbs(caster, self, "imba_invoker_exort", "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf")
 			end
 		end
-
-		-- function imba_invoker_exort:OnUpgrade() 
-			-- if IsServer() then
-				-- if self:GetLevel() == 7 and self:GetCaster():HasScepter() then  
-					-- self:SetLevel(8)
-				-- end
-			-- end
-		-- end
 
 		---------------------------------------------------------------------------------------------------------------------
 		--	Invoker: Exort Orb modifier
@@ -308,7 +266,7 @@ imba_invoker = imba_invoker or class({})
 				--Shift the ordered list of currently summoned orb particle effects down, and create the new particle.
 				caster.invoked_orbs_particle[1] = caster.invoked_orbs_particle[2]
 				caster.invoked_orbs_particle[2] = caster.invoked_orbs_particle[3]
-				caster.invoked_orbs_particle[3] = ParticleManager:CreateParticle(particle_path, PATTACH_OVERHEAD_FOLLOW, caster)
+				caster.invoked_orbs_particle[3] = ParticleManager:CreateParticle(particle_path, PATTACH_OVERHEAD_FOLLOW, caster, caster)
 				ParticleManager:SetParticleControlEnt(caster.invoked_orbs_particle[3], 1, caster, PATTACH_POINT_FOLLOW, caster.invoked_orbs_particle_attach[1], caster:GetAbsOrigin(), false)
 				
 				-- Shift the ordered list of currently summoned orb particle effect attach locations down.
@@ -414,14 +372,27 @@ imba_invoker = imba_invoker or class({})
 				end
 			end
 
-			if quas >= 2 then 
-				caster:SetRangedProjectileName(caster.quas_attack)
-			elseif wex >= 2 then 
-				caster:SetRangedProjectileName(caster.wex_attack)
-			elseif exort >= 2 then 
-				caster:SetRangedProjectileName(caster.exort_attack)
-			elseif quas == 1 and wex == 1 and exort == 1 then 
-				caster:SetRangedProjectileName(caster.all_attack)
+			local quas_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+			local wex_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+			local exort_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+			local all_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+
+			-- temporary
+			if caster.bPersona then
+				quas_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_quas.vpcf"
+				wex_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_wex.vpcf"
+				exort_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_exort.vpcf"
+				all_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf"
+			end
+
+			if quas >= 2 then
+				caster:SetRangedProjectileName(quas_attack)
+			elseif wex >= 2 then
+				caster:SetRangedProjectileName(wex_attack)
+			elseif exort >= 2 then
+				caster:SetRangedProjectileName(exort_attack)
+			elseif quas == 1 and wex == 1 and exort == 1 then
+				caster:SetRangedProjectileName(all_attack)
 			end
 		end	
 
@@ -1669,12 +1640,6 @@ imba_invoker = imba_invoker or class({})
 
 		imba_invoker_ghost_walk = class({})
 
-		function imba_invoker_ghost_walk:GetAbilityTextureName()
-			if not IsClient() then return end
-			if not self:GetCaster().arcana_style then return "invoker_ghost_walk" end
-			return "invoker_ghost_walk_persona1"
-		end
-
 		function imba_invoker_ghost_walk:GetCastAnimation()
 			return ACT_DOTA_CAST_GHOST_WALK
 		end
@@ -2208,12 +2173,6 @@ imba_invoker = imba_invoker or class({})
 
 		imba_invoker_forge_spirit = class({})
 
-		function imba_invoker_forge_spirit:GetAbilityTextureName()
-			if not IsClient() then return end
-			if not self:GetCaster().arcana_style then return "invoker_forge_spirit" end
-			return "invoker_forge_spirit_persona1"
-		end
-
 		function imba_invoker_forge_spirit:GetCastAnimation()
 			return ACT_DOTA_CAST_FORGE_SPIRIT
 		end
@@ -2279,8 +2238,8 @@ imba_invoker = imba_invoker or class({})
 				-- Summon new Spirits
 				for i = 1, spirit_count do
 					local forged_spirit = CreateUnitByName(spirit_name, caster:GetAbsOrigin() + RandomVector(100), true, caster, caster, caster:GetTeamNumber())
-					print("Has persona?", Battlepass:HasArcana(self:GetCaster(), "invoker"))
-					if Battlepass and Battlepass:HasArcana(self:GetCaster(), "invoker") then
+
+					if caster.bPersona then
 						forged_spirit:SetOriginalModel("models/heroes/invoker_kid/invoker_kid_trainer_dragon.vmdl")
 						forged_spirit:SetModel("models/heroes/invoker_kid/invoker_kid_trainer_dragon.vmdl")
 						forged_spirit:SetRangedProjectileName("particles/units/heroes/hero_invoker_kid/invoker_kid_forged_spirit_projectile.vpcf")

@@ -36444,7 +36444,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"bash_damage"			"20 30 40 50"
 			}
-			
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -36511,7 +36510,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"axe_speed"					"1500"
+				"axe_speed"					"2000"
 			}
 			"03"
 			{
@@ -36561,8 +36560,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_troll_warlord"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"ScriptFile"					"components/abilities/heroes/hero_troll_warlord"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"

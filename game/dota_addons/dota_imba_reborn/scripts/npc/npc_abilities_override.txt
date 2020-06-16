@@ -3493,11 +3493,6 @@
 				"poof_damage"				"150 200 250 300"
 				"LinkedSpecialBonus"		"special_bonus_unique_meepo_2"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"poof_tooltip"				"1.5 1.4 1.3 1.2"
-			}
 		}
 	}
 

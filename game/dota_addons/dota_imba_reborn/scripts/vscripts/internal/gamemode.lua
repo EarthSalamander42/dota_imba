@@ -47,11 +47,11 @@ function GameMode:_InitGameMode()
 
 	GameRules:GetGameModeEntity():SetFreeCourierModeEnabled(b_USE_MULTIPLE_COURIERS)
 	
-	if IMBA_PICK_SCREEN == false then
-		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
-	else
-		GameRules:SetStartingGold(0)
-	end
+--	if IMBA_PICK_SCREEN == false then
+--		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
+--	else
+--		GameRules:SetStartingGold(0)
+--	end
 
 	GameRules:LockCustomGameSetupTeamAssignment(not IsInToolsMode())
 
@@ -169,7 +169,11 @@ end
 function GameMode:OnSetGameMode()
 	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[GetMapName()]})
-	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
+
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
+	local starting_gold = HERO_INITIAL_GOLD * custom_gold_bonus / 100
+
+	CustomNetTables:SetTableValue("game_options", "initial_gold", {starting_gold})
 end
