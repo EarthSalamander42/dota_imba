@@ -117,7 +117,7 @@ end
 function modifier_vardor_yari_unit:OnDestroy()
 	if not IsServer() then return end		
 
-	-- Is it a yari charge? If it isn't, do grant a charge back to the caster when this unit dies
+	-- Is it a yari charge? If it isn't, don't grant a charge back to the caster when this unit dies
 	if self.is_charge_yari == 0 then return end
 
 	local modifier = self.caster:FindModifierByName("modifier_vardor_piercing_shot_charges")
@@ -397,13 +397,17 @@ function modifier_vardor_piercing_shot_charges:OnIntervalThink()
 	-- Check for yaris being laid down on the ground
 	local yaris = 0	
 	local units = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-
+    
 	for _, unit in pairs(units) do
 		if unit:GetUnitName() == "npc_dota_vardor_spear_dummy" then
-			-- Found a Yari!
-			yaris = yaris + 1
+            -- Check if it has the is_charge_yari property
+            local modifier = unit:FindModifierByName("modifier_vardor_yari_unit")
+            if modifier.is_charge_yari == 1 then
+    			-- Found a valid Yari!
+    			yaris = yaris + 1
+            end
 		end
-	end
+	end    
 
 	-- Check for enemies with stuck yaris debuff on them	
 	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_DAMAGE_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -425,8 +429,6 @@ function modifier_vardor_piercing_shot_charges:OnIntervalThink()
 	local found_yaris = yaris + stacks
 	if found_yaris ~= expected_charges then		
 		self:SetStackCount(expected_charges)
-	else
-		
 	end
 end
 
@@ -1265,7 +1267,7 @@ end
 function modifier_vardor_mental_thrusts_debuff:OnIntervalThink()	
 	local repeat_needed = true
 
-	-- We''ll repeat the table removal check and remove as many expired items from it as needed.
+	-- We'll repeat the table removal check and remove as many expired items from it as needed.
 	while repeat_needed do
 		-- Check if the firstmost entry in the table has expired
 		local item_time = self.stack_table[1]
