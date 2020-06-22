@@ -1423,9 +1423,9 @@ function GetEtherealAbilities()
 end
 
 function IMBA_GetHeroStartingGold()
-	-- could use dynamic vanilla starting gold, but then some bugs raises like re-random feature if a backend banned hero is picked
+	-- could use dynamic vanilla starting gold, but then some bugs raises like re-random feature giving double starting gold and xp if a backend banned hero is picked
 	local hero_gold = HERO_INITIAL_GOLD
-	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
+	local custom_gold_bonus = CUSTOM_GOLD_BONUS[GetMapName()] or 100
 
 	if custom_gold_bonus > 100 then
 		hero_gold = hero_gold * custom_gold_bonus / 100
