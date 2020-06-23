@@ -1,3 +1,5 @@
+// "npc_dota_hero_puck"                                        "Puck (IMBA)"
+
 //PUCK
 "DOTA_Tooltip_ability_imba_puck_illusory_orb"										"Illusory Orb"
 "DOTA_Tooltip_ability_imba_puck_illusory_orb_Description"							"Puck launches a magic orb that floats in a straight path, damaging enemy units along the way. At any point, Puck may teleport to the orb's location using Ethereal Jaunt.\n<font color='#FF7800'>Eternal Jaunt:</font> Ethereal Jaunt does not destroy the Illusory Orb when activated, allowing for multiple warps per orb. However, each additional jaunt beyond the first has a mana cost equal to %eternal_max_mana_pct%%% of Puck's max mana.\n<font color='#FF7800'>Dichotomous:</font> Fires an additional Illusory Orb backwards. This orb cannot be jaunted to."

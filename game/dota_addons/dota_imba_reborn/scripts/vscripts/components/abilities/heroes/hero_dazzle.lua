@@ -1958,6 +1958,7 @@ function imba_dazzle_bad_juju:GetIntrinsicModifierName()
 	return "modifier_imba_dazzle_bad_juju"
 end
 
+--[[
 function imba_dazzle_bad_juju:OnInventoryContentsChanged()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1980,6 +1981,7 @@ function imba_dazzle_bad_juju:OnInventoryContentsChanged()
 		end
 	end
 end
+--]]
 
 LinkLuaModifier("modifier_imba_dazzle_bad_juju", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
 

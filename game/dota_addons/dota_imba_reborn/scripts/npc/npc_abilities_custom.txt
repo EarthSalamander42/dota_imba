@@ -36,7 +36,8 @@
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/outworld_devourer/abilities.txt
-#base heroes/puck/abilities.txt
+// #base heroes/puck/abilities.txt
+#base heroes/puck/abilities_vanilla.txt
 #base heroes/phantom_lancer/abilities.txt
 #base heroes/rattletrap/abilities.txt
 #base heroes/rubick/abilities.txt

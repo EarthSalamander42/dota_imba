@@ -127,7 +127,6 @@
 "npc_dota_hero_phantom_assassin"                            "Phantom Assassin (IMBA)"
 "npc_dota_hero_phantom_lancer"                              "Phantom Lancer (IMBA)"
 "npc_dota_hero_phoenix"                                    "Phoenix (IMBA)"
-"npc_dota_hero_puck"                                        "Puck (IMBA)"
 "npc_dota_hero_pudge"                                      "Pudge (IMBA)"
 "npc_dota_hero_pugna"                                      "Pugna (IMBA)"
 "npc_dota_hero_queenofpain"                                "Queen of Pain (IMBA)"

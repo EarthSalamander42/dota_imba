@@ -21,7 +21,7 @@
 #base heroes/oracle/hero.txt
 #base heroes/outworld_devourer/hero.txt
 #base heroes/phantom_lancer/hero.txt
-#base heroes/puck/hero.txt
+// #base heroes/puck/hero.txt
 #base heroes/rattletrap/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
