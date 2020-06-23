@@ -1028,12 +1028,6 @@ function CDOTA_BaseNPC:IsRealHero()
 	end
 end
 
-function CDOTA_BaseNPC:IsCreepHero()
-	if not self:IsNull() then
-		return self:GetClassname() == "npc_dota_lone_druid_bear" or string.find(self:GetUnitName(), "warlock_golem") or self:GetName() == "npc_dota_visage_familiar" or self:GetName() == "npc_dota_elder_titan_ancestral_spirit" or self:GetName() == "npc_dota_brewmaster_earth" or self:GetName() == "npc_dota_brewmaster_fire" or self:GetName() == "npc_dota_brewmaster_storm"
-	end
-end
-
 function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if self:IsNull() then return end
 
