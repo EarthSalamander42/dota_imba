@@ -667,7 +667,7 @@ function imba_centaur_stampede:OnSpellStart()
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 			caster:GetAbsOrigin(),
 			nil,
-			25000, -- global
+			FIND_UNITS_EVERYWHERE, -- global
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NONE,
@@ -682,7 +682,7 @@ function imba_centaur_stampede:OnSpellStart()
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(),
 			caster:GetAbsOrigin(),
 			nil,
-			25000, -- global
+			FIND_UNITS_EVERYWHERE, -- global
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,

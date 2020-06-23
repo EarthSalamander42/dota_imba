@@ -24,7 +24,7 @@ function GenerateGGTopBar(player, team, has_gg) {
 		gg_row.style.width = "100%";
 		gg_row.style.height = "40%";
 		gg_row.style.align = "center bottom";
-		gg_row.style.zIndex = "5";
+		gg_row.style.zIndex = "501"; // ult ready UI z-index is 500;
 		gg_row.style.textAlign = "center center";
 		gg_row.style.flowChildren = "right";
 

@@ -986,7 +986,7 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 						hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration * (1 - hero:GetStatusResistance())})
 					end
 					
-					local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+					local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 					
 					for _, unit in ipairs(magnetizedFinder) do
 						if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
@@ -1266,7 +1266,7 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 					end
 				end
 				
-				local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+				local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 				
 				for _, unit in ipairs(magnetizedFinder) do
 					if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then

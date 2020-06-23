@@ -1661,7 +1661,7 @@ function modifier_imba_headhunter_debuff_handler:OnIntervalThink()
 		local heroes = FindUnitsInRadius(self.parent:GetTeamNumber(),
 			self.parent:GetAbsOrigin(),
 			nil,
-			25000, -- global
+			FIND_UNITS_EVERYWHERE, -- global
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 			DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,

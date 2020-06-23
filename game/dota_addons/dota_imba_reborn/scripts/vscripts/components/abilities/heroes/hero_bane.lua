@@ -770,7 +770,7 @@ function imba_bane_nightmare_end:OnSpellStart()
 		local units = FindUnitsInRadius(caster:GetTeamNumber(),
 			caster:GetAbsOrigin(),
 			nil,
-			25000, -- Global
+			FIND_UNITS_EVERYWHERE, -- Global
 			DOTA_UNIT_TARGET_TEAM_BOTH,
 			DOTA_UNIT_TARGET_ALL,
 			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
@@ -1283,7 +1283,7 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 				local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
 					caster:GetAbsOrigin(),
 					nil,
-					25000,				--global
+					FIND_UNITS_EVERYWHERE,				--global
 					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 					DOTA_UNIT_TARGET_BASIC,
 					DOTA_UNIT_TARGET_FLAG_INVULNERABLE,

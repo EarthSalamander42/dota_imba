@@ -34,7 +34,7 @@ function modifier_imba_stalker_in_the_night:OnCreated()
 			local heroes = FindUnitsInRadius(	self.caster:GetTeamNumber(),
 												self.caster:GetAbsOrigin(),
 												nil,
-												25000, -- global
+												FIND_UNITS_EVERYWHERE, -- global
 												DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 												DOTA_UNIT_TARGET_HERO,
 												DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
@@ -1058,7 +1058,7 @@ function imba_night_stalker_darkness:OnSpellStart()
 	local enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(),
 										   caster:GetAbsOrigin(),
 										   nil,
-										   25000, -- global
+										   FIND_UNITS_EVERYWHERE, -- global
 										   DOTA_UNIT_TARGET_TEAM_ENEMY,
 										   DOTA_UNIT_TARGET_HERO,
 										   DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,

@@ -1244,7 +1244,7 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 				self.talentWaveDelayed[oldest].handler:DestroyCustom()
 
 				-- Destroy all bounce cooldowns
-				local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+				local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
 				for _, unit in ipairs(units) do
 					local cooldownMods = unit:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 					for _, mod in ipairs(cooldownMods) do

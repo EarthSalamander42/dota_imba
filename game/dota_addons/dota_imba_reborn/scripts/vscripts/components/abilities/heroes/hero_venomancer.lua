@@ -55,7 +55,7 @@ function modifier_imba_toxicity:OnIntervalThink()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			local debuff = enemy:FindModifierByNameAndCaster("modifier_imba_toxicity_debuff", caster)
 			local poisons = {}

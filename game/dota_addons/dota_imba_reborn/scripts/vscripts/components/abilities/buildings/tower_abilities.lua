@@ -4394,7 +4394,7 @@ function modifier_tower_healing_think:OnIntervalThink()
 		local heroes = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
 			self:GetParent():GetAbsOrigin(),
 			nil,
-			25000, --global
+			FIND_UNITS_EVERYWHERE, --global
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 			DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_NONE,

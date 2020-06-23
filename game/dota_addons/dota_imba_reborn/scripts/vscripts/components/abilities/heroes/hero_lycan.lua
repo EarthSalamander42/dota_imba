@@ -72,7 +72,7 @@
 	-- local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
 									-- caster:GetAbsOrigin(),
 									-- nil,
-									-- 25000,
+									-- FIND_UNITS_EVERYWHERE,
 									-- DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 									-- DOTA_UNIT_TARGET_BASIC,
 									-- DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
@@ -263,7 +263,7 @@
 		-- local wolves = FindUnitsInRadius(self.caster:GetTeamNumber(),
     									-- self.caster:GetAbsOrigin(),
     									-- nil,
-    									-- 25000, -- global
+    									-- FIND_UNITS_EVERYWHERE, -- global
     									-- DOTA_UNIT_TARGET_TEAM_FRIENDLY,
     									-- DOTA_UNIT_TARGET_BASIC,
     									-- DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
@@ -742,7 +742,7 @@ function imba_lycan_howl:OnSpellStart()
 	local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
 									caster:GetAbsOrigin(),
 									nil,
-									25000,
+									FIND_UNITS_EVERYWHERE,
 									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 									DOTA_UNIT_TARGET_BASIC,
 									DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
@@ -783,7 +783,7 @@ function imba_lycan_howl:OnSpellStart()
 	local allies = FindUnitsInRadius(caster:GetTeamNumber(),
 									caster:GetAbsOrigin(),
 									nil,
-									25000,
+									FIND_UNITS_EVERYWHERE,
 									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 									DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
@@ -937,7 +937,7 @@ function imba_lycan_howl_723:OnSpellStart()
 	for _, creature in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
 									self:GetCaster():GetAbsOrigin(),
 									nil,
-									25000,
+									FIND_UNITS_EVERYWHERE,
 									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 									DOTA_UNIT_TARGET_BASIC,
 									DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
@@ -1846,7 +1846,7 @@ function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
 					local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
 														 self.caster:GetAbsOrigin(),
 														 nil, 
-														 25000,  		-- Global 
+														 FIND_UNITS_EVERYWHERE,  		-- Global 
 														 DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
 														 DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, 
 														 DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, 

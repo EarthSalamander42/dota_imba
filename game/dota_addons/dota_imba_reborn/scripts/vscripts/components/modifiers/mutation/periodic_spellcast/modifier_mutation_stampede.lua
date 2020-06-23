@@ -45,7 +45,7 @@ function modifier_mutation_stampede:OnCreated()
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
 			self:GetParent():GetAbsOrigin(),
 			nil,
-			25000, -- global
+			FIND_UNITS_EVERYWHERE, -- global
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NONE,

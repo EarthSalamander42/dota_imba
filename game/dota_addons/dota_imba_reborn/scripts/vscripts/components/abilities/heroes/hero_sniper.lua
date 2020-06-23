@@ -1521,7 +1521,7 @@ function imba_sniper_assassinate:OnAbilityPhaseInterrupted()
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 		caster:GetAbsOrigin(),
 		nil,
-		25000, -- global
+		FIND_UNITS_EVERYWHERE, -- global
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,

@@ -724,7 +724,7 @@ function imba_witch_doctor_death_ward:OnSpellStart()
 					local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
 						self:GetCaster():GetAbsOrigin(),
 						nil,
-						25000,
+						FIND_UNITS_EVERYWHERE,
 						DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 						DOTA_UNIT_TARGET_OTHER,
 						DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
@@ -826,18 +826,21 @@ function imba_witch_doctor_death_ward:OnChannelFinish()
 		StopSoundOn("Hero_WitchDoctor.Death_WardBuild", self.death_ward)
 		StopSoundOn("Imba.WitchDoctorSingsASong", self.death_ward)
 		UTIL_Remove(self.death_ward)
+
 		-- #5 TALENT: Mini death wards need to be removed at the end of channel.
 		if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_5") then
 			-- Find mini death wards
 			local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
 				self:GetCaster():GetAbsOrigin(),
 				nil,
-				25000,
+				FIND_UNITS_EVERYWHERE,
 				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 				DOTA_UNIT_TARGET_OTHER,
 				DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
 				FIND_ANY_ORDER,
-				false)
+				false
+			)
+
 			-- Remove mini death wards
 			for _,unit in pairs(units) do
 				if unit.bIsMiniDeathWard then
@@ -845,6 +848,7 @@ function imba_witch_doctor_death_ward:OnChannelFinish()
 				end
 			end
 		end
+
 		if self.mod_caster then self.mod_caster:Destroy() end
 	end
 end

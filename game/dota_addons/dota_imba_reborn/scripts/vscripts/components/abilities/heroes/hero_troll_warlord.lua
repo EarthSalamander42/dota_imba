@@ -803,7 +803,7 @@ function imba_troll_warlord_battle_trance:OnSpellStart()
 					sound = "Imba.TrollAK47"
 				--end
 			end
-			local allies = FindUnitsInRadius(caster:GetTeamNumber(), Vector(0,0,0), nil, 25000, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+			local allies = FindUnitsInRadius(caster:GetTeamNumber(), Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 			caster:EmitSound(sound)
 			for _,ally in ipairs(allies) do
 				local mod = ally:AddNewModifier(caster, self, "modifier_imba_battle_trance", {duration = duration})

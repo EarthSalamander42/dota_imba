@@ -1354,7 +1354,7 @@ function imba_silencer_global_silence:OnSpellStart()
 			EmitSoundOn("Hero_Silencer.Penn", caster)
 		end
 
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_global_silence", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
 			if enemy:IsRealHero() then

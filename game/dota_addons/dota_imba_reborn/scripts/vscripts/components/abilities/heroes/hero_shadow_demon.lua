@@ -1133,7 +1133,7 @@ function imba_shadow_demon_shadow_poison_release:OnSpellStart()
     local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
                                       caster:GetAbsOrigin(),
                                       nil,
-                                      25000, --global
+                                      FIND_UNITS_EVERYWHERE, --global
                                       DOTA_UNIT_TARGET_TEAM_ENEMY,
                                       DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
                                       DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
@@ -1173,7 +1173,7 @@ function imba_shadow_demon_shadow_poison_release:OnSpellStart()
     local illusions = FindUnitsInRadius(caster:GetTeamNumber(),
                                         caster:GetAbsOrigin(),
                                         nil,
-                                        25000,
+                                        FIND_UNITS_EVERYWHERE,
                                         DOTA_UNIT_TARGET_TEAM_FRIENDLY,
                                         DOTA_UNIT_TARGET_HERO,
                                         DOTA_DAMAGE_FLAG_NONE,
