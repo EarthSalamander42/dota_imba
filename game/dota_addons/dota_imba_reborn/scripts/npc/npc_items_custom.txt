@@ -9273,6 +9273,7 @@
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"AllowedInBackpack"						"0"
 		"IsTempestDoubleClonable"				"0"
+		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9317,6 +9318,7 @@
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"AllowedInBackpack"						"0"
 		"IsTempestDoubleClonable"				"0"
+		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9361,6 +9363,7 @@
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"AllowedInBackpack"						"0"
 		"IsTempestDoubleClonable"				"0"
+		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9404,6 +9407,7 @@
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"AllowedInBackpack"						"0"
 		"IsTempestDoubleClonable"				"0"
+		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9447,7 +9451,8 @@
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"AllowedInBackpack"						"0"
 		"IsTempestDoubleClonable"				"0"
-		
+		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
