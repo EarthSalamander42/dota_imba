@@ -1240,15 +1240,19 @@ end, GameMode)
 
 function PreventBannedHeroToBeRandomed(iPlayerID)
 	if PlayerResource:GetSelectedHeroName(iPlayerID) and api.disabled_heroes[PlayerResource:GetSelectedHeroName(iPlayerID)] then
+		local old_hero = PlayerResource:GetSelectedHeroEntity(iPlayerID)
 		local herolist = LoadKeyValues("scripts/npc/npc_heroes.txt")
 		local hero_table = {}
+
+		-- old hero stay because GetSelectedHeroEntity is invalid in hero selection phase
+		print("old hero:", old_hero)
 
 		for k, v in pairs(herolist) do
 			local picked_heroes = {}
 
 			for i = 0, PlayerResource:GetPlayerCount() - 1 do
-				if PlayerResource:GetPlayer(i) and PlayerResource:GetPlayer(i):GetSelectedHeroName(i) then
-					picked_heroes[PlayerResource:GetPlayer(i):GetSelectedHeroName(i)] = true
+				if PlayerResource:GetPlayer(i) and PlayerResource:GetSelectedHeroName(i) then
+					picked_heroes[PlayerResource:GetSelectedHeroName(i)] = true
 					break
 				end
 			end
@@ -1270,8 +1274,6 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 
 		PlayerResource:GetPlayer(iPlayerID):SetSelectedHero(new_hero)
 
-		local old_hero = PlayerResource:GetSelectedHeroEntity(iPlayerID)
-
 		PrecacheUnitByNameAsync(new_hero, function()
 			PlayerResource:ReplaceHeroWith(iPlayerID, new_hero, IMBA_GetHeroStartingGold(), 0)
 
@@ -1280,6 +1282,13 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 					UTIL_Remove(old_hero)
 				end
 			end)
+
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if hero.GetPlayerOwnerID and hero:GetPlayerOwnerID() == -1 then
+					print("No hero owner, remove!", hero:GetUnitName())
+					UTIL_Remove(hero)
+				end
+			end
 		end)
 
 --		print("banned hero randomed, re-random:", PlayerResource:GetSelectedHeroName(iPlayerID))

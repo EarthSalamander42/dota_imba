@@ -194,7 +194,9 @@ function GameMode:OnGameRulesStateChange(keys)
 	
 				-- First line
 				Notifications:BottomToAll( {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"} } )
+				Notifications:BottomToAll( {text = " ", duration = line_duration, style = {color = "Orange"}, continue = true})
 				Notifications:BottomToAll( {text = "#imba_introduction_line_02", duration = line_duration, style = {color = "Orange"}, continue = true})
+				Notifications:BottomToAll( {text = " ", duration = line_duration, style = {color = "Orange"}, continue = true})
 				Notifications:BottomToAll( {text = "("..GAME_VERSION..")", duration = line_duration, style = {color = "Orange"}, continue = true})
 
 				-- Second line

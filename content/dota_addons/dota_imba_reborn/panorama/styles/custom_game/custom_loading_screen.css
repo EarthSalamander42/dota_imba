@@ -480,19 +480,20 @@
 	height: 10%;
 	margin-top: 5%;
 	margin-bottom: 5%;
-	font-size: 20px;
+	font-size: 30px;
 	text-align: center center;
 	text-shadow: 2px 2px 4px black;
-	color: gradient( linear, 0% 0%, 0% 100%, from( #6E93CF ), color-stop( 0.5, #6E93CF ), to( #4C658D ) );
+	color: gradient( linear, 0% 0%, 0% 100%, from( white ), color-stop( 0.5, #ffef8a ), to( #CFC26E ) );
 /*	text-transform: uppercase; */
 	text-overflow: shrink;
+	text-decoration: underline;
 }
 
 .vote-select-description {
 	padding: 0px 10px 0px 10px;
 	align: center center;
 	text-shadow: 2px 2px 4px black;
-	color: #6E93CF;
+	color: #909090;
 	text-align: center center;
 }
 
