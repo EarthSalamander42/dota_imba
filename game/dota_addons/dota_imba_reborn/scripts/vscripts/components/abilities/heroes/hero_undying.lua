@@ -300,6 +300,8 @@ function modifier_imba_undying_decay_buff:OnStackCountChanged(prev_stacks)
 
         -- Refresh timer
         self:ForceRefresh()
+
+        self:GetParent():CalculateStatBonus()
     end
 end
 
@@ -423,6 +425,8 @@ function modifier_imba_undying_decay_debuff:OnStackCountChanged(prev_stacks)
 
         -- Refresh timer
         self:ForceRefresh()
+
+        self:GetParent():CalculateStatBonus()
     end
 end
 
@@ -436,7 +440,7 @@ end
 
 function modifier_imba_undying_decay_debuff:GetModifierBonusStats_Strength()
     if self.caster:HasScepter() then
-        return self.str_steal_scepter * self:GetStackCount() * (-1)  
+        return self.str_steal_scepter * self:GetStackCount() * (-1)
     end
 
     return self.str_steal * self:GetStackCount() * (-1)
