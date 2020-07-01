@@ -5,8 +5,8 @@ api = class({});
 
 api.disabled_heroes = {}
 
-local baseUrl = "http://api.frostrose-studio.com/imba/"
-local websiteUrl = "http://api.frostrose-studio.com/website/"
+local baseUrl = "https://api.frostrose-studio.com/imba/"
+local websiteUrl = "https://api.frostrose-studio.com/website/"
 local timeout = 5000
 
 local native_print = print

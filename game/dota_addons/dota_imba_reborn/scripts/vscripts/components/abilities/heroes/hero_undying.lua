@@ -92,7 +92,7 @@ function imba_undying_decay:OnSpellStart()
 	for _, enemy in pairs(enemies) do
 		-- Clone handling: only one Meepo clone or Arc Warden will get its Strength stolen.
 		if enemy:IsClone() or enemy:IsTempestDouble() or enemy:GetName() == "npc_dota_hero_meepo" or enemy:GetName() == "npc_dota_hero_arc_warden" then            
-				table.insert(clone_owner_units, enemy)                        
+			table.insert(clone_owner_units, enemy)                        
 		else        
 			if enemy:IsHero() and not enemy:IsIllusion() then
 				enemy:EmitSound("Hero_Undying.Decay.Target")

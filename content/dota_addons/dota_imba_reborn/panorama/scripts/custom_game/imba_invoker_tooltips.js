@@ -16,7 +16,6 @@ function GetDotaHud() {
     } catch (e) {}
 }
 
-
 function AddOrbColor(orb, text) 
 {	
 	var quas_color = '#0066FF'

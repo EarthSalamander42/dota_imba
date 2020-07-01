@@ -3,7 +3,7 @@
 var secret_key = {};
 
 var api = {
-	base : "http://api.frostrose-studio.com/",
+	base : "https://api.frostrose-studio.com/",
 	urls : {
 		loadingScreenMessage : "imba/loading-screen-info",
 	},

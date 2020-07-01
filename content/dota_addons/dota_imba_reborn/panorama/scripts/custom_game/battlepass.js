@@ -28,7 +28,7 @@ if (game_version)
 	game_type = game_version.game_type;
 
 var api = {
-	base : "http://api.frostrose-studio.com/",
+	base : "https://api.frostrose-studio.com/",
 	urls : {
 		modifyCompanion : "imba/modify-companion",
 		modifyStatue : "imba/modify-statue",
