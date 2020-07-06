@@ -539,7 +539,6 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 					if caster:HasTalent("special_bonus_imba_faceless_void_1") then
 						caster:AddNewModifier(caster, self, "modifier_imba_time_dilation_talent", {duration  = caster:FindTalentValue("special_bonus_imba_faceless_void_1", "duration")})
 					end
-
 				end
 			end
 
@@ -550,7 +549,6 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 					debuff:SetStackCount(abilities_on_cooldown)
 				end
 			end
-
 		end
 	end
 

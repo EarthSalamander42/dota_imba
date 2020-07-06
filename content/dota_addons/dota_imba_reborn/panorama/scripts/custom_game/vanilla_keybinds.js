@@ -40,6 +40,10 @@ function SetupVanillaKeyBinding(sName, callback_function, bHold, secondary_callb
 //	$.Msg(secondary_callback_function)
 	if (Players.GetLocalPlayer() != -1) {
 		var vanilla_keybind = GetKeyBind(sName).toLowerCase();
+		if (vanilla_keybind == undefined || vanilla_keybind == "") {
+			$.Msg("No vanilla key set for " + sName + ".")
+			return;
+		}
 		$.RegisterKeyBind($.GetContextPanel(), 'key_' + vanilla_keybind, callback_function);
 		Game.CreateCustomKeyBind(vanilla_keybind, sName);
 

@@ -1276,7 +1276,8 @@ function imba_lycan_shapeshift:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_cast_fx, 1 , caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_cast_fx, 2 , caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_cast_fx, 3 , caster:GetAbsOrigin())
-	
+	ParticleManager:ReleaseParticleIndex(particle_cast_fx)
+
 	-- Disable Lycan for the transform duration
 	caster:AddNewModifier(caster, ability, transform_stun, {duration = transformation_time})
 	

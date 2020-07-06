@@ -867,6 +867,7 @@
 								<Panel id="CommentIcon"/>
 								<Label id="CommentsHeader" text="#dota_page_match_details_match_discussion" />
 							</Button>
+<!--
 							<Panel id="ContainerComments" acceptsfocus="true">
 								<DOTAMatchVoting id="MatchVoting" />
 								<Panel id="CommentTextEntryContainer">
@@ -874,11 +875,11 @@
 									<TextEntry id="CommentTextEntry" placeholder="#dota_page_match_details_comment_placeholder" oninputsubmit="DOTAPostSocialMatchComment()" />
 								</Panel>
 
-								<!-- Full of popup_match_details_comment.xml blocks -->
 								<Label id="CommentsStatusLoading" text="#dota_page_match_details_comment_loading_comments" />
 								<Label id="CommentsStatusNone" text="#dota_page_match_details_comment_no_comments" />
 								<Panel id="Comments" />
 							</Panel>
+-->
 						</Panel>
 					</Panel>
 
