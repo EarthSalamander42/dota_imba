@@ -46,10 +46,6 @@ LinkLuaModifier("modifier_imba_swashbuckle_slashes", "components/abilities/heroe
 LinkLuaModifier("modifier_imba_swashbuckle_damage_control", "components/abilities/heroes/hero_pangolier", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_swashbuckle_buff", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_pangolier_swashbuckle:GetAbilityTextureName()
-	return "pangolier_swashbuckle"
-end
-
 function imba_pangolier_swashbuckle:IsHiddenWhenStolen() return false end
 function imba_pangolier_swashbuckle:IsStealable() return true end
 function imba_pangolier_swashbuckle:IsNetherWardStealable() return true end
@@ -551,10 +547,6 @@ LinkLuaModifier("modifier_imba_shield_crash_jump", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_shield_crash_block", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Talent #3: parry stacks
 LinkLuaModifier("modifier_imba_shield_crash_block_parry", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Pangolier parry (100% evasion)
 LinkLuaModifier("modifier_imba_shield_crash_block_miss", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Parried attack debuff (remove true strike during the attack)
-
-function imba_pangolier_shield_crash:GetAbilityTextureName()
-	return "pangolier_shield_crash"
-end
 
 function imba_pangolier_shield_crash:IsHiddenWhenStolen()  return false end
 function imba_pangolier_shield_crash:IsStealable() return true end
@@ -1315,11 +1307,6 @@ LinkLuaModifier("modifier_imba_heartpiercer_debuff", "components/abilities/heroe
 LinkLuaModifier("modifier_imba_heartpiercer_talent_debuff", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --visual
 LinkLuaModifier("modifier_imba_heartpiercer_talent_debuff_2", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --visual
 
-
-function imba_pangolier_heartpiercer:GetAbilityTextureName()
-	return "pangolier_heartpiercer"
-end
-
 function imba_pangolier_heartpiercer:GetIntrinsicModifierName()
 	return "modifier_imba_heartpiercer_passive"
 end
@@ -1608,10 +1595,6 @@ imba_pangolier_gyroshell = imba_pangolier_gyroshell or class({})
 --LinkLuaModifier("modifier_imba_pangolier_gyroshell_bounce", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)	------|
 LinkLuaModifier("modifier_imba_gyroshell_impact_check", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- extend Rolling Thunder on each impact and implement #7 Talent
 LinkLuaModifier("modifier_imba_gyroshell_linger", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #4: Extra spell immunity
-
-function imba_pangolier_gyroshell:GetAbilityTextureName()
-	return "pangolier_gyroshell"
-end
 
 function imba_pangolier_gyroshell:IsHiddenWhenStolen() return false end
 function imba_pangolier_gyroshell:IsStealable() return true end

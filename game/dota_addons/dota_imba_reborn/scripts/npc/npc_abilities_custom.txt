@@ -34988,7 +34988,6 @@
 				"abilitycastrange"					""
 				"LinkedSpecialBonus"		"special_bonus_imba_riki_blink_strike_cast_range"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -42024,15 +42023,14 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"charge_restore_time"			"7"
-				"LinkedSpecialBonus"			"special_bonus_sohei_dash_recharge"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
+//				"LinkedSpecialBonus"			"special_bonus_sohei_dash_recharge"
+//				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"momentum_cd_refund"	"100"
 			}
-			
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
