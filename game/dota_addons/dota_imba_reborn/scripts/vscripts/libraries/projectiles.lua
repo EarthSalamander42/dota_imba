@@ -15,7 +15,7 @@ function TrackingProjectiles:Projectile( params )
 
     --Set creation time in the parameters
     params.creation_time = GameRules:GetGameTime()
-    
+
     --Fetch initial projectile location
     local projectile
     if params.vSpawnOrigin then
@@ -56,7 +56,8 @@ function TrackingProjectiles:Think(params,projectileID)
     local particle = projectileID.particle
     local visionRadius = params.flVisionRadius or 0
     local acceleration = params.flAcceleration or 1
-    acceleration = math.pow(acceleration,1/32) -- Converting it to 1/32th second
+    local projectileTickrate = 1/32
+    acceleration = math.pow(acceleration,projectileTickrate)
 
     Timers:CreateTimer(function()
         -- Check if the destroy function has been called
@@ -107,14 +108,15 @@ function TrackingProjectiles:Think(params,projectileID)
         speed = speed * acceleration
 
         --Move the projectile towards the target and update the position
-        projectile = projectile + ( target_location - projectile ):Normalized() * speed * 1/32
+        projectile = projectile + ( target_location - projectile ):Normalized() * speed * projectileTickrate
         projectileID.position = projectile
         -- Add vision
         if visionRadius then
-            AddFOWViewer(caster:GetTeam(),projectile,visionRadius,2/32,true)
+            AddFOWViewer(caster:GetTeam(),projectile,visionRadius,projectileTickrate,true)
         end
 
         -- Check if projectile has hit a platform
+        -- what is -50 here ?
         if params.bDestroyOnGroundHit and GetGroundPosition(projectile,nil).z - 50 > projectile.z then
             -- Platform hit
             ParticleManager:DestroyParticle( particle, false )
@@ -133,7 +135,7 @@ function TrackingProjectiles:Think(params,projectileID)
         end
 
         --Check the distance to the target
-        if ( target_location - projectile ):Length()- params.flRadius < speed * 1/32 then -- Length2D() / Length()!
+        if ( target_location - projectile ):Length()- params.flRadius < speed * projectileTickrate then -- Length2D() / Length()!
             --Target has reached destination!
             TrackingProjectiles:OnProjectileHitUnit( params,projectileID )
             ParticleManager:DestroyParticle( particle, false )
@@ -146,7 +148,7 @@ function TrackingProjectiles:Think(params,projectileID)
                 pcall(params.OnProjectileDestroy, params, projectileID)
                 return nil
         else
-            return 1/32
+            return projectileTickrate
         end
     end)
 end
@@ -186,7 +188,7 @@ end
 -- Not sure if this makes these projectiles dodgeable with the default spells
 function TrackingProjectiles:hookFunctions()
     local this = self
-    
+
     local oldProjectileDodge = ProjectileManager.ProjectileDodge
     ProjectileManager.ProjectileDodge = function(projectileManager,unit)
         -- Set the unit do be dodging
@@ -199,7 +201,7 @@ function TrackingProjectiles:hookFunctions()
 end
 
 function TrackingProjectiles:init()
-    self:hookFunctions()    
+    self:hookFunctions()
 end
 
 TrackingProjectiles:init()
@@ -228,14 +230,14 @@ function Projectiles:start()
 
   if self.thinkEnt == nil then
     self.timers = {}
-    
+
     -- = Entities:CreateByClassname("info_target")
     self.thinkEnt = SpawnEntityFromTableSynchronous("info_target", {targetname="projectiles_lua_thinker"})
     --self.treeCutter = CreateUnitByName('npc_dummy_unit', Vector(0,0,0) , true, nil, nil, DOTA_TEAM_NOTEAM)
     --self.treeCutter:FindAbilityByName("reflex_dummy_unit"):SetLevel(1)
     --self.treeCutter:AddAbility("tree_cutter")
     --self.treeCutter:FindAbilityByName("tree_cutter"):SetLevel(1)
-    
+
     self.thinkEnt:SetThink("Think", self, "projectiles", PROJECTILES_THINK)
   end
 end
@@ -258,7 +260,7 @@ function Projectiles:Think()
     for k,v in pairs(Projectiles.timers) do
       local bUseGameTime = true
       -- Check if the timer has finished
-        
+
       -- Run the callback
       local status, nextCall = pcall(v.callback, Projectiles, v)
 
@@ -275,7 +277,7 @@ function Projectiles:Think()
         Projectiles.timers[k] = nil
         print('[PROJECTILES] Timer error:' .. nextCall)
       end
-    end  
+    end
   end
 
   return PROJECTILES_THINK
@@ -300,7 +302,7 @@ function Projectiles:CalcSlope(pos, unit, dir)
   local f = GetGroundPosition(pos + dir, unit)
   local b = GetGroundPosition(pos - dir, unit)
 
-  return (f - b):Normalized() 
+  return (f - b):Normalized()
 end
 
 function Projectiles:CalcNormal(pos, unit, scale)
@@ -364,7 +366,7 @@ function Projectiles:CreateProjectile(projectile)
   end
 
 
-  --[[if projectile.TreeBehavior == PROJECTILES_BOUNCE or projectile.WallBehavior == PROJECTILES_BOUNCE 
+  --[[if projectile.TreeBehavior == PROJECTILES_BOUNCE or projectile.WallBehavior == PROJECTILES_BOUNCE
     or projectile.GroundBehavior == PROJECTILES_BOUNCE or projectile.GroundBehavior == PROJECTILES_FOLLOW then
     projectile.bDynamic = true
   elseif projectile.bDynamic == nil then
@@ -496,7 +498,7 @@ function Projectiles:CreateProjectile(projectile)
           ParticleManager:SetParticleControlForward(projectile.id, projectile.iPositionCP, projectile.vel:Normalized())
         end
       end
-      
+
       ParticleManager:SetParticleControl(projectile.id, projectile.iVelocityCP, newVel)
     end
   end
@@ -529,11 +531,11 @@ function Projectiles:CreateProjectile(projectile)
         end
         return
       end
-      
+
       -- update values
       local radius = projectile.radius
       local rad2 = radius * radius
-      
+
       -- debug draw
       if projectile.draw then
         local alpha = 1
@@ -655,7 +657,7 @@ function Projectiles:CreateProjectile(projectile)
             --local vec = Vector(GridNav:GridPosToWorldCenterX(GridNav:WorldToGridPosX(subpos.x)), GridNav:GridPosToWorldCenterY(GridNav:WorldToGridPosY(subpos.y)), ground.z - projectile.fGroundOffset)
             --DebugDrawCircle(vec, Vector(200,200,200), 100, 10, true, .5)
             --local ents = Entities:FindAllByClassnameWithin("ent_dota_tree", vec, 70)
-            
+
             for i=1,#ents do
               local tree = ents[i]
               if not projectile.bZCheck or (pos.z < ground.z + 280 + radius - projectile.fGroundOffset and pos.z + radius + projectile.fGroundOffset > ground.z) then
@@ -749,7 +751,7 @@ function Projectiles:CreateProjectile(projectile)
 
             elseif projectile.GroundBehavior == PROJECTILES_FOLLOW and projectile.changes > 0 and curTime >= projectile.changeTime then
               -- follow calculation
-              
+
               local slope = Projectiles:CalcSlope(ground, projectile.Source, vel)
               local dir = vel:Normalized()
               --projectile.fGroundOffset = projectile.fGroundOffset - 10
