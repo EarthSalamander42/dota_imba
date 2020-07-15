@@ -2,6 +2,7 @@
 	<styles>
 		<include src="file://{resources}/styles/dotastyles.vcss_c" />
 		<include src="file://{resources}/styles/custom_game/frostrose_end_screen.css" />
+		<include src="file://{resources}/layout/custom_game/party_highlighter/party_highlighter.css" />
 	</styles>
 
 	<Panel class="es-player-root">

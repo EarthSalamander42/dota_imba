@@ -23,7 +23,7 @@
 
 "DOTA_Tooltip_Ability_item_recipe_imba_nullifier_2"				"Nullifier EX Recipe"
 
-"DOTA_Tooltip_ability_item_imba_nullifier_2_Description"                     "<h1>Active: Nullify</h1> Dispels the target and applies a debuff for %mute_duration% seconds. Mutes and continuously dispels the target. Anytime the target is attacked, it will be slowed by %slow_pct%%% for %slow_interval_duration% seconds.<br><br>Dispel Type: <span class=\"GameplayValues GameplayVariable\">Basic Dispel</span>\n<h1>Active: Objection Index</h1>Nullify completely disables (stats and passives) the target's item which shares the same slot as Nullifier EX, as well as any item in the subsequent slot, for 6 seconds."
+"DOTA_Tooltip_ability_item_imba_nullifier_2_Description"                     "<h1>Active: Nullify</h1> Dispels the target and applies a debuff for %mute_duration% seconds. Mutes and continuously dispels the target. Anytime the target is attacked, it will be slowed by %slow_pct%%% for %slow_interval_duration% seconds.<br><br>Dispel Type: <span class=\"GameplayValues GameplayVariable\">Basic Dispel</span>."
 "DOTA_Tooltip_ability_item_imba_nullifier_2_lore"						"A dangerous weapon pilfered from an inverse dimension."
 "DOTA_Tooltip_ability_item_imba_nullifier_2_Note0"						"Objection Index has no effect on empty item slots, items that cannot be backpacked, if Nullifier EX is not in the caster's inventory, or if the target is within a shop radius upon projectile impact."
 "DOTA_Tooltip_ability_item_imba_nullifier_2_Note1"						"If Objection Index is spell reflected, it will disable the target's items in their first and second item slots."

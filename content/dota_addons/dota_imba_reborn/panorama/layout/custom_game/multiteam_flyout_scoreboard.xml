@@ -9,9 +9,9 @@
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/api.js" />
 		<include src="file://{resources}/scripts/custom_game/util.js" />
+		<include src="file://{resources}/layout/custom_game/party_highlighter/party_highlighter.js" />
 		<include src="file://{resources}/scripts/custom_game/shared_scoreboard_updater.js" />
 		<include src="file://{resources}/scripts/custom_game/multiteam_flyout_scoreboard.js" />
-		<include src="file://{resources}/layout/custom_game/party_highlighter/party_highlighter.js" />
 	</scripts>
 
 	<Panel hittest="false" class="FlyoutScoreboardRoot">

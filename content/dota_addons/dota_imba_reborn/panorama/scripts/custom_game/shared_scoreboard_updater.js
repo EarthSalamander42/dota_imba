@@ -268,6 +268,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Kills", playerInfo.player_kills);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Deaths", playerInfo.player_deaths);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Assists", playerInfo.player_assists);
+		HighlightByParty(playerId, playerPanel.FindChildInLayoutFile("PlayerName"));
 
 		var btnMuteVoice = playerPanel.FindChildInLayoutFile("BtnMuteVoice");
 

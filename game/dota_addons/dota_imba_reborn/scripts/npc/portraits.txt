@@ -28307,6 +28307,7 @@
 				"PortraitFOV"		"33"
 			}
 		}
+	}
 	"models/items/tiny/tiny_bad_to_the_bone_shoulder/tiny_bad_to_the_bone_shoulder.vmdl"
 	{
 			"cameras"
