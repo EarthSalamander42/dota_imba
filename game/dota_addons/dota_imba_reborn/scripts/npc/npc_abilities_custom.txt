@@ -10259,62 +10259,52 @@
 				"damage"					"600 800 1000"
 				"LinkedSpecialBonus"		"special_bonus_imba_lion_7"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_damage"			"725 950 1175"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_radius"			"1000"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_delay"				"0.25"
 				"LinkedSpecialBonus"		"special_bonus_imba_lion_3"
-				
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cooldown_scepter"			"100 60 20"	// This line is literally useless
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"triggerfinger_duration"	"7"
 			}
-
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"triggerfinger_mana_inc_pct"	"50"
 			}
-
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"enemies_frog_radius"			"325"
 			}
-
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"enemies_frog_duration"			"0.4 0.6 0.8"
-			}			
-
+			}
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_cooldown"				"90 50 10"
 			}
-
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -10335,7 +10325,7 @@
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"triggerfinger_cooldown"		"5 3 1"	
+				"triggerfinger_cooldown"		"9 7 5"	
 			}
 		}
 	}
@@ -37428,7 +37418,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"status_resist"			"50"
 			}
-			
 		}
 	}
 

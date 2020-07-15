@@ -687,9 +687,9 @@ function SetArmory(hero, slot_id, item_id, bForceUnequip) {
 
 		if ($("#reward_equipped_" + item_id)) {
 			$("#reward_equipped_" + item_id).DeleteAsync(0);
-			text = $.Localize("bp_reward_unequip_success") + " " + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
+			text = $.Localize("bp_reward_unequip_success") + " " + $("#reward_button_" + item_id).GetChild(2).GetChild(0).text;
 		} else {
-			text = $.Localize("bp_reward_equip_success") + " " + $("#reward_button_" + item_id).GetChild(0).GetChild(0).text;
+			text = $.Localize("bp_reward_equip_success") + " " + $("#reward_button_" + item_id).GetChild(2).GetChild(0).text;
 			SetRewardEquipped(item_id, hero);
 		}
 
@@ -961,7 +961,7 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 */
 			if (plyData != null && bp_item_unreleased == undefined || bRewardsDisabled & bRewardsDisabled == true) {
 				// Disable tinker immortal for now until fixed
-				if (bp_item_id != "105" && bp_item_id != "113" && bp_item_id != "114" && bp_item_id != "115" && bp_item_id != "116" && bp_item_id != "117" && bp_item_id != "118" && bp_item_id != "119" && bp_item_id != "120" && bp_item_id != "121") {
+				if (bp_item_id != "105" && bp_item_id != "113" && bp_item_id != "114" && bp_item_id != "115" && bp_item_id != "116" && bp_item_id != "118" && bp_item_id != "119" && bp_item_id != "120" && bp_item_id != "121") {
 					if (bp_level <= plyData.Lvl) {
 						var reward_panel_unlocked = $.CreatePanel("Panel", reward, "");
 						reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");

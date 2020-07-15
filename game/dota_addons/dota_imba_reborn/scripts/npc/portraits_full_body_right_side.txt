@@ -472,12 +472,4 @@
 	{
 		"UnitAngles" "0 -40 0"
 	}
-	"npc_dota_hero_sohei"
-	{
-		"UnitAngles" "0 -40 0"
-	}
-	"npc_dota_hero_sly_king"
-	{
-		"UnitAngles" "0 -40 0"
-	}
 }

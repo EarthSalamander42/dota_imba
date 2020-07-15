@@ -188,6 +188,13 @@ function Battlepass:GetHeroEffect(hero)
 					if Wearable.items_game["items"][item_id] and Wearable.items_game["items"][item_id]["visuals"] then
 						Battlepass:SetOverrideAssets(hero, modifier, Wearable.items_game["items"][item_id]["visuals"])
 					end
+
+					if hero:GetUnitName() == "npc_dota_hero_crystal_maiden" and v.item_id == "117" then
+						-- timer to let donator companion spawn if any, to then override it with arcana companion
+						Timers:CreateTimer(2.0, function()
+							Battlepass:DonatorCompanion(hero:GetPlayerID(), "npc_donator_companion_crystal_maiden_puppy")
+						end)
+					end
 				end
 			else
 				if v.hero == "levelup" then

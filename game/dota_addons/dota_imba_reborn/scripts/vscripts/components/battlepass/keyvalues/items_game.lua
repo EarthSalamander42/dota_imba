@@ -254,4 +254,10 @@ function ItemsGame:GetItemImages(item_id)
 	return self:GetItemInfo(item_id, "inventory_icons") or {}
 end
 
+--[[
+function ItemsGame:GetItemCompanion(item_id)
+	return self:GetItemInfo(item_id, "companion") or {}
+end
+--]]
+
 ItemsGame:Init()

@@ -760,4 +760,48 @@ function api:SendTeamConfiguration(players, combinations, callback)
 	end, nil, "POST", data)
 end
 
+-- Credits: darklord (Dota 12v12)
+function api:DetectParties()
+	self.parties = {}
+	local party_indicies = {}
+	local party_index = 1
+	local players = {}
+
+	-- Set up player colors
+	for id = 0, 23 do
+		if PlayerResource:IsValidPlayer(id) then
+			players[id] = tostring(PlayerResource:GetSteamID(id))
+
+			-- {"0":26703929098108930,"1":26703929098108930}
+			local party_id = tonumber(tostring(PlayerResource:GetPartyID(id)))
+
+			if party_id and party_id > 0 then
+				if not party_indicies[party_id] then
+					party_indicies[party_id] = party_index
+					party_index = party_index + 1
+				end
+
+				self.parties[id] = party_indicies[party_id]
+			end
+		end
+	end
+
+	local data = {
+		players = players,
+		parties = api.parties,
+		map = GetMapName(),
+	}
+
+	print(players)
+	print(api.parties)
+
+	self:Request("teambalance", function(data)
+		if callback ~= nil then
+			callback(data)
+		end
+
+		print(data)
+	end, nil, "POST", data)
+end
+
 require("components/api/events")

@@ -338,22 +338,48 @@ end
 -- Autoattack lifesteal
 function CDOTA_BaseNPC:GetLifesteal()
 	local lifesteal = 0
+	local multiplier = 0
+
 	for _, parent_modifier in pairs(self:FindAllModifiers()) do
 		if parent_modifier.GetModifierLifesteal and parent_modifier:GetModifierLifesteal() then
 			lifesteal = lifesteal + parent_modifier:GetModifierLifesteal()
 		end
 	end
+
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierLifestealAmplify and parent_modifier:GetModifierLifestealAmplify() then
+			multiplier = multiplier + parent_modifier:GetModifierLifestealAmplify()
+		end
+	end
+
+	if lifesteal ~= 0 and multiplier ~= 0 then
+		lifesteal = lifesteal * (multiplier / 100)
+	end
+
 	return lifesteal
 end
 
 -- Spell lifesteal
 function CDOTA_BaseNPC:GetSpellLifesteal()
 	local lifesteal = 0
+	local multiplier = 0
+
 	for _, parent_modifier in pairs(self:FindAllModifiers()) do
 		if parent_modifier.GetModifierSpellLifesteal and parent_modifier:GetModifierSpellLifesteal() then
 			lifesteal = lifesteal + parent_modifier:GetModifierSpellLifesteal()
 		end
 	end
+
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierSpellLifestealAmplify and parent_modifier:GetModifierSpellLifestealAmplify() then
+			multiplier = multiplier + parent_modifier:GetModifierSpellLifestealAmplify()
+		end
+	end
+
+	if lifesteal ~= 0 and multiplier ~= 0 then
+		lifesteal = lifesteal * (multiplier / 100)
+	end
+
 	return lifesteal
 end
 

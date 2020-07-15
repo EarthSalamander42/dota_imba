@@ -2202,7 +2202,7 @@
 	{
 		"item_id"					"20844"
 		"item_type"					"bundle"
-		"item_unlock_level"			"50"
+		"item_unlock_level"			"25"
 
 		"wearables"
 		{
@@ -2216,14 +2216,14 @@
 	{
 		"item_id"					"4794"
 		"item_type"					"wearable"
-		"item_unlock_level"			"100"
+		"item_unlock_level"			"50"
 	}
 
 	"69" // Bladeform Legacy
 	{
 		"item_id"					"9059"
 		"item_type"					"wearable"
-		"item_unlock_level"			"150"
+		"item_unlock_level"			"75"
 		"modifier"					"modifier_juggernaut_arcana"
 	}
 
@@ -2231,7 +2231,7 @@
 	{
 		"item_id"					"7756"
 		"item_type"					"wearable"
-		"item_unlock_level"			"200"
+		"item_unlock_level"			"100"
 		"modifier"					"modifier_pudge_arcana"
 	}
 
@@ -2239,7 +2239,7 @@
 	{
 		"item_id"					"7247"
 		"item_type"					"wearable"
-		"item_unlock_level"			"250"
+		"item_unlock_level"			"125"
 		"modifier"					"modifier_phantom_assassin_arcana"
 	}
 
@@ -2530,7 +2530,7 @@
 	{
 		"item_id"					"9235"
 		"item_type"					"wearable"
-		"item_unlock_level"			"300"
+		"item_unlock_level"			"150"
 	}
 
 	"101" // Earthshaker: Judgement of the Fallen
@@ -2628,42 +2628,42 @@
 	{
 		"item_id"					"12692"
 		"item_type"					"wearable"
-		"item_unlock_level"			"400"
+		"item_unlock_level"			"175"
 	}
 
 	"114" // Shadow Fiend: Demon Eater
 	{
 		"item_id"					"6996"
 		"item_type"					"wearable"
-		"item_unlock_level"			"450"
+		"item_unlock_level"			"200"
 	}
 
 	"115" // Legion Commander: Blades of Voth Domosh
 	{
 		"item_id"					"5810"
 		"item_type"					"wearable"
-		"item_unlock_level"			"500"
+		"item_unlock_level"			"225"
 	}
 
 	"116" // Terrorblade: Fractal Horns of Inner Abysm
 	{
 		"item_id"					"5957"
 		"item_type"					"wearable"
-		"item_unlock_level"			"550"
+		"item_unlock_level"			"250"
 	}
 
 	"117" // Crystal Maiden: Frost Avalanche
 	{
 		"item_id"					"7385"
 		"item_type"					"wearable"
-		"item_unlock_level"			"600"
+		"item_unlock_level"			"275"
 	}
 
 	"118" // Techies: Swine of the Sunken Galley Bundle
 	{
 		"item_id"					"20610"
 		"item_type"					"bundle"
-		"item_unlock_level"			"650"
+		"item_unlock_level"			"300"
 
 		"wearables"
 		{
@@ -2680,28 +2680,28 @@
 	{
 		"item_id"					"9050"
 		"item_type"					"wearable"
-		"item_unlock_level"			"700"
+		"item_unlock_level"			"325"
 	}
 
 	"120" // Rubick: The Magus Cypher
 	{
 		"item_id"					"12451"
 		"item_type"					"wearable"
-		"item_unlock_level"			"750"
+		"item_unlock_level"			"350"
 	}
 
 	"121" // Ogre Magi: Flockheart's Gamble
 	{
 		"item_id"					"13670"
 		"item_type"					"wearable"
-		"item_unlock_level"			"800"
+		"item_unlock_level"			"375"
 	}
 
 	"122" // Skeleton King: The One True King (Bundle)
 	{
 		"item_id"					"21402"
 		"item_type"					"bundle"
-		"item_unlock_level"			"350"
+		"item_unlock_level"			"400"
 		"modifier"					"modifier_wraith_king_arcana" // vanilla modifier for crit on kill pfx
 
 		"wearables"
@@ -2719,7 +2719,7 @@
 	{
 		"item_id"					"13042"
 		"item_type"					"wearable"
-		"item_unlock_level"			"225"
+		"item_unlock_level"			"135"
 
 //		"wearables"
 //		{
@@ -2732,18 +2732,26 @@
 //		}
 	}
 
-//	"123" // Queen of Pain: Eminence of Ristul
-//	{
-//		"item_id"					"13670"
-//		"item_type"					"wearable"
-//		"item_unlock_level"			"850"
-//	}
+	"124" // Queen of Pain: Eminence of Ristul
+	{
+		"item_id"					"12930"
+		"item_type"					"wearable"
+		"item_unlock_level"			"425"
+	}
 
-//	"124" // Windrunner: Compass of the Rising Gale
+//	Need to recreate a new hero and allocate voice lines (same for Invo kid)
+	"125" // Anti-Mage: Disciple's Path
+	{
+		"item_id"					"13783"
+		"item_type"					"wearable"
+		"item_unlock_level"			"205"
+	}
+
+//	"126" // Windrunner: Compass of the Rising Gale
 //	{
 //		"item_id"					"13670"
 //		"item_type"					"wearable"
-//		"item_unlock_level"			"900"
+//		"item_unlock_level"			"450"
 //	}
 
 	// TODO: UI support for different styles

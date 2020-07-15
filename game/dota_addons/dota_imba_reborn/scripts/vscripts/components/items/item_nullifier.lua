@@ -90,7 +90,7 @@ function item_imba_nullifier:OnProjectileHit(target, location)
 		
 		if self:GetLevel() >= 2 then
 			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_mute", {duration = self:GetSpecialValueFor("mute_duration") * (1 - target:GetStatusResistance())})
-			
+--[[
 			-- IMBAfication: Objection Index
 			
 			-- First, determine what slot Nullifier EX is in
@@ -123,6 +123,7 @@ function item_imba_nullifier:OnProjectileHit(target, location)
 			
 			-- Hard-coded duration because it uses backpack cooldown for now
 			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_nullifier_objection_index", {duration = 6})
+--]]
 		end
 	end
 	

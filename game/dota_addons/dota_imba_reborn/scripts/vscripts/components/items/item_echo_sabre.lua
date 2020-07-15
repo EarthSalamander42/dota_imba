@@ -27,6 +27,7 @@ LinkLuaModifier("modifier_imba_echo_rapier_debuff_slow", "components/items/item_
 -------------------------------------------
 --				ECHO SABRE
 -------------------------------------------
+LinkLuaModifier("modifier_imba_echo_sabre", "components/items/item_echo_sabre.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_echo_sabre_passive", "components/items/item_echo_sabre.lua", LUA_MODIFIER_MOTION_NONE)
 -------------------------------------------
 item_imba_echo_sabre = item_imba_echo_sabre or class({})
@@ -39,18 +40,17 @@ function item_imba_echo_sabre:GetAbilityTextureName()
 	return "custom/imba_echo_sabre"
 end
 
--------------------------------------------
-modifier_imba_echo_sabre_passive = modifier_imba_echo_sabre_passive or class({})
+modifier_imba_echo_sabre = modifier_imba_echo_sabre or class({})
 
-function modifier_imba_echo_sabre_passive:IsHidden()		return true end
-function modifier_imba_echo_sabre_passive:IsPurgable()		return false end
-function modifier_imba_echo_sabre_passive:RemoveOnDeath()	return false end
-function modifier_imba_echo_sabre_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_echo_sabre:IsPurgable()		return false end
+function modifier_imba_echo_sabre:RemoveOnDeath()	return false end
+function modifier_imba_echo_sabre:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_echo_sabre:IsHidden() return true end
 
-function modifier_imba_echo_sabre_passive:OnCreated()
+function modifier_imba_echo_sabre:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
@@ -64,39 +64,13 @@ function modifier_imba_echo_sabre_passive:OnCreated()
 	end
 end
 
-function modifier_imba_echo_sabre_passive:DeclareFunctions()
+function modifier_imba_echo_sabre:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK
 	}
 end
 
-
-function modifier_imba_echo_sabre_passive:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
-end
-
-function modifier_imba_echo_sabre_passive:GetModifierBonusStats_Strength()
-	return self.bonus_strength
-end
-
-function modifier_imba_echo_sabre_passive:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_attack_speed
-end
-
-function modifier_imba_echo_sabre_passive:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
-end
-
-function modifier_imba_echo_sabre_passive:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen
-end
-
-function modifier_imba_echo_sabre_passive:OnAttack(keys)
+function modifier_imba_echo_sabre:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
 	
@@ -121,10 +95,75 @@ function modifier_imba_echo_sabre_passive:OnAttack(keys)
 	end
 end
 
-function modifier_imba_echo_sabre_passive:OnRemoved()
+function modifier_imba_echo_sabre:OnRemoved()
 	if not IsServer() then return end
 	if (self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste")) then
 		self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste"):Destroy()
+	end
+end
+
+-------------------------------------------
+modifier_imba_echo_sabre_passive = modifier_imba_echo_sabre_passive or class({})
+
+function modifier_imba_echo_sabre_passive:IsHidden()		return true end
+function modifier_imba_echo_sabre_passive:IsPurgable()		return false end
+function modifier_imba_echo_sabre_passive:RemoveOnDeath()	return false end
+function modifier_imba_echo_sabre_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_echo_sabre_passive:OnCreated()
+	if IsServer() then
+		if not self:GetAbility() then self:Destroy() return end
+
+		self.echo_modifier = self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_echo_sabre", {})
+	end
+
+	local item = self:GetAbility()
+	self.parent = self:GetParent()
+	if self.parent:IsHero() and item then
+		self.bonus_intellect = item:GetSpecialValueFor("bonus_intellect")
+		self.bonus_strength = item:GetSpecialValueFor("bonus_strength")
+		self.bonus_attack_speed = item:GetSpecialValueFor("bonus_attack_speed")
+		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
+		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
+		self.slow_duration = item:GetSpecialValueFor("slow_duration")
+	end
+end
+
+function modifier_imba_echo_sabre_passive:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+	}
+end
+
+function modifier_imba_echo_sabre_passive:GetModifierBonusStats_Intellect()
+	return self.bonus_intellect
+end
+
+function modifier_imba_echo_sabre_passive:GetModifierBonusStats_Strength()
+	return self.bonus_strength
+end
+
+function modifier_imba_echo_sabre_passive:GetModifierAttackSpeedBonus_Constant()
+	return self.bonus_attack_speed
+end
+
+function modifier_imba_echo_sabre_passive:GetModifierPreAttack_BonusDamage()
+	return self.bonus_damage
+end
+
+function modifier_imba_echo_sabre_passive:GetModifierConstantManaRegen()
+	return self.bonus_mana_regen
+end
+
+function modifier_imba_echo_sabre_passive:OnRemoved()
+	if not IsServer() then return end
+
+	if self.echo_modifier then
+		self.echo_modifier:Destroy()
 	end
 end
 
@@ -164,8 +203,8 @@ end
 
 function modifier_imba_reverb_rapier_passive:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
@@ -242,8 +281,8 @@ function modifier_imba_echo_rapier_haste:RemoveOnDeath() return true end
 -------------------------------------------
 function modifier_imba_echo_rapier_haste:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
@@ -299,8 +338,8 @@ end
 
 function modifier_imba_echo_rapier_debuff_slow:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 	
 	local item = self:GetAbility()
 	if item then

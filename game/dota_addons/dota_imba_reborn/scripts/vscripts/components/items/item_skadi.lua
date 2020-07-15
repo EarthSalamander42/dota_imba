@@ -300,10 +300,12 @@ function modifier_item_imba_skadi_slow:IsPurgable() return true end
 
 -- Modifier status effect
 function modifier_item_imba_skadi_slow:GetStatusEffectName()
-	return "particles/status_fx/status_effect_frost_lich.vpcf" end
+	return "particles/status_fx/status_effect_frost_lich.vpcf"
+end
 
 function modifier_item_imba_skadi_slow:StatusEffectPriority()
-	return 10 end
+	return 10
+end
 
 -- Ability KV storage
 function modifier_item_imba_skadi_slow:OnCreated(keys)
@@ -313,6 +315,7 @@ function modifier_item_imba_skadi_slow:OnCreated(keys)
 	
 	self.slow_as = self:GetAbility():GetSpecialValueFor("slow_as")
 	self.slow_ms = self:GetAbility():GetSpecialValueFor("slow_ms")
+	self.heal_reduction_pct = self:GetAbility():GetSpecialValueFor("heal_reduction_pct")
 end
 
 -- Declare modifier events/properties
@@ -320,14 +323,25 @@ function modifier_item_imba_skadi_slow:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 	}
 end
 
 function modifier_item_imba_skadi_slow:GetModifierAttackSpeedBonus_Constant()
-	return self.slow_as end
+	return self.slow_as
+end
 
 function modifier_item_imba_skadi_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self.slow_ms end
+	return self.slow_ms
+end
+
+function modifier_item_imba_skadi_slow:GetModifierHPRegenAmplify_Percentage()
+	return ( self.heal_reduction_pct * (-1) )
+end
+
+function modifier_item_imba_skadi_slow:GetModifierLifestealAmplify()
+	return ( self.heal_reduction_pct * (-1) )
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Skadi freeze

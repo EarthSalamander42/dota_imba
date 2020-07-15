@@ -442,4 +442,11 @@
 		"Model"						"models/heroes/phantom_assassin/pa_arcana.vmdl"
 		"ModelScale"				"0.5"
 	}
+
+	"npc_donator_companion_crystal_maiden_puppy"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/pets/icewrack_wolf/icewrack_wolf.vmdl"
+		"ModelScale"				"1.0"
+	}
 }

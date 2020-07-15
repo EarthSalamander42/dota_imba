@@ -63,6 +63,7 @@ function Battlepass:AddItemEffects(hero)
 	end
 end
 
+-- old function. Still used for Axe and Phantom Assassin
 function Battlepass:HasArcana(ID, hero_name)
 	if not Battlepass.GetRewardUnlocked or not BattlepassHeroes or not BattlepassHeroes[hero_name] then return nil end
 
@@ -79,16 +80,6 @@ function Battlepass:HasArcana(ID, hero_name)
 		-- if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name]["axe_immortal"] then
 			-- return 0
 		-- end
-	-- invoker legendary persona topbar icon handling
-	elseif BattlepassHeroes[hero_name]["invoker_legendary"] then
-		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name]["invoker_legendary"] then
-			return 0
-		end
-	-- tiny storegga topbar icon handling
-	elseif BattlepassHeroes[hero_name]["tiny_immortal"] then
-		if Battlepass:GetRewardUnlocked(ID) >= BattlepassHeroes[hero_name]["tiny_immortal"] then
-			return 0
-		end
 	end
 
 	return nil

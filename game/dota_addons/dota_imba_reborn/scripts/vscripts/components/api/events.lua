@@ -1,5 +1,6 @@
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		api:DetectParties()
 		CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
 
 		api:RegisterGame(function(data)
@@ -19,6 +20,10 @@ ListenToGameEvent('game_rules_state_change', function()
 		api:GetDisabledHeroes()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		api:InitDonatorTableJS()
+
+		if api.parties then
+			CustomNetTables:SetTableValue("game_options", "parties", api.parties)
+		end
 
 		if CUSTOM_GAME_TYPE == "IMBA" then
 			if api:GetCustomGamemode() == 4 then

@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.20"
+GAME_VERSION = "7.21c"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -289,7 +289,8 @@ TOWER_ABILITIES["tower2"] = {
 	"imba_tower_tenacity",
 	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
-	"imba_tower_multishot"
+	"imba_tower_multishot",
+	"imba_tower_concentrated_momentum",
 }
 TOWER_ABILITIES["tower3"] = {
 	"imba_tower_secondary_resistance",
@@ -297,7 +298,8 @@ TOWER_ABILITIES["tower3"] = {
 	-- "imba_tower_thorns",
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
-	"imba_tower_multishot"
+	"imba_tower_multishot",
+	"imba_tower_concentrated_momentum",
 }
 TOWER_ABILITIES["tower4"] = {
 	"imba_tower_secondary_resistance",
@@ -306,7 +308,8 @@ TOWER_ABILITIES["tower4"] = {
 	"imba_tower_regeneration",
 	"imba_tower_toughness",
 	-- "imba_tower_splash_fire",
-	"imba_tower_multishot"
+	"imba_tower_multishot",
+	"imba_tower_concentrated_momentum",
 }
 
 -- Update game mode net tables

@@ -230,28 +230,26 @@ function modifier_item_imba_the_triumvirate_v2:OnCreated()
 	if IsServer() then
         if not self:GetAbility() then self:Destroy() end
     end
-	
+
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
-	
+
 	-- AbilitySpecials
 	self.bonus_strength					=	self.ability:GetSpecialValueFor("bonus_strength")
 	self.bonus_agility					=	self.ability:GetSpecialValueFor("bonus_agility")
 	self.bonus_intellect				=	self.ability:GetSpecialValueFor("bonus_intellect")
-	self.bonus_damage					=	self.ability:GetSpecialValueFor("bonus_damage")
 	self.bonus_attack_speed				=	self.ability:GetSpecialValueFor("bonus_attack_speed")
 	self.spell_amp						=	self.ability:GetSpecialValueFor("spell_amp")
 	self.status_resistance				=	self.ability:GetSpecialValueFor("status_resistance")
 	self.movement_speed_percent_bonus	=	self.ability:GetSpecialValueFor("movement_speed_percent_bonus")
-	self.manacost_reduction				=	self.ability:GetSpecialValueFor("manacost_reduction")
-	self.bonus_cdr						=	self.ability:GetSpecialValueFor("bonus_cdr")
-	self.bonus_status_resistance_active	=	self.ability:GetSpecialValueFor("bonus_status_resistance_active")
-	self.bonus_evasion_active			=	self.ability:GetSpecialValueFor("bonus_evasion_active")
-	self.bonus_cdr_active				=	self.ability:GetSpecialValueFor("bonus_cdr_active")
-	
+	self.hp_regen_amp					=	self.ability:GetSpecialValueFor("hp_regen_amp")
+	self.mp_regen_amp					=	self.ability:GetSpecialValueFor("mp_regen_amp")
+	self.lifesteal_amp					=	self.ability:GetSpecialValueFor("lifesteal_amp")
+	self.spell_lifesteal_amp			=	self.ability:GetSpecialValueFor("spell_lifesteal_amp")
+
 	if not IsServer() then return end
-	
+
     -- Use Secondary Charges system to make CDR not stack with multiples
     for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
         mod:GetAbility():SetSecondaryCharges(_)
@@ -260,29 +258,26 @@ end
 
 function modifier_item_imba_the_triumvirate_v2:OnDestroy()
     if not IsServer() then return end
-    
+
     for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
         mod:GetAbility():SetSecondaryCharges(_)
     end
 end
 
-function modifier_item_imba_the_triumvirate_v2:DeclareFunctions()
-	return {
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
-		
-		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
-		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
-		
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
-	}
-end
+function modifier_item_imba_the_triumvirate_v2:DeclareFunctions() return {
+	MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+	MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+
+	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
+
+	MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+
+	MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+	MODIFIER_PROPERTY_MP_REGEN_AMPLIFY_PERCENTAGE,
+	MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
+} end
 
 function modifier_item_imba_the_triumvirate_v2:GetModifierBonusStats_Strength()
 	return self.bonus_strength
@@ -296,46 +291,34 @@ function modifier_item_imba_the_triumvirate_v2:GetModifierBonusStats_Intellect()
 	return self.bonus_intellect
 end
 
-
-
-function modifier_item_imba_the_triumvirate_v2:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
-end
-
 function modifier_item_imba_the_triumvirate_v2:GetModifierAttackSpeedBonus_Constant()
 	return self.bonus_attack_speed
-end
-
-function modifier_item_imba_the_triumvirate_v2:GetModifierSpellAmplify_PercentageUnique()
-	return self.spell_amp
-end
-
-
-
-function modifier_item_imba_the_triumvirate_v2:GetModifierStatusResistanceStacking()
-	return self.status_resistance
 end
 
 function modifier_item_imba_the_triumvirate_v2:GetModifierMoveSpeedBonus_Percentage_Unique()
 	return self.movement_speed_percent_bonus
 end
 
-function modifier_item_imba_the_triumvirate_v2:GetModifierPercentageManacost()
-	return self.manacost_reduction
+function modifier_item_imba_the_triumvirate_v2:GetModifierStatusResistanceStacking()
+	return self.status_resistance
 end
 
--- As of 7.23, the items that Kaya's tree contains are as follows:
---   - Kaya
---   - Yasha and Kaya (will consider this higher than KnS in terms of priority for now)
---   - Bloodstone
---   - Kaya and Sange
---   - The Triumvirate
---   - Arcane Nexus
---   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
-function modifier_item_imba_the_triumvirate_v2:GetModifierPercentageCooldown()
-    if self:GetAbility():GetSecondaryCharges() == 1 and
-	-- not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
-	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
-        return self.bonus_cdr
-    end
+function modifier_item_imba_the_triumvirate_v2:GetModifierHPRegenAmplify_Percentage()
+	return self.hp_regen_amp
+end
+
+function modifier_item_imba_the_triumvirate_v2:GetModifierMPRegenAmplify_Percentage()
+	return self.mp_regen_amp
+end
+
+function modifier_item_imba_the_triumvirate_v2:GetModifierSpellAmplify_PercentageUnique()
+	return self.spell_amp
+end
+
+function modifier_item_imba_the_triumvirate_v2:GetModifierLifestealAmplify()
+	return self.lifesteal_amp
+end
+
+function modifier_item_imba_the_triumvirate_v2:GetModifierSpellLifestealAmplify()
+	return self.spell_lifesteal_amp
 end

@@ -145,10 +145,6 @@ LinkLuaModifier("modifier_imba_crystal_nova_snowfield_debuff", "components/abili
 LinkLuaModifier("modifier_imba_crystal_nova_snowfield_buff", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_crystal_maiden_3", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_crystal_maiden_crystal_nova:GetAbilityTextureName()
-	return "crystal_maiden_crystal_nova"
-end
-
 function imba_crystal_maiden_crystal_nova:GetAOERadius()
 	return self:GetSpecialValueFor("nova_radius")
 end
@@ -443,10 +439,6 @@ LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_enemy_talent", "componen
 LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_ally", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_crystal_maiden_frostbite = class({})
-
-function imba_crystal_maiden_frostbite:GetAbilityTextureName()
-	return "crystal_maiden_frostbite"
-end
 
 function imba_crystal_maiden_frostbite:GetIntrinsicModifierName() return "modifier_imba_crystal_maiden_frostbite_passive_ready" end
 
@@ -767,10 +759,6 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 imba_crystal_maiden_brilliance_aura = class({})
 
-function imba_crystal_maiden_brilliance_aura:GetAbilityTextureName()
-	return "crystal_maiden_brilliance_aura"
-end
-
 function imba_crystal_maiden_brilliance_aura:GetIntrinsicModifierName() return "modifier_imba_crystal_maiden_brilliance_aura_emitter" end
 
 LinkLuaModifier("modifier_imba_crystal_maiden_brilliance_aura_emitter", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
@@ -904,10 +892,6 @@ LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_armor_bonus", "comp
 
 imba_crystal_maiden_freezing_field = class({})
 
-function imba_crystal_maiden_freezing_field:GetAbilityTextureName()
-	return "crystal_maiden_freezing_field"
-end
-
 --If caster has scepter, allow for ability to be cast at a point
 function imba_crystal_maiden_freezing_field:GetBehavior()
 	if self:GetCaster():HasScepter() then
@@ -976,7 +960,7 @@ function imba_crystal_maiden_freezing_field:OnSpellStart()
 
 		--Slow aura
 		self.freezing_field_aura = CreateModifierThinker(self.caster, self, "modifier_imba_crystal_maiden_freezing_field_aura", {duration = duration}, self.freezing_field_center, self.caster:GetTeamNumber(), false)
-		self.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, self.freezing_field_aura)
+		self.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, self.freezing_field_aura, self.caster)
 
 		ParticleManager:SetParticleControl(self.freezing_field_particle, 0, self.freezing_field_center)
 		ParticleManager:SetParticleControl(self.freezing_field_particle, 1, Vector (1000, 0, 0))
@@ -1037,7 +1021,7 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 		end
 
 		-- Fire effect
-		local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
+		local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster, caster)
 		ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
 		ParticleManager:SetParticleControl(fxIndex, 1, attackPoint)
 		ParticleManager:ReleaseParticleIndex(fxIndex)
@@ -1072,7 +1056,7 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 			self.shards = math.floor(self.frametime / self.shard_rate)
 
 			-- Fire effect
-			local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_WORLDORIGIN, nil)
+			local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_WORLDORIGIN, nil, self.caster)
 			ParticleManager:SetParticleControl(fxIndex, 0, self.freezing_field_center)
 			ParticleManager:SetParticleControl(fxIndex, 1, self.freezing_field_center)
 			ParticleManager:ReleaseParticleIndex(fxIndex)

@@ -24,11 +24,13 @@
 LinkLuaModifier("modifier_item_imba_blade_mail", "components/items/item_blade_mail", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_blade_mail_active", "components/items/item_blade_mail", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_blade_mail_lacerate", "components/items/item_blade_mail", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_blade_mail_passive", "components/items/item_blade_mail", LUA_MODIFIER_MOTION_NONE)
 
 item_imba_blade_mail					= class({})
 modifier_item_imba_blade_mail			= class({})
 modifier_item_imba_blade_mail_active	= class({})
 modifier_item_imba_blade_mail_lacerate	= class({})
+modifier_item_imba_blade_mail_passive	= class({})
 
 item_imba_bladestorm_mail				= item_imba_blade_mail
 
@@ -77,6 +79,22 @@ function modifier_item_imba_blade_mail:OnCreated()
 	self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
 	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
 	self.bonus_intellect	= self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	self.parent = self:GetParent()
+	self.ability = self:GetAbility()
+
+	if not self:GetParent():HasModifier("modifier_item_imba_blade_mail_passive") then
+		self.parent:AddNewModifier(self.parent, self.ability, "modifier_item_imba_blade_mail_passive", {})
+	end
+end
+
+function modifier_item_imba_blade_mail:OnDestroy()
+	if not IsServer() then return end
+
+	Timers:CreateTimer(0.1, function()
+		if not self.parent:HasModifier("modifier_item_imba_blade_mail") then
+			self.parent:RemoveModifierByName("modifier_item_imba_blade_mail_passive")
+		end
+	end)
 end
 
 function modifier_item_imba_blade_mail:DeclareFunctions()
@@ -253,4 +271,38 @@ end
 
 function modifier_item_imba_blade_mail_lacerate:OnTooltip()
 	return self:GetStackCount()
+end
+
+----------------------------------
+-- BLADE MAIL PASSIVE MODIFIER --
+----------------------------------
+
+function modifier_item_imba_blade_mail_passive:IsHidden() return true end
+function modifier_item_imba_blade_mail_passive:RemoveOnDeath() return false end
+function modifier_item_imba_blade_mail_passive:IsPurgable() return false end
+function modifier_item_imba_blade_mail_passive:IsPurgeException() return false end
+
+function modifier_item_imba_blade_mail_passive:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}
+end
+
+function modifier_item_imba_blade_mail_passive:OnCreated()
+	if not IsServer() then return end
+
+	self.parent = self:GetParent()
+	self.return_damage = self:GetAbility():GetSpecialValueFor("passive_return_damage")
+	self.return_damage_pct = self:GetAbility():GetSpecialValueFor("passive_return_damage_pct")
+end
+
+function modifier_item_imba_blade_mail_passive:OnTakeDamage(params)
+	if not IsServer() then return end
+
+	if params.unit == self.parent then
+		if params.attacker:GetTeamNumber() ~= params.unit:GetTeamNumber() and params.damage_type == 1 then
+			local damage = self.return_damage + (params.damage / 100 * self.return_damage_pct)
+			ApplyDamage({ victim = params.attacker, attacker = params.unit, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
+		end
+	end
 end

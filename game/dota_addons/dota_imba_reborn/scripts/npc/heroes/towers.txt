@@ -1870,4 +1870,34 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Tower ability: Concentrated Momentum
+	//=================================================================================================================
+	"imba_tower_concentrated_momentum"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"components/abilities/buildings/towers/concentrated_momentum"
+		"AbilityTextureName"				"troll_warlord_fervor"
+
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_as"			"10"
+			}			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_stacks"		"20"
+			}
+		}
+	}
 }

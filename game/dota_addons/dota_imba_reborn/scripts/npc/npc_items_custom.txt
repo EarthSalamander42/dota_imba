@@ -3344,11 +3344,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"aura_radius"			"1200"
 			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"base_regen"			"0.5"
-			}
+//			"05"
+//			{
+//				"var_type"				"FIELD_FLOAT"
+//				"base_regen"			"0.5"
+//			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -3369,11 +3369,10 @@
 				"var_type"				"FIELD_INTEGER"
 				"hp_regen_amp"			"50"
 			}
-			
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"fixed_health_regen"		"10"
+				"hp_regen_amp_broken"	"5"
 			}
 			"11"
 			{
@@ -5063,7 +5062,7 @@
 		"ItemResult"					"item_imba_silver_edge"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_shadow_blade;item_ultimate_orb"
+			"01"						"item_imba_shadow_blade;item_imba_echo_sabre"
 		}
 	}
 
@@ -5110,7 +5109,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"30"
+				"bonus_attack_speed"		"45"
 			}
 			"03"
 			{
@@ -5178,11 +5177,35 @@
 				"var_type"					"FIELD_FLOAT"
 				"main_debuff_duration"		"7.0"
 			}
-			
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"heal_reduction"		"50"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"100"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_slow"		"100"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"0.7"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_hits"				"2"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_buff"		"490"
 			}
 		}
 	}
@@ -5826,6 +5849,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_mana"				"250"				
+			}
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal_reduction_pct"		"40" // %
 			}
 		}
 	}
@@ -10852,6 +10880,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"lacerate_duration"		"10"
 			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"passive_return_damage"	"20"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"passive_return_damage_pct"	"20" // %
+			}
 		}
 	}
 
@@ -14739,6 +14777,7 @@
 		"ItemShopTags"					"damage;str;agi;int;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"triumvirate;trident;sky;kys"
+		"ItemIsNeutralDrop"				"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -14747,57 +14786,57 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"21"
+				"bonus_strength"		"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"21"
+				"bonus_agility"			"30"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"21"
+				"bonus_intellect"		"30"
 			}			
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"21"
+				"hp_regen_amp"			"30"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"21"
+				"bonus_attack_speed"	"30"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"21"
+				"spell_amp"				"30"
 			}
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"status_resistance"				"16"
+				"status_resistance"				"30"
 			}
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_speed_percent_bonus"	"16"
+				"movement_speed_percent_bonus"	"10"
 			}		
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"manacost_reduction"	"16"
+				"mp_regen_amp"		"30"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cdr"				"16"
+				"lifesteal_amp"				"30"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_status_resistance_active"	"42"
+				"spell_lifesteal_amp"	"30"
 			}
 			"12"
 			{
@@ -16413,6 +16452,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"justice_pct"			"50"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"passive_return_damage"	"20"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"passive_return_damage_pct"	"20" // %
 			}
 		}
 	}

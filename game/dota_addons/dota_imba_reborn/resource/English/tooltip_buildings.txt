@@ -224,6 +224,16 @@
 "DOTA_Tooltip_modifier_imba_tower_regeneration_aura_buff"              "Regeneration Aura"
 "DOTA_Tooltip_modifier_imba_tower_regeneration_aura_buff_Description"               "Increased health regeneration."
 
+"DOTA_Tooltip_ability_imba_tower_concentrated_momentum"								"Concentrated Momentum"
+"DOTA_Tooltip_ability_imba_tower_concentrated_momentum_Description"					"With each continuous blow on the same target, gains increased attack speed.  If the tower changes targets, the stacks drop to zero."
+"DOTA_Tooltip_ability_imba_tower_concentrated_momentum_Lore"						"If at first you don't succeed, strike, strike again."
+"DOTA_Tooltip_ability_imba_tower_concentrated_momentum_bonus_as"					"ATTACK SPEED PER STACK:"
+// "DOTA_Tooltip_ability_imba_tower_concentrated_moment_max_stacks"					"MAX STACKS:"
+
+"DOTA_Tooltip_modifier_imba_tower_concentrated_momentum_stacks"						"Concentrated Momentum"
+"DOTA_Tooltip_modifier_imba_tower_concentrated_momentum_stacks_Description"			"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
+
+
 //=================================================================================================================
 // Tier 3 tower abilities
 //=================================================================================================================

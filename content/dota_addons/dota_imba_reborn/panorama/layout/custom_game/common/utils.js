@@ -35,21 +35,21 @@ function createEventRequestCreator(eventName) {
 }
 
 function SubscribeToNetTableKey(tableName, key, callback) {
-    var immediateValue = CustomNetTables.GetTableValue(tableName, key) || {};
-    if (immediateValue != null) callback(immediateValue);
-    CustomNetTables.SubscribeNetTableListener(tableName, function (_tableName, currentKey, value) {
-        if (currentKey === key && value != null) callback(value);
-    });
+	var immediateValue = CustomNetTables.GetTableValue(tableName, key) || {};
+	if (immediateValue != null) callback(immediateValue);
+	CustomNetTables.SubscribeNetTableListener(tableName, function (_tableName, currentKey, value) {
+		if (currentKey === key && value != null) callback(value);
+	});
 }
 
 function GetDotaHud() {
-    var panel = $.GetContextPanel();
-    while (panel && panel.id !== 'Hud') {
-        panel = panel.GetParent();
+	var panel = $.GetContextPanel();
+	while (panel && panel.id !== 'Hud') {
+		panel = panel.GetParent();
 	}
 
-    if (!panel) {
-        throw new Error('Could not find Hud root from panel with id: ' + $.GetContextPanel().id);
+	if (!panel) {
+		throw new Error('Could not find Hud root from panel with id: ' + $.GetContextPanel().id);
 	}
 
 	return panel;

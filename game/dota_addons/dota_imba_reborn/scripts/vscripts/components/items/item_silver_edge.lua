@@ -31,6 +31,8 @@ LinkLuaModifier("modifier_item_imba_silver_edge_invis_flying_disabled", "compone
 LinkLuaModifier("modifier_item_imba_silver_edge_invis_panic_debuff", "components/items/item_silver_edge.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_silver_edge_invis_break_debuff", "components/items/item_silver_edge.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_silver_edge_invis_attack_cleave_particle", "components/items/item_silver_edge.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_echo_rapier_haste", "components/items/item_echo_sabre.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_echo_rapier_debuff_slow", "components/items/item_echo_sabre.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_silver_edge:OnSpellStart()
 	-- Ability properties
@@ -257,7 +259,8 @@ function modifier_item_imba_silver_edge_passive:GetAttributes() return MODIFIER_
 
 function modifier_item_imba_silver_edge_passive:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
+        if not self:GetAbility() then self:Destroy() return end
+        self.echo_ready = true
     end
 
 	local ability   =   self:GetAbility()
@@ -276,7 +279,8 @@ function modifier_item_imba_silver_edge_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_EVENT_ON_TAKEDAMAGE            -- Flying disabler handler
+		MODIFIER_EVENT_ON_TAKEDAMAGE,            -- Flying disabler handler
+		MODIFIER_EVENT_ON_ATTACK,
 	}
 end
 
@@ -322,6 +326,38 @@ function modifier_item_imba_silver_edge_passive:OnTakeDamage(params)
 			end
 		end
 	end
+end
+
+function modifier_item_imba_silver_edge_passive:OnAttack(keys)
+	local item = self:GetAbility()
+	local parent = self:GetParent()
+
+	if keys.attacker == parent and item and not parent:IsIllusion() and parent:FindAllModifiersByName(self:GetName())[1] == self then
+		if not parent:IsRangedAttacker() then 
+			if self.echo_ready == true and not keys.no_attack_cooldown then
+				self.echo_ready = false
+				self:StartIntervalThink(GetItemKV("item_imba_echo_sabre", "AbilityCooldown"))
+				parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
+
+				if not keys.target:IsBuilding() and not keys.target:IsOther() then
+					keys.target:AddNewModifier(parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+				end
+			end
+		end
+
+		if parent:HasModifier("modifier_imba_echo_rapier_haste") and (not parent:HasAbility("imba_slark_essence_shift") or parent:FindAbilityByName("imba_slark_essence_shift"):GetCooldownTime() < parent:FindAbilityByName("imba_slark_essence_shift"):GetEffectiveCooldown(parent:FindAbilityByName("imba_slark_essence_shift"):GetLevel())) then
+			local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
+			mod:DecrementStackCount()
+			if mod:GetStackCount() < 1 then
+				mod:Destroy()
+			end
+		end
+	end
+end
+
+function modifier_item_imba_silver_edge_passive:OnIntervalThink()
+	self:StartIntervalThink(-1)
+	self.echo_ready = true
 end
 
 --- Flying disabler handler

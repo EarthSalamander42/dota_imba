@@ -43745,6 +43745,592 @@
 			"modifier"		"particles/econ/items/timbersaw/timbersaw_ti9/timbersaw_ti9_ambient.vpcf"
 		}
 	}
+	"12930"
+	{
+				"skip_model_combine"		"1"
+				"asset_modifier"
+				{
+					"type"		"entity_model"
+					"asset"		"npc_dota_hero_queenofpain"
+					"modifier"		"models/items/queenofpain/queenofpain_arcana/queenofpain_arcana.vmdl"
+				}
+				"asset_modifier0"
+				{
+					"type"		"model_skin"
+					"style"		"0"
+					"skin"		"0"
+				}
+				"asset_modifier1"
+				{
+					"type"		"model_skin"
+					"style"		"1"
+					"skin"		"1"
+				}
+				"asset_modifier2"
+				{
+					"type"		"arcana_level"
+					"level"		"1"
+					"style"		"0"
+				}
+				"asset_modifier3"
+				{
+					"type"		"arcana_level"
+					"level"		"2"
+					"style"		"1"
+				}
+				"asset_modifier4"
+				{
+					"type"		"activity"
+					"asset"		"ALL"
+					"modifier"		"arcana"
+				}
+				"asset_modifier5"
+				{
+					"type"		"attack_projectile_attachment"
+					"asset"		"close"
+					"modifier"		"attach_attack2"
+				}
+				"asset_modifier6"
+				{
+					"type"		"buff_modifier"
+					"modifier"		"modifier_queenofpain_arcana"
+				}
+				"asset_modifier7"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_sonic_wave.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier8"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_blink_start.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier9"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_blink_end.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier10"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_sonic_wave_cast.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_sonic_wave_trace.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier11"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_wings_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier12"
+				{
+					"type"		"particle"
+					"asset"		"particles/msg_fx/msg_deny.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_msg_deny.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier13"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/queenofpain_arcana/queenofpain_arcana_armor_legacy.vmdl"
+					"modifier"		"models/items/queenofpain/queenofpain_arcana/queenofpain_arcana_armor.vmdl"
+				}
+				"asset_modifier14"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/dotapit_s3_abyssal_temptress_shoulder/dotapit_s3_abyssal_temptress_shoulder.vmdl"
+					"modifier"		"models/items/queenofpain/dotapit_s3_abyssal_temptress_shoulder/dotapit_s3_abyssal_temptress_shoulder_arcrefit.vmdl"
+				}
+				"asset_modifier15"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/qop_countess_of_ristul_shoulder/qop_countess_of_ristul_shoulder.vmdl"
+					"modifier"		"models/items/queenofpain/qop_countess_of_ristul_shoulder/qop_countess_of_ristul_shoulder_arcrefit.vmdl"
+				}
+				"asset_modifier16"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/qop_crimson_matriarch_shoulder/qop_crimson_matriarch_shoulder.vmdl"
+					"modifier"		"models/items/queenofpain/qop_crimson_matriarch_shoulder/qop_crimson_matriarch_shoulder_arcrefit.vmdl"
+				}
+				"asset_modifier17"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/qop_scourge_of_dungeon_shoulder/qop_scourge_of_dungeon_shoulder.vmdl"
+					"modifier"		"models/items/queenofpain/qop_scourge_of_dungeon_shoulder/qop_scourge_of_dungeon_shoulder_arcrefit.vmdl"
+				}
+				"asset_modifier18"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/queenchains/queenchains.vmdl"
+					"modifier"		"models/items/queenofpain/queenchains/queenchains_arcrefit.vmdl"
+				}
+				"asset_modifier19"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/queenofpain_blightedagony_head/queenofpain_blightedagony_head.vmdl"
+					"modifier"		"models/items/queenofpain/queenofpain_blightedagony_head/queenofpain_blightedagony_head_arcrefit.vmdl"
+				}
+				"asset_modifier20"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/queenofpain_blightedagony_shoulder/queenofpain_blightedagony_shoulder.vmdl"
+					"modifier"		"models/items/queenofpain/queenofpain_blightedagony_shoulder/queenofpain_blightedagony_shoulder_arcrefit.vmdl"
+				}
+				"asset_modifier21"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/ti8_qop_bat_queen_shoulder/ti8_qop_bat_queen_shoulder.vmdl"
+					"modifier"		"models/items/queenofpain/ti8_qop_bat_queen_shoulder/ti8_qop_bat_queen_shoulder_arcrefit.vmdl"
+				}
+				"asset_modifier22"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/tpl_shoulder_lvl2/tpl_shoulder_lvl2.vmdl"
+					"modifier"		"models/items/queenofpain/tpl_shoulder_lvl2/tpl_shoulder_lvl2_arcrefit.vmdl"
+				}
+				"asset_modifier23"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/tpl_shoulder_lvl3/tpl_shoulder_lvl3.vmdl"
+					"modifier"		"models/items/queenofpain/tpl_shoulder_lvl3/tpl_shoulder_lvl3_arcrefit.vmdl"
+				}
+				"asset_modifier24"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/twilight_shade_shoulder/twilight_shade_shoulder.vmdl"
+					"modifier"		"models/items/queenofpain/twilight_shade_shoulder/twilight_shade_shoulder_arcrefit.vmdl"
+				}
+				"asset_modifier25"
+				{
+					"type"		"model"
+					"asset"		"models/items/queenofpain/qop_ti8_weapon/qop_ti8_weapon.vmdl"
+					"modifier"		"models/items/queenofpain/qop_ti8_weapon/qop_ti8_weapon_arcrefit.vmdl"
+				}
+				"asset_modifier26"
+				{
+					"type"		"default_idle_expression"
+					"asset"		"scenes/default_idle.vcd"
+					"modifier"		"scenes/queenofpain/qop_arc_capture_portrait.vcd"
+				}
+				"styles"
+				{
+					"0"
+					{
+						"name"		"#DOTA_Style_Queen_of_Pain_Arcana_Style0"
+						"skin"		"0"
+						"alternate_icon"		"0"
+					}
+					"1"
+					{
+						"name"		"#DOTA_Style_Queen_of_Pain_Arcana_Style1"
+						"skin"		"1"
+						"alternate_icon"		"1"
+						"unlock"
+						{
+							"gem"
+							{
+								"def_index"		"3027"
+								"type_field"		"strange_type"
+								"type_value"		"815"
+								"unlock_field"		"strange_value"
+								"unlock_value"		"1000"
+							}
+						}
+					}
+				}
+				"asset_modifier27"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_whip_ambient.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier28"
+				{
+					"type"		"custom_kill_effect"
+					"asset"		"kill"
+					"modifier"		"modifier_queenofpain_arcana_kill_effect"
+				}
+				"asset_modifier29"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_sonic_wave_tgt.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_sonicwave_tgt.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier30"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_target_death.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_tgt_death.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier31"
+				{
+					"type"		"portrait_background_model"
+					"asset"		"models/items/queenofpain/queenofpain_arcana/queenofpain_arcana_pedestal.vmdl"
+					"style"		"0"
+					"skin"		"0"
+				}
+				"asset_modifier32"
+				{
+					"type"		"portrait_background_model"
+					"asset"		"models/items/queenofpain/queenofpain_arcana/queenofpain_arcana_pedestal.vmdl"
+					"style"		"1"
+					"skin"		"1"
+				}
+				"asset_modifier33"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_feet_ambient.vpcf"
+					"spawn_in_loadout_only"		"2"
+					"style"		"0"
+				}
+				"asset_modifier34"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_feet_ambient_loadout.vpcf"
+					"spawn_in_loadout_only"		"1"
+					"style"		"0"
+				}
+				"asset_modifier35"
+				{
+					"type"		"healthbar_offset"
+					"offset"		"200"
+				}
+				"asset_modifier36"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queenofpain_loadout.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_loadout.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier37"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_blink_v2_start.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier38"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_blink_v2_end.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier39"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_wings_v2_ambient.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier40"
+				{
+					"type"		"icon_replacement_hero"
+					"asset"		"npc_dota_hero_queenofpain"
+					"modifier"		"npc_dota_hero_queenofpain_alt1"
+					"style"		"0"
+					"force_display"		"1"
+				}
+				"asset_modifier41"
+				{
+					"type"		"icon_replacement_hero"
+					"asset"		"npc_dota_hero_queenofpain"
+					"modifier"		"npc_dota_hero_queenofpain_alt2"
+					"style"		"1"
+					"force_display"		"1"
+				}
+				"asset_modifier42"
+				{
+					"type"		"icon_replacement_hero_minimap"
+					"asset"		"npc_dota_hero_queenofpain"
+					"modifier"		"npc_dota_hero_queenofpain_alt1"
+					"style"		"0"
+					"force_display"		"1"
+				}
+				"asset_modifier43"
+				{
+					"type"		"icon_replacement_hero_minimap"
+					"asset"		"npc_dota_hero_queenofpain"
+					"modifier"		"npc_dota_hero_queenofpain_alt2"
+					"style"		"1"
+					"force_display"		"1"
+				}
+				"asset_modifier44"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_sonic_wave_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier45"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_sonic_wave_cast.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_sonic_wave_trace_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier46"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_whip_ambient_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier47"
+				{
+					"type"		"response_criteria"
+					"asset"		"qop_arc_ristul"
+				}
+				"asset_modifier48"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_loadout.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_loadout_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier49"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_alt.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_v2_alt.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier50"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_feet_ambient_v2.vpcf"
+					"style"		"1"
+					"spawn_in_loadout_only"		"2"
+				}
+				"asset_modifier51"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_feet_ambient_loadout_v2.vpcf"
+					"spawn_in_loadout_only"		"1"
+					"style"		"1"
+				}
+				"asset_modifier52"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_alt_b.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_alt_b_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier53"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_alt_b_ground.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_alt_b_ground_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier54"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_alt_b_whip.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_alt_b_whip_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier55"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_victory.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_victory_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier56"
+				{
+					"type"		"sound"
+					"asset"		"Hero_QueenOfPain.SonicWave.Precast"
+					"modifier"		"Hero_QueenOfPain.SonicWave.Precast.Arcana"
+				}
+				"asset_modifier57"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/events/ti10/msg_deny_ti10.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_msg_deny.vpcf"
+					"style"		"0"
+				}
+				"asset_modifier58"
+				{
+					"type"		"particle"
+					"asset"		"particles/msg_fx/msg_deny.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_msg_deny_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier59"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/events/ti10/msg_deny_ti10.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_msg_deny_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier60"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_sonic_wave_tgt.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_sonicwave_tgt_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier61"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queen_target_death.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_v2_tgt_death.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier62"
+				{
+					"type"		"particle"
+					"asset"		"particles/units/heroes/hero_queenofpain/queenofpain_loadout.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_loadout_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier63"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_head_ambient.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_head_ambient_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier64"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_blade_ambient.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_blade_ambient_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier65"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_haste.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_anim_run_v2_haste.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier66"
+				{
+					"type"		"sound"
+					"asset"		"Hero_QueenOfPain.Blink_out"
+					"modifier"		"Hero_QueenOfPain.Blink_out.Arcana"
+				}
+				"asset_modifier67"
+				{
+					"type"		"sound"
+					"asset"		"Hero_QueenOfPain.Blink_in"
+					"modifier"		"Hero_QueenOfPain.Blink_in.Arcana"
+				}
+				"asset_modifier68"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_attack_blur_melee.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_attack_blur_melee_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier69"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_attack_blur_melee_b.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_attack_blur_melee_b_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier70"
+				{
+					"type"		"particle"
+					"asset"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_melee_attack.vpcf"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_melee_attack_v2.vpcf"
+					"style"		"1"
+				}
+				"asset_modifier71"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_loadout_pedestal.vpcf"
+					"style"		"0"
+					"spawn_in_loadout_only"		"1"
+				}
+				"asset_modifier72"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/econ/items/queen_of_pain/qop_arcana/qop_arcana_loadout_pedestal_v2.vpcf"
+					"spawn_in_loadout_only"		"1"
+					"style"		"1"
+				}
+				"alternate_icons"
+				{
+					"0"
+					{
+						"icon_path"		"econ/items/queenofpain/queenofpain_arcana/queenofpain_arcana"
+					}
+					"1"
+					{
+						"icon_path"		"econ/items/queenofpain/queenofpain_arcana/queenofpain_arcana_style1"
+					}
+				}
+				"asset_modifier73"
+				{
+					"type"		"ability_icon"
+					"asset"		"queenofpain_shadow_strike"
+					"modifier"		"queen_of_pain/arcana/queenofpain_shadow_strike_alt1"
+					"style"		"0"
+					"minimum_priority"		"1"
+				}
+				"asset_modifier74"
+				{
+					"type"		"ability_icon"
+					"asset"		"queenofpain_shadow_strike"
+					"modifier"		"queen_of_pain/arcana/queenofpain_shadow_strike_alt2"
+					"style"		"1"
+					"minimum_priority"		"1"
+				}
+				"asset_modifier75"
+				{
+					"type"		"ability_icon"
+					"asset"		"queenofpain_blink"
+					"modifier"		"queen_of_pain/arcana/queenofpain_blink_alt1"
+					"style"		"0"
+				}
+				"asset_modifier76"
+				{
+					"type"		"ability_icon"
+					"asset"		"queenofpain_blink"
+					"modifier"		"queen_of_pain/arcana/queenofpain_blink_alt2"
+					"style"		"1"
+				}
+				"asset_modifier77"
+				{
+					"type"		"ability_icon"
+					"asset"		"queenofpain_scream_of_pain"
+					"modifier"		"queen_of_pain/arcana/queenofpain_scream_of_pain_alt1"
+					"style"		"0"
+				}
+				"asset_modifier78"
+				{
+					"type"		"ability_icon"
+					"asset"		"queenofpain_scream_of_pain"
+					"modifier"		"queen_of_pain/arcana/queenofpain_scream_of_pain_alt2"
+					"style"		"1"
+				}
+				"asset_modifier79"
+				{
+					"type"		"ability_icon"
+					"asset"		"queenofpain_sonic_wave"
+					"modifier"		"queen_of_pain/arcana/queenofpain_sonic_wave_alt1"
+					"style"		"0"
+				}
+				"asset_modifier80"
+				{
+					"type"		"ability_icon"
+					"asset"		"queenofpain_sonic_wave"
+					"modifier"		"queen_of_pain/arcana/queenofpain_sonic_wave_alt2"
+					"style"		"1"
+				}
+	}
 	"12931"
 	{
 				"asset_modifier"
@@ -47430,6 +48016,115 @@
 					"modifier"		"particles/econ/items/medusa/medusa_ti10_immortal_tail/medusa_ti10_ambient.vpcf"
 				}
 				"skip_model_combine"		"1"
+	}
+	"13783"
+	{
+				"asset_modifier"
+				{
+					"type"		"persona"
+					"persona"		"1"
+				}
+				"asset_modifier0"
+				{
+					"type"		"entity_model"
+					"asset"		"npc_dota_hero_antimage"
+					"modifier"		"models/heroes/antimage_female/antimage_female.vmdl"
+				}
+				"asset_modifier1"
+				{
+					"type"		"hero_scale"
+					"asset"		"npc_dota_hero_antimage"
+					"ModelScale"		"1"
+					"VersusScale"		"0.988900"
+				}
+				"asset_modifier2"
+				{
+					"type"		"response_criteria"
+					"asset"		"am_pers_wei"
+				}
+				"asset_modifier3"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Antimage.PreAttack"
+					"modifier"		"Hero_Antimage.PreAttack.Persona"
+				}
+				"asset_modifier4"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Antimage.Attack"
+					"modifier"		"Hero_Antimage.Attack.Persona"
+				}
+				"asset_modifier5"
+				{
+					"type"		"sound"
+					"asset"		"Hero_Antimage.Blink_in"
+					"modifier"		"Hero_Antimage.Blink_in.Persona"
+				}
+				"asset_modifier6"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/units/heroes/hero_antimage_female/am_female_blade_l_ambient.vpcf"
+				}
+				"asset_modifier7"
+				{
+					"type"		"particle_create"
+					"modifier"		"particles/units/heroes/hero_antimage_female/am_female_blade_r_ambient.vpcf"
+				}
+				"asset_modifier8"
+				{
+					"type"		"chatwheel"
+					"asset"		"antimage_anti_laugh_05"
+					"modifier"		"antimage_amp_wei_laugh_09"
+				}
+				"asset_modifier9"
+				{
+					"type"		"chatwheel"
+					"asset"		"antimage_anti_respawn_09"
+					"modifier"		"antimage_amp_wei_ability1_01"
+				}
+				"asset_modifier10"
+				{
+					"type"		"chatwheel"
+					"asset"		"antimage_anti_deny_12"
+					"modifier"		"antimage_amp_wei_taunt_04"
+				}
+				"asset_modifier11"
+				{
+					"type"		"chatwheel"
+					"asset"		"antimage_anti_magicuser_01"
+					"modifier"		"antimage_amp_wei_wheel_all_19"
+				}
+				"asset_modifier12"
+				{
+					"type"		"chatwheel"
+					"asset"		"antimage_anti_ability_failure_02"
+					"modifier"		"antimage_amp_wei_wheel_deny_02_02"
+				}
+				"asset_modifier13"
+				{
+					"type"		"chatwheel"
+					"asset"		"antimage_anti_kill_08"
+					"modifier"		"antimage_amp_wei_taunt_05"
+				}
+				"asset_modifier14"
+				{
+					"type"		"chatwheel"
+					"asset"		"antimage_anti_kill_13"
+					"modifier"		"antimage_amp_wei_taunt_03"
+				}
+				"asset_modifier15"
+				{
+					"type"		"chatwheel"
+					"asset"		"antimage_anti_rare_02"
+					"modifier"		"antimage_amp_wei_wheel_all_18"
+				}
+				"asset_modifier16"
+				{
+					"type"		"icon_replacement_hero_minimap"
+					"asset"		"npc_dota_hero_antimage"
+					"modifier"		"npc_dota_hero_antimage_persona1"
+					"force_display"		"1"
+				}
 	}
 	"13787"
 	{

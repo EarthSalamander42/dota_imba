@@ -1,0 +1,17 @@
+// Eye of Skadi
+"DOTA_Tooltip_Ability_item_imba_skadi"                          "Eye of Skadi"
+"DOTA_Tooltip_ability_item_imba_skadi_Description"              "<h1><font color='#FF7800'>Active: Dead Winter Reigns</font></h1> Creates a zone of utter cold around you, damaging, mini-stunning, and rooting nearby enemies.<br><br>Effect Radius: %base_radius% + %radius_per_str% per <font color='#FF0000'>strength</font><br>Damage: %base_damage% + %damage_per_agi% per <font color='#00FF00'>agility</font><br>Root Duration: %base_duration% + %duration_per_int% per <font color='#4060FF'>intelligence</font> seconds\n<h1>Passive: Cold Attack</h1> <font color='#FF7800'>Any types of sourced damage</font> lower enemy attack speed by %slow_as% and movement speed by %slow_ms%%%. <font color='#FF7800'>The slow lasts longer on enemies closer to you, and is not affected by melee or ranged usage.</font>"
+"DOTA_Tooltip_ability_item_imba_skadi_Lore"						"Noldor, blood is on your hands...\nTears unnumbered, you will shet and dwell in pain...\nDead winter reigns!"
+"DOTA_Tooltip_ability_item_imba_skadi_Note0"                    "Activation grants ground vision in the same radius as the effect."
+"DOTA_Tooltip_ability_item_imba_skadi_Note1"                    "<font color='#FF7800'>Cold Attack's slow duration uses linear scaling from %max_duration% seconds at minimum range to %min_duration% second at %slow_range_cap%, with no effect beyond %max_distance% range).</font>"
+"DOTA_Tooltip_ability_item_imba_skadi_Note2"                    "Heal reduction also affects lifesteal."
+"DOTA_Tooltip_ability_item_imba_skadi_bonus_all_stats"          "+$all"
+"DOTA_Tooltip_ability_item_imba_skadi_bonus_health"				"+$health"
+"DOTA_Tooltip_ability_item_imba_skadi_bonus_mana"				"+$mana"
+"DOTA_Tooltip_ability_item_imba_skadi_heal_reduction_pct"		"%HEAL REDUCTION:"
+
+"DOTA_Tooltip_modifier_item_imba_skadi_slow"                    "Wintergrasp"
+"DOTA_Tooltip_modifier_item_imba_skadi_slow_Description"		"Movement slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed slowed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
+
+"DOTA_Tooltip_modifier_item_imba_skadi_freeze"                  "Dead Winter"
+"DOTA_Tooltip_modifier_item_imba_skadi_freeze_Description"		"Rooted and unable to move."
