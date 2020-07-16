@@ -14778,6 +14778,7 @@
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"triumvirate;trident;sky;kys"
 		"ItemIsNeutralDrop"				"1"
+		"ItemPurchasable" 				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
