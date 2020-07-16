@@ -1808,7 +1808,7 @@ function modifier_imba_death_pact_spirit_aura:OnIntervalThink(keys)
 			self:GetParent():SetAbsOrigin(mount_point)            
 		else
 			direction = (mount_point - current_loc):Normalized()
-			local Clinkz_move_speed = self:GetCaster():GetMoveSpeedModifier(self:GetCaster():GetBaseMoveSpeed())
+			local Clinkz_move_speed = self:GetCaster():GetMoveSpeedModifier(self:GetCaster():GetBaseMoveSpeed(), false)
 
 			local new_point = current_loc + direction * ((Clinkz_move_speed * 1.25) * FrameTime())
 			local ground_point = GetGroundPosition(new_point, self:GetParent())

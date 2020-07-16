@@ -345,12 +345,12 @@
 		//Picking Screen
 		"IsImba"					"1"
 
-		"Ability1"					"imba_clinkz_death_pact_723"
+		"Ability1"					"imba_clinkz_strafe"
 		"Ability2"					"imba_clinkz_searing_arrows"
 		"Ability3"					"imba_clinkz_skeleton_walk_723"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"clinkz_burning_army"
+		"Ability6"					"imba_clinkz_death_pact"
 		
 //		"Ability9"					"imba_form_change_clinkz"
 

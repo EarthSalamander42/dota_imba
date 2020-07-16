@@ -27571,13 +27571,13 @@
 			"02"
 			{
 				"var_type"                          "FIELD_INTEGER"
-				"creep_bonus_hp_pct"                "50 70 90"
+				"creep_bonus_hp_pct"                "110 130 150"
 			}
 
 			"03"
 			{
 				"var_type"                          "FIELD_FLOAT"
-				"creep_bonus_dmg_pct"               "5 7 9"
+				"creep_bonus_dmg_pct"               "11 13 15"
 			}
 
 			"04"
