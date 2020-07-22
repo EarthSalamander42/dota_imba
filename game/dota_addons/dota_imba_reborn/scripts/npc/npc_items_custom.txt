@@ -3344,11 +3344,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"aura_radius"			"1200"
 			}
-//			"05"
-//			{
-//				"var_type"				"FIELD_FLOAT"
-//				"base_regen"			"0.5"
-//			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"health_regen_pct"		"1.0"
+			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"

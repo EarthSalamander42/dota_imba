@@ -87,8 +87,8 @@ function modifier_item_imba_heart:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_BONUS,
---		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
+
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
 	}
@@ -106,18 +106,16 @@ function modifier_item_imba_heart:GetModifierHealthBonus()
 	end
 end
 
---[[
 function modifier_item_imba_heart:GetModifierHealthRegenPercentage()
 	if self:GetAbility() and self:GetAbility():GetSecondaryCharges() == 1 then
 		if not self:GetParent():IsIllusion() then
-			return self:GetStackCount()
+			return self:GetAbility():GetSpecialValueFor("health_regen_pct")
 		else
 			-- IMBAfication: We Are All Alive
-			return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("alive_illusion_pct") / 100
+			return self:GetAbility():GetSpecialValueFor("health_regen_pct") * self:GetAbility():GetSpecialValueFor("alive_illusion_pct") / 100
 		end
 	end
 end
---]]
 
 function modifier_item_imba_heart:OnTakeDamage(keys)
 	-- "Damage greater than 0 from any player (including allies, excluding self) or Roshan puts the regeneration on a 5/7-second cooldown. "
@@ -132,7 +130,7 @@ end
 
 function modifier_item_imba_heart:GetModifierHPRegenAmplify_Percentage()
 	if self:GetAbility() then
-		if self:GetStackCount() then
+		if self:GetStackCount() == 1 then
 			if self:GetParent():IsIllusion() then
 				-- IMBAfication: We Are All Alive
 				return self:GetAbility():GetSpecialValueFor("hp_regen_amp") * self:GetAbility():GetSpecialValueFor("alive_illusion_pct") / 100
