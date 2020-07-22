@@ -71,7 +71,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 
-		"Ability1"					"imba_abaddon_mist_coil"
+		"Ability1"					"imba_abaddon_death_coil"
 		"Ability2"					"imba_abaddon_aphotic_shield"
 		"Ability3"					"imba_abaddon_curse_of_avernus"
 		"Ability4"					"imba_abaddon_over_channel"

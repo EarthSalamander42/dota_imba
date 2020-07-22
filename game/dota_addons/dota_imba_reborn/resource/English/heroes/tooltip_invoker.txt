@@ -109,7 +109,7 @@
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_lore"							"#{DOTA_Tooltip_ability_invoker_forge_spirit_Lore}"				
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_note0"							"#{DOTA_Tooltip_ability_invoker_forge_spirit_Note0}"
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_damage"					"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_damage}"
-"DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_mana"					"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_mana}"
+// "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_mana"					"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_mana}"
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_armor"					"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_armor}"
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_attack_range"			"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_attack_range}"
 "DOTA_Tooltip_ability_imba_invoker_forge_spirit_spirit_hp"						"#{DOTA_Tooltip_ability_invoker_forge_spirit_spirit_hp}"

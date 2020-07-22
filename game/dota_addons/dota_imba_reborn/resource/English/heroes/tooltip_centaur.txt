@@ -40,8 +40,8 @@
 "DOTA_Tooltip_ability_imba_centaur_return_Lore"							"#{DOTA_Tooltip_ability_centaur_return_Lore}"
 "DOTA_Tooltip_ability_imba_centaur_return_Note"							"Bulging Hide does not trigger from tower attacks."
 "DOTA_Tooltip_ability_imba_centaur_return_damage"						"#{DOTA_Tooltip_ability_centaur_return_return_damage}"
-"DOTA_Tooltip_ability_imba_centaur_return_bonus_damage"					"#{DOTA_Tooltip_ability_centaur_return_damage_gain_pct}"
-"DOTA_Tooltip_ability_imba_centaur_return_max_stacks"					"#{DOTA_Tooltip_ability_centaur_return_max_stacks}"
+// "DOTA_Tooltip_ability_imba_centaur_return_bonus_damage"					"#{DOTA_Tooltip_ability_centaur_return_damage_gain_pct}"
+// "DOTA_Tooltip_ability_imba_centaur_return_max_stacks"					"#{DOTA_Tooltip_ability_centaur_return_max_stacks}"
 
 "DOTA_Tooltip_modifier_imba_return_passive"								"Retaliate Passive"
 "DOTA_Tooltip_modifier_imba_return_passive_Description"					"Counterattacking every time someone attacks you."

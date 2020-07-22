@@ -15,7 +15,7 @@
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Lore"						"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Lore}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Note0"						"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Note0}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Note1"						"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Note1}"
-"DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Note2"						"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Note2}"
+// "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_Note2"						"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_Note2}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_totem_damage_percentage"	"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_totem_damage_percentage}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_tooltip_duration"			"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_abilityduration}"
 "DOTA_Tooltip_ability_earthshaker_enchant_totem_lua_distance_scepter"			"#{DOTA_Tooltip_ability_earthshaker_enchant_totem_distance_scepter}"

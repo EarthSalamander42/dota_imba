@@ -3,6 +3,7 @@
 		<include src="file://{resources}/scripts/custom_game/abilities_charges.js" />
 		<include src="file://{resources}/scripts/custom_game/vanilla_keybinds.js" />
 		<include src="file://{resources}/scripts/custom_game/imba_invoker_tooltips.js" />
+		<include src="file://{resources}/scripts/custom_game/imba_custom_tooltips.js" />
 	</scripts>
 
 	<script>
