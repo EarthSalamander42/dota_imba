@@ -114,8 +114,8 @@ end
 
 -- Set up fountain regen
 function GameMode:SetupFountains()
-
 	local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
+
 	for _, fountainEnt in pairs(fountainEntities) do
 		fountainEnt:AddNewModifier(fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {})
 		fountainEnt:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
@@ -125,6 +125,15 @@ function GameMode:SetupFountains()
 			fountainEnt:RemoveModifierByName("modifier_fountain_aura")
 			fountainEnt:AddNewModifier(fountainEnt, nil, "modifier_fountain_aura_lua", {})
 		end
+
+		local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
+
+		local fountain_aura_pfx = ParticleManager:CreateParticle("particles/range_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, fountainEnt)
+		ParticleManager:SetParticleControl(fountain_aura_pfx, 1, Vector(255, 255, 0))
+		ParticleManager:SetParticleControl(fountain_aura_pfx, 3, Vector(1200, 0, 0))
+		ParticleManager:ReleaseParticleIndex(fountain_aura_pfx)
 	end
 end
 
