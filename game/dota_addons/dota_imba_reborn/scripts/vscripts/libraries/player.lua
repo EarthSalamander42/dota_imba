@@ -857,10 +857,32 @@ ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
 	return original_CreateTrackingProjectile(self, hHandle)
 end
 
+local ignored_pfx_list = {}
+ignored_pfx_list["particles/ambient/fountain_danger_circle.vpcf"] = true
+ignored_pfx_list["particles/range_indicator.vpcf"] = true
+ignored_pfx_list["particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"] = true
+ignored_pfx_list["particles/generic_gameplay/radiant_fountain_regen.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_wyvern_hatchling/courier_wyvern_hatchling_fire.vpcf"] = true
+ignored_pfx_list["particles/units/heroes/hero_wisp/wisp_tether.vpcf"] = true
+ignored_pfx_list["particles/units/heroes/hero_templar_assassin/templar_assassin_trap.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_donkey_ti7/courier_donkey_ti7_ambient.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_golden_roshan/golden_roshan_ambient.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_platinum_roshan/platinum_roshan_ambient.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_roshan_darkmoon/courier_roshan_darkmoon.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_roshan_desert_sands/baby_roshan_desert_sands_ambient.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_roshan_ti8/courier_roshan_ti8.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_babyroshan_winter18/courier_babyroshan_winter18_ambient.vpcf"] = true
+ignored_pfx_list["particles/econ/courier/courier_babyroshan_ti9/courier_babyroshan_ti9_ambient.vpcf"] = true
+ignored_pfx_list["particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration.vpcf"] = true
+ignored_pfx_list["particles/hero/slardar/slardar_rain_cloud.vpcf"] = true
+ignored_pfx_list["particles/units/heroes/hero_earth_spirit/espirit_stoneremnant.vpcf"] = true
+ignored_pfx_list["particles/econ/items/tiny/tiny_prestige/tiny_prestige_tree_ambient.vpcf"] = true
+
 -- Call custom functions whenever CreateParticle is being called anywhere
 original_CreateParticle = CScriptParticleManager.CreateParticle
 CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent, hCaster)
-
 	local override = nil
 
 	if hCaster then
@@ -873,6 +895,16 @@ CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachTyp
 
 	-- call the original function
 	local response = original_CreateParticle(self, sParticleName, iAttachType, hParent)
+
+--	print("CreateParticle response:", sParticleName)
+
+	if not ignored_pfx_list[sParticleName] then
+		if hCaster and not hCaster:IsHero() then
+			table.insert(CScriptParticleManager.ACTIVE_PARTICLES, {response, 0})
+		else
+			table.insert(CScriptParticleManager.ACTIVE_PARTICLES, {response, 0})
+		end
+	end
 
 	return response
 end
