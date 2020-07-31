@@ -20,8 +20,8 @@
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_Note0"							"Has a bounce radius of %radius% and a bounce delay of %jump_delay% seconds."
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_damage"							"#{DOTA_Tooltip_ability_rubick_fade_bolt_damage}"
 //"DOTA_Tooltip_ability_imba_rubick_fade_bolt_jump_damage_bonus_pct"			"%BONUS DAMAGE PER JUMP:"
-"DOTA_Tooltip_ability_imba_rubick_fade_bolt_hero_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_hero_attack_damage_reduction}"
-"DOTA_Tooltip_ability_imba_rubick_fade_bolt_creep_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_creep_attack_damage_reduction}"
+// "DOTA_Tooltip_ability_imba_rubick_fade_bolt_hero_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_hero_attack_damage_reduction}"
+// "DOTA_Tooltip_ability_imba_rubick_fade_bolt_creep_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_creep_attack_damage_reduction}"
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_duration"						"#{DOTA_Tooltip_ability_rubick_fade_bolt_duration}"
 
 "DOTA_Tooltip_modifier_imba_rubick_fade_bolt"							"Fade Bolt"

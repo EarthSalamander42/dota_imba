@@ -423,7 +423,7 @@ function DisableRankingVoting() {
 
 	if (vote_info && vote_info[0]) {
 		vote_info[0].SetPanelEvent("onmouseover", function () {
-			$.DispatchEvent("UIShowTextTooltip", vote_info[0], $.Localize("vote_gamemode"));
+			$.DispatchEvent("UIShowTextTooltip", vote_info[0], $.Localize("vote_gamemode_description"));
 		})
 
 		vote_info[0].SetPanelEvent("onmouseout", function () {

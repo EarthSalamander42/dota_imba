@@ -17,7 +17,8 @@
 "loading_screen_patreon_modlist5"				"Hero Line Wars"
 "loading_screen_patreon_modlist6"				"Diretide (unofficial)"
 
-"vote_gamemode"							"Gamemode Vote (Vote count must be higher than 5)"
+"vote_gamemode"							"Gamemode:"
+"vote_gamemode_description"				"Gamemode Vote (Vote count must be higher than 5)"
 "vote_gamemode_1"						"Ranked"
 "vote_gamemode_2"						"Mutation"
 "vote_gamemode_3"						"Super Frantic"

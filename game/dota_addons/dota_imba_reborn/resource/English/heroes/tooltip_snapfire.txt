@@ -39,8 +39,8 @@
 "DOTA_Tooltip_ability_imba_snapfire_lil_shredder_Lore"								"#{DOTA_Tooltip_ability_snapfire_lil_shredder_Lore}"
 "DOTA_Tooltip_ability_imba_snapfire_lil_shredder_attack_range_bonus"				"#{DOTA_Tooltip_ability_snapfire_lil_shredder_attack_range_bonus}"
 "DOTA_Tooltip_ability_imba_snapfire_lil_shredder_damage"							"#{DOTA_Tooltip_ability_snapfire_lil_shredder_damage}"
-"DOTA_Tooltip_ability_imba_snapfire_lil_shredder_attack_speed_slow_per_stack"		"#{DOTA_Tooltip_ability_snapfire_lil_shredder_attack_speed_slow_per_stack}"
-"DOTA_Tooltip_ability_imba_snapfire_lil_shredder_slow_duration"						"#{DOTA_Tooltip_ability_snapfire_lil_shredder_slow_duration}"
+// "DOTA_Tooltip_ability_imba_snapfire_lil_shredder_attack_speed_slow_per_stack"		"#{DOTA_Tooltip_ability_snapfire_lil_shredder_attack_speed_slow_per_stack}"
+// "DOTA_Tooltip_ability_imba_snapfire_lil_shredder_slow_duration"						"#{DOTA_Tooltip_ability_snapfire_lil_shredder_slow_duration}"
 "DOTA_Tooltip_ability_imba_snapfire_lil_shredder_damage_per_stack"					"FURY DAMAGE PER STACK:"
 //"DOTA_Tooltip_ability_snapfire_lil_shredder_buff_duration_tooltip"
 
