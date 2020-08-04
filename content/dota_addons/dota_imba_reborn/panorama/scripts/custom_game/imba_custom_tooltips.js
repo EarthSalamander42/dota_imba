@@ -60,6 +60,25 @@ function PlainText(text)
 	}
 }
 
+function SetKeyValueLevel(level, values) {
+	var white_color = '#FFFFFF'
+
+	print(level, " / ", values)
+
+	var values = values.split(" / ")
+	var highlight_value = values[level - 1]
+
+	for (var i = 0; i < values.length; i++) {
+		if (i == (level - 1)) {
+			values[i] = values[i].replace(values[i], "<font color='#FFFFFF'>" + highlight_value + "</font>")
+		} else {
+			values[i] = values[i].replace(values[i], "<font color='#4d5560'>" + values[i] + "</font>")
+		}
+	}
+
+	return values.join(" / ") + "\n<br></br>"
+}
+
 var DotaHud = GetDotaHud();
 
 function AddHeroTooltips(slot_number) {
@@ -68,11 +87,14 @@ function AddHeroTooltips(slot_number) {
 		var ability_name = null;
 
 		if (hero != null) {
+			var ability_level = 0;
+
 			if (slot_number <= 6) {
 				var ability_slot = Entities.GetAbility(hero, slot_number);
+				ability_level = Abilities.GetLevel(ability_slot);
 
 				if (ability_slot) {
-					ability_name = Abilities.GetAbilityName(ability_slot);
+					ability_name = Abilities.GetAbilityName(ability_slot).substring(5);
 /*
 					if (ability_name && ability_name.indexOf('invoker_empty1') > -1) {
 						return
@@ -81,6 +103,8 @@ function AddHeroTooltips(slot_number) {
 				}					
 			}
 
+//			print(ability_name)
+
 			var AbilityTooltip = DotaHud.FindChildTraverse("DOTAAbilityTooltip");
 
 			if (AbilityTooltip != null) {
@@ -88,7 +112,12 @@ function AddHeroTooltips(slot_number) {
 				var AbilityExtraAttributes = AbilityTooltip.FindChildTraverse('AbilityExtraAttributes');
 				var ability_text_rows =  AbilityText.split("\n");
 
-				$.Msg(AbilityText)
+				var AbilityCooldown = AbilityTooltip.FindChildTraverse('AbilityCooldown');
+				AbilityCooldown.text = SetKeyValueLevel(ability_level, AbilityCooldown.text);
+
+				var AbilityManaCost = AbilityTooltip.FindChildTraverse('AbilityManaCost');
+
+				print(AbilityText)
 
 				var new_ability_text = "";
 
@@ -104,6 +133,7 @@ function AddHeroTooltips(slot_number) {
 						extra_attributes.style.visibility = "visible";
 						container.style.visibility = "collapse";
 					} else {
+/*
 						extra_attributes = $.CreatePanel('Label', parent_container, 'imba_invoker_tooltip')
 //						extra_attributes.style['letter-spacing'] = '0px';
 						extra_attributes.style['padding-left'] = '8px';
@@ -116,8 +146,11 @@ function AddHeroTooltips(slot_number) {
 						extra_attributes.text = new_ability_text
 						parent_container.MoveChildBefore(extra_attributes, container);
 						container.style.visibility = "collapse";
+*/
 					}
 				}
+
+				AbilityCooldown
 			}
 		}
 	} else {
@@ -142,21 +175,32 @@ function init_invoker_tooltips() {
 
 		if (ability) {
 			var ability_name = ability.FindChildTraverse("AbilityImage").abilityname.substring(5);
+			var tooltip_checker_string = "DOTA_Tooltip_Ability_" + ability_name;
+			var tooltip_checker = $.Localize(tooltip_checker_string);
+
+
+			print(tooltip_checker)
+
+			if (tooltip_checker == tooltip_checker_string) {
+				print("missing vanilla tooltip for ability " + ability_name + "! defaults to imba tooltips.")
+				ability_name = ability.FindChildTraverse("AbilityImage").abilityname;
+			}
 
 			(function (ability, ability_name, i) {
 				ability.SetPanelEvent("onmouseover", function() {
 					$.DispatchEvent("DOTAHideAbilityTooltip", ability); // Disable vanilla tooltips
 					$.DispatchEvent("DOTAShowAbilityTooltip", ability, ability_name); // Disable vanilla tooltips
-//					AddHeroTooltips(i);
+					AddHeroTooltips(i);
 				})
 
 				ability.SetPanelEvent("onmouseout", function() {
-//					ToggleHeroTooltips();
+					ToggleHeroTooltips();
 				})
 			})(ability, ability_name, i);
 		}
 	}
 }
+
 
 init_invoker_tooltips();
 
