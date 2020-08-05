@@ -1328,7 +1328,19 @@ imba_invoker = imba_invoker or class({})
 			else
 				self.cataclysm_point	= nil
 
-				for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)) do
+				local enemies = FindUnitsInRadius(
+					self:GetCaster():GetTeamNumber(),
+					self:GetCaster():GetAbsOrigin(),
+					nil,
+					FIND_UNITS_EVERYWHERE,
+					DOTA_UNIT_TARGET_TEAM_ENEMY,
+					DOTA_UNIT_TARGET_HERO,
+					DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+					FIND_ANY_ORDER,
+					false
+				)
+
+				for _, enemy in pairs(enemies) do
 					if (enemy:IsRealHero() or enemy:IsTempestDouble()) and not enemy:IsClone() then
 						for beam = 1, 2 do
 							if beam == 1 then

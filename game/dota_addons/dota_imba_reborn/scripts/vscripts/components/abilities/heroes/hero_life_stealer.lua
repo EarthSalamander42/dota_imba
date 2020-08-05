@@ -724,7 +724,7 @@ end
 function imba_life_stealer_infest:CastFilterResultTarget(target)
 	if not IsServer() then return end
 
-	if target == self:GetCaster() then
+	if target == self:GetCaster() or target:GetClassname() == "npc_dota_rattletrap_cog" then
 		return UF_FAIL_OTHER
 	else
 		return UF_SUCCESS

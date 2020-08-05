@@ -29,6 +29,7 @@
 "FreeSpells_Button"							"Free Spells"
 "Invulnerability_Button"					"Invulnerability"
 "Enemy_Button"								"Enemy"
+"EnemyNotSetup_Msg"							"You must select an enemy hero first!"
 "LevelUpEnemy_Button"						"Level Up Enemy"
 "Frantic_Button"							"Frantic"
 "DummyTarget_Button"						"Dummy Target"
