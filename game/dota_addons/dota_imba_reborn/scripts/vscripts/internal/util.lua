@@ -1245,7 +1245,9 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 		local hero_table = {}
 
 		-- old hero stay because GetSelectedHeroEntity is invalid in hero selection phase
-		print("old hero:", old_hero)
+		if old_hero then
+			print("old hero:", old_hero:GetUnitName())
+		end
 
 		for k, v in pairs(herolist) do
 			local picked_heroes = {}
@@ -1265,7 +1267,8 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 
 		local new_hero = hero_table[RandomInt(1, #hero_table)]
 
---		print(new_hero)
+		print(api.disabled_heroes)
+		print(new_hero)
 
 		if api.disabled_heroes[new_hero] then
 			PreventBannedHeroToBeRandomed(iPlayerID)
@@ -1275,7 +1278,7 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 		PlayerResource:GetPlayer(iPlayerID):SetSelectedHero(new_hero)
 
 		PrecacheUnitByNameAsync(new_hero, function()
-			PlayerResource:ReplaceHeroWith(iPlayerID, new_hero, IMBA_GetHeroStartingGold(), 0)
+			PlayerResource:ReplaceHeroWith(iPlayerID, new_hero, 0, 0)
 
 			Timers:CreateTimer(1.0, function()
 				if old_hero then
@@ -1291,7 +1294,7 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 			end
 		end)
 
---		print("banned hero randomed, re-random:", PlayerResource:GetSelectedHeroName(iPlayerID))
+		print("banned hero randomed, re-random:", PlayerResource:GetSelectedHeroName(iPlayerID))
 	end
 end
 
@@ -1431,7 +1434,9 @@ function GetEtherealAbilities()
 	return abilities
 end
 
-function IMBA_GetHeroStartingGold()
+function CDOTA_BaseNPC:IMBA_GetHeroStartingGold()
+	PlayerResource:SetGold(self:GetPlayerID(), 0, false)
+
 	-- could use dynamic vanilla starting gold, but then some bugs raises like re-random feature giving double starting gold and xp if a backend banned hero is picked
 	local hero_gold = HERO_INITIAL_GOLD
 	local custom_gold_bonus = CUSTOM_GOLD_BONUS[GetMapName()] or 100
@@ -1439,6 +1444,7 @@ function IMBA_GetHeroStartingGold()
 	if custom_gold_bonus > 100 then
 		hero_gold = hero_gold * custom_gold_bonus / 100
 	end
+
 
 	return hero_gold
 end

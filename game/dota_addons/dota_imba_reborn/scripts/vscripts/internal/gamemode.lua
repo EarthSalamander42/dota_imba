@@ -15,7 +15,6 @@ function GameMode:_InitGameMode()
 	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 
 	self:SetupAncients()
-	self:SetupFountains()
 
 	-- Setup rules
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )

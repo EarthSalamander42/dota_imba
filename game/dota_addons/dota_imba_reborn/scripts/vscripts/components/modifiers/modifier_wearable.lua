@@ -1,33 +1,18 @@
-modifier_wearable = class({})
+modifier_wearable = modifier_wearable or class({})
 
-function modifier_wearable:CheckState()
-	local state = { 
-		[MODIFIER_STATE_STUNNED] = true,
-		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
-		[MODIFIER_STATE_INVULNERABLE] = true,
-		[MODIFIER_STATE_UNSELECTABLE] = true,
-	}
+function modifier_wearable:CheckState() return { 
+	[MODIFIER_STATE_STUNNED] = true,
+	[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+	[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+	[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+	[MODIFIER_STATE_INVULNERABLE] = true,
+	[MODIFIER_STATE_UNSELECTABLE] = true,
+} end
 
-	return state
-end
-
-function modifier_wearable:IsPurgable()
-	return false
-end
-
-function modifier_wearable:IsStunDebuff()
-	return false
-end
-
-function modifier_wearable:IsPurgeException()
-	return false
-end
-
-function modifier_wearable:IsHidden()
-	return true
-end
+function modifier_wearable:IsPurgable() return false end
+function modifier_wearable:IsStunDebuff() return false end
+function modifier_wearable:IsPurgeException() return false end
+function modifier_wearable:IsHidden() return true end
 
 function modifier_wearable:OnCreated()
 	if not IsServer() then return end

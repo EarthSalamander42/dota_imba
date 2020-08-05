@@ -237,6 +237,7 @@ CUSTOM_XP_BONUS["imba_demo"] = global_xp
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 local global_starting_level = 3
+if IsInToolsMode() then global_starting_level = 1 end
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
 HERO_STARTING_LEVEL[Map1v1()] = 1
 HERO_STARTING_LEVEL["dota"] = global_starting_level

@@ -58,10 +58,10 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 			if j.type == "particle" then
 				if j.style == nil or j.style == asset_style then
 					if j.asset == GetKeyValueByHeroName(hero:GetUnitName(), "ProjectileModel") then
-						print("Range attack particle:", j)
+--						print("Range attack particle:", j)
 						hero:SetRangedProjectileName(j.modifier)
 					else
-						print("Particle:", j)
+--						print("Particle:", j)
 						local particle_table = {}
 						particle_table.asset = j.asset
 						particle_table.modifier = j.modifier

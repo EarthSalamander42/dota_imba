@@ -71,21 +71,24 @@ function GameMode:OnGameRulesStateChange(keys)
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		if IMBA_PICK_SCREEN == false then
---			for i = 0, PlayerResource:GetPlayerCount() - 1 do
---				if PlayerResource:IsValidPlayer(i) then
---					if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
---						PlayerResource:SetCameraTarget(i, GoodCamera)
---					else
---						PlayerResource:SetCameraTarget(i, BadCamera)
---					end
---				end
---			end
-
+			-- prevent_bots_to_random_banned_heroes
 			if IsInToolsMode() then
 				for i = 1, PlayerResource:GetPlayerCount() - 1 do
 					if PlayerResource:IsValidPlayer(i) then
 						PreventBannedHeroToBeRandomed(i)
 						PlayerResource:SetCanRepick(i, false)
+					end
+				end
+
+				return nil
+			end
+		else
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				if PlayerResource:IsValidPlayer(i) then
+					if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
+						PlayerResource:SetCameraTarget(i, GoodCamera)
+					else
+						PlayerResource:SetCameraTarget(i, BadCamera)
 					end
 				end
 			end
@@ -100,6 +103,8 @@ function GameMode:OnGameRulesStateChange(keys)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
+				print("Strategy-Time PreventBannedHeroToBeRandomed()")
+				print("Hero selected?", PlayerResource:HasSelectedHero(i))
 				if not PlayerResource:HasSelectedHero(i) then
 					PreventBannedHeroToBeRandomed(i)
 					PlayerResource:SetCanRepick(i, false)
@@ -124,18 +129,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			self:SetupShrines()
 		end
 
-		local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
-
-		for _, fountainEnt in pairs(fountainEntities) do
-			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
-			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
-
-			local fountain_aura_pfx = ParticleManager:CreateParticle("particles/range_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, fountainEnt)
-			ParticleManager:SetParticleControl(fountain_aura_pfx, 1, Vector(255, 255, 0))
-			ParticleManager:SetParticleControl(fountain_aura_pfx, 3, Vector(1200, 0, 0))
-			ParticleManager:ReleaseParticleIndex(fountain_aura_pfx)
-		end
+		self:SetupFountains()
 
 		-- Create a timer to avoid lag spike entering pick screen
 		Timers:CreateTimer(3.0, function()
@@ -184,6 +178,16 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- ONLY SHOW THE DEMO PANEL IF IT'S ACTUALLY DEMO MODE (lest people get the wrong idea with thinking other players can use these "hacks")
 			if IsInToolsMode() or GetMapName() == "imba_demo" then
 				CustomGameEventManager:Send_ServerToAllClients("ShowDemoPanel", {})
+			end
+
+			-- MORE FAIL-SAFE
+			print("Pre-Game PreventBannedHeroToBeRandomed()")
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if new_hero and api.disabled_heroes[new_hero] then
+					if new_hero and api.disabled_heroes[new_hero] then
+						PreventBannedHeroToBeRandomed(hero:GetPlayerID())
+					end
+				end
 			end
 		end)
 
@@ -1275,6 +1279,18 @@ function GameMode:OnThink()
 	end
 	if GameRules:IsGamePaused() then
 		return 1
+	end
+
+	if not CScriptParticleManager.ACTIVE_PARTICLES then CScriptParticleManager.ACTIVE_PARTICLES = {} end
+
+	for k, v in pairs(CScriptParticleManager.ACTIVE_PARTICLES) do
+		if v[2] >= 60 then
+			ParticleManager:DestroyParticle(v[1], false)
+			ParticleManager:ReleaseParticleIndex(v[1])
+			table.remove(CScriptParticleManager.ACTIVE_PARTICLES, k)
+		else
+			CScriptParticleManager.ACTIVE_PARTICLES[k][2] = CScriptParticleManager.ACTIVE_PARTICLES[k][2] + 1
+		end
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do

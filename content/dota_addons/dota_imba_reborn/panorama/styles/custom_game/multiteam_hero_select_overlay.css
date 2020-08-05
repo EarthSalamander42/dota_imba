@@ -286,6 +286,7 @@
 }
 
 #IMRAverage {
+	width: 100%;
 	align: center center;
 	font-family: Bold;
 	font-weight: normal;

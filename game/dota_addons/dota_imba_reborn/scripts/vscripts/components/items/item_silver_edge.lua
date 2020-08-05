@@ -263,10 +263,10 @@ function modifier_item_imba_silver_edge_passive:OnCreated()
         self.echo_ready = true
     end
 
-	local ability   =   self:GetAbility()
+	self.slow_duration = self:GetAbility():GetSpecialValueFor("slow_duration")
 
 	-- Ability parameters
-	if self:GetParent():IsHero() and ability then
+	if self:GetParent():IsHero() and self:GetAbility() then
 		self:CheckUnique(true)
 	end
 end

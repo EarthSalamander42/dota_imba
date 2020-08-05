@@ -47,6 +47,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 			-- hero:HeroLevelUp(true)
 		-- end
 
+		hero:SetAbilityPoints(1)
 		hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_Unspecified, false, true)
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[starting_level])
 	else
@@ -62,7 +63,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 	HeroSelection:Attachments(hero)
 
 	-- Set starting gold
-	PlayerResource:SetGold(hero:GetPlayerID(), IMBA_GetHeroStartingGold(), false)
+	PlayerResource:SetGold(hero:GetPlayerID(), hero:IMBA_GetHeroStartingGold(), false)
 
 	-- Give players an additional 250 boost in gold if they random
 --	if PlayerResource:HasRandomed(hero:GetPlayerID()) then
