@@ -619,7 +619,7 @@ function EndScoreboard(args) {
 				PlayerRowContainer.FindChildrenWithClassTraverse("LastHits")[0].text = Players.GetLastHits(id);
 				PlayerRowContainer.FindChildrenWithClassTraverse("Denies")[0].text = Players.GetDenies(id);
 				PlayerRowContainer.FindChildrenWithClassTraverse("GoldPerMin")[0].text = Players.GetGoldPerMin(id).toFixed(0);
-				PlayerRowContainer.FindChildrenWithClassTraverse("XPPerMin")[0].text = Players.GetTotalEarnedXP(id).toFixed(0) / Players.GetLevel(id);
+				PlayerRowContainer.FindChildrenWithClassTraverse("XPPerMin")[0].text = (Players.GetTotalEarnedXP(id).toFixed(0) / Players.GetLevel(id)).toFixed(0);
 
 				var DamageDealtContainer = $.CreatePanel('Panel', player_damage_dealt_row_container, '');
 				DamageDealtContainer.BLoadLayoutSnippet('DetailsDamageDealtPlayerRow');
