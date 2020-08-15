@@ -66,7 +66,7 @@
 		"item"		"item_ring_of_tarrasque"
 		"item"		"item_ring_of_health"
 		"item"		"item_void_stone"			
-		"item"		"item_gem"
+		"item"		"item_imba_gem"
 		"item"		"item_imba_morbid_mask"
 		"item"		"item_shadow_amulet"	
 		"item"		"item_imba_ghost"

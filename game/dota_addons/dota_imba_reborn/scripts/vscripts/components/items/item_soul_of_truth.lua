@@ -52,7 +52,7 @@ function item_imba_soul_of_truth:OnSpellStart()
 		local duration = self:GetSpecialValueFor("duration")
 
 		hCaster:AddNewModifier(hCaster, self, "modifier_imba_soul_of_truth_buff", {duration = duration})
-		hCaster:AddNewModifier(hCaster, self, "modifier_item_gem_of_true_sight", {duration = duration})
+		hCaster:AddNewModifier(hCaster, self, "modifier_item_imba_gem_of_true_sight", {duration = duration})
 		self:Destroy()
 	end
 end
@@ -133,13 +133,13 @@ end
 function modifier_imba_soul_of_truth_buff:OnDestroy()
 	if IsServer() then
 		-- If this is destroyed, it means the user died for real. Remove gem modifier
-		for _, true_sight_modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_item_gem_of_true_sight")) do
+		for _, true_sight_modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_item_imba_gem_of_true_sight")) do
 			if true_sight_modifier.GetAbility and (true_sight_modifier:GetAbility() == self:GetAbility() or true_sight_modifier:GetAbility():GetName() == "item_imba_soul_of_truth") then
 				true_sight_modifier:Destroy()
 			end
 		end
 		
-		local gem = CreateItem("item_gem", nil, nil)
+		local gem = CreateItem("item_imba_gem", nil, nil)
 		gem:SetOwner(nil)
 		CreateItemOnPositionSync(self:GetParent():GetAbsOrigin(), gem)
 	end

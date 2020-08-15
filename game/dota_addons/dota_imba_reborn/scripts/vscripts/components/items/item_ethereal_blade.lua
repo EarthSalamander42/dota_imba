@@ -90,7 +90,7 @@ function item_imba_ethereal_blade:OnProjectileHit(target, location)
 		-- ...apply the Ethereal modifier...
 		if target:GetTeam() == self.caster:GetTeam() then
 			target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_ethereal", {duration = self.duration_ally})
-			target:AddNewModifier(self.caster, self, "modifier_item_gem_of_true_sight", {duration = self.duration}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
+			target:AddNewModifier(self.caster, self, "modifier_item_imba_gem_of_true_sight", {duration = self.duration}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
 		else
 			target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_ethereal", {duration = self.duration * (1 - target:GetStatusResistance())})
 						

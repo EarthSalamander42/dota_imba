@@ -7785,7 +7785,7 @@
 		"ItemResult"					"item_imba_soul_of_truth"
 		"ItemRequirements"
 		{
-			"01"						"item_gem"
+			"01"						"item_imba_gem"
 		}
 	}
 
@@ -18190,6 +18190,7 @@
 		"AbilityCastAnimation"			"ACT_DOTA_GENERIC_CHANNEL_1"
         "ScriptFile"                    "components/items/item_trusty_shovel"
         "AbilityTextureName"            "item_trusty_shovel"
+        "ScriptFile"                    "components/items/item_trusty_shovel.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -18238,5 +18239,61 @@
 		}
 	}
 
-	//next free ID: 2370
+	//=================================================================================================================
+	// Gem
+	//=================================================================================================================
+	"item_imba_gem"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2370"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"item_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityCastRange"				"900"
+		"Model"							"models/props_gameplay/gem01.vmdl"
+		"Effect"						"particles/generic_gameplay/dropped_gem.vpcf"
+		"ScriptFile"					"components/items/item_gem.lua"
+		"AbilityTextureName"			"item_gem"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"500"
+		"ItemShopTags"					"see_invis"
+		"ItemQuality"					"component"
+		"ItemAliases"					"gem of true sight"
+		"ItemSellable"					"0"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemStockMax"					"1"
+		"ItemStockTime"					"210.0"
+		"ItemSupport"					"1"
+		"ItemKillable"					"0"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"AllowedInBackpack"				"0"
+		"IsTempestDoubleClonable"		"0"
+		
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpGemShop"
+		"UIDropSound"					"Item.DropGemShop"
+		"WorldDropSound"				"Item.DropGemWorld"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dropped_radius"		"300"
+			}
+		}
+	}
+
+	//next free ID: 2371
 }

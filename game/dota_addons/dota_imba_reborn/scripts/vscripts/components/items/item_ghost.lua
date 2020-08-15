@@ -29,7 +29,7 @@ function item_imba_ghost:OnSpellStart()
 	
 	-- Apply the Ethereal modifier
 	self.caster:AddNewModifier(self.caster, self, "modifier_imba_ghost_state", {duration = self.duration})
-	self.caster:AddNewModifier(self.caster, self, "modifier_item_gem_of_true_sight", {duration = self.duration}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
+	self.caster:AddNewModifier(self.caster, self, "modifier_item_imba_gem_of_true_sight", {duration = self.duration}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
 end
 
 --------------------------
@@ -63,7 +63,7 @@ function modifier_imba_ghost_state:OnIntervalThink()
 	
 	-- Remove itself if owner becomes spell immune (and the relevant truesight modifier)
 	if self.parent:IsMagicImmune() then
-		local truesight_modifiers = self.parent:FindAllModifiersByName("modifier_item_gem_of_true_sight")
+		local truesight_modifiers = self.parent:FindAllModifiersByName("modifier_item_imba_gem_of_true_sight")
 		
 		for _, truesight_mod in pairs(truesight_modifiers) do
 			if truesight_mod:GetAbility() == self.ability then

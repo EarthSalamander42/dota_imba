@@ -37,7 +37,7 @@ function item_imba_aether_specs:OnSpellStart()
 	ward:AddNewModifier(self:GetCaster(), self, "modifier_truesight", {duration = self:GetSpecialValueFor("ward_duration")})
 	-- This doesn't actually give truesight but it gives a random sentry ward buff so w/e
 	ward:AddNewModifier(self:GetCaster(), self, "modifier_item_ward_true_sight", {duration = self:GetSpecialValueFor("ward_duration")})
-	ward:AddNewModifier(self:GetCaster(), self, "modifier_item_gem_of_true_sight", {duration = self:GetSpecialValueFor("ward_duration")}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
+	ward:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_gem_of_true_sight", {duration = self:GetSpecialValueFor("ward_duration")}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
 	ward:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_aether_specs_ward", {duration = self:GetSpecialValueFor("ward_duration")})
 	
 	ward:SetBaseMaxHealth(self:GetSpecialValueFor("hits_to_kill") * 4)

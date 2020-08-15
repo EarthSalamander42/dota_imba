@@ -152,39 +152,44 @@ function CDOTA_BaseNPC:InitializeInnateAbilities()
 end
 
 -- Serversided function only
-function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
+function CDOTA_BaseNPC:DropItem(hItem, sNewItemName, bLaunchLoot)
 	local vLocation = self:GetAbsOrigin()
 	local sName
-	local hRapier
 	local vRandomVector = RandomVector(100)
+
 	if hItem then
-		hRapier = hItem
 		sName = hItem:GetName()
-		self:DropItemAtPositionImmediate(hRapier, vLocation)
+		self:DropItemAtPositionImmediate(hItem, vLocation)
 	else
 		sName = sNewItemName
-		hRapier = CreateItem(sNewItemName, nil, nil)
-		CreateItemOnPositionSync(vLocation, hRapier)
+		hItem = CreateItem(sNewItemName, nil, nil)
+		CreateItemOnPositionSync(vLocation, hItem)
 	end
+
 	if sName == "item_imba_rapier" then
-		hRapier:GetContainer():SetRenderColor(230,240,35)
+		hItem:GetContainer():SetRenderColor(230,240,35)
 	elseif sName == "item_imba_rapier_2" then
-		hRapier:GetContainer():SetRenderColor(240,150,30)
-		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_trinity.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+		hItem:GetContainer():SetRenderColor(240,150,30)
+		hItem.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_trinity.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hItem.rapier_pfx, 0, vLocation + vRandomVector)
 	elseif sName == "item_imba_rapier_magic" then
-		hRapier:GetContainer():SetRenderColor(35,35,240)
+		hItem:GetContainer():SetRenderColor(35,35,240)
 	elseif sName == "item_imba_rapier_magic_2" then
-		hRapier:GetContainer():SetRenderColor(140,70,220)
-		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_archmage.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+		hItem:GetContainer():SetRenderColor(140,70,220)
+		hItem.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_archmage.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hItem.rapier_pfx, 0, vLocation + vRandomVector)
 	elseif sName == "item_imba_rapier_cursed" then
-		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_cursed.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
-		hRapier.x_pfx = ParticleManager:CreateParticle("particles/item/rapier/cursed_x.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(hRapier.x_pfx, 0, vLocation + vRandomVector)
+		hItem.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_cursed.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hItem.rapier_pfx, 0, vLocation + vRandomVector)
+		hItem.x_pfx = ParticleManager:CreateParticle("particles/item/rapier/cursed_x.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hItem.x_pfx, 0, vLocation + vRandomVector)
 	end
-	hRapier:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
+
+	if bLaunchLoot then
+		hItem:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
+	end
+
+	return hItem
 end
 
 function CDOTA_BaseNPC:FindItemByName(ItemName, bBackpack, bStash)
@@ -879,6 +884,9 @@ ignored_pfx_list["particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_res
 ignored_pfx_list["particles/hero/slardar/slardar_rain_cloud.vpcf"] = true
 ignored_pfx_list["particles/units/heroes/hero_earth_spirit/espirit_stoneremnant.vpcf"] = true
 ignored_pfx_list["particles/econ/items/tiny/tiny_prestige/tiny_prestige_tree_ambient.vpcf"] = true
+ignored_pfx_list["particles/item/rapier/item_rapier_trinity.vpcf"] = true
+ignored_pfx_list["particles/item/rapier/item_rapier_archmage.vpcf"] = true
+ignored_pfx_list["particles/item/rapier/item_rapier_cursed.vpcf"] = true
 
 -- Call custom functions whenever CreateParticle is being called anywhere
 original_CreateParticle = CScriptParticleManager.CreateParticle

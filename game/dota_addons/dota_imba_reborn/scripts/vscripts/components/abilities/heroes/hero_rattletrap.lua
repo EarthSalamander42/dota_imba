@@ -846,7 +846,7 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 		local rocket_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {},	self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 		
 		if self:GetCaster():HasTalent("special_bonus_imba_rattletrap_rocket_flare_truesight") then
-			rocket_dummy:AddNewModifier(self:GetCaster(), self, "modifier_item_gem_of_true_sight", {})
+			rocket_dummy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_gem_of_true_sight", {})
 		end
 		
 		-- Need to look at how to shoot the rocket from the correct place + make the rocet "disappear" from Clockwerk for the duration
@@ -1029,7 +1029,7 @@ function imba_rattletrap_rocket_flare:OnProjectileHit_ExtraData(hTarget, vLocati
 	
 	-- Truesight talent (Carpet Fire doesn't get this for "balance" reasons)
 	if self:GetCaster():HasTalent("special_bonus_imba_rattletrap_rocket_flare_truesight") and not ExtraData.carpet_fire then
-		local sight_area = CreateModifierThinker(self:GetCaster(), self, "modifier_item_gem_of_true_sight", {
+		local sight_area = CreateModifierThinker(self:GetCaster(), self, "modifier_item_imba_gem_of_true_sight", {
 			duration		= self:GetSpecialValueFor("duration")
 		},
 		vLocation, self:GetCaster():GetTeamNumber(), false)

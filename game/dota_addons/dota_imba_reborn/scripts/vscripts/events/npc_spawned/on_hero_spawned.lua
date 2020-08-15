@@ -199,7 +199,7 @@ function GameMode:OnHeroSpawned(hero)
 							for i = 0, 14 do
 								local current_item = main_hero:GetItemInSlot(i)
 								if current_item and current_item:GetName() == "item_imba_soul_of_truth" then
-									local cloned_modifier = hero:AddNewModifier(main_hero, current_item, "modifier_item_gem_of_true_sight", {duration = buff_time})
+									local cloned_modifier = hero:AddNewModifier(main_hero, current_item, "modifier_item_imba_gem_of_true_sight", {duration = buff_time})
 									break
 								end
 							end

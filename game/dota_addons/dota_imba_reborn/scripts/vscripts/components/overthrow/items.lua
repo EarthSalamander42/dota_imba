@@ -82,7 +82,7 @@ function COverthrowGameMode:SpecialItemAdd( event )
 		"item_power_treads",
 		"item_medallion_of_courage",
 		"item_soul_ring",
-		"item_gem",
+		"item_imba_gem",
 		"item_orb_of_venom"
 	}
 	local tier2 = 

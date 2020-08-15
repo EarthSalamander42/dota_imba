@@ -20,7 +20,7 @@ function item_imba_glimmerdark_shield:OnSpellStart()
 		local hCaster = self:GetCaster()
 		hCaster:AddNewModifier( hCaster, self, "modifier_item_imba_glimmerdark_shield_prism", { duration = self.prism_duration } )
 
-		hCaster:AddNewModifier( hCaster, self, "modifier_item_gem_of_true_sight", { duration = self.prism_duration } ) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
+		hCaster:AddNewModifier( hCaster, self, "modifier_item_imba_gem_of_true_sight", { duration = self.prism_duration } ) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
 
 		EmitSoundOn( "DOTA_Item.GhostScepter.Activate", self:GetCaster() )
 	end

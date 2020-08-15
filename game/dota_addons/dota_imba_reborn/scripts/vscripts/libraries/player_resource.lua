@@ -6,13 +6,13 @@ local support_items = {
 	"item_ward_observer",
 	"item_ward_sentry",
 	"item_imba_dust_of_appearance",
-	"item_gem",
+	"item_imba_gem",
 	"item_imba_soul_of_truth",
 }
 --]]
 -- i know i can avoid using a loop, but it doesn't seem to be working so fuck it
 local function IsSupportItem(bItemName)
-	if bItemName == "item_smoke_of_deceit" or bItemName == "item_ward_observer" or bItemName == "item_ward_sentry" or bItemName == "item_imba_dust_of_appearance" or bItemName == "item_gem" or bItemName == "item_imba_soul_of_truth" then
+	if bItemName == "item_smoke_of_deceit" or bItemName == "item_ward_observer" or bItemName == "item_ward_sentry" or bItemName == "item_imba_dust_of_appearance" or bItemName == "item_imba_gem" or bItemName == "item_imba_soul_of_truth" then
 		return true
 	end
 

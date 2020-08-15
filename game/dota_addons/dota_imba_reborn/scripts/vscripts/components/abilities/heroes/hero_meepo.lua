@@ -236,7 +236,7 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_bloodstone_active_cdr_720", {duration = keys.ability:GetSpecialValueFor("active_duration")})
 		elseif keys.ability:GetName() == "item_imba_glimmerdark_shield" then
 			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_glimmerdark_shield_prism", {duration = keys.ability:GetSpecialValueFor("prism_duration")})
-			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_gem_of_true_sight", {duration = keys.ability:GetSpecialValueFor("prism_duration")})
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_gem_of_true_sight", {duration = keys.ability:GetSpecialValueFor("prism_duration")})
 		elseif keys.ability:GetName() == "item_imba_shadow_blade" then
 			Timers:CreateTimer(keys.ability:GetSpecialValueFor("invis_fade_time"), function()
 				local particle_invis_start_fx = ParticleManager:CreateParticle("particles/generic_hero_status/status_invisibility_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())

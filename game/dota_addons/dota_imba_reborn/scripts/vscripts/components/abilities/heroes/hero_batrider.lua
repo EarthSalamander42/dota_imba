@@ -537,7 +537,7 @@ function modifier_imba_batrider_firefly:OnCreated()
 	self.firefly_debuff_particle	= nil
 	
 	if self:GetCaster():HasTalent("special_bonus_unique_imba_batrider_firefly_truesight") then
-		self.truesight_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_gem_of_true_sight", {duration = self:GetRemainingTime()}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
+		self.truesight_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight", {duration = self:GetRemainingTime()}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
 	end
 	
 	if not self:GetAbility():GetAutoCastState() then

@@ -1216,10 +1216,10 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnIntervalThink()
 				enemy:FaceTowards(self.parent:GetAbsOrigin())
 			end
 			
-			local truesight_modifier = self.parent:FindModifierByName("modifier_item_gem_of_true_sight")
+			local truesight_modifier = self.parent:FindModifierByName("modifier_item_imba_gem_of_true_sight")
 			
 			if not truesight_modifier then
-				self.parent:AddNewModifier(self.caster, self.caster:FindAbilityByName("special_bonus_imba_keeper_of_the_light_ignis_truesight"), "modifier_item_gem_of_true_sight", {duration = self.on_duration})
+				self.parent:AddNewModifier(self.caster, self.caster:FindAbilityByName("special_bonus_imba_keeper_of_the_light_ignis_truesight"), "modifier_item_imba_gem_of_true_sight", {duration = self.on_duration})
 			end
 		end
 	end

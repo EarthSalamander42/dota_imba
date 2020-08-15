@@ -356,7 +356,12 @@ function GameMode:ItemAddedFilter( keys )
 	-- end
 
 	local item_name = nil
-	
+
+	-- this event is broken in dota, so calling it from here instead (Credits: Pohka)
+	if item.OnItemEquipped ~= nil then
+		item:OnItemEquipped(item)
+	end
+
 	if item:GetName() then
 		item_name = item:GetName()
 	end
@@ -516,7 +521,7 @@ function GameMode:ItemAddedFilter( keys )
 		if unit:IsIllusion() or unit:IsTempestDouble() or unit:IsHero() then
 			return true
 		else
-			unit:DropRapier(nil, item_name)
+			unit:DropItem(nil, item_name, true)
 		end
 		
 		return false
@@ -526,7 +531,7 @@ function GameMode:ItemAddedFilter( keys )
 	-- Gem of True Sight Logic (mostly for Soul of Truth merging) --
 	----------------------------------------------------------------
 	
-	if item:GetName() == "item_gem" and not unit:IsCourier() then
+	if item:GetName() == "item_imba_gem" and not unit:IsCourier() then
 		item:SetPurchaser(unit)
 	end
 
