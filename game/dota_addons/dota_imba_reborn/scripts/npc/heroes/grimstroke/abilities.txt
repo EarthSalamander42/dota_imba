@@ -16,7 +16,7 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 
-		"AbilityCastRange"				"1800"
+		"AbilityCastRange"				"1400"
 		"AbilityCastPoint"				"0.8"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
@@ -41,17 +41,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"end_radius"			"280"
+				"end_radius"			"160"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"2600"
+				"projectile_speed"		"2400"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage"					"140 210 280 350"
+				"damage"					"120 180 240 300"
 				//"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_2"
 				"LinkedSpecialBonus"		"special_bonus_imba_grimstroke_stroke_of_fate_damage"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_PERCENTAGE_ADD"
@@ -59,7 +59,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_damage_per_target"	"24 36 48 60"
+				"bonus_damage_per_target"	"16 24 32 40"
 				//"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_2"
 				"LinkedSpecialBonus"		"special_bonus_imba_grimstroke_stroke_of_fate_damage"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_PERCENTAGE_ADD"
@@ -67,12 +67,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_slow_pct"		"50 70 90 110"
+				"movement_slow_pct"		"50 60 70 80"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.0"
+				"slow_duration"			"1.5"
 			}
 			"08"
 			{
@@ -82,7 +82,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range_tooltip"				"1800"
+				"range_tooltip"				"1400"
 				//"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_3"
 				"LinkedSpecialBonus"		"special_bonus_imba_grimstroke_stroke_of_fate_cast_range"
 			}
@@ -150,7 +150,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24 21 18 15"
+		"AbilityCooldown"				"32 28 24 20"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -170,7 +170,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"speed"						"1000"
+				"speed"						"750"
 			}
 			"03"
 			{
@@ -192,12 +192,12 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_tick"			"6 12 18 24"
+				"damage_per_tick"			"3 7 11 15"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps_tooltip"				"12 24 36 48"
+				"dps_tooltip"				"6 14 22 30"
 			}
 			"08"
 			{
@@ -217,12 +217,12 @@
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pop_damage"				"110 200 290 380"
+				"pop_damage"				"120 200 280 360"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"return_projectile_speed"	"1000"
+				"return_projectile_speed"	"750"
 			}
 			"13"
 			{
@@ -327,30 +327,30 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus_pct"	"35 40 45 50"
+				"movespeed_bonus_pct"	"12 14 16 18"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
+				"radius"				"400"
 				//"LinkedSpecialBonus"	"special_bonus_unique_grimstroke_1"
 				"LinkedSpecialBonus"	"special_bonus_imba_grimstroke_ink_swell_radius"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"180 280 380 480"
+				"max_damage"			"100 200 300 400"
 				"LinkedSpecialBonus"	"special_bonus_imba_grimstroke_ink_swell_max_damage"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_stun"				"2.2 2.8 3.4 4.0"
+				"max_stun"				"1.0 1.9 2.8 3.7"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_tick"		"9 11 13 15"
+				"damage_per_tick"		"5 7 9 11"
 			}
 			"08"
 			{
@@ -360,7 +360,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tick_dps_tooltip"		"50 60 70 80"
+				"tick_dps_tooltip"		"25 35 45 55"
 			}
 			
 			"10"
@@ -446,7 +446,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastAnimation"			"ACT_DOTA_GS_SOUL_CHAIN"
 		"AbilityCastGestureSlot"		"DEFAULT"
-		"AbilityCooldown"				"70 55 40"
+		"AbilityCooldown"				"100 75 50"
 		"AbilityCastRange"				"700 800 900"
 		"AbilityCastPoint"				"0.15"
 		"AbilityManaCost"				"150 200 250"
@@ -460,7 +460,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"chain_duration"		"7 8.5 10"
+				"chain_duration"		"6 7 8"
 			}
 			"02"
 			{
@@ -516,7 +516,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"chain_duration"		"7.0 9.5 12.0"
+				"chain_duration"		"6.0 7.0 8.0"
 			}
 		}
 	}	

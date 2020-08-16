@@ -21,7 +21,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 		"AbilityCastRange"				"3000"
-		"AbilityCooldown"				"36 28 20 14"
+		"AbilityCooldown"				"44 36 28 20"
 		"AbilityManaCost"				"110"
 
 		// Stats
@@ -35,12 +35,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"20 26 32 38"
+				"damage"			"18 22 24 26"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"attack_rate"		"1.1 0.9 0.7 0.5"
+				"attack_rate"		"1.15 1.0 0.85 0.70"
 			}
 			"03"
 			{
@@ -74,7 +74,7 @@
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"600 800 1000 1200"
+				"speed"				"600 600 600 600"
 			}
 			"09"
 			{
@@ -134,14 +134,14 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 140 180 220"
+				"damage"				"100 125 150 175"
 				//"LinkedSpecialBonus"	"special_bonus_unique_weaver_1"
 				"LinkedSpecialBonus"	"special_bonus_imba_weaver_shukuchi_damage"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"220 240 260 280"
+				"speed"					"200 230 260 290"
 				"LinkedSpecialBonus"	"special_bonus_imba_weaver_shukuchi_hasted_speed"
 			}
 			"03"
@@ -177,7 +177,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		
-		"AbilityCooldown"				"7.25 5.75 4.25 2.75"
+		"AbilityCooldown"				"9.0 7.0 5.0 3.0"
 			
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -221,7 +221,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"600"
 		"AbilitySound"					"Hero_Weaver.TimeLapse"
 
 		"FightRecapLevel"				"2"
@@ -240,13 +240,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_scepter"		"16"
+				"cooldown_scepter"		"20"
 				"RequiresScepter"		"1"
 			}	
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip_scepter"		"1000"
+				"cast_range_tooltip_scepter"		"600"
 				"RequiresScepter"		"1"
 			}
 			"03"

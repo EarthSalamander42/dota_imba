@@ -21,13 +21,13 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2000 2100 2200 2300"
+		"AbilityCastRange"				"1800 1800 1800 1800"
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"11"
-		"AbilityChannelTime"			"2.0 3.0 4.0 5.0"
+		"AbilityChannelTime"			"2.0 2.7 3.4 4.1"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -40,27 +40,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_second"		"180.0 180.0 180.0 180.0"
+				"damage_per_second"		"100.0 100.0 100.0 100.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_channel_time"		"2.0 3.0 4.0 5.0"
+				"max_channel_time"		"2.0 2.7 3.4 4.1"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375 400 425 450"
+				"radius"				"375"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"2000 2100 2200 2300"
+				"range"					"1800 1800 1800 1800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"speed"					"1050.0 1100.0 1150.0 1200.0"
+				"speed"					"1050.0 1050.0 1050.0 1050.0"
 			}			
 			"06"
 			{
@@ -95,7 +95,7 @@
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"total_damage"				"360 540 720 900"
+				"total_damage"				"200 300 400 500"
 				"LinkedSpecialBonus"		"special_bonus_unique_keeper_of_the_light"
 			}
 			"13"
@@ -144,17 +144,17 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"575 650 725 800"
+		"AbilityCastRange"				"475 550 625 700"
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
  		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14"
+		"AbilityCooldown"				"20 18 16 14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 125 150 175"
+		"AbilityManaCost"				"130 145 160 175"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -187,7 +187,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"knockback_distance"	"350 450 550 650"
+				"knockback_distance"	"350"
 			}
 			"07"
 			{
@@ -197,7 +197,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"550 600 650 700"
+				"cast_range_tooltip"	"475 550 625 700"
 			}
 			"09"
 			{
@@ -254,23 +254,23 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_restore"			"125 250 375 500"
+				"mana_restore"			"80 160 240 320"
 				"LinkedSpecialBonus"	"special_bonus_unique_keeper_of_the_light_2"
 			}			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_reduction"	"4 5 6 7"
+				"cooldown_reduction"	"3 4 5 6"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0 5.0 6.0 7.0"
+				"duration"					"3.0 4.0 5.0 6.0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"mana_leak_pct"				"5.0 5.5 6.0 6.5"
+				"mana_leak_pct"				"4.5 5.0 5.5 6.0"
 			}
 			"05"
 			{
@@ -411,7 +411,7 @@
 
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"800"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -420,7 +420,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"on_count"					"4 6 8"
+				"on_count"					"3 4 5"
 				"LinkedSpecialBonus"		"special_bonus_unique_keeper_of_the_light_3"
 			}
 			"02"
@@ -431,7 +431,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_count"					"5 6 7"
+				"hit_count"					"4 5 6"
 				"LinkedSpecialBonus"		"special_bonus_unique_keeper_of_the_light_4"
 			}
 			"04"
@@ -477,7 +477,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"900"
+				"cast_range_tooltip"	"800"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"

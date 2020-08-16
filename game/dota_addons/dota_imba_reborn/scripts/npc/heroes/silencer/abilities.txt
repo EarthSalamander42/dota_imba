@@ -40,7 +40,7 @@
 
 		// Cost
 		//---------------------------------------------
-		"AbilityManaCost"				"75 100 125 150"
+		"AbilityManaCost"				"125 130 135 140"
 
 		// Special
 		//---------------------------------------------
@@ -49,7 +49,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_per_second"	"26 34 42 50"
+				"damage_per_second"	"16 26 36 46"
 			}
 			"02"
 			{
@@ -69,7 +69,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"curse_slow"		"10 15 20 25"
+				"curse_slow"		"9 12 15 18"
 				"LinkedSpecialBonus"	"special_bonus_imba_silencer_arcane_curse_slow"
 			}
 			"06"
@@ -135,7 +135,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"intellect_damage_pct"		"45 60 75 90"
+				"intellect_damage_pct"		"25 45 65 85"
 			}
 			"02"
 			{
@@ -212,7 +212,7 @@
 
 		// Damage
 		//---------------------------------------------
-		"AbilityDamage"					"100 160 220 280"
+		"AbilityDamage"					"80 120 160 200"
 
 		// Casting
 		//---------------------------------------------
@@ -337,12 +337,12 @@
 		// Casting
 		//---------------------------------------------
 		"AbilityCastPoint"			"0.3"
-		"AbilityCooldown"			"130"
+		"AbilityCooldown"			"130 115 100"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time
 		//---------------------------------------------
-		"AbilityDuration"			"4.5 5.5 6.5"
+		"AbilityDuration"			"4.5 5.25 6.0"
 
 		// Precache
 		//---------------------------------------------
@@ -363,7 +363,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"4.5 5.5 6.5"
+				"duration"			"4.5 5.25 6.0"
 			}
 		}
 	}
@@ -393,8 +393,8 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"130.0"
-		"AbilityDuration"				"4.5 5.5 6.5"
+		"AbilityCooldown"				"130.0 115.0 100.0"
+		"AbilityDuration"				"4.5 5.25 6.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

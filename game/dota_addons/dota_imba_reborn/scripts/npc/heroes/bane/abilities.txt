@@ -106,12 +106,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"status_resistance_reduction"	"20 25 30 35"
+				"status_resistance_reduction"	"15 20 25 30"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"magic_resistance_reduction"	"6 10 14 18"
+				"magic_resistance_reduction"	"4 8 12 16"
 			}
 			"03"
 			{
@@ -236,12 +236,12 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 12 10 8"
+		"AbilityCooldown"				"14 13 12 11"
 
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70 95 120 145"
+		"AbilityManaCost"				"110 130 150 170"
 
 		
 		"AbilitySpecial"
@@ -249,7 +249,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"brain_sap_damage"				"110 220 330 440"
+				"brain_sap_damage"				"100 200 300 400"
 				//"LinkedSpecialBonus"			"special_bonus_unique_bane_2"
 				"LinkedSpecialBonus"			"special_bonus_imba_bane_brain_sap_damage"
 			}
@@ -339,7 +339,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"500 600 700 800"
+				"cast_range"				"425 500 575 650"
 			}
 		}
 	}
@@ -494,8 +494,8 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"7.5 7.5 7.5"
-		"AbilityCooldown"				"100 90 80"
+		"AbilityChannelTime"			"6.0 6.0 6.0"
+		"AbilityCooldown"				"120 110 100"
 
 
 		// Cost
@@ -514,7 +514,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"fiend_grip_mana_drain"			"7"
+				"fiend_grip_mana_drain"			"5"
 			}
 			"03"
 			{
@@ -526,7 +526,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"fiend_grip_damage"				"140 230 320"
+				"fiend_grip_damage"				"100 155 215"
 			}
 		}
 	}

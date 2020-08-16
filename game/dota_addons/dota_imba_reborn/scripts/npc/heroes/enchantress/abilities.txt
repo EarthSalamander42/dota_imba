@@ -127,7 +127,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_range_scepter"	"190 190 190"
+				"bonus_attack_range_scepter"	"150 150 150"
 				"RequiresScepter"				"1"
 			}
 			"04"
@@ -257,7 +257,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal"					"10.0 11.0 12.0 13.0"
+				"heal"					"7.0 9.0 11.0 13.0"
 				//"LinkedSpecialBonus"	"special_bonus_unique_enchantress_5"
 				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"

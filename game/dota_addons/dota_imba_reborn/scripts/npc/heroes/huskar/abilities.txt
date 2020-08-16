@@ -213,7 +213,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"burn_damage"					"8 13 18 23"
+				"burn_damage"					"5 10 15 20"
 				"LinkedSpecialBonus"			"special_bonus_unique_huskar_2"
 			}
 			
@@ -250,7 +250,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"maximum_attack_speed"			"220 280 340 400"
+				"maximum_attack_speed"			"130 190 250 310"
 			}
 			"02"
 			{
@@ -260,7 +260,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"hp_threshold_max"				"10 12 14 16"
+				"hp_threshold_max"				"10 10 10 10"
 			}
 			
 			"04"
@@ -350,7 +350,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"charge_speed"				"1400"
+				"charge_speed"				"1200"
 			}
 			"05"
 			{

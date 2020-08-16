@@ -108,7 +108,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"75 75 75 75"
 		
-		"AbilityDuration"				"3 4 5 6"
+		"AbilityDuration"				"3.0 4.0 5.0 6.0"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -246,7 +246,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hp_leech_percent"		"2.0 2.5 3.0 3.5"
+				"hp_leech_percent"		"1.5 2.0 2.5 3.0"
 				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_3"
 			}
 
@@ -289,7 +289,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_bonus"	"20 40 60 80"
+				"attack_speed_bonus"	"15 30 45 60"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -418,7 +418,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_percent"			"50"
+				"heal_percent"			"35"
 				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_2"
 			}
 			"03"
@@ -434,7 +434,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"225 350 475 600"
+				"tooltip_range"			"200 300 400 500"
 			}
 			
 			"06"

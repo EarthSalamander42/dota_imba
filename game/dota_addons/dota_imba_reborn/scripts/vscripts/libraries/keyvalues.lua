@@ -235,4 +235,20 @@ function GetAbilitySpecial(name, key, level)
 	else return t end
 end
 
+function CDOTABaseAbility:GetVanillaAbilityName()
+	return string.gsub(self:GetAbilityName(), "imba_", "")
+end
+
+function CDOTABaseAbility:GetVanillaKeyValue(key, level)
+	if level then
+		return GetAbilityKV(self:GetVanillaAbilityName(), key, level)
+	else
+		return GetAbilityKV(self:GetVanillaAbilityName(), key, self:GetLevel())
+	end
+end
+
+function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
+	return GetAbilitySpecial(self:GetVanillaAbilityName(), key, self:GetLevel())
+end
+
 LoadGameKeyValues()

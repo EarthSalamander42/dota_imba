@@ -32,24 +32,24 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage"						"-70 -65 -60 -55"
+				"outgoing_damage"						"-75 -70 -65 -60"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage_tooltip"				"30 35 40 45"
+				"outgoing_damage_tooltip"				"25 30 35 40"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"incoming_damage"						"230 220 210 200"
+				"incoming_damage"						"250 250 250 250"
 				"LinkedSpecialBonus"					"special_bonus_imba_naga_siren_mirror_image_damage_taken"
 				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_SUBTRACT"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"tooltip_incoming_damage_total_pct"		"330 320 310 300"
+				"tooltip_incoming_damage_total_pct"		"350 350 350 350"
 				"LinkedSpecialBonus"					"special_bonus_imba_naga_siren_mirror_image_damage_taken"
 				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_SUBTRACT"
 			}
@@ -107,7 +107,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14.0 13.0 12.0 11.0"		
+		"AbilityCooldown"				"14.0 14.0 14.0 14.0"		
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -115,7 +115,7 @@
 		
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"650 750 850 950"
+		"AbilityCastRange"				"650 650 650 650"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -124,12 +124,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"2.5 3.5 4.5 5.5"
+				"duration"					"2.0 3.0 4.0 5.0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"net_speed"					"1500 1750 2000 2250"
+				"net_speed"					"1500 1500 1500 1500"
 			}
 			"03"
 			{
@@ -186,7 +186,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0"
+				"duration"					"4.0"
 			}
 			"06"
 			{
@@ -240,7 +240,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1250 1500 1750"
+				"radius"					"1000 1200 1400"
 			}
 			"02"
 			{
@@ -277,11 +277,6 @@
 			{
 				"var_type"									"FIELD_INTEGER"
 				"siren_temptation_incoming_damage_pct"		"30" // %
-			}
-			"09"
-			{
-				"var_type"												"FIELD_INTEGER"
-				"siren_temptation_magical_resistance_reduction_pct"		"30" // %
 			}
 		}
 	}

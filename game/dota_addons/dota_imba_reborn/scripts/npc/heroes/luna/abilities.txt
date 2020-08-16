@@ -45,12 +45,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.8 0.9 1.0 1.1"
+				"stun_duration"			"0.8 0.8 0.8 0.8"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"beam_damage"			"90 180 270 360"
+				"beam_damage"			"75 150 225 300"
 				"LinkedSpecialBonus"	"special_bonus_unique_luna_1"
 			}
 
@@ -109,17 +109,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"500 515 530 545"
+				"range"						"500 500 500 500"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bounces"					"1 2 3 6"
+				"bounces"					"3 4 5 6"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_percent"	"35 30 25 20"
+				"damage_reduction_percent"	"52 46 40 34"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -191,7 +191,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"180"
+		"AbilityCooldown"				"80"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -205,7 +205,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_pct"			"10 15 20 25"
+				"damage_pct"			"10 18 26 34"
 			}
 			"03"
 			{
@@ -215,7 +215,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_night_vision"		"250 500 750 1000"
+				"bonus_night_vision"		"200 400 600 800"
 			}
 			
 			"05"
@@ -263,7 +263,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"140.0 130.0 120.0"
+		"AbilityCooldown"				"140.0 140.0 140.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -276,7 +276,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"beams"						"6 10 14"
+				"beams"						"6 9 12"
 			}
 			"02"
 			{
@@ -302,18 +302,18 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"675 750 825"
+				"radius"					"675 675 675"
 			}	
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"beams_scepter"				"7 14 21"
+				"beams_scepter"				"6 12 18"
 				"RequiresScepter"		"1"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_count_scepter"			"7 14 21"
+				"hit_count_scepter"			"6 12 18"
 				"RequiresScepter"		"1"
 			}
 			"09"

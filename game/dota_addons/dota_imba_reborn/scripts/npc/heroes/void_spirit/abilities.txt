@@ -139,7 +139,7 @@
 
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"140 220 300 380"
+		"AbilityDamage"					"100 180 260 340"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -228,7 +228,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14"
+		"AbilityCooldown"				"16"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -241,17 +241,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
+				"radius"				"500"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"2400"
+				"speed"					"1200"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 160 220 280"
+				"damage"				"70 120 170 220"
 				"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_4"
 			}
 			"04"
@@ -262,12 +262,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_absorb_amount"	"60 110 160 210"
+				"base_absorb_amount"	"40 80 120 160"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"absorb_per_hero_hit"	"40 60 80 100"
+				"absorb_per_hero_hit"	"30 45 60 70"
 			}
 			"07"
 			{
@@ -550,7 +550,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_travel_distance"	"800 1000 1200"
+				"max_travel_distance"	"700 900 1100"
 			}
 			"06"
 			{
@@ -560,7 +560,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pop_damage"			"200 300 400"
+				"pop_damage"			"150 200 250"
 			}
 			"08"
 			{
@@ -577,7 +577,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"20 18 16"
+				"charge_restore_time"	"30 25 20"
 				//"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_9"
 				"LinkedSpecialBonus"	"special_bonus_imba_void_spirit_astral_step_charge_cooldown"
 			}

@@ -76,7 +76,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 200 300 400"
+				"damage"				"80 160 240 360"
 			}
 
 			"02"
@@ -212,7 +212,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"night_duration"		"5 6 7 8"
+				"night_duration"		"4 5 6 7"
 			}
 
 			"05"
@@ -273,7 +273,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration_night"		"5.0 6.0 7.0 8.0"
+				"duration_night"		"4.0 5.0 6.0 7.0"
 			}
 			"03"
 			{
@@ -327,12 +327,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"base_bonus_ms_pct"	"24 30 36 42"
+				"base_bonus_ms_pct"	"22 28 34 40"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"base_bonus_as"		"30 50 70 90"
+				"base_bonus_as"		"20 40 60 80"
 			}
 			"03"
 			{

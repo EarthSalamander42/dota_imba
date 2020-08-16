@@ -16,15 +16,6 @@
 		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"abaddon_death_coil"
-		"MaxLevel"										"4"
-
-		"precache"
-		{
-			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-			"particle"									"particles/dev/library/base_dust_hit_detail.vpcf"
-			"particle"									"particles/dev/library/base_dust_hit_smoke.vpcf"
-		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -32,50 +23,28 @@
 		{
 			"01"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"2000"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage"								"130 210 290 360"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"heal"									"130 210 290 360"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"cast_range"							"800"
-			}
-			"05"
-			{
 				"var_type"								"FIELD_FLOAT"
 				"mist_duration"							"2.0"
 			}
-			"06"
+			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"damage_heal_pct"						"10"
 				"CalculateSpellDamageTooltip"			"0"
 			}
-			"07"
+			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"shield_duration_extend"				"3.0"
 			}
-			"08"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"cooldown"								"4.5"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"self_damage"							"75 100 125 150"
-			}
+		}
+
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
+			"particle"									"particles/dev/library/base_dust_hit_detail.vpcf"
+			"particle"									"particles/dev/library/base_dust_hit_smoke.vpcf"
 		}
 	}
 
@@ -94,46 +63,6 @@
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"abaddon_aphotic_shield"
-		"MaxLevel"										"4"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"								"0.4"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"12.0 10.0 8.0 6.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"100 110 120 130"
-
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"duration"								"15.0"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"shield"								"110 155 200 245"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"radius"								"675"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"cast_range"							"500"
-			}
-		}
 
 		"precache"
 		{
@@ -156,50 +85,15 @@
 		"BaseClass"										"ability_lua"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
+		"ScriptFile"									"components/abilities/heroes/hero_abaddon.lua"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"							"abaddon_frostmourne"
-		"MaxLevel"										"4"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"2.5 3 3.5 4"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"move_slow"								"8 12 16 20"
-				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_slow"							"10 20 30 40"
-				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5 5 5.5 6"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"move_increase"							"15"
-				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_increase"						"10 20 30 40"
-				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
-			}
-			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"heal_convert"							"5 12 19 26"

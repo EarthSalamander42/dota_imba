@@ -23,11 +23,11 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"32.0 26.0 20.0 14.0"
+		"AbilityCooldown"				"50.0 40.0 30.0 20.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 80 70 60"
+		"AbilityManaCost"				"90 90 90 90"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -36,17 +36,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"9.0"
+				"duration"				"8.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_range_bonus"	"375 450 525 600"
+				"attack_range_bonus"	"350 425 500 575"
 			}			
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"percent_damage"		"7 8 9 10"
+				"percent_damage"		"6 7 8 9"
 			}
 			"04"
 			{
@@ -61,17 +61,17 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"move_slow"				"-25 -35 -45 -55"
+				"move_slow"				"-22 -28 -34 -40"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"night_vision_bonus"	"500"
+				"night_vision_bonus"	"400"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed_bonus"	"750"
+				"projectile_speed_bonus"	"500"
 			}
 			"09"
 			{
@@ -91,7 +91,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost_scepter"		"40"
+				"mana_cost_scepter"		"30"
 			}
 			"13"
 			{
@@ -142,11 +142,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6.0"
+		"AbilityCooldown"				"7.0"
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"140 220 300 380"
+		"AbilityDamage"					"100 180 260 340"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -159,7 +159,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"700"
+				"projectile_speed"		"650"
 			}
 			"02"
 			{
@@ -169,17 +169,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"split_radius"			"500 625 750 875"
+				"split_radius"			"500 500 500 500"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_movespeed"		"-40"
+				"bonus_movespeed"		"-30"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movespeed_slow_tooltip"		"40"
+				"movespeed_slow_tooltip"		"30"
 			}
 			"06"
 			{
@@ -286,7 +286,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_percentage"		"3 4 5 6"
+				"heal_percentage"		"2 3 4 5"
 			}
 			"04"
 			{
@@ -336,7 +336,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"80"
+		"AbilityCooldown"				"90"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -354,7 +354,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"100 90 80"
+				"damage_reduction"		"100 100 100"
 			}
 			"03"
 			{
@@ -364,7 +364,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"80 120 160"
+				"bonus_attack_speed"	"55 55 55"
 			}
 			"05"
 			{

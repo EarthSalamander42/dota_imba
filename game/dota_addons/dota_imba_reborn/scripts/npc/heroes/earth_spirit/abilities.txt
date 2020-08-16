@@ -101,7 +101,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"20 16 12 8"
+		"AbilityCooldown"				"22 18 14 10"
 		"AbilityManaCost"				"100"
 
 		// Precache
@@ -131,7 +131,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"105 180 255 330"		
+				"damage"				"105 170 235 300"		
 			}
 			"04"
 			{
@@ -206,7 +206,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"150"				
+				"collision_radius"		"160"				
 			}
 			"02"
 			{
@@ -216,12 +216,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"roll_distance"			"1000"				
+				"roll_distance"			"800"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_roll_distance"	"1800"				
+				"remnant_roll_distance"	"1600"				
 			}
 			"05"
 			{
@@ -246,7 +246,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"150 200 250 300"				
+				"damage"				"70 80 90 100"				
 			}
 			"10"
 			{
@@ -310,7 +310,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 150 200 250"				
+				"damage"				"50 100 150 200"				
 			}
 			"03"
 			{
@@ -369,7 +369,7 @@
 		"AbilityCastRange"				"300"
 		"AbilityCastPoint"				"0.01"
 		"AbilityCooldown"				"100 90 80"
-		"AbilityManaCost"				"80"
+		"AbilityManaCost"				"100"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -388,7 +388,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"				
+				"radius"					"350"				
 			}
 			"02"
 			{

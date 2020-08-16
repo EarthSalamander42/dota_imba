@@ -72,19 +72,11 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_mist_coil_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_mist_coil_mist_ally"] = LUA_MODIFIER_MOTION_NONE,
 })
-print(VANILLA_ABILITIES_BASECLASS)
-imba_abaddon_death_coil = imba_abaddon_death_coil or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_abaddon_death_coil:GetAbilityTextureName()
-	return "abaddon_death_coil"
-end
+imba_abaddon_death_coil = imba_abaddon_death_coil or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_abaddon_death_coil:GetIntrinsicModifierName()
 	return "modifier_imba_mist_coil_passive"
-end
-
-function imba_abaddon_death_coil:GetCastRange()
-	return self:GetSpecialValueFor("cast_range")
 end
 
 function imba_abaddon_death_coil:IsHiddenWhenStolen()
@@ -103,7 +95,7 @@ function imba_abaddon_death_coil:OnSpellStart(unit, special_cast)
 			local responses = {"abaddon_abad_deathcoil_01","abaddon_abad_deathcoil_02","abaddon_abad_deathcoil_06","abaddon_abad_deathcoil_08",}
 			caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20,"coil")
 
-			local health_cost = self:GetSpecialValueFor("self_damage")
+			local health_cost = self:GetVanillaAbilitySpecial("self_damage")
 			
 			if getOverChannelDamageIncrease then
 				ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = getOverChannelDamageIncrease(caster), damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL})
@@ -131,7 +123,7 @@ function imba_abaddon_death_coil:OnSpellStart(unit, special_cast)
 			bProvidesVision = true,
 			bVisibleToEnemies = true,
 			bReplaceExisting = false,
-			iMoveSpeed = self:GetSpecialValueFor("projectile_speed"),
+			iMoveSpeed = self:GetVanillaAbilitySpecial("missile_speed"),
 			iVisionRadius = 0,
 			iVisionTeamNumber = caster:GetTeamNumber(),
 			ExtraData = {special_cast = special_cast}
@@ -162,7 +154,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 				return nil
 			end
 
-			local damage = self:GetLevelSpecialValueFor("damage", ability_level) + self.overchannel_damage_increase
+			local damage = self:GetVanillaAbilitySpecial("target_damage") + self.overchannel_damage_increase
 			local damage_type = DAMAGE_TYPE_MAGICAL
 
 			-- Apply damage + parsing if the ability killed the target
@@ -185,7 +177,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 			--Apply spellpower to heal
 			-- local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 
-			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + self.overchannel_damage_increase) -- * heal_amp
+			local heal = (self:GetVanillaAbilitySpecial("heal_amount") + self.overchannel_damage_increase) -- * heal_amp
 
 			-- heal allies or self and apply mist
 			target:Heal(heal, caster)
@@ -223,7 +215,7 @@ end
 
 function imba_abaddon_death_coil:OnOwnerDied()
 	if self:GetCaster():IsRealHero() then
-		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("cast_range"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()), DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, unit in pairs(units) do
 			if unit ~= self:GetCaster() then
 				self:OnSpellStart(unit, true)
@@ -320,14 +312,6 @@ MergeTables(LinkedModifiers,{
 })
 imba_abaddon_aphotic_shield = imba_abaddon_aphotic_shield or class({})
 
-function imba_abaddon_aphotic_shield:GetAbilityTextureName()
-	return "abaddon_aphotic_shield"
-end
-
-function imba_abaddon_aphotic_shield:GetCastRange(Location, Target)
-	return self:GetSpecialValueFor("cast_range")
-end
-
 function imba_abaddon_aphotic_shield:IsHiddenWhenStolen()	return false end
 
 function imba_abaddon_aphotic_shield:OnSpellStart()
@@ -355,7 +339,7 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 		-- Did not use RemoveModifierByNameAndCaster because it will not destroy the shield if it was stolen by rubick from another rubick who stole from abaddon
 		target:RemoveModifierByName(modifier_name_aphotic_shield)
 
-		local duration = self:GetSpecialValueFor("duration")
+		local duration = self:GetVanillaAbilitySpecial("duration")
 		-- Add new modifier
 		target:AddNewModifier(caster, self, modifier_name_aphotic_shield, { duration = duration })
 	end
@@ -383,7 +367,7 @@ function modifier_imba_aphotic_shield_buff_block:OnCreated()
 		local target_origin = target:GetAbsOrigin()
 		local attach_hitloc = "attach_hitloc"
 
-		self.shield_init_value = ability:GetLevelSpecialValueFor( "shield", ability_level ) + getOverChannelShieldIncrease(caster)
+		self.shield_init_value = ability:GetVanillaAbilitySpecial("damage_absorb") + getOverChannelShieldIncrease(caster)
 		self.shield_remaining = self.shield_init_value
 		self.target_current_health = target:GetHealth()
 
@@ -425,7 +409,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 		local caster 				= self:GetCaster()
 		local ability 				= self:GetAbility()
 		local ability_level 		= ability:GetLevel()
-		local radius 				= ability:GetSpecialValueFor("radius")
+		local radius 				= ability:GetVanillaAbilitySpecial("radius")
 		local explode_target_team 	= DOTA_UNIT_TARGET_TEAM_BOTH
 		local explode_target_type 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 		local target_vector			= target:GetAbsOrigin()
@@ -488,7 +472,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 					bProvidesVision = true,
 					bVisibleToEnemies = true,
 					bReplaceExisting = false,
-					iMoveSpeed = mist_coil_ability:GetSpecialValueFor("projectile_speed"),
+					iMoveSpeed = mist_coil_ability:GetVanillaAbilitySpecial("missile_speed"),
 					iVisionRadius = 0,
 					iVisionTeamNumber = caster:GetTeamNumber(),
 					ExtraData = {special_cast = true}
@@ -567,7 +551,6 @@ MergeTables(LinkedModifiers,{
 })
 imba_abaddon_curse_of_avernus = imba_abaddon_curse_of_avernus or class({
 	GetIntrinsicModifierName = function(self) return "modifier_imba_curse_of_avernus_passive" end,
-	GetAbilityTextureName = function(self) return "abaddon_frostmourne" end,
 	IsStealable = function(self) return false end
 })
 
@@ -602,10 +585,6 @@ function imba_abaddon_curse_of_avernus:GetCooldown()
 	end
 
 	return 0
-end
-
-function imba_abaddon_curse_of_avernus:GetCastRange()
-	return self:GetCaster():Script_GetAttackRange()
 end
 
 function imba_abaddon_curse_of_avernus:OnSpellStart()
@@ -950,7 +929,6 @@ MergeTables(LinkedModifiers,{
 imba_abaddon_over_channel = imba_abaddon_over_channel or class({
 	IsStealable 			= function(self) return false end,
 	IsInnateAbility			= function(self) return true end,
-	GetAbilityTextureName	= function(self) return "custom/abaddon_over_channel" end,
 })
 
 function imba_abaddon_over_channel:OnToggle()
@@ -1058,7 +1036,6 @@ MergeTables(LinkedModifiers,{
 })
 imba_abaddon_borrowed_time = imba_abaddon_borrowed_time or class({
 	GetIntrinsicModifierName = function(self) if self:GetCaster():IsRealHero() then return "modifier_imba_borrowed_time_handler" end end,
-	GetAbilityTextureName = function(self) return "abaddon_borrowed_time" end
 })
 function imba_abaddon_borrowed_time:IsNetherWardStealable() return false end
 function imba_abaddon_borrowed_time:OnUpgrade()

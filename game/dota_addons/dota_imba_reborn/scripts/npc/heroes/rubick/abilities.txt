@@ -26,7 +26,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22.0"
+		"AbilityCooldown"				"34.0 30.0 26.0 22.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"impact_stun_duration"		"1.5 1.75 2.0 2.25"
+				"impact_stun_duration"		"1.0 1.25 1.5 1.75"
 			}
 			"03"
 			{
@@ -82,7 +82,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"enemy_lift_duration"		"1.5 1.75 2.0 2.25"
+				"enemy_lift_duration"		"0.8 1.2 1.6 2.0"
 			}
 			"08"
 			{
@@ -107,7 +107,7 @@
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"550 600 650 700"
+				"cast_range"				"550 575 600 625"
 			}
 		}
 	}
@@ -146,7 +146,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 180 260 340"
+				"damage"					"100 175 250 325"
 			}
 			"02"
 			{
@@ -175,12 +175,12 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"450 500 550 600"
+				"radius"					"440 440 440 440"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"jump_delay"				"0.25 0.22 0.19 0.16"
+				"jump_delay"				"0.25 0.25 0.25 0.25"
 			}
 			
 			"08"
@@ -257,12 +257,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"spell_amp"						"18 22 26 30"
+				"spell_amp"						"14 18 22 26"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"status_resistance"				"24 32 40 48"
+				"status_resistance"				"16 24 32 40"
 			}
 			"03"
 			{
@@ -330,7 +330,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"900 1200 1500"
+				"projectile_speed"			"900 900 900"
 			}
 			"02"
 			{

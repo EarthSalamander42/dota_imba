@@ -48,14 +48,14 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.2 2.8 3.4 4.0"
+				"stun_duration"			"2.0 2.6 3.2 3.8"
 				//"LinkedSpecialBonus"	"special_bonus_unique_windranger_6"
 				"LinkedSpecialBonus"	"special_bonus_imba_windranger_shackle_shot_duration"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shackle_distance"		"575 620 665 710"
+				"shackle_distance"		"575 575 575 575"
 			}
 			"04"
 			{
@@ -95,12 +95,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2600 2800 3000 3200"
+		"AbilityCastRange"				"2600 2600 2600 2600"
 		"AbilityCastPoint"				"0.0"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 10.5 9 7.5"
+		"AbilityCooldown"				"12 11.0 10.0 9.0"
 		"AbilityChannelTime"			"1.0 1.0 1.0 1.0"
 
 
@@ -115,14 +115,14 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"powershot_damage"		"160 260 360 460"
+				"powershot_damage"		"150 250 350 450"
 				//"LinkedSpecialBonus"	"special_bonus_unique_windranger_3"
 				"LinkedSpecialBonus"	"special_bonus_imba_windranger_powershot_damage"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"20 15 10 5"
+				"damage_reduction"		"20 20 20 20"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
@@ -133,7 +133,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_range"			"2600 2800 3000 3200"
+				"arrow_range"			"2600 2600 2600 2600"
 			}
 			"05"
 			{
@@ -244,7 +244,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 13 12 11"
+		"AbilityCooldown"				"15 14 13 12"
 		"AbilityDuration"				"3 4 5 6"
 	
 		// Cost
@@ -272,7 +272,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"enemy_movespeed_bonus_pct"	"-15 -25 -35 -45"
+				"enemy_movespeed_bonus_pct"	"-15 -20 -25 -30"
 				"LinkedSpecialBonus"		"special_bonus_unique_windranger_2"
 			}
 			"04"
@@ -396,7 +396,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"500 600 700"
+				"bonus_attack_speed"			"475 475 475"
 			}
 			"02"
 			{
@@ -456,7 +456,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"500 700 900"
+				"bonus_attack_speed"			"475 475 475"
 			}
 			"02"
 			{

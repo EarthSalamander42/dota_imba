@@ -28,7 +28,7 @@
 	
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"110 220 330 440"
+		"AbilityDamage"					"70 140 210 280"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"orb_speed"					"651 701 751 801"
+				"orb_speed"					"651 651 651 651"
 				//"LinkedSpecialBonus"		"special_bonus_unique_puck"
 				"LinkedSpecialBonus"		"special_bonus_imba_puck_illusory_orb_speed"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
@@ -68,7 +68,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"vision_duration"			"3.34 3.34 3.34 3.34"
+				"vision_duration"			"5.0 5.0 5.0 5.0"
 			}
 			
 			"06"
@@ -159,12 +159,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"silence_duration"			"2.25 2.75 3.25 3.75"
+				"silence_duration"			"2.0 2.5 3.0 3.5"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"110 220 330 440"
+				"damage"					"70 140 210 280"
 				//"LinkedSpecialBonus"		"special_bonus_unique_puck_4"
 			}
 			
@@ -279,12 +279,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_break_radius"			"600 580 560"
+				"coil_break_radius"			"600 600 600"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.5 0.75 1.0"
+				"stun_duration"				"0.5 0.5 0.5"
 			}
 			"04"
 			{
@@ -294,17 +294,17 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"coil_stun_duration"		"2.0 2.8 3.6"
+				"coil_stun_duration"		"1.8 2.4 3.0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage"			"300 450 600"
+				"coil_break_damage"			"300 400 500"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_radius"				"400 500 600"
+				"coil_radius"				"375 375 375"
 			}			
 			"08"
 			{
@@ -315,13 +315,13 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage_scepter"	"400 600 800"
+				"coil_break_damage_scepter"	"400 550 700"
 				"RequiresScepter"			"1"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"coil_stun_duration_scepter"		"3.0 4.2 5.4"
+				"coil_stun_duration_scepter"		"1.8 3.0 4.5"
 				"RequiresScepter"			"1"
 			}
 			"11"

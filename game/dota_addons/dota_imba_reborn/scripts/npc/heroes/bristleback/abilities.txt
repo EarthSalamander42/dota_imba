@@ -71,7 +71,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_limit"			"4 5 5 6"
+				"stack_limit"			"4"
 				"LinkedSpecialBonus"	"special_bonus_unique_bristleback"
 			}
 			"08"
@@ -82,7 +82,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_scepter"		"900"
+				"radius_scepter"		"825"
 				"RequiresScepter"		"1"
 			}
 			"10"
@@ -163,7 +163,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"quill_stack_damage"	"35.0 40.0 45.0 50.0"
+				"quill_stack_damage"	"30.0 32.0 34.0 36.0"
 				"LinkedSpecialBonus"	"special_bonus_unique_bristleback_2"
 			}
 			"04"
@@ -174,7 +174,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_damage"			"700.0"
+				"max_damage"			"550.0"
 			}
 			"06"
 			{
@@ -213,12 +213,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"side_damage_reduction"			"10 16 22 28"
+				"side_damage_reduction"			"8 12 16 20"
 			}	// "8 12 16 20"
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"back_damage_reduction"			"24 32 40 48"
+				"back_damage_reduction"			"16 24 32 40"
 			}	// "16 24 32 40"
 			"03"
 			{
@@ -283,7 +283,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"move_speed_per_stack"				"4 5 6"
+				"move_speed_per_stack"				"3 4 5"
 			}
 			"03"
 			{
@@ -293,7 +293,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"6 8 10"
+				"max_stacks"					"5 7 9"
 			}
 			"05"
 			{

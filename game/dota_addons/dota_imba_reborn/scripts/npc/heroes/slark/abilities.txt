@@ -48,12 +48,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"325 350 375 400"
+				"radius"				"325 325 325 325"
 			}	
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_damage"			"90 180 270 360"
+				"total_damage"			"75 150 225 300"
 				"LinkedSpecialBonus"	"special_bonus_unique_slark_2"
 			}
 			"05"
@@ -139,12 +139,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pounce_distance"		"700 800 900 1000"
+				"pounce_distance"		"700 700 700 700"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"pounce_speed"			"933.33 1066.67 1200.0 1333.33"
+				"pounce_speed"			"933.33 933.33 933.33 933.33"
 			}
 			"03"
 			{
@@ -154,7 +154,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pounce_radius"			"95 100 105 110"
+				"pounce_radius"			"95 95 95 95"
 			}
 			"05"
 			{
@@ -277,7 +277,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"30 45 60"
+				"bonus_movement_speed"		"20 35 50"
 			}
 			"04"
 			{

@@ -30,7 +30,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 15 14 13"
+		"AbilityCooldown"				"18 16 14 12"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -55,12 +55,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"115 210 305 400"
+				"damage"				"110 180 250 320"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.7 1.9 2.1 2.3"
+				"stun_duration"			"1.25 1.5 1.75 2.0"
 			}
 			"03"
 			{
@@ -149,7 +149,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cleave_distance"			"650"
+				"cleave_distance"			"700"
 				"LinkedSpecialBonus"		"special_bonus_imba_sven_2"
 			}
 			"04"
@@ -160,7 +160,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_ignore"				"3 7 11 15"
+				"armor_ignore"				"3 6 9 12"
 				"LinkedSpecialBonus"		"special_bonus_imba_sven_6"
 			}
 			"06"
@@ -365,17 +365,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"movespeed"			"10 14 18 22"
+				"movespeed"			"8 12 16 20"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_armor"		"8 11 14 17"		
+				"bonus_armor"		"6 9 12 15"		
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"14 18 22 26"		
+				"bonus_damage"		"0"		
 			}
 			"04"
 			{
@@ -385,7 +385,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"duration"		"10"
+				"duration"		"8"
 			}
 			
 			"06"
@@ -448,13 +448,13 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_dmg_pct"					"80 160 240"
+				"bonus_dmg_pct"					"110 160 210"
 				"LinkedSpecialBonus"			"special_bonus_imba_sven_8"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"duration"						"25"
+				"duration"						"40"
 			}
 			"03"
 			{
@@ -471,7 +471,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"gods_strength_bonus_str"		"10 20 30"		
+				"gods_strength_bonus_str"		"0"		
 				//"LinkedSpecialBonus"		"special_bonus_unique_sven_2"
 			}	
 		}
@@ -768,7 +768,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"100"
+				"value"					"50"
 			}
 		}
 	}

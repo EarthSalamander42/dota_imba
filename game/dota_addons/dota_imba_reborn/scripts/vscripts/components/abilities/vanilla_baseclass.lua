@@ -1,21 +1,23 @@
 vanilla_baseclass = vanilla_baseclass or {}
 
-local function GetVanillaAbilityName(sAbilityName)
-	return string.gsub(sAbilityName, "imba_", "")
+function vanilla_baseclass:GetCooldown()
+	return self:GetVanillaKeyValue("AbilityCooldown")
 end
 
-function vanilla_baseclass:GetCooldown(iLevel)
-	return GetAbilityKV(GetVanillaAbilityName(self:GetAbilityName()), "AbilityCooldown", iLevel)
-end
-
-function vanilla_baseclass:GetManaCost(iLevel)
-	return GetAbilityKV(GetVanillaAbilityName(self:GetAbilityName()), "AbilityManaCost", iLevel)
+function vanilla_baseclass:GetManaCost()
+	if self:GetLevel() == 0 then
+		return 0
+	else
+		return self:GetVanillaKeyValue("AbilityManaCost")
+	end
 end
 
 function vanilla_baseclass:GetCastPoint()
-	return GetAbilityKV(GetVanillaAbilityName(self:GetAbilityName()), "AbilityCastPoint", iLevel)
+	return self:GetVanillaKeyValue("AbilityCastPoint")
 end
 
--- CDOTABaseAbility:GetAbilitySpecial("key")
+function vanilla_baseclass:GetCastRange(location, target)
+	return self:GetVanillaKeyValue("AbilityCastRange")
+end
 
 return vanilla_baseclass

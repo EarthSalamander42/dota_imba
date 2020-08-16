@@ -27,11 +27,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"45 40 35 30"
+		"AbilityCooldown"				"60 50 40 30"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 130 160 190"
+		"AbilityManaCost"				"60 90 120 150"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"450 550 650 750"
+				"radius"				"400 450 500 550"
 				"LinkedSpecialBonus"	"special_bonus_unique_dark_seer_2"
 			}
 			"02"
@@ -52,7 +52,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 160 230 300"
+				"damage"				"100 150 200 250"
 			}
 			"04"
 			{
@@ -202,13 +202,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"250 275 300 325"
+				"radius"				"250"
 				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_ion_shell_radius"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"30 65 100 135"
+				"damage_per_second"		"24 46 68 90"
 				//"LinkedSpecialBonus"	"special_bonus_unique_dark_seer"
 				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_ion_shell_damage"
 			}
@@ -258,7 +258,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 14 12 10"
+		"AbilityCooldown"				"19 16 13 10"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

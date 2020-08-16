@@ -23,7 +23,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 140 170 200"
+		"AbilityManaCost"				"80 120 160 200"
 		"AbilityCooldown"				"0"
 
 		// Special
@@ -85,7 +85,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"525 600 675 750"
+		"AbilityCastRange"				"300 350 400 450"
 		"AbilityCastPoint"				"0.25 0.25 0.25 0.25"
 
 		// Cost
@@ -109,13 +109,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"		"150 250 350 450"
+				"damage"		"100 175 250 325"
 				"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"		"400 450 500 550"
+				"radius"		"400 400 400 400"
 			}
 			"04"
 			{
@@ -167,7 +167,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22"
+		"AbilityCooldown"				"25"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -190,23 +190,23 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mana_restore"	"25 35 45 55"
+				"mana_restore"	"20 30 40 50"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"movement_slow"		"11 22 33 44"
+				"movement_slow"		"20 30 40 50"
 				"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_2"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"slow_duration"		"1.75"
+				"slow_duration"		"2.0"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"7"
+				"duration"			"8"
 			}
 			
 			"06"
@@ -282,11 +282,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"130"
+		"AbilityCooldown"				"160"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 250 325"
+		"AbilityManaCost"				"200 325 450"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -295,17 +295,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"base_damage"				"150 225 300"
+				"base_damage"				"150 250 350"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"charge_bonus_damage"					"60 80 100"
+				"charge_bonus_damage"					"40 50 60"
 			}		
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 600 800"
+				"radius"					"375 475 575"
 			}
 			"04"
 			{
@@ -315,7 +315,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage_multiplier"	"0.5 0.6 0.7"
+				"damage_multiplier"	"0.4 0.4 0.4"
 				//"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_4"
 				"LinkedSpecialBonus"	"special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier"
 			}	
