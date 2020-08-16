@@ -961,7 +961,7 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 */
 			if (plyData != null && bp_item_unreleased == undefined || bRewardsDisabled & bRewardsDisabled == true) {
 				// Disable tinker immortal for now until fixed
-				if (bp_item_id != "105" && bp_item_id != "113" && bp_item_id != "114" && bp_item_id != "115" && bp_item_id != "116" && bp_item_id != "118" && bp_item_id != "119" && bp_item_id != "120" && bp_item_id != "121") {
+				if (bp_item_id != "100" && bp_item_id != "105" && bp_item_id != "113" && bp_item_id != "114" && bp_item_id != "115" && bp_item_id != "116" && bp_item_id != "118" && bp_item_id != "119" && bp_item_id != "120" && bp_item_id != "121") {
 					if (bp_level <= plyData.Lvl) {
 						var reward_panel_unlocked = $.CreatePanel("Panel", reward, "");
 						reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");

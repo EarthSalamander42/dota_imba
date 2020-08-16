@@ -34,7 +34,7 @@ end
 
 function item_imba_gem:OnItemEquipped(hItem)
 	if hItem == self then
-		if self.dummy_unit and self.dummy_unit:HasModifier("modifier_item_imba_gem_of_true_sight_dropped") then
+		if self.dummy_unit and IsValidEntity(self.dummy_unit) and self.dummy_unit:HasModifier("modifier_item_imba_gem_of_true_sight_dropped") then
 			self.dummy_unit:RemoveModifierByName("modifier_item_imba_gem_of_true_sight_dropped")
 		end
 	end
@@ -54,6 +54,10 @@ function modifier_item_imba_gem_of_true_sight:GetAuraSearchFlags() return DOTA_U
 function modifier_item_imba_gem_of_true_sight:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER end
 function modifier_item_imba_gem_of_true_sight:GetAuraDuration() return 0.5 end
 
+function modifier_item_imba_gem_of_true_sight:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_DEATH,
+} end
+
 function modifier_item_imba_gem_of_true_sight:OnCreated(params)
 	if not IsServer() then return end
 
@@ -71,50 +75,85 @@ function modifier_item_imba_gem_of_true_sight:OnCreated(params)
 	end
 end
 
-function modifier_item_imba_gem_of_true_sight:OnRemoved()
-	if not IsServer() then return end
-
-	-- Non-heroes should automatically drop rapier and return so they can't crash script at self:GetParent():IsImbaReincarnating() check
-	if not self:GetParent():IsRealHero() then
-		local item = self:GetParent():DropItem(self:GetAbility(), true)
-		self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", item:GetAbsOrigin(), true, nil, nil, self:GetCaster():GetTeam())
-		self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})
-
+function modifier_item_imba_gem_of_true_sight:DropGem()
+	if not self:GetAbility() or (self:GetAbility() and self:GetAbility():GetAbilityName() ~= "item_imba_gem") then
 		return
 	end
 
-	if not self:GetParent():IsImbaReincarnating() then
-		local item = self:GetParent():DropItem(self:GetAbility(), true)
-		self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", item:GetAbsOrigin(), true, nil, nil, self:GetCaster():GetTeam())
-		self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})
+	if self:GetAbility().GetContainer and self:GetAbility():GetContainer() and self:GetAbility():GetContainer().GetAbsOrigin and self:GetAbility():GetContainer():GetAbsOrigin() then
+		-- Non-heroes should automatically drop rapier and return so they can't crash script at self:GetParent():IsImbaReincarnating() check
+		if not self:GetParent():IsRealHero() then
+			self:GetParent():DropItem(self:GetAbility(), true)
+			self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", self:GetAbility():GetContainer():GetAbsOrigin(), true, nil, nil, self:GetCaster():GetTeam())
+			self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})
+
+			return
+		end
+
+		-- drop gem if not reincarnating
+		if not self:GetParent():IsImbaReincarnating() then
+			self:GetParent():DropItem(self:GetAbility(), true)
+			self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", self:GetAbility():GetContainer():GetAbsOrigin(), true, nil, nil, self:GetCaster():GetTeam())
+			self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})
+		end
 	end
+end
+
+function modifier_item_imba_gem_of_true_sight:OnDeath(params)
+	if not IsServer() then return end
+
+	if params.unit == self:GetParent() then
+		self:DropGem()
+	end
+end
+
+function modifier_item_imba_gem_of_true_sight:OnRemoved()
+	if not IsServer() then return end
+
+	self:DropGem()
 end
 
 modifier_item_imba_gem_of_true_sight_dropped = modifier_item_imba_gem_of_true_sight_dropped or class({})
 
+function modifier_item_imba_gem_of_true_sight_dropped:CheckState() return {
+	[MODIFIER_STATE_FLYING] = true,
+} end
+
 function modifier_item_imba_gem_of_true_sight_dropped:OnCreated()
 	if not IsServer() then return end
+
+	-- set dummy unit vision
+	self:GetParent():SetDayTimeVisionRange(self:GetAbility():GetSpecialValueFor("dropped_radius"))
+	self:GetParent():SetNightTimeVisionRange(self:GetAbility():GetSpecialValueFor("dropped_radius"))
 
 	self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight", {radius = self:GetAbility():GetSpecialValueFor("dropped_radius")})
 	self:StartIntervalThink(FrameTime())
 end
 
--- fail-safe to remove ground vision when combining soul of truth
 function modifier_item_imba_gem_of_true_sight_dropped:OnIntervalThink()
-	if not self:GetParent() or not self:GetAbility() then
+	local item_is_on_ground = false
+
+	-- check if item is still on the ground
+	for _, item in pairs(Entities:FindAllByClassname("dota_item_drop")) do
+		if item:GetContainedItem() == self:GetAbility() then
+			item_is_on_ground = true
+			break
+		end
+	end
+
+	-- remove vision and pfx if not on the ground anymore
+	if item_is_on_ground == false then
 		self:StartIntervalThink(-1)
 
 		if self:GetParent() then
 			self:GetParent():RemoveModifierByName("modifier_item_imba_gem_of_true_sight_dropped")
 		end
-
-		return
 	else
 		-- delay particle creation so it doesn't create if combining to soul of truth...
 		if not self.pfx then
 			self.pfx = ParticleManager:CreateParticleForTeam("particles/items_fx/gem_truesight_aura.vpcf", PATTACH_WORLDORIGIN, self:GetParent(), self:GetParent():GetTeam())
 			ParticleManager:SetParticleControl(self.pfx, 0, self:GetParent():GetAbsOrigin())
-			ParticleManager:SetParticleControl(self.pfx, 1, Vector(self.radius, 0, 0))
+			ParticleManager:SetParticleControl(self.pfx, 1, Vector(self:GetAbility():GetSpecialValueFor("dropped_radius"), 0, 0))
 		end
 	end
 end

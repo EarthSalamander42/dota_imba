@@ -188,8 +188,6 @@ function CDOTA_BaseNPC:DropItem(hItem, sNewItemName, bLaunchLoot)
 	if bLaunchLoot then
 		hItem:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
 	end
-
-	return hItem
 end
 
 function CDOTA_BaseNPC:FindItemByName(ItemName, bBackpack, bStash)

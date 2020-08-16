@@ -246,6 +246,10 @@ end
 function imba_shadow_shaman_voodoo:OnSpellStart()
 	local target = self:GetCursorTarget()
 
+	if target:IsMagicImmune() then
+		return nil
+	end
+
 	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		if not target:TriggerSpellAbsorb(self) then
 			-- "Hex instantly destroys illusions."

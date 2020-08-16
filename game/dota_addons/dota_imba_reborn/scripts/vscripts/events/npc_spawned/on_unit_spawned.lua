@@ -122,6 +122,18 @@ function GameMode:OnUnitFirstSpawn(unit)
 			cursed_fountain_modifier:SetStackCount(unit:GetOwner():FindModifierByName("modifier_imba_cursed_fountain"):GetStackCount())
 		end
 	end
+--[[
+	-- Find hidden modifiers
+	if unit:GetUnitName() == "npc_dota_techies_remote_mine" then
+		unit:SetContextThink(DoUniqueString("ModifierChecker"), function()
+			for i = 0, unit:GetModifierCount() -1 do
+				print(unit:GetUnitName(), unit:GetModifierNameByIndex(i))
+			end
+
+			return 1.0
+		end, 0)
+	end
+--]]
 end
 
 -- everytime an unit respawn

@@ -132,16 +132,13 @@ end
 
 function modifier_imba_soul_of_truth_buff:OnDestroy()
 	if IsServer() then
-		-- If this is destroyed, it means the user died for real. Remove gem modifier
-		for _, true_sight_modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_item_imba_gem_of_true_sight")) do
-			if true_sight_modifier.GetAbility and (true_sight_modifier:GetAbility() == self:GetAbility() or true_sight_modifier:GetAbility():GetName() == "item_imba_soul_of_truth") then
-				true_sight_modifier:Destroy()
-			end
-		end
-		
 		local gem = CreateItem("item_imba_gem", nil, nil)
+
 		gem:SetOwner(nil)
 		CreateItemOnPositionSync(self:GetParent():GetAbsOrigin(), gem)
+
+		gem.dummy_unit = CreateUnitByName("npc_dummy_unit_perma", self:GetParent():GetAbsOrigin(), true, nil, nil, self:GetCaster():GetTeam())
+		gem.dummy_unit:AddNewModifier(self:GetCaster(), gem, "modifier_item_imba_gem_of_true_sight_dropped", {})
 	end
 end
 

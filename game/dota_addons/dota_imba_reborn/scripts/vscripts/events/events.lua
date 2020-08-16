@@ -1294,7 +1294,6 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-	
 		-- Ban system that forces heroes into their fountain area and locks their position there (either through database or manual intervention)
 		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 or (IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())]) then
 			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
@@ -1365,13 +1364,6 @@ function GameMode:OnThink()
 				hero:FindAbilityByName("tusk_snowball"):SetActivated(true)
 			end
 		end
-
-		-- Find hidden modifiers
-		--		if hero:GetUnitName() == "npc_dota_hero_skeleton_king" then
-		--			for i = 0, hero:GetModifierCount() -1 do
-		--				print(hero:GetUnitName(), hero:GetModifierNameByIndex(i))
-		--			end
-		--		end
 	end
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
