@@ -1,3 +1,6 @@
+require('libraries/keyvalues')
+VANILLA_ABILITIES_BASECLASS = require('components/abilities/vanilla_baseclass')
+
 function MergeTables( t1, t2 )
 	for name,info in pairs(t2) do
 		t1[name] = info

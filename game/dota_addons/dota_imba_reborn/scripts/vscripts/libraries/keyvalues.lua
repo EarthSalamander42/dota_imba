@@ -103,8 +103,11 @@ function LoadGameKeyValues()
 --			print("[KeyValues] Critical Error on "..v.custom..".txt")
 			return
 		end
-		
-		GameRules[k] = file --backwards compatibility
+
+		if IsServer() then
+			GameRules[k] = file --backwards compatibility
+		end
+
 		KeyValues[k] = file
 	end   
 
@@ -150,6 +153,12 @@ function LoadGameKeyValues()
 	end
 end
 
+if IsClient() then
+	CDOTA_BaseNPC = C_DOTA_BaseNPC
+	CDOTABaseAbility = C_DOTABaseAbility
+--	CDOTA_Item = C_DOTA_Item_LUA
+end
+
 -- Works for heroes and units on the same table due to merging both tables on game init
 function CDOTA_BaseNPC:GetKeyValue(key, level)
 	if level then return GetUnitKV(self:GetUnitName(), key, level)
@@ -168,9 +177,11 @@ function CDOTABaseAbility:GetKeyValue(key, level)
 end
 
 -- Item version
-function CDOTA_Item:GetKeyValue(key, level)
-	if level then return GetItemKV(self:GetAbilityName(), key, level)
-	else return GetItemKV(self:GetAbilityName(), key) end
+if IsServer() then
+	function CDOTA_Item:GetKeyValue(key, level)
+		if level then return GetItemKV(self:GetAbilityName(), key, level)
+		else return GetItemKV(self:GetAbilityName(), key) end
+	end
 end
 
 function CDOTABaseAbility:GetAbilitySpecial(key)

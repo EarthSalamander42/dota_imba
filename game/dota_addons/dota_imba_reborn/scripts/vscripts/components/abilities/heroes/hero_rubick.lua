@@ -953,7 +953,7 @@ imba_rubick_animations_reference.animations = {
 -- AbilityName, bNormalWhenStolen, nActivity, nTranslate, fPlaybackRate
 	{"default", nil, ACT_DOTA_CAST_ABILITY_5, "bolt"},
 
-	{"imba_abaddon_mist_coil", false, ACT_DOTA_CAST_ABILITY_3, "", 1.4},
+	{"imba_abaddon_death_coil", false, ACT_DOTA_CAST_ABILITY_3, "", 1.4},
 
 	{"imba_axe_berserkers_call", false, ACT_DOTA_CAST_ABILITY_3, "", 1.0},
 

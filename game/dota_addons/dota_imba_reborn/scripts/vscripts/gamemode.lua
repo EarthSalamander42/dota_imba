@@ -30,6 +30,7 @@ require('internal/gamemode')
 require('internal/events')
 
 -- add components below the api
+VANILLA_ABILITIES_BASECLASS = require('components/abilities/vanilla_baseclass')
 require('components/abandon')
 require('components/battlepass/init')
 require('components/chat_wheel/init')

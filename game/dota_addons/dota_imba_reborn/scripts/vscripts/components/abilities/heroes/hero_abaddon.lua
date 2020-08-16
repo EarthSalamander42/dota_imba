@@ -72,25 +72,26 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_mist_coil_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_mist_coil_mist_ally"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_abaddon_mist_coil = imba_abaddon_mist_coil or class({})
+print(VANILLA_ABILITIES_BASECLASS)
+imba_abaddon_death_coil = imba_abaddon_death_coil or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_abaddon_mist_coil:GetAbilityTextureName()
+function imba_abaddon_death_coil:GetAbilityTextureName()
 	return "abaddon_death_coil"
 end
 
-function imba_abaddon_mist_coil:GetIntrinsicModifierName()
+function imba_abaddon_death_coil:GetIntrinsicModifierName()
 	return "modifier_imba_mist_coil_passive"
 end
 
-function imba_abaddon_mist_coil:GetCastRange()
+function imba_abaddon_death_coil:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
 end
 
-function imba_abaddon_mist_coil:IsHiddenWhenStolen()
+function imba_abaddon_death_coil:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
+function imba_abaddon_death_coil:OnSpellStart(unit, special_cast)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = unit or self:GetCursorTarget()
@@ -139,7 +140,7 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 	end
 end
 
-function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, ExtraData)
+function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, ExtraData)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = hTarget
@@ -220,7 +221,7 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 	end
 end
 
-function imba_abaddon_mist_coil:OnOwnerDied()
+function imba_abaddon_death_coil:OnOwnerDied()
 	if self:GetCaster():IsRealHero() then
 		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("cast_range"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, unit in pairs(units) do
@@ -452,7 +453,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 		local mist_coil_ability
 		local mist_coil_range
 		if caster:HasTalent("special_bonus_imba_abaddon_1") then
-			mist_coil_ability = caster:FindAbilityByName("imba_abaddon_mist_coil")
+			mist_coil_ability = caster:FindAbilityByName("imba_abaddon_death_coil")
 			if mist_coil_ability then
 				mist_coil_range = caster:FindTalentValue("special_bonus_imba_abaddon_1")
 			end
@@ -1261,7 +1262,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnTakeDamage(kv)
 				-- print("Damage stored:", kv.unit.borrowed_time_damage_taken)
 				for i = 1, kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter") do
 					kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken - self:GetAbility():GetSpecialValueFor("ally_threshold_scepter")
-					self:GetCaster():FindAbilityByName("imba_abaddon_mist_coil"):OnSpellStart(kv.unit, true)
+					self:GetCaster():FindAbilityByName("imba_abaddon_death_coil"):OnSpellStart(kv.unit, true)
 				end
 			end
 		end

@@ -1,0 +1,29 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Abaddon
+	//=================================================================================================================
+	"npc_dota_hero_abaddon"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_abaddon_death_coil"
+		"Ability2"					"imba_abaddon_aphotic_shield"
+		"Ability3"					"imba_abaddon_curse_of_avernus"
+		"Ability4"					"imba_abaddon_over_channel"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_abaddon_borrowed_time"
+
+		"Ability10"					"special_bonus_imba_abaddon_5" //Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
+		"Ability11"					"special_bonus_imba_abaddon_2" //+10% Curse of Avernus MS/AS shift; Curse of Avernus buff/debuff refresh increases duration by 1 second each hit.
+		"Ability12"					"special_bonus_imba_abaddon_7" //Borrowed Time Strong Purges all allies on cast.
+		"Ability13"					"special_bonus_imba_abaddon_4" //(Curse of Avernus can be activated to sacrifice 10% of your max health as extra physical damage on attack. Cooldown of 5 seconds.
+		"Ability14"					"special_bonus_imba_abaddon_8" //Heals during Borrowed Time grant a health regen buff upon end (15% of heals as health regen for 5s).
+		"Ability15"					"special_bonus_imba_abaddon_6" //+50% Overchannel power
+		"Ability16"					"special_bonus_imba_abaddon_1" //When the shield breaks, applies Mist Coil to all allies and enemies within 425 radius
+		"Ability17"					"special_bonus_imba_abaddon_3" //During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
+	}
+}

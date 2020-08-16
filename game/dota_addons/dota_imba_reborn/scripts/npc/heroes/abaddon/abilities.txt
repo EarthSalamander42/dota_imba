@@ -1,0 +1,601 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Abaddon's Mist Coil
+	//=================================================================================================================
+	"imba_abaddon_death_coil"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/heroes/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES_ENEMIES_NO"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"								"1"
+		"AbilityTextureName"							"abaddon_death_coil"
+		"MaxLevel"										"4"
+
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
+			"particle"									"particles/dev/library/base_dust_hit_detail.vpcf"
+			"particle"									"particles/dev/library/base_dust_hit_smoke.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"projectile_speed"						"2000"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"damage"								"130 210 290 360"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"heal"									"130 210 290 360"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"cast_range"							"800"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"mist_duration"							"2.0"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"damage_heal_pct"						"10"
+				"CalculateSpellDamageTooltip"			"0"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"shield_duration_extend"				"3.0"
+			}
+			"08"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"cooldown"								"4.5"
+			}
+			"09"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"self_damage"							"75 100 125 150"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon's Aphotic Shield
+	//=================================================================================================================
+	"imba_abaddon_aphotic_shield"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"components/abilities/heroes/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
+		"FightRecapLevel"								"1"
+		"AbilityTextureName"							"abaddon_aphotic_shield"
+		"MaxLevel"										"4"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"								"0.4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"12.0 10.0 8.0 6.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"100 110 120 130"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"duration"								"15.0"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"shield"								"110 155 200 245"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"radius"								"675"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"cast_range"							"500"
+			}
+		}
+
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
+			"particle"									"particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf"
+			"particle"									"particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon's Curse of Avernus
+	//=================================================================================================================
+	"imba_abaddon_curse_of_avernus"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"							"abaddon_frostmourne"
+		"MaxLevel"										"4"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"debuff_duration"						"2.5 3 3.5 4"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"move_slow"								"8 12 16 20"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"attack_slow"							"10 20 30 40"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"buff_duration"							"4.5 5 5.5 6"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"move_increase"							"15"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"attack_increase"						"10 20 30 40"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"heal_convert"							"5 12 19 26"
+			}
+		}
+
+		"precache"
+		{
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+			"particle"									"particles/generic_gameplay/generic_lifesteal.vpcf"
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon's Overchannel
+	//=================================================================================================================
+	"imba_abaddon_over_channel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityTextureName"							"custom/abaddon_over_channel"
+		"MaxLevel"										"4"
+
+		"AbilityCooldown"								"0.5"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"extra_dmg"								"90 160 230 300"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"extra_shield_health"					"75"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"extra_mist_duration"					"2.0"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"curse_of_avernus_multiplier"			"2"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"reduction_duration"					"20"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"reduction_multiplier"					"25"
+			}
+		}
+
+		"precache"
+		{
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam_blue.vpcf"
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon's Borrowed Time
+	//=================================================================================================================
+	"imba_abaddon_borrowed_time"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"								"2"
+		"AbilityTextureName"							"abaddon_borrowed_time"
+		"HasScepterUpgrade"								"1"
+		"MaxLevel"										"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"								"0.0"
+		"AbilityCastRange"								"900"
+		
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"60.0 50.0 40.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"hp_threshold"							"400"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"duration"								"4.0 5.0 6.0"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"redirect"								"10 25 40"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"redirect_range"						"900"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"ally_threshold_scepter"			"525"
+				"RequiresScepter"			"1"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"redirect_range_scepter"				"1600"
+				"RequiresScepter"			"1"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"5.0 6.0 7.0"
+				"RequiresScepter"			"1"
+			}
+		}
+
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf"
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 1: When the shield breaks, applies Mist Coil to all allies and enemies within a radius
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_1" // Coil Unleashed
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_abaddon_death_coil"			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"425"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 2: Consecutives hits of Curse of Avernus refreshes the buff/debuff and increases the duration of the buff/debuff by 1 second.
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_abaddon_curse_of_avernus"			
+		}
+			
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"extend_duration"			"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 3: During the first X seconds of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	 "imba_abaddon_aphotic_shield"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 4: Curse of Avernus can now be activated to sacrifice 10% of your max health, and deal it as extra damage on the next attack. Has a 5 second cooldown.
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	 "imba_abaddon_curse_of_avernus"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"active_cooldown"			"5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_cost_pct"			"10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_to_damage_ratio"	"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 5: Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_abaddon_curse_of_avernus"			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 6: +50% Overchannel power
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"  "imba_abaddon_over_channel"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 7: Borrowed Time Strong Purges all allies in 900 AoE on cast.
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_abaddon_borrowed_time"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01" //Unused
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 8: Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_abaddon_borrowed_time"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ratio_pct"					"15"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mist_duration"				"5"
+			}
+		}
+	}
+}
