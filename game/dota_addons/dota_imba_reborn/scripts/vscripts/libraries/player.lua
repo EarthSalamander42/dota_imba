@@ -1073,7 +1073,34 @@ CDOTA_Ability_Lua.GetProjectileName = function(self)
 
 	return response
 end
+--]]
 
+--[[ for SOME reasons, those functions are not triggered when CDOTABaseAbility.OnProjectileHit is called on any ability
+original_OnProjectileHit = CDOTABaseAbility.OnProjectileHit
+CDOTABaseAbility.OnProjectileHit = function(self, hTarget, vLocation)
+	print("Ability/Item:", self:GetAbilityName())
+	if self == nil then return end
+
+	print("target has lotus orb?", hTarget:HasModifier("modifier_item_imba_lotus_orb_active"))
+	if hTarget:HasModifier("modifier_item_imba_lotus_orb_active") then
+		return false
+	else
+		return original_OnProjectileHit(self, hTarget, vLocation)
+	end
+end
+
+original_OnProjectileHit_ExtraData = CDOTABaseAbility.OnProjectileHit_ExtraData
+CDOTABaseAbility.OnProjectileHit_ExtraData = function(self, hTarget, vLocation)
+	print("Ability/Item:", self:GetAbilityName())
+	if self == nil then return end
+
+	print("target has lotus orb?", hTarget:HasModifier("modifier_item_imba_lotus_orb_active"))
+	if hTarget:HasModifier("modifier_item_imba_lotus_orb_active") then
+		return false
+	else
+		return original_OnProjectileHit_ExtraData(self, hTarget, vLocation)
+	end
+end
 --]]
 
 ----------------------------------------------------------------------------------

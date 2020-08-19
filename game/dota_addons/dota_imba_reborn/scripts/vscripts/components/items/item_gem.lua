@@ -80,22 +80,33 @@ function modifier_item_imba_gem_of_true_sight:DropGem()
 		return
 	end
 
-	if self:GetAbility().GetContainer and self:GetAbility():GetContainer() and self:GetAbility():GetContainer().GetAbsOrigin and self:GetAbility():GetContainer():GetAbsOrigin() then
-		-- Non-heroes should automatically drop rapier and return so they can't crash script at self:GetParent():IsImbaReincarnating() check
-		if not self:GetParent():IsRealHero() then
-			self:GetParent():DropItem(self:GetAbility(), true)
-			self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", self:GetAbility():GetContainer():GetAbsOrigin(), true, nil, nil, self:GetCaster():GetTeam())
-			self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})
+	local pos = self:GetCaster():GetAbsOrigin()
 
-			return
+	-- presenting to you, the if forest.
+	if self:GetAbility().GetContainer then
+		if self:GetAbility():GetContainer() then
+			if self:GetAbility():GetContainer().GetAbsOrigin then
+				if self:GetAbility():GetContainer():GetAbsOrigin() then
+					pos = self:GetAbility():GetContainer():GetAbsOrigin()
+				end
+			end
 		end
+	end
 
-		-- drop gem if not reincarnating
-		if not self:GetParent():IsImbaReincarnating() then
-			self:GetParent():DropItem(self:GetAbility(), true)
-			self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", self:GetAbility():GetContainer():GetAbsOrigin(), true, nil, nil, self:GetCaster():GetTeam())
-			self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})
-		end
+	-- Non-heroes should automatically drop rapier and return so they can't crash script at self:GetParent():IsImbaReincarnating() check
+	if not self:GetParent():IsRealHero() then
+		self:GetParent():DropItem(self:GetAbility(), true)
+		self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", pos, true, nil, nil, self:GetCaster():GetTeam())
+		self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})
+
+		return
+	end
+
+	-- drop gem if not reincarnating
+	if not self:GetParent():IsImbaReincarnating() then
+		self:GetParent():DropItem(self:GetAbility(), true)
+		self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", pos, true, nil, nil, self:GetCaster():GetTeam())
+		self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})
 	end
 end
 

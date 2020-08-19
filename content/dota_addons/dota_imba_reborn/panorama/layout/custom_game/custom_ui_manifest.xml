@@ -271,9 +271,9 @@
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ardm_precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" /> 
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" /> -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> 
+<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" />
+<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" /> -->
 
 		<!-- Enable only during diretide -->
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" />

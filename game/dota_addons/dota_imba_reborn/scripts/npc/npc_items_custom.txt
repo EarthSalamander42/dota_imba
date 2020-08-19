@@ -7144,100 +7144,6 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Lotus Orb
-	//=================================================================================================================
-	//"item_recipe_imba_lotus_orb"
-	//{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-	//	"ID"							"2116"
-	//	"BaseClass"						"item_datadriven"
-	//	"AbilityTextureName" 			"custom/imba_recipe"
-	//	"Model"							"models/props_gameplay/recipe.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-	//	"ItemCost"						"900"
-	//	"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-	//	"ItemRecipe"					"1"
-	//	"ItemResult"					"item_imba_lotus_orb"
-	//	"ItemRequirements"
-	//	{
-	//		"01"						"item_pers;item_platemail"
-	//	}
-	//}
-
-	//=================================================================================================================
-	// Lotus Orb
-	//=================================================================================================================
-	//"item_imba_lotus_orb"
-	//{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-	//	"ID"							"2117"
-	//	"BaseClass"						"item_lotus_orb"
-	//	"AbilityTextureName" 			"item_imba_lotus_orb"
-	//	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	//	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	//	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-	//	"FightRecapLevel"				"1"
-
-	//	"AbilityCooldown"				"12.0"
-	//	"AbilityCastRange"				"1000"
-	//	"AbilityManaCost"				"50"
-
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-	//	"ItemCost"						"4050"
-	//	"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
-	//	"ItemQuality"					"epic"
-	//	"ItemAliases"					"ls;lotus orb"
-	//	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-	//	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-	//	"AbilitySpecial"
-	//	{
-	//		"01"
-	//		{
-	//			"var_type"				"FIELD_INTEGER"
-	//			"bonus_damage"			"15"
-	//			"CalculateSpellDamageTooltip"	"0"
-	//		}
-	//		"02"
-	//		{
-	//			"var_type"				"FIELD_INTEGER"
-	//			"bonus_armor"			"12"
-	//		}
-	//		"03"
-	//		{
-	//			"var_type"				"FIELD_INTEGER"
-	//			"bonus_health_regen"	"10"
-	//		}
-	//		"04"
-	//		{
-	//			"var_type"				"FIELD_INTEGER"
-	//			"bonus_mana_regen"		"200"
-	//		}
-	//		"05"
-	//		{
-	//			"var_type"				"FIELD_FLOAT"
-	//			"active_duration"		"6"
-	//		}
-	//		"06"
-	//		{
-	//			"var_type"				"FIELD_FLOAT"
-	//			"cast_range_tooltip"	"1000"
-	//		}
-	//	}
-	//}
-
-	//=================================================================================================================
 	// Recipe: Octarine Core
 	//=================================================================================================================
 	"item_recipe_imba_octarine_core"
@@ -18185,12 +18091,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2369"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"BaseClass"                     "item_lua"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityCastAnimation"			"ACT_DOTA_GENERIC_CHANNEL_1"
-        "ScriptFile"                    "components/items/item_trusty_shovel"
-        "AbilityTextureName"            "item_trusty_shovel"
-        "ScriptFile"                    "components/items/item_trusty_shovel.lua"
+		"AbilityTextureName"			"item_trusty_shovel"
+		"ScriptFile"					"components/items/item_trusty_shovel.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -18295,5 +18200,92 @@
 		}
 	}
 
-	//next free ID: 2371
+	//=================================================================================================================
+	// Recipe: Lotus Orb
+	//=================================================================================================================
+//	"item_recipe_imba_lotus_orb"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ID"							"2371"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+//		"Model"							"models/props_gameplay/recipe.vmdl"
+
+//		// Item Info
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemCost"						"0"	
+//		"ItemShopTags"					""
+
+//		// Recipe
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemRecipe"					"1"
+//		"ItemResult"					"item_imba_lotus_orb"
+//		"ItemRequirements"
+//		{
+//			"01"						"item_pers;item_platemail;item_platemail;"
+//		}
+//	}
+
+	//=================================================================================================================
+	// Lotus Orb
+	//=================================================================================================================
+	"item_imba_lotus_orb"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2372"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_lotus_orb"
+		"ScriptFile"					"components/items/item_lotus_orb.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"FightRecapLevel"				"1"
+
+		"AbilityCooldown"				"15.0"
+		"AbilityCastRange"				"900"
+		"AbilityManaCost"				"175"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3950"
+		"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"ls;lotus orb"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_health_regen"	"8.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"4.0"
+			}			
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"325"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"7"
+			}
+		}
+	}
+
+	//next free ID: 2373
 }
