@@ -313,16 +313,15 @@ function OnVoteButtonPressed(category, vote)
 	$("#VoteGameModeCheck").text = "You have voted for " + gamemode_name + "."
 }
 
-/* new system, double votes for donators
+/* new system, double votes for donators */
 
 function OnVotesReceived(data)
 {
 //	$.Msg(data)
 //	$.Msg(data.vote.toString())
 //	$.Msg(data.table)
-//	$.Msg(data.table[id])
 
-	var vote_count = []
+	var vote_count = [];
 
 	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
@@ -330,8 +329,9 @@ function OnVotesReceived(data)
 	for (var i = 1; i <= 5; i++) {
 		vote_count[i] = 0;
 		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
+			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i);
 	}
+
 
 	// Check number of votes for each gamemodes
 	for (var id in data.table){
@@ -348,15 +348,26 @@ function OnVotesReceived(data)
 			vote_tooltip = "votes"
 
 		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
 	}
 
-//	if (data.category == "random_tower_abilities") {
+	// calculate number of people who voted
+	var highest_vote = 0;
+	for (var i in vote_count) {
+		if (vote_count[i] > highest_vote)
+			highest_vote = i;
+	}
 
-//	}
+	if ($("#VoteGameModeText" + highest_vote)) {
+		if (highest_vote != 1 && vote_count[highest_vote] < 5) {
+			$("#VoteGameModeText1").style.color = "green";
+		} else {
+			$("#VoteGameModeText" + highest_vote).style.color = "green";
+		}
+	}
 }
 
-*/
+/*
 
 function OnVotesReceived(data)
 {
@@ -409,6 +420,7 @@ function OnVotesReceived(data)
 		}
 	}
 }
+*/
 
 function DisableVoting() {
 	$("#imba-loading-title-vote").style.visibility = "collapse";

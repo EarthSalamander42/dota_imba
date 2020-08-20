@@ -294,7 +294,7 @@ function GameMode:SetupFrostivus()
 		local greevil = CreateUnitByName("npc_imba_greevil_dire", Entities:FindByName(nil, "dire_greevil"):GetAbsOrigin(), true, nil, nil, 3)
 	end
 end
---[[ new system, double votes for donators
+-- new system, double votes for donators 
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- If no one voted, default to IMBA 10v10 gamemode
@@ -308,9 +308,11 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			-- Tally the votes into a new table
 			local voteCounts = {}
 			for pid, vote in pairs(pidVoteTable) do
-				if not voteCounts[vote] then voteCounts[vote] = 0 end
-				print(pid, vote)
-				voteCounts[vote] = voteCounts[vote] + 1
+				local gamemode = vote[1]
+				local vote_count = vote[2]
+				if not voteCounts[vote[1]] then voteCounts[vote[1]] = 0 end
+				print(pid, vote[1], vote[2])
+				voteCounts[vote[1]] = voteCounts[vote[1]] + vote[2]
 			end
 
 			-- Find the key that has the highest value (key=vote value, value=number of votes)
@@ -319,8 +321,8 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			for k, v in pairs(voteCounts) do
 				print(k, v)
 				if v > highest_vote then
-					highest_key = k[1]
-					highest_vote = k[2]
+					highest_key = k
+					highest_vote = v
 				end
 			end
 
@@ -335,7 +337,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 			-- Resolve a tie by selecting a random value from those with the highest votes
 			if table.getn(tieTable) > 1 then
-				--print("TIE!")
+				print("Vote System: TIE!")
 				highest_key = tieTable[math.random(table.getn(tieTable))]
 			end
 
@@ -355,16 +357,18 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 end, nil)
 
 local donator_list = {}
-donator_list[1] = true -- Lead-Dev
-donator_list[2] = true -- Dev
--- donator_list[3] = true -- Administrator
-donator_list[4] = true -- Ember Donator
-donator_list[7] = true -- Salamander Donator
-donator_list[8] = true -- Icefrog Donator
-donator_list[9] = true -- Gaben Donator
+donator_list[1] = 5 -- Lead-Dev
+donator_list[2] = 5 -- Dev
+-- donator_list[3] = 5 -- Administrator
+donator_list[4] = 1 -- Ember Donator
+donator_list[7] = 2 -- Salamander Donator
+donator_list[8] = 3 -- Icefrog Donator
+donator_list[9] = 3 -- Gaben Donator
 
 function GameMode:OnSettingVote(keys)
 	local pid = keys.PlayerID
+
+	print(keys)
 
 	if not GameMode.VoteTable then GameMode.VoteTable = {} end
 	if not GameMode.VoteTable[keys.category] then GameMode.VoteTable[keys.category] = {} end
@@ -374,8 +378,8 @@ function GameMode:OnSettingVote(keys)
 
 		GameMode.VoteTable[keys.category][pid][1] = keys.vote
 
-		if donator_list[api:GetDonatorStatus(pid)] == true then
-			GameMode.VoteTable[keys.category][pid][2] = 2
+		if donator_list[api:GetDonatorStatus(pid)] then
+			GameMode.VoteTable[keys.category][pid][2] = donator_list[api:GetDonatorStatus(pid)]
 		else
 			GameMode.VoteTable[keys.category][pid][2] = 1
 		end
@@ -387,7 +391,6 @@ function GameMode:OnSettingVote(keys)
 	-- TODO: Finish votes show up
 	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
 end
---]]
 
 -- Custom game-modes as per api:GetCustomGamemode():
 -- 1: Standard
@@ -396,17 +399,12 @@ end
 -- 4: Diretide
 -- 5: Same Hero Selection
 
+--[[
+
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then		
 		-- If no one voted, default to IMBA 10v10 gamemode
 		GameRules:SetCustomGameDifficulty(2)
-		
-		-- Let Super Frantic be the default mode for 10v10, and Standard be the default for everything else
-		if GetMapName() == "imba_10v10" then
-			api:SetCustomGamemode(3)
-		else
-			api:SetCustomGamemode(1)
-		end
 
 		if GameMode.VoteTable == nil then return end
 		local votes = GameMode.VoteTable
@@ -419,6 +417,8 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				voteCounts[vote] = voteCounts[vote] + 1
 			end
 
+			print(voteCounts)
+
 			-- Find the key that has the highest value (key=vote value, value=number of votes)
 			local highest_vote = 0
 			local highest_key = ""
@@ -429,6 +429,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				end
 			end
 
+			print("Highest vote:", highest_vote)
 			-- if vote count is lower than player count / 4, default to whatever the standard is
 			if highest_vote < 5 then
 				if GetMapName() == "imba_10v10" then
@@ -447,7 +448,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 				-- Resolve a tie by selecting a random value from those with the highest votes
 				if table.getn(tieTable) > 1 then
-					--print("TIE!")
+					print("Vote System: TIE!")
 					highest_key = tieTable[math.random(table.getn(tieTable))]
 				end
 			end
@@ -490,6 +491,8 @@ function GameMode:OnSettingVote(keys)
 	-- TODO: Finish votes show up
 	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
 end
+
+--]]
 
 function GameMode:SetSameHeroSelection(bEnabled)
 	GameRules:SetSameHeroSelectionEnabled(bEnabled)

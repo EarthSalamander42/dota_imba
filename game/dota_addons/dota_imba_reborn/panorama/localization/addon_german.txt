@@ -306,6 +306,7 @@
 	"echo_slama_jama" "Echo Slamma Jamma!"
 	"ehto_g_g" "Это ГГ"
 	"emblem_success" "Emblem changed with: "
+	"enemynotsetup_msg" "You must select an enemy hero first!"
 	"enemy_button" "Gegner"
 	"englishannouncer" "Englischer Ansager"
 	"englishannouncer2" "Englischer Ansager 2"

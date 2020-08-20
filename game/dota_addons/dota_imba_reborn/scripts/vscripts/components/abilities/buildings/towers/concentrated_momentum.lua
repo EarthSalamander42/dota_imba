@@ -18,10 +18,10 @@ function modifier_imba_tower_concentrated_momentum:RemoveOnDeath() return false 
 -------------------------------------------
 
 function modifier_imba_tower_concentrated_momentum:DeclareFunctions() return {
-	MODIFIER_EVENT_ON_ATTACK_LANDED,
+	MODIFIER_EVENT_ON_ATTACK_START,
 } end
 
-function modifier_imba_tower_concentrated_momentum:OnAttackLanded(params)
+function modifier_imba_tower_concentrated_momentum:OnAttackStart(params)
 	if params.attacker == self:GetParent() then		
 		local modifier = params.attacker:FindModifierByNameAndCaster("modifier_imba_tower_concentrated_momentum_stacks", self:GetParent())
 

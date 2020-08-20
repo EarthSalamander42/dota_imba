@@ -1891,7 +1891,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_as"			"10"
+				"bonus_as"			"5"
 			}			
 			"02"
 			{

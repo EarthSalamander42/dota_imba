@@ -58,7 +58,7 @@ function modifier_wearable:OnIntervalThink()
 	for _, v in pairs(IMBA_NODRAW_MODIFIERS) do
 		if hero:HasModifier(v) then
 			if not cosmetic.model then
---				print("ADD NODRAW TO COSMETICS")
+				print("ADD NODRAW TO COSMETICS")
 				cosmetic.model = cosmetic:GetModelName()
 			end
 
@@ -69,7 +69,7 @@ function modifier_wearable:OnIntervalThink()
 			end
 		else
 			if cosmetic.model and cosmetic:GetModelName() ~= cosmetic.model then
---				print("REMOVE NODRAW TO COSMETICS")
+				print("REMOVE NODRAW TO COSMETICS")
 				cosmetic:SetOriginalModel(cosmetic.model)
 				cosmetic:SetModel(cosmetic.model)
 				break
