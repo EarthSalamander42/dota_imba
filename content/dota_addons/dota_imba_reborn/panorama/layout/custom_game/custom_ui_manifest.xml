@@ -1,5 +1,6 @@
 <root> 
 	<scripts>
+		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/scripts/custom_game/abilities_charges.js" />
 		<include src="file://{resources}/scripts/custom_game/vanilla_keybinds.js" />
 		<include src="file://{resources}/scripts/custom_game/imba_invoker_tooltips.js" />
@@ -118,7 +119,7 @@
 				$.Schedule(0.25, HidePickScreen)
 			}
 			else {
-				PreGame.style.opacity = "1";				
+				PreGame.style.opacity = "1";
 			}
 		}
 /*

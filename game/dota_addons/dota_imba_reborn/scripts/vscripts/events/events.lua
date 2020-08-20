@@ -79,8 +79,6 @@ function GameMode:OnGameRulesStateChange(keys)
 						PlayerResource:SetCanRepick(i, false)
 					end
 				end
-
-				return nil
 			end
 		else
 			for i = 0, PlayerResource:GetPlayerCount() - 1 do
