@@ -113,9 +113,6 @@
 
 			<Image src="file://panorama/images/custom_game/patreon.png" hittest="false" />
 
-			<Image src="file://panorama/images/custom_game/battlepass/tiny_ancient.png" hittest="false" />
-
-
 			<Image src="file://panorama/images/items/custom/armlet_of_dementor_active.png" hittest="false" />
 			<Image src="file://panorama/images/items/custom/armlet_of_dementor_inactive.png" hittest="false" />
 			<Image src="file://panorama/images/items/custom/bottle_0_0.png" hittest="false" />
