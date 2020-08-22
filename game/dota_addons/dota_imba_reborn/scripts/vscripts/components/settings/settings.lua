@@ -643,7 +643,6 @@ ENTITY_MODEL_OVERRIDE = {}
 IMBA_FIRST_BLOOD = false
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = nil -- Should we use vanilla couriers? -- nil to use none of turbo or team couriers
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?

@@ -76,6 +76,7 @@ function modifier_item_imba_gem_of_true_sight:OnCreated(params)
 end
 
 function modifier_item_imba_gem_of_true_sight:DropGem()
+	if self:GetParent():IsFakeHero() then return end
 	if not self:GetAbility() or (self:GetAbility() and self:GetAbility():GetAbilityName() ~= "item_imba_gem") then
 		return
 	end

@@ -35,8 +35,6 @@ TURBO_COURIER_POSITION[3][9] = Vector(7100, 6700, 256)
 TURBO_COURIER_POSITION[3][10] = Vector(7000, 6800, 256)
 
 ListenToGameEvent("npc_spawned", function(keys)
-	if USE_TEAM_COURIER == true or USE_TEAM_COURIER == nil then return end
-
 	local hero = EntIndexToHScript(keys.entindex)
 	
 	if hero.GetPlayerID and not TurboCourier.COURIER_PLAYER[hero:GetPlayerID()] then
