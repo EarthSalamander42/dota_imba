@@ -285,6 +285,19 @@ function imba_gyrocopter_homing_missile:GetCastRange(location, target)
 end
 
 function imba_gyrocopter_homing_missile:OnSpellStart()
+	if not IsServer() then return end
+
+	local target = self:GetCursorTarget()
+
+	if target then
+		-- If the target possesses a ready Linken's Sphere, do nothing
+		if target:GetTeam() ~= self:GetCaster():GetTeam() then
+			if target:TriggerSpellAbsorb(self) then
+				return nil
+			end
+		end
+	end
+
 	if self:GetCaster():GetName() == "npc_dota_hero_gyrocopter" then
 		if not self.responses then
 			self.responses = 
@@ -299,7 +312,7 @@ function imba_gyrocopter_homing_missile:OnSpellStart()
 		
 		EmitSoundOnClient(self.responses[RandomInt(1, #self.responses)], self:GetCaster():GetPlayerOwner())
 	end
-	
+
 	local missile_starting_position = nil
 	local pre_flight_time = self:GetSpecialValueFor("pre_flight_time")
 	

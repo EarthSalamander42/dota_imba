@@ -43,6 +43,35 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			return 60.0
 		end)
 
+		if IMBA_MUTATION["positive"] == "ultimate_level" then
+			GameRules:GetGameModeEntity():SetUseCustomHeroLevels(true)
+
+			MAX_LEVEL[GetMapName()] = IMBA_MUTATION_ULTIMATE_LEVEL
+			CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
+
+			-- IMBA: Custom maximum level EXP tables adjustment
+			local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+
+			if max_level and max_level > 30 then
+				local j = 31
+
+				Timers:CreateTimer(function()
+					if j >= max_level then
+						return
+					end
+
+					for i = j, math.min(j + 2, max_level) do
+						XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i - 1] + 7500
+						GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel(XP_PER_LEVEL_TABLE)
+					end
+
+					j = j + 2
+
+					return 1.0
+				end)
+			end
+		end
+
 		if IMBA_MUTATION["terrain"] == "no_trees" then
 			Mutation:NoTrees()
 		elseif IMBA_MUTATION["terrain"] == "omni_vision" then
@@ -117,9 +146,6 @@ function Mutation:Init()
 		LinkLuaModifier("modifier_mutation_shadow_dance", "components/modifiers/mutation/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
 	elseif IMBA_MUTATION["positive"] == "super_fervor" then
 		LinkLuaModifier("modifier_mutation_super_fervor", "components/modifiers/mutation/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["positive"] == "ultimate_level" then
-		MAX_LEVEL[GetMapName()] = IMBA_MUTATION_ULTIMATE_LEVEL
-		CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 	end
 
 --	if IMBA_MUTATION["negative"] == "alien_incubation" then

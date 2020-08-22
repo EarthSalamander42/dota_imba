@@ -10,7 +10,13 @@ function Mutation:Airdrop()
 	for k, v in pairs(KeyValues.ItemKV) do -- Go through all the items in KeyValues.ItemKV and store valid items in validItems table
 		varFlag = 0 -- Let's borrow this memory to suss out the forbidden items first...
 
-		if v["ItemCost"] and v["ItemCost"] >= IMBA_MUTATION_AIRDROP_ITEM_MINIMUM_GOLD_COST and v["ItemCost"] ~= 99999 and not string.find(k, "recipe") and not string.find(k, "cheese") then
+		local item_cost = v["ItemCost"]
+
+		if item_cost then
+			item_cost = tonumber(item_cost)
+		end
+
+		if item_cost and item_cost >= IMBA_MUTATION_AIRDROP_ITEM_MINIMUM_GOLD_COST and item_cost ~= 99999 and not string.find(k, "recipe") and not string.find(k, "cheese") then
 			for _, item in pairs(IMBA_MUTATION_RESTRICTED_ITEMS) do -- Make sure item isn't a restricted item
 				if k == item then
 					varFlag = 1
@@ -18,7 +24,7 @@ function Mutation:Airdrop()
 			end
 
 			if varFlag == 0 then -- If not a restricted item (while still meeting all the other criteria...)
-				validItems[#validItems + 1] = {k = k, v = v["ItemCost"]}
+				validItems[#validItems + 1] = {k = k, v = item_cost}
 			end	
 		end
 	end

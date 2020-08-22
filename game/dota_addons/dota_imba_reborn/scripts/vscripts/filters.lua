@@ -633,165 +633,89 @@ function GameMode:OrderFilter( keys )
 	end
 
 	-- Turbo Courier filters
-	if USE_TEAM_COURIER == false then
-		if unit:IsCourier() then
-			local player_id = keys.issuer_player_id_const
+	if unit:IsCourier() then
+		local player_id = keys.issuer_player_id_const
 
-			-- if the order is given through lua, allow it
-			if player_id == -1 then
---				print("Lua order, allow it")
-				unit:GetAbilityByIndex(7):CastAbility()
-				return true
-			end
-
-			local rightful_courier = TurboCourier.COURIER_PLAYER[player_id]
-
---			print(self.COURIER_PLAYER)
-
---			if rightful_courier then
-				-- fix attempt to move items in courier inventory when giving order to a courier wich is not yours [NOT WORKING]
---				if keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM then
---					print("Move item to the rightful courier inventory!")
---					local order = {
---						UnitIndex = rightful_courier:entindex(),
---						OrderType = DOTA_UNIT_ORDER_MOVE_ITEM,
---						TargetIndex = nil,
---						Queue = false
---					}
-
---					ExecuteOrderFromTable(order)
-
---					return false
---				end
---			end
-
-			if player_id then
-				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
-					if unit == rightful_courier then
---						print("Rightful courier used, everything's okay!")
-						return true
-					end
-
-					PlayerResource:NewSelection(player_id, rightful_courier)
-					DisplayError(player_id, "#dota_hud_error_select_own_courier")
-
-					return false
-				elseif (ability and ability.GetName and ability:GetName() ~= "") then
---					print("Valid Ability")
-					if unit == rightful_courier then
---						print("Rightful courier used, everything's okay!")
-
-						return true
-					end
-
---					print(player_id, rightful_courier)
-					if rightful_courier and rightful_courier:HasAbility(ability:GetName()) then
-						if ability:IsToggle() then
-							rightful_courier:FindAbilityByName(ability:GetName()):ToggleAbility()
-						else
-							rightful_courier:FindAbilityByName(ability:GetName()):CastAbility()
-						end
-
-						-- print("main ent: ", PlayerResource:GetMainSelectedEntity(player_id))
-
-						-- if EntIndexToHScript(PlayerResource:GetMainSelectedEntity(player_id)) == unit then
---							print("Select rightful courier!")
-
-							-- Don't new selection the courier if someone presses F3
-							if ability:GetName() ~= "courier_take_stash_and_transfer_items" then
-								PlayerResource:NewSelection(player_id, rightful_courier)
-							end
-							
-						-- end
-
---						print("Return false 1")
-						return false
-					end
-				else
-					DisplayError(player_id, "#dota_hud_error_control_courier_with_abilities_only")
-
---					print("Return false 2")
-					return false
-				end
-			end
-
---			print("Return false 3")
-			return false
+		-- if the order is given through lua, allow it
+		if player_id == -1 then
+--			print("Lua order, allow it")
+			unit:GetAbilityByIndex(7):CastAbility()
+			return true
 		end
-	-- "Vanilla" courier filters
-	else
-		if unit:IsCourier() then
-			-- Timers:CreateTimer(FrameTime(), function()
-				-- if unit and not unit:IsNull() and keys.issuer_player_id_const then
-					-- unit.last_idle_change_time 			= unit:GetLastIdleChangeTime()
-					-- unit.issuer_player_id_const			= keys.issuer_player_id_const
-				-- end
-			-- end)
-			
-			local ability = EntIndexToHScript(keys["entindex_ability"])
-			
-			-- Don't let frozen players mess with courier either
-			if api:GetDonatorStatus(keys.issuer_player_id_const) == 10 or (IMBA_PUNISHED and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(keys.issuer_player_id_const)]) then
-				return false
-			end
 
-			-- Rough code to drop neutral items on the ground
-			if IsNearFountain(unit:GetAbsOrigin(), 1200) and ability and ability.GetName and ability:GetName() == "courier_return_stash_items" then
-				for i = 0, 8 do
-					if unit:GetItemInSlot(i) and unit:GetItemInSlot(i).GetPurchaser and not unit:GetItemInSlot(i):GetPurchaser() then
-						unit:DropItemAtPositionImmediate(unit:GetItemInSlot(i), unit:GetAbsOrigin() + RandomVector(RandomInt(0, 100)))
-					end
-				end
-			end
+		local rightful_courier = TurboCourier.COURIER_PLAYER[player_id]
 
-			if keys.issuer_player_id_const then
-				-- Attempts at locking courier to one player at a time
-				--  How it works: When the player issues a transfer item command, the courier will have its issuer_player_id_const variable set to keys.issuer_player_id_const, which will only turn nil once that player issues a different courier command OR the courier inventory contents change
-				-- Yes, even with this there may be potential abuse...
-				if unit.issuer_player_id_const then
-					if keys.issuer_player_id_const == unit.issuer_player_id_const then
-						unit.issuer_player_id_const = nil
-					elseif keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM then
-						return true
-					else
-						DisplayError(keys.issuer_player_id_const, "Courier is currently delivering items to "..PlayerResource:GetPlayerName(unit.issuer_player_id_const))
-						return false
-					end
-				end
-				
-				-- allow buy order!
-				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM or keys.order_type == DOTA_UNIT_ORDER_DISASSEMBLE_ITEM or keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SET_ITEM_COMBINE_LOCK then
+--		print(self.COURIER_PLAYER)
+
+--		if rightful_courier then
+			-- fix attempt to move items in courier inventory when giving order to a courier wich is not yours [NOT WORKING]
+--			if keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM then
+--				print("Move item to the rightful courier inventory!")
+--				local order = {
+--					UnitIndex = rightful_courier:entindex(),
+--					OrderType = DOTA_UNIT_ORDER_MOVE_ITEM,
+--					TargetIndex = nil,
+--					Queue = false
+--				}
+
+--				ExecuteOrderFromTable(order)
+
+--				return false
+--			end
+--		end
+
+		if player_id then
+			if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+				if unit == rightful_courier then
+--					print("Rightful courier used, everything's okay!")
 					return true
 				end
 
-				if (ability and ability.GetName and ability:GetName() ~= "" and not ability:IsItem()) then
---					print("Valid Ability")
-					if unit:HasAbility(ability:GetName()) then
-					
-						if (ability:GetName() == "courier_transfer_items" or "courier_take_stash_and_transfer_items") then
-							if not unit.issuer_player_id_const then
-								unit.issuer_player_id_const = keys.issuer_player_id_const
-								return true
-							end
-						else
-							return true
-						end
-					end
-				else
-					-- Prevent the courier from moving on right-click
-					DisplayError(keys.issuer_player_id_const, "#dota_hud_error_control_courier_with_abilities_only")
+				PlayerResource:NewSelection(player_id, rightful_courier)
+				DisplayError(player_id, "#dota_hud_error_select_own_courier")
 
-					return false
+				return false
+			elseif (ability and ability.GetName and ability:GetName() ~= "") then
+--				print("Valid Ability")
+				if unit == rightful_courier then
+--					print("Rightful courier used, everything's okay!")
+
+					return true
 				end
 
-				-- Prevent the courier from moving if already moving (therefore being used by another player)
---				if unit:IsMoving() then
---					DisplayError(keys.issuer_player_id_const, "#dota_hud_error_courier_in_use")
+--				print(player_id, rightful_courier)
+				if rightful_courier and rightful_courier:HasAbility(ability:GetName()) then
+					if ability:IsToggle() then
+						rightful_courier:FindAbilityByName(ability:GetName()):ToggleAbility()
+					else
+						rightful_courier:FindAbilityByName(ability:GetName()):CastAbility()
+					end
 
---					return false
---				end
+					-- print("main ent: ", PlayerResource:GetMainSelectedEntity(player_id))
+
+					-- if EntIndexToHScript(PlayerResource:GetMainSelectedEntity(player_id)) == unit then
+--						print("Select rightful courier!")
+
+						-- Don't new selection the courier if someone presses F3
+						if ability:GetName() ~= "courier_take_stash_and_transfer_items" then
+							PlayerResource:NewSelection(player_id, rightful_courier)
+						end
+						
+					-- end
+
+--					print("Return false 1")
+					return false
+				end
+			else
+				DisplayError(player_id, "#dota_hud_error_control_courier_with_abilities_only")
+
+--				print("Return false 2")
+				return false
 			end
 		end
+
+--		print("Return false 3")
+		return false
 	end
 
 	------------------------------------------------------------------------------------
@@ -1059,9 +983,7 @@ function GameMode:OrderFilter( keys )
 			end
 		end
 
-		if USE_TEAM_COURIER == false then
-			unit.reset_turbo_deliver = true
-		end
+		unit.reset_turbo_deliver = true
 	end
 
 	if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then

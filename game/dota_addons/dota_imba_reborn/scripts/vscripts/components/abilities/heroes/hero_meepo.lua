@@ -1,5 +1,7 @@
 -- Created by Wouterz90: https://github.com/ModDota/AbilityLuaSpellLibrary/blob/master/game/scripts/vscripts/heroes/meepo/divided_we_stand.lua
 
+LinkLuaModifier("modifier_item_imba_lotus_orb_active", "components/items/item_lotus_orb.lua", LUA_MODIFIER_MOTION_NONE)
+
 modifier_meepo_divided_we_stand_lua = modifier_meepo_divided_we_stand_lua or class({})
 
 function modifier_meepo_divided_we_stand_lua:IsHidden()
@@ -188,8 +190,8 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 			modifier_name		= "modifier_item_sphere_target"
 			modifier_duration	= keys.ability:GetSpecialValueFor("block_cooldown")
 		-- Lotus Orb
-		elseif keys.ability:GetName() == "item_lotus_orb" then
-			modifier_name		= "modifier_item_lotus_orb_active"
+		elseif keys.ability:GetName() == "item_imba_lotus_orb" then
+			modifier_name		= "modifier_item_imba_lotus_orb_active"
 			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
 		-- Mask of Madness
 		elseif keys.ability:GetName() == "item_imba_mask_of_madness" then

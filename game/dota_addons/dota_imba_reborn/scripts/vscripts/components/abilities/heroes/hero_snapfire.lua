@@ -430,6 +430,13 @@ function imba_snapfire_firesnap_cookie:OnProjectileHit( target, location )
 
 	if target:IsChanneling() or target:IsOutOfGame() then return end
 
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= self:GetCaster():GetTeam() then
+		if target:TriggerSpellAbsorb(self) then
+			return nil
+		end
+	end
+
 	-- Firesnap Cookie heals
 	if self:GetCaster():HasTalent("special_bonus_unique_snapfire_5") then
 		if target:GetTeam() == self:GetCaster():GetTeam() then

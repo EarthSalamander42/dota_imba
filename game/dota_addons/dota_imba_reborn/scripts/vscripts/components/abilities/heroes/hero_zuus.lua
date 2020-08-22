@@ -488,6 +488,15 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 			end
 		end
 
+		if not nimbus and target then
+			-- If the target possesses a ready Linken's Sphere, do nothing
+			if target:GetTeam() ~= caster:GetTeam() then
+				if target:TriggerSpellAbsorb(ability) then
+					return nil
+				end
+			end
+		end
+
 		-- If we still dont have a target we search for nearby creeps
 		if target == nil then
 			local nearby_enemy_units = FindUnitsInRadius(

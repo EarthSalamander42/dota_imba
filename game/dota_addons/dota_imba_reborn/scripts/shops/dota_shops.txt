@@ -146,7 +146,7 @@
 		"item"		"item_soul_booster"
 		"item"		"item_imba_aeon_disk"	
 		"item"		"item_imba_crimson_guard"		
-		"item"		"item_lotus_orb"		
+		"item"		"item_imba_lotus_orb"		
 		"item"		"item_imba_black_king_bar"
 		"item"		"item_imba_hurricane_pike"
 		"item"		"item_imba_shivas_guard"

@@ -66,6 +66,50 @@ function SetupVanillaKeyBinding(sName, callback_function, bHold, secondary_callb
 	}
 }
 
+function SetupTopBar() {
+//	$.Msg("10v10 top bar")
+	$.GetContextPanel().SetHasClass('TenVTen', true);
+	var topbar = FindDotaHudElement('topbar');
+	topbar.style.width = '1550px';
+
+	// Nice topbar colors
+	var TopBarRadiantTeamContainer = topbar.FindChildTraverse("TopBarRadiantTeamContainer");
+	var TopBarDireTeamContainer = topbar.FindChildTraverse("TopBarDireTeamContainer");
+
+	TopBarRadiantTeamContainer.style.width = '780px'; // 620px
+	TopBarDireTeamContainer.style.width = '780px'; // 620px
+
+	// Top Bar Radiant
+	var TopBarRadiantTeam = FindDotaHudElement('TopBarRadiantTeam');
+	TopBarRadiantTeam.style.width = '100%'; // 540px
+
+	// Top Bar Dire
+	var TopBarDireTeam = FindDotaHudElement('TopBarDireTeam');
+	TopBarDireTeam.style.width = '100%'; // 540px
+
+	for (var tbg of TopBarRadiantTeam.FindChildrenWithClassTraverse("TeamBackground")) {
+		tbg.style.width = "90%";
+		for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
+			tbbg.style.backgroundSize = '0%';
+			tbbg.style.backgroundColor = '#000000da';
+			tbbg.style.width = "100%";
+		}
+	}
+
+	for (var tbg of TopBarDireTeam.FindChildrenWithClassTraverse("TeamBackground")) {
+		tbg.style.width = "90%";
+		for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
+			tbbg.style.backgroundSize = '0%';
+			tbbg.style.backgroundColor = '#000000da';
+			tbbg.style.width = "100%";
+		}
+	}
+}
+
 (function(){
 	GameUI.SetupVanillaKeyBinding = SetupVanillaKeyBinding;
+
+	if (Game.GetMapInfo().map_display_name == 'imba_10v10') {
+		SetupTopBar();
+	}
 })();

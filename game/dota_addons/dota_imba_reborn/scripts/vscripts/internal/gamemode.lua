@@ -171,7 +171,12 @@ function GameMode:OnSetGameMode()
 	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 
+	local hero_gold = HERO_INITIAL_GOLD
 	local custom_gold_bonus = CUSTOM_GOLD_BONUS[GetMapName()] or 100
 
-	CustomNetTables:SetTableValue("game_options", "initial_gold", {starting_gold})
+	if custom_gold_bonus > 100 then
+		hero_gold = hero_gold * custom_gold_bonus / 100
+	end
+
+	CustomNetTables:SetTableValue("game_options", "initial_gold", {hero_gold})
 end

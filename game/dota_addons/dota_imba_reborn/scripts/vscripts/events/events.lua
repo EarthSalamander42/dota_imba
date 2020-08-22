@@ -79,8 +79,6 @@ function GameMode:OnGameRulesStateChange(keys)
 						PlayerResource:SetCanRepick(i, false)
 					end
 				end
-
-				return nil
 			end
 		else
 			for i = 0, PlayerResource:GetPlayerCount() - 1 do
@@ -131,42 +129,15 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		self:SetupFountains()
 
+		-- add abilities to all towers
+		local towers = Entities:FindAllByClassname("npc_dota_tower")
+
+		for _, tower in pairs(towers) do
+			SetupTower(tower)
+		end
+
 		-- Create a timer to avoid lag spike entering pick screen
 		Timers:CreateTimer(3.0, function()
-			if USE_TEAM_COURIER == true then
-				COURIER_TEAM = {}
-				for i = 2, 3 do
-					local pos = {}
-					pos[2] = Entities:FindByClassname(nil, "info_courier_spawn_radiant")
-					pos[3] = Entities:FindByClassname(nil, "info_courier_spawn_dire")
-
-					if pos[i] then
-						COURIER_TEAM[i] = CreateUnitByName("npc_dota_courier", pos[i]:GetAbsOrigin(), true, nil, nil, i)
-						COURIER_TEAM[i]:AddNewModifier(COURIER_TEAM[i], nil, "modifier_courier_turbo", {})
-						COURIER_TEAM[i]:RemoveModifierByName("modifier_magic_immune")
-						COURIER_TEAM[i]:AddAbility("courier_movespeed"):SetLevel(1)
-					end
-				end
-			end
-
-			-- -- IMBA: Custom maximum level EXP tables adjustment
-			-- local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-			
-			-- if max_level and max_level > 25 then
-				-- local j = 26
-				-- Timers:CreateTimer(function()
-					-- if j >= max_level then
-						-- return
-					-- end
-					-- for i = j, j + 2 do
-						-- XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i - 1] + 3500
-						-- GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel(XP_PER_LEVEL_TABLE)
-					-- end
-					-- j = j + 2
-					-- return 1.0
-				-- end)
-			-- end
-
 			-- Initialize IMBA Runes system
 			if IMBA_RUNE_SYSTEM == true then
 				ImbaRunes:Init()
@@ -229,13 +200,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 
-		-- add abilities to all towers
-		local towers = Entities:FindAllByClassname("npc_dota_tower")
-
-		for _, tower in pairs(towers) do
-			SetupTower(tower)
-		end
-
+--[[
 		-- temporary gold earning through old tick time, until couriers are fixed
 		Timers:CreateTimer(function()
 			if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return nil end
@@ -248,6 +213,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			return GOLD_TICK_TIME[GetMapName()]
 		end)
+--]]
 	end
 end
 
@@ -722,6 +688,20 @@ function GameMode:OnPlayerChat(keys)
 
 	for str in string.gmatch(text, "%S+") do
 		if IsInToolsMode() or GameRules:IsCheatMode() or (api.imba ~= nil and api.imba.is_developer(steamid)) then
+			if str == "-addability" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+
+				caster:AddAbility(text)
+			end
+
+			if str == "-removeability" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+
+				caster:RemoveAbility(text)
+			end
+
 			if str == "-dev_remove_units" then
 				GameMode:RemoveUnits(true, true, true)
 			end

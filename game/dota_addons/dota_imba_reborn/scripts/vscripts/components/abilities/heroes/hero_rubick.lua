@@ -397,6 +397,13 @@ function imba_rubick_fade_bolt:OnSpellStart()
 		local damage = self:GetSpecialValueFor("damage")
 		local kaboom = false
 
+		-- If the target possesses a ready Linken's Sphere, do nothing
+		if current_target:GetTeam() ~= self:GetCaster():GetTeam() then
+			if current_target:TriggerSpellAbsorb(self) then
+				return nil
+			end
+		end
+
 		EmitSoundOn("Hero_Rubick.FadeBolt.Cast", self:GetCaster())
 		
 		self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_3)

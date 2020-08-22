@@ -58,7 +58,7 @@ end
 
 function imba_bristleback_viscous_nasal_goo:OnSpellStart()
 	self.caster	= self:GetCaster()
-	
+
 	-- AbilitySpecials
 	self.goo_speed					= self:GetSpecialValueFor("goo_speed")
 	self.goo_duration				= self:GetSpecialValueFor("goo_duration")
@@ -69,20 +69,20 @@ function imba_bristleback_viscous_nasal_goo:OnSpellStart()
 	--self.stack_limit 				= self:GetSpecialValueFor("stack_limit")
 	self.goo_duration_creep			= self:GetSpecialValueFor("goo_duration_creep")
 	self.radius_scepter 			= self:GetSpecialValueFor("radius_scepter")
-	
+
 	self.disgust_knockback 			= self:GetSpecialValueFor("disgust_knockback")
 	self.disgust_knockup 			= self:GetSpecialValueFor("disgust_knockup")
 	self.base_disgust_duration 		= self:GetSpecialValueFor("base_disgust_duration")
 	self.disgust_duration_per_stack	= self:GetSpecialValueFor("disgust_duration_per_stack")
 	self.disgust_radius				= self:GetSpecialValueFor("disgust_radius")
-	
+
 	if not IsServer() then return end
-	
+
 	self.caster:EmitSound("Hero_Bristleback.ViscousGoo.Cast")
-	
+
 	if self.caster:HasScepter() then
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
-		
+
 		for _, enemy in pairs(enemies) do
 			local projectile =
 			{
@@ -102,15 +102,12 @@ function imba_bristleback_viscous_nasal_goo:OnSpellStart()
 				iVisionRadius 		= 0,
 				iVisionTeamNumber 	= self.caster:GetTeamNumber()
 			}
-			
+
 			ProjectileManager:CreateTrackingProjectile(projectile)
 		end
 	else
 		self.target	= self:GetCursorTarget()
-	
-		-- Stop if target has linkens
-		if self.target:TriggerSpellAbsorb(self) then return end
-	
+
 		local projectile =
 		{
 			Target 				= self.target,
@@ -140,6 +137,9 @@ end
 
 function imba_bristleback_viscous_nasal_goo:OnProjectileHit(hTarget, vLocation)
 	if hTarget ~= nil and hTarget:IsAlive() and not hTarget:IsMagicImmune() then
+		-- Stop if target has linkens
+		if hTarget:TriggerSpellAbsorb(self) then return end
+
 		local goo_modifier = hTarget:AddNewModifier(self.caster, self, "modifier_imba_bristleback_viscous_nasal_goo", {duration = self.goo_duration * (1 - hTarget:GetStatusResistance())})
 		
 		hTarget:EmitSound("Hero_Bristleback.ViscousGoo.Target")

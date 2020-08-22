@@ -322,37 +322,42 @@ CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName
 
 USE_CUSTOM_HERO_LEVELS = false	-- Should we allow heroes to have custom levels?
 
--- Vanilla xp increase per level
+-- Vanilla xp increase per level (Careful! update this whenever valve does)
 local vanilla_xp = {}
-vanilla_xp[1]	= 0
-vanilla_xp[2]	= 200
-vanilla_xp[3]	= 400
-vanilla_xp[4]	= 480
-vanilla_xp[5]	= 580
-vanilla_xp[6]	= 600
-vanilla_xp[7]	= 640
-vanilla_xp[8]	= 660
-vanilla_xp[9]	= 680
-vanilla_xp[10]	= 800
-vanilla_xp[11]	= 820
-vanilla_xp[12]	= 840
-vanilla_xp[13]	= 900
-vanilla_xp[14]	= 1225
-vanilla_xp[15]	= 1250
-vanilla_xp[16]	= 1275
-vanilla_xp[17]	= 1300
-vanilla_xp[18]	= 1325
-vanilla_xp[19]	= 1500
-vanilla_xp[20]	= 1590
-vanilla_xp[21]	= 1600
-vanilla_xp[22]	= 1850
-vanilla_xp[23]	= 2100
-vanilla_xp[24]	= 2350
-vanilla_xp[25]	= 2600
+vanilla_xp[1]	= 230
+vanilla_xp[2]	= 370
+vanilla_xp[3]	= 480
+vanilla_xp[4]	= 580
+vanilla_xp[5]	= 600
+vanilla_xp[6]	= 720
+vanilla_xp[7]	= 750
+vanilla_xp[8]	= 890
+vanilla_xp[9]	= 930
+vanilla_xp[10]	= 970
+vanilla_xp[11]	= 1010
+vanilla_xp[12]	= 1050
+vanilla_xp[13]	= 1225
+vanilla_xp[14]	= 1250
+vanilla_xp[15]	= 1275
+vanilla_xp[16]	= 1300
+vanilla_xp[17]	= 1325
+vanilla_xp[18]	= 1500
+vanilla_xp[19]	= 1590
+vanilla_xp[20]	= 1600
+vanilla_xp[21]	= 1850
+vanilla_xp[22]	= 2100
+vanilla_xp[23]	= 2350
+vanilla_xp[24]	= 2600
+vanilla_xp[25]	= 3500
+vanilla_xp[26]	= 4500
+vanilla_xp[27]	= 5500
+vanilla_xp[28]	= 6500
+vanilla_xp[29]	= 7500
+vanilla_xp[30]	= 7500 -- is this field truly required? hmm
 
 XP_PER_LEVEL_TABLE = {}			-- XP per level table (only active if custom hero levels are enabled)
 XP_PER_LEVEL_TABLE[1] = 0
-for i = 2, 25 do
+for i = 2, 30 do
 	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i - 1] + vanilla_xp[i]
 end
 
@@ -437,6 +442,7 @@ IMBA_INVISIBLE_MODIFIERS = {
 
 IMBA_NODRAW_MODIFIERS = {
 	"modifier_vardor_graceful_jump",
+	"modifier_mutation_monkey_business_transform",
 }
 
 IMBA_REINCARNATION_MODIFIERS = {
@@ -637,7 +643,6 @@ ENTITY_MODEL_OVERRIDE = {}
 IMBA_FIRST_BLOOD = false
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = nil -- Should we use vanilla couriers? -- nil to use none of turbo or team couriers
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?

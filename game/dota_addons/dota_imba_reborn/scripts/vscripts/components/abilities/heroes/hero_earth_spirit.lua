@@ -504,19 +504,25 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
-		end		
+		end
 
 		local pointTarget = self:GetCursorPosition()
 		local target = self:GetCursorTarget()
 		local caster = self:GetCaster()
 		local searchRadius = self:GetSpecialValueFor("max_distance_for_push") + GetCastRangeIncrease(caster)
-		
+
 		-- remove thinker modifier for when casting outside of unit/remnant search range
 		caster:RemoveModifierByName("modifier_imba_boulder_smash_cast_thinker")
-		
+
 		if target then
+			-- If the target possesses a ready Linken's Sphere, do nothing
+			if target:GetTeam() ~= caster:GetTeam() then
+				if target:TriggerSpellAbsorb(self) then
+					return nil
+				end
+			end
+
 			if CalcDistanceBetweenEntityOBB(caster, target) <= searchRadius then
-				
 				-- Find remnants first				
 				local RemnantAroundCaster = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, searchRadius+1, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
 				for _, r in ipairs(RemnantAroundCaster) do

@@ -185,6 +185,7 @@
 	text-transform: uppercase;
 	text-align: center center;
 	font-size: 18px;
+	text-overflow: shrink;
 }
 
 #BattlepassButton:hover Label

@@ -1244,7 +1244,6 @@ end
 
 function imba_scaldris_living_flame:OnSpellStart()
 	if IsServer() then
-
 		-- Parameters
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
@@ -1260,6 +1259,13 @@ function imba_scaldris_living_flame:OnSpellStart()
 
 		-- Swap fire/ice abilities
 		caster:SwapAbilities("imba_scaldris_living_flame", "imba_scaldris_absolute_zero", false, true)
+
+		-- If the target possesses a ready Linken's Sphere, do nothing
+		if target:GetTeam() ~= self:GetCaster():GetTeam() then
+			if target:TriggerSpellAbsorb(self) then
+				return nil
+			end
+		end
 
 		-- Play spread particle
 		local spread_pfx = ParticleManager:CreateParticle("particles/hero/scaldris/living_flame.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
@@ -1392,7 +1398,6 @@ end
 
 function imba_scaldris_absolute_zero:OnSpellStart()
 	if IsServer() then
-
 		-- Parameters
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
@@ -1437,6 +1442,13 @@ end
 function imba_scaldris_absolute_zero:OnProjectileHit(target, location)
 	if IsServer() then
 		if target then
+			-- If the target possesses a ready Linken's Sphere, do nothing
+			if target:GetTeam() ~= self:GetCaster():GetTeam() then
+				if target:TriggerSpellAbsorb(self) then
+					return nil
+				end
+			end
+
 			target:EmitSound("Scaldris.AbsoluteZero.Impact")
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_absolute_zero_stun", {duration = self:GetSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance()), initial_slow = self:GetSpecialValueFor("initial_slow")})
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_absolute_zero_dps", {duration = self:GetSpecialValueFor("damage_duration"), dps = self:GetSpecialValueFor("dps")})

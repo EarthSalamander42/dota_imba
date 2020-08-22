@@ -758,6 +758,8 @@ end
 --- 	 BALL LIGHTNING      ---
 --------------------------------
 imba_storm_spirit_ball_lightning = imba_storm_spirit_ball_lightning or class({})
+
+LinkLuaModifier("modifier_item_imba_lotus_orb_active", "components/items/item_lotus_orb.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ball_lightning", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_storm_spirit_ball_lightning:OnSpellStart()
@@ -850,7 +852,7 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 		-- Set the caster slightly forwards
 		caster:SetAbsOrigin(Vector(location.x, location.y, GetGroundPosition(location, caster).z))
 		caster:Purge(false, true, true, true, true)
-		caster:AddNewModifier(caster, self, "modifier_item_lotus_orb_active", {duration=FrameTime()})
+		caster:AddNewModifier(caster, self, "modifier_item_imba_lotus_orb_active", {duration=FrameTime()})
 
 		-- Calculate the new travel distance
 		self.traveled = self.traveled + ExtraData.speed

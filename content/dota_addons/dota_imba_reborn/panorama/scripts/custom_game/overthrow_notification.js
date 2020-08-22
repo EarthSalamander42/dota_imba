@@ -49,9 +49,18 @@ function OnItemDrop(msg) {
 	var chest_image_name = "file://{images}/econ/tools/gift_lockless_luckbox.png";
 	$("#PickupMessage_Chest").SetImage(chest_image_name);
 
-	var item_image_name = "file://{images}/items/" + msg.dropped_item.replace("item_", "") + ".png"
+	var item_image_name = "file://{images}/items/custom/" + msg.dropped_item.replace("item_", "") + ".png"
 	$("#PickupMessage_Item").SetImage(item_image_name);
 	$.Msg(item_image_name)
+
+//	var item_image_name = "s2r://panorama/images/items/custom/" + msg.dropped_item.replace("item_", "") + ".png"
+//	$("#PickupMessage_Item").SetImage(item_image_name);
+//	$.Msg(item_image_name)
+
+//	var item_image_name = 's2r://panorama/images/items/custom/' + msg.dropped_item.replace("item_", "") + '.png';
+//	$.Msg(item_image_name)
+//	$("#PickupMessage_Item").style.backgroundImage = 'url("' + item_image_name + '")';
+//	$.Msg('url("' + item_image_name + '")')
 
 	$.Schedule(5, ClearDropMessage);
 }

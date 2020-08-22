@@ -1191,11 +1191,12 @@ function get_remaining_days_in_year(iYear, iMonth, iDay)
 end
 
 -- ALLOW MULTIPLE INTRINSIC MODIFIERS (table support for GetIntrinsicModifierName)
+
 --[[
 -- needs to be tested before using it
 original_GetIntrinsicModifierName = CDOTABaseAbility.GetIntrinsicModifierName
 CDOTABaseAbility.GetIntrinsicModifierName = function(self, sModifierName)
-	print("Ability/Item:", self)
+	print("Ability/Item:", self:GetAbilityName())
 	if self == nil then return end
 
 	print("type:", type(sModifierName))

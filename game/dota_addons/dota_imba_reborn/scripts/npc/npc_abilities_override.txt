@@ -179,6 +179,7 @@
 	"item_third_eye"							"REMOVE"
 	"item_black_king_bar"						"REMOVE"
 	"item_gem"									"REMOVE"
+	"item_lotus_orb"							"REMOVE"
 	
 	//Banned items
 	"item_imba_ironleaf_boots"					"REMOVE"
@@ -6900,46 +6901,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_all_stats"		"6"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lotus Orb
-	//=================================================================================================================
-	"item_lotus_orb"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"10"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"8.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"4.0"
-			}			
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"325"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"7"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cast_range_tooltip"	"900"
 			}
 		}
 	}

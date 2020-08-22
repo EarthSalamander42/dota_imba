@@ -626,16 +626,20 @@ end
 -------------------------------------------
 --      SPELL SHIELD
 -------------------------------------------
+
+LinkLuaModifier("modifier_item_imba_lotus_orb_active", "components/items/item_lotus_orb.lua", LUA_MODIFIER_MOTION_NONE)
+
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_spell_shield_buff_reflect"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_spellshield_scepter_ready"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_spellshield_scepter_recharge"] = LUA_MODIFIER_MOTION_NONE,
 })
+
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_imba_spell_shield_buff_passive"] = LUA_MODIFIER_MOTION_NONE,
 })
+
 imba_antimage_spell_shield = imba_antimage_spell_shield or class({})
 
 function imba_antimage_spell_shield:GetAbilityTextureName()
@@ -655,16 +659,20 @@ function imba_antimage_spell_shield:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self
-		local active_modifier = "modifier_imba_spell_shield_buff_reflect"
+		local active_modifier = "modifier_item_imba_lotus_orb_active"
 		self.duration = ability:GetSpecialValueFor("active_duration")
 
 		-- Start skill cooldown.
-		caster:AddNewModifier(caster, ability, active_modifier, {duration = self.duration})
+		caster:AddNewModifier(caster, ability, active_modifier, {
+			duration = self.duration,
+			shield_pfx = "particles/units/heroes/hero_antimage/antimage_counter.vpcf",
+			reflect_pfx = "particles/units/heroes/hero_antimage/antimage_spellshield.vpcf",
+			cast_sound = "Hero_Antimage.Counterspell.Cast",
+		})
 
 		-- Run visual + sound
 		local shield_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end_glow.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:ReleaseParticleIndex(shield_pfx)
-		caster:EmitSound("Hero_Antimage.Counterspell.Cast")
 		
 		caster:StartGesture(ACT_DOTA_CAST_ABILITY_3)
 		
@@ -683,103 +691,8 @@ function imba_antimage_spell_shield:GetIntrinsicModifierName()
 	return "modifier_imba_spell_shield_buff_passive"
 end
 
-function imba_antimage_spell_shield:GetCooldown( nLevel )
-	return self.BaseClass.GetCooldown( self, nLevel )
-end
-
 function imba_antimage_spell_shield:IsHiddenWhenStolen()
 	return false
-end
-
-local function SpellReflect(parent, params)
-	-- If some spells shouldn't be reflected, enter it into this spell-list
-	local exception_spell =
-		{
-		["rubick_spell_steal"] = true,
-		["imba_alchemist_greevils_greed"] = true,
-		["imba_alchemist_unstable_concoction"] = true,
-		["imba_disruptor_glimpse"] = true,
-		["legion_commander_duel"] = true,
-		["imba_phantom_assassin_phantom_strike"] = true,
-		["phantom_assassin_phantom_strike"] = true,
-		["imba_riki_blink_strike"] = true,
-		["riki_blink_strike"] = true,
-		["imba_rubick_spellsteal"] = true,
-		["morphling_replicate"]	= true
-	}
-
-	local reflected_spell_name = params.ability:GetAbilityName()
-	local target = params.ability:GetCaster()
-
-	-- Does not reflect allies' projectiles for any reason
-	if target:GetTeamNumber() == parent:GetTeamNumber() then
-		return nil
-	end
-
-	-- FOR NOW, UNTIL LOTUS ORB IS DONE
-	-- Do not reflect spells if the target has Lotus Orb on, otherwise the game will die hard.
-	if target:HasModifier("modifier_item_lotus_orb_active") then
-		return nil
-	end
-
-	if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_spell_shield_buff_reflect")) then
-
-		-- If this is a reflected ability, do nothing
-		if params.ability.spell_shield_reflect then
-			return nil
-		end
-
-		local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield_reflect.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
-		ParticleManager:SetParticleControlEnt(reflect_pfx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
-		ParticleManager:ReleaseParticleIndex(reflect_pfx)
-
-		local old_spell = false
-		for _,hSpell in pairs(parent.tOldSpells) do
-			if hSpell ~= nil and hSpell:GetAbilityName() == reflected_spell_name then
-				old_spell = true
-				break
-			end
-		end
-		if old_spell then
-			ability = parent:FindAbilityByName(reflected_spell_name)
-		else
-			ability = parent:AddAbility(reflected_spell_name)
-			ability:SetStolen(true)
-			ability:SetHidden(true)
-
-			-- Tag ability as a reflection ability
-			ability.spell_shield_reflect = true
-
-			-- Modifier counter, and add it into the old-spell list
-			ability:SetRefCountsModifiers(true)
-			table.insert(parent.tOldSpells, ability)
-		end
-
-		ability:SetLevel(params.ability:GetLevel())
-		-- Set target & fire spell
-		parent:SetCursorCastTarget(target)
-		ability:OnSpellStart()
-		target:EmitSound("Hero_Antimage.Counterspell.Target")
-		
-		-- This isn't considered vanilla behavior, but at minimum it should resolve any lingering channeled abilities...
-		if ability.OnChannelFinish then
-			ability:OnChannelFinish(false)
-		end	
-	end
-
-	return false
-end
-
-local function SpellAbsorb(parent, params)
-	if params.ability:GetCaster():GetTeamNumber() == parent:GetTeamNumber() then
-		return nil
-	end
-
-	local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
-	ParticleManager:SetParticleControlEnt(reflect_pfx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetOrigin(), true)
-	ParticleManager:ReleaseParticleIndex(reflect_pfx)
-	
-	return 1
 end
 
 modifier_imba_spell_shield_buff_passive = modifier_imba_spell_shield_buff_passive or class({})
@@ -795,8 +708,6 @@ end
 function modifier_imba_spell_shield_buff_passive:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-		-- MODIFIER_PROPERTY_ABSORB_SPELL,
-		-- MODIFIER_PROPERTY_REFLECT_SPELL
 	}
 end
 
@@ -825,6 +736,19 @@ function modifier_imba_spell_shield_buff_passive:OnCreated()
 	end
 end
 
+-- Deleting old abilities
+-- This is bound to the passive modifier, so this is constantly on!
+function modifier_imba_spell_shield_buff_passive:OnIntervalThink()
+	for i = #self:GetParent().tOldSpells, 1, -1 do
+		local hSpell = self:GetParent().tOldSpells[i]
+
+		if hSpell:NumModifiersUsingAbility() == 0 and not hSpell:IsChanneling() then
+			hSpell:RemoveSelf()
+			table.remove(self:GetParent().tOldSpells,i)
+		end
+	end
+end
+
 function modifier_imba_spell_shield_buff_passive:OnRefresh()
 	self:OnCreated()
 end
@@ -835,42 +759,6 @@ function modifier_imba_spell_shield_buff_passive:GetModifierMagicalResistanceBon
 	end
 end
 
--- function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
-	-- if IsServer() then
-		-- local parent = self:GetParent()
-		-- if parent:HasScepter() and parent:IsRealHero() and not self:GetParent():HasModifier(self.modifier_recharge) then
-			-- if not self:GetParent():PassivesDisabled() then
-
-				-- -- If the targets are too far apart, do nothing
-				-- local distance = (parent:GetAbsOrigin() - params.ability:GetCaster():GetAbsOrigin()):Length2D()
-				-- if distance > self.spellshield_max_distance then
-					-- return nil
-				-- end
-
-				-- -- Apply the spell reflect
-				-- return SpellReflect(parent, params)
-			-- end
-		-- end
-	-- end
--- end
-
--- function modifier_imba_spell_shield_buff_passive:GetAbsorbSpell( params )
-	-- if IsServer() then
-		-- local parent = self:GetParent()
-		-- if parent:HasScepter() and parent:IsRealHero() and not self:GetParent():HasModifier(self.modifier_recharge) then
-			-- if not self:GetParent():PassivesDisabled() then
-
-				-- -- Start the internal recharge modifier
-				-- self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_recharge, {duration = self.internal_cooldown})
-
-				-- -- Apply Spell Absorption
-				-- return SpellAbsorb(parent, params)
-			-- end
-		-- end
-		-- return false
-	-- end
--- end
-
 function modifier_imba_spell_shield_buff_passive:OnDestroy()
 	-- If for some reason this modifier is destroyed (Rubick losing it, for instance), remove the scepter modifier
 	if IsServer() then
@@ -879,86 +767,6 @@ function modifier_imba_spell_shield_buff_passive:OnDestroy()
 		end
 	end
 end
-
--- Reflect modifier
--- Biggest thanks to Yunten !
-modifier_imba_spell_shield_buff_reflect = modifier_imba_spell_shield_buff_reflect or class({})
-
-function modifier_imba_spell_shield_buff_reflect:IsHidden()
-	return false
-end
-
-function modifier_imba_spell_shield_buff_reflect:IsDebuff()
-	return false
-end
-
-function modifier_imba_spell_shield_buff_reflect:IsPurgable()
-	return false
-end
-
-function modifier_imba_spell_shield_buff_reflect:DeclareFunctions()
-	return {
-		MODIFIER_PROPERTY_ABSORB_SPELL,
-		MODIFIER_PROPERTY_REFLECT_SPELL
-	}
-end
-
--- Initialize old-spell-checker
-function modifier_imba_spell_shield_buff_reflect:OnCreated( params )
-	if IsServer() then
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_counter.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		-- Random numbers
-		ParticleManager:SetParticleControl(self.particle, 1, Vector(150, 150, 150))
-	end
-end
-
-function modifier_imba_spell_shield_buff_reflect:GetReflectSpell( params )
-	return SpellReflect(self:GetParent(), params)
-end
-
-function modifier_imba_spell_shield_buff_reflect:GetAbsorbSpell( params )
-	-- IMBAfication: Trading Places
-	if self:GetAbility() and self:GetAbility():GetAutoCastState() and params.ability:GetCaster() and params.ability:GetCaster():IsAlive() then
-		local modifier_holder_position	= self:GetParent():GetAbsOrigin()
-		local caster_position			= params.ability:GetCaster():GetAbsOrigin()
-		
-		FindClearSpaceForUnit(self:GetParent(), caster_position, true)
-		FindClearSpaceForUnit(params.ability:GetCaster(), modifier_holder_position, true)
-		
-		local blink_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
-		ParticleManager:ReleaseParticleIndex(blink_1)
-		self:GetParent():EmitSound("Hero_Antimage.Blink_out")
-
-		local blink_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_ABSORIGIN, params.ability:GetCaster())
-		ParticleManager:ReleaseParticleIndex(blink_2)
-		params.ability:GetCaster():EmitSound("Hero_Antimage.Blink_out")
-	end
-
-	return SpellAbsorb(self:GetParent(), params)
-end
-
--- Deleting old abilities
--- This is bound to the passive modifier, so this is constantly on!
-function modifier_imba_spell_shield_buff_passive:OnIntervalThink()
-	if IsServer() then
-		local caster = self:GetParent()
-		for i=#caster.tOldSpells,1,-1 do
-			local hSpell = caster.tOldSpells[i]
-			if hSpell:NumModifiersUsingAbility() == 0 and not hSpell:IsChanneling() then
-				hSpell:RemoveSelf()
-				table.remove(caster.tOldSpells,i)
-			end
-		end
-	end
-end
-
-function modifier_imba_spell_shield_buff_reflect:OnDestroy()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.particle, false)
-		ParticleManager:ReleaseParticleIndex(self.particle)
-	end
-end
-
 
 -- Scepter block Ready modifier
 modifier_imba_spellshield_scepter_ready = modifier_imba_spellshield_scepter_ready or class({})

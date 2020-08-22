@@ -118,7 +118,7 @@ function COverthrowGameMode:SpecialItemAdd( event )
 		"item_crimson_guard",
 		"item_imba_black_king_bar",
 		"item_bloodstone",
-		"item_lotus_orb",
+		"item_imba_lotus_orb",
 		"item_guardian_greaves",
 		"item_moon_shard"
 	}

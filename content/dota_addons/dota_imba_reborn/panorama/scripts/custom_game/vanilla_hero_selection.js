@@ -14,6 +14,7 @@ function InitHeroSelection()  {
 //	$.Msg(GridCategories.GetChildCount())
 	var pick_screen_title = FindDotaHudElement('HeroSelectionText');
 	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+	if (gamemode) gamemode = gamemode["1"];
 	var same_selection = CustomNetTables.GetTableValue("game_options", "same_hero_pick");
 
 	if (same_selection && same_selection.value == 1) {
@@ -23,8 +24,8 @@ function InitHeroSelection()  {
 		GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
 	}
 
-	if (gamemode && typeof(gamemode[1]) == "number") {
-		pick_screen_title.text = ($.Localize("LobbySetting_GameMode") + ": " + $.Localize("vote_gamemode_" + gamemode[1])).toUpperCase();
+	if (gamemode && typeof(gamemode) == "string") {
+		pick_screen_title.text = ($.Localize("LobbySetting_GameMode") + ": " + $.Localize("vote_gamemode_" + gamemode)).toUpperCase();
 		pick_screen_title.style.marginTop = "30px";
 		pick_screen_title.style.height = "37px";
 		pick_screen_title.style.fontSize = "300px"; // This was originally 30px, but it was overlapping with the All Pick text; changing this to 300px seems extremely wrong, but it makes it aligned anyways?...

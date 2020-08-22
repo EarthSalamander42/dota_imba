@@ -108,6 +108,9 @@ function modifier_generic_knockback_lua:OnDestroy( kv )
 	end
 
 	self:GetParent():InterruptMotionControllers( true )
+
+	-- Firesnap Cookie gives permanent flail animation when reflected by lotus orb, fade gesture
+	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 end
 
 --------------------------------------------------------------------------------
