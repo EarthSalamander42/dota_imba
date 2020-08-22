@@ -12,7 +12,7 @@
 
 		"Ability1"					"imba_abaddon_death_coil"
 		"Ability2"					"imba_abaddon_aphotic_shield"
-		"Ability3"					"imba_abaddon_curse_of_avernus"
+		"Ability3"					"imba_abaddon_frostmourne"
 		"Ability4"					"imba_abaddon_over_channel"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_abaddon_borrowed_time"

@@ -236,19 +236,23 @@ function GetAbilitySpecial(name, key, level)
 end
 
 function CDOTABaseAbility:GetVanillaAbilityName()
+--	print("GetVanillaAbilityName:", string.gsub(self:GetAbilityName(), "imba_", ""))
 	return string.gsub(self:GetAbilityName(), "imba_", "")
 end
 
 function CDOTABaseAbility:GetVanillaKeyValue(key, level)
 	if level then
+--		print("GetVanillaKeyValue:", GetAbilityKV(self:GetVanillaAbilityName(), key, level))
 		return GetAbilityKV(self:GetVanillaAbilityName(), key, level)
 	else
+--		print("GetVanillaKeyValue:", GetAbilityKV(self:GetVanillaAbilityName(), key, self:GetLevel()))
 		return GetAbilityKV(self:GetVanillaAbilityName(), key, self:GetLevel())
 	end
 end
 
 function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
-	return GetAbilitySpecial(self:GetVanillaAbilityName(), key, self:GetLevel())
+--	print("GetVanillaAbilitySpecial:", GetAbilitySpecial(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0)
+	return GetAbilitySpecial(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
 end
 
 LoadGameKeyValues()

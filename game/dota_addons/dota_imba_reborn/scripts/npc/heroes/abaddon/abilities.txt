@@ -78,7 +78,7 @@
 	//=================================================================================================================
 	// Abaddon's Curse of Avernus
 	//=================================================================================================================
-	"imba_abaddon_curse_of_avernus"
+	"imba_abaddon_frostmourne"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -289,7 +289,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_abaddon_curse_of_avernus"			
+			"01" 	"imba_abaddon_frostmourne"			
 		}
 			
 
@@ -351,7 +351,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	 "imba_abaddon_curse_of_avernus"
+			"01"	 "imba_abaddon_frostmourne"
 		}
 
 		// Special
@@ -389,7 +389,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_abaddon_curse_of_avernus"			
+			"01" 	"imba_abaddon_frostmourne"			
 		}
 
 		// Special
