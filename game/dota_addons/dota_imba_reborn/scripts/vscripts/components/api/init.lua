@@ -726,7 +726,8 @@ end
 
 
 function api:SetCustomGamemode(iValue)
-	if iValue and type(iValue) == "number" then
+	if iValue and type(iValue) == "number" or type(iValue) == "string" then
+		if type(iValue) == "number" then iValue = tostring(iValue) end
 		CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
 	end
 
@@ -740,7 +741,7 @@ function api:GetCustomGamemode()
 		gamemode = gamemode["1"]
 	end
 
-	return gamemode
+	return tonumber(gamemode)
 end
 
 function api:SendTeamConfiguration(players, combinations, callback)
@@ -764,25 +765,30 @@ end
 function api:DetectParties()
 	self.parties = {}
 	local party_indicies = {}
+	local party_members_count = {}
 	local party_index = 1
-	local players = {}
-
 	-- Set up player colors
 	for id = 0, 23 do
 		if PlayerResource:IsValidPlayer(id) then
-			players[id] = tostring(PlayerResource:GetSteamID(id))
-
-			-- {"0":26703929098108930,"1":26703929098108930}
 			local party_id = tonumber(tostring(PlayerResource:GetPartyID(id)))
-
 			if party_id and party_id > 0 then
 				if not party_indicies[party_id] then
 					party_indicies[party_id] = party_index
 					party_index = party_index + 1
 				end
-
-				self.parties[id] = party_indicies[party_id]
+				local party_index = party_indicies[party_id]
+				self.parties[id] = party_index
+				if not party_members_count[party_index] then
+					party_members_count[party_index] = 0
+				end
+				party_members_count[party_index] = party_members_count[party_index] + 1
 			end
+		end
+	end
+	for id, party in pairs(self.parties) do
+		-- at least 2 ppl in party!
+		if party_members_count[party] and party_members_count[party] < 2 then
+			self.parties[id] = nil
 		end
 	end
 
