@@ -119,7 +119,6 @@
 		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
-		"MaxLevel"										"4"
 
 		"AbilityCooldown"								"0.5"
 
@@ -173,26 +172,21 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
+		"ScriptFile"									"components/abilities/heroes/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"abaddon_borrowed_time"
 		"HasScepterUpgrade"								"1"
-		"MaxLevel"										"3"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"								"0.0"
 		"AbilityCastRange"								"900"
-		
+
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"								"60.0 50.0 40.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -201,36 +195,26 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"hp_threshold"							"400"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"duration"								"4.0 5.0 6.0"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
 				"redirect"								"10 25 40"
 			}
-			"04"
+			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"redirect_range"						"900"
 			}
-			"05"
+			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"ally_threshold_scepter"			"525"
 				"RequiresScepter"			"1"
 			}
-			"06"
+			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"redirect_range_scepter"				"1600"
 				"RequiresScepter"			"1"
 			}
-			"07"
+			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration_scepter"			"5.0 6.0 7.0"

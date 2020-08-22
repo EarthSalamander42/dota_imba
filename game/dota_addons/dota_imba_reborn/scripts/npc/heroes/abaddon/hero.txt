@@ -17,7 +17,8 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_abaddon_borrowed_time"
 
-		"Ability10"					"special_bonus_imba_abaddon_5" //Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
+		"Ability10"					"special_bonus_imba_abaddon_5"
+//		"Ability10"					"special_bonus_imba_abaddon_5" //Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
 		"Ability11"					"special_bonus_imba_abaddon_2" //+10% Curse of Avernus MS/AS shift; Curse of Avernus buff/debuff refresh increases duration by 1 second each hit.
 		"Ability12"					"special_bonus_imba_abaddon_7" //Borrowed Time Strong Purges all allies on cast.
 		"Ability13"					"special_bonus_imba_abaddon_4" //(Curse of Avernus can be activated to sacrifice 10% of your max health as extra physical damage on attack. Cooldown of 5 seconds.
