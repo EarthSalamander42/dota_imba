@@ -35,7 +35,6 @@ end
 function item_imba_lotus_orb:OnSpellStart()
 	if not IsServer() then return end
 
-	-- use vanilla modifier, and add another modifier to handle abilities not being reflected properly
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lotus_orb_active", {duration = self:GetSpecialValueFor("active_duration")})
 end
 
@@ -108,7 +107,7 @@ function modifier_item_imba_lotus_orb_active:IsPurgable() return false end
 function modifier_item_imba_lotus_orb_active:IsPurgeException() return false end
 
 function modifier_item_imba_lotus_orb_active:DeclareFunctions() return {
-	MODIFIER_PROPERTY_ABSORB_SPELL,
+--	MODIFIER_PROPERTY_ABSORB_SPELL, -- Possible IMBAfication?
 	MODIFIER_PROPERTY_REFLECT_SPELL,
 } end
 

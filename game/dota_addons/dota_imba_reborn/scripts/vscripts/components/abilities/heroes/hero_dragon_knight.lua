@@ -152,6 +152,8 @@ end
 
 function imba_dragon_knight_dragon_tail:OnSpellStart()
 	if IsServer() then
+		if self:GetCursorTarget():TriggerSpellAbsorb(self) then return end
+
 		self.main_target = self:GetCursorTarget()
 		local speed = self:GetSpecialValueFor("projectile_speed")
 
