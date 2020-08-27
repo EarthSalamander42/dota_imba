@@ -190,6 +190,9 @@ end
 -- NULLIFIER MUTE MODIFIER --
 -----------------------------
 
+function modifier_item_imba_nullifier_dispel:IsPurgable() return false end
+function modifier_item_imba_nullifier_dispel:IsPurgeException() return false end
+
 function modifier_item_imba_nullifier_dispel:GetEffectName()
 	if (self:GetAbility() and self:GetAbility():GetLevel() == 2) or self.level == 2 then
 		return "particles/items4_fx/nullifier_mute_debuff_2.vpcf"

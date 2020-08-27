@@ -107,7 +107,7 @@ function modifier_item_imba_lotus_orb_active:IsPurgable() return false end
 function modifier_item_imba_lotus_orb_active:IsPurgeException() return false end
 
 function modifier_item_imba_lotus_orb_active:DeclareFunctions() return {
---	MODIFIER_PROPERTY_ABSORB_SPELL, -- Possible IMBAfication?
+	MODIFIER_PROPERTY_ABSORB_SPELL,
 	MODIFIER_PROPERTY_REFLECT_SPELL,
 } end
 
@@ -133,6 +133,10 @@ function modifier_item_imba_lotus_orb_active:OnCreated(params)
 end
 
 function modifier_item_imba_lotus_orb_active:GetAbsorbSpell(params)
+	if self:GetAbility():GetAbilityName() == "item_imba_lotus_orb" then
+		return nil
+	end
+
 	if params.ability then
 		print("Ability absorbed:", params.ability:GetAbilityName())
 	end
