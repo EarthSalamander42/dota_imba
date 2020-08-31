@@ -123,6 +123,9 @@ function modifier_item_imba_lotus_orb_active:OnCreated(params)
 	if params.shield_pfx then shield_pfx = params.shield_pfx end
 	if params.cast_sound then cast_sound = params.cast_sound end
 	if params.reflect_pfx then self.reflect_pfx = params.reflect_pfx end
+	if params.absorb then self.absorb = params.absorb end
+
+	self:GetParent():Purge(false, true, false, false, false)
 
 	self.pfx = ParticleManager:CreateParticle(shield_pfx, PATTACH_POINT_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
@@ -141,6 +144,8 @@ function modifier_item_imba_lotus_orb_active:GetAbsorbSpell(params)
 	if params.ability:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
 		return nil
 	end
+
+	if not self.absorb then return 0 end
 
 	self:GetCaster():EmitSound("Item.LotusOrb.Activate")
 

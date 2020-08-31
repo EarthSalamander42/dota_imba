@@ -60,6 +60,10 @@ function item_imba_sheepstick:OnSpellStart()
 		local hex_duration = self:GetSpecialValueFor("hex_duration")
 		local modified_duration = hex_duration
 
+		if target:IsMagicImmune() then
+			return nil
+		end
+
 		-- If the target possesses a ready Linken's Sphere, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(self) then

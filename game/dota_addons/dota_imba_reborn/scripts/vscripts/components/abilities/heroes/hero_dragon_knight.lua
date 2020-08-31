@@ -157,6 +157,10 @@ function imba_dragon_knight_dragon_tail:OnSpellStart()
 
 		if self.main_target then
 			if not self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
+				if self.main_target:TriggerSpellAbsorb(self) then
+					return
+				end
+
 				self.main_target:EmitSound("Hero_DragonKnight.DragonTail.Target")
 				ParticleManager:CreateParticle("particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.main_target)
 				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail", {duration = self:GetSpecialValueFor("duration_instances")})

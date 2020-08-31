@@ -668,6 +668,7 @@ function imba_antimage_spell_shield:OnSpellStart()
 			shield_pfx = "particles/units/heroes/hero_antimage/antimage_counter.vpcf",
 			reflect_pfx = "particles/units/heroes/hero_antimage/antimage_spellshield.vpcf",
 			cast_sound = "Hero_Antimage.Counterspell.Cast",
+			absorb = true,
 		})
 
 		-- Run visual + sound

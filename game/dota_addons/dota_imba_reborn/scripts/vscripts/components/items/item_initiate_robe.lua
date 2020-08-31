@@ -22,10 +22,15 @@
 -------------------------------------------
 --				Initiate Robe
 -------------------------------------------
+
 LinkLuaModifier("modifier_imba_initiate_robe_passive", "components/items/item_initiate_robe.lua", LUA_MODIFIER_MOTION_NONE)
+
 -------------------------------------------
-item_imba_initiate_robe = class({})
+
+item_imba_initiate_robe = item_imba_initiate_robe or class({})
+
 -------------------------------------------
+
 function item_imba_initiate_robe:GetIntrinsicModifierName()
 	return "modifier_imba_initiate_robe_passive"
 end
@@ -54,18 +59,18 @@ function modifier_imba_initiate_robe_passive:OnCreated()
 	if IsServer() then
         if not self:GetAbility() then self:Destroy() end
     end
-	
+
 	if IsServer() then 
 		local item = self:GetAbility()
 		self.parent = self:GetParent()
 		if self.parent:IsHero() and item then
 			self.shield_pfx = nil
 			self:CheckUnique(true)
-			
+
 			-- Start tracking mana percentages and mana values to determine if mana was lost
 			self.mana_pct = self:GetParent():GetManaPercent()
 			self.mana_raw = self:GetParent():GetMana()
-			
+
 			self:StartIntervalThink(0.03)
 		end
 	end
@@ -95,13 +100,13 @@ end
 
 function modifier_imba_initiate_robe_passive:GetModifierConstantManaRegen()
 	if self:GetAbility() then
-		return self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+		return self:GetAbility():GetSpecialValueFor("mana_regen")
 	end
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierMagicalResistanceBonus()
 	if self:GetAbility() then
-		return self:GetAbility():GetSpecialValueFor("bonus_magic_resistance")
+		return self:GetAbility():GetSpecialValueFor("magic_resist")
 	end
 end
 

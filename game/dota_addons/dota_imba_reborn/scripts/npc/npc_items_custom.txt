@@ -8695,7 +8695,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"magic_resist"			"20"
 			}
-			
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -8706,7 +8705,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_mana"			"300"			
 			}
-			
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
