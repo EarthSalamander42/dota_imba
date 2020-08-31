@@ -815,7 +815,7 @@ end
 
 function modifier_bloodseeker_thirst_v2_vision:OnDeath(keys)
 	if keys.unit == self:GetParent() then
-		if not self:GetParent().IsReincarnating or not self:GetParent():IsReincarnating() then
+		if not self:GetParent().IsImbaReincarnating or not self:GetParent():IsImbaReincarnating() then
 			self:SetDuration(self.linger_duration, true)
 		else
 			self:Destroy()

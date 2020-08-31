@@ -396,7 +396,7 @@ function modifier_imba_bristleback_quillspray_thinker:OnIntervalThink()
 			
 			table.insert(self.hit_enemies, enemy)
 			
-			if not enemy:IsAlive() and enemy:IsRealHero() and (enemy.IsReincarnating and not enemy:IsReincarnating()) then
+			if not enemy:IsAlive() and enemy:IsRealHero() and (enemy.IsImbaReincarnating and not enemy:IsImbaReincarnating()) then
 				self.caster:EmitSound("bristleback_bristle_quill_spray_0"..math.random(1,6))
 			end
 		end

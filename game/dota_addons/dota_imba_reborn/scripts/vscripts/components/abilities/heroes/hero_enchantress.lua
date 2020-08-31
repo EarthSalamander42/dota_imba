@@ -1004,7 +1004,7 @@ function modifier_imba_enchantress_impetus:OnAttackLanded( keys )
 			-- IMBAfication: Huntmastery (deprecated to now allow a small grace period with modifier modifier_imba_enchantress_impetus_huntmastery_timer but leaving this for reference
 			-- Gotta wait a bit before potential kills are registered
 			-- Timers:CreateTimer(FrameTime(), function()
-				-- if not keys.target:IsAlive() and keys.target:IsRealHero() and (keys.target.IsReincarnating and not keys.target:IsReincarnating()) then
+				-- if not keys.target:IsAlive() and keys.target:IsRealHero() and (keys.target.IsImbaReincarnating and not keys.target:IsImbaReincarnating()) then
 					-- self:IncrementStackCount()
 					
 					-- if self.caster:GetName() == "npc_dota_hero_enchantress" then
@@ -1055,7 +1055,7 @@ function modifier_imba_enchantress_impetus_huntmastery_timer:DeclareFunctions()
 end
 
 function modifier_imba_enchantress_impetus_huntmastery_timer:OnDeath(keys)
-	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (keys.unit.IsReincarnating and not keys.unit:IsReincarnating()) then
+	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (keys.unit.IsImbaReincarnating and not keys.unit:IsImbaReincarnating()) then
 		if self:GetAbility():GetName() == "imba_enchantress_impetus_723" then
 			if not self:GetCaster():HasModifier("modifier_imba_enchantress_impetus_723") then
 				local impetus_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enchantress_impetus_723", {})

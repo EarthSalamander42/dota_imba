@@ -1251,7 +1251,7 @@ function modifier_imba_broodmother_poison_sting_debuff:OnTooltip()
 end
 
 function modifier_imba_broodmother_poison_sting_debuff:OnDeath(keys)
-	if keys.unit == self:GetParent() and (not self:GetParent().IsReincarnating or not self:GetParent():IsReincarnating()) and self.spiders then	
+	if keys.unit == self:GetParent() and (not self:GetParent().IsImbaReincarnating or not self:GetParent():IsImbaReincarnating()) and self.spiders then	
 		for entindex, bool in pairs(self.spiders) do
 			if EntIndexToHScript(entindex) and not EntIndexToHScript(entindex):IsNull() and EntIndexToHScript(entindex):IsAlive() and EntIndexToHScript(entindex):HasModifier("modifier_imba_broodmother_poison_sting") then
 				if (keys.unit:IsRealHero() or keys.unit:IsClone()) then
@@ -1568,7 +1568,7 @@ function modifier_imba_broodmother_spiderking_poison_sting_debuff:OnTooltip()
 end
 
 function modifier_imba_broodmother_spiderking_poison_sting_debuff:OnDeath(keys)
-    if keys.unit == self:GetParent() and (not self:GetParent().IsReincarnating or not self:GetParent():IsReincarnating()) and self.spiders then 
+    if keys.unit == self:GetParent() and (not self:GetParent().IsImbaReincarnating or not self:GetParent():IsImbaReincarnating()) and self.spiders then 
         for entindex, bool in pairs(self.spiders) do
             if EntIndexToHScript(entindex) and not EntIndexToHScript(entindex):IsNull() and EntIndexToHScript(entindex):IsAlive() and EntIndexToHScript(entindex):HasModifier("modifier_imba_broodmother_spiderking_poison_sting") then
                 if (keys.unit:IsRealHero() or keys.unit:IsClone()) then

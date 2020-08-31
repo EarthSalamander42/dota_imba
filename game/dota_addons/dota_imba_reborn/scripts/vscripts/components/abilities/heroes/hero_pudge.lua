@@ -961,7 +961,7 @@ function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
 	local target = params.unit
 		
 	-- Checks to make sure death is an enemy hero
-	if self:GetCaster():IsRealHero() and target:IsRealHero() and caster:GetTeamNumber() ~= target:GetTeamNumber() and (not params.unit.IsReincarnating or not params.unit:IsReincarnating()) then
+	if self:GetCaster():IsRealHero() and target:IsRealHero() and caster:GetTeamNumber() ~= target:GetTeamNumber() and (not params.unit.IsImbaReincarnating or not params.unit:IsImbaReincarnating()) then
 			
 		local flesh_heap_range = self:GetAbility():GetSpecialValueFor("range")
 		if flesh_heap_range == 0 then

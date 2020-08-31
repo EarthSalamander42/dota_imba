@@ -123,7 +123,7 @@ function modifier_item_manta_passive:GetModifierMoveSpeedBonus_Constant()
 end
 
 function modifier_item_manta_passive:OnDeath(keys)
-	if self:GetAbility() and self:GetAbility():GetName() == "item_imba_manta_2" and keys.unit == self:GetParent() and self:GetParent():IsRealHero() and keys.attacker ~= self:GetParent() and (not self:GetParent().IsReincarnating or (self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating())) and (keys.attacker:IsRealHero() or keys.attacker:IsClone() or keys.attacker:IsTempestDouble() or keys.attacker:IsIllusion()) then
+	if self:GetAbility() and self:GetAbility():GetName() == "item_imba_manta_2" and keys.unit == self:GetParent() and self:GetParent():IsRealHero() and keys.attacker ~= self:GetParent() and (not self:GetParent().IsImbaReincarnating or (self:GetParent().IsImbaReincarnating and not self:GetParent():IsImbaReincarnating())) and (keys.attacker:IsRealHero() or keys.attacker:IsClone() or keys.attacker:IsTempestDouble() or keys.attacker:IsIllusion()) then
 		if not keys.attacker:IsRangedAttacker() then
 			self.outgoing_damage = self:GetAbility():GetSpecialValueFor("images_do_damage_percent_melee")
 			self.incoming_damage = self:GetAbility():GetSpecialValueFor("images_take_damage_percent_melee")

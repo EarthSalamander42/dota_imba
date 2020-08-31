@@ -280,7 +280,7 @@ function modifier_imba_furion_wrath_of_nature_spawn:DeclareFunctions()
 end
 
 function modifier_imba_furion_wrath_of_nature_spawn:OnDeath(keys)
-	if keys.unit == self:GetParent() and (not self:GetParent().IsReincarnating or not self:GetParent():IsReincarnating()) then
+	if keys.unit == self:GetParent() and (not self:GetParent().IsImbaReincarnating or not self:GetParent():IsImbaReincarnating()) then
 		if self:GetCaster():HasModifier("modifier_imba_furion_wrath_of_nature") then
 			if self:GetCaster():HasScepter() then
 				if (self:GetParent():IsRealHero() or self:GetParent():IsClone()) and self.treant_bonus_damage_hero then

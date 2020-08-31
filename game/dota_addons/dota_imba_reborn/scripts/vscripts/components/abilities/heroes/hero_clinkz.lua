@@ -466,7 +466,7 @@ function modifier_imba_clinkz_death_pact_723_enemy:GetModifierPhysicalArmorBonus
 end
 
 function modifier_imba_clinkz_death_pact_723_enemy:OnDeath(keys)
-	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (not keys.unit.IsReincarnating or (keys.unit.IsReincarnating and not keys.unit:IsReincarnating())) then
+	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (not keys.unit.IsImbaReincarnating or (keys.unit.IsImbaReincarnating and not keys.unit:IsImbaReincarnating())) then
 		local pact_modifier	= self:GetCaster():FindModifierByName("modifier_imba_clinkz_death_pact_723_permanent_buff")
 		
 		if pact_modifier then
