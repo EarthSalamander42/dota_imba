@@ -658,14 +658,13 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_scepter"	"500"
+				"cast_range_scepter"	"600"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cooldown_scepter"	"25"
 			}
-			
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"

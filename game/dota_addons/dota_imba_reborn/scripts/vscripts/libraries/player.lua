@@ -456,16 +456,11 @@ end
 function CDOTA_BaseNPC:IsImbaReincarnating()
 	if self:IsReincarnating() then
 		return true
-	end
 
 	for _, modifier in pairs(IMBA_REINCARNATION_MODIFIERS) do
 		if self:HasModifier(modifier) then
 			return true
 		end
-	end
-
-	return false
-end
 
 -- Talent handling
 function CDOTA_BaseNPC:HasTalent(talentName)
@@ -829,7 +824,7 @@ function CDOTA_BaseNPC:GetIllusionBounty()
 end
 
 -- Call custom functions whenever CreateLinearProjectile is being called anywhere
-original_CreateLinearProjectile = ProjectileManager.CreateLinearProjectile
+local original_CreateLinearProjectile = ProjectileManager.CreateLinearProjectile
 ProjectileManager.CreateLinearProjectile = function(self, hHandle)
 --	print("CreateLinearProjectile (override):", hHandle)
 	if not hHandle.EffectName then return original_CreateLinearProjectile(self, hHandle) end
@@ -844,7 +839,7 @@ ProjectileManager.CreateLinearProjectile = function(self, hHandle)
 end
 
 -- Call custom functions whenever CreateTrackingProjectile is being called anywhere
-original_CreateTrackingProjectile = ProjectileManager.CreateTrackingProjectile
+local original_CreateTrackingProjectile = ProjectileManager.CreateTrackingProjectile
 ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
 --	print("CreateTrackingProjectile (override):", hHandle)
 --	print(hHandle.EffectName)
@@ -887,7 +882,7 @@ ignored_pfx_list["particles/item/rapier/item_rapier_archmage.vpcf"] = true
 ignored_pfx_list["particles/item/rapier/item_rapier_cursed.vpcf"] = true
 
 -- Call custom functions whenever CreateParticle is being called anywhere
-original_CreateParticle = CScriptParticleManager.CreateParticle
+local original_CreateParticle = CScriptParticleManager.CreateParticle
 CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachType, hParent, hCaster)
 	local override = nil
 
@@ -916,7 +911,7 @@ CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachTyp
 end
 
 -- Call custom functions whenever CreateParticleForTeam is being called anywhere
-original_CreateParticleForTeam = CScriptParticleManager.CreateParticleForTeam
+local original_CreateParticleForTeam = CScriptParticleManager.CreateParticleForTeam
 CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAttachType, hParent, iTeamNumber, hCaster)
 --	print("Create Particle (override):", sParticleName, iAttachType, hParent, iTeamNumber, hCaster)
 
@@ -937,7 +932,7 @@ CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAt
 end
 
 -- Call custom functions whenever CreateParticleForPlayer is being called anywhere
-original_CreateParticleForPlayer = CScriptParticleManager.CreateParticleForPlayer
+local original_CreateParticleForPlayer = CScriptParticleManager.CreateParticleForPlayer
 CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, iAttachType, hParent, hPlayer, hCaster)
 --	print("Create Particle (override):", sParticleName, iAttachType, hParent, hPlayer, hCaster)
 
@@ -958,7 +953,7 @@ CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, i
 end
 
 -- Call custom functions whenever CreateIllusions is being called anywhere
-original_CreateIllusions = CreateIllusions
+local original_CreateIllusions = CreateIllusions
 CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 --	print("Create Illusions (override):", hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace)
 
@@ -980,7 +975,7 @@ end
 CDOTA_BaseNPC.SOUNDS_OVERRIDE = {}
 
 -- Call custom functions whenever EmitSound is being called anywhere
-original_EmitSound = CDOTA_BaseNPC.EmitSound
+local original_EmitSound = CDOTA_BaseNPC.EmitSound
 CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 --	print("Create Particle (override):", sSoundName)
 
@@ -1006,7 +1001,7 @@ CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 	return response
 end
 
-original_EmitSoundOn = EmitSoundOn
+local original_EmitSoundOn = EmitSoundOn
 EmitSoundOn = function(sSoundName, hParent, hCaster)
 --	print("Create Particle (override):", sSoundName)
 
@@ -1032,7 +1027,7 @@ EmitSoundOn = function(sSoundName, hParent, hCaster)
 	return response
 end
 
-original_EmitSoundOnLocationWithCaster = EmitSoundOnLocationWithCaster
+local original_EmitSoundOnLocationWithCaster = EmitSoundOnLocationWithCaster
 EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hParent, hCaster)
 --	print("Create Particle (override):", sSoundName)
 	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hParent:GetPlayerOwnerID()) 
@@ -1057,8 +1052,33 @@ EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hParent, hCaster
 	return response
 end
 
+--[[ -- not working WTF?
+-- Call custom functions whenever IsReincarnating is being called anywhere
+local original_IsReincarnating = CDOTA_BaseNPC.IsReincarnating
+CDOTA_BaseNPC.IsReincarnating = function(self)
+
+	-- call the original function
+	local response = original_IsReincarnating(self)
+	print("Is Reincarnating?:", response)
+
+	-- stop right there if vanilla IsReincarnating is true
+	if response == true then
+		return true
+	end
+
+	-- otherwise, check for imba reincarnation modifiers
+	for _, modifier in pairs(IMBA_REINCARNATION_MODIFIERS) do
+		if self:HasModifier(modifier) then
+			return true
+		end
+	end
+
+	return response
+end
+--]]
+
 --[[ Should be ready to work, not required yet
-original_Ability_GetProjectileName = CDOTA_Ability_Lua.GetProjectileName
+local original_Ability_GetProjectileName = CDOTA_Ability_Lua.GetProjectileName
 CDOTA_Ability_Lua.GetProjectileName = function(self)
 	-- call the original function
 	local response = original_Ability_GetProjectileName(self)
@@ -1076,7 +1096,7 @@ end
 --]]
 
 --[[ for SOME reasons, those functions are not triggered when CDOTABaseAbility.OnProjectileHit is called on any ability
-original_OnProjectileHit = CDOTABaseAbility.OnProjectileHit
+local original_OnProjectileHit = CDOTABaseAbility.OnProjectileHit
 CDOTABaseAbility.OnProjectileHit = function(self, hTarget, vLocation)
 	print("Ability/Item:", self:GetAbilityName())
 	if self == nil then return end
@@ -1089,7 +1109,7 @@ CDOTABaseAbility.OnProjectileHit = function(self, hTarget, vLocation)
 	end
 end
 
-original_OnProjectileHit_ExtraData = CDOTABaseAbility.OnProjectileHit_ExtraData
+local original_OnProjectileHit_ExtraData = CDOTABaseAbility.OnProjectileHit_ExtraData
 CDOTABaseAbility.OnProjectileHit_ExtraData = function(self, hTarget, vLocation)
 	print("Ability/Item:", self:GetAbilityName())
 	if self == nil then return end

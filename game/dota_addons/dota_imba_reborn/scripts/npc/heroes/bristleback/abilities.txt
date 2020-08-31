@@ -276,14 +276,14 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_stack"					"25 30 35"
+				"damage_per_stack"				"22 28 34"
 				//"LinkedSpecialBonus"	"special_bonus_unique_bristleback_3"
 				"LinkedSpecialBonus"	"special_bonus_imba_bristleback_3"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"move_speed_per_stack"				"3 4 5"
+				"move_speed_per_stack"			"3 4 5"
 			}
 			"03"
 			{

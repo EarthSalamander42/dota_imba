@@ -1216,7 +1216,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 	local unit = OnDeathKeys.unit
 	local reincarnate = OnDeathKeys.reincarnate
 	-- Check if it was a reincarnation death
-	if reincarnate then -- and (not BuffInfo.caster:HasModifier("modifier_item_imba_aegis")) then
+	if reincarnate and (not BuffInfo.caster:HasModifier("modifier_item_imba_aegis")) then
 		BuffInfo.reincarnation_death = true
 
 		-- Use the Reincarnation's ability cooldown
@@ -1284,22 +1284,22 @@ end
 -- Reicarnation modifier
 modifier_imba_reincarnation = modifier_imba_reincarnation or class({})
 
-function modifier_imba_reincarnation:OnCreated()    
-		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()    
-		self.particle_death = "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
-		self.sound_death = "Hero_SkeletonKing.Reincarnate"
-		self.sound_reincarnation = "Hero_SkeletonKing.Reincarnate.Stinger"
-		self.sound_be_back = "Hero_WraithKing.IllBeBack"
-		self.modifier_wraith = "modifier_imba_reincarnation_wraith_form"
+function modifier_imba_reincarnation:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()    
+	self.particle_death = "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+	self.sound_death = "Hero_SkeletonKing.Reincarnate"
+	self.sound_reincarnation = "Hero_SkeletonKing.Reincarnate.Stinger"
+	self.sound_be_back = "Hero_WraithKing.IllBeBack"
+	self.modifier_wraith = "modifier_imba_reincarnation_wraith_form"
 
-		-- Ability specials
-		self.reincarnate_delay = self.ability:GetSpecialValueFor("reincarnate_delay")
-		self.passive_respawn_haste = self.ability:GetSpecialValueFor("passive_respawn_haste")        
-		self.slow_radius = self.ability:GetSpecialValueFor("slow_radius")
-		self.slow_duration = self.ability:GetSpecialValueFor("slow_duration")
-		self.scepter_wraith_form_radius = self.ability:GetSpecialValueFor("scepter_wraith_form_radius")        
+	-- Ability specials
+	self.reincarnate_delay = self.ability:GetSpecialValueFor("reincarnate_delay")
+	self.passive_respawn_haste = self.ability:GetSpecialValueFor("passive_respawn_haste")        
+	self.slow_radius = self.ability:GetSpecialValueFor("slow_radius")
+	self.slow_duration = self.ability:GetSpecialValueFor("slow_duration")
+	self.scepter_wraith_form_radius = self.ability:GetSpecialValueFor("scepter_wraith_form_radius")        
 
 	if IsServer() then
 		-- Set WK as immortal!
@@ -1338,20 +1338,21 @@ function modifier_imba_reincarnation:OnIntervalThink()
 
 		if self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady() then
 			local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
-									self.caster:GetAbsOrigin(),
-									nil,
-									self.caster:FindTalentValue("special_bonus_imba_skeleton_king_5"),
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_HERO,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
+				self.caster:GetAbsOrigin(),
+				nil,
+				self.caster:FindTalentValue("special_bonus_imba_skeleton_king_5"),
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO,
+				DOTA_UNIT_TARGET_FLAG_NONE,
+				FIND_ANY_ORDER,
+				false
+			)
+
 			for _,unit in pairs(units) do
 				if unit ~= self.caster then
 					unit:AddNewModifier(self.caster, self.ability, "modifier_imba_reincarnation", {})
 				end
 			end
-
 		end
 	end
 end
@@ -1393,9 +1394,8 @@ function modifier_imba_reincarnation:OnDeath(keys)
 		local reincarnate = keys.reincarnate
 
 		-- Only apply if the caster is the unit that died
-		if self:GetParent() == unit then            
+		if self:GetParent() == unit then
 			imba_wraith_king_reincarnation:TheWillOfTheKing( keys, self )
-			
 		end
 	end
 end

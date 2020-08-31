@@ -445,11 +445,6 @@ IMBA_NODRAW_MODIFIERS = {
 	"modifier_mutation_monkey_business_transform",
 }
 
-IMBA_REINCARNATION_MODIFIERS = {
---	"modifier_imba_reincarnation",
-	"modifier_item_imba_aegis",
-}
-
 IGNORE_FOUNTAIN_UNITS = {
 	"ent_dota_promo",
 	"ent_dota_halloffame",

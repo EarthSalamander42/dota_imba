@@ -1375,7 +1375,7 @@ end
 
 function modifier_imba_chemical_rage_buff_haste:DeclareFunctions()
 	local table = {
-		MODIFIER_PROPERTY_BASE_MANA_REGEN,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
@@ -1393,7 +1393,7 @@ function modifier_imba_chemical_rage_buff_haste:GetAttackSound()
 	return "Hero_Alchemist.ChemicalRage.Attack"
 end
 
-function modifier_imba_chemical_rage_buff_haste:GetModifierBaseManaRegen()
+function modifier_imba_chemical_rage_buff_haste:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 

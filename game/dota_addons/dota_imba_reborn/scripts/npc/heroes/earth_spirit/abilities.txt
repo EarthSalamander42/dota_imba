@@ -366,7 +366,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"300"
+		"AbilityCastRange"				"350"
 		"AbilityCastPoint"				"0.01"
 		"AbilityCooldown"				"100 90 80"
 		"AbilityManaCost"				"100"
@@ -403,7 +403,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_sec"			"60 130 200"				
+				"damage_per_sec"			"40 80 120"				
 			}
 			"05"
 			{
