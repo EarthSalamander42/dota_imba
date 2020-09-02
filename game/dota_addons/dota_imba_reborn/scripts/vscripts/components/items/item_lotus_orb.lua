@@ -35,7 +35,6 @@ end
 function item_imba_lotus_orb:OnSpellStart()
 	if not IsServer() then return end
 
-	-- use vanilla modifier, and add another modifier to handle abilities not being reflected properly
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lotus_orb_active", {duration = self:GetSpecialValueFor("active_duration")})
 end
 
@@ -137,6 +136,10 @@ function modifier_item_imba_lotus_orb_active:OnCreated(params)
 end
 
 function modifier_item_imba_lotus_orb_active:GetAbsorbSpell(params)
+	if self:GetAbility():GetAbilityName() == "item_imba_lotus_orb" then
+		return nil
+	end
+
 	if params.ability then
 		print("Ability absorbed:", params.ability:GetAbilityName())
 	end
