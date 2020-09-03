@@ -1373,17 +1373,14 @@ function modifier_imba_chemical_rage_buff_haste:GetModifierAura()
 	return "modifier_imba_chemical_rage_aura"
 end
 
-function modifier_imba_chemical_rage_buff_haste:DeclareFunctions()
-	local table = {
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
-		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
-	}
-	return table
-end
+function modifier_imba_chemical_rage_buff_haste:DeclareFunctions() return {
+	MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+	MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+	MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+	MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+	MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
+	MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+} end
 
 function modifier_imba_chemical_rage_buff_haste:GetActivityTranslationModifiers()
 	return "chemical_rage"

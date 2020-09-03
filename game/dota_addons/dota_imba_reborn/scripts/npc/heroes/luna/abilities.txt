@@ -207,11 +207,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage_pct"			"10 18 26 34"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"armor_pct"		"10 15 20 25"
-			}
+//			"03"
+//			{
+//				"var_type"					"FIELD_INTEGER"
+//				"armor_pct"		"10 15 20 25"
+//			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -286,18 +286,18 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"beam_interval"				"0.6 0.5 0.4"
+				"beam_interval"				"0.6"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				//"beam_interval_scepter"				"0.3"
-				"beam_interval_scepter"				"0.3 0.25 0.2"
+				//"beam_interval_scepter"		"0.3"
+				"beam_interval_scepter"			"0.3"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_tooltip"			"3.0 4.5 5.2"
+				"duration_tooltip"			"2.4 4.2 6.0"
 			}
 			"06"
 			{
@@ -319,7 +319,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_tooltip_scepter"	"1.8 3.25 4.0"
+				"duration_tooltip_scepter"	"1.8 3.6 5.4"
 				"RequiresScepter"		"1"
 			}
 			"10"
@@ -328,7 +328,6 @@
 				"cast_range_tooltip_scepter"	"2500"
 				"RequiresScepter"		"1"
 			}
-			
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"

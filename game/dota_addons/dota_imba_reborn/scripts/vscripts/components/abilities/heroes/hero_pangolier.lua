@@ -1796,7 +1796,7 @@ function modifier_imba_gyroshell_impact_check:OnIntervalThink()
 							--Check how many times this target was damaged already
 							local times_hit = enemy.hit_times
 							--print(times_hit)
-							local extra_damage = self:GetAbility():GetSpecialValueFor("damage")
+							local extra_damage = self:GetAbility():GetAbilityDamage()
 
 							--Multiplies the damage by 2 for each previous impact
 							if times_hit > 1 then
