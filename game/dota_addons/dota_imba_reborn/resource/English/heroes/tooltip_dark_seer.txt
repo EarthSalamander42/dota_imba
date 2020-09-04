@@ -43,12 +43,11 @@
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_duration"								"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_damage_per_second"					"DAMAGE PER SECOND:"
 
-
 "DOTA_Tooltip_ability_imba_dark_seer_surge"											"Surge"
-"DOTA_Tooltip_ability_imba_dark_seer_surge_Description"								"Charges a target friendly unit with power, giving it a brief burst of movement speed and removes unit collisions. Allows the unit to surpass the movement speed limit and cannot be slowed.\n<font color='#FF7800'>Group Advancement: </font>Surge is a ground targeted, %surge_radius% radius ability. Can be self-cast to center the AoE around the caster's position.\n<font color='#FF7800'>Sonic Boom:</font> Surge also releases a sonic boom from the target location, pushing all enemies within %surge_radius% radius away (%sonic_boom_knockback_speed% speed for %sonic_boom_knockback_duration% seconds), dealing %sonic_boom_damage% damage, and applying a debuff that reduces their movement speed by %sonic_boom_move_speed_slow%%% and causes them to miss %sonic_boom_miss_percentage%%% of their attacks for %sonic_boom_move_speed_duration% seconds."
-"DOTA_Tooltip_ability_imba_dark_seer_surge_Lore"										"Ish'Kafel once used his speed of mind to navigate the maze between the walls."
+"DOTA_Tooltip_ability_imba_dark_seer_surge_Description"								"Charges a target friendly unit with power, giving it a brief burst of movement speed and removes unit collisions. Allows the unit to <font color='#FF7800'>surpass the movement speed limit</font> and cannot be slowed.\n<font color='#FF7800'>Group Advancement: </font>Surge is a ground targeted, %surge_radius% radius ability. Can be self-cast to center the AoE around the caster's position.\n<font color='#FF7800'>Sonic Boom:</font> Surge also releases a sonic boom from the target location, pushing all enemies within %surge_radius% radius away (%sonic_boom_knockback_speed% speed for %sonic_boom_knockback_duration% seconds), dealing %sonic_boom_damage% damage, and applying a debuff that reduces their movement speed by %sonic_boom_move_speed_slow%%% and causes them to miss %sonic_boom_miss_percentage%%% of their attacks for %sonic_boom_move_speed_duration% seconds."
+"DOTA_Tooltip_ability_imba_dark_seer_surge_Lore"									"Ish'Kafel once used his speed of mind to navigate the maze between the walls."
 "DOTA_Tooltip_ability_imba_dark_seer_surge_Note0"									"Units with Surge cannot be slowed unless the Surge effect is removed."
-"DOTA_Tooltip_ability_imba_dark_seer_surge_duration"									"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_dark_seer_surge_duration"								"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_dark_seer_surge_speed_boost"								"SPEED BONUS:"
 
 "DOTA_Tooltip_ability_imba_dark_seer_close_portal"									"Close Portal"
@@ -66,7 +65,7 @@
 //"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_rotation_speed"		"SCEPTER ROTATIONAL DEGREES PER SECOND:"
 //"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"			"The walls now rotate clockwise around the cast point."
 
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"		"Increases wall length and duration."
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"		"Increases wall length."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_width"				"SCEPTER WIDTH:"
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_duration"			"SCEPTER DURATION:"
 

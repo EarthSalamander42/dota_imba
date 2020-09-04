@@ -186,19 +186,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"delay"			"0.2"
+				"delay"					"0.2"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_attack"			"1"
+				"tooltip_attack"		"1"
 				//"LinkedSpecialBonus"	"special_bonus_unique_weaver_5"
 				"LinkedSpecialBonus"	"special_bonus_imba_weaver_geminate_attack_tooltip_attack"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15 30 45 60"
+				"bonus_damage"			"10 25 40 55"
 			}
 		}		
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"

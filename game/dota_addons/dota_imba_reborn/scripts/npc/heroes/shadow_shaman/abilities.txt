@@ -333,7 +333,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_bonus_range"	"250"
+				"scepter_bonus_range"	"225"
 			}
 			"06"
 			{

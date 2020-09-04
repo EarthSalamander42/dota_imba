@@ -170,7 +170,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7"
+		"AbilityCooldown"				"7.0"
 		"AbilityManaCost"				"0"
 		
 		//-------------------------------------------------------------------------------------------------------------
@@ -194,35 +194,40 @@
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"2 1 0 0"
+				"var_type"						"FIELD_FLOAT"
+				"cooldown_reduction_per_orb"	"0.3"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_cost_scepter"			"0"
+				"cooldown_scepter"			"2 1 0 0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_intellect"			"0 8 12 15"
+				"mana_cost_scepter"			"0"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_resistance_pct"		"0 0 15 25"
+				"bonus_intellect"			"0 8 12 15"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_spellpower"			"0 0 6 15"
+				"magic_resistance_pct"		"0 0 15 25"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_lifesteal"			"0 0 0 25"
+				"bonus_spellpower"			"0 0 6 15"
 			}
 			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_lifesteal"			"0 0 0 25"
+			}
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cooldown_reduction_pct"	"0 0 0 15"
@@ -274,7 +279,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"delay"						"2.9 2.8 2.7 2.6 2.5 2.4 2.3 2.2"
+				"delay"						"2.9"
 			}
 			"02"
 			{
@@ -1128,8 +1133,8 @@
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"main_damage"			"60 80 100 120 145 170 195 220"
+				"var_type"				"FIELD_FLOAT"
+				"main_damage"			"57.5 75 92.5 110 127.5 145 162.5 180.0"
 				"levelkey"				"exortlevel"
 			}
 			"09"
@@ -1139,8 +1144,8 @@
 			}
 			"10"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_dps"				"15 20 25 30 36 42 48 54"
+				"var_type"				"FIELD_FLOAT"
+				"burn_dps"				"11.5 15 18.5 22 25.5 29 32.5 36"
 				"levelkey"				"exortlevel"
 			}
 			"11"

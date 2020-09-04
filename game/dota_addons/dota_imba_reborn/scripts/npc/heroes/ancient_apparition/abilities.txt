@@ -270,7 +270,7 @@
 			"05"
 			{	
 				"var_type"				"FIELD_FLOAT"
-				"frostbite_duration"	"10 12 14"
+				"frostbite_duration"	"10.0 11.0 12.0"
 			}
 			"06"
 			{	

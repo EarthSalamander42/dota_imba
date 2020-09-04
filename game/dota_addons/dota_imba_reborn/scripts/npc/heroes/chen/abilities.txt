@@ -185,34 +185,32 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_rate"					"7 13 19 25"
+				"heal_rate"				"7 13 19 25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_bonus"		"24 36 48 60"
+				"damage_bonus"			"24 36 48 60"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"8 10 12 14"
 			}
-			
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"			
 				"creep_damage_mult"		"3"
 			}
-			
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amp_aura"				"6 10 14 18"
+				"heal_amp_aura"			"6 10 14 18"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_rate_aura"					"2 3 4 5"
+				"var_type"				"FIELD_FLOAT"
+				"heal_rate_aura"		"1.25 2.5 3.75 5.0"
 			}
 			"08"
 			{
@@ -222,13 +220,13 @@
 			}
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"army_damage_multiplier"		"2"
+				"var_type"					"FIELD_FLOAT"
+				"army_damage_multiplier"	"2"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"		"1200"
+				"aura_radius"			"1200"
 			}			
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -242,7 +240,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_chen.lua"
 		"AbilityTextureName"			"chen_holy_persuasion"		
-	
+
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
@@ -254,12 +252,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
-		"AbilityCooldown"				"0.5"
+		"AbilityCooldown"				"15.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -358,7 +356,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"250 475 600"
+				"heal_amount"			"250 425 600"
 				"LinkedSpecialBonus"	"special_bonus_unique_chen_2"
 			}
 			"02"

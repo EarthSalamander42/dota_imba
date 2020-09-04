@@ -67,7 +67,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"100 100 100 100"
+				"max_stacks"			"10 10 10 10"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -330,7 +330,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"100"
-		"AbilityCooldown"				"100 90 80"
+		"AbilityCooldown"				"100.0 90.0 80.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -348,7 +348,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"drag_distance"			"300 300 300"
+				"drag_distance"			"300"
 			}
 			"03"
 			{
@@ -358,26 +358,25 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"grab_radius"		"400"
+				"grab_radius"			"400"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"grab_radius_scepter"		"800"
+				"grab_radius_scepter"	"550"
 				"RequiresScepter"		"1"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"		"20 40 60"
+				"damage"				"20 40 60"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scepter_damage"		"100"
 				"RequiresScepter"		"1"
-			}			
-			
+			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"

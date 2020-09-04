@@ -13,7 +13,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilityCooldown"				"5.0"
+		"AbilityCooldown"				"12.0"
 		"AbilityManaCost"				"0"
 		"AbilityCastRange"				"1800"
 
@@ -71,7 +71,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.75"
+				"stun_duration"				"0.2"
 			}
 			"09"
 			{

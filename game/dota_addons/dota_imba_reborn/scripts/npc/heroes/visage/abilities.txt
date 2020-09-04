@@ -421,12 +421,12 @@
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"stun_damage"						"80 140 200"
+				"stun_damage"						"60 100 140"
 			}
 			"04"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"stun_duration"						"1.25 1.5 1.75"
+				"stun_duration"						"1.0 1.25 1.5"
 			}
 			"05"
 			{
@@ -436,7 +436,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"hp_regen"							"150 200 250"
+				"hp_regen"							"150 175 200"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"

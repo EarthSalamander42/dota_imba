@@ -116,22 +116,21 @@
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"duration"	"10"
+				"duration"						"8.0"
 			}
-			
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
+				"var_type"											"FIELD_INTEGER"
 				"discomfort_status_resistance_reduction_per_stack"	"7 8 9 10"
 			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
+				"var_type"											"FIELD_INTEGER"
 				"discomfort_magic_resistance_reduction_per_stack"	"5 6 7 8"
 			}
 			"06"
 			{
-				"var_type"						"FIELD_INTEGER"
+				"var_type"									"FIELD_INTEGER"
 				"terror_night_vision_reduction_per_stack"	"300"
 			}
 		}
@@ -238,12 +237,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"14 13 12 11"
 
-
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 130 150 170"
+		"AbilityManaCost"				"120 140 160 180"
 
-		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"

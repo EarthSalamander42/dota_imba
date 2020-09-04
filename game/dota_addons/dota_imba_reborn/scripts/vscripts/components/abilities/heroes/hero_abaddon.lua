@@ -73,7 +73,7 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_mist_coil_mist_ally"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_abaddon_death_coil = imba_abaddon_death_coil or class(VANILLA_ABILITIES_BASECLASS)
+imba_abaddon_death_coil = imba_abaddon_death_coil or class({})
 
 function imba_abaddon_death_coil:GetIntrinsicModifierName()
 	return "modifier_imba_mist_coil_passive"
@@ -314,7 +314,7 @@ end
 MergeTables(LinkedModifiers,{
 	["modifier_imba_aphotic_shield_buff_block"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_abaddon_aphotic_shield = imba_abaddon_aphotic_shield or class(VANILLA_ABILITIES_BASECLASS)
+imba_abaddon_aphotic_shield = imba_abaddon_aphotic_shield or class({})
 
 function imba_abaddon_aphotic_shield:IsHiddenWhenStolen()	return false end
 
@@ -555,7 +555,7 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_curse_of_avernus_passive"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_abaddon_frostmourne = imba_abaddon_frostmourne or class(VANILLA_ABILITIES_BASECLASS)
+imba_abaddon_frostmourne = imba_abaddon_frostmourne or class({})
 
 function imba_abaddon_frostmourne:GetIntrinsicModifierName()
 	return "modifier_imba_curse_of_avernus_passive"
@@ -1092,7 +1092,7 @@ MergeTables(LinkedModifiers,{
 MergeTables(LinkedModifiers,{
 	["modifier_imba_borrowed_time_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_abaddon_borrowed_time = imba_abaddon_borrowed_time or class(VANILLA_ABILITIES_BASECLASS)
+imba_abaddon_borrowed_time = imba_abaddon_borrowed_time or class({})
 
 function imba_abaddon_borrowed_time:GetIntrinsicModifierName()
 	if self:GetCaster():IsRealHero() then

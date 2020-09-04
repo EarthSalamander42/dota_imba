@@ -21,7 +21,8 @@
 "DOTA_Tooltip_ability_imba_weaver_shukuchi_damage"						"DAMAGE:"
 "DOTA_Tooltip_ability_imba_weaver_shukuchi_radius"						"RADIUS:"
 "DOTA_Tooltip_ability_imba_weaver_shukuchi_fade_time"					"FADE TIME:"
-"DOTA_Tooltip_ability_imba_weaver_shukuchi_duration"						"DURATION:"
+"DOTA_Tooltip_ability_imba_weaver_shukuchi_speed"						"BONUS MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_weaver_shukuchi_duration"					"DURATION:"
 
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack"						"Geminate Attack"
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack_Description"			"Allows Weaver to dispatch two attacks at once.\n<font color='#FF7800'>Entropic Reposition:</font> Can be set to auto-cast. Activating Geminate Attack with auto-cast on causes Weaver to warp to a random vector around the attacked target (distance between the attacker and target stays the same). Disjoints projectiles, and destroys trees around the warp point."

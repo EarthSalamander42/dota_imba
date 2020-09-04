@@ -24,7 +24,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15"
+		"AbilityCooldown"				"20.0 19.0 18.0 17.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37,14 +37,14 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"				"40 50 60 70"
+				"damage_per_second"				"30 40 50 60"
 				//"LinkedSpecialBonus"			"special_bonus_unique_treant_9"
 				"LinkedSpecialBonus"			"special_bonus_imba_treant_natures_grasp_damage"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"35 40 45 50"
+				"movement_slow"				"25 30 35 40"
 			}
 			"03"
 			{
@@ -102,11 +102,11 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 19 16 13"
+		"AbilityCooldown"				"18.0 16.0 14.0 12.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110"
+		"AbilityManaCost"				"110 120 130 140"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -120,14 +120,14 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"leech_damage"					"25 40 55 70"
+				"leech_damage"					"16 32 48 64"
 				//"LinkedSpecialBonus"			"special_bonus_unique_treant_2"
 				"LinkedSpecialBonus"			"special_bonus_imba_treant_leech_seed_heal"
 			}		
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_slow"					"-26 -34 -42 -50"
+				"movement_slow"					"-8 -14 -20 -26"
 			}	
 			"04"
 			{
@@ -149,7 +149,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"projectile_speed"				"550 600 650 700"
 			}
-			
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -188,7 +187,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 18 14 10"
+		"AbilityCooldown"				"26.0 22.0 18.0 14.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -199,14 +198,14 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"total_heal"		"100 160 220 280"
+				"total_heal"		"60 100 140 180"
 				//"LinkedSpecialBonus"			"special_bonus_unique_treant_8"
 				"LinkedSpecialBonus"			"special_bonus_imba_treant_living_armor_heal"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_armor"		"7 10 13 16"
+				"bonus_armor"		"5 6 7 8"
 			}
 			"03"
 			{
@@ -326,7 +325,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100 80 60"
+		"AbilityCooldown"				"100.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -358,7 +357,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"			"100 125 150"
+				"damage"						"75"
 				//"LinkedSpecialBonus"		"special_bonus_unique_treant_11"
 				"LinkedSpecialBonus"		"special_bonus_imba_treant_overgrowth_damage"
 			}

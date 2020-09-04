@@ -46,11 +46,10 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"max_distance"				"1950 2100 2250 2400"
+				"max_distance"				"1950"
 				//"LinkedSpecialBonus"		"special_bonus_unique_puck"
 				"LinkedSpecialBonus"		"special_bonus_imba_puck_illusory_orb_speed"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-				
 			}
 			"03"
 			{
@@ -167,7 +166,6 @@
 				"damage"					"70 140 210 280"
 				//"LinkedSpecialBonus"		"special_bonus_unique_puck_4"
 			}
-			
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"

@@ -37,7 +37,7 @@
             "01"
             {
                 "var_type"                "FIELD_INTEGER"
-                "slow_attack_speed"        "-120 -160 -200"
+                "slow_attack_speed"        "-100 -140 -180"
                 //"LinkedSpecialBonus"    "special_bonus_unique_enchantress_3"
 				"LinkedSpecialBonus"		"special_bonus_imba_enchantress_5"
             }
@@ -167,7 +167,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 16 12 8"
+		"AbilityCooldown"				"20.0"
 		"AbilityDuration"				"3.75 4.5 5.25 6"
 		
 		// Cost
@@ -188,19 +188,23 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-55"
+				"enchant_health"		"200 300 400 500"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"enchant_health"	"200 400 800 1200"
-			}	
+				"enchant_damage"		"10 30 50 70"
+			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"enchant_damage"	"10 30 50 70"
+				"enchant_armor"			"2 4 6 8"
 			}
-			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_movement_speed"	"-55"
+			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"

@@ -23,418 +23,441 @@ imba_invoker = imba_invoker or class({})
 --	Setup Base Abilities
 -------------------------------------------------------------------------------------------------------------------------
 
-	---------------------------------------------------------------------------------------------------------------------
-	--	Invoker: QUAS
-	---------------------------------------------------------------------------------------------------------------------
-		imba_invoker_quas = class({})
-		LinkLuaModifier("modifier_imba_invoker_quas", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+---------------------------------------------------------------------------------------------------------------------
+--	Invoker: QUAS
+---------------------------------------------------------------------------------------------------------------------
 
-		function imba_invoker_quas:ProcsMagicStick() return false end
+imba_invoker_quas = class({})
 
-		function imba_invoker_quas:OnSpellStart()
-			if IsServer() then
-				local caster = self:GetCaster()
+LinkLuaModifier("modifier_imba_invoker_quas", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 
-				if math.random(0, 100) >= 50 then
-					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
-				else
-					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
-				end
+function imba_invoker_quas:ProcsMagicStick() return false end
 
-				imba_invoker:update_orbs(caster, self, "imba_invoker_quas", "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf")
+function imba_invoker_quas:OnUpgrade()
+	if not IsServer() then return end
+
+	CustomNetTables:SetTableValue("player_table", "quas_level"..tostring(self:GetCaster():GetPlayerOwnerID()), {self:GetLevel()})
+end
+
+function imba_invoker_quas:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+
+		if math.random(0, 100) >= 50 then
+			caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+		else
+			caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+		end
+
+		imba_invoker:update_orbs(caster, self, "imba_invoker_quas", "particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf")
+	end
+end
+
+---------------------------------------------------------------------------------------------------------------------
+--	Invoker: Quas Orb modifier
+---------------------------------------------------------------------------------------------------------------------
+
+modifier_imba_invoker_quas = modifier_imba_invoker_quas or class({})
+
+function modifier_imba_invoker_quas:IsBuff() 		return true  end
+function modifier_imba_invoker_quas:IsHidden() 		return false end
+function modifier_imba_invoker_quas:IsDebuff() 		return false end
+function modifier_imba_invoker_quas:IsPurgable() 	return false end
+function modifier_imba_invoker_quas:RemoveOnDeath() return false end
+function modifier_imba_invoker_quas:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+	}
+
+	return funcs
+end
+
+function modifier_imba_invoker_quas:OnCreated(kv)
+	if IsServer() then 
+		self.bonus_strength = kv.bonus_strength
+		self.health_regen_per_instance = kv.health_regen_per_instance
+	else
+		local net_table = CustomNetTables:GetTableValue("player_table", "quas"..self:GetParent():GetPlayerOwnerID()) or {}
+		self.bonus_strength = net_table.quas_bonus_strength
+		self.health_regen_per_instance = net_table.quas_health_regen_per_instance
+	end
+end
+
+function modifier_imba_invoker_quas:GetModifierBonusStats_Strength()
+	return self.bonus_strength
+end
+
+function modifier_imba_invoker_quas:GetModifierConstantHealthRegen() 
+	return self.health_regen_per_instance
+end
+
+function modifier_imba_invoker_quas:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+
+---------------------------------------------------------------------------------------------------------------------
+--	Invoker: WEX
+---------------------------------------------------------------------------------------------------------------------
+imba_invoker_wex = class({})
+LinkLuaModifier("modifier_imba_invoker_wex", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_invoker_wex:ProcsMagicStick() return false end
+
+function imba_invoker_wex:OnUpgrade()
+	if not IsServer() then return end
+
+	CustomNetTables:SetTableValue("player_table", "wex_level"..tostring(self:GetCaster():GetPlayerOwnerID()), {self:GetLevel()})
+end
+
+function imba_invoker_wex:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+
+		if math.random(0, 100) >= 50 then
+			caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+		else
+			caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+		end
+
+		imba_invoker:update_orbs(caster, self, "imba_invoker_wex", "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf")
+	end
+end
+
+---------------------------------------------------------------------------------------------------------------------
+--	Invoker: Wex Orb modifier
+---------------------------------------------------------------------------------------------------------------------
+modifier_imba_invoker_wex = modifier_imba_invoker_wex or class({})
+function modifier_imba_invoker_wex:IsBuff() 		return true  end
+function modifier_imba_invoker_wex:IsHidden() 		return false end
+function modifier_imba_invoker_wex:IsDebuff() 		return false end
+function modifier_imba_invoker_wex:IsPurgable() 	return false end
+function modifier_imba_invoker_wex:RemoveOnDeath()	return false end
+function modifier_imba_invoker_wex:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
+
+	return funcs
+end
+
+function modifier_imba_invoker_wex:OnCreated(kv)
+	if IsServer() then 
+		self.bonus_agility 				= kv.bonus_agility
+		self.move_speed_per_instance 	= kv.move_speed_per_instance
+		self.attack_speed_per_instance 	= kv.attack_speed_per_instance
+	else
+		local net_table 				= CustomNetTables:GetTableValue("player_table", "wex"..self:GetParent():GetPlayerOwnerID()) or {}
+		self.bonus_agility 				= net_table.wex_bonus_agility
+		self.move_speed_per_instance 	= net_table.wex_move_speed_per_instance
+		self.attack_speed_per_instance 	= net_table.wex_attack_speed_per_instance
+	end
+end
+
+function modifier_imba_invoker_wex:GetModifierBonusStats_Agility()
+	return self.bonus_agility
+end
+
+-- Movement speed buff is working but dosent show up in hero stats
+function modifier_imba_invoker_wex:GetModifierMoveSpeedBonus_Percentage() 
+	return self.move_speed_per_instance
+end
+
+function modifier_imba_invoker_wex:GetModifierAttackSpeedBonus_Constant() 
+	return self.attack_speed_per_instance
+end
+
+function modifier_imba_invoker_wex:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+
+---------------------------------------------------------------------------------------------------------------------
+--	Invoker: EXORT
+---------------------------------------------------------------------------------------------------------------------
+
+imba_invoker_exort = class({})
+
+LinkLuaModifier("modifier_imba_invoker_exort", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_invoker_exort:ProcsMagicStick() return false end
+
+function imba_invoker_exort:OnUpgrade()
+	if not IsServer() then return end
+
+	CustomNetTables:SetTableValue("player_table", "exort_level"..tostring(self:GetCaster():GetPlayerOwnerID()), {self:GetLevel()})
+end
+
+function imba_invoker_exort:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+
+		if math.random(0, 100) >= 50 then
+			caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+		else
+			caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+		end
+
+		imba_invoker:update_orbs(caster, self, "imba_invoker_exort", "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf")
+	end
+end
+
+---------------------------------------------------------------------------------------------------------------------
+--	Invoker: Exort Orb modifier
+---------------------------------------------------------------------------------------------------------------------
+modifier_imba_invoker_exort = modifier_imba_invoker_exort or class({})
+function modifier_imba_invoker_exort:IsBuff() 			return true  end
+function modifier_imba_invoker_exort:IsHidden() 		return false end
+function modifier_imba_invoker_exort:IsDebuff() 		return false end
+function modifier_imba_invoker_exort:IsPurgable() 		return false end
+function modifier_imba_invoker_exort:RemoveOnDeath()	return false end
+function modifier_imba_invoker_exort:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
+	}
+
+	return funcs
+end
+
+function modifier_imba_invoker_exort:OnCreated(kv)
+	if IsServer() then 
+		self.bonus_intelligence = kv.bonus_intelligence
+		self.bonus_damage_per_instance = kv.bonus_damage_per_instance
+	else
+		local net_table = CustomNetTables:GetTableValue("player_table", "exort"..self:GetParent():GetPlayerOwnerID()) or {}
+		self.bonus_intelligence = net_table.exort_bonus_intelligence
+		self.bonus_damage_per_instance = net_table.exort_bonus_damage_per_instance
+	end
+end
+
+function modifier_imba_invoker_exort:GetModifierBonusStats_Intellect()
+	return self.bonus_intelligence
+end
+
+function modifier_imba_invoker_exort:GetModifierBaseAttack_BonusDamage() 
+	return self.bonus_damage_per_instance
+end
+
+function modifier_imba_invoker_exort:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+---------------------------------------------------------------------------------------------------------------------
+--	Utility / Help Functions for orb control
+---------------------------------------------------------------------------------------------------------------------
+function imba_invoker:update_orbs(caster, ability, invoked_orb, particle_path)
+	if IsServer() then 
+		-- need to make sure we dont mess up orb order
+		imba_invoker.orb_sync = false
+
+		-- Instantiate objects
+		if caster.invoked_orbs == nil then 
+			caster.invoked_orbs = {}
+		end
+
+		if caster.invoked_orbs_particle == nil then
+				caster.invoked_orbs_particle = {}
+		end
+
+		if caster.invoked_orbs_particle_attach == nil then
+			caster.invoked_orbs_particle_attach = {}
+			caster.invoked_orbs_particle_attach[1] = "attach_orb1"
+			caster.invoked_orbs_particle_attach[2] = "attach_orb2"
+			caster.invoked_orbs_particle_attach[3] = "attach_orb3"
+		end
+
+		-- Invoker can only have three orbs active at any given time.  Each time an orb is activated, its hscript is
+		-- placed into caster.invoked_orbs[3], the old [3] is moved into [2], and the old [2] is moved into [1].
+		-- Therefore, the oldest orb is located in [1], and the newest is located in [3].
+		-- Now, shift the ordered list of currently summoned orbs down, and add the newest orb to the queue.
+		local remove_orb = caster.invoked_orbs[1]
+		caster.invoked_orbs[1] = caster.invoked_orbs[2]
+		caster.invoked_orbs[2] = caster.invoked_orbs[3]
+		caster.invoked_orbs[3] = ability
+
+		-- Remove the oldest orb's particle effect.
+		if caster.invoked_orbs_particle[1] ~= nil then
+			ParticleManager:DestroyParticle(caster.invoked_orbs_particle[1], false)
+			caster.invoked_orbs_particle[1] = nil
+		end
+
+		--Shift the ordered list of currently summoned orb particle effects down, and create the new particle.
+		caster.invoked_orbs_particle[1] = caster.invoked_orbs_particle[2]
+		caster.invoked_orbs_particle[2] = caster.invoked_orbs_particle[3]
+		caster.invoked_orbs_particle[3] = ParticleManager:CreateParticle(particle_path, PATTACH_OVERHEAD_FOLLOW, caster, caster)
+		ParticleManager:SetParticleControlEnt(caster.invoked_orbs_particle[3], 1, caster, PATTACH_POINT_FOLLOW, caster.invoked_orbs_particle_attach[1], caster:GetAbsOrigin(), false)
+		
+		-- Shift the ordered list of currently summoned orb particle effect attach locations down.
+		local temp_attachment_point = caster.invoked_orbs_particle_attach[1]
+		caster.invoked_orbs_particle_attach[1] = caster.invoked_orbs_particle_attach[2]
+		caster.invoked_orbs_particle_attach[2] = caster.invoked_orbs_particle_attach[3]
+		caster.invoked_orbs_particle_attach[3] = temp_attachment_point
+
+		-- Update orb modifiers
+		imba_invoker:update_orb_modifiers(caster, ability, remove_orb)
+
+		-- Change base_attack_effect depending on current orb setup
+		imba_invoker:update_base_attack(caster) 
+	end
+end
+
+---------------------------------------------------------------------------------------------------------------------
+--	Help function, update orb modifier
+---------------------------------------------------------------------------------------------------------------------
+function imba_invoker:update_orb_modifiers(caster, ability, orb_to_remove)	
+	-- Find modifier to remove...
+	local orb_modifier = nil
+	if orb_to_remove ~= nil then
+		if orb_to_remove:GetName() == "imba_invoker_quas" then
+			orb_modifier = "modifier_imba_invoker_quas"
+		elseif orb_to_remove:GetName() == "imba_invoker_wex" then
+			orb_modifier = "modifier_imba_invoker_wex"
+		elseif orb_to_remove:GetName() == "imba_invoker_exort" then
+			orb_modifier = "modifier_imba_invoker_exort"
+		end
+	end
+
+	if orb_modifier ~= nil then 
+		local modifiers = caster:FindAllModifiersByName(orb_modifier)
+		local oldest
+		for i = 0, 2, 1 do
+			if oldest == nil then 
+				oldest = modifiers[i]
+			elseif modifiers[i] ~= nil and modifiers[i]:GetCreationTime() > oldest:GetCreationTime() then
+				oldest = modifiers[i]
 			end
 		end
-
-		---------------------------------------------------------------------------------------------------------------------
-		--	Invoker: Quas Orb modifier
-		---------------------------------------------------------------------------------------------------------------------
-		modifier_imba_invoker_quas = modifier_imba_invoker_quas or class({})
-		function modifier_imba_invoker_quas:IsBuff() 		return true  end
-		function modifier_imba_invoker_quas:IsHidden() 		return false end
-		function modifier_imba_invoker_quas:IsDebuff() 		return false end
-		function modifier_imba_invoker_quas:IsPurgable() 	return false end
-		function modifier_imba_invoker_quas:RemoveOnDeath() return false end
-		function modifier_imba_invoker_quas:DeclareFunctions()
-			local funcs = {
-				MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-				MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
-			}
-
-			return funcs
+		
+		if oldest then
+			-- turns out this removes the oldest running modifier by name
+			caster:RemoveModifierByName(oldest:GetName())
 		end
+	end
+	
+	local new_orb = ability:GetName()
+	if new_orb == "imba_invoker_quas" then
+		local bonus_strength 					= ability:GetSpecialValueFor("bonus_strength")
+			local health_regen_per_instance 	= ability:GetSpecialValueFor("health_regen_per_instance")
+		caster:AddNewModifier(caster, ability, "modifier_imba_invoker_quas", { 	duration = -1, 
+																				bonus_strength = bonus_strength, 
+																				health_regen_per_instance = health_regen_per_instance})
 
-		function modifier_imba_invoker_quas:OnCreated(kv)
-			if IsServer() then 
-				self.bonus_strength = kv.bonus_strength
-				self.health_regen_per_instance = kv.health_regen_per_instance
-			else
-				local net_table = CustomNetTables:GetTableValue("player_table", "quas"..self:GetParent():GetPlayerOwnerID()) or {}
-				self.bonus_strength = net_table.quas_bonus_strength
-				self.health_regen_per_instance = net_table.quas_health_regen_per_instance
-			end
+		CustomNetTables:SetTableValue("player_table", "quas"..caster:GetPlayerOwnerID(), { 	quas_bonus_strength = bonus_strength, 
+																							quas_health_regen_per_instance = health_regen_per_instance})
+	elseif new_orb == "imba_invoker_wex" then
+		local bonus_agility 					= ability:GetSpecialValueFor("bonus_agility")
+		local move_speed_per_instance 			= ability:GetSpecialValueFor("move_speed_per_instance")
+			local attack_speed_per_instance 	= ability:GetSpecialValueFor("attack_speed_per_instance")
+		caster:AddNewModifier(caster, ability, "modifier_imba_invoker_wex", {	duration = -1, 
+																					bonus_agility = bonus_agility, 
+																					move_speed_per_instance = move_speed_per_instance,
+																					attack_speed_per_instance = attack_speed_per_instance})
+
+		CustomNetTables:SetTableValue("player_table", "wex"..caster:GetPlayerOwnerID(), { 	wex_bonus_agility = bonus_agility, 
+																										wex_move_speed_per_instance = move_speed_per_instance, 
+																										wex_attack_speed_per_instance = attack_speed_per_instance})
+	elseif new_orb == "imba_invoker_exort" then
+		local bonus_intelligence 			= ability:GetSpecialValueFor("bonus_intelligence")
+		local bonus_damage_per_instance 	= ability:GetSpecialValueFor("bonus_damage_per_instance")
+		caster:AddNewModifier(caster, ability, "modifier_imba_invoker_exort", {	duration = -1, 
+																						bonus_intelligence = bonus_intelligence, 
+																						bonus_damage_per_instance = bonus_damage_per_instance})
+
+		CustomNetTables:SetTableValue("player_table", "exort"..caster:GetPlayerOwnerID(), { 	exort_bonus_intelligence = bonus_intelligence, 
+																								exort_bonus_damage_per_instance = bonus_damage_per_instance})
+	end
+end	
+
+function imba_invoker:update_base_attack(caster) 
+	local quas 	= 0 
+	local wex 	= 0 
+	local exort = 0 
+
+	-- Dont override item-effects
+	if (not string.find(caster:GetRangedProjectileName(), 'invoker', 1, true)) then
+		return 
+	end
+
+	for _,orb in pairs(caster.invoked_orbs) do 
+		local orb_type = orb:GetAbilityName() 
+
+		if orb_type == 'imba_invoker_quas' then 
+			quas = quas + 1
+		elseif orb_type == 'imba_invoker_wex' then
+			wex = wex + 1
+		elseif orb_type == 'imba_invoker_exort' then
+			exort = exort + 1
 		end
+	end
 
-		function modifier_imba_invoker_quas:GetModifierBonusStats_Strength()
-			return self.bonus_strength
-		end
+	local quas_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+	local wex_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+	local exort_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+	local all_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
 
-		function modifier_imba_invoker_quas:GetModifierConstantHealthRegen() 
-			return self.health_regen_per_instance
-		end
+	-- temporary
+	if caster.bPersona then
+		quas_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_quas.vpcf"
+		wex_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_wex.vpcf"
+		exort_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_exort.vpcf"
+		all_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf"
+	end
 
-		function modifier_imba_invoker_quas:GetAttributes()
-			return MODIFIER_ATTRIBUTE_MULTIPLE
-		end
+	if quas >= 2 then
+		caster:SetRangedProjectileName(quas_attack)
+	elseif wex >= 2 then
+		caster:SetRangedProjectileName(wex_attack)
+	elseif exort >= 2 then
+		caster:SetRangedProjectileName(exort_attack)
+	elseif quas == 1 and wex == 1 and exort == 1 then
+		caster:SetRangedProjectileName(all_attack)
+	end
+end
 
+---------------------------------------------------------------------------------------------------------------------
+--	Invoker's aghs... triggers +1 to all orbs on creation
+---------------------------------------------------------------------------------------------------------------------
+modifier_imba_invoker_aghanim_buff = class({})
 
+function modifier_imba_invoker_aghanim_buff:IsPurgable()	return false end
+function modifier_imba_invoker_aghanim_buff:IsHidden() 		return true  end
+function modifier_imba_invoker_aghanim_buff:IsDebuff() 		return false end
+function modifier_imba_invoker_aghanim_buff:RemoveOnDeath() return false end
 
-	---------------------------------------------------------------------------------------------------------------------
-	--	Invoker: WEX
-	---------------------------------------------------------------------------------------------------------------------
-		imba_invoker_wex = class({})
-		LinkLuaModifier("modifier_imba_invoker_wex", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
+function modifier_imba_invoker_aghanim_buff:OnCreated()
+	if IsServer() then
+		local caster 	= self:GetCaster()
+		local quas 		= caster:FindAbilityByName("imba_invoker_quas")
+		local wex 		= caster:FindAbilityByName("imba_invoker_wex")
+		local exort 	= caster:FindAbilityByName("imba_invoker_exort")
 
-		function imba_invoker_wex:ProcsMagicStick() return false end
+		quas:SetLevel(quas:GetLevel() + 1)
+		wex:SetLevel(wex:GetLevel() + 1)
+		exort:SetLevel(exort:GetLevel() + 1)
+	end
+end
 
-		function imba_invoker_wex:OnSpellStart()
-			if IsServer() then
-				local caster = self:GetCaster()
-
-				if math.random(0, 100) >= 50 then
-					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
-				else
-					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
-				end
-
-				imba_invoker:update_orbs(caster, self, "imba_invoker_wex", "particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf")
-			end
-		end
-
-		---------------------------------------------------------------------------------------------------------------------
-		--	Invoker: Wex Orb modifier
-		---------------------------------------------------------------------------------------------------------------------
-		modifier_imba_invoker_wex = modifier_imba_invoker_wex or class({})
-		function modifier_imba_invoker_wex:IsBuff() 		return true  end
-		function modifier_imba_invoker_wex:IsHidden() 		return false end
-		function modifier_imba_invoker_wex:IsDebuff() 		return false end
-		function modifier_imba_invoker_wex:IsPurgable() 	return false end
-		function modifier_imba_invoker_wex:RemoveOnDeath()	return false end
-		function modifier_imba_invoker_wex:DeclareFunctions()
-			local funcs = {
-				MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-				MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-				MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-			}
-
-			return funcs
-		end
-
-		function modifier_imba_invoker_wex:OnCreated(kv)
-			if IsServer() then 
-				self.bonus_agility 				= kv.bonus_agility
-				self.move_speed_per_instance 	= kv.move_speed_per_instance
-				self.attack_speed_per_instance 	= kv.attack_speed_per_instance
-			else
-				local net_table 				= CustomNetTables:GetTableValue("player_table", "wex"..self:GetParent():GetPlayerOwnerID()) or {}
-				self.bonus_agility 				= net_table.wex_bonus_agility
-				self.move_speed_per_instance 	= net_table.wex_move_speed_per_instance
-				self.attack_speed_per_instance 	= net_table.wex_attack_speed_per_instance
-			end
-		end
-
-		function modifier_imba_invoker_wex:GetModifierBonusStats_Agility()
-			return self.bonus_agility
-		end
-
-		-- Movement speed buff is working but dosent show up in hero stats
-		function modifier_imba_invoker_wex:GetModifierMoveSpeedBonus_Percentage() 
-			return self.move_speed_per_instance
-		end
-
-		function modifier_imba_invoker_wex:GetModifierAttackSpeedBonus_Constant() 
-			return self.attack_speed_per_instance
-		end
-
-		function modifier_imba_invoker_wex:GetAttributes()
-			return MODIFIER_ATTRIBUTE_MULTIPLE
-		end
-
-
-
-	---------------------------------------------------------------------------------------------------------------------
-	--	Invoker: EXORT
-	---------------------------------------------------------------------------------------------------------------------
-		imba_invoker_exort = class({})
-		LinkLuaModifier("modifier_imba_invoker_exort", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
-
-		function imba_invoker_exort:ProcsMagicStick() return false end
-
-		function imba_invoker_exort:OnSpellStart()
-			if IsServer() then
-				local caster = self:GetCaster()
-
-				if math.random(0, 100) >= 50 then
-					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
-				else
-					caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
-				end
-
-				imba_invoker:update_orbs(caster, self, "imba_invoker_exort", "particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf")
-			end
-		end
-
-		---------------------------------------------------------------------------------------------------------------------
-		--	Invoker: Exort Orb modifier
-		---------------------------------------------------------------------------------------------------------------------
-		modifier_imba_invoker_exort = modifier_imba_invoker_exort or class({})
-		function modifier_imba_invoker_exort:IsBuff() 			return true  end
-		function modifier_imba_invoker_exort:IsHidden() 		return false end
-		function modifier_imba_invoker_exort:IsDebuff() 		return false end
-		function modifier_imba_invoker_exort:IsPurgable() 		return false end
-		function modifier_imba_invoker_exort:RemoveOnDeath()	return false end
-		function modifier_imba_invoker_exort:DeclareFunctions()
-			local funcs = {
-				MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-				MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
-			}
-
-			return funcs
-		end
-
-		function modifier_imba_invoker_exort:OnCreated(kv)
-			if IsServer() then 
-				self.bonus_intelligence = kv.bonus_intelligence
-				self.bonus_damage_per_instance = kv.bonus_damage_per_instance
-			else
-				local net_table = CustomNetTables:GetTableValue("player_table", "exort"..self:GetParent():GetPlayerOwnerID()) or {}
-				self.bonus_intelligence = net_table.exort_bonus_intelligence
-				self.bonus_damage_per_instance = net_table.exort_bonus_damage_per_instance
-			end
-		end
-
-		function modifier_imba_invoker_exort:GetModifierBonusStats_Intellect()
-			return self.bonus_intelligence
-		end
-
-		function modifier_imba_invoker_exort:GetModifierBaseAttack_BonusDamage() 
-			return self.bonus_damage_per_instance
-		end
-
-		function modifier_imba_invoker_exort:GetAttributes()
-			return MODIFIER_ATTRIBUTE_MULTIPLE
-		end
-
-	---------------------------------------------------------------------------------------------------------------------
-	--	Utility / Help Functions for orb control
-	---------------------------------------------------------------------------------------------------------------------
-		function imba_invoker:update_orbs(caster, ability, invoked_orb, particle_path)
-			if IsServer() then 
-				-- need to make sure we dont mess up orb order
-				imba_invoker.orb_sync = false
-
-				-- Instantiate objects
-				if caster.invoked_orbs == nil then 
-					caster.invoked_orbs = {}
-				end
-
-				if caster.invoked_orbs_particle == nil then
-						caster.invoked_orbs_particle = {}
-				end
-
-				if caster.invoked_orbs_particle_attach == nil then
-					caster.invoked_orbs_particle_attach = {}
-					caster.invoked_orbs_particle_attach[1] = "attach_orb1"
-					caster.invoked_orbs_particle_attach[2] = "attach_orb2"
-					caster.invoked_orbs_particle_attach[3] = "attach_orb3"
-				end
-
-				-- Invoker can only have three orbs active at any given time.  Each time an orb is activated, its hscript is
-				-- placed into caster.invoked_orbs[3], the old [3] is moved into [2], and the old [2] is moved into [1].
-				-- Therefore, the oldest orb is located in [1], and the newest is located in [3].
-				-- Now, shift the ordered list of currently summoned orbs down, and add the newest orb to the queue.
-				local remove_orb = caster.invoked_orbs[1]
-				caster.invoked_orbs[1] = caster.invoked_orbs[2]
-				caster.invoked_orbs[2] = caster.invoked_orbs[3]
-				caster.invoked_orbs[3] = ability
-
-				-- Remove the oldest orb's particle effect.
-				if caster.invoked_orbs_particle[1] ~= nil then
-					ParticleManager:DestroyParticle(caster.invoked_orbs_particle[1], false)
-					caster.invoked_orbs_particle[1] = nil
-				end
-
-				--Shift the ordered list of currently summoned orb particle effects down, and create the new particle.
-				caster.invoked_orbs_particle[1] = caster.invoked_orbs_particle[2]
-				caster.invoked_orbs_particle[2] = caster.invoked_orbs_particle[3]
-				caster.invoked_orbs_particle[3] = ParticleManager:CreateParticle(particle_path, PATTACH_OVERHEAD_FOLLOW, caster, caster)
-				ParticleManager:SetParticleControlEnt(caster.invoked_orbs_particle[3], 1, caster, PATTACH_POINT_FOLLOW, caster.invoked_orbs_particle_attach[1], caster:GetAbsOrigin(), false)
-				
-				-- Shift the ordered list of currently summoned orb particle effect attach locations down.
-				local temp_attachment_point = caster.invoked_orbs_particle_attach[1]
-				caster.invoked_orbs_particle_attach[1] = caster.invoked_orbs_particle_attach[2]
-				caster.invoked_orbs_particle_attach[2] = caster.invoked_orbs_particle_attach[3]
-				caster.invoked_orbs_particle_attach[3] = temp_attachment_point
-
-				-- Update orb modifiers
-				imba_invoker:update_orb_modifiers(caster, ability, remove_orb)
-
-				-- Change base_attack_effect depending on current orb setup
-				imba_invoker:update_base_attack(caster) 
-			end
-		end
-
-		---------------------------------------------------------------------------------------------------------------------
-		--	Help function, update orb modifier
-		---------------------------------------------------------------------------------------------------------------------
-		function imba_invoker:update_orb_modifiers(caster, ability, orb_to_remove)	
-			-- Find modifier to remove...
-			local orb_modifier = nil
-			if orb_to_remove ~= nil then
-				if orb_to_remove:GetName() == "imba_invoker_quas" then
-					orb_modifier = "modifier_imba_invoker_quas"
-				elseif orb_to_remove:GetName() == "imba_invoker_wex" then
-					orb_modifier = "modifier_imba_invoker_wex"
-				elseif orb_to_remove:GetName() == "imba_invoker_exort" then
-					orb_modifier = "modifier_imba_invoker_exort"
-				end
-			end
-
-			if orb_modifier ~= nil then 
-				local modifiers = caster:FindAllModifiersByName(orb_modifier)
-				local oldest
-				for i = 0, 2, 1 do
-					if oldest == nil then 
-						oldest = modifiers[i]
-					elseif modifiers[i] ~= nil and modifiers[i]:GetCreationTime() > oldest:GetCreationTime() then
-						oldest = modifiers[i]
-					end
-				end
-				
-				if oldest then
-					-- turns out this removes the oldest running modifier by name
-					caster:RemoveModifierByName(oldest:GetName())
-				end
-			end
-			
-			local new_orb = ability:GetName()
-			if new_orb == "imba_invoker_quas" then
-				local bonus_strength 					= ability:GetSpecialValueFor("bonus_strength")
-					local health_regen_per_instance 	= ability:GetSpecialValueFor("health_regen_per_instance")
-				caster:AddNewModifier(caster, ability, "modifier_imba_invoker_quas", { 	duration = -1, 
-																						bonus_strength = bonus_strength, 
-																						health_regen_per_instance = health_regen_per_instance})
-
-				CustomNetTables:SetTableValue("player_table", "quas"..caster:GetPlayerOwnerID(), { 	quas_bonus_strength = bonus_strength, 
-																									quas_health_regen_per_instance = health_regen_per_instance})
-			elseif new_orb == "imba_invoker_wex" then
-				local bonus_agility 					= ability:GetSpecialValueFor("bonus_agility")
-				local move_speed_per_instance 			= ability:GetSpecialValueFor("move_speed_per_instance")
-					local attack_speed_per_instance 	= ability:GetSpecialValueFor("attack_speed_per_instance")
-				caster:AddNewModifier(caster, ability, "modifier_imba_invoker_wex", {	duration = -1, 
-																							bonus_agility = bonus_agility, 
-																							move_speed_per_instance = move_speed_per_instance,
-																							attack_speed_per_instance = attack_speed_per_instance})
-
-				CustomNetTables:SetTableValue("player_table", "wex"..caster:GetPlayerOwnerID(), { 	wex_bonus_agility = bonus_agility, 
-																												wex_move_speed_per_instance = move_speed_per_instance, 
-																												wex_attack_speed_per_instance = attack_speed_per_instance})
-			elseif new_orb == "imba_invoker_exort" then
-				local bonus_intelligence 			= ability:GetSpecialValueFor("bonus_intelligence")
-				local bonus_damage_per_instance 	= ability:GetSpecialValueFor("bonus_damage_per_instance")
-				caster:AddNewModifier(caster, ability, "modifier_imba_invoker_exort", {	duration = -1, 
-																								bonus_intelligence = bonus_intelligence, 
-																								bonus_damage_per_instance = bonus_damage_per_instance})
-
-				CustomNetTables:SetTableValue("player_table", "exort"..caster:GetPlayerOwnerID(), { 	exort_bonus_intelligence = bonus_intelligence, 
-																										exort_bonus_damage_per_instance = bonus_damage_per_instance})
-			end
-		end	
-
-		function imba_invoker:update_base_attack(caster) 
-			local quas 	= 0 
-			local wex 	= 0 
-			local exort = 0 
-
-			-- Dont override item-effects
-			if (not string.find(caster:GetRangedProjectileName(), 'invoker', 1, true)) then
-				return 
-			end
-
-			for _,orb in pairs(caster.invoked_orbs) do 
-				local orb_type = orb:GetAbilityName() 
-
-				if orb_type == 'imba_invoker_quas' then 
-					quas = quas + 1
-				elseif orb_type == 'imba_invoker_wex' then
-					wex = wex + 1
-				elseif orb_type == 'imba_invoker_exort' then
-					exort = exort + 1
-				end
-			end
-
-			local quas_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
-			local wex_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
-			local exort_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
-			local all_attack = "particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
-
-			-- temporary
-			if caster.bPersona then
-				quas_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_quas.vpcf"
-				wex_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_wex.vpcf"
-				exort_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_exort.vpcf"
-				all_attack = "particles/units/heroes/hero_invoker_kid/invoker_kid_base_attack_all.vpcf"
-			end
-
-			if quas >= 2 then
-				caster:SetRangedProjectileName(quas_attack)
-			elseif wex >= 2 then
-				caster:SetRangedProjectileName(wex_attack)
-			elseif exort >= 2 then
-				caster:SetRangedProjectileName(exort_attack)
-			elseif quas == 1 and wex == 1 and exort == 1 then
-				caster:SetRangedProjectileName(all_attack)
-			end
-		end	
-
-	---------------------------------------------------------------------------------------------------------------------
-	--	Invoker's aghs... triggers +1 to all orbs on creation
-	---------------------------------------------------------------------------------------------------------------------
-		modifier_imba_invoker_aghanim_buff = class({})
-		function modifier_imba_invoker_aghanim_buff:IsPurgable()	return false end
-		function modifier_imba_invoker_aghanim_buff:IsHidden() 		return true  end
-		function modifier_imba_invoker_aghanim_buff:IsDebuff() 		return false end
-		function modifier_imba_invoker_aghanim_buff:RemoveOnDeath() return false end
-
-		function modifier_imba_invoker_aghanim_buff:OnCreated()
-			if IsServer() then
-				local caster 	= self:GetCaster()
-				local quas 		= caster:FindAbilityByName("imba_invoker_quas")
-				local wex 		= caster:FindAbilityByName("imba_invoker_wex")
-				local exort 	= caster:FindAbilityByName("imba_invoker_exort")
-
-				quas:SetLevel(quas:GetLevel() + 1)
-				wex:SetLevel(wex:GetLevel() + 1)
-				exort:SetLevel(exort:GetLevel() + 1)
-			end
-		end
-
-		function modifier_imba_invoker_aghanim_buff:OnDestroy()
-			if not IsServer() then return end
-			
-			local caster 	= self:GetCaster()
-			local quas 		= caster:FindAbilityByName("imba_invoker_quas")
-			local wex 		= caster:FindAbilityByName("imba_invoker_wex")
-			local exort 	= caster:FindAbilityByName("imba_invoker_exort")
-			
-			quas:SetLevel(quas:GetLevel() - 1)
-			wex:SetLevel(wex:GetLevel() - 1)
-			exort:SetLevel(exort:GetLevel() - 1)
-		end
+function modifier_imba_invoker_aghanim_buff:OnDestroy()
+	if not IsServer() then return end
+	
+	local caster 	= self:GetCaster()
+	local quas 		= caster:FindAbilityByName("imba_invoker_quas")
+	local wex 		= caster:FindAbilityByName("imba_invoker_wex")
+	local exort 	= caster:FindAbilityByName("imba_invoker_exort")
+	
+	quas:SetLevel(quas:GetLevel() - 1)
+	wex:SetLevel(wex:GetLevel() - 1)
+	exort:SetLevel(exort:GetLevel() - 1)
+end
 
 -------------------------------------------------------------------------------------------------------------------------
 --	Invoker's Invoke
 -------------------------------------------------------------------------------------------------------------------------
-	imba_invoker_invoke = class({})
+	imba_invoker_invoke = imba_invoker_invoke or class({})
 
 	LinkLuaModifier("modifier_imba_invoker_invoke_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_invoker_aghanim_buff", "components/abilities/heroes/hero_invoker.lua", LUA_MODIFIER_MOTION_NONE)
@@ -449,6 +472,19 @@ imba_invoker = imba_invoker or class({})
 				self:GetCaster():RemoveModifierByName("modifier_imba_invoker_aghanim_buff")
 			end
 		end
+	end
+
+	function imba_invoker_invoke:GetCooldown(iLevel)
+		local quas_level = CustomNetTables:GetTableValue("player_table", "quas_level"..tostring(self:GetCaster():GetPlayerOwnerID()))
+		if quas_level then quas_level = quas_level["1"] else quas_level = 0 end
+		local wex_level = CustomNetTables:GetTableValue("player_table", "wex_level"..tostring(self:GetCaster():GetPlayerOwnerID()))
+		if wex_level then wex_level = wex_level["1"] else wex_level = 0 end
+		local exort_level = CustomNetTables:GetTableValue("player_table", "exort_level"..tostring(self:GetCaster():GetPlayerOwnerID()))
+		if exort_level then exort_level = exort_level["1"] else exort_level = 0 end
+		local orb_levels = math.min(quas_level, 7) + math.min(wex_level, 7) + math.min(exort_level, 7)
+		local cdr = self:GetSpecialValueFor("cooldown_reduction_per_orb")
+
+		return self.BaseClass.GetCooldown(self, iLevel) - (cdr * orb_levels)
 	end
 
 	function imba_invoker_invoke:OnSpellStart()

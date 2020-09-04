@@ -282,13 +282,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"speed_boost"			"250"
 			}
-			
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"surge_radius"			"175 250 325 400"
 			}
-			
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -323,7 +321,6 @@
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
 	
-
 	//=================================================================================================================
 	// Dark Seer: Close Portal
 	//=================================================================================================================
@@ -389,28 +386,28 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"20.0 25.0 30.0"
+				"duration"				"45.0"
 			}			
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"replica_damage_outgoing"	"-30 -15 0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_outgoing"	"70 85 100"
+				"tooltip_outgoing"		"70 85 100"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"replica_damage_incoming"	"100"
 			}	
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"								"FIELD_INTEGER"
 				"tooltip_replica_total_damage_incoming"	"200"
-				"CalculateSpellDamageTooltip"	"0"
+				"CalculateSpellDamageTooltip"			"0"
 			}				
 			"06"
 			{
@@ -420,7 +417,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"replica_scale"	"0"
+				"replica_scale"			"0"
 			}
 			"08"
 			{
@@ -429,18 +426,18 @@
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"							"FIELD_INTEGER"
 				"replica_damage_outgoing_scepter"	"0 20 40"
 			}
 			"10"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"tooltip_outgoing_scepter"	"100 120 140"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_slow"					"50 60 70"
+				"movement_slow"			"50 60 70"
 			}
 			"12"
 			{
@@ -448,29 +445,28 @@
 				"slow_duration"			"1.0 1.25 1.5"
 				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"
 			}
-			
 			"13"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"scepter_rotation_speed"	"45"
 				"RequiresScepter"			"1"
 			}	
 			"14"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"scepter_width"				"2000"
 				"RequiresScepter"			"1"
 			}
-			"15"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"scepter_duration"		"30.0 35.0 40.0"
-				"RequiresScepter"			"1"
-			}
+//			"15"
+//			{
+//				"var_type"					"FIELD_FLOAT"
+//				"scepter_duration"			"30.0 35.0 40.0"
+//				"RequiresScepter"			"1"
+//			}
 			"16"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"minimum_interval"		"0.5"
+				"var_type"					"FIELD_FLOAT"
+				"minimum_interval"			"0.5"
 			}
 		}
 	}

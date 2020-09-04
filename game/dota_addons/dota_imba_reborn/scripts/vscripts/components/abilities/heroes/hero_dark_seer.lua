@@ -1037,9 +1037,9 @@ function imba_dark_seer_wall_of_replica:OnSpellStart()
 	
 	local duration = self:GetSpecialValueFor("duration")
 	
-	if self:GetCaster():HasScepter() then
-		duration = self:GetSpecialValueFor("scepter_duration")
-	end
+--	if self:GetCaster():HasScepter() then
+--		duration = self:GetSpecialValueFor("scepter_duration")
+--	end
 	
 	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_Dark_Seer.Wall_of_Replica_Start", self:GetCaster())
 	

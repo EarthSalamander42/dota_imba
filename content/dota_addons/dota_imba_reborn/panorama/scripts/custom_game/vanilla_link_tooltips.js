@@ -19,7 +19,7 @@ function GetDotaHud() {
 var DotaHud = GetDotaHud();
 
 function AddHeroTooltips(slot_number) {
-	if (DotaHud.FindChildTraverse("AbilitiesAndStatBranch").BHasClass("npc_dota_hero_abaddon")) {
+	if (DotaHud.FindChildTraverse("AbilitiesAndStatBranch").BHasClass("npc_dota_hero_abaddon_lul")) {
 		var hero = Entities.GetAllEntitiesByName("npc_dota_hero_abaddon")[0] || null;
 		var ability_name = null;
 

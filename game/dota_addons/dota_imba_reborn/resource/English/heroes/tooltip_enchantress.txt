@@ -26,6 +26,7 @@
 "DOTA_Tooltip_ability_imba_enchantress_enchant_dominate_duration"					"CREEP ENCHANT DURATION:"
 "DOTA_Tooltip_ability_imba_enchantress_enchant_enchant_health"						"CREEP MAX HEALTH BONUS:"
 "DOTA_Tooltip_ability_imba_enchantress_enchant_enchant_damage"						"CREEP ATTACK DAMAGE BONUS:"
+"DOTA_Tooltip_ability_imba_enchantress_enchant_enchant_armor"						"CREEP ATTACK ARMOR BONUS:"
 
 //---------------------------------------------------------------------------
 //      Nature's Attendants

@@ -1,6 +1,5 @@
 "DOTAAbilities"
 {
-
 	//=================================================================================================================
 	// Oracle: Fortune's End
 	//=================================================================================================================
@@ -31,7 +30,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 10 8 6"
+		"AbilityCooldown"				"15 12 9 6"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -54,12 +53,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"minimum_purge_duration"	"1.0"
+				"minimum_purge_duration"	"0.5"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"maximum_purge_duration"	"3.0"
+				"maximum_purge_duration"	"2.5"
 				//"LinkedSpecialBonus"	"special_bonus_unique_oracle_2"
 				"LinkedSpecialBonus"	"special_bonus_imba_oracle_fortunes_end_max_duration"
 			}

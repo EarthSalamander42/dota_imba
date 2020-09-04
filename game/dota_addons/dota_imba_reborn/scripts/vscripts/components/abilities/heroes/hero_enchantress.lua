@@ -331,6 +331,7 @@ function modifier_imba_enchantress_enchant_controlled:OnCreated()
 	
 	self.enchant_health	= self.ability:GetSpecialValueFor("enchant_health")
 	self.enchant_damage	= self.ability:GetSpecialValueFor("enchant_damage")
+	self.enchant_armor	= self.ability:GetSpecialValueFor("enchant_armor")
 	
 	if not IsServer() then return end
 	
@@ -353,9 +354,10 @@ function modifier_imba_enchantress_enchant_controlled:DeclareFunctions()
     return {
 		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 	
 		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE, -- Talent 4
-        MODIFIER_EVENT_ON_TAKEDAMAGE
+        MODIFIER_EVENT_ON_TAKEDAMAGE,
     }
 end
 
@@ -365,6 +367,10 @@ end
 
 function modifier_imba_enchantress_enchant_controlled:GetModifierPreAttack_BonusDamage()
 	return self.enchant_damage
+end
+
+function modifier_imba_enchantress_enchant_controlled:GetModifierPhysicalArmorBonus()
+	return self.enchant_armor
 end
 
 function modifier_imba_enchantress_enchant_controlled:GetBonusVisionPercentage(keys)
