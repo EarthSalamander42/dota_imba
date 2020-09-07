@@ -752,7 +752,7 @@ function modifier_imba_slark_essence_shift:DeclareFunctions()
 end
 
 function modifier_imba_slark_essence_shift:OnAttackLanded(keys)
-	if self:GetAbility():IsTrained() and keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and (keys.target:IsRealHero() or keys.target:IsClone()) and not keys.target:IsTempestDouble() then
+	if self:GetAbility():IsTrained() and keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and (keys.target:IsRealHero() or keys.target:IsClone()) and not keys.target:IsTempestDouble() and keys.attacker:GetTeam() ~= keys.target:GetTeam() then
 		self.shift_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slark/slark_essence_shift.vpcf", PATTACH_POINT_FOLLOW, keys.target)
 		ParticleManager:ReleaseParticleIndex(self.shift_particle)
 		
