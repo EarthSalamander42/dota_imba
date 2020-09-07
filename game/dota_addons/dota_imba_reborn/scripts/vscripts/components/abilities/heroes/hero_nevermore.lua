@@ -1126,7 +1126,7 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 			end
 
 			-- If the target wasn't a real hero, do nothing
-			if not target:IsRealHero() then
+			if not target:IsRealHero() or attacker:GetTeam() ~= target:GetTeam() then
 				return nil
 			end
 
