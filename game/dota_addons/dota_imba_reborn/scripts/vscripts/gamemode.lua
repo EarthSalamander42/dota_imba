@@ -296,6 +296,7 @@ function GameMode:SetupFrostivus()
 		local greevil = CreateUnitByName("npc_imba_greevil_dire", Entities:FindByName(nil, "dire_greevil"):GetAbsOrigin(), true, nil, nil, 3)
 	end
 end
+
 -- new system, double votes for donators 
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
