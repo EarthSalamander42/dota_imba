@@ -140,6 +140,8 @@ function GameMode:SetupFountains()
 end
 
 function GameMode:SetupShrines()
+--	LinkLuaModifier("modifier_imba_shrine_passive_aura", "components/modifiers/modifier_imba_shrine_passive.lua", LUA_MODIFIER_MOTION_NONE)
+
 	-- replace 3 base fillers with shrines
 	local good_fillers = {
 		"good_filler_1",
@@ -156,42 +158,39 @@ function GameMode:SetupShrines()
 	for _, ent_name in pairs(good_fillers) do
 		if Entities:FindByName(nil, ent_name) then
 			local filler = Entities:FindByName(nil, ent_name)
-			local abs = filler:GetAbsOrigin()
+			local abs = GetGroundPosition(filler:GetAbsOrigin(), nil)
 			filler:RemoveSelf()
 			local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
 			shrine:SetAbsOrigin(abs)
+--			shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
 		end
 	end
 
 	for _, ent_name in pairs(bad_fillers) do
 		if Entities:FindByName(nil, ent_name) then
 			local filler = Entities:FindByName(nil, ent_name)
-			local abs = filler:GetAbsOrigin()
+			local abs = GetGroundPosition(filler:GetAbsOrigin(), nil)
 			filler:RemoveSelf()
 			local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
 			shrine:SetAbsOrigin(abs)
+--			shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
 		end
-	end
-
-	LinkLuaModifier("modifier_imba_shrine_passive_aura", "components/modifiers/modifier_imba_shrine_passive.lua", LUA_MODIFIER_MOTION_NONE)
-
-	for _, shrine in pairs(Entities:FindAllByClassname("npc_dota_filler")) do
-		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
 	end
 
 	-- jungle shrines
 	local good_shrine_position = {
-		Vector(-3700, 400, 384 - 20 --[[ looks weird otherwise ]]),
+		Vector(-3700, 400, 240),
 	}
 
 	local bad_shrine_position = {
-		Vector(3200, -840, 384 - 20 --[[ looks weird otherwise ]]),
+		Vector(3200, -840, 240),
 	}
 
 	for _, pos in pairs(good_shrine_position) do 
 		local shrine = CreateUnitByName("npc_dota_goodguys_healers", pos, true, nil, nil, 2)
 		shrine:SetAbsOrigin(pos)
-		
+--		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
+
 		-- Removing the backdoor protection ability makes the Sancturary ability hidden for some reason -_-
 		-- -- Don't give jungle shrines backdoor protection
 		-- if shrine:HasAbility("backdoor_protection_in_base") then
@@ -212,7 +211,8 @@ function GameMode:SetupShrines()
 	for _, pos in pairs(bad_shrine_position) do 
 		local shrine = CreateUnitByName("npc_dota_badguys_healers", pos, true, nil, nil, 3)
 		shrine:SetAbsOrigin(pos)
-		
+--		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
+
 		-- Removing the backdoor protection ability makes the Sancturary ability hidden for some reason -_-
 		-- -- Don't give jungle shrines backdoor protection
 		-- if shrine:HasAbility("backdoor_protection_in_base") then

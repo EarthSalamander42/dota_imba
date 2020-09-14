@@ -856,20 +856,19 @@ function GameMode:OnPlayerChat(keys)
 		end
 		
 		-- Spooky (inefficiently coded) dev commands
-		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 then
-			
+		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 or PlayerResource:GetSteamAccountID(keys.playerid) == 54896080 then
 			if str == "-handicap" then
 				local enemy_team		= DOTA_TEAM_BADGUYS
 				local enemy_team_name	= "Dire"
-				
+
 				if caster:GetTeamNumber() == enemy_team then
 					enemy_team = DOTA_TEAM_GOODGUYS
 					enemy_team_name	= "Radiant"
 				end
-				
+
 				local heroes = HeroList:GetAllHeroes()
 				local enemies = {}
-				
+
 				for _, hero in pairs(heroes) do
 					if hero:GetTeam() ~= caster:GetTeam() and hero:IsRealHero() and not hero:IsClone() and not hero:IsTempestDouble() then
 						table.insert(enemies, hero)
@@ -878,45 +877,45 @@ function GameMode:OnPlayerChat(keys)
 
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")
-				
+
 				if string.find(text, 'gold') then
 					text = string.gsub(text, 'gold', "")
 					text = tonumber(text)
-					
+
 					for _, enemy in pairs(enemies) do
 						enemy:ModifyGold(text, false,  DOTA_ModifyGold_Unspecified)
 						
 						SendOverheadEventMessage(PlayerResource:GetPlayer(keys.playerid), OVERHEAD_ALERT_GOLD, enemy, text, nil)
 					end
-					
+
 					Notifications:BottomToAll({ text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." has given every hero on the "..enemy_team_name.." team "..text.." gold for...reasons.", duration = 4.0, style = { color = "LightGreen" } })
 				elseif string.find(text, 'exp') then
 					text = string.gsub(text, 'exp', "")
 					text = tonumber(text)
-					
+
 					for _, enemy in pairs(enemies) do
 						enemy:AddExperience(text, DOTA_ModifyXP_Unspecified, false, false)
-					
+
 						SendOverheadEventMessage(PlayerResource:GetPlayer(keys.playerid), OVERHEAD_ALERT_XP, enemy, text, nil)
 					end
-					
+
 					Notifications:BottomToAll({ text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." has given every hero on the "..enemy_team_name.." team "..text.." experience for...reasons.", duration = 4.0, style = { color = "LightGreen" } })
 				end
-				
+
 				-- Says I'm not a "donor" but might be doing something wrong...will leave this for now in case this code block expands
 				-- print("Donor status: ", api:GetDonatorStatus(caster:GetPlayerID()))
 			elseif str == "-upgrade" then
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")		
-			
+
 				local heroes = HeroList:GetAllHeroes()
-				
+
 				for _, hero in pairs(heroes) do
 					if hero:IsRealHero() and not hero:IsClone() and not hero:IsTempestDouble() then
-						
+
 						local ability_set = {}
 						local upgraded = false
-						
+
 						-- Temporary code; update as tests require
 						if string.find(text, 'techies') and hero:GetName() == "npc_dota_hero_techies" then
 							ability_set = {
@@ -935,62 +934,6 @@ function GameMode:OnPlayerChat(keys)
 								[12] = "special_bonus_imba_techies_7",
 								[13] = "special_bonus_imba_techies_8"
 							}
-							upgraded = true
-						elseif string.find(text, 'brewmaster') and hero:GetName() == "npc_dota_hero_brewmaster" then
-							ability_set = {
-								[0] = "imba_brewmaster_thunder_clap",
-								[1] = "imba_brewmaster_cinder_brew",
-								[2] = "imba_brewmaster_drunken_brawler",
-								[3] = "generic_hidden",
-								[4] = "generic_hidden",
-								[5] = "imba_brewmaster_primal_split",
-								[6] = "special_bonus_attack_damage_30",
-								[7] = "special_bonus_hp_200",
-								[8] = "special_bonus_imba_brewmaster_thunder_clap_slow_duration",
-								[9] = "special_bonus_magic_resistance_20",
-								[10] = "special_bonus_imba_brewmaster_primal_split_health",
-								[11] = "special_bonus_attack_speed_100",
-								[12] = "special_bonus_imba_brewmaster_druken_brawler_damage",
-								[13] = "special_bonus_imba_brewmaster_primal_split_cooldown"
-							}
-							upgraded = true
-						elseif string.find(text, 'gyrocopter') and hero:GetName() == "npc_dota_hero_gyrocopter" then
-							ability_set = {
-								[0] = "imba_gyrocopter_rocket_barrage",
-								[1] = "imba_gyrocopter_homing_missile",
-								[2] = "imba_gyrocopter_flak_cannon",
-								[3] = "imba_gyrocopter_gatling_guns",
-								[4] = "generic_hidden",
-								[5] = "imba_gyrocopter_call_down",
-								[6] = "special_bonus_attack_damage_25",
-								[7] = "special_bonus_hp_250",
-								[8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
-								[9] = "special_bonus_imba_gyrocopter_rocket_barrage_damage",
-								[10] = "special_bonus_movement_speed_50",
-								[11] = "special_bonus_imba_gyrocopter_call_down_cooldown",
-								[12] = "special_bonus_imba_gyrocopter_homing_missile_charges",
-								[13] = "special_bonus_imba_gyrocopter_gatling_guns_activate"
-							}
-							upgraded = true
-						elseif string.find(text, 'void') and hero:GetName() == "npc_dota_hero_void_spirit" then
-							ability_set = {
-								-- [0] = "imba_gyrocopter_rocket_barrage",
-								[1] = "imba_void_spirit_dissimilate",
-								[2] = "imba_void_spirit_resonant_pulse",
-								[3] = "imba_void_spirit_void_stasis",
-								-- [4] = "imba_void_spirit_astral_step_helper",
-								[4] = "imba_void_spirit_astral_step_helper_2",
-								[5] = "imba_void_spirit_astral_step",
-								-- [6] = "special_bonus_attack_damage_25",
-								-- [7] = "special_bonus_hp_250",
-								-- [8] = "special_bonus_imba_gyrocopter_flak_cannon_attacks",
-								[9] = "special_bonus_imba_void_spirit_resonant_pulse_damage",
-								-- [10] = "special_bonus_movement_speed_50",
-								[11] = "special_bonus_imba_void_spirit_astral_step_charge_cooldown",
-								[12] = "special_bonus_imba_void_spirit_astral_step_crit",
-								[13] = "special_bonus_imba_void_spirit_dissimilate_stun"
-							}
-							
 							upgraded = true
 						elseif string.find(text, 'terror') and hero:GetName() == "npc_dota_hero_terrorblade" then
 							ability_set = {
@@ -1011,25 +954,6 @@ function GameMode:OnPlayerChat(keys)
 							}
 							
 							upgraded = true
-						elseif string.find(text, 'undying') and hero:GetName() == "npc_dota_hero_undying" then
-							ability_set = {
-								[0] = "imba_undying_decay",
-								[1] = "imba_undying_soul_rip",
-								[2] = "imba_undying_tombstone",
-								[3] = "imba_undying_flesh_golem_grab",
-								[4] = "imba_undying_flesh_golem_throw",
-								[5] = "imba_undying_flesh_golem",
-								[6] = "special_bonus_cast_range_150",
-								[7] = "special_bonus_hp_regen_6",
-								[8] = "special_bonus_imba_undying_tombstone_zombie_damage",
-								[9] = "special_bonus_imba_undying_decay_duration",
-								[10] = "special_bonus_imba_undying_tombstone_on_death",
-								[11] = "special_bonus_imba_undying_flesh_golem_grab_allies",
-								[12] = "special_bonus_reincarnation_200",
-								[13] = "special_bonus_imba_undying_decay_cooldown"
-							}
-							
-							upgraded = true
 						elseif string.find(text, 'tinker') and hero:GetName() == "npc_dota_hero_tinker" then
 							ability_set = {
 								[0] = "imba_tinker_laser",
@@ -1046,24 +970,6 @@ function GameMode:OnPlayerChat(keys)
 								[11] = "special_bonus_imba_tinker_6",
 								[12] = "special_bonus_imba_tinker_7",
 								[13] = "special_bonus_imba_tinker_8"
-							}
-							upgraded = true
-						elseif string.find(text, 'treant') and hero:GetName() == "npc_dota_hero_treant" then
-							ability_set = {
-								[0] = "imba_treant_natures_grasp",
-								[1] = "imba_treant_leech_seed",
-								[2] = "imba_treant_living_armor",
-								[3] = "treant_eyes_in_the_forest",
-								[4] = "imba_treant_natures_guise",
-								[5] = "imba_treant_overgrowth",
-								[6] = "special_bonus_attack_damage_50",
-								[7] = "special_bonus_imba_treant_natures_guise_invisibility",
-								[8] = "special_bonus_imba_treant_natures_grasp_damage",
-								[9] = "special_bonus_imba_treant_living_armor_heal",
-								[10] = "special_bonus_cooldown_reduction_15",
-								[11] = "special_bonus_imba_treant_leech_seed_heal",
-								[12] = "special_bonus_imba_treant_living_armor_aoe",
-								[13] = "special_bonus_imba_treant_overgrowth_damage"
 							}
 							upgraded = true
 						elseif string.find(text, 'arc') and hero:GetName() == "npc_dota_hero_arc_warden" then
@@ -1093,7 +999,7 @@ function GameMode:OnPlayerChat(keys)
 								end
 							end
 						end
-						
+
 						-- Doing the switch with Undying gives him an infinite usage reincarnation which is...not good for field testing
 						if hero:GetName() == "npc_dota_hero_undying" then
 							hero:RemoveModifierByName("modifier_special_bonus_reincarnation")
