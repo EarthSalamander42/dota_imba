@@ -292,47 +292,6 @@
 "DOTA_Tooltip_modifier_item_imba_greater_crit_buff"					"Power Overwhelming"
 "DOTA_Tooltip_modifier_item_imba_greater_crit_buff_Description"		"Next critical hit will deal increased damage."
 
-// Dagon 6-9, // Boomstick
-"DOTA_Tooltip_Ability_item_imba_dagon_6"                        "Dagon 6"
-"DOTA_Tooltip_ability_item_imba_dagon_6_Description"            "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font><br><br>Damage: %damage%<br>Range: %abilitycastrange%"
-"DOTA_Tooltip_ability_item_imba_dagon_6_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
-"DOTA_Tooltip_ability_item_imba_dagon_6_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_6_bonus_intellect"                    "+$int"
-"DOTA_Tooltip_ability_item_imba_dagon_6_bonus_all_stats"                    "+$all"
-"DOTA_Tooltip_ability_item_imba_dagon_6_bonus_damage"          "+$damage"
-
-"DOTA_Tooltip_Ability_item_imba_dagon_7"                        "Dagon 7"
-"DOTA_Tooltip_ability_item_imba_dagon_7_Description"            "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font><br><br>Damage: %damage%<br>Range: %abilitycastrange%"
-"DOTA_Tooltip_ability_item_imba_dagon_7_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
-"DOTA_Tooltip_ability_item_imba_dagon_7_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_7_bonus_intellect"                    "+$int"
-"DOTA_Tooltip_ability_item_imba_dagon_7_bonus_all_stats"                    "+$all"
-"DOTA_Tooltip_ability_item_imba_dagon_7_bonus_damage"          "+$damage"
-
-"DOTA_Tooltip_Ability_item_imba_dagon_8"                        "Dagon 8"
-"DOTA_Tooltip_ability_item_imba_dagon_8_Description"            "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font><br><br>Damage: %damage%<br>Range: %abilitycastrange%"
-"DOTA_Tooltip_ability_item_imba_dagon_8_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
-"DOTA_Tooltip_ability_item_imba_dagon_8_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_8_bonus_intellect"                    "+$int"
-"DOTA_Tooltip_ability_item_imba_dagon_8_bonus_all_stats"                    "+$all"
-"DOTA_Tooltip_ability_item_imba_dagon_8_bonus_damage"          "+$damage"
-
-"DOTA_Tooltip_Ability_item_imba_dagon_9"                        "Dagon 9"
-"DOTA_Tooltip_ability_item_imba_dagon_9_Description"            "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font><br><br>Damage: %damage%<br>Range: %abilitycastrange%"
-"DOTA_Tooltip_ability_item_imba_dagon_9_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
-"DOTA_Tooltip_ability_item_imba_dagon_9_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_9_bonus_intellect"                    "+$int"
-"DOTA_Tooltip_ability_item_imba_dagon_9_bonus_all_stats"                    "+$all"
-"DOTA_Tooltip_ability_item_imba_dagon_9_bonus_damage"          "+$damage"
-
-"DOTA_Tooltip_Ability_item_imba_dagon_10"                      "The Boomstick"
-"DOTA_Tooltip_ability_item_imba_dagon_10_Description"          "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font><br><br>Damage: %damage%<br>Range: %abilitycastrange%"
-"DOTA_Tooltip_ability_item_imba_dagon_10_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
-"DOTA_Tooltip_ability_item_imba_dagon_10_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_10_bonus_intellect"                   "+$int"
-"DOTA_Tooltip_ability_item_imba_dagon_10_bonus_all_stats"                   "+$all"
-"DOTA_Tooltip_ability_item_imba_dagon_10_bonus_damage"          "+$damage"
-
 // Desolator
 "DOTA_Tooltip_Ability_item_imba_desolator"						"Desolator"
 "DOTA_Tooltip_ability_item_imba_desolator_Description"			"<h1><font color='#FF7800'>Active: Orb of Corruption</font></h1> Launches a slow moving orb that deals %active_damage% physical damage to enemies hit, and applies Corruption to them.<br><br>Range: %projectile_length%<br>Speed: %projectile_speed%\n<h1>Passive: Corruption</h1> Your attacks reduce the target's armor by %armor_reduction% <font color='#FF7800'> and vision range by %vision_reduction%</font> for %duration% seconds."
