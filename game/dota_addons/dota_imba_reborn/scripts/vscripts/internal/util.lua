@@ -1250,31 +1250,23 @@ function PreventBannedHeroToBeRandomed(iPlayerID)
 			print("old hero:", old_hero:GetUnitName())
 		end
 
-		for k, v in pairs(herolist) do
-			local picked_heroes = {}
+		local picked_heroes = {}
 
-			for i = 0, PlayerResource:GetPlayerCount() - 1 do
-				if PlayerResource:GetPlayer(i) and PlayerResource:GetSelectedHeroName(i) then
-					picked_heroes[PlayerResource:GetSelectedHeroName(i)] = true
-					break
-				end
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			if PlayerResource:GetPlayer(i) and PlayerResource:GetSelectedHeroName(i) then
+				picked_heroes[PlayerResource:GetSelectedHeroName(i)] = true
 			end
+		end
 
+		for k, v in pairs(herolist) do
 			-- only add non-picked heroes
-			if not picked_heroes[k] then
+			if string.find(k, "npc_dota_hero_") and not picked_heroes[k] and not api.disabled_heroes[k] then
 				table.insert(hero_table, k)
 			end
 		end
 
 		local new_hero = hero_table[RandomInt(1, #hero_table)]
-
-		print(api.disabled_heroes)
 		print(new_hero)
-
-		if api.disabled_heroes[new_hero] then
-			PreventBannedHeroToBeRandomed(iPlayerID)
-			return true
-		end
 
 		PlayerResource:GetPlayer(iPlayerID):SetSelectedHero(new_hero)
 
