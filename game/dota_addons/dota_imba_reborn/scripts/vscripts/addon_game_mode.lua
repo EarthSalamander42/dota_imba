@@ -64,6 +64,9 @@ function Precache( context )
 	PrecacheModel("models/items/wraith_king/arcana/wraith_king_arcana.vmdl", context)
 	PrecacheResource("particle_folder", "models/items/wraith_king/arcana", context)
 
+	-- Custom Heroes models
+	PrecacheModel("models/heroes/sohei/sohei.vmdl", context)
+
 	-- Battlepass Blink effects
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf", context)
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf", context)
