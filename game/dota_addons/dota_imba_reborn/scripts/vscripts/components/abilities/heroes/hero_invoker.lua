@@ -1389,7 +1389,7 @@ end
 							EmitSoundOnLocationWithCaster(self.cataclysm_point, "Hero_Invoker.SunStrike.Charge", self:GetCaster())
 							AddFOWViewer(self:GetCaster():GetTeamNumber(), self.cataclysm_point, self.vision_distance, self.vision_duration, false)
 							
-							sun_strike_beam = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self:GetCaster())
+							sun_strike_beam = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_CUSTOMORIGIN, nil)
 							ParticleManager:SetParticleControl(sun_strike_beam, 0, self.cataclysm_point)
 							ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(self.area_of_effect, 0, 0))
 							self:AddParticle(sun_strike_beam, false, false, -1, false, false)
@@ -1441,7 +1441,7 @@ end
 				EmitSoundOnLocationWithCaster(self.sun_strike_points[location], "Hero_Invoker.SunStrike.Ignite", self:GetCaster())
 				-- self:GetCaster():StopSound("Hero_Invoker.SunStrike.Charge")
 				
-				local sun_strike_crater = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_POINT, self:GetCaster())
+				local sun_strike_crater = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_CUSTOMORIGIN, nil)
 				ParticleManager:SetParticleControl(sun_strike_crater, 0, self.sun_strike_points[location])
 				ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.area_of_effect,0, 0))
 				ParticleManager:ReleaseParticleIndex(sun_strike_crater)
@@ -2957,7 +2957,7 @@ end
 				EmitSoundOnLocationWithCaster(self.target_point, "Hero_Invoker.EMP.Charge", self.caster)
 
 				-- Create EMP Effect
-				self.emp_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp.vpcf", PATTACH_CUSTOMORIGIN, self.caster)
+				self.emp_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp.vpcf", PATTACH_CUSTOMORIGIN, nil)
 				ParticleManager:SetParticleControl(self.emp_effect, 0, self.target_point)
 				ParticleManager:SetParticleControl(self.emp_effect, 1, Vector(self.area_of_effect, 0, 0))
 			end
@@ -2967,7 +2967,7 @@ end
 			if IsServer() then
 				ParticleManager:DestroyParticle(self.emp_effect, false)
 				-- Create EMP explosion
-				local emp_explosion_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp_explode.vpcf",  PATTACH_ABSORIGIN, self.caster)
+				local emp_explosion_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_emp_explode.vpcf",  PATTACH_CUSTOMORIGIN, nil)
 				ParticleManager:SetParticleControl(emp_explosion_effect, 0, self.target_point)
 				ParticleManager:SetParticleControl(emp_explosion_effect, 1, Vector(self.area_of_effect, 0, 0))
 				-- Play EMP Discharge sound
@@ -3127,11 +3127,11 @@ end
 					local ice_wall_point = target_point
 					ice_wall_point.z = ice_wall_point.z - z_offset
 					--Display the Ice Wall particles in a line.
-					local ice_wall_particle_effect = ParticleManager:CreateParticle(imba_invoker_ice_wall.ice_wall_effect, PATTACH_ABSORIGIN, caster)
+					local ice_wall_particle_effect = ParticleManager:CreateParticle(imba_invoker_ice_wall.ice_wall_effect, PATTACH_CUSTOMORIGIN, nil)
 					ParticleManager:SetParticleControl(ice_wall_particle_effect, 0, ice_wall_point - ability.endpoint_distance_from_center)
 					ParticleManager:SetParticleControl(ice_wall_particle_effect, 1, ice_wall_point + ability.endpoint_distance_from_center)
 					
-					local ice_wall_particle_effect_spikes = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_ice_wall_b.vpcf", PATTACH_ABSORIGIN, caster)
+					local ice_wall_particle_effect_spikes = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_ice_wall_b.vpcf", PATTACH_CUSTOMORIGIN, nil)
 					ParticleManager:SetParticleControl(ice_wall_particle_effect_spikes, 0, target_point - ability.endpoint_distance_from_center)
 					ParticleManager:SetParticleControl(ice_wall_particle_effect_spikes, 1, target_point + ability.endpoint_distance_from_center)
 

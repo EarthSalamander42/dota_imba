@@ -1104,6 +1104,10 @@ end
 imba_rubick_spellsteal.failState = nil
 function imba_rubick_spellsteal:CastFilterResultTarget( hTarget )
 	if IsServer() then
+		if self.is_stealing_spell == true then
+			return UF_FAIL_CUSTOM
+		end
+
 		if self:GetLastSpell( hTarget ) == nil then
 			self.failState = "nevercast"
 			return UF_FAIL_CUSTOM
@@ -1143,6 +1147,10 @@ function imba_rubick_spellsteal:GetCustomCastErrorTarget( hTarget )
 		self.failState = nil
 		return "Target never casted an ability"
 	end
+
+	if self.is_stealing_spell == true then
+		return "You're already stealing a spell!"
+	end
 	
 	for _, banned_ability in pairs(self.banned_abilities) do
 		if self:GetLastSpell(hTarget).primarySpell and self:GetLastSpell(hTarget).primarySpell.GetName and self:GetLastSpell(hTarget).primarySpell:GetName() == banned_ability then
@@ -1156,19 +1164,22 @@ function imba_rubick_spellsteal:GetCustomCastErrorTarget( hTarget )
 		return "#dota_hud_error_spell_steal_monkey_king_tree_dance"
 	end
 end
+
 --------------------------------------------------------------------------------
 -- Ability Start
 --------------------------------------------------------------------------------
 
--- function imba_rubick_spellsteal:OnAbilityPhaseStart()
-	-- -- Has Talent not working in CastFilterResultTarget for whatever reasons, ez fix
-	-- if self:GetCursorTarget():IsCreep() and self:GetCaster():HasTalent("special_bonus_imba_rubick_1") == false then
-		-- DisplayError(self:GetCaster():GetPlayerID(), "#dota_hud_error_cant_cast_on_creep")
-		-- return false
-	-- end
+--[[
+function imba_rubick_spellsteal:OnAbilityPhaseStart()
+	-- Has Talent not working in CastFilterResultTarget for whatever reasons, ez fix
+	if self:GetCursorTarget():IsCreep() and self:GetCaster():HasTalent("special_bonus_imba_rubick_1") == false then
+		DisplayError(self:GetCaster():GetPlayerID(), "#dota_hud_error_cant_cast_on_creep")
+		return false
+	end
 
-	-- return true
--- end
+	return true
+end
+--]]
 
 function imba_rubick_spellsteal:GetCastRange( vLocation, hTarget )
 	if self:GetCaster():HasScepter() then 
@@ -1187,9 +1198,12 @@ function imba_rubick_spellsteal:GetCooldown( iLevel )
 end
 
 imba_rubick_spellsteal.stolenSpell = nil
+imba_rubick_spellsteal.is_stealing_spell = false
+
 function imba_rubick_spellsteal:OnSpellStart()
 	-- unit identifier
 	self.spell_target = self:GetCursorTarget()
+	self.is_stealing_spell = true
 
 	-- Cancel if blocked
 	if self.spell_target:TriggerSpellAbsorb( self ) then
@@ -1205,6 +1219,7 @@ function imba_rubick_spellsteal:OnSpellStart()
 	self.stolenSpell.primarySpell = self:GetLastSpell( self.spell_target ).primarySpell
 	self.stolenSpell.secondarySpell = self:GetLastSpell( self.spell_target ).secondarySpell
 	self.stolenSpell.linkedTalents = self:GetLastSpell( self.spell_target ).linkedTalents
+
 	-- load data
 	local projectile_name = "particles/units/heroes/hero_rubick/rubick_spell_steal.vpcf"
 	local projectile_speed = self:GetSpecialValueFor("projectile_speed")
@@ -1222,6 +1237,7 @@ function imba_rubick_spellsteal:OnSpellStart()
 		bVisibleToEnemies = true,                         -- Optional
 		bReplaceExisting = false,                         -- Optional
 	}
+
 	projectile = ProjectileManager:CreateTrackingProjectile(info)
 
 	-- Play effects
@@ -1229,11 +1245,10 @@ function imba_rubick_spellsteal:OnSpellStart()
 	EmitSoundOn( sound_cast, self:GetCaster() )
 	local sound_target = "Hero_Rubick.SpellSteal.Target"
 	EmitSoundOn( sound_target, self.spell_target )
-
-
 end
 
 function imba_rubick_spellsteal:OnProjectileHit( target, location )
+	self.is_stealing_spell = false
 
 	-- need to remove it to send the right spell amp stolen with aghanim
 	if self:GetCaster():HasModifier("modifier_imba_rubick_spellsteal") then
