@@ -23,16 +23,16 @@ function modifier_mutation_bloodlust:OnCreated()
 	self.size = 25 -- % of hero's model size increase
 
 	if IsServer() then
-		EmitSoundOn("Hero_OgreMagi.Bloodlust.Target", self:GetParent())
-		EmitSoundOn("Hero_OgreMagi.Bloodlust.Target.FP", self:GetParent())
+		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target", self:GetParent()):GetPlayerOwner()
+		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target.FP", self:GetParent():GetPlayerOwner())
 	end
 end
 
 -- Only called if buff overlaps with itself (which is probably never)
 function modifier_mutation_bloodlust:OnRefresh()
 	if IsServer() then
-		EmitSoundOn("Hero_OgreMagi.Bloodlust.Target", self:GetParent())
-		EmitSoundOn("Hero_OgreMagi.Bloodlust.Target.FP", self:GetParent())
+		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target", self:GetParent()):GetPlayerOwner()
+		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target.FP", self:GetParent():GetPlayerOwner())
 	end
 end
 

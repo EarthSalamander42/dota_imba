@@ -17,7 +17,7 @@ function modifier_mutation_torrent:OnCreated()
 	self.height = 400
 	self.stun_duration = 1.6
 
-	EmitSoundOn("Ability.pre.Torrent", self:GetParent())
+	EmitSoundOnClient("Ability.pre.Torrent", self:GetParent():GetPlayerOwner())
 
 	self.team_pfx = ParticleManager:CreateParticle("particles/hero/kunkka/torrent_bubbles.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 	ParticleManager:SetParticleControl(self.team_pfx, 0, self.pos)

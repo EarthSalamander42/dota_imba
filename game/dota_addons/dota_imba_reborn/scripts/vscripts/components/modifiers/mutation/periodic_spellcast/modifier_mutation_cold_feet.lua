@@ -40,7 +40,7 @@ function modifier_mutation_cold_feet:OnCreated()
 							damage_type = DAMAGE_TYPE_MAGICAL}
 	self.counter = 1
 	
-	EmitSoundOn("Hero_Ancient_Apparition.ColdFeetCast", self:GetParent())
+	EmitSoundOnClient("Hero_Ancient_Apparition.ColdFeetCast", self:GetParent():GetPlayerOwner())
 
 	self.ground_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_marker.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 	
@@ -61,7 +61,7 @@ function modifier_mutation_cold_feet:OnIntervalThink()
 			ApplyDamage(self.damageTable)
 		end
 				
-		EmitSoundOn("Hero_Ancient_Apparition.ColdFeetTick", self:GetParent())
+		EmitSoundOnClient("Hero_Ancient_Apparition.ColdFeetTick", self:GetParent():GetPlayerOwner())
 	end
 end
 
@@ -106,6 +106,6 @@ end
 
 function modifier_mutation_cold_feet_stun:OnCreated()
 	if IsServer() then
-		EmitSoundOn("Hero_Ancient_Apparition.ColdFeetFreeze", self:GetParent())
+		EmitSoundOnClient("Hero_Ancient_Apparition.ColdFeetFreeze", self:GetParent():GetPlayerOwner())
 	end
 end

@@ -87,6 +87,7 @@ function IsDaytime()
     return true   
 end
 
+--[[
 function C_DOTA_BaseNPC:IsInRiver()
 	if self:GetAbsOrigin().z < 160 then
 		return true
@@ -94,6 +95,7 @@ function C_DOTA_BaseNPC:IsInRiver()
 		return false
 	end
 end
+--]]
 
 -- Call custom functions whenever GetAbilityTextureName is being called anywhere
 original_Ability_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureName

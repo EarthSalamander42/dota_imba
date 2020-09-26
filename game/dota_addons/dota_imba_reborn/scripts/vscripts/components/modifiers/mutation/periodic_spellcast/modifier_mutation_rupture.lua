@@ -17,7 +17,8 @@ if IsServer() then
 		self.damagecap = 1300
 		self.prevLoc = self:GetParent():GetAbsOrigin()
 		self:StartIntervalThink(0.25)
-		EmitSoundOn("hero_bloodseeker.rupture", self:GetParent())
+
+		EmitSoundOnClient("Hero_Bloodseeker.Rupture", self:GetParent():GetPlayerOwner())
 	end
 
 	function modifier_mutation_rupture:OnIntervalThink()

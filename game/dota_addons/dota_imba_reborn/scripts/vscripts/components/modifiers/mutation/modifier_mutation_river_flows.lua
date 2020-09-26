@@ -32,7 +32,7 @@ function modifier_mutation_river_flows:IsInRiver()
 	if parent:GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" or parent:GetUnitName() == "npc_dota_gyrocopter_homing_missile" then return end
 
 	-- Add additional logic to allow shadow blade / silver edge usage to also be in check for river
-	if origin.z < 160 and (parent:HasGroundMovementCapability() or parent:HasModifier("modifier_item_imba_shadow_blade_invis") or parent:HasModifier("modifier_item_imba_silver_edge_invis")) then
+	if origin.z < 32 and (parent:HasGroundMovementCapability() or parent:HasModifier("modifier_item_imba_shadow_blade_invis") or parent:HasModifier("modifier_item_imba_silver_edge_invis")) then
 		return true
 	else
 		return false

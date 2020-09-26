@@ -111,13 +111,13 @@ function Mutation:Init()
 	IMBA_MUTATION["imba"] = "frantic"
 
 	if IsInToolsMode() then
-		-- IMBA_MUTATION["positive"] = "ultimate_level"
-		-- IMBA_MUTATION["negative"] = "monkey_business"
-		-- IMBA_MUTATION["terrain"] = "river_flows"
+		IMBA_MUTATION["positive"] = "ultimate_level"
+		IMBA_MUTATION["negative"] = "periodic_spellcast"
+		IMBA_MUTATION["terrain"] = "river_flows"
 
-		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
-		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
-		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
+--		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
+--		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
+--		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)

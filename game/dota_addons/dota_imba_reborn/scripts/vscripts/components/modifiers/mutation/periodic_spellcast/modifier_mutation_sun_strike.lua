@@ -13,7 +13,7 @@ function modifier_mutation_sun_strike:OnCreated()
 	self.damage = 1000 + (250 * game_time)
 	self.pos = self:GetParent():GetAbsOrigin()
 
-	EmitSoundOn("Hero_Invoker.SunStrike.Charge", self:GetParent())
+	EmitSoundOnClient("Hero_Invoker.SunStrike.Charge", self:GetParent():GetPlayerOwner())
 
 	local particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_WORLDORIGIN, nil, self:GetParent():GetTeamNumber())
 	ParticleManager:SetParticleControl(particle, 0, self.pos)

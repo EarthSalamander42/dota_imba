@@ -30,8 +30,8 @@ function modifier_mutation_stampede:OnCreated()
 	if IsServer() then
 		self.trample_damage = self:GetParent():GetStrength() * (self.strength_damage * 0.01)
 
-		EmitSoundOn("Hero_Centaur.Stampede.Cast", self:GetParent())
-		EmitSoundOn("Hero_Centaur.Stampede.Movement", self:GetParent())
+		EmitSoundOnClient("Hero_Centaur.Stampede.Cast", self:GetParent():GetPlayerOwner())
+		EmitSoundOnClient("Hero_Centaur.Stampede.Movement", self:GetParent():GetPlayerOwner())
 
 		self.particle_stampede_fx = ParticleManager:CreateParticle(self.particle, PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControl(self.particle_stampede_fx, 0, self:GetParent():GetAbsOrigin())

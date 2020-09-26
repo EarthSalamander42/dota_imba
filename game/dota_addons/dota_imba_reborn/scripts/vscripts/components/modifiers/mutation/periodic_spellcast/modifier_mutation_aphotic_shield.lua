@@ -36,9 +36,9 @@ function modifier_mutation_aphotic_shield:OnCreated()
 	self:GetParent():Purge(false, true, false, true, true)
 	
 	-- Play shield creation and shield looping sounds
-	EmitSoundOn("Hero_Abaddon.AphoticShield.Cast", self:GetParent())
-	EmitSoundOn("Hero_Abaddon.AphoticShield.Loop", self:GetParent())
-	
+	EmitSoundOnClient("Hero_Abaddon.AphoticShield.Cast", self:GetParent():GetPlayerOwner())
+	EmitSoundOnClient("Hero_Abaddon.AphoticShield.Loop", self:GetParent():GetPlayerOwner())
+
 	--Copied from hero_abbadon.lua with appropriately changed parameters
 	local shield_size = self:GetParent():GetModelRadius() * 0.7
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -62,7 +62,7 @@ function modifier_mutation_aphotic_shield:OnRefresh()
 		ParticleManager:SetParticleControl(particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle)
 	
-		EmitSoundOn("Hero_Abaddon.AphoticShield.Destroy", self:GetParent())
+		EmitSoundOnClient("Hero_Abaddon.AphoticShield.Destroy", self:GetParent():GetPlayerOwner())
 		
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
 		self:GetParent():GetAbsOrigin(),
@@ -85,8 +85,8 @@ function modifier_mutation_aphotic_shield:OnRefresh()
 		
 		self:GetParent():Purge(false, true, false, true, true)
 		
-		EmitSoundOn("Hero_Abaddon.AphoticShield.Cast", self:GetParent())
-		EmitSoundOn("Hero_Abaddon.AphoticShield.Loop", self:GetParent())
+		EmitSoundOnClient("Hero_Abaddon.AphoticShield.Cast", self:GetParent():GetPlayerOwner())
+		EmitSoundOnClient("Hero_Abaddon.AphoticShield.Loop", self:GetParent():GetPlayerOwner())
 	end
 end
 
@@ -97,7 +97,7 @@ function modifier_mutation_aphotic_shield:OnDestroy()
 		ParticleManager:SetParticleControl(particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle)
 	
-		EmitSoundOn("Hero_Abaddon.AphoticShield.Destroy", self:GetParent())
+		EmitSoundOnClient("Hero_Abaddon.AphoticShield.Destroy", self:GetParent():GetPlayerOwner())
 		
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
 		self:GetParent():GetAbsOrigin(),
