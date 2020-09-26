@@ -47,6 +47,7 @@ require('components/settings/settings')
 if GetMapName() == "imba_10v10" then
 	require('components/team_selection')
 end
+require('components/tooltips/init')
 
 require('events/events')
 require('filters')
