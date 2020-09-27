@@ -4,7 +4,7 @@
 		<include src="file://{resources}/scripts/custom_game/abilities_charges.js" />
 		<include src="file://{resources}/scripts/custom_game/vanilla_keybinds.js" />
 		<include src="file://{resources}/scripts/custom_game/imba_invoker_tooltips.js" />
-<!--		<include src="file://{resources}/scripts/custom_game/vanilla_link_tooltips.js" /> -->
+		<include src="file://{resources}/scripts/custom_game/imba_custom_tooltips.js" />
 	</scripts>
 
 	<script>
@@ -288,6 +288,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/manifold_paradox.xml" />
 <!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" /> -->
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_plus_stats.xml" /> -->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_tooltip_ability.xml" />
 
 <!--	<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen.xml" /> -->
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.xml" />

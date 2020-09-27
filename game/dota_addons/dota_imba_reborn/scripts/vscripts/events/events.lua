@@ -79,6 +79,18 @@ function GameMode:OnGameRulesStateChange(keys)
 						PlayerResource:SetCanRepick(i, false)
 					end
 				end
+
+				return nil
+			end
+		else
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				if PlayerResource:IsValidPlayer(i) then
+					if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
+						PlayerResource:SetCameraTarget(i, GoodCamera)
+					else
+						PlayerResource:SetCameraTarget(i, BadCamera)
+					end
+				end
 			end
 		else
 			for i = 0, PlayerResource:GetPlayerCount() - 1 do
