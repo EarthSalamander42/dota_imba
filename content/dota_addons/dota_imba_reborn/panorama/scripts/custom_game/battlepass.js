@@ -476,8 +476,14 @@ function Battlepass(retainSubTab, bRewardsDisabled) {
 	if (BP_REWARDS_2 && BP_REWARDS_2["1"])
 		BP_REWARDS_2 = BP_REWARDS_2["1"];
 
+	var limiter = 1;
+
+	while (BP_REWARDS[limiter]) {
+		limiter++;
+	}
+
 	for (var i in BP_REWARDS_2) {
-		BP_REWARDS[(parseInt(i) + 99).toString()] = BP_REWARDS_2[i];
+		BP_REWARDS[(parseInt(i) + (limiter - 1)).toString()] = BP_REWARDS_2[i];
 	}
 
 	var BP_REWARDS_3 = BubbleSortByElement(BP_REWARDS, "level");
@@ -666,7 +672,7 @@ function SetEmblem(emblem, name, id, required_status) {
 	companion_changed = true;
 }
 
-function SetArmory(hero, slot_id, item_id, bForceUnequip) {
+function SetArmory(hero, slot_id, item_id, bp_name, bForceUnequip) {
 	if (companion_changed === true && bForceUnequip == undefined) {
 		$.Msg("SLOW DOWN BUDDY!");
 		return;
@@ -687,9 +693,9 @@ function SetArmory(hero, slot_id, item_id, bForceUnequip) {
 
 		if ($("#reward_equipped_" + item_id)) {
 			$("#reward_equipped_" + item_id).DeleteAsync(0);
-			text = $.Localize("bp_reward_unequip_success") + " " + $("#reward_button_" + item_id).GetChild(2).GetChild(0).text;
+			text = $.Localize("bp_reward_unequip_success") + " " + $.Localize(bp_name);
 		} else {
-			text = $.Localize("bp_reward_equip_success") + " " + $("#reward_button_" + item_id).GetChild(2).GetChild(0).text;
+			text = $.Localize("bp_reward_equip_success") + " " + $.Localize(bp_name);
 			SetRewardEquipped(item_id, hero);
 		}
 
@@ -998,7 +1004,7 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 
 									// rough fix to unequip rewards if somehow a player equip higher tiers rewards
 									if (plyData.Lvl < bp_level) {
-										SetArmory(bp_hero, slot_id, bp_item_id, false)
+										SetArmory(bp_hero, slot_id, bp_item_id, bp_name, false)
 									}
 
 									break;
@@ -1010,7 +1016,7 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 
 						var event = function(bp_hero, bp_slot_id, bp_item_id) {
 							return function() {
-								SetArmory(bp_hero, bp_slot_id, bp_item_id);
+								SetArmory(bp_hero, bp_slot_id, bp_item_id, bp_name);
 							}
 						};
 

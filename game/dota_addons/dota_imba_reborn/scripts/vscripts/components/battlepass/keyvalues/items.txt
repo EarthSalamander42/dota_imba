@@ -6,7 +6,7 @@
 	// BLINK EFFECTS
 	////////////////////////////////////////////////////////
 
-	"1" // 
+	"1" // Fall Major 2016
 	{
 		"item_id"					"16315" // this item is in a special bundle, informations can't be retrieved
 		"item_type"					"blink"
@@ -52,7 +52,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"25"
 		"item_rarity"				"uncommon"
-		"image_inventory"			"custom_game/battlepass/blink2" // USE GAMEPEDIA WEBM VIDEO
+
 		"used_by_heroes"			"blink"
 
 		"visuals"
@@ -212,6 +212,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"125"
 		"item_rarity"				"uncommon"
+		"item_name"					"battlepass_reward_tooltip_ti4"
 		"image_inventory"			"custom_game/battlepass/blink6" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
@@ -332,6 +333,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"200"
 		"item_rarity"				"uncommon"
+		"item_name"					"battlepass_reward_tooltip_ti5"
 		"image_inventory"			"custom_game/battlepass/blink9" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
@@ -372,6 +374,7 @@
 		"item_type"					"blink"
 		"item_unlock_level"			"225"
 		"item_rarity"				"uncommon"
+		"item_name"					"battlepass_reward_tooltip_ti5"
 		"image_inventory"			"custom_game/battlepass/blink10" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"blink"
 
@@ -488,7 +491,7 @@
 	}
 	"13" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"blink"
 		"item_unlock_level"			"300"
 		"item_rarity"				"uncommon"
@@ -528,7 +531,7 @@
 	}
 	"14" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"blink"
 		"item_unlock_level"			"325"
 		"item_rarity"				"uncommon"
@@ -577,6 +580,7 @@
 		"item_type"					"bottle"
 		"item_unlock_level"			"110"
 		"item_rarity"				"rare"
+		"item_name"					"battlepass_reward_tooltip_ti4"
 		"image_inventory"			"custom_game/battlepass/bottle" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
@@ -596,6 +600,7 @@
 		"item_type"					"bottle"
 		"item_unlock_level"			"210"
 		"item_rarity"				"rare"
+		"item_name"					"battlepass_reward_tooltip_ti5"
 		"image_inventory"			"custom_game/battlepass/bottle2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"bottle"
 
@@ -611,7 +616,7 @@
 	}
 	"17" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"bottle"
 		"item_unlock_level"			"310"
 		"item_rarity"				"rare"
@@ -630,7 +635,7 @@
 	}
 	"18" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"bottle"
 		"item_unlock_level"			"410"
 		"item_rarity"				"rare"
@@ -649,7 +654,7 @@
 	}
 	"19" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"bottle"
 		"item_unlock_level"			"510"
 		"item_rarity"				"rare"
@@ -668,7 +673,7 @@
 	}
 	"20" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"bottle"
 		"item_unlock_level"			"610"
 		"item_rarity"				"rare"
@@ -732,7 +737,7 @@
 	}
 	"22" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"240"
 		"item_rarity"				"rare"
@@ -766,7 +771,7 @@
 	}
 	"23" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17239"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"360"
 		"item_rarity"				"rare"
@@ -800,7 +805,7 @@
 	}
 	"24" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"480"
 		"item_rarity"				"rare"
@@ -834,7 +839,7 @@
 	}
 	"25" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"600"
 		"item_rarity"				"rare"
@@ -868,7 +873,7 @@
 	}
 	"26" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"force_staff"
 		"item_unlock_level"			"720"
 		"item_rarity"				"rare"
@@ -967,7 +972,7 @@
 
 	"30" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"fountain"
 		"item_unlock_level"			"105"
 		"item_rarity"				"uncommon"
@@ -987,7 +992,7 @@
 
 	"31" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"fountain"
 		"item_unlock_level"			"140"
 		"item_rarity"				"uncommon"
@@ -1007,7 +1012,7 @@
 
 	"32" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"fountain"
 		"item_unlock_level"			"175"
 		"item_rarity"				"uncommon"
@@ -1027,7 +1032,7 @@
 
 	"33" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17239"
 		"item_type"					"fountain"
 		"item_unlock_level"			"210"
 		"item_rarity"				"uncommon"
@@ -1047,7 +1052,7 @@
 
 	"34" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17239"
 		"item_type"					"fountain"
 		"item_unlock_level"			"245"
 		"item_rarity"				"uncommon"
@@ -1067,7 +1072,7 @@
 
 	"35" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17239"
 		"item_type"					"fountain"
 		"item_unlock_level"			"280"
 		"item_rarity"				"uncommon"
@@ -1091,6 +1096,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"315"
 		"item_rarity"				"uncommon"
+		"item_name"					"battlepass_reward_tooltip_ti4"
 		"image_inventory"			"custom_game/battlepass/fountain10" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
@@ -1107,7 +1113,7 @@
 
 	"37" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"fountain"
 		"item_unlock_level"			"350"
 		"item_rarity"				"uncommon"
@@ -1127,7 +1133,7 @@
 
 	"38" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"fountain"
 		"item_unlock_level"			"385"
 		"item_rarity"				"uncommon"
@@ -1147,7 +1153,7 @@
 
 	"39" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"fountain"
 		"item_unlock_level"			"420"
 		"item_rarity"				"uncommon"
@@ -1171,6 +1177,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"455"
 		"item_rarity"				"uncommon"
+		"item_name"					"battlepass_reward_tooltip_ti5"
 		"image_inventory"			"custom_game/battlepass/fountain14" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
@@ -1191,6 +1198,7 @@
 		"item_type"					"fountain"
 		"item_unlock_level"			"490"
 		"item_rarity"				"uncommon"
+		"item_name"					"battlepass_reward_tooltip_ti5"
 		"image_inventory"			"custom_game/battlepass/fountain15" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"fountain"
 
@@ -1207,7 +1215,7 @@
 
 	"42" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"fountain"
 		"item_unlock_level"			"525"
 		"item_rarity"				"uncommon"
@@ -1227,7 +1235,7 @@
 
 	"43" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"fountain"
 		"item_unlock_level"			"560"
 		"item_rarity"				"uncommon"
@@ -1247,7 +1255,7 @@
 
 	"44" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"fountain"
 		"item_unlock_level"			"595"
 		"item_rarity"				"uncommon"
@@ -1267,7 +1275,7 @@
 
 	"45" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"fountain"
 		"item_unlock_level"			"630"
 		"item_rarity"				"uncommon"
@@ -1287,7 +1295,7 @@
 
 	"46" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"fountain"
 		"item_unlock_level"			"665"
 		"item_rarity"				"uncommon"
@@ -1307,7 +1315,7 @@
 
 	"47" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"fountain"
 		"item_unlock_level"			"700"
 		"item_rarity"				"uncommon"
@@ -1335,6 +1343,7 @@
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"90"
 		"item_rarity"				"mythical"
+		"item_name"					"#battlepass_reward_tooltip_48"
 		"item_inventory_icon"		"" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"maelstrom"
 
@@ -1372,7 +1381,7 @@
 
 	"49" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"270"
 		"item_rarity"				"mythical"
@@ -1420,7 +1429,7 @@
 
 	"50" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"450"
 		"item_rarity"				"mythical"
@@ -1461,7 +1470,7 @@
 
 	"51" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"630"
 		"item_rarity"				"mythical"
@@ -1502,7 +1511,7 @@
 
 	"52" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"maelstrom"
 		"item_unlock_level"			"810"
 		"item_rarity"				"mythical"
@@ -1547,7 +1556,7 @@
 
 	"53" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"mekansm"
 		"item_unlock_level"			"120"
 		"item_rarity"				"mythical"
@@ -1606,7 +1615,7 @@
 
 	"54" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"mekansm"
 		"item_unlock_level"			"360"
 		"item_rarity"				"mythical"
@@ -1665,7 +1674,7 @@
 
 	"55" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"mekansm"
 		"item_unlock_level"			"600"
 		"item_rarity"				"mythical"
@@ -1724,7 +1733,7 @@
 
 	"56" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"mekansm"
 		"item_unlock_level"			"840"
 		"item_rarity"				"mythical3"
@@ -1787,7 +1796,7 @@
 
 	"57" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"radiance"
 		"item_unlock_level"			"150"
 		"item_rarity"				"legendary"
@@ -1828,7 +1837,7 @@
 
 	"58" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"radiance"
 		"item_unlock_level"			"450"
 		"item_rarity"				"legendary"
@@ -1869,7 +1878,7 @@
 
 	"59" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"radiance"
 		"item_unlock_level"			"750"
 		"item_rarity"				"legendary"
@@ -1910,7 +1919,7 @@
 
 	"60" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"radiance"
 		"item_unlock_level"			"1050"
 		"item_rarity"				"legendary"
@@ -1955,7 +1964,7 @@
 
 	"61" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17239"
 		"item_type"					"sheepstick"
 		"item_unlock_level"			"320"
 		"item_rarity"				"legendary"
@@ -1994,6 +2003,7 @@
 		"item_type"					"sheepstick"
 		"item_unlock_level"			"640"
 		"item_rarity"				"legendary"
+		"item_name"					"battlepass_reward_tooltip_62"
 		"image_inventory"			"custom_game/battlepass/sheepstick2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"sheepstick"
 
@@ -2029,7 +2039,7 @@
 
 	"63" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"shiva"
 		"item_unlock_level"			"400"
 		"item_rarity"				"legendary"
@@ -2068,6 +2078,7 @@
 		"item_type"					"shiva"
 		"item_unlock_level"			"800"
 		"item_rarity"				"legendary"
+		"item_name"					"battlepass_reward_tooltip_64"
 		"image_inventory"			"custom_game/battlepass/shiva2" // USE GAMEPEDIA WEBM VIDEO
 		"used_by_heroes"			"shiva"
 
@@ -2108,7 +2119,7 @@
 
 	"65" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"shiva"
 		"item_unlock_level"			"1200"
 		"item_rarity"				"legendary"
@@ -2121,13 +2132,13 @@
 			{
 				"type"			"particle"
 				"asset"			"particles/items2_fx/shivas_guard_active.vpcf"
-				"modifier"		"particles/econ/events/ti7/shivas_guard_active_ti8.vpcf"
+				"modifier"		"particles/econ/events/ti8/shivas_guard_ti8_active.vpcf"
 			}
 			"asset_modifier2"
 			{
 				"type"			"particle"
 				"asset"			"particles/items2_fx/shivas_guard_impact.vpcf"
-				"modifier"		"particles/econ/events/ti7/shivas_guard_impact_ti8.vpcf"
+				"modifier"		"particles/econ/events/ti8/shivas_guard_ti8_impact.vpcf"
 			}
 		}
 
@@ -2152,7 +2163,7 @@
 
 	"66" // 
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"shiva"
 		"item_unlock_level"			"1600"
 		"item_rarity"				"legendary"
@@ -2165,13 +2176,13 @@
 			{
 				"type"			"particle"
 				"asset"			"particles/items2_fx/shivas_guard_active.vpcf"
-				"modifier"		"particles/econ/events/ti7/shivas_guard_active_ti9.vpcf"
+				"modifier"		"particles/econ/events/ti9/shivas_guard_ti9_active.vpcf"
 			}
 			"asset_modifier2"
 			{
 				"type"			"particle"
 				"asset"			"particles/items2_fx/shivas_guard_impact.vpcf"
-				"modifier"		"particles/econ/events/ti7/shivas_guard_impact_ti9.vpcf"
+				"modifier"		"particles/econ/events/ti9/shivas_guard_ti9_impact.vpcf"
 			}
 		}
 
@@ -2329,7 +2340,7 @@
 
 	"84" // TI6 Level up
 	{
-		"item_id"					"16315"
+		"item_id"					"17021"
 		"item_type"					"levelup"
 		"item_unlock_level"			"50"
 		"item_rarity"				"legendary"
@@ -2349,7 +2360,7 @@
 
 	"85" // TI7 Level up
 	{
-		"item_id"					"16315"
+		"item_id"					"17262"
 		"item_type"					"levelup"
 		"item_unlock_level"			"350"
 		"item_rarity"				"legendary"
@@ -2369,7 +2380,7 @@
 
 	"86" // TI8 Level up
 	{
-		"item_id"					"16315"
+		"item_id"					"17250"
 		"item_type"					"levelup"
 		"item_unlock_level"			"650"
 		"item_rarity"				"legendary"
@@ -2389,7 +2400,7 @@
 
 	"87" // TI9 Level up
 	{
-		"item_id"					"16315"
+		"item_id"					"17482"
 		"item_type"					"levelup"
 		"item_unlock_level"			"950"
 		"item_rarity"				"legendary"

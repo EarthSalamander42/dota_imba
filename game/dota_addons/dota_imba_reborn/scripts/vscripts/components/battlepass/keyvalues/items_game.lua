@@ -46,8 +46,10 @@ function ItemsGame:Init()
 	local count = 1
 	local bp_reward_table = {}
 	local bp_reward_table2 = {}
+	local nettable_limiter = 90
+	CustomNetTables:SetTableValue("battlepass_js_builder_limiter", "rewards", {nettable_limiter})
 
-	while ItemsGame.custom_kv[tostring(count)] and count < 100 do
+	while ItemsGame.custom_kv[tostring(count)] and count < nettable_limiter do
 		local itemKV = ItemsGame.custom_kv[tostring(count)]
 
 		if itemKV.item_type == "courier" then
@@ -81,7 +83,7 @@ function ItemsGame:Init()
 	-- max nettable limit :(
 	CustomNetTables:SetTableValue("battlepass_js_builder", "rewards", {ItemsGame.battlepass})
 
-	while ItemsGame.custom_kv[tostring(count)] and count >= 100 do
+	while ItemsGame.custom_kv[tostring(count)] and count >= nettable_limiter do
 		local itemKV = ItemsGame.custom_kv[tostring(count)]
 
 		if itemKV.item_type == "courier" then
@@ -101,7 +103,7 @@ function ItemsGame:Init()
 			reward_table.slot_id = ItemsGame:GetItemSlot(count)
 			reward_table.hero = ItemsGame:GetItemHero(count)
 
-			table.insert(bp_reward_table2, count - 99, reward_table)
+			table.insert(bp_reward_table2, count - (nettable_limiter - 1), reward_table)
 		end
 
 		count = count + 1
