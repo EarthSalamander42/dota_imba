@@ -1201,6 +1201,14 @@ end
 imba_rubick_spellsteal.stolenSpell = nil
 imba_rubick_spellsteal.is_stealing_spell = false
 
+-- fixes spell stolen not removed and unable to cast spell steal if dying before projectile hits rubick
+function imba_rubick_spellsteal:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	self:ForgetSpell()
+	self.is_stealing_spell = false
+end
+
 function imba_rubick_spellsteal:OnSpellStart()
 	-- unit identifier
 	self.spell_target = self:GetCursorTarget()
