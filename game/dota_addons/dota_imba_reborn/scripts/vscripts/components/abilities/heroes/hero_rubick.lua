@@ -9,6 +9,7 @@ LinkLuaModifier("modifier_imba_telekinesis_root", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_telekinesis_caster", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
 imba_rubick_telekinesis = class({})
+
 function imba_rubick_telekinesis:IsHiddenWhenStolen() return false end
 function imba_rubick_telekinesis:IsRefreshable() return true end
 function imba_rubick_telekinesis:IsStealable() return true end

@@ -289,14 +289,6 @@ function CDOTA_BaseNPC:GetHeroType()
 	end
 end
 
-function CDOTA_BaseNPC:SetUnitOnClearGround()
-	Timers:CreateTimer(FrameTime(), function()
-		self:SetAbsOrigin(Vector(self:GetAbsOrigin().x, self:GetAbsOrigin().y, GetGroundPosition(self:GetAbsOrigin(), self).z))		
-		FindClearSpaceForUnit(self, self:GetAbsOrigin(), true)
-		ResolveNPCPositions(self:GetAbsOrigin(), 64)
-	end)
-end
-
 function CDOTA_BaseNPC:EmitCasterSound(sCasterName, tSoundNames, fChancePct, flags, fCooldown, sCooldownindex)
 	flags = flags or 0
 	if self:GetName() ~= sCasterName then
