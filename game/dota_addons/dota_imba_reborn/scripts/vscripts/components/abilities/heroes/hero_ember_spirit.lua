@@ -1,18 +1,18 @@
 --	IMBA Ember Spirit
 -- 	by Firetoad, 22.03.2018
 
-LinkLuaModifier("modifier_imba_flame_guard_aura", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_flame_guard_talent", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_flame_guard_passive", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sleight_of_fist_caster", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sleight_of_fist_marker", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_searing_chains_attack", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_searing_chains_debuff", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_state", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_charges", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_cooldown", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_dash", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_timer", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flame_guard_aura", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flame_guard_talent", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flame_guard_passive", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sleight_of_fist_caster", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sleight_of_fist_marker", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_searing_chains_attack", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_searing_chains_debuff", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_state", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_charges", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_cooldown", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_dash", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_timer", "components/abilities/heroes/hero_ember_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 
@@ -882,47 +882,53 @@ function imba_ember_spirit_fire_remnant:OnUpgrade()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local activate_ability = caster:FindAbilityByName("imba_ember_spirit_activate_fire_remnant")
+
 		activate_ability:SetLevel(self:GetLevel())
 	end
 end
 
 function imba_ember_spirit_fire_remnant:OnSpellStart()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local target_loc = self:GetCursorPosition()
-		local charges_modifier = caster:FindModifierByName("modifier_imba_fire_remnant_charges")
+	if not IsServer() then return end
 
-		if charges_modifier:GetStackCount() > 0 then
-			charges_modifier:SetStackCount(charges_modifier:GetStackCount() - 1)
-			caster:EmitSound("Hero_EmberSpirit.FireRemnant.Cast")
-			local remnant = CreateUnitByName("npc_imba_ember_spirit_remnant", target_loc, true, caster, caster, caster:GetTeamNumber())
-			remnant:SetOwner(caster)
-			remnant:EmitSound("Hero_EmberSpirit.FireRemnant.Activate")
-			remnant:SetRenderColor(255, 0, 0)
-			remnant:AddNewModifier(caster, self, "modifier_imba_fire_remnant_state", {duration = self:GetSpecialValueFor("duration")})
-			self:GetCaster():FindAbilityByName("imba_ember_spirit_activate_fire_remnant"):SetActivated(true)
-			if charges_modifier:GetStackCount() <= 0 then
-				self:SetActivated(false)
+	local target_loc = self:GetCursorPosition()
+	local charges_modifier = self:GetCaster():FindModifierByName("modifier_imba_fire_remnant_charges")
+
+	if charges_modifier:GetStackCount() > 0 then
+		charges_modifier:SetStackCount(charges_modifier:GetStackCount() - 1)
+		self:GetCaster():EmitSound("Hero_EmberSpirit.FireRemnant.Cast")
+
+		local remnant = CreateUnitByName("npc_imba_ember_spirit_remnant", target_loc, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+		remnant:SetOwner(self:GetCaster())
+		remnant:EmitSound("Hero_EmberSpirit.FireRemnant.Activate")
+		remnant:SetRenderColor(255, 0, 0)
+		remnant:AddNewModifier(self:GetCaster(), self, "modifier_imba_fire_remnant_state", {duration = self:GetSpecialValueFor("duration")})
+
+		self:GetCaster():FindAbilityByName("imba_ember_spirit_activate_fire_remnant"):SetActivated(true)
+
+		if charges_modifier:GetStackCount() <= 0 then
+			self:SetActivated(false)
+		end
+
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_fire_remnant_timer", {duration = self:GetSpecialValueFor("duration")})
+
+		-- Remnant Flame Guard logic
+		local ability_flame_guard = self:GetCaster():FindAbilityByName("imba_ember_spirit_flame_guard")
+
+		if ability_flame_guard then
+			local effect_radius = ability_flame_guard:GetSpecialValueFor("effect_radius")
+			local damage = ability_flame_guard:GetSpecialValueFor("damage_per_second")
+			local tick_interval = ability_flame_guard:GetSpecialValueFor("tick_interval")
+
+			if self:GetCaster():FindAbilityByName("special_bonus_ember_guard_damage") and self:GetCaster():FindAbilityByName("special_bonus_ember_guard_damage"):GetLevel() > 0 then
+				damage = damage + self:GetCaster():FindAbilityByName("special_bonus_ember_guard_damage"):GetSpecialValueFor("value")
 			end
 
-			self:GetCaster():AddNewModifier(caster, self, "modifier_imba_fire_remnant_timer", {duration = self:GetSpecialValueFor("duration")})
-			
-			-- Remnant Flame Guard logic
-			local ability_flame_guard = caster:FindAbilityByName("imba_ember_spirit_flame_guard")
-			if ability_flame_guard then
-				local effect_radius = ability_flame_guard:GetSpecialValueFor("effect_radius")
-				local damage = ability_flame_guard:GetSpecialValueFor("damage_per_second")
-				local tick_interval = ability_flame_guard:GetSpecialValueFor("tick_interval")
-				if caster:FindAbilityByName("special_bonus_ember_guard_damage") and caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetLevel() > 0 then
-					damage = damage + caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetSpecialValueFor("value")
-				end
-				if caster:HasModifier("modifier_imba_flame_guard_aura") then
-					remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
-					remnant:AddNewModifier(caster, ability_flame_guard, "modifier_imba_flame_guard_aura", {damage = damage * 0.5, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = 1000, duration = caster:FindModifierByName("modifier_imba_flame_guard_aura"):GetRemainingTime()})
-				elseif caster:FindAbilityByName("special_bonus_ember_permanent_guard") and caster:FindAbilityByName("special_bonus_ember_permanent_guard"):GetLevel() > 0 then
-					remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
-					remnant:AddNewModifier(caster, ability_flame_guard, "modifier_imba_flame_guard_aura", {damage = damage * 0.5, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = 1000})
-				end
+			if self:GetCaster():HasModifier("modifier_imba_flame_guard_aura") then
+				remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
+				remnant:AddNewModifier(self:GetCaster(), ability_flame_guard, "modifier_imba_flame_guard_aura", {damage = damage * 0.5, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = 1000, duration = self:GetCaster():FindModifierByName("modifier_imba_flame_guard_aura"):GetRemainingTime()})
+			elseif self:GetCaster():FindAbilityByName("special_bonus_ember_permanent_guard") and self:GetCaster():FindAbilityByName("special_bonus_ember_permanent_guard"):GetLevel() > 0 then
+				remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
+				remnant:AddNewModifier(self:GetCaster(), ability_flame_guard, "modifier_imba_flame_guard_aura", {damage = damage * 0.5, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = 1000})
 			end
 		end
 	end
