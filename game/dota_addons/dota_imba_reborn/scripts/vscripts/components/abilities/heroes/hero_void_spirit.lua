@@ -102,26 +102,28 @@ function imba_void_spirit_dissimilate:GetCastRange(location, target)
 end
 
 function imba_void_spirit_dissimilate:OnSpellStart()
+	if not IsServer() then return end
+
 	self:GetCaster():EmitSound("Hero_VoidSpirit.Dissimilate.Cast")
-	
+
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_dissimilate", {duration = self:GetSpecialValueFor("phase_duration")})
-	
+
 	if self:GetAutoCastState() then
 		local cosmic_particle = nil
-		
+
 		local damage_radius	= self:GetSpecialValueFor("damage_radius")
-		
+
 		-- if self:GetCaster():HasScepter() then
 			-- damage_radius	= damage_radius * (100 + self:GetSpecialValueFor("scepter_size_increase_pct") * 0.01)
 		-- end
-		
+
 		for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("damage_radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, FIND_ANY_ORDER, false)) do
 			if ally ~= self:GetCaster() then
 				cosmic_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/void_spirit_cosmic_assault.vpcf", PATTACH_WORLDORIGIN, ally)
 				ParticleManager:SetParticleControl(cosmic_particle, 0, ally:GetAbsOrigin())
 				ParticleManager:SetParticleControl(cosmic_particle, 1, Vector(100, 0, 0))
 				ParticleManager:ReleaseParticleIndex(cosmic_particle)
-			
+
 				ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_void_spirit_dissimilate_ally", {duration = self:GetSpecialValueFor("phase_duration")})
 			end
 		end
@@ -380,6 +382,8 @@ function imba_void_spirit_resonant_pulse:OnHeroCalculateStatBonus()
 end
 
 function imba_void_spirit_resonant_pulse:OnSpellStart()
+	if not IsServer() then return end
+
 	self:GetCaster():EmitSound("Hero_VoidSpirit.Pulse.Cast")
 	self:GetCaster():EmitSound("Hero_VoidSpirit.Pulse")
 	
@@ -443,7 +447,6 @@ function modifier_imba_void_spirit_resonant_pulse_ring:OnCreated(keys)
 	self.damage_type	= self:GetAbility():GetAbilityDamageType()
 	
 	self.hit_enemies	= {}
-	self.interval		= FrameTime()
 	self.ring_size		= 0
 	self.center 		= self:GetParent():GetAbsOrigin()
 	

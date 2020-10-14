@@ -1212,13 +1212,14 @@ end
 function imba_rubick_spellsteal:OnSpellStart()
 	-- unit identifier
 	self.spell_target = self:GetCursorTarget()
-	self.is_stealing_spell = true
 
 	-- Cancel if blocked
 	if self.spell_target:TriggerSpellAbsorb( self ) then
 		return
 	end
-	
+
+	self.is_stealing_spell = true
+
 	-- Prevent weird stuff from happening if copied by Lotus Orb or duplicated through Grimstroke's Soulbind
 	if self:GetAbilityIndex() == 0 then return end
 
@@ -1232,7 +1233,7 @@ function imba_rubick_spellsteal:OnSpellStart()
 	-- load data
 	local projectile_name = "particles/units/heroes/hero_rubick/rubick_spell_steal.vpcf"
 	local projectile_speed = self:GetSpecialValueFor("projectile_speed")
-	
+
 	-- Create Projectile
 	local info = {
 		Target = self:GetCaster(),
@@ -1263,7 +1264,7 @@ function imba_rubick_spellsteal:OnProjectileHit( target, location )
 	if self:GetCaster():HasModifier("modifier_imba_rubick_spellsteal") then
 		self:GetCaster():RemoveModifierByName("modifier_imba_rubick_spellsteal")
 	end
-	
+
 	-- Add ability
 	self:SetStolenSpell( self.stolenSpell )
 	self.stolenSpell = nil
@@ -1294,7 +1295,6 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 	secondary_ability = hSpell:GetAssociatedSecondaryAbilities()
 
 	-- check if there is primary or secondary linked ability
-
 	if primary_ability ~= nil then
 		primary = hHero:FindAbilityByName(primary_ability)
 		secondary = hSpell
@@ -1304,7 +1304,7 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 	--print(primary:GetStolenActivityModifier())
 	--special_bonus_imba_sniper_1
 	--PrintTable(hHero:FindAbilityByName("special_bonus_imba_sniper_1"))
-	
+
 	-- loop thru poop thru talent table
 	for i=1,8 do 
 		talent = hHero:FindAbilityByName("special_bonus_imba_"..hero_name.."_"..i)
@@ -1333,7 +1333,7 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 			-- secondary = nil
 		-- end
 	-- end
-	
+
 	-- find hero in list
 	local heroData = nil
 	for _,data in pairs(imba_rubick_spellsteal.heroesData) do
@@ -1399,6 +1399,7 @@ imba_rubick_spellsteal.CurrentSpellOwner = nil
 imba_rubick_spellsteal.animations = imba_rubick_animations_reference
 imba_rubick_spellsteal.slot1 = "rubick_empty1"
 imba_rubick_spellsteal.slot2 = "rubick_empty2"
+
 -- Add new stolen spell
 function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	if not spellData then return end
@@ -1406,12 +1407,12 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	local primarySpell = spellData.primarySpell
 	local secondarySpell = spellData.secondarySpell
 	local linkedTalents = spellData.linkedTalents	
-	
+
 	-- I have no idea wtf is going on but trying to get this ability to be (mostly) stolen correctly without abilities being out of slot
 	if self:GetCaster():HasAbility("monkey_king_primal_spring") then
 		self:GetCaster():RemoveAbility("monkey_king_primal_spring")
 	end
-	
+
 	-- Forget previous one
 	self:ForgetSpell()
 	-- print("Stolen spell: "..primarySpell:GetAbilityName())
@@ -1436,7 +1437,7 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	if self:GetCaster():HasAbility("monkey_king_primal_spring_early") then
 		self:GetCaster():RemoveAbility("monkey_king_primal_spring_early")
 	end
-	
+
 	if primarySpell:GetAbilityName() == "monkey_king_tree_dance" then
 		self.CurrentSecondarySpell = self:GetCaster():AddAbility("monkey_king_primal_spring")
 		self.CurrentSecondarySpell:SetLevel(primarySpell:GetLevel())
@@ -1446,27 +1447,26 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		-- spring_early_ability:SetHidden(true)
 		-- spring_early_ability:SetActivated(true)
 	end	
-	
+
 	-- Vanilla Leshrac has some scepter thinker associated with Pulse Nova/Lightning Storm that is required, otherwise the lightning storms strike every frame -_-
 	if self:GetCaster():HasModifier("modifier_leshrac_lightning_storm_scepter_thinker") then
 		self:GetCaster():RemoveModifierByName("modifier_leshrac_lightning_storm_scepter_thinker")
 	end
-	
+
 	if secondarySpell~=nil and not secondarySpell:IsNull() and secondarySpell:GetName() == "leshrac_lightning_storm" then
 		self:GetCaster():AddNewModifier(self:GetCaster(), secondarySpell, "modifier_leshrac_lightning_storm_scepter_thinker", {})
 	end	
 
-	
 	-- Add new spell
 	if primarySpell~=nil and not primarySpell:IsNull() then
 		self.CurrentPrimarySpell = self:GetCaster():AddAbility( primarySpell:GetAbilityName() )
 		self.CurrentPrimarySpell:SetLevel( primarySpell:GetLevel() )
 		self.CurrentPrimarySpell:SetStolen( true )
-		
+
 		if self.CurrentPrimarySpell.OnStolen then
 			self.CurrentPrimarySpell:OnStolen(self.CurrentPrimarySpell)
 		end
-		
+
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentPrimarySpell:IsHiddenWhenStolen() then
 			self.CurrentPrimarySpell:SetHidden(true)
@@ -1483,7 +1483,7 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		if self.CurrentSecondarySpell.OnStolen then
 			self.CurrentSecondarySpell:OnStolen(self.CurrentPrimarySpell)
 		end
-		
+
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentSecondarySpell:IsHiddenWhenStolen() then
 			self.CurrentSecondarySpell:SetHidden(true)
@@ -1495,16 +1495,15 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		if self.CurrentSecondarySpell:GetAbilityName() == "tiny_toss_tree" then
 			self.CurrentSecondarySpell:SetHidden(true)
 		end
-		
 	end
-	
+
 	-- Add Linked Talents 
 	for _,talent in pairs(linkedTalents) do
 		local talent_handle = self:GetCaster():AddAbility( talent )
 		talent_handle:SetLevel( 1 )
 		talent_handle:SetStolen( true )
 	end
-	
+
 	-- Animations override
 	if self.CurrentPrimarySpell ~= nil then
 		self.animations:SetCurrentReference( self.CurrentPrimarySpell:GetAbilityName() )
@@ -1513,11 +1512,11 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		end
 		self.CurrentSpellOwner = spellData.stolenFrom
 	end
-	
+
 	if self:GetCaster():HasAbility("monkey_king_primal_spring_early") then
 		self:GetCaster():FindAbilityByName("monkey_king_primal_spring_early"):SetHidden(true)
 	end
-	
+
 	-- One last check to see if the abilities are in the correct slots?
 	-- if self.CurrentPrimarySpell and self.CurrentPrimarySpell.GetAbilityIndex then
 		-- print(self.CurrentPrimarySpell:GetAbilityIndex())
@@ -1527,6 +1526,7 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		-- self:GetCaster():SwapAbilities( self.CurrentSecondarySpell:GetAbilityName(), self:GetCaster():GetAbilityByIndex(4):GetAbilityName(), true, true )
 	-- end
 end
+
 -- Remove currently stolen spell
 function imba_rubick_spellsteal:ForgetSpell()
 	if self.CurrentSpellOwner ~= nil then
@@ -1544,14 +1544,13 @@ function imba_rubick_spellsteal:ForgetSpell()
 				self:GetCaster():RemoveAbility( talent:GetAbilityName() )
 			end
 		end
-			
 	end
-	
+
 	if self.CurrentPrimarySpell~=nil and not self.CurrentPrimarySpell:IsNull() then
 		if self.CurrentPrimarySpell.OnUnStolen then
 			self.CurrentPrimarySpell:OnUnStolen()
 		end
-	
+
 		--print("forgetting primary")
 		self:GetCaster():SwapAbilities( self.slot1, self.CurrentPrimarySpell:GetAbilityName(), true, false )
 		self:GetCaster():RemoveAbility( self.CurrentPrimarySpell:GetAbilityName() )
@@ -1559,7 +1558,7 @@ function imba_rubick_spellsteal:ForgetSpell()
 			if self.CurrentSecondarySpell.OnUnStolen then
 				self.CurrentSecondarySpell:OnUnStolen()
 			end
-		
+
 			--print("forgetting secondary")
 			self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), true, false )
 			self:GetCaster():RemoveAbility( self.CurrentSecondarySpell:GetAbilityName() )
@@ -1571,6 +1570,7 @@ function imba_rubick_spellsteal:ForgetSpell()
 		self.CurrentSpellOwner = nil
 	end
 end
+
 --------------------------------------------------------------------------------
 -- Ability Considerations
 --------------------------------------------------------------------------------
@@ -1593,24 +1593,21 @@ function imba_rubick_spellsteal:AbilityConsiderations()
 	-- Illusion Copy
 	local bIllusion = target:IsIllusion()
 end
+
 -------------------------------------------
 --	modifier_rubick_spellsteal_hidden
 -------------------------------------------
-modifier_rubick_spellsteal_hidden = class({})
+
 LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
+modifier_rubick_spellsteal_hidden = class({})
+
 function modifier_rubick_spellsteal_hidden:IsHidden() return true end
-
 function modifier_rubick_spellsteal_hidden:IsDebuff() return false end
-
 function modifier_rubick_spellsteal_hidden:IsPurgable() return false end
-
 function modifier_rubick_spellsteal_hidden:RemoveOnDeath() return false end
-
 function modifier_rubick_spellsteal_hidden:OnCreated( kv ) end
-
 function modifier_rubick_spellsteal_hidden:OnRefresh( kv ) end
-
 function modifier_rubick_spellsteal_hidden:OnDestroy() end
 
 function modifier_rubick_spellsteal_hidden:DeclareFunctions()
@@ -1652,25 +1649,25 @@ function modifier_imba_rubick_spellsteal:IsPurgable() return false end
 
 function modifier_imba_rubick_spellsteal:OnCreated( kv )
 	if IsClient() then return end
-	
+
 	if kv.spell_amp == nil then
 		return
 	end
-	
+
 	self.stolen_spell_amp = kv.spell_amp * 100
-	
+
 	self:SetStackCount(self.stolen_spell_amp)
 end
 
 function modifier_imba_rubick_spellsteal:OnRefresh( kv )
 	if IsClient() then return end
-	
+
 	self:SetStackCount(self.stolen_spell_amp)
 end
 
 function modifier_imba_rubick_spellsteal:OnDestroy( kv )
 	if not IsServer() then return end
-	
+
 	self:GetAbility():ForgetSpell() 
 end
 
@@ -1691,7 +1688,7 @@ function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
 				-- No cast point is what Rubick is known for...
 				params.ability:SetOverrideCastPoint(0)
 			end
-			
+
 			if params.ability==self:GetAbility().currentSpell then
 				-- Destroy previous animation
 				local modifier = self:GetParent():FindModifierByNameAndCaster( "modifier_imba_rubick_spellsteal_animation", self:GetParent() )
@@ -1753,15 +1750,15 @@ function modifier_imba_rubick_spellsteal_animation:OnRefresh( kv ) end
 function modifier_imba_rubick_spellsteal_animation:OnDestroy( kv ) end
 
 function modifier_imba_rubick_spellsteal_animation:DeclareFunctions() 
-  local funcs = {
-	MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-	MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE,
-	-- MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT,
-	MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-	MODIFIER_EVENT_ON_ORDER,
-  }
- 
-  return funcs
+	local funcs = {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE,
+		-- MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		MODIFIER_EVENT_ON_ORDER,
+	}
+
+	return funcs
 end
 
 function modifier_imba_rubick_spellsteal_animation:GetOverrideAnimation()
@@ -1815,7 +1812,7 @@ function modifier_special_bonus_imba_rubick_remnants_of_null_field:RemoveOnDeath
 
 function modifier_special_bonus_imba_rubick_remnants_of_null_field:OnCreated()
 	if not IsServer() then return end
-	
+
 	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_rubick_remnants_of_null_field"), "modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura", {})
 end
 
@@ -1896,9 +1893,6 @@ function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative:GetM
 		return self.magic_resistance
 	end
 end
-
-
-
 
 function imba_rubick_fade_bolt:OnOwnerSpawned()
 	if not IsServer() then return end
