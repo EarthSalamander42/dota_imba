@@ -64,6 +64,7 @@
 #base heroes/winter_wyvern/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
+#base custom_heroes/quick_stick/abilities.txt
 
 
 "DOTAAbilities"
