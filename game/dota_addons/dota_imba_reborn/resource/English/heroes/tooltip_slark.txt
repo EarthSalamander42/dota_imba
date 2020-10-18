@@ -10,6 +10,7 @@
 "DOTA_Tooltip_ability_imba_slark_dark_pact_delay"							"DELAY:"
 "DOTA_Tooltip_ability_imba_slark_dark_pact_radius"							"RADIUS:"
 "DOTA_Tooltip_ability_imba_slark_dark_pact_total_damage"						"DAMAGE:"
+
 "DOTA_Tooltip_ability_imba_slark_pounce"										"Pounce"
 "DOTA_Tooltip_ability_imba_slark_pounce_Description"							"Slark leaps forward, grabbing the first hero he connects with.  That unit is leashed, and can only move a limited distance away from Slark's landing position.\n<font color='#FF7800'>β/Remnants of Pounce: </font> Applies an instant attack upon pouncing a target.\n<font color='#FF7800'>Aerial Redirection: </font>Pounce can be cast again mid-pounce (after a 0.1 second cooldown) to change its direction.\n<font color='#FF7800'>Hyper-Elasticity: </font>The leash cannot be broken by forced movement. If it is stretched beyond the leash radius, the leash will exert negative movement speed on the target should they attempt to stretch it further through standard movement."
 "DOTA_Tooltip_ability_imba_slark_pounce_Lore"								"Time in the Dark Reef made Slark a dangerous assassin; aggressive and fearless."
@@ -21,6 +22,7 @@
 "DOTA_Tooltip_ability_imba_slark_pounce_leash_duration"						"LEASH DURATION:"
 "DOTA_Tooltip_ability_imba_slark_pounce_leash_radius"						"LEASH RADIUS:"
 "DOTA_Tooltip_ability_imba_slark_pounce_aghanim_description"				"Provides %max_charges% charges and increases pounce range."
+
 "DOTA_Tooltip_ability_imba_slark_essence_shift"								"Essence Shift"
 "DOTA_Tooltip_ability_imba_slark_essence_shift_Description"					"Slark steals the life essence of enemy heroes with his attacks, draining each of their attributes and converting them to bonus Agility. If Slark kills an affected enemy hero, he permanently steals 1 Agility.\n<font color='#FF7800'>Shivved:</font> When off cooldown, Essence Shift applies a fake attack immediately after an attack which triggers Essence Shift's passive.\n<font color='#FF7800'>Shivalry:</font> Temporary bonus agility is not affected by status resistance."
 "DOTA_Tooltip_ability_imba_slark_essence_shift_Lore"							"With each strike at his adversaries, Slark's knowledge of their weaknesses improves."
@@ -30,12 +32,14 @@
 "DOTA_Tooltip_ability_imba_slark_essence_shift_agi_gain"						"AGILITY GAINED:"
 "DOTA_Tooltip_ability_imba_slark_essence_shift_stat_loss"					"ALL ATTRIBUTE LOSS:"
 "DOTA_Tooltip_ability_imba_slark_essence_shift_duration"						"DURATION:"
+
 "DOTA_Tooltip_ability_imba_slark_shadow_dance"								"Shadow Dance"
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Description"					"When used, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark.  Passively, when not visible to the enemy team, Slark gains bonus movement speed and health regeneration.\n<font color='#FF7800'>Welcome to Dark Reef: </font>Shadow Dance can be set to auto-cast. Casting Shadow Dance in this manner creates a %dark_reef_radius% radius cloud at the cast location, which hides both allies and enemies for the duration."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_aghanim_description"			"Reduces cooldown and causes Shadow Dance active to be an area of effect ability, hiding nearby allied heroes underneath it. Allies do not gain bonus movement speed or health regeneration."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Lore"							"The hidden Thirteenth is a slippery foe."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Note0"							"If Slark is damaged by a neutral unit, the passive movement and health regeneration bonuses are lost for %neutral_disable% seconds."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Note1"							"The passive movement and health regeneration bonuses have a %activation_delay% second activation and deactivation delay."
+"DOTA_Tooltip_ability_imba_slark_shadow_dance_Note2"							"Welcome to Dark Reef auto-cast affects buildings."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_duration"						"DURATION:"
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_bonus_movement_speed"			"%BONUS MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_bonus_regen_pct"				"%HEALTH GAINED PER SECOND:"

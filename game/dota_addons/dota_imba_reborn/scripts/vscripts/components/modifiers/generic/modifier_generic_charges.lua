@@ -1,7 +1,7 @@
 -- Generic Charges Library created by Elfansoer (with modifications)
 -- See the reference at https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/generic/modifier_generic_charges.lua
 
-modifier_generic_charges = class({})
+modifier_generic_charges = modifier_generic_charges or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications

@@ -201,7 +201,7 @@ end
 
 modifier_imba_malfurion_strength_of_the_wild = modifier_imba_malfurion_strength_of_the_wild or class({})
 
-function imba_malfurion_strength_of_the_wild:IsHidden() return true end
+function modifier_imba_malfurion_strength_of_the_wild:IsHidden() return true end
 
 function modifier_imba_malfurion_strength_of_the_wild:DeclareFunctions()
 	local funcs = {

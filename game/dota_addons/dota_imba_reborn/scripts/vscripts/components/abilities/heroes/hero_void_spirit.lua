@@ -1024,20 +1024,20 @@ function imba_void_spirit_astral_step:OnUpgrade()
 		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):SetLevel(1)
 		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper"):SetActivated(false)
 	end
-	
+
 	if self:IsTrained() and self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper_2") then
 		self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2"):SetLevel(self:GetLevel())
 	end
-	
+
 	if self:GetLevel() == 1 then
 		for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
 			if mod:GetAbility() == self then
 				mod:OnCreated()
-				
+
 				if self:GetCaster():HasAbility("imba_void_spirit_astral_step_helper_2") then
 					self:GetCaster():FindAbilityByName("imba_void_spirit_astral_step_helper_2").charge_modifier = mod
 				end
-				
+
 				break
 			end
 		end

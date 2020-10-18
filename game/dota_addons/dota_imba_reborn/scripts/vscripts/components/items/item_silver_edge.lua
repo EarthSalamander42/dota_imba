@@ -360,6 +360,14 @@ function modifier_item_imba_silver_edge_passive:OnIntervalThink()
 	self.echo_ready = true
 end
 
+function modifier_item_imba_silver_edge_passive:OnDestroy()
+	if not IsServer() then return end
+
+	if self:GetParent():HasModifier("modifier_imba_echo_rapier_haste") then
+		self:GetParent():RemoveModifierByName("modifier_imba_echo_rapier_haste")
+	end
+end
+
 --- Flying disabler handler
 modifier_item_imba_silver_edge_invis_flying_disabled = modifier_item_imba_silver_edge_invis_flying_disabled or class({})
 
