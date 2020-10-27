@@ -170,7 +170,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 
 				-- debuff_duration can be 0 if caster has ability but not learnt it yet
 				if debuff_duration > 0 and not caster:PassivesDisabled() then
-					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration * (1 - target:GetStatusResistance()) })
+					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", { duration = debuff_duration * (1 - target:GetStatusResistance()) })
 				end
 			end
 		else
@@ -679,7 +679,6 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 
 				-- Apply curse of avernus to enemies
 				if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and not target:HasModifier("modifier_imba_curse_of_avernus_debuff_slow") then
-
 					-- remove attack speed buff if attacking a target who's not cursed
 					if self:GetCaster():HasModifier("modifier_imba_curse_of_avernus_buff_haste") then
 						self:GetCaster():RemoveModifierByName("modifier_imba_curse_of_avernus_buff_haste")
@@ -687,7 +686,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 
 					-- Apply debuff if enemy
 					if self:GetAbility() then
-						local slow_duration = self:GetAbility():GetSpecialValueFor("slow_duration") -- Not possible for this to be 0 here
+						local slow_duration = self:GetAbility():GetVanillaAbilitySpecial("slow_duration") -- Not possible for this to be 0 here
 						target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_curse_of_avernus_debuff_counter", { duration = slow_duration * (1 - target:GetStatusResistance())})
 					end
 				end
@@ -840,7 +839,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnCreated(kv)
 		end
 
 		if not current_buff then
-			local buff_duration = self:GetAbility():GetSpecialValueFor( "slow_duration" ) -- Not possible for this to be 0 here
+			local buff_duration = self:GetAbility():GetVanillaAbilitySpecial( "slow_duration" ) -- Not possible for this to be 0 here
 			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), buff_name, { duration = buff_duration })
 		else
 			current_buff:ForceRefresh()
@@ -867,7 +866,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnAttack(kv)
 
 			if caster:GetTeamNumber() == attacker:GetTeamNumber() then
 				local ability = self:GetAbility()
-				local buff_duration = ability:GetSpecialValueFor("slow_duration") -- Not possible for this to be 0 here
+				local buff_duration = ability:GetVanillaAbilitySpecial("slow_duration") -- Not possible for this to be 0 here
 
 				-- Apply buff on allies who attack this enemy
 				if self.has_talent then
@@ -936,7 +935,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 	end
 end
 
-function modifier_imba_curse_of_avernus_debuff_slow:GetModifierMoveSpeedBonus_Percentage() return self:GetAbility():GetSpecialValueFor("curse_slow") * (-1) end
+function modifier_imba_curse_of_avernus_debuff_slow:GetModifierMoveSpeedBonus_Percentage() return self:GetAbility():GetVanillaAbilitySpecial("curse_slow") * (-1) end
 
 modifier_imba_curse_of_avernus_buff_haste = modifier_imba_curse_of_avernus_buff_haste or class({
 	IsHidden				= function(self) return false end,
@@ -947,7 +946,7 @@ modifier_imba_curse_of_avernus_buff_haste = modifier_imba_curse_of_avernus_buff_
 })
 
 function modifier_imba_curse_of_avernus_buff_haste:_UpdateIncreaseValues()
-	self.attack_increase = self:GetAbility():GetSpecialValueFor( "curse_attack_speed" )
+	self.attack_increase = self:GetAbility():GetVanillaAbilitySpecial( "curse_attack_speed" )
 
 	if self:GetCaster():HasTalent("special_bonus_imba_abaddon_2") then
 		self.attack_increase = self.attack_increase + self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_2", "value")
