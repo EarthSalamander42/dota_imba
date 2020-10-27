@@ -777,6 +777,7 @@ function modifier_imba_curse_of_avernus_debuff_counter:OnRefresh(kv)
 		self:GetParent():RemoveModifierByName("modifier_imba_curse_of_avernus_debuff_counter")
 		local responses = {"abaddon_abad_frostmourne_01","abaddon_abad_frostmourne_02","abaddon_abad_frostmourne_03","abaddon_abad_frostmourne_04","abaddon_abad_frostmourne_05","abaddon_abad_frostmourne_06","abaddon_abad_frostmourne_06"}
 		self:GetCaster():EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 30,"curse_of_avernus")
+		self:GetCaster():EmitSound("Hero_Abaddon.Curse.Proc")
 	end
 end
 
