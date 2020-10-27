@@ -236,8 +236,11 @@ function GetAbilitySpecial(name, key, level)
 end
 
 function CDOTABaseAbility:GetVanillaAbilityName()
---	print("GetVanillaAbilityName:", string.gsub(self:GetAbilityName(), "imba_", ""))
-	return string.gsub(self:GetAbilityName(), "imba_", "")
+	return GetVanillaAbilityName(self:GetAbilityName())
+end
+
+function GetVanillaAbilityName(ability_name)
+	return string.gsub(ability_name, "imba_", "")
 end
 
 function CDOTABaseAbility:GetVanillaKeyValue(key, level)
@@ -253,6 +256,58 @@ end
 function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
 --	print("GetVanillaAbilitySpecial:", GetAbilitySpecial(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0)
 	return GetAbilitySpecial(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
+end
+
+function GetAbilitySpecials(name)
+	local t = KeyValues.All[name]
+	local ability_specials = {}
+
+	if t then
+		local tspecial = t["AbilitySpecial"]
+		if tspecial then
+			for k, v in pairs(tspecial) do
+				for i, j in pairs(v) do
+					if i ~= "var_type" and i ~= "LinkedSpecialBonus" then
+						ability_specials[tonumber(k)] = {i, j}
+						break
+					end
+				end
+			end
+		end
+	end
+
+	return ability_specials
+end
+
+function GetAbilityManaCost(name)
+	local t = KeyValues.All[name]
+
+	if t then
+		local manacost = t["AbilityManaCost"]
+
+		if manacost then
+			return manacost
+		end
+	end
+
+	return 0
+end
+
+function GetAbilityCooldown(name)
+	local t = KeyValues.All[name]
+
+--	print(name)
+--	print(t)
+
+	if t then
+		local cooldown = t["AbilityCooldown"]
+
+		if cooldown then
+			return cooldown
+		end
+	end
+
+	return 0
 end
 
 LoadGameKeyValues()
