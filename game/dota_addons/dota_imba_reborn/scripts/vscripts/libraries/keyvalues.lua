@@ -245,7 +245,7 @@ function CDOTABaseAbility:GetVanillaKeyValue(key, level)
 --		print("GetVanillaKeyValue:", GetAbilityKV(self:GetVanillaAbilityName(), key, level))
 		return GetAbilityKV(self:GetVanillaAbilityName(), key, level)
 	else
---		print("GetVanillaKeyValue:", GetAbilityKV(self:GetVanillaAbilityName(), key, self:GetLevel()))
+--		print("GetVanillaKeyValue:", self:GetVanillaAbilityName(), key, GetAbilityKV(self:GetVanillaAbilityName(), self:GetLevel()))
 		return GetAbilityKV(self:GetVanillaAbilityName(), key, self:GetLevel())
 	end
 end
