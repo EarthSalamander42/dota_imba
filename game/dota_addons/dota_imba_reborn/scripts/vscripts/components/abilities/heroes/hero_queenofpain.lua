@@ -724,9 +724,8 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 end
 
 function imba_queenofpain_sonic_wave:OnProjectileHit_ExtraData(target, location, ExtraData)
-	local caster = self:GetCaster()
 	if target then
-		ApplyDamage({attacker = caster, victim = target, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+		ApplyDamage({attacker = self:GetCaster(), victim = target, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 		
 		target:AddNewModifier(self:GetCaster(), self, "modifier_generic_motion_controller", 
 		{
@@ -742,27 +741,27 @@ function imba_queenofpain_sonic_wave:OnProjectileHit_ExtraData(target, location,
 			bDestroyTreesAlongPath	= true
 		})
 		
-		if caster:HasScepter() then
-			target:AddNewModifier(caster, self, "modifier_imba_sonic_wave_daze", {stacks = self:GetSpecialValueFor("orders_scepter")})
+		if self:GetCaster():HasScepter() then
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_sonic_wave_daze", {stacks = self:GetSpecialValueFor("orders_scepter")})
 		end
 		if target:IsAlive() == false then
-			if (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_queenofpain") then
-				caster:EmitSound("queenofpain_pain_ability_sonicwave_0"..math.random(1,4))
+			if (math.random(1,100) <= 15) and (self:GetCaster():GetName() == "npc_dota_hero_queenofpain") then
+				self:GetCaster():EmitSound("queenofpain_pain_ability_sonicwave_0"..math.random(1,4))
 			end
 		end
 
 		-- Talent #8 handling
-		if caster:HasTalent("special_bonus_imba_queenofpain_8") and caster:HasAbility("imba_queenofpain_shadow_strike") then
-			local shadow_strike_ability = caster:FindAbilityByName("imba_queenofpain_shadow_strike")
+		if self:GetCaster():HasTalent("special_bonus_imba_queenofpain_8") and self:GetCaster():HasAbility("imba_queenofpain_shadow_strike") then
+			local shadow_strike_ability = self:GetCaster():FindAbilityByName("imba_queenofpain_shadow_strike")
 			if shadow_strike_ability:GetLevel() > 0 then
 				local init_damage = shadow_strike_ability:GetSpecialValueFor("damage")
 				local duration = shadow_strike_ability:GetSpecialValueFor("duration")
 				local sec_damage_total = shadow_strike_ability:GetSpecialValueFor("sec_damage_total")
 				local damage_interval = shadow_strike_ability:GetSpecialValueFor("damage_interval")
 				local damage_over_time = sec_damage_total / math.floor(duration / damage_interval)
-				ApplyDamage({victim = target, attacker = caster, ability = shadow_strike_ability, damage = init_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				ApplyDamage({victim = target, attacker = self:GetCaster(), ability = shadow_strike_ability, damage = init_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, init_damage, nil)
-				target:AddNewModifier(caster, shadow_strike_ability, "modifier_imba_shadow_strike_debuff", {duration = duration, damage_per_interval = damage_over_time, damage_interval = damage_interval})
+				target:AddNewModifier(self:GetCaster(), shadow_strike_ability, "modifier_imba_shadow_strike_debuff", {duration = duration, damage_per_interval = damage_over_time, damage_interval = damage_interval})
 			end
 		end
 	end
