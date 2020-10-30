@@ -684,7 +684,7 @@ end
 
 function imba_brewmaster_primal_split:GetBehavior()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_brewmaster_primal_split", self:GetCaster()) == 0 then
-		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		return tonumber(tostring(self.BaseClass.GetBehavior(self))) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	else
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	end

@@ -238,7 +238,7 @@ function imba_lich_frost_nova:GetBehavior()
 	if not self:GetCaster():HasTalent("special_bonus_imba_lich_11") then
 		return self.BaseClass.GetBehavior(self)
 	else
-		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		return tonumber(tostring(self.BaseClass.GetBehavior(self))) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	end
 end
 

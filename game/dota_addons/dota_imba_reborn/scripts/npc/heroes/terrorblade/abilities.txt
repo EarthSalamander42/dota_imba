@@ -85,7 +85,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_terrorblade"
 		"AbilityTextureName"			"terrorblade_conjure_image"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilitySound"					"Hero_Terrorblade.ConjureImage"
 
 		// Casting

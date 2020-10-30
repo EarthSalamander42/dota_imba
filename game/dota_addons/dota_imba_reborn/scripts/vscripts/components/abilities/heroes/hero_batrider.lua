@@ -48,10 +48,6 @@ function imba_batrider_sticky_napalm:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
-function imba_batrider_sticky_napalm:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_batrider_sticky_napalm:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Batrider.StickyNapalm.Cast")
 	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_Batrider.StickyNapalm.Impact", self:GetCaster())
@@ -408,10 +404,6 @@ end
 
 function imba_batrider_firefly:GetAssociatedSecondaryAbilities()
 	return "imba_batrider_methane_boost"
-end
-
-function imba_batrider_firefly:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
 -- "When Batrider dies during Firefly, the already existing fire on the ground still stays for the remaining duration."

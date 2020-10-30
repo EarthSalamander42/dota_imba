@@ -250,10 +250,6 @@ function imba_arc_warden_spark_wraith:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
-function imba_arc_warden_spark_wraith:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_arc_warden_spark_wraith:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_arc_warden_spark_wraith_cooldown")
 end

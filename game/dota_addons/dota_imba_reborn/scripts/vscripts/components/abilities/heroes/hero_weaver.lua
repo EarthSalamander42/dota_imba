@@ -352,10 +352,6 @@ function imba_weaver_shukuchi:GetIntrinsicModifierName()
 	return "modifier_imba_weaver_shukuchi_handler"
 end
 
-function imba_weaver_shukuchi:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_weaver_shukuchi:GetCooldown(level)
 	if not self.glitch_point_position then
 		return self.BaseClass.GetCooldown(self, level)

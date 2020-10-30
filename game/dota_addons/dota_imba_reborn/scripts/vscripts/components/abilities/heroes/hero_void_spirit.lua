@@ -93,10 +93,6 @@ end
 -- IMBA_VOID_SPIRIT_DISSIMILATE --
 ----------------------------------
 
-function imba_void_spirit_dissimilate:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_void_spirit_dissimilate:GetCastRange(location, target)
 	return (self:GetSpecialValueFor("damage_radius") * (100 + self:GetSpecialValueFor("scepter_size_increase_pct")) * 0.01) - self:GetCaster():GetCastRangeBonus()
 end

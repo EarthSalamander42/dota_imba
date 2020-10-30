@@ -1837,6 +1837,8 @@ end
 -------------------------	Ressurection		-------------------------
 -------------------------------------------------------------------------
 
+--[[
+
 LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_dazzle_ressurection", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE )
 
@@ -1951,6 +1953,8 @@ end
 -------------------------------------------------------------------------
 -------------------------	Bad Juju	-------------------------
 -------------------------------------------------------------------------
+
+--]]
 
 if imba_dazzle_bad_juju == nil then imba_dazzle_bad_juju = class({}) end
 

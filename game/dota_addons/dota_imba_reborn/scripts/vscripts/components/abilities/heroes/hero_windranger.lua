@@ -46,10 +46,6 @@ modifier_imba_windranger_focusfire			= class({})
 -- IMBA_WINDRANGER_SHACKLESHOT --
 ---------------------------------
 
-function imba_windranger_shackleshot:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_windranger_shackleshot:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_windranger_shackle_shot_cooldown")
 end
@@ -279,10 +275,6 @@ end
 -------------------------------
 
 -- Not gonna do the voicelines for this one cause I'd need to track hero kills with the arrows and stuff and it's gonna get annoying
-
-function imba_windranger_powershot:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
 
 function imba_windranger_powershot:GetIntrinsicModifierName()
 	return "modifier_imba_windranger_powershot"

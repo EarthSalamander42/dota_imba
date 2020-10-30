@@ -186,7 +186,7 @@ end
 	-- if self:GetCaster():GetLevel() < self:GetSpecialValueFor("backpack_level_unlock") then
 		-- return self.BaseClass.GetBehavior(self)
 	-- else
-		-- return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		-- return tonumber(tostring(self.BaseClass.GetBehavior(self))) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	-- end
 -- end
 

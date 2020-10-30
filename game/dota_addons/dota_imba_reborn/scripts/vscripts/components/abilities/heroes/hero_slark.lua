@@ -65,7 +65,7 @@ end
 
 function imba_slark_dark_pact:GetBehavior()
 	if self:GetCaster():IsHero() then
-		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		return tonumber(tostring(self.BaseClass.GetBehavior(self))) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	else
 		return self.BaseClass.GetBehavior(self)
 	end
@@ -960,10 +960,6 @@ end
 
 function imba_slark_shadow_dance:GetIntrinsicModifierName()
 	return "modifier_imba_slark_shadow_dance_passive_regen"
-end
-
-function imba_slark_shadow_dance:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
 function imba_slark_shadow_dance:GetCastRange(location, target)

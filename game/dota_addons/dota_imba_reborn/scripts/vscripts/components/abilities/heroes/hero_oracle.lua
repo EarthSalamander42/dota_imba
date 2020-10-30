@@ -56,10 +56,6 @@ function imba_oracle_fortunes_end:GetAbilityTextureName()
 	end
 end
 
-function imba_oracle_fortunes_end:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_oracle_fortunes_end:GetAOERadius()
 	if not self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("radius")
@@ -349,10 +345,6 @@ function imba_oracle_fates_edict:GetAbilityTextureName()
 	else
 		return "custom/oracle/fates_edict_alter"
 	end
-end
-
-function imba_oracle_fates_edict:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
 function imba_oracle_fates_edict:GetCooldown(level)
@@ -808,10 +800,6 @@ end
 -- IMBA_ORACLE_FALSE_PROMISE --
 -------------------------------
 
-function imba_oracle_false_promise:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_oracle_false_promise:OnUpgrade()
 	if self:GetCaster():HasAbility("imba_oracle_false_promise_alter") then
 		self:GetCaster():FindAbilityByName("imba_oracle_false_promise_alter"):SetLevel(self:GetLevel())
@@ -869,10 +857,6 @@ end
 -------------------------------------
 -- IMBA_ORACLE_FALSE_PROMISE_ALTER --
 -------------------------------------
-
-function imba_oracle_false_promise_alter:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
 
 function imba_oracle_false_promise_alter:OnSpellStart()
 	local target = self:GetCursorTarget()

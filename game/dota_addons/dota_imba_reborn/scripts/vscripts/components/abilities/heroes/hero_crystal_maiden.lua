@@ -471,10 +471,6 @@ function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
 	end
 end
 
-function imba_crystal_maiden_frostbite:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_crystal_maiden_frostbite:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
