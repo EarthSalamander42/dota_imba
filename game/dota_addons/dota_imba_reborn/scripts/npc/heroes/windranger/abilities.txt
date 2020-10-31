@@ -287,15 +287,15 @@
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"2"
+				"var_type"					"FIELD_INTEGER"
+				"max_charges_scepter"		"2"
 				"RequiresScepter"			"1"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"15 14 13 12"
-				"RequiresScepter"			"1"
+				"var_type"						"FIELD_INTEGER"
+				"charge_restore_time_scepter"	"15 14 13 12"
+				"RequiresScepter"				"1"
 			}
 			"08"
 			{
@@ -303,7 +303,6 @@
 				"scepter_bonus_movement"	"45"
 				"RequiresScepter"			"1"
 			}
-			
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"

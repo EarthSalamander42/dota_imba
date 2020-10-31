@@ -1485,7 +1485,6 @@ function SetupPanel() {
 		var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
 		var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
 		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
-		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
 		var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
 
 		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";

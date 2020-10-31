@@ -103,7 +103,7 @@ function imba_queenofpain_shadow_strike:GetBehavior()
 	if not self:GetCaster():HasTalent("special_bonus_imba_queen_of_pain_shadow_strike_aoe") then
 		return self.BaseClass.GetBehavior(self)
 	else
-		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AOE
+		return tonumber(tostring(self.BaseClass.GetBehavior(self))) + DOTA_ABILITY_BEHAVIOR_AOE
 	end
 end
 

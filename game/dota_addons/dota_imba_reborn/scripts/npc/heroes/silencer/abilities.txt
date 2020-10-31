@@ -167,7 +167,6 @@
 				"var_type"					"FIELD_FLOAT"
 				"scepter_damage_multiplier"	"100"				 // 100 = +100%
 			}
-			
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"

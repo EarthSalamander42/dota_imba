@@ -53,4 +53,9 @@ function GameMode:OnHeroDeath(killer, victim)
 			end
 		end
 	end
+
+	-- Tell me why this is required, i'll wait
+	if killer:GetTeam() == DOTA_TEAM_BADGUYS then
+		GameRules:GetGameModeEntity():SetCustomDireScore(GetTeamHeroKills(DOTA_TEAM_BADGUYS))
+	end
 end

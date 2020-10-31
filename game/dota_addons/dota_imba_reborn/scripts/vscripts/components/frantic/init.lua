@@ -12,7 +12,6 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 		-- Apply frantic logic at the Hero Selection screen
 		if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
-			require("components/frantic/settings")
 			require('components/frantic/events')
 		end
 	end)

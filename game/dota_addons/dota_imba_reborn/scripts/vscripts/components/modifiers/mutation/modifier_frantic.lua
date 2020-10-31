@@ -124,6 +124,8 @@ function modifier_frantic:GetEffectAttachType()
 end
 
 function modifier_frantic:GetModifierPercentageCooldownStacking(keys)
+	print(self:GetStackCount(), CustomNetTables:GetTableValue("game_options", "frantic").frantic)
+	print(type(self:GetStackCount()), type(CustomNetTables:GetTableValue("game_options", "frantic").frantic))
 	if self:GetStackCount() == CustomNetTables:GetTableValue("game_options", "frantic").frantic then
 		if keys.ability and self.ignore_frantic_cdr_abilities[keys.ability:GetName()] then
 			return nil
@@ -139,7 +141,7 @@ function modifier_frantic:GetModifierPercentageCooldownStacking(keys)
 end
 
 function modifier_frantic:GetModifierPercentageCooldown(keys)
-	if self:GetStackCount() == CustomNetTables:GetTableValue("game_options", "frantic").super_frantic then
+--	if self:GetStackCount() == CustomNetTables:GetTableValue("game_options", "frantic").super_frantic then
 		if keys.ability and self.ignore_frantic_cdr_abilities[keys.ability:GetName()] then
 			return nil
 		else
@@ -149,7 +151,7 @@ function modifier_frantic:GetModifierPercentageCooldown(keys)
 				return math.max(((self:GetStackCount() - 100) / self.cooldown_reduction) + 100, 0)
 			end
 		end
-	end
+--	end
 end
 
 function modifier_frantic:GetModifierPercentageManacost()
