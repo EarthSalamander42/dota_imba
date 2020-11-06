@@ -39,33 +39,31 @@ function Precache( context )
 
 	-- arcanas
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
-	PrecacheModel("models/items/pudge/arcana/pudge_arcana_base.vmdl", context)
+	PrecacheResource("model_folder", "models/items/pudge/arcana", context)
 
 	PrecacheResource("particle_folder", "particles/econ/items/juggernaut/jugg_arcana", context)
-	PrecacheModel("models/heroes/juggernaut/juggernaut_arcana.vmdl", context)
+	PrecacheResource("model_folder", "models/heroes/juggernaut", context)
 
 	PrecacheResource("particle_folder", "particles/econ/items/earthshaker/earthshaker_arcana", context)
-	PrecacheModel("models/items/earthshaker/earthshaker_arcana/earthshaker_arcana.vmdl", context)
+	PrecacheResource("model_folder", "models/items/earthshaker/earthshaker_arcana", context)
 
 	PrecacheResource("particle_folder", "particles/econ/items/zeus/arcana_chariot", context)
-	PrecacheModel("models/heroes/zeus/zeus_arcana.vmdl", context)
+	PrecacheResource("model_folder", "models/heroes/zeus", context)
 
 	PrecacheResource("particle_folder", "particles/econ/items/wisp", context)
-	PrecacheModel("models/items/io/io_ti7/io_ti7.vmdl", context)
+	PrecacheResource("model_folder", "models/items/io/io_ti7", context)
 
 	PrecacheResource("particle_folder", "particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith", context)
-	PrecacheModel("models/heroes/phantom_assassin/pa_arcana.vmdl", context)
+	PrecacheResource("model_folder", "models/heroes/phantom_assassin", context)
 
 	PrecacheResource("particle_folder", "particles/econ/items/lina/lina_head_headflame", context)
 
-	PrecacheModel("models/heroes/invoker_kid/invoker_kid.vmdl", context)
-	PrecacheResource("particle_folder", "models/heroes/invoker_kid", context)
+	PrecacheResource("model_folder", "models/heroes/invoker_kid", context)
 
-	PrecacheModel("models/items/wraith_king/arcana/wraith_king_arcana.vmdl", context)
-	PrecacheResource("particle_folder", "models/items/wraith_king/arcana", context)
+	PrecacheResource("model_folder", "models/items/wraith_king/arcana", context)
 
 	-- Custom Heroes models
-	PrecacheModel("models/heroes/sohei/sohei.vmdl", context)
+	PrecacheResource("model_folder", "models/heroes/sohei", context)
 
 	-- Battlepass Blink effects
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf", context)

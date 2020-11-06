@@ -713,7 +713,7 @@ function GameMode:OrderFilter( keys )
 	-- Prevent Buyback during reincarnation
 	------------------------------------------------------------------------------------
 	if keys.order_type == DOTA_UNIT_ORDER_BUYBACK then
-		if unit:IsImbaReincarnating() then
+		if unit:IsReincarnating() then
 			return false
 		else
 			-- Trying to add a custom buyback respawn timer penalty modifier

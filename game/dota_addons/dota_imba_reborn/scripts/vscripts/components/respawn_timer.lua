@@ -75,7 +75,7 @@ ListenToGameEvent('entity_killed', function(keys)
 		end
 	end
 
-	if hero:IsImbaReincarnating() then
+	if hero:IsReincarnating() then
 		hero:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
 		return
 	elseif hero:IsClone() then

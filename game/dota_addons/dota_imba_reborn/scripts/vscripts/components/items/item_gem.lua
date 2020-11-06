@@ -94,7 +94,7 @@ function modifier_item_imba_gem_of_true_sight:DropGem()
 		end
 	end
 
-	-- Non-heroes should automatically drop rapier and return so they can't crash script at self:GetParent():IsImbaReincarnating() check
+	-- Non-heroes should automatically drop rapier and return so they can't crash script at self:GetParent():IsReincarnating() check
 	if not self:GetParent():IsRealHero() then
 		self:GetParent():DropItem(self:GetAbility(), true)
 		self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", pos, true, nil, nil, self:GetCaster():GetTeam())
@@ -104,7 +104,7 @@ function modifier_item_imba_gem_of_true_sight:DropGem()
 	end
 
 	-- drop gem if not reincarnating
-	if not self:GetParent():IsImbaReincarnating() then
+	if not self:GetParent():IsReincarnating() then
 		self:GetParent():DropItem(self:GetAbility(), true)
 		self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", pos, true, nil, nil, self:GetCaster():GetTeam())
 		self:GetAbility().dummy_unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_gem_of_true_sight_dropped", {})

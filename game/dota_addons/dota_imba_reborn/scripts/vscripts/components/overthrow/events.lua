@@ -191,7 +191,7 @@ ListenToGameEvent("entity_killed", function(event)
 		end
 		if killedUnit:GetRespawnTime() > 10 then
 			--print("Hero has long respawn time")
-			if killedUnit:IsImbaReincarnating() == true then
+			if killedUnit:IsReincarnating() == true then
 				--print("Set time for Wraith King respawn disabled")
 				return nil
 			else

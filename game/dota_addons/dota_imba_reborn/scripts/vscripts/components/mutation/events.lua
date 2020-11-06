@@ -39,7 +39,7 @@ ListenToGameEvent('npc_spawned', function(keys)
 		end
 
 		if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
-			if not hero:IsImbaReincarnating() then
+			if not hero:IsReincarnating() then
 				Mutation:ARDMReplacehero(hero)
 				return
 			else
@@ -151,7 +151,7 @@ ListenToGameEvent('entity_killed', function(keys)
 	end
 
 	if IMBA_MUTATION["positive"] == "teammate_resurrection" then
-		if hero:IsImbaReincarnating() then
+		if hero:IsReincarnating() then
 			print("Hero is reincarnating!")
 			hero.reincarnation = true 
 		else
@@ -169,7 +169,7 @@ ListenToGameEvent('entity_killed', function(keys)
 	end
 
 	if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
-		if hero:IsImbaReincarnating() then print("hero is reincarnating, don't count down respawn count!") return end
+		if hero:IsReincarnating() then print("hero is reincarnating, don't count down respawn count!") return end
 		IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] = IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] - 1
 
 		if IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] < 0 then

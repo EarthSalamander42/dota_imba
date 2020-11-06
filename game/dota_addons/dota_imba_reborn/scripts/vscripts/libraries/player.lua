@@ -445,25 +445,6 @@ function CDOTA_BaseNPC:IsImbaInvisible()
 	return false
 end
 
-local IMBA_REINCARNATION_MODIFIERS = {
-	"modifier_imba_reincarnation",
-	"modifier_item_imba_aegis",
-}
-
-function CDOTA_BaseNPC:IsImbaReincarnating()
-	if self:IsReincarnating() then
-		return true
-	end
-
-	for _, modifier in pairs(IMBA_REINCARNATION_MODIFIERS) do
-		if self:HasModifier(modifier) then
-			return true
-		end
-	end
-
-	return false
-end
-
 -- Talent handling
 function CDOTA_BaseNPC:HasTalent(talentName)
 	if self and not self:IsNull() and self:HasAbility(talentName) then

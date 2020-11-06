@@ -1123,7 +1123,7 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 end
 
 function imba_warlock_rain_of_chaos:OnOwnerDied()
-	if self:GetCaster():HasTalent("special_bonus_imba_warlock_9") and (not self:GetCaster().IsImbaReincarnating or (self:GetCaster().IsImbaReincarnating and not self:GetCaster():IsImbaReincarnating())) and self:IsTrained() then
+	if self:GetCaster():HasTalent("special_bonus_imba_warlock_9") and (not self:GetCaster().IsReincarnating or (self:GetCaster().IsReincarnating and not self:GetCaster():IsReincarnating())) and self:IsTrained() then
 		self:SummonGolem(self:GetCaster():GetAbsOrigin(), self:GetCaster():HasScepter(), true)
 	end
 end

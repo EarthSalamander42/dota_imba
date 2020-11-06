@@ -547,7 +547,7 @@ function Wearable:WearAfterRespawn(hUnit, hNewWears)
 	hUnit.Slots = {}
 	for sSlotName, hNewWear in pairs(hNewWears) do
 		local sItemDef = hNewWear.sItemDef
-		if Wearable.respawn_items[sItemDef] == 1 and GameRules.herodemo.m_bRespawnWear then
+		if Wearable.respawn_items[sItemDef] == 1 and GameRules.m_bRespawnWear then
 			-- 重生模型设置重生饰品table
 			local hWear = {}
 			hWear["itemDef"] = sItemDef
@@ -657,7 +657,7 @@ function Wearable:_WearItemsRespawn(hUnitOrigin, hNewWears)
 		table.insert(hBundle, hSubItem)
 	end
 
-	if GameRules.herodemo.m_bRespawnWear then
+	if GameRules.m_bRespawnWear then
 		sUnitNameWithWear = Wearable:GetRepawnUnitName(hUnitOrigin:GetUnitName(), hNewWears)
 	end
 	-- 非重生模式时，需要重生一个默认单位，单位名不变
@@ -678,7 +678,7 @@ function Wearable:_WearItemsRespawn(hUnitOrigin, hNewWears)
 		nil,
 		hUnitOrigin:GetTeam(),
 		function(hUnitNew)
-			table.insert(GameRules.herodemo.m_tAlliesList, hUnitNew)
+			table.insert(GameRules.m_tAlliesList, hUnitNew)
 --[[
 			CustomNetTables:SetTableValue(
 				"hero_prismatic",
@@ -763,7 +763,7 @@ function Wearable:ShouldRespawnForCombination(hUnit, hCombination)
 		end
 	end
 
-	if GameRules.herodemo.m_bRespawnWear then
+	if GameRules.m_bRespawnWear then
 		for nSlotIndex = 0, 10 do
 			local nItemDef = hCombination["itemDef" .. nSlotIndex]
 			if Wearable.respawn_items[tostring(nItemDef)] == 1 then
@@ -792,7 +792,7 @@ function Wearable:ShouldRespawnForItem(hUnit, sItemDef)
 
 	local hItem = Wearable.items[sItemDef]
 	if hItem.prefab == "bundle" then
-		if GameRules.herodemo.m_bRespawnWear then
+		if GameRules.m_bRespawnWear then
 			for _, sSubItemDef in pairs(Wearable.bundles[sItemDef]) do
 				local sSubSlotName = Wearable:GetSlotName(sSubItemDef)
 				local hSubWearOld = hUnit.Slots[sSubSlotName]
@@ -817,13 +817,13 @@ function Wearable:ShouldRespawnForItem(hUnit, sItemDef)
 	local sSlotName = Wearable:GetSlotName(sItemDef)
 	local hWearOld = hUnit.Slots[sSlotName]
 
-	if not GameRules.herodemo.m_bRespawnWear and bHasRespawnItem then
+	if not GameRules.m_bRespawnWear and bHasRespawnItem then
 		-- 已关闭重生饰品模式，但原单位仍有重生饰品，需要重生一个默认单位
 		return true
-	elseif hWearOld and GameRules.herodemo.m_bRespawnWear and hWearOld["bRespawnItem"] then
+	elseif hWearOld and GameRules.m_bRespawnWear and hWearOld["bRespawnItem"] then
 		-- 被替换的槽位中有重生饰品，需要重生一个不包含该重生饰品的单位
 		return true
-	elseif GameRules.herodemo.m_bRespawnWear and Wearable.respawn_items[sItemDef] == 1 then
+	elseif GameRules.m_bRespawnWear and Wearable.respawn_items[sItemDef] == 1 then
 		-- 新饰品为重生饰品
 		return true
 	else
