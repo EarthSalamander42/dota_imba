@@ -48,12 +48,12 @@
 			"01"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"direct_damage"					"120 180 240 300"
+				"direct_damage"					"60 90 120 150"
 			}
 			"02"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"slow_pct" 						"10 20 30 40"
+				"slow_pct" 						"8 16 24 32"
 			}
 			"03"
 			{
@@ -63,12 +63,12 @@
 			"04"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"damage_over_time_target"		"15 30 45 60"
+				"damage_over_time_target"		"12 20 30 40"
 			}
 			"05"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"damage_ground" 				"75 125 175 225"
+				"damage_ground" 				"40 60 80 100"
 			}
 			"06"
 			{
@@ -78,7 +78,7 @@
 			"07"
 			{
 				"var_type"    					"FIELD_FLOAT"
-				"root_duration"    				"2"
+				"root_duration"    				"1.0"
 			}
 			"08"
 			{
@@ -143,7 +143,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"   			"0.0"
-		"AbilityCooldown"    			"5.0"
+		"AbilityCooldown"    			"8.0"
 		"AbilityManaCost"    			"0"		
 
 		//Precache
@@ -161,7 +161,7 @@
 			"01"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"damage"	 					"80 120 180 240"
+				"damage"	 					"70 100 130 160"
 			}			
 			"02"
 			{
@@ -171,7 +171,7 @@
 			"03"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"jump_speed"					"1500"
+				"jump_speed"					"1200"
 			}
 			"04"
 			{
@@ -181,12 +181,12 @@
 			"05"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"max_charges"					"3"
+				"max_charges"					"2"
 			}
 			"06"
 			{
 				"var_type"    					"FIELD_INTEGER"
-				"charge_restore_time"			"5"
+				"charge_restore_time"			"8"
 			}
 		}
 	}
