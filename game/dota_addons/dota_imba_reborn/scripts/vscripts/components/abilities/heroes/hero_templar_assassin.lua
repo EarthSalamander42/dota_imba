@@ -74,10 +74,6 @@ function imba_templar_assassin_refraction:GetAbilityTextureName()
 	end
 end
 
-function imba_templar_assassin_refraction:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 -- IMBAfication: Disperse Influence
 function imba_templar_assassin_refraction:GetCastRange(location, target)
 	return self:GetSpecialValueFor("disperse_radius") - self:GetCaster():GetCastRangeBonus()
@@ -713,9 +709,6 @@ end
 
 function imba_templar_assassin_trap:GetAssociatedSecondaryAbilities()	return "imba_templar_assassin_psionic_trap" end
 function imba_templar_assassin_trap:ProcsMagicStick() return false end
-function imba_templar_assassin_trap:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
 
 function imba_templar_assassin_trap:OnSpellStart()
 	if not self.trap_ability then
@@ -1105,10 +1098,6 @@ function imba_templar_assassin_psionic_trap:GetAbilityTextureName()
 	else
 		return "templar_assassin_psionic_trap"
 	end
-end
-
-function imba_templar_assassin_psionic_trap:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_AOE
 end
 
 function imba_templar_assassin_psionic_trap:GetAOERadius()

@@ -93,10 +93,6 @@ function imba_dark_seer_vacuum:GetCooldown(level)
 	end
 end
 
--- function imba_dark_seer_vacuum:GetBehavior()
-	-- return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST 
--- end
-
 function imba_dark_seer_vacuum:OnSpellStart()
 	if not IsServer() then return end
 	
@@ -588,10 +584,6 @@ end
 ---------------
 -- ION SHELL --
 ---------------
-
-function imba_dark_seer_ion_shell:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST 
-end
 
 function imba_dark_seer_ion_shell:OnSpellStart()
 	if not IsServer() then return end

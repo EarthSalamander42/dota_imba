@@ -383,8 +383,8 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 
 					for i = 1, self.int_steal do 
 						if modifier_buff and modifier_debuff then
-							modifier_buff:IncrementStackCount()
-							modifier_debuff:IncrementStackCount()
+							modifier_buff:SetStackCount(self:GetAbility():GetSpecialValueFor("int_steal"))
+							modifier_debuff:SetStackCount(self:GetAbility():GetSpecialValueFor("int_steal"))
 						end
 					end
 				end
@@ -425,7 +425,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 				end
 
 				if hit_counter then
-					hit_counter:IncrementStackCount()
+					hit_counter:SetStackCount(self:GetAbility():GetSpecialValueFor("int_steal"))
 					hit_counter:SetDuration(self.hit_count_duration, true)
 				end
 
@@ -434,7 +434,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 					-- int_damage = target:AddNewModifier(attacker, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
 				-- end
 
-				-- int_damage:IncrementStackCount()
+				-- int_damage:SetStackCount(self:GetAbility():GetSpecialValueFor("int_steal"))
 				-- int_damage:SetDuration(self.int_reduction_duration, true)
 
 				-- if attacker:HasTalent("special_bonus_imba_silencer_6") then

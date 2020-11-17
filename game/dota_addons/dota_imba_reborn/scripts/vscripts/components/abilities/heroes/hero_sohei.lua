@@ -477,7 +477,7 @@ function sohei_wholeness_of_body:GetBehavior()
 --	caster:HasModifier(...) will return true on the client only if the talent is leveled up with aghanim scepter
 	if caster:HasTalent("special_bonus_imba_sohei_wholeness_allycast") or caster:HasModifier("modifier_special_bonus_imba_sohei_wholeness_allycast") then
 		if self:GetCaster():GetModifierStackCount("modifier_sohei_wholeness_of_body_handler", self:GetCaster()) == 0 then
-			return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+			return tonumber(tostring(self.BaseClass.GetBehavior(self))) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 		else
 			return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 		end

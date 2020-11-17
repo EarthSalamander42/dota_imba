@@ -65,7 +65,7 @@ end
 
 function imba_slark_dark_pact:GetBehavior()
 	if self:GetCaster():IsHero() then
-		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		return tonumber(tostring(self.BaseClass.GetBehavior(self))) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	else
 		return self.BaseClass.GetBehavior(self)
 	end
@@ -866,7 +866,7 @@ end
 
 function modifier_imba_slark_essence_shift_debuff_counter:OnDeath(keys)
 	if keys.unit == self:GetParent() and (keys.unit == self:GetParent() or keys.unit:GetTeamNumber() ~= keys.attacker:GetTeamNumber()) and self:GetCaster():HasModifier("modifier_imba_slark_essence_shift") and ((keys.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= 300 or keys.attacker == self:GetCaster()) and not self:GetCaster():HasModifier("modifier_morphling_replicate") then
-		if not self:GetParent().IsImbaReincarnating or (self:GetParent().IsImbaReincarnating and not self:GetParent():IsImbaReincarnating()) then
+		if not self:GetParent().IsReincarnating or (self:GetParent().IsReincarnating and not self:GetParent():IsReincarnating()) then
 			self.bStealAgi = true
 			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_slark_essence_shift_permanent_buff", {})
 		else
@@ -960,10 +960,6 @@ end
 
 function imba_slark_shadow_dance:GetIntrinsicModifierName()
 	return "modifier_imba_slark_shadow_dance_passive_regen"
-end
-
-function imba_slark_shadow_dance:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
 function imba_slark_shadow_dance:GetCastRange(location, target)

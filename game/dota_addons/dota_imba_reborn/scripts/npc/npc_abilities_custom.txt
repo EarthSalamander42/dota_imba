@@ -2179,7 +2179,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"components/abilities/heroes/hero_crystal_maiden"	
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
@@ -10124,7 +10124,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_lycan"
 		"AbilityTextureName"     	"lycan_howl"
 		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilitySound"					"Hero_Lycan.Howl"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
@@ -21624,7 +21624,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_tiny"													// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_RUNE_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_RUNE_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -37060,29 +37060,29 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attributes"		"4 7 10 13"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_attributes"	"4 7 10 13"
 				"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_2"
-				//"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_command_aura_attributes"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"			"FIELD_INTEGER"
 				"bonus_attack_range"	"50 75 100 125"
+				"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_8"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"		"1200"
 			}			
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"						"FIELD_INTEGER"
 				"illusion_damage_out_pct"	"70 80 90 100"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"						"FIELD_INTEGER"
 				"illusion_damage_in_pct"	"150"
 			}
 			"06"
@@ -37115,23 +37115,29 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_attributes"	"7 10 13 16"
+				"bonus_attributes"	"4 7 10 13"
 				"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_2"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_attack_range"	"60 90 120 150"
-			}	
+				"bonus_attack_range"	"50 75 100 125"
+				"LinkedSpecialBonus"	"special_bonus_unique_vengeful_spirit_8"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"		"1200"
+			}			
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"illusion_damage_out_pct"	"100"
+				"illusion_damage_out_pct"	"70 80 90 100"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"illusion_damage_in_pct"	"100"
+				"illusion_damage_in_pct"	"150"
 			}	
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
@@ -37727,29 +37733,6 @@
 			}
 		}
 	}	
-
-	//=================================================================================================================
-	// Ability: Special Bonus
-	//=================================================================================================================
-	"special_bonus_unique_vengeful_spirit_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"6237"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"				"10"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Venomancer's Venomous Gale

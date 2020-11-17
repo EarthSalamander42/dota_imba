@@ -50,10 +50,6 @@ function imba_phantom_lancer_spirit_lance:GetIntrinsicModifierName()
 	return "modifier_imba_phantom_lancer_spirit_lance_handler"
 end
 
-function imba_phantom_lancer_spirit_lance:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_phantom_lancer_spirit_lance:CastFilterResultTarget(target)
 	if self:GetCaster():GetModifierStackCount("modifier_imba_phantom_lancer_spirit_lance_handler", self:GetCaster()) == 0 then
 		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())

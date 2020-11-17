@@ -1390,7 +1390,7 @@ function imba_sniper_assassinate:GetBehavior()
 	if not self:GetCaster():HasTalent("special_bonus_imba_sniper_6") then
 		return self.BaseClass.GetBehavior(self)
 	else
-		return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+		return tonumber(tostring(self.BaseClass.GetBehavior(self))) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 	end
 end
 
@@ -1707,7 +1707,6 @@ function imba_sniper_assassinate:AssassinateHit(target, projectile_num)
 
 	-- Primary target block with Linken and do not need the extra hit particle
 	if target.primary_assassination_target then
-
 		-- If target has Linken's Sphere off cooldown, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(ability) then

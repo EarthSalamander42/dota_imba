@@ -53,10 +53,6 @@ modifier_imba_timbersaw_chakram_3				= class({})
 -- IMBA_TIMBERSAW_WHIRLING_DEATH --
 ----------------------------------
 
-function imba_timbersaw_whirling_death:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_timbersaw_whirling_death:OnSpellStart()
 	if self:GetCaster():GetName() == "npc_dota_hero_shredder" and RollPercentage(15) then
 		if not self.responses then
@@ -269,10 +265,6 @@ end
 --------------------------------
 -- IMBA_TIMBERSAW_TIMBER_CHAIN --
 --------------------------------
-
-function imba_timbersaw_timber_chain:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
 
 function imba_timbersaw_timber_chain:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_timbersaw_timber_chain_range")
@@ -961,10 +953,6 @@ function imba_timbersaw_chakram_2:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
-function imba_timbersaw_chakram_2:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_timbersaw_chakram_2:OnInventoryContentsChanged()
 	if self:GetCaster():HasScepter() or self:IsStolen() then
 		if not self:IsTrained() then
@@ -1267,10 +1255,6 @@ function imba_timbersaw_chakram:OnUnStolen()
 			self:GetCaster():RemoveModifierByName("modifier_imba_timbersaw_chakram_disarm")
 		end
 	end
-end
-
-function imba_timbersaw_chakram:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
 function imba_timbersaw_chakram:GetAOERadius()

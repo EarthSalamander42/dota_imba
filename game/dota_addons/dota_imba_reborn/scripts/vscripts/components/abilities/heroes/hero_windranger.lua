@@ -8,7 +8,6 @@ LinkLuaModifier("modifier_imba_windranger_powershot_scattershot", "components/ab
 LinkLuaModifier("modifier_imba_windranger_powershot_overstretch", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_windranger_windrun", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_windranger_windrun_handler", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_windranger_windrun_slow", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_windranger_windrun_invis", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
@@ -18,6 +17,8 @@ LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/gene
 LinkLuaModifier("modifier_imba_windranger_focusfire_vanilla_enhancer", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_windranger_focusfire", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
+
+LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
 imba_windranger_shackleshot					= class({})
 modifier_imba_windranger_shackle_shot		= class({})
@@ -45,10 +46,6 @@ modifier_imba_windranger_focusfire			= class({})
 ---------------------------------
 -- IMBA_WINDRANGER_SHACKLESHOT --
 ---------------------------------
-
-function imba_windranger_shackleshot:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
 
 function imba_windranger_shackleshot:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_windranger_shackle_shot_cooldown")
@@ -279,10 +276,6 @@ end
 -------------------------------
 
 -- Not gonna do the voicelines for this one cause I'd need to track hero kills with the arrows and stuff and it's gonna get annoying
-
-function imba_windranger_powershot:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
 
 function imba_windranger_powershot:GetIntrinsicModifierName()
 	return "modifier_imba_windranger_powershot"
@@ -528,26 +521,33 @@ end
 -- IMBA_WINDRANGER_WINDRUN --
 -----------------------------
 
-function imba_windranger_windrun:GetIntrinsicModifierName()
-	return "modifier_imba_windranger_windrun_handler"
-end
-
--- function imba_windranger_windrun:OnInventoryContentsChanged()
-	-- if self:GetCaster():HasScepter() and self:GetCaster():HasModifier("modifier_imba_windranger_windrun_handler") and not self:GetCaster():FindModifierByNameAndCaster("modifier_imba_windranger_windrun_handler", self:GetCaster()).initialized then
-		-- self:GetCaster():FindModifierByNameAndCaster("modifier_imba_windranger_windrun_handler", self:GetCaster()).initialized = true
-		-- self:GetCaster():FindModifierByNameAndCaster("modifier_imba_windranger_windrun_handler", self:GetCaster()):SetStackCount(self:GetSpecialValueFor("max_charges"))
-	-- end
--- end
-
--- function imba_windranger_windrun:OnHeroCalculateStatBonus()
-	-- self:OnInventoryContentsChanged()
--- end
-
 function imba_windranger_windrun:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
 		return self.BaseClass.GetCooldown(self, level)
 	else
 		return 0
+	end
+end
+
+function imba_windranger_windrun:OnInventoryContentsChanged()
+	-- Caster got scepter
+	if self:GetCaster():HasScepter() then
+		if self:GetCaster():HasModifier("modifier_generic_charges") then
+			local has_rightful_modifier = false
+
+			for _, mod in pairs(self:GetCaster():FindAllModifiersByName("modifier_generic_charges")) do
+				if mod:GetAbility():GetAbilityName() == self:GetAbilityName() then
+					has_rightful_modifier = true
+					break
+				end
+			end
+
+			if has_rightful_modifier == false then
+				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})		
+			end
+		else
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})		
+		end
 	end
 end
 
@@ -573,89 +573,6 @@ function imba_windranger_windrun:OnSpellStart()
 	
 	if self:GetCaster():HasTalent("special_bonus_imba_windranger_windrun_invisibility") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_windranger_windrun_invis", {duration = self:GetSpecialValueFor("duration")})
-	end
-end
-
-----------------------------------------------
--- MODIFIER_IMBA_WINDRANGER_WINDRUN_HANDLER --
-----------------------------------------------
-
--- Largely copied from the modifier_generic_charges modifier but with changes to support scepter charge system only (also allows for its own tooltips cause I still can't do the modifier_imba_windranger_windrun_handler = modifier_generic_charges thing
-
-function modifier_imba_windranger_windrun_handler:IsHidden()		return not self:GetCaster():HasScepter() end
-function modifier_imba_windranger_windrun_handler:DestroyOnExpire()	return false end
-
-function modifier_imba_windranger_windrun_handler:OnCreated()
-	if not IsServer() then return end
-
-	-- Sphaget way of getting this working but it's hardcode (doesn't read the server-side value if RequiresScepter flag is on and scepter is not held)
-	self:SetStackCount(math.max(self:GetAbility():GetSpecialValueFor("max_charges"), 2))
-	self:CalculateCharge()
-end
-
-function modifier_imba_windranger_windrun_handler:OnIntervalThink()
-	self:IncrementStackCount()
-	self:StartIntervalThink(-1)
-	self:CalculateCharge()
-end
-
-function modifier_imba_windranger_windrun_handler:CalculateCharge()	
-	if self:GetStackCount() >= math.max(self:GetAbility():GetSpecialValueFor("max_charges"), 2) then
-		self:SetDuration(-1, true)
-		self:StartIntervalThink(-1)
-	else
-		if self:GetRemainingTime() <= 0.05 then
-			self:StartIntervalThink(self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction())
-			self:SetDuration(self:GetAbility():GetTalentSpecialValueFor("charge_restore_time") * self:GetParent():GetCooldownReduction(), true)
-		end
-		
-		if self:GetStackCount() == 0 then
-			self:GetAbility():StartCooldown(self:GetRemainingTime())
-		else
-			self:GetAbility():StartCooldown(0.25)
-		end
-	end
-end
-
-function modifier_imba_windranger_windrun_handler:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
-end
-
-function modifier_imba_windranger_windrun_handler:OnAbilityFullyCast(params)
-	if params.unit ~= self:GetParent() or not self:GetParent():HasScepter() then return end
-	
-	if params.ability == self:GetAbility() then
-		-- All this garbage is just to try and check for WTF mode to not expend charges and yet it's still bypassable
-		local wtf_mode = true
-		
-		if not GameRules:IsCheatMode() then
-			wtf_mode = false
-		else
-			for ability = 0, 24 - 1 do
-				if self:GetParent():GetAbilityByIndex(ability) and self:GetParent():GetAbilityByIndex(ability):GetCooldownTimeRemaining() > 0 then
-					wtf_mode = false
-					break
-				end
-			end
-
-			if wtf_mode ~= false then
-				for item = 0, 15 do
-					if self:GetParent():GetItemInSlot(item) and self:GetParent():GetItemInSlot(item):GetCooldownTimeRemaining() > 0 then
-						wtf_mode = false
-						break
-					end
-				end
-			end
-		end
-		
-		if wtf_mode == false then
-			self:DecrementStackCount()
-			self:CalculateCharge()
-		end
-	elseif params.ability:GetName() == "item_refresher" or params.ability:GetName() == "item_refresher_shard" then
-		self:StartIntervalThink(-1)
-		self:SetDuration(-1, true)
-		self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
 	end
 end
 

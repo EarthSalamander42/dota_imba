@@ -56,6 +56,10 @@ function item_imba_abyssal_blade:OnSpellStart()
 			return nil
 		end
 	end
+
+	if self:GetCaster():HasModifier("modifier_imba_slark_pounce") then
+		self:GetCaster():FindModifierByName("modifier_imba_slark_pounce"):Destroy()
+	end
 	
 	-- This isn't the right particle but I don't want to spend forever looking for this when there are a million other changes to work on
 	local blink_start_particle = ParticleManager:CreateParticle("particles/econ/events/ti9/blink_dagger_ti9_start_lvl2.vpcf", PATTACH_ABSORIGIN, self:GetCaster())

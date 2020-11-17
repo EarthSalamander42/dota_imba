@@ -1481,10 +1481,6 @@ end
 
 function imba_life_stealer_assimilate:IsStealable()	return false end
 
-function imba_life_stealer_assimilate:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_AOE
-end
-
 function imba_life_stealer_assimilate:OnInventoryContentsChanged()
 	if self:GetCaster():HasAbility("imba_life_stealer_infest") and self:GetCaster():HasScepter() and not self:GetCaster():FindModifierByNameAndCaster("modifier_imba_life_stealer_infest", self:GetCaster()) then
 		self:SetHidden(false)

@@ -42,8 +42,8 @@
 "DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_buff_counter"		"Glaives of Wisdom"
 "DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_buff_counter_Description"		"Temporarily Stealing Intelligence"
 
-"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_multiple"					"Glaives of Wisdom"
-"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_multiple_Description"		"Total intelligence stolen"
+"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom"					"Glaives of Wisdom"
+"DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_Description"		"Total intelligence stolen"
 
 "DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_debuff_counter"	"Glaives of Wisdom"
 "DOTA_Tooltip_modifier_imba_silencer_glaives_of_wisdom_debuff_counter_Description"	"Temporarily losing intelligence"

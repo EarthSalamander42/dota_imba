@@ -966,10 +966,6 @@ end
 
 function imba_tiny_toss:IsNetherWardStealable() return false end
 
-function imba_tiny_toss:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_tiny_toss:CastFilterResultLocation(location)
 	if not IsServer() then return end
 

@@ -913,10 +913,6 @@ imba_lycan_howl_723					= imba_lycan_howl_723 or class({})
 modifier_imba_lycan_howl_723		= modifier_imba_lycan_howl_723 or class({})
 modifier_imba_lycan_howl_723_phased	= modifier_imba_lycan_howl_723_phased or class({})
 
-function imba_lycan_howl_723:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 function imba_lycan_howl_723:OnSpellStart()
 	EmitSoundOnLocationForAllies(self:GetCaster():GetAbsOrigin(), "Hero_Lycan.Howl", self:GetCaster())
 	

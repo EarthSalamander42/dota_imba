@@ -1200,7 +1200,7 @@ function modifier_imba_leshrac_lightning_storm_tormented_cloud_aura:OnDeath(keys
 
 	-- Only apply if the dead unit is the caster
 	if keys.unit == self.caster then
-		self.parent:Kill()
+		self.parent:ForceKill(false)
 		self:Destroy()
 	end
 end
@@ -1694,6 +1694,7 @@ LinkLuaModifier("modifier_imba_tormented_soul_form", "components/abilities/heroe
 imba_leshrac_tormented_soul_form = imba_leshrac_tormented_soul_form or class({})
 
 function imba_leshrac_tormented_soul_form:IsInnateAbility() return true end	
+function imba_leshrac_tormented_soul_form:IsNetherWardStealable() return false end
 
 function imba_leshrac_tormented_soul_form:GetManaCost(level)
 	-- Ability properties

@@ -243,10 +243,6 @@ end
 -- IMBA_TERRORBLADE_CONJURE_IMAGE --
 ------------------------------------
 
-function imba_terrorblade_conjure_image:GetBehavior()
-	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
 -- IMBAfication: Optimal Creation
 function imba_terrorblade_conjure_image:GetIntrinsicModifierName()
 	return "modifier_imba_terrorblade_conjure_image_autocast"

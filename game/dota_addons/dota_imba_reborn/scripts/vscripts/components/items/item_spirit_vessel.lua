@@ -404,7 +404,7 @@ end
 
 function modifier_item_imba_spirit_vessel:OnDeath(keys)
 	-- First check: Is the unit within capture range and an enemy and not reincarnating?
-	if self:GetAbility() and keys.unit:IsRealHero() and self:GetCaster():IsRealHero() and self:GetCaster():GetTeam() ~= keys.unit:GetTeam() and (not keys.unit.IsImbaReincarnating or (keys.unit.IsImbaReincarnating and not keys.unit:IsImbaReincarnating())) and self:GetCaster():IsAlive() and (self:GetCaster():GetAbsOrigin() - keys.unit:GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("soul_radius") then
+	if self:GetAbility() and keys.unit:IsRealHero() and self:GetCaster():IsRealHero() and self:GetCaster():GetTeam() ~= keys.unit:GetTeam() and (not keys.unit.IsReincarnating or (keys.unit.IsReincarnating and not keys.unit:IsReincarnating())) and self:GetCaster():IsAlive() and (self:GetCaster():GetAbsOrigin() - keys.unit:GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("soul_radius") then
 	
 		-- Second check: Is there no one closer than the item owner that also has a Spirit Vessel?
 		local nearbyAllies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), keys.unit:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("soul_radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)

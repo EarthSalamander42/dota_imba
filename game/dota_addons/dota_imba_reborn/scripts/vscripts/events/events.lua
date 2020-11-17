@@ -117,6 +117,9 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
+		-- shows -1 for some reason by default
+		GameRules:GetGameModeEntity():SetCustomDireScore(0)
+
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
