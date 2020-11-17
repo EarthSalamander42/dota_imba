@@ -268,7 +268,7 @@ function GetAbilitySpecials(name)
 		if tspecial then
 			for k, v in pairs(tspecial) do
 				for i, j in pairs(v) do
-					if i ~= "var_type" and i ~= "LinkedSpecialBonus" then
+					if i ~= "var_type" and i ~= "LinkedSpecialBonus" and i ~= "RequiresScepter" then
 						ability_specials[tonumber(k)] = {i, j}
 						break
 					end

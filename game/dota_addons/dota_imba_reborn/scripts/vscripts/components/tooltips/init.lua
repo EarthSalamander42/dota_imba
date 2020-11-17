@@ -14,14 +14,19 @@ function CustomTooltips:GetTooltipsInfo(keys)
 
 	if ability then
 		local ability_name = ability:GetVanillaAbilityName()
+		local specials = GetAbilitySpecials(ability_name)
+		local imba_specials = GetAbilitySpecials("imba_"..ability_name)
+
+		for k, v in pairs(imba_specials) do
+			specials[k] = v
+		end
 
 		if ability_name then
 			ability_values["cooldown"] = GetAbilityCooldown(ability_name)
 			ability_values["manacost"] = GetAbilityManaCost(ability_name)
-			ability_values["specials"] = GetAbilitySpecials(ability_name)
+			ability_values["specials"] = specials
 			ability_values["SpellImmunityType"] = GetSpellImmunityType(ability_name)
 			ability_values["SpellDispellableType"] = GetSpellDispellableType(ability_name)
---			ability_values["specials"] = GetAbilitySpecials(ability_name)
 		else
 			print("ERROR: Vanilla ability name not found.", ability:GetAbilityName())
 			return
@@ -31,7 +36,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		return
 	end
 
---	print("Send server tooltips info:", ability_values)
+--	print("Send server tooltips info:", ability_values["specials"])
 	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", {
 		sAbilityName = keys.sAbilityName,
 		hPosition = keys.hPosition,
