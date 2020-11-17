@@ -37,7 +37,8 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		hPosition = keys.hPosition,
 		iCooldown = ability_values["cooldown"],
 		iManaCost = ability_values["manacost"],
-		iSpellImmunity = ability_values["SpellImmunityType"],
+		sSpellImmunity = ability_values["SpellImmunityType"],
+		sSpellDispellable = ability_values["SpellDispellableType"],
 		sSpecial = ability_values["specials"],
 	})
 end

@@ -1,13 +1,9 @@
 // Abaddon's Mist Coil
-"DOTA_Tooltip_ability_imba_abaddon_death_coil"							"#{DOTA_Tooltip_ability_abaddon_death_coil}"
-"DOTA_Tooltip_ability_imba_abaddon_death_coil_Description"				"#{DOTA_Tooltip_ability_abaddon_death_coil_Description}"
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_1"			"<font color='#FF7800'>Inner Mists:</font> Can be self-cast."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_2"			"<font color='#FF7800'>Parting Gift:</font> On death, Mist Coil is cast on all allies within cast range."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_3"			"<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_4"			"<font color='#FF7800'>Shrouding Mist:</font> Allies heal %damage_heal_pct%%% of all damage they receive within and after %mist_duration% seconds."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_5"			"<font color='#FF7800'>Shield Renewal:</font> If the affected unit has Aphotic Shield, renew the shield and extend duration by %shield_duration_extend% seconds."
-"DOTA_Tooltip_ability_imba_abaddon_death_coil_Note0"					"#{DOTA_Tooltip_ability_abaddon_death_coil_Note0}"
-"DOTA_Tooltip_ability_imba_abaddon_death_coil_Lore"						"#{DOTA_Tooltip_ability_abaddon_death_coil_Lore}"
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_heal"						"#{DOTA_Tooltip_ability_abaddon_death_coil_target_damage}"
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_self_damage"				"#{DOTA_Tooltip_ability_abaddon_death_coil_self_damage}"
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_abilitycastrange"			"#{DOTA_Tooltip_ability_abaddon_death_coil_abilitycastrange}"
@@ -16,47 +12,45 @@
 "DOTA_Tooltip_modifier_imba_mist_coil_mist_ally_Description"            "At the end of the duration, receive a portion of the damage sustained as a heal."
 
 // Abaddon's Aphotic Shield
-"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield"                      "Aphotic Shield"
-"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"          "Summons dark energies around an ally unit, creating a shield that absorbs a set amount of damage before expiring. When the shield is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it. Removes certain types of negative buffs and stuns on cast.\n\nDISPEL TYPE: Strong Dispel\n<font color='#FF7800'>Black Mist:</font> Can be cast on spell-immune allies.\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Note0"                "Self-castable, can be casted on buildings."
-"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Lore"                "The powers of the black mist rise to absorb attacks like the black mist absorbs light."
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Imbafication_1"		"<font color='#FF7800'>Black Mist:</font> Can be cast on spell-immune allies."
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Imbafication_2"		"<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
+
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_radius"              "DAMAGE RADIUS:"
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_shield"              "DAMAGE BLOCK:"
 
 "DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block"                  "Aphotic Shield"
-"DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block_Description"                  "Incoming damage blocked by Aphotic Shield's protection"
+"DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block_Description"		"Incoming damage blocked by Aphotic Shield's protection"
 
 // Abaddon's Curse of Avernus
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus"                    "Curse of Avernus (Pre 7.20)"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Description"		"Abaddon strikes enemies with a chilling curse on every attack, causing all units who attack the slowed enemy to gain increased movement and attack speed.\n<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal Abaddon by %heal_convert%%% of the damage."
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Note0"                    "Illusions do not apply this debuff."
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Lore"              "The curse that slows an enemy, speeds an ally."
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_buff_duration"                  "#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Imbafication_1"		"<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal Abaddon by %heal_convert%%% of the damage."
+
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_buff_duration"		"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_move_slow"          "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_slow"                    "ATTACK SLOW:"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_debuff_duration"                "#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_abilityduration}"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_move_increase"                  "%BONUS MOVE SPEED:"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_increase"                "BONUS ATTACK SPEED:"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_slow"		"ATTACK SLOW:"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_debuff_duration"	"#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_abilityduration}"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_move_increase"		"%BONUS MOVE SPEED:"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_increase"	"BONUS ATTACK SPEED:"
 
 "DOTA_Tooltip_modifier_imba_curse_of_avernus_debuff_slow"              "Curse of Avernus"
-"DOTA_Tooltip_modifier_imba_curse_of_avernus_debuff_slow_Description"               "Slowed and granting bonus speed to attackers."
+"DOTA_Tooltip_modifier_imba_curse_of_avernus_debuff_slow_Description"	"Slowed and granting bonus speed to attackers."
 
 "DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste"                "Curse of Avernus"
-"DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_Description"                "Gaining bonus move and attack speed due to attacking Abaddon's target."
+"DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_Description"	"Gaining bonus move and attack speed due to attacking Abaddon's target."
 
-"DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_aura"          "Blessing of Avernus"
-"DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_aura_Description"           "Attack speed and move speed increased."
+"DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_aura"				"Blessing of Avernus"
+"DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_aura_Description"	"Attack speed and move speed increased."
 
 // Abaddon's Overchannel
 "DOTA_Tooltip_ability_imba_abaddon_over_channel"                        "Overchannel"
-"DOTA_Tooltip_ability_imba_abaddon_over_channel_Description"            "Abaddon channels a dangerously large amount of mist through his body, empowering Mist Coil (and increasing Mist duration) and Aphotic Shield, but causing those spells to cost health to cast. Also applies to Curse of Avernus active.\nEach spell cast under the effects of Overchannel also introduces a debuff that reduces move speed and attack speed by %reduction_multiplier% per stack. The debuff lasts %reduction_duration% seconds, and is incremented with successive casts under Overchannel."
+"DOTA_Tooltip_ability_imba_abaddon_over_channel_Description"            "Abaddon channels a dangerously large amount of mist through his body, empowering Mist Coil (and increasing Mist duration) and Aphotic Shield, but causing those spells to cost health to cast. Also applies to Curse of Avernus active.<br>Each spell cast under the effects of Overchannel also introduces a debuff that reduces move speed and attack speed by %reduction_multiplier% per stack. The debuff lasts %reduction_duration% seconds, and is incremented with successive casts under Overchannel."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_Note0"                  "Health costs are lethal."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_Note1"                  "Level upgrades with Borrowed Time."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_dmg"              "DAMAGE/HEALTH COST:"
-//"DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_shield_health"                "EXTRA SHIELD (IN ADDITION TO ABOVE):"
-"DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_mist_duration"                "EXTRA MIST DURATION:"
-"DOTA_Tooltip_ability_imba_abaddon_over_channel_curse_of_avernus_multiplier"        "CURSE COST/DAMAGE MULTIPLIER:"
+//"DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_shield_health"	"EXTRA SHIELD (IN ADDITION TO ABOVE):"
+"DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_mist_duration"	"EXTRA MIST DURATION:"
+"DOTA_Tooltip_ability_imba_abaddon_over_channel_curse_of_avernus_multiplier"	"CURSE COST/DAMAGE MULTIPLIER:"
 
 "DOTA_Tooltip_modifier_over_channel_handler"                            "Overchannel"
 "DOTA_Tooltip_modifier_over_channel_handler_Description"                "Your next spell is strengtened at the cost of your health."
@@ -65,12 +59,10 @@
 "DOTA_Tooltip_modifier_over_channel_reduction_Description"				"Overchanneling mist lessens your grip of the physical realm. Attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%."
 
 // Abaddon's Borrowed Time
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time"                      "Borrowed Time"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Description"          "When activated, all damage dealt to you will heal instead of harm. Most negative buffs will also be removed. If not on cooldown, Borrowed Time will activate whenever your hitpoints drop below %hp_threshold%.\n<font color='#FF7800'>Borrowed Pain:</font> %redirect%%% of damage taken by Abaddon's nearby allies will be redirected to him while Borrowed Time is active.</font>"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_aghanim_description"  "Increases duration. While Borrowed Time is active, anytime an ally takes more than a certain threshold of damage while within a certain range of Abaddon, an individual Mist Coil will automatically fire towards that ally. <font color='#FF0000'>These Mist Coils do not benefit from Overchannel.</font>\n<font color='#FF7800'>While Borrowed Time is active, Curse of Avernus's Health Hex applies to all allies in Borrowed Pain's radius, healing them as well.</font>"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will not activate if the incoming damage is more than Abaddon's current health."
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Lore"                 "The most unnatural of all the gifts of the Font of Avernus, this power defies mortal understanding. What should hurt, instead heals; and what should kill gives strength anew."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Imbafication_1"		"<font color='#FF7800'>Borrowed Pain:</font> %redirect%%% of damage taken by Abaddon's nearby allies will be redirected to him while Borrowed Time is active."
+
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_duration"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect_range"       "BORROWED PAIN RANGE:"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect"             "%DAMAGE REDIRECTED:"

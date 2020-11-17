@@ -1,5 +1,4 @@
-$.Msg("Register subscribers")
-// GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips); // Not working for some reason?
+GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
 GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
 
 function GetDotaHud() {
@@ -37,8 +36,17 @@ Array_AbilityImmunityType[SPELL_IMMUNITY_TYPES.SPELL_IMMUNITY_ENEMIES_YES] = "Ye
 Array_AbilityImmunityType[SPELL_IMMUNITY_TYPES.SPELL_IMMUNITY_ENEMIES_NO] = "No";
 Array_AbilityImmunityType[SPELL_IMMUNITY_TYPES.SPELL_IMMUNITY_ALLIES_YES_ENEMIES_NO] = "AlliesYesEnemiesNo";
 
+var Array_AbilityDispellableType = [];
+Array_AbilityDispellableType["SPELL_DISPELLABLE_YES_STRONG"] = "Yes_Strong";
+Array_AbilityDispellableType["SPELL_DISPELLABLE_YES"] = "Yes_Soft";
+Array_AbilityDispellableType["SPELL_DISPELLABLE_NO"] = "No";
+Array_AbilityDispellableType[4] = "Item_Yes_Strong";
+Array_AbilityDispellableType[5] = "Item_Yes_Soft";
+
 // var DotaHud = GetDotaHud();
 var DotaHud = $.GetContextPanel();
+
+var AbilitiesAndStatBranch = GetDotaHud().FindChildTraverse("AbilitiesAndStatBranch");
 
 var AbilityDetails = DotaHud.FindChildTraverse("AbilityDetails");
 var AbilityName = DotaHud.FindChildTraverse("AbilityName");
@@ -48,7 +56,8 @@ var CurrentAbilityCooldown = DotaHud.FindChildTraverse("CurrentAbilityCooldown")
 var AbilityCastType = DotaHud.FindChildTraverse("AbilityCastType");
 var AbilityTargetType = DotaHud.FindChildTraverse("AbilityTargetType"); // Not setup yet!
 var AbilityDamageType = DotaHud.FindChildTraverse("AbilityDamageType");
-var AbilitySpellImmunityType = DotaHud.FindChildTraverse("AbilitySpellImmunityType"); // Not setup yet!
+var AbilitySpellImmunityType = DotaHud.FindChildTraverse("AbilitySpellImmunityType");
+var AbilityDispelType = DotaHud.FindChildTraverse("AbilityDispelType");
 var AbilityAttributes = DotaHud.FindChildTraverse("AbilityAttributes");
 var AbilityExtraAttributes = DotaHud.FindChildTraverse("AbilityExtraAttributes");
 var AbilityCooldown = DotaHud.FindChildTraverse("AbilityCooldown");
@@ -64,7 +73,6 @@ if (Game.IsInToolsMode()) {
 
 var ItemScepterDescription = DotaHud.FindChildTraverse("ItemScepterDescription");
 
-$.Schedule(1.0, InitTooltips);
 // $.Schedule(1.0, SetAbilityTooltips);
 // OverrideAbilityTooltips();
 
@@ -80,7 +88,32 @@ function OverrideAbilityTooltips() {
 function InitTooltips() {
 	var i = 0;
 
-	$.Msg("Init Tooltips")
+//	$.Msg("Init Tooltips")
+
+		$.Schedule(0.03, function() {
+			if (!AbilitiesAndStatBranch.BHasClass("npc_dota_hero_abaddon")) {
+				$.Msg("Custom tooltips only work for Abaddon so far.")
+
+				// Re-enable vanilla tooltips
+				while (GetDotaHud().FindChildTraverse("Ability" + i) != null) {
+					var ability = GetDotaHud().FindChildTraverse("Ability" + i);
+					var ability_name = ability.FindChildTraverse("AbilityImage").abilityname;
+
+					(function (ability, ability_name) {
+						ability.SetPanelEvent("onmouseover", function () {
+							$.DispatchEvent("DOTAShowAbilityTooltip", ability, ability_name);
+						})
+						ability.SetPanelEvent("onmouseout", function () {
+							$.DispatchEvent("DOTAHideAbilityTooltip", ability);
+						})
+					})(ability, ability_name);
+
+					i++;
+				}
+			}
+
+			return;
+		})
 
 	$.Schedule(0.03, function() {
 		while (GetDotaHud().FindChildTraverse("Ability" + i) != null) {
@@ -114,8 +147,6 @@ function CallTooltips(i) {
 }
 
 function SetAbilityTooltips(keys) {
-	InitTooltips();
-
 	var ability = Entities.GetAbilityByName(Game.GetLocalPlayerInfo().player_selected_hero_entity_index, keys.sAbilityName);
 	$.Msg(keys.sAbilityName)
 
@@ -153,19 +184,32 @@ function SetAbilityTooltips(keys) {
 
 //	$.Msg(Abilities.GetAbilityTargetType(ability))
 //	AbilityTargetType.SetDialogVariable("targettype", "");
+	AbilityTargetType.style.visibility = "collapse";
 
-	$.Msg(Abilities.GetAbilityDamageType(ability))
 	if (Abilities.GetAbilityDamageType(ability)) {
 		AbilityDamageType.SetDialogVariable("damagetype", $.Localize("DOTA_ToolTip_Damage_" + Array_AbilityDamageType[Abilities.GetAbilityDamageType(ability)]));
 		AbilityDamageType.style.visibility = "visible";
 	} else
 		AbilityDamageType.style.visibility = "collapse";
 
-	if (keys["iSpellImmunity"]) {
-		AbilitySpellImmunityType.SetDialogVariable("spellimmunity", $.Localize("DOTA_ToolTip_PiercesSpellImmunity_" + Array_AbilityImmunityType[GetImmunityType(keys["iSpellImmunity"])]))
+	if (keys["sSpellImmunity"]) {
+		AbilitySpellImmunityType.SetDialogVariable("spellimmunity", $.Localize("DOTA_ToolTip_PiercesSpellImmunity_" + Array_AbilityImmunityType[GetImmunityType(keys["sSpellImmunity"])]))
+		AbilitySpellImmunityType.style.visibility = "visible";
+	} else {
+		AbilitySpellImmunityType.style.visibility = "collapse";
 	}
 
-	var AbilityDescription = $.Localize("DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Description");
+	if (keys["sSpellDispellable"] && !keys["sSpellDispellable"] == "SPELL_DISPELLABLE_NO") {
+		AbilityDispelType.SetDialogVariable("dispeltype", $.Localize("DOTA_ToolTip_Dispellable_" + Array_AbilityDispellableType[keys["sSpellDispellable"]]))
+		AbilityDispelType.style.visibility = "visible";
+	} else {
+		AbilityDispelType.style.visibility = "collapse";
+	}
+
+	var AbilityDescription_String = "DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Description";
+	var AbilityDescription = $.Localize(AbilityDescription_String);
+
+	if ($.Localize("DOTA_Tooltip_Ability_" + keys.sAbilityName.replace("imba_", "") + "_Description"))
 
 //	var ability_special = AbilityDescription.split(/[%%]/).reverse();
 
@@ -208,12 +252,15 @@ function SetAbilityTooltips(keys) {
 		}
 	}
 
+	$.Msg(AbilityDescription)
+
 	AbilityExtraDescription = AbilityExtraDescription.slice(0, -4);
 
 	AbilityExtraAttributes.SetDialogVariable("extra_attributes", AbilityExtraDescription);
 
 //	<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">400</span></span></span>.
-	AbilityDescription = SetTooltipsValues(keys.sAbilityName, AbilityDescription, AbilityAttributes, true);
+	if (AbilityDescription.indexOf("imba_") !== -1)
+		AbilityDescription = SetTooltipsValues(keys.sAbilityName, AbilityDescription, AbilityAttributes, true);
 //	$.Msg(AbilityDescription)
 
 	var i = 1;
@@ -285,7 +332,15 @@ function SetAbilityTooltips(keys) {
 		}
 	}
 
-	AbilityLore.SetDialogVariable("lore", $.Localize("DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Lore"));
+	var String_Lore = "DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Lore";
+	var Lore = $.Localize(String_Lore);
+
+	if (Lore != String_Lore) {
+		AbilityLore.SetDialogVariable("lore", $.Localize("DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Lore"));
+		AbilityLore.style.visibility = "visible";
+	} else {
+		AbilityLore.style.visibility = "collapse";
+	}
 
 	if (Abilities.GetLevel(ability) != Abilities.GetMaxLevel(ability)) {
 		AbilityUpgradeLevel.SetDialogVariableInt("upgradelevel", Abilities.GetHeroLevelRequiredToUpgrade(ability))
@@ -346,7 +401,7 @@ function SetTooltipsPosition(hPosition) {
 
 //	$.Msg("---------------------------------------------------------------------")
 
-	$.Msg("" + (position_x + offset_x) + "px " + (position_y + offset_y) + "px 0px")
+//	$.Msg("" + (position_x + offset_x) + "px " + (position_y + offset_y) + "px 0px")
 	AbilityDetails.style.position = "" + (position_x + offset_x) + "px " + (position_y + offset_y) + "px 0px";
 }
 
