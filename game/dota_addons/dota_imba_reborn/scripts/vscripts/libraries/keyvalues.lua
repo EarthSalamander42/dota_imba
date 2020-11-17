@@ -264,6 +264,7 @@ function GetAbilitySpecials(name)
 
 	if t then
 		local tspecial = t["AbilitySpecial"]
+
 		if tspecial then
 			for k, v in pairs(tspecial) do
 				for i, j in pairs(v) do
@@ -273,6 +274,18 @@ function GetAbilitySpecials(name)
 					end
 				end
 			end
+		else
+			print("KV: AbilitySpecial not found.", name)
+		end
+	else
+		print("KV: not found.", name)
+
+		if not string.find(name, "imba") then
+			GetAbilitySpecials("imba_" + name)
+			return
+		else
+			print("IMBA KV: not found.")
+			return
 		end
 	end
 
@@ -308,6 +321,40 @@ function GetAbilityCooldown(name)
 	end
 
 	return 0
+end
+
+function GetSpellImmunityType(name)
+	local t = KeyValues.All[name]
+
+--	print(name)
+--	print(t)
+
+	if t then
+		local value = t["SpellImmunityType"]
+
+		if value then
+			return value
+		end
+	end
+
+	return nil
+end
+
+function GetSpellDispellableType(name)
+	local t = KeyValues.All[name]
+
+--	print(name)
+--	print(t)
+
+	if t then
+		local value = t["SpellDispellableType"]
+
+		if value then
+			return value
+		end
+	end
+
+	return nil
 end
 
 LoadGameKeyValues()
