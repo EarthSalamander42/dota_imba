@@ -1,0 +1,355 @@
+// Mars LUA credits: Elfansoer (https://github.com/Elfansoer/dota-2-lua-abilities/tree/master/scripts/vscripts/lua_abilities)
+
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Mars: Spear of Mars
+	//=================================================================================================================
+	"imba_mars_spear_of_mars"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/hero_mars.lua"
+		"AbilityTextureName"			"mars_spear_of_mars"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"4"
+		"precache"
+		{
+//			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+			"particle"	"particles/status_fx/status_effect_mars_spear.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_spear.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_spear_impact.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_spear_impact_debuff.vpcf"
+		}
+		
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+ 		"AbilityCastRange"				"900 1000 1100 1200"
+		"AbilityCastPoint"				"0.25"
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14.0"
+		"AbilityManaCost"				"100"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 175 250 325"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"spear_speed"		"1400"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spear_width"		"125"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spear_vision"		"500"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spear_range"		"900 1000 1100 1200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"activity_duration"		"1.7"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"1.6 2.0 2.4 2.8"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.25"
+			}			
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_distance"	"75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mars: God's Rebuke
+	//=================================================================================================================
+	"imba_mars_gods_rebuke"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/hero_mars.lua"
+		"AbilityTextureName"			"mars_gods_rebuke"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"4"
+		"precache"
+		{
+//			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+			"particle"	"particles/units/heroes/hero_mars/mars_shield_bash.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_shield_bash_crit.vpcf"
+		}
+		
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.2"
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 14 12 10"
+		"AbilityManaCost"				"55 60 65 70"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_mult"					"160 200 240 280"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"angle"						"140"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"knockback_duration"		"0.3"
+			}			
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"knockback_distance"		"150"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"activity_duration"			"2"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_vs_heroes"	"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mars: Bulwark
+	//=================================================================================================================
+	"imba_mars_bulwark"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/hero_mars.lua"
+		"AbilityTextureName"			"mars_bulwark"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"4"
+		"precache"
+		{
+//			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+			"particle"	"particles/units/heroes/hero_mars/mars_shield_of_mars.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_shield_of_mars_small.vpcf"
+		}
+		
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"physical_damage_reduction"		"25 40 55 70"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"forward_angle"					"140"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"physical_damage_reduction_side"	"12 20 27 35"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"side_angle"					"240"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mars: Arena of Blood
+	//=================================================================================================================
+	"imba_mars_arena_of_blood"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/hero_mars.lua"
+		"AbilityTextureName"			"mars_arena_of_blood"
+		"FightRecapLevel"				"2"
+		"MaxLevel"						"3"
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+			"particle"	"particles/units/heroes/hero_mars/mars_arena_of_blood.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_arena_of_blood_spear.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_arena_of_blood_impact.vpcf"
+		}
+		
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+ 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.1"
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90 75 60"
+		"AbilityManaCost"				"200"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5 6 7"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"550"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"width"				"100"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spear_damage"		"150 200 250"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"formation_time"	"0.6"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spear_distance_from_wall"	"160"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"spear_attack_interval"	"1.0"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"warrior_count"		"14"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_warrior_angle"	"0.0"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"warrior_fade_min_dist"	"350.0"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"warrior_fade_max_dist"	"450.0"
+			}
+		}
+	}
+}
