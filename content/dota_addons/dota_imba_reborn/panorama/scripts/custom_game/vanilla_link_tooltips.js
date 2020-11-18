@@ -67,11 +67,10 @@ var AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
 var AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
 var AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
 
-if (Game.IsInToolsMode()) {
-	DotaHud.style.width = "100%";
-	DotaHud.style.height = "100%";
-	AbilityDetails.AddClass("AbilityContentsCustom");
-}
+DotaHud.style.width = "100%";
+DotaHud.style.height = "100%";
+AbilityLore.style.width = "370px";
+AbilityDetails.AddClass("AbilityContentsCustom");
 
 var ItemScepterDescription = DotaHud.FindChildTraverse("ItemScepterDescription");
 
@@ -86,53 +85,64 @@ function OverrideAbilityTooltips(sAbilityName) {
 	$.Msg(Specials);
 }
 
-function InitTooltips() {
-	var i = 0;
+var eligible_heroes = [
+	"npc_dota_hero_abaddon",	
+	"npc_dota_hero_mars",	
+];
 
+function InitTooltips() {
 //	$.Msg("Init Tooltips")
 
-		$.Schedule(0.03, function() {
-			if (!AbilitiesAndStatBranch.BHasClass("npc_dota_hero_abaddon")) {
-				$.Msg("Custom tooltips only work for Abaddon so far.")
+	$.Schedule(0.03, function() {
+		for (var i = 0; i < eligible_heroes.length; i++) {
+			var hero = eligible_heroes[i];
 
-				// Re-enable vanilla tooltips
+			if (AbilitiesAndStatBranch.BHasClass(hero)) {
+				var i = 0;
+
 				while (GetDotaHud().FindChildTraverse("Ability" + i) != null) {
 					var ability = GetDotaHud().FindChildTraverse("Ability" + i);
-					var ability_name = ability.FindChildTraverse("AbilityImage").abilityname;
+					var ability_button = ability.FindChildTraverse("AbilityButton");
 
-					(function (ability, ability_name) {
-						ability.SetPanelEvent("onmouseover", function () {
-							$.DispatchEvent("DOTAShowAbilityTooltip", ability, ability_name);
+					(function (ability_button, i) {
+						ability_button.SetPanelEvent("onmouseover", function () {
+							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
+							CallTooltips(i);
 						})
-						ability.SetPanelEvent("onmouseout", function () {
-							$.DispatchEvent("DOTAHideAbilityTooltip", ability);
+						ability_button.SetPanelEvent("onmouseout", function () {
+							HideTooltips();
 						})
-					})(ability, ability_name);
+					})(ability_button, i);
 
 					i++;
 				}
+
+				return;
 			}
+		}
 
-			return;
-		})
+//		$.Msg("Custom tooltips are not set for this hero.")
 
-	$.Schedule(0.03, function() {
+		var i = 0;
+
+		// Re-enable vanilla tooltips
 		while (GetDotaHud().FindChildTraverse("Ability" + i) != null) {
 			var ability = GetDotaHud().FindChildTraverse("Ability" + i);
+			var ability_button = ability.FindChildTraverse("AbilityButton");
+			var ability_name = ability.FindChildTraverse("AbilityImage").abilityname;
 
-			(function (ability, i) {
-				ability.SetPanelEvent("onmouseover", function () {
-					$.DispatchEvent("DOTAHideAbilityTooltip", ability);
-					CallTooltips(i);
+			(function (ability_button, ability_name) {
+				ability_button.SetPanelEvent("onmouseover", function () {
+					$.DispatchEvent("DOTAShowAbilityTooltip", ability_button, ability_name);
 				})
-				ability.SetPanelEvent("onmouseout", function () {
-					HideTooltips();
+				ability_button.SetPanelEvent("onmouseout", function () {
+					$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
 				})
-			})(ability, i);
+			})(ability_button, ability_name);
 
 			i++;
 		}
-	});
+	})
 }
 
 function CallTooltips(i) {
@@ -306,7 +316,7 @@ function SetAbilityTooltips(keys) {
 					AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + tooltip_string_localized + " " + special_values + "<br>";
 				}
 
-				if (imba_tooltip_string_localized != imba_tooltip_string) {
+				if (keys.sAbilityName.indexOf("imba_") !== -1 && imba_tooltip_string_localized != imba_tooltip_string) {
 					$.Msg(imba_tooltip_string)
 					$.Msg(imba_tooltip_string_localized)
 					AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + imba_tooltip_string_localized + " " + special_values + "<br>";

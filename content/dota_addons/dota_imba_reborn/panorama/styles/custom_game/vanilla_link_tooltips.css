@@ -2,7 +2,7 @@
 
 .AbilityContentsCustom
 {
-	width: 360px;	
+	width: 400px;	/* vanilla width: 360px; */
     background-color: #10171c;
 	background-image: url("s2r://panorama/images/hud/ability_tooltip_psd.vtex");
 	background-repeat: no-repeat;

@@ -2,7 +2,7 @@
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_1"			"<font color='#FF7800'>Inner Mists:</font> Can be self-cast."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_2"			"<font color='#FF7800'>Parting Gift:</font> On death, Mist Coil is cast on all allies within cast range."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_3"			"<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target."
-"DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_4"			"<font color='#FF7800'>Shrouding Mist:</font> Allies heal %damage_heal_pct%%% of all damage they receive within and after %mist_duration% seconds."
+"DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_4"			"<font color='#FF7800'>Shrouding Mist:</font> Allies heal %damage_heal_pct%% of all damage they receive within and after %mist_duration% seconds."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_5"			"<font color='#FF7800'>Shield Renewal:</font> If the affected unit has Aphotic Shield, renew the shield and extend duration by %shield_duration_extend% seconds."
 
 // "DOTA_Tooltip_ability_imba_abaddon_death_coil_abilitycastrange"			"#{DOTA_Tooltip_ability_abaddon_death_coil_abilitycastrange}"
@@ -49,10 +49,9 @@
 // Abaddon's Borrowed Time
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will not activate if the incoming damage is more than Abaddon's current health."
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Imbafication_1"		"<font color='#FF7800'>Borrowed Pain:</font> %redirect%%% of damage taken by Abaddon's nearby allies will be redirected to him while Borrowed Time is active."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Imbafication_1"		"<font color='#FF7800'>Borrowed Pain:</font> %redirect%% of damage taken by Abaddon's nearby allies will be redirected to him while Borrowed Time is active."
 
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect_range"       "BORROWED PAIN RANGE:"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect"             "%DAMAGE REDIRECTED:"
 
 "DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster"              "Borrowed Time"
 "DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster_Description"	"Being healed by all incoming damage."
