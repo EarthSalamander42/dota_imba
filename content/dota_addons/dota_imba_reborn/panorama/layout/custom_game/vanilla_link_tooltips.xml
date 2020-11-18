@@ -1,0 +1,15 @@
+<root>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/vanilla_link_tooltips.js" /> 
+	</scripts>
+
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/tooltips/tooltip_ability.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/vanilla_link_tooltips.css" />
+	</styles>
+
+	<DOTATooltipAbility class="AbilityContents" hittest="false">
+		<DOTAAbilityDetails id="AbilityDetails" />
+	</DOTATooltipAbility>
+</root>
