@@ -18,7 +18,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		local imba_specials = GetAbilitySpecials("imba_"..ability_name)
 
 		for k, v in pairs(imba_specials) do
-			specials[k] = v
+			table.insert(specials, v)
 		end
 
 		if ability_name then

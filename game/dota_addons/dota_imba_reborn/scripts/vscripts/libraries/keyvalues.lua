@@ -279,13 +279,6 @@ function GetAbilitySpecials(name)
 		end
 	else
 		print("KV: not found.", name)
-
-		if not string.find(name, "imba") then
-			return GetAbilitySpecials("imba_"..name)
-		else
-			print("IMBA KV: not found.")
-			return
-		end
 	end
 
 	return ability_specials
