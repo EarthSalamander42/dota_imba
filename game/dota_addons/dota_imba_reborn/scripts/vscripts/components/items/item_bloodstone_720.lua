@@ -231,7 +231,7 @@ function modifier_item_imba_bloodstone_720:OnDeath(keys)
 			end
 			
 		-- Check if the owner of the Bloodstone died and is not reincarnating
-		elseif self.parent == keys.unit and (not keys.unit.IsImbaReincarnating or (keys.unit.IsImbaReincarnating and not keys.unit:IsImbaReincarnating())) then
+		elseif self.parent == keys.unit and (not keys.unit.IsReincarnating or (keys.unit.IsReincarnating and not keys.unit:IsReincarnating())) then
 			self.ability:SetCurrentCharges(math.max(self.ability:GetCurrentCharges() - self.death_charges, 0))
 		end
 		

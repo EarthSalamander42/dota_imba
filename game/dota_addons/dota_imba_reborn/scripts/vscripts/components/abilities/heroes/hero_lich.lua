@@ -2119,7 +2119,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 		Timers:CreateTimer(FrameTime(), function()
 			if self.target then
 				-- IMBAfication: Soul Consumption
-				if not self.target:IsAlive() and not self.target:IsImbaReincarnating() and (self.target:IsRealHero() or self.target:IsClone()) then
+				if not self.target:IsAlive() and not self.target:IsReincarnating() and (self.target:IsRealHero() or self.target:IsClone()) then
 					local consumption_health = self.target:GetMaxHealth()
 
 					self.caster:AddNewModifier(self.caster, self, "modifier_imba_lich_sinister_gaze_bonus_health", {duration = self.soul_consumption_duration}):SetStackCount(consumption_health)
@@ -2133,7 +2133,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 					-- end)
 				
 				-- IMBAfication: Retaliatory Chains
-				elseif not self.caster:IsAlive() and not self.target:IsImbaReincarnating() then
+				elseif not self.caster:IsAlive() and not self.target:IsReincarnating() then
 					local retaliation_damage = self.caster:GetMaxHealth() * (self.retaliatory_chains_dmg_pct / 100)
 
 					local damageTable = {victim = self.target,
@@ -2152,7 +2152,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 	end
 
 	Timers:CreateTimer(FrameTime(), function()
-		if self.target and not self.target:IsAlive() and (not self.target.IsImbaReincarnating or (self.target.IsImbaReincarnating and not self.target:IsImbaReincarnating())) then
+		if self.target and not self.target:IsAlive() and (not self.target.IsReincarnating or (self.target.IsReincarnating and not self.target:IsReincarnating())) then
 		
 			local particle_name	= ""
 		

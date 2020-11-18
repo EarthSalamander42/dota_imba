@@ -1243,7 +1243,7 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
 
 
 		-- If the caster was the one who died, he loses half his stacks (unless he has #7 Talent)
-		if self.caster == target and not target:IsIllusion() and (not self.caster.IsImbaReincarnating or (self.caster.IsImbaReincarnating and not self.caster:IsImbaReincarnating())) then
+		if self.caster == target and not target:IsIllusion() and (not self.caster.IsReincarnating or (self.caster.IsReincarnating and not self.caster:IsReincarnating())) then
 			local stacks = self:GetStackCount()
 			local stacks_lost = math.floor(stacks * (self.souls_lost_on_death_pct * 0.01))
 

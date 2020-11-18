@@ -1184,8 +1184,6 @@ function imba_wraith_king_reincarnation:GetManaCost(level)
 	end
 end
 
-function imba_wraith_king_reincarnation:OnAbilityPhaseStart() return false end
-
 function imba_wraith_king_reincarnation:GetBehavior()
 --	print("Reincarnation Behavior:", self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_2"))
 
@@ -1215,6 +1213,7 @@ end
 function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo )
 	local unit = OnDeathKeys.unit
 	local reincarnate = OnDeathKeys.reincarnate
+
 	-- Check if it was a reincarnation death
 	if reincarnate and (not BuffInfo.caster:HasModifier("modifier_item_imba_aegis")) then
 		BuffInfo.reincarnation_death = true
@@ -1275,8 +1274,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 		--Timers:CreateTimer(BuffInfo.reincarnate_delay, function()
 		--    EmitSoundOn(BuffInfo.sound_reincarnation, BuffInfo.caster) 
 		--end)                
-		
-	else                
+	else
 		BuffInfo.reincarnation_death = false     
 	end
 end
@@ -1325,8 +1323,10 @@ function modifier_imba_reincarnation:OnIntervalThink()
 	
 	-- If caster has sufficent mana and the ability is ready, apply
 	if (self.ability:IsOwnersManaEnough()) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
+		print("WK IMMORTAL!")
 		self.can_die = false
 	else
+		print("OMG WK NOT IMMORTAL!")
 		self.can_die = true
 	end
 
@@ -1371,7 +1371,7 @@ function modifier_imba_reincarnation:DeclareFunctions()
 end
 
 function modifier_imba_reincarnation:ReincarnateTime()
-	if IsServer() then  
+	if IsServer() then
 		if not self.can_die and self.caster:IsRealHero() then
 			return self.reincarnate_delay
 		end
