@@ -20,4 +20,14 @@ function vanilla_baseclass:GetCastRange(location, target)
 	return self:GetVanillaKeyValue("AbilityCastRange")
 end
 
+--[[ -- occasionnally turns the ability to an uncastable state
+function vanilla_baseclass:GetBehavior()
+	if not self.vanilla_behavior then
+		self.vanilla_behavior = _G[self:GetVanillaKeyValue("AbilityBehavior")]
+	end
+
+	return self.vanilla_behavior
+end
+--]]
+
 return vanilla_baseclass

@@ -9,30 +9,24 @@ function CustomTooltips:GetTooltipsInfo(keys)
 
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
-	local ability = hero:FindAbilityByName(keys.sAbilityName)
 	local ability_values = {}
 
-	if ability then
-		local ability_name = ability:GetVanillaAbilityName()
-		local specials = GetAbilitySpecials(ability_name)
-		local imba_specials = GetAbilitySpecials("imba_"..ability_name)
+	local ability_name = GetVanillaAbilityName(keys.sAbilityName)
+	local specials = GetAbilitySpecials(ability_name)
+	local imba_specials = GetAbilitySpecials("imba_"..ability_name)
 
-		for k, v in pairs(imba_specials) do
-			table.insert(specials, v)
-		end
+	for k, v in pairs(imba_specials) do
+		table.insert(specials, v)
+	end
 
-		if ability_name then
-			ability_values["cooldown"] = GetAbilityCooldown(ability_name)
-			ability_values["manacost"] = GetAbilityManaCost(ability_name)
-			ability_values["specials"] = specials
-			ability_values["SpellImmunityType"] = GetSpellImmunityType(ability_name)
-			ability_values["SpellDispellableType"] = GetSpellDispellableType(ability_name)
-		else
-			print("ERROR: Vanilla ability name not found.", ability:GetAbilityName())
-			return
-		end
+	if ability_name then
+		ability_values["cooldown"] = GetAbilityCooldown(ability_name)
+		ability_values["manacost"] = GetAbilityManaCost(ability_name)
+		ability_values["specials"] = specials
+		ability_values["SpellImmunityType"] = GetSpellImmunityType(ability_name)
+		ability_values["SpellDispellableType"] = GetSpellDispellableType(ability_name)
 	else
-		print("ERROR: Ability not found.", keys.iAbilityIndex)
+		print("ERROR: Vanilla ability name not found.", keys.sAbilityName)
 		return
 	end
 

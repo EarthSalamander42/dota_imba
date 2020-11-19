@@ -1,0 +1,39 @@
+// Spear of Mars
+"DOTA_Tooltip_ability_imba_mars_spear_Imbafication_1"			"<font color='#FF7800'>Heaven Spear:</font> When auto-cast is on, Mars calls a spear falling from the sky, stunning the closest unit within 200 radius and pushing others away by 150."
+"DOTA_Tooltip_ability_imba_mars_spear_Imbafication_2"			"<font color='#FF7800'>Trailblazer:</font> Spear leaves a burning trail in its wake. The trail lasts for 4 seconds and burns enemies for 25% of Spear's damage per second."
+
+// "DOTA_Tooltip_modifier_imba_mist_coil_mist_ally"							"Shrouding Mist"
+// "DOTA_Tooltip_modifier_imba_mist_coil_mist_ally_Description"				"At the end of the duration, receive a portion of the damage sustained as a heal."
+
+// God's Rebuke
+"DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_1"				"<font color='#FF7800'>Strong Argument:</font> God's Rebuke grants Mars 2/4/6/8 strength for 6 seconds for each enemy heroes hit."
+"DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_2"				"<font color='#FF7800'>Ancile's Soul:</font> God's Rebuke damage is increased by 'Jupiter Strength' stored damage."
+
+// "DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block"					"Aphotic Shield"
+// "DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block_Description"		"Incoming damage blocked by Aphotic Shield's protection"
+
+// Bulwark
+"DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_1"					"<font color='#FF7800'>Spiked Shield:</font> During active Bulwark, Mars deals 20% of his attack damage to enemies that are attacking him from the front."
+"DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_2"					"<font color='#FF7800'>Jupiter's Strenght:</font> Store 50% of damage blocked for 10 seconds. Adds bonus damage to God's Rebuke when casted."
+
+// "DOTA_Tooltip_modifier_imba_frostmourne_debuff_slow"					"Curse of Avernus"
+// "DOTA_Tooltip_modifier_imba_frostmourne_debuff_slow_Description"		"Slowed and granting bonus speed to attackers."
+
+// "DOTA_Tooltip_modifier_imba_frostmourne_buff_haste"					"Curse of Avernus"
+// "DOTA_Tooltip_modifier_imba_frostmourne_buff_haste_Description"		"Gaining bonus move and attack speed due to attacking Abaddon's target."
+
+// "DOTA_Tooltip_modifier_imba_frostmourne_buff_haste_aura"				"Blessing of Avernus"
+// "DOTA_Tooltip_modifier_imba_frostmourne_buff_haste_aura_Description"	"Attack speed and move speed increased."
+
+// Arena of Blood
+"DOTA_Tooltip_ability_imba_mars_arena_of_blood_Imbafication_1"		"<font color='#FF7800'>Divine Call:</font> Invoke a divine shield around the arena that can't be bypassed by any means."
+"DOTA_Tooltip_ability_imba_mars_arena_of_blood_Imbafication_2"		"<font color='#FF7800'>Coliseum:</font> Allies inside the Arena gain 10/20/30 bonus damage and 15/30/45 bonus attack speed for each ally inside. max stacks 5."
+
+// "DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster"              "Borrowed Time"
+// "DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster_Description"	"Being healed by all incoming damage."
+
+// Custom Talents
+"DOTA_Tooltip_Ability_special_bonus_imba_mars_1"						"Full Circle"
+"DOTA_Tooltip_Ability_special_bonus_imba_mars_1_Description"			"God's Rebuke deals damage in a full circle around Mars."
+"DOTA_Tooltip_Ability_special_bonus_imba_mars_2"						"Stunning Rebuke"
+"DOTA_Tooltip_Ability_special_bonus_imba_mars_2_Description"			"God's Rebuke stuns enemies for 0.1 second."

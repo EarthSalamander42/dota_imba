@@ -155,6 +155,14 @@ function CallTooltips(i) {
 	})
 }
 
+function SetHTMLNewLine(text) {
+	while (text.indexOf("\n") !== -1) {
+		text = text.replace("\n", "<br>");
+	}
+
+	return text;
+}
+
 function SetAbilityTooltips(keys) {
 	var ability = Entities.GetAbilityByName(Game.GetLocalPlayerInfo().player_selected_hero_entity_index, keys.sAbilityName);
 //	$.Msg(keys.sAbilityName)
@@ -239,6 +247,9 @@ function SetAbilityTooltips(keys) {
 		Imba_description = false;
 	}
 
+	// set newline to supported format
+	AbilityDescription = SetHTMLNewLine(AbilityDescription);
+
 	var i = 1;
 
 //	$.Msg($.Localize("DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Imbafication_" + i))
@@ -317,8 +328,8 @@ function SetAbilityTooltips(keys) {
 				}
 
 				if (keys.sAbilityName.indexOf("imba_") !== -1 && imba_tooltip_string_localized != imba_tooltip_string) {
-					$.Msg(imba_tooltip_string)
-					$.Msg(imba_tooltip_string_localized)
+//					$.Msg(imba_tooltip_string)
+//					$.Msg(imba_tooltip_string_localized)
 					AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + imba_tooltip_string_localized + " " + special_values + "<br>";
 				}
 			}
@@ -424,11 +435,11 @@ function SetAbilityTooltips(keys) {
 		}
 	}
 
-	var String_Lore = "DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Lore";
+	var String_Lore = "DOTA_Tooltip_Ability_" + keys.sAbilityName.replace("imba_", "") + "_Lore";
 	var Lore = $.Localize(String_Lore);
 
 	if (Lore != String_Lore) {
-		AbilityLore.SetDialogVariable("lore", $.Localize("DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Lore"));
+		AbilityLore.SetDialogVariable("lore", Lore);
 		AbilityLore.style.visibility = "visible";
 	} else {
 		AbilityLore.style.visibility = "collapse";
@@ -542,6 +553,9 @@ function GetAbilityType(iBehavior) {
 		if (Array_BehaviorTooltips[bit_band(iBehavior, DOTA_ABILITY_BEHAVIOR[i])])
 			return DOTA_ABILITY_BEHAVIOR[i];
 	}
+
+	// Defaults to no target in case the function doesn't work as expected.
+	return 4;
 }
 
 function GetImmunityType(iEnum) {
