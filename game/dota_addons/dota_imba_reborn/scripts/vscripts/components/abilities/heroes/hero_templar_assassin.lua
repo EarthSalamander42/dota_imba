@@ -661,7 +661,7 @@ function modifier_imba_templar_assassin_psi_blades:OnTakeDamage(keys)
 			if enemy ~= keys.unit then
 				enemy:EmitSound("Hero_TemplarAssassin.PsiBlade")
 			
-				self.psi_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_templar_assassin/templar_assassin_psi_blade.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.unit)
+				self.psi_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_templar_assassin/templar_assassin_psi_blade.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.unit, self:GetParent())
 				ParticleManager:SetParticleControlEnt(self.psi_particle, 0, keys.unit, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.unit:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(self.psi_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(self.psi_particle)

@@ -2758,12 +2758,35 @@
 		"item_unlock_level"			"205"
 	}
 
-//	"126" // Windrunner: Compass of the Rising Gale
-//	{
-//		"item_id"					"13670"
-//		"item_type"					"wearable"
-//		"item_unlock_level"			"450"
-//	}
+	"126" // Windrunner: Compass of the Rising Gale
+	{
+		"item_id"					"21444"
+		"item_type"					"bundle"
+		"item_unlock_level"			"450"
+
+		"wearables"
+		{
+			"13804"			"back" // Cape of the Rising Gale
+			"13805"			"weapon" // Longbow of the Rising Gale
+			"13806"			"head" // Compass of the Rising Gale
+			"13807"			"shoulder" // Armor of the Rising Gale
+			"13808"			"offhand_weapon" // Quiver of the Rising Gale
+		}
+	}
+
+	"127" // Faceless Void: Mace of Aeons
+	{
+		"item_id"					"7571"
+		"item_type"					"wearable"
+		"item_unlock_level"			"390"
+	}
+
+	"128" // Templar Assassin: Focal Resonance
+	{
+		"item_id"					"9318"
+		"item_type"					"wearable"
+		"item_unlock_level"			"420"
+	}
 
 	// TODO: UI support for different styles
 }

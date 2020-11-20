@@ -48274,6 +48274,754 @@
 					}
 				}
 	}
+	"13805"
+	{
+		"asset_modifier0"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_bowstring_ambient.vpcf"
+		}
+		"asset_modifier1"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_bow_ambient.vpcf"
+		}
+	}
+	"13806"
+	{
+		"styles"
+		{
+			"0"
+			{
+				"name"		"#DOTA_Style_Windrunner_Arcana_Style0"
+				"skin"		"0"
+				"alternate_icon"		"0"
+			}
+			"1"
+			{
+				"name"		"#DOTA_Style_Windrunner_Arcana_Style1"
+				"skin"		"1"
+				"alternate_icon"		"1"
+				"unlock"
+				{
+					"gem"
+					{
+						"def_index"		"3034"
+						"type_field"		"strange_type"
+						"type_value"		"816"
+						"unlock_field"		"strange_value"
+						"unlock_value"		"2500000"
+					}
+				}
+			}
+		}
+		"asset_modifier0"
+		{
+			"type"		"model_skin"
+			"style"		"0"
+			"skin"		"0"
+		}
+		"asset_modifier1"
+		{
+			"type"		"model_skin"
+			"style"		"1"
+			"skin"		"1"
+		}
+		"asset_modifier2"
+		{
+			"type"		"custom_kill_effect"
+			"asset"		"kill"
+			"modifier"		"modifier_windrunner_arcana_kill_effect"
+		}
+		"asset_modifier3"
+		{
+			"type"		"entity_model"
+			"asset"		"npc_dota_hero_windrunner"
+			"modifier"		"models/items/windrunner/windrunner_arcana/wr_arcana_base.vmdl"
+		}
+		"asset_modifier4"
+		{
+			"type"		"arcana_level"
+			"level"		"1"
+			"style"		"0"
+		}
+		"asset_modifier5"
+		{
+			"type"		"arcana_level"
+			"level"		"2"
+			"style"		"1"
+		}
+		"skip_model_combine"		"1"
+		"asset_modifier6"
+		{
+			"type"		"default_idle_expression"
+			"asset"		"scenes/windrunner/windrunner_exp_idle_01.vcd"
+			"modifier"		"scenes/windrunner/windrunner_wr_arc_exp_idle_01.vcd"
+		}
+		"asset_modifier7"
+		{
+			"type"		"buff_modifier"
+			"modifier"		"modifier_windrunner_arcana"
+		}
+		"asset_modifier8"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_loadout.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_loadout.vpcf"
+		}
+		"asset_modifier9"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_focusfire_attack.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_focusfire_attack.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier10"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_focusfire_attack.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_focusfire_attack_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier11"
+		{
+			"type"		"particle"
+			"asset"		"particles/items5_fx/javelin_tgt.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_javelin_tgt.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier12"
+		{
+			"type"		"particle"
+			"asset"		"particles/items5_fx/javelin_tgt.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_javelin_tgt_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier13"
+		{
+			"type"		"particle"
+			"asset"		"particles/items5_fx/monkey_king_bar_tgt.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_monkey_king_bar_tgt.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier14"
+		{
+			"type"		"particle"
+			"asset"		"particles/items5_fx/monkey_king_bar_tgt.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_monkey_king_bar_tgt_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier15"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_focusfire_start.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_focusfire_start.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier16"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_focusfire_start.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_focusfire_start_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier17"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_focusfire.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_focusfire.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier18"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_focusfire.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_focusfire_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier19"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_base_attack.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier20"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_base_attack_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier21"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_ambient.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier22"
+		{
+			"type"		"particle"
+			"asset"		"particles/items_fx/cyclone.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_item_cyclone.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier23"
+		{
+			"type"		"particle"
+			"asset"		"particles/items_fx/cyclone.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_item_cyclone_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier24"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_tgt_death.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_tgt_death.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier25"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_tgt_death.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_tgt_death_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier26"
+		{
+			"type"		"activity"
+			"asset"		"ALL"
+			"modifier"		"arcana"
+		}
+		"asset_modifier27"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_windrun.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier28"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_windrun_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier29"
+		{
+			"type"		"particle_combined"
+			"asset"		"particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_cascade.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_windrun_combo.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier30"
+		{
+			"type"		"particle_combined"
+			"asset"		"particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_cascade.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_windrun_combo_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier31"
+		{
+			"type"		"particle"
+			"asset"		"particles/items_fx/force_staff.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_item_force_staff.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier32"
+		{
+			"type"		"particle"
+			"asset"		"particles/items_fx/force_staff.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_item_force_staff_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier33"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_death.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_death.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier34"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_death.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_death_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier35"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_channel.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_powershot_channel.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier36"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_channel.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_powershot_channel_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier37"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/wr_taunt_kiss_heart.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_taunt_kiss_heart.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier38"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/wr_taunt_kiss_heart.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_taunt_kiss_heart_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier39"
+		{
+			"type"		"particle_combined"
+			"asset"		"particles/econ/items/windrunner/windrunner_ti6/windrunner_spell_powershot_channel_ti6.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_powershot_channel_combo.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier40"
+		{
+			"type"		"particle_combined"
+			"asset"		"particles/econ/items/windrunner/windrunner_ti6/windrunner_spell_powershot_channel_ti6.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_powershot_channel_combo_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier41"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_spell_powershot.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier42"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_spell_powershot_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier43"
+		{
+			"type"		"particle_combined"
+			"asset"		"particles/econ/items/windrunner/windrunner_ti6/windrunner_spell_powershot_ti6.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_spell_powershot_combo.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier44"
+		{
+			"type"		"additional_wearable"
+			"asset"		"models/items/windrunner/windrunner_arcana/wr_arc_legs_scrolling.vmdl"
+		}
+		"asset_modifier45"
+		{
+			"type"		"response_criteria"
+			"asset"		"wind_eth_arc"
+		}
+		"asset_modifier46"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_shackleshot.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier47"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_shackleshot_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier48"
+		{
+			"type"		"particle_combined"
+			"asset"		"particles/econ/items/windrunner/wr_ti8_immortal_shoulder/wr_ti8_shackleshot.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/wr_ti8_shackleshot_combo.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier49"
+		{
+			"type"		"particle_combined"
+			"asset"		"particles/econ/items/windrunner/wr_ti8_immortal_shoulder/wr_ti8_shackleshot.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/wr_ti8_shackleshot_combo_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier50"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/windranger_ti8_immortal_shoulders/windranger_ti8_immortal_shoulders.vmdl"
+			"modifier"		"models/items/windrunner/windranger_ti8_immortal_shoulders/windranger_ti8_immortal_shoulders_arcana_refit.vmdl"
+		}
+		"asset_modifier51"
+		{
+			"type"		"particle"
+			"asset"		"particles/units/heroes/hero_windrunner/windrunner_focusfire_hit.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_focusfire_hit.vpcf"
+		}
+		"asset_modifier52"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/ti6_windranger_offhand/ti6_windranger_offhand.vmdl"
+			"modifier"		"models/items/windrunner/ti6_windranger_offhand/ti6_wr_offhand_arcana_refit.vmdl"
+		}
+		"asset_modifier53"
+		{
+			"type"		"icon_replacement_hero_minimap"
+			"asset"		"npc_dota_hero_windrunner"
+			"modifier"		"npc_dota_hero_windrunner_alt1"
+			"style"		"0"
+			"force_display"		"1"
+		}
+		"asset_modifier54"
+		{
+			"type"		"icon_replacement_hero_minimap"
+			"asset"		"npc_dota_hero_windrunner"
+			"modifier"		"npc_dota_hero_windrunner_alt2"
+			"style"		"1"
+			"force_display"		"1"
+		}
+		"asset_modifier55"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_ambient_head.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier56"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_ambient_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier57"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_ambient_head_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier58"
+		{
+			"type"		"particle"
+			"asset"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_bowstring_ambient.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_bowstring_ambient_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier59"
+		{
+			"type"		"particle"
+			"asset"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_bow_ambient.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_bow_ambient_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier60"
+		{
+			"type"		"particle"
+			"asset"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_anim_run_rare.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_anim_run_rare_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier61"
+		{
+			"type"		"particle"
+			"asset"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_anim_gesture.vpcf"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_anim_gesture_v2.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier62"
+		{
+			"type"		"sound"
+			"asset"		"Ability.Focusfire"
+			"modifier"		"Ability.Focusfire.Arcana"
+		}
+		"asset_modifier63"
+		{
+			"type"		"sound"
+			"asset"		"Ability.PowershotPull"
+			"modifier"		"Ability.PowershotPull.Arcana"
+		}
+		"asset_modifier64"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/sparrowhawk_quiver/sparrowhawk_quiver.vmdl"
+			"modifier"		"models/items/windrunner/sparrowhawk_quiver/sparrowhawk_quiver_refit.vmdl"
+		}
+		"asset_modifier65"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/barrel_quiver_update/barrel_quiver_update.vmdl"
+			"modifier"		"models/items/windrunner/barrel_quiver_update/barrel_quiver_refit.vmdl"
+		}
+		"asset_modifier66"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/wild_wind_quiver/wild_wind_quiver.vmdl"
+			"modifier"		"models/items/windrunner/wild_wind_quiver/wild_wind_quiver_refit.vmdl"
+		}
+		"asset_modifier67"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/anuxi_featherfall_quiver/anuxi_featherfall_quiver.vmdl"
+			"modifier"		"models/items/windrunner/anuxi_featherfall_quiver/anuxi_featherfall_quiver_refit.vmdl"
+		}
+		"asset_modifier68"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/tranquility_quiver/tranquility_quiver.vmdl"
+			"modifier"		"models/items/windrunner/tranquility_quiver/tranquility_quiver_refit.vmdl"
+		}
+		"asset_modifier69"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/deadly_feather_swing_offhand/deadly_feather_swing_offhand.vmdl"
+			"modifier"		"models/items/windrunner/deadly_feather_swing_offhand/deadly_feather_swing_offhand_refit.vmdl"
+		}
+		"asset_modifier70"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/armaments_of_the_wind_offhand/armaments_of_the_wind_offhand.vmdl"
+			"modifier"		"models/items/windrunner/armaments_of_the_wind_offhand/armaments_of_the_wind_offhand_refit.vmdl"
+		}
+		"asset_modifier71"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/featherquiver21/featherquiver21.vmdl"
+			"modifier"		"models/items/windrunner/featherquiver21/featherquiver21_refit.vmdl"
+		}
+		"asset_modifier72"
+		{
+			"type"		"icon_replacement_hero"
+			"asset"		"npc_dota_hero_windrunner"
+			"modifier"		"npc_dota_hero_windrunner_alt1"
+			"style"		"0"
+			"force_display"		"1"
+		}
+		"asset_modifier73"
+		{
+			"type"		"icon_replacement_hero"
+			"asset"		"npc_dota_hero_windrunner"
+			"modifier"		"npc_dota_hero_windrunner_alt2"
+			"style"		"1"
+			"force_display"		"1"
+		}
+		"asset_modifier74"
+		{
+			"type"		"portrait_background_model"
+			"asset"		"models/items/windrunner/windrunner_arcana/wr_arcana_pedestal.vmdl"
+			"style"		"0"
+			"skin"		"0"
+		}
+		"asset_modifier75"
+		{
+			"type"		"portrait_background_model"
+			"asset"		"models/items/windrunner/windrunner_arcana/wr_arcana_pedestal.vmdl"
+			"style"		"1"
+			"skin"		"1"
+		}
+		"asset_modifier76"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_loadout_butterfly_trail.vpcf"
+			"style"		"0"
+			"spawn_in_loadout_only"		"1"
+		}
+		"asset_modifier77"
+		{
+			"type"		"particle_create"
+			"modifier"		"particles/econ/items/windrunner/windranger_arcana/windranger_arcana_loadout_v2_butterfly_trail.vpcf"
+			"style"		"1"
+			"spawn_in_loadout_only"		"1"
+		}
+		"asset_modifier78"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/wr_spriggan_shoulder_of_spriggan/wr_spriggan_shoulder_of_spriggan.vmdl"
+			"modifier"		"models/items/windrunner/ti6_windranger_shoulder/wr_spriggan_shoulder_of_spriggan_arc_refit.vmdl"
+		}
+		"asset_modifier79"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/ti6_windranger_shoulder/ti6_windranger_shoulder.vmdl"
+			"modifier"		"models/items/windrunner/ti6_windranger_shoulder/ti6_windranger_shoulder_arc_refit.vmdl"
+		}
+		"asset_modifier80"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/windranger_ti8_immortal_shoulders/windranger_ti8_immortal_shoulders.vmdl"
+			"modifier"		"models/items/windrunner/windranger_ti8_immortal_shoulders/windranger_ti8_immortal_shoulders_arcana_refit.vmdl"
+		}
+		"asset_modifier81"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_shackleshot"
+			"modifier"		"windrunner_shackleshot_arcana"
+			"style"		"0"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier82"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_shackleshot"
+			"modifier"		"windrunner_shackleshot_arcana_alt"
+			"style"		"1"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier83"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_powershot"
+			"modifier"		"windrunner_powershot_arcana"
+			"style"		"0"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier84"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_powershot"
+			"modifier"		"windrunner_powershot_arcana_alt"
+			"style"		"1"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier85"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_windrun"
+			"modifier"		"windrunner_windrun_arcana"
+			"style"		"0"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier86"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_windrun"
+			"modifier"		"windrunner_windrun_arcana_alt"
+			"style"		"1"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier87"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_focusfire"
+			"modifier"		"windrunner_focusfire_arcana"
+			"style"		"0"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier88"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_focusfire"
+			"modifier"		"windrunner_focusfire_arcana_alt"
+			"style"		"1"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier89"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_focusfire_cancel"
+			"modifier"		"windrunner_focusfire_cancel_arcana"
+			"style"		"0"
+			"minimum_priority"		"1"
+		}
+		"asset_modifier90"
+		{
+			"type"		"ability_icon"
+			"asset"		"windrunner_focusfire_cancel"
+			"modifier"		"windrunner_focusfire_cancel_arcana_alt"
+			"style"		"1"
+			"minimum_priority"		"1"
+		}
+		"alternate_icons"
+		{
+			"0"
+			{
+				"icon_path"		"econ/items/windrunner/windrunner_arcana/wr_arcana_head"
+			}
+			"1"
+			{
+				"icon_path"		"econ/items/windrunner/windrunner_arcana/wr_arcana_head_style1"
+			}
+		}
+		"asset_modifier91"
+		{
+			"type"		"particle"
+			"asset"		"particles/econ/items/windrunner/wr_ti8_immortal_shoulder/wr_ti8_ambients.vpcf"
+			"modifier"		"particles/econ/items/windrunner/wr_ti8_immortal_shoulder/wr_ti8_ambients_arcana_alt.vpcf"
+			"style"		"0"
+		}
+		"asset_modifier92"
+		{
+			"type"		"particle"
+			"asset"		"particles/econ/items/windrunner/wr_ti8_immortal_shoulder/wr_ti8_ambients.vpcf"
+			"modifier"		"particles/econ/items/windrunner/wr_ti8_immortal_shoulder/wr_ti8_ambients_arcana_fall.vpcf"
+			"style"		"1"
+		}
+		"asset_modifier93"
+		{
+			"type"		"inventory_icon"
+			"asset"		"force_staff"
+			"modifier"		"force_staff_wr_arcana"
+			"style"		"0"
+		}
+		"asset_modifier94"
+		{
+			"type"		"inventory_icon"
+			"asset"		"force_staff"
+			"modifier"		"force_staff_wr_arcana_alt"
+			"style"		"1"
+		}
+		"asset_modifier95"
+		{
+			"type"		"inventory_icon"
+			"asset"		"cyclone"
+			"modifier"		"cyclone_wr_arcana"
+			"style"		"0"
+		}
+		"asset_modifier96"
+		{
+			"type"		"inventory_icon"
+			"asset"		"cyclone"
+			"modifier"		"cyclone_wr_arcana_alt"
+			"style"		"1"
+		}
+		"asset_modifier97"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/windrunner_arcana/wr_arcana_shoulder_refit_legacy.vmdl"
+			"modifier"		"models/items/windrunner/windrunner_arcana/wr_arcana_shoulder.vmdl"
+		}
+		"asset_modifier98"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/ti6_windranger_back/ti6_windranger_back.vmdl"
+			"modifier"		"models/items/windrunner/ti6_windranger_back/ti6_windranger_back_refit.vmdl"
+		}
+		"asset_modifier99"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/sylvan_cascade/sylvan_cascade.vmdl"
+			"modifier"		"models/items/windrunner/sylvan_cascade/sylvan_cascade_refit.vmdl"
+		}
+		"asset_modifier100"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/falconcloak/falconcloak.vmdl"
+			"modifier"		"models/items/windrunner/falconcloak/falconcloak_refit.vmdl"
+		}
+		"asset_modifier101"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/anuxi_featherfall_cape/anuxi_featherfall_cape.vmdl"
+			"modifier"		"models/items/windrunner/anuxi_featherfall_cape/anuxi_featherfall_cape_refit.vmdl"
+		}
+		"asset_modifier102"
+		{
+			"type"		"model"
+			"asset"		"models/items/windrunner/tranquility_back/tranquility_back.vmdl"
+			"modifier"		"models/items/windrunner/tranquility_back/tranquility_back_refit.vmdl"
+		}
+	}
 	"13809"
 	{
 				"skip_model_combine"		"0"

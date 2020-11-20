@@ -1185,7 +1185,7 @@ function modifier_imba_mars_arena_of_blood_projectile_aura:OnCreated( kv )
 	if not self.owner then return end
 
 	-- create filter using library
-	self.filter = FilterManager:AddTrackingProjectileFilter( self.ProjectileFilter, self )
+--	self.filter = FilterManager:AddTrackingProjectileFilter( self.ProjectileFilter, self )
 
 	self:StartIntervalThink( 0.03 )
 end
@@ -1201,7 +1201,7 @@ function modifier_imba_mars_arena_of_blood_projectile_aura:OnDestroy()
 	if not IsServer() then return end
 
 	if not self.owner then return end
-	FilterManager:RemoveTrackingProjectileFilter( self.filter )
+--	FilterManager:RemoveTrackingProjectileFilter( self.filter )
 end
 
 --------------------------------------------------------------------------------
