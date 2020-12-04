@@ -683,12 +683,12 @@ function modifier_imba_batrider_firefly_thinker:CheckState() return {
 
 function modifier_imba_batrider_firefly_thinker:OnCreated()
 	if not IsServer() then return end
-	
+
 	self.firefly_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_firefly.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
 	ParticleManager:SetParticleControl(self.firefly_particle, 11, Vector(1, 0, 0))
 	self:AddParticle(self.firefly_particle, false, false, -1, false, false)
-	
+
 	self:StartIntervalThink(0.1)
 end
 

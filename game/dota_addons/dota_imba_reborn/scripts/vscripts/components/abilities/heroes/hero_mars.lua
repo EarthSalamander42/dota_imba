@@ -13,15 +13,36 @@ Ability checklist (erase if done/checked):
 ]]
 --------------------------------------------------------------------------------
 imba_mars_spear = imba_mars_spear or class(VANILLA_ABILITIES_BASECLASS)
+LinkLuaModifier("modifier_generic_knockback_lua", "components/modifiers/generic/modifier_generic_knockback_lua", LUA_MODIFIER_MOTION_BOTH)
 LinkLuaModifier( "modifier_imba_mars_spear", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_HORIZONTAL )
 LinkLuaModifier( "modifier_imba_mars_spear_debuff", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier("modifier_generic_knockback_lua", "components/modifiers/generic/modifier_generic_knockback_lua", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier( "modifier_imba_mars_spear_heaven_spear", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_mars_spear_trailblazer_thinker", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
+
+function imba_mars_spear:GetAOERadius()
+	print(self:GetAutoCastState())
+	if self:GetAutoCastState() then
+		return self:GetSpecialValueFor("heaven_spear_radius")
+	end
+
+	return 0
+end
+
+function imba_mars_spear:OnAbilityPhaseStart()
+	self.autocast = self:GetAutoCastState()
+
+	if self.autocast then
+		self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_1)
+	end
+
+	return true
+end
+
 -- Ability Start
 function imba_mars_spear:OnSpellStart()
 	-- unit identifier
-	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
 
 	-- load data
@@ -30,44 +51,230 @@ function imba_mars_spear:OnSpellStart()
 	local projectile_speed = self:GetVanillaAbilitySpecial("spear_speed")
 	local projectile_radius = self:GetVanillaAbilitySpecial("spear_width")
 	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
+	self.trailblazer_particles = {}
 
-	-- calculate direction
-	local direction = point - caster:GetOrigin()
-	direction.z = 0
-	direction = direction:Normalized()
+	if not IsServer() then return end
 
-	local info = {
-		Source = caster,
-		Ability = self,
-		vSpawnOrigin = caster:GetOrigin(),
+	if self.autocast then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_spear_heaven_spear", {duration = projectile_distance / projectile_speed})
+	else
+		-- calculate direction
+		local direction = point - self:GetCaster():GetOrigin()
+		direction.z = 0
+		direction = direction:Normalized()
+
+		local info = {
+			Source = self:GetCaster(),
+			Ability = self,
+			vSpawnOrigin = self:GetCaster():GetOrigin(),
+			
+		    bDeleteOnHit = false,
+		    
+		    iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		    iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		    
+		    EffectName = projectile_name,
+		    fDistance = projectile_distance,
+		    fStartRadius = projectile_radius,
+		    fEndRadius = projectile_radius,
+			vVelocity = direction * projectile_speed,
 		
-	    bDeleteOnHit = false,
-	    
-	    iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-	    iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-	    
-	    EffectName = projectile_name,
-	    fDistance = projectile_distance,
-	    fStartRadius = projectile_radius,
-	    fEndRadius =projectile_radius,
-		vVelocity = direction * projectile_speed,
-	
-		bHasFrontalCone = false,
-		bReplaceExisting = false,
-		-- fExpireTime = GameRules:GetGameTime() + 10.0,
-		
-		bProvidesVision = true,
-		iVisionRadius = projectile_vision,
-		fVisionDuration = 10,
-		iVisionTeamNumber = caster:GetTeamNumber()
-	}
-	ProjectileManager:CreateLinearProjectile(info)
+			bHasFrontalCone = false,
+			bReplaceExisting = false,
+			-- fExpireTime = GameRules:GetGameTime() + 10.0,
+			
+			bProvidesVision = true,
+			iVisionRadius = projectile_vision,
+			fVisionDuration = 10,
+			iVisionTeamNumber = self:GetCaster():GetTeamNumber()
+		}
+
+		ProjectileManager:CreateLinearProjectile(info)
+
+		self.trailblazer_previous_pos = self:GetCaster():GetAbsOrigin()
+
+		self.traiblazer_thinker = CreateModifierThinker(
+			self:GetCaster(),
+			self,
+			"modifier_imba_mars_spear_trailblazer_thinker",
+			{duration = self:GetSpecialValueFor("trailblazer_duration")},
+			self:GetCaster():GetAbsOrigin(),
+			self:GetCaster():GetTeamNumber(),
+			false
+		)
+	end
 
 	-- play effects
-	local sound_cast = "Hero_Mars.Spear.Cast"
-	EmitSoundOn( sound_cast, caster )
-	local sound_cast = "Hero_Mars.Spear"
-	EmitSoundOn( sound_cast, caster )
+	EmitSoundOn("Hero_Mars.Spear.Cast", self:GetCaster())
+	EmitSoundOn("Hero_Mars.Spear", self:GetCaster())
+end
+
+modifier_imba_mars_spear_heaven_spear = modifier_imba_mars_spear_heaven_spear or class({})
+
+function modifier_imba_mars_spear_heaven_spear:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+function modifier_imba_mars_spear_heaven_spear:OnCreated()
+	if not IsServer() then return end
+
+	self.origin = self:GetAbility():GetCursorPosition()
+	self.radius = self:GetAbility():GetSpecialValueFor("heaven_spear_radius")
+	self.knockback_radius = self:GetAbility():GetSpecialValueFor("heaven_spear_knockback")
+	self.stun_duration = self:GetAbility():GetVanillaAbilitySpecial("stun_duration")
+	self.knockback_duration = self:GetAbility():GetSpecialValueFor("heaven_spear_duration")
+
+	-- add viewer
+	AddFOWViewer( self:GetCaster():GetTeamNumber(), self.origin, self.radius, self.stun_duration, false)
+
+	local pre_spear = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self:GetCaster())
+	ParticleManager:SetParticleControl(pre_spear, 0, self:GetAbility():GetCursorPosition()) 
+	ParticleManager:SetParticleControl(pre_spear, 1, Vector(self.radius, 0, 0))
+	self:AddParticle(pre_spear, false, false, -1, false, false)
+end
+
+function modifier_imba_mars_spear_heaven_spear:OnRemoved()
+	if not IsServer() then return end
+
+	local units = FindUnitsInRadius(
+		self:GetCaster():GetTeamNumber(),	-- int, your team number
+		self.origin,	-- point, center point
+		nil,	-- handle, cacheUnit. (not known)
+		self.radius,	-- float, radius. or use FIND_UNITS_EVERYWHERE
+		DOTA_UNIT_TARGET_TEAM_ENEMY,	-- int, team filter
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,	-- int, type filter
+		DOTA_UNIT_TARGET_FLAG_NONE,	-- int, flag filter
+		FIND_CLOSEST,	-- int, order filter
+		false	-- bool, can grow cache
+	)
+
+	local hero_found = 0
+
+	local sun_strike_crater = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(sun_strike_crater, 0, self.origin)
+	ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.radius, 0, 0))
+	ParticleManager:ReleaseParticleIndex(sun_strike_crater)
+
+	if #units > 0 then
+		for k, v in pairs(units) do
+			if v:IsConsideredHero() and hero_found < 1 then -- includes IsRealHero()
+				hero_found = hero_found + 1
+
+				v:SetAbsOrigin(self.origin)
+				v:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_mars_spear_debuff", {duration = self.stun_duration})
+				EmitSoundOn("Hero_Mars.Spear.Root", v)
+			else
+				local enemy_direction = (v:GetOrigin() - self.origin):Normalized()
+
+				-- knockback if not having spear stun
+				if not v:HasModifier( "modifier_imba_mars_spear_debuff" ) then
+					v:AddNewModifier(
+						caster, -- player source
+						self, -- ability source
+						"modifier_generic_knockback_lua", -- modifier name
+						{
+							duration = self.knockback_duration,
+							distance = self.knockback_radius,
+							height = 50,
+							direction_x = enemy_direction.x,
+							direction_y = enemy_direction.y,
+						} -- kv
+					)
+				end
+			end
+
+			-- apply damage
+			local damageTable = {
+				victim = v,
+				attacker = self:GetCaster(),
+				damage = self:GetAbility():GetVanillaAbilitySpecial("damage"),
+				damage_type = self:GetAbility():GetAbilityDamageType(),
+				ability = self:GetAbility(), --Optional.
+				damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
+			}
+			ApplyDamage(damageTable)
+		end
+	end
+
+	-- trailblazer
+	self.traiblazer_thinker = CreateModifierThinker(
+		self:GetCaster(),
+		self:GetAbility(),
+		"modifier_imba_mars_spear_trailblazer_thinker",
+		{duration = self:GetAbility():GetSpecialValueFor("trailblazer_duration"), heaven_spear = 1},
+		self.origin,
+		self:GetCaster():GetTeamNumber(),
+		false
+	)
+end
+
+--------------------------------------------
+-- MODIFIER_IMBA_mars_spear_trailblazer_THINKER --
+--------------------------------------------
+
+modifier_imba_mars_spear_trailblazer_thinker = modifier_imba_mars_spear_trailblazer_thinker or class({})
+
+function modifier_imba_mars_spear_trailblazer_thinker:IsPurgable() return false end
+
+function modifier_imba_mars_spear_trailblazer_thinker:CheckState() return {
+	-- keep thinker visible by everyone, so the firefly ground pfx don't disappear when batrider is no longer visible
+	[MODIFIER_STATE_PROVIDES_VISION] = true,
+} end
+
+function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
+	if not IsServer() then return end
+
+	if keys.heaven_spear then
+		self.heaven_spear = keys.heaven_spear
+	end
+
+	self.initial_pos = self:GetParent():GetAbsOrigin()
+
+	local pfx = ParticleManager:CreateParticle("particles/econ/items/batrider/batrider_ti8_immortal_mount/batrider_ti8_immortal_firefly.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent())
+	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
+	ParticleManager:SetParticleControl(pfx, 0, self.initial_pos)
+	ParticleManager:SetParticleControl(pfx, 11, Vector(1, 0, 0))
+	self:AddParticle(pfx, false, false, -1, false, false)
+
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_mars_spear_trailblazer_thinker:OnIntervalThink()
+	local damage = (self:GetAbility():GetVanillaAbilitySpecial("damage") * (self:GetAbility():GetSpecialValueFor("trailblazer_damage_pct") / 100)) * FrameTime()
+	local enemies = nil
+
+	if self.heaven_spear and self.heaven_spear == 1 then
+		enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.initial_pos, nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags(), 0, false)
+	else
+		enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self.initial_pos, self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags())
+	end
+
+	if #enemies > 0 then
+		for _, enemy in pairs(enemies) do
+			ApplyDamage({
+				attacker = self:GetCaster(),
+				victim = enemy,
+				damage = damage,
+				damage_type = self:GetAbility():GetAbilityDamageType(),
+				damage_flags = self:GetAbility():GetAbilityTargetFlags()
+			})
+		end
+	end
+end
+
+function modifier_imba_mars_spear_trailblazer_thinker:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():RemoveSelf()
+
+	if self:GetAbility() then
+		self:GetAbility().traiblazer_thinker = nil
+
+		for k, v in pairs(self:GetAbility().trailblazer_particles) do
+			ParticleManager:DestroyParticle(v, false)
+			ParticleManager:ReleaseParticleIndex(v)
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -101,6 +308,27 @@ function mars_projectiles:Destroy( projectileID )
 	self[projectileID] = nil
 end
 imba_mars_spear.projectiles = mars_projectiles
+
+function imba_mars_spear:OnProjectileThink(vLocation)
+	if not IsServer() then return end
+
+	if self.traiblazer_thinker then
+		self.traiblazer_thinker:SetAbsOrigin(vLocation)
+
+		local difference = (vLocation - self.trailblazer_previous_pos):Length2D()
+
+		if difference >= 100 then
+			self.trailblazer_previous_pos = vLocation
+
+			local pfx = ParticleManager:CreateParticle("particles/econ/items/batrider/batrider_ti8_immortal_mount/batrider_ti8_immortal_firefly.vpcf", PATTACH_CUSTOMORIGIN, self.traiblazer_thinker)
+			-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
+			ParticleManager:SetParticleControl(pfx, 0, vLocation)
+			ParticleManager:SetParticleControl(pfx, 11, Vector(1, 0, 0))
+
+			table.insert(self.trailblazer_particles, pfx)
+		end
+	end
+end
 
 -- projectile hit
 function imba_mars_spear:OnProjectileHitHandle( target, location, iProjectileHandle )
@@ -280,7 +508,7 @@ function imba_mars_spear:Pinned( iProjectileHandle )
 
 	-- destroy projectile and modifier
 	ProjectileManager:DestroyLinearProjectile( iProjectileHandle )
-	if not data.modifier:IsNull() then
+	if data.modifier and not data.modifier:IsNull() then
 		data.modifier:Destroy()
 
 		data.unit:SetOrigin( GetGroundPosition( data.location, data.unit ) )
