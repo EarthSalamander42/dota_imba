@@ -9,8 +9,8 @@ local healthBonus = 300
 local attackBonus = 50
 local moveSpeedBonus = 5
 local aspdBonus = 10
--- local pArmorBonus = 5
-local pArmorBonus = 0
+local pArmorBonus = 3
+local pArmorBonusMax = 90
 local mResistBonus = 2
 local healthRegen = 2.5
 local rangeBonus = 10
@@ -69,7 +69,7 @@ function modifier_mutation_tug_of_war_golem:GetModifierAttackSpeedBonus_Constant
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierPhysicalArmorBonus()
-	return pArmorBonus * self:GetStackCount()
+	return math.min(pArmorBonus * self:GetStackCount(), pArmorBonusMax)
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierMagicalResistanceBonus()
