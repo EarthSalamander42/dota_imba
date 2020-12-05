@@ -31,7 +31,7 @@ function GameMode:_OnNPCSpawned(keys)
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
 		if npc:GetUnitName() ~= FORCE_PICKED_HERO then
-			npc:InitializeInnateAbilities()
+			npc:InitializeAbilities()
 		end
 	end
 

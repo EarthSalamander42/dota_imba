@@ -625,7 +625,7 @@ function imba_oracle_purifying_flames:OnSpellStart()
 	
 	self.purifying_cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_purifyingflames_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(self.purifying_cast_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
-	ParticleManager:ReleaseParticleIndex(self.purifying_particle)
+	ParticleManager:ReleaseParticleIndex(self.purifying_cast_particle)
 	
 	-- "The damage is applied instantly upon cast, followed by the heal over time. The damage is lethal to enemies, but not to allies."
 	if self.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
