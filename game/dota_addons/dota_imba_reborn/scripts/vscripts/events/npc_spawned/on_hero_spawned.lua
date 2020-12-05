@@ -58,7 +58,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 
 	-- Initialize innate hero abilities
-	hero:InitializeInnateAbilities()
+	hero:InitializeAbilities()
 
 	HeroSelection:Attachments(hero)
 

@@ -73,7 +73,7 @@ function Mutation:ARDMReplacehero(old_hero)
 	hero.killstreak = 0
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 --	PlayerResource:SetCustomPlayerColor(old_hero:GetPlayerID(), PLAYER_COLORS[old_hero:GetPlayerID()][1], PLAYER_COLORS[old_hero:GetPlayerID()][2], PLAYER_COLORS[old_hero:GetPlayerID()][3])
-	hero:InitializeInnateAbilities()
+	hero:InitializeAbilities()
 	hero:SetupHealthBarLabel()
 	hero.first_spawn = true
 
