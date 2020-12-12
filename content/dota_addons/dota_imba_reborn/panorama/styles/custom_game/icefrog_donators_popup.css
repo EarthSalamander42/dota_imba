@@ -1,0 +1,24 @@
+.HUDRoot {
+	width: 100%;
+	height: 100%;
+	z-index: -1000;
+}
+
+.column {
+	flow-children: right;
+	width: 200px;
+}
+
+.hpbar {
+	background-color: gradient( linear, 0% 0%, 0% 0%, from( #000000aa ), color-stop( 0.8, #000000aa ),  to( #00000000 ) );
+	/* background-color: black; */
+	padding: 0 5px;
+	border-radius: 5px;
+	flow-children: down;
+}
+
+.hpbar Label {
+	font-size: 16px;
+	text-shadow: 5px 5px 0px #00000083;
+//	text-overflow: shrink;
+}

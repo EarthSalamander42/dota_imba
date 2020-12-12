@@ -457,6 +457,7 @@ function SetAbilityTooltips(keys) {
 		// repeat or else panel is not at the right position
 		$.Schedule(1/60, () => {
 			SetTooltipsPosition(keys.hPosition);
+			AbilityDetails.style.opacity = "1";
 		});
 	});
 }
@@ -483,8 +484,6 @@ function SetTooltipsPosition(hPosition) {
 		offset_x = aspect_ratio[1];
 		offset_y = aspect_ratio[2];
 	}
-
-	AbilityDetails.style.opacity = "1";
 
 //	$.Msg("Screen size: ", AbilityDetails.GetParent().actuallayoutwidth, " / ", AbilityDetails.GetParent().actuallayoutheight)
 //	$.Msg("Tooltip size:", AbilityDetails.actuallayoutwidth, " / ", AbilityDetails.actuallayoutheight)
