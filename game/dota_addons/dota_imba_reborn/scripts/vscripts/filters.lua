@@ -1289,6 +1289,7 @@ end
 function GameMode:BountyRuneFilter(keys)
 	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
 
+
 	self.player_counter = self.player_counter or 1
 
 	-- Initialize the table of people on the bounty rune acquirer's team on the first instance
@@ -1340,6 +1341,12 @@ function GameMode:BountyRuneFilter(keys)
 	if #self.allies == self.player_counter then
 		self.player_counter = nil
 		self.allies = nil
+
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("set_bounty_rune_gold_text"), function()
+			if IMBA_COMBAT_EVENTS == false then
+				CustomGameEventManager:Send_ServerToAllClients("set_bounty_rune_gold", {gold = keys.gold_bounty})
+			end
+		end, 0.1)
 	else
 		self.player_counter = self.player_counter + 1
 	end

@@ -1,7 +1,10 @@
 -- not working: team kill tower, courier dead, courier respawn, 
 -- hero kill tower says hero denied
 function CombatEvents(event_type, reason, victim, attacker, custom_gold)
-	if IMBA_COMBAT_EVENTS == false then return end
+	if IMBA_COMBAT_EVENTS == false then
+		return
+	end
+
 	local text = ""
 	local team
 	local atacker_name
