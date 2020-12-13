@@ -83,9 +83,13 @@ function modifier_item_imba_mekansm:GetAttributes()	return MODIFIER_ATTRIBUTE_MU
 
 -- Adds the aura emitter to the caster when created
 function modifier_item_imba_mekansm:OnCreated(keys)
-	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+	if not self:GetAbility() then
+		if IsServer() then
+			self:Destroy()
+		end
+
+		return
+	end
 
 	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
@@ -349,8 +353,8 @@ function modifier_item_imba_guardian_greaves_aura_emitter:IsPurgable() return fa
 
 function modifier_item_imba_guardian_greaves_aura_emitter:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	self.aura_radius			= self:GetAbility():GetSpecialValueFor("aura_radius")
 	self.aura_bonus_threshold	= self:GetAbility():GetSpecialValueFor("aura_bonus_threshold")
@@ -484,8 +488,8 @@ end
 -- Stores the ability's parameters to prevent errors if the item is destroyed
 function modifier_item_imba_guardian_greaves_heal:OnCreated(keys)
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 	
 	self.mend_regen = self:GetAbility():GetSpecialValueFor("mend_regen")
 end

@@ -8,19 +8,19 @@ if (Game.IsInToolsMode()) {
 }
 
 var radiant_donators = [
-	"1: ONO PERseverance ZONNOZ",
-	"2: Snick",
-	"3: Sijumah",
-	"4: Gordon Ramsay",
-	"5: KimcilJahat",
+	["1: ONO PERseverance ZONNOZ", "green"],
+	["2: Snick", "darkred"],
+	["3: Sijumah", "lightgrey"],
+	["4: Gordon Ramsay", "orange"],
+	["5: KimcilJahat", "black"],
 ];
 
 var dire_donators = [
-	"1: Acalia",
-	"2: General Atrox",
-	"3: Miku MIku MIKu MIKU !!",
-	"4: Anh Hùng Nùp",
-	"5: Kiddo",
+	["1: Acalia", "acalia_blue"],
+	["2: General Atrox", "icefrog_blue"],
+	["3: Miku MIku MIKu MIKU !!", "miku_blue"],
+	["4: Anh Hùng Nùp", "anh_pink"],
+	["5: Kiddo", "red"],
 ];
 
 /*
@@ -40,29 +40,6 @@ var dire_donators = {
 	"5: Kiddo": "green",
 };
 */
-
-GameUI.SetMouseCallback(function (eventName, arg) {
-	// if(eventName == 'doublepressed' && arg == 0){
-	// 	if(!drag && !cooldown){
-	// 		unit = Players.GetLocalPlayerPortraitUnit()
-	// 		if(Entities.GetPlayerOwnerID(unit) === ply){
-	// 			prevMouse = mousePos
-	// 			mousePos = roundMouse(GameUI.GetScreenWorldPosition(GameUI.GetCursorPosition()))
-	// 			drag = true
-	// 			$.Schedule(0.01, function() {
-	// 				GameUI.SelectUnit(unit,false)
-	// 				DragUnit(unit)
-	// 			})
-	// 		}
-	// 	}
-	// }
-
-	if (eventName == 'pressed' && arg == 0) {
-		// return false
-	}
-
-	// return false
-});
 
 var healthbars = new Map();
 
@@ -123,7 +100,7 @@ function SetHealthBar() {
 		var dist = Math.sqrt( Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2) );
 
 //		$.Msg(dist)
-		if (dist < 2000) {
+		if (dist < 3000) {
 			if (healthbars.has(v)) {
 				var panel = healthbars.get(v);
 				healthbars.get(v).style.opacity = "1";
@@ -134,11 +111,15 @@ function SetHealthBar() {
 
 				if (v == shops[0]) {
 					radiant_donators.forEach(function(v) {
-						panel.FindChildTraverse("name").text = panel.FindChildTraverse("name").text + v + "\n";
+						var label = $.CreatePanel('Label', panel.GetChild(0), '');
+						label.AddClass(v[1]);
+						label.text = v[0];
 					})
 				} else {
 					dire_donators.forEach(function(v) {
-						panel.FindChildTraverse("name").text = panel.FindChildTraverse("name").text + v + "\n";
+						var label = $.CreatePanel('Label', panel.GetChild(0), '');
+						label.AddClass(v[1]);
+						label.text = v[0];
 					})
 				}
 			}
@@ -162,11 +143,11 @@ function hpbarmove() {
 	healthbars.forEach(function (v, k) {
 		var vec = Entities.GetAbsOrigin(k);
 		var uix_offset = -v.desiredlayoutwidth;
-		var uiy_offset = -220;
+		var uiy_offset = -320;
 
 		// fix for enemy team hpbar positions
 		if (vec[1] > 0 && Game.GetLocalPlayerInfo().player_team_id == 2 || vec[1] < 0 && Game.GetLocalPlayerInfo().player_team_id == 3) {
-			uiy_offset = 0;
+			uiy_offset = -280;
 		}
 
 		var scrx = Game.WorldToScreenX(vec[0], vec[1], vec[2]);
@@ -181,7 +162,7 @@ function hpbarmove() {
 
 			v.style.position = uixp + '% ' + uiyp + '% -15%';
 			v.SetHasClass("invis", false);
-			v.style['zIndex'] = vec[1] / 100 * -1;
+//			v.style['zIndex'] = vec[1] / 100 * -1;
 		}
 	});
 

@@ -5,20 +5,61 @@
 }
 
 .column {
-	flow-children: right;
-	width: 200px;
+	flow-children: down;
+	padding: 5px;
 }
 
 .hpbar {
-	background-color: gradient( linear, 0% 0%, 0% 0%, from( #000000aa ), color-stop( 0.8, #000000aa ),  to( #00000000 ) );
+	background-color: gradient( linear, 0% 0%, 0% 0%, from( #303030da ), color-stop( 0.8, #303030aa ),  to( #00000000 ) );
 	/* background-color: black; */
 	padding: 0 5px;
-	border-radius: 5px;
+	border-radius: 10px;
 	flow-children: down;
+	z-index: -1000;
 }
 
 .hpbar Label {
-	font-size: 16px;
-	text-shadow: 5px 5px 0px #00000083;
+	font-size: 20px;
+	text-shadow: 2px 2px 0px #00000083;
 //	text-overflow: shrink;
+}
+
+.icefrog_blue {
+	color: dodgerblue;
+}
+
+.green {
+	color: green;
+}
+
+.darkred {
+	color: darkred;
+}
+
+.lightgrey {
+	color: lightgrey;
+}
+
+.orange {
+	color: orange;
+}
+
+.black {
+	color: black;
+}
+
+.acalia_blue {
+	color: #00BEFF;
+}
+
+.miku_blue {
+	color: #00FFF2;
+}
+
+.anh_pink {
+	color: #FF00C3;
+}
+
+.red {
+	color: red;
 }

@@ -12,7 +12,8 @@
 		<snippet name="hpbar">
 			<Panel class="hpbar" hittest="false">
 				<Panel class="column" hittest="false">
-					<Label id="name" text=""/>
+					<Label class="icefrog_blue" text="Icefrog Donators:"/>
+					<!-- Create label elements dynamically -->
 				</Panel>
 			</Panel>
 		</snippet>
