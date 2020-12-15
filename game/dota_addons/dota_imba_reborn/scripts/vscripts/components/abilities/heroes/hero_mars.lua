@@ -755,6 +755,7 @@ Ability checklist (erase if done/checked):
 --------------------------------------------------------------------------------
 imba_mars_gods_rebuke = imba_mars_gods_rebuke or class({})
 LinkLuaModifier( "modifier_imba_mars_gods_rebuke", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_mars_gods_rebuke_strong_argument", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -797,12 +798,14 @@ function imba_mars_gods_rebuke:OnSpellStart()
 
 	-- for each units
 	local caught = false
+
 	for _,enemy in pairs(enemies) do
 		-- check within cast angle
 		local enemy_direction = (enemy:GetOrigin() - origin):Normalized()
 		local enemy_angle = VectorToAngles( enemy_direction ).y
 		local angle_diff = math.abs( AngleDiff( cast_angle, enemy_angle ) )
-		if angle_diff<=angle then
+
+		if angle_diff <= angle then
 			-- attack
 			caster:PerformAttack(
 				enemy,
@@ -836,6 +839,9 @@ function imba_mars_gods_rebuke:OnSpellStart()
 			self:PlayEffects2( enemy, origin, cast_direction )
 		end
 	end
+
+	local stacks = #enemies * self:GetSpecialValueFor("strong_argument_bonus_strength")
+	caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
 
 	-- destroy buff modifier
 	buff:Destroy()
@@ -885,17 +891,9 @@ modifier_imba_mars_gods_rebuke = modifier_imba_mars_gods_rebuke or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_gods_rebuke:IsHidden()
-	return true
-end
-
-function modifier_imba_mars_gods_rebuke:IsDebuff()
-	return false
-end
-
-function modifier_imba_mars_gods_rebuke:IsPurgable()
-	return false
-end
+function modifier_imba_mars_gods_rebuke:IsHidden() return true end
+function modifier_imba_mars_gods_rebuke:IsDebuff() return false end
+function modifier_imba_mars_gods_rebuke:IsPurgable() return false end
 
 --------------------------------------------------------------------------------
 -- Initializations
@@ -903,6 +901,12 @@ function modifier_imba_mars_gods_rebuke:OnCreated( kv )
 	-- references
 	self.bonus_damage = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_vs_heroes" )
 	self.bonus_crit = self:GetAbility():GetVanillaAbilitySpecial( "crit_mult" )
+
+	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
+
+	if mod then
+		self.bonus_damage = self.bonus_damage + mod:GetStackCount()
+	end
 end
 
 function modifier_imba_mars_gods_rebuke:OnRefresh( kv )
@@ -934,8 +938,20 @@ function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_CriticalStrike( par
 end
 
 --------------------------------------------------------------------------------
+modifier_imba_mars_gods_rebuke_strong_argument = modifier_imba_mars_gods_rebuke_strong_argument or class({})
+
+function modifier_imba_mars_gods_rebuke_strong_argument:DeclareFunctions() return {
+	MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS,
+} end
+
+function modifier_imba_mars_gods_rebuke_strong_argument:GetModifierExtraStrengthBonus()
+	return self:GetStackCount()
+end
+
+--------------------------------------------------------------------------------
 imba_mars_bulwark = imba_mars_bulwark or class({})
 LinkLuaModifier( "modifier_imba_mars_bulwark", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_mars_bulwark_jupiters_strength", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 -- Passive Modifier
@@ -944,7 +960,7 @@ function imba_mars_bulwark:GetIntrinsicModifierName()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_bulwark = class({})
+modifier_imba_mars_bulwark = modifier_imba_mars_bulwark or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -975,6 +991,7 @@ function modifier_imba_mars_bulwark:OnCreated( kv )
 
 	if IsServer() then
 		self.parent = self:GetParent()
+		self.parent:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {})
 	end
 end
 
@@ -1050,6 +1067,82 @@ function modifier_imba_mars_bulwark:PlayEffects( front )
 
 	-- Create Sound
 	EmitSoundOn( sound_cast, self:GetParent() )
+end
+
+modifier_imba_mars_bulwark_jupiters_strength = modifier_imba_mars_bulwark_jupiters_strength or class({})
+
+function modifier_imba_mars_bulwark_jupiters_strength:RemoveOnDeath() return false end
+function modifier_imba_mars_bulwark_jupiters_strength:IsPurgable() return false end
+
+function modifier_imba_mars_bulwark_jupiters_strength:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_TAKEDAMAGE,
+} end
+
+function modifier_imba_mars_bulwark_jupiters_strength:OnCreated()
+	if IsServer() then
+		self.duration = self:GetSpecialValueFor("jupiters_strength_duration")
+		self.stack_table = {}
+		self:StartIntervalThink(1.0)
+	end
+end
+
+function modifier_imba_mars_bulwark_jupiters_strength:OnIntervalThink()
+	local repeat_needed = true
+
+	-- We'll repeat the table removal check and remove as many expired items from it as needed.
+	while repeat_needed do
+		-- Check if the firstmost entry in the table has expired
+		local item_time = self.stack_table[1]
+
+		-- If the difference between times is longer, it's time to get rid of a stack
+		if GameRules:GetGameTime() - item_time >= self.duration then
+			-- Check if there is only one stack, which would mean bye bye debuff
+			if self:GetStackCount() == 1 then
+				self:Destroy()
+				break
+			else
+				-- Remove the entry from the table
+				table.remove(self.stack_table, 1)
+
+				-- Decrement a stack
+				self:DecrementStackCount()
+
+				-- Calculate hero status
+				if self:GetParent().CalculateStatBonus then
+					self:GetParent():CalculateStatBonus()
+				end
+			end
+		else
+			-- If no more items need to be removed, no need to repeat the table
+			repeat_needed = false
+		end
+	end
+end
+
+function modifier_imba_mars_bulwark_jupiters_strength:OnTakeDamage(params)
+	if not IsServer() then return end
+
+	if params.unit == self:GetParent() and params.damage > 0 then
+		local stacks = params.damage * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
+
+		self:SetStackCount(self:GetStackCount() + stacks)
+		self:ForceRefresh()
+	end
+end
+
+function modifier_imba_mars_bulwark_jupiters_strength:OnStackCountChanged(prev_stacks)
+	if not IsServer() then return end
+
+	local stacks = self:GetStackCount()
+
+	-- We only care about stack incrementals
+	if stacks > prev_stacks then
+		-- Insert the current game time of the stack that was just added to the stack table
+		table.insert(self.stack_table, GameRules:GetGameTime())
+
+		-- Refresh timer
+--		self:ForceRefresh()
+	end
 end
 
 --[[

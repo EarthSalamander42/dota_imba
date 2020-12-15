@@ -6,7 +6,7 @@
 // "DOTA_Tooltip_modifier_imba_mist_coil_mist_ally_Description"				"At the end of the duration, receive a portion of the damage sustained as a heal."
 
 // God's Rebuke
-"DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_1"				"<font color='#FF7800'>Strong Argument:</font> God's Rebuke grants Mars 2/4/6/8 strength for 6 seconds for each enemy heroes hit."
+"DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_1"				"<font color='#FF7800'>Strong Argument:</font> God's Rebuke grants Mars %strong_argument_bonus_strength% strength for %strong_argument_duration% seconds for each enemy heroes hit."
 "DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_2"				"<font color='#FF7800'>Ancile's Soul:</font> God's Rebuke damage is increased by 'Jupiter Strength' stored damage."
 
 // "DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block"					"Aphotic Shield"
