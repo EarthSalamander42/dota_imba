@@ -135,7 +135,7 @@ function imba_outworld_devourer_astral_imprisonment:OnInventoryContentsChanged()
 	end
 end
 
-function imba_outworld_devourer_astral_imprisonment:OnHeroCalculateStatBonus()
+function imba_outworld_devourer_astral_imprisonment:OnHeroCalculateStatBonus(true)
 	self:OnInventoryContentsChanged()
 end
 
@@ -500,7 +500,7 @@ function modifier_imba_outworld_devourer_sanity_eclipse_charge:OnCreated(keys)
 	
 	if not IsServer() then return end
 	
-	self:GetParent():CalculateStatBonus()
+	self:GetParent():CalculateStatBonus(true)
 end
 
 function modifier_imba_outworld_devourer_sanity_eclipse_charge:OnRefresh(keys)

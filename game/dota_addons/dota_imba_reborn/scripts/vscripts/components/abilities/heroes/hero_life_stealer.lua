@@ -394,7 +394,7 @@ function modifier_imba_life_stealer_feast:GetModifierProcAttack_BonusDamage_Phys
 					stacks		= health_differential * self:GetAbility():GetSpecialValueFor("engorge_pct") * 0.01
 				})
 				
-				self:GetParent():CalculateStatBonus()
+				self:GetParent():CalculateStatBonus(true)
 			end
 		end
 		
@@ -1498,7 +1498,7 @@ function imba_life_stealer_assimilate:GetIntrinsicModifierName()
 	return "modifier_imba_life_stealer_assimilate_handler"
 end
 
-function imba_life_stealer_assimilate:OnHeroCalculateStatBonus()
+function imba_life_stealer_assimilate:OnHeroCalculateStatBonus(true)
 	self:OnInventoryContentsChanged()
 end
 
@@ -1819,7 +1819,7 @@ function imba_life_stealer_assimilate_eject:OnInventoryContentsChanged()
 	end
 end
 
-function imba_life_stealer_assimilate_eject:OnHeroCalculateStatBonus()
+function imba_life_stealer_assimilate_eject:OnHeroCalculateStatBonus(true)
 	self:OnInventoryContentsChanged()
 end
 

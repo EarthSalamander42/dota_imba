@@ -90,7 +90,7 @@ function item_imba_origin_treads:OnSpellStart()
 			end
 		end
 		
-		target:CalculateStatBonus()
+		target:CalculateStatBonus(true)
 	else
 		-- Do not bypass linken's Sphere
 		if target:TriggerSpellAbsorb(self) then

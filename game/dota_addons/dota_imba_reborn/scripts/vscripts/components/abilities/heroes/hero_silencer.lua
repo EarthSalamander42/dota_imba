@@ -654,7 +654,7 @@ function modifier_imba_silencer_glaives_int_damage:OnStackCountChanged(old_stack
 			end
 
 			self.total_int_reduced = self.total_int_reduced + int_taken
-			target:CalculateStatBonus()
+			target:CalculateStatBonus(true)
 		end
 	end
 end
@@ -1282,11 +1282,11 @@ function modifier_imba_silencer_arcane_supremacy:OnDeath( params )
 						end
 
 						params.unit:SetBaseIntellect( enemy_intelligence - enemy_intelligence_taken )
-						params.unit:CalculateStatBonus()
+						params.unit:CalculateStatBonus(true)
 
 						self.caster:SetBaseIntellect(self.caster:GetBaseIntellect() + enemy_intelligence_taken)
 						self:SetStackCount(self:GetStackCount() + enemy_intelligence_taken)
-						self.caster:CalculateStatBonus()
+						self.caster:CalculateStatBonus(true)
 
 						-- Copied from https://moddota.com/forums/discussion/1156/modifying-silencers-int-steal
 						local life_time = 2.0

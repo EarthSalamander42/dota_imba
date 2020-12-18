@@ -111,7 +111,7 @@ function modifier_meepo_divided_we_stand_lua:OnIntervalThink()
 			end
 		end
 
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 

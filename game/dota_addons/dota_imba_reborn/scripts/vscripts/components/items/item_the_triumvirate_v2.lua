@@ -86,7 +86,7 @@ function modifier_item_imba_the_triumvirate_v2_sange:OnAttackLanded(keys)
 	if keys.target == self:GetParent() and keys.attacker:IsRealHero() and keys.attacker:GetTeam() ~= keys.target:GetTeam() then
 		self:IncrementStackCount()
 		-- Seems like I need to call this to update the health properly
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 		self:SetDuration(self:GetRemainingTime() + self.sange_extension, true)
 	end
 end
@@ -140,7 +140,7 @@ function modifier_item_imba_the_triumvirate_v2_yasha:OnAttackLanded(keys)
 	if keys.attacker == self:GetParent() and keys.target:IsRealHero() and keys.attacker:GetTeam() ~= keys.target:GetTeam() then
 		self:IncrementStackCount()
 		-- IDK if I need to call this for Yasha but I'm doing it for the other two so w/e
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 		self:SetDuration(self:GetRemainingTime() + self.yasha_extension, true)
 	end
 end
@@ -203,7 +203,7 @@ function modifier_item_imba_the_triumvirate_v2_kaya:OnTakeDamage(keys)
 		if (keys.damage >= self.kaya_min_health_dmg) then
 			self:IncrementStackCount()
 			-- Seems like I need to call this to update the mana properly
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 			self:SetDuration(self:GetRemainingTime() + self.kaya_extension, true)
 		end
 	end

@@ -259,7 +259,7 @@ function modifier_imba_tango:OnIntervalThink()
 
 				-- Calculate hero status
 				if self.parent.CalculateStatBonus then
-					self.parent:CalculateStatBonus()
+					self.parent:CalculateStatBonus(true)
 				end
 			end
 		else

@@ -430,7 +430,7 @@ function modifier_imba_blood_bath_buff_stats:OnTakeDamage(params)
 	if params.attacker == self:GetParent() and params.inflictor == self:GetAbility() then
 		local bonusHP = params.damage * self.overheal
 		self:SetStackCount(self:GetStackCount() + bonusHP)
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 		self:GetParent():Heal(bonusHP, self:GetParent())
 	end
 end

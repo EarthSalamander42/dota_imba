@@ -194,7 +194,7 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 					lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct * 0.01), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
 					
 					if keys.attacker.CalculateStatBonus then
-						keys.attacker:CalculateStatBonus()
+						keys.attacker:CalculateStatBonus(true)
 					end
 					
 					if keys.attacker:GetMaxHealth() <= 0 then
@@ -228,7 +228,7 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 					lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct * 0.01), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
 					
 					if keys.attacker:GetPlayerOwner():GetAssignedHero().CalculateStatBonus then
-						keys.attacker:GetPlayerOwner():GetAssignedHero():CalculateStatBonus()
+						keys.attacker:GetPlayerOwner():GetAssignedHero():CalculateStatBonus(true)
 					end
 					
 					if keys.attacker:GetPlayerOwner():GetAssignedHero():GetMaxHealth() <= 0 then

@@ -1179,7 +1179,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function sohei_palm_of_life:OnHeroCalculateStatBonus()
+function sohei_palm_of_life:OnHeroCalculateStatBonus(true)
 	local caster = self:GetCaster()
 
 	if caster:HasScepter() then

@@ -391,7 +391,7 @@ function modifier_imba_luna_lunar_blessing_aura:OnIntervalThink()
 	end
 	
 	if IsServer() then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 

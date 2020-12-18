@@ -683,7 +683,7 @@ function imba_terrorblade_power_rend:OnInventoryContentsChanged()
 	end
 end
 
-function imba_terrorblade_power_rend:OnHeroCalculateStatBonus()
+function imba_terrorblade_power_rend:OnHeroCalculateStatBonus(true)
 	self:OnInventoryContentsChanged()
 end
 
@@ -749,7 +749,7 @@ end
 
 function modifier_imba_terrorblade_power_rend:OnIntervalThink()
 	if self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 	
 	self:StartIntervalThink(-1)

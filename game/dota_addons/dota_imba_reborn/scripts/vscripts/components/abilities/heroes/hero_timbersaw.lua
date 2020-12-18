@@ -186,7 +186,7 @@ end
 
 function modifier_imba_timbersaw_whirling_death_debuff:OnIntervalThink()
 	if self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 	
 	self:StartIntervalThink(-1)
@@ -196,7 +196,7 @@ function modifier_imba_timbersaw_whirling_death_debuff:OnDestroy()
 	if not IsServer() then return end
 	
 	if self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -234,14 +234,14 @@ function modifier_imba_timbersaw_whirling_death_oil:OnCreated(params)
 end
 
 function modifier_imba_timbersaw_whirling_death_oil:OnIntervalThink()
-	self:GetParent():CalculateStatBonus()
+	self:GetParent():CalculateStatBonus(true)
 	self:StartIntervalThink(-1)
 end
 
 function modifier_imba_timbersaw_whirling_death_oil:OnDestroy()
 	if not IsServer() then return end
 
-	self:GetParent():CalculateStatBonus()
+	self:GetParent():CalculateStatBonus(true)
 end
 
 function modifier_imba_timbersaw_whirling_death_oil:DeclareFunctions()
@@ -969,7 +969,7 @@ function imba_timbersaw_chakram_2:OnInventoryContentsChanged()
 	end
 end
 
-function imba_timbersaw_chakram_2:OnHeroCalculateStatBonus()
+function imba_timbersaw_chakram_2:OnHeroCalculateStatBonus(true)
 	self:OnInventoryContentsChanged()
 end
 
