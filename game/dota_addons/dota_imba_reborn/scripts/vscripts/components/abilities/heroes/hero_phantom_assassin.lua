@@ -731,7 +731,7 @@ function modifier_imba_blur_speed:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 
 			-- If there are no stacks on the table, just remove the modifier.
 		else
@@ -1106,7 +1106,7 @@ function modifier_imba_coup_de_grace_crit:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 
 			-- If there are no stacks on the table, just remove the modifier.
 		else

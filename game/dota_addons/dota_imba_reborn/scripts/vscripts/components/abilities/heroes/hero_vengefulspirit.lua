@@ -959,7 +959,7 @@ function modifier_imba_vengefulspirit_command_aura_effect_723:OnIntervalThink()
 	end
 	
 	if IsServer() and self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -1068,7 +1068,7 @@ function modifier_imba_vengefulspirit_command_negative_aura_effect_723:OnInterva
 	end
 	
 	if IsServer() and self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 

@@ -168,7 +168,7 @@ function modifier_imba_enfeeble_debuff:OnIntervalThink()
 			end
 
 			-- Calculate stats
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 
 		end
 	end

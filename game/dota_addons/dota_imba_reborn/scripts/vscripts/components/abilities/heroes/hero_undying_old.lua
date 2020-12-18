@@ -111,7 +111,7 @@ function imba_undying_decay:OnInventoryContentsChanged()
 	end
 end
 
-function imba_undying_decay:OnHeroCalculateStatBonus()
+function imba_undying_decay:OnHeroCalculateStatBonus(true)
 	self:OnInventoryContentsChanged()
 end
 
@@ -519,7 +519,7 @@ function imba_undying_soul_rip:OnSpellStart()
 				injection_modifier:SetStackCount(units_ripped)
 				
 				if target.CalculateStatBonus then
-					target:CalculateStatBonus()
+					target:CalculateStatBonus(true)
 				end
 			end
 		elseif target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target:GetName() ~= "npc_dota_unit_undying_tombstone" then
@@ -536,7 +536,7 @@ function imba_undying_soul_rip:OnSpellStart()
 				injection_modifier:SetStackCount(units_ripped)
 				
 				if target.CalculateStatBonus then
-					target:CalculateStatBonus()
+					target:CalculateStatBonus(true)
 				end
 			end
 		elseif target:GetTeamNumber() == self:GetCaster():GetTeamNumber() and target:GetName() == "npc_dota_unit_undying_tombstone" then
@@ -565,7 +565,7 @@ function modifier_imba_undying_soul_rip_soul_injection:OnDestroy()
 	if not IsServer() then return end
 	
 	if self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -605,7 +605,7 @@ function modifier_imba_undying_soul_rip_soul_injection_debuff:OnDestroy()
 	if not IsServer() then return end
 	
 	if self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -1317,7 +1317,7 @@ end
 function modifier_imba_undying_flesh_golem:OnIntervalThink()
 	self.strength	= 0
 	self.strength	= self:GetParent():GetStrength() * self.str_percentage * 0.01
-	self:GetParent():CalculateStatBonus()
+	self:GetParent():CalculateStatBonus(true)
 end
 
 function modifier_imba_undying_flesh_golem:OnDestroy()
