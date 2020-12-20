@@ -1498,7 +1498,7 @@ function imba_life_stealer_assimilate:GetIntrinsicModifierName()
 	return "modifier_imba_life_stealer_assimilate_handler"
 end
 
-function imba_life_stealer_assimilate:OnHeroCalculateStatBonus(true)
+function imba_life_stealer_assimilate:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 
@@ -1819,7 +1819,7 @@ function imba_life_stealer_assimilate_eject:OnInventoryContentsChanged()
 	end
 end
 
-function imba_life_stealer_assimilate_eject:OnHeroCalculateStatBonus(true)
+function imba_life_stealer_assimilate_eject:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

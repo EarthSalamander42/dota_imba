@@ -692,7 +692,7 @@ function imba_terrorblade_power_rend:OnInventoryContentsChanged()
 	end
 end
 
-function imba_terrorblade_power_rend:OnHeroCalculateStatBonus(true)
+function imba_terrorblade_power_rend:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

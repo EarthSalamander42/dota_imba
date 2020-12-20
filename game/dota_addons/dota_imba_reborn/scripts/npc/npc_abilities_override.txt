@@ -236,6 +236,11 @@
 	"item_imba_faerie_fire"						"REMOVE"
 	"item_banana"								"REMOVE"
 	"item_imba_banana"							"REMOVE"
+	"item_imba_necronomicon"					"REMOVE"
+	"item_imba_necronomicon_2"					"REMOVE"
+	"item_imba_necronomicon_3"					"REMOVE"
+	"item_imba_necronomicon_4"					"REMOVE"
+	"item_imba_necronomicon_5"					"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------

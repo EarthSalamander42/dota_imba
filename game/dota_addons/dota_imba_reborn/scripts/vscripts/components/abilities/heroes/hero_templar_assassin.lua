@@ -1035,7 +1035,7 @@ function imba_templar_assassin_trap_teleport:OnInventoryContentsChanged()
 	end
 end
 
-function imba_templar_assassin_trap_teleport:OnHeroCalculateStatBonus(true)
+function imba_templar_assassin_trap_teleport:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 
