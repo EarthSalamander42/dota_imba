@@ -55,9 +55,11 @@ function item_imba_necronomicon:OnSpellStart()
 	-- Destroy trees
 	GridNav:DestroyTreesAroundPoint(caster_loc + caster_direction * 180, 180, false)
 
-	print("Crash happens between this")
+	-- prints return valid arguments
 	print(melee_summon_name, melee_loc)
 	print(ranged_summon_name, ranged_loc)
+
+	print("Crash happens between this")
 
 	-- Spawn the summons
 	local melee_summon = CreateUnitByName(melee_summon_name, melee_loc, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeam())
