@@ -135,7 +135,7 @@ function imba_outworld_devourer_astral_imprisonment:OnInventoryContentsChanged()
 	end
 end
 
-function imba_outworld_devourer_astral_imprisonment:OnHeroCalculateStatBonus(true)
+function imba_outworld_devourer_astral_imprisonment:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

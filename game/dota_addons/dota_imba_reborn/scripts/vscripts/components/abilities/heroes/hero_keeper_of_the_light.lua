@@ -881,7 +881,7 @@ function imba_keeper_of_the_light_recall:OnInventoryContentsChanged()
 	end
 end
 
-function imba_keeper_of_the_light_recall:OnHeroCalculateStatBonus(true)
+function imba_keeper_of_the_light_recall:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 
@@ -997,7 +997,7 @@ function imba_keeper_of_the_light_spotlights:OnInventoryContentsChanged()
 	end
 end
 
-function imba_keeper_of_the_light_spotlights:OnHeroCalculateStatBonus(true)
+function imba_keeper_of_the_light_spotlights:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

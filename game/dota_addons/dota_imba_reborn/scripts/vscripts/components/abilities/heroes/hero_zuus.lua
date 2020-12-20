@@ -876,7 +876,7 @@ function imba_zuus_cloud:OnInventoryContentsChanged()
 	end
 end
 
-function imba_zuus_cloud:OnHeroCalculateStatBonus(true)
+function imba_zuus_cloud:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 
@@ -1071,7 +1071,7 @@ function imba_zuus_nimbus_zap:OnInventoryContentsChanged()
 	end
 end
 
-function imba_zuus_nimbus_zap:OnHeroCalculateStatBonus(true)
+function imba_zuus_nimbus_zap:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

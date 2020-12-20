@@ -70,7 +70,7 @@ function imba_spectre_haunt_single:OnInventoryContentsChanged()
 	end
 end
 
-function imba_spectre_haunt_single:OnHeroCalculateStatBonus(true)
+function imba_spectre_haunt_single:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

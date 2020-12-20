@@ -969,7 +969,7 @@ function imba_timbersaw_chakram_2:OnInventoryContentsChanged()
 	end
 end
 
-function imba_timbersaw_chakram_2:OnHeroCalculateStatBonus(true)
+function imba_timbersaw_chakram_2:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

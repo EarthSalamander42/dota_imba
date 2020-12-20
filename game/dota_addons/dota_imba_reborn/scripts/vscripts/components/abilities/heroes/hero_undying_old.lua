@@ -111,7 +111,7 @@ function imba_undying_decay:OnInventoryContentsChanged()
 	end
 end
 
-function imba_undying_decay:OnHeroCalculateStatBonus(true)
+function imba_undying_decay:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

@@ -1093,7 +1093,7 @@ imba_rubick_spellsteal.banned_abilities =
 -- Passive Modifier
 --------------------------------------------------------------------------------
 imba_rubick_spellsteal.firstTime = true
-function imba_rubick_spellsteal:OnHeroCalculateStatBonus(true)
+function imba_rubick_spellsteal:OnHeroCalculateStatBonus()
 	if self.firstTime then
 		self:GetCaster():AddNewModifier(self:GetCaster(),self,"modifier_rubick_spellsteal_hidden",	{})
 		self.firstTime = false

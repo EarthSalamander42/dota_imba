@@ -373,7 +373,7 @@ function imba_void_spirit_resonant_pulse:OnInventoryContentsChanged()
 	end
 end
 
-function imba_void_spirit_resonant_pulse:OnHeroCalculateStatBonus(true)
+function imba_void_spirit_resonant_pulse:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 
@@ -924,7 +924,7 @@ function imba_void_spirit_void_stasis:OnInventoryContentsChanged()
 	end
 end
 
-function imba_void_spirit_void_stasis:OnHeroCalculateStatBonus(true)
+function imba_void_spirit_void_stasis:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 

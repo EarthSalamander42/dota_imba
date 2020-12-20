@@ -863,7 +863,7 @@ function imba_gyrocopter_flak_cannon:OnInventoryContentsChanged()
 	end
 end
 
-function imba_gyrocopter_flak_cannon:OnHeroCalculateStatBonus(true)
+function imba_gyrocopter_flak_cannon:OnHeroCalculateStatBonus()
 	self:OnInventoryContentsChanged()
 end
 
