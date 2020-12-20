@@ -3760,8 +3760,8 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_warrior_mana_burn"
-		"Ability2"					"necronomicon_warrior_last_will"
+//		"Ability1"					"necronomicon_warrior_mana_burn"
+//		"Ability2"					"necronomicon_warrior_last_will"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4220,7 +4220,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_archer_aoe"
+//		"Ability1"					"necronomicon_archer_aoe"
 
 		// Armor
 		//----------------------------------------------------------------

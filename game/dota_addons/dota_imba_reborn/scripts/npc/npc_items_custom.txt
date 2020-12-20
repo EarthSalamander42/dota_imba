@@ -1989,7 +1989,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2047"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityTextureName" 			"custom/imba_necronomicon"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
@@ -2094,51 +2095,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"1"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	"item_imba_necronomicon_2"
@@ -2146,7 +2102,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2048"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityTextureName" 			"custom/imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
@@ -2251,51 +2208,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"2"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 		"%bonus_mana_regen"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	"item_imba_necronomicon_3"
@@ -2303,8 +2215,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2049"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_necronomicon_3"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
+		"AbilityTextureName" 			"custom/imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2408,51 +2321,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"3"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	"item_imba_necronomicon_4"
@@ -2460,8 +2328,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2194"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_necronomicon_4"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2565,51 +2433,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"4"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	"item_imba_necronomicon_5"
@@ -2617,7 +2440,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2195"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityTextureName" 			"custom/imba_necronomicon_5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
@@ -2718,51 +2542,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
-		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
 		}
 	}
 
