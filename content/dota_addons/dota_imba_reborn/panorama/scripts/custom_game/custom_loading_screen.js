@@ -215,6 +215,45 @@ function AllPlayersLoaded() {
 		})(panel, gamemode);
 	}
 
+	ToggleVoteContainer(true);
+
+	var vote_panel = $.GetContextPanel().FindChildrenWithClassTraverse("vote-select-panel-container");
+
+	if (vote_panel && vote_panel[0]) {
+		for (var i = 0; i <= vote_panel[0].GetChildCount() - 1; i++) {
+			var panel = vote_panel[0].GetChild(i);
+			var gamemode = undefined;
+			var button = undefined;
+
+			if (panel.GetChild(2)) {
+				gamemode = panel.GetChild(2).id.replace("VoteGameModeMainText", "");
+				button = panel.GetChild(2);
+
+				panel.GetChild(0).text = $.Localize("vote_gamemode_" + gamemode);
+				panel.GetChild(1).text = $.Localize("description_gamemode_" + gamemode);
+			}
+
+//			if (!panel.BHasClass("Active"))
+//				panel.AddClass("Active");
+
+			if (gamemode) {
+				(function (button, gamemode) {
+					button.SetPanelEvent("onactivate", function () {
+						OnVoteButtonPressed('gamemode', gamemode);
+						ToggleVoteContainer(false);
+					})
+				})(button, gamemode);
+			}
+		}
+	}
+
+//	$("#VoteGameMode1").checked = true;
+//	OnVoteButtonPressed("gamemode", 1);
+}
+
+function AllPlayersBattlepassLoaded() {
+	$.Msg("ALL PLAYERS BATTLEPASS LOADED!")
+
 	var player_table = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer().toString());
 
 	if (player_table && player_table.mmr_title) {
@@ -252,41 +291,6 @@ function AllPlayersLoaded() {
 		})
 */
 	}
-
-	ToggleVoteContainer(true);
-
-	var vote_panel = $.GetContextPanel().FindChildrenWithClassTraverse("vote-select-panel-container");
-
-	if (vote_panel && vote_panel[0]) {
-		for (var i = 0; i <= vote_panel[0].GetChildCount() - 1; i++) {
-			var panel = vote_panel[0].GetChild(i);
-			var gamemode = undefined;
-			var button = undefined;
-
-			if (panel.GetChild(2)) {
-				gamemode = panel.GetChild(2).id.replace("VoteGameModeMainText", "");
-				button = panel.GetChild(2);
-
-				panel.GetChild(0).text = $.Localize("vote_gamemode_" + gamemode);
-				panel.GetChild(1).text = $.Localize("description_gamemode_" + gamemode);
-			}
-
-//			if (!panel.BHasClass("Active"))
-//				panel.AddClass("Active");
-
-			if (gamemode) {
-				(function (button, gamemode) {
-					button.SetPanelEvent("onactivate", function () {
-						OnVoteButtonPressed('gamemode', gamemode);
-						ToggleVoteContainer(false);
-					})
-				})(button, gamemode);
-			}
-		}
-	}
-
-//	$("#VoteGameMode1").checked = true;
-//	OnVoteButtonPressed("gamemode", 1);
 }
 
 function ToggleVoteContainer(bBoolean) {
@@ -481,4 +485,5 @@ function DisableRankingVoting() {
 	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 	GameEvents.Subscribe("all_players_loaded", AllPlayersLoaded);
+	GameEvents.Subscribe("all_players_battlepass_loaded", AllPlayersBattlepassLoaded);
 })();

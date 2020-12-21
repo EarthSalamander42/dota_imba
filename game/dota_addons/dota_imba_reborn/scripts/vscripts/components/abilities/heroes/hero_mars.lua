@@ -1080,7 +1080,7 @@ function modifier_imba_mars_bulwark_jupiters_strength:DeclareFunctions() return 
 
 function modifier_imba_mars_bulwark_jupiters_strength:OnCreated()
 	if IsServer() then
-		self.duration = self:GetSpecialValueFor("jupiters_strength_duration")
+		self.duration = self:GetAbility():GetSpecialValueFor("jupiters_strength_duration")
 		self.stack_table = {}
 		self:StartIntervalThink(1.0)
 	end
@@ -1094,22 +1094,24 @@ function modifier_imba_mars_bulwark_jupiters_strength:OnIntervalThink()
 		-- Check if the firstmost entry in the table has expired
 		local item_time = self.stack_table[1]
 
-		-- If the difference between times is longer, it's time to get rid of a stack
-		if GameRules:GetGameTime() - item_time >= self.duration then
-			-- Check if there is only one stack, which would mean bye bye debuff
-			if self:GetStackCount() == 1 then
-				self:Destroy()
-				break
-			else
-				-- Remove the entry from the table
-				table.remove(self.stack_table, 1)
+		if item_time then
+			-- If the difference between times is longer, it's time to get rid of a stack
+			if GameRules:GetGameTime() - item_time >= self.duration then
+				-- Check if there is only one stack, which would mean bye bye debuff
+				if self:GetStackCount() == 1 then
+					self:Destroy()
+					break
+				else
+					-- Remove the entry from the table
+					table.remove(self.stack_table, 1)
 
-				-- Decrement a stack
-				self:DecrementStackCount()
+					-- Decrement a stack
+					self:DecrementStackCount()
 
-				-- Calculate hero status
-				if self:GetParent().CalculateStatBonus then
-					self:GetParent():CalculateStatBonus()
+					-- Calculate hero status
+					if self:GetParent().CalculateStatBonus then
+						self:GetParent():CalculateStatBonus()
+					end
 				end
 			end
 		else

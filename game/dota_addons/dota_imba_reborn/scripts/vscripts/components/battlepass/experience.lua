@@ -85,5 +85,5 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 	end
 
 	print("ALL PLAYERS LOADED IN!")
-	CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
+	CustomGameEventManager:Send_ServerToAllClients("all_players_battlepass_loaded", {})
 end

@@ -1,3 +1,5 @@
+"npc_dota_hero_mars"						"Mars (IMBA)"
+
 // Spear of Mars
 "DOTA_Tooltip_ability_imba_mars_spear_Imbafication_1"			"<font color='#FF7800'>Heaven Spear:</font> When auto-cast is on, Mars calls a spear falling from the sky, stunning the closest unit within %heaven_spear_radius% radius and knockback other units in range by %heaven_spear_knockback%."
 "DOTA_Tooltip_ability_imba_mars_spear_Imbafication_2"			"<font color='#FF7800'>Trailblazer:</font> Spear leaves a burning trail in its wake. The trail lasts for %trailblazer_duration% seconds and burns enemies for %trailblazer_damage_pct%% of Spear's damage per second. When auto-cast is on, deals 25% of spear's damage within %heaven_spear_radius% radius of Heaven Spear land position for %trailblazer_duration% seconds."

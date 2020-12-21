@@ -23,7 +23,7 @@ function modifier_mutation_bloodlust:OnCreated()
 	self.size = 25 -- % of hero's model size increase
 
 	if IsServer() then
-		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target", self:GetParent()):GetPlayerOwner()
+		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target", self:GetParent():GetPlayerOwner())
 		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target.FP", self:GetParent():GetPlayerOwner())
 	end
 end
@@ -31,19 +31,17 @@ end
 -- Only called if buff overlaps with itself (which is probably never)
 function modifier_mutation_bloodlust:OnRefresh()
 	if IsServer() then
-		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target", self:GetParent()):GetPlayerOwner()
+		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target", self:GetParent():GetPlayerOwner())
 		EmitSoundOnClient("Hero_OgreMagi.Bloodlust.Target.FP", self:GetParent():GetPlayerOwner())
 	end
 end
 
-function modifier_mutation_bloodlust:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, 
+function modifier_mutation_bloodlust:DeclareFunctions() return {
+	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, 
 	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
-	MODIFIER_PROPERTY_MODEL_SCALE}
-
-	return decFuncs
-end
+	MODIFIER_PROPERTY_MODEL_SCALE,
+} end
 
 function modifier_mutation_bloodlust:GetModifierMoveSpeedBonus_Percentage()
 	return self.movespeed
