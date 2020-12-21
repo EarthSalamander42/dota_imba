@@ -153,7 +153,7 @@ end
 
 -- Serversided function only
 function CDOTA_BaseNPC:DropItem(hItem, sNewItemName, bLaunchLoot)
-	local vLocation = self:GetAbsOrigin()
+	local vLocation = GetGroundPosition(self:GetAbsOrigin(), self)
 	local sName
 	local vRandomVector = RandomVector(100)
 
