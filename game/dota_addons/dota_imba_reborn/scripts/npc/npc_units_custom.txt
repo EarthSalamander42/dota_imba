@@ -1194,7 +1194,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models/heroes/techies/fx_techiesfx_mine.mdl"
+		"Model"						"models/heroes/techies/fx_techiesfx_mine.vmdl"
 		"BaseClass"					"npc_dota_techies_mines"
 		"SoundSet"					"0"
 		"Level"						"1"
@@ -1266,7 +1266,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models/heroes/techies/fx_techiesfx_mine.mdl"
+		"Model"						"models/heroes/techies/fx_techiesfx_mine.vmdl"
 		"BaseClass"					"npc_dota_techies_mines"
 		"SoundSet"					"0"
 		"Level"						"1"
@@ -1338,7 +1338,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models/heroes/techies/fx_techiesfx_stasis.mdl"
+		"Model"						"models/heroes/techies/fx_techiesfx_stasis.vmdl"
 		"BaseClass"					"npc_dota_techies_mines"
 		"SoundSet"					"0"
 		"Level"						"1"
@@ -1411,7 +1411,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_techies_minefield_sign"
-		"Model"						"models/heroes/techies/techies_sign.mdl"
+		"Model"						"models/heroes/techies/techies_sign.vmdl"
 		"Level"						"1"
 		"ModelScale" 				"1.0"
 		"SelectionGroup"			"techies_minefield_sign"
@@ -3750,7 +3750,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.vmdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"Level"						"5"
 		"ModelScale"				"0.6"
@@ -3760,8 +3760,8 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_warrior_mana_burn"
-		"Ability2"					"necronomicon_warrior_last_will"
+//		"Ability1"					"necronomicon_warrior_mana_burn"
+//		"Ability2"					"necronomicon_warrior_last_will"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -3840,7 +3840,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.vmdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"Level"						"5"
 		"ModelScale"				"0.65"
@@ -3930,7 +3930,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.vmdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"Level"						"5"
 		"ModelScale"				"0.7"
@@ -4021,7 +4021,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.vmdl"
 		"SoundSet"					"n_creep_Melee"
 		"Level"						"5"
 		"ModelScale"				"0.75"
@@ -4115,7 +4115,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.vmdl"
 		"SoundSet"					"n_creep_Melee"
 		"Level"						"5"
 		"ModelScale"				"0.8"
@@ -4210,7 +4210,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.vmdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
 		"ModelScale"				"0.6"
@@ -4220,7 +4220,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_archer_aoe"
+//		"Ability1"					"necronomicon_archer_aoe"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4299,7 +4299,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.vmdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
 		"ModelScale"				"0.65"
@@ -4388,7 +4388,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.vmdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
 		"ModelScale"				"0.7"
@@ -4478,7 +4478,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.vmdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
 		"ModelScale"				"0.75"
@@ -4570,7 +4570,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.vmdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
 		"ModelScale"				"0.8"

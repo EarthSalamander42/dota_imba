@@ -2124,7 +2124,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 
 					self.caster:AddNewModifier(self.caster, self, "modifier_imba_lich_sinister_gaze_bonus_health", {duration = self.soul_consumption_duration}):SetStackCount(consumption_health)
 					
-					self.caster:CalculateStatBonus()
+					self.caster:CalculateStatBonus(true)
 					
 					-- Sure takes a while to add that max health through the modifier...
 					-- Timers:CreateTimer(0.5, function()

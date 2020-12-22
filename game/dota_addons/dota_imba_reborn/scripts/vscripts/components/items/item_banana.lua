@@ -21,8 +21,8 @@ function item_imba_banana:OnSpellStart()
 
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_banana", {})
 	
-	if self:GetCursorTarget():CalculateStatBonus() then
-		self:GetCursorTarget():CalculateStatBonus()
+	if self:GetCursorTarget():CalculateStatBonus(true) then
+		self:GetCursorTarget():CalculateStatBonus(true)
 	end
 	
 	-- if self:GetCursorTarget() == self:GetCaster() then

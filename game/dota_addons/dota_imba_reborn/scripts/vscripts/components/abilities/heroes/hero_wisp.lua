@@ -122,7 +122,7 @@ function imba_wisp_tether:OnSpellStart()
 	if caster:HasTalent("special_bonus_imba_wisp_2") then
 		self.tether_ally:SetStolenScepter(true)
 		if self.tether_ally.CalculateStatBonus then
-			self.tether_ally:CalculateStatBonus()
+			self.tether_ally:CalculateStatBonus(true)
 		end
 	end
 
@@ -313,7 +313,7 @@ function modifier_imba_wisp_tether:OnRemoved()
 			self.target:SetStolenScepter(false)
 			
 			if self.target.CalculateStatBonus then
-				self.target:CalculateStatBonus()
+				self.target:CalculateStatBonus(true)
 			end
 		end
 

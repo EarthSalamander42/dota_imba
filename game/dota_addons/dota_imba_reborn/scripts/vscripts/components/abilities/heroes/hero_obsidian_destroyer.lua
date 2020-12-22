@@ -586,7 +586,7 @@ function modifier_imba_arcane_orb_buff:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 
 		-- If there are no stacks on the table, just remove the modifier.
 		else
@@ -671,7 +671,7 @@ function modifier_imba_arcane_orb_debuff:OnIntervalThink()
 
 			-- Recalculate bonus based on new stack count
 			if self:GetParent().CalculateStatBonus then
-				self:GetParent():CalculateStatBonus()
+				self:GetParent():CalculateStatBonus(true)
 			end
 
 		-- If there are no stacks on the table, just remove the modifier.
@@ -752,7 +752,7 @@ function modifier_imba_arcane_orb_instance:OnIntervalThink()
             end
 
             -- Recalculate bonus based on new stack count
-            self:GetParent():CalculateStatBonus()
+            self:GetParent():CalculateStatBonus(true)
 
         -- If there are no stacks on the table, just remove the modifier.
         else
@@ -1518,7 +1518,7 @@ function modifier_imba_essence_aura_proc:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 
 		-- If there are no stacks on the table, just remove the modifier.
 		else
@@ -1598,7 +1598,7 @@ function modifier_imba_essence_aura_over_maximum:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 
 		-- If there are no stacks on the table, just remove the modifier.
 		else
@@ -1674,7 +1674,7 @@ function modifier_imba_essence_aura_over_maximum_indicator:OnIntervalThink()
 			end
 
 			-- Recalculate bonus based on new stack count
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 
 		-- If there are no stacks on the table, just remove the modifier.
 		else

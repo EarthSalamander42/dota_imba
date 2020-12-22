@@ -1207,7 +1207,7 @@ function modifier_imba_chen_hand_of_god_overheal:OnIntervalThink()
 	self:SetStackCount(self:GetStackCount() - self.overheal_loss_per_tick)
 	
 	if self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 	
 	if self:GetStackCount() <= 0 then

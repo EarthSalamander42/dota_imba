@@ -1072,7 +1072,7 @@ function modifier_imba_treant_overgrowth_giant_ent:OnCreated(keys)
 	self:SetStackCount(keys.enemies_hit)
 	
 	if self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -1088,7 +1088,7 @@ function modifier_imba_treant_overgrowth_giant_ent:OnRefresh(keys)
 		self:SetStackCount(keys.enemies_hit)
 		
 		if self:GetParent().CalculateStatBonus then
-			self:GetParent():CalculateStatBonus()
+			self:GetParent():CalculateStatBonus(true)
 		end
 	end
 end
@@ -1097,7 +1097,7 @@ function modifier_imba_treant_overgrowth_giant_ent:OnDestroy()
 	if not IsServer() then return end
 	
 	if self:GetParent().CalculateStatBonus then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 

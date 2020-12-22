@@ -394,7 +394,7 @@ function modifier_imba_life_stealer_feast:GetModifierProcAttack_BonusDamage_Phys
 					stacks		= health_differential * self:GetAbility():GetSpecialValueFor("engorge_pct") * 0.01
 				})
 				
-				self:GetParent():CalculateStatBonus()
+				self:GetParent():CalculateStatBonus(true)
 			end
 		end
 		

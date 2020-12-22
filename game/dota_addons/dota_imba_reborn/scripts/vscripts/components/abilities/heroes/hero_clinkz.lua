@@ -1650,7 +1650,7 @@ function imba_clinkz_death_pact:OnSpellStart()
 	end
 
 	-- Force recalculation of stats (to recalculate HP)
-	caster:CalculateStatBonus()
+	caster:CalculateStatBonus(true)
 
 	-- #8 Talent: Death Pact bonuses stay permanently if enemy target dies quickly
 	-- Apply a marker on the target if caster has the talent

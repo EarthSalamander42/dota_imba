@@ -1372,7 +1372,7 @@ function modifier_imba_juggernaut_blade_dance_wind_dance:OnRefresh()
 	self.ms = self:GetAbility():GetTalentSpecialValueFor("bonus_ms")
 	if IsServer() then
 		self:IncrementStackCount()
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -1399,14 +1399,14 @@ function modifier_imba_juggernaut_blade_dance_secret_blade:GetTexture()	return "
 function modifier_imba_juggernaut_blade_dance_secret_blade:OnRefresh()
 	if IsServer() then
 		self:IncrementStackCount()
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
 function modifier_imba_juggernaut_blade_dance_secret_blade:OnStackCountChanged()
 	local serverCheck = 0
 	if IsServer() then -- why? ? ? ? ? (Preserve the question marks ! ! ! ! ! ? ? ? ? ? )
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 		serverCheck = 1
 		if self:GetStackCount() == self:GetAbility():GetTalentSpecialValueFor("active_min_stacks") then
 		self:GetParent():EmitSound("Imba.JuggernautLightsaber")

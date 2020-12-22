@@ -1260,7 +1260,7 @@ function modifier_vardor_mental_thrusts_debuff:OnStackCountChanged(prev_stacks)
 	end
 
 	if self.parent:IsHero() then
-		self.parent:CalculateStatBonus()
+		self.parent:CalculateStatBonus(true)
 	end
 end
 

@@ -227,7 +227,7 @@ function modifier_imba_cursed_fountain:OnIntervalThink()
 		self.agility	= self:GetParent():GetAgility()		- self:GetParent():GetBaseAgility()
 		self.intellect	= self:GetParent():GetIntellect()	- self:GetParent():GetBaseIntellect()
 		
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	else
 		self.strength	= 0
 		self.agility	= 0

@@ -296,7 +296,7 @@
 	{
 		"ItemRequirements"
 		{
-			"01"						"item_ring_of_tarrasque;item_energy_booster;item_imba_magic_wand"
+			"01"						"item_headdress;item_fluffy_hat;item_energy_booster;item_imba_magic_wand"
 		}
 	}
 
