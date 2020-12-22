@@ -120,48 +120,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"max_distance_for_push"	"200"			// max distance required for you to push a remnant or target
+				"var_type"				"FIELD_FLOAT"
+				"earths_mark_duration"	"5"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"effect_radius"			"180"				
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"105 170 235 300"		
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"900"				
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"unit_distance"			"500 650 800 950"				
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"remnant_distance"		"2000"				
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.1 1.5 1.9 2.3"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
-			}
-			"9"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mark_stack_damage"		"25 50 75 100"
+				"mark_stack_damage"		"20 40 60 80"
 			}
 		}
 	}

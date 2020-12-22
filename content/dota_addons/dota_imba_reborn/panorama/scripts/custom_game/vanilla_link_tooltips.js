@@ -86,8 +86,9 @@ function OverrideAbilityTooltips(sAbilityName) {
 }
 
 var eligible_heroes = [
-	"npc_dota_hero_abaddon",	
-	"npc_dota_hero_mars",	
+	"npc_dota_hero_abaddon",
+	"npc_dota_hero_earth_spirit",
+	"npc_dota_hero_mars",
 ];
 
 function InitTooltips() {
