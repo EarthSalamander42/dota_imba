@@ -123,13 +123,15 @@ function modifier_imba_mars_spear_heaven_spear:OnCreated()
 	self.knockback_radius = self:GetAbility():GetSpecialValueFor("heaven_spear_knockback")
 	self.stun_duration = self:GetAbility():GetVanillaAbilitySpecial("stun_duration")
 	self.knockback_duration = self:GetAbility():GetSpecialValueFor("heaven_spear_duration")
+	self.height = 128
+	self.delay = 0.2
 
 	-- add viewer
 	AddFOWViewer( self:GetCaster():GetTeamNumber(), self.origin, self.radius, self.stun_duration, false)
 
-	local pre_spear = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self:GetCaster())
+	local pre_spear = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(pre_spear, 0, self:GetAbility():GetCursorPosition()) 
-	ParticleManager:SetParticleControl(pre_spear, 1, Vector(self.radius, 0, 0))
+	ParticleManager:SetParticleControl(pre_spear, 1, Vector(self.height, self:GetDuration() - self.delay, self.delay))
 	self:AddParticle(pre_spear, false, false, -1, false, false)
 end
 
@@ -149,11 +151,6 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 	)
 
 	local hero_found = 0
-
-	local sun_strike_crater = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_CUSTOMORIGIN, nil)
-	ParticleManager:SetParticleControl(sun_strike_crater, 0, self.origin)
-	ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.radius, 0, 0))
-	ParticleManager:ReleaseParticleIndex(sun_strike_crater)
 
 	if #units > 0 then
 		for k, v in pairs(units) do
@@ -834,20 +831,33 @@ function imba_mars_gods_rebuke:OnSpellStart()
 				)
 			end
 
-			caught = true
 			-- play effects
 			self:PlayEffects2( enemy, origin, cast_direction )
 		end
 	end
 
 	local stacks = #enemies * self:GetSpecialValueFor("strong_argument_bonus_strength")
-	caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
+
+	if #enemies > 0 then
+		local mod = caster:FindModifierByName("modifier_imba_mars_gods_rebuke_strong_argument")
+
+
+		if not mod then
+			caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
+		else
+			mod:SetStackCount(mod:GetStackCount() + stacks)
+			mod:SetDuration(self:GetSpecialValueFor("strong_argument_duration"), true)
+		end
+
+		caught = true
+		caster:CalculateStatBonus(true)
+	end
 
 	-- destroy buff modifier
 	buff:Destroy()
 
 	-- play effects
-	self:PlayEffects1( caught, (point-origin):Normalized() )
+	self:PlayEffects1(caught, (point - origin):Normalized())
 end
 
 --------------------------------------------------------------------------------
@@ -856,7 +866,7 @@ function imba_mars_gods_rebuke:PlayEffects1( caught, direction )
 	-- Get Resources
 	local particle_cast = "particles/units/heroes/hero_mars/mars_shield_bash.vpcf"
 	local sound_cast = "Hero_Mars.Shield.Cast"
-	if not caught then
+	if caught == false then
 		local sound_cast = "Hero_Mars.Shield.Cast.Small"
 	end
 
@@ -941,10 +951,10 @@ end
 modifier_imba_mars_gods_rebuke_strong_argument = modifier_imba_mars_gods_rebuke_strong_argument or class({})
 
 function modifier_imba_mars_gods_rebuke_strong_argument:DeclareFunctions() return {
-	MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS,
+	MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 } end
 
-function modifier_imba_mars_gods_rebuke_strong_argument:GetModifierExtraStrengthBonus()
+function modifier_imba_mars_gods_rebuke_strong_argument:GetModifierBonusStats_Strength()
 	return self:GetStackCount()
 end
 

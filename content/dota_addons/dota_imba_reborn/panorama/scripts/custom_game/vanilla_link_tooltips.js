@@ -111,7 +111,9 @@ function InitTooltips() {
 							CallTooltips(i);
 						})
 						ability_button.SetPanelEvent("onmouseout", function () {
-							HideTooltips();
+							$.Schedule(1/60, () => {
+								HideTooltips();
+							});
 						})
 					})(ability_button, i);
 
@@ -499,7 +501,7 @@ function SetTooltipsPosition(hPosition) {
 
 //	$.Msg("Off-screen height? ", full_y > AbilityDetails.GetParent().actuallayoutheight, " / ", full_y, " / ", AbilityDetails.GetParent().actuallayoutheight)
 	if (full_y > AbilityDetails.GetParent().actuallayoutheight)
-		offset_y = ((full_y) - (AbilityDetails.GetParent().actuallayoutheight)) * (-1) - 10; // -10 so it's not tied to the border of the screen
+		offset_y = ((full_y) - (AbilityDetails.GetParent().actuallayoutheight)) * (-1) - 20; // -20 so it's not tied to the border of the screen
 
 //	$.Msg("---------------------------------------------------------------------")
 
