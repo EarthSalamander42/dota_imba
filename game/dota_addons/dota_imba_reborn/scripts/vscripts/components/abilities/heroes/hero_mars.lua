@@ -50,12 +50,13 @@ function imba_mars_spear:OnSpellStart()
 	local projectile_speed = self:GetVanillaAbilitySpecial("spear_speed")
 	local projectile_radius = self:GetVanillaAbilitySpecial("spear_width")
 	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
+	local heaven_spear_delay = self:GetSpecialValueFor("heaven_spear_delay")
 	self.trailblazer_particles = {}
 
 	if not IsServer() then return end
 
 	if self.autocast then
-		local duration = projectile_distance / projectile_speed + 0.5
+		local duration = projectile_distance / projectile_speed + heaven_spear_delay
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_spear_heaven_spear", {duration = duration})
 	else
 		-- calculate direction
@@ -123,9 +124,8 @@ function modifier_imba_mars_spear_heaven_spear:OnCreated()
 	self.knockback_radius = self:GetAbility():GetSpecialValueFor("heaven_spear_knockback")
 	self.stun_duration = self:GetAbility():GetVanillaAbilitySpecial("stun_duration")
 	self.knockback_duration = self:GetAbility():GetSpecialValueFor("heaven_spear_duration")
-
+	self.delay = self:GetAbility():GetSpecialValueFor("heaven_spear_delay")
 	self.height = 700
-	self.delay = 0.5
 	self.travel_time = self:GetDuration() - self.delay
 
 	-- add viewer
@@ -161,7 +161,7 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 				hero_found = hero_found + 1
 
 				v:SetAbsOrigin(self.origin)
-				v:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_mars_spear_debuff", {duration = self.stun_duration})
+				v:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_mars_spear_debuff", {duration = self.stun_duration, heaven_spear = 1})
 				EmitSoundOn("Hero_Mars.Spear.Root", v)
 			else
 				local enemy_direction = (v:GetOrigin() - self.origin):Normalized()
@@ -230,11 +230,17 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 
 	self.initial_pos = self:GetParent():GetAbsOrigin()
 
+--[[
 	local pfx = ParticleManager:CreateParticle("particles/econ/items/batrider/batrider_ti8_immortal_mount/batrider_ti8_immortal_firefly.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent())
 	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
 	ParticleManager:SetParticleControl(pfx, 0, self.initial_pos)
 	ParticleManager:SetParticleControl(pfx, 11, Vector(1, 0, 0))
 	self:AddParticle(pfx, false, false, -1, false, false)
+--]]
+
+	local ground_pfx = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear_ground.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(ground_pfx, 0, self.initial_pos)
+	ParticleManager:ReleaseParticleIndex(ground_pfx)
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -264,7 +270,7 @@ end
 
 function modifier_imba_mars_spear_trailblazer_thinker:OnDestroy()
 	if not IsServer() then return end
-	
+
 	self:GetParent():RemoveSelf()
 
 	if self:GetAbility() then
@@ -688,6 +694,7 @@ end
 -- Initializations
 function modifier_imba_mars_spear_debuff:OnCreated( kv )
 	if not IsServer() then return end
+
 	self.projectile = kv.projectile
 end
 
@@ -696,6 +703,7 @@ end
 
 function modifier_imba_mars_spear_debuff:OnRemoved()
 	if not IsServer() then return end
+
 	-- destroy tree
 	GridNav:DestroyTreesAroundPoint( self:GetParent():GetOrigin(), 120, false )
 end
@@ -764,9 +772,15 @@ function imba_mars_gods_rebuke:OnSpellStart()
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
 
+	local mod = caster:FindModifierByName("modifier_imba_mars_bulwark_active")
+
+	if mod then
+		point = caster:GetAbsOrigin() + mod.forward_vector
+	end
+
 	-- load data
 	local radius = self:GetVanillaAbilitySpecial("radius")
-	local angle = self:GetVanillaAbilitySpecial("angle")/2
+	local angle = self:GetVanillaAbilitySpecial("angle") / 2
 	local duration = self:GetVanillaAbilitySpecial("knockback_duration")
 	local distance = self:GetVanillaAbilitySpecial("knockback_distance")
 
@@ -839,21 +853,30 @@ function imba_mars_gods_rebuke:OnSpellStart()
 		end
 	end
 
-	local stacks = #enemies * self:GetSpecialValueFor("strong_argument_bonus_strength")
+	local heroes = 0
 
 	if #enemies > 0 then
-		local mod = caster:FindModifierByName("modifier_imba_mars_gods_rebuke_strong_argument")
-
-
-		if not mod then
-			caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
-		else
-			mod:SetStackCount(mod:GetStackCount() + stacks)
-			mod:SetDuration(self:GetSpecialValueFor("strong_argument_duration"), true)
+		for k, v in pairs(enemies) do
+			if v:IsRealHero() then
+				heroes = heroes + 1
+			end
 		end
 
-		caught = true
-		caster:CalculateStatBonus(true)
+		if #heroes > 0 then
+			local stacks = #heroes * self:GetSpecialValueFor("strong_argument_bonus_strength")
+			local mod = caster:FindModifierByName("modifier_imba_mars_gods_rebuke_strong_argument")
+
+
+			if not mod then
+				caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
+			else
+				mod:SetStackCount(mod:GetStackCount() + stacks)
+				mod:SetDuration(self:GetSpecialValueFor("strong_argument_duration"), true)
+			end
+
+			caught = true
+			caster:CalculateStatBonus(true)
+		end
 	end
 
 	-- destroy buff modifier
@@ -962,20 +985,38 @@ function modifier_imba_mars_gods_rebuke_strong_argument:GetModifierBonusStats_St
 end
 
 --------------------------------------------------------------------------------
-imba_mars_bulwark = imba_mars_bulwark or class({})
 LinkLuaModifier( "modifier_imba_mars_bulwark", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+-- Using vanilla modifier for now
+LinkLuaModifier( "modifier_imba_mars_bulwark_active", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_mars_bulwark_jupiters_strength", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 
+imba_mars_bulwark = imba_mars_bulwark or class({})
+
 --------------------------------------------------------------------------------
--- Passive Modifier
+
+function imba_mars_bulwark:IsStealable()			return false end
+function imba_mars_bulwark:ResetToggleOnRespawn()	return true end
+
 function imba_mars_bulwark:GetIntrinsicModifierName()
 	return "modifier_imba_mars_bulwark"
 end
 
+function imba_mars_bulwark:OnToggle()
+	if self:GetToggleState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_mars_bulwark_active", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_bulwark_active", {})
+	else
+		self:GetCaster():RemoveModifierByName("modifier_mars_bulwark_active")
+		self:GetCaster():RemoveModifierByName("modifier_imba_mars_bulwark_active")
+	end
+end
+
 --------------------------------------------------------------------------------
+
 modifier_imba_mars_bulwark = modifier_imba_mars_bulwark or class({})
 
 --------------------------------------------------------------------------------
+
 -- Classifications
 function modifier_imba_mars_bulwark:IsHidden()
 	return true
@@ -1086,6 +1127,35 @@ function modifier_imba_mars_bulwark:PlayEffects( front )
 
 	-- Create Sound
 	EmitSoundOn( sound_cast, self:GetParent() )
+end
+
+modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class({})
+
+function modifier_imba_mars_bulwark_active:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+} end
+
+function modifier_imba_mars_bulwark_active:OnCreated()
+	if not IsServer() then return end
+
+	self.forward_vector = self:GetParent():GetForwardVector()
+
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_mars_bulwark_active:OnIntervalThink()
+	self:GetParent():SetForwardVector(self.forward_vector)
+end
+
+function modifier_imba_mars_bulwark_active:OnAbilityFullyCast(params)
+	if not IsServer() then return end
+
+	if params.ability and params.ability.GetAbilityName and params.unit == self:GetParent() then
+		if params.ability:GetAbilityName() == "imba_mars_spear" then
+			print("Spear cast, disable Bulwark")
+			self:GetAbility():ToggleAbility()
+		end
+	end
 end
 
 modifier_imba_mars_bulwark_jupiters_strength = modifier_imba_mars_bulwark_jupiters_strength or class({})

@@ -27,7 +27,7 @@
 		
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -51,19 +51,24 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"heaven_spear_duration"		"0.5"
+				"heaven_spear_duration"		"0.3" // Knockback duration
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trailblazer_duration"		"6.0"
+				"heaven_spear_delay"		"0.1" // delay before start going down
 			}
 			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trailblazer_duration"		"6.0"
+			}
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trailblazer_radius"		"150"
 			}
-			"06"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trailblazer_damage_pct"	"25"
@@ -85,7 +90,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
 		"AbilityTextureName"			"mars_gods_rebuke"
 		"FightRecapLevel"				"1"
-		"MaxLevel"						"4"
+
 		"precache"
 		{
 //			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
@@ -95,7 +100,6 @@
 		
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -142,7 +146,6 @@
 		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
 		"AbilityTextureName"			"mars_bulwark"
 		"FightRecapLevel"				"1"
-		"MaxLevel"						"4"
 
 		"precache"
 		{
@@ -153,17 +156,7 @@
 
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
-
-		// Ability Casting
-		//-------------------------------------------------------------------------------------------------------------
-
-		// Ability Resource
-		//-------------------------------------------------------------------------------------------------------------
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
