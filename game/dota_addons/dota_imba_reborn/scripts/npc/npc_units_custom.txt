@@ -1,6 +1,7 @@
 // #base heroes/broodmother/units.txt
 #base heroes/ember_spirit/units.txt
 #base heroes/invoker/units.txt
+#base heroes/mars/units.txt
 #base heroes/undying/units.txt
 
 #base custom_heroes/hell_empress/hero.txt

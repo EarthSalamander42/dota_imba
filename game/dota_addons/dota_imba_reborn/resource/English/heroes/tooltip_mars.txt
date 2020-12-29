@@ -16,10 +16,10 @@
 
 // Bulwark
 "DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_1"					"<font color='#FF7800'>Spiked Shield:</font> During active Bulwark, Mars deals 20% of his attack damage to enemies that are attacking him from the front."
-"DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_2"					"<font color='#FF7800'>Jupiter's Strenght:</font> Store 50% of damage blocked for 10 seconds. Adds bonus damage to God's Rebuke when casted."
+"DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_2"					"<font color='#FF7800'>Jupiter's Strength:</font> Store 50% of damage blocked for 10 seconds. Adds bonus damage to God's Rebuke when casted."
 
-// "DOTA_Tooltip_modifier_imba_frostmourne_debuff_slow"					"Curse of Avernus"
-// "DOTA_Tooltip_modifier_imba_frostmourne_debuff_slow_Description"		"Slowed and granting bonus speed to attackers."
+"DOTA_Tooltip_modifier_imba_mars_bulwark_jupiters_strength"					"Jupiter's Strength"
+"DOTA_Tooltip_modifier_imba_mars_bulwark_jupiters_strength_Description"		"Store %jupiters_strength_stored_damage_pct%% damage blocked, add these stored damage to God's Rebuke."
 
 // "DOTA_Tooltip_modifier_imba_frostmourne_buff_haste"					"Curse of Avernus"
 // "DOTA_Tooltip_modifier_imba_frostmourne_buff_haste_Description"		"Gaining bonus move and attack speed due to attacking Abaddon's target."

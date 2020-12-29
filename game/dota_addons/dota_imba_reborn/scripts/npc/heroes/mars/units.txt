@@ -1,6 +1,6 @@
 "DOTAUnits"
 {
-	"npc_dota_mars_arena_of_blood_lua_soldier"
+	"npc_dota_imba_mars_arena_of_blood_soldier"
 	{
 		// General
 		//----------------------------------------------------------------

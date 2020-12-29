@@ -22,7 +22,6 @@ LinkLuaModifier( "modifier_imba_mars_spear_trailblazer_thinker", "components/abi
 --------------------------------------------------------------------------------
 
 function imba_mars_spear:GetAOERadius()
-	print(self:GetAutoCastState())
 	if self:GetAutoCastState() then
 		return self:GetSpecialValueFor("heaven_spear_radius")
 	end
@@ -56,7 +55,8 @@ function imba_mars_spear:OnSpellStart()
 	if not IsServer() then return end
 
 	if self.autocast then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_spear_heaven_spear", {duration = projectile_distance / projectile_speed})
+		local duration = projectile_distance / projectile_speed + 0.5
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_spear_heaven_spear", {duration = duration})
 	else
 		-- calculate direction
 		local direction = point - self:GetCaster():GetOrigin()
@@ -123,15 +123,18 @@ function modifier_imba_mars_spear_heaven_spear:OnCreated()
 	self.knockback_radius = self:GetAbility():GetSpecialValueFor("heaven_spear_knockback")
 	self.stun_duration = self:GetAbility():GetVanillaAbilitySpecial("stun_duration")
 	self.knockback_duration = self:GetAbility():GetSpecialValueFor("heaven_spear_duration")
-	self.height = 128
-	self.delay = 0.2
+
+	self.height = 700
+	self.delay = 0.5
+	self.travel_time = self:GetDuration() - self.delay
 
 	-- add viewer
 	AddFOWViewer( self:GetCaster():GetTeamNumber(), self.origin, self.radius, self.stun_duration, false)
 
 	local pre_spear = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
-	ParticleManager:SetParticleControl(pre_spear, 0, self:GetAbility():GetCursorPosition()) 
-	ParticleManager:SetParticleControl(pre_spear, 1, Vector(self.height, self:GetDuration() - self.delay, self.delay))
+--	ParticleManager:SetParticleControl(pre_spear, 0, self.origin)
+	ParticleManager:SetParticleControl(pre_spear, 1, Vector(self.height, self.delay, self.travel_time))
+	ParticleManager:SetParticleControl(pre_spear, 2, self.origin)
 	self:AddParticle(pre_spear, false, false, -1, false, false)
 end
 
@@ -975,7 +978,7 @@ modifier_imba_mars_bulwark = modifier_imba_mars_bulwark or class({})
 --------------------------------------------------------------------------------
 -- Classifications
 function modifier_imba_mars_bulwark:IsHidden()
-	return false
+	return true
 end
 
 function modifier_imba_mars_bulwark:IsDebuff()
@@ -1051,13 +1054,19 @@ function modifier_imba_mars_bulwark:GetModifierPhysical_ConstantBlock( params )
 	if angle_diff < self.angle_front then
 		reduction = self.reduction_front
 		self:PlayEffects( true, attacker_vector )
-
 	elseif angle_diff < self.angle_side then
 		reduction = self.reduction_side
 		self:PlayEffects( false, attacker_vector )
 	end
 
-	return reduction*params.damage/100
+	local damage_blocked = reduction * params.damage / 100
+
+	local stacks = damage_blocked * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
+	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
+
+	mod:SetStackCount(mod:GetStackCount() + stacks)
+
+	return damage_blocked
 end
 --------------------------------------------------------------------------------
 -- Graphics & Animations
@@ -1084,61 +1093,30 @@ modifier_imba_mars_bulwark_jupiters_strength = modifier_imba_mars_bulwark_jupite
 function modifier_imba_mars_bulwark_jupiters_strength:RemoveOnDeath() return false end
 function modifier_imba_mars_bulwark_jupiters_strength:IsPurgable() return false end
 
-function modifier_imba_mars_bulwark_jupiters_strength:DeclareFunctions() return {
-	MODIFIER_EVENT_ON_TAKEDAMAGE,
-} end
-
 function modifier_imba_mars_bulwark_jupiters_strength:OnCreated()
 	if IsServer() then
 		self.duration = self:GetAbility():GetSpecialValueFor("jupiters_strength_duration")
 		self.stack_table = {}
-		self:StartIntervalThink(1.0)
+		self:StartIntervalThink(0.1)
 	end
 end
 
 function modifier_imba_mars_bulwark_jupiters_strength:OnIntervalThink()
-	local repeat_needed = true
+	if not self.stack_table[1] then return end
+	-- Check if the firstmost entry in the table has expired
+	local item_time = self.stack_table[1][1]
+	local stacks = self.stack_table[1][2]
 
-	-- We'll repeat the table removal check and remove as many expired items from it as needed.
-	while repeat_needed do
-		-- Check if the firstmost entry in the table has expired
-		local item_time = self.stack_table[1]
+	if item_time then
+		-- If the difference between times is longer, it's time to get rid of a stack
+		if GameRules:GetGameTime() - item_time >= self.duration then
+			-- Remove the entry from the table
+			table.remove(self.stack_table, 1)
 
-		if item_time then
-			-- If the difference between times is longer, it's time to get rid of a stack
-			if GameRules:GetGameTime() - item_time >= self.duration then
-				-- Check if there is only one stack, which would mean bye bye debuff
-				if self:GetStackCount() == 1 then
-					self:Destroy()
-					break
-				else
-					-- Remove the entry from the table
-					table.remove(self.stack_table, 1)
-
-					-- Decrement a stack
-					self:DecrementStackCount()
-
-					-- Calculate hero status
-					if self:GetParent().CalculateStatBonus then
-						self:GetParent():CalculateStatBonus()
-					end
-				end
-			end
-		else
-			-- If no more items need to be removed, no need to repeat the table
-			repeat_needed = false
+			-- Decrement a stack
+			self:SetStackCount(self:GetStackCount() - stacks)
+			self:GetParent():CalculateStatBonus(true)
 		end
-	end
-end
-
-function modifier_imba_mars_bulwark_jupiters_strength:OnTakeDamage(params)
-	if not IsServer() then return end
-
-	if params.unit == self:GetParent() and params.damage > 0 then
-		local stacks = params.damage * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
-
-		self:SetStackCount(self:GetStackCount() + stacks)
-		self:ForceRefresh()
 	end
 end
 
@@ -1150,7 +1128,7 @@ function modifier_imba_mars_bulwark_jupiters_strength:OnStackCountChanged(prev_s
 	-- We only care about stack incrementals
 	if stacks > prev_stacks then
 		-- Insert the current game time of the stack that was just added to the stack table
-		table.insert(self.stack_table, GameRules:GetGameTime())
+		table.insert(self.stack_table, {GameRules:GetGameTime(), stacks - prev_stacks})
 
 		-- Refresh timer
 --		self:ForceRefresh()
@@ -1382,7 +1360,7 @@ function modifier_imba_mars_arena_of_blood:PlayEffects()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_blocker = class({})
+modifier_imba_mars_arena_of_blood_blocker = modifier_imba_mars_arena_of_blood_blocker or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1724,8 +1702,9 @@ function modifier_imba_mars_arena_of_blood_spear_aura:OnCreated( kv )
 		self:PlayEffects( direction:Normalized() )
 
 		-- knockback if not having spear buff
-		if self:GetParent():HasModifier( "modifier_mars_spear_of_mars_lua" ) then return end
-		if self:GetParent():HasModifier( "modifier_mars_spear_of_mars_lua_debuff" ) then return end
+		if self:GetParent():HasModifier( "modifier_imba_mars_spear" ) then return end
+		if self:GetParent():HasModifier( "modifier_imba_mars_spear_debuff" ) then return end
+
 		self:GetParent():AddNewModifier(
 			self:GetCaster(), -- player source
 			self:GetAbility(), -- ability source
@@ -1823,7 +1802,7 @@ function modifier_imba_mars_arena_of_blood_spear_aura:PlayEffects( direction )
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_thinker = class({})
+modifier_imba_mars_arena_of_blood_thinker = modifier_imba_mars_arena_of_blood_thinker or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications

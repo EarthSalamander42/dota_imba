@@ -202,8 +202,6 @@
 	"item_imba_travel_boots_2"					"REMOVE"
 	"item_imba_cyclone"							"REMOVE"
 	"item_imba_recipe_cyclone"					"REMOVE"
-	"item_imba_plancks_artifact"				"REMOVE"
-	"item_recipe_imba_plancks_artifact"			"REMOVE"
 	"item_nokrash_blade"						"REMOVE"
 	"item_recipe_nokrash_blade"					"REMOVE"
 	"item_imba_haste_boots"						"REMOVE"

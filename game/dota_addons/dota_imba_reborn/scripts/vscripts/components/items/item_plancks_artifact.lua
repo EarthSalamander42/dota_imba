@@ -27,10 +27,6 @@ end
 LinkLuaModifier("modifier_imba_plancks_artifact_basic", "components/items/item_plancks_artifact.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier("modifier_imba_plancks_artifact_unique", "components/items/item_plancks_artifact.lua", LUA_MODIFIER_MOTION_NONE )
 
-function item_imba_plancks_artifact:GetAbilityTextureName()
-	return "custom/imba_plancks_artifact"
-end
-
 function item_imba_plancks_artifact:GetIntrinsicModifierName()
 	return "modifier_imba_plancks_artifact_basic"
 end
@@ -174,10 +170,7 @@ end
 
 -- Remove stacks, respawn time, heal
 function modifier_imba_plancks_artifact_unique:OnDeath(args)
-
-	if not IsServer() then
-		return nil
-	end
+	if not IsServer() then return end
 
 	local stacks = self:GetAbility():GetCurrentCharges()
 	local caster = self:GetAbility():GetCaster()
@@ -202,9 +195,7 @@ function modifier_imba_plancks_artifact_unique:OnDeath(args)
 		-- add stack and set respawn reduction
 		self:GetAbility():SetCurrentCharges(self:GetAbility():GetCurrentCharges() + 1)
 		self:GetAbility():set_respawn_time()
-
 	else
-
 		-- ok if we reincarnate, do nothing
 		if caster:WillReincarnate() then
 			return nil

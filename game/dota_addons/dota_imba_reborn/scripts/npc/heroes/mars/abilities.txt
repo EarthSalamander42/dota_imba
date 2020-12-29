@@ -143,17 +143,18 @@
 		"AbilityTextureName"			"mars_bulwark"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
+
 		"precache"
 		{
 //			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
 			"particle"	"particles/units/heroes/hero_mars/mars_shield_of_mars.vpcf"
 			"particle"	"particles/units/heroes/hero_mars/mars_shield_of_mars_small.vpcf"
 		}
-		
+
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 
 		// Ability Casting
 		//-------------------------------------------------------------------------------------------------------------
