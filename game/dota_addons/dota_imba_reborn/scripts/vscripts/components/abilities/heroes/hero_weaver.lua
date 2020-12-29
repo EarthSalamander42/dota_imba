@@ -571,21 +571,21 @@ function modifier_imba_weaver_geminate_attack_delay:OnCreated(params)
 	
 	self.bonus_damage	= self:GetAbility():GetSpecialValueFor("bonus_damage")
 	
-	if self:GetAbility():GetAutoCastState() and not self:GetParent():IsRooted() then
-		local new_position = self:GetCaster():GetAbsOrigin() + RandomVector((self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D())
+	-- if self:GetAbility():GetAutoCastState() and not self:GetParent():IsRooted() then
+		-- local new_position = self:GetCaster():GetAbsOrigin() + RandomVector((self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D())
 	
-		local geminate_lapse_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_weaver/weaver_timelapse.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-		ParticleManager:SetParticleControl(geminate_lapse_particle, 0, self:GetCaster():GetAbsOrigin())
-		ParticleManager:SetParticleControl(geminate_lapse_particle, 2, new_position)
-		ParticleManager:SetParticleControl(geminate_lapse_particle, 61, Vector(1, 0, 0))
-		ParticleManager:ReleaseParticleIndex(geminate_lapse_particle)
+		-- local geminate_lapse_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_weaver/weaver_timelapse.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+		-- ParticleManager:SetParticleControl(geminate_lapse_particle, 0, self:GetCaster():GetAbsOrigin())
+		-- ParticleManager:SetParticleControl(geminate_lapse_particle, 2, new_position)
+		-- ParticleManager:SetParticleControl(geminate_lapse_particle, 61, Vector(1, 0, 0))
+		-- ParticleManager:ReleaseParticleIndex(geminate_lapse_particle)
 	
-		FindClearSpaceForUnit(self:GetParent(), new_position, false)
-		self:GetParent():SetForwardVector((self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized())
-		GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius(), true)
+		-- FindClearSpaceForUnit(self:GetParent(), new_position, false)
+		-- self:GetParent():SetForwardVector((self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized())
+		-- GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius(), true)
 		
-		ProjectileManager:ProjectileDodge(self:GetParent())
-	end
+		-- ProjectileManager:ProjectileDodge(self:GetParent())
+	-- end
 	
 	if params and params.delay then
 		self:StartIntervalThink(params.delay)

@@ -25,7 +25,7 @@
 "DOTA_Tooltip_ability_imba_weaver_shukuchi_duration"					"DURATION:"
 
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack"						"Geminate Attack"
-"DOTA_Tooltip_ability_imba_weaver_geminate_attack_Description"			"Allows Weaver to dispatch two attacks at once.\n<font color='#FF7800'>Entropic Reposition:</font> Can be set to auto-cast. Activating Geminate Attack with auto-cast on causes Weaver to warp to a random vector around the attacked target (distance between the attacker and target stays the same). Disjoints projectiles, and destroys trees around the warp point."
+"DOTA_Tooltip_ability_imba_weaver_geminate_attack_Description"			"Allows Weaver to dispatch two attacks at once."
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack_Lore"					"Skitskurr's relationship with time is somewhat variable, causing his actions to be witnessed - and felt - more than once."
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack_Note0"						"The second attack leaves Weaver 0.2 seconds after the first, and has no range limit."
 "DOTA_Tooltip_ability_imba_weaver_geminate_attack_tooltip_attack"						"GEMINATE ATTACK COUNT:"
