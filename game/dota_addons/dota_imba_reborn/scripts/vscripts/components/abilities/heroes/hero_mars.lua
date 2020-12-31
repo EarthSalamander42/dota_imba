@@ -29,6 +29,12 @@ function imba_mars_spear:GetAOERadius()
 	return 0
 end
 
+function imba_mars_spear:GetCastRange()
+	if IsClient() then
+		return self:GetVanillaAbilitySpecial("spear_range")
+	end
+end
+
 function imba_mars_spear:OnAbilityPhaseStart()
 	self.autocast = self:GetAutoCastState()
 
@@ -238,9 +244,11 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 	self:AddParticle(pfx, false, false, -1, false, false)
 --]]
 
-	local ground_pfx = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear_ground.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-	ParticleManager:SetParticleControl(ground_pfx, 0, self.initial_pos)
-	ParticleManager:ReleaseParticleIndex(ground_pfx)
+	if self:GetAbility().autocast then
+		local ground_pfx = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear_ground.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(ground_pfx, 0, self.initial_pos)
+		ParticleManager:ReleaseParticleIndex(ground_pfx)
+	end
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -853,17 +861,17 @@ function imba_mars_gods_rebuke:OnSpellStart()
 		end
 	end
 
-	local heroes = 0
+	local heroes_count = 0
 
 	if #enemies > 0 then
 		for k, v in pairs(enemies) do
 			if v:IsRealHero() then
-				heroes = heroes + 1
+				heroes_count = heroes_count + 1
 			end
 		end
 
-		if #heroes > 0 then
-			local stacks = #heroes * self:GetSpecialValueFor("strong_argument_bonus_strength")
+		if heroes_count > 0 then
+			local stacks = heroes_count * self:GetSpecialValueFor("strong_argument_bonus_strength")
 			local mod = caster:FindModifierByName("modifier_imba_mars_gods_rebuke_strong_argument")
 
 

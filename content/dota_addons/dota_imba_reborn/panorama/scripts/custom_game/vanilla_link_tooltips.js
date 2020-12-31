@@ -67,6 +67,8 @@ var AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
 var AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
 var AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
 
+var RangeDisplayPFX = undefined;
+
 DotaHud.style.width = "100%";
 DotaHud.style.height = "100%";
 AbilityLore.style.width = "370px";
@@ -455,6 +457,16 @@ function SetAbilityTooltips(keys) {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
+	$.Msg("Cast Range: ", Abilities.GetCastRange(ability))
+	if (Abilities.GetCastRange(ability) && Abilities.GetCastRange(ability) > 0) {
+		var origin = Entities.GetAbsOrigin(Players.GetLocalPlayerPortraitUnit());
+		$.Msg(origin);
+
+		RangeDisplayPFX = Particles.CreateParticle("particles/ui_mouseactions/range_display.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, Players.GetLocalPlayerPortraitUnit());
+		Particles.SetParticleControl(RangeDisplayPFX, 0, origin);
+		Particles.SetParticleControl(RangeDisplayPFX, 1, [Abilities.GetCastRange(ability), 0, 0]);
+	}
+
 	$.Schedule(1/60, () => {
 		SetTooltipsPosition(keys.hPosition);
 		// repeat or else panel is not at the right position
@@ -529,6 +541,12 @@ function OnThink() {
 function HideTooltips() {
 	$.Schedule(1/60, () => {
 		AbilityDetails.style.opacity = "0";
+
+		$.Msg("RangeDisplayPFX: ", RangeDisplayPFX)
+		if (RangeDisplayPFX != undefined) {
+			Particles.DestroyParticleEffect(RangeDisplayPFX, false);
+			RangeDisplayPFX = undefined;
+		}
 	});
 }
 
