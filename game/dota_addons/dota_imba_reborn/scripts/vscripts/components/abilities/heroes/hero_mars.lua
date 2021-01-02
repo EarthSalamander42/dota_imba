@@ -1884,9 +1884,7 @@ modifier_imba_mars_arena_of_blood_thinker = modifier_imba_mars_arena_of_blood_th
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_arena_of_blood_thinker:IsHidden()
-	return true
-end
+function modifier_imba_mars_arena_of_blood_thinker:IsHidden() return true end
 
 --------------------------------------------------------------------------------
 -- Initializations
@@ -2074,17 +2072,10 @@ modifier_imba_mars_arena_of_blood_wall_aura = class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_arena_of_blood_wall_aura:IsHidden()
-	return true
-end
-
-function modifier_imba_mars_arena_of_blood_wall_aura:IsDebuff()
-	return true
-end
-
-function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgable()
-	return true
-end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsHidden() return true end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsDebuff() return true end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgable() return true end
+function modifier_imba_mars_arena_of_blood_wall_aura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 --------------------------------------------------------------------------------
 -- Initializations
@@ -2104,6 +2095,7 @@ function modifier_imba_mars_arena_of_blood_wall_aura:OnCreated( kv )
 	self.aura_radius = self.radius + self.twice_width
 	self.MAX_SPEED = 550
 	self.MIN_SPEED = 1
+	self.arena_offset = 200
 
 	self.owner = kv.isProvidedByAura~=1
 
@@ -2111,6 +2103,25 @@ function modifier_imba_mars_arena_of_blood_wall_aura:OnCreated( kv )
 		self.aura_origin = Vector( kv.aura_origin_x, kv.aura_origin_y, 0 )
 	else
 		self.aura_origin = self:GetParent():GetOrigin()
+	end
+
+	self.position = self:GetParent():GetAbsOrigin()
+
+	-- Seems like CheckState() interavls aren't fast enough to prevent a sort of "glitchy" effect
+	self:OnIntervalThink()
+	self:StartIntervalThink(FrameTime())
+end
+
+
+function modifier_imba_mars_arena_of_blood_wall_aura:OnIntervalThink()
+	if self:GetAuraOwner() then
+		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() > self.aura_radius - self.arena_offset and (self.position - self:GetParent():GetAbsOrigin()):Length2D() < self.aura_radius then
+			FindClearSpaceForUnit(self:GetParent(), self:GetAuraOwner():GetAbsOrigin() + ((self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Normalized() * self.radius), false)
+		end
+		
+		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() <= self.aura_radius - self.arena_offset then
+			self.position	= self:GetParent():GetAbsOrigin()
+		end
 	end
 end
 
@@ -2131,6 +2142,11 @@ function modifier_imba_mars_arena_of_blood_wall_aura:DeclareFunctions()
 	}
 
 	return funcs
+end
+
+-- IMBAfication: Divine Call (impassable walls)
+function modifier_imba_mars_arena_of_blood_wall_aura:CheckState()
+	return {[MODIFIER_STATE_TETHERED] = true}
 end
 
 function modifier_imba_mars_arena_of_blood_wall_aura:GetModifierMoveSpeed_Limit( params )
@@ -2225,13 +2241,11 @@ end
 
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_enhance", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker_debuff", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
 imba_mars_arena_of_blood_enhance					= imba_mars_arena_of_blood_enhance or class({})
 modifier_imba_mars_arena_of_blood_enhance			= modifier_imba_mars_arena_of_blood_enhance or class({})
 
 modifier_imba_mars_arena_of_blood_thinker			= modifier_imba_mars_arena_of_blood_thinker or class({})
-modifier_imba_mars_arena_of_blood_thinker_debuff	= modifier_imba_mars_arena_of_blood_thinker_debuff or class({})
 
 ----------------------------
 -- Arena of Blood ENHANCE --
@@ -2315,6 +2329,10 @@ function modifier_imba_mars_arena_of_blood_thinker:GetAuraSearchType()		return D
 function modifier_imba_mars_arena_of_blood_thinker:GetModifierAura()		return "modifier_imba_mars_arena_of_blood_thinker_debuff" end
 
 function modifier_imba_mars_arena_of_blood_thinker:GetAuraEntityReject(target)	return target:HasFlyMovementCapability() end
+
+LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker_debuff", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_mars_arena_of_blood_thinker_debuff	= modifier_imba_mars_arena_of_blood_thinker_debuff or class({})
 
 ------------------------------------------------------
 -- MODIFIER_IMBA_MARS_ARENA_OF_BLOOD_THINKER_DEBUFF --

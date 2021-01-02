@@ -108,14 +108,18 @@ function InitTooltips() {
 					var ability_button = ability.FindChildTraverse("AbilityButton");
 
 					(function (ability_button, i) {
-						ability_button.SetPanelEvent("onmouseover", function () {
+						ability_button.SetPanelEvent("onmouseover", function() {
 							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
 							CallTooltips(i);
 						})
-						ability_button.SetPanelEvent("onmouseout", function () {
+
+						ability_button.SetPanelEvent("onmouseout", function() {
+							HideTooltips();
+/*
 							$.Schedule(1/60, () => {
 								HideTooltips();
 							});
+*/
 						})
 					})(ability_button, i);
 
@@ -171,6 +175,9 @@ function SetHTMLNewLine(text) {
 function SetAbilityTooltips(keys) {
 	var ability = Entities.GetAbilityByName(Game.GetLocalPlayerInfo().player_selected_hero_entity_index, keys.sAbilityName);
 //	$.Msg(keys.sAbilityName)
+
+	// Fail-Safe?
+	HideTooltips();
 
 	// HasCooldown // ScepterUpgradable
 
@@ -457,10 +464,10 @@ function SetAbilityTooltips(keys) {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
-	$.Msg("Cast Range: ", Abilities.GetCastRange(ability))
+//	$.Msg("Cast Range: ", Abilities.GetCastRange(ability))
 	if (Abilities.GetCastRange(ability) && Abilities.GetCastRange(ability) > 0) {
 		var origin = Entities.GetAbsOrigin(Players.GetLocalPlayerPortraitUnit());
-		$.Msg(origin);
+//		$.Msg(origin);
 
 		RangeDisplayPFX = Particles.CreateParticle("particles/ui_mouseactions/range_display.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, Players.GetLocalPlayerPortraitUnit());
 		Particles.SetParticleControl(RangeDisplayPFX, 0, origin);
@@ -534,20 +541,17 @@ function OnThink() {
 		}
 	}
 
-
 	$.Schedule(0.03, OnThink);
 }
 
 function HideTooltips() {
-	$.Schedule(1/60, () => {
-		AbilityDetails.style.opacity = "0";
+	AbilityDetails.style.opacity = "0";
 
-		$.Msg("RangeDisplayPFX: ", RangeDisplayPFX)
-		if (RangeDisplayPFX != undefined) {
-			Particles.DestroyParticleEffect(RangeDisplayPFX, false);
-			RangeDisplayPFX = undefined;
-		}
-	});
+//	$.Msg("RangeDisplayPFX: ", RangeDisplayPFX)
+	if (RangeDisplayPFX != undefined) {
+		Particles.DestroyParticleEffect(RangeDisplayPFX, false);
+		RangeDisplayPFX = undefined;
+	}
 }
 
 // utils
