@@ -940,7 +940,7 @@ end
 -- function modifier_imba_tower_toughness_aura_buff:OnIntervalThink()
 	-- if IsServer() then
 		-- if not self:GetParent():IsNull() then
-			-- self:GetParent():CalculateStatBonus()
+			-- self:GetParent():CalculateStatBonus(true)
 		-- end
 	-- end
 -- end
@@ -3039,7 +3039,7 @@ function modifier_imba_tower_essence_drain_debuff:OnIntervalThink()
 
 			-- Recalculate bonus based on new stack count
 			if self:GetParent().CalculateStatBonus then
-				self:GetParent():CalculateStatBonus()
+				self:GetParent():CalculateStatBonus(true)
 			end
 
 			-- If there are no stacks on the table, just remove the modifier.
@@ -3151,7 +3151,7 @@ function modifier_imba_tower_essence_drain_buff:OnIntervalThink()
 
 			-- Recalculate bonus based on new stack count
 			if self:GetParent().CalculateStatBonus then
-				self:GetParent():CalculateStatBonus()
+				self:GetParent():CalculateStatBonus(true)
 			end
 
 			-- If there are no stacks on the table, just remove the modifier.

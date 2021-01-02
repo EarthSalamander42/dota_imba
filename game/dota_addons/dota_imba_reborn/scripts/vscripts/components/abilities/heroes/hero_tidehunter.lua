@@ -380,11 +380,11 @@ function modifier_imba_tidehunter_kraken_shell:OnIntervalThink()
 	
 	-- Calculate stat bonuses
 	if not self.bInRiver and self:GetParent():GetAbsOrigin().z < 160 then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 		
 		self.bInRiver = true
 	elseif self.bInRiver and self:GetParent():GetAbsOrigin().z >= 160 then
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 		
 		self.bInRiver = false
 	end

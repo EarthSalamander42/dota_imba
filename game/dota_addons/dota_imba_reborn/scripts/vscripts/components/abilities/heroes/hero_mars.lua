@@ -22,12 +22,17 @@ LinkLuaModifier( "modifier_imba_mars_spear_trailblazer_thinker", "components/abi
 --------------------------------------------------------------------------------
 
 function imba_mars_spear:GetAOERadius()
-	print(self:GetAutoCastState())
 	if self:GetAutoCastState() then
 		return self:GetSpecialValueFor("heaven_spear_radius")
 	end
 
 	return 0
+end
+
+function imba_mars_spear:GetCastRange()
+	if IsClient() then
+		return self:GetVanillaAbilitySpecial("spear_range")
+	end
 end
 
 function imba_mars_spear:OnAbilityPhaseStart()
@@ -51,12 +56,14 @@ function imba_mars_spear:OnSpellStart()
 	local projectile_speed = self:GetVanillaAbilitySpecial("spear_speed")
 	local projectile_radius = self:GetVanillaAbilitySpecial("spear_width")
 	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
+	local heaven_spear_delay = self:GetSpecialValueFor("heaven_spear_delay")
 	self.trailblazer_particles = {}
 
 	if not IsServer() then return end
 
 	if self.autocast then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_spear_heaven_spear", {duration = projectile_distance / projectile_speed})
+		local duration = projectile_distance / projectile_speed + heaven_spear_delay
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_spear_heaven_spear", {duration = duration})
 	else
 		-- calculate direction
 		local direction = point - self:GetCaster():GetOrigin()
@@ -123,13 +130,17 @@ function modifier_imba_mars_spear_heaven_spear:OnCreated()
 	self.knockback_radius = self:GetAbility():GetSpecialValueFor("heaven_spear_knockback")
 	self.stun_duration = self:GetAbility():GetVanillaAbilitySpecial("stun_duration")
 	self.knockback_duration = self:GetAbility():GetSpecialValueFor("heaven_spear_duration")
+	self.delay = self:GetAbility():GetSpecialValueFor("heaven_spear_delay")
+	self.height = 700
+	self.travel_time = self:GetDuration() - self.delay
 
 	-- add viewer
 	AddFOWViewer( self:GetCaster():GetTeamNumber(), self.origin, self.radius, self.stun_duration, false)
 
-	local pre_spear = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self:GetCaster())
-	ParticleManager:SetParticleControl(pre_spear, 0, self:GetAbility():GetCursorPosition()) 
-	ParticleManager:SetParticleControl(pre_spear, 1, Vector(self.radius, 0, 0))
+	local pre_spear = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
+--	ParticleManager:SetParticleControl(pre_spear, 0, self.origin)
+	ParticleManager:SetParticleControl(pre_spear, 1, Vector(self.height, self.delay, self.travel_time))
+	ParticleManager:SetParticleControl(pre_spear, 2, self.origin)
 	self:AddParticle(pre_spear, false, false, -1, false, false)
 end
 
@@ -150,18 +161,13 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 
 	local hero_found = 0
 
-	local sun_strike_crater = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_CUSTOMORIGIN, nil)
-	ParticleManager:SetParticleControl(sun_strike_crater, 0, self.origin)
-	ParticleManager:SetParticleControl(sun_strike_crater, 1, Vector(self.radius, 0, 0))
-	ParticleManager:ReleaseParticleIndex(sun_strike_crater)
-
 	if #units > 0 then
 		for k, v in pairs(units) do
 			if v:IsConsideredHero() and hero_found < 1 then -- includes IsRealHero()
 				hero_found = hero_found + 1
 
 				v:SetAbsOrigin(self.origin)
-				v:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_mars_spear_debuff", {duration = self.stun_duration})
+				v:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_mars_spear_debuff", {duration = self.stun_duration, heaven_spear = 1})
 				EmitSoundOn("Hero_Mars.Spear.Root", v)
 			else
 				local enemy_direction = (v:GetOrigin() - self.origin):Normalized()
@@ -230,11 +236,19 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 
 	self.initial_pos = self:GetParent():GetAbsOrigin()
 
+--[[
 	local pfx = ParticleManager:CreateParticle("particles/econ/items/batrider/batrider_ti8_immortal_mount/batrider_ti8_immortal_firefly.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent())
 	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
 	ParticleManager:SetParticleControl(pfx, 0, self.initial_pos)
 	ParticleManager:SetParticleControl(pfx, 11, Vector(1, 0, 0))
 	self:AddParticle(pfx, false, false, -1, false, false)
+--]]
+
+	if self:GetAbility().autocast then
+		local ground_pfx = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear_ground.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(ground_pfx, 0, self.initial_pos)
+		ParticleManager:ReleaseParticleIndex(ground_pfx)
+	end
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -264,7 +278,7 @@ end
 
 function modifier_imba_mars_spear_trailblazer_thinker:OnDestroy()
 	if not IsServer() then return end
-	
+
 	self:GetParent():RemoveSelf()
 
 	if self:GetAbility() then
@@ -688,6 +702,7 @@ end
 -- Initializations
 function modifier_imba_mars_spear_debuff:OnCreated( kv )
 	if not IsServer() then return end
+
 	self.projectile = kv.projectile
 end
 
@@ -696,6 +711,7 @@ end
 
 function modifier_imba_mars_spear_debuff:OnRemoved()
 	if not IsServer() then return end
+
 	-- destroy tree
 	GridNav:DestroyTreesAroundPoint( self:GetParent():GetOrigin(), 120, false )
 end
@@ -755,6 +771,7 @@ Ability checklist (erase if done/checked):
 --------------------------------------------------------------------------------
 imba_mars_gods_rebuke = imba_mars_gods_rebuke or class({})
 LinkLuaModifier( "modifier_imba_mars_gods_rebuke", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_mars_gods_rebuke_strong_argument", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -763,9 +780,15 @@ function imba_mars_gods_rebuke:OnSpellStart()
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
 
+	local mod = caster:FindModifierByName("modifier_imba_mars_bulwark_active")
+
+	if mod then
+		point = caster:GetAbsOrigin() + mod.forward_vector
+	end
+
 	-- load data
 	local radius = self:GetVanillaAbilitySpecial("radius")
-	local angle = self:GetVanillaAbilitySpecial("angle")/2
+	local angle = self:GetVanillaAbilitySpecial("angle") / 2
 	local duration = self:GetVanillaAbilitySpecial("knockback_duration")
 	local distance = self:GetVanillaAbilitySpecial("knockback_distance")
 
@@ -797,12 +820,14 @@ function imba_mars_gods_rebuke:OnSpellStart()
 
 	-- for each units
 	local caught = false
+
 	for _,enemy in pairs(enemies) do
 		-- check within cast angle
 		local enemy_direction = (enemy:GetOrigin() - origin):Normalized()
 		local enemy_angle = VectorToAngles( enemy_direction ).y
 		local angle_diff = math.abs( AngleDiff( cast_angle, enemy_angle ) )
-		if angle_diff<=angle then
+
+		if angle_diff <= angle then
 			-- attack
 			caster:PerformAttack(
 				enemy,
@@ -831,9 +856,34 @@ function imba_mars_gods_rebuke:OnSpellStart()
 				)
 			end
 
-			caught = true
 			-- play effects
 			self:PlayEffects2( enemy, origin, cast_direction )
+		end
+	end
+
+	local heroes_count = 0
+
+	if #enemies > 0 then
+		for k, v in pairs(enemies) do
+			if v:IsRealHero() then
+				heroes_count = heroes_count + 1
+			end
+		end
+
+		if heroes_count > 0 then
+			local stacks = heroes_count * self:GetSpecialValueFor("strong_argument_bonus_strength")
+			local mod = caster:FindModifierByName("modifier_imba_mars_gods_rebuke_strong_argument")
+
+
+			if not mod then
+				caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
+			else
+				mod:SetStackCount(mod:GetStackCount() + stacks)
+				mod:SetDuration(self:GetSpecialValueFor("strong_argument_duration"), true)
+			end
+
+			caught = true
+			caster:CalculateStatBonus(true)
 		end
 	end
 
@@ -841,7 +891,7 @@ function imba_mars_gods_rebuke:OnSpellStart()
 	buff:Destroy()
 
 	-- play effects
-	self:PlayEffects1( caught, (point-origin):Normalized() )
+	self:PlayEffects1(caught, (point - origin):Normalized())
 end
 
 --------------------------------------------------------------------------------
@@ -850,7 +900,7 @@ function imba_mars_gods_rebuke:PlayEffects1( caught, direction )
 	-- Get Resources
 	local particle_cast = "particles/units/heroes/hero_mars/mars_shield_bash.vpcf"
 	local sound_cast = "Hero_Mars.Shield.Cast"
-	if not caught then
+	if caught == false then
 		local sound_cast = "Hero_Mars.Shield.Cast.Small"
 	end
 
@@ -885,17 +935,9 @@ modifier_imba_mars_gods_rebuke = modifier_imba_mars_gods_rebuke or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_gods_rebuke:IsHidden()
-	return true
-end
-
-function modifier_imba_mars_gods_rebuke:IsDebuff()
-	return false
-end
-
-function modifier_imba_mars_gods_rebuke:IsPurgable()
-	return false
-end
+function modifier_imba_mars_gods_rebuke:IsHidden() return true end
+function modifier_imba_mars_gods_rebuke:IsDebuff() return false end
+function modifier_imba_mars_gods_rebuke:IsPurgable() return false end
 
 --------------------------------------------------------------------------------
 -- Initializations
@@ -903,6 +945,12 @@ function modifier_imba_mars_gods_rebuke:OnCreated( kv )
 	-- references
 	self.bonus_damage = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_vs_heroes" )
 	self.bonus_crit = self:GetAbility():GetVanillaAbilitySpecial( "crit_mult" )
+
+	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
+
+	if mod then
+		self.bonus_damage = self.bonus_damage + mod:GetStackCount()
+	end
 end
 
 function modifier_imba_mars_gods_rebuke:OnRefresh( kv )
@@ -934,22 +982,52 @@ function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_CriticalStrike( par
 end
 
 --------------------------------------------------------------------------------
-imba_mars_bulwark = imba_mars_bulwark or class({})
-LinkLuaModifier( "modifier_imba_mars_bulwark", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+modifier_imba_mars_gods_rebuke_strong_argument = modifier_imba_mars_gods_rebuke_strong_argument or class({})
+
+function modifier_imba_mars_gods_rebuke_strong_argument:DeclareFunctions() return {
+	MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+} end
+
+function modifier_imba_mars_gods_rebuke_strong_argument:GetModifierBonusStats_Strength()
+	return self:GetStackCount()
+end
 
 --------------------------------------------------------------------------------
--- Passive Modifier
+LinkLuaModifier( "modifier_imba_mars_bulwark", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+-- Using vanilla modifier for now
+LinkLuaModifier( "modifier_imba_mars_bulwark_active", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_mars_bulwark_jupiters_strength", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+
+imba_mars_bulwark = imba_mars_bulwark or class({})
+
+--------------------------------------------------------------------------------
+
+function imba_mars_bulwark:IsStealable()			return false end
+function imba_mars_bulwark:ResetToggleOnRespawn()	return true end
+
 function imba_mars_bulwark:GetIntrinsicModifierName()
 	return "modifier_imba_mars_bulwark"
 end
 
---------------------------------------------------------------------------------
-modifier_imba_mars_bulwark = class({})
+function imba_mars_bulwark:OnToggle()
+	if self:GetToggleState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_mars_bulwark_active", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_bulwark_active", {})
+	else
+		self:GetCaster():RemoveModifierByName("modifier_mars_bulwark_active")
+		self:GetCaster():RemoveModifierByName("modifier_imba_mars_bulwark_active")
+	end
+end
 
 --------------------------------------------------------------------------------
+
+modifier_imba_mars_bulwark = modifier_imba_mars_bulwark or class({})
+
+--------------------------------------------------------------------------------
+
 -- Classifications
 function modifier_imba_mars_bulwark:IsHidden()
-	return false
+	return true
 end
 
 function modifier_imba_mars_bulwark:IsDebuff()
@@ -975,6 +1053,7 @@ function modifier_imba_mars_bulwark:OnCreated( kv )
 
 	if IsServer() then
 		self.parent = self:GetParent()
+		self.parent:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {})
 	end
 end
 
@@ -1024,13 +1103,19 @@ function modifier_imba_mars_bulwark:GetModifierPhysical_ConstantBlock( params )
 	if angle_diff < self.angle_front then
 		reduction = self.reduction_front
 		self:PlayEffects( true, attacker_vector )
-
 	elseif angle_diff < self.angle_side then
 		reduction = self.reduction_side
 		self:PlayEffects( false, attacker_vector )
 	end
 
-	return reduction*params.damage/100
+	local damage_blocked = reduction * params.damage / 100
+
+	local stacks = damage_blocked * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
+	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
+
+	mod:SetStackCount(mod:GetStackCount() + stacks)
+
+	return damage_blocked
 end
 --------------------------------------------------------------------------------
 -- Graphics & Animations
@@ -1050,6 +1135,82 @@ function modifier_imba_mars_bulwark:PlayEffects( front )
 
 	-- Create Sound
 	EmitSoundOn( sound_cast, self:GetParent() )
+end
+
+modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class({})
+
+function modifier_imba_mars_bulwark_active:DeclareFunctions() return {
+	MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+} end
+
+function modifier_imba_mars_bulwark_active:OnCreated()
+	if not IsServer() then return end
+
+	self.forward_vector = self:GetParent():GetForwardVector()
+
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_mars_bulwark_active:OnIntervalThink()
+	self:GetParent():SetForwardVector(self.forward_vector)
+end
+
+function modifier_imba_mars_bulwark_active:OnAbilityFullyCast(params)
+	if not IsServer() then return end
+
+	if params.ability and params.ability.GetAbilityName and params.unit == self:GetParent() then
+		if params.ability:GetAbilityName() == "imba_mars_spear" then
+			print("Spear cast, disable Bulwark")
+			self:GetAbility():ToggleAbility()
+		end
+	end
+end
+
+modifier_imba_mars_bulwark_jupiters_strength = modifier_imba_mars_bulwark_jupiters_strength or class({})
+
+function modifier_imba_mars_bulwark_jupiters_strength:RemoveOnDeath() return false end
+function modifier_imba_mars_bulwark_jupiters_strength:IsPurgable() return false end
+
+function modifier_imba_mars_bulwark_jupiters_strength:OnCreated()
+	if IsServer() then
+		self.duration = self:GetAbility():GetSpecialValueFor("jupiters_strength_duration")
+		self.stack_table = {}
+		self:StartIntervalThink(0.1)
+	end
+end
+
+function modifier_imba_mars_bulwark_jupiters_strength:OnIntervalThink()
+	if not self.stack_table[1] then return end
+	-- Check if the firstmost entry in the table has expired
+	local item_time = self.stack_table[1][1]
+	local stacks = self.stack_table[1][2]
+
+	if item_time then
+		-- If the difference between times is longer, it's time to get rid of a stack
+		if GameRules:GetGameTime() - item_time >= self.duration then
+			-- Remove the entry from the table
+			table.remove(self.stack_table, 1)
+
+			-- Decrement a stack
+			self:SetStackCount(self:GetStackCount() - stacks)
+			self:GetParent():CalculateStatBonus(true)
+		end
+	end
+end
+
+function modifier_imba_mars_bulwark_jupiters_strength:OnStackCountChanged(prev_stacks)
+	if not IsServer() then return end
+
+	local stacks = self:GetStackCount()
+
+	-- We only care about stack incrementals
+	if stacks > prev_stacks then
+		-- Insert the current game time of the stack that was just added to the stack table
+		table.insert(self.stack_table, {GameRules:GetGameTime(), stacks - prev_stacks})
+
+		-- Refresh timer
+--		self:ForceRefresh()
+	end
 end
 
 --[[
@@ -1277,7 +1438,7 @@ function modifier_imba_mars_arena_of_blood:PlayEffects()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_blocker = class({})
+modifier_imba_mars_arena_of_blood_blocker = modifier_imba_mars_arena_of_blood_blocker or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1619,8 +1780,9 @@ function modifier_imba_mars_arena_of_blood_spear_aura:OnCreated( kv )
 		self:PlayEffects( direction:Normalized() )
 
 		-- knockback if not having spear buff
-		if self:GetParent():HasModifier( "modifier_mars_spear_of_mars_lua" ) then return end
-		if self:GetParent():HasModifier( "modifier_mars_spear_of_mars_lua_debuff" ) then return end
+		if self:GetParent():HasModifier( "modifier_imba_mars_spear" ) then return end
+		if self:GetParent():HasModifier( "modifier_imba_mars_spear_debuff" ) then return end
+
 		self:GetParent():AddNewModifier(
 			self:GetCaster(), -- player source
 			self:GetAbility(), -- ability source
@@ -1718,13 +1880,11 @@ function modifier_imba_mars_arena_of_blood_spear_aura:PlayEffects( direction )
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_thinker = class({})
+modifier_imba_mars_arena_of_blood_thinker = modifier_imba_mars_arena_of_blood_thinker or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_arena_of_blood_thinker:IsHidden()
-	return true
-end
+function modifier_imba_mars_arena_of_blood_thinker:IsHidden() return true end
 
 --------------------------------------------------------------------------------
 -- Initializations
@@ -1912,17 +2072,10 @@ modifier_imba_mars_arena_of_blood_wall_aura = class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_arena_of_blood_wall_aura:IsHidden()
-	return true
-end
-
-function modifier_imba_mars_arena_of_blood_wall_aura:IsDebuff()
-	return true
-end
-
-function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgable()
-	return true
-end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsHidden() return true end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsDebuff() return true end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgable() return true end
+function modifier_imba_mars_arena_of_blood_wall_aura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 --------------------------------------------------------------------------------
 -- Initializations
@@ -1942,6 +2095,7 @@ function modifier_imba_mars_arena_of_blood_wall_aura:OnCreated( kv )
 	self.aura_radius = self.radius + self.twice_width
 	self.MAX_SPEED = 550
 	self.MIN_SPEED = 1
+	self.arena_offset = 200
 
 	self.owner = kv.isProvidedByAura~=1
 
@@ -1949,6 +2103,25 @@ function modifier_imba_mars_arena_of_blood_wall_aura:OnCreated( kv )
 		self.aura_origin = Vector( kv.aura_origin_x, kv.aura_origin_y, 0 )
 	else
 		self.aura_origin = self:GetParent():GetOrigin()
+	end
+
+	self.position = self:GetParent():GetAbsOrigin()
+
+	-- Seems like CheckState() interavls aren't fast enough to prevent a sort of "glitchy" effect
+	self:OnIntervalThink()
+	self:StartIntervalThink(FrameTime())
+end
+
+
+function modifier_imba_mars_arena_of_blood_wall_aura:OnIntervalThink()
+	if self:GetAuraOwner() then
+		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() > self.aura_radius - self.arena_offset and (self.position - self:GetParent():GetAbsOrigin()):Length2D() < self.aura_radius then
+			FindClearSpaceForUnit(self:GetParent(), self:GetAuraOwner():GetAbsOrigin() + ((self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Normalized() * self.radius), false)
+		end
+		
+		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() <= self.aura_radius - self.arena_offset then
+			self.position	= self:GetParent():GetAbsOrigin()
+		end
 	end
 end
 
@@ -1969,6 +2142,11 @@ function modifier_imba_mars_arena_of_blood_wall_aura:DeclareFunctions()
 	}
 
 	return funcs
+end
+
+-- IMBAfication: Divine Call (impassable walls)
+function modifier_imba_mars_arena_of_blood_wall_aura:CheckState()
+	return {[MODIFIER_STATE_TETHERED] = true}
 end
 
 function modifier_imba_mars_arena_of_blood_wall_aura:GetModifierMoveSpeed_Limit( params )
@@ -2063,13 +2241,11 @@ end
 
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_enhance", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker_debuff", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
 imba_mars_arena_of_blood_enhance					= imba_mars_arena_of_blood_enhance or class({})
 modifier_imba_mars_arena_of_blood_enhance			= modifier_imba_mars_arena_of_blood_enhance or class({})
 
 modifier_imba_mars_arena_of_blood_thinker			= modifier_imba_mars_arena_of_blood_thinker or class({})
-modifier_imba_mars_arena_of_blood_thinker_debuff	= modifier_imba_mars_arena_of_blood_thinker_debuff or class({})
 
 ----------------------------
 -- Arena of Blood ENHANCE --
@@ -2153,6 +2329,10 @@ function modifier_imba_mars_arena_of_blood_thinker:GetAuraSearchType()		return D
 function modifier_imba_mars_arena_of_blood_thinker:GetModifierAura()		return "modifier_imba_mars_arena_of_blood_thinker_debuff" end
 
 function modifier_imba_mars_arena_of_blood_thinker:GetAuraEntityReject(target)	return target:HasFlyMovementCapability() end
+
+LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker_debuff", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_mars_arena_of_blood_thinker_debuff	= modifier_imba_mars_arena_of_blood_thinker_debuff or class({})
 
 ------------------------------------------------------
 -- MODIFIER_IMBA_MARS_ARENA_OF_BLOOD_THINKER_DEBUFF --

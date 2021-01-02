@@ -887,7 +887,7 @@ function modifier_imba_fiery_soul_counter:OnDestroy()
 	end
 	self:GetAbility().GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 	self:GetAbility():GetBehavior()
-	self:GetAbility():GetCooldown()
+	self:GetAbility():GetCooldown(self:GetAbility():GetLevel())
 end
 
 function modifier_imba_fiery_soul_counter:GetTexture()

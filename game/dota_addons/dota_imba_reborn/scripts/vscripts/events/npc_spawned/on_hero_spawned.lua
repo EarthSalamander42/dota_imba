@@ -20,6 +20,24 @@ function GameMode:OnHeroFirstSpawn(hero)
 	-- Track the time the unit spawned (for IMBAfications or other custom checks)
 	hero.time_spawned = GameRules:GetGameTime()
 
+--[[
+	if IsInToolsMode() then
+		if hero:GetUnitName() == "npc_dota_hero_mars" then
+			Timers:CreateTimer(1.0, function()
+				local modifiers = hero:FindAllModifiers()
+
+				for _, modifier in pairs(modifiers) do
+					if modifier.GetName then
+						print(modifier:GetName())
+					end
+				end
+
+				return 1.0
+			end)
+		end
+	end
+--]]
+
 	if hero:IsIllusion() then
 		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 		return

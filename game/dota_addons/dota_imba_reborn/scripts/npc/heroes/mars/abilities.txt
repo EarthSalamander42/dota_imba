@@ -27,7 +27,7 @@
 		
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -51,19 +51,24 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"heaven_spear_duration"		"0.5"
+				"heaven_spear_duration"		"0.3" // Knockback duration
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trailblazer_duration"		"6.0"
+				"heaven_spear_delay"		"0.3" // delay before start going down
 			}
 			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trailblazer_duration"		"6.0"
+			}
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trailblazer_radius"		"150"
 			}
-			"06"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trailblazer_damage_pct"	"25"
@@ -85,7 +90,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
 		"AbilityTextureName"			"mars_gods_rebuke"
 		"FightRecapLevel"				"1"
-		"MaxLevel"						"4"
+
 		"precache"
 		{
 //			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
@@ -95,7 +100,6 @@
 		
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -112,50 +116,21 @@
 		"AbilityCooldown"				"16 14 12 10"
 		"AbilityManaCost"				"55 60 65 70"
 
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_mult"					"160 200 240 280"
+				"var_type"							"FIELD_INTEGER"
+				"strong_argument_bonus_strength"	"2 4 6 8"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"angle"						"140"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"500"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"knockback_duration"		"0.3"
-			}			
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"knockback_distance"		"150"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"activity_duration"			"2"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_vs_heroes"	"25"
+				"var_type"						"FIELD_FLOAT"
+				"strong_argument_duration"		"6.0"
 			}
 		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 	}
 
 	//=================================================================================================================
@@ -171,27 +146,17 @@
 		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
 		"AbilityTextureName"			"mars_bulwark"
 		"FightRecapLevel"				"1"
-		"MaxLevel"						"4"
+
 		"precache"
 		{
 //			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
 			"particle"	"particles/units/heroes/hero_mars/mars_shield_of_mars.vpcf"
 			"particle"	"particles/units/heroes/hero_mars/mars_shield_of_mars_small.vpcf"
 		}
-		
+
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Ability Casting
-		//-------------------------------------------------------------------------------------------------------------
-
-		// Ability Resource
-		//-------------------------------------------------------------------------------------------------------------
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -199,23 +164,13 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"physical_damage_reduction"		"25 40 55 70"
+				"var_type"								"FIELD_INTEGER"
+				"jupiters_strength_stored_damage_pct"	"50" // %
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"forward_angle"					"140"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"physical_damage_reduction_side"	"12 20 27 35"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"side_angle"					"240"
+				"var_type"						"FIELD_FLOAT"
+				"jupiters_strength_duration"	"10.0"
 			}
 		}
 	}

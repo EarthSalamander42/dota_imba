@@ -10,6 +10,6 @@
 	</styles>
 
 	<DOTATooltipAbility class="AbilityContents" hittest="false">
-		<DOTAAbilityDetails id="AbilityDetails" />
+		<DOTAAbilityDetails id="AbilityDetails"/>
 	</DOTATooltipAbility>
 </root>

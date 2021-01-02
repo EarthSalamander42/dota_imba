@@ -67,6 +67,8 @@ var AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
 var AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
 var AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
 
+var RangeDisplayPFX = undefined;
+
 DotaHud.style.width = "100%";
 DotaHud.style.height = "100%";
 AbilityLore.style.width = "370px";
@@ -86,8 +88,9 @@ function OverrideAbilityTooltips(sAbilityName) {
 }
 
 var eligible_heroes = [
-	"npc_dota_hero_abaddon",	
-	"npc_dota_hero_mars",	
+	"npc_dota_hero_abaddon",
+	"npc_dota_hero_earth_spirit",
+	"npc_dota_hero_mars",
 ];
 
 function InitTooltips() {
@@ -105,12 +108,18 @@ function InitTooltips() {
 					var ability_button = ability.FindChildTraverse("AbilityButton");
 
 					(function (ability_button, i) {
-						ability_button.SetPanelEvent("onmouseover", function () {
+						ability_button.SetPanelEvent("onmouseover", function() {
 							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
 							CallTooltips(i);
 						})
-						ability_button.SetPanelEvent("onmouseout", function () {
+
+						ability_button.SetPanelEvent("onmouseout", function() {
 							HideTooltips();
+/*
+							$.Schedule(1/60, () => {
+								HideTooltips();
+							});
+*/
 						})
 					})(ability_button, i);
 
@@ -166,6 +175,9 @@ function SetHTMLNewLine(text) {
 function SetAbilityTooltips(keys) {
 	var ability = Entities.GetAbilityByName(Game.GetLocalPlayerInfo().player_selected_hero_entity_index, keys.sAbilityName);
 //	$.Msg(keys.sAbilityName)
+
+	// Fail-Safe?
+	HideTooltips();
 
 	// HasCooldown // ScepterUpgradable
 
@@ -452,11 +464,22 @@ function SetAbilityTooltips(keys) {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
+//	$.Msg("Cast Range: ", Abilities.GetCastRange(ability))
+	if (Abilities.GetCastRange(ability) && Abilities.GetCastRange(ability) > 0) {
+		var origin = Entities.GetAbsOrigin(Players.GetLocalPlayerPortraitUnit());
+//		$.Msg(origin);
+
+		RangeDisplayPFX = Particles.CreateParticle("particles/ui_mouseactions/range_display.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, Players.GetLocalPlayerPortraitUnit());
+		Particles.SetParticleControl(RangeDisplayPFX, 0, origin);
+		Particles.SetParticleControl(RangeDisplayPFX, 1, [Abilities.GetCastRange(ability), 0, 0]);
+	}
+
 	$.Schedule(1/60, () => {
 		SetTooltipsPosition(keys.hPosition);
 		// repeat or else panel is not at the right position
 		$.Schedule(1/60, () => {
 			SetTooltipsPosition(keys.hPosition);
+			AbilityDetails.style.opacity = "1";
 		});
 	});
 }
@@ -484,8 +507,6 @@ function SetTooltipsPosition(hPosition) {
 		offset_y = aspect_ratio[2];
 	}
 
-	AbilityDetails.style.opacity = "1";
-
 //	$.Msg("Screen size: ", AbilityDetails.GetParent().actuallayoutwidth, " / ", AbilityDetails.GetParent().actuallayoutheight)
 //	$.Msg("Tooltip size:", AbilityDetails.actuallayoutwidth, " / ", AbilityDetails.actuallayoutheight)
 //	$.Msg("Tooltip position: ", position_x, " / ", position_y)
@@ -499,7 +520,7 @@ function SetTooltipsPosition(hPosition) {
 
 //	$.Msg("Off-screen height? ", full_y > AbilityDetails.GetParent().actuallayoutheight, " / ", full_y, " / ", AbilityDetails.GetParent().actuallayoutheight)
 	if (full_y > AbilityDetails.GetParent().actuallayoutheight)
-		offset_y = ((full_y) - (AbilityDetails.GetParent().actuallayoutheight)) * (-1) - 10; // -10 so it's not tied to the border of the screen
+		offset_y = ((full_y) - (AbilityDetails.GetParent().actuallayoutheight)) * (-1) - 20; // -20 so it's not tied to the border of the screen
 
 //	$.Msg("---------------------------------------------------------------------")
 
@@ -520,14 +541,17 @@ function OnThink() {
 		}
 	}
 
-
 	$.Schedule(0.03, OnThink);
 }
 
 function HideTooltips() {
-	$.Schedule(1/60, () => {
-		AbilityDetails.style.opacity = "0";
-	});
+	AbilityDetails.style.opacity = "0";
+
+//	$.Msg("RangeDisplayPFX: ", RangeDisplayPFX)
+	if (RangeDisplayPFX != undefined) {
+		Particles.DestroyParticleEffect(RangeDisplayPFX, false);
+		RangeDisplayPFX = undefined;
+	}
 }
 
 // utils

@@ -107,7 +107,7 @@
 
 						<Label id="loading-description-text" />
 
-						<Button class="vote-button">
+						<Button class="vote-button" onactivate="DOTADisplayURL('https://frostrose-studio.com')">
 							<Label class="vote-button-label" text="#loading_screen_button" />
 						</Button>
 					</Panel>
@@ -203,18 +203,18 @@
 					</Panel>
 
 					<Panel class="bottom-transifex-container">
-						<Button class="vote-button">
+						<Button class="vote-button" onactivate="DOTADisplayURL('https://www.transifex.com/frostrose-studio/dota-imba/')">
 							<Label class="vote-button-label" text="#loading_screen_promote_button" />
 						</Button>
 					</Panel>
 
 					<Panel class="bottom-patreon-container">
-						<Button class="loading-link-patreon">
-							<Label class="vote-button-label" />
-						</Button>
-
 						<!-- Filled Dynamically -->
 						<Panel class="bottom-patreon-sub"/>
+
+						<Button class="loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325')">
+							<Label class="vote-button-label" />
+						</Button>
 					</Panel>
 				</Panel>
 			</Panel>

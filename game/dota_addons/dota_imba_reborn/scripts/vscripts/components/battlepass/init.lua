@@ -1,5 +1,5 @@
 -- Copyright (C) 2018  The Dota IMBA Development Team
--- Battlpeass System for Dota IMBA
+-- Battlepass System for Dota IMBA
 
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
@@ -12,10 +12,10 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		require('components/battlepass/experience')
 		require('components/battlepass/keyvalues/items_game')
 
-		if CUSTOM_GAME_TYPE ~= "POG" then
-			require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
-			Battlepass:Init()
-		end
+		require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
+		Battlepass:Init()
+
+		CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 	end
 end, nil)
 

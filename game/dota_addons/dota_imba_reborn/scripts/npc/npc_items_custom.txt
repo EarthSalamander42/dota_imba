@@ -100,7 +100,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"Model"							"models/props_gameplay/halloween_candy.mdl"
+		"Model"							"models/props_gameplay/halloween_candy.vmdl"
 		"Effect"						"particles/generic_gameplay/dropped_gem.vpcf"
 
 		// Sound
@@ -162,7 +162,7 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_magic_stick"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"Model"							"models/props_gameplay/magic_wand.mdl"
+		"Model"							"models/props_gameplay/magic_wand.vmdl"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -262,7 +262,7 @@
 		"ID"							"2000"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -290,7 +290,7 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_magic_wand"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"Model"							"models/props_gameplay/magic_wand.mdl"
+		"Model"							"models/props_gameplay/magic_wand.vmdl"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -425,7 +425,7 @@
 		"ID"							"2005"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -599,7 +599,7 @@
 		"ID"							"2013"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -708,7 +708,7 @@
 		"ID"							"2122"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -854,7 +854,7 @@
 		"ID"							"2017"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -879,7 +879,7 @@
 		"ID"							"2018"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1056,7 +1056,7 @@
 		"ID"							"2027"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1174,7 +1174,7 @@
 		"ID"							"2029"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1279,7 +1279,7 @@
 		"ID"							"2139"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1405,7 +1405,7 @@
 		"ID"							"2037"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1429,7 +1429,7 @@
 		"ID"							"2038"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1453,7 +1453,7 @@
 		"ID"							"2039"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1477,7 +1477,7 @@
 		"ID"							"2040"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1501,7 +1501,7 @@
 		"ID"							"2041"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1868,7 +1868,7 @@
 		"ID"							"2044"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1989,7 +1989,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2047"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityTextureName" 			"custom/imba_necronomicon"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
@@ -2094,51 +2095,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"1"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	"item_imba_necronomicon_2"
@@ -2146,7 +2102,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2048"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityTextureName" 			"custom/imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
@@ -2251,51 +2208,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"2"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 		"%bonus_mana_regen"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	"item_imba_necronomicon_3"
@@ -2303,8 +2215,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2049"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_necronomicon_3"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
+		"AbilityTextureName" 			"custom/imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2408,51 +2321,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"3"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	"item_imba_necronomicon_4"
@@ -2460,8 +2328,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2194"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_necronomicon_4"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2565,51 +2433,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"4"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	"item_imba_necronomicon_5"
@@ -2617,7 +2440,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2195"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityTextureName" 			"custom/imba_necronomicon_5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
@@ -2719,51 +2543,6 @@
 				"archer_attack_speed"	"5 7 9 11 13"
 			}	
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_necronomicon.lua"
-				"Function"				"Necronomicon"
-
-				"sound_cast"			"DOTA_Item.Necronomicon.Activate"
-				"necro_level"			"5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_necronomicon"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_imba_necronomicon_summon"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -2776,7 +2555,7 @@
 		"ID"							"2052"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -2866,7 +2645,7 @@
 		"ID"							"2149"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3052,11 +2831,11 @@
 		"ID"							"2053"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"400"
+		"ItemCost"						"900"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -3065,7 +2844,7 @@
 		"ItemResult"					"item_imba_heart"
 		"ItemRequirements"
 		{
-			"01"						"item_reaver;item_vitality_booster;item_ring_of_tarrasque"
+			"01"						"item_reaver;item_vitality_booster"
 		}
 	}
 
@@ -3162,7 +2941,7 @@
 		"ID"							"2055"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3293,7 +3072,7 @@
 		"ID"							"2056"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3665,7 +3444,7 @@
 		"ID"							"2032"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3756,7 +3535,7 @@
 		"ID"							"2058"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3838,7 +3617,7 @@
 		"ID"							"2059"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3982,7 +3761,7 @@
 		"ID"							"2183"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4278,7 +4057,7 @@
 		"ID"							"2067"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4515,7 +4294,7 @@
 		"ID"							"2071"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4590,7 +4369,7 @@
 		"ID"							"2076"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4711,7 +4490,7 @@
 		"ID"							"2167"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4990,7 +4769,7 @@
 		"ID"							"2084"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5043,7 +4822,7 @@
 		"ID"							"2107"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5362,7 +5141,7 @@
 		"ID"							"2236"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5638,7 +5417,7 @@
 		"ID"							"2142"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5734,7 +5513,7 @@
 		"ID"							"2144"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5938,7 +5717,7 @@
 		"ID"							"2087"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6053,7 +5832,7 @@
 		"ID"							"2198"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6177,7 +5956,7 @@
 		"ID"							"2090"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6420,7 +6199,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2096"
 		"BaseClass"						"item_datadriven"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 		"AbilityTextureName" 			"custom/imba_recipe"
 
 		// Item Info
@@ -6555,7 +6334,7 @@
 		"ID"							"2100"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6766,7 +6545,7 @@
 //		"ID"							"2109"
 //		"BaseClass"						"item_datadriven"
 //		"AbilityTextureName" 			"custom/imba_recipe"
-//		"Model"							"models/props_gameplay/recipe.mdl"
+//		"Model"							"models/props_gameplay/recipe.vmdl"
 //
 //		// Item Info
 //		//-------------------------------------------------------------------------------------------------------------
@@ -6923,7 +6702,7 @@
 		"ID"							"2120"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7029,7 +6808,7 @@
 	//	"ID"							"255"
 	//	"BaseClass"						"item_datadriven"
 	//	"AbilityTextureName" 			"custom/imba_recipe"
-	//	"Model"							"models/props_gameplay/recipe.mdl"
+	//	"Model"							"models/props_gameplay/recipe.vmdl"
 
 	//	// Item Info
 	//	//-------------------------------------------------------------------------------------------------------------
@@ -7123,7 +6902,7 @@
 		"BaseClass"							"item_lua"
 		"AbilityTextureName" 				"item_aegis"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"Model"								"models/props_gameplay/aegis.mdl"
+		"Model"								"models/props_gameplay/aegis.vmdl"
 		"ScriptFile"                   		"components/items/item_aegis.lua"
 
 		"ItemDeclarations"					"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -7209,7 +6988,7 @@
 		"ID"							"2176"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7331,7 +7110,7 @@
 		"ID"							"2178"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7448,7 +7227,7 @@
 		"ID"							"2353"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7549,7 +7328,7 @@
 		"ID"							"2186"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7741,7 +7520,7 @@
 		"ID"							"2188"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8071,7 +7850,7 @@
 		"ID"							"2152"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8176,7 +7955,7 @@
 		"ID"							"2154"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8291,7 +8070,7 @@
 		"ID"							"2156"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8406,7 +8185,7 @@
 		"ID"							"2158"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8498,7 +8277,7 @@
 		"ID"							"2160"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8956,7 +8735,7 @@
 		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"item_rapier"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"Model"									"models/props_gameplay/divine_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
 
 		// Item Info
@@ -9001,7 +8780,7 @@
 		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_2"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"Model"									"models/props_gameplay/divine_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
 
 		// Item Info
@@ -9046,7 +8825,7 @@
 		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_magic"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"Model"									"models/props_gameplay/divine_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
 
 		// Item Info
@@ -9090,7 +8869,7 @@
 		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_magic_2"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"Model"									"models/props_gameplay/divine_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
 
 		// Item Info
@@ -9134,7 +8913,7 @@
 		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_cursed"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/cursed_rapier.mdl"
+		"Model"									"models/cursed_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
 
 		// Item Info
@@ -9272,7 +9051,7 @@
 		"BaseClass"						"item_datadriven"
 		"ID"							"2224"
 		"AbilityTextureName"			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10001,7 +9780,7 @@
 		"ID"							"2239"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10122,7 +9901,7 @@
 		"ID"							"2241"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10351,7 +10130,7 @@
 		"ID"							"2245"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10471,7 +10250,7 @@
 		"ID"							"2247"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10577,7 +10356,7 @@
 		"ID"							"2249"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10665,7 +10444,7 @@
 		"ID"							"2251"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10767,7 +10546,7 @@
 		"ID"							"2253"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11099,7 +10878,7 @@
 		"ID"							"2257"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11169,7 +10948,7 @@
 		"ID"							"2261"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12231,7 +12010,7 @@
 		"ID"							"2284"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12517,7 +12296,7 @@
 		"ID"							"2289"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -14053,7 +13832,7 @@
 		"ID"							"2311"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -14259,7 +14038,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		"ID"							"2314"
 		
@@ -14406,7 +14185,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 		"ID"							"2316"
 
 		// Item Info
@@ -14560,7 +14339,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2318"
 		
@@ -14736,7 +14515,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2320"
 		
@@ -14924,7 +14703,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2323"
 		
@@ -15046,7 +14825,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 
 		"ID"							"2325"
 
@@ -15165,7 +14944,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2327"
 		
@@ -15271,7 +15050,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2329"
 		
@@ -15374,7 +15153,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2331"
 		
@@ -15554,7 +15333,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -15693,7 +15472,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2337"
 		"BaseClass"						"item_datadriven"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -15813,7 +15592,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2339"
 		"BaseClass"						"item_datadriven"
-		"Model"							"models/props_gameplay/recipe.mdl"
+		"Model"							"models/props_gameplay/recipe.vmdl"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -15912,7 +15691,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2341"
 		
@@ -16037,7 +15816,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2343"
 		
@@ -16150,7 +15929,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2345"
 		
@@ -16312,7 +16091,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2347"
 		
@@ -16327,7 +16106,7 @@
 		"ItemResult"					"item_imba_valiance"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_vanguard;item_ring_of_tarrasque;item_ring_of_tarrasque"
+			"01"						"item_imba_vanguard;item_vitality_booster"
 		}
 	}	
 		
@@ -16367,7 +16146,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"700"
+				"bonus_health"			"600"
 			}
 			"02"
 			{
@@ -16493,7 +16272,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2349"
 		
@@ -16645,7 +16424,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"		
+		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2351"
 		

@@ -268,7 +268,7 @@ function modifier_imba_undying_decay_buff:OnIntervalThink()
 
 				-- Calculate hero status
 				if self.parent.CalculateStatBonus then
-					self.parent:CalculateStatBonus()
+					self.parent:CalculateStatBonus(true)
 				end
 			end
 		else
@@ -301,7 +301,7 @@ function modifier_imba_undying_decay_buff:OnStackCountChanged(prev_stacks)
 		-- Refresh timer
 		self:ForceRefresh()
 
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -386,7 +386,7 @@ function modifier_imba_undying_decay_debuff:OnIntervalThink()
 
 				-- Calculate hero status
 				if self.parent.CalculateStatBonus then
-					self.parent:CalculateStatBonus()
+					self.parent:CalculateStatBonus(true)
 				end
 			end
 		else
@@ -426,7 +426,7 @@ function modifier_imba_undying_decay_debuff:OnStackCountChanged(prev_stacks)
 		-- Refresh timer
 		self:ForceRefresh()
 
-		self:GetParent():CalculateStatBonus()
+		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -588,7 +588,7 @@ function imba_undying_soul_rip:OnSpellStart()
 				
 			-- Cause target to recalculate its stats
 			if target.CalculateStatBonus then
-				target:CalculateStatBonus()
+				target:CalculateStatBonus(true)
 			end
 			
 
@@ -614,7 +614,7 @@ function imba_undying_soul_rip:OnSpellStart()
 				
 			-- Cause target to recalculate its stats, if possible
 			if target.CalculateStatBonus then
-				target:CalculateStatBonus()
+				target:CalculateStatBonus(true)
 			end
 			
 		elseif target:GetTeamNumber() == caster:GetTeamNumber() and IsUndyingTombstone(target) then
@@ -685,7 +685,7 @@ function modifier_imba_undying_soul_rip_soul_injection_buff:OnIntervalThink()
 
 				-- Calculate hero status
 				if self.parent.CalculateStatBonus then
-					self.parent:CalculateStatBonus()
+					self.parent:CalculateStatBonus(true)
 				end
 			end
 		else
@@ -791,7 +791,7 @@ function modifier_imba_undying_soul_rip_soul_injection_debuff:OnIntervalThink()
 
 				-- Calculate hero status
 				if self.parent.CalculateStatBonus then
-					self.parent:CalculateStatBonus()
+					self.parent:CalculateStatBonus(true)
 				end
 			end
 		else
@@ -1405,7 +1405,7 @@ function modifier_imba_undying_zombie_deathlust_debuff:OnIntervalThink()
 
 				-- Calculate hero status
 				if self.parent.CalculateStatBonus then
-					self.parent:CalculateStatBonus()
+					self.parent:CalculateStatBonus(true)
 				end
 			end
 		else
@@ -1726,7 +1726,7 @@ end
 function modifier_imba_undying_flesh_golem:OnIntervalThink()
 	self.strength   = 0
 	self.strength   = self:GetParent():GetStrength() * self.str_percentage * 0.01
-	self:GetParent():CalculateStatBonus()
+	self:GetParent():CalculateStatBonus(true)
 end
 
 function modifier_imba_undying_flesh_golem:OnDestroy()

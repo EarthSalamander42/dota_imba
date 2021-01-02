@@ -105,7 +105,7 @@ function modifier_item_imba_stonework_pendant:OnIntervalThink()
 	self.mana_raw = self:GetParent():GetMana()
 	self.mana_pct = self:GetParent():GetManaPercent()
 	
-	--self:GetParent():CalculateStatBonus()
+	--self:GetParent():CalculateStatBonus(true)
 end
 
 --------------------------------------------------------------------------------

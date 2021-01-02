@@ -493,7 +493,7 @@ function modifier_ghost_revenant_ghost_immolation_debuff:OnIntervalThink()
 		end
 
 		-- Re-calculate health stats
-		self:GetParent():CalculateStatBonus() -- spam a lot of errors, but works fine, lul?
+		self:GetParent():CalculateStatBonus(true) -- spam a lot of errors, but works fine, lul?
 
 		if self:GetStackCount() <= 0 then
 			self:GetParent():RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")

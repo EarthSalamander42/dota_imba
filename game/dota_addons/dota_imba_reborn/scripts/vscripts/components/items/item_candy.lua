@@ -100,7 +100,7 @@ function modifier_diretide_candy_hp_loss:OnIntervalThink()
 	end
 
 	-- Re-calculate health stats
-	self.caster:CalculateStatBonus()
+	self.caster:CalculateStatBonus(true)
 
 	if not self.caster.OverHeadJingu then 
 		self.caster.OverHeadJingu = ParticleManager:CreateParticle("particles/hw_fx/candy_carrying_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self.caster)

@@ -56,7 +56,7 @@ function item_imba_power_treads_2:OnSpellStart()
 			local mod = caster:FindModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..i)
 			if mod then caster:RemoveModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..i) end
 		end
-		caster:CalculateStatBonus()
+		caster:CalculateStatBonus(true)
 		
 		-- This is in attempts to reserve the Mega Treads item state if dropped and picked back up
 		self.type = self:GetCaster():GetModifierStackCount("modifier_imba_power_treads_2", self:GetCaster())

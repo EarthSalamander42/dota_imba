@@ -20,6 +20,11 @@
 @define COLOR_INFO_BACKGROUND_DARK_GREY: #333333;
 @define COLOR_INFO_TEXT_GREY: #ff0000;
 
+@define COLOR_INFO_BACKGROUND_PURPLE: #0B0B27;
+@define COLOR_INFO_BACKGROUND_PURPLE_SOCIAL: #222222da;
+@define COLOR_INFO_BACKGROUND_DARK_PURPLE: #333333;
+@define COLOR_INFO_TEXT_PURPLE: #ff0000;
+
 @define maximum_length: 77%;
 
 @keyframes 'VoteVisible'
@@ -175,7 +180,6 @@
 	height: 100%;
 	text-align: center center;
 	font-size: 35px;
-	text-shadow: 2px 2px 2px black;
 	color: #aaa;
 }
 
@@ -236,15 +240,15 @@
 .description-background {
 	width: 100%;
 	height: 55%;
-	background-image: url("file://{images}/custom_game/loading_screen/outlanders_rising.jpg");
-	background-position: 50%;
+	background-image: url("file://{images}/custom_game/loading_screen/war_of_the_gods.jpg");
+	background-position: 50% 0%;
 	background-size: cover;
 }
 
 .description-text-container {
 	width: 100%;
 	height: 45%;
-	background-color: #0B0B27;
+	background-color: COLOR_INFO_BACKGROUND_DARK_ORANGE;
 	flow-children: down;
 }
 
@@ -537,12 +541,12 @@
 	width: 100%;
 	height: 100%;
 	visibility: collapse;
-	flow-children: down;
 }
 
 .bottom-patreon-sub {
 	width: 100%;
 	height: 100%;
+	align: center top;
 	flow-children: right;
 }
 
@@ -615,7 +619,7 @@
 	box-shadow: 0 0 10px #111;
 	transition-duration: 0.25s;
 	transition-property: box-shadow;
-	align: center center;
+	align: center top;
 }
 
 .loading-link-patreon:hover {
