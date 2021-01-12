@@ -67,7 +67,7 @@ var AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
 var AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
 var AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
 
-var RangeDisplayPFX = undefined;
+var RangeDisplayPFX = [];
 
 DotaHud.style.width = "100%";
 DotaHud.style.height = "100%";
@@ -464,14 +464,18 @@ function SetAbilityTooltips(keys) {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
+	var bonus_cast_range = keys.iBonusCastRange || 0;
+
 //	$.Msg("Cast Range: ", Abilities.GetCastRange(ability))
 	if (Abilities.GetCastRange(ability) && Abilities.GetCastRange(ability) > 0) {
 		var origin = Entities.GetAbsOrigin(Players.GetLocalPlayerPortraitUnit());
 //		$.Msg(origin);
 
-		RangeDisplayPFX = Particles.CreateParticle("particles/ui_mouseactions/range_display.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, Players.GetLocalPlayerPortraitUnit());
-		Particles.SetParticleControl(RangeDisplayPFX, 0, origin);
-		Particles.SetParticleControl(RangeDisplayPFX, 1, [Abilities.GetCastRange(ability), 0, 0]);
+		var pfx = Particles.CreateParticle("particles/ui_mouseactions/range_display.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, Players.GetLocalPlayerPortraitUnit());
+		Particles.SetParticleControl(pfx, 0, origin);
+		Particles.SetParticleControl(pfx, 1, [Abilities.GetCastRange(ability) + bonus_cast_range, 0, 0]);
+
+		RangeDisplayPFX.push(pfx);
 	}
 
 	$.Schedule(1/60, () => {
@@ -548,9 +552,10 @@ function HideTooltips() {
 	AbilityDetails.style.opacity = "0";
 
 //	$.Msg("RangeDisplayPFX: ", RangeDisplayPFX)
-	if (RangeDisplayPFX != undefined) {
-		Particles.DestroyParticleEffect(RangeDisplayPFX, false);
-		RangeDisplayPFX = undefined;
+
+	for (var i = 0; i < RangeDisplayPFX.length; i++) {
+		Particles.DestroyParticleEffect(RangeDisplayPFX[i], false);
+		RangeDisplayPFX.splice(i, 1);
 	}
 }
 

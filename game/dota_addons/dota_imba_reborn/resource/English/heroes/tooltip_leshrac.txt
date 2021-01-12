@@ -47,7 +47,7 @@
 "DOTA_Tooltip_ability_imba_leshrac_lightning_storm_Note2"               "Tormented Lightning Storm zaps do not bounce on nearby enemies."
 "DOTA_Tooltip_ability_imba_leshrac_lightning_storm_Note3"               "The same target cannot be hit twice in a row by a lightning from the same Lightning Storm cast."
 "DOTA_Tooltip_ability_imba_leshrac_lightning_storm_Lore"                "The Tormented Soul's mastery of the elements is evident in the massive storms that strike down armies before him."
-"DOTA_Tooltip_ability_imba_leshrac_lightning_storm_aghanim_description" "While Pulse Nova is active, Lightning Storm will hit one random unit in a radius every %interval_scepter% seconds."
+"DOTA_Tooltip_ability_imba_leshrac_lightning_storm_scepter_description" "While Pulse Nova is active, Lightning Storm will hit one random unit in a radius every %interval_scepter% seconds."
 "DOTA_Tooltip_ability_imba_leshrac_lightning_storm_jump_count"          "LIGHTNING STRIKES:"
 "DOTA_Tooltip_ability_imba_leshrac_lightning_storm_radius"              "LIGHTNING JUMP RADIUS:"        
 "DOTA_Tooltip_ability_imba_leshrac_lightning_storm_slow_duration"       "SLOW DURATION:"

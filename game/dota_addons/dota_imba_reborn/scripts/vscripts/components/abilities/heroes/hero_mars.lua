@@ -362,8 +362,8 @@ function imba_mars_spear:OnProjectileHitHandle( target, location, iProjectileHan
 	end
 
 	-- get stun and damage
-	local stun = self:GetVanillaAbilitySpecial("stun_duration")
-	local damage = self:GetVanillaAbilitySpecial("damage")
+	local stun = self:GetVanillaAbilitySpecial("stun_duration") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_spear_stun_duration")
+	local damage = self:GetVanillaAbilitySpecial("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_spear_bonus_damage")
 
 	-- apply damage
 	local damageTable = {
@@ -592,15 +592,12 @@ end
 --------------------------------------------------------------------------------
 -- Initializations
 function modifier_imba_mars_spear:OnCreated( kv )
-	-- references
-	self.ability = self:GetAbility()
-
 	if IsServer() then
 		self.projectile = kv.projectile
 
 		-- face towards
 		self:GetParent():SetForwardVector( -self:GetAbility().projectiles[kv.projectile].direction )
-		self:GetParent():FaceTowards( self.ability.projectiles[self.projectile].init_pos )
+		self:GetParent():FaceTowards( self:GetAbility().projectiles[self.projectile].init_pos )
 
 		-- try apply
 		if self:ApplyHorizontalMotionController() == false then
@@ -654,13 +651,13 @@ end
 -- Motion Effects
 function modifier_imba_mars_spear:UpdateHorizontalMotion( me, dt )
 	-- check projectile data
-	if not self.ability.projectiles[self.projectile] then
+	if not self:GetAbility().projectiles[self.projectile] then
 		self:Destroy()
 		return
 	end
 
 	-- get location
-	local data = self.ability.projectiles[self.projectile]
+	local data = self:GetAbility().projectiles[self.projectile]
 
 	if not data.active then return end
 
@@ -944,12 +941,13 @@ function modifier_imba_mars_gods_rebuke:IsPurgable() return false end
 function modifier_imba_mars_gods_rebuke:OnCreated( kv )
 	-- references
 	self.bonus_damage = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_vs_heroes" )
-	self.bonus_crit = self:GetAbility():GetVanillaAbilitySpecial( "crit_mult" )
+	self.bonus_crit = self:GetAbility():GetVanillaAbilitySpecial( "crit_mult" ) + self:GetCaster():FindTalentValue("special_bonus_unique_mars_gods_rebuke_extra_crit")
 
 	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
 
 	if mod then
 		self.bonus_damage = self.bonus_damage + mod:GetStackCount()
+		mod:SetStackCount(0)
 	end
 end
 
@@ -1052,8 +1050,7 @@ function modifier_imba_mars_bulwark:OnCreated( kv )
 	self.angle_side = self:GetAbility():GetVanillaAbilitySpecial( "side_angle" )/2
 
 	if IsServer() then
-		self.parent = self:GetParent()
-		self.parent:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {})
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {})
 	end
 end
 
@@ -1141,12 +1138,15 @@ modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class({
 
 function modifier_imba_mars_bulwark_active:DeclareFunctions() return {
 	MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+	MODIFIER_EVENT_ON_TAKEDAMAGE,
 } end
 
 function modifier_imba_mars_bulwark_active:OnCreated()
 	if not IsServer() then return end
 
 	self.forward_vector = self:GetParent():GetForwardVector()
+	self.angle_front = self:GetAbility():GetVanillaAbilitySpecial( "forward_angle" )/2
+	self.angle_side = self:GetAbility():GetVanillaAbilitySpecial( "side_angle" )/2
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -1160,8 +1160,52 @@ function modifier_imba_mars_bulwark_active:OnAbilityFullyCast(params)
 
 	if params.ability and params.ability.GetAbilityName and params.unit == self:GetParent() then
 		if params.ability:GetAbilityName() == "imba_mars_spear" then
-			print("Spear cast, disable Bulwark")
 			self:GetAbility():ToggleAbility()
+		end
+	end
+end
+
+function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
+	if not IsServer() then return end
+	
+	local attacker = keys.attacker
+	local target = keys.unit
+	local original_damage = keys.original_damage
+	local damage_type = keys.damage_type
+	local damage_flags = keys.damage_flags
+
+	if keys.unit == self:GetParent() and not keys.attacker:IsBuilding() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then	
+		if not keys.unit:IsOther() then
+			local facing_direction = self:GetParent():GetAnglesAsVector().y
+			local attacker_vector = (attacker:GetOrigin() - self:GetParent():GetOrigin())
+			local attacker_direction = VectorToAngles( attacker_vector ).y
+			local angle_diff = math.abs( AngleDiff( facing_direction, attacker_direction ) )
+
+			local bonus_damage = 0
+
+			-- calculate damage reduction (same return from front or side for now, leaving different statements here in case it gets changed)
+			if angle_diff < self.angle_front then
+				bonus_damage = self:GetAbility():GetSpecialValueFor("spiked_shield_return_pct")
+			elseif angle_diff < self.angle_side then
+				bonus_damage = self:GetAbility():GetSpecialValueFor("spiked_shield_return_pct")
+			end
+
+			-- if received damage from front or side
+			if damage > 0 then
+				local damageTable = {
+					victim			= keys.attacker,
+					damage			= keys.original_damage / 100 * damage,
+					damage_type		= keys.damage_type,
+					damage_flags	= DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+					attacker		= self:GetParent(),
+					ability			= self:GetAbility()
+				}
+
+				-- expecting shitfest in team fights so let's not
+--				EmitSoundOnClient("DOTA_Item.BladeMail.Damage", keys.attacker:GetPlayerOwner())
+
+				ApplyDamage(damageTable)
+			end
 		end
 	end
 end
@@ -1225,6 +1269,8 @@ LinkLuaModifier( "modifier_imba_mars_arena_of_blood_thinker", "components/abilit
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_wall_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_spear_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_projectile_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Custom KV
@@ -1293,9 +1339,6 @@ end
 --------------------------------------------------------------------------------
 -- Initializations
 function modifier_imba_mars_arena_of_blood:OnCreated( kv )
-	-- references
-	self.special_value = self:GetAbility():GetSpecialValueFor( "special_value" )
-
 	if IsServer() then
 		-- Start interval
 		self:StartIntervalThink( self.interval )
@@ -1457,12 +1500,10 @@ function modifier_imba_mars_arena_of_blood_blocker:OnCreated( kv )
 
 	if kv.model==1 then
 		-- references
-		self.fade_min = self:GetAbility():GetSpecialValueFor( "warrior_fade_min_dist" )
-		self.fade_max = self:GetAbility():GetSpecialValueFor( "warrior_fade_max_dist" )
+		self.fade_min = self:GetAbility():GetVanillaAbilitySpecial( "warrior_fade_min_dist" )
+		self.fade_max = self:GetAbility():GetVanillaAbilitySpecial( "warrior_fade_max_dist" )
 		self.fade_range = self.fade_max-self.fade_min
-		self.caster = self:GetCaster()
-		self.parent = self:GetParent()
-		self.origin = self.parent:GetOrigin()
+		self.origin = self:GetParent():GetOrigin()
 
 		-- replace model for even soldiers
 		self:GetParent():SetOriginalModel( "models/heroes/mars/mars_soldier.vmdl" )
@@ -1512,7 +1553,7 @@ function modifier_imba_mars_arena_of_blood_blocker:OnIntervalThink()
 
 	-- find enemies
 	local enemies = FindUnitsInRadius(
-		self.caster:GetTeamNumber(),	-- int, your team number
+		self:GetCaster():GetTeamNumber(),	-- int, your team number
 		self.origin,	-- point, center point
 		nil,	-- handle, cacheUnit. (not known)
 		self.fade_max,	-- float, radius. or use FIND_UNITS_EVERYWHERE
@@ -1526,17 +1567,119 @@ function modifier_imba_mars_arena_of_blood_blocker:OnIntervalThink()
 	-- find out distance between closest enemy
 	if #enemies>0 then
 		local enemy = enemies[1]
-		local range = math.max( self.parent:GetRangeToUnit( enemy ), self.fade_min )
+		local range = math.max( self:GetParent():GetRangeToUnit( enemy ), self.fade_min )
 		range = math.min( range, self.fade_max )-self.fade_min
 		alpha = self:Interpolate( range/self.fade_range, 255, 0 )
 	end
 
 	-- set alpha based on distance
-	self.parent:SetRenderAlpha( alpha )
+	self:GetParent():SetRenderAlpha( alpha )
 end
 
 function modifier_imba_mars_arena_of_blood_blocker:Interpolate( value, min, max )
 	return value*(max-min) + min
+end
+
+modifier_imba_mars_arena_of_blood_coliseum_aura = modifier_imba_mars_arena_of_blood_coliseum_aura or class({})
+
+function modifier_imba_mars_arena_of_blood_coliseum_aura:IsHidden()	return true end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:IsPurgable() return false end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:IsDebuff() return false end
+
+function modifier_imba_mars_arena_of_blood_coliseum_aura:IsAura() return true end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:GetModifierAura() return "modifier_imba_mars_arena_of_blood_coliseum" end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraRadius() return self:GetAbility():GetVanillaAbilitySpecial("radius") end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraDuration() return 0.0 end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE end
+--[[
+function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraEntityReject( hEntity )
+	if IsServer() then
+
+	end
+
+	return false
+end
+--]]
+
+function modifier_imba_mars_arena_of_blood_coliseum_aura:OnCreated()
+	if IsServer() then
+		if not self:GetAbility() then
+			self:Destroy()
+			return nil
+		end
+	end
+end
+
+function modifier_imba_mars_arena_of_blood_coliseum_aura:OnRefresh()
+	self:OnCreated()
+end
+
+modifier_imba_mars_arena_of_blood_coliseum = modifier_imba_mars_arena_of_blood_coliseum or class({})
+
+function modifier_imba_mars_arena_of_blood_coliseum:IsHidden() return true end
+function modifier_imba_mars_arena_of_blood_coliseum:IsPurgable() return false end
+
+function modifier_imba_mars_arena_of_blood_coliseum:DeclareFunctions() return {
+	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+} end
+
+function modifier_imba_mars_arena_of_blood_coliseum:OnCreated()
+	self.bonus_damage = self:GetAbility():GetSpecialValueFor("coliseum_bonus_damage")
+	self.bonus_attack_speed = self:GetAbility():GetSpecialValueFor("coliseum_bonus_attack_speed")
+
+	if not IsServer() then return end
+
+	self.health_regen = self:GetCaster():GetOwnerEntity():FindTalentValue("special_bonus_unique_mars_arena_of_blood_hp_regen") or 0
+
+	self:SetHasCustomTransmitterData(true)
+	self:StartIntervalThink(0.2) -- for optimisation sake, screw frame time checks we're not a competitive mode
+end
+
+function modifier_imba_mars_arena_of_blood_coliseum:OnIntervalThink()
+	if IsServer() then
+		if not self:GetCaster() or self:GetCaster() and not self:GetCaster():IsAlive() then
+			self:Destroy()
+			return
+		end
+
+		local heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+			self:GetCaster():GetAbsOrigin(),
+			nil,
+			self:GetAbility():GetVanillaAbilitySpecial("radius"),
+			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+			DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+			FIND_ANY_ORDER,
+			false
+		)
+
+		-- Set stack count to the number of heroes in arena
+		self:SetStackCount(#heroes)
+	end
+end
+
+function modifier_imba_mars_arena_of_blood_coliseum:GetModifierPreAttack_BonusDamage()
+	return self.bonus_damage * self:GetStackCount()
+end
+
+function modifier_imba_mars_arena_of_blood_coliseum:GetModifierAttackSpeedBonus_Constant()
+	return self.bonus_attack_speed * self:GetStackCount()
+end
+
+function modifier_imba_mars_arena_of_blood_coliseum:AddCustomTransmitterData() return {
+	health_regen = self.health_regen,
+} end
+
+function modifier_imba_mars_arena_of_blood_coliseum:HandleCustomTransmitterData(data)
+	self.health_regen = data.health_regen
+end
+
+function modifier_imba_mars_arena_of_blood_coliseum:GetModifierConstantHealthRegen()
+	return self.health_regen
 end
 
 --------------------------------------------------------------------------------
@@ -1544,29 +1687,16 @@ modifier_imba_mars_arena_of_blood_projectile_aura = class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_arena_of_blood_projectile_aura:IsHidden()
-	return false
-end
-
-function modifier_imba_mars_arena_of_blood_projectile_aura:IsDebuff()
-	return false
-end
-
-function modifier_imba_mars_arena_of_blood_projectile_aura:IsStunDebuff()
-	return false
-end
-
-function modifier_imba_mars_arena_of_blood_projectile_aura:IsPurgable()
-	return false
-end
+function modifier_imba_mars_arena_of_blood_projectile_aura:IsHidden() return false end
+function modifier_imba_mars_arena_of_blood_projectile_aura:IsDebuff() return false end
+function modifier_imba_mars_arena_of_blood_projectile_aura:IsStunDebuff() return false end
+function modifier_imba_mars_arena_of_blood_projectile_aura:IsPurgable() return false end
 
 --------------------------------------------------------------------------------
 -- Initializations
 function modifier_imba_mars_arena_of_blood_projectile_aura:OnCreated( kv )
-	self.radius = self:GetAbility():GetSpecialValueFor( "radius" )
-	self.width = self:GetAbility():GetSpecialValueFor( "width" )
-	self.parent = self:GetParent()
-	self.ability = self:GetAbility()
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
+	self.width = self:GetAbility():GetVanillaAbilitySpecial( "width" )
 
 	if not IsServer() then return end
 
@@ -1577,13 +1707,6 @@ function modifier_imba_mars_arena_of_blood_projectile_aura:OnCreated( kv )
 --	self.filter = FilterManager:AddTrackingProjectileFilter( self.ProjectileFilter, self )
 
 	self:StartIntervalThink( 0.03 )
-end
-
-function modifier_imba_mars_arena_of_blood_projectile_aura:OnRefresh( kv )
-	
-end
-
-function modifier_imba_mars_arena_of_blood_projectile_aura:OnRemoved()
 end
 
 function modifier_imba_mars_arena_of_blood_projectile_aura:OnDestroy()
@@ -1620,7 +1743,7 @@ function modifier_imba_mars_arena_of_blood_projectile_aura:ProjectileFilter( dat
 	local info = {
 		Target = target,
 		Source = attacker,
-		Ability = self.ability,	
+		Ability = self:GetAbility(),	
 		
 		EffectName = attacker:GetRangedProjectileName(),
 		iMoveSpeed = data.move_speed,
@@ -1634,7 +1757,7 @@ function modifier_imba_mars_arena_of_blood_projectile_aura:ProjectileFilter( dat
 	self.lock = true
 	local id = ProjectileManager:CreateTrackingProjectile(info)
 	self.lock = false
-	self.ability.projectiles[id] = data
+	self:GetAbility().projectiles[id] = data
 
 	return false
 end
@@ -1644,7 +1767,7 @@ end
 function modifier_imba_mars_arena_of_blood_projectile_aura:OnIntervalThink()
 	local origin = self:GetParent():GetOrigin()
 
-	for id,_ in pairs(self.ability.projectiles) do
+	for id,_ in pairs(self:GetAbility().projectiles) do
 		-- get position
 		local pos = ProjectileManager:GetTrackingProjectileLocation( id )
 
@@ -1654,7 +1777,7 @@ function modifier_imba_mars_arena_of_blood_projectile_aura:OnIntervalThink()
 		-- check if position is within the ring
 		if math.abs(distance-self.radius)<self.width then
 			-- destroy
-			self.ability.projectiles[id].destroyed = true
+			self:GetAbility().projectiles[id].destroyed = true
 			ProjectileManager:DestroyTrackingProjectile( id )
 
 			-- play effects
@@ -1738,13 +1861,12 @@ end
 -- Initializations
 function modifier_imba_mars_arena_of_blood_spear_aura:OnCreated( kv )
 	-- references
-	self.radius = self:GetAbility():GetSpecialValueFor( "radius" )
-	self.width = self:GetAbility():GetSpecialValueFor( "spear_distance_from_wall" )
-	self.duration = self:GetAbility():GetSpecialValueFor( "spear_attack_interval" )
-	self.damage = self:GetAbility():GetSpecialValueFor( "spear_damage" )
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
+	self.width = self:GetAbility():GetVanillaAbilitySpecial( "spear_distance_from_wall" )
+	self.duration = self:GetAbility():GetVanillaAbilitySpecial( "spear_attack_interval" )
+	self.damage = self:GetAbility():GetVanillaAbilitySpecial( "spear_damage" )
 	self.knockback_duration = 0.2
 
-	self.parent = self:GetParent()
 	self.spear_radius = self.radius-self.width
 
 	if not IsServer() then return end
@@ -1767,7 +1889,7 @@ function modifier_imba_mars_arena_of_blood_spear_aura:OnCreated( kv )
 		ApplyDamage(damageTable)
 
 		-- animate soldiers
-		local arena_walls = Entities:FindAllByClassnameWithin( "npc_dota_phantomassassin_gravestone", self.parent:GetOrigin(), 160 )
+		local arena_walls = Entities:FindAllByClassnameWithin( "npc_dota_phantomassassin_gravestone", self:GetParent():GetOrigin(), 160 )
 		for _,arena_wall in pairs(arena_walls) do
 			if arena_wall:HasModifier( "modifier_imba_mars_arena_of_blood_blocker" ) and arena_wall.model then
 				arena_wall:FadeGesture( ACT_DOTA_ATTACK )
@@ -1887,12 +2009,13 @@ modifier_imba_mars_arena_of_blood_thinker = modifier_imba_mars_arena_of_blood_th
 function modifier_imba_mars_arena_of_blood_thinker:IsHidden() return true end
 
 --------------------------------------------------------------------------------
+
 -- Initializations
 function modifier_imba_mars_arena_of_blood_thinker:OnCreated( kv )
 	-- references
-	self.delay = self:GetAbility():GetSpecialValueFor( "formation_time" )
-	self.duration = self:GetAbility():GetSpecialValueFor( "duration" )
-	self.radius = self:GetAbility():GetSpecialValueFor( "radius" )
+	self.delay = self:GetAbility():GetVanillaAbilitySpecial( "formation_time" )
+	self.duration = self:GetAbility():GetVanillaAbilitySpecial( "duration" )
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
 
 	if IsServer() then
 		self.thinkers = {}
@@ -1901,13 +2024,11 @@ function modifier_imba_mars_arena_of_blood_thinker:OnCreated( kv )
 		self.phase_delay = true
 		self:StartIntervalThink( self.delay )
 
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_arena_of_blood_coliseum_aura", {})
+
 		-- play effects
 		self:PlayEffects()
 	end
-end
-
-function modifier_imba_mars_arena_of_blood_thinker:OnRefresh( kv )
-	
 end
 
 function modifier_imba_mars_arena_of_blood_thinker:OnRemoved()
@@ -2087,9 +2208,8 @@ function modifier_imba_mars_arena_of_blood_wall_aura:OnCreated( kv )
 	-- zero limit outer ring = radius + 100
 	-- normal limit outer ring = radius + 200
 
-	self.radius = self:GetAbility():GetSpecialValueFor( "radius" )
-	self.width = self:GetAbility():GetSpecialValueFor( "width" )
-	self.parent = self:GetParent()
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
+	self.width = self:GetAbility():GetVanillaAbilitySpecial( "width" )
 
 	self.twice_width = self.width*2
 	self.aura_radius = self.radius + self.twice_width
@@ -2155,7 +2275,7 @@ function modifier_imba_mars_arena_of_blood_wall_aura:GetModifierMoveSpeed_Limit(
 	if self.owner then return 0 end
 
 	-- get data
-	local parent_vector = self.parent:GetOrigin()-self.aura_origin
+	local parent_vector = self:GetParent():GetOrigin()-self.aura_origin
 	local parent_direction = parent_vector:Normalized()
 
 	-- calculate distance

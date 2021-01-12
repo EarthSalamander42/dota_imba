@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_stun_duration"		"STUN DURATION:"
 "DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_scepter_cooldown"		"SCEPTER COOLDOWN:"
 "DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_scepter_speed"		"SCEPTER SPEED BONUS:"
-"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_aghanim_description"		"Increases Charge of Darkness movement speed and reduces cooldown."
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_scepter_description"		"Increases Charge of Darkness movement speed and reduces cooldown."
 
 
 "DOTA_Tooltip_ability_imba_spirit_breaker_bulldoze"								"Bulldoze"
@@ -51,7 +51,7 @@
 //"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_cast_range_scepter"		"SCEPTER RANGE:"
 //"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_bash_radius_scepter"		"SCEPTER BASH RADIUS:"
 //"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_cooldown_scepter"		"SCEPTER COOLDOWN:"
-//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_aghanim_description"		"Causes the Greater Bash to hit an area around the initial target, decreases cooldown, and increases cast range."
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_scepter_description"		"Causes the Greater Bash to hit an area around the initial target, decreases cooldown, and increases cast range."
 
 "DOTA_Tooltip_modifier_knockback"												"Greater Bash"
 "DOTA_Tooltip_modifier_knockback_Description"									"Stunned"

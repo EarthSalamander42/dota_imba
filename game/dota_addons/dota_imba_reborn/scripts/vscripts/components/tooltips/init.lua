@@ -39,5 +39,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		sSpellImmunity = ability_values["SpellImmunityType"],
 		sSpellDispellable = ability_values["SpellDispellableType"],
 		sSpecial = ability_values["specials"],
+		iBonusCastRange = hero:GetCastRangeBonus(),
 	})
 end
