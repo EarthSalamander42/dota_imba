@@ -21,6 +21,16 @@ function TeamOrdering:ComputeTeamSelection()
 	local steamids = {1234, 3123, 1231, 1232, 1241, 1235, 4121, 1231, 1233, 1211}
 	local winrates = {81.0, 77.0, 74.2, 65.1, 54.2, 53.2, 49.9, 43.3, 41.2, 32.8}
 
+	-- not tested yet
+	if not IsInToolsMode() then
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			if PlayerResource:IsValidPlayer(i) then
+				steamids[i] = PlayerResource:GetSteamID(i)
+				winrates[i] = api:GetPlayerWinrate(i)
+			end
+		end
+	end
+
 	local n = 10
 	local k = 5
 	local halfCombinationsNumber = 126 -- generations number is n!/((n-k)!*k!) 
