@@ -25,8 +25,8 @@ function TeamOrdering:ComputeTeamSelection()
 	if not IsInToolsMode() then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) then
-				steamids[i] = PlayerResource:GetSteamID(i)
-				winrates[i] = api:GetPlayerWinrate(i)
+				steamids[i + 1] = PlayerResource:GetSteamID(i)
+				winrates[i + 1] = api:GetPlayerWinrate(i)
 			end
 		end
 	end
