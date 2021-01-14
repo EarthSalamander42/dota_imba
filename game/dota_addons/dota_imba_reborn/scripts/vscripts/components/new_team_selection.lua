@@ -94,6 +94,28 @@ function TeamOrdering:CalculateWinrateDifference(teamAwinrates, teamBWinrates)
 	return math.abs(winrateTeamA-winrateTeamB)
 end
 
+-- hRadiant and hDire should return both an array of player id's
+function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
+	-- unassign players
+	for i = 0, PlayerResource:GetPlayerCount() - 1 do
+		local player = PlayerResource:GetPlayer(i)
+
+		player:SetTeam(DOTA_TEAM_NOTEAM)
+	end
+
+	for k, v in pairs(hRadiant) do
+		local player = PlayerResource:GetPlayer(v)
+
+		player:SetTeam(DOTA_TEAM_GOODGUYS)
+	end
+
+	for k, v in pairs(hDire) do
+		local player = PlayerResource:GetPlayer(v)
+
+		player:SetTeam(DOTA_TEAM_BADGUYS)
+	end
+end
+
 -- utils
 function PrintArray(array)
 	local text = ""
