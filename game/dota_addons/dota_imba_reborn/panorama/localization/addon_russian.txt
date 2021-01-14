@@ -574,7 +574,7 @@
 	"vote_gamemode_3" "Безумный"
 	"vote_gamemode_4" "Восстание тьмы"
 	"vote_gamemode_5" "Одинаковые герои"
-	"vote_gamemode_description" "Голосование (Голосов должно быть более 5 для выбора режима)"
+	"vote_gamemode_description" "Gamemode Vote (Vote count must be higher than 5, otherwise defaults to upper choice)"
 	"votooltip" "Удерживайте 'L'  для доступа к колесу чата"
 	"wan_bu_liao_la" "玩不了啦!"
 	"welcome_label" "Добро пожаловать в Dota IMBA!"
