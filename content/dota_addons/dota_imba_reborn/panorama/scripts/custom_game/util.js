@@ -286,6 +286,7 @@ function GetDonatorColor(status) {
 	donator_colors[4] = "#993399";
 	donator_colors[5] = "#2F5B97";
 	donator_colors[6] = "#BB4B0A";
+	donator_colors[7] = "#871414";
 	donator_colors[100] = "#0066FF";
 	donator_colors[101] = "#641414";
 	donator_colors[102] = "#871414";
