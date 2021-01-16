@@ -21,7 +21,7 @@
 "DOTA_Tooltip_ability_imba_slark_pounce_pounce_distance_scepter"				"SCEPTER DISTANCE:"
 "DOTA_Tooltip_ability_imba_slark_pounce_leash_duration"						"LEASH DURATION:"
 "DOTA_Tooltip_ability_imba_slark_pounce_leash_radius"						"LEASH RADIUS:"
-"DOTA_Tooltip_ability_imba_slark_pounce_aghanim_description"				"Provides %max_charges% charges and increases pounce range."
+"DOTA_Tooltip_ability_imba_slark_pounce_scepter_description"				"Provides %max_charges% charges and increases pounce range."
 
 "DOTA_Tooltip_ability_imba_slark_essence_shift"								"Essence Shift"
 "DOTA_Tooltip_ability_imba_slark_essence_shift_Description"					"Slark steals the life essence of enemy heroes with his attacks, draining each of their attributes and converting them to bonus Agility. If Slark kills an affected enemy hero, he permanently steals 1 Agility.\n<font color='#FF7800'>Shivved:</font> When off cooldown, Essence Shift applies a fake attack immediately after an attack which triggers Essence Shift's passive.\n<font color='#FF7800'>Shivalry:</font> Temporary bonus agility is not affected by status resistance."
@@ -35,7 +35,7 @@
 
 "DOTA_Tooltip_ability_imba_slark_shadow_dance"								"Shadow Dance"
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Description"					"When used, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark.  Passively, when not visible to the enemy team, Slark gains bonus movement speed and health regeneration.\n<font color='#FF7800'>Welcome to Dark Reef: </font>Shadow Dance can be set to auto-cast. Casting Shadow Dance in this manner creates a %dark_reef_radius% radius cloud at the cast location, which hides both allies and enemies for the duration."
-"DOTA_Tooltip_ability_imba_slark_shadow_dance_aghanim_description"			"Reduces cooldown and causes Shadow Dance active to be an area of effect ability, hiding nearby allied heroes underneath it. Allies do not gain bonus movement speed or health regeneration."
+"DOTA_Tooltip_ability_imba_slark_shadow_dance_scepter_description"			"Reduces cooldown and causes Shadow Dance active to be an area of effect ability, hiding nearby allied heroes underneath it. Allies do not gain bonus movement speed or health regeneration."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Lore"							"The hidden Thirteenth is a slippery foe."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Note0"							"If Slark is damaged by a neutral unit, the passive movement and health regeneration bonuses are lost for %neutral_disable% seconds."
 "DOTA_Tooltip_ability_imba_slark_shadow_dance_Note1"							"The passive movement and health regeneration bonuses have a %activation_delay% second activation and deactivation delay."

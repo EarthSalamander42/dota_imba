@@ -1516,8 +1516,8 @@ function imba_lich_chain_frost:LaunchProjectile(source, target)
 	end
 
 	-- Launch the projectile
-	local chain_frost_projectile
-	chain_frost_projectile = {Target = target,
+	local chain_frost_projectile = {
+		Target = target,
 		Source = source,
 		Ability = ability,
 		EffectName = particle_projectile,
@@ -1538,7 +1538,7 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local sound_hit = "Hero_Lich.ChainFrostImpact.Creep"
+--	local sound_hit = "Hero_Lich.ChainFrostImpact.Creep"
 	local particle_projectile = "particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
 	local particle_mini_frost_projectile = "particles/hero/lich/lich_mini_frosts.vpcf"
 	local modifier_slow = "modifier_imba_chain_frost_slow"
@@ -2055,19 +2055,19 @@ function imba_lich_sinister_gaze:OnSpellStart()
 	self.cold_front_stacks			= self:GetSpecialValueFor("cold_front_stacks")
 
 	self.caster:EmitSound("Hero_Lich.SinisterGaze.Cast")
-	
+
 	if not self:GetCaster():HasScepter() then
 		self.target:EmitSound("Hero_Lich.SinisterGaze.Target")
 
 		self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", {duration = self:GetChannelTime()})
 		self.target:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", {duration = self:GetChannelTime()})
-		
+
 		if self.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 			IncreaseStacksColdFront(self.caster, self.target, self.cold_front_stacks)
 		end
 	else
 		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("aoe_scepter"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, FIND_CLOSEST, false)
-		
+
 		if #units == 0 then
 			self.end_channel = true 
 		else	
@@ -2076,10 +2076,10 @@ function imba_lich_sinister_gaze:OnSpellStart()
 					if _ == 1 then
 						self.target = unit
 					end
-				
+
 					unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", {duration = self:GetChannelTime()})
 					unit:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", {duration = self:GetChannelTime()})
-					
+
 					if self.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 						IncreaseStacksColdFront(self.caster, unit, self.cold_front_stacks)
 					end
@@ -2114,7 +2114,6 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 		end
 
 		self.target:Kill(self, self.caster)
-
 	else
 		Timers:CreateTimer(FrameTime(), function()
 			if self.target then
@@ -2223,7 +2222,7 @@ end
 --	SINISTER GAZE MODIFIER 		 --
 -----------------------------------
 
-modifier_imba_lich_sinister_gaze = class({})
+modifier_imba_lich_sinister_gaze = modifier_imba_lich_sinister_gaze or class({})
 
 function modifier_imba_lich_sinister_gaze:IgnoreTenacity()	return true end
 
@@ -2239,22 +2238,22 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 	self.destination		= self.ability:GetSpecialValueFor("destination") + self.caster:FindTalentValue("special_bonus_imba_lich_10")
 	self.distance 			= CalcDistanceBetweenEntityOBB(self:GetCaster(), self:GetParent()) * (self.destination / 100)
 	self.mana_drain			= self.ability:GetSpecialValueFor("mana_drain")
-	
+
 	if not IsServer() then return end
-	
+
 	self.status_resistance = self:GetParent():GetStatusResistance()
-	
+
 	self.duration			= self:GetRemainingTime()
 	self.interval			= 0.1
-	
+
 	if self.parent.GetMana then
 		self.current_mana		= self.parent:GetMana()
 	else
 		self.current_mana		= 0
 	end
-	
+
 	self.mana_per_interval	= (self.current_mana * self.mana_drain * 0.01) / (self.duration / self.interval)
-	
+
 	-- This is so errors don't pop up if the spell gets reflected
 	if self.caster:GetName() == "npc_dota_hero_lich" then
 		-- Particle attachments aren't perfect but they're good enough...I guess
@@ -2275,7 +2274,7 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 
 	self.parent:Interrupt()
 	self.parent:MoveToNPC(self.caster)
-	
+
 	self:StartIntervalThink(self.interval)
 end
 

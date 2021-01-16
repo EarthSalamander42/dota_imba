@@ -62,7 +62,7 @@
 "DOTA_Tooltip_ability_imba_centaur_stampede_stun_duration"              "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_centaur_stampede_damage_reduction_scepter"	"%SCEPTER DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_centaur_stampede_ms_slow_pct"                "%MOVE SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_centaur_stampede_aghanim_description"		"Heroes affected by Stampede take reduced damage, and are able to run through obstructions, including trees and up cliffs."
+"DOTA_Tooltip_ability_imba_centaur_stampede_scepter_description"		"Heroes affected by Stampede take reduced damage, and are able to run through obstructions, including trees and up cliffs."
 
 "DOTA_Tooltip_modifier_imba_stampede_haste"								"Stampede"
 "DOTA_Tooltip_modifier_imba_stampede_haste_Description"					"Moving at maximum speed and trampling nearby enemies."

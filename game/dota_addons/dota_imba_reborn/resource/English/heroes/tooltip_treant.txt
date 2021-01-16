@@ -38,7 +38,7 @@
 "DOTA_Tooltip_ability_imba_treant_overgrowth_duration"				"DURATION:"
 "DOTA_Tooltip_ability_imba_treant_overgrowth_radius"					"RADIUS:"
 "DOTA_Tooltip_ability_imba_treant_overgrowth_damage"					"DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_treant_overgrowth_aghanim_description"	"Adds new ability: Eye in the Forest.\n When Overgrowth is cast, it is also cast around Eye of the Forest. Causes all trees to respawn much faster."	
+"DOTA_Tooltip_ability_imba_treant_overgrowth_scepter_description"	"Adds new ability: Eye in the Forest.\n When Overgrowth is cast, it is also cast around Eye of the Forest. Causes all trees to respawn much faster."	
 "DOTA_Tooltip_ability_imba_treant_eyes_in_the_forest"						"Eyes In The Forest"
 "DOTA_Tooltip_ability_imba_treant_eyes_in_the_forest_Description"			"Treant Protector enchants a tree, which grants him unobstructed vision in that location. If Overgrowth is cast, units within a radius of an enchanted tree will be entangled and damaged."
 "DOTA_Tooltip_ability_imba_treant_eyes_in_the_forest_vision_aoe"		"TREE VISION RADIUS:"

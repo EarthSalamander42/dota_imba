@@ -84,6 +84,11 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 		end
 	end
 
+	if not IsInToolsMode() then
+		-- re-order teams based on winrate
+		TeamOrdering:ComputeTeamSelection()
+	end
+
 	print("ALL PLAYERS LOADED IN!")
 	CustomGameEventManager:Send_ServerToAllClients("all_players_battlepass_loaded", {})
 end

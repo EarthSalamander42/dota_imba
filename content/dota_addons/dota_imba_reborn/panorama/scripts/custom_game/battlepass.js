@@ -955,8 +955,8 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 
 			var reward = $.CreatePanel("Button", $("#reward_container_level_" + bp_level), "reward_button_" + bp_item_id);
 			reward.BLoadLayoutSnippet('BattlePassReward');
-			reward.style.backgroundImage = 'url("s2r://panorama/images/' + bp_image + '.png")';
-			reward.AddClass(bp_rarity + "_border");
+			reward.FindChildTraverse("BattlepassRewardImage").style.backgroundImage = 'url("s2r://panorama/images/' + bp_image + '.png")';
+			reward.FindChildTraverse("BattlepassRewardImage").AddClass(bp_rarity + "_border");
 			reward.hero_type = bp_hero;
 /*
 			if (bp_hero != undefined && bp_hero.indexOf("npc_dota_hero_") !== -1) {
@@ -969,11 +969,10 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 				// Disable tinker immortal for now until fixed
 				if (bp_item_id != "105" && bp_item_id != "113" && bp_item_id != "114" && bp_item_id != "115" && bp_item_id != "116" && bp_item_id != "118" && bp_item_id != "119" && bp_item_id != "120" && bp_item_id != "121") {
 					if (bp_level <= plyData.Lvl) {
+						reward.FindChildTraverse("BattlepassRewardTitle").AddClass("BattlepassRewardLabelUnlocked");
+
 						var reward_panel_unlocked = $.CreatePanel("Panel", reward, "");
 						reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
-
-						var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, "");
-						reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked");
 
 						if (bp_type == "bundle" || bp_type == "wearable" || bp_type == "taunt") {
 							var hero_tooltip = $.Localize(bp_hero);
@@ -984,11 +983,11 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 							}
 
 							if (new_hero_tooltip)
-								reward_label_unlocked.text = new_hero_tooltip + ": " +  $.Localize(bp_name);
+								reward.FindChildTraverse("BattlepassRewardTitle").text = new_hero_tooltip + ": " +  $.Localize(bp_name);
 							else
-								reward_label_unlocked.text = hero_tooltip + ": " +  $.Localize(bp_name);
+								reward.FindChildTraverse("BattlepassRewardTitle").text = hero_tooltip + ": " +  $.Localize(bp_name);
 						} else
-							reward_label_unlocked.text = $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+							reward.FindChildTraverse("BattlepassRewardTitle").text = $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 
 						var armory = CustomNetTables.GetTableValue("battlepass_rewards", "rewards_" + player);
 
@@ -1023,21 +1022,23 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 						reward.SetPanelEvent("onactivate", event(bp_hero, bp_slot_id, bp_item_id));
 					} else {
 						reward.AddClass("BattlepassRewardIcon_locked")
-						var reward_label_locked = $.CreatePanel("Label", reward, "");
-						reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-						reward_label_locked.text = $.Localize("battlepass_reward_locked") + "\n" + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+						reward.FindChildTraverse("BattlepassRewardTitle").AddClass("BattlepassRewardLabelLocked");
+						reward.FindChildTraverse("BattlepassRewardTitle").text = $.Localize("battlepass_reward_locked") + "\n" + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 					}
 				} else {
 					reward.AddClass("BattlepassRewardIcon_unreleased")
-					var reward_label_locked = $.CreatePanel("Label", reward, "");
-					reward_label_locked.AddClass("BattlepassRewardLabelUnreleased");
-					reward_label_locked.text = $.Localize("battlepass_reward_unreleased") + "\n" + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+					reward.FindChildTraverse("BattlepassRewardTitle").AddClass("BattlepassRewardLabelUnreleased");
+					reward.FindChildTraverse("BattlepassRewardTitle").text = $.Localize("battlepass_reward_unreleased") + "\n" + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
 				}
 			} else {
 				reward.AddClass("BattlepassRewardIcon_locked")
-				var reward_label_locked = $.CreatePanel("Label", reward, "");
-				reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-				reward_label_locked.text = $.Localize("battlepass_reward_locked") + "\n" + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+				reward.FindChildTraverse("BattlepassRewardTitle").AddClass("BattlepassRewardLabelLocked");
+				reward.FindChildTraverse("BattlepassRewardTitle").text = $.Localize("battlepass_reward_locked") + "\n" + $.Localize("battlepass_" + bp_type) + ": " +  $.Localize(bp_name);
+			}
+
+			if (reward.FindChildTraverse("BattlepassRewardRarity")) {			
+				reward.FindChildTraverse("BattlepassRewardRarity").text = bp_rarity;
+				reward.FindChildTraverse("BattlepassRewardRarity").AddClass(bp_rarity + "_text");
 			}
 		} else {
 			break;
@@ -1056,7 +1057,7 @@ function SetRewardEquipped(item_id, item_hero) {
 		i++;
 	}
 
-	var reward_equipped = $.CreatePanel("Panel", $("#reward_button_" + item_id), "reward_equipped_" + item_id);
+	var reward_equipped = $.CreatePanel("Panel", $("#reward_button_" + item_id).FindChildTraverse("BattlepassRewardImage"), "reward_equipped_" + item_id);
 	reward_equipped.AddClass("RewardEquipped");
 }
 

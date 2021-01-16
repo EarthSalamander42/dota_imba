@@ -9,14 +9,16 @@
 
 // God's Rebuke
 "DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_1"				"<font color='#FF7800'>Strong Argument:</font> God's Rebuke grants Mars %strong_argument_bonus_strength% strength for %strong_argument_duration% seconds for each enemy heroes hit."
-"DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_2"				"<font color='#FF7800'>Ancile's Soul:</font> God's Rebuke damage is increased by 'Jupiter Strength' stored damage."
+// "DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_2"				"<font color='#FF7800'>Ancile's Soul:</font> God's Rebuke damage is increased by 'Jupiter Strength' stored damage."
+
+"DOTA_Tooltip_ability_imba_mars_bulwark_scepter_description"			"Reduces God's Rebuke cooldown to %imba_scepter_cooldown%."
 
 // "DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block"					"Aphotic Shield"
 // "DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block_Description"		"Incoming damage blocked by Aphotic Shield's protection"
 
 // Bulwark
 "DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_1"					"<font color='#FF7800'>Spiked Shield:</font> During active Bulwark, Mars deals 20% of his attack damage to enemies that are attacking him from the front."
-"DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_2"					"<font color='#FF7800'>Jupiter's Strength:</font> Store 50% of damage blocked for 10 seconds. Adds bonus damage to God's Rebuke when casted."
+"DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_2"					"<font color='#FF7800'>Jupiter's Strength:</font> Store %jupiters_strength_stored_damage_pct%% of damage blocked for %jupiters_strength_duration% seconds. Adds bonus damage to God's Rebuke when casted."
 
 "DOTA_Tooltip_modifier_imba_mars_bulwark_jupiters_strength"					"Jupiter's Strength"
 "DOTA_Tooltip_modifier_imba_mars_bulwark_jupiters_strength_Description"		"Store %jupiters_strength_stored_damage_pct%% damage blocked, add these stored damage to God's Rebuke."
@@ -29,7 +31,7 @@
 
 // Arena of Blood
 "DOTA_Tooltip_ability_imba_mars_arena_of_blood_Imbafication_1"		"<font color='#FF7800'>Divine Call:</font> Invoke a divine shield around the arena that can't be bypassed by any means."
-"DOTA_Tooltip_ability_imba_mars_arena_of_blood_Imbafication_2"		"<font color='#FF7800'>Coliseum:</font> Allies inside the Arena gain 10/20/30 bonus damage and 15/30/45 bonus attack speed for each ally inside. max stacks 5."
+"DOTA_Tooltip_ability_imba_mars_arena_of_blood_Imbafication_2"		"<font color='#FF7800'>Coliseum:</font> Allies inside the Arena gain %coliseum_bonus_damage% bonus damage and %coliseum_bonus_attack_speed% bonus attack speed for each ally inside. max stacks 5."
 
 // "DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster"              "Borrowed Time"
 // "DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster_Description"	"Being healed by all incoming damage."
@@ -38,4 +40,4 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_mars_1"						"Full Circle"
 "DOTA_Tooltip_Ability_special_bonus_imba_mars_1_Description"			"God's Rebuke deals damage in a full circle around Mars."
 "DOTA_Tooltip_Ability_special_bonus_imba_mars_2"						"Stunning Rebuke"
-"DOTA_Tooltip_Ability_special_bonus_imba_mars_2_Description"			"God's Rebuke stuns enemies for 0.1 second."
+"DOTA_Tooltip_Ability_special_bonus_imba_mars_2_Description"			"God's Rebuke also stuns enemies for the knockback duration."

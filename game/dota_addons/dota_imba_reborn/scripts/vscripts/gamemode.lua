@@ -45,9 +45,13 @@ require('components/mutation/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
+require('components/new_team_selection')
+
+--[[
 if GetMapName() == "imba_10v10" then
 	require('components/team_selection')
 end
+--]]
 
 require('components/tooltips/init')
 

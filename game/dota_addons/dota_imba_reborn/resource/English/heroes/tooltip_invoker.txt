@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_invoker_sun_strike_area_of_effect"      		    	"#{DOTA_Tooltip_ability_invoker_sun_strike_area_of_effect}"
 "DOTA_Tooltip_ability_imba_invoker_sun_strike_delay"							"#{DOTA_Tooltip_ability_invoker_sun_strike_delay}"
 "DOTA_Tooltip_ability_imba_invoker_sun_strike_damage"             				"#{DOTA_Tooltip_ability_invoker_sun_strike_damage}"
-"DOTA_Tooltip_ability_imba_invoker_sun_strike_aghanim_description"				"#{DOTA_Tooltip_ability_invoker_sun_strike_aghanim_description} <br><br><font color='#FF7800'>Knowledge is Power:</font> Adds one level to Quas, Wex and Exort."
+"DOTA_Tooltip_ability_imba_invoker_sun_strike_scepter_description"				"#{DOTA_Tooltip_ability_invoker_sun_strike_scepter_description} <br><br><font color='#FF7800'>Knowledge is Power:</font> Adds one level to Quas, Wex and Exort."
 
 "DOTA_Tooltip_modifier_imba_invoker_sun_strike_incinerate"						"Incinerated"
 "DOTA_Tooltip_modifier_imba_invoker_sun_strike_incinerate_description"			"Sun Strike deals 10%% increased damage per stack."

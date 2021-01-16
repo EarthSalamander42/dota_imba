@@ -26,7 +26,7 @@
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Lore"							"Lycan has devoted his life to the wolves that adopted him into their pack. Adapting his tactics to the neverending hunt in the Ancients' battlefield was a trivial matter."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_damage_bonus"					"DAMAGE PER STACK:"
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_shapeshift_cooldown_reduction"	"SHAPESHIFT COOLDOWN REDUCTION PER STACK:"
-"DOTA_Tooltip_ability_imba_lycan_wolfsbane_aghanim_description"				"Grants the damage to all allied heroes and player controlled creeps. Lycan no longer has to be present in a kill for Wolfsbane to trigger, but the minimum amount of allies is still required."
+"DOTA_Tooltip_ability_imba_lycan_wolfsbane_scepter_description"				"Grants the damage to all allied heroes and player controlled creeps. Lycan no longer has to be present in a kill for Wolfsbane to trigger, but the minimum amount of allies is still required."
 
 "DOTA_Tooltip_modifier_imba_wolfsbane_wolves"                          "Wolfsbane"
 "DOTA_Tooltip_modifier_imba_wolfsbane_wolves_Description"              "%dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% Bonus damage from successful kills as a pack."
@@ -83,7 +83,7 @@
 "DOTA_Tooltip_ability_imba_lycan_shapeshift_duration"					"#{DOTA_Tooltip_ability_lycan_shapeshift_duration}"
 "DOTA_Tooltip_ability_imba_lycan_shapeshift_night_vision_bonus"			"#{DOTA_Tooltip_ability_lycan_shapeshift_bonus_night_vision}"
 "DOTA_Tooltip_ability_imba_lycan_shapeshift_absolute_speed"				"HASTED SPEED:"
-"DOTA_Tooltip_ability_imba_lycan_shapeshift_aghanim_description"		"Grants new ability: Wolf Bite. Bite an ally, granting them Shapeshift properties."
+"DOTA_Tooltip_ability_imba_lycan_shapeshift_scepter_description"		"Grants new ability: Wolf Bite. Bite an ally, granting them Shapeshift properties."
 
 "DOTA_Tooltip_modifier_imba_shapeshift"									"Shapeshift"
 "DOTA_Tooltip_modifier_imba_shapeshift_Description"						"Unslowable, and moving beyond normal maximum speed. Attacks have a chance to crit."

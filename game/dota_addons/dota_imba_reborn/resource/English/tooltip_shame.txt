@@ -343,7 +343,7 @@
 "DOTA_Tooltip_ability_chen_test_of_faith_teleport_Description"          "Teleports an allied or enemy unit back to its base. Creeps are teleported instantly, while Heroes have a delay before teleporting. If cast on Chen, all units controlled by Chen through Holy Persuasion will be teleported to him after a delay."
 
 "DOTA_Tooltip_ability_gyrocopter_rocket_barrage_Description"            "Launches a salvo of rockets at nearby enemy units in a radius around the Gyrocopter. Lasts 3/3.3/3.6/4 seconds."
-"DOTA_Tooltip_ability_gyrocopter_call_down_aghanim_description"                     "Adds a Side Gunner that at random attacks enemy units within a 1000 radius every 0.7 seconds."
+"DOTA_Tooltip_ability_gyrocopter_call_down_scepter_description"                     "Adds a Side Gunner that at random attacks enemy units within a 1000 radius every 0.7 seconds."
 
 "DOTA_Tooltip_ability_invoker_alacrity_Description"                    "Invoker infuses an ally with an immense surge of energy, increasing their attack speed based on the level of <font color='#d671a9'>Wex</font> and their damage based on the level of <font color='#cabe68'>Exort</font>.\n<font color='#FF7800'>Stone Enchanter:</font> Can be used on buildings."
 "DOTA_Tooltip_ability_invoker_invoke_Description"                      "Combines the properties of the elements currently being manipulated to create a new spell for Invoker to use. Invoke cooldown is reduced by %cooldown_reduction_per_orb% seconds for each orb level. <br><br> Click the help button to see the list of possible spells.\n<font color='#FF7800'>Advanced Sorceries:</font> Invoke receives additional levels at Level 6, 12, and 18. Invoke provides these additional bonuses:<br><br>Intellect: %bonus_intellect%<br>Magic Resistance: %magic_resistance_pct%%%<br>Spell Amplification: %bonus_spellpower%%%<br>Spell Lifesteal: %spell_lifesteal%%%<br>Cooldown Reduction: %cooldown_reduction_pct%%%"
@@ -356,7 +356,7 @@
 
 "DOTA_Tooltip_ability_weaver_geminate_attack_Note0"						"The second attack leaves Weaver 0.2 seconds after the first, and has no range limit."
 
-"DOTA_Tooltip_ability_weaver_time_lapse_aghanim_description"            "Reduces cooldown, and allows Weaver to cast Time Lapse on allies <font color='#FF7800'>and enemies</font>."
+"DOTA_Tooltip_ability_weaver_time_lapse_scepter_description"            "Reduces cooldown, and allows Weaver to cast Time Lapse on allies <font color='#FF7800'>and enemies</font>."
 
 "DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Description"                     "Launches a ball of brittle ice toward an enemy <font color='#FF7800'>or ally</font>. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% radius. Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%."
 

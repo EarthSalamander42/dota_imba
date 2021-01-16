@@ -54,7 +54,7 @@
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_abilitycastrange"		"CAST RANGE:"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_attack_damage"          "DAMAGE PER ATTACK:"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_cast_damage"            "DAMAGE PER CAST:"
-"DOTA_Tooltip_ability_imba_bloodseeker_rupture_aghanim_description"                 "Allows Rupture to store up to 2 charges. A charge is replenished every 40 seconds and can be reduced with cooldown reductions effects."
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_scepter_description"                 "Allows Rupture to store up to 2 charges. A charge is replenished every 40 seconds and can be reduced with cooldown reductions effects."
 
 "DOTA_Tooltip_modifier_imba_rupture_debuff_dot"                        "Rupture"
 "DOTA_Tooltip_modifier_imba_rupture_debuff_dot_Description"            "Ruptured! Moving will cause you to take damage."

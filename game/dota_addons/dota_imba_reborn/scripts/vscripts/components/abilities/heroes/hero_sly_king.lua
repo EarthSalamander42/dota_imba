@@ -338,6 +338,12 @@ function modifier_imba_frost_gale_setin:GetEffectName()
 function modifier_imba_frost_gale_setin:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW end
 
+function modifier_imba_frost_gale_setin:DeclareFunctions()
+	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+		}
+	return funcs
+end
+
 function modifier_imba_frost_gale_setin:OnCreated()
 
 	--Ability properties
@@ -349,33 +355,19 @@ function modifier_imba_frost_gale_setin:OnCreated()
 	self.maximum_slow = self:GetAbility():GetSpecialValueFor("maximum_slow")
 	self.chill_duration = self:GetAbility():GetSpecialValueFor("chill_duration")
 
+	self.interval_think = 0.5
+
 	if IsServer() then
-		self:StartIntervalThink(1)
+		self:StartIntervalThink(self.interval_think)
 	end
-end
-
-function modifier_imba_frost_gale_setin:OnDestroy()
-	if IsServer() then
-		--if victim isn't dead and isn't magic immune, apply the root debuff
-		if self:GetParent():IsAlive() and not self:GetParent():IsMagicImmune() then
-
-			local mod = self:GetParent():AddNewModifier(self:GetAbility():GetCaster(), self:GetAbility(), "modifier_imba_frost_gale_debuff", {duration = self.chill_duration})
-			mod:SetStackCount(self:GetStackCount())
-		end
-	end
-end
-
-function modifier_imba_frost_gale_setin:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
-	return funcs
 end
 
 function modifier_imba_frost_gale_setin:OnIntervalThink()
 	if IsServer() then
 		--play chill tick sound and apply a tick of damage
 		EmitSoundOn("Hero_Ancient_Apparition.ColdFeetTick", self:GetParent())
-		local damage = ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.chill_damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
+
+		local damage = ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.chill_damage * self.interval_think, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), damage, nil)
 	end
 end
@@ -389,6 +381,19 @@ function modifier_imba_frost_gale_setin:GetModifierMoveSpeedBonus_Percentage()
 
 		local totalSlow = (self.maximum_slow - self.minimum_slow) / duration * elapsed + self.minimum_slow
 		return totalSlow * -1
+	end
+end
+
+function modifier_imba_frost_gale_setin:OnDestroy()
+	if IsServer() then
+		--if victim isn't dead and isn't magic immune, apply the root debuff
+		if self:GetParent():IsAlive() and not self:GetParent():IsMagicImmune() then
+			-- if effect not dispelled
+			if self:GetElapsedTime() >= self:GetDuration() then
+				local mod = self:GetParent():AddNewModifier(self:GetAbility():GetCaster(), self:GetAbility(), "modifier_imba_frost_gale_debuff", {duration = self.chill_duration * (1 - self:GetParent():GetStatusResistance())})
+				mod:SetStackCount(self:GetStackCount())
+			end
+		end
 	end
 end
 

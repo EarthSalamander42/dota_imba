@@ -20,6 +20,19 @@
 				<Panel id="ToastElements" >
 					<Label id="ToastLabel" html="true" />
 				</Panel>
+
+				<Panel id="BattlepassRewardTitleContainer" class="BattlepassRewardTitleContainer" hittest="false">
+					<Label id="BattlepassRewardTitle" class="BattlepassRewardTitle" hittest="false"/>
+					<Label id="BattlepassRewardRarity" class="BattlepassRewardRarity" hittest="false"/>
+				</Panel>
+
+				<Panel id="BattlepassRewardImage" class="BattlepassRewardImage">
+					<Panel id="BattlepassRewardImageLabelContainer" class="BattlepassRewardImageLabelContainer">
+<!--
+						<Label id="BattlepassRewardImageLabel" class="BattlepassRewardImageLabel" text="#bp_reward_equip_description" hittest="false"/>
+-->
+					</Panel>
+				</Panel>
 			</Panel>
 		</snippet>
 	</snippets>

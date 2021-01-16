@@ -113,7 +113,7 @@
 "DOTA_Tooltip_ability_imba_techies_remote_mine_inflammable_charge_radius"           "INFLAMMABLE RADIUS PER CHARGE:"
 "DOTA_Tooltip_ability_imba_techies_remote_mine_scepter_damage_bonus"                "SCEPTER DAMGE BONUS:"
 "DOTA_Tooltip_ability_imba_techies_remote_mine_scepter_radius_bonus"                "SCEPTER RADIUS BONUS:"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_aghanim_description"                 "Increases Remote Mines' damage by 150 and radius by 200."
+"DOTA_Tooltip_ability_imba_techies_remote_mine_scepter_description"                 "Increases Remote Mines' damage by 150 and radius by 200."
 
 "DOTA_Tooltip_ability_imba_techies_remote_mine_pinpoint_detonation"                 "Pinpoint Detonation"
 "DOTA_Tooltip_ability_imba_techies_remote_mine_pinpoint_detonation_Description"     "Detonate selected remote mine."

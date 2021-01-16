@@ -39,7 +39,6 @@ function HexAura( keys )
 
 	-- Check if the ability should be cast
 	if #creeps >= min_creeps or #heroes >= 1 then
-
 		-- Choose a random hero to be the modifier owner (having a non-hero hex modifier owner crashes the game)
 		local hero_owner = HeroList:GetHero(0)
 
@@ -52,6 +51,7 @@ function HexAura( keys )
 				ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 			end
 		end
+
 		for _,enemy in pairs(heroes) do
 			if enemy:IsIllusion() then
 				enemy:ForceKill(true)

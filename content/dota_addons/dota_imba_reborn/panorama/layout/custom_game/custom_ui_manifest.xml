@@ -70,20 +70,58 @@
 			if (Parent.FindChildTraverse("GameAndPlayersRoot") == undefined || Parent.FindChildTraverse("TeamsList") == undefined || Parent.FindChildTraverse("TeamsListGroup") == undefined || Parent.FindChildTraverse("CancelAndUnlockButton") == undefined || Parent.FindChildTraverse("UnassignedPlayerPanel") == undefined || Parent.FindChildTraverse("ShuffleTeamAssignmentButton") == undefined)
 				$.Schedule(0.25, SetupLoadingScreen);
 			else {
-				Parent.FindChildTraverse("GameAndPlayersRoot").style.backgroundColor = "#000000aa";
-				Parent.FindChildTraverse("GameAndPlayersRoot").style.borderRadius = "3px";
-				Parent.FindChildTraverse("GameAndPlayersRoot").style.boxShadow = "black -4px -4px 8px 8px";
-				Parent.FindChildTraverse("TeamsList").style.visibility = "collapse";
-				Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
-				Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
-				Parent.FindChildTraverse("TeamsListGroup").style.width = "99%";
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.visibility = "collapse";
+				var cancel = Parent.FindChildTraverse("CancelAndUnlockButton");
+				var lock = Parent.FindChildTraverse("LockAndStartButton");
 
 				if (Game.IsInToolsMode() == false) {
-					Parent.FindChildTraverse("UnassignedPlayerPanel").style.visibility = "collapse";
-					Parent.FindChildTraverse("CancelAndUnlockButton").style.visibility = "collapse";
 					Parent.FindChildTraverse("ShuffleTeamAssignmentButton").style.visibility = "collapse";
+					cancel.style.visibility = "collapse";
+					lock.style.visibility = "collapse";
+				} else {
+					var parent = Parent.FindChildTraverse("TeamsList");
+					var header = Parent.FindChildTraverse("TeamsListGroup");
+
+					var game_info = Parent.FindChildTraverse("GameAndPlayersRoot").FindChildTraverse("GameInfoPanel");
+					var map_label = Parent.FindChildTraverse("MapInfoLabel");
+					var text = "Re-ordering teams based on winrate, please wait";
+
+					map_label.text = text;
+					SetTeamOrderingText(map_label);
+
+					if (game_info) {
+						game_info.SetParent(parent);
+						parent.MoveChildBefore(game_info, header);
+					}
+
+					if (parent.FindChildTraverse("GameInfoPanel"))
+						parent.MoveChildBefore(parent.FindChildTraverse("GameInfoPanel"), header);
+
+					if (cancel)
+						cancel.SetParent(parent);
+
+					if (lock)
+						lock.SetParent(parent);
+
+//					Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
+//					Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
+//					Parent.FindChildTraverse("TeamsListGroup").style.width = "99%";
 				}
 			}
+		}
+
+		function SetTeamOrderingText(panel, text) {
+			if (!panel || Game.GameStateIsAfter(2))
+				return;
+
+			if (panel.text.indexOf("...") != -1)
+				panel.text = panel.text.slice(0, -3) + ".";
+			else
+				panel.text = panel.text + ".";
+
+			$.Schedule(1.0, function() {
+				SetTeamOrderingText(panel, text);
+			})
 		}
 
 		// Unit Side Tab visible in mutation mod
