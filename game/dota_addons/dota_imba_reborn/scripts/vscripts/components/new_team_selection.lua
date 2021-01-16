@@ -3,37 +3,51 @@
 
 if not TeamOrdering then
 	TeamOrdering = class({})
+	TeamOrdering.winrates = {}
 end
 
 -- events
+
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
-			TeamOrdering:ComputeTeamSelection()
+		if GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10" and IsInToolsMode() then
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
+				-- This function is called when connection to backend is successful if not in tools mode, let's call it in tools mode when bots are added in for testing purpose
+				TeamOrdering:ComputeTeamSelection()
 
-			return nil
-		end, 1.0)
+				return nil
+			end, 3.0)
+		end
 	end
 end, nil)
 
+
 -- core
 function TeamOrdering:ComputeTeamSelection()
-	local steamids = {1234, 3123, 1231, 1232, 1241, 1235, 4121, 1231, 1233, 1211}
-	local winrates = {81.0, 77.0, 74.2, 65.1, 54.2, 53.2, 49.9, 43.3, 41.2, 32.8}
+	--keep in mind that this algorithm works only for 5v5 atm
+	local n = PlayerResource:GetPlayerCount()
+	local k = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
+
+	--don't forget to change that for 10v10 ->
+	local halfCombinationsNumber = 126 -- generations number is n!/((n-k)!*k!)
+	local winratesBaseArray = {81.0, 77.0, 74.2, 65.1, 54.2, 53.2, 49.9, 43.3, 41.2, 32.8}
+
+	if GetMapName() == "imba_10v10" then
+		halfCombinationsNumber = 126
+	end
+
+	for i = 0, n - 1 do
+		self.winrates[i] = winratesBaseArray[i + 1]
+	end
 
 	-- not tested yet
 	if not IsInToolsMode() then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) then
-				steamids[i + 1] = PlayerResource:GetSteamID(i)
-				winrates[i + 1] = api:GetPlayerWinrate(i)
+				self.winrates[i] = api:GetPlayerWinrate(i)
 			end
 		end
 	end
-
-	local n = 10
-	local k = 5
-	local halfCombinationsNumber = 126 -- generations number is n!/((n-k)!*k!) 
 
 	local combination = {}
 
@@ -43,22 +57,35 @@ function TeamOrdering:ComputeTeamSelection()
 
 	combination[k] = n
 
+	local winratesDifference = nil
+	local smallestWinratesDifference = 100 * k -- highest winrates difference possible
+
+	local bestTeamAOrdering = {}
+	local bestTeamBOrdering = {}
+
 	for i = 0, halfCombinationsNumber - 1 do
-		PrintArray(combination)
+		-- start of operations with combination
 
 		local oppositeCombination = {}
 
-		for j = 0, 9 do
-			oppositeCombination[j] = j
+		for j = 0, n - 1 do
+		 	oppositeCombination[j] = j
 		end
 
-		ArraySubtract(oppositeCombination, combination)
-		PrintArray(oppositeCombination)
+		oppositeCombination = TableSubtract(oppositeCombination, combination)
 
-		--teamA = {}
-		--for i = 0, k - 1 do
-		--    teamA[i] = steamids[combination[i]]
+		local teamA = CopyArray(combination, k)
+		local teamB = CopyArray(oppositeCombination, k)
 
+		winratesDifference = self:CalculateWinratesDifference(teamA, teamB)
+
+		if winratesDifference and winratesDifference < smallestWinratesDifference then
+			smallestWinratesDifference = winratesDifference
+			bestTeamAOrdering = CopyArray(teamA, k)
+			bestTeamBOrdering = CopyArray(teamB, k)
+		end
+
+		-- end of operations with combination
 		local jKeeper = 0
 
 		for j = 0, k do
@@ -77,22 +104,27 @@ function TeamOrdering:ComputeTeamSelection()
 			break
 		end
 	end
+
+	print(bestTeamAOrdering)
+	print(bestTeamBOrdering)
+	self:SetTeams_PostCompute(bestTeamAOrdering, bestTeamBOrdering)
 end
 
-function TeamOrdering:CalculateWinrateDifference(teamAwinrates, teamBWinrates)
+function TeamOrdering:CalculateWinratesDifference(teamA, teamB)
 	local winrateTeamA = 0
 	local winrateTeamB = 0
 	
-	for _, playerAWinrate in pairs(teamAWinrates) do
-		winrateTeamA = winrateTeamA + playerAWinrate
+	for _, playerAIndex in pairs(teamA) do
+		winrateTeamA = winrateTeamA + self.winrates[playerAIndex]
 	end
 
-	for _, playerBWinrate in pairs(teamBWinrates) do
-		winrateTeamB = winrateTeamB + playerBWinrate
+	for _, playerBIndex in pairs(teamB) do
+		winrateTeamB = winrateTeamB + self.winrates[playerBIndex]
 	end
 
-	return math.abs(winrateTeamA-winrateTeamB)
+	return math.abs(winrateTeamA - winrateTeamB)
 end
+
 
 -- hRadiant and hDire should return both an array of player id's
 function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
@@ -103,40 +135,68 @@ function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
 		player:SetTeam(DOTA_TEAM_NOTEAM)
 	end
 
-	for k, v in pairs(hRadiant) do
+	for k, v in pairs(hRadiant or {}) do
 		local player = PlayerResource:GetPlayer(v)
 
 		player:SetTeam(DOTA_TEAM_GOODGUYS)
 	end
 
-	for k, v in pairs(hDire) do
+	for k, v in pairs(hDire or {}) do
 		local player = PlayerResource:GetPlayer(v)
 
 		player:SetTeam(DOTA_TEAM_BADGUYS)
 	end
+
+	GameRules:SetCustomGameSetupRemainingTime(10.0)
 end
 
 -- utils
 function PrintArray(array)
-	local text = ""
-
-	for i = 0, #array do
-		text = text..array[i].." | "
-	end
-
-	print(text)
+    local text = ""
+    for i = 0, #array do
+        text = text..array[i].."|"
+    end
+    print(text)
 end
 
-function ArraySubtract(t2, t1)
-	local set = {}
-	for i = 0, #t1-1 do
-		set[t1[i]] = true;
+function CopyArray(array, length)
+	local newArray = {}
+	for i = 0, length - 1 do
+		newArray[i] = array[i]
 	end
-	difference = t2
-	for i = #difference-1, 0, -1 do
-		if set[difference[i+1]] then
-			table.remove(difference, i+1)
-		end
-	end
-	return difference
+	return newArray
+end
+
+
+function tableRemoveAtIndexZero(table)
+    local newTable = {}
+    for i = 0, #table - 1 do
+        newTable[i] = table[i+1]
+    end
+
+    return newTable
+end
+
+function TableSubtract(greaterTable, smallerTable)
+    local set = {}
+    for i = 0, #smallerTable do
+        set[smallerTable[i]] = true;
+    end
+
+    local difference = {}
+    for i = 0, #greaterTable do
+        difference[i] = greaterTable[i]
+    end
+
+    for i = #difference, 0, -1 do
+        if set[difference[i]] then
+            if i == 0 then
+                difference = tableRemoveAtIndexZero(difference)
+            else
+                table.remove(difference, i)
+            end
+        end
+    end
+
+    return difference
 end

@@ -84,7 +84,7 @@ function modifier_item_imba_blade_mail:OnCreated()
 
 	if IsServer() then
 		if not self:GetParent():HasModifier("modifier_item_imba_blade_mail_passive") then
-			self.parent:AddNewModifier(self.parent, self.ability, "modifier_item_imba_blade_mail_passive", {})
+			self:GetParent():AddNewModifier(self.parent, self.ability, "modifier_item_imba_blade_mail_passive", {})
 		end
 	end
 end
