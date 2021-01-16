@@ -43,8 +43,8 @@ function TeamOrdering:ComputeTeamSelection()
 	else
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) then
-				self.winrates[i] = api:GetPlayerWinrate(i)
-				print("Player ID:", i, PlayerResource:GetPlayerName(i))
+				self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
+				print("Player ID/Name/Winrate/typeof(Winrate):", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i), type(api:GetPlayerWinrate(i)))
 			end
 		end
 	end
