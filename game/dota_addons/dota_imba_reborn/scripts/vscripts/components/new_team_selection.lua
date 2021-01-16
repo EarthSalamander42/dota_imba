@@ -35,15 +35,16 @@ function TeamOrdering:ComputeTeamSelection()
 		halfCombinationsNumber = 92378
 	end
 
-	for i = 0, n - 1 do
-		self.winrates[i] = winratesBaseArray[i + 1]
-	end
-
 	-- not tested yet
-	if not IsInToolsMode() then
+	if IsInToolsMode() then
+		for i = 0, n - 1 do
+			self.winrates[i] = winratesBaseArray[i + 1]
+		end
+	else
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) then
 				self.winrates[i] = api:GetPlayerWinrate(i)
+				print("Player ID:", i, PlayerResource:GetPlayerName(i))
 			end
 		end
 	end
@@ -85,10 +86,13 @@ function TeamOrdering:ComputeTeamSelection()
 	        break
     	end
 
-		if winratesDifference and winratesDifference < smallestWinratesDifference then
-			smallestWinratesDifference = winratesDifference
-			bestTeamAOrdering = CopyArray(teamA, k)
-			bestTeamBOrdering = CopyArray(teamB, k)
+		if winratesDifference then
+			print("Winrate Diffs:", winratesDifference, smallestWinratesDifference)
+			if winratesDifference < smallestWinratesDifference then
+				smallestWinratesDifference = winratesDifference
+				bestTeamAOrdering = CopyArray(teamA, k)
+				bestTeamBOrdering = CopyArray(teamB, k)
+			end
 		end
 
 		-- end of operations with combination
@@ -111,8 +115,8 @@ function TeamOrdering:ComputeTeamSelection()
 		end
 	end
 
-	print(bestTeamAOrdering)
-	print(bestTeamBOrdering)
+	print("Radiant comp:", bestTeamAOrdering)
+	print("Dire comp:", bestTeamBOrdering)
 	self:SetTeams_PostCompute(bestTeamAOrdering, bestTeamBOrdering)
 end
 

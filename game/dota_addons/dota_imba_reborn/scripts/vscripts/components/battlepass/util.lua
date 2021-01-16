@@ -188,18 +188,20 @@ function Battlepass:RegisterHeroTaunt(hero)
 
 --	print("Armory:", armory)
 
-	for k, v in pairs(armory) do
-		if v.slot_id == "taunt" then
-			if hero:GetUnitName() == v.hero and Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= ItemsGame:GetItemUnlockLevel(v.item_id) then
-				if ItemsGame:GetItemVisuals(v.item_id)["asset_modifier1"] then
-					hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier1"].modifier
-				elseif ItemsGame:GetItemVisuals(v.item_id)["asset_modifier0"] then
-					hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier0"].modifier
-				elseif ItemsGame:GetItemVisuals(v.item_id)["asset_modifier"] then
-					hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier"].modifier
-				end
+	if armory and type(armory) == "table" then
+		for k, v in pairs(armory) do
+			if v.slot_id == "taunt" then
+				if hero:GetUnitName() == v.hero and Battlepass:GetRewardUnlocked(hero:GetPlayerID()) >= ItemsGame:GetItemUnlockLevel(v.item_id) then
+					if ItemsGame:GetItemVisuals(v.item_id)["asset_modifier1"] then
+						hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier1"].modifier
+					elseif ItemsGame:GetItemVisuals(v.item_id)["asset_modifier0"] then
+						hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier0"].modifier
+					elseif ItemsGame:GetItemVisuals(v.item_id)["asset_modifier"] then
+						hero.bp_taunt = ItemsGame:GetItemVisuals(v.item_id)["asset_modifier"].modifier
+					end
 
-				return
+					return
+				end
 			end
 		end
 	end
