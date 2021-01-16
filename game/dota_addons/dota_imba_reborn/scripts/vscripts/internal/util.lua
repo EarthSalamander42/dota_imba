@@ -549,8 +549,15 @@ function SetupTower(tower)
 	end
 end
 
+-- Outdated formula
+--[[
 function GetReductionFromArmor(armor)
 	return (0.052 * armor) / (0.9 + 0.048 * math.abs(armor))
+end
+--]]
+
+function GetReductionFromArmor(armor)
+	return (0.06 * armor) / (1 + 0.06 * math.abs(armor))
 end
 
 function CalculateDamageIgnoringArmor(damage, armor)

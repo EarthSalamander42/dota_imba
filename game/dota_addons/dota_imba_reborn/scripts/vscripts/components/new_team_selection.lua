@@ -24,16 +24,15 @@ end, nil)
 
 -- core
 function TeamOrdering:ComputeTeamSelection()
-	--keep in mind that this algorithm works only for 5v5 atm
 	local n = PlayerResource:GetPlayerCount()
 	local k = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
+	local acceptableWinratesDifference = 1 -- for 10v10 only
 
-	--don't forget to change that for 10v10 ->
 	local halfCombinationsNumber = 126 -- generations number is n!/((n-k)!*k!)
-	local winratesBaseArray = {81.0, 77.0, 74.2, 65.1, 54.2, 53.2, 49.9, 43.3, 41.2, 32.8}
+	local winratesBaseArray = {81.0, 77.0, 74.2, 65.1, 54.2, 53.2, 49.9, 43.3, 41.2, 32.8, 41.0, 71.0, 72.2, 62.1, 24.2, 33.2, 19.9, 63.3, 71.2, 92.8}
 
 	if GetMapName() == "imba_10v10" then
-		halfCombinationsNumber = 126
+		halfCombinationsNumber = 92378
 	end
 
 	for i = 0, n - 1 do
@@ -78,6 +77,13 @@ function TeamOrdering:ComputeTeamSelection()
 		local teamB = CopyArray(oppositeCombination, k)
 
 		winratesDifference = self:CalculateWinratesDifference(teamA, teamB)
+
+		if GetMapName() == "imba_10v10" and winratesDifference < acceptableWinratesDifference then
+	        smallestWinratesDifference = winratesDifference
+	        bestTeamAOrdering = CopyArray(teamA, k)
+	        bestTeamBOrdering = CopyArray(teamB, k)
+	        break
+    	end
 
 		if winratesDifference and winratesDifference < smallestWinratesDifference then
 			smallestWinratesDifference = winratesDifference
