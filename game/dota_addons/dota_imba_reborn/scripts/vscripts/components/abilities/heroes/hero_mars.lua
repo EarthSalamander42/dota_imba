@@ -758,8 +758,6 @@ end
 -- Created by Elfansoer
 --[[
 Ability checklist (erase if done/checked):
-- Scepter Upgrade
-- Break behavior
 - Linken/Reflect behavior
 - Spell Immune/Invulnerable/Invisible behavior
 - Illusion behavior
@@ -771,11 +769,28 @@ LinkLuaModifier( "modifier_imba_mars_gods_rebuke", "components/abilities/heroes/
 LinkLuaModifier( "modifier_imba_mars_gods_rebuke_strong_argument", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
--- Ability Start
+
+function imba_mars_gods_rebuke:GetCooldown(iLevel)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("imba_scepter_cooldown")
+	end
+
+	return self.BaseClass.GetCooldown(self, iLevel)
+end
+
+function imba_mars_gods_rebuke:GetBehavior()
+--	if self:GetCaster():HasTalent("special_bonus_imba_mars_1") then
+--		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
+--	end
+
+	return DOTA_ABILITY_BEHAVIOR_POINT
+end
+
 function imba_mars_gods_rebuke:OnSpellStart()
 	-- unit identifier
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
+	print(point)
 
 	local mod = caster:FindModifierByName("modifier_imba_mars_bulwark_active")
 
@@ -1271,6 +1286,7 @@ LinkLuaModifier( "modifier_imba_mars_arena_of_blood_spear_aura", "components/abi
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_projectile_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mars_arena_of_blood_scepter", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Custom KV
@@ -1279,23 +1295,37 @@ function imba_mars_arena_of_blood:GetAOERadius()
 	return self:GetVanillaAbilitySpecial( "radius" )
 end
 
+function imba_mars_arena_of_blood:GetCastRange(vLocation, hTarget)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_cast_range")
+	end
+
+	return self.BaseClass.GetCastRange(self, vLocation, hTarget)
+end
+
 --------------------------------------------------------------------------------
 -- Ability Start
 function imba_mars_arena_of_blood:OnSpellStart()
-	-- unit identifier
-	local caster = self:GetCaster()
-	local point = self:GetCursorPosition()
+	if not IsServer() then return end
 
-	-- create thinker
-	CreateModifierThinker(
-		caster, -- player source
-		self, -- ability source
-		"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
-		{  }, -- kv
-		point,
-		caster:GetTeamNumber(),
-		false
-	)
+	if self:GetCaster():HasScepter() then
+		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {})
+
+		if mod then
+			mod.target_point = self:GetCursorPosition()
+		end
+	else
+		-- create thinker
+		CreateModifierThinker(
+			self:GetCaster(), -- player source
+			self, -- ability source
+			"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
+			{  }, -- kv
+			self:GetCursorPosition(),
+			self:GetCaster():GetTeamNumber(),
+			false
+		)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -2353,6 +2383,101 @@ function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraEntityReject( unit )
 	return false
 end
 
+modifier_imba_mars_arena_of_blood_scepter = modifier_imba_mars_arena_of_blood_scepter or class({})
+
+function modifier_imba_mars_arena_of_blood_scepter:IsHidden() return true end
+function modifier_imba_mars_arena_of_blood_scepter:IsPurgable() return false end
+function modifier_imba_mars_arena_of_blood_scepter:IsDebuff() return false end
+function modifier_imba_mars_arena_of_blood_scepter:IgnoreTenacity() return true end
+function modifier_imba_mars_arena_of_blood_scepter:IsMotionController() return true end
+function modifier_imba_mars_arena_of_blood_scepter:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_imba_mars_arena_of_blood_scepter:OnCreated()
+	if not IsServer() then return end
+
+	self.max_height = self:GetAbility():GetSpecialValueFor("scepter_max_height")
+
+	-- Variables
+	self.time_elapsed = 0
+	self.leap_z = 0
+
+	-- Wait one frame to get the target point from the ability's OnSpellStart, then calculate distance
+	Timers:CreateTimer(FrameTime(), function()
+		self.distance = (self:GetParent():GetAbsOrigin() - self.target_point):Length2D()
+		self.jump_time = self.distance / self.jump_speed
+
+		self.direction = (self.target_point - self:GetParent():GetAbsOrigin()):Normalized()
+
+		self:StartIntervalThink(FrameTime())
+	end)
+end
+
+function modifier_imba_mars_arena_of_blood_scepter:OnIntervalThink()
+	-- Check motion controllers
+	if not self:CheckMotionControllers() then		
+		self:Destroy()
+		return nil
+	end
+
+	-- Vertical Motion
+	self:VerticalMotion(self:GetParent(), FrameTime())
+
+	-- Horizontal Motion
+	self:HorizontalMotion(self:GetParent(), FrameTime())
+end
+
+function modifier_imba_mars_arena_of_blood_scepter:VerticalMotion(me, dt)
+	if IsServer() then
+
+		-- Check if we're still jumping
+		if self.time_elapsed < self.jump_time then
+			-- Check if we should be going up or down
+			if self.time_elapsed <= self.jump_time / 2 then
+				-- Going up
+				self.leap_z = self.leap_z + 30
+
+				self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()) + Vector(0,0,self.leap_z))
+			else
+				-- Going down
+				self.leap_z = self.leap_z - 30
+				if self.leap_z > 0 then
+					self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()) + Vector(0,0,self.leap_z))
+				end
+
+			end
+		end
+	end
+end
+
+function modifier_imba_mars_arena_of_blood_scepter:HorizontalMotion(me, dt)
+	if IsServer() then
+		-- Check if we're still jumping
+		self.time_elapsed = self.time_elapsed + dt
+		if self.time_elapsed < self.jump_time then
+			-- Go forward
+			local new_location = self:GetParent():GetAbsOrigin() + self.direction * self.jump_speed * dt
+			self:GetParent():SetAbsOrigin(new_location)
+		else
+			self:Destroy()
+		end
+	end
+end
+
+function modifier_imba_mars_arena_of_blood_scepter:OnRemoved()
+	if not IsServer() then return end
+
+	CreateModifierThinker(
+		self:GetParent(), -- player source
+		self:GetAbility(), -- ability source
+		"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
+		{  }, -- kv
+		self:GetCursorPosition(),
+		self:GetCaster():GetTeamNumber(),
+		false
+	)
+
+	self:GetParent():SetUnitOnClearGround()
+end
 
 --[[
 

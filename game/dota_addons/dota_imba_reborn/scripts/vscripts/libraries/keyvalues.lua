@@ -298,23 +298,6 @@ function GetAbilityManaCost(name)
 	return 0
 end
 
-function GetAbilityCooldown(name)
-	local t = KeyValues.All[name]
-
---	print(name)
---	print(t)
-
-	if t then
-		local cooldown = t["AbilityCooldown"]
-
-		if cooldown then
-			return cooldown
-		end
-	end
-
-	return 0
-end
-
 function GetSpellImmunityType(name)
 	local t = KeyValues.All[name]
 

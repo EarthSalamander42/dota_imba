@@ -1,7 +1,9 @@
 if not CustomTooltips then
 	CustomTooltips = class({})
+	CustomTooltips.particles = {}
 
 	CustomGameEventManager:RegisterListener("get_tooltips_info", Dynamic_Wrap(CustomTooltips, 'GetTooltipsInfo'))
+	CustomGameEventManager:RegisterListener("remove_tooltips_info", Dynamic_Wrap(CustomTooltips, 'RemoveTooltipsInfo'))
 end
 
 function CustomTooltips:GetTooltipsInfo(keys)
@@ -20,7 +22,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	end
 
 	if ability_name then
-		ability_values["cooldown"] = GetAbilityCooldown(ability_name)
 		ability_values["manacost"] = GetAbilityManaCost(ability_name)
 		ability_values["specials"] = specials
 		ability_values["SpellImmunityType"] = GetSpellImmunityType(ability_name)
@@ -30,15 +31,46 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		return
 	end
 
+	local hAbility = hero:FindAbilityByName(keys.sAbilityName)
+	local hRealCooldown = {}
+
+	for i = 1, hAbility:GetMaxLevel() do
+		local iRealCooldown = hAbility:GetCooldown(i - 1)
+
+--		print(iRealCooldown, hero:GetCooldownReduction())
+		hRealCooldown[i] = iRealCooldown * (hero:GetCooldownReduction() * 100) / 100
+	end
+
+	local cast_range = GetAbilityKV(ability_name, "AbilityCastRange", hAbility:GetLevel()) or 0
+
+	if cast_range ~= 0 then
+		if not CustomTooltips.particles[keys.PlayerID] then
+			CustomTooltips.particles[keys.PlayerID] = {}
+		end
+
+		local pfx = ParticleManager:CreateParticle("particles/ui_mouseactions/range_display.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+		ParticleManager:SetParticleControl(pfx, 0, hero:GetAbsOrigin())
+		ParticleManager:SetParticleControl(pfx, 1, Vector(cast_range + GetCastRangeIncrease(hero), 0, 0))
+		table.insert(CustomTooltips.particles[keys.PlayerID], pfx)
+	end
+
 --	print("Send server tooltips info:", ability_values["specials"])
 	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", {
 		sAbilityName = keys.sAbilityName,
 		hPosition = keys.hPosition,
-		iCooldown = ability_values["cooldown"],
+		iCooldown = hRealCooldown,
 		iManaCost = ability_values["manacost"],
 		sSpellImmunity = ability_values["SpellImmunityType"],
 		sSpellDispellable = ability_values["SpellDispellableType"],
 		sSpecial = ability_values["specials"],
 		iBonusCastRange = hero:GetCastRangeBonus(),
+		iAbility = keys["iAbility"],
 	})
+end
+
+function CustomTooltips:RemoveTooltipsInfo(keys)
+	for k, v in pairs(CustomTooltips.particles[keys.PlayerID] or {}) do
+		ParticleManager:DestroyParticle(v, false)
+		ParticleManager:ReleaseParticleIndex(v)
+	end
 end

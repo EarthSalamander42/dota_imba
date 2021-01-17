@@ -67,8 +67,6 @@ var AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
 var AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
 var AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
 
-var RangeDisplayPFX = [];
-
 DotaHud.style.width = "100%";
 DotaHud.style.height = "100%";
 AbilityLore.style.width = "370px";
@@ -84,6 +82,7 @@ function OverrideAbilityTooltips(sAbilityName) {
 	var tooltip = $.Localize("DOTA_Tooltip_Ability_" + sAbilityName + "_Description")
 	var Specials = GameUI.ReplaceDOTAAbilitySpecialValues(sAbilityName, tooltip, AbilityDetails)
 
+	$.Msg("Override Ability Tooltips")
 	$.Msg(Specials);
 }
 
@@ -161,6 +160,7 @@ function CallTooltips(i) {
 	GameEvents.SendCustomGameEventToServer("get_tooltips_info", {
 		sAbilityName: sAbilityName,
 		hPosition: hPanel.GetPositionWithinWindow(),
+		iAbility: i,
 	})
 }
 
@@ -176,12 +176,10 @@ function SetAbilityTooltips(keys) {
 	var ability = Entities.GetAbilityByName(Game.GetLocalPlayerInfo().player_selected_hero_entity_index, keys.sAbilityName);
 //	$.Msg(keys.sAbilityName)
 
-	// Fail-Safe?
-	HideTooltips();
-
 	// HasCooldown // ScepterUpgradable
 
 	var bIsItem = false;
+	var ability_level = Abilities.GetLevel(ability);
 
 	if (bIsItem == false) {
 		ItemScepterDescription.style.visibility = "collapse";
@@ -208,7 +206,7 @@ function SetAbilityTooltips(keys) {
 		AbilityName.SetDialogVariable("name", $.Localize("DOTA_Tooltip_ability_" + keys.sAbilityName));
 	}
 
-	AbilityLevel.SetDialogVariable("level", Abilities.GetLevel(ability));
+	AbilityLevel.SetDialogVariable("level", ability_level);
 
 	if (Abilities.GetManaCost(ability) == 0)
 		CurrentAbilityManaCost.style.visibility = "collapse";
@@ -221,7 +219,9 @@ function SetAbilityTooltips(keys) {
 		CurrentAbilityCooldown.style.visibility = "collapse";
 	} else {
 		CurrentAbilityCooldown.style.visibility = "visible";
-		CurrentAbilityCooldown.SetDialogVariable("current_cooldown", Abilities.GetCooldown(ability));
+
+		if (ability_level != 0)
+			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][ability_level].toFixed(1));
 	}
 
 	AbilityCastType.SetDialogVariable("casttype", $.Localize("DOTA_ToolTip_Ability_" + Array_BehaviorTooltips[GetAbilityType(Abilities.GetBehavior(ability))]));
@@ -283,7 +283,7 @@ function SetAbilityTooltips(keys) {
 			if (keys["sSpecial"][i] && keys["sSpecial"][i][1]) {
 				var special_key = keys["sSpecial"][i][1];
 				var special_values = keys["sSpecial"][i][2].toString().split(" ");
-				var special_value = special_values[Math.min(Abilities.GetLevel(ability) - 1, special_values.length - 1)];
+				var special_value = special_values[Math.min(ability_level - 1, special_values.length - 1)];
 
 //				$.Msg(special_key)
 //				$.Msg(special_values)
@@ -396,17 +396,23 @@ function SetAbilityTooltips(keys) {
 
 	if (keys) {	
 		if (keys["iCooldown"] != undefined) {	
-			var cd = keys["iCooldown"].toString().split(" ");
+			var cd = [];
+			var current_cd = 0;
 
-			for (var i in cd) {
-				cd[i] = parseFloat(cd[i]);
+			for (var i in keys["iCooldown"]) {
+				var fixed_cd = parseFloat(keys["iCooldown"][i]).toFixed(1);
+				cd[i - 1] = fixed_cd;
+
+				if (i == ability_level)
+					current_cd = fixed_cd
 			}
 
 			cd = cd.join(" / ");
 
-			if (cd != 0) {
-				if (Abilities.GetLevel(ability) != 0) {
-					cd = SetActiveValue(cd, Abilities.GetCooldown(ability));
+			// Yeah it's pretty bad right?
+			if (cd != "0.0" && cd != "0.0 / 0.0" && cd != "0.0 / 0.0 / 0.0" && cd != "0.0 / 0.0 / 0.0 / 0.0") {
+				if (ability_level != 0) {
+					cd = SetActiveValue(cd, current_cd);
 				}
 
 				AbilityCooldown.style.visibility = "visible";
@@ -418,6 +424,7 @@ function SetAbilityTooltips(keys) {
 		var same_mana = true;
 		if (keys["iManaCost"] != undefined) {
 			var mana = keys["iManaCost"].toString().split(" ");
+			var current_mana = [];
 
 			for (var i in mana) {
 
@@ -436,8 +443,8 @@ function SetAbilityTooltips(keys) {
 				mana = mana.join(" / ");
 
 			if (mana != 0) {
-				if (Abilities.GetLevel(ability) != 0) {
-					mana = SetActiveValue(mana, Abilities.GetManaCost(ability));
+				if (ability_level != 0) {
+//					mana = SetActiveValue(mana, Abilities.GetManaCost(ability));
 				}
 
 				AbilityManaCost.style.visibility = "visible";
@@ -457,34 +464,24 @@ function SetAbilityTooltips(keys) {
 		AbilityLore.style.visibility = "collapse";
 	}
 
-	if (Abilities.GetLevel(ability) != Abilities.GetMaxLevel(ability)) {
+	if (ability_level != Abilities.GetMaxLevel(ability)) {
 		AbilityUpgradeLevel.SetDialogVariableInt("upgradelevel", Abilities.GetHeroLevelRequiredToUpgrade(ability))
 		AbilityUpgradeLevel.style.visibility = "visible";
 	} else {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
-	var bonus_cast_range = keys.iBonusCastRange || 0;
+	SetTooltipsPosition(keys.hPosition);
 
-//	$.Msg("Cast Range: ", Abilities.GetCastRange(ability))
-	if (Abilities.GetCastRange(ability) && Abilities.GetCastRange(ability) > 0) {
-		var origin = Entities.GetAbsOrigin(Players.GetLocalPlayerPortraitUnit());
-//		$.Msg(origin);
+	// repeat or else panel is not at the right position
+	$.Schedule(0.05, () => {
+		var ability = GetDotaHud().FindChildTraverse("Ability" + keys["iAbility"]);
+		var ability_button = ability.FindChildTraverse("AbilityButton");
 
-		var pfx = Particles.CreateParticle("particles/ui_mouseactions/range_display.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, Players.GetLocalPlayerPortraitUnit());
-		Particles.SetParticleControl(pfx, 0, origin);
-		Particles.SetParticleControl(pfx, 1, [Abilities.GetCastRange(ability) + bonus_cast_range, 0, 0]);
-
-		RangeDisplayPFX.push(pfx);
-	}
-
-	$.Schedule(1/60, () => {
-		SetTooltipsPosition(keys.hPosition);
-		// repeat or else panel is not at the right position
-		$.Schedule(1/60, () => {
+		if (ability_button.BHasHoverStyle()) {		
 			SetTooltipsPosition(keys.hPosition);
 			AbilityDetails.style.opacity = "1";
-		});
+		}
 	});
 }
 
@@ -551,12 +548,7 @@ function OnThink() {
 function HideTooltips() {
 	AbilityDetails.style.opacity = "0";
 
-//	$.Msg("RangeDisplayPFX: ", RangeDisplayPFX)
-
-	for (var i = 0; i < RangeDisplayPFX.length; i++) {
-		Particles.DestroyParticleEffect(RangeDisplayPFX[i], false);
-		RangeDisplayPFX.splice(i, 1);
-	}
+	GameEvents.SendCustomGameEventToServer("remove_tooltips_info", {})
 }
 
 // utils

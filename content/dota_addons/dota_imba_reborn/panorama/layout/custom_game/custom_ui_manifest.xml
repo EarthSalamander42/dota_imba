@@ -111,7 +111,6 @@
 		}
 
 		function SetTeamOrderingText(panel, text) {
-			$.Msg("SetTeamOrderingText()")
 			if (!panel || Game.GameStateIsAfter(2))
 				return;
 
