@@ -747,7 +747,7 @@ function modifier_imba_glimpse_storm_aura:OnCreated(keys)
 
 		-- Setting the model scale according to its radius
 		if self.storm_radius > self.original_radius then
-		self.scale_factor = 1 + self.storm_radius / self.original_radius
+			self.scale_factor = 1 + self.storm_radius / self.original_radius
 		end
 		
 		-- Create storm effects
@@ -800,7 +800,7 @@ function modifier_imba_glimpse_storm_aura:OnRemoved()
 		StopSoundOn(self.sound_storm, self.parent)
 
 		-- Play end sound
-		EmitSoundOnLocationWithCaster(self.parent_pos, self.sound_storm_end, nil)
+		EmitSoundOnLocationWithCaster(self.parent_pos, self.sound_storm_end, self.parent)
 	end
 end
 

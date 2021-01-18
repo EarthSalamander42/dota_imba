@@ -177,6 +177,11 @@ function GameMode:OnHeroSpawned(hero)
 		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_custom_mechanics", {})
 	end
 
+	if hero:GetUnitName() == "npc_dota_hero_wisp" then
+		hero:SetModel("models/heroes/wisp/wisp.vmdl")
+		hero:SetOriginalModel("models/heroes/wisp/wisp.vmdl")
+	end
+
 	if hero:IsTempestDouble() then
 		local clone_shared_buffs = {
 			"modifier_frantic",

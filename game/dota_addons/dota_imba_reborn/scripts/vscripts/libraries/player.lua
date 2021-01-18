@@ -1024,6 +1024,11 @@ end
 
 local original_EmitSoundOnLocationWithCaster = EmitSoundOnLocationWithCaster
 EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hParent, hCaster)
+	if hParent == nil then
+		print("CRITICAL ERROR: Missing hParent for function: EmitSoundOnLocationWithCaster.")
+		return
+	end
+
 --	print("Create Particle (override):", sSoundName)
 	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hParent:GetPlayerOwnerID()) 
 

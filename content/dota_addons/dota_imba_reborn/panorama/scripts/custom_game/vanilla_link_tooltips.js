@@ -108,7 +108,7 @@ function InitTooltips() {
 
 					(function (ability_button, i) {
 						ability_button.SetPanelEvent("onmouseover", function() {
-							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
+//							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
 							CallTooltips(i);
 						})
 
@@ -131,6 +131,7 @@ function InitTooltips() {
 
 //		$.Msg("Custom tooltips are not set for this hero.")
 
+/*
 		var i = 0;
 
 		// Re-enable vanilla tooltips
@@ -150,6 +151,7 @@ function InitTooltips() {
 
 			i++;
 		}
+*/
 	})
 }
 
