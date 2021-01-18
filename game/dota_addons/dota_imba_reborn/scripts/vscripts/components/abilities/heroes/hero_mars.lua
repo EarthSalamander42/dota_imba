@@ -98,8 +98,6 @@ function imba_mars_spear:OnSpellStart()
 
 		ProjectileManager:CreateLinearProjectile(info)
 
-		self.trailblazer_previous_pos = self:GetCaster():GetAbsOrigin()
-
 		self.traiblazer_thinker = CreateModifierThinker(
 			self:GetCaster(),
 			self,
@@ -234,21 +232,27 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 		self.heaven_spear = keys.heaven_spear
 	end
 
-	self.initial_pos = self:GetParent():GetAbsOrigin()
+	self.start_pos = self:GetParent():GetAbsOrigin()
+	local direction = (self:GetCaster():GetCursorPosition() - self.start_pos):Normalized()
 
---[[
-	local pfx = ParticleManager:CreateParticle("particles/econ/items/batrider/batrider_ti8_immortal_mount/batrider_ti8_immortal_firefly.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent())
-	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
-	ParticleManager:SetParticleControl(pfx, 0, self.initial_pos)
-	ParticleManager:SetParticleControl(pfx, 11, Vector(1, 0, 0))
-	self:AddParticle(pfx, false, false, -1, false, false)
---]]
+	if self.heaven_spear and self.heaven_spear == 1 then
+		self.end_pos = self.start_pos
+	else
+		local direction = (self:GetCaster():GetCursorPosition() - self.start_pos):Normalized()
+		self.end_pos = self.start_pos + direction * self:GetAbility():GetVanillaAbilitySpecial("spear_range")
+	end
 
-	if self:GetAbility().autocast then
-		local ground_pfx = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear_ground.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-		ParticleManager:SetParticleControl(ground_pfx, 0, self.initial_pos)
+	if self.heaven_spear and self.heaven_spear == 1 then
+		local ground_pfx = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear_ground.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+		ParticleManager:SetParticleControl(ground_pfx, 0, self.start_pos)
 		ParticleManager:ReleaseParticleIndex(ground_pfx)
 	end
+
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_mars/mars_spear_burning_trail.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(self.pfx, 0, self.start_pos)
+	ParticleManager:SetParticleControl(self.pfx, 1, self.end_pos)
+	ParticleManager:SetParticleControl(self.pfx, 2, Vector(self:GetAbility():GetSpecialValueFor("trailblazer_duration"), 0, 0))
+	ParticleManager:SetParticleControl(self.pfx, 3, Vector(self:GetAbility():GetSpecialValueFor("heaven_spear_radius"), 0, 0))
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -258,9 +262,9 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnIntervalThink()
 	local enemies = nil
 
 	if self.heaven_spear and self.heaven_spear == 1 then
-		enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.initial_pos, nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags(), 0, false)
+		enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.start_pos, nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags(), 0, false)
 	else
-		enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self.initial_pos, self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags())
+		enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self.start_pos, self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags())
 	end
 
 	if #enemies > 0 then
@@ -283,11 +287,11 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnDestroy()
 
 	if self:GetAbility() then
 		self:GetAbility().traiblazer_thinker = nil
+	end
 
-		for k, v in pairs(self:GetAbility().trailblazer_particles) do
-			ParticleManager:DestroyParticle(v, false)
-			ParticleManager:ReleaseParticleIndex(v)
-		end
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
 	end
 end
 
@@ -326,19 +330,8 @@ imba_mars_spear.projectiles = mars_projectiles
 function imba_mars_spear:OnProjectileThink(vLocation)
 	if not IsServer() then return end
 
-	if self.traiblazer_thinker then
+	if self.traiblazer_thinker and vLocation then
 		self.traiblazer_thinker:SetAbsOrigin(vLocation)
-
-		local difference = (vLocation - self.trailblazer_previous_pos):Length2D()
-
-		if difference >= 100 then
-			self.trailblazer_previous_pos = vLocation
-
-			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_mars/mars_spear_burning_trail.vpcf", PATTACH_CUSTOMORIGIN, self.traiblazer_thinker)
-			ParticleManager:SetParticleControl(pfx, 0, vLocation)
-
-			table.insert(self.trailblazer_particles, pfx)
-		end
 	end
 end
 
@@ -788,7 +781,6 @@ function imba_mars_gods_rebuke:OnSpellStart()
 	-- unit identifier
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
-	print(point)
 
 	local mod = caster:FindModifierByName("modifier_imba_mars_bulwark_active")
 
@@ -830,6 +822,7 @@ function imba_mars_gods_rebuke:OnSpellStart()
 
 	-- for each units
 	local caught = false
+	local heroes_count = 0
 
 	for _,enemy in pairs(enemies) do
 		-- check within cast angle
@@ -837,7 +830,8 @@ function imba_mars_gods_rebuke:OnSpellStart()
 		local enemy_angle = VectorToAngles( enemy_direction ).y
 		local angle_diff = math.abs( AngleDiff( cast_angle, enemy_angle ) )
 
-		if angle_diff <= angle then
+		-- If in right angle or has full circle talent
+		if angle_diff <= angle or self:GetCaster():HasTalent("special_bonus_imba_mars_1") then
 			-- attack
 			caster:PerformAttack(
 				enemy,
@@ -866,33 +860,20 @@ function imba_mars_gods_rebuke:OnSpellStart()
 				)
 			end
 
+			heroes_count = heroes_count + 1
+
 			-- play effects
 			self:PlayEffects2( enemy, origin, cast_direction )
 		end
 	end
 
-	local heroes_count = 0
-
 	if #enemies > 0 then
-		for k, v in pairs(enemies) do
-			if v:IsRealHero() then
-				heroes_count = heroes_count + 1
-			end
-		end
-
 		if heroes_count > 0 then
-			local stacks = heroes_count * self:GetSpecialValueFor("strong_argument_bonus_strength")
-			local mod = caster:FindModifierByName("modifier_imba_mars_gods_rebuke_strong_argument")
-
-
-			if not mod then
-				caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
-			else
-				mod:SetStackCount(mod:GetStackCount() + stacks)
-				mod:SetDuration(self:GetSpecialValueFor("strong_argument_duration"), true)
-			end
-
 			caught = true
+
+			local stacks = heroes_count * self:GetSpecialValueFor("strong_argument_bonus_strength")
+
+			caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
 			caster:CalculateStatBonus(true)
 		end
 	end
@@ -907,18 +888,24 @@ end
 --------------------------------------------------------------------------------
 -- Play Effects
 function imba_mars_gods_rebuke:PlayEffects1( caught, direction )
-	-- Get Resources
-	local particle_cast = "particles/units/heroes/hero_mars/mars_shield_bash.vpcf"
 	local sound_cast = "Hero_Mars.Shield.Cast"
+
 	if caught == false then
 		local sound_cast = "Hero_Mars.Shield.Cast.Small"
 	end
 
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, self:GetCaster() )
-	ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
-	ParticleManager:SetParticleControlForward( effect_cast, 0, direction )
-	ParticleManager:ReleaseParticleIndex( effect_cast )
+	if self:GetCaster():HasTalent("special_bonus_imba_mars_1") then
+		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash_full_circle.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
+		ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
+		ParticleManager:SetParticleControlForward( effect_cast, 0, direction )
+		ParticleManager:ReleaseParticleIndex( effect_cast )
+	else
+		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
+		ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
+		ParticleManager:SetParticleControlForward( effect_cast, 0, direction )
+		ParticleManager:ReleaseParticleIndex( effect_cast )
+	end
 
 	-- Create Sound
 	EmitSoundOnLocationWithCaster( self:GetCaster():GetOrigin(), sound_cast, self:GetCaster() )
@@ -2398,6 +2385,9 @@ function modifier_imba_mars_arena_of_blood_scepter:OnCreated()
 	-- Variables
 	self.time_elapsed = 0
 	self.leap_z = 0
+	self.jump_speed = self:GetAbility():GetSpecialValueFor("scepter_jump_speed")
+
+	self:GetParent():StartGesture(ACT_DOTA_CAST1_STATUE)
 
 	-- Wait one frame to get the target point from the ability's OnSpellStart, then calculate distance
 	Timers:CreateTimer(FrameTime(), function()
@@ -2469,12 +2459,13 @@ function modifier_imba_mars_arena_of_blood_scepter:OnRemoved()
 		self:GetAbility(), -- ability source
 		"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
 		{  }, -- kv
-		self:GetCursorPosition(),
+		self.target_point,
 		self:GetCaster():GetTeamNumber(),
 		false
 	)
 
 	self:GetParent():SetUnitOnClearGround()
+	self:GetParent():FadeGesture(ACT_DOTA_CAST1_STATUE)
 end
 
 --[[
