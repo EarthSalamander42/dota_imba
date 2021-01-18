@@ -572,7 +572,7 @@
 		"Ability1"					"imba_earth_spirit_boulder_smash"
 		"Ability2"					"imba_earth_spirit_rolling_boulder"
 		"Ability3"					"imba_earth_spirit_geomagnetic_grip"
-		"Ability4"					"imba_earth_spirit_stone_remnant"
+		"Ability4"					"imba_earth_spirit_stone_caller"
 		"Ability5"					"imba_earth_spirit_petrify"
 		"Ability6"					"imba_earth_spirit_magnetize"
 

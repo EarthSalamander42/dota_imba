@@ -334,10 +334,8 @@ function imba_mars_spear:OnProjectileThink(vLocation)
 		if difference >= 100 then
 			self.trailblazer_previous_pos = vLocation
 
-			local pfx = ParticleManager:CreateParticle("particles/econ/items/batrider/batrider_ti8_immortal_mount/batrider_ti8_immortal_firefly.vpcf", PATTACH_CUSTOMORIGIN, self.traiblazer_thinker)
-			-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
+			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_mars/mars_spear_burning_trail.vpcf", PATTACH_CUSTOMORIGIN, self.traiblazer_thinker)
 			ParticleManager:SetParticleControl(pfx, 0, vLocation)
-			ParticleManager:SetParticleControl(pfx, 11, Vector(1, 0, 0))
 
 			table.insert(self.trailblazer_particles, pfx)
 		end
