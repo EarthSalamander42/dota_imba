@@ -19,7 +19,7 @@
 -------------------------	Stone Remnant	-------------------------
 ---------------------------------------------------------------------
 
-imba_earth_spirit_stone_caller = imba_earth_spirit_stone_caller or class({})
+imba_earth_spirit_stone_caller = imba_earth_spirit_stone_caller or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_earth_spirit_remnant_handler", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Remnant Handler + Earths Mark on attack
 LinkLuaModifier("modifier_imba_stone_remnant", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)					-- Remnant Modifier
@@ -854,7 +854,7 @@ end
 ---------------------------------------------------------------------
 -------------------------	Rolling Boulder	-------------------------
 ---------------------------------------------------------------------
-imba_earth_spirit_rolling_boulder = imba_earth_spirit_rolling_boulder or class({})
+imba_earth_spirit_rolling_boulder = imba_earth_spirit_rolling_boulder or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_rolling_boulder", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- Movement handler
 LinkLuaModifier("modifier_imba_rolling_boulder_slow", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Slow debuff
 LinkLuaModifier("modifier_imba_rolling_boulder_disarm", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- Disarm from earths mark
@@ -1127,7 +1127,7 @@ function modifier_imba_rolling_boulder_disarm:CheckState()
 ---------------------------------------------------------------------
 -------------------------	Geomagnetic Grip	---------------------
 ---------------------------------------------------------------------
-imba_earth_spirit_geomagnetic_grip = imba_earth_spirit_geomagnetic_grip or class({})
+imba_earth_spirit_geomagnetic_grip = imba_earth_spirit_geomagnetic_grip or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_geomagnetic_grip_pull", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- Movement modifier
 LinkLuaModifier("modifier_imba_geomagnetic_grip_silence", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Silence
 LinkLuaModifier("modifier_imba_geomagnetic_grip_root", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- Root
@@ -1353,7 +1353,7 @@ function modifier_imba_geomagnetic_grip_root:CheckState()
 ---------------------------------------------------------------------
 ---------------------------	   Magnetize	-------------------------
 ---------------------------------------------------------------------
-imba_earth_spirit_magnetize = imba_earth_spirit_magnetize or class({})
+imba_earth_spirit_magnetize = imba_earth_spirit_magnetize or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_magnetize", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_earth_spirit_magnetize:GetAssociatedSecondaryAbilities()
@@ -1533,7 +1533,7 @@ end
 ---------------------------------------------------------------------
 -------------------------	Enchant Remnant	  -----------------------
 ---------------------------------------------------------------------
-imba_earth_spirit_petrify = imba_earth_spirit_petrify or class({})
+imba_earth_spirit_petrify = imba_earth_spirit_petrify or class(VANILLA_ABILITIES_BASECLASS)
 function imba_earth_spirit_petrify:IsNetherWardStealable() return false end
 function imba_earth_spirit_petrify:IsStealable() return false end
 function imba_earth_spirit_petrify:IsInnateAbility() return true end

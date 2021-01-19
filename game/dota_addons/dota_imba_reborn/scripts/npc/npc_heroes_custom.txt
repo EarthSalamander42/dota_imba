@@ -81,7 +81,7 @@
 		"Ability4"					"imba_alchemist_mammonite"	
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_alchemist_chemical_rage"
-		"Ability7"					"generic_hidden" // This is Unstable concoction vanilla ability slot, remove it
+		"Ability7"					"alchemist_unstable_concoction_throw" // This ability is here only to gather vanilla values from it
 
 		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains +150% gold (additive) from bounty runes
 		"Ability11"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
