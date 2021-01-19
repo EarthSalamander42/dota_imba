@@ -88,6 +88,7 @@ function OverrideAbilityTooltips(sAbilityName) {
 
 var eligible_heroes = [
 	"npc_dota_hero_abaddon",
+	"npc_dota_hero_alchemist",
 	"npc_dota_hero_earth_spirit",
 	"npc_dota_hero_mars",
 ];
@@ -222,8 +223,14 @@ function SetAbilityTooltips(keys) {
 	} else {
 		CurrentAbilityCooldown.style.visibility = "visible";
 
-		if (ability_level != 0)
-			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][ability_level].toFixed(1));
+		$.Msg(keys["iCooldown"])
+		var cooldowns = Object.values(keys["iCooldown"]);
+		var cd_level = Math.min(ability_level, cooldowns.length)
+		$.Msg(cooldowns)
+		$.Msg(cd_level)
+
+		if (cd_level != 0)
+			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][cd_level].toFixed(1));
 	}
 
 	AbilityCastType.SetDialogVariable("casttype", $.Localize("DOTA_ToolTip_Ability_" + Array_BehaviorTooltips[GetAbilityType(Abilities.GetBehavior(ability))]));
@@ -232,7 +239,8 @@ function SetAbilityTooltips(keys) {
 //	AbilityTargetType.SetDialogVariable("targettype", "");
 	AbilityTargetType.style.visibility = "collapse";
 
-	if (Abilities.GetAbilityDamageType(ability)) {
+	$.Msg(Abilities.GetAbilityDamageType(ability))
+	if (Abilities.GetAbilityDamageType(ability) != -1 && Abilities.GetAbilityDamageType(ability) != 0) {
 		AbilityDamageType.SetDialogVariable("damagetype", $.Localize("DOTA_ToolTip_Damage_" + Array_AbilityDamageType[Abilities.GetAbilityDamageType(ability)]));
 		AbilityDamageType.style.visibility = "visible";
 	} else

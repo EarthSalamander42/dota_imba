@@ -1280,7 +1280,7 @@ function GameMode:OnThink()
 			end
 
 			for team = 2, 3 do
-				print(team, "Abandom time remaining / Team abandoning? / Players Remaining:", TEAM_ABANDON[team][1], TEAM_ABANDON[team][2], TEAM_ABANDON[team][3])
+--				print(team, "Abandom time remaining / Team abandoning? / Players Remaining:", TEAM_ABANDON[team][1], TEAM_ABANDON[team][2], TEAM_ABANDON[team][3])
 
 				if TEAM_ABANDON[team][3] > 0 then
 					if TEAM_ABANDON[team][2] ~= false then

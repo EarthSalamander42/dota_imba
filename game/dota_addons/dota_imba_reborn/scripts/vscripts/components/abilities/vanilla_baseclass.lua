@@ -1,10 +1,22 @@
 vanilla_baseclass = vanilla_baseclass or {}
 
 function vanilla_baseclass:GetCooldown()
+	local imba_value = GetAbilityKV(self:GetName(), "AbilityCooldown")
+
+	if imba_value then
+		return imba_value
+	end
+
 	return self:GetVanillaKeyValue("AbilityCooldown")
 end
 
 function vanilla_baseclass:GetManaCost()
+	local imba_value = GetAbilityKV(self:GetName(), "AbilityManaCost")
+
+	if imba_value then
+		return imba_value
+	end
+
 	if self:GetLevel() == 0 then
 		return 0
 	else
@@ -13,10 +25,22 @@ function vanilla_baseclass:GetManaCost()
 end
 
 function vanilla_baseclass:GetCastPoint()
+	local imba_value = GetAbilityKV(self:GetName(), "AbilityCastPoint")
+
+	if imba_value then
+		return imba_value
+	end
+
 	return self:GetVanillaKeyValue("AbilityCastPoint")
 end
 
 function vanilla_baseclass:GetCastRange(location, target)
+	local imba_value = GetAbilityKV(self:GetName(), "AbilityCastRange")
+
+	if imba_value then
+		return imba_value
+	end
+
 	return self:GetVanillaKeyValue("AbilityCastRange")
 end
 

@@ -10,17 +10,13 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		
+		"MaxLevel"						"1"
 		"AbilityTextureName"			"earth_spirit_stone_caller"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
-		"MaxLevel"						"1"
 		"HasScepterUpgrade"				"1"
 		
 		// Precache
@@ -98,12 +94,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"22 18 14 10"
-		"AbilityManaCost"				"100"
-
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -136,18 +126,9 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_rolling_boulder"
-		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-//		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
-//		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"16 12 8 4"
-		"AbilityManaCost"				"50"
-		
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -186,17 +167,10 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_geomagnetic_grip"
-		
+
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
-		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"13"
-		"AbilityManaCost"				"100"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -237,13 +211,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 //		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"350"
-		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"100 90 80"
-		"AbilityManaCost"				"100"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -300,13 +267,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 
 		"IsGrantedByScepter"			"1"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"125"
-		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"45"
-		"AbilityManaCost"				"150"
+
 		"MaxLevel"						"1"
 		
 		// Precache

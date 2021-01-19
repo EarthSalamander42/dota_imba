@@ -6,6 +6,16 @@ if not CustomTooltips then
 	CustomGameEventManager:RegisterListener("remove_tooltips_info", Dynamic_Wrap(CustomTooltips, 'RemoveTooltipsInfo'))
 end
 
+local split = function(inputstr, sep)
+	if sep == nil then sep = "%s" end
+	local t={} ; i=1
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+		t[i] = str
+		i = i + 1
+	end
+	return t
+end
+
 function CustomTooltips:GetTooltipsInfo(keys)
 --	print(keys)
 
@@ -22,6 +32,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	end
 
 	if ability_name then
+		ability_values["cooldown"] = GetAbilityCooldown(ability_name)
 		ability_values["manacost"] = GetAbilityManaCost(ability_name)
 		ability_values["specials"] = specials
 		ability_values["SpellImmunityType"] = GetSpellImmunityType(ability_name)
@@ -32,16 +43,22 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	end
 
 	local hAbility = hero:FindAbilityByName(keys.sAbilityName)
-	local hRealCooldown = {}
+	local hRealCooldown = split(ability_values["cooldown"], " ")
 
-	for i = 1, hAbility:GetMaxLevel() do
-		local iRealCooldown = hAbility:GetCooldown(i - 1)
+	print(hRealCooldown)
 
---		print(iRealCooldown, hero:GetCooldownReduction())
-		hRealCooldown[i] = iRealCooldown * (hero:GetCooldownReduction() * 100) / 100
+	for i = 1, #hRealCooldown do
+		if hRealCooldown[i] then
+--			print(hRealCooldown[i], hero:GetCooldownReduction())
+			hRealCooldown[i] = hRealCooldown[i] * (hero:GetCooldownReduction() * 100) / 100
+		end
 	end
 
-	local cast_range = GetAbilityKV(ability_name, "AbilityCastRange", hAbility:GetLevel()) or 0
+	local cast_range = 0
+
+	if hAbility then
+		cast_range = GetAbilityKV(ability_name, "AbilityCastRange", hAbility:GetLevel()) or 0
+	end
 
 	if cast_range ~= 0 then
 		if not CustomTooltips.particles[keys.PlayerID] then

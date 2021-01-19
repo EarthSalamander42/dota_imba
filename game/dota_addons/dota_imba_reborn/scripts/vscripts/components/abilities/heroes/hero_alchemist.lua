@@ -420,50 +420,55 @@ function imba_alchemist_unstable_concoction:IsHiddenWhenStolen()
 	return false
 end
 
+function imba_alchemist_unstable_concoction:OnUpgrade()
+	if not self.vanilla_ability then
+		self.vanilla_ability = self:GetCaster():FindAbilityByName("alchemist_unstable_concoction_throw")
+	end
+
+	self.vanilla_ability:SetLevel(self:GetLevel())
+end
+
 function imba_alchemist_unstable_concoction:OnUnStolen()
 	local caster = self:GetCaster()
 	caster:RemoveModifierByName("modifier_imba_unstable_concoction_handler")
 end
 
 function imba_alchemist_unstable_concoction:OnSpellStart()
-	local caster = self:GetCaster()
 	local cast_response = {"alchemist_alch_ability_concoc_01", "alchemist_alch_ability_concoc_02", "alchemist_alch_ability_concoc_03", "alchemist_alch_ability_concoc_04", "alchemist_alch_ability_concoc_05", "alchemist_alch_ability_concoc_06", "alchemist_alch_ability_concoc_07", "alchemist_alch_ability_concoc_08", "alchemist_alch_ability_concoc_10"}
 	local last_second_throw_response = {"alchemist_alch_ability_concoc_16", "alchemist_alch_ability_concoc_17"}
 
-	self.vanilla_ability = caster:FindAbilityByName("alchemist_unstable_concoction_throw")
-
-	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
+	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") then
 		local target = self:GetCursorTarget()
 		-- Stops the charging sound
-		caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
+		self:GetCaster():StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
 		--Emit the throwing sound
-		caster:EmitSound("Hero_Alchemist.UnstableConcoction.Throw")
+		self:GetCaster():EmitSound("Hero_Alchemist.UnstableConcoction.Throw")
 		-- Last second throw responses
-		local modifier_unstable_handler = caster:FindModifierByName("modifier_imba_unstable_concoction_handler")
+		local modifier_unstable_handler = self:GetCaster():FindModifierByName("modifier_imba_unstable_concoction_handler")
 		if modifier_unstable_handler then
 			local remaining_time = modifier_unstable_handler:GetRemainingTime()
 			if remaining_time < 1 then
-				EmitSoundOn(last_second_throw_response[math.random(1,#last_second_throw_response)], caster)
+				EmitSoundOn(last_second_throw_response[math.random(1,#last_second_throw_response)], self:GetCaster())
 			end
 		end
 
-		caster:RemoveModifierByName("modifier_imba_unstable_concoction_handler")
+		self:GetCaster():RemoveModifierByName("modifier_imba_unstable_concoction_handler")
 
-		caster:StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION_THROW)
-		caster:FadeGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
+		self:GetCaster():StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION_THROW)
+		self:GetCaster():FadeGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
 
 		-- Set how much time the spell charged
 		self.time_charged = GameRules:GetGameTime() - self.brew_start
 
 		-- Remove the brewing modifier
-		caster:RemoveModifierByName("modifier_imba_unstable_concoction_handler")
+		self:GetCaster():RemoveModifierByName("modifier_imba_unstable_concoction_handler")
 
 		Timers:CreateTimer(0.3, function()
 			local projectile_speed = self.vanilla_ability:GetSpecialValueFor("movement_speed")
-			local info =
-			{
+
+			local info = {
 				Target = target,
-				Source = caster,
+				Source = self:GetCaster(),
 				Ability = self,
 				bDodgeable = false,
 				EffectName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf",
@@ -475,8 +480,8 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 		return
 	end
 
-	EmitSoundOn(cast_response[math.random(1,#cast_response)], caster)
-	caster:StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
+	EmitSoundOn(cast_response[math.random(1,#cast_response)], self:GetCaster())
+	self:GetCaster():StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
 	self.brew_start = GameRules:GetGameTime()
 	self.brew_time = self.vanilla_ability:GetSpecialValueFor("brew_time")
 	local extra_brew_time = self:GetVanillaAbilitySpecial("brew_explosion")
@@ -484,7 +489,7 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 	self.stun = self.vanilla_ability:GetSpecialValueFor("max_stun")
 	self.damage = self.vanilla_ability:GetSpecialValueFor("max_damage")
 	self.radius_increase = self:GetSpecialValueFor("radius_increase") / self.brew_time
-	local greed_modifier = caster:FindModifierByName("modifier_imba_goblins_greed_passive")
+	local greed_modifier = self:GetCaster():FindModifierByName("modifier_imba_goblins_greed_passive")
 	if greed_modifier then
 		local greed_stacks = greed_modifier:GetStackCount()
 		local greed_multiplier = self:GetSpecialValueFor("time_per_stack")
@@ -493,18 +498,18 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 
 	-- #6 Talent : When in Chemical Rage, Alchemist brews Unstable Concoction faster.
 	local speed_multiplier
-	if caster:HasTalent("special_bonus_imba_alchemist_6")  and caster:FindModifierByName("modifier_imba_chemical_rage_buff_haste")  then
-		speed_multiplier	=	caster:FindTalentValue("special_bonus_imba_alchemist_6")
+	if self:GetCaster():HasTalent("special_bonus_imba_alchemist_6")  and self:GetCaster():FindModifierByName("modifier_imba_chemical_rage_buff_haste")  then
+		speed_multiplier	=	self:GetCaster():FindTalentValue("special_bonus_imba_alchemist_6")
 	else speed_multiplier	=	1 		end
 
 	duration = duration / speed_multiplier
 
-	caster:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_handler", {duration = duration,})
-	CustomNetTables:SetTableValue("player_table", tostring(caster:GetPlayerOwnerID()), { brew_start = GameRules:GetGameTime(), radius_increase = self.radius_increase,})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_unstable_concoction_handler", {duration = duration,})
+	CustomNetTables:SetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID()), { brew_start = GameRules:GetGameTime(), radius_increase = self.radius_increase,})
 	self.radius = self:GetVanillaAbilitySpecial("radius")
 
 	-- Play the sound, which will be stopped when the sub ability fires
-	caster:EmitSound("Hero_Alchemist.UnstableConcoction.Fuse")
+	self:GetCaster():EmitSound("Hero_Alchemist.UnstableConcoction.Fuse")
 end
 
 function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
@@ -619,33 +624,34 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 end
 
 function imba_alchemist_unstable_concoction:GetAbilityTextureName()
-	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
+	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") then
 		return "alchemist_unstable_concoction_throw"
 	end
+
 	return self.BaseClass.GetAbilityTextureName(self)
 end
 
 function imba_alchemist_unstable_concoction:GetCooldown(level)
-	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
+	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") then
 		if IsServer() then
-			return self.BaseClass.GetCooldown(self, level) - (GameRules:GetGameTime() - self.brew_start)
+			return self:GetVanillaKeyValue("AbilityCooldown") - (GameRules:GetGameTime() - self.brew_start)
 		end
 		return 0
 	end
-	if IsServer() then
+
+	if IsServer() or self:GetLevel() == 0 then
 		return 0
 	end
-	return self.BaseClass.GetCooldown(self, level)
+
+	return self:GetVanillaKeyValue("AbilityCooldown")
 end
 
 function imba_alchemist_unstable_concoction:GetManaCost(level)
-	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
+	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") or self:GetLevel() == 0 then
 		return 0
 	end
-	return self.BaseClass.GetManaCost(self, level)
+
+	return self:GetVanillaKeyValue("AbilityManaCost")
 end
 
 
@@ -802,7 +808,6 @@ function modifier_imba_unstable_concoction_handler:OnIntervalThink()
 				end
 			end
 		else
-
 			-- Set how much time the spell charged
 			ability.time_charged = GameRules:GetGameTime() - ability.brew_start
 
