@@ -166,7 +166,6 @@ function CallTooltips(i) {
 
 	GameEvents.SendCustomGameEventToServer("get_tooltips_info", {
 		sAbilityName: sAbilityName,
-		hPosition: hPanel.GetPositionWithinWindow(),
 		iAbility: i,
 	})
 }
@@ -180,6 +179,7 @@ function SetHTMLNewLine(text) {
 }
 
 function SetAbilityTooltips(keys) {
+	var hPanel = GetDotaHud().FindChildTraverse("Ability" + keys.iAbility);
 	var ability = Entities.GetAbilityByName(Game.GetLocalPlayerInfo().player_selected_hero_entity_index, keys.sAbilityName);
 //	$.Msg(keys.sAbilityName)
 
@@ -250,7 +250,6 @@ function SetAbilityTooltips(keys) {
 //	AbilityTargetType.SetDialogVariable("targettype", "");
 	AbilityTargetType.style.visibility = "collapse";
 
-	$.Msg(Abilities.GetAbilityDamageType(ability))
 	if (Abilities.GetAbilityDamageType(ability) != -1 && Abilities.GetAbilityDamageType(ability) != 0) {
 		AbilityDamageType.SetDialogVariable("damagetype", $.Localize("DOTA_ToolTip_Damage_" + Array_AbilityDamageType[Abilities.GetAbilityDamageType(ability)]));
 		AbilityDamageType.style.visibility = "visible";
@@ -419,7 +418,7 @@ function SetAbilityTooltips(keys) {
 		if (keys["iCooldown"] != undefined) {	
 			var cd = [];
 			var current_cd = 0;
-			var current_cd_level = Math.min(ability_level, cooldowns.length);
+//			var current_cd_level = Math.min(ability_level, cooldowns.length);
 
 			for (var i in keys["iCooldown"]) {
 				var fixed_cd = keys["iCooldown"][i];
@@ -491,15 +490,15 @@ function SetAbilityTooltips(keys) {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
-	SetTooltipsPosition(keys.hPosition);
+	SetTooltipsPosition(hPanel.GetPositionWithinWindow()); // Find a way to get the updated version when hovering
 
 	// repeat or else panel is not at the right position
-	$.Schedule(0.05, () => {
+	$.Schedule(0.1, () => {
 		var ability = GetDotaHud().FindChildTraverse("Ability" + keys["iAbility"]);
 		var ability_button = ability.FindChildTraverse("AbilityButton");
 
 		if (ability_button.BHasHoverStyle()) {		
-			SetTooltipsPosition(keys.hPosition);
+			SetTooltipsPosition(hPanel.GetPositionWithinWindow()); // Find a way to get the updated version when hovering
 			AbilityDetails.style.opacity = "1";
 		}
 	});
