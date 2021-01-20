@@ -860,7 +860,9 @@ function imba_mars_gods_rebuke:OnSpellStart()
 				)
 			end
 
-			heroes_count = heroes_count + 1
+			if hero:IsRealHero() then
+				heroes_count = heroes_count + 1
+			end
 
 			-- play effects
 			self:PlayEffects2( enemy, origin, cast_direction )
@@ -1131,7 +1133,7 @@ function modifier_imba_mars_bulwark:PlayEffects( front )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	EmitSoundOn( sound_cast, self:GetParent() )
+	self:GetParent():EmitSound(sound_cast)
 end
 
 modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class({})
@@ -1144,9 +1146,11 @@ function modifier_imba_mars_bulwark_active:DeclareFunctions() return {
 function modifier_imba_mars_bulwark_active:OnCreated()
 	if not IsServer() then return end
 
+	self.ability = self:GetAbility()
 	self.forward_vector = self:GetParent():GetForwardVector()
-	self.angle_front = self:GetAbility():GetVanillaAbilitySpecial( "forward_angle" )/2
-	self.angle_side = self:GetAbility():GetVanillaAbilitySpecial( "side_angle" )/2
+	self.angle_front = self.ability:GetVanillaAbilitySpecial( "forward_angle" ) / 2
+	self.angle_side = self.ability:GetVanillaAbilitySpecial( "side_angle" ) / 2
+	self.spiked_shield_return_pct = self.ability:GetSpecialValueFor("spiked_shield_return_pct")
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -1160,7 +1164,7 @@ function modifier_imba_mars_bulwark_active:OnAbilityFullyCast(params)
 
 	if params.ability and params.ability.GetAbilityName and params.unit == self:GetParent() then
 		if params.ability:GetAbilityName() == "imba_mars_spear" then
-			self:GetAbility():ToggleAbility()
+			self.ability:ToggleAbility()
 		end
 	end
 end
@@ -1185,9 +1189,9 @@ function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 
 			-- calculate damage reduction (same return from front or side for now, leaving different statements here in case it gets changed)
 			if angle_diff < self.angle_front then
-				bonus_damage = self:GetAbility():GetSpecialValueFor("spiked_shield_return_pct")
+				bonus_damage = self.spiked_shield_return_pct
 			elseif angle_diff < self.angle_side then
-				bonus_damage = self:GetAbility():GetSpecialValueFor("spiked_shield_return_pct")
+				bonus_damage = self.spiked_shield_return_pct
 			end
 
 			-- if received damage from front or side
@@ -1198,7 +1202,7 @@ function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 					damage_type		= keys.damage_type,
 					damage_flags	= DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 					attacker		= self:GetParent(),
-					ability			= self:GetAbility()
+					ability			= self.ability
 				}
 
 				-- expecting shitfest in team fights so let's not

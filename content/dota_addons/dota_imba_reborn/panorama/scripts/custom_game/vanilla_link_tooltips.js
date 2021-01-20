@@ -515,8 +515,8 @@ function SetTooltipsPosition(hPosition) {
 	// 1.77, 1.6, 1.33: 16/9, 16/10, 4/3
 	var aspect_ratios = []
 	aspect_ratios[1.8] = ["16/9", 90, 0];
-	aspect_ratios[1.6] = ["16/10", 0, 0];
-	aspect_ratios[1.3] = ["4/3", 0, 0];
+	aspect_ratios[1.6] = ["16/10", 90, 0];
+	aspect_ratios[1.3] = ["4/3", 90, 0];
 
 	var aspect_ratio = aspect_ratios[(AbilityDetails.GetParent().actuallayoutwidth / AbilityDetails.GetParent().actuallayoutheight).toFixed(1)];
 
@@ -544,8 +544,11 @@ function SetTooltipsPosition(hPosition) {
 
 //	$.Msg("---------------------------------------------------------------------")
 
+	var x_pct = ((position_x + offset_x) / Game.GetScreenWidth()) * 100;
+	var y_pct = ((position_y + offset_y) / Game.GetScreenHeight()) * 100;
+
 //	$.Msg("" + (position_x + offset_x) + "px " + (position_y + offset_y) + "px 0px")
-	AbilityDetails.style.position = "" + (position_x + offset_x) + "px " + (position_y + offset_y) + "px 0px";
+	AbilityDetails.style.position = "" + x_pct + "% " + y_pct + "% 0px";
 }
 
 function OnThink() {

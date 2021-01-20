@@ -74,7 +74,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 			CustomTooltips.particles[keys.PlayerID] = {}
 		end
 
-		local pfx = ParticleManager:CreateParticle("particles/ui_mouseactions/range_display.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+		local pfx = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/range_display.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, player)
 		ParticleManager:SetParticleControl(pfx, 0, hero:GetAbsOrigin())
 		ParticleManager:SetParticleControl(pfx, 1, Vector(cast_range + GetCastRangeIncrease(hero), 0, 0))
 		table.insert(CustomTooltips.particles[keys.PlayerID], pfx)
