@@ -1259,6 +1259,8 @@ function GameMode:OnThink()
 	end
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		if GetMapName() == "imba_demo" then return 1 end
+
 		-- End the game if one team completely abandoned
 --		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 and not IsInToolsMode() and not GameRules:IsCheatMode() then
 			if not TEAM_ABANDON then
