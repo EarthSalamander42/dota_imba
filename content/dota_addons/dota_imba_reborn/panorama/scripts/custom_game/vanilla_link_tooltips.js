@@ -415,10 +415,11 @@ function SetAbilityTooltips(keys) {
 	AbilityExtraDescription_Text = AbilityExtraDescription_Text.slice(8);
 	AbilityExtraDescription.SetDialogVariable("extradescription", AbilityExtraDescription_Text);
 
-	if (keys) {	
+	if (keys) {
 		if (keys["iCooldown"] != undefined) {	
 			var cd = [];
 			var current_cd = 0;
+			var current_cd_level = Math.min(ability_level, cooldowns.length);
 
 			for (var i in keys["iCooldown"]) {
 				var fixed_cd = keys["iCooldown"][i];
