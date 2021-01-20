@@ -288,7 +288,7 @@ function GetAbilityCooldown(name)
 	local imba_t = KeyValues.All["imba_"..name]
 	local t = KeyValues.All[name]
 
-	if imba_t and ["AbilityCooldown"] then
+	if imba_t and imba_t["AbilityCooldown"] then
 		local value = t["AbilityCooldown"]
 
 		if value then
