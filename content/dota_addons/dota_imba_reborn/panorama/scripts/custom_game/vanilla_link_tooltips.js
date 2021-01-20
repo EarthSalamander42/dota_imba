@@ -14,6 +14,10 @@ function GetDotaHud() {
 	} catch (e) {}
 }
 
+function isFloat(n){
+    return Number(n) === n && n % 1 !== 0;
+}
+
 var Array_BehaviorTooltips = [];
 Array_BehaviorTooltips[DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_PASSIVE] = "Passive";
 Array_BehaviorTooltips[DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_NO_TARGET] = "NoTarget";
@@ -215,7 +219,13 @@ function SetAbilityTooltips(keys) {
 		CurrentAbilityManaCost.style.visibility = "collapse";
 	else {
 		CurrentAbilityManaCost.style.visibility = "visible";
-		CurrentAbilityManaCost.SetDialogVariable("current_manacost", Abilities.GetManaCost(ability));
+
+		var manacosts = Object.values(keys["iManaCost"]);
+		var mana_level = Math.min(ability_level, manacosts.length)
+		var active_mana = keys["iManaCost"][mana_level];
+
+		if (mana_level != 0)
+			CurrentAbilityManaCost.SetDialogVariable("current_manacost", active_mana);
 	}
 
 	if (Abilities.GetCooldown(ability) == 0) {
@@ -223,14 +233,15 @@ function SetAbilityTooltips(keys) {
 	} else {
 		CurrentAbilityCooldown.style.visibility = "visible";
 
-		$.Msg(keys["iCooldown"])
 		var cooldowns = Object.values(keys["iCooldown"]);
 		var cd_level = Math.min(ability_level, cooldowns.length)
-		$.Msg(cooldowns)
-		$.Msg(cd_level)
+		var active_cd = keys["iCooldown"][cd_level];
+
+		if (isFloat(active_cd))
+			active_cd = active_cd.toFixed(1);
 
 		if (cd_level != 0)
-			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][cd_level].toFixed(1));
+			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][cd_level]);
 	}
 
 	AbilityCastType.SetDialogVariable("casttype", $.Localize("DOTA_ToolTip_Ability_" + Array_BehaviorTooltips[GetAbilityType(Abilities.GetBehavior(ability))]));
@@ -410,7 +421,11 @@ function SetAbilityTooltips(keys) {
 			var current_cd = 0;
 
 			for (var i in keys["iCooldown"]) {
-				var fixed_cd = parseFloat(keys["iCooldown"][i]).toFixed(1);
+				var fixed_cd = keys["iCooldown"][i];
+
+				if (isFloat(fixed_cd))
+					fixed_cd = fixed_cd.toFixed(1);
+
 				cd[i - 1] = fixed_cd;
 
 				if (i == ability_level)
@@ -419,8 +434,7 @@ function SetAbilityTooltips(keys) {
 
 			cd = cd.join(" / ");
 
-			// Yeah it's pretty bad right?
-			if (cd != "0.0" && cd != "0.0 / 0.0" && cd != "0.0 / 0.0 / 0.0" && cd != "0.0 / 0.0 / 0.0 / 0.0") {
+			if (cd != 0) {
 				if (ability_level != 0) {
 					cd = SetActiveValue(cd, current_cd);
 				}
@@ -433,28 +447,23 @@ function SetAbilityTooltips(keys) {
 
 		var same_mana = true;
 		if (keys["iManaCost"] != undefined) {
-			var mana = keys["iManaCost"].toString().split(" ");
-			var current_mana = [];
+			var mana = [];
+			var current_mana = 0;
 
-			for (var i in mana) {
+			for (var i in keys["iManaCost"]) {
+				var fixed_mana = keys["iManaCost"][i];
 
-				if (i > 0 && same_mana == true) {				
-					if (mana[i] != mana[i - 1]) {
-						same_mana = false;
-					}
-				}
+				mana[i - 1] = fixed_mana;
 
-				mana[i] = parseFloat(mana[i]);
+				if (i == ability_level)
+					current_mana = fixed_mana
 			}
 
-			if (same_mana == true)
-				mana = mana[0];
-			else
-				mana = mana.join(" / ");
+			mana = mana.join(" / ");
 
 			if (mana != 0) {
 				if (ability_level != 0) {
-//					mana = SetActiveValue(mana, Abilities.GetManaCost(ability));
+					mana = SetActiveValue(mana, current_mana);
 				}
 
 				AbilityManaCost.style.visibility = "visible";

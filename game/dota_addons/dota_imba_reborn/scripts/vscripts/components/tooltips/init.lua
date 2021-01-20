@@ -44,8 +44,9 @@ function CustomTooltips:GetTooltipsInfo(keys)
 
 	local hAbility = hero:FindAbilityByName(keys.sAbilityName)
 	local hRealCooldown = split(ability_values["cooldown"], " ")
+	local hRealManaCost = split(ability_values["manacost"], " ")
 
-	print(hRealCooldown)
+	print(hRealManaCost)
 
 	for i = 1, #hRealCooldown do
 		if hRealCooldown[i] then
@@ -54,6 +55,14 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		end
 	end
 
+--[[
+	for i = 1, #hRealManaCost do
+		if hRealManaCost[i] then
+--			print(hRealManaCost[i], hero:GetCooldownReduction())
+			hRealManaCost[i] = hRealManaCost[i] * (hero:GetCooldownReduction() * 100) / 100
+		end
+	end
+--]]
 	local cast_range = 0
 
 	if hAbility then
@@ -76,7 +85,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		sAbilityName = keys.sAbilityName,
 		hPosition = keys.hPosition,
 		iCooldown = hRealCooldown,
-		iManaCost = ability_values["manacost"],
+		iManaCost = hRealManaCost,
 		sSpellImmunity = ability_values["SpellImmunityType"],
 		sSpellDispellable = ability_values["SpellDispellableType"],
 		sSpecial = ability_values["specials"],
