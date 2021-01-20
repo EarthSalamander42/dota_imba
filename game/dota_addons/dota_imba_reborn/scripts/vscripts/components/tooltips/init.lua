@@ -83,7 +83,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 --	print("Send server tooltips info:", ability_values["specials"])
 	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", {
 		sAbilityName = keys.sAbilityName,
-		hPosition = keys.hPosition,
 		iCooldown = hRealCooldown,
 		iManaCost = hRealManaCost,
 		sSpellImmunity = ability_values["SpellImmunityType"],
