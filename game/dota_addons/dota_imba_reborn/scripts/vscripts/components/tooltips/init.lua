@@ -46,8 +46,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	local hRealCooldown = split(ability_values["cooldown"], " ")
 	local hRealManaCost = split(ability_values["manacost"], " ")
 
-	print(hRealManaCost)
-
 	for i = 1, #hRealCooldown do
 		if hRealCooldown[i] then
 --			print(hRealCooldown[i], hero:GetCooldownReduction())

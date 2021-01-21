@@ -490,18 +490,22 @@ function SetAbilityTooltips(keys) {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
-	SetTooltipsPosition(hPanel.GetPositionWithinWindow()); // Find a way to get the updated version when hovering
+	var ability = GetDotaHud().FindChildTraverse("Ability" + keys["iAbility"]);
+	var ability_button = ability.FindChildTraverse("AbilityButton");
 
-	// repeat or else panel is not at the right position
-	$.Schedule(0.1, () => {
-		var ability = GetDotaHud().FindChildTraverse("Ability" + keys["iAbility"]);
-		var ability_button = ability.FindChildTraverse("AbilityButton");
+	SetPositionLoop(ability_button, hPanel.GetPositionWithinWindow());
 
-		if (ability_button.BHasHoverStyle()) {		
-			SetTooltipsPosition(hPanel.GetPositionWithinWindow()); // Find a way to get the updated version when hovering
-			AbilityDetails.style.opacity = "1";
-		}
-	});
+	AbilityDetails.style.opacity = "1";
+}
+
+function SetPositionLoop(hPanel, hPosition) {
+	SetTooltipsPosition(hPanel.GetPositionWithinWindow());
+
+	if (hPanel.BHasHoverStyle()) {
+		$.Schedule(0.03, function() {
+			SetPositionLoop(hPanel, hPosition);
+		});
+	}
 }
 
 function SetTooltipsPosition(hPosition) {
