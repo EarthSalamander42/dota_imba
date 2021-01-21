@@ -37,13 +37,15 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		Timers:CreateTimer(2.0, function()
-			if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
-				BOTS_ENABLED = true
-			end
+			if IsInToolsMode() then
+				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+					BOTS_ENABLED = true
+				end
 
-			if BOTS_ENABLED == true then
-				SendToServerConsole('sm_gmode 1')
-				SendToServerConsole('dota_bot_populate')
+				if BOTS_ENABLED == true then
+					SendToServerConsole('sm_gmode 1')
+					SendToServerConsole('dota_bot_populate')
+				end
 			end
 
 			if IsOverthrowMap() then
@@ -1259,7 +1261,7 @@ function GameMode:OnThink()
 	end
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		if GetMapName() == "imba_demo" then return 1 end
+		if GetMapName() == "imba_demo" or GameRules:IsCheatMode() then return 1 end
 
 		-- End the game if one team completely abandoned
 --		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 and not IsInToolsMode() and not GameRules:IsCheatMode() then
