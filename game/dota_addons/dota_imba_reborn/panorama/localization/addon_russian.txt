@@ -34,7 +34,7 @@
 	"battlepass_wearable" "Комплект"
 	"bozhe_kak_eto_bolno" "Боже, как это больно!"
 	"bozhe_ti_posmotri" "Боже, ты посмотри вокруг, что происходит!"
-	"bp_reward_equip_description" "Click to Equip/Unequip item"
+	"bp_reward_equip_description" "Нажмите на награду, чтобы надеть или снять её."
 	"bp_reward_equip_success" "Награда надета:"
 	"bp_reward_unequip_success" "Награда снята:"
 	"brutal" "Brutal. Savage. Rekt."
