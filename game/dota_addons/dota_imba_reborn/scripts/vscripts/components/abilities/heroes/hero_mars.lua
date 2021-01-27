@@ -856,11 +856,12 @@ function imba_mars_gods_rebuke:OnSpellStart()
 						height = 30,
 						direction_x = enemy_direction.x,
 						direction_y = enemy_direction.y,
+						IsStun = self:GetCaster():HasTalent("special_bonus_imba_mars_2"),
 					} -- kv
 				)
 			end
 
-			if hero:IsRealHero() then
+			if enemy:IsRealHero() then
 				heroes_count = heroes_count + 1
 			end
 
