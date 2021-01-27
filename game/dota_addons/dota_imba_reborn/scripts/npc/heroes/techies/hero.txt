@@ -9,8 +9,6 @@
 	{
 		"IsImba"					"1"
 
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
 		"Ability1"					"imba_techies_proximity_mine"
 		"Ability2"					"imba_techies_stasis_trap"
 		"Ability3"					"imba_techies_blast_off"

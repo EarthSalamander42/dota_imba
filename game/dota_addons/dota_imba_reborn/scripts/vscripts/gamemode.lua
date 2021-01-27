@@ -319,7 +319,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				local gamemode = vote[1]
 				local vote_count = vote[2]
 				if not voteCounts[vote[1]] then voteCounts[vote[1]] = 0 end
-				print(pid, vote[1], vote[2])
+--				print(pid, vote[1], vote[2])
 				voteCounts[vote[1]] = voteCounts[vote[1]] + vote[2]
 			end
 
@@ -327,7 +327,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			local highest_vote = 0
 			local highest_key = ""
 			for k, v in pairs(voteCounts) do
-				print(k, v)
+--				print(k, v)
 				if v > highest_vote then
 					highest_key = k
 					highest_vote = v
@@ -337,7 +337,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			-- Check for a tie by counting how many values have the highest number of votes
 			local tieTable = {}
 			for k, v in pairs(voteCounts) do
-				print(k, v)
+--				print(k, v)
 				if v == highest_vote then
 					table.insert(tieTable, k[1])
 				end
@@ -345,7 +345,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 			-- Resolve a tie by selecting a random value from those with the highest votes
 			if table.getn(tieTable) > 1 then
-				print("Vote System: TIE!")
+--				print("Vote System: TIE!")
 				highest_key = tieTable[math.random(table.getn(tieTable))]
 			end
 
@@ -359,7 +359,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				GameRules:SetCustomGameDifficulty(highest_key)
 			end
 
-			print(category .. ": " .. highest_key)
+--			print(category .. ": " .. highest_key)
 		end
 	end
 end, nil)
@@ -376,7 +376,7 @@ donator_list[9] = 3 -- Gaben Donator
 function GameMode:OnSettingVote(keys)
 	local pid = keys.PlayerID
 
-	print(keys)
+--	print(keys)
 
 	if not GameMode.VoteTable then GameMode.VoteTable = {} end
 	if not GameMode.VoteTable[keys.category] then GameMode.VoteTable[keys.category] = {} end
