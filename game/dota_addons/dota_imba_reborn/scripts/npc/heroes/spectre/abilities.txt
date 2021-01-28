@@ -64,15 +64,9 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"attack_delay"				"1.0 1.0 1.0"
-			}
-			
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
 				"spawn_distance"			"200"
 			}
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"travel_speed"				"275 300 325"
