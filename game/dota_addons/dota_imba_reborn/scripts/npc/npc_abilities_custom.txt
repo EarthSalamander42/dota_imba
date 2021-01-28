@@ -5,18 +5,23 @@
 #base heroes/towers.txt
 
 #base heroes/abaddon/abilities.txt
+#base heroes/abyssal_underlord/abilities.txt
 #base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
 #base heroes/arc_warden/abilities.txt
 #base heroes/bane/abilities.txt
 #base heroes/batrider/abilities.txt
+#base heroes/beastmaster/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/brewmaster/abilities.txt
 #base heroes/bristleback/abilities.txt
 // #base heroes/broodmother/abilities.txt
+#base heroes/chaos_knight/abilities.txt
 #base heroes/chen/abilities.txt
 #base heroes/dark_seer/abilities.txt
+#base heroes/dark_willow/abilities.txt
 #base heroes/death_prophet/abilities.txt
+#base heroes/doom_bringer/abilities.txt
 #base heroes/earthshaker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/ember_spirit/abilities.txt
@@ -24,24 +29,31 @@
 #base heroes/furion/abilities.txt
 #base heroes/grimstroke/abilities.txt
 #base heroes/gyrocopter/abilities.txt
+#base heroes/hoodwink/abilities.txt
 #base heroes/huskar/abilities.txt
 #base heroes/invoker/abilities.txt
 #base heroes/keeper_of_the_light/abilities.txt
+#base heroes/legion_commander/abilities.txt
 #base heroes/leshrac/abilities.txt
 #base heroes/life_stealer/abilities.txt
+#base heroes/lone_druid/abilities.txt
 #base heroes/luna/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
-#base heroes/mars/abilities.txt
-#base heroes/monkey_king/abilities.txt
 #base heroes/medusa/abilities.txt
+#base heroes/meepo/abilities.txt
+#base heroes/monkey_king/abilities.txt
+#base heroes/morphling/abilities.txt
 #base heroes/naga_siren/abilities.txt
-#base heroes/oracle/abilities.txt
 #base custom_heroes/nian/abilities.txt
 #base heroes/night_stalker/abilities.txt
+#base heroes/ogre_magi/abilities.txt
+#base heroes/oracle/abilities.txt
 #base heroes/outworld_devourer/abilities.txt
 // #base heroes/puck/abilities.txt
 #base heroes/phantom_lancer/abilities.txt
 #base heroes/rattletrap/abilities.txt
+#base heroes/razor/abilities.txt
+#base heroes/riki/abilities.txt
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/slark/abilities.txt
@@ -51,15 +63,17 @@
 #base heroes/spectre/abilities.txt
 #base heroes/spirit_breaker/abilities.txt
 #base heroes/sven/abilities.txt
-#base heroes/techies/abilities.txt
 #base heroes/templar_assassin/abilities.txt
-#base heroes/terrorblade/abilities.txt
+// #base heroes/terrorblade/abilities.txt
 #base heroes/tidehunter/abilities.txt
 #base heroes/timbersaw/abilities.txt
+#base heroes/tinker/abilities.txt
 #base heroes/treant/abilities.txt
+#base heroes/tusk/abilities.txt
 #base heroes/undying/abilities.txt
 #base custom_heroes/vardor/abilities.txt
 #base heroes/visage/abilities.txt
+#base heroes/viper/abilities.txt
 #base heroes/void_spirit/abilities.txt
 #base heroes/weaver/abilities.txt
 #base heroes/windranger/abilities.txt
@@ -1192,238 +1206,6 @@
 			{
 				"var_type"      "FIELD_INTEGER"
 				"value"         "1"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Beastmaster: Call of the Wild Hawk
-	//=================================================================================================================
-	"imba_beastmaster_summon_hawk"
-	{
-		//General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_beastmaster.lua"
-		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"FightRecapLevel"			"1"
-		"AbilityTextureName"     	"beastmaster_call_of_the_wild"
-		"MaxLevel"					"4"
-		"LevelsBetweenUpgrades"		"2"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"48 36 24 12"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_beastmaster.vsndevts"
-			"particle"					"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			// If you want to change the values of the hawk, change this and the hawk units in npc_units_custom.
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_hp_tooltip"			"100 200 300 400"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_speed_tooltip"		"400 500 600 700"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_daysight_tooltip"		"800 1200 1600 2000"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_nightsight_tooltip"	"500 800 1100 1400"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_duration"				"60 65 70 75"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"hawk_fade_delay_tooltip"	"6.0 4.0 2.0 1.0"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Beastmaster's Hawk Invisibility
-	//=================================================================================================================
-	"imba_beastmaster_hawk_invis"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_beastmaster.lua"
-		"AbilityTextureName"			"beastmaster_hawk_invisibility"
-		"FightRecapLevel"				"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"MaxLevel"						"4"		
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6 4 2 1"					// Visible indicator of fade time
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"fade_time"							"6.0 4.0 2.0 1.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Beastmaster's Call of the Wild Boar
-	//=================================================================================================================
-	"imba_beastmaster_summon_boar"
-	{
-		//General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_beastmaster.lua"
-		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"FightRecapLevel"			"1"
-		"AbilityTextureName"     	"beastmaster_call_of_the_wild_boar"
-		"MaxLevel"					"4"
-		"LevelsBetweenUpgrades"		"2"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"48 36 24 12"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_beastmaster.vsndevts"
-			"particle"					"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			// If you want to change the values of the boar, change this and the boar units in npc_units_custom.
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"boar_health_tooltip"			"250 550 850 1150"
-			}
-
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"boar_armor_tooltip"			"0 2 4 6"
-			}
-			
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"boar_damage_tooltip"			"20 60 90 110"
-			}
-
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"boar_moveslow_tooltip"			"15 35 50 60"
-			}
-
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"boar_attackslow_tooltip"		"15 35 60 90"
-			}
-
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"poison_duration_tooltip"		"3"
-			}
-
-			"07"
-			{
-				"var_type" 						"FIELD_INTEGER"
-				"boar_duration"					"60 65 70 75"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Beastmaster's Boar poison
-	//=================================================================================================================
-	"imba_beastmaster_boar_poison"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_beastmaster"
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"beastmaster_boar_poison"
-		"MaxLevel"						"4"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed_slow"			"15 35 50 60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attackspeed_slow"			"15 35 60 90"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0"
 			}
 		}
 	}
@@ -15301,7 +15083,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_health"			"18 22 26 30"
+				"ward_health"			"16"
 			}
 			"05"
 			{
@@ -15316,7 +15098,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"30"
+				"duration"				"18 22 26 30"
 			}
 			"08"
 			{
@@ -16850,6 +16632,981 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Techies' Proximity Mine
+	//=================================================================================================================
+	"imba_techies_proximity_mine"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"				"techies_land_mines"
+		"MaxLevel"							"4"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+			"soundfile"						"soundevents/voscripts/game_sounds_vo_techies.vsndevts"
+			"particle"						"particles/units/heroes/hero_techies/techies_land_mine.vpcf"
+			"particle"						"particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"			
+			"particle"						"particles/hero/techies/techies_big_boom_explosions.vpcf"
+			"model"							"models/heroes/techies/fx_techiesfx_mine.vmdl"	
+		}		
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"100 150 200 250"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_mines"				"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mine_distance"				"225"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trigger_range"				"400"				
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"activation_delay"			"1.75"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"explosion_delay"			"1.6"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mine_damage"				"150 350 550 750"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explosion_range"			"400 500 600 700"
+				"LinkedSpecialBonus"		"special_bonus_imba_techies_1"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"building_damage_pct"		"25"
+			}
+			"9"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"building_magic_resistance"	"90"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"buidling_damage_duration"  "0.1"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charge_replenish_duration" "20 17 14 11"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_charges"				"4"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_increase_per_stack"	"30"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_mine_hits"		"4"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_mine_bonus_dmg"	"150"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_shrapnel_aoe"		"1000"
+			}
+			"17"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"big_boom_shrapnel_duration"	"3"
+			}
+			"18"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"big_boom_shrapnel_damage"		"125"
+			}
+			"19"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"big_boom_shrapnel_interval"	"0.25"
+			}
+			"20"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range"					"100 150 200 250"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Techies' Proximity Mines passive AI (mine ability)
+	//=================================================================================================================
+	"imba_techies_proximity_mine_trigger"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"				"rubick_empty1"
+		"MaxLevel"							"4"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"explosion_delay"			"0.4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mine_damage"				"500 1000 1500 2000"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explosion_range"			"400"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trigger_range"				"400"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"activation_delay"			"1.75"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"building_damage_pct"		"25"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"building_magic_resistance"	"90"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"buidling_damage_duration"  "0.1"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"  			"0.1"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fow_radius"				"300"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fow_duration"				"1"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_mine_bonus_dmg"	"300"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_shrapnel_aoe"		"1000"
+			}
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"big_boom_shrapnel_duration"	"3"
+			}
+			"15"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"big_boom_shrapnel_damage"		"125"
+			}
+			"16"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"big_boom_shrapnel_interval"	"0.25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Techies' Stasis Trap
+	//=================================================================================================================
+	"imba_techies_stasis_trap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"				"techies_stasis_trap"	
+		"MaxLevel"							"4"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+			"soundfile"						"soundevents/voscripts/game_sounds_vo_techies.vsndevts"
+			"particle"						"particles/units/heroes/hero_techies/techies_stasis_trap.vpcf"
+			"particle"						"particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf"
+			"particle"						"particles/hero/techies/techies_stasis_trap_plant_creep.vpcf"
+			"particle"						"particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
+			"particle"						"particles/status_fx/status_effect_techies_stasis.vpcf"
+			"model"							"models/heroes/techies/fx_techiesfx_stasis.vmdl"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"150"
+		"AbilityCastPoint"					"1"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"19 16 13 10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"80 140 170 190"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"activate_delay"			"2"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trigger_range"				"400"
+			}
+
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"root_range"				"600"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"root_duration"				"2 3 4 5"
+			}
+
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_rate"					"0.1"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_magnetic_radius"		"300 350 400 450"
+				"LinkedSpecialBonus"		"special_bonus_imba_techies_3"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_magnetic_movespeed"	"120"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magnetic_stack_radius"		"75"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magnetic_stack_movespeed"	"40"
+			}			
+
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"flying_vision_duration"	"1"
+			}
+		}			
+	}
+
+	//=================================================================================================================
+	// Techies' Stasis Trap passive AI (mine ability)
+	//=================================================================================================================
+	"imba_techies_stasis_trap_trigger"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"techies_stasis_trap"
+		"MaxLevel"										"4"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"activate_delay"			"2"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trigger_range"				"400"
+			}
+
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"root_range"				"600"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"root_duration"				"2 3 4 5"
+			}
+
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_rate"					"0.1"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_magnetic_radius"		"600 650 700 750"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_magnetic_movespeed"	"120"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magnetic_stack_radius"		"100"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magnetic_stack_movespeed"	"40"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Techies' Blast Off
+	//=================================================================================================================
+	"imba_techies_blast_off"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"				"techies_suicide"	
+		"MaxLevel"							"4"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+			"soundfile"						"soundevents/voscripts/game_sounds_vo_techies.vsndevts"			
+			"particle"						"particles/units/heroes/hero_techies/techies_blast_off_trail.vpcf"
+			"particle"						"particles/units/heroes/hero_techies/techies_blast_off.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"1000"
+		"AbilityCastPoint"					"1"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"35"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"100 150 175 200"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"300 400 500 600"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
+			}
+
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"self_damage_pct"			"50 40 30 20"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"silence_duration"			"4 5 6 7"
+			}			
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_jumps"					"1 2 3 4"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"jump_max_height"			"281.108"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"jump_duration"				"0.75"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"jump_continue_delay"		"0.5"
+			}
+		}			
+	}
+
+	//=================================================================================================================
+	// Techies' Minefield sign
+	//=================================================================================================================
+	"imba_techies_minefield_sign"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityTextureName"				"techies_minefield_sign"		
+		"MaxLevel"							"1"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+			"model"							"models/heroes/techies/techies_sign.vmdl"	
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"10"		
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"360"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"250"
+				"LinkedSpecialBonus"		"special_bonus_imba_techies_6"
+			}
+		}				
+	}	
+
+	//=================================================================================================================
+	// Techies' Remote Mine
+	//=================================================================================================================
+	"imba_techies_remote_mine"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"				"techies_remote_mines"
+		"MaxLevel"							"3"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"
+
+		"HasScepterUpgrade"					"1"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+			"soundfile"						"soundevents/voscripts/game_sounds_vo_techies.vsndevts"
+			"particle"						"particles/units/heroes/hero_techies/techies_remote_mine.vpcf"
+			"particle"						"particles/hero/techies/techies_remote_mine_plant.vpcf"
+			"particle"						"particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+			"model"							"models/heroes/techies/fx_techies_remotebomb.vmdl"			
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"500"
+		"AbilityCastPoint"					"1"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"200 300 340"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"300 600 700"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"425"
+			}
+
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mine_duration"				"600"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inflammable_duration"		"5"
+			}
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inflammable_max_charges"	"3 4 5 6"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inflammable_charge_damage"	"50"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inflammable_charge_radius"	"75"
+			}	
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_damage_bonus"		"150"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_radius_bonus"		"200"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Techies' Remote Mines' Pinpoint Detonation
+	//=================================================================================================================
+	"imba_techies_remote_mine_pinpoint_detonation"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"							"techies_remote_mines_self_detonate"
+		"MaxLevel"										"3"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"			
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"300 600 700"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"425"
+			}			
+
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inflammable_duration"		"5"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inflammable_max_charges"	"3 4 5"
+			}
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inflammable_charge_damage"	"50"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"inflammable_charge_radius"	"75"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_damage_bonus"		"150"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_radius_bonus"		"200"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Techies' Focused Detonate
+	//=================================================================================================================
+	"imba_techies_focused_detonate"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"				"techies_focused_detonate"
+		"MaxLevel"							"1"
+		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"		
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"25000"
+		"AbilityCastPoint"					"0.03"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"1"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"700"
+			}			
+		}		
+	}
+
+	//=================================================================================================================
+	// Techies's Talents
+	//=================================================================================================================
+	"special_bonus_imba_techies_1" // Proximity Mines trigger range
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_techies_proximity_mine"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "75"
+			}
+		}
+	}
+
+	"special_bonus_imba_techies_2" // Stasis Traps can be placed within friendly creeps
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_techies_stasis_trap"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
+			}
+		}
+	}
+
+	"special_bonus_imba_techies_3" // Electrocharge mines pull radius increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_techies_stasis_trap"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "150"
+			}
+		}
+	}
+
+	"special_bonus_imba_techies_4" // Stasis Traps grants charges of Inflammable to Remote mines
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_techies_stasis_trap"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
+			}
+		}
+	}    
+
+	"special_bonus_imba_techies_5" // Blast Off! jumps drop a Proximity Mine
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_techies_blast_off"
+			"02"	"imba_techies_proximity_mine"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
+			}
+		}
+	}
+
+	"special_bonus_imba_techies_6" // Minefield Sign radius increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_techies_minefield_sign"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "175"
+			}
+		}
+	}
+
+	"special_bonus_imba_techies_7" // Proximity Mines initial mine is a Big Boom
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_techies_proximity_mine"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
+			}
+		}
+	}
+
+	"special_bonus_imba_techies_8" // Blast Off throws a little pig instead of you
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"                                                        
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_techies_blast_off"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
 			}
 		}
 	}
@@ -23903,94 +24660,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"scepter_images_count_extra"	"2"
 				"RequiresScepter"					"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom Bringer: Doom
-	//=================================================================================================================
-	"imba_doom_bringer_doom"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_doom_bringer.lua"
-		"AbilityTextureName"			"doom_bringer_doom"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AURA + DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"FightRecapLevel"				"2"
-		//"HasScepterUpgrade"				"1"
-		"MaxLevel"						"3"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
-		"AbilityCooldown"				"145.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 200 250"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"16.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"25 40 55"
-				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
-			}
-//			"03"
-//			{
-//				"var_type"				"FIELD_FLOAT"
-//				"duration_scepter"		"20.0"
-//			}
-//			"04"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"damage_scepter"		"45 75 105"
-//			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deniable_pct"			"25"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"450"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_bonus"			"100"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"self_duration"			"13.0"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aoe_radius"			"400"
 			}
 		}
 	}
@@ -32794,1012 +33463,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Riki's Smoke Screen
-	//=================================================================================================================
-	"imba_riki_smoke_screen"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"ScriptFile"				"components/abilities/heroes/hero_riki.lua"
-		"AbilityTextureName"			"riki_smoke_screen"
-		"FightRecapLevel"				"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
-		"AbilityCastPoint"				"0.4"		
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17 15 13 11"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90"
-		
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-			"particle"					"particles/units/heroes/hero_riki/riki_smokebomb_smoke.vpcf"
-			"particle"					"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"area_of_effect"			"325"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"miss_chance"				"40 50 60 70"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"10 15 20 25"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"turn_rate_slow"			"15"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_vision_reduction_pcnt"	"100"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Riki: Smoke Screen (7.23)
-	//=================================================================================================================
-	"imba_riki_smoke_screen_723"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_riki"
-		"AbilityTextureName"			"riki_smoke_screen"
-		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilitySound"					"Hero_Riki.Smoke_Screen"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
-		"AbilityCastPoint"				"0.2"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 17 14 11"
-		"AbilityDuration"				"6"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"280 310 340 370"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"miss_rate"					"25 35 45 55"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"remnants_movespeed_slow"	"4 6 8 10"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"remnants_vision"			"200"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"solid_turn_rate_slow"		"15"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	}
-
-	//=================================================================================================================
-	// Riki's Blink Strike
-	//=================================================================================================================
-	"imba_riki_blink_strike"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_riki"
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"		
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"riki_blink_strike"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 700 800 900"
-		"AbilityCastPoint"				"0.3"		
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10 8 6 4"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
-			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike_start.vpcf"
-			"particle"					"particles/hero/riki/blink_trail.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"75 90 105 120"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"turn_rate_slow_pct"	"30"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"jump_range"			"700"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_jumps"				"1 2 3 4"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"jump_interval_frames"	"12"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lagg_threshold"		"100"		// If it gets too crowded, it could get laggy.
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"abilitycastrange"					""
-				"LinkedSpecialBonus"		"special_bonus_imba_riki_blink_strike_cast_range"
-			}			
-		}
-	}
-	
-	//=================================================================================================================
-	// Riki's Blink Strike (7.23)
-	//=================================================================================================================
-	"imba_riki_blink_strike_723"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_riki"
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"		
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"riki_blink_strike"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 700 800 900"
-		"AbilityCastPoint"				"0.3"		
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
-			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike_start.vpcf"
-			"particle"					"particles/hero/riki/blink_trail.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"				"25 50 75 100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"turn_rate_slow_pct"	"30"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"jump_range"			"700"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_jumps"				"1 2 3 4"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"jump_interval_frames"	"12"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lagg_threshold"		"100"		// If it gets too crowded, it could get laggy.
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"abilitycastrange"					""
-				"LinkedSpecialBonus"		"special_bonus_imba_riki_blink_strike_cast_range"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_charges"				"2"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"charge_restore_time"		"25 20 15 10"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Riki's Cloak and Dagger
-	//=================================================================================================================
-	"imba_riki_cloak_and_dagger"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_riki.lua"
-		"AbilityTextureName"			"riki_permanent_invisibility"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"		
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6 5 4 3"		
-
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-			"particle"					"particles/units/heroes/hero_riki/riki_backstab.vpcf"
-			"particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"
-			"particle"					"particles/hero/riki/blink_trail.vpcf"
-			"particle"					"particles/hero/riki/riki_sucker_punch.vpcf"
-			"particle"					"particles/hero/riki/riki_peek_a_boo_active.vpcf"
-			"particle"					"particles/hero/riki/riki_peek_a_boo_stab.vpcf"
-			"particle"					"particles/hero/riki/riki_backbreaker_slash.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"fade_time"							"6 5 4 3"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"backstab_angle"					"120"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier"			"0.55 0.7 0.85 1.0"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier_smoke"	"0.2 0.3 0.4 0.5"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"invis_break_agility_multiplier"	"2"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier_side"	"0.2 0.3 0.4 0.5"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"hp_regen"					"2 3 4 5"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Riki's Cloak and Dagger (7.23)
-	//=================================================================================================================
-	"imba_riki_cloak_and_dagger_723"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_riki.lua"
-		"AbilityTextureName"			"riki_permanent_invisibility"
-		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"damage_multiplier"				"1.4 1.8 2.2"
-				//"LinkedSpecialBonus"		"special_bonus_unique_riki_1"
-				"LinkedSpecialBonus"		"special_bonus_imba_riki_cloak_and_dagger_damage"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"backstab_angle"				"105 105 105"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fade_delay"					"4 3 2"
-			}
-
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"regards_health_regen_pct"	"1.5"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"regards_mana_regen_pct"	"1.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Riki's Tricks of the Trade
-	//=================================================================================================================
-	"imba_riki_tricks_of_the_trade"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_riki.lua"
-		"AbilityTextureName"			"riki_tricks_of_the_trade"
-		
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"				"1"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastPoint"				"0.3"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50 45 40"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"		
-
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-			"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
-			"particle"					"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
-			"particle"					"particles/units/heroes/hero_riki/riki_tricks.vpcf"
-			"particle"					"particles/hero/riki/riki_martyr_dagger_start_pos.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"450"				
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"attack_interval"		"0.6 0.55 0.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"channel_duration"		"4.0 4.5 5.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_cast_range"	"1000"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_duration"		"8 9 10"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"martyr_aspd_pct"		"30"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Riki's Tricks of the Trade (7.23)
-	//=================================================================================================================
-	"imba_riki_tricks_of_the_trade_723"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_riki"
-		"AbilityTextureName"			"riki_tricks_of_the_trade"
-		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"				"1"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.3"
-		"AbilityChannelTime"			"2.0"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-		"AbilityChannelAnimation"		"ACT_DOTA_CHANNEL_ABILITY_4"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"21 18 15 12"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-			"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
-			"particle"					"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
-			"particle"					"particles/units/heroes/hero_riki/riki_tricks.vpcf"
-			"particle"					"particles/hero/riki/riki_martyr_dagger_start_pos.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"450 500 550"				
-			}
-			
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"channel_duration"		"2.0"
-			}
-			
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"martyr_aspd_pct"		"50"
-			}
-			
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_count"	"4"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_pct"	"70 80 90 100"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"scepter_duration"				"3"
-				"RequiresScepter"		"1"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_attacks"				"6"
-				"RequiresScepter"		"1"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_cast_range"				"1000"
-				"RequiresScepter"		"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Riki's Talents 
-	//=================================================================================================================
-	"special_bonus_imba_riki_1" // Each instance of Blink Strike leaves Smokescreen for 1 second
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_smoke_screen"
-			"02"        "imba_riki_blink_strike"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_2" // Tricks of the Trade applies Martys Mark on its targets
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_tricks_of_the_trade"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_3" // Cloak and Dagger can be activated for Riki to gain bonus multiplier, but loses its invisibility over the duration
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"2"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_4" // Cloak and Dagger now applies Sidestab for reduced multiplier
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"sidestab_angle"			"285"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_5" // Smokescreen grants Riki a second form of Invisibility.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-			"02"        "imba_riki_smoke_screen"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"1.5"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_6" // Tricks of the Trade now refunds cooldown proportional to its cast duration. Has a minimum cooldown of 6 seconds.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_tricks_of_the_trade"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"6"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_7" // 4 successive Backstabs now breaks the target for 5 seconds. Resets when an attack isn't a Backstab.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"5"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"break_duration"			"5"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_8" // Riki gains a chance to attack an opponent's back
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_blink_strike"
-			"02"        "imba_riki_cloak_and_dagger"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"distance"					"96"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_smokescreen_cooldown"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_smoke_screen_723"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"5"
-			}
-		}
-	}
-	
-	"special_bonus_imba_riki_blink_strike_cast_range"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_blink_strike"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"600"
-			}
-		}
-	}
-	
-	"special_bonus_imba_riki_cloak_and_dagger_damage"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger_723"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"0.8"
-			}
-		}
-	}
-	
-	"special_bonus_imba_riki_tricks_of_the_trade_cooldown"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_tricks_of_the_trade_723"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"7"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_cloak_and_dagger_invis"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger_723"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
 	
 	//=================================================================================================================
 	// Sniper's Shrapnel
@@ -36909,7 +36572,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"20"
+		"AbilityManaCost"				"20 22 24 26"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -36940,12 +36603,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scourge_damage"			"15 25 35 45"
+				"scourge_damage"			"13 22 31 40"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scourge_gold"				"25"
+				"scourge_gold"				"15 17 19 21"
 			}
 			"05"
 			{
@@ -37002,7 +36665,7 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"20 20 20 20"
+		"AbilityManaCost"				"20 22 24 26"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -37024,7 +36687,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_damage_tooltip"	"15 25 35 45"
+				"ward_damage_tooltip"	"13 22 31 40"
 				//"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
 				"LinkedSpecialBonus"	"special_bonus_imba_venomancer_plague_ward_upgrade"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
@@ -37563,7 +37226,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_hell_empress"
+		"ScriptFile"				"components/abilities/heroes/hero_hell_empress"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -37760,13 +37423,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_hell_empress"
+		"ScriptFile"				"components/abilities/heroes/hero_hell_empress"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-//		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE" // Leaving this line or removing it does literally no difference
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"				"2"
