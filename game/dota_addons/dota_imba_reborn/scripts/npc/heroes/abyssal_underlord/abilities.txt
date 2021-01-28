@@ -1,48 +1,25 @@
 "DOTAAbilities"
 {
 	//=================================================================================================================
-	// Death Prophet: Silence
+	// Ability: Special Bonus
 	//=================================================================================================================
-	"imba_death_prophet_silence"
+	"special_bonus_unique_underlord"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_death_prophet"
-		"AbilityTextureName"			"death_prophet_silence"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.4"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15 13 11 9"
-		"AbilityDuration"				"3.0 4.0 5.0 6.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 90 100 110"
-
+		"ID"					"6019"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"425 475 525 575"
-			}
-			"02"
-			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0 4.0 5.0 6.0"
+				"value"				"1.2"
+				"ad_linked_ability"			"abyssal_underlord_pit_of_malice"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}
@@ -50,11 +27,11 @@
 	//=================================================================================================================
 	// Ability: Special Bonus
 	//=================================================================================================================
-	"special_bonus_unique_death_prophet"
+	"special_bonus_unique_underlord_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"6191"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"ID"					"6967"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -65,8 +42,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"24"
-				"ad_linked_ability"			"death_prophet_exorcism"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+				"value"				"30"
+				"ad_linked_ability"			"abyssal_underlord_firestorm"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}
@@ -74,11 +51,11 @@
 	//=================================================================================================================
 	// Ability: Special Bonus
 	//=================================================================================================================
-	"special_bonus_unique_death_prophet_3"
+	"special_bonus_unique_underlord_4"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"6628"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"ID"					"6969"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -88,9 +65,9 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"				"3.5"
-				"ad_linked_ability"			"death_prophet_spirit_siphon"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+				"var_type"					"FIELD_INTEGER"
+				"value"				"25"
+				"ad_linked_ability"			"abyssal_underlord_firestorm"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}
@@ -98,11 +75,11 @@
 	//=================================================================================================================
 	// Ability: Special Bonus
 	//=================================================================================================================
-	"special_bonus_unique_death_prophet_5"
+	"special_bonus_unique_underlord_6"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"698"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"ID"					"557"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -112,9 +89,9 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"				"22.0"
-				"ad_linked_ability"			"death_prophet_spirit_siphon"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+				"var_type"					"FIELD_INTEGER"
+				"value"				"140"
+				"ad_linked_ability"			"abyssal_underlord_pit_of_malice"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}
