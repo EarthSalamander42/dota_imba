@@ -1,60 +1,13 @@
 "DOTAAbilities"
 {
 	//=================================================================================================================
-	// Death Prophet: Silence
-	//=================================================================================================================
-	"imba_death_prophet_silence"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_death_prophet"
-		"AbilityTextureName"			"death_prophet_silence"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.4"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15 13 11 9"
-		"AbilityDuration"				"3.0 4.0 5.0 6.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 90 100 110"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"425 475 525 575"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0 4.0 5.0 6.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Ability: Special Bonus
 	//=================================================================================================================
-	"special_bonus_unique_death_prophet"
+	"special_bonus_unique_meepo"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"6191"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"ID"					"6288"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -65,8 +18,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"24"
-				"ad_linked_ability"			"death_prophet_exorcism"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+				"value"				"5"
+				"ad_linked_ability"			"meepo_poof"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}
@@ -74,11 +27,11 @@
 	//=================================================================================================================
 	// Ability: Special Bonus
 	//=================================================================================================================
-	"special_bonus_unique_death_prophet_3"
+	"special_bonus_unique_meepo_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"6628"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"ID"					"6689"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -88,9 +41,9 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"				"3.5"
-				"ad_linked_ability"			"death_prophet_spirit_siphon"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+				"var_type"					"FIELD_INTEGER"
+				"value"				"70"
+				"ad_linked_ability"			"meepo_poof"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}
@@ -98,11 +51,11 @@
 	//=================================================================================================================
 	// Ability: Special Bonus
 	//=================================================================================================================
-	"special_bonus_unique_death_prophet_5"
+	"special_bonus_unique_meepo_5"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"698"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"ID"					"546"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -112,9 +65,33 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"				"22.0"
-				"ad_linked_ability"			"death_prophet_spirit_siphon"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+				"var_type"					"FIELD_INTEGER"
+				"value"				"1"
+				"ad_linked_ability"			"meepo_divided_we_stand"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_meepo_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"618"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"14"
+				"ad_linked_ability"			"meepo_ransack"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}

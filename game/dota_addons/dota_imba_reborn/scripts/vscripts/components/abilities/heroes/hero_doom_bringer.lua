@@ -66,13 +66,13 @@ function imba_doom_bringer_doom:OnSpellStart()
 	local caster = self:GetCaster()
 	
 	if self:GetAutoCastState() then
-		caster:AddNewModifier(caster, self, "modifier_imba_doom_bringer_doom", {duration = self:GetSpecialValueFor("self_duration")})
+		caster:AddNewModifier(caster, self, "modifier_imba_doom_bringer_doom", {duration = self:GetSpecialValueFor("self_duration") + self:GetCaster():FindTalentValue("special_bonus_unique_doom_7")})
 	else
 		if not self:GetCursorTarget():TriggerSpellAbsorb(self) then
 			local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("aoe_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, FIND_ANY_ORDER, false)
 		
 			for _, enemy in pairs(enemies) do
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_doom_bringer_doom_enemies", {duration = self:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_doom_bringer_doom_enemies", {duration = (self:GetSpecialValueFor("duration") + self:GetCaster():FindTalentValue("special_bonus_unique_doom_7")) * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end
@@ -196,7 +196,7 @@ function modifier_imba_doom_bringer_doom_enemies:GetAttributes()	return MODIFIER
 function modifier_imba_doom_bringer_doom_enemies:OnCreated()
 	if self:GetAbility() then
 		self.deniable_pct	= self:GetAbility():GetSpecialValueFor("deniable_pct")
-		self.duration		= self:GetAbility():GetSpecialValueFor("duration")
+		self.duration		= self:GetAbility():GetSpecialValueFor("duration") + self:GetCaster():FindTalentValue("special_bonus_unique_doom_7")
 		self.damage			= self:GetAbility():GetSpecialValueFor("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_doom_5")
 	else
 		self.deniable_pct	= 25
