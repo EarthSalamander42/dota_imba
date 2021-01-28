@@ -35,11 +35,9 @@ function modifier_frantic:OnCreated()
 	
 	-- This may get updated by Valve over-time, in which case it will have to manually updated...zzz
 	self.cdr_talents = {
-		"special_bonus_cooldown_reduction_6",
 		"special_bonus_cooldown_reduction_8",
 		"special_bonus_cooldown_reduction_10",
 		"special_bonus_cooldown_reduction_12",
-		"special_bonus_cooldown_reduction_14",
 		"special_bonus_cooldown_reduction_15",
 		"special_bonus_cooldown_reduction_20",
 		"special_bonus_cooldown_reduction_25",
