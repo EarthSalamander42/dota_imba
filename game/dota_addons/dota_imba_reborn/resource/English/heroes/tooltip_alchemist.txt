@@ -1,24 +1,28 @@
 // Alchemist's Acid Spray
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_Imbafication_1"			"<font color='#FF7800'>Sticky Acid:</font> Enemies inside the Acid Spray area of effect gain stacks of Sticky Acid every second, up to a maximum. Each stack increases Acid Spray's damage by %stack_damage% and further reduces the target's armor by %stack_armor_reduction%. When enemies are not inside the acid or the effect ends, they lose a stack of Sticky Acid every second."
-
+"DOTA_Tooltip_ability_imba_alchemist_acid_spray"                        "Acid Spray"
+"DOTA_Tooltip_ability_imba_alchemist_acid_spray_Description"            "Sprays high-pressure acid across a target area. Enemy units who step across the contaminated terrain take damage per second and have their armor reduced.\n<font color='#FF7800'>Sticky Acid:</font> Enemies inside the Acid Spray area of effect gain stacks of Sticky Acid every second, up to a maximum. Each stack increases Acid Spray's damage by %stack_damage% and further reduces the target's armor by %stack_armor_reduction%. When enemies are not inside the acid or the effect ends, they lose a stack of Sticky Acid every second."
+"DOTA_Tooltip_ability_imba_alchemist_acid_spray_Lore"                  "Using traditional Alchemy from the Darkbrew family, Razzil concocts an acid that dissolves even the toughest metals."
 "DOTA_Tooltip_ability_imba_alchemist_acid_spray_Note0"                  "The aura lingers for 0.5 seconds."
 "DOTA_Tooltip_ability_imba_alchemist_acid_spray_Note1"                  "The damage from Sticky Acid is the same as Acid Spray's, even without the Acid Spray itself to deal the damage."
-
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_armor_reduction"		"ARMOR REDUCTION"
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_max_stacks"				"MAX STACKS:"
+"DOTA_Tooltip_ability_imba_alchemist_acid_spray_radius"                "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_alchemist_acid_spray_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_alchemist_acid_spray_damage"                "DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_alchemist_acid_spray_armor_reduction"                    "ARMOR REDUCTION"
+"DOTA_Tooltip_ability_imba_alchemist_acid_spray_max_stacks"            "MAX STACKS:"
 
 "DOTA_Tooltip_modifier_imba_acid_spray_debuff_dot"                      "Sticky Acid"
 "DOTA_Tooltip_modifier_imba_acid_spray_debuff_dot_Description"          "Taking damage every second and losing armor. Stacks decay every second when outside Acid Spray's area of effect."
 
 // Alchemist's Unstable Concoction
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Imbafication_1"               "<font color='#FF7800'>Bigger Bottles:</font> Increases the radius when thrown after the base duration."
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Imbafication_2"               "<font color='#FF7800'>Golden Substance:</font> Each stack of Greevil's Greed adds 0.02 seconds to the brew duration."
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Imbafication_3"               "<font color='#FF7800'>Highly Combustible:</font> If Unstable Concoction hits an enemy inside the Acid Spray pool, it explodes violently, burning the whole Acid Spray AoE, dealing a portion of the damage to all enemies in its range."
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Imbafication_4"               "<font color='#FF7800'>Instant Repulsion:</font> All stacks of Sticky Acid on the main target are consumed, dealing their damage instantly."
-
+"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction"              "Unstable Concoction"
+"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Description"               "Alchemist brews up an unstable concoction that he can throw at an enemy hero, to stun and deal damage in an area around the explosion. The longer the concoction brews, the more damage it deals and the longer the stun. In time, the brew reaches its maximum damage and stun time. However, %extra_brew_time% seconds after the duration, the concoction will explode on Alchemist himself if not thrown.\n<font color='#FF7800'>Bigger Bottles:</font> Increases the radius when thrown after the base duration.\n<font color='#FF7800'>Golden Substance:</font> Each stack of Greevil's Greed adds 0.02 seconds to the brew duration.\n<font color='#FF7800'>Highly Combustible:</font> If Unstable Concoction hits an enemy inside the Acid Spray pool, it explodes violently, burning the whole Acid Spray AoE, dealing a portion of the damage to all enemies in its range.\n<font color='#FF7800'>Instant Repulsion:</font> All stacks of Sticky Acid on the main target are consumed, dealing their damage instantly."
+"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Lore"          "A silver lining to the failure of turning a mountain into gold, this volatile solution has destructive potential."
 "DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Note0"                     "If Alchemist himself is hit by the explosion of the concoction, he still deals damage to enemy units in the explosion radius."
 "DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Note1"                     "Base brew damage refer to the base brewing duration. The damage can increase further when brewing for longer."
-
+"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_brew_time"                 "BASE BREW DURATION:"
+"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_stun"          "MAX STUN DURATION:"
+"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_damage"                    "BASE BREW DAMAGE:"
+"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_radius"                    "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_radius_increase"           "BIGGER BOTTLES RADIUS:"
 "DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_acid_spray_damage"         "%HIGHLY COMBUSTIBLE DAMAGE:"
 
@@ -26,14 +30,15 @@
 "DOTA_Tooltip_modifier_imba_unstable_concoction_stunned_Description"                "Stunned."
 
 // Alchemist's Goblin's Greed
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Imbafication_1"		"<font color='#FF7800'>The Rich Get Richer:</font> No gold bonus cap."
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Imbafication_2"		"<font color='#FF7800'>Pocketful of Gold:</font> Landing a last hit on enemy heroes grant a multiplication of the bonus gold."
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Imbafication_3"		"<font color='#FF7800'>Goldenfinger:</font> Can be cast as a unit-targeted ability to convert a target allied or enemy creep into pure gold, gaining x%gold_multiplier% its bounty and exp, and permanently gaining %bonus_stacks% stacks of Greevil's Greed."
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Imbafication_4"		"<font color='#FF7800'>Golden Greevil:</font> Upon consuming a creep, a Golden Greevil spawns from its corpse. The Golden Greevil follows Alchemist and grants it gold every 2 seconds equal to a portion of your Greed stacks."
-
+"DOTA_Tooltip_ability_imba_alchemist_goblins_greed"                    "Greevil's Greed"
+"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Description"			"Alchemist synthesizes additional gold from his enemies. With each kill, Alchemist earns base bonus gold and extra bonus gold. If Alchemist kills another unit which yields gold within the next %duration% seconds, an additional instance of Extra Bonus Gold is added to the total. Additionally, causes bounty runes to yield %bounty_multiplier%%  of their normal gold.\n<font color='#FF7800'>The Rich Get Richer:</font> No gold bonus cap.\n<font color='#FF7800'>Pocketful of Gold:</font> Landing a last hit on enemy heroes grant a multiplication of the bonus gold.\n<font color='#FF7800'>Goldenfinger:</font> Can be cast as a unit-targeted ability to convert a target allied or enemy creep into pure gold, gaining x%gold_multiplier% its bounty and exp, and permanently gaining %bonus_stacks% stacks of Greevil's Greed. \n<font color='#FF7800'>Golden Greevil:</font> Upon consuming a creep, a Golden Greevil spawns from its corpse. The Golden Greevil follows Alchemist and grants it gold every 2 seconds equal to a portion of your Greed stacks."
+"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Lore"                "While it is not a mountain, Razzil has mastered the conversion of smaller compounds to line his pockets."
 "DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Note0"              "The pet greevil is a flying unit, and it follows Alchemist. It doesn't teleport automatically with Alchemist, and needs to travel to him."
 "DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Note1"				"<font color='#FF0000'>Gold gain is not affected by the map gold multiplier.</font>"
-
+"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_duration"			"RECENT KILL WINDOW:"
+"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_bonus_gold"          "BASE GOLD BONUS:"
+"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_bonus_bonus_gold"                "GOLD PER KILL:"
+"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_bounty_multiplier"               "%BOUNTY RUNE GOLD MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_alchemist_goblins_greed_hero_multiplier"                 "HERO KILL MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_alchemist_goblins_greed_greevil_duration"                "GREEVIL DURATION:"
 "DOTA_Tooltip_ability_imba_alchemist_goblins_greed_periodic_gold_percentage"        "%GREED STACKS TO GOLD FROM GREEVIL:"
@@ -47,19 +52,25 @@
 "dota_hud_error_active_greevil"											"A Greevil is Still Active"
 
 // Alchemist's Chemical Rage
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Imbafication_1"		"<font color='#FF7800'>Ogre's Wrath:</font> Chemical Rage persists through death."
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Imbafication_2"		"<font color='#FF7800'>Acidic Emanation:</font> While Alchemist is under the effects of Chemical Rage, he becomes enveloped in an aura of acid. The aura only applies on units with at least one stack of Sticky Acid, and has the same radius as Acid Spray. Units affected by aura have their stack limit of Sticky Acid doubled. Damage fully stacks with Acid Spray's stacks, while armor reduction does not. Does nothing to units that have no stacks of Sticky Acid, but prevents Acid Spray stack degeneration while in range of a unit affected by it."
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Imbafication_3"		"<font color='#FF7800'>Remnants of Chemical Rage:</font> Also increases mana regeneration."
-
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage"                    "Chemical Rage"
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Description"			"Alchemist causes his Ogre to enter a chemically induced rage, reducing base attack cooldown and increasing movement speed, regeneration and strength.\n<font color='#FF7800'>Ogre's Wrath:</font> Chemical Rage persists through death.\n<font color='#FF7800'>Acidic Emanation:</font> While Alchemist is under the effects of Chemical Rage, he becomes enveloped in an aura of acid. The aura only applies on units with at least one stack of Sticky Acid, and has the same radius as Acid Spray. Units affected by aura have their stack limit of Sticky Acid doubled. Damage fully stacks with Acid Spray's stacks, while armor reduction does not. Does nothing to units that have no stacks of Sticky Acid, but prevents Acid Spray stack degeneration while in range of a unit affected by it.\n<font color='#FF7800'>Remnants of Chemical Rage:</font> Also increases mana regeneration."
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Lore"                "The brew Razzil gave to the Ogre during their prison bust has become a useful potion in the midst of combat."
 "DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Note0"              "Acidic Emanations behaves similar to Acid Spray by all means: deals damage, reduces armor and grants stacks of Sticky Acid."
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_base_attack_time"	"BASE ATTACK TIME:"
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_health_regen"	"BONUS HEALTH REGEN:"
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_mana_regen"	"BONUS MANA REGEN:"
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_movespeed"		"BONUS MOVESPEED:"
 
 "DOTA_Tooltip_ability_imba_alchemist_chemical_rage_scepter_description"	"Alchemist melts down Aghanim's Scepter to grant an allied hero all Aghanim's Scepter upgrades. When you have a Scepter of your own, you will gain bonus damage and spell amplification for each gifted Scepter."
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_scepter_bonus_damage"	"SCEPTER BONUS DAMAGE:"
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_scepter_spell_amp"		"%SCEPTER SPELL AMP:"
 
-"DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste"					"Chemical Rage"
-"DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste_Description"		"Grants lower Base attack time, bonus health and mana regeneration and bonus move speed. Emitting Acid Aura on nearby enemies."
+"DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste"                  "Chemical Rage"
+"DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste_Description"                   "Grants lower Base attack time, bonus health and mana regeneration and bonus move speed. Emitting Acid Aura on nearby enemies."
 
-"DOTA_Tooltip_modifier_imba_chemical_rage_aura_buff"					"Extra Incentive"
-"DOTA_Tooltip_modifier_imba_chemical_rage_aura_buff_Description"		"Damage increased based on Alchemist Greevil's Greed's stacks."
+"DOTA_Tooltip_modifier_imba_chemical_rage_aura_buff"                    "Extra Incentive"
+"DOTA_Tooltip_modifier_imba_chemical_rage_aura_buff_Description"                    "Damage increased based on Alchemist Greevil's Greed's stacks."
 
 // Alchemist's Mammonite
 "DOTA_Tooltip_ability_imba_alchemist_mammonite"                        "Mammonite"

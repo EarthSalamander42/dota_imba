@@ -10,7 +10,7 @@ end
 
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		if (GetMapName() == "imba_5v5" or GetMapName()) == "imba_10v10" and IsInToolsMode() then
+		if GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10" and IsInToolsMode() then
 			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
 				-- This function is called when connection to backend is successful if not in tools mode, let's call it in tools mode when bots are added in for testing purpose
 				TeamOrdering:ComputeTeamSelection()
@@ -24,7 +24,6 @@ end, nil)
 
 -- core
 function TeamOrdering:ComputeTeamSelection()
-	print("ComputeTeamSelection()")
 	local n = PlayerResource:GetPlayerCount()
 	local k = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
 	local acceptableWinratesDifference = 1 -- for 10v10 only
@@ -36,16 +35,15 @@ function TeamOrdering:ComputeTeamSelection()
 		halfCombinationsNumber = 92378
 	end
 
+	for i = 0, n - 1 do
+		self.winrates[i] = winratesBaseArray[i + 1]
+	end
+
 	-- not tested yet
-	if IsInToolsMode() then
-		for i = 0, n - 1 do
-			self.winrates[i] = winratesBaseArray[i + 1]
-		end
-	else
+	if not IsInToolsMode() then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) then
-				self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
-				print("Player ID/Name/Winrate/typeof(Winrate):", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i), type(api:GetPlayerWinrate(i)))
+				self.winrates[i] = api:GetPlayerWinrate(i)
 			end
 		end
 	end
@@ -87,13 +85,10 @@ function TeamOrdering:ComputeTeamSelection()
 	        break
     	end
 
-		if winratesDifference then
-			print("Winrate Diffs:", winratesDifference, smallestWinratesDifference)
-			if winratesDifference < smallestWinratesDifference then
-				smallestWinratesDifference = winratesDifference
-				bestTeamAOrdering = CopyArray(teamA, k)
-				bestTeamBOrdering = CopyArray(teamB, k)
-			end
+		if winratesDifference and winratesDifference < smallestWinratesDifference then
+			smallestWinratesDifference = winratesDifference
+			bestTeamAOrdering = CopyArray(teamA, k)
+			bestTeamBOrdering = CopyArray(teamB, k)
 		end
 
 		-- end of operations with combination
@@ -116,8 +111,8 @@ function TeamOrdering:ComputeTeamSelection()
 		end
 	end
 
-	print("Radiant comp:", bestTeamAOrdering)
-	print("Dire comp:", bestTeamBOrdering)
+	print(bestTeamAOrdering)
+	print(bestTeamBOrdering)
 	self:SetTeams_PostCompute(bestTeamAOrdering, bestTeamBOrdering)
 end
 

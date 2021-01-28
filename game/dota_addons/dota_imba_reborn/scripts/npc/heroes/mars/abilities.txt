@@ -56,7 +56,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"heaven_spear_delay"		"0.5" // delay before start going down
+				"heaven_spear_delay"		"0.3" // delay before start going down
 			}
 			"05"
 			{
@@ -200,8 +200,6 @@
 		"AbilityTextureName"			"mars_arena_of_blood"
 		"FightRecapLevel"				"2"
 		"MaxLevel"						"3"
-        "HasScepterUpgrade"				"1"
-
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
@@ -209,7 +207,7 @@
 			"particle"	"particles/units/heroes/hero_mars/mars_arena_of_blood_spear.vpcf"
 			"particle"	"particles/units/heroes/hero_mars/mars_arena_of_blood_impact.vpcf"
 		}
-
+		
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
@@ -245,64 +243,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"coliseum_bonus_attack_speed"	"15 30 45"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"scepter_jump_speed"			"1500"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"scepter_cast_range"			"900"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"scepter_max_height"			"300"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Mars Talents
-	//=================================================================================================================
-	"special_bonus_imba_mars_1" // Full Circle: God's Rebuke deals damage in a full circle around Mars.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_mars_2" // Stunning Rebuke: Stuns enemies while being knockbacked.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
 			}
 		}
 	}

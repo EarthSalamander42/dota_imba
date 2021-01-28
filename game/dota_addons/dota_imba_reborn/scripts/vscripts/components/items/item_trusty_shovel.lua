@@ -20,6 +20,7 @@ function modifier_imba_trusty_shovel_passives:GetModifierHealthBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_health")
 end
 
+
 item_imba_trusty_shovel = item_imba_trusty_shovel or class({})
 
 function item_imba_trusty_shovel:GetIntrinsicModifierName()
@@ -65,7 +66,7 @@ function item_imba_trusty_shovel:OnChannelFinish(bInterrupted)
 
 			self.last_reward = "bounty"
 
-			CreateRune(self:GetCursorPosition(), DOTA_RUNE_BOUNTY)
+			self:SpawnItem("item_imba_rune_bounty", self:GetCursorPosition())
 		elseif random_int > self.bounty_chance_threshold and random_int <= self.flask_chance_threshold then
 			if self.last_reward == "flask" then
 				self:OnChannelFinish(bInterrupted)

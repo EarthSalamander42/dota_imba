@@ -833,9 +833,6 @@ end
 
 -- 通过生成prop_dynamic来换装
 function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
-	-- disable wisp cosmetic, no target issue
-	if sItemDef == "9235" then return end
-
 	if not hUnit.Slots then
 		hUnit.Slots = {}
 --		CustomNetTables:SetTableValue("hero_wearables", tostring(hUnit:GetEntityIndex()), hUnit.Slots)
@@ -870,6 +867,11 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 	Wearable:TakeOffSlot(hUnit, sSlotName)
 
 	hWear["style"] = sStyle
+
+	-- IO Arcana fix
+	if sItemDef == "9235" then
+		sModel_player = nil
+	end
 
 	for sSlotName, hOtherWear in pairs(hUnit.Slots) do
 		if hOtherWear.model_modifiers then

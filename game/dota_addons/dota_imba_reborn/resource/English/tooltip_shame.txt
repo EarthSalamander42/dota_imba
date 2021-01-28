@@ -110,6 +110,7 @@
 "npc_dota_hero_lion"                                        "Lion (IMBA)"
 "npc_dota_hero_luna"                                        "Luna (IMBA)"
 "npc_dota_hero_lycan"                                      "Lycan (IMBA)"
+"npc_dota_hero_mars"										"Mars"
 "npc_dota_hero_magnataur"                                  "Destroyer Magnataur (IMBA)"
 "npc_dota_hero_medusa"                                      "Medusa (IMBA)"
 "npc_dota_hero_meepo"                                      "Meepo"

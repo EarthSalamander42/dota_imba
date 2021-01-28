@@ -30,7 +30,7 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_acid_spray_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_alchemist_acid_spray = imba_alchemist_acid_spray or class(VANILLA_ABILITIES_BASECLASS)
+imba_alchemist_acid_spray = imba_alchemist_acid_spray or class ({})
 
 function imba_alchemist_acid_spray:GetAbilityTextureName()
 	return "alchemist_acid_spray"
@@ -46,7 +46,7 @@ end
 
 function imba_alchemist_acid_spray:GetAOERadius()
 	local caster = self:GetCaster()
-	local radius = self:GetVanillaAbilitySpecial("radius")
+	local radius = self:GetSpecialValueFor("radius")
 
 	return radius
 end
@@ -62,7 +62,7 @@ function imba_alchemist_acid_spray:OnSpellStart()
 		EmitSoundOn(cast_responses[math.random(1, #cast_responses)], caster)
 	end
 
-	local thinker = CreateModifierThinker(caster, self, "modifier_imba_acid_spray_thinker", {duration = self:GetVanillaAbilitySpecial("duration")}, point, team_id, false)
+	local thinker = CreateModifierThinker(caster, self, "modifier_imba_acid_spray_thinker", {duration = self:GetSpecialValueFor("duration")}, point, team_id, false)
 end
 
 modifier_imba_acid_spray_thinker = modifier_imba_acid_spray_thinker or class({})
@@ -86,9 +86,9 @@ function modifier_imba_acid_spray_thinker:OnCreated(keys)
 
 		self.thinker:EmitSound("Hero_Alchemist.AcidSpray")
 
-		self.radius			= self.ability:GetVanillaAbilitySpecial("radius")
-		self.tick_rate		= self.ability:GetVanillaAbilitySpecial("tick_rate")
-		self.damage			= self.ability:GetVanillaAbilitySpecial("damage")
+		self.radius			= self.ability:GetSpecialValueFor("radius")
+		self.tick_rate		= self.ability:GetSpecialValueFor("tick_rate")
+		self.damage			= self.ability:GetSpecialValueFor("damage")
 		self.stack_damage	= self.ability:GetSpecialValueFor("stack_damage")
 		self.ability_damage_type	= self.ability:GetAbilityDamageType()
 
@@ -207,9 +207,9 @@ function modifier_imba_acid_spray_handler:OnCreated()
 		self.modifier = unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_acid_spray_debuff_dot", {})
 		
 		if self:GetAbility() then
-			self.modifier.damage		= ability:GetVanillaAbilitySpecial("damage")
+			self.modifier.damage		= ability:GetSpecialValueFor("damage")
 			self.modifier.stack_damage	= ability:GetSpecialValueFor("stack_damage")
-			self.tick_rate				= ability:GetVanillaAbilitySpecial("tick_rate")
+			self.tick_rate				= ability:GetSpecialValueFor("tick_rate")
 			
 		else
 			self.modifier.damage		= 25
@@ -301,10 +301,10 @@ end
 
 function modifier_imba_acid_spray_debuff_dot:OnCreated()
 	if self:GetAbility() then
-		self.armor_reduction		= self:GetAbility():GetVanillaAbilitySpecial("armor_reduction")
-		self.stack_armor_reduction	= self:GetAbility():GetVanillaAbilitySpecial("stack_armor_reduction")
+		self.armor_reduction		= self:GetAbility():GetSpecialValueFor("armor_reduction")
+		self.stack_armor_reduction	= self:GetAbility():GetSpecialValueFor("stack_armor_reduction")
 		self.max_stacks				= self:GetAbility():GetSpecialValueFor("max_stacks")
-		self.tick_rate				= self:GetAbility():GetVanillaAbilitySpecial("tick_rate")
+		self.tick_rate				= self:GetAbility():GetSpecialValueFor("tick_rate")
 	else
 		self.armor_reduction		= 5
 		self.stack_armor_reduction	= 1
@@ -402,7 +402,7 @@ MergeTables(LinkedModifiers,{
 MergeTables(LinkedModifiers,{
 	["modifier_imba_unstable_concoction_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_alchemist_unstable_concoction = imba_alchemist_unstable_concoction or class(VANILLA_ABILITIES_BASECLASS)
+imba_alchemist_unstable_concoction = imba_alchemist_unstable_concoction or class({})
 
 function imba_alchemist_unstable_concoction:GetAbilityTextureName()
 	return "alchemist_unstable_concoction"
@@ -420,55 +420,47 @@ function imba_alchemist_unstable_concoction:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_alchemist_unstable_concoction:OnUpgrade()
-	if not self.vanilla_ability then
-		self.vanilla_ability = self:GetCaster():FindAbilityByName("alchemist_unstable_concoction_throw")
-	end
-
-	self.vanilla_ability:SetLevel(self:GetLevel())
-end
-
 function imba_alchemist_unstable_concoction:OnUnStolen()
 	local caster = self:GetCaster()
 	caster:RemoveModifierByName("modifier_imba_unstable_concoction_handler")
 end
 
 function imba_alchemist_unstable_concoction:OnSpellStart()
+	local caster = self:GetCaster()
 	local cast_response = {"alchemist_alch_ability_concoc_01", "alchemist_alch_ability_concoc_02", "alchemist_alch_ability_concoc_03", "alchemist_alch_ability_concoc_04", "alchemist_alch_ability_concoc_05", "alchemist_alch_ability_concoc_06", "alchemist_alch_ability_concoc_07", "alchemist_alch_ability_concoc_08", "alchemist_alch_ability_concoc_10"}
 	local last_second_throw_response = {"alchemist_alch_ability_concoc_16", "alchemist_alch_ability_concoc_17"}
-
-	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") then
+	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
 		local target = self:GetCursorTarget()
 		-- Stops the charging sound
-		self:GetCaster():StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
+		caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
 		--Emit the throwing sound
-		self:GetCaster():EmitSound("Hero_Alchemist.UnstableConcoction.Throw")
+		caster:EmitSound("Hero_Alchemist.UnstableConcoction.Throw")
 		-- Last second throw responses
-		local modifier_unstable_handler = self:GetCaster():FindModifierByName("modifier_imba_unstable_concoction_handler")
+		local modifier_unstable_handler = caster:FindModifierByName("modifier_imba_unstable_concoction_handler")
 		if modifier_unstable_handler then
 			local remaining_time = modifier_unstable_handler:GetRemainingTime()
 			if remaining_time < 1 then
-				EmitSoundOn(last_second_throw_response[math.random(1,#last_second_throw_response)], self:GetCaster())
+				EmitSoundOn(last_second_throw_response[math.random(1,#last_second_throw_response)], caster)
 			end
 		end
 
-		self:GetCaster():RemoveModifierByName("modifier_imba_unstable_concoction_handler")
+		caster:RemoveModifierByName("modifier_imba_unstable_concoction_handler")
 
-		self:GetCaster():StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION_THROW)
-		self:GetCaster():FadeGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
+		caster:StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION_THROW)
+		caster:FadeGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
 
 		-- Set how much time the spell charged
 		self.time_charged = GameRules:GetGameTime() - self.brew_start
 
 		-- Remove the brewing modifier
-		self:GetCaster():RemoveModifierByName("modifier_imba_unstable_concoction_handler")
+		caster:RemoveModifierByName("modifier_imba_unstable_concoction_handler")
 
 		Timers:CreateTimer(0.3, function()
-			local projectile_speed = self.vanilla_ability:GetSpecialValueFor("movement_speed")
-
-			local info = {
+			local projectile_speed = self:GetSpecialValueFor("movement_speed")
+			local info =
+			{
 				Target = target,
-				Source = self:GetCaster(),
+				Source = caster,
 				Ability = self,
 				bDodgeable = false,
 				EffectName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf",
@@ -480,16 +472,16 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 		return
 	end
 
-	EmitSoundOn(cast_response[math.random(1,#cast_response)], self:GetCaster())
-	self:GetCaster():StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
+	EmitSoundOn(cast_response[math.random(1,#cast_response)], caster)
+	caster:StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
 	self.brew_start = GameRules:GetGameTime()
-	self.brew_time = self.vanilla_ability:GetSpecialValueFor("brew_time")
-	local extra_brew_time = self:GetVanillaAbilitySpecial("brew_explosion")
-	local duration = extra_brew_time
-	self.stun = self.vanilla_ability:GetSpecialValueFor("max_stun")
-	self.damage = self.vanilla_ability:GetSpecialValueFor("max_damage")
+	self.brew_time = self:GetSpecialValueFor("brew_time")
+	local extra_brew_time = self:GetSpecialValueFor("extra_brew_time")
+	local duration = self.brew_time + extra_brew_time
+	self.stun = self:GetSpecialValueFor("stun")
+	self.damage = self:GetSpecialValueFor("damage")
 	self.radius_increase = self:GetSpecialValueFor("radius_increase") / self.brew_time
-	local greed_modifier = self:GetCaster():FindModifierByName("modifier_imba_goblins_greed_passive")
+	local greed_modifier = caster:FindModifierByName("modifier_imba_goblins_greed_passive")
 	if greed_modifier then
 		local greed_stacks = greed_modifier:GetStackCount()
 		local greed_multiplier = self:GetSpecialValueFor("time_per_stack")
@@ -498,18 +490,18 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 
 	-- #6 Talent : When in Chemical Rage, Alchemist brews Unstable Concoction faster.
 	local speed_multiplier
-	if self:GetCaster():HasTalent("special_bonus_imba_alchemist_6")  and self:GetCaster():FindModifierByName("modifier_imba_chemical_rage_buff_haste")  then
-		speed_multiplier	=	self:GetCaster():FindTalentValue("special_bonus_imba_alchemist_6")
+	if caster:HasTalent("special_bonus_imba_alchemist_6")  and caster:FindModifierByName("modifier_imba_chemical_rage_buff_haste")  then
+		speed_multiplier	=	caster:FindTalentValue("special_bonus_imba_alchemist_6")
 	else speed_multiplier	=	1 		end
 
 	duration = duration / speed_multiplier
 
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_unstable_concoction_handler", {duration = duration,})
-	CustomNetTables:SetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID()), { brew_start = GameRules:GetGameTime(), radius_increase = self.radius_increase,})
-	self.radius = self:GetVanillaAbilitySpecial("radius")
+	caster:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_handler", {duration = duration,})
+	CustomNetTables:SetTableValue("player_table", tostring(caster:GetPlayerOwnerID()), { brew_start = GameRules:GetGameTime(), radius_increase = self.radius_increase,})
+	self.radius = self:GetSpecialValueFor("radius")
 
 	-- Play the sound, which will be stopped when the sub ability fires
-	self:GetCaster():EmitSound("Hero_Alchemist.UnstableConcoction.Fuse")
+	caster:EmitSound("Hero_Alchemist.UnstableConcoction.Fuse")
 end
 
 function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
@@ -624,34 +616,33 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 end
 
 function imba_alchemist_unstable_concoction:GetAbilityTextureName()
-	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") then
+	local caster = self:GetCaster()
+	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
 		return "alchemist_unstable_concoction_throw"
 	end
-
 	return self.BaseClass.GetAbilityTextureName(self)
 end
 
 function imba_alchemist_unstable_concoction:GetCooldown(level)
-	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") then
+	local caster = self:GetCaster()
+	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
 		if IsServer() then
-			return self:GetVanillaKeyValue("AbilityCooldown") - (GameRules:GetGameTime() - self.brew_start)
+			return self.BaseClass.GetCooldown(self, level) - (GameRules:GetGameTime() - self.brew_start)
 		end
 		return 0
 	end
-
-	if IsServer() or self:GetLevel() == 0 then
+	if IsServer() then
 		return 0
 	end
-
-	return self:GetVanillaKeyValue("AbilityCooldown")
+	return self.BaseClass.GetCooldown(self, level)
 end
 
 function imba_alchemist_unstable_concoction:GetManaCost(level)
-	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") or self:GetLevel() == 0 then
+	local caster = self:GetCaster()
+	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
 		return 0
 	end
-
-	return self:GetVanillaKeyValue("AbilityManaCost")
+	return self.BaseClass.GetManaCost(self, level)
 end
 
 
@@ -716,7 +707,7 @@ function imba_alchemist_unstable_concoction:GetAOERadius()
 		brew_start = net_table.brew_start or 0
 		radius_increase = net_table.radius_increase or 0
 	end
-	local radius = self:GetVanillaAbilitySpecial("radius") + (GameRules:GetGameTime() - brew_start) * radius_increase
+	local radius = self:GetSpecialValueFor("radius") + (GameRules:GetGameTime() - brew_start) * radius_increase
 	return radius
 end
 
@@ -808,6 +799,7 @@ function modifier_imba_unstable_concoction_handler:OnIntervalThink()
 				end
 			end
 		else
+
 			-- Set how much time the spell charged
 			ability.time_charged = GameRules:GetGameTime() - ability.brew_start
 
@@ -821,7 +813,7 @@ function modifier_imba_unstable_concoction_handler:OnIntervalThink()
 					Ability = ability,
 					bDodgeable = false,
 					EffectName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf",
-					iMoveSpeed = self:GetAbility().vanilla_ability:GetSpecialValueFor("movement_speed"),
+					iMoveSpeed = ability:GetSpecialValueFor("movement_speed"),
 				}
 			ProjectileManager:CreateTrackingProjectile(info)
 			ability:StartCooldown(ability:GetCooldown(ability:GetLevel()))
@@ -866,7 +858,7 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_greevils_greed_handler"]= LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_greevil_gold"]			= LUA_MODIFIER_MOTION_NONE,
 })
-imba_alchemist_goblins_greed = imba_alchemist_goblins_greed or class(VANILLA_ABILITIES_BASECLASS)
+imba_alchemist_goblins_greed = imba_alchemist_goblins_greed or class ({})
 
 function imba_alchemist_goblins_greed:GetAbilityTextureName()
 	return "alchemist_goblins_greed"
@@ -910,7 +902,7 @@ end
 function imba_alchemist_goblins_greed:OnUpgrade()
 	local caster = self:GetCaster()
 	local modifier = caster:FindModifierByName(self:GetIntrinsicModifierName())
-	local base_gold = self:GetVanillaAbilitySpecial("bonus_gold")
+	local base_gold = self:GetSpecialValueFor("bonus_gold")
 	local base_gold_1 = self:GetLevelSpecialValueFor("bonus_gold", self:GetLevel() - 2)
 	local stacks = modifier:GetStackCount()
 	if self:GetLevel() == 1 then
@@ -1101,8 +1093,8 @@ function modifier_imba_goblins_greed_passive:OnDeath(keys)
 		ParticleManager:SetParticleControl(particle2, 2, Vector(lifetime, digits, 0))
 		ParticleManager:SetParticleControl(particle2, 3, color)
 
-		local stack_bonus = ability:GetVanillaAbilitySpecial("bonus_bonus_gold")
-		local duration = ability:GetVanillaAbilitySpecial("duration")
+		local stack_bonus = ability:GetSpecialValueFor("bonus_bonus_gold")
+		local duration = ability:GetSpecialValueFor("duration")
 		self:SetStackCount(stacks + stack_bonus)
 
 		Timers:CreateTimer(duration, function()
@@ -1117,7 +1109,7 @@ end
 
 -- LITTLE GREEVIL SHIT
 
-imba_alchemist_greevils_greed = imba_alchemist_greevils_greed or class(VANILLA_ABILITIES_BASECLASS)
+imba_alchemist_greevils_greed = imba_alchemist_greevils_greed or class ({})
 
 function imba_alchemist_greevils_greed:GetAbilityTextureName()
 	return "alchemist_goblins_greed"
@@ -1221,7 +1213,7 @@ MergeTables(LinkedModifiers,{
 	-- The logic is done for this but it's actually unncessary since the vanilla logic's already built into the hero itself...
 	-- ["modifier_imba_chemical_rage_scepter_handler"]	= LUA_MODIFIER_MOTION_NONE
 })
-imba_alchemist_chemical_rage = imba_alchemist_chemical_rage or class(VANILLA_ABILITIES_BASECLASS)
+imba_alchemist_chemical_rage = imba_alchemist_chemical_rage or class ({})
 
 function imba_alchemist_chemical_rage:GetAbilityTextureName()
 	return "alchemist_chemical_rage"
@@ -1271,7 +1263,7 @@ end
 function modifier_imba_chemical_rage_handler:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
 	
-	self.transformation_time	= self:GetAbility():GetVanillaAbilitySpecial("transformation_time")
+	self.transformation_time	= self:GetAbility():GetSpecialValueFor("transformation_time")
 
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1292,7 +1284,7 @@ function modifier_imba_chemical_rage_handler:OnDestroy()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
-		local buff_duration = ability:GetVanillaAbilitySpecial("duration")
+		local buff_duration = ability:GetSpecialValueFor("duration")
 		if caster:HasModifier("modifier_imba_chemical_rage_buff_haste") then
 			caster:RemoveModifierByName("modifier_imba_chemical_rage_buff_haste")
 		end
@@ -1320,9 +1312,9 @@ function modifier_imba_chemical_rage_buff_haste:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
 
 	self.bonus_mana_regen	= self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
-	self.bonus_health_regen	= self:GetAbility():GetVanillaAbilitySpecial("bonus_health_regen")
-	self.bonus_movespeed	= self:GetAbility():GetVanillaAbilitySpecial("bonus_movespeed")
-	self.base_attack_time	= self:GetAbility():GetVanillaAbilitySpecial("base_attack_time")
+	self.bonus_health_regen	= self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+	self.bonus_movespeed	= self:GetAbility():GetSpecialValueFor("bonus_movespeed")
+	self.base_attack_time	= self:GetAbility():GetSpecialValueFor("base_attack_time")
 
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1334,7 +1326,7 @@ function modifier_imba_chemical_rage_buff_haste:OnCreated()
 		self.ability			= 	caster:FindAbilityByName("imba_alchemist_acid_spray")
 		
 		if self.ability then
-			self.radius			=	self.ability:GetVanillaAbilitySpecial("radius")
+			self.radius			=	self.ability:GetSpecialValueFor("radius")
 		else
 			self.radius			=	0
 		end
@@ -1457,9 +1449,9 @@ function modifier_imba_chemical_rage_aura:OnCreated()
 		self.modifier = unit:FindModifierByName("modifier_imba_acid_spray_debuff_dot")
 
 		if self.ability and self.modifier then
-			self.modifier.damage = self.ability:GetVanillaAbilitySpecial("damage")
+			self.modifier.damage = self.ability:GetSpecialValueFor("damage")
 			self.modifier.stack_damage = self.ability:GetSpecialValueFor("stack_damage")
-			local tick_rate = self.ability:GetVanillaAbilitySpecial("tick_rate")
+			local tick_rate = self.ability:GetSpecialValueFor("tick_rate")
 			self:StartIntervalThink(tick_rate)
 		end
 	end
@@ -1578,13 +1570,13 @@ end
 
 -- function modifier_imba_chemical_rage_scepter_handler:GetModifierPreAttack_BonusDamage()
 	-- if self:GetCaster():HasScepter() then
-		-- return self:GetAbility():GetVanillaAbilitySpecial("scepter_bonus_damage") * self:GetStackCount()
+		-- return self:GetAbility():GetSpecialValueFor("scepter_bonus_damage") * self:GetStackCount()
 	-- end
 -- end
 
 -- function modifier_imba_chemical_rage_scepter_handler:GetModifierSpellAmplify_Percentage()
 	-- if self:GetCaster():HasScepter() then
-		-- return self:GetAbility():GetVanillaAbilitySpecial("scepter_spell_amp") * self:GetStackCount()
+		-- return self:GetAbility():GetSpecialValueFor("scepter_spell_amp") * self:GetStackCount()
 	-- end
 -- end
 

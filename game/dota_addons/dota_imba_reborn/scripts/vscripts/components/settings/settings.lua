@@ -120,7 +120,7 @@ BUYBACK_COOLDOWN_MAXIMUM = 180												-- Maximum buyback cooldown
 
 BUYBACK_RESPAWN_PENALTY	= 15												-- Increased respawn time when dying after a buyback
 
-ABANDON_TIME = 180.0														-- Time for a player to be considered as having abandoned the game (in seconds)
+ABANDON_TIME = 240.0															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 5.0														-- Time for a team to be considered as having abandoned the game (in seconds)
 
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills

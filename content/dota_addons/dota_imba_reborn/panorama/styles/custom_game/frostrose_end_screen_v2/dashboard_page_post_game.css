@@ -7108,6 +7108,11 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	visibility: visible;
 }
 
+#PlayerNameScoreboard Label
+{
+	text-overflow: shrink;
+}
+
 .LocalPlayer #PlayerNameScoreboard
 {
 	wash-color: white;
@@ -7152,7 +7157,6 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	padding-right: 12px;
 	font-size: 22px;
 	font-weight: thin;
-	text-overflow: shrink;
 //	letter-spacing: 1px;
 }
 

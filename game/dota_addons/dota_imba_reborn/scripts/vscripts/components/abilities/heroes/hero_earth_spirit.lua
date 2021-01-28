@@ -19,7 +19,7 @@
 -------------------------	Stone Remnant	-------------------------
 ---------------------------------------------------------------------
 
-imba_earth_spirit_stone_caller = imba_earth_spirit_stone_caller or class(VANILLA_ABILITIES_BASECLASS)
+imba_earth_spirit_stone_remnant = imba_earth_spirit_stone_remnant or class({})
 
 LinkLuaModifier("modifier_imba_earth_spirit_remnant_handler", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Remnant Handler + Earths Mark on attack
 LinkLuaModifier("modifier_imba_stone_remnant", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)					-- Remnant Modifier
@@ -28,16 +28,16 @@ LinkLuaModifier("modifier_imba_earth_spirit_layout_fix", "components/abilities/h
 
 LinkLuaModifier("modifier_imba_earth_spirit_stone_caller_charge_counter", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE) -- Visible counter for how many free remnants there are
 
-function imba_earth_spirit_stone_caller:IsNetherWardStealable() return false end
-function imba_earth_spirit_stone_caller:IsInnateAbility() return true end
-function imba_earth_spirit_stone_caller:IsStealable() return false end
-function imba_earth_spirit_stone_caller:ProcsMagicStick() return false end
+function imba_earth_spirit_stone_remnant:IsNetherWardStealable() return false end
+function imba_earth_spirit_stone_remnant:IsInnateAbility() return true end
+function imba_earth_spirit_stone_remnant:IsStealable() return false end
+function imba_earth_spirit_stone_remnant:ProcsMagicStick() return false end
 
-function imba_earth_spirit_stone_caller:GetManaCost()
+function imba_earth_spirit_stone_remnant:GetManaCost()
 	return self:GetSpecialValueFor("overdraw_base_cost") * ((self:GetCaster():GetModifierStackCount("modifier_imba_earth_spirit_remnant_handler", self:GetCaster()) - 1) ^ self:GetSpecialValueFor("overdraw_cost_multiplier"))
 end
 
-function imba_earth_spirit_stone_caller:GetBehavior()
+function imba_earth_spirit_stone_remnant:GetBehavior()
 	if IsServer() then
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT
 	else
@@ -45,7 +45,7 @@ function imba_earth_spirit_stone_caller:GetBehavior()
 	end
 end
 
-function imba_earth_spirit_stone_caller:OnAbilityPhaseStart()
+function imba_earth_spirit_stone_remnant:OnAbilityPhaseStart()
 	if IsServer() then
 		if not self.handler then
 			self.handler = self:GetCaster():FindModifierByName("modifier_imba_earth_spirit_remnant_handler")
@@ -54,10 +54,10 @@ function imba_earth_spirit_stone_caller:OnAbilityPhaseStart()
 	end
 end
 
-function imba_earth_spirit_stone_caller:GetIntrinsicModifierName()
+function imba_earth_spirit_stone_remnant:GetIntrinsicModifierName()
 	return "modifier_imba_earth_spirit_remnant_handler" end
 
-function imba_earth_spirit_stone_caller:OnSpellStart()
+function imba_earth_spirit_stone_remnant:OnSpellStart()
 	if IsServer() then
 		if self.handler then
 			self.handler:OnCreated()
@@ -68,7 +68,7 @@ function imba_earth_spirit_stone_caller:OnSpellStart()
 		local caster = self:GetCaster()
 		local target = self:GetCursorPosition()
 		local unit = self:GetCursorTarget()
-		local remnantDuration = self:GetVanillaAbilitySpecial("duration")
+		local remnantDuration = self:GetSpecialValueFor("remnant_duration")
 		local effectRadius = self:GetVanillaAbilitySpecial("radius")
 		local visionDuration = self:GetSpecialValueFor("vision_duration")
 		
@@ -95,19 +95,19 @@ function imba_earth_spirit_stone_caller:OnSpellStart()
 			if mark then
 				mark:IncrementStackCount()
 			else
-				enemy:AddNewModifier(caster, self, "modifier_imba_earths_mark", {})
+				enemy:AddNewModifier(caster, self, "modifier_imba_earths_mark", {duration = self:GetSpecialValueFor("earths_mark_duration") * (1 - enemy:GetStatusResistance())})
 			end
 		end
 	end
 end
 
-function imba_earth_spirit_stone_caller:OnUpgrade()
+function imba_earth_spirit_stone_remnant:OnUpgrade()
 	if IsServer() then self:CheckScepter() end end
 
-function imba_earth_spirit_stone_caller:OnInventoryContentsChanged()
+function imba_earth_spirit_stone_remnant:OnInventoryContentsChanged()
 	if IsServer() then self:CheckScepter() end end
 
-function imba_earth_spirit_stone_caller:CheckScepter()
+function imba_earth_spirit_stone_remnant:CheckScepter()
 	local caster = self:GetCaster()
 	-- if not caster:HasModifier("modifier_imba_earth_spirit_layout_fix") then
 		-- caster:AddNewModifier(caster, self, "modifier_imba_earth_spirit_layout_fix", {})
@@ -125,7 +125,7 @@ function imba_earth_spirit_stone_caller:CheckScepter()
 	end
 end
 
-function imba_earth_spirit_stone_caller:KillRemnant(remnantID)
+function imba_earth_spirit_stone_remnant:KillRemnant(remnantID)
 	if IsServer() then
 		self.handler:KillRemnant(remnantID)
 	end
@@ -226,7 +226,7 @@ function modifier_imba_earth_spirit_remnant_handler:OnAttackLanded(keys)
 			if mark then
 				mark:IncrementStackCount()
 			else
-				keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_earths_mark", {})
+				keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_earths_mark", {duration = self:GetAbility():GetSpecialValueFor("earths_mark_duration") * (1 - keys.target:GetStatusResistance())})
 			end
 		end
 	end
@@ -292,8 +292,8 @@ function modifier_imba_stone_remnant:OnDestroy()
 			
 			-- Deal enhcant remnant damage in AoE upon expiration
 			if self.PetrifyHandler then
-				local damage = self.PetrifyHandler:GetVanillaAbilitySpecial("damage")
-				local damageRadius = self.PetrifyHandler:GetVanillaAbilitySpecial("aoe")
+				local damage = self.PetrifyHandler:GetSpecialValueFor("damage")
+				local damageRadius = self.PetrifyHandler:GetSpecialValueFor("damage_radius")
 				local units = FindUnitsInRadius(self.PetrifyHandler:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, damageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 				for _, unit in ipairs(units) do
 					ApplyDamage({victim = unit, attacker = self.PetrifyHandler:GetCaster(), damage = damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
@@ -386,11 +386,9 @@ function modifier_imba_earths_mark:DeclareFunctions()
 function modifier_imba_earths_mark:OnCreated()
 	self.caster = self:GetCaster()	-- Required for client as well
 	if IsServer() then
-		local stone_caller = self:GetCaster():FindAbilityByName("imba_earth_spirit_stone_caller")
-		self.duration = stone_caller:GetSpecialValueFor("earths_mark_duration") * (1 - self:GetParent():GetStatusResistance())
-		self:SetDuration(self.duration, true)
+		self.duration = self:GetAbility():GetSpecialValueFor("earths_mark_duration")
 		self:SetStackCount(1)
-
+		
 		if self.caster:HasTalent("special_bonus_imba_earth_spirit_7") or self.caster:HasTalent("special_bonus_imba_earth_spirit_8") then
 			self:StartIntervalThink(FrameTime() * 3)
 		end
@@ -426,9 +424,6 @@ function modifier_imba_earths_mark:OnStackCountChanged(oldStacks)
 		
 		if self:GetStackCount() > oldStacks then
 			self:RefreshDuration()
-
-			local max_stacks = self.caster:FindAbilityByName("imba_earth_spirit_stone_caller"):GetSpecialValueFor("max_stacks")
-			self:SetStackCount(math.min(self:GetStackCount(), max_stacks))
 		end
 	end
 end
@@ -471,7 +466,7 @@ LinkLuaModifier("modifier_imba_boulder_smash_push", "components/abilities/heroes
 LinkLuaModifier("modifier_imba_boulder_smash_cast_thinker", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Used when the target is outside of unit cast range 
 
 function imba_earth_spirit_boulder_smash:GetAssociatedSecondaryAbilities()
-	return "imba_earth_spirit_stone_caller"
+	return "imba_earth_spirit_stone_remnant"
 end
 
 function imba_earth_spirit_boulder_smash:GetCastRange()
@@ -697,6 +692,7 @@ function modifier_imba_boulder_smash_push:OnCreated()
 			local remnantDistance = self.ability:GetVanillaAbilitySpecial("rock_distance")
 			local unitDistance = self.ability:GetVanillaAbilitySpecial("unit_distance")
 			
+			self.earthsMarkDuration = self.ability:GetSpecialValueFor("earths_mark_duration")
 			self.markStackDamage = self.ability:GetSpecialValueFor("mark_stack_damage")
 			
 			-- extra handlers
@@ -722,22 +718,22 @@ function modifier_imba_boulder_smash_push:OnIntervalThink()
 		for _, target in ipairs(targets) do
 			if not self.hitTargets[target:GetEntityIndex()] then
 				self.hitTargets[target:GetEntityIndex()] = true
-
+				
 				local damage = self.damage
 				EmitSoundOn("Hero_EarthSpirit.BoulderSmash.Damage", target)
-
+				
 				-- checking for modifier instead of isRemnant because enchant remnant retains movement qualities after expiring, but doesnt stun anymore
 				if self.parent:HasModifier("modifier_imba_stone_remnant") then
 					target:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.debuff_duration * (1 - target:GetStatusResistance())})
 					EmitSoundOn("Hero_EarthSpirit.BoulderSmash.Silence", target)
-
+					
 					-- Earths mark effect
 					local mark = target:FindModifierByName("modifier_imba_earths_mark")
 					if mark then
 						damage = damage + self.markStackDamage * mark:GetStackCount()
 						mark:IncrementStackCount()
 					else
-						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {})
+						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration * (1 - target:GetStatusResistance())})
 					end
 				end
 
@@ -854,7 +850,7 @@ end
 ---------------------------------------------------------------------
 -------------------------	Rolling Boulder	-------------------------
 ---------------------------------------------------------------------
-imba_earth_spirit_rolling_boulder = imba_earth_spirit_rolling_boulder or class(VANILLA_ABILITIES_BASECLASS)
+imba_earth_spirit_rolling_boulder = imba_earth_spirit_rolling_boulder or class({})
 LinkLuaModifier("modifier_imba_rolling_boulder", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- Movement handler
 LinkLuaModifier("modifier_imba_rolling_boulder_slow", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Slow debuff
 LinkLuaModifier("modifier_imba_rolling_boulder_disarm", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- Disarm from earths mark
@@ -862,11 +858,11 @@ LinkLuaModifier("modifier_imba_rolling_boulder_disarm", "components/abilities/he
 function imba_earth_spirit_rolling_boulder:IsNetherWardStealable() return false end
 
 function imba_earth_spirit_rolling_boulder:GetAssociatedSecondaryAbilities()
-	return "imba_earth_spirit_stone_caller" end
+	return "imba_earth_spirit_stone_remnant" end
 
 function imba_earth_spirit_rolling_boulder:GetCastRange()
 	if IsClient() then		-- Indicating no-remnant maximum range
-		return self:GetVanillaAbilitySpecial("distance")
+		return self:GetSpecialValueFor("roll_distance")
 	else					-- So you can click wherever and roll in that direction, even if its out of range
 		return 30000
 	end
@@ -912,16 +908,17 @@ function modifier_imba_rolling_boulder:OnCreated()
 		self.casterTeam = self.caster:GetTeamNumber()
 		
 		-- ability params
-		self.delay = self.ability:GetVanillaAbilitySpecial("delay")
-		self.hitRadius = self.ability:GetVanillaAbilitySpecial("radius")
-		self.damage = self.ability:GetVanillaAbilitySpecial("damage")
-		self.stunDuration = self.ability:GetVanillaAbilitySpecial("stun_duration")
-		self.normalDistance = self.ability:GetVanillaAbilitySpecial("distance")
-		self.normalVelocity = self.ability:GetVanillaAbilitySpecial("speed")
-		self.remnantDistance = self.ability:GetVanillaAbilitySpecial("rock_distance")
-		self.remnantVelocity = self.ability:GetVanillaAbilitySpecial("rock_speed")
+		self.delay = self.ability:GetSpecialValueFor("launch_delay")
+		self.hitRadius = self.ability:GetSpecialValueFor("collision_radius")
+		self.damage = self.ability:GetSpecialValueFor("damage")
+		self.slowDuration = self.ability:GetSpecialValueFor("remnant_slow_duration")
+		self.normalDistance = self.ability:GetSpecialValueFor("roll_distance")
+		self.normalVelocity = self.ability:GetSpecialValueFor("speed")
+		self.remnantDistance = self.ability:GetSpecialValueFor("remnant_roll_distance")
+		self.remnantVelocity = self.ability:GetSpecialValueFor("remnant_speed")
 		self.distanceOppositeToTarget = self.ability:GetSpecialValueFor("opposite_to_enemy_distance")
 		
+		self.earthsMarkDuration = self.ability:GetSpecialValueFor("earths_mark_duration")
 		self.disarmDurationPerMark = self.ability:GetSpecialValueFor("disarm_duration_per_mark")
 		
 		-- extra handlers
@@ -974,7 +971,6 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 						
 						EmitSoundOn("Hero_EarthSpirit.RollingBoulder.Stone", self.caster)
 						self.hitRemnant = true
-						self.stunDuration = self.stunDuration + self.ability:GetVanillaAbilitySpecial("rock_bonus_duration")
 						break
 					end
 				end
@@ -998,7 +994,7 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 						mark:IncrementStackCount()
 						hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_disarm", {duration = (mark:GetStackCount() * self.disarmDurationPerMark) * (1 - hero:GetStatusResistance())})
 					else
-						hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {})
+						hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration * (1 - hero:GetStatusResistance())})
 					end
 					
 					local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
@@ -1010,20 +1006,20 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 								mark:IncrementStackCount()
 								unit:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_disarm", {duration = (mark:GetStackCount() * self.disarmDurationPerMark) * (1 - unit:GetStatusResistance())})
 							else
-								unit:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {})
+								unit:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration * (1 - unit:GetStatusResistance())})
 							end
 						end
 					end
 					
 					if self.hitRemnant then
+						hero:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.slowDuration * (1 - hero:GetStatusResistance())})
+						
 						for _, unit in ipairs(magnetizedFinder) do
 							if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
-								unit:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.stunDuration * (1 - unit:GetStatusResistance())})
+								unit:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration * (1 - unit:GetStatusResistance())})
 							end
 						end
 					end
-
-					hero:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stunDuration * (1 - hero:GetStatusResistance())})
 					
 					-- Place caster on the other side of the target
 					if i == 1 then
@@ -1089,9 +1085,7 @@ function modifier_imba_rolling_boulder:OnDestroy()
 end
 
 -----	Slow Modifier
-
 modifier_imba_rolling_boulder_slow = modifier_imba_rolling_boulder_slow or class({})
-
 function modifier_imba_rolling_boulder_slow:IsDebuff() return true end
 function modifier_imba_rolling_boulder_slow:IsPurgable() return true end
 
@@ -1102,12 +1096,10 @@ function modifier_imba_rolling_boulder_slow:DeclareFunctions()
 	return { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE } end
 
 function modifier_imba_rolling_boulder_slow:OnCreated()
-	self.slowPcnt = self:GetAbility():GetVanillaAbilitySpecial("move_slow") * -1
-end
+	self.slowPcnt = self:GetAbility():GetSpecialValueFor("remnant_slow_pcnt") * -1 end
 
 function modifier_imba_rolling_boulder_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self.slowPcnt end
-
 
 -----	Disarm modifier
 modifier_imba_rolling_boulder_disarm = modifier_imba_rolling_boulder_disarm or class({})
@@ -1127,13 +1119,13 @@ function modifier_imba_rolling_boulder_disarm:CheckState()
 ---------------------------------------------------------------------
 -------------------------	Geomagnetic Grip	---------------------
 ---------------------------------------------------------------------
-imba_earth_spirit_geomagnetic_grip = imba_earth_spirit_geomagnetic_grip or class(VANILLA_ABILITIES_BASECLASS)
+imba_earth_spirit_geomagnetic_grip = imba_earth_spirit_geomagnetic_grip or class({})
 LinkLuaModifier("modifier_imba_geomagnetic_grip_pull", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- Movement modifier
 LinkLuaModifier("modifier_imba_geomagnetic_grip_silence", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Silence
 LinkLuaModifier("modifier_imba_geomagnetic_grip_root", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- Root
 
 function imba_earth_spirit_geomagnetic_grip:GetAssociatedSecondaryAbilities()
-	return "imba_earth_spirit_stone_caller" end
+	return "imba_earth_spirit_stone_remnant" end
 
 function imba_earth_spirit_geomagnetic_grip:CastFilterResultTarget(target)
 	local caster = self:GetCaster()
@@ -1158,7 +1150,7 @@ end
 
 function imba_earth_spirit_geomagnetic_grip:OnAbilityPhaseStart()
 	if IsServer() then
-		local remnantSearchRadius = self:GetVanillaAbilitySpecial("radius")
+		local remnantSearchRadius = self:GetSpecialValueFor("remnant_search_radius")
 		local target = self:GetCursorTarget()
 		local pointTarget = self:GetCursorPosition()
 		local caster = self:GetCaster()
@@ -1231,10 +1223,12 @@ function modifier_imba_geomagnetic_grip_pull:OnCreated()
 			
 			-- ability params
 			self.hitRadius = self.ability:GetVanillaAbilitySpecial("radius")
-			self.damage = self.ability:GetVanillaAbilitySpecial("rock_damage")
-			self.silenceDuration = self.ability:GetVanillaAbilitySpecial("duration")
-			self.normalVelocity = self.ability:GetVanillaAbilitySpecial("speed")
+			self.damage = self.ability:GetSpecialValueFor("damage")
+			self.silenceDuration = self.ability:GetTalentSpecialValueFor("silence_duration")
+			self.remnantVelocity = self.ability:GetSpecialValueFor("remnant_speed")
+			self.normalVelocity = self.ability:GetSpecialValueFor("speed")
 			
+			self.earthsMarkDuration = self.ability:GetSpecialValueFor("earths_mark_duration")
 			self.rootTimePerMark = self.ability:GetSpecialValueFor("root_time_per_mark")
 			
 			-- extra handlers
@@ -1279,7 +1273,7 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 						target:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_root", {duration = (self.rootTimePerMark * mark:GetStackCount()) * (1 - target:GetStatusResistance())})
 						mark:IncrementStackCount()
 					else
-						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {})
+						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration * (1 - target:GetStatusResistance())})
 					end
 				end
 				
@@ -1296,7 +1290,7 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 						unit:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_root", {duration = (self.rootTimePerMark * mark:GetStackCount()) * (1 - unit:GetStatusResistance())})
 						mark:IncrementStackCount()
 					else
-						unit:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {})
+						unit:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration * (1 - unit:GetStatusResistance())})
 					end
 				end
 			end
@@ -1307,9 +1301,14 @@ end
 function modifier_imba_geomagnetic_grip_pull:HorizontalMotion(dt)
 	if IsServer() then
 		if self.traveled < self.distance then
-			self.parent:SetAbsOrigin(self.parent:GetAbsOrigin() + self.direction * self.normalVelocity * dt)
-			self.traveled = self.traveled + self.normalVelocity * dt
-
+			if self.isRemnant then
+				self.parent:SetAbsOrigin(self.parent:GetAbsOrigin() + self.direction * self.remnantVelocity * dt)
+				self.traveled = self.traveled + self.remnantVelocity * dt
+			else
+				self.parent:SetAbsOrigin(self.parent:GetAbsOrigin() + self.direction * self.normalVelocity * dt)
+				self.traveled = self.traveled + self.normalVelocity * dt
+			end
+			
 			self.parent:SetAbsOrigin(Vector(self.parent:GetAbsOrigin().x, self.parent:GetAbsOrigin().y, GetGroundHeight(self.parent:GetAbsOrigin(), self.parent)))
 		else
 			if not self.isRemnant then
@@ -1353,11 +1352,11 @@ function modifier_imba_geomagnetic_grip_root:CheckState()
 ---------------------------------------------------------------------
 ---------------------------	   Magnetize	-------------------------
 ---------------------------------------------------------------------
-imba_earth_spirit_magnetize = imba_earth_spirit_magnetize or class(VANILLA_ABILITIES_BASECLASS)
+imba_earth_spirit_magnetize = imba_earth_spirit_magnetize or class({})
 LinkLuaModifier("modifier_imba_magnetize", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_earth_spirit_magnetize:GetAssociatedSecondaryAbilities()
-	return "imba_earth_spirit_stone_caller" end
+	return "imba_earth_spirit_stone_remnant" end
 
 function imba_earth_spirit_magnetize:GetBehavior()
 	if self:GetCaster():HasScepter() then
@@ -1369,8 +1368,8 @@ end
 
 function imba_earth_spirit_magnetize:OnSpellStart()
 	if IsServer() then
-		local searchRadius = self:GetVanillaAbilitySpecial("rock_search_radius")
-		local debuffDuration = self:GetVanillaAbilitySpecial("damage_duration")
+		local searchRadius = self:GetSpecialValueFor("radius")
+		local debuffDuration = self:GetSpecialValueFor("duration")
 		local caster = self:GetCaster()
 		
 		EmitSoundOn("Hero_EarthSpirit.Magnetize.Cast", caster)
@@ -1403,12 +1402,13 @@ function modifier_imba_magnetize:OnCreated()
 		self.caster = self.ability:GetCaster()
 		
 		self.tickInterval = self.ability:GetSpecialValueFor("tick_cooldown")
-		self.tickDamge = self.ability:GetVanillaAbilitySpecial("damage_per_second") * self.tickInterval
-		self.refreshRadius = self.ability:GetVanillaAbilitySpecial("rock_explosion_radius")
-		self.remnantSearchRadius = self.ability:GetVanillaAbilitySpecial("rock_search_radius")
-		self.baseDration = self.ability:GetVanillaAbilitySpecial("damage_duration")
-		self.remnantNewLifespan = self.ability:GetVanillaAbilitySpecial("rock_explosion_delay")
+		self.tickDamge = self.ability:GetSpecialValueFor("damage_per_sec") * self.tickInterval
+		self.refreshRadius = self.ability:GetSpecialValueFor("remnant_refresh_radius")
+		self.remnantSearchRadius = self.ability:GetSpecialValueFor("remnant_search_radius")
+		self.baseDration = self.ability:GetSpecialValueFor("duration")
+		self.remnantNewLifespan = self.ability:GetSpecialValueFor("remnant_lifespan")
 		
+		self.earthsMarkDuration = self.ability:GetSpecialValueFor("earths_mark_duration")
 		self.markTickDamagePerSecPerStack = self.ability:GetSpecialValueFor("mark_damage_per_sec_per_stack") * self.tickInterval
 		self.markedStunDuration = self.ability:GetSpecialValueFor("marked_stun_duration")
 		
@@ -1485,7 +1485,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 						unitMark:IncrementStackCount()
 						-- self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.markedStunDuration})
 					else
-						unit:AddNewModifier(unit, self.ability, "modifier_imba_earths_mark", {})
+						unit:AddNewModifier(unit, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration * (1 - unit:GetStatusResistance())})
 					end
 				end
 				
@@ -1494,7 +1494,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 					mark:IncrementStackCount()
 					-- self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.markedStunDuration})
 				else
-					mark = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_earths_mark", {})
+					mark = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration * (1 - self.parent:GetStatusResistance())})
 				end
 				
 				remnantModifier:SetDuration(math.min(self.remnantNewLifespan, remnantModifier:GetRemainingTime()), true)
@@ -1533,7 +1533,7 @@ end
 ---------------------------------------------------------------------
 -------------------------	Enchant Remnant	  -----------------------
 ---------------------------------------------------------------------
-imba_earth_spirit_petrify = imba_earth_spirit_petrify or class(VANILLA_ABILITIES_BASECLASS)
+imba_earth_spirit_petrify = imba_earth_spirit_petrify or class({})
 function imba_earth_spirit_petrify:IsNetherWardStealable() return false end
 function imba_earth_spirit_petrify:IsStealable() return false end
 function imba_earth_spirit_petrify:IsInnateAbility() return true end
@@ -1567,7 +1567,7 @@ end
 function imba_earth_spirit_petrify:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
-		local duration = self:GetVanillaAbilitySpecial("duration")
+		local duration = self:GetSpecialValueFor("duration")
 		
 		-- IMBAfication: 
 		-- if not target:TriggerSpellAbsorb(self) then
@@ -1631,7 +1631,7 @@ function modifier_special_bonus_imba_earth_spirit_4:IsHidden() 			return true en
 function modifier_special_bonus_imba_earth_spirit_4:IsPurgable() 		return false end
 function modifier_special_bonus_imba_earth_spirit_4:RemoveOnDeath() 	return false end
 
-function imba_earth_spirit_stone_caller:OnOwnerSpawned()
+function imba_earth_spirit_stone_remnant:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_earth_spirit_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_earth_spirit_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_earth_spirit_4"), "modifier_special_bonus_imba_earth_spirit_4", {})
 	end

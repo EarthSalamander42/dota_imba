@@ -219,7 +219,7 @@
 }
 
 #BattlepassWindow.sethidden {
-	transform: translate3d( 100%, 0, 0px );
+	transform: translate3d( 45%, 0, 0px );
 }
 
 #InfoContent

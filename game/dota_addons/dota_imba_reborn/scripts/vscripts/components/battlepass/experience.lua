@@ -85,10 +85,8 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 	end
 
 	if not IsInToolsMode() then
-		if GetMapName() == "imba_5v5" then
-			-- re-order teams based on winrate
-			TeamOrdering:ComputeTeamSelection()
-		end
+		-- re-order teams based on winrate
+		TeamOrdering:ComputeTeamSelection()
 	end
 
 	print("ALL PLAYERS LOADED IN!")

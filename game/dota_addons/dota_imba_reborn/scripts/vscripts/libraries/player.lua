@@ -844,7 +844,6 @@ ProjectileManager.CreateTrackingProjectile = function(self, hHandle)
 end
 
 local ignored_pfx_list = {}
-ignored_pfx_list["particles/dev/empty_particle.vpcf"] = true
 ignored_pfx_list["particles/ambient/fountain_danger_circle.vpcf"] = true
 ignored_pfx_list["particles/range_indicator.vpcf"] = true
 ignored_pfx_list["particles/units/heroes/hero_skeletonking/wraith_king_ambient_custom.vpcf"] = true
@@ -869,12 +868,6 @@ ignored_pfx_list["particles/econ/items/tiny/tiny_prestige/tiny_prestige_tree_amb
 ignored_pfx_list["particles/item/rapier/item_rapier_trinity.vpcf"] = true
 ignored_pfx_list["particles/item/rapier/item_rapier_archmage.vpcf"] = true
 ignored_pfx_list["particles/item/rapier/item_rapier_cursed.vpcf"] = true
-ignored_pfx_list["particles/econ/items/faceless_void/faceless_void_mace_of_aeons/fv_ambient_mace_aeons.vpcf"] = true
-ignored_pfx_list["particles/econ/events/ti7/ti7_hero_effect_1.vpcf"] = true
-ignored_pfx_list["particles/econ/events/ti9/ti9_emblem_effect_loadout.vpcf"] = true
-ignored_pfx_list["particles/econ/events/ti8/ti8_hero_effect.vpcf"] = true
-ignored_pfx_list["particles/econ/events/ti7/ti7_hero_effect.vpcf"] = true
-ignored_pfx_list["particles/econ/events/ti10/emblem/ti10_emblem_effect.vpcf"] = true
 
 -- Call custom functions whenever CreateParticle is being called anywhere
 local original_CreateParticle = CScriptParticleManager.CreateParticle
@@ -1024,11 +1017,6 @@ end
 
 local original_EmitSoundOnLocationWithCaster = EmitSoundOnLocationWithCaster
 EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hParent, hCaster)
-	if hParent == nil then
-		print("CRITICAL ERROR: Missing hParent for function: EmitSoundOnLocationWithCaster.")
-		return
-	end
-
 --	print("Create Particle (override):", sSoundName)
 	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hParent:GetPlayerOwnerID()) 
 

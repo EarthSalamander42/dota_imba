@@ -74,11 +74,11 @@
 				var cancel = Parent.FindChildTraverse("CancelAndUnlockButton");
 				var lock = Parent.FindChildTraverse("LockAndStartButton");
 
-//				if (Game.IsInToolsMode() == false) {
-//					Parent.FindChildTraverse("ShuffleTeamAssignmentButton").style.visibility = "collapse";
-//					cancel.style.visibility = "collapse";
-//					lock.style.visibility = "collapse";
-//				} else {
+				if (Game.IsInToolsMode() == false) {
+					Parent.FindChildTraverse("ShuffleTeamAssignmentButton").style.visibility = "collapse";
+					cancel.style.visibility = "collapse";
+					lock.style.visibility = "collapse";
+				} else {
 					var parent = Parent.FindChildTraverse("TeamsList");
 					var header = Parent.FindChildTraverse("TeamsListGroup");
 
@@ -106,7 +106,7 @@
 //					Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
 //					Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
 //					Parent.FindChildTraverse("TeamsListGroup").style.width = "99%";
-//				}
+				}
 			}
 		}
 

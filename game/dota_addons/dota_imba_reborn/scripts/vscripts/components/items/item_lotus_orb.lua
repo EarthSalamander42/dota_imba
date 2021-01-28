@@ -35,7 +35,7 @@ end
 function item_imba_lotus_orb:OnSpellStart()
 	if not IsServer() then return end
 
-	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lotus_orb_active", {duration = self:GetSpecialValueFor("active_duration"), dispel = true})
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lotus_orb_active", {duration = self:GetSpecialValueFor("active_duration")})
 end
 
 modifier_item_imba_lotus_orb_passive = modifier_item_imba_lotus_orb_passive or class({})
@@ -123,11 +123,8 @@ function modifier_item_imba_lotus_orb_active:OnCreated(params)
 	if params.cast_sound then cast_sound = params.cast_sound end
 	if params.reflect_pfx then self.reflect_pfx = params.reflect_pfx end
 	if params.absorb then self.absorb = params.absorb end
-	if params.dispel then self.dispel = params.dispel end
 
-	if params.dispel then
-		self:GetParent():Purge(false, true, false, false, false)
-	end
+	self:GetParent():Purge(false, true, false, false, false)
 
 	self.pfx = ParticleManager:CreateParticle(shield_pfx, PATTACH_POINT_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)

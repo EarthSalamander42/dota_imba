@@ -98,6 +98,8 @@ function imba_mars_spear:OnSpellStart()
 
 		ProjectileManager:CreateLinearProjectile(info)
 
+		self.trailblazer_previous_pos = self:GetCaster():GetAbsOrigin()
+
 		self.traiblazer_thinker = CreateModifierThinker(
 			self:GetCaster(),
 			self,
@@ -232,27 +234,21 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 		self.heaven_spear = keys.heaven_spear
 	end
 
-	self.start_pos = self:GetParent():GetAbsOrigin()
-	local direction = (self:GetCaster():GetCursorPosition() - self.start_pos):Normalized()
+	self.initial_pos = self:GetParent():GetAbsOrigin()
 
-	if self.heaven_spear and self.heaven_spear == 1 then
-		self.end_pos = self.start_pos
-	else
-		local direction = (self:GetCaster():GetCursorPosition() - self.start_pos):Normalized()
-		self.end_pos = self.start_pos + direction * self:GetAbility():GetVanillaAbilitySpecial("spear_range")
-	end
+--[[
+	local pfx = ParticleManager:CreateParticle("particles/econ/items/batrider/batrider_ti8_immortal_mount/batrider_ti8_immortal_firefly.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent())
+	-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
+	ParticleManager:SetParticleControl(pfx, 0, self.initial_pos)
+	ParticleManager:SetParticleControl(pfx, 11, Vector(1, 0, 0))
+	self:AddParticle(pfx, false, false, -1, false, false)
+--]]
 
-	if self.heaven_spear and self.heaven_spear == 1 then
-		local ground_pfx = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear_ground.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
-		ParticleManager:SetParticleControl(ground_pfx, 0, self.start_pos)
+	if self:GetAbility().autocast then
+		local ground_pfx = ParticleManager:CreateParticle("particles/units/hero/hero_mars/mars_sky_spear_ground.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(ground_pfx, 0, self.initial_pos)
 		ParticleManager:ReleaseParticleIndex(ground_pfx)
 	end
-
-	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_mars/mars_spear_burning_trail.vpcf", PATTACH_CUSTOMORIGIN, self:GetParent())
-	ParticleManager:SetParticleControl(self.pfx, 0, self.start_pos)
-	ParticleManager:SetParticleControl(self.pfx, 1, self.end_pos)
-	ParticleManager:SetParticleControl(self.pfx, 2, Vector(self:GetAbility():GetSpecialValueFor("trailblazer_duration"), 0, 0))
-	ParticleManager:SetParticleControl(self.pfx, 3, Vector(self:GetAbility():GetSpecialValueFor("heaven_spear_radius"), 0, 0))
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -262,9 +258,9 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnIntervalThink()
 	local enemies = nil
 
 	if self.heaven_spear and self.heaven_spear == 1 then
-		enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.start_pos, nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags(), 0, false)
+		enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self.initial_pos, nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags(), 0, false)
 	else
-		enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self.start_pos, self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags())
+		enemies = FindUnitsInLine(self:GetCaster():GetTeamNumber(), self.initial_pos, self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("trailblazer_radius"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), self:GetAbility():GetAbilityTargetFlags())
 	end
 
 	if #enemies > 0 then
@@ -287,11 +283,11 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnDestroy()
 
 	if self:GetAbility() then
 		self:GetAbility().traiblazer_thinker = nil
-	end
 
-	if self.pfx then
-		ParticleManager:DestroyParticle(self.pfx, false)
-		ParticleManager:ReleaseParticleIndex(self.pfx)
+		for k, v in pairs(self:GetAbility().trailblazer_particles) do
+			ParticleManager:DestroyParticle(v, false)
+			ParticleManager:ReleaseParticleIndex(v)
+		end
 	end
 end
 
@@ -330,8 +326,21 @@ imba_mars_spear.projectiles = mars_projectiles
 function imba_mars_spear:OnProjectileThink(vLocation)
 	if not IsServer() then return end
 
-	if self.traiblazer_thinker and vLocation then
+	if self.traiblazer_thinker then
 		self.traiblazer_thinker:SetAbsOrigin(vLocation)
+
+		local difference = (vLocation - self.trailblazer_previous_pos):Length2D()
+
+		if difference >= 100 then
+			self.trailblazer_previous_pos = vLocation
+
+			local pfx = ParticleManager:CreateParticle("particles/econ/items/batrider/batrider_ti8_immortal_mount/batrider_ti8_immortal_firefly.vpcf", PATTACH_CUSTOMORIGIN, self.traiblazer_thinker)
+			-- The immortal particle effect doesn't have CP11 set to (1, 0, 0) which basically ends up making the flames invisible, so I have to force it here
+			ParticleManager:SetParticleControl(pfx, 0, vLocation)
+			ParticleManager:SetParticleControl(pfx, 11, Vector(1, 0, 0))
+
+			table.insert(self.trailblazer_particles, pfx)
+		end
 	end
 end
 
@@ -749,6 +758,8 @@ end
 -- Created by Elfansoer
 --[[
 Ability checklist (erase if done/checked):
+- Scepter Upgrade
+- Break behavior
 - Linken/Reflect behavior
 - Spell Immune/Invulnerable/Invisible behavior
 - Illusion behavior
@@ -760,23 +771,7 @@ LinkLuaModifier( "modifier_imba_mars_gods_rebuke", "components/abilities/heroes/
 LinkLuaModifier( "modifier_imba_mars_gods_rebuke_strong_argument", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
-
-function imba_mars_gods_rebuke:GetCooldown(iLevel)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("imba_scepter_cooldown")
-	end
-
-	return self.BaseClass.GetCooldown(self, iLevel)
-end
-
-function imba_mars_gods_rebuke:GetBehavior()
---	if self:GetCaster():HasTalent("special_bonus_imba_mars_1") then
---		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
---	end
-
-	return DOTA_ABILITY_BEHAVIOR_POINT
-end
-
+-- Ability Start
 function imba_mars_gods_rebuke:OnSpellStart()
 	-- unit identifier
 	local caster = self:GetCaster()
@@ -822,7 +817,6 @@ function imba_mars_gods_rebuke:OnSpellStart()
 
 	-- for each units
 	local caught = false
-	local heroes_count = 0
 
 	for _,enemy in pairs(enemies) do
 		-- check within cast angle
@@ -830,8 +824,7 @@ function imba_mars_gods_rebuke:OnSpellStart()
 		local enemy_angle = VectorToAngles( enemy_direction ).y
 		local angle_diff = math.abs( AngleDiff( cast_angle, enemy_angle ) )
 
-		-- If in right angle or has full circle talent
-		if angle_diff <= angle or self:GetCaster():HasTalent("special_bonus_imba_mars_1") then
+		if angle_diff <= angle then
 			-- attack
 			caster:PerformAttack(
 				enemy,
@@ -860,22 +853,33 @@ function imba_mars_gods_rebuke:OnSpellStart()
 				)
 			end
 
-			if hero:IsRealHero() then
-				heroes_count = heroes_count + 1
-			end
-
 			-- play effects
 			self:PlayEffects2( enemy, origin, cast_direction )
 		end
 	end
 
+	local heroes_count = 0
+
 	if #enemies > 0 then
+		for k, v in pairs(enemies) do
+			if v:IsRealHero() then
+				heroes_count = heroes_count + 1
+			end
+		end
+
 		if heroes_count > 0 then
-			caught = true
-
 			local stacks = heroes_count * self:GetSpecialValueFor("strong_argument_bonus_strength")
+			local mod = caster:FindModifierByName("modifier_imba_mars_gods_rebuke_strong_argument")
 
-			caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
+
+			if not mod then
+				caster:AddNewModifier(caster, self, "modifier_imba_mars_gods_rebuke_strong_argument", {duration = self:GetSpecialValueFor("strong_argument_duration")}):SetStackCount(stacks)
+			else
+				mod:SetStackCount(mod:GetStackCount() + stacks)
+				mod:SetDuration(self:GetSpecialValueFor("strong_argument_duration"), true)
+			end
+
+			caught = true
 			caster:CalculateStatBonus(true)
 		end
 	end
@@ -890,24 +894,18 @@ end
 --------------------------------------------------------------------------------
 -- Play Effects
 function imba_mars_gods_rebuke:PlayEffects1( caught, direction )
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_mars/mars_shield_bash.vpcf"
 	local sound_cast = "Hero_Mars.Shield.Cast"
-
 	if caught == false then
 		local sound_cast = "Hero_Mars.Shield.Cast.Small"
 	end
 
 	-- Create Particle
-	if self:GetCaster():HasTalent("special_bonus_imba_mars_1") then
-		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash_full_circle.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
-		ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
-		ParticleManager:SetParticleControlForward( effect_cast, 0, direction )
-		ParticleManager:ReleaseParticleIndex( effect_cast )
-	else
-		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
-		ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
-		ParticleManager:SetParticleControlForward( effect_cast, 0, direction )
-		ParticleManager:ReleaseParticleIndex( effect_cast )
-	end
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, self:GetCaster() )
+	ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
+	ParticleManager:SetParticleControlForward( effect_cast, 0, direction )
+	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
 	EmitSoundOnLocationWithCaster( self:GetCaster():GetOrigin(), sound_cast, self:GetCaster() )
@@ -1133,7 +1131,7 @@ function modifier_imba_mars_bulwark:PlayEffects( front )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	self:GetParent():EmitSound(sound_cast)
+	EmitSoundOn( sound_cast, self:GetParent() )
 end
 
 modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class({})
@@ -1146,11 +1144,9 @@ function modifier_imba_mars_bulwark_active:DeclareFunctions() return {
 function modifier_imba_mars_bulwark_active:OnCreated()
 	if not IsServer() then return end
 
-	self.ability = self:GetAbility()
 	self.forward_vector = self:GetParent():GetForwardVector()
-	self.angle_front = self.ability:GetVanillaAbilitySpecial( "forward_angle" ) / 2
-	self.angle_side = self.ability:GetVanillaAbilitySpecial( "side_angle" ) / 2
-	self.spiked_shield_return_pct = self.ability:GetSpecialValueFor("spiked_shield_return_pct")
+	self.angle_front = self:GetAbility():GetVanillaAbilitySpecial( "forward_angle" )/2
+	self.angle_side = self:GetAbility():GetVanillaAbilitySpecial( "side_angle" )/2
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -1164,7 +1160,7 @@ function modifier_imba_mars_bulwark_active:OnAbilityFullyCast(params)
 
 	if params.ability and params.ability.GetAbilityName and params.unit == self:GetParent() then
 		if params.ability:GetAbilityName() == "imba_mars_spear" then
-			self.ability:ToggleAbility()
+			self:GetAbility():ToggleAbility()
 		end
 	end
 end
@@ -1189,9 +1185,9 @@ function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 
 			-- calculate damage reduction (same return from front or side for now, leaving different statements here in case it gets changed)
 			if angle_diff < self.angle_front then
-				bonus_damage = self.spiked_shield_return_pct
+				bonus_damage = self:GetAbility():GetSpecialValueFor("spiked_shield_return_pct")
 			elseif angle_diff < self.angle_side then
-				bonus_damage = self.spiked_shield_return_pct
+				bonus_damage = self:GetAbility():GetSpecialValueFor("spiked_shield_return_pct")
 			end
 
 			-- if received damage from front or side
@@ -1202,7 +1198,7 @@ function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 					damage_type		= keys.damage_type,
 					damage_flags	= DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 					attacker		= self:GetParent(),
-					ability			= self.ability
+					ability			= self:GetAbility()
 				}
 
 				-- expecting shitfest in team fights so let's not
@@ -1275,7 +1271,6 @@ LinkLuaModifier( "modifier_imba_mars_arena_of_blood_spear_aura", "components/abi
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_projectile_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mars_arena_of_blood_scepter", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Custom KV
@@ -1284,37 +1279,23 @@ function imba_mars_arena_of_blood:GetAOERadius()
 	return self:GetVanillaAbilitySpecial( "radius" )
 end
 
-function imba_mars_arena_of_blood:GetCastRange(vLocation, hTarget)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("scepter_cast_range")
-	end
-
-	return self.BaseClass.GetCastRange(self, vLocation, hTarget)
-end
-
 --------------------------------------------------------------------------------
 -- Ability Start
 function imba_mars_arena_of_blood:OnSpellStart()
-	if not IsServer() then return end
+	-- unit identifier
+	local caster = self:GetCaster()
+	local point = self:GetCursorPosition()
 
-	if self:GetCaster():HasScepter() then
-		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {})
-
-		if mod then
-			mod.target_point = self:GetCursorPosition()
-		end
-	else
-		-- create thinker
-		CreateModifierThinker(
-			self:GetCaster(), -- player source
-			self, -- ability source
-			"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
-			{  }, -- kv
-			self:GetCursorPosition(),
-			self:GetCaster():GetTeamNumber(),
-			false
-		)
-	end
+	-- create thinker
+	CreateModifierThinker(
+		caster, -- player source
+		self, -- ability source
+		"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
+		{  }, -- kv
+		point,
+		caster:GetTeamNumber(),
+		false
+	)
 end
 
 --------------------------------------------------------------------------------
@@ -2372,105 +2353,6 @@ function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraEntityReject( unit )
 	return false
 end
 
-modifier_imba_mars_arena_of_blood_scepter = modifier_imba_mars_arena_of_blood_scepter or class({})
-
-function modifier_imba_mars_arena_of_blood_scepter:IsHidden() return true end
-function modifier_imba_mars_arena_of_blood_scepter:IsPurgable() return false end
-function modifier_imba_mars_arena_of_blood_scepter:IsDebuff() return false end
-function modifier_imba_mars_arena_of_blood_scepter:IgnoreTenacity() return true end
-function modifier_imba_mars_arena_of_blood_scepter:IsMotionController() return true end
-function modifier_imba_mars_arena_of_blood_scepter:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
-
-function modifier_imba_mars_arena_of_blood_scepter:OnCreated()
-	if not IsServer() then return end
-
-	self.max_height = self:GetAbility():GetSpecialValueFor("scepter_max_height")
-
-	-- Variables
-	self.time_elapsed = 0
-	self.leap_z = 0
-	self.jump_speed = self:GetAbility():GetSpecialValueFor("scepter_jump_speed")
-
-	self:GetParent():StartGesture(ACT_DOTA_CAST1_STATUE)
-
-	-- Wait one frame to get the target point from the ability's OnSpellStart, then calculate distance
-	Timers:CreateTimer(FrameTime(), function()
-		self.distance = (self:GetParent():GetAbsOrigin() - self.target_point):Length2D()
-		self.jump_time = self.distance / self.jump_speed
-
-		self.direction = (self.target_point - self:GetParent():GetAbsOrigin()):Normalized()
-
-		self:StartIntervalThink(FrameTime())
-	end)
-end
-
-function modifier_imba_mars_arena_of_blood_scepter:OnIntervalThink()
-	-- Check motion controllers
-	if not self:CheckMotionControllers() then		
-		self:Destroy()
-		return nil
-	end
-
-	-- Vertical Motion
-	self:VerticalMotion(self:GetParent(), FrameTime())
-
-	-- Horizontal Motion
-	self:HorizontalMotion(self:GetParent(), FrameTime())
-end
-
-function modifier_imba_mars_arena_of_blood_scepter:VerticalMotion(me, dt)
-	if IsServer() then
-
-		-- Check if we're still jumping
-		if self.time_elapsed < self.jump_time then
-			-- Check if we should be going up or down
-			if self.time_elapsed <= self.jump_time / 2 then
-				-- Going up
-				self.leap_z = self.leap_z + 30
-
-				self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()) + Vector(0,0,self.leap_z))
-			else
-				-- Going down
-				self.leap_z = self.leap_z - 30
-				if self.leap_z > 0 then
-					self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()) + Vector(0,0,self.leap_z))
-				end
-
-			end
-		end
-	end
-end
-
-function modifier_imba_mars_arena_of_blood_scepter:HorizontalMotion(me, dt)
-	if IsServer() then
-		-- Check if we're still jumping
-		self.time_elapsed = self.time_elapsed + dt
-		if self.time_elapsed < self.jump_time then
-			-- Go forward
-			local new_location = self:GetParent():GetAbsOrigin() + self.direction * self.jump_speed * dt
-			self:GetParent():SetAbsOrigin(new_location)
-		else
-			self:Destroy()
-		end
-	end
-end
-
-function modifier_imba_mars_arena_of_blood_scepter:OnRemoved()
-	if not IsServer() then return end
-
-	CreateModifierThinker(
-		self:GetParent(), -- player source
-		self:GetAbility(), -- ability source
-		"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
-		{  }, -- kv
-		self.target_point,
-		self:GetCaster():GetTeamNumber(),
-		false
-	)
-
-	self:GetParent():SetUnitOnClearGround()
-	self:GetParent():FadeGesture(ACT_DOTA_CAST1_STATUE)
-end
 
 --[[
 

@@ -14,10 +14,6 @@ function GetDotaHud() {
 	} catch (e) {}
 }
 
-function isFloat(n){
-    return Number(n) === n && n % 1 !== 0;
-}
-
 var Array_BehaviorTooltips = [];
 Array_BehaviorTooltips[DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_PASSIVE] = "Passive";
 Array_BehaviorTooltips[DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_NO_TARGET] = "NoTarget";
@@ -71,6 +67,8 @@ var AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
 var AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
 var AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
 
+var RangeDisplayPFX = [];
+
 DotaHud.style.width = "100%";
 DotaHud.style.height = "100%";
 AbilityLore.style.width = "370px";
@@ -86,13 +84,11 @@ function OverrideAbilityTooltips(sAbilityName) {
 	var tooltip = $.Localize("DOTA_Tooltip_Ability_" + sAbilityName + "_Description")
 	var Specials = GameUI.ReplaceDOTAAbilitySpecialValues(sAbilityName, tooltip, AbilityDetails)
 
-	$.Msg("Override Ability Tooltips")
 	$.Msg(Specials);
 }
 
 var eligible_heroes = [
 	"npc_dota_hero_abaddon",
-	"npc_dota_hero_alchemist",
 	"npc_dota_hero_earth_spirit",
 	"npc_dota_hero_mars",
 ];
@@ -113,7 +109,7 @@ function InitTooltips() {
 
 					(function (ability_button, i) {
 						ability_button.SetPanelEvent("onmouseover", function() {
-//							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
+							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
 							CallTooltips(i);
 						})
 
@@ -136,7 +132,6 @@ function InitTooltips() {
 
 //		$.Msg("Custom tooltips are not set for this hero.")
 
-/*
 		var i = 0;
 
 		// Re-enable vanilla tooltips
@@ -156,7 +151,6 @@ function InitTooltips() {
 
 			i++;
 		}
-*/
 	})
 }
 
@@ -166,7 +160,7 @@ function CallTooltips(i) {
 
 	GameEvents.SendCustomGameEventToServer("get_tooltips_info", {
 		sAbilityName: sAbilityName,
-		iAbility: i,
+		hPosition: hPanel.GetPositionWithinWindow(),
 	})
 }
 
@@ -179,14 +173,15 @@ function SetHTMLNewLine(text) {
 }
 
 function SetAbilityTooltips(keys) {
-	var hPanel = GetDotaHud().FindChildTraverse("Ability" + keys.iAbility);
 	var ability = Entities.GetAbilityByName(Game.GetLocalPlayerInfo().player_selected_hero_entity_index, keys.sAbilityName);
 //	$.Msg(keys.sAbilityName)
+
+	// Fail-Safe?
+	HideTooltips();
 
 	// HasCooldown // ScepterUpgradable
 
 	var bIsItem = false;
-	var ability_level = Abilities.GetLevel(ability);
 
 	if (bIsItem == false) {
 		ItemScepterDescription.style.visibility = "collapse";
@@ -213,35 +208,20 @@ function SetAbilityTooltips(keys) {
 		AbilityName.SetDialogVariable("name", $.Localize("DOTA_Tooltip_ability_" + keys.sAbilityName));
 	}
 
-	AbilityLevel.SetDialogVariable("level", ability_level);
+	AbilityLevel.SetDialogVariable("level", Abilities.GetLevel(ability));
 
 	if (Abilities.GetManaCost(ability) == 0)
 		CurrentAbilityManaCost.style.visibility = "collapse";
 	else {
 		CurrentAbilityManaCost.style.visibility = "visible";
-
-		var manacosts = Object.values(keys["iManaCost"]);
-		var mana_level = Math.min(ability_level, manacosts.length)
-		var active_mana = keys["iManaCost"][mana_level];
-
-		if (mana_level != 0)
-			CurrentAbilityManaCost.SetDialogVariable("current_manacost", active_mana);
+		CurrentAbilityManaCost.SetDialogVariable("current_manacost", Abilities.GetManaCost(ability));
 	}
 
 	if (Abilities.GetCooldown(ability) == 0) {
 		CurrentAbilityCooldown.style.visibility = "collapse";
 	} else {
 		CurrentAbilityCooldown.style.visibility = "visible";
-
-		var cooldowns = Object.values(keys["iCooldown"]);
-		var cd_level = Math.min(ability_level, cooldowns.length)
-		var active_cd = keys["iCooldown"][cd_level];
-
-		if (isFloat(active_cd))
-			active_cd = active_cd.toFixed(1);
-
-		if (cd_level != 0)
-			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][cd_level]);
+		CurrentAbilityCooldown.SetDialogVariable("current_cooldown", Abilities.GetCooldown(ability));
 	}
 
 	AbilityCastType.SetDialogVariable("casttype", $.Localize("DOTA_ToolTip_Ability_" + Array_BehaviorTooltips[GetAbilityType(Abilities.GetBehavior(ability))]));
@@ -250,7 +230,7 @@ function SetAbilityTooltips(keys) {
 //	AbilityTargetType.SetDialogVariable("targettype", "");
 	AbilityTargetType.style.visibility = "collapse";
 
-	if (Abilities.GetAbilityDamageType(ability) != -1 && Abilities.GetAbilityDamageType(ability) != 0) {
+	if (Abilities.GetAbilityDamageType(ability)) {
 		AbilityDamageType.SetDialogVariable("damagetype", $.Localize("DOTA_ToolTip_Damage_" + Array_AbilityDamageType[Abilities.GetAbilityDamageType(ability)]));
 		AbilityDamageType.style.visibility = "visible";
 	} else
@@ -303,7 +283,7 @@ function SetAbilityTooltips(keys) {
 			if (keys["sSpecial"][i] && keys["sSpecial"][i][1]) {
 				var special_key = keys["sSpecial"][i][1];
 				var special_values = keys["sSpecial"][i][2].toString().split(" ");
-				var special_value = special_values[Math.min(ability_level - 1, special_values.length - 1)];
+				var special_value = special_values[Math.min(Abilities.GetLevel(ability) - 1, special_values.length - 1)];
 
 //				$.Msg(special_key)
 //				$.Msg(special_values)
@@ -414,29 +394,19 @@ function SetAbilityTooltips(keys) {
 	AbilityExtraDescription_Text = AbilityExtraDescription_Text.slice(8);
 	AbilityExtraDescription.SetDialogVariable("extradescription", AbilityExtraDescription_Text);
 
-	if (keys) {
+	if (keys) {	
 		if (keys["iCooldown"] != undefined) {	
-			var cd = [];
-			var current_cd = 0;
-//			var current_cd_level = Math.min(ability_level, cooldowns.length);
+			var cd = keys["iCooldown"].toString().split(" ");
 
-			for (var i in keys["iCooldown"]) {
-				var fixed_cd = keys["iCooldown"][i];
-
-				if (isFloat(fixed_cd))
-					fixed_cd = fixed_cd.toFixed(1);
-
-				cd[i - 1] = fixed_cd;
-
-				if (i == ability_level)
-					current_cd = fixed_cd
+			for (var i in cd) {
+				cd[i] = parseFloat(cd[i]);
 			}
 
 			cd = cd.join(" / ");
 
 			if (cd != 0) {
-				if (ability_level != 0) {
-					cd = SetActiveValue(cd, current_cd);
+				if (Abilities.GetLevel(ability) != 0) {
+					cd = SetActiveValue(cd, Abilities.GetCooldown(ability));
 				}
 
 				AbilityCooldown.style.visibility = "visible";
@@ -447,23 +417,27 @@ function SetAbilityTooltips(keys) {
 
 		var same_mana = true;
 		if (keys["iManaCost"] != undefined) {
-			var mana = [];
-			var current_mana = 0;
+			var mana = keys["iManaCost"].toString().split(" ");
 
-			for (var i in keys["iManaCost"]) {
-				var fixed_mana = keys["iManaCost"][i];
+			for (var i in mana) {
 
-				mana[i - 1] = fixed_mana;
+				if (i > 0 && same_mana == true) {				
+					if (mana[i] != mana[i - 1]) {
+						same_mana = false;
+					}
+				}
 
-				if (i == ability_level)
-					current_mana = fixed_mana
+				mana[i] = parseFloat(mana[i]);
 			}
 
-			mana = mana.join(" / ");
+			if (same_mana == true)
+				mana = mana[0];
+			else
+				mana = mana.join(" / ");
 
 			if (mana != 0) {
-				if (ability_level != 0) {
-					mana = SetActiveValue(mana, current_mana);
+				if (Abilities.GetLevel(ability) != 0) {
+					mana = SetActiveValue(mana, Abilities.GetManaCost(ability));
 				}
 
 				AbilityManaCost.style.visibility = "visible";
@@ -483,29 +457,35 @@ function SetAbilityTooltips(keys) {
 		AbilityLore.style.visibility = "collapse";
 	}
 
-	if (ability_level != Abilities.GetMaxLevel(ability)) {
+	if (Abilities.GetLevel(ability) != Abilities.GetMaxLevel(ability)) {
 		AbilityUpgradeLevel.SetDialogVariableInt("upgradelevel", Abilities.GetHeroLevelRequiredToUpgrade(ability))
 		AbilityUpgradeLevel.style.visibility = "visible";
 	} else {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
-	var ability = GetDotaHud().FindChildTraverse("Ability" + keys["iAbility"]);
-	var ability_button = ability.FindChildTraverse("AbilityButton");
+	var bonus_cast_range = keys.iBonusCastRange || 0;
 
-	SetPositionLoop(ability_button, hPanel.GetPositionWithinWindow());
+//	$.Msg("Cast Range: ", Abilities.GetCastRange(ability))
+	if (Abilities.GetCastRange(ability) && Abilities.GetCastRange(ability) > 0) {
+		var origin = Entities.GetAbsOrigin(Players.GetLocalPlayerPortraitUnit());
+//		$.Msg(origin);
 
-	AbilityDetails.style.opacity = "1";
-}
+		var pfx = Particles.CreateParticle("particles/ui_mouseactions/range_display.vpcf", ParticleAttachment_t.PATTACH_ABSORIGIN_FOLLOW, Players.GetLocalPlayerPortraitUnit());
+		Particles.SetParticleControl(pfx, 0, origin);
+		Particles.SetParticleControl(pfx, 1, [Abilities.GetCastRange(ability) + bonus_cast_range, 0, 0]);
 
-function SetPositionLoop(hPanel, hPosition) {
-	SetTooltipsPosition(hPanel.GetPositionWithinWindow());
-
-	if (hPanel.BHasHoverStyle()) {
-		$.Schedule(0.03, function() {
-			SetPositionLoop(hPanel, hPosition);
-		});
+		RangeDisplayPFX.push(pfx);
 	}
+
+	$.Schedule(1/60, () => {
+		SetTooltipsPosition(keys.hPosition);
+		// repeat or else panel is not at the right position
+		$.Schedule(1/60, () => {
+			SetTooltipsPosition(keys.hPosition);
+			AbilityDetails.style.opacity = "1";
+		});
+	});
 }
 
 function SetTooltipsPosition(hPosition) {
@@ -519,8 +499,8 @@ function SetTooltipsPosition(hPosition) {
 	// 1.77, 1.6, 1.33: 16/9, 16/10, 4/3
 	var aspect_ratios = []
 	aspect_ratios[1.8] = ["16/9", 90, 0];
-	aspect_ratios[1.6] = ["16/10", 90, 0];
-	aspect_ratios[1.3] = ["4/3", 90, 0];
+	aspect_ratios[1.6] = ["16/10", 0, 0];
+	aspect_ratios[1.3] = ["4/3", 0, 0];
 
 	var aspect_ratio = aspect_ratios[(AbilityDetails.GetParent().actuallayoutwidth / AbilityDetails.GetParent().actuallayoutheight).toFixed(1)];
 
@@ -548,11 +528,8 @@ function SetTooltipsPosition(hPosition) {
 
 //	$.Msg("---------------------------------------------------------------------")
 
-	var x_pct = ((position_x + offset_x) / Game.GetScreenWidth()) * 100;
-	var y_pct = ((position_y + offset_y) / Game.GetScreenHeight()) * 100;
-
 //	$.Msg("" + (position_x + offset_x) + "px " + (position_y + offset_y) + "px 0px")
-	AbilityDetails.style.position = "" + x_pct + "% " + y_pct + "% 0px";
+	AbilityDetails.style.position = "" + (position_x + offset_x) + "px " + (position_y + offset_y) + "px 0px";
 }
 
 function OnThink() {
@@ -574,7 +551,12 @@ function OnThink() {
 function HideTooltips() {
 	AbilityDetails.style.opacity = "0";
 
-	GameEvents.SendCustomGameEventToServer("remove_tooltips_info", {})
+//	$.Msg("RangeDisplayPFX: ", RangeDisplayPFX)
+
+	for (var i = 0; i < RangeDisplayPFX.length; i++) {
+		Particles.DestroyParticleEffect(RangeDisplayPFX[i], false);
+		RangeDisplayPFX.splice(i, 1);
+	}
 }
 
 // utils

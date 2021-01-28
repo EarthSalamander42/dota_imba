@@ -277,6 +277,9 @@ function modifier_imba_silencer_glaives_of_wisdom:OnCreated()
 	self.modifier_int_damage = "modifier_imba_silencer_glaives_int_damage"
 	self.modifier_hit_counter = "modifier_imba_silencer_glaives_hit_counter"
 	self.scepter_damage_multiplier = self.ability:GetSpecialValueFor("scepter_damage_multiplier")
+
+	-- Ability specials
+	self.int_steal = self.ability:GetSpecialValueFor("int_steal")
 end
 
 function modifier_imba_silencer_glaives_of_wisdom:OnAttackStart(keys)
@@ -371,25 +374,22 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 
 		-- Only apply on Silencer's attacks
 		if self.caster == attacker then
+
 			if target:IsAlive() and self.glaive_attack then
+				
 				if keys.target.IsRealHero and (keys.target:IsRealHero() or keys.target:IsTempestDouble()) and not keys.target:IsClone() then
-					local modifier_buff = self.caster:FindModifierByName("modifier_imba_silencer_glaives_of_wisdom_buff")
+					local modifier_buff = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_buff", {duration = self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance())})
+					local modifier_debuff = target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_glaives_of_wisdom_debuff", {duration = self:GetAbility():GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance())})
 
-					if not modifier_buff then
-						modifier_buff = self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_silencer_glaives_of_wisdom_buff", {duration = self.ability:GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance())}):SetStackCount(self.ability:GetSpecialValueFor("int_steal"))
-					else
-						modifier_buff:SetStackCount(modifier_buff:GetStackCount() + self.ability:GetSpecialValueFor("int_steal"))
-					end
-
-					local modifier_debuff = target:FindModifierByName("modifier_imba_silencer_glaives_of_wisdom_debuff")
-
-					if not modifier_debuff then
-						modifier_debuff = target:AddNewModifier(self.caster, self.ability, "modifier_imba_silencer_glaives_of_wisdom_debuff", {duration = self.ability:GetSpecialValueFor("int_steal_duration") * (1 - target:GetStatusResistance())}):SetStackCount(self.ability:GetSpecialValueFor("int_steal"))
-					else
-						modifier_debuff:SetStackCount(modifier_debuff:GetStackCount() + self.ability:GetSpecialValueFor("int_steal"))
+					for i = 1, self.int_steal do 
+						if modifier_buff and modifier_debuff then
+							modifier_buff:SetStackCount(self:GetAbility():GetSpecialValueFor("int_steal"))
+							modifier_debuff:SetStackCount(self:GetAbility():GetSpecialValueFor("int_steal"))
+						end
 					end
 				end
 
+			
 				local glaive_pure_damage = attacker:GetIntellect() * self.intellect_damage_pct / 100
 
 				-- if attacker:HasScepter() and (target:IsSilenced() or target:HasModifier("modifier_imba_silencer_global_silence")) then
@@ -420,13 +420,12 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 				
 				-- IMBAfication: Tranquility of Aeol Drias
 				local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
-
 				if not hit_counter then
 					hit_counter = target:AddNewModifier(attacker, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
 				end
 
 				if hit_counter then
-					hit_counter:IncrementStackCount()
+					hit_counter:SetStackCount(self:GetAbility():GetSpecialValueFor("int_steal"))
 					hit_counter:SetDuration(self.hit_count_duration, true)
 				end
 
@@ -435,7 +434,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 					-- int_damage = target:AddNewModifier(attacker, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
 				-- end
 
-				-- int_damage:SetStackCount(self.ability:GetSpecialValueFor("int_steal"))
+				-- int_damage:SetStackCount(self:GetAbility():GetSpecialValueFor("int_steal"))
 				-- int_damage:SetDuration(self.int_reduction_duration, true)
 
 				-- if attacker:HasTalent("special_bonus_imba_silencer_6") then
@@ -771,7 +770,6 @@ function modifier_imba_silencer_glaives_of_wisdom_buff:OnStackCountChanged(prev_
 
 		-- Refresh timer
 		self:ForceRefresh()
-		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -785,6 +783,7 @@ function modifier_imba_silencer_glaives_of_wisdom_buff:OnIntervalThink()
 
 		-- If the difference between times is longer, it's time to get rid of a stack
 		if GameRules:GetGameTime() - item_time >= self.duration then
+
 			-- Check if there is only one stack, which would mean bye bye debuff
 			if self:GetStackCount() == 1 then
 				self:Destroy()
@@ -842,7 +841,6 @@ function modifier_imba_silencer_glaives_of_wisdom_debuff:OnStackCountChanged(pre
 
 		-- Refresh timer
 		self:ForceRefresh()
-		self:GetParent():CalculateStatBonus(true)
 	end
 end
 
@@ -856,6 +854,7 @@ function modifier_imba_silencer_glaives_of_wisdom_debuff:OnIntervalThink()
 
 		-- If the difference between times is longer, it's time to get rid of a stack
 		if GameRules:GetGameTime() - item_time >= self.duration then
+
 			-- Check if there is only one stack, which would mean bye bye debuff
 			if self:GetStackCount() == 1 then
 				self:Destroy()

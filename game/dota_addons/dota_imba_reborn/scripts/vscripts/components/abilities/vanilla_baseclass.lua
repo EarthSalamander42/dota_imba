@@ -1,34 +1,23 @@
 vanilla_baseclass = vanilla_baseclass or {}
 
-function vanilla_baseclass:GetRightfulKV(sKeyValue, bHideAtLevel1)
-	if bHideAtLevel1 and self:GetLevel() == 0 then
-		return 0
-	end
-
-	local imba_value = GetAbilityKV(self:GetName(), sKeyValue)
-
-	if imba_value then
-		return imba_value
-	end
-
-	return self:GetVanillaKeyValue(sKeyValue)
-end
-
--- Careful! These functions are being overriden if one exists in hero scripts
 function vanilla_baseclass:GetCooldown()
-	return self:GetRightfulKV("AbilityCooldown")
+	return self:GetVanillaKeyValue("AbilityCooldown")
 end
 
 function vanilla_baseclass:GetManaCost()
-	return self:GetRightfulKV("AbilityManaCost", true)
+	if self:GetLevel() == 0 then
+		return 0
+	else
+		return self:GetVanillaKeyValue("AbilityManaCost")
+	end
 end
 
 function vanilla_baseclass:GetCastPoint()
-	return self:GetRightfulKV("AbilityCastPoint")
+	return self:GetVanillaKeyValue("AbilityCastPoint")
 end
 
 function vanilla_baseclass:GetCastRange(location, target)
-	return self:GetRightfulKV("AbilityCastRange")
+	return self:GetVanillaKeyValue("AbilityCastRange")
 end
 
 --[[ -- occasionnally turns the ability to an uncastable state
