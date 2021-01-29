@@ -34,6 +34,7 @@
 	"battlepass_wearable" "Wearable"
 	"bozhe_kak_eto_bolno" "Боже, как это больно!"
 	"bozhe_ti_posmotri" "Боже, ты посмотри вокруг, что происходит!"
+	"bp_reward_equip_description" "Click to Equip/Unequip item"
 	"bp_reward_equip_success" "Récompense équipée:"
 	"bp_reward_unequip_success" "Récompense déséquipé:"
 	"brutal" "Brutal. Sauvage. Ruiné."
