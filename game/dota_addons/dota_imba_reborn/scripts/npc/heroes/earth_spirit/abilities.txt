@@ -3,24 +3,20 @@
 	//=================================================================================================================
 	// Earth Spirit Stone Remnant
 	//=================================================================================================================
-	"imba_earth_spirit_stone_remnant"
+	"imba_earth_spirit_stone_caller"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		
+		"MaxLevel"						"1"
 		"AbilityTextureName"			"earth_spirit_stone_caller"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
-		"MaxLevel"						"1"
 		"HasScepterUpgrade"				"1"
 		
 		// Precache
@@ -52,33 +48,33 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"remnant_duration"		"120"		
-			}
-			"04"
-			{
 				"var_type"				"FIELD_FLOAT"
 				"earths_mark_duration"	"5"
 			}
-			"05"
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"effect_radius"			"400"
 			}
-			"06"
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"vision_duration"		"2"
 			}
-			"07"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"overdraw_base_cost"	"50"
 			}
-			"08"
+			"07"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"overdraw_cost_multiplier"		"1.5"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_stacks"					"10"
 			}
 		}
 	}
@@ -98,12 +94,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"22 18 14 10"
-		"AbilityManaCost"				"100"
-
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -119,11 +109,6 @@
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
-			}
-			"2"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mark_stack_damage"		"20 40 60 80"
@@ -141,18 +126,9 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_rolling_boulder"
-		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-//		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
-//		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"16 12 8 4"
-		"AbilityManaCost"				"50"
-		
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -170,60 +146,10 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"160"				
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"launch_delay"			"0.6"				
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"roll_distance"			"800"				
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"remnant_roll_distance"	"1600"				
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"remnant_slow_pcnt"		"80"				
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"remnant_slow_duration"	"1.2 1.7 2.2 2.7"				
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"800"				
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"remnant_speed"			"1600"				
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"70 80 90 100"				
-			}
-			"10"
-			{
 				"var_type"						"FIELD_INTEGER"
 				"opposite_to_enemy_distance"	"80"				
 			}
-			"11"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"earths_mark_duration"			"5"
-			}
-			"12"
+			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"disarm_duration_per_mark"		"0.25"
@@ -241,17 +167,10 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_geomagnetic_grip"
-		
+
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
-		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"13"
-		"AbilityManaCost"				"100"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -268,42 +187,6 @@
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"effect_radius"			"180"				
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 100 150 200"				
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"600"				
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"remnant_speed"			"1000"				
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"silence_duration"		"2.5 3.0 3.5 4.0"
-				"LinkedSpecialBonus"	"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"remnant_search_radius"	"180"				
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
-			}
-			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"root_time_per_mark"	"0.5"
@@ -322,19 +205,12 @@
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_magnetize"
 		"HasScepterUpgrade"				"1"
-		
+
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	//	"AbilityBehavior"				Defined in the Lua script
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 //		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"350"
-		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"100 90 80"
-		"AbilityManaCost"				"100"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -352,55 +228,20 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"350"				
+				"var_type"						"FIELD_FLOAT"
+				"tick_cooldown"					"0.5"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"remnant_search_radius"		"400"
+				"var_type"						"FIELD_INTEGER"
+				"mark_damage_per_sec_per_stack"	"25"
 			}
 			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"remnant_refresh_radius"	"600"		
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_per_sec"			"40 80 120"				
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_cooldown"				"0.5"				
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"remnant_lifespan"			"8"				
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"earths_mark_duration"		"5"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"mark_damage_per_sec_per_stack"	"50"
-			}
-			"10"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"marked_stun_duration"			"0.5"
 			}
-			"11"
+			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"marked_damage_pct"				"2"
@@ -426,13 +267,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 
 		"IsGrantedByScepter"			"1"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"125"
-		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"45"
-		"AbilityManaCost"				"150"
+
 		"MaxLevel"						"1"
 		
 		// Precache
@@ -447,21 +282,6 @@
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"300"				
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_radius"			"300"				
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"3"				
-			}
-			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"earths_mark_duration"	"5"

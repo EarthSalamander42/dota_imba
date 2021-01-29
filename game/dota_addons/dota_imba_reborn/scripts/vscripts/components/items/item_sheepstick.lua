@@ -36,8 +36,8 @@ function item_imba_sheepstick:CastFilterResultTarget(target)
 	-- Can't cast on allies, except for yourself
 	if self:GetCaster():GetTeamNumber() == target:GetTeamNumber() and self:GetCaster() ~= target then
 		return UF_FAIL_CUSTOM
-	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
-		return UF_FAIL_CUSTOM
+--	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
+--		return UF_FAIL_CUSTOM
 	end
 	
 	return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber() )
@@ -47,8 +47,8 @@ function item_imba_sheepstick:GetCustomCastErrorTarget(target)
 	local caster = self:GetCaster()
 	if caster:GetTeamNumber() == target:GetTeamNumber() and caster ~= target then
 		return "#dota_hud_error_only_cast_on_self"
-	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
-		return "#dota_hud_error_cant_use_already_hexed"
+--	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
+--		return "#dota_hud_error_cant_use_already_hexed"
 	end
 end
 
@@ -179,6 +179,12 @@ function modifier_item_imba_sheepstick_debuff:OnCreated()
 			end
 		end
 	end
+end
+
+function modifier_item_imba_sheepstick_debuff:OnRefresh()
+	if not IsServer() then return end
+
+	self:OnCreated()
 end
 
 function modifier_item_imba_sheepstick_debuff:GetModifierMoveSpeedOverride()

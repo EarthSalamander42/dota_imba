@@ -19,14 +19,11 @@
 
 		"Ability10"		"special_bonus_attack_damage_15"
 		"Ability11"		"special_bonus_movement_speed_15"
-//		"Ability12"		"special_bonus_unique_mars_rebuke_cooldown"
-		"Ability13"		"special_bonus_armor_6"
+		"Ability12"		"special_bonus_imba_mars_1" // Full Circle
+		"Ability13"		"special_bonus_imba_mars_2" // Stunning Rebuke
 		"Ability14"		"special_bonus_unique_mars_spear_bonus_damage"
 		"Ability15"		"special_bonus_unique_mars_spear_stun_duration"
 		"Ability16"		"special_bonus_unique_mars_gods_rebuke_extra_crit"
 		"Ability17"		"special_bonus_unique_mars_arena_of_blood_hp_regen"
-
-		// Removed Talents
-		// "Ability12"		"special_bonus_unique_luna_2" // -Xs Lucent Beam Cooldown (taken care of by "special_bonus_imba_luna_lucent_beam_cooldown")
 	}
 }

@@ -303,7 +303,7 @@ function modifier_item_imba_blade_mail_passive:OnTakeDamage(params)
 
 	if params.unit == self:GetParent() and not params.attacker:IsBuilding() and params.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and bit.band(params.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(params.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION and params.damage_type == 1 then
 		local damage = self.return_damage + (params.damage / 100 * self.return_damage_pct)
-		print("Return damage:", damage)
+
 		ApplyDamage({
 			victim = params.attacker,
 			attacker = params.unit,

@@ -284,31 +284,37 @@ function GetAbilitySpecials(name)
 	return ability_specials
 end
 
-function GetAbilityManaCost(name)
+function GetAbilityCooldown(name)
+	local imba_t = KeyValues.All["imba_"..name]
 	local t = KeyValues.All[name]
 
-	if t then
-		local manacost = t["AbilityManaCost"]
+	if imba_t and imba_t["AbilityCooldown"] then
+		local value = t["AbilityCooldown"]
 
-		if manacost then
-			return manacost
+		if value then
+			return value
+		end
+	else
+		if t then
+			local value = t["AbilityCooldown"]
+
+			if value then
+				return value
+			end
 		end
 	end
 
 	return 0
 end
 
-function GetAbilityCooldown(name)
+function GetAbilityManaCost(name)
 	local t = KeyValues.All[name]
 
---	print(name)
---	print(t)
-
 	if t then
-		local cooldown = t["AbilityCooldown"]
+		local value = t["AbilityManaCost"]
 
-		if cooldown then
-			return cooldown
+		if value then
+			return value
 		end
 	end
 
