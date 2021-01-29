@@ -1,0 +1,330 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Beastmaster: Call of the Wild Hawk
+	//=================================================================================================================
+	"imba_beastmaster_summon_hawk"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_beastmaster.lua"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"FightRecapLevel"			"1"
+		"AbilityTextureName"     	"beastmaster_call_of_the_wild"
+		"MaxLevel"					"4"
+		"LevelsBetweenUpgrades"		"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60 50 40 30"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"30"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_beastmaster.vsndevts"
+			"particle"					"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			// If you want to change the values of the hawk, change this and the hawk units in npc_units_custom.
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_hp_tooltip"			"150 200 250 300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_speed_tooltip"		"300 340 380 420"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_daysight_tooltip"		"600 700 800 900"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_nightsight_tooltip"	"600 700 800 900"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_duration"				"60"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hawk_fade_delay_tooltip"	"0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Beastmaster's Hawk Invisibility
+	//=================================================================================================================
+	"imba_beastmaster_hawk_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_beastmaster.lua"
+		"AbilityTextureName"			"beastmaster_hawk_invisibility"
+		"FightRecapLevel"				"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"						"4"		
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"					// Visible indicator of fade time
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"fade_time"							"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Beastmaster's Call of the Wild Boar
+	//=================================================================================================================
+	"imba_beastmaster_summon_boar"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_beastmaster.lua"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"FightRecapLevel"			"1"
+		"AbilityTextureName"     	"beastmaster_call_of_the_wild_boar"
+		"MaxLevel"					"4"
+		"LevelsBetweenUpgrades"		"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"42 38 34 30"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 65 70 75"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_beastmaster.vsndevts"
+			"particle"					"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			// If you want to change the values of the boar, change this and the boar units in npc_units_custom.
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_health_tooltip"			"300 450 600 750"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_armor_tooltip"			"0"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_damage_tooltip"			"16 32 48 64"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_moveslow_tooltip"			"10 20 30 40"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_attackslow_tooltip"		"10 20 30 40"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"poison_duration_tooltip"		"3"
+			}
+
+			"07"
+			{
+				"var_type" 						"FIELD_INTEGER"
+				"boar_duration"					"60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Beastmaster's Boar poison
+	//=================================================================================================================
+	"imba_beastmaster_boar_poison"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_beastmaster"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"beastmaster_boar_poison"
+		"MaxLevel"						"4"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_slow"			"15 35 50 60"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attackspeed_slow"			"15 35 60 90"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_beastmaster"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6103"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"120"
+				"ad_linked_ability"			"beastmaster_wild_axes"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_beastmaster_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6517"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"40"
+				"ad_linked_ability"			"beastmaster_call_of_the_wild_boar"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_beastmaster_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6612"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"20"
+				"ad_linked_ability"			"beastmaster_inner_beast"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_beastmaster_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"613"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_hp"				"600"
+				"ad_linked_ability"			"beastmaster_call_of_the_wild_boar"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+}

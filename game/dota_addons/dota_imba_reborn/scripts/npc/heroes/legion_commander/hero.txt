@@ -1,0 +1,17 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Legion Commander
+	//=================================================================================================================
+	"npc_dota_hero_legion_commander"
+	{
+		"Ability10"		"special_bonus_strength_14"
+		"Ability11"		"special_bonus_cast_range_200"
+		"Ability12"		"special_bonus_movement_speed_50"
+		"Ability13"		"special_bonus_unique_legion_commander_4"
+		"Ability14"		"special_bonus_unique_legion_commander"
+		"Ability15"		"special_bonus_unique_legion_commander_5"
+		"Ability16"		"special_bonus_cleave_100"
+		"Ability17"		"special_bonus_unique_legion_commander_3"
+	}
+}

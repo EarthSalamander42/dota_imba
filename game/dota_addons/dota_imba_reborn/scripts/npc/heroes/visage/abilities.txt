@@ -275,7 +275,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_attack_damage"	"20 40 60"
+				"familiar_attack_damage"	"25 50 75"
 			}
 			"05"
 			{
@@ -360,12 +360,12 @@
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"stun_damage"						"80 140 200"
+				"stun_damage"						"60 100 140"
 			}
 			"04"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"stun_duration"						"1.25 1.5 1.75"
+				"stun_duration"						"1 1.25 1.5"
 			}
 			"05"
 			{
@@ -375,7 +375,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"hp_regen"							"150 200 250"
+				"hp_regen"							"150 175 200"
 			}
 		}
 	}
@@ -479,12 +479,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_attack_damage"	"48 96 144"
+				"familiar_attack_damage"	"25 50 75"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"familiar_attack_rate"		"0.4"
+				"familiar_attack_rate"		"0.5"
 			}
 			"04"
 			{
@@ -504,7 +504,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_armor"			"0 2 4"
+				"familiar_armor"			"0 1 2"
 			}
 			"07"
 			{
