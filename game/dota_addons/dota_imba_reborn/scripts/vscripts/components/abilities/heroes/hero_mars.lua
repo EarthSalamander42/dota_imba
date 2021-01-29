@@ -1178,6 +1178,7 @@ function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 	local original_damage = keys.original_damage
 	local damage_type = keys.damage_type
 	local damage_flags = keys.damage_flags
+	local damage = keys.damage
 
 	if keys.unit == self:GetParent() and not keys.attacker:IsBuilding() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then	
 		if not keys.unit:IsOther() then

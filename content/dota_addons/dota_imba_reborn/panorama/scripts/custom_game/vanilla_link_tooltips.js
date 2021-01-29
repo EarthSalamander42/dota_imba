@@ -100,39 +100,34 @@ var eligible_heroes = [
 function InitTooltips() {
 //	$.Msg("Init Tooltips")
 
-	$.Schedule(0.03, function() {
-		for (var i = 0; i < eligible_heroes.length; i++) {
-			var hero = eligible_heroes[i];
+//	$.Schedule(0.03, function() {
+//		for (var i = 0; i < eligible_heroes.length; i++) {
+//			var hero = eligible_heroes[i];
 
-			if (AbilitiesAndStatBranch.BHasClass(hero)) {
-				var i = 0;
+//			if (AbilitiesAndStatBranch.BHasClass(hero)) {
+				var j = 0;
 
-				while (GetDotaHud().FindChildTraverse("Ability" + i) != null) {
-					var ability = GetDotaHud().FindChildTraverse("Ability" + i);
+				while (GetDotaHud().FindChildTraverse("Ability" + j) != null) {
+					var ability = GetDotaHud().FindChildTraverse("Ability" + j);
 					var ability_button = ability.FindChildTraverse("AbilityButton");
 
-					(function (ability_button, i) {
+					(function (ability_button, j) {
 						ability_button.SetPanelEvent("onmouseover", function() {
 //							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
-							CallTooltips(i);
+							CallTooltips(j);
 						})
 
 						ability_button.SetPanelEvent("onmouseout", function() {
 							HideTooltips();
-/*
-							$.Schedule(1/60, () => {
-								HideTooltips();
-							});
-*/
 						})
-					})(ability_button, i);
+					})(ability_button, j);
 
-					i++;
+					j++;
 				}
 
 				return;
-			}
-		}
+//			}
+//		}
 
 //		$.Msg("Custom tooltips are not set for this hero.")
 
@@ -157,7 +152,7 @@ function InitTooltips() {
 			i++;
 		}
 */
-	})
+//	})
 }
 
 function CallTooltips(i) {
@@ -180,12 +175,17 @@ function SetHTMLNewLine(text) {
 
 function SetAbilityTooltips(keys) {
 	var hPanel = GetDotaHud().FindChildTraverse("Ability" + keys.iAbility);
-	var ability = Entities.GetAbilityByName(Game.GetLocalPlayerInfo().player_selected_hero_entity_index, keys.sAbilityName);
+	var hero = Players.GetSelectedEntities(Game.GetLocalPlayerID());
+	if (hero && hero[0])
+		hero = hero[0];
+	var ability = Entities.GetAbilityByName(hero, keys.sAbilityName);
+
 //	$.Msg(keys.sAbilityName)
 
 	// HasCooldown // ScepterUpgradable
 
 	var bIsItem = false;
+
 	var ability_level = Abilities.GetLevel(ability);
 
 	if (bIsItem == false) {
@@ -298,6 +298,7 @@ function SetAbilityTooltips(keys) {
 	var AbilityExtraAttributes_Text = "";
 
 	// Set IMBA KV in description
+//	$.Msg(keys["sSpecial"])
 	if (keys["sSpecial"]) {
 		for (var i in keys["sSpecial"]) {
 			if (keys["sSpecial"][i] && keys["sSpecial"][i][1]) {
@@ -320,16 +321,16 @@ function SetAbilityTooltips(keys) {
 //				$.Msg(tooltip_string)
 //				$.Msg(tooltip_string_localized)
 
-				if (tooltip_string_localized != tooltip_string) {
-					if (tooltip_string_localized.startsWith("%")) {
-						tooltip_string_localized = tooltip_string_localized.replace("%", "");
-						IsPercentage = true;
-					}
-				}
-
 				if (imba_tooltip_string_localized != tooltip_string) {
 					if (imba_tooltip_string_localized.startsWith("%")) {
 						imba_tooltip_string_localized = imba_tooltip_string_localized.replace("%", "");
+						IsPercentage = true;
+					}
+				} 
+
+				if (tooltip_string_localized != tooltip_string) {
+					if (tooltip_string_localized.startsWith("%")) {
+						tooltip_string_localized = tooltip_string_localized.replace("%", "");
 						IsPercentage = true;
 					}
 				}

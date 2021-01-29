@@ -268,7 +268,7 @@ function GetAbilitySpecials(name)
 		if tspecial then
 			for k, v in pairs(tspecial) do
 				for i, j in pairs(v) do
-					if i ~= "var_type" and i ~= "LinkedSpecialBonus" and i ~= "RequiresScepter" then
+					if i ~= "var_type" and i ~= "LinkedSpecialBonus" and i ~= "RequiresScepter" and i ~= "CalculateSpellDamageTooltip" then
 						ability_specials[tonumber(k)] = {i, j}
 						break
 					end
@@ -288,7 +288,7 @@ function GetAbilityCooldown(name)
 	local imba_t = KeyValues.All["imba_"..name]
 	local t = KeyValues.All[name]
 
-	if imba_t and imba_t["AbilityCooldown"] then
+	if t and imba_t and imba_t["AbilityCooldown"] then
 		local value = t["AbilityCooldown"]
 
 		if value then
