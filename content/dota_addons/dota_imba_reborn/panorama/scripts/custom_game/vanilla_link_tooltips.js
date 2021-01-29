@@ -133,11 +133,13 @@ function InitTooltips() {
 
 /*
 		var i = 0;
+
 		// Re-enable vanilla tooltips
 		while (GetDotaHud().FindChildTraverse("Ability" + i) != null) {
 			var ability = GetDotaHud().FindChildTraverse("Ability" + i);
 			var ability_button = ability.FindChildTraverse("AbilityButton");
 			var ability_name = ability.FindChildTraverse("AbilityImage").abilityname;
+
 			(function (ability_button, ability_name) {
 				ability_button.SetPanelEvent("onmouseover", function () {
 					$.DispatchEvent("DOTAShowAbilityTooltip", ability_button, ability_name);
@@ -146,6 +148,7 @@ function InitTooltips() {
 					$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
 				})
 			})(ability_button, ability_name);
+
 			i++;
 		}
 */
@@ -376,6 +379,7 @@ function SetAbilityTooltips(keys) {
 	// Need a proper way to gather cast range for every levels and highlight current level value
 /*
 	var cast_range_string = "DOTA_Tooltip_Ability_" + keys.sAbilityName.replace("imba_", "") + "_abilitycastrange";
+
 	if ($.Localize(cast_range_string) != cast_range_string) {
 		AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + $.Localize(cast_range_string) + " " + special_values + "<br>";
 	}

@@ -429,7 +429,8 @@ function EndScoreboard(args) {
 				PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundImage = 'url("s2r://panorama/images/heroes/' + Players.GetPlayerSelectedHero(id) + '.png")';
 				PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundSize = "cover";
 
-				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").GetChild(0).text = player_info.player_name;
+				$.Msg("Player Name: " + player_info.player_name)
+				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").SetDialogVariable("user_account_id", player_info.player_name);
 				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize(Players.GetPlayerSelectedHero(id));
 
