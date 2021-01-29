@@ -34606,12 +34606,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scourge_damage"			"15 25 35 45"
+				"scourge_damage"			"13 22 31 40"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scourge_gold"				"25"
+				"scourge_gold"				"15 17 19 21"
 			}
 			"05"
 			{
@@ -34690,7 +34690,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_damage_tooltip"	"15 25 35 45"
+				"ward_damage_tooltip"	"13 22 31 40"
 				//"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
 				"LinkedSpecialBonus"	"special_bonus_imba_venomancer_plague_ward_upgrade"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
