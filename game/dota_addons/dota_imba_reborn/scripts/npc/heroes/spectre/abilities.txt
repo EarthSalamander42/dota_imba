@@ -48,7 +48,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing"	"20 30 40"
+				"tooltip_outgoing"			"20 30 40"
 				"LinkedSpecialBonus"		"special_bonus_unique_spectre_4"
 			}
 			"04"
@@ -191,4 +191,214 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0"
 	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_spectre"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6148"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"9"
+				"ad_linked_ability"			"spectre_spectral_dagger"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_spectre_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6900"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"60"
+				"ad_linked_ability"			"spectre_desolate"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_spectre_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6901"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"20"
+				"ad_linked_ability"			"spectre_spectral_dagger"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_spectre_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6902"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"32"
+				"ad_linked_ability"			"spectre_haunt"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_spectre_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6903"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"12"
+				"ad_linked_ability"			"spectre_dispersion"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
 }
+
+//	//=================================================================================================================
+//	// Spectre's Reality
+//	//=================================================================================================================
+//	"imba_spectre_reality"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"BaseClass"						"ability_lua"
+//		"ScriptFile"				"components/abilities/heroes/hero_spectre"
+//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+//		"FightRecapLevel"				"1"
+//		"MaxLevel"						"1"
+//
+//		// Time 
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityCooldown"				"0"
+//		
+//		// Cost
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityManaCost"				"0"
+//		
+//		// Precache
+//		//-------------------------------------------------------------------------------------------------------------
+//		"precache"
+//		{
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
+//		}
+//	}
+//
+//	//=================================================================================================================
+//	// Spectre's Haunt
+//	//=================================================================================================================
+//	"imba_spectre_haunt"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"BaseClass"						"ability_lua"
+//		"ScriptFile"				"components/abilities/heroes/hero_spectre"
+//		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+//		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+//		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+//		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+//		"FightRecapLevel"				"1"
+//
+//		// Time
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityCooldown"				"180 150 120"
+//		
+//		// Cost
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityManaCost"				"150"
+//		
+//		// Precache
+//		//-------------------------------------------------------------------------------------------------------------
+//		"precache"
+//		{
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
+//		}
+//		
+//		// Special
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilitySpecial"
+//		{
+//		
+//			"01"
+//			{
+//				"var_type"							"FIELD_FLOAT"
+//				"duration" 							"5 6 7"
+//			}
+//			"02"
+//			{
+//				"var_type"							"FIELD_INTEGER"
+//				"illusion_dmg_received"				"200"
+//			}
+//			"03"
+//			{
+//				"var_type"							"FIELD_INTEGER"
+//				"illusion_dmg_dealt"				"40"
+//			}
+//			"04"
+//			{
+//				"var_type"							"FIELD_INTEGER"
+//				"illusion_base_speed"				"400"
+//			}
+//		}
+//	}

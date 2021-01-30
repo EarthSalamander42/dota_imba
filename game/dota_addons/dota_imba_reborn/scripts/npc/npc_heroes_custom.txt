@@ -1,31 +1,45 @@
 #base heroes/abaddon/hero.txt
+#base heroes/abyssal_underlord/hero.txt
 #base heroes/ancient_apparition/hero.txt
 #base heroes/batrider/hero.txt
+#base heroes/beastmaster/hero.txt
 #base heroes/brewmaster/hero.txt
 #base heroes/bristleback/hero.txt
 // #base heroes/broodmother/hero.txt
+#base heroes/chaos_knight/hero.txt
 #base heroes/chen/hero.txt
 #base heroes/dark_seer/hero.txt
+#base heroes/dark_willow/hero.txt
 #base heroes/death_prophet/hero.txt
+#base heroes/doom_bringer/hero.txt
 #base heroes/earthshaker/hero.txt
 #base heroes/ember_spirit/hero.txt
 #base heroes/enchantress/hero.txt
 #base heroes/furion/hero.txt
 #base heroes/grimstroke/hero.txt
 #base heroes/gyrocopter/hero.txt
+#base heroes/hoodwink/hero.txt
 #base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
+#base heroes/legion_commander/hero.txt
 #base heroes/leshrac/hero.txt
 #base heroes/life_stealer/hero.txt
+#base heroes/lone_druid/hero.txt
 #base heroes/luna/hero.txt
 #base heroes/mars/hero.txt
 #base heroes/medusa/hero.txt
+#base heroes/meepo/hero.txt
+#base heroes/monkey_king/hero.txt
+#base heroes/morphling/hero.txt
 #base heroes/naga_siren/hero.txt
+#base heroes/ogre_magi/hero.txt
 #base heroes/oracle/hero.txt
 #base heroes/outworld_devourer/hero.txt
 #base heroes/phantom_lancer/hero.txt
 // #base heroes/puck/hero.txt
 #base heroes/rattletrap/hero.txt
+#base heroes/razor/hero.txt
+#base heroes/riki/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
 #base heroes/silencer/hero.txt
@@ -34,15 +48,18 @@
 #base heroes/spectre/hero.txt
 #base heroes/spirit_breaker/hero.txt
 #base heroes/shadow_demon/hero.txt
-// If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
 #base heroes/techies/hero.txt
+// If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
 #base heroes/templar_assassin/hero.txt
 #base heroes/terrorblade/hero.txt
 #base heroes/tidehunter/hero.txt
 #base heroes/timbersaw/hero.txt
+#base heroes/tinker/hero.txt
 #base heroes/treant/hero.txt
+#base heroes/tusk/hero.txt
 #base heroes/undying/hero.txt
 #base heroes/visage/hero.txt
+#base heroes/viper/hero.txt
 #base heroes/void_spirit/hero.txt
 #base heroes/weaver/hero.txt
 #base heroes/wisp/hero.txt
@@ -206,15 +223,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Beastmaster
-	//=================================================================================================================
-	"npc_dota_hero_beastmaster"
-	{
-		"Ability11"					"special_bonus_movement_speed_30"
-		"Ability12"					"special_bonus_armor_7"
-	}
-
-	//=================================================================================================================
 	// HERO: Bloodseeker
 	//=================================================================================================================
 	"npc_dota_hero_bloodseeker"
@@ -305,15 +313,6 @@
 		//"Ability12"					"special_bonus_imba_centaur_8" //Stampede duration increase per trampled enemy
 		//"Ability14"					"special_bonus_imba_centaur_3" //Centaur hoof stomp arena moves along with hero
 		//"Ability17"					"special_bonus_imba_centaur_5" //Heroes with Stampede haste get 75% tenacity. 
-	}
-
-	//=================================================================================================================
-	//	HERO: Chaos Knight
-	//=================================================================================================================
-	"npc_dota_hero_chaos_knight"
-	{		
-		"Ability6"					"imba_chaos_knight_phantasm"
-		"Ability14"					"special_bonus_attack_speed_40"
 	}
 
 	//=================================================================================================================
@@ -460,28 +459,6 @@
 		// "Ability14"					"special_bonus_imba_disruptor_5" (Glimpse Storm Expansion - Glimpsing an enemy into an already formed Kinetic Field expands Glimpse Storm's size to match.)
 		// "Ability15"					"special_bonus_imba_disruptor_6" (Static Storm builds stacks of mini-stun (applies upon exit))
 		// "Ability16"					"special_bonus_imba_disruptor_7"
-	}
-
-	//=================================================================================================================
-	// HERO: Doombringer
-	//=================================================================================================================
-	"npc_dota_hero_doom_bringer"
-	{
-		"Ability1"					"doom_bringer_devour"
-		"Ability2"					"doom_bringer_scorched_earth"
-		"Ability3"					"doom_bringer_infernal_blade"
-		"Ability4"					"doom_bringer_empty1"
-		"Ability5"					"doom_bringer_empty2"
-		"Ability6"					"imba_doom_bringer_doom"
-
-		"Ability10"					"special_bonus_unique_doom_4"
-		"Ability11"					"special_bonus_unique_doom_6"
-		"Ability12"					"special_bonus_evasion_20"
-		"Ability13"					"special_bonus_unique_doom_3"
-		"Ability14"					"special_bonus_unique_doom_5"
-		"Ability15"					"special_bonus_unique_doom_2"
-		"Ability16"					"special_bonus_unique_doom_1"
-		"Ability17"					"special_bonus_cleave_175"
 	}
 
 	//=================================================================================================================
@@ -949,17 +926,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Meepo
-	//=================================================================================================================
-	"npc_dota_hero_meepo"
-	{
-		"Ability10"		"special_bonus_strength_15"
-		"Ability11"		"special_bonus_attack_damage_25"
-		"Ability15"		"special_bonus_lifesteal_15"
-		"Ability16"		"special_bonus_hp_800"
-	}
-
-	//=================================================================================================================
 	// HERO: Mirana
 	//=================================================================================================================
 	"npc_dota_hero_mirana"
@@ -989,14 +955,6 @@
 		// "Ability11"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
 		// "Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
 		// "Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
-	}
-
-	//=================================================================================================================
-	// HERO: Monkey King
-	//=================================================================================================================
-	"npc_dota_hero_monkey_king"
-	{
-		"Ability9"					"imba_monkey_king_true_strike"
 	}
 
 	//=================================================================================================================
@@ -1310,51 +1268,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Riki
-	//=================================================================================================================
-	"npc_dota_hero_riki"
-	{
-		//Picking Screen
-		"IsImba"					"1"
-
-		"Ability1"					"imba_riki_smoke_screen_723"
-		"Ability2"					"imba_riki_blink_strike_723"
-		"Ability3"					"imba_riki_tricks_of_the_trade_723"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_riki_cloak_and_dagger_723"
-		
-//		"Ability9"					"imba_form_change_riki"
-
-		"Ability10"					"special_bonus_hp_regen_8"
-		"Ability11"					"special_bonus_attack_speed_25"
-		"Ability12"					"special_bonus_attack_damage_35"
-		"Ability13"					"special_bonus_imba_riki_smokescreen_cooldown"
-		"Ability14"					"special_bonus_imba_riki_cloak_and_dagger_damage"
-		"Ability15"					"special_bonus_imba_riki_blink_strike_cast_range"
-		"Ability16"					"special_bonus_imba_riki_tricks_of_the_trade_cooldown"
-		"Ability17"					"special_bonus_imba_riki_cloak_and_dagger_invis"
-		
-		// Form Change Abilities
-		//"Ability1"					"imba_riki_smoke_screen"
-		//"Ability2"					"imba_riki_blink_strike"
-		//"Ability3"					"imba_riki_cloak_and_dagger"
-		//"Ability6"					"imba_riki_tricks_of_the_trade"
-		
-		// Form Change Talents
-		// "Ability10"					"special_bonus_imba_riki_1"
-		// "Ability11"					"special_bonus_imba_riki_4"
-		// "Ability12"					"special_bonus_imba_riki_3"
-		// "Ability13"					"special_bonus_imba_riki_5"
-		// "Ability14"					"special_bonus_imba_riki_2"
-		// "Ability16"					"special_bonus_imba_riki_7"
-		// "Ability17"					"special_bonus_imba_riki_8"
-		
-		// Removed Talents
-		//"Ability15"					"special_bonus_imba_riki_6"
-	}
-
-	//=================================================================================================================
 	// HERO: Sand King
 	//=================================================================================================================
 	"npc_dota_hero_sand_king"
@@ -1607,14 +1520,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Tinker
-	//=================================================================================================================
-	"npc_dota_hero_tinker"
-	{
-		"Ability6"					"imba_tinker_rearm"
-	}
-
-	//=================================================================================================================
 	// HERO: Tiny
 	//=================================================================================================================
 	"npc_dota_hero_tiny"
@@ -1678,14 +1583,6 @@
 		// "Ability12"					"special_bonus_imba_troll_warlord_3" // -X% Fervor stack loss on target change
 		// "Ability15"					"special_bonus_imba_troll_warlord_6" // +50% Battle Trance duration
 		// "Ability16"					"special_bonus_imba_troll_warlord_9" // Remnants of Berserker's Rage
-	}
-
-	//=================================================================================================================
-	// HERO: Tusk
-	//=================================================================================================================
-	"npc_dota_hero_tusk"
-	{
-		"Ability5"		"tusk_frozen_sigil"
 	}
 
 	//=================================================================================================================

@@ -1,0 +1,20 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Morphling
+	//=================================================================================================================
+	"npc_dota_hero_morphling"
+	{
+		//Picking Screen
+		"IsImba"					"0"
+
+		"Ability15"		"special_bonus_agility_16"
+		"Ability16"		"special_bonus_unique_morphling_1"
+		"Ability17"		"special_bonus_unique_morphling_8"
+		"Ability18"		"special_bonus_magic_resistance_20"
+		"Ability19"		"special_bonus_spell_amplify_25"
+		"Ability20"		"special_bonus_unique_morphling_4"
+		"Ability21"		"special_bonus_unique_morphling_6"
+		"Ability22"		"special_bonus_attack_range_200"
+	}
+}
