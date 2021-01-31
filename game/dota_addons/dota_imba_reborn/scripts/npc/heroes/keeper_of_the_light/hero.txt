@@ -27,6 +27,7 @@
 		//"Ability16"		"special_bonus_unique_keeper_of_the_light_3"
 		//"Ability17"		"special_bonus_unique_keeper_of_the_light"
 		
+		"AbilityTalentStart" "10"
 		"Ability10"		"special_bonus_imba_keeper_of_the_light_ignis_truesight"
 		"Ability11"		"special_bonus_movement_speed_25"
 		"Ability12"		"special_bonus_imba_keeper_of_the_light_travelling_light"
@@ -35,5 +36,6 @@
 		"Ability15"		"special_bonus_imba_keeper_of_the_light_luminous_burster"
 		"Ability16"		"special_bonus_imba_keeper_of_the_light_flow_inhibition"
 		"Ability17"		"special_bonus_imba_keeper_of_the_light_pure_illuminate"
+		"Ability18"		""
 	}
 }

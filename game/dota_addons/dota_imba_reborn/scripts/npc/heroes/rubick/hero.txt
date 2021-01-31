@@ -5,8 +5,6 @@
 	//=================================================================================================================
 	"npc_dota_hero_rubick"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
@@ -22,6 +20,7 @@
 		"Ability9"					"rubick_hidden2"
 		"Ability10"					"rubick_hidden3"
 
+		"AbilityTalentStart"					"11"
 		"Ability11"					"special_bonus_hp_300"
 		"Ability12"					"special_bonus_attack_damage_60"
 		"Ability13"					"special_bonus_cast_range_150"
@@ -30,6 +29,7 @@
 		"Ability16"					"special_bonus_imba_rubick_fade_bolt_cooldown"
 		"Ability17"					"special_bonus_imba_rubick_3"	// Fade bolt applies break for 5 seconds (red particle)
 		"Ability18"					"special_bonus_imba_rubick_spell_steal_spell_amp"
+		"Ability19"					""
 		
 		// Removed Abilities
 		// "Ability3"					"imba_rubick_null_field"

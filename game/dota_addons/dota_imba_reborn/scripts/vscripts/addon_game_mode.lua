@@ -146,7 +146,7 @@ function Precache( context )
 	-- Chat Wheel
 	PrecacheResource( "soundfile", "soundevents/custom_soundboard_soundevents.vsndevts", context )
 
-	local heroeskv = LoadKeyValues("scripts/heroes.txt")
+	local heroeskv = LoadKeyValues("scripts/npc/herolist.txt")
 	for hero, _ in pairs(heroeskv) do
 		PrecacheResource( "soundfile", "soundevents/voscripts/game_sounds_vo_"..string.sub(hero,15)..".vsndevts", context )
 	end
