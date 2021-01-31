@@ -4,6 +4,9 @@
 if not TeamOrdering then
 	TeamOrdering = class({})
 	TeamOrdering.winrates = {}
+	TeamOrdering.start_time = 5.0
+	TeamOrdering.Radiant = {}
+	TeamOrdering.Dire = {}
 end
 
 -- events
@@ -17,7 +20,19 @@ ListenToGameEvent('game_rules_state_change', function()
 
 				return nil
 			end, 3.0)
+
+			-- OH YEAH THAT'S FUNNY RIGHT YEAH THAT'S SO FUNNY YEAH YEAH FUCK YOU
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_anti_stacks_fucker"), function()
+				GameRules:SetCustomGameSetupRemainingTime(TeamOrdering.start_time)
+
+				return nil
+			end, 5.0)
+		else
+			GameRules:SetCustomGameSetupRemainingTime(TeamOrdering.start_time)
 		end
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		-- Call it here to re-apply players to rightful teams in case a smart boi use shuffle command as lobby leader
+		self:SetTeams_PostCompute()
 	end
 end, nil)
 
@@ -118,7 +133,11 @@ function TeamOrdering:ComputeTeamSelection()
 
 	print("Radiant comp:", bestTeamAOrdering)
 	print("Dire comp:", bestTeamBOrdering)
-	self:SetTeams_PostCompute(bestTeamAOrdering, bestTeamBOrdering)
+	self.Radiant = bestTeamAOrdering
+	self.Dire = bestTeamBOrdering
+
+	-- Call it here to show team comp to players
+	self:SetTeams_PostCompute()
 end
 
 function TeamOrdering:CalculateWinratesDifference(teamA, teamB)
@@ -136,7 +155,6 @@ function TeamOrdering:CalculateWinratesDifference(teamA, teamB)
 	return math.abs(winrateTeamA - winrateTeamB)
 end
 
-
 -- hRadiant and hDire should return both an array of player id's
 function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
 	-- unassign players
@@ -146,19 +164,19 @@ function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
 		player:SetTeam(DOTA_TEAM_NOTEAM)
 	end
 
-	for k, v in pairs(hRadiant or {}) do
+	for k, v in pairs(self.Radiant or {}) do
 		local player = PlayerResource:GetPlayer(v)
 
 		player:SetTeam(DOTA_TEAM_GOODGUYS)
 	end
 
-	for k, v in pairs(hDire or {}) do
+	for k, v in pairs(self.Dire or {}) do
 		local player = PlayerResource:GetPlayer(v)
 
 		player:SetTeam(DOTA_TEAM_BADGUYS)
 	end
 
-	GameRules:SetCustomGameSetupRemainingTime(10.0)
+	GameRules:SetCustomGameSetupRemainingTime(self.start_time)
 end
 
 -- utils

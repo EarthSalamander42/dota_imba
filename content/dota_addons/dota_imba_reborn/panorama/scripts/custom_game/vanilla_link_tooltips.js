@@ -514,7 +514,17 @@ function SetPositionLoop(hPanel, hPosition) {
 		$.Schedule(0.03, function() {
 			SetPositionLoop(hPanel, hPosition);
 		});
+
+		return;
 	}
+
+
+	// fix for panel staying visible sometimes?
+	$.Schedule(0.03, function() {
+		if (AbilityDetails.style.opacity == 1) {
+			HideTooltips();
+		}
+	});
 }
 
 function SetTooltipsPosition(hPosition) {
