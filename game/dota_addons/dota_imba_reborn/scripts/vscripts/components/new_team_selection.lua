@@ -13,7 +13,7 @@ end
 
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		if (GetMapName() == "imba_5v5" or GetMapName()) == "imba_10v10" and IsInToolsMode() then
+		if (GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10") and IsInToolsMode() then
 --		if GetMapName() == "imba_5v5" and IsInToolsMode() then
 			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
 				-- This function is called when connection to backend is successful if not in tools mode, let's call it in tools mode when bots are added in for testing purpose
@@ -21,15 +21,6 @@ ListenToGameEvent('game_rules_state_change', function()
 
 				return nil
 			end, 3.0)
-
-			-- OH YEAH THAT'S FUNNY RIGHT YEAH THAT'S SO FUNNY YEAH YEAH FUCK YOU
-			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_anti_stacks_fucker"), function()
-				GameRules:SetCustomGameSetupRemainingTime(TeamOrdering.start_time)
-
-				return nil
-			end, 5.0)
-		else
-			GameRules:SetCustomGameSetupRemainingTime(TeamOrdering.start_time)
 		end
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- Call it here to re-apply players to rightful teams in case a smart boi use shuffle command as lobby leader
