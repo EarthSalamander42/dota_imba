@@ -1373,7 +1373,7 @@ function GameMode:OnTeamKillCredit(keys)
 				return
 			end
 
-			if PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
+			if PlayerResource:GetPlayer(victim_id).GetAssignedHero and PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
 				return
 			end
 
