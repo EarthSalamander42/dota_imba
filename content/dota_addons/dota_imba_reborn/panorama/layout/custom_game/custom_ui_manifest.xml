@@ -97,11 +97,19 @@
 					if (parent.FindChildTraverse("GameInfoPanel"))
 						parent.MoveChildBefore(parent.FindChildTraverse("GameInfoPanel"), header);
 
-					if (cancel)
-						cancel.SetParent(parent);
+					if (Game.IsInToolsMode() == false) {
+						if (cancel)
+							cancel.style.visibility = "collapse";
 
-					if (lock)
-						lock.SetParent(parent);
+						if (lock)
+							lock.style.visibility = "collapse";
+					} else {
+						if (cancel)
+							cancel.SetParent(parent);
+
+						if (lock)
+							lock.SetParent(parent);
+					}
 
 //					Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
 //					Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
