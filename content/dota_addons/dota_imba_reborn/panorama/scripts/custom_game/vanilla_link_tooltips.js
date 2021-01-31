@@ -15,7 +15,7 @@ function GetDotaHud() {
 }
 
 function isFloat(n){
-    return Number(n) === n && n % 1 !== 0;
+	return Number(n) === n && n % 1 !== 0;
 }
 
 var Array_BehaviorTooltips = [];
@@ -303,6 +303,14 @@ function SetAbilityTooltips(keys) {
 		for (var i in keys["sSpecial"]) {
 			if (keys["sSpecial"][i] && keys["sSpecial"][i][1]) {
 				var special_key = keys["sSpecial"][i][1];
+
+				// Turn weird values with 10 decimals into 2 decimals max
+				if (keys["sSpecial"][i][2])
+					special_value = Number(keys["sSpecial"][i][2]);
+
+				if (isFloat(keys["sSpecial"][i][2]))
+					keys["sSpecial"][i][2] = keys["sSpecial"][i][2].toFixed(2);
+
 				var special_values = keys["sSpecial"][i][2].toString().split(" ");
 				var special_value = special_values[Math.min(ability_level - 1, special_values.length - 1)];
 

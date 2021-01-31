@@ -1172,7 +1172,7 @@ end
 
 function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 	if not IsServer() then return end
-	
+
 	local attacker = keys.attacker
 	local target = keys.unit
 	local original_damage = keys.original_damage
