@@ -5,6 +5,7 @@
 #base heroes/towers.txt
 
 #base heroes/abaddon/abilities.txt
+#base heroes/abyssal_underlord/abilities.txt
 #base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
 #base heroes/arc_warden/abilities.txt
