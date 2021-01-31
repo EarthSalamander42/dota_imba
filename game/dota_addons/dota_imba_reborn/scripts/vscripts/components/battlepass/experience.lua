@@ -85,19 +85,7 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 	end
 
 	if not IsInToolsMode() then
-		if GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10" then
-			-- re-order teams based on winrate
-			TeamOrdering:ComputeTeamSelection()
-
-			-- OH YEAH THAT'S FUNNY RIGHT YEAH THAT'S SO FUNNY YEAH YEAH FUCK YOU
-			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_anti_stacks_fucker"), function()
-				GameRules:SetCustomGameSetupRemainingTime(TeamOrdering.start_time)
-
-				return nil
-			end, 5.0)
-		else
-			GameRules:SetCustomGameSetupRemainingTime(TeamOrdering.start_time)
-		end
+		TeamOrdering:OnPlayersLoaded()
 	end
 
 	print("ALL PLAYERS LOADED IN!")

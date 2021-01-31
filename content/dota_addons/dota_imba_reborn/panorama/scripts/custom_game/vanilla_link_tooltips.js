@@ -1,5 +1,6 @@
 OnThink()
 GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
+GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
 GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
 
 function GetDotaHud() {
@@ -517,7 +518,6 @@ function SetPositionLoop(hPanel, hPosition) {
 
 		return;
 	}
-
 
 	// fix for panel staying visible sometimes?
 	$.Schedule(0.03, function() {

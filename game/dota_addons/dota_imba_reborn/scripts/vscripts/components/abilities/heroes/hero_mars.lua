@@ -2399,7 +2399,6 @@ function modifier_imba_mars_arena_of_blood_scepter:OnCreated()
 	Timers:CreateTimer(FrameTime(), function()
 		self.distance = (self:GetParent():GetAbsOrigin() - self.target_point):Length2D()
 		self.jump_time = self.distance / self.jump_speed
-
 		self.direction = (self.target_point - self:GetParent():GetAbsOrigin()):Normalized()
 
 		self:StartIntervalThink(FrameTime())
@@ -2422,7 +2421,6 @@ end
 
 function modifier_imba_mars_arena_of_blood_scepter:VerticalMotion(me, dt)
 	if IsServer() then
-
 		-- Check if we're still jumping
 		if self.time_elapsed < self.jump_time then
 			-- Check if we should be going up or down
@@ -2437,7 +2435,6 @@ function modifier_imba_mars_arena_of_blood_scepter:VerticalMotion(me, dt)
 				if self.leap_z > 0 then
 					self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()) + Vector(0,0,self.leap_z))
 				end
-
 			end
 		end
 	end
@@ -2447,6 +2444,7 @@ function modifier_imba_mars_arena_of_blood_scepter:HorizontalMotion(me, dt)
 	if IsServer() then
 		-- Check if we're still jumping
 		self.time_elapsed = self.time_elapsed + dt
+
 		if self.time_elapsed < self.jump_time then
 			-- Go forward
 			local new_location = self:GetParent():GetAbsOrigin() + self.direction * self.jump_speed * dt
@@ -2457,7 +2455,7 @@ function modifier_imba_mars_arena_of_blood_scepter:HorizontalMotion(me, dt)
 	end
 end
 
-function modifier_imba_mars_arena_of_blood_scepter:OnRemoved()
+function modifier_imba_mars_arena_of_blood_scepter:OnDestroy()
 	if not IsServer() then return end
 
 	CreateModifierThinker(

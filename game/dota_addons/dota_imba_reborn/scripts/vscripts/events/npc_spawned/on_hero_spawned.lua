@@ -155,6 +155,8 @@ function GameMode:OnHeroFirstSpawn(hero)
 		if teleport_scroll then
 			teleport_scroll:EndCooldown()
 		end
+
+		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "vanillafier_init_tooltips_first_spawn", {})
 	end
 end
 

@@ -11,6 +11,7 @@ end
 
 -- events
 
+-- This function is ONLY for testing purposes
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		if (GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10") and IsInToolsMode() then
@@ -24,10 +25,28 @@ ListenToGameEvent('game_rules_state_change', function()
 		end
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- Call it here to re-apply players to rightful teams in case a smart boi use shuffle command as lobby leader
-		self:SetTeams_PostCompute()
+
+		-- causing weird player disconnects and unable to reconnect (sending players in another team but not fully due to being done in hero selection phase?)
+--		TeamOrdering:SetTeams_PostCompute()
 	end
 end, nil)
 
+-- This function is ONLY for public games (triggers when backend successfully gathered every players winrates)
+function TeamOrdering:OnPlayersLoaded()
+	if GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10" then
+		-- re-order teams based on winrate
+		self:ComputeTeamSelection()
+
+		-- OH YEAH THAT'S FUNNY RIGHT YEAH THAT'S SO FUNNY YEAH YEAH FUCK YOU
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_anti_stacks_fucker"), function()
+			GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+
+			return nil
+		end, 5.0)
+	else
+		GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+	end
+end
 
 -- core
 function TeamOrdering:ComputeTeamSelection()

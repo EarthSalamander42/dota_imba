@@ -17,6 +17,11 @@ local split = function(inputstr, sep)
 end
 
 function CustomTooltips:GetTooltipsInfo(keys)
+	if not keys.PlayerID or keys.PlayerID == -1 then
+		print("ERROR: Invalid Player ID:", keys.PlayerID)
+		return
+	end
+
 --	print(keys)
 	local ability_name = GetVanillaAbilityName(keys.sAbilityName)
 	if not ability_name then
