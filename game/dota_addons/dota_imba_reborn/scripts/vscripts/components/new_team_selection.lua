@@ -7,6 +7,8 @@ if not TeamOrdering then
 	TeamOrdering.start_time = 5.0
 	TeamOrdering.Radiant = {}
 	TeamOrdering.Dire = {}
+	TeamOrdering.minimum_level_to_reorder = 25
+	TeamOrdering.fixed_winrate_for_rookies = 30
 end
 
 -- events
@@ -56,25 +58,30 @@ function TeamOrdering:ComputeTeamSelection()
 	local acceptableWinratesDifference = 1 -- for 10v10 only
 
 	local halfCombinationsNumber = 126 -- generations number is n!/((n-k)!*k!)
-	local winratesBaseArray = {81.0, 77.0, 74.2, 65.1, 54.2, 53.2, 49.9, 43.3, 41.2, 32.8, 41.0, 71.0, 72.2, 62.1, 24.2, 33.2, 19.9, 63.3, 71.2, 92.8}
+--	local winratesBaseArray = {81.0, 77.0, 74.2, 65.1, 54.2, 53.2, 49.9, 43.3, 41.2, 32.8, 41.0, 71.0, 72.2, 62.1, 24.2, 33.2, 19.9, 63.3, 71.2, 92.8}
 
 	if GetMapName() == "imba_10v10" then
 		halfCombinationsNumber = 92378
 	end
 
 	-- not tested yet
-	if IsInToolsMode() then
-		for i = 0, n - 1 do
-			self.winrates[i] = winratesBaseArray[i + 1]
-		end
-	else
+--	if IsInToolsMode() then
+--		for i = 0, n - 1 do
+--			self.winrates[i] = winratesBaseArray[i + 1]
+--		end
+--	else
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) then
-				self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
-				print("Player ID/Name/Winrate/typeof(Winrate):", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i), type(api:GetPlayerWinrate(i)))
+				if api:GetPlayerXPLevel(i) < self.minimum_level_to_reorder then
+					self.winrates[i] = self.fixed_winrate_for_rookies
+					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
+				else
+					self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
+					print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i))
+				end
 			end
 		end
-	end
+--	end
 
 	local combination = {}
 

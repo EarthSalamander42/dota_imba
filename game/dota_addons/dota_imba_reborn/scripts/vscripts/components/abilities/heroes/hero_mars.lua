@@ -98,7 +98,7 @@ function imba_mars_spear:OnSpellStart()
 
 		ProjectileManager:CreateLinearProjectile(info)
 
-		self.traiblazer_thinker = CreateModifierThinker(
+		self.trailblazer_thinker = CreateModifierThinker(
 			self:GetCaster(),
 			self,
 			"modifier_imba_mars_spear_trailblazer_thinker",
@@ -201,7 +201,7 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 	end
 
 	-- trailblazer
-	self.traiblazer_thinker = CreateModifierThinker(
+	self.trailblazer_thinker = CreateModifierThinker(
 		self:GetCaster(),
 		self:GetAbility(),
 		"modifier_imba_mars_spear_trailblazer_thinker",
@@ -210,6 +210,8 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 		self:GetCaster():GetTeamNumber(),
 		false
 	)
+
+	self:GetCaster():EmitSound("Hero_Mars.Spear.Target", self.trailblazer_thinker)
 end
 
 --------------------------------------------
@@ -286,7 +288,7 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnDestroy()
 	self:GetParent():RemoveSelf()
 
 	if self:GetAbility() then
-		self:GetAbility().traiblazer_thinker = nil
+		self:GetAbility().trailblazer_thinker = nil
 	end
 
 	if self.pfx then
@@ -330,8 +332,8 @@ imba_mars_spear.projectiles = mars_projectiles
 function imba_mars_spear:OnProjectileThink(vLocation)
 	if not IsServer() then return end
 
-	if self.traiblazer_thinker and vLocation then
-		self.traiblazer_thinker:SetAbsOrigin(vLocation)
+	if self.trailblazer_thinker and vLocation then
+		self.trailblazer_thinker:SetAbsOrigin(vLocation)
 	end
 end
 
