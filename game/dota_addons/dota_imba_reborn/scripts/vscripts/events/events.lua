@@ -39,7 +39,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		Timers:CreateTimer(2.0, function()
 			if IsInToolsMode() then
 				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
-					BOTS_ENABLED = true
+					BOTS_ENABLED = false
 				end
 
 				if BOTS_ENABLED == true then
