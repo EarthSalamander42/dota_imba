@@ -33,7 +33,7 @@ end, nil)
 
 -- This function is ONLY for public games (triggers when backend successfully gathered every players winrates)
 function TeamOrdering:OnPlayersLoaded()
-	if GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10" then
+	if PlayerResource:GetPlayerCount() > 3 then
 		-- re-order teams based on winrate
 		self:ComputeTeamSelection()
 
@@ -42,7 +42,7 @@ function TeamOrdering:OnPlayersLoaded()
 			GameRules:SetCustomGameSetupRemainingTime(self.start_time)
 
 			return nil
-		end, 5.0)
+		end, self.start_time + 3.0)
 	else
 		GameRules:SetCustomGameSetupRemainingTime(self.start_time)
 	end
