@@ -950,6 +950,7 @@ function modifier_imba_mars_gods_rebuke:OnCreated( kv )
 
 	if mod then
 		self.bonus_damage = self.bonus_damage + mod:GetStackCount()
+		mod.stack_table = {}
 		mod:SetStackCount(0)
 	end
 end
@@ -1197,10 +1198,10 @@ function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 			end
 
 			-- if received damage from front or side
-			if damage > 0 then
+			if bonus_damage > 0 then
 				local damageTable = {
 					victim			= keys.attacker,
-					damage			= keys.original_damage / 100 * damage,
+					damage			= keys.original_damage / 100 * bonus_damage,
 					damage_type		= keys.damage_type,
 					damage_flags	= DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 					attacker		= self:GetParent(),

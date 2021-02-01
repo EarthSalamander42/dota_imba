@@ -123,7 +123,6 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 		gamemode = gamemode["1"];
 
 	if (!player_info || player_info.winrate_toggle != 1) {
-		$.Msg("Set rank to nil")
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
 	} else if (gamemode == "1") {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);

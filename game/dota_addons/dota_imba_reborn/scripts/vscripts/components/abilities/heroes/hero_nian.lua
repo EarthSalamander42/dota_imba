@@ -756,7 +756,7 @@ function imba_nian_volcanic_burster:OnProjectileHit_ExtraData(target, location, 
 	if not IsServer() then return end
 		
 	if target and data.bSecondary == 1 then
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster", {duration = self:GetSpecialValueFor("burn_duration") * (1 - enemy:GetStatusResistance())})
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_nian_volcanic_burster", {duration = self:GetSpecialValueFor("burn_duration") * (1 - target:GetStatusResistance())})
 	elseif not target and data.volcanic_dummy then
 		EntIndexToHScript(data.volcanic_dummy):RemoveSelf()
 	end

@@ -112,16 +112,18 @@ function InitTooltips() {
 					var ability = GetDotaHud().FindChildTraverse("Ability" + j);
 					var ability_button = ability.FindChildTraverse("AbilityButton");
 
-					(function (ability_button, j) {
-						ability_button.SetPanelEvent("onmouseover", function() {
-//							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
-							CallTooltips(j);
-						})
+					if (ability && ability_button) {
+						(function (ability_button, j) {
+							ability_button.SetPanelEvent("onmouseover", function() {
+	//							$.DispatchEvent("DOTAHideAbilityTooltip", ability_button);
+								CallTooltips(j);
+							})
 
-						ability_button.SetPanelEvent("onmouseout", function() {
-							HideTooltips();
-						})
-					})(ability_button, j);
+							ability_button.SetPanelEvent("onmouseout", function() {
+								HideTooltips();
+							})
+						})(ability_button, j);
+					}
 
 					j++;
 				}
