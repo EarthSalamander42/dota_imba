@@ -977,9 +977,11 @@ end
 
 function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_BonusDamagePostCrit( params )
 	if not IsServer() then return end
+	print("Bonus Damage:", self.bonus_damage)
 	return self.bonus_damage
 end
 function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_CriticalStrike( params )
+	print("Bonus Crit:", self.bonus_crit)
 	return self.bonus_crit
 end
 
