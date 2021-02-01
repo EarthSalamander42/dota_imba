@@ -1,0 +1,76 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf31:version{593cd181-a1d6-4c6f-9a8c-0534e8d44db0} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 1
+	m_flCullRadius = 100.0
+	m_nCullControlPoint = 3
+	m_flConstantRadius = 1.0
+	m_bShouldSort = false
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 3
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 1
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 3
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_PreEmissionOperators = 
+	[
+		{
+			_class = "C_OP_SetControlPointOrientation"
+			m_nCP = 3
+			m_vecRotation = [ 90.0, 0.0, 0.0 ]
+			m_vecRotationB = [ 90.0, 0.0, 0.0 ]
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/hero/hero_mars/mars_sky_spear_body_model_selector.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/hero/hero_mars/mars_sky_spear_body_outline.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/hero/hero_mars/mars_sky_spear_body_trail.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/hero/hero_mars/mars_sky_spear_body_trail_b.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/hero/hero_mars/mars_sky_spear_body_edges.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/hero/hero_mars/mars_sky_spear_body_sparks.vpcf"
+		},
+		{
+			m_bEndCap = true
+			m_ChildRef = resource:"particles/econ/items/mars/mars_ti9_immortal/mars_ti9_immortal_spear_end.vpcf"
+			m_bDisableChild = true
+		},
+	]
+}

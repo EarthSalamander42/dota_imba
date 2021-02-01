@@ -85,7 +85,7 @@
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_range_scepter"              "SCEPTER LENGTH:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_duration"                  "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_duration_scepter"          "SCEPTER DURATION:"
-"DOTA_Tooltip_ability_imba_jakiro_macropyre_aghanim_description"		"Increases flame length, duration, and damage."
+"DOTA_Tooltip_ability_imba_jakiro_macropyre_scepter_description"		"Increases flame length, duration, and damage."
 
 "DOTA_Tooltip_modifier_imba_macropyre_debuff"                          "Macropyre"
 "DOTA_Tooltip_modifier_imba_macropyre_debuff_Description"              "You're on fire! Taking massive damage over time. If affected by Fire Breath, Frost Breath, or Liquid Fire debuffs, their durations will count down at half the normal rate."

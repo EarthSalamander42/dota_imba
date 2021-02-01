@@ -205,6 +205,8 @@ end
 --------------------------------------------------------------------------------
 -- Helper: Flags
 function modifier_generic_orb_effect_lua:FlagExist(a,b)--Bitwise Exist
+	a = tonumber(tostring(a))
+	b = tonumber(tostring(b))
 	local p,c,d=1,0,b
 	while a>0 and b>0 do
 		local ra,rb=a%2,b%2

@@ -86,10 +86,6 @@ LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_ms", "components/abi
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_cast", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- Motion + invuln
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_slow", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)			-- Reduced moenemt/attack speed stolen by caster
 
-function imba_faceless_void_time_walk:GetAbilityTextureName()
-	return "faceless_void_time_walk"
-end
-
 function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
 function imba_faceless_void_time_walk:IsNetherWardStealable() return false end
 
@@ -449,10 +445,6 @@ LinkLuaModifier("modifier_imba_faceless_void_time_dilation_buff", "components/ab
 LinkLuaModifier("modifier_imba_faceless_void_time_dilation_slow", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)			-- Enemy debuff
 LinkLuaModifier("modifier_imba_time_dilation_talent", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- Talent caster buff
 
-function imba_faceless_void_time_dilation:GetAbilityTextureName()
-	return "faceless_void_time_dilation"
-end
-
 function imba_faceless_void_time_dilation:IsHiddenWhenStolen() return false end
 
 function imba_faceless_void_time_dilation:GetCastRange()
@@ -753,10 +745,6 @@ if imba_faceless_void_time_lock == nil then imba_faceless_void_time_lock = class
 LinkLuaModifier("modifier_imba_faceless_void_time_lock", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)		-- Passive effect
 LinkLuaModifier("modifier_imba_faceless_void_time_lock_stun", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- The stun
 
-function imba_faceless_void_time_lock:GetAbilityTextureName()
-	return "faceless_void_time_lock"
-end
-
 function imba_faceless_void_time_lock:GetIntrinsicModifierName()
 	if not self:GetCaster():IsIllusion() then
 		return "modifier_imba_faceless_void_time_lock"
@@ -970,10 +958,6 @@ LinkLuaModifier("modifier_imba_faceless_void_chronosphere_aura", "components/abi
 LinkLuaModifier("modifier_imba_faceless_void_chronosphere_handler", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- Handler
 LinkLuaModifier("modifier_imba_faceless_void_chronosphere_caster_buff", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)-- Bonus attack speed for caster and their minions
 
-function imba_faceless_void_chronosphere:GetAbilityTextureName()
-	return "faceless_void_chronosphere"
-end
-
 function imba_faceless_void_chronosphere:IsHiddenWhenStolen() return false end
 
 function imba_faceless_void_chronosphere:GetAOERadius()
@@ -1132,7 +1116,7 @@ function modifier_imba_faceless_void_chronosphere_aura:OnCreated()
 			self.total_radius 		= 	self.caster:FindTalentValue("special_bonus_imba_faceless_void_5", "aoe")
 		end
 
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf", PATTACH_WORLDORIGIN, self.parent)
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf", PATTACH_WORLDORIGIN, self.parent, self.caster)
 		ParticleManager:SetParticleControl(particle, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle, 1, Vector(self.total_radius, self.total_radius, self.total_radius))
 		self:AddParticle(particle, false, false, -1, false, false)

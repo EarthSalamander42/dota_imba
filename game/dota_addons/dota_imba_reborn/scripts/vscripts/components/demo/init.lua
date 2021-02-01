@@ -66,11 +66,15 @@ function GameMode:InitDemo()
 --	self.m_nHeroLevelBeforeMaxing = 1 -- unused now
 --	self.m_bHeroMaxedOut = false -- unused now
 
-	self.m_nALLIES_TEAM = 2
+	self.m_nALLIES_TEAM = PlayerResource:GetTeam(0) or 2
 	self.m_tAlliesList = {}
 	self.m_nAlliesCount = 0
 
-	self.m_nENEMIES_TEAM = 3
+	local enemy_team = self.m_nALLIES_TEAM
+	if enemy_team == 2 then enemy_team = 3
+	elseif enemy_team == 3 then enemy_team = 2 end
+
+	self.m_nENEMIES_TEAM = enemy_team
 	self.m_tEnemiesList = {}
 
 	self.m_bFreeSpellsEnabled = false

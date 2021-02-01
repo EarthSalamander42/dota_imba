@@ -88,34 +88,23 @@ end
 ------------------------------
 --     PROXIMITY MINE       --
 ------------------------------
+
+LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
+
 imba_techies_proximity_mine = imba_techies_proximity_mine or class({})
-LinkLuaModifier("modifier_imba_proximity_mine_charges", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_techies_proximity_mine:GetAbilityTextureName()
-   return "techies_land_mines"
-end
-
-function imba_techies_proximity_mine:GetCastRange()
-	return self:GetSpecialValueFor("cast_range")
-end
-
-function imba_techies_proximity_mine:IsHiddenWhenStolen()
-	return false
-end
-
-function imba_techies_proximity_mine:IsNetherWardStealable()
-	return false
-end
+function imba_techies_proximity_mine:IsHiddenWhenStolen() return false end
+function imba_techies_proximity_mine:IsNetherWardStealable() return false end
 
 function imba_techies_proximity_mine:GetIntrinsicModifierName()
-	return "modifier_imba_proximity_mine_charges"
+	return "modifier_generic_charges"
 end
 
 function imba_techies_proximity_mine:GetManaCost(level)
 	-- Ability properties
 	local caster = self:GetCaster()
 	local initial_mana_cost = self.BaseClass.GetManaCost(self, level)
-	local modifier_charges = "modifier_imba_proximity_mine_charges"
+	local modifier_charges = "modifier_generic_charges"
 
 	-- Ability specials
 	local mana_increase_per_stack = self:GetSpecialValueFor("mana_increase_per_stack")
@@ -197,7 +186,7 @@ function imba_techies_proximity_mine:OnSpellStart()
 	local target_point = self:GetCursorPosition()
 	local cast_response = {"techies_tech_setmine_01", "techies_tech_setmine_02", "techies_tech_setmine_04", "techies_tech_setmine_08", "techies_tech_setmine_09", "techies_tech_setmine_10", "techies_tech_setmine_11", "techies_tech_setmine_13", "techies_tech_setmine_16", "techies_tech_setmine_17", "techies_tech_setmine_18", "techies_tech_setmine_19", "techies_tech_setmine_20", "techies_tech_setmine_30", "techies_tech_setmine_32", "techies_tech_setmine_33", "techies_tech_setmine_34", "techies_tech_setmine_38", "techies_tech_setmine_45", "techies_tech_setmine_46", "techies_tech_setmine_47", "techies_tech_setmine_48", "techies_tech_setmine_50", "techies_tech_setmine_51", "techies_tech_setmine_54", "techies_tech_cast_02", "techies_tech_cast_03", "techies_tech_setmine_05", "techies_tech_setmine_06", "techies_tech_setmine_07", "techies_tech_setmine_14", "techies_tech_setmine_21", "techies_tech_setmine_22", "techies_tech_setmine_23", "techies_tech_setmine_24", "techies_tech_setmine_25", "techies_tech_setmine_26", "techies_tech_setmine_28", "techies_tech_setmine_29", "techies_tech_setmine_35", "techies_tech_setmine_36", "techies_tech_setmine_37", "techies_tech_setmine_39", "techies_tech_setmine_41", "techies_tech_setmine_42", "techies_tech_setmine_43", "techies_tech_setmine_44", "techies_tech_setmine_52"}
 	local sound_cast = "Hero_Techies.LandMine.Plant"
-	local modifier_charges = "modifier_imba_proximity_mine_charges"
+	local modifier_charges = "modifier_generic_charges"
 
 	-- Ability special
 	local initial_mines = ability:GetSpecialValueFor("initial_mines")
@@ -254,85 +243,6 @@ function imba_techies_proximity_mine:OnSpellStart()
 	end
 end
 
-
--- Charges modifier
-modifier_imba_proximity_mine_charges = modifier_imba_proximity_mine_charges or class({})
-
-function modifier_imba_proximity_mine_charges:OnCreated()
-	local ability = self:GetAbility()
-
-	-- Ability specials
-	self.charge_replenish_duration = ability:GetSpecialValueFor("charge_replenish_duration")
-	self.max_charges = ability:GetSpecialValueFor("max_charges")
-
-	-- Set a bonus first mine immediatley when the ability is first learned
-	if not self.repeated then
-		self:SetStackCount(1)
-		self:SetDuration(self.charge_replenish_duration, true)
-		self.repeated = true
-	end
-
-	-- Start thinking
-	self:StartIntervalThink(0.1)
-end
-
-function modifier_imba_proximity_mine_charges:OnRefresh()
-	self:OnCreated()
-end
-
-function modifier_imba_proximity_mine_charges:OnIntervalThink()
-	-- Check the current duration
-	local duration = self:GetDuration()
-
-	-- If the duration is fixed, do nothing
-	if duration == -1 then
-		return nil
-	end
-
-	-- If the amount of mines somehow got over the maximum, retain max charges
-	if self:GetStackCount() > self.max_charges then
-		self:SetStackCount(self.max_charges)
-	end
-
-	-- Otherwise, get the remaining duration. If it's 0 or below, grant a stack!
-	local remaining_duration = self:GetRemainingTime()
-
-	if remaining_duration <= 0 then
-		self.restart = true
-		self:IncrementStackCount()
-	end
-end
-
-function modifier_imba_proximity_mine_charges:IsHidden() return false end
-function modifier_imba_proximity_mine_charges:IsDebuff() return false end
-function modifier_imba_proximity_mine_charges:IsPurgable() return false end
-function modifier_imba_proximity_mine_charges:RemoveOnDeath() return false end
-function modifier_imba_proximity_mine_charges:AllowIllusionDuplicate() return false end
-function modifier_imba_proximity_mine_charges:DestroyOnExpire() return false end
-
-function modifier_imba_proximity_mine_charges:OnStackCountChanged(old_count)
-	-- Get current stack count
-	local stacks = self:GetStackCount()
-
-	-- If the stacks somehow surpassed max charges, reset to max
-	-- This somehow happens when player is disconnected for some reason
-	if stacks > self.max_charges then
-		self:SetStackCount(self.max_charges)
-	end
-
-	-- If the stack is in the maximum, stop the duration
-	if stacks == self.max_charges then
-		self:SetDuration(-1, true)
-
-	-- Otherwise, if it needs to be restared, do so
-	elseif self.restart or old_count == self.max_charges then
-		self:SetDuration(self.charge_replenish_duration, true)
-	end
-
-	self.restart = false
-end
-
-
 ------------------------------
 --     PROXIMITY MINE AI    --
 ------------------------------
@@ -376,19 +286,18 @@ function modifier_imba_proximity_mine:OnCreated()
 		-- #1 Talent: Trigger range increase
 		self.trigger_range = self.trigger_range + self.caster:FindTalentValue("special_bonus_imba_techies_1")
 
-		-- Add mine particle effect
-		local particle_mine = "particles/units/heroes/hero_techies/techies_land_mine.vpcf"
-		local particle_mine_fx = ParticleManager:CreateParticle(particle_mine, PATTACH_ABSORIGIN_FOLLOW, self.caster)
-		ParticleManager:SetParticleControl(particle_mine_fx, 0, self.caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_mine_fx, 3, self.caster:GetAbsOrigin())
-		self:AddParticle(particle_mine_fx, false, false, -1, false, false)
-
 		-- Set the mine as inactive
 		self.active = false
 		self.triggered = false
 		self.trigger_time = 0
 
 		if IsServer() then
+			-- Add mine particle effect
+			local particle_mine = "particles/units/heroes/hero_techies/techies_land_mine.vpcf"
+			local particle_mine_fx = ParticleManager:CreateParticle(particle_mine, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+			ParticleManager:SetParticleControl(particle_mine_fx, 0, self.caster:GetAbsOrigin())
+			ParticleManager:SetParticleControl(particle_mine_fx, 3, self.caster:GetAbsOrigin())
+			self:AddParticle(particle_mine_fx, false, false, -1, false, false)
 
 			-- Determine if this is a Big Boom
 			if self.caster:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" then
@@ -431,14 +340,15 @@ function modifier_imba_proximity_mine:OnIntervalThink()
 
 		-- Look for nearby enemies
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-										  caster:GetAbsOrigin(),
-										  nil,
-										  self.trigger_range,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
-										  DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-										  FIND_ANY_ORDER,
-										  false)
+			caster:GetAbsOrigin(),
+			nil,
+			self.trigger_range,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+			FIND_ANY_ORDER,
+			false
+		)
 
 		local enemy_found
 

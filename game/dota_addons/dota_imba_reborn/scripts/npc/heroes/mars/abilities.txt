@@ -1,0 +1,309 @@
+// Mars LUA credits: Elfansoer (https://github.com/Elfansoer/dota-2-lua-abilities/tree/master/scripts/vscripts/lua_abilities)
+
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Mars: Spear of Mars
+	//=================================================================================================================
+	"imba_mars_spear"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
+		"AbilityTextureName"			"mars_spear"
+		"FightRecapLevel"				"1"
+
+		"precache"
+		{
+//			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+			"particle"	"particles/status_fx/status_effect_mars_spear.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_spear.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_spear_impact.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_spear_impact_debuff.vpcf"
+		}
+		
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heaven_spear_radius"		"200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heaven_spear_knockback"	"150"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"heaven_spear_duration"		"0.3" // Knockback duration
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"heaven_spear_delay"		"0.4" // delay before start going down
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trailblazer_duration"		"6.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trailblazer_radius"		"150"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trailblazer_damage_pct"	"25"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+	}
+
+	//=================================================================================================================
+	// Mars: God's Rebuke
+	//=================================================================================================================
+	"imba_mars_gods_rebuke"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
+		"AbilityTextureName"			"mars_gods_rebuke"
+		"FightRecapLevel"				"1"
+        "HasScepterUpgrade"				"1"
+
+		"precache"
+		{
+//			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+			"particle"	"particles/units/heroes/hero_mars/mars_shield_bash.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_shield_bash_crit.vpcf"
+		}
+		
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.2"
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 14 12 10"
+		"AbilityManaCost"				"55 60 65 70"
+
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"strong_argument_bonus_strength"	"2 4 6 8"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"strong_argument_duration"		"6.0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"imba_scepter_cooldown"			"3.5"
+				"RequiresScepter"				"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mars: Bulwark
+	//=================================================================================================================
+	"imba_mars_bulwark"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
+		"AbilityTextureName"			"mars_bulwark"
+		"FightRecapLevel"				"1"
+
+		"precache"
+		{
+//			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+			"particle"	"particles/units/heroes/hero_mars/mars_shield_of_mars.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_shield_of_mars_small.vpcf"
+		}
+
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"spiked_shield_return_pct"				"20" // %
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"jupiters_strength_stored_damage_pct"	"30" // %
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"jupiters_strength_duration"	"10.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mars: Arena of Blood
+	//=================================================================================================================
+	"imba_mars_arena_of_blood"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
+		"AbilityTextureName"			"mars_arena_of_blood"
+		"FightRecapLevel"				"2"
+		"MaxLevel"						"3"
+        "HasScepterUpgrade"				"1"
+
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_mars.vsndevts"
+			"particle"	"particles/units/heroes/hero_mars/mars_arena_of_blood.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_arena_of_blood_spear.vpcf"
+			"particle"	"particles/units/heroes/hero_mars/mars_arena_of_blood_impact.vpcf"
+		}
+
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+ 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.1"
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90 75 60"
+		"AbilityManaCost"				"200"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"coliseum_bonus_damage"			"10 20 30"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"coliseum_bonus_attack_speed"	"15 30 45"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"scepter_jump_speed"			"1500"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_cast_range"			"900"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_max_height"			"300"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mars Talents
+	//=================================================================================================================
+	"special_bonus_imba_mars_1" // Full Circle: God's Rebuke deals damage in a full circle around Mars.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_mars_2" // Stunning Rebuke: Stuns enemies while being knockbacked.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+}

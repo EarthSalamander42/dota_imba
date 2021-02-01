@@ -7,8 +7,6 @@
 	//=================================================================================================================
 	"npc_dota_hero_wisp"
 	{
-	
-
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"

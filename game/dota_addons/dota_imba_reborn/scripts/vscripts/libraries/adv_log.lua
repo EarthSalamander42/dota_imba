@@ -286,6 +286,9 @@ if Log == nil then
 			for i = 1, #self.targets do
 				self.targets[i]:print(levelString, "Error occured while executing in safe context: " .. err, self:_GetStackTrace(4))
 			end
+
+			-- ultimate debugging
+			Say(PlayerResource:GetPlayer(0), "Error: " .. err, false)
 		end, unpack(args))
 
 		return status, err

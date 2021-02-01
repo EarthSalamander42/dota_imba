@@ -48,7 +48,7 @@
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward"                    "Death Ward"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Description"                     "Summons a deadly ward to attack enemy heroes.\n <font color='#FF7800'>Spirit Double:</font> Death Ward benefits from most of Witch Doctor's on-hit effects, but does not inherit the raw damage from items.\n<font color='#FF7800'>Deadly Mind:</font> Death Ward deals bonus damage equal to a percentage of Witch Doctor's intelligence."
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Note0"              "Effects that Death Ward does not receive are: Battle Fury, Butterfly, Starfury, Echo Sabre, or Reverb Sabre."
-"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_aghanim_description"             "Death Ward attacks have True Strike and bounce between nearby enemies."
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_scepter_description"             "Death Ward attacks have True Strike and bounce between nearby enemies."
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Lore"                "The Witch Doctor recycles the bones of fallen friends and foes, using the powder as part of his arsenal of charms and alchemy."
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_damage"              "WARD DAMAGE:"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_int_to_dmg_pct"               	"%INT TO WARD DAMAGE:"

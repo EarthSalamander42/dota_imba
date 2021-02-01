@@ -28,7 +28,7 @@
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_int_steal"					"INT STEAL:"
 "DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_int_steal_duration"		"INT STEAL DURATION:"
 		
-"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_aghanim_description"          "<font color='#FF7800'>Causes Glaives to pierce spell immunity.</font>"
+"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_scepter_description"          "<font color='#FF7800'>Causes Glaives to pierce spell immunity.</font>"
 
 "DOTA_Tooltip_modifier_imba_silencer_glaives_int_damage"                "Decreased Intelligence"
 "DOTA_Tooltip_modifier_imba_silencer_glaives_int_damage_Description"                "Temporarily, your arguments are no match for Nortrom."
@@ -62,7 +62,7 @@
 "DOTA_Tooltip_ability_imba_silencer_last_word_int_multiplier"							"INT MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_silencer_last_word_silence_duration"                     "SILENCE DURATION:"
 "DOTA_Tooltip_ability_imba_silencer_last_word_scepter_radius"					"SCEPTER RADIUS:"
-"DOTA_Tooltip_ability_imba_silencer_last_word_aghanim_description"				"Causes Last Word to become an AoE ability."
+"DOTA_Tooltip_ability_imba_silencer_last_word_scepter_description"				"Causes Last Word to become an AoE ability."
 
 "DOTA_Tooltip_modifier_imba_silencer_last_word_debuff"                  "Last Word"
 "DOTA_Tooltip_modifier_imba_silencer_last_word_debuff_Description"		"Reducing max mana regeneration by %fMODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE%%%. Casting spells will repeat Last Word after silence ends."

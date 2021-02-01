@@ -37,13 +37,15 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		Timers:CreateTimer(2.0, function()
-			if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
-				BOTS_ENABLED = true
-			end
+			if IsInToolsMode() then
+				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+					BOTS_ENABLED = true
+				end
 
-			if BOTS_ENABLED == true then
-				SendToServerConsole('sm_gmode 1')
-				SendToServerConsole('dota_bot_populate')
+				if BOTS_ENABLED == true then
+					SendToServerConsole('sm_gmode 1')
+					SendToServerConsole('dota_bot_populate')
+				end
 			end
 
 			if IsOverthrowMap() then
@@ -297,19 +299,22 @@ function GameMode:OnDisconnect(keys)
 		return nil
 		-- Else, start tracking player's reconnect/abandon state
 	else
-		-- Fetch player's player and hero information
-		if keys.PlayerID == nil or keys.PlayerID == -1 then
-			return
-		end
 		local player_id = keys.PlayerID
 		local player_name = keys.name
+
+		-- Fetch player's player and hero information
+		if player_id == nil or player_id == -1 then
+			return
+		end
+
 		if PlayerResource:GetPlayer(player_id):GetAssignedHero() == nil then
 			return
 		end
+
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		local line_duration = 7
-
 		local disconnect_time = 0
+
 		Timers:CreateTimer(1, function()
 			-- Keep track of time disconnected
 			disconnect_time = disconnect_time + 1
@@ -317,9 +322,9 @@ function GameMode:OnDisconnect(keys)
 			-- If the player has abandoned the game, set his gold to zero and distribute passive gold towards its allies
 			if disconnect_time >= ABANDON_TIME then
 				-- Abandon message
-				Notifications:BottomToAll({ hero = hero:GetUnitName(), duration = line_duration })
-				Notifications:BottomToAll({ text = player_name .. " ", duration = line_duration, continue = true })
-				Notifications:BottomToAll({ text = "#imba_player_abandon_message", duration = line_duration, style = { color = "DodgerBlue" }, continue = true })
+				Notifications:BottomToAll({hero = hero:GetUnitName(), duration = line_duration})
+				Notifications:BottomToAll({text = player_name .. " ", duration = line_duration, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
 				print("player " .. player_id .. " has abandoned the game.")
 
@@ -1256,8 +1261,10 @@ function GameMode:OnThink()
 	end
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		if GetMapName() == "imba_demo" or GameRules:IsCheatMode() then return 1 end
+
 		-- End the game if one team completely abandoned
-		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 and not IsInToolsMode() and not GameRules:IsCheatMode() then
+--		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 and not IsInToolsMode() and not GameRules:IsCheatMode() then
 			if not TEAM_ABANDON then
 				TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
 				TEAM_ABANDON[2] = { FULL_ABANDON_TIME, false, 0 }
@@ -1270,22 +1277,32 @@ function GameMode:OnThink()
 			for ID = 0, PlayerResource:GetPlayerCount() - 1 do
 				local team = PlayerResource:GetTeam(ID)
 
-				if PlayerResource:GetConnectionState(ID) ~= 2 then
+				if PlayerResource:GetConnectionState(ID) ~= 2 and PlayerResource:GetHasAbandonedDueToLongDisconnect(ID) then
 					-- if disconnected then
 					TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] - 1
 				end
+			end
+
+			for team = 2, 3 do
+--				print(team, "Abandom time remaining / Team abandoning? / Players Remaining:", TEAM_ABANDON[team][1], TEAM_ABANDON[team][2], TEAM_ABANDON[team][3])
 
 				if TEAM_ABANDON[team][3] > 0 then
-					TEAM_ABANDON[team][2] = false
-				else
-					if TEAM_ABANDON[team][2] == false then
-						local abandon_text = "#imba_team_good_abandon_message"
-						if team == 3 then
-							abandon_text = "#imba_team_bad_abandon_message"
-						end
-						abandon_text = string.gsub(abandon_text, "{s:seconds}", TEAM_ABANDON[team][1])
-						Notifications:BottomToAll({text = abandon_text, duration = 1.0})
+					if TEAM_ABANDON[team][2] ~= false then
+						TEAM_ABANDON[team][2] = false
 					end
+
+					if not TEAM_ABANDON[team][1] == FULL_ABANDON_TIME then
+						TEAM_ABANDON[team][1] = FULL_ABANDON_TIME
+					end
+				else
+					local abandon_text = "#imba_team_good_abandon_message"
+
+					if team == 3 then
+						abandon_text = "#imba_team_bad_abandon_message"
+					end
+
+					abandon_text = string.gsub(abandon_text, "{s:seconds}", TEAM_ABANDON[team][1])
+					Notifications:BottomToAll({text = abandon_text, duration = 1.0})
 
 					TEAM_ABANDON[team][2] = true
 					TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] - 1
@@ -1299,7 +1316,7 @@ function GameMode:OnThink()
 					end
 				end
 			end
-		end
+--		end
 	end
 
 	-- What the hell
@@ -1356,7 +1373,7 @@ function GameMode:OnTeamKillCredit(keys)
 				return
 			end
 
-			if PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
+			if PlayerResource:GetPlayer(victim_id).GetAssignedHero and PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
 				return
 			end
 

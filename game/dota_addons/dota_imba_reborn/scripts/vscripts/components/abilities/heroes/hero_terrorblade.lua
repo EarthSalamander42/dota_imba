@@ -62,9 +62,11 @@ function imba_terrorblade_reflection:GetIntrinsicModifierName()
 end
 
 function imba_terrorblade_reflection:OnSpellStart()
+	if not IsServer() then return end
+
 	local spawn_range	= 108
 	local slow_modifier	= nil
-	
+
 	if self:GetCaster():GetName() == "npc_dota_hero_terrorblade" then
 		if RollPercentage(1) then
 			if self:GetCaster():HasModifier("modifier_imba_terrorblade_metamorphosis") then
@@ -89,7 +91,7 @@ function imba_terrorblade_reflection:OnSpellStart()
 					"terrorblade_terr_reflection_07"
 				}
 			end
-			
+
 			if not self.responses_morph then
 				self.responses_morph = 
 				{
@@ -100,7 +102,7 @@ function imba_terrorblade_reflection:OnSpellStart()
 					"terrorblade_terr_morph_reflection_07"
 				}
 			end
-			
+
 			if self:GetCaster():HasModifier("modifier_imba_terrorblade_metamorphosis") then
 				-- WHy isn't there a function that plays only on one unit but not on client? This function doesn't make the sound come out of the unit which is wrong, but no one else is supposed to hear these voicelines either. Ugh...
 				EmitSoundOnClient(self.responses_morph[RandomInt(1, #self.responses_morph)], self:GetCaster():GetPlayerOwner())
@@ -116,9 +118,9 @@ function imba_terrorblade_reflection:OnSpellStart()
 		else
 			spawn_range	= 72
 		end
-		
+	
 		enemy:EmitSound("Hero_Terrorblade.Reflection")
-		
+	
 		local illusions = CreateIllusions(self:GetCaster(), enemy, {
 			outgoing_damage = self:GetTalentSpecialValueFor("illusion_outgoing_damage"),
 			incoming_damage	= -100,
@@ -129,13 +131,13 @@ function imba_terrorblade_reflection:OnSpellStart()
 			duration		= self:GetSpecialValueFor("illusion_duration") + (self:GetSpecialValueFor("infinity_duration_per_stack") * self:GetCaster():GetModifierStackCount("modifier_imba_terrorblade_reflection_infinity_mirror_stacks", self:GetCaster()))
 		}
 		, 1, spawn_range, false, true)
-		
+	
 		for _, illusion in pairs(illusions) do
 			illusion:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_unit", {enemy_entindex = enemy:entindex()})
 			-- Vanilla modifier to give the illusions that Terrorblade illusion texture
 			illusion:AddNewModifier(self:GetCaster(), self, "modifier_terrorblade_reflection_invulnerability", {})
 		end
-		
+
 		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_reflection_slow", {duration = self:GetSpecialValueFor("illusion_duration") * (1 - enemy:GetStatusResistance())})
 	end
 end
@@ -249,8 +251,10 @@ function imba_terrorblade_conjure_image:GetIntrinsicModifierName()
 end
 
 function imba_terrorblade_conjure_image:OnSpellStart()
+	if not IsServer() then return end
+
 	self:GetCaster():EmitSound("Hero_Terrorblade.ConjureImage")
-	
+
 	if self:GetCaster():GetName() == "npc_dota_hero_terrorblade" then
 		if RollPercentage(2) then
 			if self:GetCaster():HasModifier("modifier_imba_terrorblade_metamorphosis") then
@@ -274,7 +278,7 @@ function imba_terrorblade_conjure_image:OnSpellStart()
 					"terrorblade_terr_demon_11",
 				}
 			end
-			
+
 			if not self.responses_morph then
 				self.responses_morph = 
 				{
@@ -284,7 +288,7 @@ function imba_terrorblade_conjure_image:OnSpellStart()
 					"terrorblade_terr_morph_demon_11",
 				}
 			end
-			
+
 			if self:GetCaster():HasModifier("modifier_imba_terrorblade_metamorphosis") then
 				-- WHy isn't there a function that plays only on one unit but not on client? This function doesn't make the sound come out of the unit which is wrong, but no one else is supposed to hear these voicelines either. Ugh...
 				EmitSoundOnClient(self.responses_morph[RandomInt(1, #self.responses_morph)], self:GetCaster():GetPlayerOwner())
@@ -293,7 +297,7 @@ function imba_terrorblade_conjure_image:OnSpellStart()
 			end
 		end
 	end
-	
+
 	local illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), {
 		outgoing_damage = self:GetSpecialValueFor("illusion_outgoing_damage"),
 		incoming_damage	= self:GetSpecialValueFor("illusion_incoming_damage"),
@@ -304,12 +308,12 @@ function imba_terrorblade_conjure_image:OnSpellStart()
 		duration		= self:GetSpecialValueFor("illusion_duration")
 	}
 	, 1, 108, false, true)
-	
+
 	if illusions then
 		for _, illusion in pairs(illusions) do
 			-- Vanilla modifier to give the illusions that Terrorblade illusion texture
 			illusion:AddNewModifier(self:GetCaster(), self, "modifier_terrorblade_conjureimage", {})
-			
+
 			illusion:StartGesture(ACT_DOTA_CAST_ABILITY_3_END)
 		end
 	end
@@ -362,11 +366,13 @@ function modifier_imba_terrorblade_conjure_image_autocast_cooldown:IgnoreTenacit
 ------------------------------------
 
 function imba_terrorblade_metamorphosis:OnSpellStart()
+	if not IsServer() then return end
+
 -- Hero_Terrorblade.Metamorphosis
 -- Hero_Terrorblade.Metamorphosis.Scepter
 -- Hero_Terrorblade.Metamorphosis.Fear
 	self:GetCaster():EmitSound("Hero_Terrorblade.Metamorphosis")
-	
+
 	if self:GetCaster():GetName() == "npc_dota_hero_terrorblade" then
 		if not self.responses then
 			self.responses = 
@@ -388,12 +394,12 @@ function imba_terrorblade_metamorphosis:OnSpellStart()
 		
 		EmitSoundOnClient(self.responses[RandomInt(1, #self.responses)], self:GetCaster():GetPlayerOwner())
 	end
-	
+
 	self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_3)
-	
+
 	self:GetCaster():RemoveModifierByName("modifier_imba_terrorblade_metamorphosis")
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_terrorblade_metamorphosis_transform", {duration = self:GetSpecialValueFor("transformation_time")})
-	
+
 	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("metamorph_aura_tooltip"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
 		if unit ~= self:GetCaster() and unit:IsIllusion() and unit:GetPlayerOwnerID() == self:GetCaster():GetPlayerOwnerID() and unit:GetName() == self:GetCaster():GetName() then
 			unit:RemoveModifierByName("modifier_imba_terrorblade_metamorphosis")
@@ -588,13 +594,16 @@ function modifier_imba_terrorblade_metamorphosis_transform_aura_applier:GetAuraE
 ----------------------------------
 
 function imba_terrorblade_terror_wave:IsInnateAbility()	return true end
+function imba_terrorblade_terror_wave:IsDisabledByDefault()	return true end
 
 -- The wave is released 0.6 seconds after cast, starting at the original cast location.
 -- The cast sound is global and audible to the enemy through the fog of war.
 -- The wave travels outwards at a speed of 1000, taking 1.6 seconds to reach max radius.
 function imba_terrorblade_terror_wave:OnSpellStart()
+	if not IsServer() then return end
+
 	EmitGlobalSound("Hero_Terrorblade.Metamorphosis.Scepter")	
-	
+
 	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_terrorblade_metamorphosis_fear_thinker", {duration = self:GetSpecialValueFor("spawn_delay") + (self:GetSpecialValueFor("radius") / self:GetSpecialValueFor("speed"))}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 end
 
@@ -688,6 +697,8 @@ function imba_terrorblade_power_rend:OnHeroCalculateStatBonus()
 end
 
 function imba_terrorblade_power_rend:OnSpellStart()
+	if not IsServer() then return end
+
 	local target = self:GetCursorTarget()
 	
 	if target:TriggerSpellAbsorb(self) then return end
@@ -808,13 +819,15 @@ function imba_terrorblade_sunder:GetCooldown(level)
 end
 
 function imba_terrorblade_sunder:OnSpellStart()
+	if not IsServer() then return end
+
 	local target = self:GetCursorTarget()
-	
+
 	if target:TriggerSpellAbsorb(self) then return end
-	
+
 	local caster_health_percent	= self:GetCaster():GetHealthPercent()
 	local target_health_percent	= target:GetHealthPercent()
-	
+
 	self:GetCaster():EmitSound("Hero_Terrorblade.Sunder.Cast")
 	target:EmitSound("Hero_Terrorblade.Sunder.Target")
 
@@ -834,7 +847,7 @@ function imba_terrorblade_sunder:OnSpellStart()
 				"terrorblade_terr_sunder_11"
 			}
 		end
-		
+
 		if not self.responses_morph then
 			self.responses_morph = 
 			{
@@ -850,7 +863,7 @@ function imba_terrorblade_sunder:OnSpellStart()
 				"terrorblade_terr_morph_sunder_11"
 			}
 		end
-		
+
 		if self:GetCaster():HasModifier("modifier_imba_terrorblade_metamorphosis") then
 			-- WHy isn't there a function that plays only on one unit but not on client? This function doesn't make the sound come out of the unit which is wrong, but no one else is supposed to hear these voicelines either. Ugh...
 			EmitSoundOnClient(self.responses_morph[RandomInt(1, #self.responses_morph)], self:GetCaster():GetPlayerOwner())
@@ -858,7 +871,7 @@ function imba_terrorblade_sunder:OnSpellStart()
 			EmitSoundOnClient(self.responses[RandomInt(1, #self.responses)], self:GetCaster():GetPlayerOwner())
 		end
 	end
-	
+
 	local sunder_particle_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:SetParticleControlEnt(sunder_particle_1, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(sunder_particle_1, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
@@ -868,7 +881,7 @@ function imba_terrorblade_sunder:OnSpellStart()
 	ParticleManager:SetParticleControlEnt(sunder_particle_2, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(sunder_particle_2, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(sunder_particle_2)
-	
+
 	self:GetCaster():SetHealth(self:GetCaster():GetMaxHealth() * math.max(target_health_percent, self:GetSpecialValueFor("hit_point_minimum_pct")) * 0.01)
 	target:SetHealth(target:GetMaxHealth() * math.max(caster_health_percent, self:GetSpecialValueFor("hit_point_minimum_pct")) * 0.01)
 end

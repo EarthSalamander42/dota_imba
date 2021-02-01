@@ -56,7 +56,7 @@
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own <font color='#FF7800'>indefinitely</font> or until he dies.\n<font color='#FF7800'>All Copy:</font> Spell Steal can also target creeps.\n<font color='#FF7800'>Clandestine Librarian:</font> Grants %clandestine_spell_amp_per_cast%%% spell amplification every time Spell Steal is cast, up to a maximum of %clandestine_max_spell_amp% stacks. %clandestine_loss_pct%%% of the stacks (rounded down) are lost upon death."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Lore"						"...but even their lesser magics can be a source of much utility..."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Note0"						"Cannot steal Monkey King's Wukong's Command or Void Spirit's Aether Remnant. Attempting to do so results in a cast error."
-"DOTA_Tooltip_ability_imba_rubick_spellsteal_aghanim_description"		"Decreases cooldown, increases cast range and upgrades the spell to the Scepter level.\n<font color='#FF7800'>Copies the target's spell amplification values, adding it to Rubick's own. Expires on death or when another spell is stolen.</font>"
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_scepter_description"		"Decreases cooldown, increases cast range and upgrades the spell to the Scepter level.\n<font color='#FF7800'>Copies the target's spell amplification values, adding it to Rubick's own. Expires on death or when another spell is stolen.</font>"
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_cooldown_scepter"			"SCEPTER COOLDOWN:"
 
 "dota_hud_error_spell_steal_banned_ability"								"This ability cannot be stolen due to crash issues!"	

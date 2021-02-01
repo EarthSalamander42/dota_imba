@@ -1,6 +1,7 @@
 // #base heroes/broodmother/units.txt
 #base heroes/ember_spirit/units.txt
 #base heroes/invoker/units.txt
+#base heroes/mars/units.txt
 #base heroes/undying/units.txt
 
 #base custom_heroes/hell_empress/hero.txt
@@ -316,8 +317,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"25"
-		"AttackDamageMax"			"33"
+		"AttackDamageMin"			"24"
+		"AttackDamageMax"			"32"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.5"
 		"AttackAnimationPoint"		"0.4"
@@ -423,7 +424,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"240"
+		"StatusHealth"				"220"
 		"StatusHealthRegen"			"0.4"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -501,7 +502,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"270"
+		"StatusHealth"				"240"
 		"StatusHealthRegen"			"0.4"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -571,8 +572,8 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"440"
-		"MovementTurnRate"			"1.0"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"0.5"
 		"FollowRange"				"250"
 
 		// Status
@@ -713,9 +714,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"25"
-		"BountyGoldMin"				"25"
-		"BountyGoldMax"				"25"
+		"BountyXP"					"0"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"20"
 
 		// Movement
 		//----------------------------------------------------------------
@@ -787,9 +788,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"50"
-		"BountyGoldMin"				"50"
-		"BountyGoldMax"				"50"
+		"BountyXP"					"0"
+		"BountyGoldMin"				"40"
+		"BountyGoldMax"				"40"
 
 		// Movement
 		//----------------------------------------------------------------
@@ -799,7 +800,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"20"
+		"StatusHealth"				"16"
 		"StatusHealthRegen"			"0.0"
 		"StatusMana"				"1000"
 		"StatusManaRegen"			"100"
@@ -861,9 +862,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"75"
-		"BountyGoldMin"				"75"
-		"BountyGoldMax"				"75"
+		"BountyXP"					"0"
+		"BountyGoldMin"				"60"
+		"BountyGoldMax"				"60"
 
 		// Movement
 		//----------------------------------------------------------------
@@ -873,7 +874,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"24"
+		"StatusHealth"				"16"
 		"StatusHealthRegen"			"0.0"
 		"StatusMana"				"1000"
 		"StatusManaRegen"			"100"
@@ -935,9 +936,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"100"
-		"BountyGoldMin"				"100"
-		"BountyGoldMax"				"100"
+		"BountyXP"					"0"
+		"BountyGoldMin"				"80"
+		"BountyGoldMax"				"80"
 
 		// Movement
 		//----------------------------------------------------------------
@@ -947,7 +948,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"28"
+		"StatusHealth"				"16"
 		"StatusHealthRegen"			"0.0"
 		"StatusMana"				"1000"
 		"StatusManaRegen"			"100"
@@ -2278,68 +2279,6 @@
 	}
 
 	//=================================================================================
-	// Lone Druid Spirit Bears
-	//=================================================================================
-	"npc_dota_lone_druid_bear1"
-	{										
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"3"			// Physical protection.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealthRegen"			"6"			// Health regeneration rate.
-	}
-
-	"npc_dota_lone_druid_bear2"
-	{										
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"6"			// Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackRate"				"1.45"		// Speed of attack.
-		
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"2600"		// Base health.
-		"StatusHealthRegen"			"8"			// Health regeneration rate.	 
-	}
-
-	"npc_dota_lone_druid_bear3"
-	{										
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"9"			// Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackRate"				"1.25"		// Speed of attack.   
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"3700"		// Base health.
-		"StatusHealthRegen"			"10"			// Health regeneration rate.
-	}
-
-	"npc_dota_lone_druid_bear4"
-	{										
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"12"			// Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackRate"				"1.05"		// Speed of attack.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"4800"		// Base health.
-		"StatusHealthRegen"			"12"			// Health regeneration rate.
-	}
-
-	//=================================================================================
 	// Frozen Sigil 
 	//=================================================================================
 	"npc_dota_tusk_frozen_sigil1"
@@ -3230,7 +3169,7 @@
 		//----------------------------------------------------------------
 		"BountyXP"					"20"
 		"BountyGoldMin"				"18"
-		"BountyGoldMax"				"23"
+		"BountyGoldMax"				"24"
 
 		// Movement
 		//----------------------------------------------------------------
@@ -4667,24 +4606,24 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2250"		// Base health.
+		"StatusHealth"				"1400"		// Base health.
 		
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "5"         // Physical protection.
+		"ArmorPhysical"             "3"         // Physical protection.
 				
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"40"		// Damage range min.
-		"AttackDamageMax"			"50"		// Damage range max.	
+		"AttackDamageMin"			"25"		// Damage range min.
+		"AttackDamageMax"			"35"		// Damage range max.	
 	}   
 
 	"npc_dota_brewmaster_earth_2"
 	{
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3300"		// Base health.	
+		"StatusHealth"				"2200"		// Base health.	
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4693,25 +4632,25 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"70"		// Damage range min.
-		"AttackDamageMax"			"80"		// Damage range max.	
+		"AttackDamageMin"			"55"		// Damage range min.
+		"AttackDamageMax"			"65"		// Damage range max.	
 	}   
 
 	"npc_dota_brewmaster_earth_3"
 	{
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"4500"		// Base health.
+		"StatusHealth"				"3000"		// Base health.
 	
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "5"         // Physical protection.	
+		"ArmorPhysical"             "7"         // Physical protection.	
 				
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"100"		// Damage range min.
-		"AttackDamageMax"			"110"		// Damage range max.	
+		"AttackDamageMin"			"85"		// Damage range min.
+		"AttackDamageMax"			"95"		// Damage range max.	
 	}   
 
 	"npc_dota_brewmaster_earth_4"
@@ -4922,36 +4861,36 @@
 	{                                       
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1250"		// Base health.
+		"StatusHealth"				"1000"		// Base health.
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"30"		// Damage range min.
-		"AttackDamageMax"			"40"		// Damage range max.			
+		"AttackDamageMin"			"25"		// Damage range min.
+		"AttackDamageMax"			"35"		// Damage range max.			
 
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"3600"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1600"		// Range of vision at night time.		
+		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.		
 	}   
 
 	"npc_dota_brewmaster_storm_2"
 	{                                       
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1875"		// Base health.
+		"StatusHealth"				"1800"		// Base health.
 		
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"50"		// Damage range min.
-		"AttackDamageMax"			"60"		// Damage range max.	
+		"AttackDamageMin"			"45"		// Damage range min.
+		"AttackDamageMax"			"55"		// Damage range max.	
 
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"3600"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1600"		// Range of vision at night time.		
+		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.		
 	}   
 
 	"npc_dota_brewmaster_storm_3"
@@ -4968,8 +4907,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"3600"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1600"		// Range of vision at night time.
+		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
 	} 
 
 	"npc_dota_brewmaster_storm_4"
@@ -5192,13 +5131,13 @@
 	{                                       
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1625"		// Base health.
+		"StatusHealth"				"1300"		// Base health.
 		
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"100"		// Damage range min.
-		"AttackDamageMax"			"110"		// Damage range max.		
+		"AttackDamageMin"			"75"		// Damage range min.
+		"AttackDamageMax"			"85"		// Damage range max.		
 		"AttackRate"				"1.35"		// Speed of attack.
 	}   
 
@@ -5206,14 +5145,14 @@
 	{                                       
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1625"		// Base health.
+		"StatusHealth"				"1300"		// Base health.
 		
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"200"		// Damage range min.
-		"AttackDamageMax"			"210"		// Damage range max.		
-		"AttackRate"				"1.2"		// Speed of attack.	
+		"AttackDamageMin"			"125"		// Damage range min.
+		"AttackDamageMax"			"135"		// Damage range max.		
+		"AttackRate"				"1.35"		// Speed of attack.	
 	}   
 
 	"npc_dota_brewmaster_fire_3"
@@ -5225,9 +5164,9 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"300"		// Damage range min.
-		"AttackDamageMax"			"310"		// Damage range max.		
-		"AttackRate"				"1.05"		// Speed of attack.
+		"AttackDamageMin"			"175"		// Damage range min.
+		"AttackDamageMax"			"185"		// Damage range max.		
+		"AttackRate"				"1.35"		// Speed of attack.
 	}
 
 	"npc_dota_brewmaster_fire_4"
@@ -5432,28 +5371,28 @@
 	{
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"20"		// Base health.
+		"StatusHealth"				"16"		// Base health.
 	}
 
 	"npc_dota_unit_tombstone2"
 	{
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"28"		// Base health.
+		"StatusHealth"				"20"		// Base health.
 	}
 
 	"npc_dota_unit_tombstone3"
 	{
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"36"		// Base health.
+		"StatusHealth"				"24"		// Base health.
 	}
 
 	"npc_dota_unit_tombstone4"
 	{
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"44"		// Base health.
+		"StatusHealth"				"28"		// Base health.
 	}
 
 	"npc_dota_visage_familiar1"
@@ -5468,8 +5407,8 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackDamageMin"			"48"			// Damage range min.
-		"AttackDamageMax"			"48"			// Damage range max.
+		"AttackDamageMin"			"25"			// Damage range min.
+		"AttackDamageMax"			"25"			// Damage range max.
 
 		// Status
 		//----------------------------------------------------------------
@@ -5484,16 +5423,16 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"2"			// Physical protection.
+		"ArmorPhysical"				"1"			// Physical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackDamageMin"			"96"			// Damage range min.
-		"AttackDamageMax"			"96"			// Damage range max.
+		"AttackDamageMin"			"50"			// Damage range min.
+		"AttackDamageMax"			"50"			// Damage range max.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"850"		// Base health.
+		"StatusHealth"				"600"		// Base health.
 	}
 
 	"npc_dota_visage_familiar3"
@@ -5504,16 +5443,16 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"			// Physical protection.
+		"ArmorPhysical"				"2"			// Physical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackDamageMin"			"144"			// Damage range min.
-		"AttackDamageMax"			"144"			// Damage range max.
+		"AttackDamageMin"			"75"			// Damage range min.
+		"AttackDamageMax"			"75"			// Damage range max.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1200"		// Base health.
+		"StatusHealth"				"700"		// Base health.
 	}
 
 	//=================================================================================
@@ -5747,64 +5686,6 @@
 	//=================================================================================	
 	"npc_dota_beastmaster_hawk_1"
 	{
-		// Movement
-		//----------------------------------------------------------------
-		"MovementSpeed"             "400"       // Speed.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "200"        // Base health.
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "800"       // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-	}   
-
-	"npc_dota_beastmaster_hawk_2"
-	{
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "30"        // Gold earned min.
-		"BountyGoldMax"             "30"        // Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementSpeed"             "450"       // Speed.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "250"        // Base health.
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "900"       // Range of vision during day light.
-		"VisionNighttimeRange"      "900"       // Range of vision at night time.
-	} 
-		
-	"npc_dota_beastmaster_hawk_3"
-	{
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"             "30"        // Gold earned min.
-		"BountyGoldMax"             "30"        // Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementSpeed"             "500"       // Speed.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "300"        // Base health.
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1000"       // Range of vision during day light.
-		"VisionNighttimeRange"      "1000"       // Range of vision at night time.
-	} 
-		
-	"npc_dota_beastmaster_hawk_4"
-	{
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"                  "77"        // Experience earn.
@@ -5813,16 +5694,80 @@
 
 		// Movement
 		//----------------------------------------------------------------
-		"MovementSpeed"             "550"       // Speed.
+		"MovementSpeed"             "300"       // Speed.
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "350"        // Base health.
+		"StatusHealth"              "150"        // Base health.
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1100"       // Range of vision during day light.
-		"VisionNighttimeRange"      "1100"       // Range of vision at night time.
+		"VisionDaytimeRange"        "600"       // Range of vision during day light.
+		"VisionNighttimeRange"      "600"       // Range of vision at night time.
+	}   
+
+	"npc_dota_beastmaster_hawk_2"
+	{
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"             "40"        // Gold earned min.
+		"BountyGoldMax"             "40"        // Gold earned max.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementSpeed"             "340"       // Speed.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"              "200"        // Base health.
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "700"       // Range of vision during day light.
+		"VisionNighttimeRange"      "700"       // Range of vision at night time.
+	} 
+		
+	"npc_dota_beastmaster_hawk_3"
+	{
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"             "50"        // Gold earned min.
+		"BountyGoldMax"             "50"        // Gold earned max.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementSpeed"             "380"       // Speed.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"              "250"        // Base health.
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "800"       // Range of vision during day light.
+		"VisionNighttimeRange"      "800"       // Range of vision at night time.
+	} 
+		
+	"npc_dota_beastmaster_hawk_4"
+	{
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "77"        // Experience earn.
+		"BountyGoldMin"             "60"        // Gold earned min.
+		"BountyGoldMax"             "60"        // Gold earned max.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementSpeed"             "420"       // Speed.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"              "300"        // Base health.
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "900"       // Range of vision during day light.
+		"VisionNighttimeRange"      "900"       // Range of vision at night time.
 	} 
 	
 	//=================================================================================
@@ -5832,60 +5777,50 @@
 	{
 		// Attack
 		//----------------------------------------------------------------
-		"AttackDamageMin"			"20"		// Damage range min.
-		"AttackDamageMax"			"20"		// Damage range max.
+		"AttackDamageMin"			"16"		// Damage range min.
+		"AttackDamageMax"			"16"		// Damage range max.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"300"		// Base health.
+	}	
+
+	"npc_dota_beastmaster_boar_2"
+	{										
+		// Attack
+		//----------------------------------------------------------------
+		"AttackDamageMin"			"32"		// Damage range min.
+		"AttackDamageMax"			"32"		// Damage range max. 
 
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"450"		// Base health.
 	}	
 
-	"npc_dota_beastmaster_boar_2"
+	"npc_dota_beastmaster_boar_3"
 	{										
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"2"			// Physical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackDamageMin"			"50"		// Damage range min.
-		"AttackDamageMax"			"50"		// Damage range max. 
+		"AttackDamageMin"			"48"		// Damage range min.
+		"AttackDamageMax"			"48"		// Damage range max.	   
 
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"600"		// Base health.
 	}	
 
-	"npc_dota_beastmaster_boar_3"
+	"npc_dota_beastmaster_boar_4"
 	{										
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"			// Physical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackDamageMin"			"80"		// Damage range min.
-		"AttackDamageMax"			"80"		// Damage range max.	   
+		"AttackDamageMin"			"64"		// Damage range min.
+		"AttackDamageMax"			"64"		// Damage range max.	
 
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"750"		// Base health.
-	}	
-
-	"npc_dota_beastmaster_boar_4"
-	{										
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"6"			// Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackDamageMin"			"110"		// Damage range min.
-		"AttackDamageMax"			"110"		// Damage range max.	
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"900"		// Base health.
 	}	
 	
 	//=================================================================================
@@ -5981,8 +5916,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "100"            				// Damage range min.
-		"AttackDamageMax"           "100"            				// Damage range max.
+		"AttackDamageMin"           "85"            				// Damage range min.
+		"AttackDamageMax"           "85"            				// Damage range max.
 		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"                "1.5"      						// Speed of attack.
 		"AttackAnimationPoint"      "0.3"       					// Normalized time in animation cycle to attack.
@@ -6005,8 +5940,8 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"                  "31"        // Experience earn.
-		"BountyGoldMin"             "26"        // Gold earned min.
-		"BountyGoldMax"             "38"        // Gold earned max.
+		"BountyGoldMin"             "28"        // Gold earned min.
+		"BountyGoldMax"             "36"        // Gold earned max.
 
 		// Status
 		//----------------------------------------------------------------
@@ -6051,8 +5986,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "150"            				// Damage range min.
-		"AttackDamageMax"           "150"            				// Damage range max.
+		"AttackDamageMin"           "120"            				// Damage range min.
+		"AttackDamageMax"           "120"            				// Damage range max.
 		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"                "1.5"      						// Speed of attack.
 		"AttackAnimationPoint"      "0.3"       					// Normalized time in animation cycle to attack.
@@ -7020,98 +6955,98 @@
 	//=================================================================================================================
 	// HERO: Storegga // Need to be duplicated in npc_units_custom.txt
 	//=================================================================================================================
-//	"npc_dota_hero_storegga"
-//	{
-//		// General
-//		//-------------------------------------------------------------------------------------------------------------
-//		"BaseClass"					"npc_dota_hero_tiny"
-//		"HeroID"					"121"
-//		"Model"						"models/heroes/tiny_01/tiny_01.vmdl"
-//		"ModelScale"				"1.10000"
-//		"SoundSet"					"Hero_Tiny"
-//
-//		// Armor
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ArmorPhysical"				"8"									// Physical protection.
-//		"MagicalResistance"			"25"								// Magical protection (percentage).
-//
-//		// Abilities
-//		//-------------------------------------------------------------------------------------------------------------
-//		"Ability1"			"storegga_arm_slam"
-//		"Ability2"			"storegga_grab"
-//		"Ability3"			"storegga_grab_throw"
-//		"Ability4"			"generic_hidden"
-//		"Ability5"			"generic_hidden"
-//		"Ability6"			"storegga_avalanche"
-//
-//		// Talents
-//		//-------------------------------------------------------------------------------------------------------------
-//		"Ability10"					"special_bonus_magic_resistance_15"
-//		"Ability11"					"special_bonus_exp_boost_10"
-//		"Ability12"					"special_bonus_attack_damage_40"
-//		"Ability13"					"special_bonus_mp_300"
-//		"Ability14"					"special_bonus_cast_range_150" 
-//		"Ability15"					"special_bonus_spell_amplify_10"
-//		"Ability16"					"special_bonus_cooldown_reduction_15"
-//		"Ability17"					"special_bonus_gold_income_50"
-//
-//		// Attack
-//		//-------------------------------------------------------------------------------------------------------------
-//		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-//		"AttackDamageMin"			"59"							// Damage range min.
-//		"AttackDamageMax"			"75"							// Damage range max.
-//		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
-//		"AttackRate"				"1.700"							// Speed of attack.
-//		"AttackAnimationPoint"		"1.000"							// Normalized time in animation cycle to attack.
-//		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
-//		"AttackRange"				"150"							// Range within a target can be attacked.
-//		"ProjectileModel"			""								// Particle system model for projectile.
-//		"ProjectileSpeed"			"0"							// Speed of projectile.
-//		"HasInventory"				"1"
-//
-//		// Attributes
-//		//-------------------------------------------------------------------------------------------------------------
-//		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"	// Primary Attribute
-//		"AttributeBaseStrength"		"26"
-//		"AttributeStrengthGain"		"4.400000"
-//		"AttributeBaseAgility"		"19"
-//		"AttributeAgilityGain"		"2.900000"
-//		"AttributeBaseIntelligence"	"16"
-//		"AttributeIntelligenceGain"	"2.600000"
-//
-//		// Bounds
-//		//-------------------------------------------------------------------------------------------------------------
-//		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-//		"RingRadius"				"70"
-//		"HealthBarOffset"			"240"
-//
-//		// Movement
-//		//-------------------------------------------------------------------------------------------------------------
-//		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-//		"MovementSpeed"				"285"									// Speed.
-//		"MovementTurnRate"			"0.5"									// Turning rate.
-//
-//		// Status
-//		//-------------------------------------------------------------------------------------------------------------
-//		"StatusHealth"				"200"									// Base health.
-//		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
-//		"StatusMana"				"50"									// Base mana.
-//		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
-//
-//		// Team
-//		//-------------------------------------------------------------------------------------------------------------
-//		"TeamName"					"DOTA_TEAM_GOODGUYS"
-//		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-//		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-//		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-//
-//		// Vision
-//		//-------------------------------------------------------------------------------------------------------------
-//		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
-//		"VisionNighttimeRange"		"800"									// Range of vision at night time.
-//
-//		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
-//	}	
+	"npc_dota_hero_storegga"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_tiny"
+		"HeroID"					"255"
+		"Model"						"models/creeps/ice_biome/storegga/storegga.vmdl"
+		"ModelScale"				"0.8"
+		"SoundSet"					"Hero_Tiny"
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"8"									// Physical protection.
+		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"			"storegga_arm_slam"
+		"Ability2"			"storegga_grab"
+		"Ability3"			"storegga_grab_throw"
+		"Ability4"			"generic_hidden"
+		"Ability5"			"generic_hidden"
+		"Ability6"			"storegga_avalanche"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_exp_boost_10"
+		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability13"					"special_bonus_mp_300"
+		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_gold_income_50"
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"59"							// Damage range min.
+		"AttackDamageMax"			"75"							// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+		"AttackRate"				"1.700"							// Speed of attack.
+		"AttackAnimationPoint"		"1.000"							// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
+		"AttackRange"				"150"							// Range within a target can be attacked.
+		"ProjectileModel"			""								// Particle system model for projectile.
+		"ProjectileSpeed"			"0"							// Speed of projectile.
+		"HasInventory"				"1"
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"	// Primary Attribute
+		"AttributeBaseStrength"		"26"
+		"AttributeStrengthGain"		"4.400000"
+		"AttributeBaseAgility"		"19"
+		"AttributeAgilityGain"		"2.900000"
+		"AttributeBaseIntelligence"	"16"
+		"AttributeIntelligenceGain"	"2.600000"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"240"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"285"									// Speed.
+		"MovementTurnRate"			"0.5"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
+	}	
 
 
 	"npc_dota_mutation_spiderling_super_big"
@@ -9219,8 +9154,8 @@
 	{
 		// Attack
 		//----------------------------------------------------------------
-		"AttackDamageMin"			"60"		// Damage range min.
-		"AttackDamageMax"			"65"		// Damage range max.
+		"AttackDamageMin"			"35"		// Damage range min.
+		"AttackDamageMax"			"40"		// Damage range max.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -9230,7 +9165,7 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"600"		// Base health.
+		"StatusHealth"				"175"		// Base health.
 	}
 	
 	"npc_dota_life_stealer_banquet"

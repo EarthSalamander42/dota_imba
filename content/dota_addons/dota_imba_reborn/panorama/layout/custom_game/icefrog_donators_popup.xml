@@ -1,0 +1,24 @@
+<root>
+	<styles>
+    	<include src="file://{resources}/styles/custom_game/icefrog_donators_popup.css" />
+    	<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/icefrog_donators_popup.js" /> 
+	</scripts>
+
+	<snippets>
+		<snippet name="hpbar">
+			<Panel class="hpbar" hittest="false">
+				<Panel class="column" hittest="false">
+					<Label class="icefrog_blue" text="Icefrog Donators:"/>
+					<!-- Create label elements dynamically -->
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<Panel class="HUDRoot" hittest="false">
+	</Panel>
+</root>

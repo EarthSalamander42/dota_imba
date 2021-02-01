@@ -1289,6 +1289,7 @@ end
 function GameMode:BountyRuneFilter(keys)
 	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
 
+
 	self.player_counter = self.player_counter or 1
 
 	-- Initialize the table of people on the bounty rune acquirer's team on the first instance
@@ -1328,7 +1329,7 @@ function GameMode:BountyRuneFilter(keys)
 		local alchemy_bounty = 0
 
 		-- #7 Talent: Moar gold from bounty runes (should return 0 for that if the owner doesn't have it)
-		alchemy_bounty = keys.gold_bounty * (target:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") + target:FindTalentValue("special_bonus_imba_alchemist_7")) / 100
+		alchemy_bounty = keys.gold_bounty * (target:FindAbilityByName("imba_alchemist_goblins_greed"):GetVanillaAbilitySpecial("bounty_multiplier") + target:FindTalentValue("special_bonus_imba_alchemist_7"))
 
 		-- Return the DIFFERENCE between the calculated boost and the standard bounty rune amount since the Greevil's Greed owner is already getting keys.gold_bounty
 		local additional_bounty = alchemy_bounty - keys.gold_bounty
@@ -1340,6 +1341,12 @@ function GameMode:BountyRuneFilter(keys)
 	if #self.allies == self.player_counter then
 		self.player_counter = nil
 		self.allies = nil
+
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("set_bounty_rune_gold_text"), function()
+			if IMBA_COMBAT_EVENTS == false then
+				CustomGameEventManager:Send_ServerToAllClients("set_bounty_rune_gold", {gold = keys.gold_bounty})
+			end
+		end, 0.1)
 	else
 		self.player_counter = self.player_counter + 1
 	end

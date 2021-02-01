@@ -43,13 +43,15 @@ function modifier_wearable:OnIntervalThink()
 	end
 
 	for _, v in pairs(IMBA_INVISIBLE_MODIFIERS) do
-		if not hero:HasModifier(v) then
+		local mod = hero:FindModifierByName(v)
+
+		if not mod then
 			if cosmetic:HasModifier(v) then
 				cosmetic:RemoveModifierByName(v)
 			end
 		else
 			if not cosmetic:HasModifier(v) then
-				cosmetic:AddNewModifier(cosmetic, nil, v, {})
+				cosmetic:AddNewModifier(cosmetic, mod:GetAbility(), v, {})
 				break -- remove this break if you want to add multiple modifiers at the same time
 			end
 		end

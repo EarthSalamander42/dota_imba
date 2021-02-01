@@ -255,9 +255,19 @@ function imba_empress_hurl_through_hell:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(cast_pfx)
 
 	-- Iterate through caught enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, hurl_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for _, enemy in pairs(enemies) do
+	local enemies = FindUnitsInRadius(
+		caster:GetTeamNumber(),
+		target_loc,
+		nil,
+		hurl_radius,
+		self:GetAbilityTargetTeam(),
+		self:GetAbilityTargetType(),
+		self:GetAbilityTargetFlags(),
+		FIND_ANY_ORDER,
+		false
+	)
 
+	for _, enemy in pairs(enemies) do
 		-- Apply banishment modifier
 		enemy:AddNewModifier(caster, self, "modifier_imba_hurl_through_hell", {duration = hurl_duration})
 	end

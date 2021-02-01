@@ -43,8 +43,8 @@ function modifier_imba_assault_cuirass:GetAttributes()	return MODIFIER_ATTRIBUTE
 
 function modifier_imba_assault_cuirass:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
 	
@@ -155,10 +155,14 @@ end
 modifier_imba_assault_cuirass_aura_positive_effect = class({})
 
 function modifier_imba_assault_cuirass_aura_positive_effect:OnCreated()
-	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+	if not self:GetAbility() then
+		if IsServer() then
+			self:Destroy()
+		end
+
+		return
+	end
+
 	-- Ability specials
 	self.aura_as_ally = self:GetAbility():GetSpecialValueFor("aura_as_ally")
 	self.aura_armor_ally = self:GetAbility():GetSpecialValueFor("aura_armor_ally")

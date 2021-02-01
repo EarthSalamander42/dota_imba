@@ -73,8 +73,8 @@ function modifier_item_imba_blade_mail:GetAttributes()	return MODIFIER_ATTRIBUTE
 
 function modifier_item_imba_blade_mail:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	self.bonus_damage		= self:GetAbility():GetSpecialValueFor("bonus_damage")
 	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
@@ -82,8 +82,10 @@ function modifier_item_imba_blade_mail:OnCreated()
 	self.parent = self:GetParent()
 	self.ability = self:GetAbility()
 
-	if not self:GetParent():HasModifier("modifier_item_imba_blade_mail_passive") then
-		self.parent:AddNewModifier(self.parent, self.ability, "modifier_item_imba_blade_mail_passive", {})
+	if IsServer() then
+		if not self:GetParent():HasModifier("modifier_item_imba_blade_mail_passive") then
+			self:GetParent():AddNewModifier(self.parent, self.ability, "modifier_item_imba_blade_mail_passive", {})
+		end
 	end
 end
 
@@ -98,13 +100,13 @@ function modifier_item_imba_blade_mail:OnDestroy()
 end
 
 function modifier_item_imba_blade_mail:DeclareFunctions()
-    local decFuncs = {
+	local decFuncs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
-    }
+	}
 	
-    return decFuncs
+	return decFuncs
 end
 
 function modifier_item_imba_blade_mail:GetModifierPreAttack_BonusDamage()
@@ -145,8 +147,8 @@ end
 
 function modifier_item_imba_blade_mail_active:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 	
 	self.level				= self:GetAbility():GetLevel()
 	
@@ -301,7 +303,7 @@ function modifier_item_imba_blade_mail_passive:OnTakeDamage(params)
 
 	if params.unit == self:GetParent() and not params.attacker:IsBuilding() and params.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and bit.band(params.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(params.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION and params.damage_type == 1 then
 		local damage = self.return_damage + (params.damage / 100 * self.return_damage_pct)
-		print("Return damage:", damage)
+
 		ApplyDamage({
 			victim = params.attacker,
 			attacker = params.unit,

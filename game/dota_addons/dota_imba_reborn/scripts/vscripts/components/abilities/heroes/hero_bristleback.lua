@@ -201,7 +201,6 @@ function modifier_imba_bristleback_viscous_nasal_goo:OnCreated()
 	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(0, self:GetStackCount(), 0))
 	self:AddParticle(self.particle, false, false, -1, false, false)
-	
 end
 
 function modifier_imba_bristleback_viscous_nasal_goo:OnRefresh()

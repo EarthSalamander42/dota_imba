@@ -20,6 +20,24 @@ function GameMode:OnHeroFirstSpawn(hero)
 	-- Track the time the unit spawned (for IMBAfications or other custom checks)
 	hero.time_spawned = GameRules:GetGameTime()
 
+--[[
+	if IsInToolsMode() then
+		if hero:GetUnitName() == "npc_dota_hero_mars" then
+			Timers:CreateTimer(1.0, function()
+				local modifiers = hero:FindAllModifiers()
+
+				for _, modifier in pairs(modifiers) do
+					if modifier.GetName then
+						print(modifier:GetName())
+					end
+				end
+
+				return 1.0
+			end)
+		end
+	end
+--]]
+
 	if hero:IsIllusion() then
 		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 		return
@@ -58,7 +76,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 
 	-- Initialize innate hero abilities
-	hero:InitializeInnateAbilities()
+	hero:InitializeAbilities()
 
 	HeroSelection:Attachments(hero)
 
@@ -137,6 +155,8 @@ function GameMode:OnHeroFirstSpawn(hero)
 		if teleport_scroll then
 			teleport_scroll:EndCooldown()
 		end
+
+		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "vanillafier_init_tooltips_first_spawn", {})
 	end
 end
 
@@ -157,6 +177,11 @@ function GameMode:OnHeroSpawned(hero)
 	if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() and (not hero:HasModifier("modifier_meepo_divided_we_stand_lua") or not hero:HasModifier("modifier_custom_mechanics")) then
 		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_meepo_divided_we_stand_lua", {})
 		hero:AddNewModifier(hero:GetCloneSource(), nil, "modifier_custom_mechanics", {})
+	end
+
+	if hero:GetUnitName() == "npc_dota_hero_wisp" then
+		hero:SetModel("models/heroes/wisp/wisp.vmdl")
+		hero:SetOriginalModel("models/heroes/wisp/wisp.vmdl")
 	end
 
 	if hero:IsTempestDouble() then

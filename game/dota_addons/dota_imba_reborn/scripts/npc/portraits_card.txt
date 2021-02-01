@@ -4075,6 +4075,7 @@
 		"PortraitDesaturateHero"		"1"
 		"PortraitPlayIdleExpression"		"0"
 	}
+
 	"npc_dota_hero_sohei"
 	{
 		"cameras"

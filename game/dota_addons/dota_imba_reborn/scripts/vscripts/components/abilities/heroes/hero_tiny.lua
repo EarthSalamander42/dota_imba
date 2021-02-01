@@ -179,17 +179,14 @@ function modifier_imba_tiny_tree_animation:OnCreated()
 			--Adjust poition to match grow lvl 3
 			local pos = origin + (fv * 50)
 			self.tree:SetAbsOrigin(Vector(pos.x + 10, pos.y, (origin.z + 25)))
-		
 		elseif grow_lvl == 2 then
 			-- Adjust poition to match grow lvl 2
 			local pos = origin + (fv * 35)
 			self.tree:SetAbsOrigin(Vector(pos.x, pos.y, (origin.z + 25)))
-
 		elseif grow_lvl == 1 then
 			-- Adjust poition to match grow lvl 1
 			local pos = origin + (fv * 35) 
 			self.tree:SetAbsOrigin(Vector(pos.x, pos.y + 20, (origin.z + 25)))
-
 		elseif grow_lvl == 0 then
 			-- Adjust poition to match original no grow model
 			local pos = origin - (fv * 25) 

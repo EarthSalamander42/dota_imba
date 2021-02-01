@@ -44,7 +44,7 @@
 "DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"				"Fires off a bolt of scorching lightning at an enemy, dealing massive damage after a %effect_delay% second delay.\n<font color='#FF7800'>Forked Lightning:</font> Hits up to %bounce_amount% additional random enemies in %bounce_range% radius around the main target. Occurs after the target got hit by Laguna Blade."
 "DOTA_Tooltip_ability_imba_lina_laguna_blade_Note0"						"Bounce targets are chosen at random, including illusions and creeps."
 "DOTA_Tooltip_ability_imba_lina_laguna_blade_Lore"						"The air around Lina becomes so intensely torrid that it scorches foes with white-hot lightning."
-"DOTA_Tooltip_ability_imba_lina_laguna_blade_aghanim_description"		"Changes Laguna Blade's damage type to Pure, and allows it to slice through spell immunity."
+"DOTA_Tooltip_ability_imba_lina_laguna_blade_scepter_description"		"Changes Laguna Blade's damage type to Pure, and allows it to slice through spell immunity."
 "DOTA_Tooltip_ability_imba_lina_laguna_blade_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 ////===============================================================================================================

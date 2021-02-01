@@ -933,9 +933,15 @@ function modifier_imba_leshrac_lightning_storm_slow:IsDebuff() return true end
 function modifier_imba_leshrac_lightning_storm_slow:IsPurgable() return true end
 
 function modifier_imba_leshrac_lightning_storm_slow:OnCreated()
-	if IsServer() then
-		if not self:GetAbility() then self:Destroy() end
+	if not self:GetAbility() then
+		if IsServer() then
+			self:Destroy()
+		end
+
+		return
 	end
+
+	if not IsServer() then return end
 
 	-- Ability properties
 	self.caster = self:GetCaster()

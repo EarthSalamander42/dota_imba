@@ -34,7 +34,7 @@ end
 
 function item_imba_bottle:SetStorageRune(type)
 	--if self.RuneStorage then return end
-	if self:GetCaster().GetPlayerID then
+	if self:GetCaster().GetPlayerID and IMBA_COMBAT_EVENTS == true then
 		CustomGameEventManager:Send_ServerToTeam(self:GetCaster():GetTeam(), "create_custom_toast", {
 			type = "generic",
 			text = "#custom_toast_BottledRune",
