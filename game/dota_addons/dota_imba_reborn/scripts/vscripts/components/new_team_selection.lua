@@ -197,6 +197,32 @@ function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
 	GameRules:SetCustomGameSetupRemainingTime(self.start_time)
 end
 
+function TeamOrdering:OnPlayerReconnect(iPlayerID)
+	local player_team_set = false
+
+	for k, v in pairs(self.Radiant or {}) do
+		if v == iPlayerID then
+			local player = PlayerResource:GetPlayer(v)
+
+			player:SetTeam(DOTA_TEAM_GOODGUYS)
+			player_team_set = true
+
+			break
+		end
+	end
+
+	if player_team_set == false then
+		for k, v in pairs(self.Dire or {}) do
+			if v == iPlayerID then
+				local player = PlayerResource:GetPlayer(v)
+
+				player:SetTeam(DOTA_TEAM_BADGUYS)
+				break
+			end
+		end
+	end
+end
+
 -- utils
 function PrintArray(array)
     local text = ""
