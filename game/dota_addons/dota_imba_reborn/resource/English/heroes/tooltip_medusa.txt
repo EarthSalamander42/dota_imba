@@ -23,7 +23,7 @@
 "DOTA_Tooltip_ability_imba_medusa_mystic_snake_slow_duration"			"SLOW DURATION:"
 "DOTA_Tooltip_ability_imba_medusa_mystic_snake_stone_form_scepter_base"		"SCEPTER BASE DURATION:"
 "DOTA_Tooltip_ability_imba_medusa_mystic_snake_stone_form_scepter_increment"	"SCEPTER DURATION BOUNCE INCREASE:"
-"DOTA_Tooltip_ability_imba_medusa_mystic_snake_scepter_description"			"Causes Mystic Snake to turn enemies into stone for a short duration, increasing with each bounce."
+"DOTA_Tooltip_ability_imba_medusa_mystic_snake_aghanim_description"			"Causes Mystic Snake to turn enemies into stone for a short duration, increasing with each bounce."
 "DOTA_Tooltip_ability_imba_medusa_mana_shield"								"Mana Shield"
 "DOTA_Tooltip_ability_imba_medusa_mana_shield_Description"					"Creates a shield that absorbs %absorption_tooltip%%% of the incoming damage in exchange for Medusa's mana.\n<font color='#FF7800'>Meditate:</font> While Mana Shield is inactive, Medusa acquires mana equal to %meditate_mana_acquire_pct%%% of attack damage dealt. Does not work if passives are disabled, and loses %meditate_enchanted_reduction%%% efficacy for each individual buff of Split Shot's Enchanted Aim active."
 "DOTA_Tooltip_ability_imba_medusa_mana_shield_Lore"							"While Medusa was not gifted with eternal life upon birth, her curse bestowed her with impressive defensive powers."

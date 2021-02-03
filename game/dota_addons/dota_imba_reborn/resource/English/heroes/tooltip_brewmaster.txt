@@ -21,7 +21,7 @@
 "DOTA_Tooltip_ability_imba_brewmaster_cinder_brew_duration"						"DURATION:"
 "DOTA_Tooltip_ability_imba_brewmaster_cinder_brew_total_damage"					"IGNITE TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_brewmaster_cinder_brew_movement_slow"					"%MOVEMENT SLOW:"
-"DOTA_Tooltip_ability_imba_brewmaster_cinder_brew_scepter_description"			"<font color='#FF7800'>Applies a strong dispel to allies.</font>"
+"DOTA_Tooltip_ability_imba_brewmaster_cinder_brew_aghanim_description"			"<font color='#FF7800'>Applies a strong dispel to allies.</font>"
 
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler"							"Drunken Brawler"
 "DOTA_Tooltip_ability_imba_brewmaster_drunken_brawler_Lore"						"When Mangix won his title as the Brewmaster of the Order of Oyo, he also claimed his place in the mastery of inebriation."
@@ -41,7 +41,7 @@
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_Note2"						"When the spell ends, Brewmaster will take the place of an element in this order, assuming they are alive: Earth, Storm, Fire."
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_Note3"						"If Panda Co-Pilot is used on a target that is not the caster, the caster will have control of the Storm and Fire Brewlings, but will relinquish control to the target if the Earth Brewling is killed."
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_duration"						"DURATION:"
-"DOTA_Tooltip_ability_imba_brewmaster_primal_split_scepter_description"			"Grants Brewlings bonus <font color='#FF7800'>phased</font> movement speed, <font color='#FF7800'>as well as bonus attack speed and magic resistance.</font>"
+"DOTA_Tooltip_ability_imba_brewmaster_primal_split_aghanim_description"			"Grants Brewlings bonus <font color='#FF7800'>phased</font> movement speed, <font color='#FF7800'>as well as bonus attack speed and magic resistance.</font>"
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_scepter_movementspeed"		"SCEPTER BONUS MOVESPEED:"
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_scepter_attack_speed"		"SCEPTER BONUS ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_brewmaster_primal_split_scepter_magic_resistance"	"%SCEPTER BONUS MAGIC RESISTANCE:"

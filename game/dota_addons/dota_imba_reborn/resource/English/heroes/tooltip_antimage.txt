@@ -30,7 +30,7 @@
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_Lore"                  "Anti-Mage's burning hatred for magic makes him impervious against most of its vile effects."
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_magic_resistance"                  "%MAGIC RESISTANCE:"
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_active_duration"                   "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
-//"DOTA_Tooltip_ability_imba_antimage_spell_shield_scepter_description"               "Automatically shields and reflects one spell to its original caster upon getting hit by a targeted spell. This effect has an internal cooldown of 6 seconds."
+//"DOTA_Tooltip_ability_imba_antimage_spell_shield_aghanim_description"               "Automatically shields and reflects one spell to its original caster upon getting hit by a targeted spell. This effect has an internal cooldown of 6 seconds."
 
 "DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect"                  "Spell Shield"
 "DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect_Description"                  "Counter and reflect every spell for a short duration"
@@ -53,8 +53,8 @@
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_ministun"			"STUN DURATION:"
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_aoe_radius"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_mana_burn_pct"		"%MANA BURN:"
-"DOTA_Tooltip_ability_imba_antimage_mana_void_scepter_description"			"Mana Void kills cause the enemy's highest cooldown ability to take longer to cool down, and increases stun duration."
-// "DOTA_Tooltip_ability_imba_antimage_mana_void_scepter_description"			"#{DOTA_Tooltip_ability_antimage_mana_void_scepter_description}"
+"DOTA_Tooltip_ability_imba_antimage_mana_void_aghanim_description"			"Mana Void kills cause the enemy's highest cooldown ability to take longer to cool down, and increases stun duration."
+// "DOTA_Tooltip_ability_imba_antimage_mana_void_aghanim_description"			"#{DOTA_Tooltip_ability_antimage_mana_void_aghanim_description}"
 
 "DOTA_Tooltip_ability_imba_antimage_mana_void_scepter_cooldown_increase"	"SCEPTER COOLDOWN INCREASE:"
 "DOTA_Tooltip_ability_imba_antimage_mana_void_scepter_ministun"				"SCEPTER STUN DURATION:"
@@ -63,7 +63,7 @@
 "DOTA_Tooltip_modifier_imba_mana_void_stunned_Description"            "Stunned by Anti-Mage's mana void."
 
 "DOTA_Tooltip_modifier_imba_mana_void_scepter" 							"Sundered Cabal"
-"DOTA_Tooltip_modifier_imba_mana_void_scepter_Description"				"Died while under the effects of Aghanim's Scepter Mana Void. Upon respawn, your highest cooldown ability will incur a further 70 second increased cooldown."
+"DOTA_Tooltip_modifier_imba_mana_void_aghanim_description"				"Died while under the effects of Aghanim's Scepter Mana Void. Upon respawn, your highest cooldown ability will incur a further 70 second increased cooldown."
 
 // Anti Mage's Custom Talents
 "Dota_Tooltip_Ability_special_bonus_imba_antimage_1"                    "Blink Stores 2 Charges"

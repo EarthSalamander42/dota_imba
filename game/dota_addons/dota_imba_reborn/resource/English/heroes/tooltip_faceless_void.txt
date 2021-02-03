@@ -7,7 +7,7 @@
 "DOTA_Tooltip_ability_imba_faceless_void_time_walk_slow_radius"                     "SLOW RADIUS:"
 "DOTA_Tooltip_ability_imba_faceless_void_time_walk_range"              "MAX RANGE:"
 "DOTA_Tooltip_ability_imba_faceless_void_time_walk_damage_time"                     "BACKTRACK TIME:"
-"DOTA_Tooltip_ability_imba_faceless_void_time_walk_scepter_description"				"Applies a Time Lock proc to all units at the landing destination."
+"DOTA_Tooltip_ability_imba_faceless_void_time_walk_aghanim_description"				"Applies a Time Lock proc to all units at the landing destination."
 "DOTA_Tooltip_ability_imba_faceless_void_time_walk_radius_scepter"					"SCEPTER TIMELOCK RADIUS:"
 
 "DOTA_Tooltip_modifier_imba_faceless_void_time_walk_slow"					"Time Walk"
@@ -75,7 +75,7 @@
 "DOTA_Tooltip_ability_imba_faceless_void_chronosphere_duration"                     "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_faceless_void_chronosphere_base_radius"                  "BASE RADIUS:"
 "DOTA_Tooltip_ability_imba_faceless_void_chronosphere_chronocharge_attackspeed"     "ATTACK SPEED PER CHRONOCHARGE:"
-"DOTA_Tooltip_ability_imba_faceless_void_chronosphere_scepter_description"          "<font color='#FF7800'>Improves Chronosphere's cooldown to %scepter_cooldown% seconds. Allows allies to move in it, though they are slowed by %scepter_ally_ms_slow_pcnt%%% move speed, %scepter_ally_as_slow% attack speed, %scepter_ally_casttime_pcnt_debuff%%% cast speed and %scepter_ally_projectile_slow%%% projectile speed.</font>"
+"DOTA_Tooltip_ability_imba_faceless_void_chronosphere_aghanim_description"          "<font color='#FF7800'>Improves Chronosphere's cooldown to %scepter_cooldown% seconds. Allows allies to move in it, though they are slowed by %scepter_ally_ms_slow_pcnt%%% move speed, %scepter_ally_as_slow% attack speed, %scepter_ally_casttime_pcnt_debuff%%% cast speed and %scepter_ally_projectile_slow%%% projectile speed.</font>"
 
 "DOTA_Tooltip_modifier_imba_faceless_void_chronocharges"                "Chronocharges"
 "DOTA_Tooltip_modifier_imba_faceless_void_chronocharges_Description"                "Currency of time, allowing the Timelord to bend it to its will."

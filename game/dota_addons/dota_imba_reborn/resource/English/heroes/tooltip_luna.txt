@@ -47,7 +47,7 @@
 "DOTA_Tooltip_ability_imba_luna_eclipse_beams_scepter"								"SCEPTER TOTAL BEAMS:"
 "DOTA_Tooltip_ability_imba_luna_eclipse_duration_tooltip_scepter"					"SCEPTER DURATION:"
 "DOTA_Tooltip_ability_imba_luna_eclipse_cast_range_tooltip_scepter"					"SCEPTER CAST RANGE:"		
-"DOTA_Tooltip_ability_imba_luna_eclipse_scepter_description"							"Allows Luna to cast Eclipse on an allied unit or herself and have its effects follow them, or cast it on an area. Also increases total beams and duration, removes the limit on beams per unit, and makes the beams appear twice as fast."
+"DOTA_Tooltip_ability_imba_luna_eclipse_aghanim_description"							"Allows Luna to cast Eclipse on an allied unit or herself and have its effects follow them, or cast it on an area. Also increases total beams and duration, removes the limit on beams per unit, and makes the beams appear twice as fast."
 
 "DOTA_Tooltip_modifier_imba_luna_lunar_blessing_aura"				"Lunar Blessing"
 //"DOTA_Tooltip_modifier_imba_luna_lunar_blessing_aura_Description"	"Increasing Agility +%dMODIFIER_PROPERTY_STATS_AGILITY_BONUS%; Strength +%dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%; Intelligence +%dMODIFIER_PROPERTY_STATS_INTELLECT_BONUS%"

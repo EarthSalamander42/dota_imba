@@ -5,7 +5,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_damage"					"#{DOTA_Tooltip_ability_magnataur_shockwave_shock_damage}"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_shock_distance"			"#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_polarize_duration"		"POLARIZE DURATION:"
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_scepter_description"		"<font color='#FF7800'>Increases travel distance and speed, and causes Shockwave to come back. Return wave slows units, but deals half damage to creeps.</font>"
+"DOTA_Tooltip_ability_imba_magnataur_shockwave_aghanim_description"		"<font color='#FF7800'>Increases travel distance and speed, and causes Shockwave to come back. Return wave slows units, but deals half damage to creeps.</font>"
 
 "DOTA_Tooltip_modifier_imba_shockwave_pull"								"Shockwave Pull"
 
@@ -19,7 +19,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_empower_Description"			"Gives an allied unit bonus damage and cleave on attack. Magnus receives %self_multiplier% times the bonus cleave.\n<font color='#FF7800'>Overpowered:</font> Empower is always active on Magnus, and is not dispelled by Spell Immunity.\n<font color='#FF7800'>Universal Magnetism:</font> Casting this on ranged allies grants them %splash_radius% radius splash damage attack at %cleave_damage_ranged%%% efficiency. Additionally, Overpower can also be cast on buildings.\n<font color='#FF7800'>Supercharge:</font> When using Empower on an already empowered ally, they gain %supercharge_ms%%% movement and %supercharge_as% attack speed. In addition, the cleave and splash areas increase as such:\n<b>Cleave Start Radius:</b> Increases from %cleave_radius_start% to %super_cleave_start%<br><b>Cleave End Radius:</b> Increases from %cleave_radius_end% to %super_cleave_end% <br><b>Cleave Distance:</b> Increases from %cleave_distance% to %super_cleave_distance%<br><b>Splash Radius:</b> Increases from %splash_radius% to %super_splash_radius%"
 "DOTA_Tooltip_ability_imba_magnataur_empower_Note0"					"Empower's ranged splash damage is centered on the enemy target."
 "DOTA_Tooltip_ability_imba_magnataur_empower_Lore"					"#{DOTA_Tooltip_ability_magnataur_empower_Lore}"
-"DOTA_Tooltip_ability_imba_magnataur_empower_scepter_description"	"<font color='#FF7800'>Continuously applies a reduced-duration Empower to allies. Lingers for 12 seconds after leaving the radius.</font>"
+"DOTA_Tooltip_ability_imba_magnataur_empower_aghanim_description"	"<font color='#FF7800'>Continuously applies a reduced-duration Empower to allies. Lingers for 12 seconds after leaving the radius.</font>"
 
 "DOTA_Tooltip_ability_imba_magnataur_empower_empower_duration"		"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_magnataur_empower_bonus_damage_pct"		"#{DOTA_Tooltip_ability_magnataur_empower_bonus_damage_pct}"
@@ -51,7 +51,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_skewer_skewer_radius"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_entangle_dur"			"ENTANGLE DURATION:"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_pardon_extra_dmg"		"BONUS DAMAGE:"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_scepter_description"	"Lowers cooldown, cast point and manacost."
+"DOTA_Tooltip_ability_imba_magnataur_skewer_aghanim_description"	"Lowers cooldown, cast point and manacost."
 "DOTA_Tooltip_ability_imba_magnataur_skewer_scepter_cooldown"		"SCEPTER COOLDOWN:"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_skewer_manacost"		"SCEPTER MANACOST:"
 

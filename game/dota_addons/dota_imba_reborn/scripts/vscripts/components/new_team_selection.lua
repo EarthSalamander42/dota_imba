@@ -36,15 +36,19 @@ end, nil)
 -- This function is ONLY for public games (triggers when backend successfully gathered every players winrates)
 function TeamOrdering:OnPlayersLoaded()
 	if PlayerResource:GetPlayerCount() > 3 then
-		-- re-order teams based on winrate
-		self:ComputeTeamSelection()
+		-- re-order teams based on winrate with a delay to make sure winrate values are gathered
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
+			self:ComputeTeamSelection()
 
-		-- OH YEAH THAT'S FUNNY RIGHT YEAH THAT'S SO FUNNY YEAH YEAH FUCK YOU
-		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_anti_stacks_fucker"), function()
-			GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+			-- fail-safe
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_anti_stacks_fucker"), function()
+				GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+
+				return nil
+			end, self.start_time * 2)
 
 			return nil
-		end, self.start_time + 3.0)
+		end, 3.0)
 	else
 		GameRules:SetCustomGameSetupRemainingTime(self.start_time)
 	end
@@ -103,7 +107,7 @@ function TeamOrdering:ComputeTeamSelection()
 		local oppositeCombination = {}
 
 		for j = 0, n - 1 do
-		 	oppositeCombination[j] = j
+			oppositeCombination[j] = j
 		end
 
 		oppositeCombination = TableSubtract(oppositeCombination, combination)
@@ -114,11 +118,11 @@ function TeamOrdering:ComputeTeamSelection()
 		winratesDifference = self:CalculateWinratesDifference(teamA, teamB)
 
 		if GetMapName() == "imba_10v10" and winratesDifference < acceptableWinratesDifference then
-	        smallestWinratesDifference = winratesDifference
-	        bestTeamAOrdering = CopyArray(teamA, k)
-	        bestTeamBOrdering = CopyArray(teamB, k)
-	        break
-    	end
+			smallestWinratesDifference = winratesDifference
+			bestTeamAOrdering = CopyArray(teamA, k)
+			bestTeamBOrdering = CopyArray(teamB, k)
+			break
+		end
 
 		if winratesDifference then
 			print("Winrate Diffs:", winratesDifference, smallestWinratesDifference)
@@ -225,11 +229,11 @@ end
 
 -- utils
 function PrintArray(array)
-    local text = ""
-    for i = 0, #array do
-        text = text..array[i].."|"
-    end
-    print(text)
+	local text = ""
+	for i = 0, #array do
+		text = text..array[i].."|"
+	end
+	print(text)
 end
 
 function CopyArray(array, length)
@@ -242,34 +246,34 @@ end
 
 
 function tableRemoveAtIndexZero(table)
-    local newTable = {}
-    for i = 0, #table - 1 do
-        newTable[i] = table[i+1]
-    end
+	local newTable = {}
+	for i = 0, #table - 1 do
+		newTable[i] = table[i+1]
+	end
 
-    return newTable
+	return newTable
 end
 
 function TableSubtract(greaterTable, smallerTable)
-    local set = {}
-    for i = 0, #smallerTable do
-        set[smallerTable[i]] = true;
-    end
+	local set = {}
+	for i = 0, #smallerTable do
+		set[smallerTable[i]] = true;
+	end
 
-    local difference = {}
-    for i = 0, #greaterTable do
-        difference[i] = greaterTable[i]
-    end
+	local difference = {}
+	for i = 0, #greaterTable do
+		difference[i] = greaterTable[i]
+	end
 
-    for i = #difference, 0, -1 do
-        if set[difference[i]] then
-            if i == 0 then
-                difference = tableRemoveAtIndexZero(difference)
-            else
-                table.remove(difference, i)
-            end
-        end
-    end
+	for i = #difference, 0, -1 do
+		if set[difference[i]] then
+			if i == 0 then
+				difference = tableRemoveAtIndexZero(difference)
+			else
+				table.remove(difference, i)
+			end
+		end
+	end
 
-    return difference
+	return difference
 end

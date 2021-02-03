@@ -38,7 +38,7 @@
 "DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom_int_per_health_pct_loss"	"INT PER LOST HEALTH %:"
 "DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom_spell_amp_per_int"		"%ADDITIONAL SPELL AMP PER INT:"
 
-"DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom_scepter_description"		"Also grants armor for each percentange of health below maximum."
+"DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom_aghanim_description"		"Also grants armor for each percentange of health below maximum."
 "DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom_armor_per_health_pct_loss"	"SCEPTER ARMOR PER LOST HEALTH %:"
 
 "DOTA_Tooltip_modifier_imba_frozen_skin_debuff"						"Frozen Skin"

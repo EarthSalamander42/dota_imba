@@ -70,7 +70,7 @@
 // Crystal Maiden's Freezing Field
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field"              "Freezing Field"
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Description"               "CHANNELED - Surrounds Crystal Maiden with random icy explosions that slow enemies and deal massive damage. Grants bonus armor while channeling. Lasts %abilitychanneltime% seconds.\n<font color='#FF7800'>Heart of the Glacier:</font> Also briefly inflicts frostbite to enemies in the area."
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_description"       "<font color='#FF7800'>Allows Freezing Field to be cast on a target area up to 900 range away.</font>"
+"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_aghanim_description"       "<font color='#FF7800'>Allows Freezing Field to be cast on a target area up to 900 range away.</font>"
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note0"						"The slow is applied on all enemies in the radius, even if they aren't hit by an explosion (lasts %slow_duration% second)."
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note1"						"Explosions occur every %explosion_interval% seconds."
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Lore"          "Once the place of her exile, Thickset Venue has become an anchor for Rylai's frigid onslaught."

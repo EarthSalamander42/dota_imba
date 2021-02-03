@@ -31,7 +31,7 @@
 "DOTA_Tooltip_ability_imba_bane_brain_sap_brain_sap_duration"			"ADDLEBRAIN DURATION:"
 "DOTA_Tooltip_ability_imba_bane_brain_sap_brain_sap_damage"				"DAMAGE/HEAL:"
 "DOTA_Tooltip_ability_imba_bane_brain_sap_enfeeble_stack_to_damage"		"ENFEEBLE STACKS TO DAMAGE:"
-"DOTA_Tooltip_ability_imba_bane_brain_sap_scepter_description"			"Decreases cooldown, cast point, and makes Brain Sap pierce Spell Immunity."
+"DOTA_Tooltip_ability_imba_bane_brain_sap_aghanim_description"			"Decreases cooldown, cast point, and makes Brain Sap pierce Spell Immunity."
 
 "DOTA_Tooltip_ability_imba_bane_brain_sap_cooldown_scepter"				"SCEPTER COOLDOWN:"
 
@@ -45,7 +45,7 @@
 "DOTA_Tooltip_ability_imba_bane_brain_sap_723_cooldown_scepter"				            "SCEPTER COOLDOWN:"
 "DOTA_Tooltip_ability_imba_bane_brain_sap_723_castpoint_scepter"				            "SCEPTER CAST POINT:"
 "DOTA_Tooltip_ability_imba_bane_brain_sap_723_Lore"										"Atropos finds no greater pleasure than to harvest the fear he creates."
-"DOTA_Tooltip_ability_imba_bane_brain_sap_723_scepter_description"						"Decreases cooldown, cast point, and makes Brain Sap pierce Spell Immunity."
+"DOTA_Tooltip_ability_imba_bane_brain_sap_723_aghanim_description"						"Decreases cooldown, cast point, and makes Brain Sap pierce Spell Immunity."
 
 // Bane's Nightmare / Nightmare End
 "DOTA_Tooltip_ability_imba_bane_nightmare"                              "Nightmare"

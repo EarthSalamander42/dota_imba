@@ -7,7 +7,7 @@
 "DOTA_Tooltip_ability_imba_scaldris_antipode_Note0"         "Each of the spells' elemental aspects has an independent cooldown."
 "DOTA_Tooltip_ability_imba_scaldris_antipode_Note1"         "Aghanim's Scepter refresh mechanic must be able to spend at least 1 mana."
 
-"DOTA_Tooltip_ability_imba_scaldris_antipode_scepter_description"		"Antipode can now be cast to swap all abilities to their other elemental aspect. Additionally, killing any real enemy hero refreshes the cooldown of the most recently cast ability."
+"DOTA_Tooltip_ability_imba_scaldris_antipode_aghanim_description"		"Antipode can now be cast to swap all abilities to their other elemental aspect. Additionally, killing any real enemy hero refreshes the cooldown of the most recently cast ability."
 //"DOTA_Tooltip_ability_imba_scaldris_antipode_scepter_max_mana_pct_cost"	"%SCEPTER % OF MAX MANA COST PER ABILITY:"
 //"DOTA_Tooltip_ability_imba_scaldris_antipode_scepter_refresh_chance"	"%SCEPTER REFRESH CHANCE:"
 

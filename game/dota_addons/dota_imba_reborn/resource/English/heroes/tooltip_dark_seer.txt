@@ -14,7 +14,7 @@
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_damage"									"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_cast_range_tooltip"						"CAST RANGE:"
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_scepter_cooldown"						"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_dark_seer_vacuum_scepter_description"					"Reduces cooldown."
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_aghanim_description"					"Reduces cooldown."
 
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole"											"Wormhole"
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole_Description"								"Wormhole creates an exit portal, porting any units that move to the portal created by Vacuum. Can be closed prematurely by Dark Seer.\n<font color='#FF0000'>Vacuum and Wormhole cannot be cast near the fountain danger zone area.</font>"
@@ -63,9 +63,9 @@
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_movement_slow"		            "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_slow_duration"		            "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 //"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_rotation_speed"		"SCEPTER ROTATIONAL DEGREES PER SECOND:"
-//"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_description"			"The walls now rotate clockwise around the cast point."
+//"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"			"The walls now rotate clockwise around the cast point."
 
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_description"		"Increases wall length."
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"		"Increases wall length."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_width"				"SCEPTER WIDTH:"
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_duration"			"SCEPTER DURATION:"
 

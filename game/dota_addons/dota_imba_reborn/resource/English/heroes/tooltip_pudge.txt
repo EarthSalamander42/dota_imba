@@ -11,7 +11,7 @@
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_base_damage"				"BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_hook_stacks"				"POWER/SWIFT STACKS:"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_scepter_hook_stacks"		"SCEPTER BONUS POWER/SWIFT STACKS:"
-"DOTA_Tooltip_ability_imba_pudge_meat_hook_scepter_description"		"<font color='#FF7800'>Increase Power and Swift Hook stack count.</font>"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_aghanim_description"		"<font color='#FF7800'>Increase Power and Swift Hook stack count.</font>"
 
 "DOTA_Tooltip_ability_imba_pudge_rot"					"#{DOTA_Tooltip_ability_pudge_rot}"
 "DOTA_Tooltip_ability_imba_pudge_rot_Description"		"#{DOTA_Tooltip_ability_pudge_rot_description}\n<font color='#FF7800'>Death and Decay:</font> Deals bonus damage per second equal to %bonus_damage%%% of Pudge's maximum health.\n<font color='#FF7800'>Gas Giant:</font> Each stack of Flesh Heap increases Rot's radius by %stack_radius%, up to a maximum of %max_radius%.\n<font color='#FF7800'>Too Stinky to Live:</font> Rot can self-deny."
@@ -58,7 +58,7 @@
 "DOTA_Tooltip_ability_imba_pudge_dismember_Note1"						"If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember."
 "DOTA_Tooltip_ability_imba_pudge_dismember_dismember_damage"			"DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_pudge_dismember_strength_damage"				"%STRENGTH DAMAGE BONUS:"
-"DOTA_Tooltip_ability_imba_pudge_dismember_scepter_description"			"Reduces Dismember cooldown to %scepter_cooldown%. Allows you to target an ally with Dismember, instantly swallowing them in your belly and healing them for %scepter_healing_pct%% of their max health per second. The ally can exit whenever they want by issuing a command."
+"DOTA_Tooltip_ability_imba_pudge_dismember_aghanim_description"			"Reduces Dismember cooldown to %scepter_cooldown%. Allows you to target an ally with Dismember, instantly swallowing them in your belly and healing them for %scepter_healing_pct%% of their max health per second. The ally can exit whenever they want by issuing a command."
 
 // Unable to gather dota 2 vanilla tooltips for reasons
 "DOTA_Tooltip_ability_imba_pudge_eject"					"Eject"
@@ -89,7 +89,7 @@
 "DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"		"Gaining bonus strength and magic resistance."
 
 "DOTA_Tooltip_modifier_imba_dismember_scepter"					"Swallowed"		
-"DOTA_Tooltip_modifier_imba_dismember_scepter_Description"		"Swallowed by pudge and regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% health per second. Issue a command to eject."
+"DOTA_Tooltip_modifier_imba_dismember_aghanim_description"		"Swallowed by pudge and regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% health per second. Issue a command to eject."
 
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_1"				"+10 Power and Swift stacks"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_2"				"+300 Meat Hook speed"

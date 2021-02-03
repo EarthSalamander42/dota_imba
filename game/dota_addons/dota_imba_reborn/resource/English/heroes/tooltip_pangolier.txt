@@ -25,7 +25,7 @@
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_hero_stacks"		"#{DOTA_Tooltip_ability_pangolier_shield_crash_hero_stacks}"
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_duration"			"#{DOTA_Tooltip_ability_pangolier_shield_crash_duration}"
 
-"DOTA_Tooltip_ability_imba_pangolier_shield_crash_scepter_description"	"Causes Shield Crash to cast a 2-attack Swashbuckle in every 90 degrees around your hero."
+"DOTA_Tooltip_ability_imba_pangolier_shield_crash_aghanim_description"	"Causes Shield Crash to cast a 2-attack Swashbuckle in every 90 degrees around your hero."
 
 "DOTA_Tooltip_modifier_imba_shield_crash_buff"						"Shield Crash"	
 //"DOTA_Tooltip_modifier_imba_shield_crash_buff_Description"			"Blocking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%.0 of incoming damage."

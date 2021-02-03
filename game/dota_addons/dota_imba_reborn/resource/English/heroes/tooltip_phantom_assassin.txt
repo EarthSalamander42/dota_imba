@@ -6,7 +6,7 @@
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_slow_duration"          "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_duration}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_bonus_damage"           "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_base_damage}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_cast_range"             "#{DOTA_Tooltip_ability_phantom_assassin_stifling_dagger_abilitycastrange}"
-//"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_scepter_description"    "Mortred throws 1 additional dagger after the first one; this hits a random enemy in range, but cannot hit the same target more than once, unless there are less enemies in the area than daggers to throw."
+//"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_aghanim_description"    "Mortred throws 1 additional dagger after the first one; this hits a random enemy in range, but cannot hit the same target more than once, unless there are less enemies in the area than daggers to throw."
 
 "DOTA_Tooltip_modifier_imba_stifling_dagger_slow"									"#{DOTA_Tooltip_modifier_phantom_assassin_stiflingdagger}"
 "DOTA_Tooltip_modifier_imba_stifling_dagger_slow_Description"						"#{DOTA_Tooltip_modifier_phantom_assassin_stiflingdagger_Description}"
@@ -35,7 +35,7 @@
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_fade_duration"			"VANISH FADE DURATION:"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_duration"				"VANISH DURATION:"
 
-"DOTA_Tooltip_ability_imba_phantom_assassin_blur_scepter_description"	"Causes Blur to have instant cast time and applies a dispel. Anytime you get a hero kill, your abilities are refreshed. Reduces Blur cooldown to 12 seconds."
+"DOTA_Tooltip_ability_imba_phantom_assassin_blur_aghanim_description"	"Causes Blur to have instant cast time and applies a dispel. Anytime you get a hero kill, your abilities are refreshed. Reduces Blur cooldown to 12 seconds."
 
 "DOTA_Tooltip_modifier_imba_blur_speed"									"Swift and Silent"
 "DOTA_Tooltip_modifier_imba_blur_speed_Description"						"Gaining bonus movement speed for a short duration for each stack."

@@ -79,7 +79,7 @@
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_damage"			"SCEPTER DAMAGE:"
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_radius"			"SCEPTER RADIUS:"
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_cooldown"		"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_description"	"Lowers cooldown, increases damage, and causes Finger of Death to hit every enemy in 325 radius, or 1000 radius if the secondary enemy is either stunned or hexed."
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_aghanim_description"	"Lowers cooldown, increases damage, and causes Finger of Death to hit every enemy in 325 radius, or 1000 radius if the secondary enemy is either stunned or hexed."
 
 "DOTA_Tooltip_modifier_imba_trigger_finger_debuff"						"Trigger Finger"
 "DOTA_Tooltip_modifier_imba_trigger_finger_debuff_Description"			"Casting Finger of Death again while under this debuff will cost more mana."

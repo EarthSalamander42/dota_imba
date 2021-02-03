@@ -19,7 +19,7 @@
 "DOTA_Tooltip_ability_imba_void_spirit_dissimilate"						"Dissimilate"
 "DOTA_Tooltip_ability_imba_void_spirit_dissimilate_Description"			"Void Spirit temporarily fades into the aether, creating a number of portals through which he can reassemble himself. Upon exiting a portal, he damages all enemies in the area.\n<font color='#FF7800'>Shared Incorporeality:</font> Can be set to auto-cast to make Dissimilate also pull allies into the center portal. They will appear at Void Spirit's chosen portal after the phase duration at a similar position offset."
 "DOTA_Tooltip_ability_imba_void_spirit_dissimilate_Lore"					"Inai much prefers to observe our plane free from the confines of corporeal form."
-//"DOTA_Tooltip_ability_imba_void_spirit_dissimilate_scepter_description" "Increases size and distance of portals by %scepter_size_increase_pct%%%."
+//"DOTA_Tooltip_ability_imba_void_spirit_dissimilate_aghanim_description" "Increases size and distance of portals by %scepter_size_increase_pct%%%."
 "DOTA_Tooltip_ability_imba_void_spirit_dissimilate_phase_duration"		"PHASE DURATION:"
 "DOTA_Tooltip_ability_imba_void_spirit_dissimilate_armor_reduction"		"ARMOR REDUCTION:"
 
@@ -36,7 +36,7 @@
 "DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_damage"					"DAMAGE:"
 "DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_base_absorb_amount"		"BASE SHIELD ABSORB:"
 "DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_absorb_per_hero_hit"	"BONUS ABSORB PER HERO HIT:"
-"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_scepter_description"    "Causes Resonant Pulse to silence for %silence_duration_scepter% seconds and gain %max_charges% charges."
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_aghanim_description"    "Causes Resonant Pulse to silence for %silence_duration_scepter% seconds and gain %max_charges% charges."
 
 "DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_physical_buff"				"Resonant Pulse"
 "DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_physical_buff_Description"	"Absorbing physical damage."

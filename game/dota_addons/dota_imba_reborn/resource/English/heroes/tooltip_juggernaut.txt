@@ -75,7 +75,7 @@
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_omni_slash_radius"			"SLASH JUMP RADIUS:"
 //"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_duration_scepter"			"SCEPTER DURATION:"
 //"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_cooldown_scepter"			"SCEPTER COOLDOWN:"
-//"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_scepter_description"		"Increases duration and decreases cooldown."
+//"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_aghanim_description"		"Increases duration and decreases cooldown."
 
 "DOTA_Tooltip_modifier_imba_omni_slash_caster"                          "Omnislash"
 "DOTA_Tooltip_modifier_imba_omni_slash_caster_Description"              "Invulnerable. Attacking enemy units in an area."
