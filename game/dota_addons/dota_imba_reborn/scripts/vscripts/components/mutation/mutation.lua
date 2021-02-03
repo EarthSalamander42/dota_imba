@@ -192,8 +192,8 @@ end
 
 function Mutation:Minefield()
 	local mines = {
-		"npc_imba_techies_proximity_mine",
-		"npc_imba_techies_proximity_mine_big_boom",
+		"npc_imba_techies_land_mines",
+		"npc_imba_techies_land_mines_big_boom",
 		"npc_imba_techies_stasis_trap",
 	}
 
@@ -203,11 +203,11 @@ function Mutation:Minefield()
 		local max_mine_count = 75
 
 		for _, unit in pairs(units) do
-			if unit:GetUnitName() == "npc_imba_techies_proximity_mine" or unit:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" or unit:GetUnitName() == "npc_imba_techies_stasis_trap" then			
-				if unit:GetUnitName() == "npc_imba_techies_proximity_mine" then
-					unit:FindAbilityByName("imba_techies_proximity_mine_trigger"):SetLevel(RandomInt(1, 4))
-				elseif unit:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" then
-					unit:FindAbilityByName("imba_techies_proximity_mine_trigger"):SetLevel(RandomInt(1, 4))
+			if unit:GetUnitName() == "npc_imba_techies_land_mines" or unit:GetUnitName() == "npc_imba_techies_land_mines_big_boom" or unit:GetUnitName() == "npc_imba_techies_stasis_trap" then			
+				if unit:GetUnitName() == "npc_imba_techies_land_mines" then
+					unit:FindAbilityByName("imba_techies_land_mines_trigger"):SetLevel(RandomInt(1, 4))
+				elseif unit:GetUnitName() == "npc_imba_techies_land_mines_big_boom" then
+					unit:FindAbilityByName("imba_techies_land_mines_trigger"):SetLevel(RandomInt(1, 4))
 				elseif unit:GetUnitName() == "npc_imba_techies_stasis_trap" then
 					unit:FindAbilityByName("imba_techies_stasis_trap_trigger"):SetLevel(RandomInt(1, 4))
 				end

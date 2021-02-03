@@ -39,7 +39,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		Timers:CreateTimer(2.0, function()
 			if IsInToolsMode() then
 				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
-					BOTS_ENABLED = false
+					BOTS_ENABLED = true
 				end
 
 				if BOTS_ENABLED == true then
@@ -927,12 +927,12 @@ function GameMode:OnPlayerChat(keys)
 						-- Temporary code; update as tests require
 						if string.find(text, 'techies') and hero:GetName() == "npc_dota_hero_techies" then
 							ability_set = {
-								[0] = "imba_techies_proximity_mine",
+								[0] = "imba_techies_land_mines",
 								[1] = "imba_techies_stasis_trap",
-								[2] = "imba_techies_blast_off",
+								[2] = "imba_techies_suicide",
 								[3] = "imba_techies_focused_detonate",
 								[4] = "imba_techies_minefield_sign",
-								[5] = "imba_techies_remote_mine",
+								[5] = "imba_techies_remote_mines",
 								[6] = "special_bonus_imba_techies_1",
 								[7] = "special_bonus_imba_techies_2",
 								[8] = "special_bonus_imba_techies_3",
