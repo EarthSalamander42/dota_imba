@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end_scepter_bonus_range"		"SCEPTER BONUS RANGE:"
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end_scepter_bonus_radius"		"SCEPTER BONUS RADIUS:"
 "DOTA_Tooltip_ability_imba_oracle_fortunes_end_scepter_stun_percentage"	"%SCEPTER STUN DURATION:"
-"DOTA_Tooltip_ability_imba_oracle_fortunes_end_scepter_description"		"Increases cast range, effect radius, and stuns for a percentage of the duration."
+"DOTA_Tooltip_ability_imba_oracle_fortunes_end_aghanim_description"		"Increases cast range, effect radius, and stuns for a percentage of the duration."
 
 "DOTA_Tooltip_ability_imba_oracle_fates_edict"							"Fate's Edict"
 "DOTA_Tooltip_ability_imba_oracle_fates_edict_Description"				"Oracle enraptures a target, disarming them and granting them %magic_damage_resistance_pct_tooltip%%% magic damage resistance. Can be cast on allies and enemies.\n<font color='#FF7800'>Future Unsealed:</font> Can be set to auto-cast to apply a modifier on the target that will activate Fate's Edict after a %decree_delay% second delay.\n<font color='#20C6B6'>Alter Self:</font> Mutes the target and grants them physical damage immunity."
@@ -21,7 +21,7 @@
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames"						"Purifying Flames"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_Description"			"Burns away impurities, dealing heavy magic damage to the target before causing them to regenerate health over time. The amount of health regenerated over its duration exceeds the amount of initial damage. Can be cast on enemies and allies.\n<font color='#F78000'>Faux Flame:</font> Can be cast on magic-immune allies.\n<font color='#20C6B6'>Alter Self:</font> Damage and healing is swapped. The damage over time is armor ignoring physical damage, and the debuff is unpurgable."
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_Lore"					"Like a hall of mirrors might amplify the light of a single candle, the shattered walls of the universe can transform the light of prophecy into a burning torch."
-"DOTA_Tooltip_ability_imba_oracle_purifying_flames_scepter_description"	"<font color='#FF7800'>Improves cast point.</font>"
+"DOTA_Tooltip_ability_imba_oracle_purifying_flames_aghanim_description"	"<font color='#FF7800'>Improves cast point.</font>"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_damage"				"DAMAGE:"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_heal_per_second"		"HEAL PER SECOND:"
 "DOTA_Tooltip_ability_imba_oracle_purifying_flames_total_heal_tooltip"		"TOTAL HEAL:"

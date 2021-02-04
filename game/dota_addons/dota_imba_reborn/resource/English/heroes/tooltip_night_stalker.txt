@@ -19,7 +19,7 @@
 //"DOTA_Tooltip_ability_imba_night_stalker_void_night_extend"            "NIGHT EXTEND:"
 "DOTA_Tooltip_ability_imba_night_stalker_void_vision_reduction"                     "VISION REDUCTION:"
 
-"DOTA_Tooltip_ability_imba_night_stalker_void_scepter_description"			"Causes Void to be an AoE ability. <font color='#FF7800'>Increases the ministun duration. Increased ministun duration does not apply during day time casts.</font>"
+"DOTA_Tooltip_ability_imba_night_stalker_void_aghanim_description"			"Causes Void to be an AoE ability. <font color='#FF7800'>Increases the ministun duration. Increased ministun duration does not apply during day time casts.</font>"
 "DOTA_Tooltip_ability_imba_night_stalker_void_radius_scepter"				"SCEPTER AOE:"
 "DOTA_Tooltip_ability_imba_night_stalker_void_scepter_ministun"				"SCEPTER STUN:"
 //"DOTA_Tooltip_ability_imba_night_stalker_void_scepter_cooldown_reduction"	"SCEPTER COOLDOWN REDUCTION:"
@@ -52,7 +52,7 @@
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_radius"					"AURA RADIUS:"
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_miss_pct"				"%MISS CHANCE:"
 
-"DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_scepter_description"	"<font color='#FF7800'>Crippling Fear can be set to auto-cast to make it a targeted spell, being able to cast the Crippling Fear aura on any allied hero or standard unit. Additionally, enemies affected by Crippling Fear cannot block or evade attacks.</font>"
+"DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_aghanim_description"	"<font color='#FF7800'>Crippling Fear can be set to auto-cast to make it a targeted spell, being able to cast the Crippling Fear aura on any allied hero or standard unit. Additionally, enemies affected by Crippling Fear cannot block or evade attacks.</font>"
 "DOTA_Tooltip_ability_imba_night_stalker_crippling_fear_720_scepter_cast_range"	"SCEPTER CAST RANGE:"
 
 "DOTA_Tooltip_modifier_imba_night_stalker_crippling_fear_aura_720"					"Crippling Fear"
@@ -87,7 +87,7 @@
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_bonus_damage"				"BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_vision_reduction_pct"		"%VISION RANGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_night_stalker_darkness_enemy_vision_duration"	"DARKSIGHT DURATION:"
-//"DOTA_Tooltip_ability_imba_night_stalker_darkness_scepter_description"	"Grants unobstructed flying vision at night."
+//"DOTA_Tooltip_ability_imba_night_stalker_darkness_aghanim_description"	"Grants unobstructed flying vision at night."
 
 "DOTA_Tooltip_modifier_imba_darkness_night"                            "Dark Ascension"
 "DOTA_Tooltip_modifier_imba_darkness_night_Description"                "Temporarily turns day into night, granting flight, bonus damage and unobstructed vision."

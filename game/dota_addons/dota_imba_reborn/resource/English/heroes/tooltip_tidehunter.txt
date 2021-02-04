@@ -9,7 +9,7 @@
 "DOTA_Tooltip_ability_imba_tidehunter_gush_cast_range_scepter"  						"SCEPTER RANGE:"
 "DOTA_Tooltip_ability_imba_tidehunter_gush_aoe_scepter"  						"SCEPTER RADIUS:"
 "DOTA_Tooltip_ability_imba_tidehunter_gush_cooldown_scepter"  						"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_tidehunter_gush_scepter_description"						"Gush becomes a ground targeted wave ability that affects enemy units in a line.  Decreases cooldown.\n<font color='#FF7800'> The targeted portion can also be used (doing so casts both unit and ground targeted waves), but does not deal damage or apply the armor reduction. Additionally, the ground targeted wave can apply \"Surf's Up!\" on allies as well.</font>"
+"DOTA_Tooltip_ability_imba_tidehunter_gush_aghanim_description"						"Gush becomes a ground targeted wave ability that affects enemy units in a line.  Decreases cooldown.\n<font color='#FF7800'> The targeted portion can also be used (doing so casts both unit and ground targeted waves), but does not deal damage or apply the armor reduction. Additionally, the ground targeted wave can apply \"Surf's Up!\" on allies as well.</font>"
 
 
 "DOTA_Tooltip_ability_imba_tidehunter_kraken_shell"									"Kraken Shell"

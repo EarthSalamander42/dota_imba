@@ -25,4 +25,4 @@
 "DOTA_Tooltip_ability_imba_chaos_knight_phantasm_incoming_damage_tooltip"	"%PHANTASM DAMAGE TAKEN:"
 "DOTA_Tooltip_ability_imba_chaos_knight_phantasm_outgoing_damage_tooltip"	"%PHANTASM DAMAGE:"
 "DOTA_Tooltip_ability_imba_chaos_knight_phantasm_magic_resistance"				"%ILLUSION MAGIC RESISTANCE:"	
-"DOTA_Tooltip_ability_imba_chaos_knight_phantasm_scepter_description"			"Creates <font color='#FF7800'>%scepter_images_count_extra%</font> additional illusions for Chaos Knight. <font color='#FF0000'>Does not create an illusion of allied heroes.</font>"
+"DOTA_Tooltip_ability_imba_chaos_knight_phantasm_aghanim_description"			"Creates <font color='#FF7800'>%scepter_images_count_extra%</font> additional illusions for Chaos Knight. <font color='#FF0000'>Does not create an illusion of allied heroes.</font>"

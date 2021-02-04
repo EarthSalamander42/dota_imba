@@ -85,7 +85,7 @@
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_passive_respawn_haste"         "PASSIVE RESPAWN TIME REDUCTION:"
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_scepter_wraith_form_radius"    "WRAITH FORM RADIUS:"
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_scepter_wraith_form_duration"  "WRAITH FORM DURATION:"
-"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_scepter_description"           "If a nearby allied hero is slain, they will be transformed into a wraith and have their death delayed for 7 seconds. <font color='#FF0000'>Taking 30% of your max health as damage reduces your Wraith Form time by one second.</font>"
+"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_aghanim_description"           "If a nearby allied hero is slain, they will be transformed into a wraith and have their death delayed for 7 seconds. <font color='#FF0000'>Taking 30% of your max health as damage reduces your Wraith Form time by one second.</font>"
 
 "DOTA_Tooltip_modifier_imba_reincarnation_wraith_form_buff"            "Wraith Form"
 "DOTA_Tooltip_modifier_imba_reincarnation_wraith_form_buff_Description"             "Dying will transform you into a Wraith for a limited time, extending your life."

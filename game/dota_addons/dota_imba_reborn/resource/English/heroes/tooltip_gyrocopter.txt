@@ -24,7 +24,7 @@
 "DOTA_Tooltip_ability_imba_gyrocopter_flak_cannon_max_attacks"					"MAX ATTACKS:"
 "DOTA_Tooltip_ability_imba_gyrocopter_flak_cannon_fire_rate"						"SIDE GUNNER FIRE RATE:"
 "DOTA_Tooltip_ability_imba_gyrocopter_flak_cannon_scepter_radius"				"SIDE GUNNER ATTACK RADIUS:"
-"DOTA_Tooltip_ability_imba_gyrocopter_flak_cannon_scepter_description"				"Adds a Side Gunner that at random attacks enemy units near Gyrocopter. Prioritizes furthest unit away within its range."
+"DOTA_Tooltip_ability_imba_gyrocopter_flak_cannon_aghanim_description"				"Adds a Side Gunner that at random attacks enemy units near Gyrocopter. Prioritizes furthest unit away within its range."
 
 //"DOTA_Tooltip_ability_imba_gyrocopter_flak_cannon_bonus_damage"					"BONUS DAMAGE:"
 

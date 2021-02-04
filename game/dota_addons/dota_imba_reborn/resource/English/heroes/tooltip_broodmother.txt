@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_broodmother_spin_web"									"#{DOTA_Tooltip_ability_broodmother_spin_web}"
 "DOTA_Tooltip_ability_imba_broodmother_spin_web_Description"						"#{DOTA_Tooltip_ability_broodmother_spin_web_Description}"
 "DOTA_Tooltip_ability_imba_broodmother_spin_web_Lore"								"#{DOTA_Tooltip_ability_broodmother_spin_web_Lore}"
-// "DOTA_Tooltip_ability_imba_broodmother_spin_web_scepter_description"				"#{DOTA_Tooltip_ability_broodmother_spin_web_scepter_description}"
+// "DOTA_Tooltip_ability_imba_broodmother_spin_web_aghanim_description"				"#{DOTA_Tooltip_ability_broodmother_spin_web_aghanim_description}"
 "DOTA_Tooltip_ability_imba_broodmother_spin_web_Note0"								"#{DOTA_Tooltip_ability_broodmother_spin_web_Note0}"
 "DOTA_Tooltip_ability_imba_broodmother_spin_web_Note1"								"#{DOTA_Tooltip_ability_broodmother_spin_web_Note1}"
 "DOTA_Tooltip_ability_imba_broodmother_spin_web_count"								"#{DOTA_Tooltip_ability_broodmother_spin_web_count}"

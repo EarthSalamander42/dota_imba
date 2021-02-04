@@ -82,7 +82,7 @@
 "DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_duration"                 "DURATION:"
 "DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_purge_damage"             "PURGE DAMAGE:"
 "DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_charge_restore_time"      "SCEPTER CHARGE RESTORE TIME:"
-"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_scepter_description"      "Cooldown is removed, replaced with %max_charges_scepter% charges that replenish every %charge_restore_time% seconds. Also causes Demonic Purge to break its target's passive abilities while active."
+"DOTA_Tooltip_ability_imba_shadow_demon_demonic_purge_aghanim_description"      "Cooldown is removed, replaced with %max_charges_scepter% charges that replenish every %charge_restore_time% seconds. Also causes Demonic Purge to break its target's passive abilities while active."
 
 "DOTA_Tooltip_modifier_imba_demonic_purge_debuff"                               "Demonic Purge"
 "DOTA_Tooltip_modifier_imba_demonic_purge_debuff_Description"                   "Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE% and constantly being purged. Soul Catcher and Shadow Poison cannot be dispelled, pierce spell immunity, and have their durations paused."

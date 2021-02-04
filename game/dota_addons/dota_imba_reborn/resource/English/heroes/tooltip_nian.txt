@@ -40,7 +40,7 @@
 "DOTA_Tooltip_modifier_imba_nian_crushing_leap_intellect"								"Intellect Reduction"
 "DOTA_Tooltip_modifier_imba_nian_crushing_leap_intellect_Description"					"Intellect reduced by %dMODIFIER_PROPERTY_TOOLTIP%."
 
-"DOTA_Tooltip_ability_imba_nian_crushing_leap_scepter_description"						"Enemies hit by Crushing Leap also have their stats reduced by a percentage."
+"DOTA_Tooltip_ability_imba_nian_crushing_leap_aghanim_description"						"Enemies hit by Crushing Leap also have their stats reduced by a percentage."
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_scepter_stat_reduction"					"%STATS REDUCTION:"
 "DOTA_Tooltip_ability_imba_nian_crushing_leap_scepter_duration"							"REDUCTION DURATION:"
 

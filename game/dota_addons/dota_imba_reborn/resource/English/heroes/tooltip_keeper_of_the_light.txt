@@ -1,7 +1,7 @@
 //KEEPER OF THE LIGHT
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate"					"Illuminate"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_Description"		"Channels light energy, building power the longer it's channeled.  Once released, a wave is sent forth that deals damage and gives vision in its path.  The longer it is channeled, the more damage is dealt.\n<font color='#FF7800'>Transient Form:</font> Illuminate can be channeled without standing still. However, breaking the standard channel reduces the caster's movement speed by %transient_form_ms_reduction%%% for the remainder of the channel."
-"DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_scepter_description"		"Removes Trasient Form's penalties, and allows Illuminate to heal allies during the day for the same amount as its damage values."
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_aghanim_description"		"Removes Trasient Form's penalties, and allows Illuminate to heal allies during the day for the same amount as its damage values."
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_Lore"				"Ezalor's hidden light reveals itself in marvelous fashion."
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_Note0"				"Gives increasing vision over the channeling time."
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_Note1"				"Damages mechanical units."
@@ -61,7 +61,7 @@
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_spotlights_passive_radius"		"PASSIVE RADIUS:"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_spotlights_attack_duration"		"ATTACK VISION DURATION:"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_spotlights_damaged_duration"		"DAMAGED VISION DURATION:"
-"DOTA_Tooltip_ability_imba_keeper_of_the_light_spotlights_scepter_description"	"Grants unobstructed vision during daytime."
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_spotlights_aghanim_description"	"Grants unobstructed vision during daytime."
 
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_will_o_wisp"							"Will-O-Wisp"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_will_o_wisp_Description"				"Summons Ignis Fatuus at the targeted area. Alternates on and off every second. When active, it causes all enemies near it to stare hypnotized at it. Can be attacked by units outside of the radius, dies after a certain number of attacks.\nCast Range: %cast_range_tooltip%\n<font color='#FF7800'>Desynced:</font> Multiple Will-O-Wisps do not synchronize pulses.\n<font color='#FF7800'>Tunnel Vision:</font> Hypnotized enemies have %tunnel_vision_reduction%%% reduced vision.\n<font color='#FF7800'>Ignis Blessing:</font> Can be attacked by allies (does not deal damage to Ignis Fatuus; uses standard deny mechanics). Doing so imbues them with a %ignis_blessing_duration% second buff that gives them bonus pure attack damage equal to %ignis_blessing_int_to_damage%%% of the caster's intellect."

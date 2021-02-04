@@ -42,7 +42,7 @@
 "DOTA_Tooltip_ability_imba_visage_summon_familiars_familiar_speed"		"FAMILIAR SPEED:"
 "DOTA_Tooltip_ability_imba_visage_summon_familiars_familiar_attack_damage"	"FAMILIAR ATTACK DAMAGE:"
 "DOTA_Tooltip_ability_imba_visage_summon_familiars_familiar_hp"			"HP:"
-"DOTA_Tooltip_ability_imba_visage_summon_familiars_scepter_description"			"Summons a bonus familiar."
+"DOTA_Tooltip_ability_imba_visage_summon_familiars_aghanim_description"			"Summons a bonus familiar."
 
 "DOTA_Tooltip_modifier_imba_visage_summon_familiars_petrifying_breath"				"Petrifying Breath"
 "DOTA_Tooltip_modifier_imba_visage_summon_familiars_petrifying_breath_Description"	"Move speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%, and attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."

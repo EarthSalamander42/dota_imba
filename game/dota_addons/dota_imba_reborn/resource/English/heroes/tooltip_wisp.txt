@@ -68,7 +68,7 @@
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_attack_range"      "ATTACK RANGE:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_damage_pct"        "%INCOMING DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_tooltip_drain_pct"       "%HEALTH/MANA DRAIN:"
-"DOTA_Tooltip_Ability_imba_wisp_overcharge_scepter_description"   	"Overcharge also provides nearby allied units with the buff at reduced values. Does not affect the caster or any tethered units."
+"DOTA_Tooltip_Ability_imba_wisp_overcharge_aghanim_description"   	"Overcharge also provides nearby allied units with the buff at reduced values. Does not affect the caster or any tethered units."
 "DOTA_Tooltip_Ability_imba_wisp_overcharge_scepter_radius"			"SCEPTER RADIUS:"
 "DOTA_Tooltip_Ability_imba_wisp_overcharge_scepter_efficiency"		"SCEPTER EFFICIENCY:"
 
@@ -90,7 +90,7 @@
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_hp_regen"						"%MAX HEALTH REGEN:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_duration"						"DURATION:"
 
-"DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_description"   	"<font color='#FF7800'>Overcharge also provides nearby allied units with the buff at reduced efficiency. Does not affect units that already have the main Overcharge buff.</font>"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_aghanim_description"   	"<font color='#FF7800'>Overcharge also provides nearby allied units with the buff at reduced efficiency. Does not affect units that already have the main Overcharge buff.</font>"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_radius"			"SCEPTER RADIUS:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_efficiency"		"SCEPTER EFFICIENCY:"
 

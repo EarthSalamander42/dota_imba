@@ -1,6 +1,6 @@
 //UNDYING
 "dota_tooltip_ability_imba_undying_decay"                       "Decay"
-"dota_tooltip_ability_imba_undying_decay_scepter_description"   "Increases strength steal."
+"dota_tooltip_ability_imba_undying_decay_aghanim_description"   "Increases strength steal."
 "dota_tooltip_ability_imba_undying_decay_decay_damage"          "BASE DAMAGE:"
 "dota_tooltip_ability_imba_undying_decay_decay_duration"        "STEAL DURATION:"
 "dota_tooltip_ability_imba_undying_decay_description"           "Undying steals strength from all enemy heroes in an area, dealing base damage as he claims the enemy's strength for himself.\n<font color='#FF7800'>Braiiiinssss:</font> Also reduces intelligence by %brains_int_pct%%% of of the strength steal, rounded up. Undying does not gain this intelligence."

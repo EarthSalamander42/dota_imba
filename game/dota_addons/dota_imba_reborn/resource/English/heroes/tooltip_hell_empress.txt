@@ -31,7 +31,7 @@
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_hurl_damage"       "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_debuff_duration"     "#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_abilityduration}"
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_cast_range"        "CAST RANGE:"
-"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_scepter_description"   "Causes targets to be affected by four random debuffs instead of two."
+"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_aghanim_description"   "Causes targets to be affected by four random debuffs instead of two."
 
 "DOTA_Tooltip_modifier_imba_hurl_through_hell_slow"               "Hurl Through Hell"
 "DOTA_Tooltip_modifier_imba_hurl_through_hell_slow_Description"         "Attack/movement speeds slowed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% / %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%"

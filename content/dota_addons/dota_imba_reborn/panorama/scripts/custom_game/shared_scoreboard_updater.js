@@ -98,7 +98,6 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 
 	var LevelContainerChild2 = ImbaXP_Panel.FindChildTraverse("LevelContainerChild2");
 
-
 	LevelContainerChild2.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='0'/>");
 	LevelContainerChild2.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
 
@@ -119,15 +118,27 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 		// playerPanel.FindChildTraverse(ids.level).style.color = player_info.title_color;		
 	}
 
-	var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
-/*
-	if (!player_info || player_info.winrate_toggle == 0) {
+	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+	if (gamemode)
+		gamemode = gamemode["1"];
+
+	if (!player_info || player_info.winrate_toggle != 1) {
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
-	} else if (player_info.winrate_toggle == 1) {
-		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
+	} else if (gamemode == "1") {
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
+	} else {
+		var LegendIMR = $.GetContextPanel().FindChildrenWithClassTraverse("ScoreCol_WinRate");
+
+		for (var i = 0; i < LegendIMR.length; i++) {
+			LegendIMR[i].text = "WINRATE";
+		}
+
+		var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
+
+		if (player_info.winrate_toggle == 1) {
+			_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
+		}
 	}
-*/
-	_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
 }
 
 var is_donator_set = [];
@@ -450,7 +461,7 @@ function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, te
 		var teamColor_GradentFromTransparentLeft = teamPanel.FindChildInLayoutFile("TeamColor_GradentFromTransparentLeft");
 		if (teamColor_GradentFromTransparentLeft) {
 			var gradientText = 'gradient( linear, 0% 0%, 800% 0%, from( #00000000 ), to( ' + teamColor + ' ) );';
-			$.Msg( gradientText );
+//			$.Msg( gradientText );
 			teamColor_GradentFromTransparentLeft.style.backgroundColor = gradientText;
 		}
 	}

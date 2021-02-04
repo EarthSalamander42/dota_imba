@@ -838,7 +838,9 @@ function ReconnectPlayer(player_id)
 	if not player_id then player_id = 0 end
 	if player_id == "test_reconnect" then player_id = 0 end
 
---	print("Player is reconnecting:", player_id)
+	print("Player is reconnecting:", player_id)
+
+	TeamOrdering:OnPlayerReconnect(player_id)
 
 	-- Reinitialize the player's pick screen panorama, if necessary
 	Timers:CreateTimer(function()

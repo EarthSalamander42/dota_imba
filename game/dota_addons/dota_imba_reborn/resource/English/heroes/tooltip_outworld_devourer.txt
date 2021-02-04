@@ -25,7 +25,7 @@
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage"           "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_duration"  "PRISON DURATION:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_movespeed" "PRISON MOVE SPEED:"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_scepter_description"  "Astral Imprisonment now steals 5 intelligence when it is applied on an enemy target."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_aghanim_description"  "Astral Imprisonment now steals 5 intelligence when it is applied on an enemy target."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_cast_range"       "CAST RANGE:"
 
 "DOTA_Tooltip_modifier_imba_astral_imprisonment"                        "Astral Imprisonment"
@@ -77,7 +77,7 @@
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_int_multiplier"        "INTELLIGENCE MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_max_mana_burn_pct"     "%MAX MANA LOSS:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_int_steal_count"       "INTELLIGENCE STEAL:"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_scepter_description"   "Applies Astral Imprisonment to all targets hit by Sanity's Eclipse. This effect occurs after calculating damage."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_aghanim_description"   "Applies Astral Imprisonment to all targets hit by Sanity's Eclipse. This effect occurs after calculating damage."
 
 // Obsidian Destroyer's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_1"				"Intelligence Differential"
@@ -120,7 +120,7 @@
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_max_charges_scepter"	"SCEPTER MAX CHARGES:"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_scepter_range_bonus"	"SCEPTER CAST RANGE BONUS:"
 "DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_charge_restore_time_scepter"	"SCEPTER CHARGE RESTORE TIME:"
-"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_scepter_description"	"Grants charges to Astral Imprisonment. Damage areas stack. Also increases cast range."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_aghanim_description"	"Grants charges to Astral Imprisonment. Damage areas stack. Also increases cast range."
 
 "DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux"					"Essence Flux"
 "DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_Description"		"Passively grants you a chance to restore a percentage of your max mana each time you cast an ability. When activated, causes all abilities to slow enemies when they deal damage.\n<font color='#FF7800'>More Equal Than Others:</font> Each instance of damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."

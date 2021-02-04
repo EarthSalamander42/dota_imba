@@ -41,7 +41,7 @@
 "DOTA_Tooltip_ability_imba_terrorblade_sunder_Description"								"Severs the life from both Terrorblade and a target hero, exchanging a percentage of both units' current health. Some health points must remain.\n<font color='#FF7800'>Anti Anti-Magic:</font> Can be cast on spell immune enemies, but doing so increases Sunder's cooldown by %spell_immunity_cooldown_increase% seconds."
 "DOTA_Tooltip_ability_imba_terrorblade_sunder_Lore"										"You didn't need that life, did you?  The demon marauder steals that which you hold most dear."
 "DOTA_Tooltip_ability_imba_terrorblade_sunder_hit_point_minimum_pct"					"%MINIMUM HP SWAP:"
-"DOTA_Tooltip_ability_imba_terrorblade_sunder_scepter_description"						"Grants new ability: Power Rend. Swaps attributes with the target for a duration."
+"DOTA_Tooltip_ability_imba_terrorblade_sunder_aghanim_description"						"Grants new ability: Power Rend. Swaps attributes with the target for a duration."
 
 "DOTA_Tooltip_ability_imba_terrorblade_terror_wave"									"Terror Wave"
 "DOTA_Tooltip_ability_imba_terrorblade_terror_wave_Description"						"Can only be cast while Metamorphosis is active. After a %spawn_delay% second delay, causes a wave to travel outwards in all directions forcing enemy heroes to become feared upon impact."

@@ -23,7 +23,7 @@
 // "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_self_slow"				"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_electric_vortex_self_slow}"
 // "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_self_slow_duration"		"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_electric_vortex_self_slow_duration}"
 "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_cast_range"				"#{DOTA_Tooltip_ability_tiny_toss_tree_range}"
-"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_scepter_description"	"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_scepter_description}"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_aghanim_description"	"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_aghanim_description}"
 
 "DOTA_Tooltip_modifier_imba_vortex_pull"										"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_pull}"
 "DOTA_Tooltip_modifier_imba_vortex_pull_Description"							"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_pull_Description}"

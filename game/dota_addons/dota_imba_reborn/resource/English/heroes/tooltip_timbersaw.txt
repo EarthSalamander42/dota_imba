@@ -43,7 +43,7 @@
 "DOTA_Tooltip_ability_imba_timbersaw_chakram_damage_per_second"				"DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_timbersaw_chakram_slow"							"%SLOW:"
 "DOTA_Tooltip_ability_imba_timbersaw_chakram_mana_per_second"					"MANA COST PER SECOND:"
-"DOTA_Tooltip_ability_imba_timbersaw_chakram_scepter_description"				"Grants a second Chakram."
+"DOTA_Tooltip_ability_imba_timbersaw_chakram_aghanim_description"				"Grants a second Chakram."
 "DOTA_Tooltip_ability_imba_timbersaw_return_chakram"							"Return Chakram"
 "DOTA_Tooltip_ability_imba_timbersaw_return_chakram_Description"				"Returns the Chakram to Timbersaw."
 

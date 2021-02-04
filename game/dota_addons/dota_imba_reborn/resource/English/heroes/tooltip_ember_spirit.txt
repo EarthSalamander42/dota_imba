@@ -38,7 +38,7 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_activate_fire_remnant_effect_radius"    "EXPLOSION RADIUS:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_activate_fire_remnant_damage"           "EXPLOSION DAMAGE:"
 
-"DOTA_Tooltip_Ability_imba_ember_spirit_activate_fire_remnant_scepter_description"	"Activate Fire Remnant costs less mana."
+"DOTA_Tooltip_Ability_imba_ember_spirit_activate_fire_remnant_aghanim_description"	"Activate Fire Remnant costs less mana."
 "DOTA_Tooltip_Ability_imba_ember_spirit_activate_fire_remnant_scepter_mana_cost"	"SCEPTER MANA COST:"
 
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant"                       "Fire Remnant"
@@ -50,7 +50,7 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_effect_radius"         "EXPLOSION RADIUS:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_damage"                "EXPLOSION DAMAGE:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_attack_cd_scepter"     "SCEPTER ATTACK RATE:"
-"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_scepter_description"   "Increases cast range by %scepter_additional_cast_range% and maximum charges by %scepter_additional_charges%."
+"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_aghanim_description"   "Increases cast range by %scepter_additional_cast_range% and maximum charges by %scepter_additional_charges%."
 
 // <font color='#FF7800'>Causes your remnants to attack a random enemy in their range, using your attack damage and items, every 2 seconds.</font>
 

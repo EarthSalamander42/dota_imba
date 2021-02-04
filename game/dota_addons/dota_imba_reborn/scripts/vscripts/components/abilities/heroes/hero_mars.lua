@@ -98,7 +98,7 @@ function imba_mars_spear:OnSpellStart()
 
 		ProjectileManager:CreateLinearProjectile(info)
 
-		self.traiblazer_thinker = CreateModifierThinker(
+		self.trailblazer_thinker = CreateModifierThinker(
 			self:GetCaster(),
 			self,
 			"modifier_imba_mars_spear_trailblazer_thinker",
@@ -201,7 +201,7 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 	end
 
 	-- trailblazer
-	self.traiblazer_thinker = CreateModifierThinker(
+	self.trailblazer_thinker = CreateModifierThinker(
 		self:GetCaster(),
 		self:GetAbility(),
 		"modifier_imba_mars_spear_trailblazer_thinker",
@@ -210,6 +210,8 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 		self:GetCaster():GetTeamNumber(),
 		false
 	)
+
+	self:GetCaster():EmitSound("Hero_Mars.Spear.Target", self.trailblazer_thinker)
 end
 
 --------------------------------------------
@@ -286,7 +288,7 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnDestroy()
 	self:GetParent():RemoveSelf()
 
 	if self:GetAbility() then
-		self:GetAbility().traiblazer_thinker = nil
+		self:GetAbility().trailblazer_thinker = nil
 	end
 
 	if self.pfx then
@@ -330,8 +332,8 @@ imba_mars_spear.projectiles = mars_projectiles
 function imba_mars_spear:OnProjectileThink(vLocation)
 	if not IsServer() then return end
 
-	if self.traiblazer_thinker and vLocation then
-		self.traiblazer_thinker:SetAbsOrigin(vLocation)
+	if self.trailblazer_thinker and vLocation then
+		self.trailblazer_thinker:SetAbsOrigin(vLocation)
 	end
 end
 
@@ -950,6 +952,7 @@ function modifier_imba_mars_gods_rebuke:OnCreated( kv )
 
 	if mod then
 		self.bonus_damage = self.bonus_damage + mod:GetStackCount()
+		mod.stack_table = {}
 		mod:SetStackCount(0)
 	end
 end
@@ -976,9 +979,11 @@ end
 
 function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_BonusDamagePostCrit( params )
 	if not IsServer() then return end
+	print("Bonus Damage:", self.bonus_damage)
 	return self.bonus_damage
 end
 function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_CriticalStrike( params )
+	print("Bonus Crit:", self.bonus_crit)
 	return self.bonus_crit
 end
 
@@ -1197,10 +1202,10 @@ function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 			end
 
 			-- if received damage from front or side
-			if damage > 0 then
+			if bonus_damage > 0 then
 				local damageTable = {
 					victim			= keys.attacker,
-					damage			= keys.original_damage / 100 * damage,
+					damage			= keys.original_damage / 100 * bonus_damage,
 					damage_type		= keys.damage_type,
 					damage_flags	= DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 					attacker		= self:GetParent(),

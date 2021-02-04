@@ -9,7 +9,7 @@
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_stun_duration"              "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_crit_pct"                    "%CRITICAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_cast_range_bonus_scepter"	"SCEPTER BONUS CAST RANGE:"
-"DOTA_Tooltip_ability_imba_sven_storm_bolt_scepter_description"			"Increases cast range and applies an instant attack on the primary target."
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_aghanim_description"			"Increases cast range and applies an instant attack on the primary target."
 
 "DOTA_Tooltip_modifier_imba_storm_bolt_crit"                            "MANmentum"
 "DOTA_Tooltip_modifier_imba_storm_bolt_crit_Description"                "The next attack is a guaranteed critical hit."
@@ -60,7 +60,7 @@
 "DOTA_Tooltip_ability_imba_sven_gods_strength_Description"              "Sven channels his rogue strength, granting bonus strength and damage for %duration% seconds.\n<font color='#FF7800'>Colossal Slash:</font> While Gods Strength is active, Sven can use Colossal Slash."
 "DOTA_Tooltip_ability_imba_sven_gods_strength_Lore"						"With the strength that shattered the Sacred Helm, the Rogue Knight stands unopposed in melee combat."
 "DOTA_Tooltip_ability_imba_sven_gods_strength_Note0"                    "Only increases base damage and that given by the primary attribute. Raw bonus damage is not increased."
-"DOTA_Tooltip_ability_imba_sven_gods_strength_scepter_description"		"<font color='#FF7800'>God's Strength grants %ally_bonus_dmg_pct_scepter%%% bonus damage to allies in a %aura_radius_scepter% radius.</font>"
+"DOTA_Tooltip_ability_imba_sven_gods_strength_aghanim_description"		"<font color='#FF7800'>God's Strength grants %ally_bonus_dmg_pct_scepter%%% bonus damage to allies in a %aura_radius_scepter% radius.</font>"
 "DOTA_Tooltip_ability_imba_sven_gods_strength_bonus_dmg_pct"            "%DAMAGE BONUS:"
 "DOTA_Tooltip_ability_imba_sven_gods_strength_gods_strength_bonus_str"	"BONUS STRENGTH:"
 "DOTA_Tooltip_ability_imba_sven_gods_strength_radius"                  "EFFECT RADIUS:"

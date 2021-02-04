@@ -161,7 +161,7 @@ function fetch() {
 		game_version = game_version.toString() + ".0";
 
 	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
-	view.subtitle.text = "Outlanders Rising";
+	view.subtitle.text = "War of the Gods";
 
 	api.getLoadingScreenMessage(function(data) {
 		var found_lang = false;

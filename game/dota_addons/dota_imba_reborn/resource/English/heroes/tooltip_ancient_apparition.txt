@@ -27,7 +27,7 @@
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_slow"					"%MOVEMENT SLOW:"
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_duration"				"SLOW DURATION:"
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_attack_range_bonus"		"ATTACK RANGE BONUS:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_scepter_description"	"Removes cooldown."
+"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_aghanim_description"	"Removes cooldown."
 
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast"								"Ice Blast"
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Description"					"Launches a tracer toward any location on the battlefield, which must be triggered again to mark the area to be blasted by a damaging explosion of hail. The further the tracer travels, the larger the explosion will be. Enemies caught in the explosion, or who touch the icy ball of hail as it travels, are Frostbitten, taking damage and prevented from regenerating or healing. If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter.\n<font color='#FF7800'>Absolute Freeze: </font>The debuff is also placed on creeps and illusions.\n<font color='#FF7800'>Cold Hearted:</font> Grants %cold_hearted_pct%%% of the sum of health regeneration from all enemies hit by the Ice Blast explosion to Ancient Apparition for the Frostbite duration. The health regeneration is copied from the target after Ice Blast applies its explosion damage, and does not dynamically update."
@@ -41,7 +41,7 @@
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_dot_damage"					"FROSTBITTEN DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_kill_pct"					"%SHATTER HEALTH THRESHOLD:"
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_frostbite_duration_scepter"	"SCEPTER FROSTBITTEN DURATION:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_scepter_description"		    "<font color='#FF7800'>Increases frostbite duration.</font>"
+"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_aghanim_description"		    "<font color='#FF7800'>Increases frostbite duration.</font>"
 
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_global_cooling"							"Global Cooling"
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_global_cooling_Description"				"Move speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% for the duration of Ice Blast's Frostbite."

@@ -72,7 +72,7 @@
 "DOTA_Tooltip_ability_imba_lich_chain_frost_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_lich_chain_frost_num_bounces"                "BOUNCES:"
 "DOTA_Tooltip_ability_imba_lich_chain_frost_speed_increase_per_bounce"              "SPEED INCREASE PER BOUNCE:"
-//"DOTA_Tooltip_ability_imba_lich_chain_frost_scepter_description"                    "Causes Chain Frost to bounce infinitely, except when inside the fountain."
+//"DOTA_Tooltip_ability_imba_lich_chain_frost_aghanim_description"                    "Causes Chain Frost to bounce infinitely, except when inside the fountain."
 "DOTA_Tooltip_ability_imba_lich_chain_frost_scepter_bonus_projectiles"              "MINI CHAIN FROSTS COUNT:"
 "DOTA_Tooltip_ability_imba_lich_chain_frost_scepter_projectiles_damage_pct"         "%MINI CHAIN FROST DAMAGE:"
 "DOTA_Tooltip_ability_imba_lich_chain_frost_bonus_jump_damage"						"INCREMENTAL DAMAGE:"
@@ -114,7 +114,7 @@
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze_mana_drain"					"%MANA DRAIN:"
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze_cast_range_tooltip"					"CAST RANGE:"
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze_aoe_scepter"					"SCEPTER AOE:"
-"DOTA_Tooltip_ability_imba_lich_sinister_gaze_scepter_description"			"Casts Sinister Gaze in a target area. <font color='#FF7800'>Ignores status resistance. The IMBAfications will only apply to the closest unit to the cast position.</font>"
+"DOTA_Tooltip_ability_imba_lich_sinister_gaze_aghanim_description"			"Casts Sinister Gaze in a target area. <font color='#FF7800'>Ignores status resistance. The IMBAfications will only apply to the closest unit to the cast position.</font>"
 
 "DOTA_Tooltip_modifier_imba_lich_sinister_gaze"	"Sinister Gaze"
 "DOTA_Tooltip_modifier_imba_lich_sinister_gaze_Description"	"You are helpless against Lich's Sinister Gaze!"

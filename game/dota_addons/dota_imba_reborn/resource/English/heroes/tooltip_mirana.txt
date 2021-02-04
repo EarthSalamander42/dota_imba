@@ -7,7 +7,7 @@
 "DOTA_Tooltip_ability_imba_mirana_starfall_damage"                      "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_mirana_starfall_radius"                      "EFFECT RADIUS:"
 "DOTA_Tooltip_ability_imba_mirana_starfall_additional_waves_count"                  "ADDITIONAL WAVES:"
-"DOTA_Tooltip_ability_imba_mirana_starfall_scepter_description"                     "Causes Starstorm to passively activate whenever there are nearby enemies, and you are not invisible. This effect has a %scepter_starfall_cd% second cooldown."
+"DOTA_Tooltip_ability_imba_mirana_starfall_aghanim_description"                     "Causes Starstorm to passively activate whenever there are nearby enemies, and you are not invisible. This effect has a %scepter_starfall_cd% second cooldown."
 
 "DOTA_Tooltip_modifier_imba_starfall_scepter_thinker"                  "Starstorm Cooldown"
 "DOTA_Tooltip_modifier_imba_starfall_scepter_thinker_Description"                   "Passively casts Starstorm on nearby enemies when recharged."
