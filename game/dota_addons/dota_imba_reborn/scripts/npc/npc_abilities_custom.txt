@@ -38088,7 +38088,7 @@
 	"BaseClass"           "special_bonus_undefined"
 	"AbilityType"         "DOTA_ABILITY_TYPE_ATTRIBUTES"
 	"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"ID"                  "9505"
+	"ID"                  "9504"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -38184,7 +38184,7 @@
 		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"ID"					"9509"
+		"ID"					"9507"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -38208,7 +38208,7 @@
 		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"ID"					"9505"
+		"ID"					"9512"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
