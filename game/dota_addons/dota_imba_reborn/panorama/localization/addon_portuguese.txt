@@ -229,6 +229,7 @@
 	"freespellsoff_msg" "Habilidades livres: Desligado"
 	"freespellson_msg" "Habilidades livres: Ligado"
 	"freespells_button" "Habilidades livres"
+	"game_version_name" "War of the Gods"
 	"gan_ma_ne_xiong_di" "干嘛呢兄弟"
 	"gao_fu_shuai" "这就是高富帅啊"
 	"gg_call" "Contagem de jogadores GG:"
