@@ -17,6 +17,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"value"							"3"
+				"ad_linked_ability"			"hoodwink_acorn_shot"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}
@@ -38,6 +39,7 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"fade_time"						"0.5"
+				"ad_linked_ability"			"hoodwink_scurry"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}
 	}
@@ -59,6 +61,7 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"value"							"-0.25"  // used for tooltip only
+				"ad_linked_ability"			"hoodwink_sharpshooter"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 			"02"
 			{
