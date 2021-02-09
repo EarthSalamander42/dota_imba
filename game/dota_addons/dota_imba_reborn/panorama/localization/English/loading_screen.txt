@@ -1,4 +1,4 @@
-"game_version_name"							""
+"game_version_name"							"War of the Gods"
 "loading_screen_description" 				"Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
 "loading_screen_button"						"Dota 2 IMBA Website"
 "loading_screen_frostrose_battlefield"		"Frostrose Battlefield requires more testers! We're moving closer to a release date and we need help to polish the gameplay and make sure the game is stable. Play-testing F-B will grant you 2x more Imbattlepass XP than regular imba games. If you're interested, join Frostrose Battlefield's Discord server:"

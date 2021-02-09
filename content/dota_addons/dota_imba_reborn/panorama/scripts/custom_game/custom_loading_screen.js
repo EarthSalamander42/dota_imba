@@ -161,7 +161,7 @@ function fetch() {
 		game_version = game_version.toString() + ".0";
 
 	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
-	view.subtitle.text = "War of the Gods";
+	view.subtitle.text = $.Localize("#game_version_name").toUpperCase();
 
 	api.getLoadingScreenMessage(function(data) {
 		var found_lang = false;
@@ -349,10 +349,12 @@ function OnVotesReceived(data)
 	for (var i = 1; i <= 5; i++) {
 		var vote_tooltip = "vote"
 		if (vote_count[i] > 1)
-			vote_tooltip = "votes"
+			vote_tooltip = "votes";
 
-		if ($("#VoteGameModeText" + i))
+		if ($("#VoteGameModeText" + i)) {
+			$("#VoteGameModeText" + i).style.color = "white";
 			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+		}
 	}
 
 	// calculate number of people who voted
