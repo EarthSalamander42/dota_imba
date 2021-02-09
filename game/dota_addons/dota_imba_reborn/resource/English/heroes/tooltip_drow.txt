@@ -98,7 +98,7 @@
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_proc_chance"			"%PROC CHANCE:"
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_range_bonus"			"BONUS RANGE:"
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_instakill_threshold"	"%HEROES INSTAKILL THRESHOLD:"
-"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_aghanim_description"	"Causes your attacks to splinter, hitting all enemies in 375 radius of your target. Splinters deal 50% reduced damage, and cannot proc any on-hit effects, except Frost Arrows."
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_scepter_description"	"Causes your attacks to splinter, hitting all enemies in 375 radius of your target. Splinters deal 50% reduced damage, and cannot proc any on-hit effects, except Frost Arrows."
 
 "DOTA_Tooltip_modifier_imba_markmanship_buff"							"Silent Sentinel Blessing"
 "DOTA_Tooltip_modifier_imba_markmanship_buff_Description"				"Drow's presence infuses your attacks with a chilling effect that slows enemy units."
@@ -108,7 +108,7 @@
 
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723"									"Marksmanship"
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_Description"						"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. Grants Drow and nearby ranged heroes with bonus agility based on Drow's current agility. This ability is disabled if there is an enemy hero within %disable_range% range.\n<font color='#FF7800'>Perfect Ranger:</font> Passively grants %range_bonus% bonus attack range.\n<font color='#FF7800'>Perfect Shot:</font> When Marksmanship procs, instantly kills targets if their health is below %instakill_threshold%%%."
-"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_aghanim_description"				"Causes Drow Ranger's attacks to splinter on the target, hitting nearby units with normal attacks that deal reduced damage."
+"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_scepter_description"				"Causes Drow Ranger's attacks to splinter on the target, hitting nearby units with normal attacks that deal reduced damage."
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_split_count_scepter"				"SCEPTER SPLIT COUNT:"
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_damage_reduction_scepter"		"%SCEPTER DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_723_Lore"							"The Drow Ranger is the epitome of archery prowess."

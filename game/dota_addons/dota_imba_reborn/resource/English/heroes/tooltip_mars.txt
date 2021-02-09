@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_1"				"<font color='#FF7800'>Strong Argument:</font> God's Rebuke grants Mars %strong_argument_bonus_strength% strength for %strong_argument_duration% seconds for each enemy heroes hit."
 // "DOTA_Tooltip_ability_imba_mars_gods_rebuke_Imbafication_2"			"<font color='#FF7800'>Ancile's Soul:</font> God's Rebuke damage is increased by 'Jupiter Strength' stored damage."
 
-"DOTA_Tooltip_ability_imba_mars_gods_rebuke_aghanim_description"		"Reduces God's Rebuke cooldown to %imba_scepter_cooldown%."
+"DOTA_Tooltip_ability_imba_mars_gods_rebuke_scepter_description"		"Reduces God's Rebuke cooldown to %imba_scepter_cooldown%."
 
 // Bulwark
 "DOTA_Tooltip_ability_imba_mars_bulwark"								"#{DOTA_Tooltip_ability_mars_bulwark}"
@@ -25,7 +25,7 @@
 "DOTA_Tooltip_ability_imba_mars_arena_of_blood_Imbafication_1"			"<font color='#FF7800'>Divine Call:</font> Invoke a divine shield around the arena that can't be bypassed by any means."
 "DOTA_Tooltip_ability_imba_mars_arena_of_blood_Imbafication_2"			"<font color='#FF7800'>Coliseum:</font> Allies inside the Arena gain %coliseum_bonus_damage% bonus damage and %coliseum_bonus_attack_speed% bonus attack speed for each ally inside. max stacks 5."
 
-"DOTA_Tooltip_ability_imba_mars_arena_of_blood_aghanim_description"		"Battle Thrust: Mars now jumps up to 900 range away unleashing arena of blood when reaching cast position."
+"DOTA_Tooltip_ability_imba_mars_arena_of_blood_scepter_description"		"Battle Thrust: Mars now jumps up to 900 range away unleashing arena of blood when reaching cast position."
 
 // Custom Talents
 "DOTA_Tooltip_Ability_special_bonus_imba_mars_1"						"Full Circle"

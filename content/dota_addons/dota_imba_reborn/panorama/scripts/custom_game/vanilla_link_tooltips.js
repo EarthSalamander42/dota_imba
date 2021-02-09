@@ -229,6 +229,8 @@ function SetAbilityTooltips(keys) {
 
 		if (mana_level != 0)
 			CurrentAbilityManaCost.SetDialogVariable("current_manacost", active_mana);
+		else
+			CurrentAbilityManaCost.style.visibility = "collapse";
 	}
 
 	if (Abilities.GetCooldown(ability) == 0) {
@@ -245,6 +247,8 @@ function SetAbilityTooltips(keys) {
 
 		if (cd_level != 0)
 			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][cd_level]);
+		else
+			CurrentAbilityCooldown.style.visibility = "collapse";
 	}
 
 	AbilityCastType.SetDialogVariable("casttype", $.Localize("DOTA_ToolTip_Ability_" + Array_BehaviorTooltips[GetAbilityType(Abilities.GetBehavior(ability))]));
@@ -429,8 +433,6 @@ function SetAbilityTooltips(keys) {
 	if (keys) {
 		if (keys["iCooldown"] != undefined) {	
 			var cd = [];
-			var current_cd = 0;
-//			var current_cd_level = Math.min(ability_level, cooldowns.length);
 
 			for (var i in keys["iCooldown"]) {
 				var fixed_cd = keys["iCooldown"][i];
@@ -439,11 +441,11 @@ function SetAbilityTooltips(keys) {
 					fixed_cd = fixed_cd.toFixed(1);
 
 				cd[i - 1] = fixed_cd;
-
-				if (i == ability_level)
-					current_cd = fixed_cd
 			}
 
+			var current_cd = cd[Math.min(ability_level, cd.length - 1)];
+
+			// This is where we turn array of values into a single string to use as text
 			cd = cd.join(" / ");
 
 			if (cd != 0) {
@@ -460,17 +462,16 @@ function SetAbilityTooltips(keys) {
 		var same_mana = true;
 		if (keys["iManaCost"] != undefined) {
 			var mana = [];
-			var current_mana = 0;
 
 			for (var i in keys["iManaCost"]) {
 				var fixed_mana = keys["iManaCost"][i];
 
 				mana[i - 1] = fixed_mana;
-
-				if (i == ability_level)
-					current_mana = fixed_mana
 			}
 
+			var current_mana = mana[Math.min(ability_level, mana.length - 1)];
+
+			// This is where we turn array of values into a single string to use as text
 			mana = mana.join(" / ");
 
 			if (mana != 0) {

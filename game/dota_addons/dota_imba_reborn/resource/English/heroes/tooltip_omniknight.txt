@@ -66,7 +66,7 @@
 "DOTA_Tooltip_ability_imba_omniknight_guardian_angel_shield_duration"               "SHIELD DURATION:"
 "DOTA_Tooltip_ability_imba_omniknight_guardian_angel_max_hp_shield_health_pct"      "%MAX HP AS SHIELD HEALTH:"
 "DOTA_Tooltip_ability_imba_omniknight_guardian_angel_radius"            "EFFECT RADIUS:"
-"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_aghanim_description"           "Increases duration, provides HP regen, and causes Guardian Angel to affect allies globally."
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_scepter_description"           "Increases duration, provides HP regen, and causes Guardian Angel to affect allies globally."
 
 "DOTA_Tooltip_modifier_imba_guardian_angel"                            "Guardian Angel"
 "DOTA_Tooltip_modifier_imba_guardian_angel_Description"                "Immune to physical damage."

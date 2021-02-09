@@ -29,7 +29,7 @@
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_speed_bonus"				"%SPEED BONUS PER STACK:"
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_scepter_damage_reduction"	"%SCEPTER DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_scepter_range"				"SCEPTER AOE:"
-"DOTA_Tooltip_ability_imba_axe_battle_hunger_aghanim_description"		"Causes Battle Hunger to be an area of effect ability, and reduces the damage output of affected enemy units."
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_scepter_description"		"Causes Battle Hunger to be an area of effect ability, and reduces the damage output of affected enemy units."
 
 "DOTA_Tooltip_modifier_imba_battle_hunger_debuff_dot"					"Battle Hunger"
 "DOTA_Tooltip_modifier_imba_battle_hunger_debuff_dot_Description"		"Dealing %dMODIFIER_PROPERTY_TOOLTIP% damage per second, reducing movement speed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, and reducing outgoing damage by %dMODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE%%% until you kill %dMODIFIER_PROPERTY_TOOLTIP% units.<br><br>Duration will pause if no one is harmed by you for %dMODIFIER_PROPERTY_TOOLTIP% seconds. On attack, you have a chance to attack a random target in range."
@@ -59,7 +59,7 @@
 "DOTA_Tooltip_ability_imba_axe_culling_blade_speed_bonus"              "%MOVE SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_axe_culling_blade_as_bonus"                  "ATTACK SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_axe_culling_blade_speed_duration"            "SPEED BONUS DURATION:"
-"DOTA_Tooltip_ability_imba_axe_culling_blade_aghanim_description"		"<font color='#FF7800'>Applies Battle Hunger on enemy heroes within a %scepter_battle_hunger_radius% AoE radius after a successful Culling Blade.</font>"
+"DOTA_Tooltip_ability_imba_axe_culling_blade_scepter_description"		"<font color='#FF7800'>Applies Battle Hunger on enemy heroes within a %scepter_battle_hunger_radius% AoE radius after a successful Culling Blade.</font>"
 
 "DOTA_Tooltip_modifier_imba_culling_blade_buff_haste"                  "Culling Blade"
 "DOTA_Tooltip_modifier_imba_culling_blade_buff_haste_Description"                   "CULLED! Axe's manly display of force makes you faster!"

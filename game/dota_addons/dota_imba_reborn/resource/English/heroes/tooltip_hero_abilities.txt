@@ -149,7 +149,7 @@
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_max_damage"          "MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_scepter_max_damage"               "SCEPTER MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_damage_increase_enemy"            "BONUS DAMAGE PER ENEMY:"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_aghanim_description"				"Mutes items <font color='#FF7800'>and increases duration</font>."
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_scepter_description"				"Mutes items <font color='#FF7800'>and increases duration</font>."
 
 "DOTA_Tooltip_modifier_imba_static_storm_debuff"                        "Static Storm"
 "DOTA_Tooltip_modifier_imba_static_storm_debuff_Description"            "Silenced and taking damage."
@@ -191,7 +191,7 @@
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_Note0"           "Units afflicted by Doom can be denied when their HP drops below 25%."
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_doom_bringer_doom_damage"          "DAMAGE PER SECOND:"
-//"DOTA_Tooltip_ability_imba_doom_bringer_doom_aghanim_description"   "Increases Doom's duration, and will suspend its duration while the affected unit is within 900 range. Also causes it to remove positive buffs from the target when cast, and break most passive abilities while active. Duration is not increased with Inner Hell."
+//"DOTA_Tooltip_ability_imba_doom_bringer_doom_scepter_description"   "Increases Doom's duration, and will suspend its duration while the affected unit is within 900 range. Also causes it to remove positive buffs from the target when cast, and break most passive abilities while active. Duration is not increased with Inner Hell."
 
 "DOTA_Tooltip_modifier_imba_doom_bringer_doom"            "Doomer"
 "DOTA_Tooltip_modifier_imba_doom_bringer_doom_Description"      "All enemies around you get silenced, cannot use items, and are burned for %dMODIFIER_PROPERTY_TOOLTIP% damage per second."
@@ -211,14 +211,14 @@
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_radius"             "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_stomp_damage"           "STOMP DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_sleep_duration"         "STUN DURATION:"
-//"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_aghanim_description"      "Echo Stomp now causes you to become Spell Immune while channeling and for 2 additional seconds per affected enemy hero."
+//"DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_scepter_description"      "Echo Stomp now causes you to become Spell Immune while channeling and for 2 additional seconds per affected enemy hero."
 
 "DOTA_Tooltip_modifier_imba_elder_titan_magic_immune"	"Spell Immunity"
 
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit"              "Astral Spirit"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Description"        "Elder Titan sends forth his Astral Spirit, damaging any units it passes through.  When the spirit rejoins the Titan, it grants bonus damage, movement speed, and armor for each unit it passed through.\n\nThe Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.\n<font color='#FF7800'>Astral Speed:</font> The spirit's movement speed is not set to Elder Titan's movement speed; the Ancestral Spirit instead moves at increased movement speed.\n<font color='#FF7800'>Spirit Delimiter:</font> No movement speed cap for the movement speed bonus.\n<font color='#FF7800'>Phase Through:</font> Overlapping with the Astral Spirit does not automatically return it to Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_Lore"           "Like the four fundamentals, Elder Titan exists across all planes at once and can draw other aspects of himself to assist in times of need."
-"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_aghanim_description"		"Causes you to become Spell Immune for %scepter_magic_immune_per_hero% seconds per affected enemy hero when the spirit returns to you."
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_scepter_description"		"Causes you to become Spell Immune for %scepter_magic_immune_per_hero% seconds per affected enemy hero when the spirit returns to you."
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_spirit_duration"      "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_buff_duration"        "#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_pass_damage"        "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
@@ -261,14 +261,14 @@
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_duration"        "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_damage_pct"         "%MAX HP AS DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_pct"           "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
-"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_aghanim_description"      "<font color='#FF7800'>Increases slow duration, and units pulled in by Earth Splitter are also disarmed.</font>"
+"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_scepter_description"      "<font color='#FF7800'>Increases slow duration, and units pulled in by Earth Splitter are also disarmed.</font>"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_duration_scepter"    "SCEPTER SLOW/DISARM DURATION:"
 
 "DOTA_Tooltip_modifier_imba_earth_splitter"								"Earth Splitter"
 "DOTA_Tooltip_modifier_imba_earth_splitter_Description"					"Slowed and broken for the duration."
 
 "DOTA_Tooltip_modifier_imba_earth_splitter_scepter"								"Earth Splitter Scepter"
-"DOTA_Tooltip_modifier_imba_earth_splitter_aghanim_description"					"Disarmed for the duration."
+"DOTA_Tooltip_modifier_imba_earth_splitter_scepter_Description"					"Disarmed for the duration."
 
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_spirit"             "Echo Stomp (Spirit)"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_spirit_Description"       "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness."
@@ -336,7 +336,7 @@
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_pct"            "%RESTORATION AMPLIFICATION:"
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_magic_amp_pct"            "%INCREASED MAGIC DAMAGE:"
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_slow_pct"            "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
-"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_aghanim_description"						"Reduces Ghost Shroud cooldown."
+"DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_scepter_description"						"Reduces Ghost Shroud cooldown."
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_cooldown_scepter"						"SCEPTER COOLDOWN:"
 
 "DOTA_Tooltip_modifier_imba_ghost_shroud_active"                  "Ghost Shroud"
@@ -358,7 +358,7 @@
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_Lore"            "Those who come within a short distance of Necrolyte can feel pestilence and plague in the air."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_damage_pct"                  "%HEALTH LOSS PER SECOND:"
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_heal_reduce_pct"             "%HEALTH REGEN REDUCTION:"
-"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_aghanim_description"			"Increases Heartstopper Aura damage while Ghost Shroud is active."
+"DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_scepter_description"			"Increases Heartstopper Aura damage while Ghost Shroud is active."
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_scepter_multiplier"			"SCEPTER DAMAGE MULTIPLIER:"
 
 "DOTA_Tooltip_modifier_imba_heartstopper_aura_damage"                  "Heartstopper Aura"
@@ -370,7 +370,7 @@
 
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe"								"Reaper's Scythe"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their base attack damage and spell ampification."
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "<font color='#FF7800'>Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds.</font>"
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_scepter_description"            "<font color='#FF7800'>Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds.</font>"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"							"The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"							"DAMAGE PER MISSING HEALTH:"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage_reduction_pct"           "%DAMAGE REDUCTION:"
@@ -474,7 +474,7 @@
 "DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_movement_speed_pct"                "%MOVEMENT SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_bonus_damage"          "BASE BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_maximum_vendetta_stacks"           "MAXIMUM STORED DAMAGE:"
-"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_aghanim_description"               "Adds a burrow ability which empowers all of Nyx's other abilities."
+"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_scepter_description"               "Adds a burrow ability which empowers all of Nyx's other abilities."
 
 "DOTA_Tooltip_modifier_imba_vendetta"                      "Vendetta"
 "DOTA_Tooltip_modifier_imba_vendetta_Description"                      "Gaining increased movement speed and phased movement. Your next attack will deal massive bonus damage."
@@ -640,7 +640,7 @@
 "DOTA_Tooltip_ability_imba_phoenix_supernova_max_hero_attacks"                    "ATTACKS TO DESTROY:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_additional_duration"         "SCEPTER DURATION INCREASE:"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_cooldown"                    "SCEPTER PASSIVE COOLDOWN:"
-"DOTA_Tooltip_ability_imba_phoenix_supernova_aghanim_description"                 "Allows Phoenix to cast Sun Ray and turn its direction.\n\n <font color='#FF7800'>When Phoenix is about to be killed, he instantly activates a Super Nova that has an increased duration, preventing his death. This effect has its own seperate cooldown from Super Nova.</font>"
+"DOTA_Tooltip_ability_imba_phoenix_supernova_scepter_description"                 "Allows Phoenix to cast Sun Ray and turn its direction.\n\n <font color='#FF7800'>When Phoenix is about to be killed, he instantly activates a Super Nova that has an increased duration, preventing his death. This effect has its own seperate cooldown from Super Nova.</font>"
 
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_egg_double"            "Sun Form"
 "DOTA_Tooltip_modifier_imba_phoenix_supernova_egg_double_Description"             "Burning enemies before being reborn."
@@ -773,7 +773,7 @@
 "DOTA_Tooltip_ability_imba_pugna_life_drain_duration"                  "MAX LENGTH:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_base_slow_pct"              "%BASE SLOW:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_slow_per_second"            "%SLOW PER SECOND:"
-"DOTA_Tooltip_ability_imba_pugna_life_drain_aghanim_description"		"Removes cooldown and increases damage."
+"DOTA_Tooltip_ability_imba_pugna_life_drain_scepter_description"		"Removes cooldown and increases damage."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_cast_range"                "CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_pugna_life_drain_end"                        "Life Drain Cancel"
@@ -862,7 +862,7 @@
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Description"          "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake and pushing them back.\n<font color='#FF7800'>Joy of Pain:</font> Absorbs part of the damage dealt by Sonic Wave as health."
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Note0"                "Confusion does not pierce Spell Immunity."
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Lore"                "Her most exquisite of all of torments, Akasha's Sonic Wave puts her poor foes out of their misery."
-"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_aghanim_description"              "Increases damage and decreases cooldown. <font color='#FF7800'>Also confuses enemies hit by making them deafened. Their next 4 orders are inverted: movement and ground targeted spells are spun around 180 degrees, and unit targeted spells choose a random valid target in range. Other types of orders are ignored and do not count.</font>"
+"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_scepter_description"              "Increases damage and decreases cooldown. <font color='#FF7800'>Also confuses enemies hit by making them deafened. Their next 4 orders are inverted: movement and ground targeted spells are spun around 180 degrees, and unit targeted spells choose a random valid target in range. Other types of orders are ignored and do not count.</font>"
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_travel_distance"                  "TRAVEL DISTANCE:"
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_knockback_distance"				"KNOCKBACK DISTANCE:"
 "DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_start_radius"                     "STARTING RADIUS:"
@@ -1001,7 +1001,7 @@
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_channel_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_attack_interval"				"ATTACK INTERVAL:"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_scepter_duration"               "SCEPTER DURATION:"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_aghanim_description"            "Increases Tricks of the Trade's duration to 9 seconds, and allows Riki to target an allied hero, centering Tricks of the Trade on it."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_scepter_description"            "Increases Tricks of the Trade's duration to 9 seconds, and allows Riki to target an allied hero, centering Tricks of the Trade on it."
 
 "DOTA_Tooltip_modifier_imba_riki_tricks_of_the_trade_primary"						"Tricks of the Trade"
 "DOTA_Tooltip_modifier_imba_riki_tricks_of_the_trade_primary_Description"			"Invulnerable and slashing enemies in the area."
@@ -1011,7 +1011,7 @@
 
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723"									"Tricks of the Trade"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Description"						"Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed.\n<font color='#E03E2E'>This ability is not affected by Frantic's cooldown reduction.</font>"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_aghanim_description"				"Increases duration, attacks, cast range and allows you to target an allied hero, hiding inside them for the duration."
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_scepter_description"				"Increases duration, attacks, cast range and allows you to target an allied hero, hiding inside them for the duration."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Lore"							"The Stealth Assassin is not afraid to fight dirty, and specializes in attacking his opponents from behind."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Note0"							"Moving while phased out will cancel the ability."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_area_of_effect"							"RADIUS:"
@@ -1065,7 +1065,7 @@
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike_max_push_distance"                 "MAXIMUM DISTANCE:"
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike_cast_range_scepter"	"SCEPTER RANGE:"
 
-"DOTA_Tooltip_ability_imba_sandking_burrowstrike_aghanim_description"	"Doubles cast range."
+"DOTA_Tooltip_ability_imba_sandking_burrowstrike_scepter_description"	"Doubles cast range."
 
 "DOTA_Tooltip_modifier_imba_burrowstrike_stun"                          "Burrowstrike"
 "DOTA_Tooltip_modifier_imba_burrowstrike_stun_Description"              "Stunned."
@@ -1122,7 +1122,7 @@
 "DOTA_Tooltip_ability_imba_sandking_epicenter_ms_slow_pct"              "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_sandking_epicenter_as_slow"                  "ATTACK SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_sandking_epicenter_slow_duration"            "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
-"DOTA_Tooltip_ability_imba_sandking_epicenter_aghanim_description"		"<font color='#FF7800'>Increases the channel time to 3, but also increases the pulse count by 50%.</font>"
+"DOTA_Tooltip_ability_imba_sandking_epicenter_scepter_description"		"<font color='#FF7800'>Increases the channel time to 3, but also increases the pulse count by 50%.</font>"
 
 "DOTA_Tooltip_modifier_imba_epicenter_slow"                            "Epicenter Slow"
 "DOTA_Tooltip_modifier_imba_epicenter_slow_Description"                "Slowed by a pulse from Epicenter."
@@ -1212,7 +1212,7 @@
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_max_souls"				"MAX SOULS:"
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_damage_per_soul"			"DAMAGE PER SOUL:"
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_scepter_max_souls"		"SCEPTER MAX SOULS:"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_aghanim_description"		"Increases max souls." 
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_scepter_description"		"Increases max souls." 
 
 "DOTA_Tooltip_modifier_imba_necromastery_souls"					"Necromastery"
 "DOTA_Tooltip_modifier_imba_necromastery_souls_Description"		"Stored souls granting an additional %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage."
@@ -1246,7 +1246,7 @@
 "DOTA_Tooltip_ability_imba_nevermore_requiem_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_nevermore_requiem_scepter_line_damage_pct"	"%SCEPTER DAMAGE ON RETURN:"
 
-"DOTA_Tooltip_ability_imba_nevermore_requiem_aghanim_description"		"Causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend deals less damage, but heals Shadow Fiend for all the damage it dealt. <font color='#FF7800'>Also darkens the screens of enemy players hit by Requiem of Souls for the duration of the slow.</font>"
+"DOTA_Tooltip_ability_imba_nevermore_requiem_scepter_description"		"Causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend deals less damage, but heals Shadow Fiend for all the damage it dealt. <font color='#FF7800'>Also darkens the screens of enemy players hit by Requiem of Souls for the duration of the slow.</font>"
 
 "DOTA_Tooltip_modifier_imba_reqiuem_debuff"								"Requiem of Souls"
 "DOTA_Tooltip_modifier_imba_reqiuem_debuff_Description"					"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%."
@@ -1279,7 +1279,7 @@
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Note1"				"Arcane Bolt cannot be disjointed."
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_base_damage"                   "BASE DAMAGE:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_intelligence_bonus_pct"        "%INTELLIGENCE MULTIPLIER:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_aghanim_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within %scepter_search_radius% range willl be hit with the same ability. Heroes will take priority."
+"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_scepter_description"           "When Skywrath Mage casts Arcane Bolt, a different random target within %scepter_search_radius% range willl be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff"                          "Arcane Wrath"
 "DOTA_Tooltip_modifier_imba_arcane_bolt_buff_Description"              "Arcane Bolt intelligence multiplier increased by %dMODIFIER_PROPERTY_TOOLTIP%%%, and projectile speed increased by %dMODIFIER_PROPERTY_TOOLTIP%."
@@ -1297,7 +1297,7 @@
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_ms_slow_pct"               "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_slow_duration"             "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_max_bounces"               "MAXIMUM GHASTLY PULSE BOUNCES:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_aghanim_description"       "When Skywrath Mage casts Concussive Shot, a different random target within cast range will be hit with the same ability. Heroes will take priority."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_scepter_description"       "When Skywrath Mage casts Concussive Shot, a different random target within cast range will be hit with the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_concussive_shot_slow"						"Concussive Shot"
 "DOTA_Tooltip_modifier_imba_concussive_shot_slow_Description"			"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
@@ -1311,7 +1311,7 @@
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_Note0"            "The ground seal ignores targets that has the regular seal on them, but can apply it if the seal gets purged."
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_seal_duration"                "SEAL DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_mr_reduction_pct"             "%MAGIC AMPLIFICATION:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_aghanim_description"          "Anytime Skywrath Mage casts Ancient Seal, a different random target within 700 range will be affected by the same ability. Heroes will take priority."
+"DOTA_Tooltip_ability_imba_skywrath_mage_ancient_seal_scepter_description"          "Anytime Skywrath Mage casts Ancient Seal, a different random target within 700 range will be affected by the same ability. Heroes will take priority."
 
 "DOTA_Tooltip_modifier_imba_ancient_seal_main"							"Ancient Seal"
 "DOTA_Tooltip_modifier_imba_ancient_seal_main_Description"				"Silenced and magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
@@ -1332,7 +1332,7 @@
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_duration"				"DURATION:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage"          "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_explosion_radius"             "NOVA RADIUS:"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_aghanim_description"          "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within %scepter_search_radius% range (that is not inside the initial Mystic Flare). Heroes will take priority."
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_scepter_description"          "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within %scepter_search_radius% range (that is not inside the initial Mystic Flare). Heroes will take priority."
 
 ////===============================================================================================================
 // Skywrath Mage's Custom Talents
@@ -1364,7 +1364,7 @@
 "DOTA_Tooltip_ability_imba_tinker_rearm_Note1"              "Rod of Atos EX can be Rearmed, but doing so will decrement its number of charges by 1."
 "DOTA_Tooltip_ability_imba_tinker_rearm_cooldown_tooltip"       "CHANNEL TIME:"
 
-"DOTA_Tooltip_ability_imba_tinker_rearm_aghanim_description"               "<font color='#FF7800'>Grants bonus spell amplification based on every 3% of missing mana, up to a maximum of 34% at 0 mana.</font>"
+"DOTA_Tooltip_ability_imba_tinker_rearm_scepter_description"               "<font color='#FF7800'>Grants bonus spell amplification based on every 3% of missing mana, up to a maximum of 34% at 0 mana.</font>"
 
 "DOTA_Tooltip_modifier_imba_rearm_animation"              "Rearm"
 "DOTA_Tooltip_modifier_imba_rearm_animation_Description"        "Currently reloading your arsenal."
@@ -1532,7 +1532,7 @@
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_as"                    "ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_buff_duration"               "TRANCE DURATION:"
 "DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_bat"                   "BASE ATTACK TIME:"
-"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"         "<font color='#FF7800'>Standard: Allows Troll Warlord's allies to benefit from Fervor while Battle Trance is active. Fervor stacks are lost after the effect ends.\n Jesus Take the Wheel: Gives Troll Warlord free pathing while Battle Trance is active and locked onto a target.</font>"
+"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_scepter_description"         "<font color='#FF7800'>Standard: Allows Troll Warlord's allies to benefit from Fervor while Battle Trance is active. Fervor stacks are lost after the effect ends.\n Jesus Take the Wheel: Gives Troll Warlord free pathing while Battle Trance is active and locked onto a target.</font>"
 
 "DOTA_Tooltip_modifier_imba_battle_trance"                              "Battle Trance"
 "DOTA_Tooltip_modifier_imba_battle_trance_Description"                  "Increased attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
@@ -1651,9 +1651,9 @@
 //"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_damage_transfer_pct"       "%SCEPTER DEMON LINK:"
 
 
-//"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_aghanim_description"               "Summons 5 Ascension demons around the target point. Ascension demons link their own life force to the protect the golem. While they live, the golem takes no damage, but everytime it is damaged, a portion of it is applied to a random demon. Each living demon increases the Golem's attack by 10%."
+//"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_description"               "Summons 5 Ascension demons around the target point. Ascension demons link their own life force to the protect the golem. While they live, the golem takes no damage, but everytime it is damaged, a portion of it is applied to a random demon. Each living demon increases the Golem's attack by 10%."
 
-"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_aghanim_description"               	"Calls 2 golems with reduced stats and bounty. <font color='#FF7800'>Contract of the Black Grimoire applies to both golems, but is reduced to 75% efficacy.</font>"
+"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_description"               	"Calls 2 golems with reduced stats and bounty. <font color='#FF7800'>Contract of the Black Grimoire applies to both golems, but is reduced to 75% efficacy.</font>"
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_number_of_golems_scepter"				"SCEPTER NUMBER OF GOLEMS:"
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_golem_hp_tooltip_scepter"				"SCEPTER GOLEM HEALTH:"
 "DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_golem_dmg_tooltip_scepter"				"SCEPTER GOLEM DAMAGE:"
