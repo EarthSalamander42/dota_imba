@@ -57,8 +57,6 @@ local function RefreshElectroCharge(unit)
 end
 
 local function PlantProximityMine(caster, ability, spawn_point, big_boom)
-	local mine_ability = "imba_techies_land_mines_trigger"
-
 	-- Create the mine unit
 	local mine_name
 	if big_boom then
@@ -75,17 +73,11 @@ local function PlantProximityMine(caster, ability, spawn_point, big_boom)
 	local playerID = caster:GetPlayerID()
 	mine:SetControllableByPlayer(playerID, true)
 
-	-- Set the mine's ability to be the same level as the planting ability
-	local mine_ability_handler = mine:FindAbilityByName(mine_ability)
-
-	print(mine_ability_handler)
-	if mine_ability_handler then
-		print(ability:GetLevel())
-		mine_ability_handler:SetLevel(ability:GetLevel())
-	end
-
 	-- Set the mine's owner to be the caster
 	mine:SetOwner(caster)
+
+	-- Set the mine's modifier AI
+	mine:AddNewModifier(caster, ability, "modifier_imba_proximity_mine", {})
 end
 
 ------------------------------
@@ -250,18 +242,9 @@ end
 ------------------------------
 --     PROXIMITY MINE AI    --
 ------------------------------
-imba_techies_land_mines_trigger = imba_techies_land_mines_trigger or class({})
 LinkLuaModifier("modifier_imba_proximity_mine", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_proximity_mine_building_res", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_proximity_mine_talent", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_techies_land_mines_trigger:GetIntrinsicModifierName()
-	return "modifier_imba_proximity_mine"
-end
-
-function imba_techies_land_mines_trigger:GetAbilityTextureName()
-   return "rubick_empty1"
-end
 
 -- Proximity mine states modifier
 modifier_imba_proximity_mine = modifier_imba_proximity_mine or class({})
@@ -269,8 +252,9 @@ modifier_imba_proximity_mine = modifier_imba_proximity_mine or class({})
 function modifier_imba_proximity_mine:OnCreated()
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()
+		self.caster = self:GetParent()
 		self.owner = self.caster:GetOwner()
+
 		self.ability = self.owner:FindAbilityByName("imba_techies_land_mines")
 
 		-- Ability specials
@@ -779,20 +763,16 @@ function imba_techies_stasis_trap:OnSpellStart()
 	else -- Plant on the ground
 		-- Plant trap
 		local trap = CreateUnitByName("npc_imba_techies_stasis_trap", target_point, true, caster, caster, caster:GetTeamNumber())
-		local trap_ability = "imba_techies_stasis_trap_trigger"
 
 		-- Set the mine's team to be the same as the caster
 		local playerID = caster:GetPlayerID()
 		trap:SetControllableByPlayer(playerID, true)
 
-		-- Set the mine's ability to be the same level as the planting ability
-		local trap_ability_handler = trap:FindAbilityByName(trap_ability)
-		if trap_ability_handler then
-			trap_ability_handler:SetLevel(ability:GetLevel())
-		end
-
 		-- Set the mine's owner to be the caster
 		trap:SetOwner(caster)
+
+		-- Set the mine's modifier AI
+		trap:AddNewModifier(self:GetCaster(), self, "modifier_imba_statis_trap", {})
 	end
 end
 
@@ -801,164 +781,18 @@ end
 ------------------------------
 --      STATIS TRAP AI      --
 ------------------------------
-imba_techies_stasis_trap_trigger = imba_techies_stasis_trap_trigger or class({})
+
 LinkLuaModifier("modifier_imba_statis_trap", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_root", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_electrocharge", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_disarmed", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_techies_stasis_trap_trigger:GetAbilityTextureName()
-   return "techies_stasis_trap"
-end
-
-function imba_techies_stasis_trap_trigger:GetIntrinsicModifierName()
-	return "modifier_imba_statis_trap"
-end
-
 -- Statis Trap thinker modifier
 modifier_imba_statis_trap = modifier_imba_statis_trap or class({})
-
-
-function modifier_imba_statis_trap:OnCreated()
-	if IsServer() then
-		-- Ability properties
-		self.caster = self:GetCaster()
-		self.owner = self.caster:GetOwner()
-		self.ability = self.owner:FindAbilityByName("imba_techies_stasis_trap")
-
-		-- Ability specials
-		self.activate_delay = self.ability:GetVanillaAbilitySpecial("activation_time")
-		self.trigger_range = self.ability:GetVanillaAbilitySpecial("stun_radius")
-		self.root_range = self.ability:GetVanillaAbilitySpecial("stun_radius")
-		self.root_duration = self.ability:GetVanillaAbilitySpecial("stun_duration")
-		self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
-		self.flying_vision_duration = self.ability:GetSpecialValueFor("flying_vision_duration")
-
-		-- Set variables
-		self.active = false
-
-		-- Wait for activation
-		Timers:CreateTimer(self.activate_delay, function()
-
-			-- Mark trap as activated
-			self.active = true
-
-			-- Start thinking
-			self:StartIntervalThink(self.tick_rate)
-		end)
-	end
-end
 
 function modifier_imba_statis_trap:IsHidden() return true end
 function modifier_imba_statis_trap:IsPurgable() return false end
 function modifier_imba_statis_trap:IsDebuff() return false end
-
-function modifier_imba_statis_trap:OnIntervalThink()
-	if IsServer() then
-		local caster = self.caster
-
-		-- If the caster has the sign modifier, do nothing
-		local modifier_sign = "modifier_imba_minefield_sign_detection"
-		if caster:HasModifier(modifier_sign) then
-			return nil
-		end
-
-		-- If the Stasis trap is dead, do nothing and destroy
-		if not caster:IsAlive() then
-			self:Destroy()
-			return nil
-		end
-
-		-- Look for nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-										  caster:GetAbsOrigin(),
-										  nil,
-										  self.trigger_range,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-										  FIND_ANY_ORDER,
-										  false)
-
-		if #enemies > 0 then
-			self:_Explode()
-		end
-	end
-end
-
-function modifier_imba_statis_trap:_Explode()
-	local caster = self.caster
-
-	-- Springing the trap! Play root sound
-	local sound_explosion = "Hero_Techies.StasisTrap.Stun"
-	EmitSoundOn(sound_explosion, caster)
-
-	-- Add explosion particle
-	local particle_explode = "particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
-	local particle_explode_fx = ParticleManager:CreateParticle(particle_explode, PATTACH_WORLDORIGIN, caster)
-	ParticleManager:SetParticleControl(particle_explode_fx, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_explode_fx, 1, Vector(self.root_range, 1, 1))
-	ParticleManager:SetParticleControl(particle_explode_fx, 3, caster:GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(particle_explode_fx)
-
-	-- Find all units in radius
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-								caster:GetAbsOrigin(),
-								nil,
-								self.root_range,
-								DOTA_UNIT_TARGET_TEAM_ENEMY,
-								DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-								DOTA_UNIT_TARGET_FLAG_NONE,
-								FIND_ANY_ORDER,
-								false)
-
-	local modifier_root = "modifier_imba_statis_trap_root"
-	local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
-	local modifier_disarmed = "modifier_imba_statis_trap_disarmed"
-
-	-- Root enemies nearby if not disarmed, and apply a electrocharge
-	for _,enemy in pairs(enemies) do
-		if not caster:HasModifier(modifier_disarmed) then
-			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
-		end
-
-		-- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
-		if not enemy:HasModifier(modifier_electrocharge) then
-			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
-		else
-			RefreshElectroCharge(enemy)
-		end
-	end
-
-	-- Find nearby Statis Traps and mark them as disarmed
-	local mines = FindUnitsInRadius(caster:GetTeamNumber(),
-									caster:GetAbsOrigin(),
-									nil,
-									self.root_range,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_OTHER,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
-
-	for _,mine in pairs(mines) do
-		if mine:GetUnitName() == "npc_imba_techies_stasis_trap" and mine ~= caster then
-			mine:AddNewModifier(caster, self.ability, modifier_disarmed, {})
-		end
-	end
-
-	-- #4 Talent: Stasis Traps grants charges of Inflammable to Remote mines
-	if self.owner and self.owner:HasTalent("special_bonus_imba_techies_4") then
-		ApplyInflammableToRemoteMines(caster, self.root_range, mines)
-	end
-
-	-- Apply flying vision
-	AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), self.root_range, self.flying_vision_duration, false)
-
-	-- Kill trap and destroy modifier
-	caster:ForceKill(false)
-	self:Destroy()
-end
 
 function modifier_imba_statis_trap:CheckState()
 	if IsServer() then
@@ -980,6 +814,166 @@ function modifier_imba_statis_trap:CheckState()
 		end
 		return state
 	end
+end
+
+function modifier_imba_statis_trap:OnCreated()
+	if IsServer() then
+		-- Ability properties
+		self.caster = self:GetParent()
+		self.owner = self.caster:GetOwner()
+		self.ability = self.owner:FindAbilityByName("imba_techies_stasis_trap")
+
+		-- Ability specials
+		self.activate_delay = self.ability:GetVanillaAbilitySpecial("activation_time")
+		self.trigger_range = self.ability:GetVanillaAbilitySpecial("stun_radius")
+		self.root_range = self.ability:GetVanillaAbilitySpecial("stun_radius")
+		self.root_duration = self.ability:GetVanillaAbilitySpecial("stun_duration")
+		self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
+		self.flying_vision_duration = self.ability:GetSpecialValueFor("flying_vision_duration")
+
+		print(self.activate_delay, self.trigger_range, self.root_duration, self.tick_rate, self.flying_vision_duration)
+
+		-- Set variables
+		self.active = false
+
+		-- Wait for activation
+		Timers:CreateTimer(self.activate_delay, function()
+
+			-- Mark trap as activated
+			self.active = true
+
+			-- Start thinking
+			self:StartIntervalThink(self.tick_rate)
+		end)
+	end
+end
+
+function modifier_imba_statis_trap:OnIntervalThink()
+	local caster = self.caster
+
+	-- If the caster has the sign modifier, do nothing
+	local modifier_sign = "modifier_imba_minefield_sign_detection"
+	if caster:HasModifier(modifier_sign) then
+		return nil
+	end
+
+	-- If the Stasis trap is dead, do nothing and destroy
+	if not caster:IsAlive() then
+		self:Destroy()
+		return nil
+	end
+
+	-- Look for nearby enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+		caster:GetAbsOrigin(),
+		nil,
+		self.trigger_range,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	if #enemies > 0 then
+		self:_Explode()
+	end
+end
+
+function modifier_imba_statis_trap:_Explode()
+	local caster = self.caster
+
+	print("Start explode")
+
+	-- Springing the trap! Play root sound
+	local sound_explosion = "Hero_Techies.StasisTrap.Stun"
+	EmitSoundOn(sound_explosion, caster)
+
+	-- Add explosion particle
+	local particle_explode = "particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
+	local particle_explode_fx = ParticleManager:CreateParticle(particle_explode, PATTACH_WORLDORIGIN, caster)
+	ParticleManager:SetParticleControl(particle_explode_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_explode_fx, 1, Vector(self.root_range, 1, 1))
+	ParticleManager:SetParticleControl(particle_explode_fx, 3, caster:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(particle_explode_fx)
+
+	-- Find all units in radius
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+		caster:GetAbsOrigin(),
+		nil,
+		self.root_range,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	local modifier_root = "modifier_imba_statis_trap_root"
+	local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
+	local modifier_disarmed = "modifier_imba_statis_trap_disarmed"
+
+	print("Start root")
+
+	-- Root enemies nearby if not disarmed, and apply a electrocharge
+	for _,enemy in pairs(enemies) do
+		if not caster:HasModifier(modifier_disarmed) then
+			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
+		end
+
+		-- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
+		if not enemy:HasModifier(modifier_electrocharge) then
+			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
+		else
+			RefreshElectroCharge(enemy)
+		end
+	end
+
+	print("End Root")
+
+	-- Find nearby Statis Traps and mark them as disarmed
+	local mines = FindUnitsInRadius(caster:GetTeamNumber(),
+		caster:GetAbsOrigin(),
+		nil,
+		self.root_range,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_OTHER,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	print("Start stasis trap ally mines root")
+
+	for _,mine in pairs(mines) do
+		if mine:GetUnitName() == "npc_imba_techies_stasis_trap" and mine ~= caster then
+			mine:AddNewModifier(caster, self.ability, modifier_disarmed, {})
+		end
+	end
+
+	print("End")
+
+	print("Has talent 4?")
+
+	-- #4 Talent: Stasis Traps grants charges of Inflammable to Remote mines
+	if self.owner and self.owner:HasTalent("special_bonus_imba_techies_4") then
+		ApplyInflammableToRemoteMines(caster, self.root_range, mines)
+	end
+
+	print("End has talent 4")
+
+	print("Add Vision")
+
+	-- Apply flying vision
+	AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), self.root_range, self.flying_vision_duration, false)
+
+	print("Kill and Destroy")
+
+	-- Kill trap and destroy modifier
+	caster:ForceKill(false)
+	self:Destroy()
+
+	print("End Explode")
 end
 
 

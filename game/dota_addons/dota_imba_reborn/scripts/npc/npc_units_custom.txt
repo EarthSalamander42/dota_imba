@@ -1205,7 +1205,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_techies_land_mines_trigger"
+		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""
@@ -1277,7 +1277,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_techies_land_mines_trigger"
+		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""
@@ -1349,7 +1349,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_techies_stasis_trap_trigger"
+		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""

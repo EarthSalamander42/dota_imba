@@ -1,11 +1,11 @@
 vanilla_baseclass = vanilla_baseclass or {}
 
-function vanilla_baseclass:GetRightfulKV(sKeyValue, bHideAtLevel1)
-	if bHideAtLevel1 and self:GetLevel() == 0 then
+function vanilla_baseclass:GetRightfulKV(sKeyValue, bHideAtLevel0)
+	if bHideAtLevel0 and self:GetLevel() == 0 then
 		return 0
 	end
 
-	local imba_value = GetAbilityKV(self:GetName(), sKeyValue)
+	local imba_value = GetAbilityKV(self:GetName(), sKeyValue, self:GetLevel())
 
 	if imba_value then
 		return imba_value

@@ -146,7 +146,7 @@
 "npc_dota_hero_spirit_breaker"                              "Spirit Breaker (IMBA)"
 "npc_dota_hero_storm_spirit"                                "Storm Spirit (IMBA)"
 "npc_dota_hero_sven"                                        "Sven (IMBA)"
-"npc_dota_hero_techies"                                    "Techies"
+"npc_dota_hero_techies"                                    "Techies (IMBA)"
 "npc_dota_hero_templar_assassin"                            "Templar Assassin (IMBA)"
 "npc_dota_hero_terrorblade"                                "Terrorblade"
 "npc_dota_hero_tidehunter"                                  "Tidehunter (IMBA)"
