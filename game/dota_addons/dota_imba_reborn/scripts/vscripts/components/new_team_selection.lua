@@ -8,7 +8,7 @@ if not TeamOrdering then
 	TeamOrdering.Radiant = {}
 	TeamOrdering.Dire = {}
 	TeamOrdering.minimum_level_to_reorder = 25
-	TeamOrdering.fixed_winrate_for_rookies = 30
+	TeamOrdering.fixed_winrate_for_rookies = 15
 end
 
 -- events
@@ -76,7 +76,7 @@ function TeamOrdering:ComputeTeamSelection()
 --	else
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) then
-				if api:GetPlayerXPLevel(i) < self.minimum_level_to_reorder then
+				if api:GetPlayerXPLevel(i) <= self.minimum_level_to_reorder then
 					self.winrates[i] = self.fixed_winrate_for_rookies
 					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
 				else
