@@ -84,7 +84,7 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 		end
 	end
 
-	if not IsInToolsMode() then
+	if not IsInToolsMode() and CUSTOM_GAME_TYPE == "IMBA" then
 		TeamOrdering:OnPlayersLoaded()
 	end
 
