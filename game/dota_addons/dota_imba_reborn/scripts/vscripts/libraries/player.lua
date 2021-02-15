@@ -875,6 +875,7 @@ ignored_pfx_list["particles/econ/events/ti9/ti9_emblem_effect_loadout.vpcf"] = t
 ignored_pfx_list["particles/econ/events/ti8/ti8_hero_effect.vpcf"] = true
 ignored_pfx_list["particles/econ/events/ti7/ti7_hero_effect.vpcf"] = true
 ignored_pfx_list["particles/econ/events/ti10/emblem/ti10_emblem_effect.vpcf"] = true
+ignored_pfx_list["particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"] = true
 
 -- Call custom functions whenever CreateParticle is being called anywhere
 local original_CreateParticle = CScriptParticleManager.CreateParticle
