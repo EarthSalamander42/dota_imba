@@ -80,8 +80,8 @@ function TeamOrdering:ComputeTeamSelection()
 					self.winrates[i] = self.fixed_winrate_for_rookies
 					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
 				else
-					self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
-					print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i))
+					self.winrates[i] = api:GetPlayerSeasonalWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
+					print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerSeasonalWinrate(i))
 				end
 			end
 		end
