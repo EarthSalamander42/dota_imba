@@ -13,7 +13,8 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		require('components/battlepass/keyvalues/items_game')
 
 		require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
-		Battlepass:Init()
+
+		Battlepass:GetPlayerInfoXP()
 
 		CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 	end
@@ -59,15 +60,6 @@ ListenToGameEvent('npc_spawned', function(event)
 		if npc.bp_init == true then return end
 
 		npc.bp_init = true
-
-		local herolist = CustomNetTables:GetTableValue("hero_selection", "herolist")
-
-		if herolist and herolist.customlist and herolist.customlist[npc:GetUnitName()] then
-			CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
-				player_id = npc:GetPlayerID(),
-				icon_path = npc:GetUnitName(),
-			})
-		end
 	end
 end, nil)
 
