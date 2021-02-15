@@ -42,23 +42,15 @@ function Battlepass:GetRewardUnlocked(ID)
 end
 
 -- global functions shared across Frostrose Studio custom games
-
-function Battlepass:AddItemEffects(hero)
+function Battlepass:AddItemEffects(hero, ply_table)
 	if hero.GetPlayerID == nil then return end
 
-	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(hero:GetPlayerID()))
+	if ply_table and ply_table.bp_rewards == 0 then return end
 
-	if ply_table and ply_table.bp_rewards == 0 then
+	if CUSTOM_GAME_TYPE == "PW" then
+		Battlepass:SetItemEffects(hero)
 	else
-		if CUSTOM_GAME_TYPE == "PW" then
-			Battlepass:SetItemEffects(hero)
-		else
-			Battlepass:RegisterHeroTaunt(hero)
-		end
-	end
-
-	-- some effects override some items effects, need to call it after items setup
-	if CUSTOM_GAME_TYPE ~= "PW" then
+		Battlepass:RegisterHeroTaunt(hero)
 		Battlepass:GetHeroEffect(hero)
 	end
 end
@@ -86,9 +78,7 @@ function Battlepass:HasArcana(ID, hero_name)
 end
 
 -- vanilla extension
-function CDOTA_BaseNPC:SetupHealthBarLabel()
-	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(self:GetPlayerOwnerID()))
-
+function CDOTA_BaseNPC:SetupHealthBarLabel(donator_level, ply_table)
 	if ply_table and ply_table.in_game_tag == 0 then
 		self:SetCustomHealthLabel("", 0, 0, 0)
 
@@ -97,7 +87,6 @@ function CDOTA_BaseNPC:SetupHealthBarLabel()
 
 --	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
 	if api:IsDonator(self:GetPlayerOwnerID()) ~= false then
-		local donator_level = api:GetDonatorStatus(self:GetPlayerOwnerID())
 		if donator_level and donator_level > 0 then
 			self:SetCustomHealthLabel("#donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
 		end
