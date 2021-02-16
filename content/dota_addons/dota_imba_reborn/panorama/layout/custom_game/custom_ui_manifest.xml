@@ -332,7 +332,7 @@
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/roshan_health_bar.xml" /> 
 -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.xml" /> 
+<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
@@ -347,6 +347,6 @@
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 
 		<!-- Credits: Dota 12v12 (Dota 2 Unofficial dev team) -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/dota_hud_chat_wheel.xml" />
+<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/dota_hud_chat_wheel.xml" /> -->
 	</Panel>
 </root>

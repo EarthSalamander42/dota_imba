@@ -56,7 +56,7 @@ end
 
 -- core
 function TeamOrdering:ComputeTeamSelection()
-	print("ComputeTeamSelection()")
+--	print("ComputeTeamSelection()")
 	local n = PlayerResource:GetPlayerCount()
 	local k = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
 	local acceptableWinratesDifference = 1 -- for 10v10 only
@@ -78,10 +78,10 @@ function TeamOrdering:ComputeTeamSelection()
 			if PlayerResource:IsValidPlayer(i) then
 				if api:GetPlayerXPLevel(i) <= self.minimum_level_to_reorder then
 					self.winrates[i] = self.fixed_winrate_for_rookies
-					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
+--					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
 				else
 					self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
-					print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i))
+--					print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i))
 				end
 			end
 		end
@@ -125,7 +125,7 @@ function TeamOrdering:ComputeTeamSelection()
 		end
 
 		if winratesDifference then
-			print("Winrate Diffs:", winratesDifference, smallestWinratesDifference)
+--			print("Winrate Diffs:", winratesDifference, smallestWinratesDifference)
 			if winratesDifference < smallestWinratesDifference then
 				smallestWinratesDifference = winratesDifference
 				bestTeamAOrdering = CopyArray(teamA, k)
@@ -153,8 +153,8 @@ function TeamOrdering:ComputeTeamSelection()
 		end
 	end
 
-	print("Radiant comp:", bestTeamAOrdering)
-	print("Dire comp:", bestTeamBOrdering)
+--	print("Radiant comp:", bestTeamAOrdering)
+--	print("Dire comp:", bestTeamBOrdering)
 	self.Radiant = bestTeamAOrdering
 	self.Dire = bestTeamBOrdering
 

@@ -672,8 +672,14 @@ function GameMode:OnConnectFull(keys)
 	local entIndex = keys.index + 1
 	local ply = EntIndexToHScript(entIndex)
 	local playerID = ply:GetPlayerID()
+	if not GameMode.first_connect then GameMode.first_connect = {} end
 
-	ReconnectPlayer(playerID)
+	-- only procs if the player reconnects
+	if GameMode.first_connect[playerID] then
+		ReconnectPlayer(playerID)
+	else
+		GameMode.first_connect = true
+	end
 end
 
 -- This function is called whenever any player sends a chat message to team or All

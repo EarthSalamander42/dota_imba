@@ -838,7 +838,7 @@ function ReconnectPlayer(player_id)
 	if player_id == "test_reconnect" then player_id = 0 end
 
 	print("Player is reconnecting:", player_id)
-	Say(PlayerResource:GetPlayer(0), "Debug: " .. player_id .. " has reconnected!", false)
+	Say(PlayerResource:GetPlayer(0), "Debug: Player ID " .. player_id .. " has reconnected!", false)
 
 	TeamOrdering:OnPlayerReconnect(player_id)
 
@@ -1449,4 +1449,20 @@ function CDOTA_BaseNPC:IMBA_GetHeroStartingGold()
 
 
 	return hero_gold
+end
+
+function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
+	PlayerResource:SetCameraTarget(self:GetPlayerID(), hTarget)
+	if iDuration == nil then iDuration = FrameTime() end
+	if iDuration ~= -1 then
+		Timers:CreateTimer(iDuration, function()
+			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			Timers:CreateTimer(FrameTime(), function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+			Timers:CreateTimer(FrameTime() * 3, function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+		end)
+	end
 end
