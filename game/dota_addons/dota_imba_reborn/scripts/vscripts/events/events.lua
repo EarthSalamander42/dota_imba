@@ -678,7 +678,7 @@ function GameMode:OnConnectFull(keys)
 	if GameMode.first_connect[playerID] then
 		ReconnectPlayer(playerID)
 	else
-		GameMode.first_connect = true
+		GameMode.first_connect[playerID] = true
 	end
 end
 
