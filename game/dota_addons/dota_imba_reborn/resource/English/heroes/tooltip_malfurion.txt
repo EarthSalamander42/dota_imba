@@ -43,7 +43,7 @@
 "DOTA_Tooltip_ability_imba_malfurion_living_tower_xp_bounty"				"DEATH XP BOUNTY:"
 "DOTA_Tooltip_ability_imba_malfurion_living_tower_gold_bounty"				"DEATH GOLD BOUNTY:"
 
-"DOTA_Tooltip_ability_imba_malfurion_living_tower_aghanim_description"		"Increases Living Tower health and duration."
+"DOTA_Tooltip_ability_imba_malfurion_living_tower_scepter_description"		"Increases Living Tower health and duration."
 "DOTA_Tooltip_ability_imba_malfurion_living_tower_scepter_health"			"SCEPTER HEALTH:"
 "DOTA_Tooltip_ability_imba_malfurion_living_tower_scepter_duration"			"SCEPTER DURATION:"
 

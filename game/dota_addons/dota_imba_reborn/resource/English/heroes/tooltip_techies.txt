@@ -77,7 +77,7 @@
 "DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_max_charges"             "INFLAMMABLE MAX CHARGES:"
 "DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_charge_damage"           "INFLAMMABLE DAMAGE PER CHRAGE:"
 "DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_charge_radius"           "INFLAMMABLE RADIUS PER CHARGE:"
-"DOTA_Tooltip_ability_imba_techies_remote_mines_aghanim_description"                 "Increases Remote Mines' damage by 150 and radius by 200."
+"DOTA_Tooltip_ability_imba_techies_remote_mines_scepter_description"                 "Increases Remote Mines' damage by 150 and radius by 200."
 
 "DOTA_Tooltip_ability_imba_techies_remote_mines_pinpoint_detonation"                 "Pinpoint Detonation"
 "DOTA_Tooltip_ability_imba_techies_remote_mines_pinpoint_detonation_Description"     "Detonate selected remote mine."

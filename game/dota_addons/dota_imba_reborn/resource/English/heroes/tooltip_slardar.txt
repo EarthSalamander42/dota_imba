@@ -13,7 +13,7 @@
 
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_radius"					"RIP CURRENT RADIUS:"
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_damage"					"RIP CURRENT DAMAGE:"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_aghanim_description"		"Gains 35 HP regen, 12 armor and 40% status resistance while in a puddle or in the river. <font color='#FF7800'>While inside your Rain Cloud, gain 15% additional movement speed and decrease damage taken by 10%.</font>"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_scepter_description"		"Gains 35 HP regen, 12 armor and 40% status resistance while in a puddle or in the river. <font color='#FF7800'>While inside your Rain Cloud, gain 15% additional movement speed and decrease damage taken by 10%.</font>"
 
 "DOTA_Tooltip_modifier_imba_guardian_sprint_buff"							"Guardian Sprint"
 "DOTA_Tooltip_modifier_imba_guardian_sprint_buff_Description"				"Phased and gaining bonus move speed."
@@ -30,7 +30,7 @@
 // Slardar's Slithereen Crush
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush"						"Slithereen Crush"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Description"			"Slams the ground, stunning and damaging nearby enemies. After the stun, the affected units are slowed.\n<font color='#FF7800'>Royal Break:</font> Enemies hit by Slithereen Crush are affected by Royal Break for %royal_break_duration% seconds, becoming unable to block or evade the next %royal_break_attacks% attacks."
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_aghanim_description"	"Creates a puddle of water that is considered a river for bonuses. <font color='#FF7800'>While inside your Rain Cloud, Slithereen Crush's radius is increased by 50%.</font>"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_scepter_description"	"Creates a puddle of water that is considered a river for bonuses. <font color='#FF7800'>While inside your Rain Cloud, Slithereen Crush's radius is increased by 50%.</font>"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Lore"					"A swift crush of might and water breaks even the toughest of defenses."
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_radius"					"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_ms_slow_pct"			"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
@@ -78,7 +78,7 @@
 // Slardar's Corrosive Haze
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze"							"Corrosive Haze"
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Description"				"Reduces enemy armor to amplify physical damage and provides True Sight of the targeted unit, revealing invisibility.\n<font color='#FF7800'>Slipstream:</font> Enemies are additionally affected by Slipstream, granting a chance to slip on every attack. Slipping completely negates that attack's damage and slows the target's movement speed by %slip_up_ms_loss_pct%%% for %slip_up_duration% seconds. Enemies already affected by Slipstream cannot proc it again."
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_aghanim_description"		"<font color='#FF7800'>Adds a new ability: Rain Cloud. Passively creates a cloud that follows Slardar around. While the cloud soaks Slardar in rainwater, many of his skills are improved. While inside your Rain Cloud, enemies affected by Corrosive Haze take 30% increased damage from any source while they are stunned.</font>"
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_scepter_description"		"<font color='#FF7800'>Adds a new ability: Rain Cloud. Passively creates a cloud that follows Slardar around. While the cloud soaks Slardar in rainwater, many of his skills are improved. While inside your Rain Cloud, enemies affected by Corrosive Haze take 30% increased damage from any source while they are stunned.</font>"
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Lore"						"Even the strongest armor counts for little when left to the brine of the sea."
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_armor_reduction"			"ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"

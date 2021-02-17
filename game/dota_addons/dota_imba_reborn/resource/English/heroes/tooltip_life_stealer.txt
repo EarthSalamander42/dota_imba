@@ -79,7 +79,7 @@
 "DOTA_Tooltip_ability_imba_life_stealer_infest_723_bonus_health"							"HEALTH BONUS:"
 "DOTA_Tooltip_ability_imba_life_stealer_infest_723_cooldown_scepter"						"SCEPTER COOLDOWN:"
 "DOTA_Tooltip_ability_imba_life_stealer_infest_723_cast_range_scepter"					"SCEPTER CAST RANGE:"
-"DOTA_Tooltip_ability_imba_life_stealer_infest_723_aghanim_description"					"Reduces Infest cooldown, increases cast range, and applies Rage buff to the infested unit."
+"DOTA_Tooltip_ability_imba_life_stealer_infest_723_scepter_description"					"Reduces Infest cooldown, increases cast range, and applies Rage buff to the infested unit."
 
 "DOTA_Tooltip_ability_imba_life_stealer_control"										"Control"
 "DOTA_Tooltip_ability_imba_life_stealer_control_Description"							"Lifestealer seizes control of the host body's nervous system, allowing him to issue movement and attack orders from within.  Controlled units share Lifestealer's movement speed.  Cannot be used on heroes."

@@ -53,7 +53,7 @@
 
 "DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Note0"              "Acidic Emanations behaves similar to Acid Spray by all means: deals damage, reduces armor and grants stacks of Sticky Acid."
 
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_aghanim_description"	"Alchemist melts down Aghanim's Scepter to grant an allied hero all Aghanim's Scepter upgrades. When you have a Scepter of your own, you will gain bonus damage and spell amplification for each gifted Scepter."
+"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_scepter_description"	"Alchemist melts down Aghanim's Scepter to grant an allied hero all Aghanim's Scepter upgrades. When you have a Scepter of your own, you will gain bonus damage and spell amplification for each gifted Scepter."
 
 "DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste"					"Chemical Rage"
 "DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste_Description"		"Grants lower Base attack time, bonus health and mana regeneration and bonus move speed. Emitting Acid Aura on nearby enemies."
@@ -68,7 +68,7 @@
 "DOTA_Tooltip_ability_imba_alchemist_mammonite_Note1"                  "The amount of gold spent is based on your current gold, so the more gold you have, the more gold spent. This amount is added to your attacks. It uses unreliable gold first, if possible."
 "DOTA_Tooltip_ability_imba_alchemist_mammonite_Lore"                    "You can use money to do other things than just buy items."
 "DOTA_Tooltip_ability_imba_alchemist_mammonite_gold_damage"            "%CURRENT GOLD TO DAMAGE:"
-"DOTA_Tooltip_ability_imba_alchemist_mammonite_aghanim_description"		"Adds a new ability: Mammonite. Deals a portion of your current gold as damage, but spends that amount of gold on every attack."
+"DOTA_Tooltip_ability_imba_alchemist_mammonite_scepter_description"		"Adds a new ability: Mammonite. Deals a portion of your current gold as damage, but spends that amount of gold on every attack."
 
 // Alchemist's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_1"                   "+{s:value}% Sticky Acid Slow"

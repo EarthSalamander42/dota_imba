@@ -59,7 +59,7 @@
 "DOTA_Tooltip_ability_imba_enigma_black_hole_singularity_stun_radius_increment_per_stack"  "STUN RADIUS INCREASE PER STACK:"
 "DOTA_Tooltip_ability_imba_enigma_black_hole_singularity_pull_radius_increment_per_stack"  "SLOW RADIUS INCREASE PER STACK:"
 "DOTA_Tooltip_ability_imba_enigma_black_hole_cdr_pct_per_stack"			"%COOLDOWN REDUCTION PER STACK:"
-"DOTA_Tooltip_ability_imba_enigma_black_hole_aghanim_description"		"Adds the current level of Midnight Pulse to Black Hole."
+"DOTA_Tooltip_ability_imba_enigma_black_hole_scepter_description"		"Adds the current level of Midnight Pulse to Black Hole."
 
 "DOTA_Tooltip_modifier_imba_enigma_black_hole"                          "Black Hole"
 "DOTA_Tooltip_modifier_imba_enigma_black_hole_Description"              "Disabled, being pulled in and taking damage."

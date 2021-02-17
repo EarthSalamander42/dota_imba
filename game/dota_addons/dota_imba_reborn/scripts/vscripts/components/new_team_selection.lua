@@ -16,25 +16,6 @@ end
 -- This function is ONLY for testing purposes
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
---		if IsInToolsMode() then
---			if (GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10") then
---				GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
-					-- This function is called when connection to backend is successful if not in tools mode, let's call it in tools mode when bots are added in for testing purpose
---					TeamOrdering:ComputeTeamSelection()
-
---					return nil
---				end, 3.0)
---			end
---		else
-			-- only if BP is disabled, otherwise call it in battle pass scripts
-			if not Battlepass then
-				if CUSTOM_GAME_TYPE == "IMBA" then
-					print("BP disabled, hello there")
-					TeamOrdering:OnPlayersLoaded()
-				end
-			end
---		end
-
 		-- ultimate fail-safe in case something goes wrong
 		GameRules:SetCustomGameSetupRemainingTime(20.0)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then

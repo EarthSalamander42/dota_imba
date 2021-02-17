@@ -36,7 +36,7 @@
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_Note0"												"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_Note0}"
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_Note1"												"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_Note1}"
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_Note2"												"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_Note2}"
-// "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_aghanim_description"								"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_aghanim_description}"
+// "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_scepter_description"								"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_scepter_description}"
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_duration"											"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_duration}"
 "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_radius"												"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_radius}"
 // "DOTA_Tooltip_ability_imba_naga_siren_song_of_the_siren_regen_rate_tooltip_scepter"							"#{DOTA_Tooltip_ability_naga_siren_song_of_the_siren_regen_rate_tooltip_scepter}"

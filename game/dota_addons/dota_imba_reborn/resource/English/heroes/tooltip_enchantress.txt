@@ -12,7 +12,7 @@
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_Note1"							"The slow is applied on the attacking unit when the attack starts, not when damage is applied."
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_Note2"							"Peace on Earth does not interrupt Teleport Scroll or Boots of Travel."
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_slow_attack_speed"				"ATTACK SLOW:"
-"DOTA_Tooltip_ability_imba_enchantress_untouchable_aghanim_description"				"Grants new ability: Sproink. Enchantress leaps backward and dodges incoming projectiles. <font color='#FF7800'>Peace on Earth now affects ALL enemy units.</font>"
+"DOTA_Tooltip_ability_imba_enchantress_untouchable_scepter_description"				"Grants new ability: Sproink. Enchantress leaps backward and dodges incoming projectiles. <font color='#FF7800'>Peace on Earth now affects ALL enemy units.</font>"
 
 //---------------------------------------------------------------------------
 //      Enchant
@@ -59,7 +59,7 @@
 "DOTA_Tooltip_ability_imba_enchantress_impetus_Note1"								"Distance to target is measured when the projectile hits."
 "DOTA_Tooltip_ability_imba_enchantress_impetus_distance_damage_pct"					"%DISTANCE DAMAGE:"
 "DOTA_Tooltip_ability_imba_enchantress_impetus_bonus_attack_range_scepter"			"SCEPTER BONUS RANGE:"
-"DOTA_Tooltip_ability_imba_enchantress_impetus_aghanim_description"					"Increases attack range, and cast range of <font color='#FF7800'>all abilities.</font>"
+"DOTA_Tooltip_ability_imba_enchantress_impetus_scepter_description"					"Increases attack range, and cast range of <font color='#FF7800'>all abilities.</font>"
 
 "DOTA_Tooltip_ability_imba_enchantress_impetus_723"										"Impetus"
 "DOTA_Tooltip_ability_imba_enchantress_impetus_723_Description"							"Places an enchantment on each attack while activated, causing it to deal additional damage based on how far away the target is.  The farther the target, the greater the damage dealt. <font color='#FF7800'>The damage has no distance cap.</font>\n<font color='#FF7800'>Huntmastery: </font>If an enemy is killed within %huntmastery_grace_period% seconds of being hit by Impetus, Enchantress's attack and cast range is permanently increased by %attack_cast_stack%."
@@ -68,7 +68,7 @@
 "DOTA_Tooltip_ability_imba_enchantress_impetus_723_Note1"								"Distance to target is measured when the projectile hits."
 "DOTA_Tooltip_ability_imba_enchantress_impetus_723_distance_damage_pct"					"%DISTANCE DAMAGE:"
 "DOTA_Tooltip_ability_imba_enchantress_impetus_723_bonus_attack_range_scepter"			"SCEPTER BONUS RANGE:"
-//"DOTA_Tooltip_ability_imba_enchantress_impetus_723_aghanim_description"					"<font color='#FF7800'>Increases attack range, and cast range of all abilities.</font>"
+//"DOTA_Tooltip_ability_imba_enchantress_impetus_723_scepter_description"					"<font color='#FF7800'>Increases attack range, and cast range of all abilities.</font>"
 
 "DOTA_Tooltip_modifier_imba_enchantress_impetus_723"									"Impetus Huntmastery"
 "DOTA_Tooltip_modifier_imba_enchantress_impetus_723_Description"						"Gaining %dMODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING% additional cast and attack range."

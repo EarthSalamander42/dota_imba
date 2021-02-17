@@ -44,7 +44,7 @@
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_duration"        "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_bonus_movement_speed"  "BONUS MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_bonus_attack_range"    "BONUS ATTACK RANGE:"
-"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_aghanim_description"   "Increases the level of your ultimate. Adds a 4th level, Black Dragon. Black Dragon has 50% bonus Corrosive Damage, Splash Damage and Slow amount. Increases attack range to 600, grants free pathing, and grants 30% Magic resistance.\n\n<font color='#FF7800'>Elder Dragon Form is now freely toggleable.</font>"
+"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_scepter_description"   "Increases the level of your ultimate. Adds a 4th level, Black Dragon. Black Dragon has 50% bonus Corrosive Damage, Splash Damage and Slow amount. Increases attack range to 600, grants free pathing, and grants 30% Magic resistance.\n\n<font color='#FF7800'>Elder Dragon Form is now freely toggleable.</font>"
 
 "DOTA_Tooltip_modifier_imba_elder_dragon_form_debuff"               "Elder Dragon"
 "DOTA_Tooltip_modifier_imba_elder_dragon_form_debuff_Description"         "Base damage reduced by 20%."
