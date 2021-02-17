@@ -12,6 +12,9 @@
 
 "DOTA_Tooltip_ability_imba_mars_gods_rebuke_scepter_description"		"Reduces God's Rebuke cooldown to %imba_scepter_cooldown%."
 
+"DOTA_Tooltip_modifier_imba_mars_gods_rebuke_strong_argument"				"Strong Argument"
+"DOTA_Tooltip_modifier_imba_mars_gods_rebuke_strong_argument_Description"	"Strength increased by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%."
+
 // Bulwark
 "DOTA_Tooltip_ability_imba_mars_bulwark"								"#{DOTA_Tooltip_ability_mars_bulwark}"
 "DOTA_Tooltip_ability_imba_mars_bulwark_Imbafication_1"					"<font color='#FF7800'>Spiked Shield:</font> During active Bulwark, Mars deals 20% of his attack damage to enemies that are attacking him from the front."
