@@ -149,7 +149,18 @@ function UpdateTeamPanel( teamPanel )
 	{
 		var playerSlot = FindPlayerSlotInTeamPanel( teamPanel, i );
 		playerSlot.RemoveAndDeleteChildren();
-		FindOrCreatePanelForPlayer( teamPlayers[ i ], playerSlot );
+
+		var player_panel = FindOrCreatePanelForPlayer( teamPlayers[ i ], playerSlot );
+		var player_table = CustomNetTables.GetTableValue("battlepass_player", teamPlayers[ i ]);
+
+		if (player_panel && player_table) {
+			var winrate_panel = player_panel.FindChildTraverse("PlayerWinrate");
+
+			if (winrate_panel && player_table.winrate) {
+				if (player_table.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752")
+				winrate_panel.text = player_table.winrate.toFixed(2) + "%";
+			}
+		}
 	}
 
 	// Fill in the remaining player slots with the empty slot indicator

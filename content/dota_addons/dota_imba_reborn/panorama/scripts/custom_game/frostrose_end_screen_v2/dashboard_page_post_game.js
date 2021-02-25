@@ -290,7 +290,7 @@ function EndScoreboard(args) {
 	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel())
 
 	// Set game time
-//	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
+	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
 
 //	for (var i = 0; i < Game.GetAllPlayerIDs().length; i++) {
 //		Game.GetAllPlayerIDs()[i]
@@ -401,14 +401,21 @@ function EndScoreboard(args) {
 			$("#" + team_name[team_number] + "PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
 
 //			$.Msg(args.data)
+//			$.Msg(args.players)
 
 			$.Each(Game.GetPlayerIDsOnTeam(team_number), function(id) {
 //				$.Msg("Player ID " + id + " in team " + team_number)
 				var player_info = Game.GetPlayerInfo(id);
 				var player_items = Game.GetPlayerItems(id);
 				var player_table = CustomNetTables.GetTableValue("battlepass_player", id.toString());
-				var player_result = args.players[player_info.player_steamid];
-				var player_backend_result = args.data.players[player_info.player_steamid];
+				var player_result = undefined;
+				var player_backend_result = undefined;
+
+				if (player_info && args.players && args.players[player_info.player_steamid])
+					player_result = args.players[player_info.player_steamid];
+
+				if (player_info && args.data && args.data.players && args.data.players[player_info.player_steamid])
+					player_backend_result = args.data.players[player_info.player_steamid];
 
 //				$.Msg(player_info)
 //				$.Msg(player_table)
@@ -429,7 +436,6 @@ function EndScoreboard(args) {
 				PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundImage = 'url("s2r://panorama/images/heroes/' + Players.GetPlayerSelectedHero(id) + '.png")';
 				PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundSize = "cover";
 
-				$.Msg("Player Name: " + player_info.player_name)
 				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").SetDialogVariable("user_account_id", player_info.player_name);
 				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize(Players.GetPlayerSelectedHero(id));
