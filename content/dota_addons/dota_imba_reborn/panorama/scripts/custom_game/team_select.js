@@ -9,6 +9,10 @@ var g_PlayerPanels = [];
 
 var g_TEAM_SPECATOR = 1;
 
+function isInt(n) {
+   return n % 1 === 0;
+}
+
 //--------------------------------------------------------------------------------------------------
 // Handeler for when the unssigned players panel is clicked that causes the player to be reassigned
 // to the unssigned players team
@@ -157,8 +161,12 @@ function UpdateTeamPanel( teamPanel )
 			var winrate_panel = player_panel.FindChildTraverse("PlayerWinrate");
 
 			if (winrate_panel && player_table.winrate) {
-				if (player_table.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752")
-				winrate_panel.text = player_table.winrate.toFixed(2) + "%";
+				if (player_table.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
+				if (isInt(player_table.winrate))
+					winrate_panel.text = player_table.winrate.toFixed(2) + "%";
+				else
+					winrate_panel.text = player_table.winrate;
+				}
 			}
 		}
 	}

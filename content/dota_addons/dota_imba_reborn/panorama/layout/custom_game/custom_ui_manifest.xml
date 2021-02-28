@@ -85,7 +85,7 @@
 
 					var game_info = Parent.FindChildTraverse("GameAndPlayersRoot").FindChildTraverse("GameInfoPanel");
 					var map_label = Parent.FindChildTraverse("MapInfoLabel");
-					var text = "Re-ordering teams based on winrate, please wait";
+					var text = "Re-ordering teams based on seasonal winrate, please wait";
 
 					map_label.text = text;
 					SetTeamOrderingText(map_label);
