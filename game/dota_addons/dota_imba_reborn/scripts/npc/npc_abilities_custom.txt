@@ -5008,7 +5008,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_midnight_pulse"		
@@ -5203,12 +5203,6 @@
 				"cdr_pct_per_stack"				"2"
 			}
 			"16"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"min_cd_cap"					"15"
-			}
-			
-			"17"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ms_reduction"					"30 40 50"

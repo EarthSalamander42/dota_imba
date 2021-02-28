@@ -482,7 +482,6 @@ function imba_enigma_midnight_pulse:OnSpellStart()
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
 	local duration = self:GetSpecialValueFor("duration")
-	local damage_per_tick = self:GetSpecialValueFor("damage_per_tick")
 	local radius = self:GetSpecialValueFor("radius")
 	EmitSoundOnLocationWithCaster(point,"Hero_Enigma.Midnight_Pulse",caster)
 	GridNav:DestroyTreesAroundPoint(point, radius, false)
@@ -537,7 +536,7 @@ function modifier_imba_enigma_midnight_pulse_thinker:OnIntervalThink()
 		    local damageTable = {victim = enemy,
 	    		attacker = caster,
 		    	damage = dmg,
-		    	damage_type = DAMAGE_TYPE_PURE,
+		    	damage_type = ability:GetAbilityDamageType(),
 		    	damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 		    	ability = ability}
 	    	ApplyDamage(damageTable)
@@ -638,11 +637,13 @@ function imba_enigma_black_hole:OnSpellStart()
 	local duration = self:GetSpecialValueFor("duration")
 	self.thinker = CreateModifierThinker(caster, self, "modifier_imba_enigma_black_hole_thinker", {duration = duration}, pos, caster:GetTeamNumber(), false)
 
+--[[
 	-- Force a minimum CD for sanity
 	if not GameRules:IsCheatMode() and self:GetCooldownTimeRemaining() <= self:GetSpecialValueFor("min_cd_cap") then
 		self:EndCooldown()
 		self:StartCooldown(self:GetSpecialValueFor("min_cd_cap"))
 	end
+--]]
 end
 
 function imba_enigma_black_hole:OnChannelFinish( bInterrupted )
