@@ -673,7 +673,21 @@ function GameMode:OnConnectFull(keys)
 	local ply = EntIndexToHScript(entIndex)
 	local playerID = ply:GetPlayerID()
 
-	ReconnectPlayer(playerID)
+	if playerID == -1 then
+		Timers:CreateTimer(1.0, function()
+			self:OnConnectFull(keys)
+			return 0.0
+		end)
+
+		return
+	else
+		-- only procs if the player reconnects
+		if GameMode.first_connect[playerID] then
+			ReconnectPlayer(playerID)
+		else
+			GameMode.first_connect[playerID] = true
+		end
+	end
 end
 
 -- This function is called whenever any player sends a chat message to team or All

@@ -116,6 +116,8 @@ end
 
 modifier_imba_mars_spear_heaven_spear = modifier_imba_mars_spear_heaven_spear or class({})
 
+function modifier_imba_mars_spear_heaven_spear:RemoveOnDeath() return false end
+
 function modifier_imba_mars_spear_heaven_spear:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
