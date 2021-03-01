@@ -229,7 +229,7 @@
 	"freespellsoff_msg" "Без перезарядок: Выкл"
 	"freespellson_msg" "Без перезарядок: Вкл"
 	"freespells_button" "Без перезарядок"
-	"game_version_name" "War of the Gods"
+	"game_version_name" "Война Богов"
 	"gan_ma_ne_xiong_di" "干嘛呢兄弟"
 	"gao_fu_shuai" "这就是高富帅啊"
 	"gg_call" "Счётчик прописавших GG:"

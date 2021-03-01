@@ -75,7 +75,7 @@
 "DOTA_Tooltip_ability_imba_faceless_void_chronosphere_duration"                     "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_faceless_void_chronosphere_base_radius"                  "BASE RADIUS:"
 "DOTA_Tooltip_ability_imba_faceless_void_chronosphere_chronocharge_attackspeed"     "ATTACK SPEED PER CHRONOCHARGE:"
-"DOTA_Tooltip_ability_imba_faceless_void_chronosphere_scepter_description"          "<font color='#FF7800'>Improves Chronosphere's cooldown to %scepter_cooldown% seconds. Allows allies to move in it, though they are slowed by %scepter_ally_ms_slow_pcnt%%% move speed, %scepter_ally_as_slow% attack speed, %scepter_ally_casttime_pcnt_debuff%%% cast speed and %scepter_ally_projectile_slow%%% projectile speed.</font>"
+"DOTA_Tooltip_ability_imba_faceless_void_chronosphere_scepter_description"          "<font color='#FF7800'>Allows allies to move in it, though they are slowed by %scepter_ally_ms_slow_pcnt%%% move speed, %scepter_ally_as_slow% attack speed, %scepter_ally_casttime_pcnt_debuff%%% cast speed and %scepter_ally_projectile_slow%%% projectile speed.</font>"
 
 "DOTA_Tooltip_modifier_imba_faceless_void_chronocharges"                "Chronocharges"
 "DOTA_Tooltip_modifier_imba_faceless_void_chronocharges_Description"                "Currency of time, allowing the Timelord to bend it to its will."
@@ -89,7 +89,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_2"				"Time Dilation bonus health/mana regen"
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_2_Description"	"+12/+6 health/mana regen per Time Dilation Chronocharge spent."
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_3"				"Speed Barrier"
-"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_3_Description"	"Increases Faceless Void's Chronosphere haste speed to 3000 and constantly dodges projectiles while inside Chronosphere."
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_3_Description"	"Increases Faceless Void's Chronosphere haste speed to 3000."
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_4"				"Back to the Future"
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_4_Description"	"Time Lock increases target's CDs by 0.5 and reduces his CDs by 0.5 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_5"				"Time Lock spawns a mini-Chronosphere"

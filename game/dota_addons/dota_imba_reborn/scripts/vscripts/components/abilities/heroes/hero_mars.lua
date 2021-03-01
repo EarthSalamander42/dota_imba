@@ -236,6 +236,7 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 		self.heaven_spear = keys.heaven_spear
 	end
 
+	self.tick_time = self:GetAbility():GetSpecialValueFor("trailblazer_tick_time")
 	self.start_pos = self:GetParent():GetAbsOrigin()
 	local direction = (self:GetCaster():GetCursorPosition() - self.start_pos):Normalized()
 
@@ -258,11 +259,11 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 	ParticleManager:SetParticleControl(self.pfx, 2, Vector(self:GetAbility():GetSpecialValueFor("trailblazer_duration"), 0, 0))
 	ParticleManager:SetParticleControl(self.pfx, 3, Vector(self:GetAbility():GetSpecialValueFor("heaven_spear_radius"), 0, 0))
 
-	self:StartIntervalThink(FrameTime())
+	self:StartIntervalThink(self.tick_time)
 end
 
 function modifier_imba_mars_spear_trailblazer_thinker:OnIntervalThink()
-	local damage = (self:GetAbility():GetVanillaAbilitySpecial("damage") * (self:GetAbility():GetSpecialValueFor("trailblazer_damage_pct") / 100)) * FrameTime()
+	local damage = (self:GetAbility():GetVanillaAbilitySpecial("damage") * (self:GetAbility():GetSpecialValueFor("trailblazer_damage_pct") / 100)) * self.tick_time
 	local enemies = nil
 
 	if self.heaven_spear and self.heaven_spear == 1 then

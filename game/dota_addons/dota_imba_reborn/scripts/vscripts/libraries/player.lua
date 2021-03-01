@@ -997,6 +997,33 @@ CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 	return response
 end
 
+-- Call custom functions whenever StopSound is being called anywhere
+local original_StopSound = CDOTA_BaseNPC.StopSound
+CDOTA_BaseNPC.StopSound = function(self, sSoundName, hCaster)
+--	print("Create Particle (override):", sSoundName)
+
+	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..self:GetPlayerOwnerID()) 
+
+	if override_sound then
+--		print("StopSoundOn (override):", sSoundName, override_sound["1"])
+		sSoundName = override_sound["1"]
+	else
+		if hCaster then
+			local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hCaster:GetPlayerOwnerID()) 
+
+			if override_sound then
+--				print("StopSoundOn (override):", sSoundName, override_sound["1"])
+				sSoundName = override_sound["1"]
+			end
+		end
+	end
+
+	-- call the original function
+	local response = original_StopSound(self, sSoundName)
+
+	return response
+end
+
 local original_EmitSoundOn = EmitSoundOn
 EmitSoundOn = function(sSoundName, hParent, hCaster)
 --	print("Create Particle (override):", sSoundName)
@@ -1317,4 +1344,20 @@ function CDOTA_BaseNPC:Custom_IsUnderForcedMovement()
 	end
 	
 	return bForcedMovement
+end
+
+function CDOTA_BaseNPC:HasShard()
+	if self:HasModifier("modifier_item_aghanims_shard") then
+		return true
+	end
+
+	return false
+end
+
+function CDOTA_BaseNPC:IsCustomHero()
+	if GetKeyValueByHeroName(self:GetUnitName(), "IsCustom") and GetKeyValueByHeroName(self:GetUnitName(), "IsCustom") == 1 then
+		return true
+	end
+
+	return false
 end

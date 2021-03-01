@@ -118,6 +118,7 @@ ListenToGameEvent('entity_killed', function(keys)
 		else
 --			print("Set time until respawn for unit " .. tostring(hero:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
 
+--[[
 			if hero:HasModifier("modifier_frantic") and (respawn_time * IMBA_FRANTIC_RESPAWN_REDUCTION_PCT / 100) > 1 then
 				local respawn_time_reduction = respawn_time * IMBA_FRANTIC_RESPAWN_REDUCTION_PCT / 100
 --				print("Respawn time reduction:", respawn_time_reduction)
@@ -125,6 +126,7 @@ ListenToGameEvent('entity_killed', function(keys)
 				respawn_time = respawn_time - respawn_time_reduction
 --				print("Respawn time (frantic):", respawn_time)
 			end
+--]]
 
 			if hero:HasModifier("modifier_buyback_penalty") and BUYBACK_RESPAWN_PENALTY then
 				respawn_time = respawn_time + BUYBACK_RESPAWN_PENALTY

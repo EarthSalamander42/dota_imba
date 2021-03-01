@@ -72,19 +72,27 @@ function C_DOTA_Modifier_Lua:CheckUnique(bCreated)
 end
 
 function IsDaytime()
-    if CustomNetTables:GetTableValue("game_options", "isdaytime") then
-        if CustomNetTables:GetTableValue("game_options", "isdaytime").is_day then  
-            local is_day = CustomNetTables:GetTableValue("game_options", "isdaytime").is_day  
+	if CustomNetTables:GetTableValue("game_options", "isdaytime") then
+		if CustomNetTables:GetTableValue("game_options", "isdaytime").is_day then  
+			local is_day = CustomNetTables:GetTableValue("game_options", "isdaytime").is_day  
 
-            if is_day == 1 then
-                return true
-            else
-                return false
-            end
-        end
-    end
+			if is_day == 1 then
+				return true
+			else
+				return false
+			end
+		end
+	end
 
-    return true   
+	return true   
+end
+
+function CDOTA_BaseNPC:HasShard()
+	if self:HasModifier("modifier_item_aghanims_shard") then
+		return true
+	end
+
+	return false
 end
 
 --[[

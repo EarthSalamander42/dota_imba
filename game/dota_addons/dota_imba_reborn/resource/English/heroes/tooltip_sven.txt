@@ -9,7 +9,8 @@
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_stun_duration"              "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_crit_pct"                    "%CRITICAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_cast_range_bonus_scepter"	"SCEPTER BONUS CAST RANGE:"
-"DOTA_Tooltip_ability_imba_sven_storm_bolt_scepter_description"			"Increases cast range and applies an instant attack on the primary target."
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_shard_description"			"#{DOTA_Tooltip_ability_sven_storm_bolt_shard_description}"
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_scepter_description"			"Increases cast range."
 
 "DOTA_Tooltip_modifier_imba_storm_bolt_crit"                            "MANmentum"
 "DOTA_Tooltip_modifier_imba_storm_bolt_crit_Description"                "The next attack is a guaranteed critical hit."
@@ -91,6 +92,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_sven_4"            "-{s:value}s God's Strength Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_sven_5"            "-{s:value}s SVEN Bolt Cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_sven_6"            "+{s:value} Great Cleave Overkill Armor Penetration"
-"DOTA_Tooltip_ability_special_bonus_imba_sven_7"            "Warcry grants spell immunity for {s:value} seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_7"            "Warcry grants spell immunity for {s:value}% of the duration"
 "DOTA_Tooltip_ability_special_bonus_imba_sven_8"            "+{s:value}% God's Strength self damage bonus"
 "DOTA_Tooltip_ability_special_bonus_imba_sven_9"            "SVEN Bolt Dispels Enemies"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_10"			"+4s Warcry Duration"

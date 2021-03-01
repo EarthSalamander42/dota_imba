@@ -1105,7 +1105,7 @@ function modifier_imba_statis_trap_disarmed:IsDebuff() return false end
 ------------------------------
 --        BLAST OFF!        --
 ------------------------------
-imba_techies_suicide = imba_techies_suicide or class({})
+imba_techies_suicide = imba_techies_suicide or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_blast_off", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_movement", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_silence", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1946,7 +1946,7 @@ end
 ------------------------------
 --      MINEFIELD SIGN      --
 ------------------------------
-imba_techies_minefield_sign = imba_techies_minefield_sign or class({})
+imba_techies_minefield_sign = imba_techies_minefield_sign or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_minefield_sign_aura", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_minefield_sign_detection", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 

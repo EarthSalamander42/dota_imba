@@ -1354,6 +1354,7 @@ function modifier_imba_night_stalker_crippling_fear_aura_720:OnCreated()
 	self.duration_day		= self.ability:GetSpecialValueFor("duration_day")
 	self.duration_night		= self.ability:GetSpecialValueFor("duration_night")
 	self.radius				= self.ability:GetSpecialValueFor("radius")
+	self.refresh_time_pct	= self.ability:GetSpecialValueFor("refresh_time_pct")
 
 	if not IsServer() then return end
 
@@ -1398,13 +1399,15 @@ function modifier_imba_night_stalker_crippling_fear_aura_720:OnHeroKilled(keys)
 		if self:GetStackCount() == 1 then
 			self:IncrementStackCount()
 		end
-		
+
+		local new_duration = math.min(self:GetRemainingTime() + (self.duration_night * self.refresh_time_pct / 100), self.duration_night)
+
 		if GameRules:IsDaytime() then
-			self:SetDuration(math.max(self.duration_day, self:GetRemainingTime()), true)
-		else
-			self:SetDuration(self.duration_night, true)
+			new_duration = math.min(self:GetRemainingTime() + (self.duration_day * self.refresh_time_pct / 100), self.duration_day)
 		end
-	
+
+		self:SetDuration(new_duration, true)
+
 		-- Destroy/Release particle index and re-draw with updated radius (don't technically have to but it looks better)
 		ParticleManager:DestroyParticle(self.particle, true)
 		ParticleManager:ReleaseParticleIndex(self.particle)

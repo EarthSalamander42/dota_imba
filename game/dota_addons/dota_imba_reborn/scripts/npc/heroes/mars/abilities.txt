@@ -73,6 +73,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"trailblazer_damage_pct"	"25"
 			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trailblazer_tick_time"		"1.0"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_5"
 	}

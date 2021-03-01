@@ -21,7 +21,7 @@ end, nil)
 ListenToGameEvent('npc_spawned', function(event)
 	local npc = EntIndexToHScript(event.entindex)
 
-	print(npc:GetUnitName())
+--	print(npc:GetUnitName())
 
 	if npc.bp_init == true then return end
 	npc.bp_init = true
@@ -32,13 +32,19 @@ ListenToGameEvent('npc_spawned', function(event)
 		donator_level = api:GetDonatorStatus(npc:GetPlayerID())
 	end
 
+	if npc:IsCustomHero() then
+		CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+			player_id = npc:GetPlayerID(),
+			icon_path = npc:GetUnitName(),
+		})
+	end
+
 	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(npc:GetPlayerOwnerID()))
 
 	if npc:IsIllusion() or string.find(npc:GetUnitName(), "npc_dota_lone_druid_bear") then
 		npc:SetupHealthBarLabel(donator_level, ply_table)
 		return
 	elseif npc:IsRealHero() then
-		print(ply_table)
 		if ply_table and ply_table.bp_rewards == 0 then
 			return
 		end

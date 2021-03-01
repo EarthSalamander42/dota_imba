@@ -416,7 +416,7 @@ function modifier_imba_gyrocopter_homing_missile_pre_flight:OnCreated(keys)
 	
 	self.bAutoCast = keys.bAutoCast
 	
-	self:GetParent():EmitSound("Hero_Gyrocopter.HomingMissile")
+	self:GetParent():EmitSound("Hero_Gyrocopter.HomingMissile.Enemy", self:GetCaster())
 	
 	if keys.bAutoCast == 0 then
 		self.target	= self:GetAbility():GetCursorTarget()
@@ -430,7 +430,7 @@ function modifier_imba_gyrocopter_homing_missile_pre_flight:OnDestroy()
 	
 	if not self:GetParent():IsAlive() then return end
 	
-	self:GetParent():EmitSound("Hero_Gyrocopter.HomingMissile.Enemy")
+	self:GetParent():StopSound("Hero_Gyrocopter.HomingMissile.Enemy", self:GetCaster())
 	
 	if self:GetParent():HasModifier("modifier_imba_gyrocopter_homing_missile") then
 		-- Okay so this part I don't understand at all; if I don't set controllable by player, the missile won't fly at all EXCEPT when the ability is level 1. This is non-vanilla behaviour to make the missile selectable (as in highlighted green bar), but I can't figure this out right now
@@ -705,8 +705,7 @@ end
 function modifier_imba_gyrocopter_homing_missile:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():StopSound("Hero_Gyrocopter.HomingMissile")
-	self:GetParent():StopSound("Hero_Gyrocopter.HomingMissile.Enemy")
+	self:GetParent():StopSound("Hero_Gyrocopter.HomingMissile.Enemy", self:GetCaster())
 end
 
 function modifier_imba_gyrocopter_homing_missile:CheckState()

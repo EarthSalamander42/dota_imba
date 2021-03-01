@@ -292,6 +292,11 @@
 				"scepter_cast_range"	"700"
 				"RequiresScepter"		"1"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"refresh_time_pct"		"25"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}

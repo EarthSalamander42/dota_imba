@@ -116,15 +116,17 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 					ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration * (1 - enemy:GetStatusResistance())})
 					
-					if caster:HasTalent("special_bonus_imba_sven_9") then
+					if caster:HasShard() then
 						enemy:Purge(true, false, false, false, false)
 					end
 				end
 			end
-			
+
+--[[
 			if self:GetCaster():HasScepter() then
 				self:GetCaster():PerformAttack(target, true, true, true, true, true, false, false)
 			end
+--]]
 		end
 	end
 end
@@ -393,14 +395,17 @@ function imba_sven_warcry:OnSpellStart()
 		local tenacity_bonus_pct = self:GetSpecialValueFor("tenacity_bonus_pct")
 		local tenacity_self_pct = self:GetSpecialValueFor("tenacity_self_pct")
 		local radius = self:GetSpecialValueFor("radius")
-		local duration = self:GetSpecialValueFor("duration")
+		local duration = self:GetSpecialValueFor("duration") + caster:FindTalentValue("special_bonus_imba_sven_10")
 
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+
 		for _,ally in ipairs(allies) do
 			if caster == ally then
 				caster:AddNewModifier(caster, self, "modifier_imba_warcry", {duration = duration})
 				if caster:HasTalent("special_bonus_imba_sven_7") then
-					caster:AddNewModifier(caster, self, "modifier_imba_warcry_immunity", {duration = caster:FindTalentValue("special_bonus_imba_sven_7")})
+					local immunity_duration = duration * caster:FindTalentValue("special_bonus_imba_sven_7") / 100
+
+					caster:AddNewModifier(caster, self, "modifier_imba_warcry_immunity", {duration = immunity_duration})
 				end
 			else
 				ally:AddNewModifier(caster, self, "modifier_imba_warcry", {duration = duration})
@@ -594,32 +599,37 @@ function imba_sven_warcry_723:GetCastRange(location, target)
 end
 
 function imba_sven_warcry_723:OnSpellStart()
+	if not IsServer() then return end
+
+	local duration = self:GetSpecialValueFor("duration") + self:GetCaster():FindTalentValue("special_bonus_imba_sven_10")
+
 	self:GetCaster():EmitSound("Hero_Sven.WarCry")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_sven" then
 		self:GetCaster():EmitSound("sven_sven_ability_warcry_0"..RandomInt(1,4))
 	end
-	
+
 	local warcry_cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_spell_warcry.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-	
+
 	if self:GetCaster():GetName() == "npc_dota_hero_sven" then
 		ParticleManager:SetParticleControlEnt(warcry_cast_particle, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_eyes", self:GetCaster():GetAbsOrigin(), true)
 	else
 		ParticleManager:SetParticleControlEnt(warcry_cast_particle, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 	end
-	
+
 	ParticleManager:ReleaseParticleIndex(warcry_cast_particle)
-	
+
 	-- IMBAfication: WAAARGH!
 	self:GetCaster():Purge(false, true, false, false, false)
 	
 	for _, ally in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_sven_warcry_723", {duration = self:GetSpecialValueFor("duration")})
+		ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_sven_warcry_723", {duration = duration})
 	end
 	
 	-- Talent: "Warcry grants spell immunity for X seconds"
 	if self:GetCaster():HasTalent("special_bonus_imba_sven_7") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_warcry_immunity", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_sven_7")})
+		local immunity_duration = duration * self:GetCaster():FindTalentValue("special_bonus_imba_sven_7") / 100
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_warcry_immunity", {duration = immunity_duration})
 	end
 end
 
@@ -775,6 +785,7 @@ function modifier_imba_god_strength:IsAura()
 	if IsServer() then
 		return self:GetCaster():HasScepter()
 	end
+
 	return false
 end
 
@@ -1104,6 +1115,7 @@ LinkLuaModifier("modifier_special_bonus_imba_sven_6", "components/abilities/hero
 LinkLuaModifier("modifier_special_bonus_imba_sven_7", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sven_8", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sven_9", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_sven_10", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_sven_4	= class({})
 modifier_special_bonus_imba_sven_5	= class({})
@@ -1111,6 +1123,7 @@ modifier_special_bonus_imba_sven_6	= modifier_special_bonus_imba_sven_6 or class
 modifier_special_bonus_imba_sven_7	= modifier_special_bonus_imba_sven_8 or class({})
 modifier_special_bonus_imba_sven_8	= modifier_special_bonus_imba_sven_8 or class({})
 modifier_special_bonus_imba_sven_9	= modifier_special_bonus_imba_sven_8 or class({})
+modifier_special_bonus_imba_sven_10	= modifier_special_bonus_imba_sven_8 or class({})
 
 function modifier_special_bonus_imba_sven_4:IsHidden() 			return true end
 function modifier_special_bonus_imba_sven_4:IsPurgable() 		return false end
@@ -1135,6 +1148,10 @@ function modifier_special_bonus_imba_sven_8:RemoveOnDeath() 	return false end
 function modifier_special_bonus_imba_sven_9:IsHidden() 			return true end
 function modifier_special_bonus_imba_sven_9:IsPurgable() 		return false end
 function modifier_special_bonus_imba_sven_9:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_sven_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_sven_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sven_10:RemoveOnDeath() 	return false end
 
 function imba_sven_storm_bolt:OnOwnerSpawned()
 	if not IsServer() then return end

@@ -764,7 +764,7 @@ function GameMode:OnPlayerChat(keys)
 			if str == "-getwearable" then
 				Wearables:PrintWearables(caster)
 			end
-			
+
 			-- When you don't want to have random match history...
 			if str == "-crashgame" then
 				print(PlayerResource:GetPlayerName(caster:GetPlayerID()), "(", PlayerResource:GetSteamID(caster:GetPlayerID()), ") has called a crash command.")
@@ -794,7 +794,7 @@ function GameMode:OnPlayerChat(keys)
 		if str == "-gg" then
 			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
 		end
-		
+
 		-- Quick entity check to see if there's too many on the map (can't do anything about it with this, but at least to provide diagnosis)
 		if str == "-count" then
 			local hero_count = 0
@@ -841,23 +841,7 @@ function GameMode:OnPlayerChat(keys)
 		
 			Say(PlayerResource:GetPlayer(keys.playerid), "There are a total of "..modifier_count.." modifiers present.", true)
 		end
-		
-		if str == "-slark" then
-			if caster:HasModifier("modifier_imba_slark_shadow_dance_passive_regen") and caster:FindModifierByName("modifier_imba_slark_shadow_dance_passive_regen").enemy_that_sees_me then
-				DisplayError(caster:GetPlayerID(), "Visible to "..caster:FindModifierByName("modifier_imba_slark_shadow_dance_passive_regen").enemy_that_sees_me:GetName().."...\n\nEnemy Team Number: "..caster:FindModifierByName("modifier_imba_slark_shadow_dance_passive_regen").enemy_that_sees_me:GetTeamNumber())
-			else
-				DisplayError(caster:GetPlayerID(), "Nothing to see here.")
-			end
-		end
-		
-		if str == "-charge" then
-			if caster:HasAbility("imba_spirit_breaker_charge_of_darkness") and caster:FindAbilityByName("imba_spirit_breaker_charge_of_darkness").charge_cancel_reason then
-				DisplayError(caster:GetPlayerID(), "Charge was cancelled due to..."..caster:FindAbilityByName("imba_spirit_breaker_charge_of_darkness").charge_cancel_reason)
-			else
-				DisplayError(caster:GetPlayerID(), "Nothing to see here.")
-			end
-		end
-	
+
 		if str == "-killillusions" then
 			local zero_health_illusion_count = 0
 			
@@ -872,12 +856,12 @@ function GameMode:OnPlayerChat(keys)
 			
 			DisplayError(caster:GetPlayerID(), zero_health_illusion_count.." zero health illusions killed.")
 		end
-		
+
 		-- For the serial disconnectors
 		if (IsInToolsMode() or GetMapName() == "imba_demo") and str == "-exit" then
 			GameRules:SetGameWinner(caster:GetTeamNumber())
 		end
-		
+
 		-- Spooky (inefficiently coded) dev commands
 		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 or PlayerResource:GetSteamAccountID(keys.playerid) == 54896080 then
 			if str == "-handicap" then
@@ -924,131 +908,6 @@ function GameMode:OnPlayerChat(keys)
 
 					Notifications:BottomToAll({ text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." has given every hero on the "..enemy_team_name.." team "..text.." experience for...reasons.", duration = 4.0, style = { color = "LightGreen" } })
 				end
-
-				-- Says I'm not a "donor" but might be doing something wrong...will leave this for now in case this code block expands
-				-- print("Donor status: ", api:GetDonatorStatus(caster:GetPlayerID()))
-			elseif str == "-upgrade" then
-				text = string.gsub(text, str, "")
-				text = string.gsub(text, " ", "")		
-
-				local heroes = HeroList:GetAllHeroes()
-
-				for _, hero in pairs(heroes) do
-					if hero:IsRealHero() and not hero:IsClone() and not hero:IsTempestDouble() then
-
-						local ability_set = {}
-						local upgraded = false
-
-						-- Temporary code; update as tests require
-						if string.find(text, 'techies') and hero:GetName() == "npc_dota_hero_techies" then
-							ability_set = {
-								[0] = "imba_techies_land_mines",
-								[1] = "imba_techies_stasis_trap",
-								[2] = "imba_techies_suicide",
-								[3] = "imba_techies_focused_detonate",
-								[4] = "imba_techies_minefield_sign",
-								[5] = "imba_techies_remote_mines",
-								[6] = "special_bonus_imba_techies_1",
-								[7] = "special_bonus_imba_techies_2",
-								[8] = "special_bonus_imba_techies_3",
-								[9] = "special_bonus_imba_techies_4",
-								[10] = "special_bonus_imba_techies_5",
-								[11] = "special_bonus_imba_techies_6",
-								[12] = "special_bonus_imba_techies_7",
-								[13] = "special_bonus_imba_techies_8"
-							}
-							upgraded = true
-						elseif string.find(text, 'terror') and hero:GetName() == "npc_dota_hero_terrorblade" then
-							ability_set = {
-								[0] = "imba_terrorblade_reflection",
-								[1] = "imba_terrorblade_conjure_image",
-								[2] = "imba_terrorblade_metamorphosis",
-								[3] = "imba_terrorblade_terror_wave",
-								[4] = "imba_terrorblade_power_rend",
-								[5] = "imba_terrorblade_sunder",
-								[6] = "special_bonus_movement_speed_20",
-								[7] = "special_bonus_evasion_15",
-								[8] = "special_bonus_hp_250",
-								[9] = "special_bonus_attack_speed_25",
-								[10] = "special_bonus_all_stats_10",
-								[11] = "special_bonus_imba_terrorblade_reflection_cooldown",
-								[12] = "special_bonus_imba_terrorblade_sunder_cooldown",
-								[13] = "special_bonus_imba_terrorblade_metamorphosis_attack_range"
-							}
-							
-							upgraded = true
-						elseif string.find(text, 'tinker') and hero:GetName() == "npc_dota_hero_tinker" then
-							ability_set = {
-								[0] = "imba_tinker_laser",
-								[1] = "imba_tinker_heat_seeking_missile",
-								[2] = "imba_tinker_march_of_the_machines",
-								[3] = "imba_tinker_technomancy",
-								[4] = "generic_hidden",
-								[5] = "imba_tinker_rearm",
-								[6] = "special_bonus_imba_tinker_1",
-								[7] = "special_bonus_imba_tinker_2",
-								[8] = "special_bonus_imba_tinker_3",
-								[9] = "special_bonus_imba_tinker_4",
-								[10] = "special_bonus_imba_tinker_5",
-								[11] = "special_bonus_imba_tinker_6",
-								[12] = "special_bonus_imba_tinker_7",
-								[13] = "special_bonus_imba_tinker_8"
-							}
-							upgraded = true
-						elseif string.find(text, 'arc') and hero:GetName() == "npc_dota_hero_arc_warden" then
-							ability_set = {
-								[0] = "imba_arc_warden_flux",
-								[1] = "imba_arc_warden_magnetic_field",
-								[2] = "imba_arc_warden_spark_wraith",
-							}
-							upgraded = true
-						end
-						
-						for ability = 0, 23 do
-							if hero:GetAbilityByIndex(ability) and ability_set[ability] then
-								local old_ability_level = hero:GetAbilityByIndex(ability):GetLevel()
-							
-								hero:RemoveAbility(hero:GetAbilityByIndex(ability):GetName())
-								
-								local new_ability = hero:AddAbility(ability_set[ability])
-								new_ability:SetLevel(old_ability_level)
-								
-								-- Remove this when done
-								if new_ability:GetName() == "imba_gyrocopter_lock_on" or
-								new_ability:GetName() == "imba_gyrocopter_gatling_guns" or 
-								new_ability:GetName() == "imba_void_spirit_void_stasis" or
-								new_ability:GetName() == "imba_tinker_technomancy" then
-									new_ability:SetLevel(1)
-								end
-							end
-						end
-
-						-- Doing the switch with Undying gives him an infinite usage reincarnation which is...not good for field testing
-						if hero:GetName() == "npc_dota_hero_undying" then
-							hero:RemoveModifierByName("modifier_special_bonus_reincarnation")
-						end
-						
-						if hero:GetName() == "npc_dota_hero_void_spirit" and not hero:HasAbility("imba_void_spirit_aether_remnant_helper") then
-							local helper_ability = hero:AddAbility("imba_void_spirit_aether_remnant_helper")
-							helper_ability:SetLevel(1)
-							-- helper_ability:SetAbilityIndex(4)
-						end
-						
-						if upgraded then
-							-- Random fancy particles to indicate something has changed in the world...
-							local particle = ParticleManager:CreateParticle("particles/item/origin/origin_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
-							ParticleManager:ReleaseParticleIndex(particle)
-							
-							local particle2 = ParticleManager:CreateParticle("particles/econ/events/ti8/hero_levelup_ti8.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
-							ParticleManager:ReleaseParticleIndex(particle2)
-						end
-					end
-				end
-			elseif str == "-phantom_lancer" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_phantom_lancer")
-			elseif str == "-vardor" then
-				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_vardor")
-			-- Yeah best not to call this ever but if you really think lag is bad or something...
 			elseif str == "-destroyparticles" then
 				for particle = 0, 99999 do
 					ParticleManager:DestroyParticle(particle, true)
