@@ -177,7 +177,10 @@ function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_
 
 -- Adds the unique modifier to the owner when created
 function modifier_imba_radiance_basic:OnCreated(keys)
+	self.bonus_damage = self:GetAbility():GetSpecialValueFor("bonus_damage")
+
 	if IsServer() then
+
 		if not self:GetParent():HasModifier("modifier_imba_radiance_aura") then
 			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_radiance_aura", {})
 		end
@@ -205,7 +208,7 @@ function modifier_imba_radiance_basic:DeclareFunctions()
 end
 
 function modifier_imba_radiance_basic:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+	return self.bonus_damage
 end
 
 -----------------------------------------------------------------------------------------------------------
