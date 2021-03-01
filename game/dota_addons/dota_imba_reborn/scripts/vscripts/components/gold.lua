@@ -9,7 +9,6 @@ function GoldSystem:OnHeroDeath(killer, victim)
 end
 
 function GoldSystem:_OnHeroDeath(killer, victim)
-
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 	local base_gold_bounty = 110 * (custom_gold_bonus / 100)
 	local level_difference = victim:GetLevel() - killer:GetLevel()

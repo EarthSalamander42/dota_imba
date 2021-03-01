@@ -101,24 +101,21 @@
 // Techies's Remote Mine
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_techies_remote_mine"                        "Remote Mine"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_Description"            "Plant an invisible explosive that will only detonate when manually triggered. Does not damage buildings. Remote Mines lasts %mine_duration% seconds.\n<font color='#FF7800'>Inflammable:</font> Whenever a Remote Mine is in the explosion range of an exploding Proximity or Remote Mine, it gains a charge of Inflammable, further increasing the damage and radius of the mine for a duration. Charges can stack up to a maximum."
-"DOTA_Tooltip_ability_imba_techies_remote_mine_Lore"                    "The downfall of Dredger's Bight!"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_Note0"                  "When Remote Mines explode through Focused Detonate, they explode in small delays, each mine strengthening the following mines."
-"DOTA_Tooltip_ability_imba_techies_remote_mine_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_radius"                  "BASE RADIUS:"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_inflammable_duration"                "INFLAMMABLE DURATION:"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_inflammable_max_charges"             "INFLAMMABLE MAX CHARGES:"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_inflammable_charge_damage"           "INFLAMMABLE DAMAGE PER CHRAGE:"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_inflammable_charge_radius"           "INFLAMMABLE RADIUS PER CHARGE:"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_scepter_damage_bonus"                "SCEPTER DAMGE BONUS:"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_scepter_radius_bonus"                "SCEPTER RADIUS BONUS:"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_scepter_description"                 "Increases Remote Mines' damage by 150 and radius by 200."
+"DOTA_Tooltip_ability_imba_techies_remote_mines"                        "Remote Mine"
+"DOTA_Tooltip_ability_imba_techies_remote_mines_Imbafication_1"            "<font color='#FF7800'>Inflammable:</font> Whenever a Remote Mine is in the explosion range of an exploding Proximity or Remote Mine, it gains a charge of Inflammable, further increasing the damage and radius of the mine for a duration. Charges can stack up to a maximum."
+"DOTA_Tooltip_ability_imba_techies_remote_mines_Lore"                    "The downfall of Dredger's Bight!"
+"DOTA_Tooltip_ability_imba_techies_remote_mines_Note0"                  "When Remote Mines explode through Focused Detonate, they explode in small delays, each mine strengthening the following mines."
 
-"DOTA_Tooltip_ability_imba_techies_remote_mine_pinpoint_detonation"                 "Pinpoint Detonation"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_pinpoint_detonation_Description"     "Detonate selected remote mine."
-"DOTA_Tooltip_ability_imba_techies_remote_mine_pinpoint_detonation_Lore"            "Kablooey!"
-"DOTA_Tooltip_ability_imba_techies_remote_mine_pinpoint_detonation_Note0"           "If more than one mine is selected, triggers only one mine on every push."
+"DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_duration"                "INFLAMMABLE DURATION:"
+"DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_max_charges"             "INFLAMMABLE MAX CHARGES:"
+"DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_charge_damage"           "INFLAMMABLE DAMAGE PER CHRAGE:"
+"DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_charge_radius"           "INFLAMMABLE RADIUS PER CHARGE:"
+"DOTA_Tooltip_ability_imba_techies_remote_mines_scepter_description"                 "Increases Remote Mines' damage by 150 and radius by 200."
+
+"DOTA_Tooltip_ability_imba_techies_remote_mines_pinpoint_detonation"                 "Pinpoint Detonation"
+"DOTA_Tooltip_ability_imba_techies_remote_mines_pinpoint_detonation_Description"     "Detonate selected remote mine."
+"DOTA_Tooltip_ability_imba_techies_remote_mines_pinpoint_detonation_Lore"            "Kablooey!"
+"DOTA_Tooltip_ability_imba_techies_remote_mines_pinpoint_detonation_Note0"           "If more than one mine is selected, triggers only one mine on every push."
 
 "DOTA_Tooltip_modifier_imba_remote_mine_inflammable"                    "Inflammable"
 "DOTA_Tooltip_modifier_imba_remote_mine_inflammable_Description"                    "This mine will deal more damage and reach further for every stack of Inflammable."

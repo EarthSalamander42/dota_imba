@@ -35,9 +35,11 @@ require('components/abandon')
 require('components/battlepass/init')
 require('components/chat_wheel/init')
 require('components/courier/init')
-require("components/demo/init")
+if GetMapName() == "imba_demo" or IsInToolsMode() then
+	require("components/demo/init")
+end
 require("components/frantic/init")
-require("components/diretide/diretide")
+-- require("components/diretide/diretide")
 require('components/gold')
 require('components/hero_selection/init')
 require('components/mutation/init')

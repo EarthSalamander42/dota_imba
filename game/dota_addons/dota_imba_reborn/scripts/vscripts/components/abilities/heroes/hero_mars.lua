@@ -1146,6 +1146,8 @@ end
 
 modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class({})
 
+function modifier_imba_mars_bulwark_active:IsHidden() return true end
+
 function modifier_imba_mars_bulwark_active:DeclareFunctions() return {
 	MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
 	MODIFIER_EVENT_ON_TAKEDAMAGE,
@@ -1228,6 +1230,14 @@ modifier_imba_mars_bulwark_jupiters_strength = modifier_imba_mars_bulwark_jupite
 function modifier_imba_mars_bulwark_jupiters_strength:RemoveOnDeath() return false end
 function modifier_imba_mars_bulwark_jupiters_strength:IsPurgable() return false end
 
+function modifier_imba_mars_bulwark_jupiters_strength:IsHidden()
+	if self:GetStackCount() == 0 then
+		return true
+	end
+
+	return false
+end
+
 function modifier_imba_mars_bulwark_jupiters_strength:OnCreated()
 	if IsServer() then
 		self.duration = self:GetAbility():GetSpecialValueFor("jupiters_strength_duration")
@@ -1264,6 +1274,7 @@ function modifier_imba_mars_bulwark_jupiters_strength:OnStackCountChanged(prev_s
 	if stacks > prev_stacks then
 		-- Insert the current game time of the stack that was just added to the stack table
 		table.insert(self.stack_table, {GameRules:GetGameTime(), stacks - prev_stacks})
+		self:SetDuration(self.duration, true)
 
 		-- Refresh timer
 --		self:ForceRefresh()
@@ -1284,7 +1295,7 @@ LinkLuaModifier( "modifier_imba_mars_arena_of_blood_spear_aura", "components/abi
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_projectile_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mars_arena_of_blood_scepter", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mars_arena_of_blood_scepter", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_BOTH)
 
 --------------------------------------------------------------------------------
 -- Custom KV
@@ -1715,7 +1726,7 @@ modifier_imba_mars_arena_of_blood_projectile_aura = class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_arena_of_blood_projectile_aura:IsHidden() return false end
+function modifier_imba_mars_arena_of_blood_projectile_aura:IsHidden() return true end
 function modifier_imba_mars_arena_of_blood_projectile_aura:IsDebuff() return false end
 function modifier_imba_mars_arena_of_blood_projectile_aura:IsStunDebuff() return false end
 function modifier_imba_mars_arena_of_blood_projectile_aura:IsPurgable() return false end
@@ -2223,7 +2234,8 @@ modifier_imba_mars_arena_of_blood_wall_aura = class({})
 -- Classifications
 function modifier_imba_mars_arena_of_blood_wall_aura:IsHidden() return true end
 function modifier_imba_mars_arena_of_blood_wall_aura:IsDebuff() return true end
-function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgable() return true end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgable() return false end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgeException() return false end
 function modifier_imba_mars_arena_of_blood_wall_aura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 --------------------------------------------------------------------------------
@@ -2369,7 +2381,7 @@ function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraSearchType()
 end
 
 function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraSearchFlags()
-	return 0
+	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 end
 
 function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraEntityReject( unit )

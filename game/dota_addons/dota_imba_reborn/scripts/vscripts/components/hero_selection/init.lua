@@ -6,7 +6,7 @@ if IMBA_PICK_SCREEN == true then
 	require('components/hero_selection/cmpickorder')
 end
 
-HeroSelection = class({})
+HeroSelection = HeroSelection or class({})
 
 -- available heroes
 local herolist = {}

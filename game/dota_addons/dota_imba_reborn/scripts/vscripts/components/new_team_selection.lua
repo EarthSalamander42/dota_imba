@@ -9,6 +9,7 @@ if not TeamOrdering then
 	TeamOrdering.Dire = {}
 	TeamOrdering.minimum_level_to_reorder = 25
 	TeamOrdering.fixed_winrate_for_rookies = 15
+	TeamOrdering.fixed_winrates_for_uncalibrated = 15
 end
 
 -- events
@@ -16,15 +17,8 @@ end
 -- This function is ONLY for testing purposes
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		if (GetMapName() == "imba_5v5" or GetMapName() == "imba_10v10") and IsInToolsMode() then
---		if GetMapName() == "imba_5v5" and IsInToolsMode() then
-			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
-				-- This function is called when connection to backend is successful if not in tools mode, let's call it in tools mode when bots are added in for testing purpose
-				TeamOrdering:ComputeTeamSelection()
-
-				return nil
-			end, 3.0)
-		end
+		-- ultimate fail-safe in case something goes wrong
+		GameRules:SetCustomGameSetupRemainingTime(20.0)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- Call it here to re-apply players to rightful teams in case a smart boi use shuffle command as lobby leader
 
@@ -56,7 +50,7 @@ end
 
 -- core
 function TeamOrdering:ComputeTeamSelection()
-	print("ComputeTeamSelection()")
+--	print("ComputeTeamSelection()")
 	local n = PlayerResource:GetPlayerCount()
 	local k = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
 	local acceptableWinratesDifference = 1 -- for 10v10 only
@@ -78,10 +72,15 @@ function TeamOrdering:ComputeTeamSelection()
 			if PlayerResource:IsValidPlayer(i) then
 				if api:GetPlayerXPLevel(i) <= self.minimum_level_to_reorder then
 					self.winrates[i] = self.fixed_winrate_for_rookies
-					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
+--					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
 				else
-					self.winrates[i] = api:GetPlayerSeasonalWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
-					print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerSeasonalWinrate(i))
+					-- if calibrated
+					if type(api:GetPlayerWinrate(i)) == "number" then
+						self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
+--						print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i))
+					else
+						self.winrates[i] = self.fixed_winrates_for_uncalibrated
+					end
 				end
 			end
 		end
@@ -125,7 +124,7 @@ function TeamOrdering:ComputeTeamSelection()
 		end
 
 		if winratesDifference then
-			print("Winrate Diffs:", winratesDifference, smallestWinratesDifference)
+--			print("Winrate Diffs:", winratesDifference, smallestWinratesDifference)
 			if winratesDifference < smallestWinratesDifference then
 				smallestWinratesDifference = winratesDifference
 				bestTeamAOrdering = CopyArray(teamA, k)
@@ -153,8 +152,8 @@ function TeamOrdering:ComputeTeamSelection()
 		end
 	end
 
-	print("Radiant comp:", bestTeamAOrdering)
-	print("Dire comp:", bestTeamBOrdering)
+--	print("Radiant comp:", bestTeamAOrdering)
+--	print("Dire comp:", bestTeamBOrdering)
 	self.Radiant = bestTeamAOrdering
 	self.Dire = bestTeamBOrdering
 

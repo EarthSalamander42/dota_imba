@@ -672,6 +672,7 @@ function GameMode:OnConnectFull(keys)
 	local entIndex = keys.index + 1
 	local ply = EntIndexToHScript(entIndex)
 	local playerID = ply:GetPlayerID()
+	if not GameMode.first_connect then GameMode.first_connect = {} end
 
 	if playerID == -1 then
 		Timers:CreateTimer(1.0, function()
