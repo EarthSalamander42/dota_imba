@@ -42,10 +42,6 @@
 			<Panel id="SafeToLeave">
 				<Label text="imba_safe_to_leave" />
 			</Panel>
-
-			<Button id="BattlepassButton" onactivate="ToggleBattlepass();">
-				<Label text="#battlepass" />
-			</Button>
 		</Panel>
 
 		<Panel id="BattlepassWindow" hittest="false">

@@ -1440,7 +1440,34 @@ function SetupPanel() {
 	}
 }
 
+function CreateBattlepassPanel() {
+	var Parent = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ButtonBar");
+
+	if (!Parent) {
+		$.Schedule(1.0, CreateBattlepassPanel);
+		return;
+	}
+
+	if (!Parent.FindChildTraverse("BattlepassButton")) {
+		var BattlepassButton = $.CreatePanel("Button", $.GetContextPanel(), "BattlepassButton");
+		BattlepassButton.SetPanelEvent("onactivate", function() {
+			ToggleBattlepass();
+		});
+
+		BattlepassButton.SetPanelEvent("onmouseover", function() {
+			$.DispatchEvent("UIShowTextTooltip", BattlepassButton, $.Localize("battlepass"));
+		})
+
+		BattlepassButton.SetPanelEvent("onmouseout", function() {
+			$.DispatchEvent("UIHideTextTooltip", BattlepassButton);
+		})
+		BattlepassButton.SetParent(Parent);
+	}
+}
+
 (function() {
+	$.Schedule(1.0, CreateBattlepassPanel);
+
 	// prevent running an api call everytime this file is edited
 	if (!Game.IsInToolsMode()) {
 		var args = {

@@ -1,5 +1,4 @@
-#Mutations {
-	flow-children: down;
+.Mutation_Main {
 	box-shadow: none;
 	margin-top: 130px;
 	visibility: collapse;
@@ -7,6 +6,10 @@
 
 .HUDFlipped .Main {
 	horizontal-align: right;
+}
+
+#Mutations {
+	flow-children: down;	
 }
 
 .DotaMutations {

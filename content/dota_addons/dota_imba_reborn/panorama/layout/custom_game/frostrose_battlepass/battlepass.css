@@ -130,8 +130,6 @@
 {
 	margin-top: 3.7%;
 	align: center top;
-	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
-	background-size: 100%;
 	flow-children: down;
 }
 
@@ -143,12 +141,15 @@
 }
 
 #SafeToLeave {
+	width: 250px;
+	max-width: 400px;
 	padding-left: 10px;
 	padding-right: 10px;
 	height: 40px;
 	background-color: green;
 	horizontal-align: center;
-	border-radius: 50px;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
 	visibility: collapse;
 }
 
@@ -162,20 +163,27 @@
 
 #BattlepassButton
 {
-	width: 150px;
-	height: 35px;
-	horizontal-align: center;
-	saturation: 0.8;
+	background-image: url("file://{resources}/images/custom_game/battlepass/battlepass_new.png");
+	background-size: 28px;
+	vertical-align: top;
+	width: 30px;
+	height: 30px;
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: 0.5;
+	wash-color: #CDF;
+	transition-property: opacity;
+	transition-duration: 0.2s;
 }
 
 #BattlepassButton:hover
 {
-	saturation: 0.7;
+	opacity: 1.0;
 }
 
 #BattlepassButton:active
 {
-	saturation: 1.0;
+	opacity: 1.0;
 }
 
 #BattlepassButton Label

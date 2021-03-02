@@ -1,8 +1,10 @@
 (function () {
+/*
 	if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
 		$.Msg("Vanilla Link Tooltips: Block spectators.");
 		return;
 	}
+*/
 
 	OnThink()
 
@@ -169,10 +171,12 @@ function InitTooltips() {
 function CallTooltips(i) {
 	var hPanel = GetDotaHud().FindChildTraverse("Ability" + i);
 	var sAbilityName = hPanel.FindChildTraverse("AbilityImage").abilityname;
+	var selected_entities = Players.GetSelectedEntities(Game.GetLocalPlayerID());
 
 	GameEvents.SendCustomGameEventToServer("get_tooltips_info", {
 		sAbilityName: sAbilityName,
 		iAbility: i,
+		iSelectedEntIndex: selected_entities[0],
 	})
 }
 
@@ -308,7 +312,7 @@ function SetAbilityTooltips(keys) {
 
 //	var ability_special = AbilityDescription.split(/[%%]/).reverse();
 
-	$.Msg(AbilityDescription)
+//	$.Msg(AbilityDescription)
 
 	var AbilityExtraAttributes_Text = "";
 
@@ -362,7 +366,7 @@ function SetAbilityTooltips(keys) {
 //				$.Msg("%" + special_key + "%%%")
 
 				if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1 || IsPercentage == true) {
-					$.Msg("Percentage value: " + special_key)
+//					$.Msg("Percentage value: " + special_key)
 					special_values = special_values.join("% / ") + "%";
 
 					if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1) {

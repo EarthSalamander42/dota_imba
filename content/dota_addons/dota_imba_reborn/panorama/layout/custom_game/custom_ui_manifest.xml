@@ -57,14 +57,14 @@
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "Custom 1";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "Custom 2";
-
+/*
 		(function () {
 			if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
 				$.Msg("Custom UI Manifest: Block spectators.");
 				return;
 			}
 		})();
-
+*/
 		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
 		var hudElements = Parent.FindChildTraverse("HUDElements")
