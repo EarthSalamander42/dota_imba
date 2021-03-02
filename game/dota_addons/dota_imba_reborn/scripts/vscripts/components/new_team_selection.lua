@@ -29,6 +29,8 @@ end, nil)
 
 -- This function is ONLY for public games (triggers when backend successfully gathered every players winrates)
 function TeamOrdering:OnPlayersLoaded()
+	if IsInToolsMode() then return end
+
 	if PlayerResource:GetPlayerCount() > 3 then
 		-- re-order teams based on winrate with a delay to make sure winrate values are gathered
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()

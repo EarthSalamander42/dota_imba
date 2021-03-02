@@ -154,8 +154,10 @@
 
 #TeamsContainer
 {
+	max-height: 97%;
 	flow-children: down;
 	horizontal-align: left;
+	overflow: clip scroll;
 }
 
 .FlyoutTeamData

@@ -60,6 +60,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 
 	local hRealCooldown = split(GetAbilityCooldown(ability_name), " ")
 
+	-- hero is nil when spectating (however currently custom tooltips are disabled for spectators)
 	for i = 1, #hRealCooldown do
 		if hRealCooldown[i] then
 --			print(hRealCooldown[i], hero:GetCooldownReduction())
@@ -83,6 +84,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	local hAbility = hero:FindAbilityByName(keys.sAbilityName)
 
 	local lua_cast_range = hAbility:GetCastRange(hero:GetAbsOrigin(), nil)
+
 	if hAbility and hAbility:GetLevel() ~= 0 then
 		if lua_cast_range == 0 then
 			cast_range = GetAbilityKV(ability_name, "AbilityCastRange", hAbility:GetLevel()) or 0

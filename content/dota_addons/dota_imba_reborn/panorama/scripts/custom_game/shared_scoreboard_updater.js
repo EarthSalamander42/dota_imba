@@ -416,7 +416,7 @@ function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, te
 		return;
 
 	var teamId = teamDetails.team_id;
-	// $.Msg( "_ScoreboardUpdater_UpdateTeamPanel: ", teamId );
+//	$.Msg( "_ScoreboardUpdater_UpdateTeamPanel: ", teamId );
 
 	var teamPanelName = "_dynamic_team_" + teamId;
 	var teamPanel = containerPanel.FindChild(teamPanelName);
@@ -460,7 +460,11 @@ function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, te
 		teamsInfo.max_team_players = teamPlayers.length;
 	}
 
-	_ScoreboardUpdater_SetTextSafe(teamPanel, "TeamScore", teamDetails.team_score)
+	if (teamDetails.team_id == 1)
+		_ScoreboardUpdater_SetTextSafe(teamPanel, "TeamScore", teamDetails.team_num_players);
+	else
+		_ScoreboardUpdater_SetTextSafe(teamPanel, "TeamScore", teamDetails.team_score);
+
 	_ScoreboardUpdater_SetTextSafe(teamPanel, "TeamName", $.Localize(teamDetails.team_name).toUpperCase())
 
 	if (GameUI.CustomUIConfig().team_colors) {
@@ -556,7 +560,12 @@ function _ScoreboardUpdater_UpdateAllTeamsAndPlayers(scoreboardConfig, teamsCont
 	// );
 
 	var teamsList = [];
-	for (var teamId of Game.GetAllTeamIDs()) {
+	var all_teams = Game.GetAllTeamIDs();
+
+	// Create Spectator team in scoreboard
+	all_teams.push(1);
+
+	for (var teamId of all_teams) {
 		teamsList.push(Game.GetTeamDetails(teamId));
 	}
 

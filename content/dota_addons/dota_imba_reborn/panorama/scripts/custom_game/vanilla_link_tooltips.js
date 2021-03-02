@@ -1,8 +1,3 @@
-OnThink()
-GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
-GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
-GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
-
 function GetDotaHud() {
 	var p = $.GetContextPanel();
 	try {
@@ -682,3 +677,16 @@ function ClearTooltips() {
 function bit_band(iBehavior, iBitCheck) {
 	return iBehavior & iBitCheck;
 }
+
+(function () {
+	if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
+		$.Msg("SPECTATOR DON'T HAVE ACCESS TO TOOLTIPS YET, INFINITE LOOPS OMEGALUL");
+		return;
+	}
+
+	OnThink()
+
+	GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
+	GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
+	GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
+})();

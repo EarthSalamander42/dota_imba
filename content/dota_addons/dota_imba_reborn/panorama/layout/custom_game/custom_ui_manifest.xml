@@ -42,11 +42,17 @@
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_names = {}
 
+		// Spectator slots
+		if (Game.IsInToolsMode())
+			GameUI.CustomUIConfig().team_select = {"bShowSpectatorTeam" : true};
+
+		GameUI.CustomUIConfig().team_colors[1] = "grey;";
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 
+		GameUI.CustomUIConfig().team_names[1] = "Spectators";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "Custom 1";
