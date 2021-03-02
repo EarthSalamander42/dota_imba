@@ -1,5 +1,12 @@
 "use strict";
 
+(function () {
+	if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
+		$.Msg("Shared Scoreboard Updater: Block spectators.");
+		return;
+	}
+})();
+
 function isInt(n) {
    return n % 1 === 0;
 }

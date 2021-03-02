@@ -22,6 +22,11 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		return
 	end
 
+	if PlayerResource:GetPlayer(keys.PlayerID):GetTeam() == 1 then
+		print("Custom Tooltips: Block Spectators.")
+		return
+	end
+
 --	print(keys)
 	local ability_name = GetVanillaAbilityName(keys.sAbilityName)
 	if not ability_name then

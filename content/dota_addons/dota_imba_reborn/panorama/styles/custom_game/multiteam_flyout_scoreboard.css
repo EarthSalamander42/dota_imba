@@ -14,6 +14,8 @@
 	background-image: url("file://{images}/custom_game/flyout/bg.png");
 	padding: 10px 0 10px 0px;
 	background-size: cover;
+	overflow: clip scroll;
+	max-height: 97%;
 }
 
 .ScoreCol_DisplayPic DOTAAvatarImage
@@ -149,15 +151,13 @@
 
 .spectator_view .ScoreCol_Buttons
 {
-	width: 25px;
+	width: 35px;
 }
 
 #TeamsContainer
 {
-	max-height: 97%;
 	flow-children: down;
 	horizontal-align: left;
-	overflow: clip scroll;
 }
 
 .FlyoutTeamData

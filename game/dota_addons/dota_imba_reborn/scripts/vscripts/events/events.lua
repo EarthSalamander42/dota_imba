@@ -677,11 +677,16 @@ function GameMode:OnConnectFull(keys)
 	if playerID == -1 then
 		Timers:CreateTimer(1.0, function()
 			self:OnConnectFull(keys)
-			return 0.0
+			return 1.0
 		end)
 
 		return
 	else
+		if PlayerResource:GetPlayer(keys.PlayerID):GetTeam() == 1 then
+			print("GameMode:OnConnectFull() - Don't trigger for spectator.")
+			return
+		end
+
 		-- only procs if the player reconnects
 		if GameMode.first_connect[playerID] then
 			ReconnectPlayer(playerID)
