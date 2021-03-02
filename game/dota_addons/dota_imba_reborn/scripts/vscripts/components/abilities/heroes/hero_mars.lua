@@ -213,7 +213,7 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 		false
 	)
 
-	self:GetCaster():EmitSound("Hero_Mars.Spear.Target", self.trailblazer_thinker)
+	self.trailblazer_thinker:EmitSound("Hero_Mars.Spear.Target", self:GetCaster())
 end
 
 --------------------------------------------

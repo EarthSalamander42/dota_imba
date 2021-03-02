@@ -72,7 +72,7 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 	self.deflect = true
 
 --	self.damage_penalty	= self:GetAbility():GetTalentSpecialValueFor("damage_penalty")
-	self.damage_penalty	= 100
+	self.damage_penalty	= -100
 	self.talent_movespeed	= self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_blade_fury_movement_speed")
 
 	if IsServer() then
