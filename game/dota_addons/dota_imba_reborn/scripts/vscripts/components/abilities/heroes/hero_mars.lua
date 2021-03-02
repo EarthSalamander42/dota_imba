@@ -957,6 +957,8 @@ function modifier_imba_mars_gods_rebuke:OnCreated( kv )
 		self.bonus_damage = self.bonus_damage + mod:GetStackCount()
 		mod.stack_table = {}
 		mod:SetStackCount(0)
+	else
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {})
 	end
 end
 
@@ -1121,7 +1123,11 @@ function modifier_imba_mars_bulwark:GetModifierPhysical_ConstantBlock( params )
 	local stacks = damage_blocked * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
 	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
 
-	mod:SetStackCount(mod:GetStackCount() + stacks)
+	if mod then
+		mod:SetStackCount(mod:GetStackCount() + stacks)
+	else
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {}):SetStackCount(stacks)
+	end
 
 	return damage_blocked
 end
@@ -1318,12 +1324,14 @@ end
 function imba_mars_arena_of_blood:OnSpellStart()
 	if not IsServer() then return end
 
-	if self:GetCaster():HasScepter() then
-		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {})
+	local cast_position = self:GetCursorPosition()
 
-		if mod then
-			mod.target_point = self:GetCursorPosition()
-		end
+	if self:GetCaster():HasScepter() then
+		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {
+			cast_position_x = cast_position[1],
+			cast_position_y = cast_position[2],
+			cast_position_z = cast_position[3],
+		})
 	else
 		-- create thinker
 		CreateModifierThinker(
@@ -1331,7 +1339,7 @@ function imba_mars_arena_of_blood:OnSpellStart()
 			self, -- ability source
 			"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
 			{  }, -- kv
-			self:GetCursorPosition(),
+			cast_position,
 			self:GetCaster():GetTeamNumber(),
 			false
 		)
@@ -2403,8 +2411,14 @@ function modifier_imba_mars_arena_of_blood_scepter:IgnoreTenacity() return true 
 function modifier_imba_mars_arena_of_blood_scepter:IsMotionController() return true end
 function modifier_imba_mars_arena_of_blood_scepter:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_imba_mars_arena_of_blood_scepter:OnCreated()
+function modifier_imba_mars_arena_of_blood_scepter:OnCreated(keys)
 	if not IsServer() then return end
+
+	if keys.cast_position_x == nil then
+		self.target_point = self:GetParent():GetAbsOrigin()
+	else
+		self.target_point = Vector(keys.cast_position_x, keys.cast_position_y, keys.cast_position_z)
+	end
 
 	self.max_height = self:GetAbility():GetSpecialValueFor("scepter_max_height")
 

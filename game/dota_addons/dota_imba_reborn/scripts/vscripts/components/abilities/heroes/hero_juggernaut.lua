@@ -713,7 +713,7 @@ function modifier_imba_juggernaut_healing_ward_aura:DeclareFunctions()
 end
 
 function modifier_imba_juggernaut_healing_ward_aura:GetModifierHealthRegenPercentage()
-	if self:GetCaster():HasModifier("modifier_imba_juggernaut_healing_ward_totem") then
+	if self:GetCaster() and self:GetCaster().HasModifier and self:GetCaster():HasModifier("modifier_imba_juggernaut_healing_ward_totem") then
 		return self.heal_per_sec_totem
 	else
 		return self.heal_per_sec

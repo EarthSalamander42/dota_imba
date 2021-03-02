@@ -246,7 +246,7 @@ function SetAbilityTooltips(keys) {
 			active_cd = active_cd.toFixed(1);
 
 		if (cd_level != 0)
-			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][cd_level]);
+			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", active_cd);
 		else
 			CurrentAbilityCooldown.style.visibility = "collapse";
 	}
@@ -300,7 +300,7 @@ function SetAbilityTooltips(keys) {
 
 //	var ability_special = AbilityDescription.split(/[%%]/).reverse();
 
-//	$.Msg(AbilityDescription)
+	$.Msg(AbilityDescription)
 
 	var AbilityExtraAttributes_Text = "";
 
@@ -313,7 +313,7 @@ function SetAbilityTooltips(keys) {
 
 				// Turn weird values with 10 decimals into 2 decimals max
 				if (keys["sSpecial"][i][2])
-					special_value = Number(keys["sSpecial"][i][2]);
+					special_value = Number(keys["sSpecial"][i][2]).toFixed(0);
 
 				if (isFloat(keys["sSpecial"][i][2]))
 					keys["sSpecial"][i][2] = keys["sSpecial"][i][2].toFixed(2);
@@ -353,22 +353,37 @@ function SetAbilityTooltips(keys) {
 				// Percentage checker
 //				$.Msg("%" + special_key + "%%%")
 
-				if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1 || IsPercentage == true) {
-//					$.Msg("Percentage value: " + special_key)
+				if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1 || IsPercentage == true) {
+					$.Msg("Percentage value: " + special_key)
 					special_values = special_values.join("% / ") + "%";
-					special_values = special_values.replace(special_value + "%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
+
+					if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1) {
+						special_values = special_values.replace(special_value + "%%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
+
+						if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1) {
+	//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
+
+							AbilityDescription = AbilityDescription.replace("%" + special_key + "%%%", special_values);
+						}
+					} else {
+						special_values = special_values.replace(special_value + "%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
+
+						if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1) {
+	//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
+
+							AbilityDescription = AbilityDescription.replace("%" + special_key + "%%", special_values);
+						}
+					}
 				} else {
 //					$.Msg("Non Percentage value: " + special_key)
 					special_values = special_values.join(" / ");
 					special_values = SetActiveValue(special_values, special_value);
-				}
 
-				// replace KV token with number values
-				if (AbilityDescription.indexOf("%" + special_key + "%") !== -1) {
-//					$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
+					if (AbilityDescription.indexOf("%" + special_key + "%") !== -1) {
+//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
 
-					// for some reason .replace is not working?
-					AbilityDescription = AbilityDescription.replace("%" + special_key + "%", special_values);
+						AbilityDescription = AbilityDescription.replace("%" + special_key + "%", special_values);
+					}
 				}
 
 				if (tooltip_string_localized != tooltip_string) {
@@ -611,10 +626,35 @@ function SetActiveValue(values, active_value, bFloat) {
 	if (typeof(values) == "number")
 		values = values.toString();
 
+	var sliced_string = values;
+	var string_sliced = false;
+
+//	$.Msg(values)
+//	$.Msg(active_value)
+
+	var last_match_pos_in_string = values.lastIndexOf(active_value);
+
+	if (last_match_pos_in_string !== -1 && last_match_pos_in_string !== 0) {
+//		$.Msg("Match/Position: " + active_value + " / " + last_match_pos_in_string);
+		values = values.slice(0, last_match_pos_in_string);
+		sliced_string = sliced_string.slice(last_match_pos_in_string);
+		string_sliced = true;
+	}
+
+//	$.Msg(values)
+//	$.Msg(sliced_string);
+
+	if (string_sliced == true) {
+		sliced_string = sliced_string.replace(active_value, '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '</span></span></span>');
+		return values + sliced_string;
+	} else {
+		return values.replace(active_value, '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '</span></span></span>');
+	}
+
 //	if (bFloat == true)
 //		return values.replace(active_value + ".0", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '.0</span></span></span>')
 //	else
-		return values.replace(active_value, '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '</span></span></span>')
+//		return values.replace(active_value, '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '</span></span></span>')
 }
 
 function GetAbilityType(iBehavior) {

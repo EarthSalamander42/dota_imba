@@ -4,7 +4,6 @@
 "DOTA_Tooltip_ability_imba_alchemist_acid_spray_Note0"                  "The aura lingers for 0.5 seconds."
 "DOTA_Tooltip_ability_imba_alchemist_acid_spray_Note1"                  "The damage from Sticky Acid is the same as Acid Spray's, even without the Acid Spray itself to deal the damage."
 
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_armor_reduction"		"ARMOR REDUCTION"
 "DOTA_Tooltip_ability_imba_alchemist_acid_spray_max_stacks"				"MAX STACKS:"
 
 "DOTA_Tooltip_modifier_imba_acid_spray_debuff_dot"                      "Sticky Acid"

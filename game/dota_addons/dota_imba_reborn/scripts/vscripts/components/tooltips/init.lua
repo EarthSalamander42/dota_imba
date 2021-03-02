@@ -82,18 +82,28 @@ function CustomTooltips:GetTooltipsInfo(keys)
 
 	local hAbility = hero:FindAbilityByName(keys.sAbilityName)
 
-	if hAbility then
-		cast_range = GetAbilityKV(ability_name, "AbilityCastRange", hAbility:GetLevel()) or 0
+	local lua_cast_range = hAbility:GetCastRange(hero:GetAbsOrigin(), nil)
+	if hAbility and hAbility:GetLevel() ~= 0 then
+		if lua_cast_range == 0 then
+			cast_range = GetAbilityKV(ability_name, "AbilityCastRange", hAbility:GetLevel()) or 0
+		else
+			cast_range = lua_cast_range or 0
+		end
 	end
 
+--	print("Cast Range:", cast_range)
 	if cast_range ~= 0 then
 		if not CustomTooltips.particles[keys.PlayerID] then
 			CustomTooltips.particles[keys.PlayerID] = {}
 		end
 
+		if bit.band(tonumber(tostring(hAbility:GetBehavior())), DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= DOTA_ABILITY_BEHAVIOR_NO_TARGET then
+			cast_range = cast_range + GetCastRangeIncrease(hero)
+		end
+
 		local pfx = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/range_display.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, player)
 		ParticleManager:SetParticleControl(pfx, 0, hero:GetAbsOrigin())
-		ParticleManager:SetParticleControl(pfx, 1, Vector(cast_range + GetCastRangeIncrease(hero), 0, 0))
+		ParticleManager:SetParticleControl(pfx, 1, Vector(cast_range, 0, 0))
 		table.insert(CustomTooltips.particles[keys.PlayerID], pfx)
 	end
 

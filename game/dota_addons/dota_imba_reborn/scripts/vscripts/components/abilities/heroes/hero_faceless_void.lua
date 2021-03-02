@@ -169,7 +169,7 @@ function imba_faceless_void_time_walk:OnSpellStart()
 	end
 
 	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {
-		duration	= math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), max_cast_range / self:GetVanillaAbilitySpecial("speed") + 0.5, -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
+		duration	= math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), max_cast_range) / self:GetVanillaAbilitySpecial("speed") + 0.5, -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
 		x			= position.x,
 		y 			= position.y,
 		z			= position.z
