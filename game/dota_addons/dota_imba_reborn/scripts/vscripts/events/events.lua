@@ -674,26 +674,29 @@ function GameMode:OnConnectFull(keys)
 	local playerID = ply:GetPlayerID()
 	if not GameMode.first_connect then GameMode.first_connect = {} end
 
-	if playerID == -1 then
-		Timers:CreateTimer(1.0, function()
-			self:OnConnectFull(keys)
-			return 1.0
-		end)
+	-- OVER MEGA DDOS DON'T USE THIS AGAIN, FIND ANOTHER WAY DUMBASS FUCK
+--	if playerID == -1 then
+--		Timers:CreateTimer(1.0, function()
+--			self:OnConnectFull(keys)
+--			return 1.0
+--		end)
 
-		return
-	else
-		if PlayerResource:GetPlayer(keys.PlayerID):GetTeam() == 1 then
-			print("GameMode:OnConnectFull() - Don't trigger for spectator.")
-			return
-		end
+--		return
+--	else
+--		if PlayerResource:GetPlayer(keys.PlayerID):GetTeam() == 1 then
+--			print("GameMode:OnConnectFull() - Don't trigger for spectator.")
+--			return
+--		end
 
 		-- only procs if the player reconnects
 		if GameMode.first_connect[playerID] then
-			ReconnectPlayer(playerID)
+			Timers:CreateTimer(3.0, function()
+				ReconnectPlayer(playerID)
+			end)
 		else
 			GameMode.first_connect[playerID] = true
 		end
-	end
+--	end
 end
 
 -- This function is called whenever any player sends a chat message to team or All

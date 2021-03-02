@@ -840,8 +840,6 @@ function ReconnectPlayer(player_id)
 	print("Player is reconnecting:", player_id)
 	Say(PlayerResource:GetPlayer(0), "Debug: Player ID " .. player_id .. " has reconnected!", false)
 
-	TeamOrdering:OnPlayerReconnect(player_id)
-
 	-- Reinitialize the player's pick screen panorama, if necessary
 	Timers:CreateTimer(function()
 --		print(PlayerResource:GetSelectedHeroEntity(player_id))
@@ -872,6 +870,8 @@ function ReconnectPlayer(player_id)
 
 				GoodGame:Call(gg_table)
 			end)
+
+			TeamOrdering:OnPlayerReconnect(player_id)
 		else
 --			print("Not fully reconnected yet:", player_id)
 			return 1.0
