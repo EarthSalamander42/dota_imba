@@ -1,4 +1,20 @@
 "use strict";
+/*
+(function () {
+	if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
+		$.Msg("Shared Scoreboard Updater: Block spectators.");
+		return;
+	}
+})();
+*/
+
+function isInt(n) {
+   return n % 1 === 0;
+}
+
+function isFloat(n){
+	return Number(n) === n && n % 1 !== 0;
+}
 
 function LightenDarkenColor(col, amt) {
 	var usePound = false;
@@ -122,21 +138,28 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	if (gamemode)
 		gamemode = gamemode["1"];
 
-	if (!player_info || player_info.winrate_toggle != 1) {
-		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
-	} else if (gamemode == "1") {
-		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
-	} else {
-		var LegendIMR = $.GetContextPanel().FindChildrenWithClassTraverse("ScoreCol_WinRate");
+	_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
 
-		for (var i = 0; i < LegendIMR.length; i++) {
-			LegendIMR[i].text = "WINRATE";
-		}
+	if (player_info) {
+		if (gamemode == "1") {
+			_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
+		} else {
+			var LegendIMR = $.GetContextPanel().FindChildrenWithClassTraverse("ScoreCol_WinRate");
 
-		var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
+			for (var i = 0; i < LegendIMR.length; i++) {
+				LegendIMR[i].text = "WINRATE";
+			}
 
-		if (player_info.winrate_toggle == 1) {
-			_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
+			var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
+
+			if (player_info.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
+				if (isInt(player_info.winrate))
+					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
+				else if (isFloat(player_info.winrate))
+					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(2) + "%");					
+				else
+					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate + "%");
+			}
 		}
 	}
 }
@@ -401,7 +424,7 @@ function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, te
 		return;
 
 	var teamId = teamDetails.team_id;
-	// $.Msg( "_ScoreboardUpdater_UpdateTeamPanel: ", teamId );
+//	$.Msg( "_ScoreboardUpdater_UpdateTeamPanel: ", teamId );
 
 	var teamPanelName = "_dynamic_team_" + teamId;
 	var teamPanel = containerPanel.FindChild(teamPanelName);
@@ -445,7 +468,11 @@ function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, te
 		teamsInfo.max_team_players = teamPlayers.length;
 	}
 
-	_ScoreboardUpdater_SetTextSafe(teamPanel, "TeamScore", teamDetails.team_score)
+	if (teamDetails.team_id == 1)
+		_ScoreboardUpdater_SetTextSafe(teamPanel, "TeamScore", teamDetails.team_num_players);
+	else
+		_ScoreboardUpdater_SetTextSafe(teamPanel, "TeamScore", teamDetails.team_score);
+
 	_ScoreboardUpdater_SetTextSafe(teamPanel, "TeamName", $.Localize(teamDetails.team_name).toUpperCase())
 
 	if (GameUI.CustomUIConfig().team_colors) {
@@ -541,7 +568,12 @@ function _ScoreboardUpdater_UpdateAllTeamsAndPlayers(scoreboardConfig, teamsCont
 	// );
 
 	var teamsList = [];
-	for (var teamId of Game.GetAllTeamIDs()) {
+	var all_teams = Game.GetAllTeamIDs();
+
+	// Create Spectator team in scoreboard
+	all_teams.push(1);
+
+	for (var teamId of all_teams) {
 		teamsList.push(Game.GetTeamDetails(teamId));
 	}
 

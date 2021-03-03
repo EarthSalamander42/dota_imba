@@ -1,7 +1,12 @@
+LinkLuaModifier("modifier_imba_ward_deniable", "components/neutral_creeps/modifiers/modifier_imba_ward_deniable.lua", LUA_MODIFIER_MOTION_NONE)
+
 Neutrals = Neutrals or class({})
+
+-- require("components/neutral_creeps/util.lua")
 
 Neutrals.start_time = 30.0
 Neutrals.spawn_interval = 60.0
+Neutrals.enable_custom_system = false
 
 Neutrals.Creeps = {}
 Neutrals.Creeps["small"] = {}
@@ -56,6 +61,8 @@ Neutrals.Triggers["neutralcamp_evil_9"] = "big"
 Neutrals.spawn_point = {}
 
 ListenToGameEvent('game_rules_state_change', function(keys)
+	if Neutrals.enable_custom_system == false then return end
+
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		for trigger_name, camp_size in pairs(Neutrals.Triggers) do
 			for _, spawner in pairs(Entities:FindAllByClassname("npc_dota_neutral_spawner") or {}) do
@@ -88,6 +95,27 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 	end
 end, nil)
 
+ListenToGameEvent("npc_spawned", function(keys)
+	if not IsServer() then return end
+
+	local npc = EntIndexToHScript(keys.entindex)
+
+	if not IsValidEntity(npc) then
+		return
+	end
+
+	if npc:GetUnitName() == "npc_dota_observer_wards" or npc:GetUnitName() == "npc_dota_sentry_wards" then
+		npc:SetContextThink(DoUniqueString("ward_fucker"), function()
+			if Neutrals:IsBlockingAllyNeutralSpawn(npc) then
+				npc:AddNewModifier(npc, nil, "modifier_imba_ward_deniable", {})
+			end
+
+			return nil
+		end, FrameTime())
+	end
+end, nil)
+
+--[[
 function Neutrals:CheckForSpawn()
 	for trigger_name, camp_size in pairs(Neutrals.Triggers) do
 		local trigger = Entities:FindByName(nil, trigger_name)
@@ -124,6 +152,7 @@ function Neutrals:CheckForSpawn()
 		end
 	end
 end
+--]]
 
 function Neutrals:Spawn(trigger, pos, camp_size)
 	local neutrals = Neutrals.Creeps[camp_size][RandomInt(1, #Neutrals.Creeps[camp_size])]
@@ -131,4 +160,23 @@ function Neutrals:Spawn(trigger, pos, camp_size)
 	for _, neutral in pairs(neutrals) do
 		local unit = CreateUnitByName(neutral, pos, true, nil, nil, 4)
 	end
+end
+
+-- Make wards deniable if planted on Neutral Creeps triggers
+function Neutrals:IsBlockingAllyNeutralSpawn(ward)
+	for trigger_name, camp_size in pairs(Neutrals.Triggers) do
+		local trigger = Entities:FindByName(nil, trigger_name)
+
+		if trigger then
+			local length = (trigger:GetBoundingMins() - trigger:GetBoundingMaxs()):Length2D()
+
+			if string.find(trigger:GetName(), "good") and ward:GetTeam() == 2 or string.find(trigger:GetName(), "evil") and ward:GetTeam() == 3 then
+				if trigger:IsTouching(ward) then
+					return true
+				end
+			end
+		end
+	end
+
+	return false
 end

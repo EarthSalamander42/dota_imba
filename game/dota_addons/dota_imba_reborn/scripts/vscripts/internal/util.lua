@@ -825,7 +825,6 @@ function CalculateDirection(ent1, ent2)
 	return direction
 end
 
--- Thanks to LoD-Redux & darklord for this!
 function DisplayError(playerID, message)
 	local player = PlayerResource:GetPlayer(playerID)
 	if player then
@@ -839,32 +838,19 @@ function ReconnectPlayer(player_id)
 	if player_id == "test_reconnect" then player_id = 0 end
 
 	print("Player is reconnecting:", player_id)
-
-	TeamOrdering:OnPlayerReconnect(player_id)
+	Say(PlayerResource:GetPlayer(0), "Debug: Player ID " .. player_id .. " has reconnected!", false)
 
 	-- Reinitialize the player's pick screen panorama, if necessary
 	Timers:CreateTimer(function()
 --		print(PlayerResource:GetSelectedHeroEntity(player_id))
 
 		if PlayerResource:GetSelectedHeroEntity(player_id) then
-			Timers:CreateTimer(3.0, function()
-				local table = {
-					ID = player_id,
-					team = PlayerResource:GetTeam(player_id),
-					disconnect = 2,
-				}
-
-				GoodGame:Call(table)
-			end)
-
 			if IMBA_PICK_SCREEN == true then
 				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
-			end
 
-			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
+				local hero = PlayerResource:GetSelectedHeroEntity(player_id)
 
-			if IMBA_PICK_SCREEN == true then
-				if PICKING_SCREEN_OVER == true then
+				if hero and PICKING_SCREEN_OVER == true then
 					if hero:GetUnitName() == FORCE_PICKED_HERO then
 						print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
 						local random_hero = HeroSelection:RandomHero()
@@ -873,9 +859,22 @@ function ReconnectPlayer(player_id)
 					end
 				end
 			end
+
+			-- set player connected again for GG logic
+			Timers:CreateTimer(2.0, function()
+				local gg_table = {
+					ID = player_id,
+					team = PlayerResource:GetTeam(player_id),
+					disconnect = 2,
+				}
+
+				GoodGame:Call(gg_table)
+			end)
+
+			TeamOrdering:OnPlayerReconnect(player_id)
 		else
 --			print("Not fully reconnected yet:", player_id)
-			return 0.1
+			return 1.0
 		end
 	end)
 
@@ -885,6 +884,7 @@ function ReconnectPlayer(player_id)
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		local hero_name = hero:GetUnitName()
 		local line_duration = 7
+
 		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
@@ -1449,4 +1449,20 @@ function CDOTA_BaseNPC:IMBA_GetHeroStartingGold()
 
 
 	return hero_gold
+end
+
+function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
+	PlayerResource:SetCameraTarget(self:GetPlayerID(), hTarget)
+	if iDuration == nil then iDuration = FrameTime() end
+	if iDuration ~= -1 then
+		Timers:CreateTimer(iDuration, function()
+			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			Timers:CreateTimer(FrameTime(), function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+			Timers:CreateTimer(FrameTime() * 3, function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+		end)
+	end
 end

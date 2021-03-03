@@ -1,7 +1,17 @@
-OnThink()
-GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
-GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
-GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
+(function () {
+/*
+	if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
+		$.Msg("Vanilla Link Tooltips: Block spectators.");
+		return;
+	}
+*/
+
+	OnThink()
+
+	GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
+	GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
+	GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
+})();
 
 function GetDotaHud() {
 	var p = $.GetContextPanel();
@@ -161,10 +171,12 @@ function InitTooltips() {
 function CallTooltips(i) {
 	var hPanel = GetDotaHud().FindChildTraverse("Ability" + i);
 	var sAbilityName = hPanel.FindChildTraverse("AbilityImage").abilityname;
+	var selected_entities = Players.GetSelectedEntities(Game.GetLocalPlayerID());
 
 	GameEvents.SendCustomGameEventToServer("get_tooltips_info", {
 		sAbilityName: sAbilityName,
 		iAbility: i,
+		iSelectedEntIndex: selected_entities[0],
 	})
 }
 
@@ -229,6 +241,8 @@ function SetAbilityTooltips(keys) {
 
 		if (mana_level != 0)
 			CurrentAbilityManaCost.SetDialogVariable("current_manacost", active_mana);
+		else
+			CurrentAbilityManaCost.style.visibility = "collapse";
 	}
 
 	if (Abilities.GetCooldown(ability) == 0) {
@@ -244,7 +258,9 @@ function SetAbilityTooltips(keys) {
 			active_cd = active_cd.toFixed(1);
 
 		if (cd_level != 0)
-			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", keys["iCooldown"][cd_level]);
+			CurrentAbilityCooldown.SetDialogVariable("current_cooldown", active_cd);
+		else
+			CurrentAbilityCooldown.style.visibility = "collapse";
 	}
 
 	AbilityCastType.SetDialogVariable("casttype", $.Localize("DOTA_ToolTip_Ability_" + Array_BehaviorTooltips[GetAbilityType(Abilities.GetBehavior(ability))]));
@@ -309,7 +325,7 @@ function SetAbilityTooltips(keys) {
 
 				// Turn weird values with 10 decimals into 2 decimals max
 				if (keys["sSpecial"][i][2])
-					special_value = Number(keys["sSpecial"][i][2]);
+					special_value = Number(keys["sSpecial"][i][2]).toFixed(0);
 
 				if (isFloat(keys["sSpecial"][i][2]))
 					keys["sSpecial"][i][2] = keys["sSpecial"][i][2].toFixed(2);
@@ -349,22 +365,37 @@ function SetAbilityTooltips(keys) {
 				// Percentage checker
 //				$.Msg("%" + special_key + "%%%")
 
-				if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1 || IsPercentage == true) {
+				if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1 || IsPercentage == true) {
 //					$.Msg("Percentage value: " + special_key)
 					special_values = special_values.join("% / ") + "%";
-					special_values = special_values.replace(special_value + "%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
+
+					if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1) {
+						special_values = special_values.replace(special_value + "%%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
+
+						if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1) {
+	//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
+
+							AbilityDescription = AbilityDescription.replace("%" + special_key + "%%%", special_values);
+						}
+					} else {
+						special_values = special_values.replace(special_value + "%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
+
+						if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1) {
+	//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
+
+							AbilityDescription = AbilityDescription.replace("%" + special_key + "%%", special_values);
+						}
+					}
 				} else {
 //					$.Msg("Non Percentage value: " + special_key)
 					special_values = special_values.join(" / ");
 					special_values = SetActiveValue(special_values, special_value);
-				}
 
-				// replace KV token with number values
-				if (AbilityDescription.indexOf("%" + special_key + "%") !== -1) {
-//					$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
+					if (AbilityDescription.indexOf("%" + special_key + "%") !== -1) {
+//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
 
-					// for some reason .replace is not working?
-					AbilityDescription = AbilityDescription.replace("%" + special_key + "%", special_values);
+						AbilityDescription = AbilityDescription.replace("%" + special_key + "%", special_values);
+					}
 				}
 
 				if (tooltip_string_localized != tooltip_string) {
@@ -429,8 +460,6 @@ function SetAbilityTooltips(keys) {
 	if (keys) {
 		if (keys["iCooldown"] != undefined) {	
 			var cd = [];
-			var current_cd = 0;
-//			var current_cd_level = Math.min(ability_level, cooldowns.length);
 
 			for (var i in keys["iCooldown"]) {
 				var fixed_cd = keys["iCooldown"][i];
@@ -439,11 +468,11 @@ function SetAbilityTooltips(keys) {
 					fixed_cd = fixed_cd.toFixed(1);
 
 				cd[i - 1] = fixed_cd;
-
-				if (i == ability_level)
-					current_cd = fixed_cd
 			}
 
+			var current_cd = cd[Math.min(ability_level, cd.length - 1)];
+
+			// This is where we turn array of values into a single string to use as text
 			cd = cd.join(" / ");
 
 			if (cd != 0) {
@@ -460,17 +489,16 @@ function SetAbilityTooltips(keys) {
 		var same_mana = true;
 		if (keys["iManaCost"] != undefined) {
 			var mana = [];
-			var current_mana = 0;
 
 			for (var i in keys["iManaCost"]) {
 				var fixed_mana = keys["iManaCost"][i];
 
 				mana[i - 1] = fixed_mana;
-
-				if (i == ability_level)
-					current_mana = fixed_mana
 			}
 
+			var current_mana = mana[Math.min(ability_level, mana.length - 1)];
+
+			// This is where we turn array of values into a single string to use as text
 			mana = mana.join(" / ");
 
 			if (mana != 0) {
@@ -610,10 +638,35 @@ function SetActiveValue(values, active_value, bFloat) {
 	if (typeof(values) == "number")
 		values = values.toString();
 
+	var sliced_string = values;
+	var string_sliced = false;
+
+//	$.Msg(values)
+//	$.Msg(active_value)
+
+	var last_match_pos_in_string = values.lastIndexOf(active_value);
+
+	if (last_match_pos_in_string !== -1 && last_match_pos_in_string !== 0) {
+//		$.Msg("Match/Position: " + active_value + " / " + last_match_pos_in_string);
+		values = values.slice(0, last_match_pos_in_string);
+		sliced_string = sliced_string.slice(last_match_pos_in_string);
+		string_sliced = true;
+	}
+
+//	$.Msg(values)
+//	$.Msg(sliced_string);
+
+	if (string_sliced == true) {
+		sliced_string = sliced_string.replace(active_value, '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '</span></span></span>');
+		return values + sliced_string;
+	} else {
+		return values.replace(active_value, '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '</span></span></span>');
+	}
+
 //	if (bFloat == true)
 //		return values.replace(active_value + ".0", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '.0</span></span></span>')
 //	else
-		return values.replace(active_value, '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '</span></span></span>')
+//		return values.replace(active_value, '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + active_value + '</span></span></span>')
 }
 
 function GetAbilityType(iBehavior) {

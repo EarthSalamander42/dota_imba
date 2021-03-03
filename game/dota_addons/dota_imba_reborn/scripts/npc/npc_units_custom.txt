@@ -1191,7 +1191,7 @@
 	//=================================================================================
 	//	Techies: Proximity Mine
 	//=================================================================================
-	"npc_imba_techies_proximity_mine"
+	"npc_imba_techies_land_mines"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1205,7 +1205,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_techies_proximity_mine_trigger"
+		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""
@@ -1263,7 +1263,7 @@
 	//=================================================================================
 	//	Techies: Proximity Mine
 	//=================================================================================
-	"npc_imba_techies_proximity_mine_big_boom"
+	"npc_imba_techies_land_mines_big_boom"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1277,7 +1277,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_techies_proximity_mine_trigger"
+		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""
@@ -1349,7 +1349,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_techies_stasis_trap_trigger"
+		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""
@@ -1477,7 +1477,7 @@
 	//=================================================================================
 	// Techies: Remote Mine
 	//=================================================================================
-	"npc_imba_techies_remote_mine"
+	"npc_imba_techies_remote_mines"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1491,7 +1491,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_techies_remote_mine_pinpoint_detonation"
+		"Ability1"					"imba_techies_remote_mines_pinpoint_detonation"
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""
@@ -1549,7 +1549,7 @@
 	//=================================================================================
 	// Techies: Blast Off little Piggy
 	//=================================================================================
-	"npc_imba_techies_blast_off_piggy"
+	"npc_imba_techies_suicide_piggy"
 	{
 		// General
 		//----------------------------------------------------------------

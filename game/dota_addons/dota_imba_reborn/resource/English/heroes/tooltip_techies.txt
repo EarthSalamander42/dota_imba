@@ -2,12 +2,28 @@
 // Techies's Proximity Mine
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_techies_land_mines"							"Proximity Mine"
-"DOTA_Tooltip_ability_imba_techies_land_mines_Imbafication_1"			"<font color='#FF7800'>Mine Cart:</font> Grants the Mine Cart modifier, which acts as charges. Charges are replenished over time, up to a maximum of mines. For each stack of Mine Cart, the cost of Proximity Mines increases by %mana_increase_per_stack%. Casting Proximity Mines consumes all charges, and adds a mine for each stack consumed. One mine is always set in the target point, while the rest are placed in a set distance from each other. Each mine is independent of other mines and work normally whenever an enemy comes into its range. The range of the explosion increases with levels, but an enemy still need to be in the trigger range for a mine to tick and explode."
-"DOTA_Tooltip_ability_imba_techies_land_mines_Lore"						"The bane of Toterin!"
-"DOTA_Tooltip_ability_imba_techies_land_mines_Note0"					"Mines cannot be placed in the trigger range of other mines. This is indicated by the AoE marker when placing a mine."
-"DOTA_Tooltip_ability_imba_techies_land_mines_Note1"					"When dealing damage to a building, it receives 90% magic resistance bonus very briefly which reduces other mines' effectiveness when they all explode at the same time."
-"DOTA_Tooltip_ability_imba_techies_land_mines_Note2"					"The mine activates 1.75 seconds after being placed."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine"							"Proximity Mine"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_Description"				"Plant an invisible mine that becomes visible if an enemy is within the trigger range of the mine. The mine detonates if an enemy is standing within the trigger range for %explosion_delay% seconds. The explosion deals full damage in the blast radius, and deals %building_damage_pct%% damage to buildings.\n<font color='#FF7800'>Mine Cart:</font> Grants the Mine Cart modifier, which acts as charges. Charges are replenished over time, up to a maximum of mines. For each stack of Mine Cart, the cost of Proximity Mines increases by %mana_increase_per_stack%. Casting Proximity Mines consumes all charges, and adds a mine for each stack consumed. One mine is always set in the target point, while the rest are placed in a set distance from each other. Each mine is independent of other mines and work normally whenever an enemy comes into its range. The range of the explosion increases with levels, but an enemy still need to be in the trigger range for a mine to tick and explode."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_Lore"						"The bane of Toterin!"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_Note0"					"Mines cannot be placed in the trigger range of other mines. This is indicated by the AoE marker when placing a mine."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_Note1"					"When dealing damage to a building, it receives 90% magic resistance bonus very briefly which reduces other mines' effectiveness when they all explode at the same time."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_Note2"					"The mine activates 1.75 seconds after being placed."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_mine_placement_count"		"MINE COUNT:"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_mine_damage"				"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger_range"			"TRIGGER RANGE:"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_explosion_range"			"EXPLOSION RANGE:"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_charge_restore_time"		"CHARGES REPLENISH:"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_max_charges"				"MAX CHARGES:"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_cast_range"				"CAST RANGE:"
+
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger"              "Proximity Mine"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger_Description"              "An invisible mine that becomes visible if an enemy is within the trigger range of the mine. Mines detonate if an enemy is standing within the trigger range for %explosion_delay% seconds. The explosion deals full damage in the blast radius, and deals %building_damage_pct%% damage to buildings."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger_Lore"                     "The bane of Toterin!"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger_Note0"                    "Mines cannot be placed in the trigger range of other mines. This is indicated by the AoE marker when placing a mine."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger_Note1"                    "When dealing damage to a building, it receives 90% magic resistance bonus very briefly which reduces other mines' effectiveness when they all explode at the same time."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger_Note2"                    "The mine activates 1.75 seconds after being placed."
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger_mine_damage"              "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_techies_proximity_mine_trigger_trigger_range"            "TRIGGER/EXPLOSION RANGE:"
 
 "DOTA_Tooltip_modifier_imba_proximity_mine_charges"                    "Mine Cart"
 "DOTA_Tooltip_modifier_imba_proximity_mine_charges_Description"                     "Stocks Proximity Mines for the next cast."
@@ -19,16 +35,29 @@
 // Techies's Stasis Trap
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_techies_stasis_trap"							"Stasis Trap"
-"DOTA_Tooltip_ability_imba_techies_stasis_trap_Imbafication_1"			"<font color='#FF7800'>Electrocharge:</font> Enemies hit by the Stasis Trap become Electrocharged, pulling nearby mines to them. Each mine that explodes while Electrocharged refresh the duration and increases the magnet radius by %magnetic_stack_radius% and pull power by %magnetic_stack_movespeed%. Lasts for the same initial root duration."
-"DOTA_Tooltip_ability_imba_techies_stasis_trap_Imbafication_2"			"<font color='#FF7800'>Subtle Stasis:</font> Nearby Stasis Traps become disarmed, losing their root effect, but can still apply or refresh Electrocharge upon enemies coming into their range."
+"DOTA_Tooltip_ability_imba_techies_stasis_trap"                        "Stasis Trap"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_Description"            "Plant an invisible trap that roots nearby enemy units instantly when triggered.\n<font color='#FF7800'>Electrocharge:</font> Enemies hit by the Stasis Trap become Electrocharged, pulling nearby mines to them. Each mine that explodes while Electrocharged refresh the duration and increases the magnet radius by %magnetic_stack_radius% and pull power by %magnetic_stack_movespeed%. Lasts for the same initial root duration.\n<font color='#FF7800'>Subtle Stasis:</font> Nearby Stasis Traps become disarmed, losing their root effect, but can still apply or refresh Electrocharge upon enemies coming into their range."
 "DOTA_Tooltip_ability_imba_techies_stasis_trap_Lore"                    "The scourge of Trapper Town!"
 "DOTA_Tooltip_ability_imba_techies_stasis_trap_Note0"                  "Mines are drawn towards the first Electrocharged enemies that they detect, and ignore any other Electrocharged enemies, even if they're closer, until the effect ends."
 "DOTA_Tooltip_ability_imba_techies_stasis_trap_Note1"                  "While mines are drawn towards an Electrocharged target, they still operate normally and will detonate if an enemy come into their trigger range."
 "DOTA_Tooltip_ability_imba_techies_stasis_trap_Note2"                  "Stasis Mines take 2 seconds to activate when planted."
-
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_range"          "TRIGGER RANGE:"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_root_range"              "EXPLOSION RANGE:"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_root_duration"          "ROOT DURATION:"
 "DOTA_Tooltip_ability_imba_techies_stasis_trap_base_magnetic_radius"                "BASE ELECTROCHARGE RADIUS:"
 "DOTA_Tooltip_ability_imba_techies_stasis_trap_base_magnetic_movespeed"             "BASE ELECTROCHARGE PULL SPEED:"
+
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger"                "Stasis Trap"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_Description"                 "An invisible trap that roots nearby enemy units instantly when triggered.\n<font color='#FF7800'>Electrocharge:</font> Enemies hit by the Stasis Trap become Electrocharged, pulling nearby mines to them. Each mine that explodes while Electrocharged refresh the duration and increases the magnet radius by %magnetic_stack_radius% and pull power by %magnetic_stack_movespeed%. Lasts for the same initial root duration.\n<font color='#FF7800'>Subtle Stasis:</font> Nearby Stasis Traps become disarmed, losing their root effect, but can still apply or refresh Electrocharge upon enemies coming into their range."
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_Lore"            "The scourge of Trapper Town!"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_Note0"          "Mines are drawn towards the first Electrocharged enemies that they detect, and ignore any other Electrocharged enemies, even if they're closer, until the effect ends."
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_Note1"          "While mines are drawn towards an Electrocharged target, they still operate normally and will detonate if an enemy come into their trigger range."
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_Note2"          "Stasis Mines take 2 seconds to activate when planted."
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_trigger_range"               "TRIGGER RANGE:"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_root_range"                  "EXPLOSION RANGE:"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_root_duration"               "ROOT DURATION:"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_base_magnetic_radius"        "BASE ELECTROCHARGE RADIUS:"
+"DOTA_Tooltip_ability_imba_techies_stasis_trap_trigger_base_magnetic_movespeed"     "BASE ELECTROCHARGE PULL SPEED:"
 
 "DOTA_Tooltip_modifier_imba_statis_trap_root"                          "Stasis Trap"
 "DOTA_Tooltip_modifier_imba_statis_trap_root_Description"              "Rooted"
@@ -43,23 +72,27 @@
 // Techies's Blast Off!
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_techies_suicide"							"Blast Off!"
-"DOTA_Tooltip_ability_imba_techies_suicide_Imbafication_1"			"<font color='#FF7800'>Infinity Chain:</font> Techies can continue jumping the same distance again and again, dealing damage to enemies and themselves, up to a maximum. Issuing any attack, move, or stop order stops Techies from jumping further."
-"DOTA_Tooltip_ability_imba_techies_suicide_Lore"					"Where we going?"
-"DOTA_Tooltip_ability_imba_techies_suicide_Note0"					"Dying or becoming disabled while jumping also stops the Infinity Chain jumps."
+"DOTA_Tooltip_ability_imba_techies_blast_off"                          "Blast Off!"
+"DOTA_Tooltip_ability_imba_techies_blast_off_Description"              "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and silence enemies. Upon landing, the assault deals Techies damage a portion of their max health.\n<font color='#FF7800'>Infinity Chain:</font> Techies can continue jumping the same distance again and again, dealing damage to enemies and themselves, up to a maximum. Issuing any attack, move, or stop order stops Techies from jumping further."
+"DOTA_Tooltip_ability_imba_techies_blast_off_Lore"                      "Where we going?"
+"DOTA_Tooltip_ability_imba_techies_blast_off_Note0"                    "Dying or becoming disabled while jumping also stops the Infinity Chain jumps."
+"DOTA_Tooltip_ability_imba_techies_blast_off_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_techies_blast_off_radius"                    "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_techies_blast_off_self_damage_pct"          "%SELF DAMAGE:"
+"DOTA_Tooltip_ability_imba_techies_blast_off_silence_duration"          "SILENCE DURATION:"
+"DOTA_Tooltip_ability_imba_techies_blast_off_max_jumps"                "MAXIMUM INFINITY CHAIN JUMPS:"
 
-"DOTA_Tooltip_ability_imba_techies_suicide_max_jumps"				"MAXIMUM INFINITY CHAIN JUMPS:"
-
-"DOTA_Tooltip_modifier_imba_blast_off_silence"						"Blast Off!"
-"DOTA_Tooltip_modifier_imba_blast_off_silence_Description"			"Silenced by Blast Off!'s effect."
+"DOTA_Tooltip_modifier_imba_blast_off_silence"                          "Blast Off!"
+"DOTA_Tooltip_modifier_imba_blast_off_silence_Description"              "Silenced by Blast Off!'s effect."
 
 ////===============================================================================================================
 // Techies's Minefield Sign
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_techies_minefield_sign"						"Minefield Sign"
-"DOTA_Tooltip_ability_imba_techies_minefield_sign_Imbafication_1"		"<font color='#FF7800'>Mined Games:</font> Minefield Sign can be toggled. When it is toggled off, all mines in its range are normally. However, when it is toggled on, all mines in its range cannot be detected with True Sight, and do not explode until toggling the sign back off."
-"DOTA_Tooltip_ability_imba_techies_minefield_sign_Lore"					"Watch your step!"
+"DOTA_Tooltip_ability_imba_techies_minefield_sign"                      "Minefield Sign"
+"DOTA_Tooltip_ability_imba_techies_minefield_sign_Description"          "Plant a warning sign to remind enemies to step lightly. Only one sign can exist at a time. Last infinitely.\n<font color='#FF7800'>Mined Games:</font> Minefield Sign can be toggled. When it is toggled off, all mines in its range are normally. However, when it is toggled on, all mines in its range cannot be detected with True Sight, and do not explode until toggling the sign back off."
+"DOTA_Tooltip_ability_imba_techies_minefield_sign_Lore"                "Watch your step!"
+"DOTA_Tooltip_ability_imba_techies_minefield_sign_radius"              "#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 "DOTA_Tooltip_modifier_imba_minefield_sign_detection"                  "Active Minefield Sign"
 "DOTA_Tooltip_modifier_imba_minefield_sign_detection_Description"                   "Minefield Sign is active, preventing this mine from blowing up."
@@ -77,7 +110,7 @@
 "DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_max_charges"             "INFLAMMABLE MAX CHARGES:"
 "DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_charge_damage"           "INFLAMMABLE DAMAGE PER CHRAGE:"
 "DOTA_Tooltip_ability_imba_techies_remote_mines_inflammable_charge_radius"           "INFLAMMABLE RADIUS PER CHARGE:"
-"DOTA_Tooltip_ability_imba_techies_remote_mines_aghanim_description"                 "Increases Remote Mines' damage by 150 and radius by 200."
+"DOTA_Tooltip_ability_imba_techies_remote_mines_scepter_description"                 "Increases Remote Mines' damage by 150 and radius by 200."
 
 "DOTA_Tooltip_ability_imba_techies_remote_mines_pinpoint_detonation"                 "Pinpoint Detonation"
 "DOTA_Tooltip_ability_imba_techies_remote_mines_pinpoint_detonation_Description"     "Detonate selected remote mine."
@@ -95,6 +128,7 @@
 "DOTA_Tooltip_ability_imba_techies_focused_detonate_Description"                    "Detonate all remote mines in the target area."
 "DOTA_Tooltip_ability_imba_techies_focused_detonate_Lore"              "Why light one fuse when you can light them all?"
 "DOTA_Tooltip_ability_imba_techies_focused_detonate_Note0"              "Blows all mines in range within very small intervals."
+"DOTA_Tooltip_ability_imba_techies_focused_detonate_radius"            "#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 ////===============================================================================================================
 // Techies's Custom Talents
@@ -112,9 +146,9 @@
 ////===============================================================================================================
 // Techies's summon units: Proximity Mine, Big Boom, Stasis Trap, Minefield Sign, Remote Mine, Blast Pig
 ////===============================================================================================================
-"npc_imba_techies_land_mines"                          "Proximity Mine"
-"npc_imba_techies_land_mines_big_boom"                              "Big Boom"
+"npc_imba_techies_proximity_mine"                          "Proximity Mine"
+"npc_imba_techies_proximity_mine_big_boom"                              "Big Boom"
 "npc_imba_techies_stasis_trap"                              "Stasis Trap"
 "npc_imba_techies_minefield_sign"                          "Minefield Sign"
-"npc_imba_techies_remote_mines"                              "Remote Mine"
-"npc_imba_techies_suicide_piggy"                          "Blast Pig"
+"npc_imba_techies_remote_mine"                              "Remote Mine"
+"npc_imba_techies_blast_off_piggy"                          "Blast Pig"

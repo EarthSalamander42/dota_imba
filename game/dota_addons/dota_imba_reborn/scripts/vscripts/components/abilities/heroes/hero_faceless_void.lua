@@ -79,7 +79,7 @@ end
 -------------------------------------------------------------
 --------------------	  Time Walk		 --------------------
 -------------------------------------------------------------
-if imba_faceless_void_time_walk == nil then imba_faceless_void_time_walk = class({}) end
+if imba_faceless_void_time_walk == nil then imba_faceless_void_time_walk = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_damage_counter", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)-- Reduced moenemt/attack speed stolen by caster
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_as", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)		-- Bonus attack speed stolen from enemies
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_ms", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)		-- Bonus movement speed stolen from enemies
@@ -90,7 +90,7 @@ function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
 function imba_faceless_void_time_walk:IsNetherWardStealable() return false end
 
 function imba_faceless_void_time_walk:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_11")
+	return self:GetVanillaKeyValue("AbilityCooldown", level) - self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_11")
 end
 
 function imba_faceless_void_time_walk:GetIntrinsicModifierName()
@@ -109,7 +109,7 @@ end
 
 function imba_faceless_void_time_walk:GetAOERadius()
 	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("radius_scepter")
+		return self:GetVanillaAbilitySpecial("radius_scepter")
 	end
 end
 
@@ -121,6 +121,12 @@ function imba_faceless_void_time_walk:OnUpgrade()
 			if not caster:HasModifier("modifier_imba_faceless_void_chronocharges") then
 				caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_chronocharges", {})
 			end
+		end
+
+		local reverse = self:GetCaster():FindAbilityByName("imba_faceless_void_time_walk_reverse")
+
+		if reverse and reverse:GetLevel() == 0 then
+			reverse:SetLevel(1)
 		end
 	end
 end
@@ -135,24 +141,49 @@ end
 
 function imba_faceless_void_time_walk:GetCastRange(location, target)
 	if IsClient() then
-		return self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()
+		local cast_range = self:GetVanillaAbilitySpecial("range") + self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
+
+		-- Volvo did you hardcode this value? can't find it ugh
+		if self:GetCaster():HasShard() then
+			cast_range = cast_range + 200
+		end
+
+		return cast_range
 	end
 end
 
 function imba_faceless_void_time_walk:OnSpellStart()
 	local caster = self:GetCaster()
 	local slow_radius = self:GetSpecialValueFor("slow_radius")
-
 	local position	= self:GetCursorPosition()
+	self.old_position = self:GetCaster():GetAbsOrigin()
 
 	-- Play sound and apply casting modifier
 	caster:EmitSound("Hero_FacelessVoid.TimeWalk")
+
+	local max_cast_range = self:GetVanillaAbilitySpecial("range") + caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
+
+	-- Volvo did you hardcode this value? can't find it ugh
+	if self:GetCaster():HasShard() then
+		max_cast_range = max_cast_range + 200
+	end
+
 	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {
-		duration	= math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()) / self:GetSpecialValueFor("speed") + 0.5, -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
+		duration	= math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), max_cast_range) / self:GetVanillaAbilitySpecial("speed") + 0.5, -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
 		x			= position.x,
 		y 			= position.y,
 		z			= position.z
 	})
+
+	if caster:HasShard() then
+		caster:SwapAbilities(self:GetAbilityName(), "imba_faceless_void_time_walk_reverse", false, true)
+
+		caster:SetContextThink(DoUniqueString("time_walk_reverse"), function()
+			caster:SwapAbilities(self:GetAbilityName(), "imba_faceless_void_time_walk_reverse", true, false)
+
+			return nil
+		end, self:GetSpecialValueFor("time_walk_reverse_timer"))
+	end
 	
 	-- Heal recent damage
 	if caster.time_walk_damage_taken then
@@ -183,7 +214,7 @@ function modifier_imba_faceless_void_time_walk_damage_counter:OnCreated()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.damage_time = self.ability:GetSpecialValueFor("damage_time")
+	self.damage_time = self.ability:GetVanillaAbilitySpecial("backtrack_duration")
 
 	if IsServer() then
 		if not self.caster.time_walk_damage_taken then
@@ -272,7 +303,7 @@ function modifier_imba_faceless_void_time_walk_cast:CheckState()
 end
 
 function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
-	self.radius_scepter	= self:GetAbility():GetSpecialValueFor("radius_scepter")
+	self.radius_scepter	= self:GetAbility():GetVanillaAbilitySpecial("radius_scepter")
 
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -281,11 +312,20 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		local position = GetGroundPosition(Vector(params.x, params.y, params.z), nil)
 
 		-- Compare distance to cast point and max distance, use whichever is closer
-		local max_distance = ability:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus()
+		local max_distance = ability:GetVanillaAbilitySpecial("range") + caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
+
+		if caster:HasShard() then
+			max_distance = max_distance + 200
+		end
+
 		local distance = math.min((caster:GetAbsOrigin() - position):Length2D(), max_distance)
-		
+
+		if ability:GetAbilityName() == "imba_faceless_void_time_walk_reverse" then
+			distance = (caster:GetAbsOrigin() - position):Length2D()
+		end
+
 		-- Initialize variables for HorizontalMotion
-		self.velocity = ability:GetSpecialValueFor("speed")
+		self.velocity = ability:GetVanillaAbilitySpecial("speed")
 		self.direction = (position - self:GetParent():GetAbsOrigin()):Normalized()
 		self.distance_traveled = 0
 		self.distance = distance
@@ -317,42 +357,46 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 	-- Horizontal motion
 	self:HorizontalMotion(self:GetParent(), self.frametime)
 
-	local caster = self:GetParent()
 	local ability = self:GetAbility()
 
-	local aoe = self:GetAbility():GetSpecialValueFor("slow_radius")
-	local duration = self:GetAbility():GetSpecialValueFor("duration")
-	local as_steal = self:GetAbility():GetSpecialValueFor("as_steal")
-	local ms_steal = self:GetAbility():GetSpecialValueFor("ms_steal_pcnt")
-	local chronocharges = 0
+	if ability:GetAbilityName() == "imba_faceless_void_time_walk" then
+		local caster = self:GetParent()
 
-	-- Slow enemies
-	enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	for _,enemy in pairs(enemies) do
-		if not enemy:HasModifier("modifier_imba_faceless_void_time_walk_slow") then
+		local aoe = self:GetAbility():GetSpecialValueFor("slow_radius")
+		local duration = self:GetAbility():GetSpecialValueFor("duration")
+		local as_steal = self:GetAbility():GetSpecialValueFor("as_steal")
+		local ms_steal = self:GetAbility():GetSpecialValueFor("ms_steal_pcnt")
+		local chronocharges = 0
 
-			-- If the enemy is a real hero index their move and attack speed, and grant a chronocharge
-			if enemy:IsRealHero() then
-				self.as_stolen = self.as_stolen + enemy:GetAttackSpeed() * as_steal
-				self.ms_stolen = self.ms_stolen + enemy:GetMoveSpeedModifier(enemy:GetBaseMoveSpeed(), false) * ms_steal
-				chronocharges = chronocharges + 1
+		-- Slow enemies
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+		for _,enemy in pairs(enemies) do
+			if not enemy:HasModifier("modifier_imba_faceless_void_time_walk_slow") then
+
+				-- If the enemy is a real hero index their move and attack speed, and grant a chronocharge
+				if enemy:IsRealHero() then
+					self.as_stolen = self.as_stolen + enemy:GetAttackSpeed() * as_steal
+					self.ms_stolen = self.ms_stolen + enemy:GetMoveSpeedModifier(enemy:GetBaseMoveSpeed(), false) * ms_steal
+					chronocharges = chronocharges + 1
+				end
+
+				-- Play hit particle only on hit heroes, and their illusions to prevent the caster from finding the real hero with this skill.
+				if enemy:IsHero() then
+					local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf", PATTACH_ABSORIGIN, enemy)
+					ParticleManager:SetParticleControl(particle, 0, enemy:GetAbsOrigin())
+					ParticleManager:ReleaseParticleIndex(particle)
+				end
+
+				-- Apply the slow
+				enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", {duration = duration * (1 - enemy:GetStatusResistance())})
 			end
-
-			-- Play hit particle only on hit heroes, and their illusions to prevent the caster from finding the real hero with this skill.
-			if enemy:IsHero() then
-				local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf", PATTACH_ABSORIGIN, enemy)
-				ParticleManager:SetParticleControl(particle, 0, enemy:GetAbsOrigin())
-				ParticleManager:ReleaseParticleIndex(particle)
-			end
-
-			-- Apply the slow
-			enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", {duration = duration * (1 - enemy:GetStatusResistance())})
 		end
-	end
 
-	-- If spell not stolen, add chronocharges
-	if not ability:IsStolen() and self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges") then
-		self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + chronocharges)
+		-- If spell not stolen, add chronocharges
+		if not ability:IsStolen() and self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges") then
+			self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + chronocharges)
+		end
 	end
 end
 
@@ -972,6 +1016,7 @@ function imba_faceless_void_chronosphere:GetAOERadius()
 	return aoe
 end
 
+--[[
 function imba_faceless_void_chronosphere:GetCooldown( level )
 	if self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("scepter_cooldown")
@@ -979,6 +1024,7 @@ function imba_faceless_void_chronosphere:GetCooldown( level )
 		return self.BaseClass.GetCooldown( self, level )
 	end
 end
+--]]
 
 function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_location )
 	local caster = self:GetCaster()
@@ -1237,13 +1283,15 @@ function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
 				end
 			end
 		end
-		
+
+--[[
 		-- #3 TALENT: Void dodges projectiles in Chrono
 		if self:GetStackCount() == 1 then
 			if self.caster:HasTalent("special_bonus_imba_faceless_void_3") then
 				ProjectileManager:ProjectileDodge(self.parent)
 			end
 		end
+--]]
 	end
 end
 
@@ -1624,4 +1672,21 @@ function imba_faceless_void_time_walk:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_11") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_11"), "modifier_special_bonus_imba_faceless_void_11", {})
 	end	
+end
+
+imba_faceless_void_time_walk_reverse = imba_faceless_void_time_walk_reverse or class(VANILLA_ABILITIES_BASECLASS)
+
+function imba_faceless_void_time_walk_reverse:OnSpellStart()
+	if not IsServer() then return end
+
+	local position = self:GetCaster():FindAbilityByName("imba_faceless_void_time_walk").old_position
+
+--	self:GetCaster():FaceTowards(position)
+
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_faceless_void_time_walk_cast", {
+		duration	= (position - self:GetCaster():GetAbsOrigin()):Length2D() / self:GetVanillaAbilitySpecial("speed"),
+		x			= position.x,
+		y 			= position.y,
+		z			= position.z
+	})
 end

@@ -27,7 +27,7 @@
 "DOTA_Tooltip_ability_imba_kunkka_torrent_sec_torrent_count"		"SECONDARY TORRENTS:"
 "DOTA_Tooltip_ability_imba_kunkka_torrent_damage"					"#{DOTA_Tooltip_ability_kunkka_torrent_torrent_damage}"
 "DOTA_Tooltip_ability_imba_kunkka_torrent_slow_duration"			"#{DOTA_Tooltip_ability_kunkka_torrent_slow_duration}"
-"DOTA_Tooltip_ability_imba_kunkka_torrent_aghanim_description"		"Adds a new ability: Torrent Storm. Continuously releases visible Torrents around you."
+"DOTA_Tooltip_ability_imba_kunkka_torrent_scepter_description"		"Adds a new ability: Torrent Storm. Continuously releases visible Torrents around you."
 
 "DOTA_Tooltip_modifier_imba_torrent_slow"							"#{DOTA_Tooltip_modifier_kunkka_torrent_slow}"
 "DOTA_Tooltip_modifier_imba_torrent_slow_Description"				"#{DOTA_Tooltip_modifier_kunkka_torrent_slow_Description}"
@@ -72,7 +72,7 @@
 "DOTA_Tooltip_ability_imba_kunkka_ghostship_rum_reduce_pct"			"%RUM DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_kunkka_ghostship_buff_duration"			"#{DOTA_Tooltip_ability_kunkka_ghostship_buff_duration}"
 "DOTA_Tooltip_ability_imba_kunkka_ghostship_start_distance"			"SHIP SPAWN DISTANCE:"
-"DOTA_Tooltip_ability_imba_kunkka_ghostship_aghanim_description"    "Causes the ship to drop from the sky on the targeted area, landing after a 1 second delay and travelling towards Kunkka. Enemies caught directly on the landing take impact damage. <font color='#00ccff'>Low Tide</font> now increases cast range by 300, and <font color='#00ff00'>Wave Break</font> causes the ship to crash down almost instantly."
+"DOTA_Tooltip_ability_imba_kunkka_ghostship_scepter_description"    "Causes the ship to drop from the sky on the targeted area, landing after a 1 second delay and travelling towards Kunkka. Enemies caught directly on the landing take impact damage. <font color='#00ccff'>Low Tide</font> now increases cast range by 300, and <font color='#00ff00'>Wave Break</font> causes the ship to crash down almost instantly."
 
 "DOTA_Tooltip_modifier_imba_ghostship_rum"							"The Admiral's Rum"
 "DOTA_Tooltip_modifier_imba_ghostship_rum_Description"				"Inebriated by Kunkka's rum. Part of the damage you take will only be felt later."

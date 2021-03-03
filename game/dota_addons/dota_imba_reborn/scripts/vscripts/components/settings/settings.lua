@@ -14,7 +14,7 @@
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-GAME_VERSION = "7.23"
+GAME_VERSION = "7.23b"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})
 CustomNetTables:SetTableValue("game_options", "gamemode", {1})
 
@@ -27,8 +27,8 @@ CAPTAINS_MODE_RESERVE_TIME = 130	-- total bonus time that can be used throughout
 
 -- IMBA constants
 IMBA_REINCARNATION_TIME = 3.0
-IMBA_MAX_RESPAWN_TIME = 50.0		-- Maximum respawn time, does not include bonus reaper scythe duration
-IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla respawn time
+IMBA_MAX_RESPAWN_TIME = 60.0		-- Maximum respawn time, does not include bonus reaper scythe duration
+IMBA_RESPAWN_TIME_PCT = 60			-- Percentage of the respawn time from vanilla respawn time
 
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
@@ -471,8 +471,8 @@ RESTRICT_FOUNTAIN_UNITS = {
 	"npc_dota_tusk_frozen_sigil3",
 	"npc_dota_tusk_frozen_sigil4",
 	"imba_witch_doctor_death_ward",
-	"npc_imba_techies_proximity_mine",
-	"npc_imba_techies_proximity_mine_big_boom",
+	"npc_imba_techies_land_mines",
+	"npc_imba_techies_land_mines_big_boom",
 	"npc_imba_techies_stasis_trap",
 	"npc_dota_zeus_cloud",
 	"npc_dota_observer_wards",
@@ -500,103 +500,6 @@ MORPHLING_RESTRICTED_MODIFIERS = {
 
 STATUS_RESISTANCE_IGNORE_MODIFIERS = {
 	""
-}
-
-UNIT_EQUIPMENT = {}
-UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden.vmdl"] = {
-	"models/heroes/crystal_maiden/crystal_maiden_staff.vmdl",
-	"models/heroes/crystal_maiden/crystal_maiden_cuffs.vmdl",
-	"models/heroes/crystal_maiden/crystal_maiden_cape.vmdl",
-	"models/heroes/crystal_maiden/head_item.vmdl",
-	"models/heroes/crystal_maiden/crystal_maiden_shoulders.vmdl",
-}
-UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden_arcana.vmdl"] = {
-	"models/heroes/crystal_maiden/crystal_maiden_staff.vmdl",
-	"models/heroes/crystal_maiden/crystal_maiden_cuffs.vmdl",
-	"models/heroes/crystal_maiden/crystal_maiden_arcana_back.vmdl",
-	"models/heroes/crystal_maiden/head_item.vmdl",
-	"models/heroes/crystal_maiden/crystal_maiden_shoulders.vmdl",
-}
-UNIT_EQUIPMENT["models/heroes/shredder/shredder.vmdl"] = {
-	"models/heroes/shredder/shredder_armor.vmdl",
-	"models/heroes/shredder/shredder_blade.vmdl",
-	"models/heroes/shredder/shredder_body.vmdl",
-	"models/heroes/shredder/shredder_chainsaw.vmdl",
-	"models/heroes/shredder/shredder_driver_hat.vmdl",
-	"models/heroes/shredder/shredder_hook.vmdl",
-	"models/heroes/shredder/shredder_shoulders.vmdl",
-}
-UNIT_EQUIPMENT["npc_donator_companion_zonnoz"] = {
-	"models/items/pudge/blackdeath_offhand/blackdeath_offhand.vmdl",
-	"models/items/pudge/blackdeath_head_s3/blackdeath_head_s3.vmdl",
-	"models/items/pudge/immortal_arm/immortal_arm.vmdl",
-	"models/items/pudge/scorching_talon/scorching_talon.vmdl",
-	"models/items/pudge/doomsday_ripper_belt/doomsday_ripper_belt.vmdl",
-	"models/items/pudge/pudge_deep_sea_abomination_arms/pudge_deep_sea_abomination_arms.vmdl",
-	"models/items/pudge/arcana/pudge_arcana_back.vmdl",
-}
-UNIT_EQUIPMENT["models/heroes/huskar/huskar.vmdl"] = {
-	"models/items/huskar/searing_dominator/searing_dominator.vmdl",
-	"models/heroes/huskar/huskar_bracer.vmdl",
-	"models/heroes/huskar/huskar_dagger.vmdl",
-	"models/heroes/huskar/huskar_shoulder.vmdl",
-	"models/heroes/huskar/huskar_spear.vmdl",
-}
-UNIT_EQUIPMENT["models/heroes/rubick/rubick.vmdl"] = {
-	"models/items/rubick/force_staff/force_staff.vmdl",
-	"models/items/rubick/kuroky_rubick_back/kuroky_rubick_back.vmdl",
-	"models/items/rubick/kuroky_rubick_shoulders/kuroky_rubick_shoulders.vmdl",
-	"models/items/rubick/kuroky_rubick_weapon/kuroky_rubick_weapon.vmdl",
-	"models/items/rubick/rubick_kuroky_head/rubick_kuroky_head.vmdl",
-}
-UNIT_EQUIPMENT["npc_donator_companion_acalia"] = {
-	"models/items/enchantress/rainbow_spear/mesh/rainbow_spear_model.vmdl",
-	"models/items/enchantress/anuxi_summer_head/anuxi_summer_head.vmdl",
-	"models/items/enchantress/amberlight_belt/amberlight_belt.vmdl",
-	"models/items/enchantress/anuxi_summer_shoulder/anuxi_summer_shoulder.vmdl",
-	"models/items/enchantress/anuxi_wildkin_arm/anuxi_wildkin_arm.vmdl",
-}
-UNIT_EQUIPMENT["npc_donator_companion_gordon_ramsay"] = {
-	"models/heroes/phoenix/phoenix_wings.vmdl",
-	"models/heroes/phoenix/phoenix_bird_head.vmdl",
-}
-UNIT_EQUIPMENT["npc_donator_companion_rayzone"] = {
-	"models/heroes/bristleback/bristleback_back.vmdl",
-	"models/heroes/bristleback/bristleback_bracer.vmdl",
-	"models/heroes/bristleback/bristleback_head.vmdl",
-	"models/heroes/bristleback/bristleback_necklace.vmdl",
-	"models/heroes/bristleback/bristleback_weapon.vmdl",
---	"models/heroes/bristleback/bristleback_offhand_weapon.vmdl",
-}
-UNIT_EQUIPMENT["npc_donator_companion_rubick_arcana"] = {
-	"models/items/rubick/rubick_arcana/rubick_arcana_back.vmdl",
-	"models/heroes/rubick/rubick_head.vmdl",
-	"models/heroes/rubick/rubick_staff.vmdl",
-	"models/heroes/rubick/shoulder.vmdl",
-}
-UNIT_EQUIPMENT["npc_donator_companion_juggernaut_arcana"] = {
-	"models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl",
-	"models/items/juggernaut/jugg_ti8/jugg_ti8_sword.vmdl",
-	"models/heroes/juggernaut/jugg_cape.vmdl",
-	"models/heroes/juggernaut/juggernaut_pants.vmdl",
-}
-UNIT_EQUIPMENT["npc_donator_companion_terrorblade_arcana"] = {
-	{"5957", "arcana"},
-	{"306", "back"},
-	{"307", "weapon"},
-	{"476", "armor"},
-}
-UNIT_EQUIPMENT["npc_donator_companion_kiddo"] = {
---	{"7247", "weapon"},
---	{"137", "head"},
---	{"138", "shoulder"},
---	{"139", "back"},
---	{"141", "belt"},
-	"models/heroes/phantom_assassin/pa_arcana_weapons.vmdl", -- Manifold Paradox
-	"models/heroes/phantom_assassin/phantom_assassin_helmet.vmdl",
-	"models/heroes/phantom_assassin/phantom_assassin_shoulders.vmdl",
-	"models/heroes/phantom_assassin/phantom_assassin_cape.vmdl",
-	"models/heroes/phantom_assassin/phantom_assassin_daggers.vmdl",
 }
 
 IMBA_DISABLED_SKULL_BASHER = {

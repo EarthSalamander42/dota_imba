@@ -1013,13 +1013,13 @@ function GenerateBattlepassPanel(reward_list, player, bRewardsDisabled) {
 							}
 						}
 
-						var event = function(bp_hero, bp_slot_id, bp_item_id) {
+						var event = function(bp_hero, bp_slot_id, bp_item_id, bp_name) {
 							return function() {
 								SetArmory(bp_hero, bp_slot_id, bp_item_id, bp_name);
 							}
 						};
 
-						reward.SetPanelEvent("onactivate", event(bp_hero, bp_slot_id, bp_item_id));
+						reward.SetPanelEvent("onactivate", event(bp_hero, bp_slot_id, bp_item_id, bp_name));
 					} else {
 						reward.AddClass("BattlepassRewardIcon_locked")
 						reward.FindChildTraverse("BattlepassRewardTitle").AddClass("BattlepassRewardLabelLocked");
@@ -1367,8 +1367,8 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 
 	LevelContainerChild.BCreateChildren("<Label id='LevelLabel' text='Level: '/>");
 
-	LevelContainerChild.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='999'/>");
-	LevelContainerChild.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='999'/>");
+	LevelContainerChild.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='undefined'/>");
+	LevelContainerChild.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='undefined'/>");
 
 
 	LevelContainer.BCreateChildren("<Panel id='LevelContainerChild2'/>");
@@ -1376,7 +1376,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	var LevelContainerChild2 = ImbaXP_Panel.FindChildTraverse("LevelContainerChild2");
 
 
-	LevelContainerChild2.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='999'/>");
+	LevelContainerChild2.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='undefined'/>");
 	LevelContainerChild2.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
 
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
@@ -1440,7 +1440,34 @@ function SetupPanel() {
 	}
 }
 
+function CreateBattlepassPanel() {
+	var Parent = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ButtonBar");
+
+	if (!Parent) {
+		$.Schedule(1.0, CreateBattlepassPanel);
+		return;
+	}
+
+	if (!Parent.FindChildTraverse("BattlepassButton")) {
+		var BattlepassButton = $.CreatePanel("Button", $.GetContextPanel(), "BattlepassButton");
+		BattlepassButton.SetPanelEvent("onactivate", function() {
+			ToggleBattlepass();
+		});
+
+		BattlepassButton.SetPanelEvent("onmouseover", function() {
+			$.DispatchEvent("UIShowTextTooltip", BattlepassButton, $.Localize("battlepass"));
+		})
+
+		BattlepassButton.SetPanelEvent("onmouseout", function() {
+			$.DispatchEvent("UIHideTextTooltip", BattlepassButton);
+		})
+		BattlepassButton.SetParent(Parent);
+	}
+}
+
 (function() {
+	$.Schedule(1.0, CreateBattlepassPanel);
+
 	// prevent running an api call everytime this file is edited
 	if (!Game.IsInToolsMode()) {
 		var args = {
@@ -1494,7 +1521,7 @@ function SetupPanel() {
 		$("#InitialLevelValue").text = initial_level[1];
 		$("#MaxLevelValue").text = max_level[1];
 		$("#GoldTickValue").text = gold_tick[1].toFixed(1);
-	} else if (game_type == "PW") {
+	} else if (game_type == "PW" || game_type == "XHS") {
 		$("#ExpMultiplierDesc").style.visibility = "collapse";
 		$("#InitialGoldDesc").style.visibility = "collapse";
 		$("#InitialLevelDesc").style.visibility = "collapse";

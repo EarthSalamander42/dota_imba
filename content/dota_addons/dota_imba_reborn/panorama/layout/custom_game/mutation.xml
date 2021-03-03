@@ -8,7 +8,7 @@
 		<include src="file://{resources}/styles/custom_game/mutation.css" />
 	</styles>
 
-	<Panel class="Main">
+	<Panel class="Mutation_Main">
 		<Panel id="Mutations">
 			<Panel id="Mutation0" class="MutationWrap">
 				<Label id="Mutation0Label" class="DotaMutations" text="Mutation 0"/>

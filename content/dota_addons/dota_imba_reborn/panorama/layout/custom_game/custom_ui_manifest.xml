@@ -42,16 +42,29 @@
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_names = {}
 
+		// Spectator slots
+		if (Game.IsInToolsMode())
+			GameUI.CustomUIConfig().team_select = {"bShowSpectatorTeam" : true};
+
+		GameUI.CustomUIConfig().team_colors[1] = "grey;";
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 
+		GameUI.CustomUIConfig().team_names[1] = "Spectators";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "Custom 1";
 		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "Custom 2";
-
+/*
+		(function () {
+			if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
+				$.Msg("Custom UI Manifest: Block spectators.");
+				return;
+			}
+		})();
+*/
 		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
 		var hudElements = Parent.FindChildTraverse("HUDElements")
@@ -85,7 +98,7 @@
 
 					var game_info = Parent.FindChildTraverse("GameAndPlayersRoot").FindChildTraverse("GameInfoPanel");
 					var map_label = Parent.FindChildTraverse("MapInfoLabel");
-					var text = "Re-ordering teams based on winrate, please wait";
+					var text = "Re-ordering teams based on seasonal winrate, please wait";
 
 					map_label.text = text;
 					SetTeamOrderingText(map_label);
@@ -332,7 +345,7 @@
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/roshan_health_bar.xml" /> 
 -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/battlepass.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
@@ -342,7 +355,6 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/vanilla_link_tooltips.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/icefrog_donators_popup.xml" />
 
-<!--	<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen.xml" /> -->
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.xml" />
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 

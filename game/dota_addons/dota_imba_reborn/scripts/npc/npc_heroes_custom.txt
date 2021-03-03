@@ -644,7 +644,7 @@
 		//"Ability3"					"imba_faceless_void_time_lock"
 		"Ability3"					"imba_faceless_void_time_lock_720"
 		//"Ability4"					"imba_faceless_void_timelord"
-		"Ability5"					"generic_hidden"
+		"Ability5"					"imba_faceless_void_time_walk_reverse"
 		"Ability6"					"imba_faceless_void_chronosphere"
 
 		"Ability10"					"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
@@ -1507,7 +1507,7 @@
 		"Ability10"					"special_bonus_strength_10"
 		"Ability11"					"special_bonus_mp_regen_4"
 		"Ability12"					"special_bonus_imba_sven_4"
-		"Ability13"					"special_bonus_imba_sven_9"
+		"Ability13"					"special_bonus_imba_sven_10"
 		"Ability14"					"special_bonus_imba_sven_5"
 		"Ability15"					"special_bonus_imba_sven_6"
 		"Ability16"					"special_bonus_imba_sven_7"

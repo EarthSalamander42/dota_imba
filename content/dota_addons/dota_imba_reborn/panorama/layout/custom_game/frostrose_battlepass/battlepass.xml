@@ -1,13 +1,13 @@
 <root>
 	<styles>
 		<include src="file://{resources}/styles/dotastyles.vcss_c" />
-		<include src="file://{resources}/styles/custom_game/battlepass.css" />
+		<include src="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.css" />
 	</styles>
 
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/scripts/custom_game/api.js" />
-		<include src="file://{resources}/scripts/custom_game/battlepass.js" />
+		<include src="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.js" />
 	</scripts>
 
 	<snippets>
@@ -42,10 +42,6 @@
 			<Panel id="SafeToLeave">
 				<Label text="imba_safe_to_leave" />
 			</Panel>
-
-			<Button id="BattlepassButton" onactivate="ToggleBattlepass();">
-				<Label text="#battlepass" />
-			</Button>
 		</Panel>
 
 		<Panel id="BattlepassWindow" hittest="false">
@@ -209,7 +205,7 @@
 
 			<Panel id="BattlepassInfoContainer" hittest="false">
 				<Panel id="ComingSoonPanel">
-					<Label id="ComingSoon" text="#coming_soon" />
+					<Label id="ComingSoon" text="#bp_reward_equip_description" />
 				</Panel>
 
 				<Panel id="BattlepassRewardContainer" hittest="true">

@@ -56,7 +56,7 @@
 "DOTA_Tooltip_ability_imba_sniper_assassinate_damage"					"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_sniper_assassinate_bullet_radius"			"BULLET SEARCH RADIUS:"
 "DOTA_Tooltip_ability_imba_sniper_assassinate_cast_range"				"CAST RANGE:"
-"DOTA_Tooltip_ability_imba_sniper_assassinate_aghanim_description"		"Reduces cast time on Assassinate by %scepter_cast_time% and causes it to disable the target for %scepter_stun_duration% seconds."
+"DOTA_Tooltip_ability_imba_sniper_assassinate_scepter_description"		"Reduces cast time on Assassinate by %scepter_cast_time% and causes it to disable the target for %scepter_stun_duration% seconds."
 
 "DOTA_Tooltip_modifier_imba_assassinate_cross"                          "Assassinate"
 "DOTA_Tooltip_modifier_imba_assassinate_cross_Description"              "Revealed to the enemy. A devastating shot will come shortly!"

@@ -3,7 +3,7 @@
 	//=================================================================================================================
 	// Techies' Proximity Mine
 	//=================================================================================================================
-	"imba_techies_proximity_mine"
+	"imba_techies_land_mines"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -14,8 +14,7 @@
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"				"techies_land_mines"
-		"MaxLevel"							"4"
-		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"
+		"ScriptFile"						"components/abilities/heroes/hero_techies.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -27,15 +26,7 @@
 			"particle"						"particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"			
 			"particle"						"particles/hero/techies/techies_big_boom_explosions.vpcf"
 			"model"							"models/heroes/techies/fx_techiesfx_mine.vmdl"	
-		}		
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"12"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"100 150 200 250"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -54,195 +45,74 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trigger_range"				"400"				
+				"building_magic_resistance"	"90"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"activation_delay"			"1.75"
+				"buidling_damage_duration"  "0.1"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"explosion_delay"			"1.6"
+				"var_type"					"FIELD_INTEGER"
+				"charge_restore_time" 		"23"
 			}
 			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mine_damage"				"150 350 550 750"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"explosion_range"			"400 500 600 700"
-				"LinkedSpecialBonus"		"special_bonus_imba_techies_1"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"building_damage_pct"		"25"
-			}
-			"9"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"building_magic_resistance"	"90"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"buidling_damage_duration"  "0.1"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"charge_restore_time" 		"20 17 14 11"
-			}
-			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_charges"				"4"
 			}
-			"13"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_increase_per_stack"	"30"
 			}
-			"14"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"big_boom_mine_hits"		"4"
 			}
-			"15"
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"big_boom_mine_bonus_dmg"	"150"
 			}
-			"16"
+			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"big_boom_shrapnel_aoe"		"1000"
 			}
-			"17"
+			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"big_boom_shrapnel_duration"	"3"
 			}
-			"18"
+			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"big_boom_shrapnel_damage"		"125"
 			}
-			"19"
+			"13"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"big_boom_shrapnel_interval"	"0.25"
 			}
-			"20"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cast_range"					"100 150 200 250"
-			}
-		}		
-	}
-
-	//=================================================================================================================
-	// Techies' Proximity Mines passive AI (mine ability)
-	//=================================================================================================================
-	"imba_techies_proximity_mine_trigger"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"				"rubick_empty1"
-		"MaxLevel"							"4"
-		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"explosion_delay"			"0.4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mine_damage"				"500 1000 1500 2000"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"explosion_range"			"400"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trigger_range"				"400"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"activation_delay"			"1.75"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"building_damage_pct"		"25"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"building_magic_resistance"	"90"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"buidling_damage_duration"  "0.1"
-			}
-			"09"
+			"14"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_interval"  			"0.1"
 			}
-			"10"
+			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"fow_radius"				"300"
 			}
-			"11"
+			"16"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"fow_duration"				"1"
 			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"big_boom_mine_bonus_dmg"	"300"
-			}
-			"13"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"big_boom_shrapnel_aoe"		"1000"
-			}
-			"14"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"big_boom_shrapnel_duration"	"3"
-			}
-			"15"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"big_boom_shrapnel_damage"		"125"
-			}
-			"16"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"big_boom_shrapnel_interval"	"0.25"
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -275,79 +145,37 @@
 			"model"							"models/heroes/techies/fx_techiesfx_stasis.vmdl"
 		}
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"150"
-		"AbilityCastPoint"					"1"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"19 16 13 10"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"80 140 170 190"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"activate_delay"			"2"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trigger_range"				"400"
-			}
-
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"root_range"				"600"
-			}
-
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"root_duration"				"2 3 4 5"
-			}
-
-			"05"
-			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_rate"					"0.1"
 			}
-
-			"06"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_magnetic_radius"		"300 350 400 450"
 				"LinkedSpecialBonus"		"special_bonus_imba_techies_3"
 			}
-
-			"07"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_magnetic_movespeed"	"120"
 			}
-
-			"08"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"magnetic_stack_radius"		"75"
 			}
-
-			"09"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"magnetic_stack_movespeed"	"40"
-			}			
-
-			"10"
+			}
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"flying_vision_duration"	"1"
@@ -356,82 +184,9 @@
 	}
 
 	//=================================================================================================================
-	// Techies' Stasis Trap passive AI (mine ability)
-	//=================================================================================================================
-	"imba_techies_stasis_trap_trigger"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"techies_stasis_trap"
-		"MaxLevel"										"4"
-		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"	
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"activate_delay"			"2"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trigger_range"				"400"
-			}
-
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"root_range"				"600"
-			}
-
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"root_duration"				"2 3 4 5"
-			}
-
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_rate"					"0.1"
-			}
-
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"base_magnetic_radius"		"600 650 700 750"
-			}
-
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"base_magnetic_movespeed"	"120"
-			}
-
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magnetic_stack_radius"		"100"
-			}
-
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magnetic_stack_movespeed"	"40"
-			}
-		}		
-	}
-
-	//=================================================================================================================
 	// Techies' Blast Off
 	//=================================================================================================================
-	"imba_techies_blast_off"
+	"imba_techies_suicide"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -442,8 +197,7 @@
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"				"techies_suicide"	
-		"MaxLevel"							"4"
-		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"	
+		"ScriptFile"						"components/abilities/heroes/hero_techies.lua"	
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -455,19 +209,6 @@
 			"particle"						"particles/units/heroes/hero_techies/techies_blast_off.vpcf"
 		}
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1000"
-		"AbilityCastPoint"					"1"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"35"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"100 150 175 200"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -475,46 +216,19 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 400 500 600"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
-			}
-
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"self_damage_pct"			"50 40 30 20"
-			}
-
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"silence_duration"			"4 5 6 7"
-			}			
-
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"max_jumps"					"1 2 3 4"
 			}
-
-			"06"
+			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"jump_max_height"			"281.108"
 			}
-
-			"07"
+			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"jump_duration"				"0.75"
 			}
-
-			"08"
+			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"jump_continue_delay"		"0.5"
@@ -543,14 +257,6 @@
 			"model"							"models/heroes/techies/techies_sign.vmdl"	
 		}
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"10"		
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"360"		
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -567,7 +273,7 @@
 	//=================================================================================================================
 	// Techies' Remote Mine
 	//=================================================================================================================
-	"imba_techies_remote_mine"
+	"imba_techies_remote_mines"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -596,75 +302,34 @@
 			"model"							"models/heroes/techies/fx_techies_remotebomb.vmdl"			
 		}
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"500"
-		"AbilityCastPoint"					"1"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"10"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"200 300 340"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 600 700"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"425"
-			}
-
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mine_duration"				"600"
-			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"inflammable_duration"		"5"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"inflammable_max_charges"	"3 4 5 6"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"inflammable_charge_damage"	"50"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"inflammable_charge_radius"	"75"
 			}	
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_damage_bonus"		"150"
-			}
-
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_radius_bonus"		"200"
 			}
 		}		
 	}
@@ -672,7 +337,7 @@
 	//=================================================================================================================
 	// Techies' Remote Mines' Pinpoint Detonation
 	//=================================================================================================================
-	"imba_techies_remote_mine_pinpoint_detonation"
+	"imba_techies_remote_mines_pinpoint_detonation"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -680,61 +345,7 @@
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"							"techies_remote_mines_self_detonate"
 		"MaxLevel"										"3"
-		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"			
-
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 600 700"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"425"
-			}			
-
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"inflammable_duration"		"5"
-			}
-
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"inflammable_max_charges"	"3 4 5"
-			}
-
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"inflammable_charge_damage"	"50"
-			}
-
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"inflammable_charge_radius"	"75"
-			}
-
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_damage_bonus"		"150"
-			}
-
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_radius_bonus"		"200"
-			}
-		}		
+		"ScriptFile"									"components/abilities/heroes/hero_techies.lua"		
 	}
 
 	//=================================================================================================================
@@ -748,27 +359,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"				"techies_focused_detonate"
 		"MaxLevel"							"1"
-		"ScriptFile"				"components/abilities/heroes/hero_techies.lua"		
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"25000"
-		"AbilityCastPoint"					"0.03"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"1"		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"700"
-			}			
-		}		
+		"ScriptFile"						"components/abilities/heroes/hero_techies.lua"	
 	}
 
 	//=================================================================================================================
@@ -884,7 +475,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_techies_blast_off"
+			"01"	"imba_techies_suicide"
 			"02"	"imba_techies_proximity_mine"
 		}
 		
@@ -960,7 +551,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_techies_blast_off"
+			"01"	"imba_techies_suicide"
 		}
 		
 		// Special

@@ -21,11 +21,11 @@ local function ApplyInflammableToRemoteMines(caster, range, remote_mines)
 	end
 
 	local modifier_inflammable = "modifier_imba_remote_mine_inflammable"
-	local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
+	local detonate_ability = "imba_techies_remote_mines_pinpoint_detonation"
 
 	-- Give them inflammable stacks
 	for _,remote_mine in pairs(remote_mines) do
-		if remote_mine:GetUnitName() == "npc_imba_techies_remote_mine" then
+		if remote_mine:GetUnitName() == "npc_imba_techies_remote_mines" then
 
 			local modifier_inflammable_handler = remote_mine:FindModifierByName(modifier_inflammable)
 			if not modifier_inflammable_handler then
@@ -57,14 +57,12 @@ local function RefreshElectroCharge(unit)
 end
 
 local function PlantProximityMine(caster, ability, spawn_point, big_boom)
-	local mine_ability = "imba_techies_proximity_mine_trigger"
-
 	-- Create the mine unit
 	local mine_name
 	if big_boom then
-		mine_name = "npc_imba_techies_proximity_mine_big_boom"
+		mine_name = "npc_imba_techies_land_mines_big_boom"
 	else
-		mine_name = "npc_imba_techies_proximity_mine"
+		mine_name = "npc_imba_techies_land_mines"
 	end
 
 	local mine = CreateUnitByName(mine_name, spawn_point, true, caster, caster, caster:GetTeamNumber())
@@ -75,14 +73,11 @@ local function PlantProximityMine(caster, ability, spawn_point, big_boom)
 	local playerID = caster:GetPlayerID()
 	mine:SetControllableByPlayer(playerID, true)
 
-	-- Set the mine's ability to be the same level as the planting ability
-	local mine_ability_handler = mine:FindAbilityByName(mine_ability)
-	if mine_ability_handler then
-		mine_ability_handler:SetLevel(ability:GetLevel())
-	end
-
 	-- Set the mine's owner to be the caster
 	mine:SetOwner(caster)
+
+	-- Set the mine's modifier AI
+	mine:AddNewModifier(caster, ability, "modifier_imba_proximity_mine", {})
 end
 
 ------------------------------
@@ -91,19 +86,20 @@ end
 
 LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
-imba_techies_proximity_mine = imba_techies_proximity_mine or class({})
+imba_techies_land_mines = imba_techies_land_mines or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_techies_proximity_mine:IsHiddenWhenStolen() return false end
-function imba_techies_proximity_mine:IsNetherWardStealable() return false end
+function imba_techies_land_mines:IsHiddenWhenStolen() return false end
+function imba_techies_land_mines:IsNetherWardStealable() return false end
 
-function imba_techies_proximity_mine:GetIntrinsicModifierName()
+function imba_techies_land_mines:GetIntrinsicModifierName()
 	return "modifier_generic_charges"
 end
 
-function imba_techies_proximity_mine:GetManaCost(level)
+function imba_techies_land_mines:GetManaCost(level)
 	-- Ability properties
 	local caster = self:GetCaster()
-	local initial_mana_cost = self.BaseClass.GetManaCost(self, level)
+	local vanilla_ability_name = GetVanillaAbilityName(self:GetAbilityName())
+	local initial_mana_cost = GetAbilityKV(vanilla_ability_name, "AbilityManaCost", self:GetLevel())
 	local modifier_charges = "modifier_generic_charges"
 
 	-- Ability specials
@@ -116,7 +112,7 @@ function imba_techies_proximity_mine:GetManaCost(level)
 	return mana_cost
 end
 
-function imba_techies_proximity_mine:CastFilterResultLocation(location)
+function imba_techies_land_mines:CastFilterResultLocation(location)
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
@@ -124,7 +120,7 @@ function imba_techies_proximity_mine:CastFilterResultLocation(location)
 
 		-- Ability specials
 		local mine_distance = ability:GetSpecialValueFor("mine_distance")
-		local trigger_range = ability:GetSpecialValueFor("trigger_range")
+		local trigger_range = ability:GetVanillaAbilitySpecial("radius")
 
 		-- #1 Talent: Trigger range increase
 		trigger_range = trigger_range + caster:FindTalentValue("special_bonus_imba_techies_1")
@@ -148,7 +144,7 @@ function imba_techies_proximity_mine:CastFilterResultLocation(location)
 		-- Search and see if mines were found
 		for _,unit in pairs(friendly_units) do
 			local unitName = unit:GetUnitName()
-			if unitName == "npc_imba_techies_proximity_mine" or unitName == "npc_imba_techies_proximity_mine_big_boom" then
+			if unitName == "npc_imba_techies_land_mines" or unitName == "npc_imba_techies_land_mines_big_boom" then
 				mine_found = true
 				break
 			end
@@ -162,15 +158,15 @@ function imba_techies_proximity_mine:CastFilterResultLocation(location)
 	end
 end
 
-function imba_techies_proximity_mine:GetCustomCastErrorLocation(location)
+function imba_techies_land_mines:GetCustomCastErrorLocation(location)
 	return "Cannot place mine in range of other mines"
 end
 
-function imba_techies_proximity_mine:GetAOERadius()
+function imba_techies_land_mines:GetAOERadius()
 	local caster = self:GetCaster()
 	local ability = self
 
-	local trigger_range = ability:GetSpecialValueFor("trigger_range")
+	local trigger_range = ability:GetVanillaAbilitySpecial("radius")
 	local mine_distance = ability:GetSpecialValueFor("mine_distance")
 
 	-- #1 Talent: Trigger range increase
@@ -179,7 +175,7 @@ function imba_techies_proximity_mine:GetAOERadius()
 	return trigger_range + mine_distance
 end
 
-function imba_techies_proximity_mine:OnSpellStart()
+function imba_techies_land_mines:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -246,18 +242,9 @@ end
 ------------------------------
 --     PROXIMITY MINE AI    --
 ------------------------------
-imba_techies_proximity_mine_trigger = imba_techies_proximity_mine_trigger or class({})
 LinkLuaModifier("modifier_imba_proximity_mine", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_proximity_mine_building_res", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_proximity_mine_talent", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_techies_proximity_mine_trigger:GetIntrinsicModifierName()
-	return "modifier_imba_proximity_mine"
-end
-
-function imba_techies_proximity_mine_trigger:GetAbilityTextureName()
-   return "rubick_empty1"
-end
 
 -- Proximity mine states modifier
 modifier_imba_proximity_mine = modifier_imba_proximity_mine or class({})
@@ -265,23 +252,30 @@ modifier_imba_proximity_mine = modifier_imba_proximity_mine or class({})
 function modifier_imba_proximity_mine:OnCreated()
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
+		self.caster = self:GetParent()
 		self.owner = self.caster:GetOwner()
 
+		self.ability = self.owner:FindAbilityByName("imba_techies_land_mines")
+
 		-- Ability specials
-		self.explosion_delay = self.ability:GetSpecialValueFor("explosion_delay")
-		self.mine_damage = self.ability:GetSpecialValueFor("mine_damage")
-		self.explosion_range = self.ability:GetSpecialValueFor("explosion_range")
-		self.trigger_range = self.ability:GetSpecialValueFor("trigger_range")
-		self.activation_delay = self.ability:GetSpecialValueFor("activation_delay")
-		self.building_damage_pct = self.ability:GetSpecialValueFor("building_damage_pct")
+		self.explosion_delay = self.ability:GetVanillaAbilitySpecial("proximity_threshold")
+		self.mine_damage = self.ability:GetVanillaAbilitySpecial("damage")
+		self.trigger_range = self.ability:GetVanillaAbilitySpecial("radius")
+		self.activation_delay = self.ability:GetVanillaAbilitySpecial("activation_delay")
+		self.building_damage_pct = self.ability:GetVanillaAbilitySpecial("building_damage_pct")
+
+		-- IMBA Ability specials
 		self.buidling_damage_duration = self.ability:GetSpecialValueFor("buidling_damage_duration")
 		self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
 		self.fow_radius = self.ability:GetSpecialValueFor("fow_radius")
 		self.fow_duration = self.ability:GetSpecialValueFor("fow_duration")
 		self.big_boom_mine_bonus_dmg = self.ability:GetSpecialValueFor("big_boom_mine_bonus_dmg")
 		self.big_boom_shrapnel_duration = self.ability:GetSpecialValueFor("big_boom_shrapnel_duration")
+
+		print("Explosion Delay:", self.explosion_delay)
+		print("Mine Damage:", self.mine_damage)
+		print("Trigger Range:", self.trigger_range)
+		print("Activation Delay:", self.activation_delay)
 
 		-- #1 Talent: Trigger range increase
 		self.trigger_range = self.trigger_range + self.caster:FindTalentValue("special_bonus_imba_techies_1")
@@ -300,7 +294,7 @@ function modifier_imba_proximity_mine:OnCreated()
 			self:AddParticle(particle_mine_fx, false, false, -1, false, false)
 
 			-- Determine if this is a Big Boom
-			if self.caster:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" then
+			if self.caster:GetUnitName() == "npc_imba_techies_land_mines_big_boom" then
 				self.is_big_boom = true
 			end
 
@@ -404,7 +398,7 @@ end
 function modifier_imba_proximity_mine:_Explode()
 	local enemy_killed
 	local caster = self.caster
-	local explosion_range = self.explosion_range
+	local trigger_range = self.trigger_range
 
 	-- BLOW UP TIME! Play explosion sound
 	local sound_explosion = "Hero_Techies.LandMine.Detonate"
@@ -417,14 +411,14 @@ function modifier_imba_proximity_mine:_Explode()
 	local particle_explosion_fx = ParticleManager:CreateParticle(particle_explosion, PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(particle_explosion_fx, 0, casterAbsOrigin)
 	ParticleManager:SetParticleControl(particle_explosion_fx, 1, casterAbsOrigin)
-	ParticleManager:SetParticleControl(particle_explosion_fx, 2, Vector(explosion_range, 1, 1))
+	ParticleManager:SetParticleControl(particle_explosion_fx, 2, Vector(trigger_range, 1, 1))
 	ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
 
 	-- Look for nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 										casterAbsOrigin,
 										nil,
-										explosion_range,
+										trigger_range,
 										DOTA_UNIT_TARGET_TEAM_ENEMY,
 										DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
 										DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
@@ -453,7 +447,7 @@ function modifier_imba_proximity_mine:_Explode()
 
 			-- If the enemy is a building, reduce damage to it
 			if enemy:IsBuilding() then
-				damage = damage * self.building_damage_pct * 0.01
+				damage = damage * self.building_damage_pct / 100
 			end
 
 			-- Deal damage
@@ -644,7 +638,7 @@ end
 ------------------------------
 --       STASIS TRAP        --
 ------------------------------
-imba_techies_stasis_trap = imba_techies_stasis_trap or class({})
+imba_techies_stasis_trap = imba_techies_stasis_trap or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_techies_stasis_trap:GetAbilityTextureName()
    return "techies_stasis_trap"
@@ -659,7 +653,7 @@ function imba_techies_stasis_trap:IsNetherWardStealable()
 end
 
 function imba_techies_stasis_trap:GetAOERadius()
-	local root_range = self:GetSpecialValueFor("root_range")
+	local root_range = self:GetVanillaAbilitySpecial("stun_radius")
 	return root_range
 end
 
@@ -769,20 +763,16 @@ function imba_techies_stasis_trap:OnSpellStart()
 	else -- Plant on the ground
 		-- Plant trap
 		local trap = CreateUnitByName("npc_imba_techies_stasis_trap", target_point, true, caster, caster, caster:GetTeamNumber())
-		local trap_ability = "imba_techies_stasis_trap_trigger"
 
 		-- Set the mine's team to be the same as the caster
 		local playerID = caster:GetPlayerID()
 		trap:SetControllableByPlayer(playerID, true)
 
-		-- Set the mine's ability to be the same level as the planting ability
-		local trap_ability_handler = trap:FindAbilityByName(trap_ability)
-		if trap_ability_handler then
-			trap_ability_handler:SetLevel(ability:GetLevel())
-		end
-
 		-- Set the mine's owner to be the caster
 		trap:SetOwner(caster)
+
+		-- Set the mine's modifier AI
+		trap:AddNewModifier(self:GetCaster(), self, "modifier_imba_statis_trap", {})
 	end
 end
 
@@ -791,164 +781,18 @@ end
 ------------------------------
 --      STATIS TRAP AI      --
 ------------------------------
-imba_techies_stasis_trap_trigger = imba_techies_stasis_trap_trigger or class({})
+
 LinkLuaModifier("modifier_imba_statis_trap", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_root", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_electrocharge", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_disarmed", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_techies_stasis_trap_trigger:GetAbilityTextureName()
-   return "techies_stasis_trap"
-end
-
-function imba_techies_stasis_trap_trigger:GetIntrinsicModifierName()
-	return "modifier_imba_statis_trap"
-end
-
 -- Statis Trap thinker modifier
 modifier_imba_statis_trap = modifier_imba_statis_trap or class({})
-
-
-function modifier_imba_statis_trap:OnCreated()
-	if IsServer() then
-		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.owner = self.caster:GetOwner()
-
-		-- Ability specials
-		self.activate_delay = self.ability:GetSpecialValueFor("activate_delay")
-		self.trigger_range = self.ability:GetSpecialValueFor("trigger_range")
-		self.root_range = self.ability:GetSpecialValueFor("root_range")
-		self.root_duration = self.ability:GetSpecialValueFor("root_duration")
-		self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
-		self.flying_vision_duration = self.ability:GetSpecialValueFor("flying_vision_duration")
-
-		-- Set variables
-		self.active = false
-
-		-- Wait for activation
-		Timers:CreateTimer(self.activate_delay, function()
-
-			-- Mark trap as activated
-			self.active = true
-
-			-- Start thinking
-			self:StartIntervalThink(self.tick_rate)
-		end)
-	end
-end
 
 function modifier_imba_statis_trap:IsHidden() return true end
 function modifier_imba_statis_trap:IsPurgable() return false end
 function modifier_imba_statis_trap:IsDebuff() return false end
-
-function modifier_imba_statis_trap:OnIntervalThink()
-	if IsServer() then
-		local caster = self.caster
-
-		-- If the caster has the sign modifier, do nothing
-		local modifier_sign = "modifier_imba_minefield_sign_detection"
-		if caster:HasModifier(modifier_sign) then
-			return nil
-		end
-
-		-- If the Stasis trap is dead, do nothing and destroy
-		if not caster:IsAlive() then
-			self:Destroy()
-			return nil
-		end
-
-		-- Look for nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-										  caster:GetAbsOrigin(),
-										  nil,
-										  self.trigger_range,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-										  FIND_ANY_ORDER,
-										  false)
-
-		if #enemies > 0 then
-			self:_Explode()
-		end
-	end
-end
-
-function modifier_imba_statis_trap:_Explode()
-	local caster = self.caster
-
-	-- Springing the trap! Play root sound
-	local sound_explosion = "Hero_Techies.StasisTrap.Stun"
-	EmitSoundOn(sound_explosion, caster)
-
-	-- Add explosion particle
-	local particle_explode = "particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
-	local particle_explode_fx = ParticleManager:CreateParticle(particle_explode, PATTACH_WORLDORIGIN, caster)
-	ParticleManager:SetParticleControl(particle_explode_fx, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_explode_fx, 1, Vector(self.root_range, 1, 1))
-	ParticleManager:SetParticleControl(particle_explode_fx, 3, caster:GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(particle_explode_fx)
-
-	-- Find all units in radius
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-								caster:GetAbsOrigin(),
-								nil,
-								self.root_range,
-								DOTA_UNIT_TARGET_TEAM_ENEMY,
-								DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-								DOTA_UNIT_TARGET_FLAG_NONE,
-								FIND_ANY_ORDER,
-								false)
-
-	local modifier_root = "modifier_imba_statis_trap_root"
-	local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
-	local modifier_disarmed = "modifier_imba_statis_trap_disarmed"
-
-	-- Root enemies nearby if not disarmed, and apply a electrocharge
-	for _,enemy in pairs(enemies) do
-		if not caster:HasModifier(modifier_disarmed) then
-			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
-		end
-
-		-- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
-		if not enemy:HasModifier(modifier_electrocharge) then
-			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
-		else
-			RefreshElectroCharge(enemy)
-		end
-	end
-
-	-- Find nearby Statis Traps and mark them as disarmed
-	local mines = FindUnitsInRadius(caster:GetTeamNumber(),
-									caster:GetAbsOrigin(),
-									nil,
-									self.root_range,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_OTHER,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
-
-	for _,mine in pairs(mines) do
-		if mine:GetUnitName() == "npc_imba_techies_stasis_trap" and mine ~= caster then
-			mine:AddNewModifier(caster, self.ability, modifier_disarmed, {})
-		end
-	end
-
-	-- #4 Talent: Stasis Traps grants charges of Inflammable to Remote mines
-	if self.owner and self.owner:HasTalent("special_bonus_imba_techies_4") then
-		ApplyInflammableToRemoteMines(caster, self.root_range, mines)
-	end
-
-	-- Apply flying vision
-	AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), self.root_range, self.flying_vision_duration, false)
-
-	-- Kill trap and destroy modifier
-	caster:ForceKill(false)
-	self:Destroy()
-end
 
 function modifier_imba_statis_trap:CheckState()
 	if IsServer() then
@@ -970,6 +814,166 @@ function modifier_imba_statis_trap:CheckState()
 		end
 		return state
 	end
+end
+
+function modifier_imba_statis_trap:OnCreated()
+	if IsServer() then
+		-- Ability properties
+		self.caster = self:GetParent()
+		self.owner = self.caster:GetOwner()
+		self.ability = self.owner:FindAbilityByName("imba_techies_stasis_trap")
+
+		-- Ability specials
+		self.activate_delay = self.ability:GetVanillaAbilitySpecial("activation_time")
+		self.trigger_range = self.ability:GetVanillaAbilitySpecial("stun_radius")
+		self.root_range = self.ability:GetVanillaAbilitySpecial("stun_radius")
+		self.root_duration = self.ability:GetVanillaAbilitySpecial("stun_duration")
+		self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
+		self.flying_vision_duration = self.ability:GetSpecialValueFor("flying_vision_duration")
+
+		print(self.activate_delay, self.trigger_range, self.root_duration, self.tick_rate, self.flying_vision_duration)
+
+		-- Set variables
+		self.active = false
+
+		-- Wait for activation
+		Timers:CreateTimer(self.activate_delay, function()
+
+			-- Mark trap as activated
+			self.active = true
+
+			-- Start thinking
+			self:StartIntervalThink(self.tick_rate)
+		end)
+	end
+end
+
+function modifier_imba_statis_trap:OnIntervalThink()
+	local caster = self.caster
+
+	-- If the caster has the sign modifier, do nothing
+	local modifier_sign = "modifier_imba_minefield_sign_detection"
+	if caster:HasModifier(modifier_sign) then
+		return nil
+	end
+
+	-- If the Stasis trap is dead, do nothing and destroy
+	if not caster:IsAlive() then
+		self:Destroy()
+		return nil
+	end
+
+	-- Look for nearby enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+		caster:GetAbsOrigin(),
+		nil,
+		self.trigger_range,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	if #enemies > 0 then
+		self:_Explode()
+	end
+end
+
+function modifier_imba_statis_trap:_Explode()
+	local caster = self.caster
+
+	print("Start explode")
+
+	-- Springing the trap! Play root sound
+	local sound_explosion = "Hero_Techies.StasisTrap.Stun"
+	EmitSoundOn(sound_explosion, caster)
+
+	-- Add explosion particle
+	local particle_explode = "particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
+	local particle_explode_fx = ParticleManager:CreateParticle(particle_explode, PATTACH_WORLDORIGIN, caster)
+	ParticleManager:SetParticleControl(particle_explode_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_explode_fx, 1, Vector(self.root_range, 1, 1))
+	ParticleManager:SetParticleControl(particle_explode_fx, 3, caster:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(particle_explode_fx)
+
+	-- Find all units in radius
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+		caster:GetAbsOrigin(),
+		nil,
+		self.root_range,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	local modifier_root = "modifier_imba_statis_trap_root"
+	local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
+	local modifier_disarmed = "modifier_imba_statis_trap_disarmed"
+
+	print("Start root")
+
+	-- Root enemies nearby if not disarmed, and apply a electrocharge
+	for _,enemy in pairs(enemies) do
+		if not caster:HasModifier(modifier_disarmed) then
+			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
+		end
+
+		-- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
+		if not enemy:HasModifier(modifier_electrocharge) then
+			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
+		else
+			RefreshElectroCharge(enemy)
+		end
+	end
+
+	print("End Root")
+
+	-- Find nearby Statis Traps and mark them as disarmed
+	local mines = FindUnitsInRadius(caster:GetTeamNumber(),
+		caster:GetAbsOrigin(),
+		nil,
+		self.root_range,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_OTHER,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	print("Start stasis trap ally mines root")
+
+	for _,mine in pairs(mines) do
+		if mine:GetUnitName() == "npc_imba_techies_stasis_trap" and mine ~= caster then
+			mine:AddNewModifier(caster, self.ability, modifier_disarmed, {})
+		end
+	end
+
+	print("End")
+
+	print("Has talent 4?")
+
+	-- #4 Talent: Stasis Traps grants charges of Inflammable to Remote mines
+	if self.owner and self.owner:HasTalent("special_bonus_imba_techies_4") then
+		ApplyInflammableToRemoteMines(caster, self.root_range, mines)
+	end
+
+	print("End has talent 4")
+
+	print("Add Vision")
+
+	-- Apply flying vision
+	AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), self.root_range, self.flying_vision_duration, false)
+
+	print("Kill and Destroy")
+
+	-- Kill trap and destroy modifier
+	caster:ForceKill(false)
+	self:Destroy()
+
+	print("End Explode")
 end
 
 
@@ -1059,7 +1063,7 @@ function modifier_imba_statis_trap_electrocharge:OnIntervalThink()
 		for _,mine in pairs(mines) do
 			local mineUnitName = mine:GetUnitName()
 
-			if mineUnitName == "npc_imba_techies_proximity_mine" or mineUnitName == "npc_imba_techies_proximity_mine_big_boom" or mineUnitName == "npc_imba_techies_stasis_trap" or mineUnitName == "npc_imba_techies_remote_mine" then
+			if mineUnitName == "npc_imba_techies_land_mines" or mineUnitName == "npc_imba_techies_land_mines_big_boom" or mineUnitName == "npc_imba_techies_stasis_trap" or mineUnitName == "npc_imba_techies_remote_mines" then
 				local mineAbsOrigin = mine:GetAbsOrigin()
 
 				-- Get mine's distance from enemy
@@ -1101,29 +1105,29 @@ function modifier_imba_statis_trap_disarmed:IsDebuff() return false end
 ------------------------------
 --        BLAST OFF!        --
 ------------------------------
-imba_techies_blast_off = imba_techies_blast_off or class({})
+imba_techies_suicide = imba_techies_suicide or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_blast_off", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_movement", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_silence", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_techies_blast_off:GetAbilityTextureName()
+function imba_techies_suicide:GetAbilityTextureName()
    return "techies_suicide"
 end
 
-function imba_techies_blast_off:IsHiddenWhenStolen()
+function imba_techies_suicide:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_techies_blast_off:GetAOERadius()
-	local radius  = self:GetSpecialValueFor("radius")
+function imba_techies_suicide:GetAOERadius()
+	local radius  = self:GetVanillaAbilitySpecial("radius")
 	return radius
 end
 
-function imba_techies_blast_off:IsNetherWardStealable()
+function imba_techies_suicide:IsNetherWardStealable()
 	return false
 end
 
-function imba_techies_blast_off:OnSpellStart()
+function imba_techies_suicide:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -1139,7 +1143,7 @@ function imba_techies_blast_off:OnSpellStart()
 	local pig
 	local modifierParam = {target_point_x = target_point.x, target_point_y = target_point.y, target_point_z = target_point.z}
 	if caster:HasTalent("special_bonus_imba_techies_8") then
-		pig = CreateUnitByName("npc_imba_techies_blast_off_piggy", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+		pig = CreateUnitByName("npc_imba_techies_suicide_piggy", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 
 		-- Set the pig to be on the player's team
 		local playerID = caster:GetPlayerID()
@@ -1272,7 +1276,7 @@ function modifier_imba_blast_off:OnDestroy()
 		end
 
 		-- If it was a pig, remove it after a small delay
-		if self.parent:GetUnitName() == "npc_imba_techies_blast_off_piggy" then
+		if self.parent:GetUnitName() == "npc_imba_techies_suicide_piggy" then
 			-- Avoid reference values from self after onDestroy
 			local parent = self.parent
 
@@ -1297,10 +1301,10 @@ function modifier_imba_blast_off_movement:OnCreated( keys )
 		local particle_trail = "particles/units/heroes/hero_techies/techies_blast_off_trail.vpcf"
 
 		-- Ability specials
-		self.damage = self.ability:GetSpecialValueFor("damage")
-		self.radius = self.ability:GetSpecialValueFor("radius")
-		self.self_damage_pct = self.ability:GetSpecialValueFor("self_damage_pct")
-		self.silence_duration = self.ability:GetSpecialValueFor("silence_duration")
+		self.damage = self.ability:GetVanillaAbilitySpecial("damage")
+		self.radius = self.ability:GetVanillaAbilitySpecial("radius")
+		self.self_damage_pct = self.ability:GetVanillaAbilitySpecial("hp_cost")
+		self.silence_duration = self.ability:GetVanillaAbilitySpecial("silence_duration")
 		self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")
 		self.jump_max_height = self.ability:GetSpecialValueFor("jump_max_height")
 
@@ -1478,7 +1482,7 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
 
 		--#5 Talent: Blast Off! jumps drop a Proximity Mine
 		if self.caster:HasTalent("special_bonus_imba_techies_5") then
-			local proximity_ability = "imba_techies_proximity_mine"
+			local proximity_ability = "imba_techies_land_mines"
 			-- Find Proximity Mine ability. Talent can't proc if the caster doesn't have Proximity Mines.
 			local proximity_ability_handler = self.caster:FindAbilityByName(proximity_ability)
 			if proximity_ability_handler and proximity_ability_handler:GetLevel() > 0 then
@@ -1528,25 +1532,25 @@ end
 ------------------------------
 --      REMOTE MINES        --
 ------------------------------
-imba_techies_remote_mine = imba_techies_remote_mine or class({})
+imba_techies_remote_mines = imba_techies_remote_mines or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_techies_remote_mine:GetAbilityTextureName()
+function imba_techies_remote_mines:GetAbilityTextureName()
    return "techies_remote_mines"
 end
 
-function imba_techies_remote_mine:IsHiddenWhenStolen()
+function imba_techies_remote_mines:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_techies_remote_mine:GetAssociatedSecondaryAbilities()
+function imba_techies_remote_mines:GetAssociatedSecondaryAbilities()
 	return "imba_techies_focused_detonate"
 end
 
-function imba_techies_remote_mine:IsNetherWardStealable()
+function imba_techies_remote_mines:IsNetherWardStealable()
 	return false
 end
 
-function imba_techies_remote_mine:OnUpgrade()
+function imba_techies_remote_mines:OnUpgrade()
 	local caster = self:GetCaster()
 	local focused_ability = "imba_techies_focused_detonate"
 
@@ -1556,13 +1560,13 @@ function imba_techies_remote_mine:OnUpgrade()
 	end
 end
 
-function imba_techies_remote_mine:GetAOERadius()
+function imba_techies_remote_mines:GetAOERadius()
 	local caster = self:GetCaster()
 	local ability = self
 	local scepter = caster:HasScepter()
 
-	local radius = ability:GetSpecialValueFor("radius")
-	local scepter_radius_bonus = ability:GetSpecialValueFor("scepter_radius_bonus")
+	local radius = ability:GetVanillaAbilitySpecial("radius")
+	local scepter_radius_bonus = ability:GetVanillaAbilitySpecial("cast_range_scepter_bonus")
 
 	if scepter then
 		radius = radius + scepter_radius_bonus
@@ -1571,7 +1575,7 @@ function imba_techies_remote_mine:GetAOERadius()
 	return radius
 end
 
-function imba_techies_remote_mine:OnAbilityPhaseStart()
+function imba_techies_remote_mines:OnAbilityPhaseStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -1592,7 +1596,7 @@ function imba_techies_remote_mine:OnAbilityPhaseStart()
 	return true
 end
 
-function imba_techies_remote_mine:OnSpellStart()
+function imba_techies_remote_mines:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -1600,10 +1604,10 @@ function imba_techies_remote_mine:OnSpellStart()
 	local cast_response = {"techies_tech_remotemines_03", "techies_tech_remotemines_04", "techies_tech_remotemines_05", "techies_tech_remotemines_07", "techies_tech_remotemines_08", "techies_tech_remotemines_09", "techies_tech_remotemines_13", "techies_tech_remotemines_14", "techies_tech_remotemines_15", "techies_tech_remotemines_17", "techies_tech_remotemines_18", "techies_tech_remotemines_19", "techies_tech_remotemines_20", "techies_tech_remotemines_25", "techies_tech_remotemines_26", "techies_tech_remotemines_27", "techies_tech_remotemines_30", "techies_tech_remotemines_02", "techies_tech_remotemines_10", "techies_tech_remotemines_11", "techies_tech_remotemines_16", "techies_tech_remotemines_21", "techies_tech_remotemines_22", "techies_tech_remotemines_23", "techies_tech_remotemines_28", "techies_tech_remotemines_29"}
 	local rare_cast_response = "techies_tech_remotemines_01"
 	local sound_cast = "Hero_Techies.RemoteMine.Plant"
-	local mine_ability = "imba_techies_remote_mine_pinpoint_detonation"
+	local mine_ability = "imba_techies_remote_mines_pinpoint_detonation"
 
 	-- Ability specials
-	local mine_duration = ability:GetSpecialValueFor("mine_duration")
+	local mine_duration = ability:GetVanillaAbilitySpecial("duration")
 
 	-- Roll for rare cast response
 	local sound
@@ -1618,7 +1622,7 @@ function imba_techies_remote_mine:OnSpellStart()
 	EmitSoundOn(sound_cast, caster)
 
 	-- Plant mine
-	local mine = CreateUnitByName("npc_imba_techies_remote_mine", target_point, false, caster, caster, caster:GetTeamNumber())
+	local mine = CreateUnitByName("npc_imba_techies_remote_mines", target_point, false, caster, caster, caster:GetTeamNumber())
 
 	-- Set mine to be controllable by the player
 	local playerID = caster:GetPlayerID()
@@ -1641,35 +1645,35 @@ end
 ------------------------------
 --    PINPOINT DETONATION   --
 ------------------------------
-imba_techies_remote_mine_pinpoint_detonation = imba_techies_remote_mine_pinpoint_detonation or class({})
+imba_techies_remote_mines_pinpoint_detonation = imba_techies_remote_mines_pinpoint_detonation or class({})
 LinkLuaModifier("modifier_imba_remote_mine", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_remote_mine_inflammable", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_techies_remote_mine_pinpoint_detonation:GetAbilityTextureName()
+function imba_techies_remote_mines_pinpoint_detonation:GetAbilityTextureName()
    return "techies_remote_mines_self_detonate"
 end
 
-function imba_techies_remote_mine_pinpoint_detonation:IsStealable()
+function imba_techies_remote_mines_pinpoint_detonation:IsStealable()
 	return false
 end
 
-function imba_techies_remote_mine_pinpoint_detonation:ProcsMagicStick()
+function imba_techies_remote_mines_pinpoint_detonation:ProcsMagicStick()
 	return false
 end
 
-function imba_techies_remote_mine_pinpoint_detonation:IsNetherWardStealable()
+function imba_techies_remote_mines_pinpoint_detonation:IsNetherWardStealable()
 	return false
 end
 
-function imba_techies_remote_mine_pinpoint_detonation:GetIntrinsicModifierName()
+function imba_techies_remote_mines_pinpoint_detonation:GetIntrinsicModifierName()
 	return "modifier_imba_remote_mine"
 end
 
-function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
+function imba_techies_remote_mines_pinpoint_detonation:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
-	local ability = self
 	local owner = caster:GetOwner()
+	local ability = owner:FindAbilityByName("imba_techies_remote_mines")
 	local sound_activate = "Hero_Techies.RemoteMine.Activate"
 	local sound_detonate = "Hero_Techies.RemoteMine.Detonate"
 	local particle_explosion = "particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
@@ -1678,13 +1682,13 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
 	local scepter = owner:HasScepter()
 
 	-- Ability specials
-	local damage = ability:GetSpecialValueFor("damage")
-	local radius = ability:GetSpecialValueFor("radius")
+	local damage = ability:GetVanillaAbilitySpecial("damage")
+	local radius = ability:GetVanillaAbilitySpecial("radius")
 	local inflammable_duration = ability:GetSpecialValueFor("inflammable_duration")
 	local inflammable_charge_radius = ability:GetSpecialValueFor("inflammable_charge_radius")
 	local inflammable_charge_damage = ability:GetSpecialValueFor("inflammable_charge_damage")
-	local scepter_damage_bonus = ability:GetSpecialValueFor("scepter_damage_bonus")
-	local scepter_radius_bonus = ability:GetSpecialValueFor("scepter_radius_bonus")
+	local scepter_damage_bonus = ability:GetVanillaAbilitySpecial("damage_scepter")
+	local scepter_radius_bonus = ability:GetVanillaAbilitySpecial("cast_range_scepter_bonus")
 
 	-- Play activation sound
 	EmitSoundOn(sound_activate, caster)
@@ -1757,7 +1761,7 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
 										false)
 
 		for _,mine in pairs(mines) do
-			if mine:GetUnitName() == "npc_imba_techies_remote_mine" then
+			if mine:GetUnitName() == "npc_imba_techies_remote_mines" then
 
 				local modifier_inflammable_handler = mine:FindModifierByName(modifier_inflammable)
 				if not modifier_inflammable_handler then
@@ -1837,7 +1841,7 @@ end
 ------------------------------
 --     FOCUSED DETONATE     --
 ------------------------------
-imba_techies_focused_detonate = imba_techies_focused_detonate or class({})
+imba_techies_focused_detonate = imba_techies_focused_detonate or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_focused_detonate", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_focused_detonate:GetAbilityTextureName()
@@ -1859,7 +1863,7 @@ end
 function imba_techies_focused_detonate:GetAOERadius()
 	local ability = self
 
-	local radius = ability:GetSpecialValueFor("radius")
+	local radius = ability:GetVanillaAbilitySpecial("radius")
 	return radius
 end
 
@@ -1868,10 +1872,10 @@ function imba_techies_focused_detonate:OnSpellStart()
 	local caster = self:GetCaster()
 	local ability = self
 	local target_point = self:GetCursorPosition()
-	local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
+	local detonate_ability = "imba_techies_remote_mines_pinpoint_detonation"
 
 	-- Ability specials
-	local radius = ability:GetSpecialValueFor("radius")
+	local radius = ability:GetVanillaAbilitySpecial("radius")
 
 	-- Find all mines in radius
 	local remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -1942,7 +1946,7 @@ end
 ------------------------------
 --      MINEFIELD SIGN      --
 ------------------------------
-imba_techies_minefield_sign = imba_techies_minefield_sign or class({})
+imba_techies_minefield_sign = imba_techies_minefield_sign or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_minefield_sign_aura", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_minefield_sign_detection", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -1965,7 +1969,7 @@ end
 function imba_techies_minefield_sign:GetAOERadius()
 	local caster = self:GetCaster()
 	local ability = self
-	local radius = ability:GetSpecialValueFor("radius")
+	local radius = ability:GetVanillaAbilitySpecial("aura_radius")
 
 	-- #6 Talent: Minefield radius increase
 	radius = radius + caster:FindTalentValue("special_bonus_imba_techies_6")
@@ -2018,7 +2022,7 @@ function modifier_imba_minefield_sign_aura:OnCreated()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.radius = self.ability:GetSpecialValueFor("radius")
+	self.radius = self.ability:GetVanillaAbilitySpecial("aura_radius")
 end
 
 function modifier_imba_minefield_sign_aura:IsHidden() return false end
@@ -2037,7 +2041,7 @@ end
 function modifier_imba_minefield_sign_aura:GetAuraEntityReject(target)
 	-- Only apply on mines
 	local targetUnitName = target:GetUnitName()
-	if targetUnitName == "npc_imba_techies_proximity_mine" or targetUnitName == "npc_imba_techies_proximity_mine_big_boom" or targetUnitName == "npc_imba_techies_stasis_trap" or targetUnitName == "npc_imba_techies_remote_mine" then
+	if targetUnitName == "npc_imba_techies_land_mines" or targetUnitName == "npc_imba_techies_land_mines_big_boom" or targetUnitName == "npc_imba_techies_stasis_trap" or targetUnitName == "npc_imba_techies_remote_mines" then
 		return false
 	end
 
@@ -2091,12 +2095,12 @@ function modifier_imba_minefield_sign_detection:OnDestroy()
 		-- If it is a Remote Mine, wait a game tick, check if the mine is still alive, and scan for nearby enemies
 		Timers:CreateTimer(FrameTime(), function()
 
-			if parent:GetUnitName() == "npc_imba_techies_remote_mine" and parent:IsAlive() then
+			if parent:GetUnitName() == "npc_imba_techies_remote_mines" and parent:IsAlive() then
 
-				local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
+				local detonate_ability = "imba_techies_remote_mines"
 				local detonate_ability_handler = parent:FindAbilityByName(detonate_ability)
 				if detonate_ability_handler then --detonate only if parent has the ability
-					local radius = detonate_ability_handler:GetSpecialValueFor("radius")
+					local radius = detonate_ability_handler:GetVanillaAbilitySpecial("radius")
 
 					local enemies = FindUnitsInRadius(parent:GetTeamNumber(),
 														parent:GetAbsOrigin(),

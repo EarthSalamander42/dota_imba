@@ -54,8 +54,8 @@
 "DOTA_Tooltip_ability_imba_huskar_life_break_slow_durtion_tooltip"								"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 //"DOTA_Tooltip_ability_imba_huskar_life_break_cooldown_scepter"						"SCEPTER COOLDOWN:"
 //"DOTA_Tooltip_ability_imba_huskar_life_break_tooltip_health_damage_scepter"			"%SCEPTER DAMAGE DEALT:"
-//"DOTA_Tooltip_ability_imba_huskar_life_break_aghanim_description"					"Increases damage dealt, reduces cooldown."
-"DOTA_Tooltip_ability_imba_huskar_life_break_aghanim_description"					"Forces the enemy target to attack you."
+//"DOTA_Tooltip_ability_imba_huskar_life_break_scepter_description"					"Increases damage dealt, reduces cooldown."
+"DOTA_Tooltip_ability_imba_huskar_life_break_scepter_description"					"Forces the enemy target to attack you."
 "DOTA_Tooltip_ability_imba_huskar_life_break_taunt_duration"						"TAUNT DURATION:"		
 
 "DOTA_Tooltip_modifier_imba_huskar_inner_vitality"					"Inner Vitality"

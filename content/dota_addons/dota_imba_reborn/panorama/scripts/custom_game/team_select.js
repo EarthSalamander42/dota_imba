@@ -9,6 +9,10 @@ var g_PlayerPanels = [];
 
 var g_TEAM_SPECATOR = 1;
 
+function isInt(n) {
+   return n % 1 === 0;
+}
+
 //--------------------------------------------------------------------------------------------------
 // Handeler for when the unssigned players panel is clicked that causes the player to be reassigned
 // to the unssigned players team
@@ -149,7 +153,22 @@ function UpdateTeamPanel( teamPanel )
 	{
 		var playerSlot = FindPlayerSlotInTeamPanel( teamPanel, i );
 		playerSlot.RemoveAndDeleteChildren();
-		FindOrCreatePanelForPlayer( teamPlayers[ i ], playerSlot );
+
+		var player_panel = FindOrCreatePanelForPlayer( teamPlayers[ i ], playerSlot );
+		var player_table = CustomNetTables.GetTableValue("battlepass_player", teamPlayers[ i ]);
+
+		if (player_panel && player_table) {
+			var winrate_panel = player_panel.FindChildTraverse("PlayerWinrate");
+
+			if (winrate_panel && player_table.winrate) {
+				if (player_table.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
+				if (isInt(player_table.winrate))
+					winrate_panel.text = player_table.winrate.toFixed(2) + "%";
+				else
+					winrate_panel.text = player_table.winrate;
+				}
+			}
+		}
 	}
 
 	// Fill in the remaining player slots with the empty slot indicator

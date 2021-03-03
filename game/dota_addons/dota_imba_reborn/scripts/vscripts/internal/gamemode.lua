@@ -59,6 +59,10 @@ function GameMode:_InitGameMode()
 		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
 	end
 
+	if IsInToolsMode() then
+		GameRules:SetCustomGameTeamMaxPlayers(1, 1)
+	end
+
 	-- This is multiteam configuration stuff
 	if USE_AUTOMATIC_PLAYERS_PER_TEAM then
 		local num = math.floor(10 / MAX_NUMBER_OF_TEAMS)

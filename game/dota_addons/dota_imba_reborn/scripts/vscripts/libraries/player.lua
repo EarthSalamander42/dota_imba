@@ -875,6 +875,7 @@ ignored_pfx_list["particles/econ/events/ti9/ti9_emblem_effect_loadout.vpcf"] = t
 ignored_pfx_list["particles/econ/events/ti8/ti8_hero_effect.vpcf"] = true
 ignored_pfx_list["particles/econ/events/ti7/ti7_hero_effect.vpcf"] = true
 ignored_pfx_list["particles/econ/events/ti10/emblem/ti10_emblem_effect.vpcf"] = true
+ignored_pfx_list["particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"] = true
 
 -- Call custom functions whenever CreateParticle is being called anywhere
 local original_CreateParticle = CScriptParticleManager.CreateParticle
@@ -992,6 +993,33 @@ CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 
 	-- call the original function
 	local response = original_EmitSound(self, sSoundName)
+
+	return response
+end
+
+-- Call custom functions whenever StopSound is being called anywhere
+local original_StopSound = CDOTA_BaseNPC.StopSound
+CDOTA_BaseNPC.StopSound = function(self, sSoundName, hCaster)
+--	print("Create Particle (override):", sSoundName)
+
+	local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..self:GetPlayerOwnerID()) 
+
+	if override_sound then
+--		print("StopSoundOn (override):", sSoundName, override_sound["1"])
+		sSoundName = override_sound["1"]
+	else
+		if hCaster then
+			local override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hCaster:GetPlayerOwnerID()) 
+
+			if override_sound then
+--				print("StopSoundOn (override):", sSoundName, override_sound["1"])
+				sSoundName = override_sound["1"]
+			end
+		end
+	end
+
+	-- call the original function
+	local response = original_StopSound(self, sSoundName)
 
 	return response
 end
@@ -1316,4 +1344,20 @@ function CDOTA_BaseNPC:Custom_IsUnderForcedMovement()
 	end
 	
 	return bForcedMovement
+end
+
+function CDOTA_BaseNPC:HasShard()
+	if self:HasModifier("modifier_item_aghanims_shard") then
+		return true
+	end
+
+	return false
+end
+
+function CDOTA_BaseNPC:IsCustomHero()
+	if GetKeyValueByHeroName(self:GetUnitName(), "IsCustom") and GetKeyValueByHeroName(self:GetUnitName(), "IsCustom") == 1 then
+		return true
+	end
+
+	return false
 end

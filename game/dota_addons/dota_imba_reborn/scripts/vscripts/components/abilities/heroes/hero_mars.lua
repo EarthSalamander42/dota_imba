@@ -116,6 +116,8 @@ end
 
 modifier_imba_mars_spear_heaven_spear = modifier_imba_mars_spear_heaven_spear or class({})
 
+function modifier_imba_mars_spear_heaven_spear:RemoveOnDeath() return false end
+
 function modifier_imba_mars_spear_heaven_spear:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
@@ -211,7 +213,7 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 		false
 	)
 
-	self:GetCaster():EmitSound("Hero_Mars.Spear.Target", self.trailblazer_thinker)
+	self.trailblazer_thinker:EmitSound("Hero_Mars.Spear.Target", self:GetCaster())
 end
 
 --------------------------------------------
@@ -234,6 +236,7 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 		self.heaven_spear = keys.heaven_spear
 	end
 
+	self.tick_time = self:GetAbility():GetSpecialValueFor("trailblazer_tick_time")
 	self.start_pos = self:GetParent():GetAbsOrigin()
 	local direction = (self:GetCaster():GetCursorPosition() - self.start_pos):Normalized()
 
@@ -256,11 +259,11 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 	ParticleManager:SetParticleControl(self.pfx, 2, Vector(self:GetAbility():GetSpecialValueFor("trailblazer_duration"), 0, 0))
 	ParticleManager:SetParticleControl(self.pfx, 3, Vector(self:GetAbility():GetSpecialValueFor("heaven_spear_radius"), 0, 0))
 
-	self:StartIntervalThink(FrameTime())
+	self:StartIntervalThink(self.tick_time)
 end
 
 function modifier_imba_mars_spear_trailblazer_thinker:OnIntervalThink()
-	local damage = (self:GetAbility():GetVanillaAbilitySpecial("damage") * (self:GetAbility():GetSpecialValueFor("trailblazer_damage_pct") / 100)) * FrameTime()
+	local damage = (self:GetAbility():GetVanillaAbilitySpecial("damage") * (self:GetAbility():GetSpecialValueFor("trailblazer_damage_pct") / 100)) * self.tick_time
 	local enemies = nil
 
 	if self.heaven_spear and self.heaven_spear == 1 then
@@ -954,6 +957,8 @@ function modifier_imba_mars_gods_rebuke:OnCreated( kv )
 		self.bonus_damage = self.bonus_damage + mod:GetStackCount()
 		mod.stack_table = {}
 		mod:SetStackCount(0)
+	else
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {})
 	end
 end
 
@@ -1118,7 +1123,11 @@ function modifier_imba_mars_bulwark:GetModifierPhysical_ConstantBlock( params )
 	local stacks = damage_blocked * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
 	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
 
-	mod:SetStackCount(mod:GetStackCount() + stacks)
+	if mod then
+		mod:SetStackCount(mod:GetStackCount() + stacks)
+	else
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {}):SetStackCount(stacks)
+	end
 
 	return damage_blocked
 end
@@ -1143,6 +1152,8 @@ function modifier_imba_mars_bulwark:PlayEffects( front )
 end
 
 modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class({})
+
+function modifier_imba_mars_bulwark_active:IsHidden() return true end
 
 function modifier_imba_mars_bulwark_active:DeclareFunctions() return {
 	MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
@@ -1226,6 +1237,14 @@ modifier_imba_mars_bulwark_jupiters_strength = modifier_imba_mars_bulwark_jupite
 function modifier_imba_mars_bulwark_jupiters_strength:RemoveOnDeath() return false end
 function modifier_imba_mars_bulwark_jupiters_strength:IsPurgable() return false end
 
+function modifier_imba_mars_bulwark_jupiters_strength:IsHidden()
+	if self:GetStackCount() == 0 then
+		return true
+	end
+
+	return false
+end
+
 function modifier_imba_mars_bulwark_jupiters_strength:OnCreated()
 	if IsServer() then
 		self.duration = self:GetAbility():GetSpecialValueFor("jupiters_strength_duration")
@@ -1262,6 +1281,7 @@ function modifier_imba_mars_bulwark_jupiters_strength:OnStackCountChanged(prev_s
 	if stacks > prev_stacks then
 		-- Insert the current game time of the stack that was just added to the stack table
 		table.insert(self.stack_table, {GameRules:GetGameTime(), stacks - prev_stacks})
+		self:SetDuration(self.duration, true)
 
 		-- Refresh timer
 --		self:ForceRefresh()
@@ -1282,7 +1302,7 @@ LinkLuaModifier( "modifier_imba_mars_arena_of_blood_spear_aura", "components/abi
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_projectile_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_coliseum", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mars_arena_of_blood_scepter", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mars_arena_of_blood_scepter", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_BOTH)
 
 --------------------------------------------------------------------------------
 -- Custom KV
@@ -1304,12 +1324,14 @@ end
 function imba_mars_arena_of_blood:OnSpellStart()
 	if not IsServer() then return end
 
-	if self:GetCaster():HasScepter() then
-		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {})
+	local cast_position = self:GetCursorPosition()
 
-		if mod then
-			mod.target_point = self:GetCursorPosition()
-		end
+	if self:GetCaster():HasScepter() then
+		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {
+			cast_position_x = cast_position[1],
+			cast_position_y = cast_position[2],
+			cast_position_z = cast_position[3],
+		})
 	else
 		-- create thinker
 		CreateModifierThinker(
@@ -1317,7 +1339,7 @@ function imba_mars_arena_of_blood:OnSpellStart()
 			self, -- ability source
 			"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
 			{  }, -- kv
-			self:GetCursorPosition(),
+			cast_position,
 			self:GetCaster():GetTeamNumber(),
 			false
 		)
@@ -1713,7 +1735,7 @@ modifier_imba_mars_arena_of_blood_projectile_aura = class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_mars_arena_of_blood_projectile_aura:IsHidden() return false end
+function modifier_imba_mars_arena_of_blood_projectile_aura:IsHidden() return true end
 function modifier_imba_mars_arena_of_blood_projectile_aura:IsDebuff() return false end
 function modifier_imba_mars_arena_of_blood_projectile_aura:IsStunDebuff() return false end
 function modifier_imba_mars_arena_of_blood_projectile_aura:IsPurgable() return false end
@@ -2221,7 +2243,8 @@ modifier_imba_mars_arena_of_blood_wall_aura = class({})
 -- Classifications
 function modifier_imba_mars_arena_of_blood_wall_aura:IsHidden() return true end
 function modifier_imba_mars_arena_of_blood_wall_aura:IsDebuff() return true end
-function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgable() return true end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgable() return false end
+function modifier_imba_mars_arena_of_blood_wall_aura:IsPurgeException() return false end
 function modifier_imba_mars_arena_of_blood_wall_aura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 --------------------------------------------------------------------------------
@@ -2367,7 +2390,7 @@ function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraSearchType()
 end
 
 function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraSearchFlags()
-	return 0
+	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 end
 
 function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraEntityReject( unit )
@@ -2388,8 +2411,14 @@ function modifier_imba_mars_arena_of_blood_scepter:IgnoreTenacity() return true 
 function modifier_imba_mars_arena_of_blood_scepter:IsMotionController() return true end
 function modifier_imba_mars_arena_of_blood_scepter:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_imba_mars_arena_of_blood_scepter:OnCreated()
+function modifier_imba_mars_arena_of_blood_scepter:OnCreated(keys)
 	if not IsServer() then return end
+
+	if keys.cast_position_x == nil then
+		self.target_point = self:GetParent():GetAbsOrigin()
+	else
+		self.target_point = Vector(keys.cast_position_x, keys.cast_position_y, keys.cast_position_z)
+	end
 
 	self.max_height = self:GetAbility():GetSpecialValueFor("scepter_max_height")
 

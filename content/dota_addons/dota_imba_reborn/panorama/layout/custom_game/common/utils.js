@@ -10,14 +10,6 @@ String.prototype.includes = function(searchString, position) {
 	return this.indexOf(searchString, position) !== -1
 }
 
-function setInterval(callback, interval) {
-	interval = interval / 1000;
-	$.Schedule(interval, function reschedule() {
-		$.Schedule(interval, reschedule);
-		callback();
-	});
-}
-
 function createEventRequestCreator(eventName) {
 	var idCounter = 0;
 	return function(data, callback) {

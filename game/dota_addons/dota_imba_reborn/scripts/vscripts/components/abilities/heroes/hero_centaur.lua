@@ -377,7 +377,7 @@ end
 -- 		   Return 		       --
 ---------------------------------
 
-imba_centaur_return = class({})
+imba_centaur_return = imba_centaur_return or class({})
 LinkLuaModifier("modifier_imba_return_aura", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_passive", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_damage_block", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
