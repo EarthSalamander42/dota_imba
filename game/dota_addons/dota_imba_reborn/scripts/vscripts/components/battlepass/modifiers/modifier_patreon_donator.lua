@@ -4,12 +4,12 @@ function modifier_patreon_donator:IsHidden() return true end
 function modifier_patreon_donator:IsPurgable() return false end
 
 function modifier_patreon_donator:OnCreated()
-	if IsServer() then
-		self:SetStackCount(api:GetDonatorStatus(self:GetParent():GetPlayerID()))
-		self:StartIntervalThink(0.2)
-		self.current_effect_name = ""
-		self.effect_name = api:GetPlayerEmblem(self:GetParent():GetPlayerID())
-	end
+	if not IsServer() then return end
+
+	self:SetStackCount(api:GetDonatorStatus(self:GetParent():GetPlayerID()))
+	self:StartIntervalThink(0.2)
+	self.current_effect_name = ""
+	self.effect_name = api:GetPlayerEmblem(self:GetParent():GetPlayerID())
 end
 
 function modifier_patreon_donator:OnIntervalThink()
@@ -31,21 +31,22 @@ function modifier_patreon_donator:RefreshEffect()
 --		print("Old Effect:", self.current_effect_name)
 --		print("Effect:", self.effect_name)
 
+		self.current_effect_name = self.effect_name
+
 		if self.pfx then
 			ParticleManager:DestroyParticle(self.pfx, false)
 			ParticleManager:ReleaseParticleIndex(self.pfx)
 		end
 
 		self.pfx = ParticleManager:CreateParticle(self.effect_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		self.current_effect_name = self.effect_name
 	end
 end
 
 function modifier_patreon_donator:OnDestroy()
-	if IsServer() then
-		if self.pfx then
-			ParticleManager:DestroyParticle(self.pfx, false)
-			ParticleManager:ReleaseParticleIndex(self.pfx)
-		end
+	if not IsServer() then return end
+
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
 	end
 end

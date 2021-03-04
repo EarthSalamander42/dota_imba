@@ -145,25 +145,28 @@ function hpbarmove() {
 		var uix_offset = -v.desiredlayoutwidth;
 		var uiy_offset = -320;
 
-		// fix for enemy team hpbar positions
-		if (vec[1] > 0 && Game.GetLocalPlayerInfo().player_team_id == 2 || vec[1] < 0 && Game.GetLocalPlayerInfo().player_team_id == 3) {
-			uiy_offset = -280;
+		if (Game.GetLocalPlayerInfo() && Game.GetLocalPlayerInfo().player_team_id) {
+			// fix for enemy team hpbar positions
+			if (vec[1] > 0 && Game.GetLocalPlayerInfo().player_team_id == 2 || vec[1] < 0 && Game.GetLocalPlayerInfo().player_team_id == 3) {
+				uiy_offset = -280;
+			}
+
+			var scrx = Game.WorldToScreenX(vec[0], vec[1], vec[2]);
+			var scry = Game.WorldToScreenY(vec[0], vec[1], vec[2]);
+			var uix = scrx + uix_offset;
+			var uiy = scry + uiy_offset;
+
+	//		$.Msg(scrx)
+
+			if (uiw != 0 && uih != 0 && scrx != -1 && scry != -1) {
+				var uixp = uix / uiw * 100, uiyp = uiy / uih * 100;
+
+				v.style.position = uixp + '% ' + uiyp + '% -15%';
+				v.SetHasClass("invis", false);
+	//			v.style['zIndex'] = vec[1] / 100 * -1;
+			}
 		}
 
-		var scrx = Game.WorldToScreenX(vec[0], vec[1], vec[2]);
-		var scry = Game.WorldToScreenY(vec[0], vec[1], vec[2]);
-		var uix = scrx + uix_offset;
-		var uiy = scry + uiy_offset;
-
-//		$.Msg(scrx)
-
-		if (uiw != 0 && uih != 0 && scrx != -1 && scry != -1) {
-			var uixp = uix / uiw * 100, uiyp = uiy / uih * 100;
-
-			v.style.position = uixp + '% ' + uiyp + '% -15%';
-			v.SetHasClass("invis", false);
-//			v.style['zIndex'] = vec[1] / 100 * -1;
-		}
 	});
 
 	$.Schedule(0, hpbarmove);

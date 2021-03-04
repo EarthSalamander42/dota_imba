@@ -66,8 +66,10 @@ ListenToGameEvent('npc_spawned', function(event)
 
 				if api:GetDonatorStatus(npc:GetPlayerID()) ~= 6 then
 					Timers:CreateTimer(1.5, function()
-						if api:GetPlayerCompanion(npc:GetPlayerID()) then
-							Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()).file)
+						local companion = api:GetPlayerCompanion(npc:GetPlayerID())
+
+						if companion then
+							Battlepass:DonatorCompanion(npc:GetPlayerID(), companion)
 						end
 					end)
 				end

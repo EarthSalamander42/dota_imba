@@ -39,6 +39,15 @@
 			})
 		})
 
+		GameEvents.Subscribe("send_effigy_death_message", function(data) 
+		{
+			GameEvents.SendCustomGameEventToServer("effigy_destroyed", {
+				player_name: data["player_name"],
+				unit_name: data["unit_name"],
+				real_unit_name: $.Localize(data["unit_name"]),
+			})
+		})
+
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_names = {}
 
