@@ -292,24 +292,28 @@
 //=================================================================================================================
 // Developers
 //=================================================================================================================
-"npc_imba_developer_shush"                                  "Shush"
-"npc_imba_developer_firetoad"                              "Firetoad"
-"npc_imba_developer_xthedark"                              "X-TheDark"
-"npc_imba_developer_zimber"                                "Zimberzimber"
-"npc_imba_developer_hewdraw"                                "Hewdraw"
-"npc_imba_developer_iaminnocent"                            "IAmInnocent"
-"npc_imba_developer_noobsauce"                              "Noobsauce"
-"npc_imba_developer_seinken"                                "Seinken"
-"npc_imba_developer_mouji"                                  "MouJiaoZi"
-"npc_imba_developer_atrocty"                                "AtroCty"
-"npc_imba_developer_broccoli"                              "Broccoli"
-"npc_imba_developer_cookies"                                "Cookies"
-"npc_imba_developer_suthernfriend"                          "suthernfriend"
-"npc_imba_developer_dewouter"                              "Dewouter"
-"npc_imba_developer_fudge"                                  "Fudge"
-"npc_imba_developer_lindbrum"                              "Lindbrum"
-"npc_imba_developer_sercankd"                              "sercankd"
-"npc_imba_developer_yahnich"                                "yahnich"
+"npc_imba_developer_cookies"                                "EarthSalamander"
+
+//=================================================================================================================
+// Previous Developers
+//=================================================================================================================
+"npc_imba_contributor_shush"                                  "Shush"
+"npc_imba_contributor_firetoad"                              "Firetoad"
+"npc_imba_contributor_xthedark"                              "X-TheDark"
+"npc_imba_contributor_zimber"                                "Zimberzimber"
+"npc_imba_contributor_hewdraw"                                "Hewdraw"
+"npc_imba_contributor_iaminnocent"                            "IAmInnocent"
+"npc_imba_contributor_noobsauce"                              "Noobsauce"
+"npc_imba_contributor_seinken"                                "Seinken"
+"npc_imba_contributor_mouji"                                  "MouJiaoZi"
+"npc_imba_contributor_atrocty"                                "AtroCty"
+"npc_imba_contributor_broccoli"                              "Broccoli"
+"npc_imba_contributor_suthernfriend"                          "suthernfriend"
+"npc_imba_contributor_dewouter"                              "Dewouter"
+"npc_imba_contributor_fudge"                                  "Fudge"
+"npc_imba_contributor_lindbrum"                              "Lindbrum"
+"npc_imba_contributor_sercankd"                              "sercankd"
+"npc_imba_contributor_yahnich"                                "yahnich"
 
 //=================================================================================================================
 // Contributors

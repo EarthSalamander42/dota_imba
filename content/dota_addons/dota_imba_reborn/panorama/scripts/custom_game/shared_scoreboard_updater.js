@@ -140,7 +140,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 
 	_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
 
-	if (player_info) {
+	if (player_info && Game.GetLocalPlayerInfo() && Game.GetLocalPlayerInfo().player_steamid) {
 		if (gamemode == "1") {
 			_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
 		} else {

@@ -36,6 +36,8 @@ function GameMode:OnGameRulesStateChange(keys)
 			table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
 		end
 
+		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
+
 		Timers:CreateTimer(2.0, function()
 			if IsInToolsMode() then
 				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
@@ -69,8 +71,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			HeroSelection:Init()
 		end)
-
-		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		if IMBA_PICK_SCREEN == false then
 			-- prevent_bots_to_random_banned_heroes
@@ -126,8 +126,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
 		else
-			-- No point of these right now until the names are visible again (also probably causing a bit of lag)
-			-- self:SetupContributors()
+			self:SetupContributors()
 			self:SetupFrostivus()
 			self:SetupShrines()
 		end

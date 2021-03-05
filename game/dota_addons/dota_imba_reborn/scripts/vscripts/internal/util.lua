@@ -838,7 +838,7 @@ function ReconnectPlayer(player_id)
 	if player_id == "test_reconnect" then player_id = 0 end
 
 	print("Player is reconnecting:", player_id)
-	Say(PlayerResource:GetPlayer(0), "Debug: Player ID " .. player_id .. " has reconnected!", false)
+	Say(nil, "Debug: Player ID " .. player_id .. " has reconnected!", false)
 
 	-- Reinitialize the player's pick screen panorama, if necessary
 	Timers:CreateTimer(function()

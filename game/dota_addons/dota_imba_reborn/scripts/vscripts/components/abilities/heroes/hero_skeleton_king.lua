@@ -1323,10 +1323,10 @@ function modifier_imba_reincarnation:OnIntervalThink()
 	
 	-- If caster has sufficent mana and the ability is ready, apply
 	if (self.ability:IsOwnersManaEnough()) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
-		print("WK IMMORTAL!")
+--		print("WK IMMORTAL!")
 		self.can_die = false
 	else
-		print("OMG WK NOT IMMORTAL!")
+--		print("OMG WK NOT IMMORTAL!")
 		self.can_die = true
 	end
 

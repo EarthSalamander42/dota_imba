@@ -240,16 +240,11 @@
 
 #BattlepassInfoContainer,
 #DonatorInfoContainer,
-#LeaderboardInfoContainer,
 #SettingsInfoContainer, {
 	width: 100%;
 	height: 520px;
 	flow-children: down;
 	padding: 5px;
-}
-
-#LeaderboardInfoContainer {
-	height: 550px;
 }
 
 #LocalPlayerInfoContainer {
@@ -259,15 +254,6 @@
 
 #LocalPlayerInfo {
 	align: center bottom;
-}
-
-.LeaderboardTableWrapper {
-	width: 100%;
-	background-color: #040c1850;
-	height: 445px;
-	padding-bottom: 10px;
-	overflow:  squish scroll;
-	flow-children: down;
 }
 
 #BattlepassButtons {
@@ -281,7 +267,6 @@
 
 
 #DonatorInfoContainer,
-#LeaderboardInfoContainer,
 #SettingsInfoContainer {
 	visibility: collapse;
 }
@@ -292,14 +277,6 @@
 	background-color: #2c4d6015;
 	border-bottom: 1px solid #29353b;
 	margin-bottom: 20px;
-}
-
-.LeaderboardButtonLabel {
-	width: 100%;
-	text-align: center;
-	font-size: 19px;
-	color:#daebff;
-	align:  center center;
 }
 
 #XP {
@@ -330,73 +307,6 @@
 
 #IMR:active {
 	background-color: #303848;
-}
-
-.LeaderboardRankLabel,
-.LeaderboardXPLabel,
-.LeaderboardAvatarLabel,
-.LeaderboardAvatar_altLabel
-{
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	font-size: 19px;
-	color:#daebff;
-}
-
-.LeaderboardIMR {
-	text-align: center;
-	font-size: 19px;
-	color:#daebff;	
-}
-
-.LeaderboardAvatarDiretide {
-	width: 40%;
-	height: 100%;
-	text-align: center;
-	font-size: 19px;
-	color:#daebff;
-}
-
-/* Leaderboard Legend */
-.LeaderboardLegend {
-	width: 100%;
-	height: 40px;
-	flow-children: right;
-	/* border-bottom: 1px solid white; */
-}
-
-/* Leaderboard */
-.LeaderboardGames {
-	width: 100%;
-	height: 45px;
-	flow-children: right-wrap;
-	border-top: 1px solid #3f464ecc;
-}
-
-.LeaderboardRank {
-	width: 10%;	
-	height: 90%;
-	align:  center top;
-	text-align:  center center;
-}
-
-.LeaderboardAvatar {
-	width: 15%;
-	height: 90%;
-	border: 0;
-	align:  center top;
-}
-
-.LeaderboardXP {
-	width: 50%;
-	align:  center center;
-	padding: 3px 10px 3px 10px;
-}
-
-.LeaderboardIMR {
-	width: 23%;
-	align:  center center;
 }
 
 #PlayerContent
@@ -455,6 +365,8 @@
 	flow-children: right;
 }
 .sub_nav_tab Label {
+	transition-property: color, text-shadow;
+	transition-duration: 0.2s;
 	text-transform: uppercase;
 //	letter-spacing: 0.5px;
 	color: #606366;
@@ -515,17 +427,19 @@
 	animation-direction: alternate;
 	animation-iteration-count: infinite;
 }
-#BattlepassTabButton,
+#OverviewTabButton,
 #DonatorTabButton,
-#LeaderboardTabButton {	
+#LeaderboardTabButton {
 	width: 230px;
 	height: 47px;
 	padding-left: 30px;
 	align: left center;
 	margin-right: -18px;
+	transition-property: brightness;
+	transition-duration: 0.2s;
 }
 
-#BattlepassTabButton .text,
+#OverviewTabButton .text,
 #DonatorTabButton .text,
 #LeaderboardTabButton .text {
 	font-size: 19px;
@@ -535,7 +449,7 @@
 	padding-left: 30px;
 	margin-top: 0px;
 }
-#BattlepassTabButton .image,
+#OverviewTabButton .image,
 #DonatorTabButton .image,
 #LeaderboardTabButton .image {
 	width: 14px;
@@ -543,21 +457,21 @@
 	align: left center;
 	margin-top: -1px;
 }	
-#BattlepassTabButton {
+#OverviewTabButton {
 	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_battlepass.png");
 }
 
-#BattlepassTabButton:hover, #BattlepassTabButton:active,
+#OverviewTabButton:hover, #OverviewTabButton:active,
 #DonatorTabButton:hover, #DonatorTabButton:active,
 #LeaderboardTabButton:hover, #LeaderboardTabButton:active {
 	brightness:  2;
 	animation-name:  none;
 }
-#BattlepassTabButton .text {
+#OverviewTabButton .text {
 	color: #ceebf2;
 	text-shadow: 1px 1px 2px 2.0 #1a424ca2;
 }
-#BattlepassTabButton .image {
+#OverviewTabButton .image {
 	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_battlepass_icon.png");
 }
 #DonatorTabButton {
@@ -570,6 +484,7 @@
 #DonatorTabButton .image {
 	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_donator_icon.png");
 }
+
 #LeaderboardTabButton {
 	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_leaderboard.png");
 }
@@ -673,11 +588,6 @@
 	opacity: 1;
 //	letter-spacing: 0.5px;
 	text-shadow: 1px 1px 2px 2.0 #00000030;
-}
-
-.LeaderboardInGamePlayers {
-	width: 100%;
-	flow-children: right;
 }
 
 /* Labels */

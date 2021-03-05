@@ -172,13 +172,14 @@ if (FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTrav
 	OverrideHeroImage("0", panel, "lina")
 }
 */
-
+OverrideTopBarColor()
 function OverrideTopBarColor() {
-	var colors = CustomNetTables.GetTableValue("game_options", "player_colors")
+	var colors = CustomNetTables.GetTableValue("game_options", "player_colors");
 
 	for (var id in colors) {
 		if (!Players.GetTeam(parseInt(id))) {return $.Msg("No player for this ID, stop loop.")};
 		if (!Players.GetTeam(parseInt(id))) {return};
+		if (Players.GetTeam(parseInt(id)) == 1) {return};
 		var team = "Radiant"
 
 		if (Players.GetTeam(parseInt(id)) == 3) {
@@ -187,7 +188,9 @@ function OverrideTopBarColor() {
 
 		var panel = FindDotaHudElement(team + "Player" + id)
 //		$.Msg(id)
-		panel.FindChildTraverse('PlayerColor').style.backgroundColor = colors[id];
+
+		if (panel)
+			panel.FindChildTraverse('PlayerColor').style.backgroundColor = colors[id];
 	}    
 }
 

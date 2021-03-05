@@ -233,6 +233,70 @@ function GameMode:SetupShrines()
 end
 
 function GameMode:SetupContributors()
+	if not GameMode.contributors then
+		GameMode.contributors = LoadKeyValues("scripts/npc/units/contributors.txt")
+	end
+
+	local contributors = {}
+	local contributors_count = 0
+	local fillers = {
+		"good_filler_2",
+		"good_filler_4",
+		"good_filler_6",
+		"good_filler_7",
+		"bad_filler_2",
+		"bad_filler_4",
+		"bad_filler_6",
+		"bad_filler_7",
+	}
+	local max_contributors = #fillers
+
+	for k, v in pairs(GameMode.contributors) do
+		if k ~= "Version" then
+			contributors_count = contributors_count + 1
+			if not contributors[contributors_count] then contributors[contributors_count] = {} end
+			contributors[contributors_count]["name"] = k
+			contributors[contributors_count]["model"] = GameMode.contributors[k]["Model"]
+		end
+	end
+
+	local pedestal_name = "npc_donator_pedestal"
+
+	for _, ent_name in pairs(fillers) do
+		local random_int = RandomInt(1, max_contributors)
+		local contributor = contributors[random_int]
+		if contributor == nil then
+			print("Error: nil contributor name!")
+			return
+		end
+		table.remove(contributors, random_int)
+
+		local filler = Entities:FindByName(nil, ent_name)
+
+		if filler then
+			local abs = filler:GetAbsOrigin()
+			local team = 2
+			if string.find(ent_name, "bad") then team = 3 end
+
+			filler:SetUnitName(contributor["name"])
+			filler:SetModel(contributor["model"])
+			filler:SetOriginalModel(contributor["model"])
+			filler:AddNewModifier(filler, nil, "modifier_contributor_filler", {})
+			filler:StartGesture(ACT_DOTA_IDLE)
+			filler:SetAbsOrigin(abs + Vector(0, 0, 45))
+
+			local pedestal = CreateUnitByName(pedestal_name, abs, true, nil, nil, team)
+			pedestal:AddNewModifier(pedestal, nil, "modifier_contributor_statue", {})
+--			if not string.find(filler:GetName(), "6") or not string.find(filler:GetName(), "7") then
+				pedestal:SetAbsOrigin(abs + Vector(0, 0, 45))
+				filler.pedestal = pedestal
+--			end
+		end
+	end
+end
+
+--[[
+function GameMode:SetupContributors()
 	local i = 0
 	local j = 0
 	local team
@@ -287,6 +351,7 @@ function GameMode:SetupContributors()
 		end
 	end
 end
+--]]
 
 function GameMode:SetupFrostivus()
 	if Entities:FindByName(nil, "radiant_greevil") then
