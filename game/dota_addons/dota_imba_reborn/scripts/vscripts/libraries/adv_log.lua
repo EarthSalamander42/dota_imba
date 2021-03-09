@@ -364,6 +364,10 @@ if Log == nil then
 		for i = 1, #trace do
 			trace = trace .. ", " .. json.encode(trace[i])
 		end
+
+		-- don't send empty message to backend
+		if trace == "" then return end
+
 		-- prepare api request
 		api:Message({
 			level = level,
