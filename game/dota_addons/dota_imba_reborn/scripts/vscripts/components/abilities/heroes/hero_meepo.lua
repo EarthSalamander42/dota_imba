@@ -129,7 +129,7 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 	-- print(self:GetParent().GetCloneSource)
 	-- print(keys.unit)
 	-- print(self:GetParent():GetCloneSource())
-	
+
 	if keys.ability and keys.ability.IsItem and keys.ability:IsItem() and self:GetParent().GetCloneSource and (keys.unit and keys.unit == self:GetParent():GetCloneSource() or (keys.target and keys.target == self:GetParent():GetCloneSource() and keys.unit:GetTeamNumber() == self:GetParent():GetCloneSource():GetTeamNumber())) then
 		local modifier_name			= nil
 		local modifier_duration		= nil
@@ -137,9 +137,6 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 		-- Garbage case-by-case basis here
 		if keys.ability:GetName() == "item_imba_white_queen_cape" or keys.ability:GetName() == "item_minotaur_horn" then
 			modifier_name		= "modifier_black_king_bar_immune"
-			modifier_duration	= keys.ability:GetSpecialValueFor("duration")
-		elseif keys.ability:GetName() == "item_imba_black_queen_cape" then
-			modifier_name		= "modifier_imba_black_queen_cape_active_bkb"
 			modifier_duration	= keys.ability:GetSpecialValueFor("duration")
 		elseif keys.ability:GetName() == "item_imba_black_king_bar" then
 			modifier_name		= "modifier_item_imba_black_king_bar_buff"
@@ -158,7 +155,7 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 			modifier_duration	= keys.ability:GetSpecialValueFor("flutter_duration")
 		-- Jarnbjorn
 		elseif keys.ability:GetName() == "item_imba_jarnbjorn" then
-			modifier_name		= "modifier_item_imba_jarnbjorn_static"
+			modifier_name		= "modifier_item_imba_static_charge"
 			modifier_duration	= keys.ability:GetSpecialValueFor("static_duration")
 		-- KYS
 		elseif keys.ability:GetName() == "item_imba_sange" then
@@ -199,12 +196,8 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 			modifier_duration	= keys.ability:GetSpecialValueFor("berserk_duration")
 		-- Mjollnir
 		elseif keys.ability:GetName() == "item_imba_mjollnir" then
-			modifier_name		= "modifier_item_imba_mjollnir_static"
+			modifier_name		= "modifier_item_imba_static_charge"
 			modifier_duration	= keys.ability:GetSpecialValueFor("static_duration")
-		-- Satanic
-		elseif keys.ability:GetName() == "item_imba_satanic" then
-			modifier_name		= "modifier_item_imba_sange_yasha_active"
-			modifier_duration	= keys.ability:GetSpecialValueFor("active_duration")
 		-- Spirit Vessel
 		elseif keys.ability:GetName() == "item_imba_spirit_vessel" then
 			modifier_name		= "modifier_item_imba_spirit_vessel_heal"
@@ -233,6 +226,14 @@ function modifier_meepo_divided_we_stand_lua:OnAbilityFullyCast(keys)
 					self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_the_triumvirate_v2_kaya", {duration = keys.ability:GetSpecialValueFor("active_duration")})
 				end)
 			end)
+		elseif keys.ability:GetName() == "item_imba_black_queen_cape" then
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_imba_black_queen_cape_active_bkb", {duration = keys.ability:GetSpecialValueFor("bkb_duration")})
+			if keys.ability:GetCurrentCharges() >= 1 then
+				self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_imba_black_queen_cape_active_heal", {duration = keys.ability:GetSpecialValueFor("heal_duration")})
+			end
+		elseif keys.ability:GetName() == "item_imba_satanic" then
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_imba_satanic", {duration = keys.ability:GetSpecialValueFor("unholy_rage_duration")})
+			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_imba_satanic_active", {duration = keys.ability:GetSpecialValueFor("unholy_rage_duration")})
 		elseif keys.ability:GetName() == "item_imba_bloodstone_720" then
 			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_bloodstone_active_720", {duration = keys.ability:GetSpecialValueFor("restore_duration")})
 			self:GetParent():AddNewModifier(self:GetParent():GetCloneSource(), keys.ability, "modifier_item_imba_bloodstone_active_cdr_720", {duration = keys.ability:GetSpecialValueFor("active_duration")})
