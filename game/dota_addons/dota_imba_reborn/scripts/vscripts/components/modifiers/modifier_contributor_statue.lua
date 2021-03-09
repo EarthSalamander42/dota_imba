@@ -73,5 +73,4 @@ function modifier_contributor_filler:OnDeath(keys)
 			self:GetParent().pedestal:ForceKill(false)
 		end
 	end
-
 end

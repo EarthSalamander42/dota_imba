@@ -76,12 +76,13 @@ function TeamOrdering:ComputeTeamSelection()
 					self.winrates[i] = self.fixed_winrate_for_rookies
 --					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
 				else
+					local seasonal_winrate = api:GetPlayerSeasonalWinrate(i)
 					-- if calibrated
-					if type(api:GetPlayerWinrate(i)) == "number" then
-						self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
---						print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i))
+					if type(seasonal_winrate) == "number" then
+						self.winrates[i] = seasonal_winrate or 50.00042 -- specific value to notice when winrate couldn't be gathered
+--						print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), seasonal_winrate)
 					else
-						self.winrates[i] = self.fixed_winrates_for_uncalibrated
+						self.winrates[i] = api:GetPlayerWinrate(i)
 					end
 				end
 			end
