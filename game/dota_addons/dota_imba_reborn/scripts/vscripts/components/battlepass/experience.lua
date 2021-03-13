@@ -74,7 +74,7 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				in_game_tag = api:GetPlayerTagEnabled(ID),
 				bp_rewards = api:GetPlayerBPRewardsEnabled(ID),
 				player_xp = api:GetPlayerXPEnabled(ID),
-				winrate = api:GetPlayerWinrate(ID),
+				winrate = api:GetPlayerSeasonalWinrate(ID),
 				winrate_toggle = api:GetPlayerWinrateShown(ID),
 				XP_change = 0,
 				IMR_5v5_change = 0,

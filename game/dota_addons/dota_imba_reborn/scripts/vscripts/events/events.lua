@@ -707,14 +707,20 @@ function GameMode:OnPlayerChat(keys)
 	local text = keys.text
 
 	local steamid = tostring(PlayerResource:GetSteamID(keys.playerid))
-	api.Message("C[" .. steamid .. "] " .. tostring(text))
+--	api.Message("C[" .. steamid .. "] " .. tostring(text))
 
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then
 		return nil
 	end
 
+	if not keys.playerid then return end
+	if not PlayerResource:GetPlayer(keys.playerid) then return end
+	if not PlayerResource:GetPlayer(keys.playerid).GetAssignedHero then return end
+
 	local caster = PlayerResource:GetPlayer(keys.playerid):GetAssignedHero()
+
+	if not caster then return end
 
 	for str in string.gmatch(text, "%S+") do
 		if IsInToolsMode() or GameRules:IsCheatMode() or (api.imba ~= nil and api.imba.is_developer(steamid)) then

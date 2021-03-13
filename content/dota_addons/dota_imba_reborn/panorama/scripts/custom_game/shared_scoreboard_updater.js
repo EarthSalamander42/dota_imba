@@ -158,7 +158,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 				else if (isFloat(player_info.winrate))
 					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(2) + "%");					
 				else
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate + "%");
+					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate);
 			}
 		}
 	}

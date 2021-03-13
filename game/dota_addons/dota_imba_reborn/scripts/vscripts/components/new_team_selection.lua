@@ -29,7 +29,7 @@ end, nil)
 
 -- This function is ONLY for public games (triggers when backend successfully gathered every players winrates)
 function TeamOrdering:OnPlayersLoaded()
-	if IsInToolsMode() then return end
+--	if IsInToolsMode() then return end
 
 	if PlayerResource:GetPlayerCount() > 3 then
 		-- re-order teams based on winrate with a delay to make sure winrate values are gathered
@@ -76,17 +76,22 @@ function TeamOrdering:ComputeTeamSelection()
 					self.winrates[i] = self.fixed_winrate_for_rookies
 --					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
 				else
+					local seasonal_winrate = api:GetPlayerSeasonalWinrate(i)
 					-- if calibrated
-					if type(api:GetPlayerWinrate(i)) == "number" then
-						self.winrates[i] = api:GetPlayerWinrate(i) or 50.00042 -- specific value to notice when winrate couldn't be gathered
---						print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), api:GetPlayerWinrate(i))
+					if type(seasonal_winrate) == "number" then
+						self.winrates[i] = seasonal_winrate or 50.00042 -- specific value to notice when winrate couldn't be gathered
+--						print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), seasonal_winrate)
 					else
-						self.winrates[i] = self.fixed_winrates_for_uncalibrated
+						self.winrates[i] = api:GetPlayerWinrate(i)
 					end
 				end
 			end
 		end
 --	end
+
+	if IsInToolsMode() then
+		print(self.winrates)
+	end
 
 	local combination = {}
 
@@ -168,11 +173,15 @@ function TeamOrdering:CalculateWinratesDifference(teamA, teamB)
 	local winrateTeamB = 0
 	
 	for _, playerAIndex in pairs(teamA) do
-		winrateTeamA = winrateTeamA + self.winrates[playerAIndex]
+		if self.winrates[playerAIndex] and type(self.winrates[playerAIndex]) == "number" then
+			winrateTeamA = winrateTeamA + self.winrates[playerAIndex]
+		end
 	end
 
 	for _, playerBIndex in pairs(teamB) do
-		winrateTeamB = winrateTeamB + self.winrates[playerBIndex]
+		if self.winrates[playerBIndex] and type(self.winrates[playerBIndex]) == "number" then
+			winrateTeamB = winrateTeamB + self.winrates[playerBIndex]
+		end
 	end
 
 	return math.abs(winrateTeamA - winrateTeamB)
