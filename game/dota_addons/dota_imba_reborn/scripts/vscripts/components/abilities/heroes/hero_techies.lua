@@ -250,64 +250,57 @@ LinkLuaModifier("modifier_imba_proximity_mine_talent", "components/abilities/her
 modifier_imba_proximity_mine = modifier_imba_proximity_mine or class({})
 
 function modifier_imba_proximity_mine:OnCreated()
-	if IsServer() then
-		-- Ability properties
-		self.caster = self:GetParent()
-		self.owner = self.caster:GetOwner()
+	if not IsServer() then return end
 
-		self.ability = self.owner:FindAbilityByName("imba_techies_land_mines")
+	-- Ability properties
+	self.caster = self:GetParent()
+	self.owner = self.caster:GetOwner()
 
-		-- Ability specials
-		self.explosion_delay = self.ability:GetVanillaAbilitySpecial("proximity_threshold")
-		self.mine_damage = self.ability:GetVanillaAbilitySpecial("damage")
-		self.trigger_range = self.ability:GetVanillaAbilitySpecial("radius")
-		self.activation_delay = self.ability:GetVanillaAbilitySpecial("activation_delay")
-		self.building_damage_pct = self.ability:GetVanillaAbilitySpecial("building_damage_pct")
+	self.ability = self.owner:FindAbilityByName("imba_techies_land_mines")
 
-		-- IMBA Ability specials
-		self.buidling_damage_duration = self.ability:GetSpecialValueFor("buidling_damage_duration")
-		self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
-		self.fow_radius = self.ability:GetSpecialValueFor("fow_radius")
-		self.fow_duration = self.ability:GetSpecialValueFor("fow_duration")
-		self.big_boom_mine_bonus_dmg = self.ability:GetSpecialValueFor("big_boom_mine_bonus_dmg")
-		self.big_boom_shrapnel_duration = self.ability:GetSpecialValueFor("big_boom_shrapnel_duration")
+	-- Ability specials
+	self.explosion_delay = self.ability:GetVanillaAbilitySpecial("proximity_threshold")
+	self.mine_damage = self.ability:GetVanillaAbilitySpecial("damage")
+	self.trigger_range = self.ability:GetVanillaAbilitySpecial("radius")
+	self.activation_delay = self.ability:GetVanillaAbilitySpecial("activation_delay")
+	self.building_damage_pct = self.ability:GetVanillaAbilitySpecial("building_damage_pct")
 
-		print("Explosion Delay:", self.explosion_delay)
-		print("Mine Damage:", self.mine_damage)
-		print("Trigger Range:", self.trigger_range)
-		print("Activation Delay:", self.activation_delay)
+	-- IMBA Ability specials
+	self.buidling_damage_duration = self.ability:GetSpecialValueFor("buidling_damage_duration")
+	self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
+	self.fow_radius = self.ability:GetSpecialValueFor("fow_radius")
+	self.fow_duration = self.ability:GetSpecialValueFor("fow_duration")
+	self.big_boom_mine_bonus_dmg = self.ability:GetSpecialValueFor("big_boom_mine_bonus_dmg")
+	self.big_boom_shrapnel_duration = self.ability:GetSpecialValueFor("big_boom_shrapnel_duration")
 
-		-- #1 Talent: Trigger range increase
-		self.trigger_range = self.trigger_range + self.caster:FindTalentValue("special_bonus_imba_techies_1")
+	-- #1 Talent: Trigger range increase
+	self.trigger_range = self.trigger_range + self.caster:FindTalentValue("special_bonus_imba_techies_1")
 
-		-- Set the mine as inactive
-		self.active = false
-		self.triggered = false
-		self.trigger_time = 0
+	-- Set the mine as inactive
+	self.active = false
+	self.triggered = false
+	self.trigger_time = 0
 
-		if IsServer() then
-			-- Add mine particle effect
-			local particle_mine = "particles/units/heroes/hero_techies/techies_land_mine.vpcf"
-			local particle_mine_fx = ParticleManager:CreateParticle(particle_mine, PATTACH_ABSORIGIN_FOLLOW, self.caster)
-			ParticleManager:SetParticleControl(particle_mine_fx, 0, self.caster:GetAbsOrigin())
-			ParticleManager:SetParticleControl(particle_mine_fx, 3, self.caster:GetAbsOrigin())
-			self:AddParticle(particle_mine_fx, false, false, -1, false, false)
+	-- Add mine particle effect
+	local particle_mine = "particles/units/heroes/hero_techies/techies_land_mine.vpcf"
+	local particle_mine_fx = ParticleManager:CreateParticle(particle_mine, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+	ParticleManager:SetParticleControl(particle_mine_fx, 0, self.caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_mine_fx, 3, self.caster:GetAbsOrigin())
+	self:AddParticle(particle_mine_fx, false, false, -1, false, false)
 
-			-- Determine if this is a Big Boom
-			if self.caster:GetUnitName() == "npc_imba_techies_land_mines_big_boom" then
-				self.is_big_boom = true
-			end
-
-			-- Wait for the mine to activate
-			Timers:CreateTimer(self.activation_delay, function()
-				-- Mark mine as active
-				self.active = true
-
-				-- Start looking around for enemies
-				self:StartIntervalThink(self.tick_interval)
-			end)
-		end
+	-- Determine if this is a Big Boom
+	if self.caster:GetUnitName() == "npc_imba_techies_land_mines_big_boom" then
+		self.is_big_boom = true
 	end
+
+	-- Wait for the mine to activate
+	Timers:CreateTimer(self.activation_delay, function()
+		-- Mark mine as active
+		self.active = true
+
+		-- Start looking around for enemies
+		self:StartIntervalThink(self.tick_interval)
+	end)
 end
 
 function modifier_imba_proximity_mine:IsHidden() return true end
@@ -831,8 +824,6 @@ function modifier_imba_statis_trap:OnCreated()
 		self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
 		self.flying_vision_duration = self.ability:GetSpecialValueFor("flying_vision_duration")
 
-		print(self.activate_delay, self.trigger_range, self.root_duration, self.tick_rate, self.flying_vision_duration)
-
 		-- Set variables
 		self.active = false
 
@@ -883,8 +874,6 @@ end
 function modifier_imba_statis_trap:_Explode()
 	local caster = self.caster
 
-	print("Start explode")
-
 	-- Springing the trap! Play root sound
 	local sound_explosion = "Hero_Techies.StasisTrap.Stun"
 	EmitSoundOn(sound_explosion, caster)
@@ -913,8 +902,6 @@ function modifier_imba_statis_trap:_Explode()
 	local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
 	local modifier_disarmed = "modifier_imba_statis_trap_disarmed"
 
-	print("Start root")
-
 	-- Root enemies nearby if not disarmed, and apply a electrocharge
 	for _,enemy in pairs(enemies) do
 		if not caster:HasModifier(modifier_disarmed) then
@@ -929,8 +916,6 @@ function modifier_imba_statis_trap:_Explode()
 		end
 	end
 
-	print("End Root")
-
 	-- Find nearby Statis Traps and mark them as disarmed
 	local mines = FindUnitsInRadius(caster:GetTeamNumber(),
 		caster:GetAbsOrigin(),
@@ -943,37 +928,23 @@ function modifier_imba_statis_trap:_Explode()
 		false
 	)
 
-	print("Start stasis trap ally mines root")
-
 	for _,mine in pairs(mines) do
 		if mine:GetUnitName() == "npc_imba_techies_stasis_trap" and mine ~= caster then
 			mine:AddNewModifier(caster, self.ability, modifier_disarmed, {})
 		end
 	end
 
-	print("End")
-
-	print("Has talent 4?")
-
 	-- #4 Talent: Stasis Traps grants charges of Inflammable to Remote mines
 	if self.owner and self.owner:HasTalent("special_bonus_imba_techies_4") then
 		ApplyInflammableToRemoteMines(caster, self.root_range, mines)
 	end
 
-	print("End has talent 4")
-
-	print("Add Vision")
-
 	-- Apply flying vision
 	AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), self.root_range, self.flying_vision_duration, false)
-
-	print("Kill and Destroy")
 
 	-- Kill trap and destroy modifier
 	caster:ForceKill(false)
 	self:Destroy()
-
-	print("End Explode")
 end
 
 
@@ -1997,7 +1968,7 @@ function imba_techies_minefield_sign:OnSpellStart()
 	EmitSoundOn(sound_cast, caster)
 
 	-- If there is already a sign assigned to this ability, destroy it
-	if self.assigned_sign then
+	if self.assigned_sign and self.assigned_sign.Destroy then
 		self.assigned_sign:Destroy()
 	end
 
