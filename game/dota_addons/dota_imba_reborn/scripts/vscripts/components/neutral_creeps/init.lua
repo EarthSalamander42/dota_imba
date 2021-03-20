@@ -58,6 +58,17 @@ Neutrals.Triggers["neutralcamp_evil_7"] = "medium"
 Neutrals.Triggers["neutralcamp_evil_8"] = "ancient"
 Neutrals.Triggers["neutralcamp_evil_9"] = "big"
 
+Neutrals.deniable_allies = {}
+Neutrals.deniable_allies["npc_dota_observer_wards"] = true
+Neutrals.deniable_allies["npc_dota_sentry_wards"] = true
+Neutrals.deniable_allies["npc_imba_techies_land_mines"] = true
+Neutrals.deniable_allies["npc_imba_techies_land_mines_big_boom"] = true
+Neutrals.deniable_allies["npc_imba_techies_stasis_trap"] = true
+Neutrals.deniable_allies["npc_imba_techies_remote_mines"] = true
+
+Neutrals.blacklisted_allies = {}
+Neutrals.blacklisted_allies["npc_imba_techies_minefield_sign"] = true
+
 Neutrals.spawn_point = {}
 
 ListenToGameEvent('game_rules_state_change', function(keys)
@@ -104,13 +115,24 @@ ListenToGameEvent("npc_spawned", function(keys)
 		return
 	end
 
-	if npc:GetUnitName() == "npc_dota_observer_wards" or npc:GetUnitName() == "npc_dota_sentry_wards" then
+	if Neutrals.deniable_allies[npc:GetUnitName()] then
 		npc:SetContextThink(DoUniqueString("ward_fucker"), function()
 			if Neutrals:IsBlockingAllyNeutralSpawn(npc) then
 				npc:AddNewModifier(npc, nil, "modifier_imba_ward_deniable", {})
 			end
 
 			return nil
+		end, FrameTime())
+	end
+
+	if Neutrals.blacklisted_allies[npc:GetUnitName()] then
+		npc:SetContextThink(DoUniqueString("ward_fucker"), function()
+			if Neutrals:IsBlockingAllyNeutralSpawn(npc) then
+				npc:ForceKill(false)
+
+				local player_id = npc:GetPlayerOwnerID()
+				DisplayError(player_id, "Can't spawn this unit in neutral camps area.")
+			end
 		end, FrameTime())
 	end
 end, nil)

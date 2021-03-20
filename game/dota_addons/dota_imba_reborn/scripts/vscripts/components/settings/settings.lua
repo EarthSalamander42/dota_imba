@@ -27,8 +27,8 @@ CAPTAINS_MODE_RESERVE_TIME = 130	-- total bonus time that can be used throughout
 
 -- IMBA constants
 IMBA_REINCARNATION_TIME = 3.0
-IMBA_MAX_RESPAWN_TIME = 50.0		-- Maximum respawn time, does not include bonus reaper scythe duration
-IMBA_RESPAWN_TIME_PCT = 50			-- Percentage of the respawn time from vanilla respawn time
+IMBA_MAX_RESPAWN_TIME = 60.0		-- Maximum respawn time, does not include bonus reaper scythe duration
+IMBA_RESPAWN_TIME_PCT = 60			-- Percentage of the respawn time from vanilla respawn time
 
 RUNE_SPAWN_TIME = 120				-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
