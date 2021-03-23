@@ -301,12 +301,13 @@
 	//=================================================================================================================
 	"item_recipe_trident"
 	{
+		"ItemResult"					"item_imba_the_triumvirate_v2"
+
 		"ItemRequirements"
 		{
-			"01"						"item_imba_kaya;item_imba_sange;item_imba_yasha;"
-			"02"						"item_imba_kaya_and_sange;item_imba_yasha;"
-			"03"						"item_imba_sange_and_yasha;item_imba_kaya;"
-			"04"						"item_imba_yasha_and_kaya;item_imba_sange;"
+			"01"						"item_imba_kaya_and_sange;item_imba_yasha;"
+			"02"						"item_imba_sange_yasha;item_imba_kaya;"
+			"03"						"item_imba_yasha_and_kaya;item_imba_sange;"
 		}
 	}
 
@@ -355,6 +356,12 @@
 		"ItemCost"						"1450"
 		"ItemIsNeutralDrop"				"0"
 		"ItemPurchasable"				"1"
+
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_strength"			"0"
+		}
 	}
 
 	//=================================================================================================================
@@ -476,6 +483,14 @@
 		{
 			"01"						"item_imba_blink;item_reaver"
 		}
+	}
+
+	//=================================================================================================================
+	// Aghanim's Shard
+	//=================================================================================================================
+	"item_aghanims_shard"
+	{
+		"ItemInitialStockTime"			"600.0"
 	}
 
 	//=================================================================================================================

@@ -2881,7 +2881,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"575"
+				"bonus_health"			"250"
 			}
 			"03"
 			{
@@ -2896,7 +2896,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"health_regen_pct"		"1.0"
+				"health_regen_pct"		"1.6"
 			}
 			"06"
 			{
@@ -2916,12 +2916,12 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_amp"			"50"
+				"hp_regen_amp"			"100"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_amp_broken"	"5"
+				"hp_regen_amp_broken"	"10"
 			}
 			"11"
 			{
@@ -9809,7 +9809,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"865"
+//		"ItemCost" 						"845"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"agi;int;str;armor;boost_health;mana_regen"
 		"ItemQuality"					"artifact"
@@ -9864,7 +9864,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"bonus_mana_regen"				"1.0"
+				"bonus_mana_regen"				"1.5"
 			}
 			"07"
 			{
@@ -9874,19 +9874,19 @@
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"150"
+				"damage"						"200"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"heal"							"400"
+				"heal"							"240"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"duration"						"8"
+				"duration"						"8.0"
 			}
 		}
 	}
@@ -9965,22 +9965,22 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_strength"				"13"
+				"bonus_strength"				"12"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_agility"					"3"
+				"bonus_agility"					"2"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_intelligence"			"3"
+				"bonus_intelligence"			"2"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_armor"					"3"
+				"bonus_armor"					"2"
 			}
 			"05"
 			{
@@ -13398,7 +13398,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"	
+		"ItemCost"						"1000"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -13465,12 +13465,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"20"
+				"bonus_movement_speed"	"0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"1.5"
+				"bonus_mana_regen"		"1.75"
 			}
 			"04"
 			{
@@ -13500,12 +13500,12 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"soul_heal_amount"		"50"
+				"soul_heal_amount"		"40"
 			}			
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"soul_damage_amount"	"30"
+				"soul_damage_amount"	"35"
 			}
 			"11"
 			{
@@ -13520,7 +13520,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_reduction_enemy"	"65"
+				"hp_regen_reduction_enemy"	"45"
 			}
 			"14"
 			{

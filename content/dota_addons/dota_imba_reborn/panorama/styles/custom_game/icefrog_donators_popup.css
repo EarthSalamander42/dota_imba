@@ -1,18 +1,17 @@
 .HUDRoot {
 	width: 100%;
 	height: 100%;
-	z-index: -1000;
 }
 
 .column {
 	flow-children: down;
-	padding: 5px;
+	padding: 10px;
 }
 
 .hpbar {
 	background-color: gradient( linear, 0% 0%, 0% 0%, from( #303030da ), color-stop( 0.8, #303030aa ),  to( #00000000 ) );
 	/* background-color: black; */
-	padding: 0 5px;
+	padding: 5px 5px;
 	border-radius: 10px;
 	flow-children: down;
 	z-index: -1000;
@@ -62,4 +61,33 @@
 
 .red {
 	color: red;
+}
+
+.HideButtonContainer {
+	align: center center;
+}
+
+.HideButton {
+	width: 150px;
+	height: 30px;
+	background-image: url("s2r://panorama/images/red_large_off_png.vtex");
+	background-size: 100%;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	transition-property: brightness, saturation;
+	transition-duration: .2s;
+	overflow: noclip noclip;
+	brightness: 0.5;
+}
+
+.HideButton:hover {
+	brightness: 1.0;
+}
+
+.HideText {
+	margin-top: 2px;
+	horizontal-align: center;
+	font-size: 18px;
+	color: white;
+	text-align: center;
 }

@@ -163,25 +163,9 @@
 
 		<!-- Vanilla pick screen -->
 		var PreGame = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame")
-		var PregameBG = PreGame.FindChildTraverse("PregameBG")
-//		var AmbientFX = PreGame.FindChildTraverse("AmbientFXContainer")
 		var HeroPickScreen = PreGame.FindChildTraverse("HeroPickScreen")
-		var MainHeroPickScreenContents = PreGame.FindChildTraverse("MainHeroPickScreenContents")
-		var HeroPickLeftColumn = PreGame.FindChildTraverse("HeroPickLeftColumn")
-		var HeroGrid = PreGame.FindChildTraverse("HeroGrid")
-		var GridCore = PreGame.FindChildTraverse("GridCore")
-		var PreMinimapContainer = PreGame.FindChildTraverse("PreMinimapContainer")
 
-//		PreGame.style.backgroundColor = "none";
 		HeroPickScreen.style.marginTop = "125px"; // 112px
-//		Minimap.style.visibility = "collapse";
-//		BattlePass.style.visibility = "collapse";
-//		GridTeam.style.visibility = "collapse";
-//		HeroInspect.style.visibility = "collapse";
-//		HeroFilters.style.visibility = "collapse";
-//		PregameBG.style.opacity = "0";
-		PregameBG.style.transitionDuration = "0.0s";
-//		AmbientFX.style.backgroundColor = "#000000fa";
 
 		HidePickScreen();
 //		OverrideVersusScreen();
@@ -208,14 +192,23 @@
 		DeBuffBar.style.marginRight = "29.5%";
 		DeBuffBar.style.flowChildren = "right";
 */
+		var BattlePassHeroUpsell = PreGame.FindChildTraverse("BattlePassHeroUpsell");
+
 		// Enable Hero bio + Disable not-working Dota Plus feature
-		if (PreGame.FindChildTraverse("BattlePassHeroUpsell")) {
-			PreGame.FindChildTraverse("BattlePassHeroUpsell").style.visibility = "collapse";
-			PreGame.FindChildTraverse("FriendsAndFoes").style.height = "205px";
-			PreGame.FindChildTraverse("FriendsAndFoes").style.padding = "0px 0px";
+		if (BattlePassHeroUpsell) {
+			BattlePassHeroUpsell.style.visibility = "collapse";
+
+			var FriendsAndFoes = PreGame.FindChildTraverse("FriendsAndFoes");
+
+			if (FriendsAndFoes) {
+				PreGame.FindChildTraverse("FriendsAndFoes").style.height = "205px";
+				PreGame.FindChildTraverse("FriendsAndFoes").style.padding = "0px 0px";
+			}
+
+			var BattlePassHeroData = PreGame.FindChildTraverse("BattlePassHeroData");
 			
-			if (PreGame && PreGame.FindChildTraverse("BattlePassHeroData"))
-				PreGame.FindChildTraverse("BattlePassHeroData").style.visibility = "collapse";
+			if (BattlePassHeroData)
+				BattlePassHeroData.style.visibility = "collapse";
 		}
 
 		// Override Versus Screen with IMBA info (Credits: EarthSalamander)

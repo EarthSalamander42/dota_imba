@@ -1,10 +1,11 @@
 "use strict";
 
 var hud = $.GetContextPanel().GetParent().GetParent().GetParent();
+var root_panel = $.GetContextPanel();
 var topbar = hud.FindChildTraverse("topbar");
 
 if (Game.IsInToolsMode()) {
-	$.GetContextPanel().RemoveAndDeleteChildren()
+	root_panel.RemoveAndDeleteChildren();
 }
 
 var radiant_donators = [
@@ -105,7 +106,7 @@ function SetHealthBar() {
 				var panel = healthbars.get(v);
 				healthbars.get(v).style.opacity = "1";
 			} else {
-				var panel = $.CreatePanel("Panel", $.GetContextPanel(), "healthbar" + v);
+				var panel = $.CreatePanel("Panel", root_panel, "healthbar" + v);
 				panel.BLoadLayoutSnippet('hpbar');
 				healthbars.set(v, panel);
 
@@ -122,6 +123,9 @@ function SetHealthBar() {
 						label.text = v[0];
 					})
 				}
+
+				var exit_button = $.CreatePanel("Panel", panel, "exitbutton" + v);
+				exit_button.BLoadLayoutSnippet('exit');
 			}
 		} else {
 			if (healthbars.has(v)) {
@@ -138,7 +142,7 @@ function SetHealthBar() {
 }
 
 function hpbarmove() {
-	var context = $.GetContextPanel(), uiw = context.actuallayoutwidth, uih = context.actuallayoutheight;
+	var uiw = root_panel.actuallayoutwidth, uih = root_panel.actuallayoutheight;
 
 	healthbars.forEach(function (v, k) {
 		var vec = Entities.GetAbsOrigin(k);
@@ -170,6 +174,10 @@ function hpbarmove() {
 	});
 
 	$.Schedule(0, hpbarmove);
+}
+
+function HideButton() {
+	$.GetContextPanel().style.opacity = 0;
 }
 
 (function() {

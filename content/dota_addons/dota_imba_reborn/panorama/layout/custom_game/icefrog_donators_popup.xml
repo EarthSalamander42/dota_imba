@@ -17,8 +17,15 @@
 				</Panel>
 			</Panel>
 		</snippet>
+
+		<snippet name="exit">
+			<Panel class="HideButtonContainer" hittest="false">
+				<Button class="HideButton" onactivate="HideButton()">
+					<Label class="HideText" text="Hide"/>
+				</Button>
+			</Panel>
+		</snippet>
 	</snippets>
 
-	<Panel class="HUDRoot" hittest="false">
-	</Panel>
+	<Panel class="HUDRoot" hittest="false"/>
 </root>
