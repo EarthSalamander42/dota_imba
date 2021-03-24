@@ -466,3 +466,64 @@ function GameMode:SetSameHeroSelection(bEnabled)
 	GameRules:SetSameHeroSelectionEnabled(bEnabled)
 	CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = bEnabled})
 end
+
+function GameMode:PreventBannedHeroToBeRandomed(keys)
+--	print(keys)
+
+	if PlayerResource:GetSelectedHeroName(keys.iPlayerID) and api.disabled_heroes[PlayerResource:GetSelectedHeroName(keys.iPlayerID)] or keys.bIMBA == 1 then
+		local old_hero = PlayerResource:GetSelectedHeroEntity(keys.iPlayerID)
+		local herolist = LoadKeyValues("scripts/npc/npc_heroes.txt")
+		local hero_table = {}
+
+		-- old hero stay because GetSelectedHeroEntity is invalid in hero selection phase
+		if old_hero then
+			print("old hero:", old_hero:GetUnitName())
+		end
+
+		local picked_heroes = {}
+
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			if PlayerResource:GetPlayer(i) and PlayerResource:GetSelectedHeroName(i) then
+				picked_heroes[PlayerResource:GetSelectedHeroName(i)] = true
+			end
+		end
+
+		for k, v in pairs(herolist) do
+			-- only add non-picked heroes
+			if string.find(k, "npc_dota_hero_") and not picked_heroes[k] and not api.disabled_heroes[k] then
+				if keys.bIMBA == 1 then
+					if HeroSelection.imbalist[k] and HeroSelection.imbalist[k] == 1 then
+						table.insert(hero_table, k)
+					end
+				else
+					table.insert(hero_table, k)
+				end
+			end
+		end
+
+--		print(hero_table)
+
+		local new_hero = hero_table[RandomInt(1, #hero_table)]
+
+		PlayerResource:GetPlayer(keys.iPlayerID):SetSelectedHero(new_hero)
+
+		PrecacheUnitByNameAsync(new_hero, function()
+			PlayerResource:ReplaceHeroWith(keys.iPlayerID, new_hero, 0, 0)
+
+			Timers:CreateTimer(1.0, function()
+				if old_hero then
+					UTIL_Remove(old_hero)
+				end
+			end)
+
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if hero.GetPlayerOwnerID and hero:GetPlayerOwnerID() == -1 then
+					print("No hero owner, remove!", hero:GetUnitName())
+					UTIL_Remove(hero)
+				end
+			end
+		end)
+
+		print("banned hero randomed, re-random:", new_hero)
+	end
+end

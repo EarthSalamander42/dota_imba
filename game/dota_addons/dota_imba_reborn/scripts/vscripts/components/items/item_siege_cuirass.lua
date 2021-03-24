@@ -167,10 +167,10 @@ function modifier_imba_siege_cuirass:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+--		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+--		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 	}
 end
@@ -187,17 +187,21 @@ function modifier_imba_siege_cuirass:GetModifierBonusStats_Strength()
 	end
 end
 
+--[[
 function modifier_imba_siege_cuirass:GetModifierBonusStats_Agility()
 	if self:GetAbility() then
 		return self:GetAbility():GetSpecialValueFor("bonus_agi")
 	end
 end
+--]]
 
+--[[
 function modifier_imba_siege_cuirass:GetModifierMoveSpeedBonus_Constant()
 	if self:GetAbility() then
 		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
 	end
 end
+--]]
 
 function modifier_imba_siege_cuirass:GetModifierAttackSpeedBonus_Constant()
 	if self:GetAbility() then
@@ -205,11 +209,13 @@ function modifier_imba_siege_cuirass:GetModifierAttackSpeedBonus_Constant()
 	end
 end
 
+--[[
 function modifier_imba_siege_cuirass:GetModifierConstantManaRegen()
 	if self:GetAbility() then
 		return self:GetAbility():GetSpecialValueFor("bonus_mana_regen_pct")
 	end
 end
+--]]
 
 function modifier_imba_siege_cuirass:GetModifierPhysicalArmorBonus()
 	if self:GetAbility() then

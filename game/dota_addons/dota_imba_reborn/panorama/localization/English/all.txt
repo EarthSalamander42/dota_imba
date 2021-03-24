@@ -125,8 +125,6 @@
 "vanilla_hero"					"Lazy"
 "close_picking_screen"			"Force-close Picking Screen"
 
-"gg_panel_description"			"GG confirmed in"
-
 "imba_hero_name_filler"                         "Lock in "
 "imba_strength_hero_pick_list_title"            "Strength Heroes"
 "imba_agility_hero_pick_list_title"             "Agility Heroes"
@@ -157,3 +155,5 @@
 "gg_call"										"GG player count: "
 
 "Playback_ButtonCategory"						"Controllers"
+
+"imba_random_description"						"Randomly picks from every IMBAfied heroes."

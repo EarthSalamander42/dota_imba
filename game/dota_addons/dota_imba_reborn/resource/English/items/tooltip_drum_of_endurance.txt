@@ -1,5 +1,5 @@
 "DOTA_Tooltip_Ability_item_imba_ancient_janggo"					"Drum of Endurance"
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_Description"		"<h1>Active: Endurance</h1> <font color='#FF7800'>Does not use any charges.</font> Gives +%bonus_attack_speed_pct% attack speed and +%bonus_movement_speed_pct%%% movement speed to nearby allies for %duration% seconds. <font color='#FF7800'>Also further boosts attack speed by %active_as_per_ally% and movement speed by %active_ms_per_ally%%% for every affected ally. Heroes count as %hero_multiplier% units.</font><br><br>Radius: %radius%\n\n<h1>Passive: Speed Aura</h1> Increases nearby allies' attack speed by %aura_as%.<br><br>Radius: %radius%"
+"DOTA_Tooltip_Ability_item_imba_ancient_janggo_Description"		"<h1>Active: Endurance</h1> <font color='#FF7800'>Does not use any charges.</font> Gives +%bonus_attack_speed_pct% attack speed and +%bonus_movement_speed_pct%%% movement speed to nearby allies for %duration% seconds. <font color='#FF7800'>Also further boosts attack speed by %active_as_per_ally% and movement speed by %active_ms_per_ally%%% for every affected ally. Heroes count as %hero_multiplier% units.</font><br><br>Radius: %radius%\n\n<h1>Passive: Swiftness Aura</h1> Increases nearby allies' movement speed by %aura_ms%.<br><br>Radius: %radius%"
 "DOTA_Tooltip_Ability_item_imba_ancient_janggo_Lore"            "A relic that enchants the bodies of those around it for swifter movement in times of crisis."
 "DOTA_Tooltip_Ability_item_imba_ancient_janggo_Note0"          "Endurance does not stack with itself - using it while it's still active will result either in extending the current bonus, or overwriting it with a stronger one."
 "DOTA_Tooltip_Ability_item_imba_ancient_janggo_Note1"          "Drum of Endurance's Endurance and Siege Cuirass's Hellish Siege can both extend the duration or overwrite each other's effects with a stronger one, but never stack."
@@ -7,8 +7,8 @@
 "DOTA_Tooltip_Ability_item_imba_ancient_janggo_bonus_mana_regen"            "+$mana_regen"
 "DOTA_Tooltip_Ability_item_imba_ancient_janggo_bonus_movement_speed"		"+$move_speed"
 
-"DOTA_Tooltip_modifier_imba_drums_aura_effect"					"Speed Aura"
-"DOTA_Tooltip_modifier_imba_drums_aura_effect_Description"		"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
+"DOTA_Tooltip_modifier_imba_drums_aura_effect"					"Swiftness Aura"
+"DOTA_Tooltip_modifier_imba_drums_aura_effect_Description"		"Attack speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%."
 
 "DOTA_Tooltip_modifier_imba_drums_active"                      "Endurance"
 "DOTA_Tooltip_modifier_imba_drums_active_Description"          "Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."

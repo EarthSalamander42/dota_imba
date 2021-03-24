@@ -217,6 +217,71 @@ function SetPickButtonAlwaysEnabled() {
 //	$.Schedule(0.1, SetPickButtonEnabled)
 }
 
+function SetIMBARandomButton() {
+	var button = FindDotaHudElement("ReRandomButton");
+
+	if (!button) {
+		$.Schedule(0.03, SetIMBARandomButton);
+	}
+
+	var lock_button = FindDotaHudElement("LockInButton");
+
+	if (lock_button) {
+		var lock_label = lock_button.FindChildrenWithClassTraverse("PickButtonHeroName")[0];
+
+		if (lock_label)
+			lock_label.style.maxWidth = "150px";
+			lock_label.style.maxHeight = "35px";
+			lock_label.style.fontSize = "24px";
+			lock_label.style.textOverflow = "shrink";
+	}
+
+	button.style.visibility = "visible";
+	button.style.marginLeft = "12px";
+	button.style.width = "93px";
+	button.style.height = "93px";
+	button.style.backgroundColor = "gradient( linear, 0% 0%, 0% 100%, from( #7B4200 ), to( #9A5300 ) )";
+	button.style.borderTop = "1px solid #B56100";
+	button.style.borderLeft = "1px solid #B5610022";
+	button.style.borderRight = "1px solid #B5610011";
+	button.style.borderBottom = "1px solid #B5610033";
+	button.style.padding = "8px 0px 0px 0px";
+
+	button.SetPanelEvent("onmouseover", function() {
+		$.DispatchEvent("UIShowTextTooltip", button, $.Localize("imba_random_description"));
+	})
+
+	button.SetPanelEvent("onmouseout", function() {
+		$.DispatchEvent("UIHideTextTooltip", button);
+	})
+
+	button.SetPanelEvent("onactivate", function() {
+		GameEvents.SendCustomGameEventToServer("imba_random", {
+			iPlayerID : Game.GetLocalPlayerID(),
+			bIMBA : true,
+		});
+	})
+
+	var container = button.GetChild(0);
+
+	container.style.flowChildren = "down";
+	container.style.width = "100%";
+	container.style.height = "100%";
+
+	var image = container.GetChild(0);
+
+	image.style.horizontalAlign = "center";
+	image.style.washColor = "none";
+
+	var label = container.GetChild(1);
+
+	label.style.width = "100%";
+	label.style.marginLeft = "0px";
+	label.text = "IMBA-RANDOM";
+	label.style.horizontalAlign = "center";
+	label.style.textAlign = "center";
+}
+
 (function() {
 	var PreGame = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("PreGame")
 	PreGame.style.opacity = "1";
@@ -224,6 +289,7 @@ function SetPickButtonAlwaysEnabled() {
 
 	$.Schedule(1.0, InitHeroSelection);
 //	$.Schedule(1.0, OnUpdateHeroSelection);
+	SetIMBARandomButton();
 
 	var clock_label = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ClockLabel");
 	clock_label.style.visibility = "visible";

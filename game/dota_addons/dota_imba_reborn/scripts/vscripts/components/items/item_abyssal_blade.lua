@@ -75,10 +75,22 @@ function item_imba_abyssal_blade:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_abyssal_fx, 0, target:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_abyssal_fx)
 
-	-- Stun and break the target for the duration
-	target:AddNewModifier(caster, ability, modifier_bash, {duration = active_stun_duration * (1 - target:GetStatusResistance())})
-	
-	target:AddNewModifier(caster, ability, modifier_break, {duration = actual_break_duration * (1 - target:GetStatusResistance())})
+	-- Apply damage
+	local damageTable = {
+		victim = target,
+		attacker = self:GetCaster(),
+		damage = self:GetSpecialValueFor("bash_damage"),
+		damage_type = DAMAGE_TYPE_PHYSICAL,
+		ability = self
+	}
+
+	ApplyDamage(damageTable)
+
+	if target:IsAlive() then
+		-- Stun and break the target for the duration
+		target:AddNewModifier(caster, ability, modifier_bash, {duration = active_stun_duration * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, ability, modifier_break, {duration = actual_break_duration * (1 - target:GetStatusResistance())})
+	end
 end
 
 
@@ -100,7 +112,6 @@ function modifier_imba_abyssal_blade:DeclareFunctions()
 		
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL
 	}
 end
 
@@ -165,17 +176,17 @@ end
 function modifier_imba_abyssal_blade:OnAttackLanded(keys)
 	if self:GetAbility() and keys.attacker == self:GetParent() and self.bash_proc then
 		self.bash_proc = false
-		
+
 		-- Make the ability go into an internal cooldown
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_internal_cd", {duration = self:GetAbility():GetSpecialValueFor("internal_bash_cd")})
-		
+
 		-- If the attacker is one of the forbidden heroes, do not proc the bash
 		if IMBA_DISABLED_SKULL_BASHER == nil or not IMBA_DISABLED_SKULL_BASHER[keys.attacker:GetUnitName()] then
 			keys.target:EmitSound("DOTA_Item.SkullBasher")
 			
 			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_bash", {duration = self:GetAbility():GetSpecialValueFor("stun_duration") * (1 - keys.target:GetStatusResistance())})
 		end
-		
+
 		-- IMBAfication: Skull Crash
 		-- If the target is not skull crashed yet, CRUSH IT!
 		if not keys.target:HasModifier("modifier_imba_abyssal_blade_skull_crash") then
@@ -192,12 +203,6 @@ function modifier_imba_abyssal_blade:OnAttackLanded(keys)
 			-- Apply BREAK!
 			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_abyssal_blade_skull_break", {duration = self:GetAbility():GetSpecialValueFor("actual_break_duration") * (1 - keys.target:GetStatusResistance())})
 		end
-	end
-end
-
-function modifier_imba_abyssal_blade:GetModifierProcAttack_BonusDamage_Magical()
-	if self:GetAbility() and self.bash_proc then
-		return self:GetAbility():GetSpecialValueFor("bash_damage")
 	end
 end
 

@@ -1156,11 +1156,11 @@ function SetupPanel() {
 	}
 }
 
-function CreateBattlepassPanel() {
+function CreateBattlepassButton() {
 	var Parent = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ButtonBar");
 
 	if (!Parent) {
-		$.Schedule(1.0, CreateBattlepassPanel);
+		$.Schedule(1.0, CreateBattlepassButton);
 		return;
 	}
 
@@ -1184,7 +1184,7 @@ function CreateBattlepassPanel() {
 }
 
 (function() {
-	$.Schedule(2.0, CreateBattlepassPanel);
+	$.Schedule(2.0, CreateBattlepassButton);
 
 	// prevent running an api call everytime this file is edited
 	if (!Game.IsInToolsMode()) {

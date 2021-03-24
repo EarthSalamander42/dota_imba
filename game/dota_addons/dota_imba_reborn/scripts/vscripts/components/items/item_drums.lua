@@ -215,15 +215,17 @@ function modifier_imba_drums_aura_effect:IsDebuff() return false end
 
 function modifier_imba_drums_aura_effect:DeclareFunctions()
 	return {
-		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		-- MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
 end
 
--- function modifier_imba_drums_aura_effect:GetModifierMoveSpeedBonus_Constant()
-	-- return self.aura_ms
--- end
+function modifier_imba_drums_aura_effect:GetModifierMoveSpeedBonus_Constant()
+	return self.aura_ms
+end
 
+--[[
 function modifier_imba_drums_aura_effect:GetModifierAttackSpeedBonus_Constant()
 	return self.aura_as
 end
+--]]

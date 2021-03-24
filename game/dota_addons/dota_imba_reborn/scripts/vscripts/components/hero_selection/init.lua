@@ -1,16 +1,18 @@
+HeroSelection = HeroSelection or class({})
+
 if IMBA_PICK_SCREEN == true then
 	require('components/hero_selection/hero_selection')
 	require('libraries/hero_selection/event')
 	require('libraries/hero_selection/fun')()
 	require('libraries/hero_selection/functional')
 	require('components/hero_selection/cmpickorder')
+else
+	CustomGameEventManager:RegisterListener("imba_random", Dynamic_Wrap(GameMode, "PreventBannedHeroToBeRandomed"))
 end
-
-HeroSelection = HeroSelection or class({})
 
 -- available heroes
 local herolist = {}
-local imbalist = {}
+HeroSelection.imbalist = {}
 local newlist = {}
 local customlist = {}
 local totalheroes = 0
@@ -35,7 +37,7 @@ function HeroSelection:Init()
 		herolist[key] = KeyValues.HeroKV[key].AttributePrimary
 
 		if KeyValues.HeroKV[key].IsImba == 1 then
-			imbalist[key] = KeyValues.HeroKV[key].IsImba
+			HeroSelection.imbalist[key] = KeyValues.HeroKV[key].IsImba
 		elseif KeyValues.HeroKV[key].IsNew == 1 then
 			newlist[key] = KeyValues.HeroKV[key].IsNew
 		elseif KeyValues.HeroKV[key].IsCustom == 1 then
@@ -49,7 +51,7 @@ function HeroSelection:Init()
 	CustomNetTables:SetTableValue("hero_selection", "herolist", {
 		gametype = GetMapName(),
 		herolist = herolist,
-		imbalist = imbalist,
+		imbalist = HeroSelection.imbalist,
 		newlist = newlist,
 		customlist = customlist,
 		hotdisabledlist = api.disabled_heroes,
@@ -72,18 +74,18 @@ function HeroSelection:Init()
 end
 
 -- utils
+--[[
 function HeroSelection:RandomImbaHero()
-	while true do
-		local choice = HeroSelection:UnsafeRandomHero()
+	local choice = HeroSelection:UnsafeRandomHero()
 
-		for key, value in pairs(imbalist) do
---			print(key, choice, self:IsHeroDisabled(choice))
-			if key == choice and not self:IsHeroDisabled(choice) then
-				return choice
-			end
+	for key, value in pairs(HeroSelection.imbalist) do
+--		print(key, choice, self:IsHeroDisabled(choice))
+		if key == choice and not self:IsHeroDisabled(choice) then
+			return choice
 		end
 	end
 end
+--]]
 
 function HeroSelection:UnsafeRandomHero()
 	local curstate = 0

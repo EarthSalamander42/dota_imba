@@ -13,6 +13,7 @@
 	background-size: cover;
 	flow-children:  down;
 	visibility:  collapse;
+	border-radius: 20px;
 }
 .Root.visible {
 	visibility: visible;
@@ -67,4 +68,29 @@
 	text-shadow: 1px 1px 3px 2.0 #4d400dac;
 //	letter-spacing: 2px;
 	font-weight: bold;
+}
+
+#GGButton
+{
+	background-image: url("file://{resources}/images/custom_game/gg/gg_button.png");
+	background-size: 28px;
+	vertical-align: top;
+	width: 30px;
+	height: 30px;
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: 0.5;
+	wash-color: #CDF;
+	transition-property: opacity;
+	transition-duration: 0.2s;
+}
+
+#GGButton:hover
+{
+	opacity: 1.0;
+}
+
+#GGButton:active
+{
+	opacity: 1.0;
 }

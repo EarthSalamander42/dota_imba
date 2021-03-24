@@ -60,9 +60,9 @@ function modifier_imba_assault_cuirass:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,	
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
+--		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,	
+--		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
 	}
 end
 
@@ -78,6 +78,7 @@ function modifier_imba_assault_cuirass:GetModifierPhysicalArmorBonus()
 	end
 end
 
+--[[
 function modifier_imba_assault_cuirass:GetModifierBonusStats_Strength()
 	if self:GetAbility() then
 		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
@@ -95,6 +96,7 @@ function modifier_imba_assault_cuirass:GetModifierBonusStats_Intellect()
 		return self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	end
 end
+--]]
 
 function modifier_imba_assault_cuirass:OnDestroy()
 	if IsServer() then

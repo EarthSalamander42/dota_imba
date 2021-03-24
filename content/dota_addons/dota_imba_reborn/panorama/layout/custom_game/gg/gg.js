@@ -99,7 +99,37 @@ function CancelGG() {
 	$.GetContextPanel().FindChildTraverse('Root').RemoveClass("visible");
 }
 
+function CreateGGButton() {
+	var Parent = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ButtonBar");
+
+	if (!Parent) {
+		$.Schedule(1.0, CreateGGButton);
+		return;
+	}
+
+	if (Parent.FindChildTraverse("GGButton")) {
+		Parent.FindChildTraverse("GGButton").DeleteAsync(0);
+	}
+
+	var GGButton = $.CreatePanel("Button", $.GetContextPanel(), "GGButton");
+	GGButton.SetPanelEvent("onactivate", function() {
+		GGLocal();
+	});
+
+	GGButton.SetPanelEvent("onmouseover", function() {
+		$.DispatchEvent("UIShowTextTooltip", GGButton, $.Localize("gg_button"));
+	})
+
+	GGButton.SetPanelEvent("onmouseout", function() {
+		$.DispatchEvent("UIHideTextTooltip", GGButton);
+	})
+
+	GGButton.SetParent(Parent);
+}
+
 (function() {
+	$.Schedule(2.0, CreateGGButton);
+
 	GameEvents.Subscribe("gg_called", GGCalled);
 	GameEvents.Subscribe("gg_init_by_local", GGLocal);
 })();

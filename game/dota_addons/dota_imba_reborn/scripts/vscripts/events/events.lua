@@ -40,9 +40,9 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		Timers:CreateTimer(2.0, function()
 			if IsInToolsMode() then
-				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+--				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
 					BOTS_ENABLED = true
-				end
+--				end
 
 				if BOTS_ENABLED == true then
 					SendToServerConsole('sm_gmode 1')
@@ -77,7 +77,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			if IsInToolsMode() then
 				for i = 1, PlayerResource:GetPlayerCount() - 1 do
 					if PlayerResource:IsValidPlayer(i) then
-						PreventBannedHeroToBeRandomed(i)
+						GameMode:PreventBannedHeroToBeRandomed({iPlayerID = i})
 						PlayerResource:SetCanRepick(i, false)
 					end
 				end
@@ -106,13 +106,13 @@ function GameMode:OnGameRulesStateChange(keys)
 				print("Strategy-Time PreventBannedHeroToBeRandomed()")
 				print("Hero selected?", PlayerResource:HasSelectedHero(i))
 				if not PlayerResource:HasSelectedHero(i) then
-					PreventBannedHeroToBeRandomed(i)
+					GameMode:PreventBannedHeroToBeRandomed({iPlayerID = i})
 					PlayerResource:SetCanRepick(i, false)
 				else
 					local new_hero = PlayerResource:GetSelectedHeroName(i)
 
 					if new_hero and api.disabled_heroes[new_hero] then
-						PreventBannedHeroToBeRandomed(i)
+						GameMode:PreventBannedHeroToBeRandomed({iPlayerID = i})
 						PlayerResource:SetCanRepick(i, false)
 					end
 				end
@@ -160,7 +160,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				if new_hero and api.disabled_heroes[new_hero] then
 					if new_hero and api.disabled_heroes[new_hero] then
-						PreventBannedHeroToBeRandomed(hero:GetPlayerID())
+						GameMode:PreventBannedHeroToBeRandomed({iPlayerID = hero:GetPlayerID()})
 					end
 				end
 			end

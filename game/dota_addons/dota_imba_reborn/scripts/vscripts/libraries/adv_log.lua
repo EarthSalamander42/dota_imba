@@ -434,6 +434,9 @@ if Log == nil then
 --			print(mt[name](unpack(args)))
 
 			local status, v = safe(function()
+--				print(mt)
+--				print(name)
+--				print(args)
 				return mt[name](unpack(args))
 			end)
 

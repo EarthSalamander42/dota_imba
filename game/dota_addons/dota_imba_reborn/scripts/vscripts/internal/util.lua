@@ -1,3 +1,4 @@
+-- Tables/Arrays utils
 function PrintTable(t, indent, done)
 	--print ( string.format ('PrintTable type %s', type(keys)) )
 	if type(t) ~= "table" then return end
@@ -42,6 +43,84 @@ function MergeTables( t1, t2 )
 	end
 end
 
+-- Copy shallow copy given input
+function ShallowCopy(orig)
+	local copy = {}
+	for orig_key, orig_value in pairs(orig) do
+		copy[orig_key] = orig_value
+	end
+	return copy
+end
+
+function ShuffledList( orig_list )
+	local list = ShallowCopy( orig_list )
+	local result = {}
+	local count = #list
+	for i = 1, count do
+		local pick = RandomInt( 1, #list )
+		result[ #result + 1 ] = list[ pick ]
+		table.remove( list, pick )
+	end
+	return result
+end
+
+function TableFindKey( table, val )
+	if table == nil then
+		print( "nil" )
+		return nil
+	end
+
+	for k, v in pairs( table ) do
+		if v == val then
+			return k
+		end
+	end
+	return nil
+end
+
+
+function CopyArray(array, length)
+	local newArray = {}
+	for i = 0, length - 1 do
+		newArray[i] = array[i]
+	end
+	return newArray
+end
+
+
+function tableRemoveAtIndexZero(table)
+	local newTable = {}
+	for i = 0, #table - 1 do
+		newTable[i] = table[i+1]
+	end
+
+	return newTable
+end
+
+function TableSubtract(greaterTable, smallerTable)
+	local set = {}
+	for i = 0, #smallerTable do
+		set[smallerTable[i]] = true;
+	end
+
+	local difference = {}
+	for i = 0, #greaterTable do
+		difference[i] = greaterTable[i]
+	end
+
+	for i = #difference, 0, -1 do
+		if set[difference[i]] then
+			if i == 0 then
+				difference = tableRemoveAtIndexZero(difference)
+			else
+				table.remove(difference, i)
+			end
+		end
+	end
+
+	return difference
+end
+
 function BubbleSortByElement(t, element_name)
 	local i = 0
 
@@ -62,6 +141,7 @@ function BubbleSortByElement(t, element_name)
 	return t
 end
 
+-- String utils
 function string.split(input, delimiter)
 	input = tostring(input)
 	delimiter = tostring(delimiter)
@@ -156,41 +236,6 @@ function CBaseEntity:IsItemContainer()
 	end
 
 	return false
-end
-
--- Copy shallow copy given input
-function ShallowCopy(orig)
-	local copy = {}
-	for orig_key, orig_value in pairs(orig) do
-		copy[orig_key] = orig_value
-	end
-	return copy
-end
-
-function ShuffledList( orig_list )
-	local list = ShallowCopy( orig_list )
-	local result = {}
-	local count = #list
-	for i = 1, count do
-		local pick = RandomInt( 1, #list )
-		result[ #result + 1 ] = list[ pick ]
-		table.remove( list, pick )
-	end
-	return result
-end
-
-function TableFindKey( table, val )
-	if table == nil then
-		print( "nil" )
-		return nil
-	end
-
-	for k, v in pairs( table ) do
-		if v == val then
-			return k
-		end
-	end
-	return nil
 end
 
 function ShowHUD(bool)
@@ -1247,58 +1292,6 @@ GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(function(ctx, event)
 	return true
 end, GameMode)
 --]]
-
-function PreventBannedHeroToBeRandomed(iPlayerID)
-	if PlayerResource:GetSelectedHeroName(iPlayerID) and api.disabled_heroes[PlayerResource:GetSelectedHeroName(iPlayerID)] then
-		local old_hero = PlayerResource:GetSelectedHeroEntity(iPlayerID)
-		local herolist = LoadKeyValues("scripts/npc/npc_heroes.txt")
-		local hero_table = {}
-
-		-- old hero stay because GetSelectedHeroEntity is invalid in hero selection phase
-		if old_hero then
-			print("old hero:", old_hero:GetUnitName())
-		end
-
-		local picked_heroes = {}
-
-		for i = 0, PlayerResource:GetPlayerCount() - 1 do
-			if PlayerResource:GetPlayer(i) and PlayerResource:GetSelectedHeroName(i) then
-				picked_heroes[PlayerResource:GetSelectedHeroName(i)] = true
-			end
-		end
-
-		for k, v in pairs(herolist) do
-			-- only add non-picked heroes
-			if string.find(k, "npc_dota_hero_") and not picked_heroes[k] and not api.disabled_heroes[k] then
-				table.insert(hero_table, k)
-			end
-		end
-
-		local new_hero = hero_table[RandomInt(1, #hero_table)]
-		print(new_hero)
-
-		PlayerResource:GetPlayer(iPlayerID):SetSelectedHero(new_hero)
-
-		PrecacheUnitByNameAsync(new_hero, function()
-			PlayerResource:ReplaceHeroWith(iPlayerID, new_hero, 0, 0)
-
-			Timers:CreateTimer(1.0, function()
-				if old_hero then
-					UTIL_Remove(old_hero)
-				end
-			end)
-
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero.GetPlayerOwnerID and hero:GetPlayerOwnerID() == -1 then
-					print("No hero owner, remove!", hero:GetUnitName())
-					UTIL_Remove(hero)
-				end
-			end
-		end)
-
-		print("banned hero randomed, re-random:", PlayerResource:GetSelectedHeroName(iPlayerID))
-	end
-end
 
 -- FireParticle credits: yahnich
 function ParticleManager:FireParticle(effect, attach, owner, cps)

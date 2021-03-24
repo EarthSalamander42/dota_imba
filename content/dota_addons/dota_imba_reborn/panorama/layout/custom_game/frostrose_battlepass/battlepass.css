@@ -186,21 +186,6 @@
 	opacity: 1.0;
 }
 
-#BattlepassButton Label
-{
-	align: center center;
-	color: blue;
-	text-transform: uppercase;
-	text-align: center center;
-	font-size: 18px;
-	text-overflow: shrink;
-}
-
-#BattlepassButton:hover Label
-{
-	color: darkblue;
-}
-
 #BattlepassWindow
 {
 	width: 820px;

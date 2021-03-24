@@ -267,7 +267,7 @@ function modifier_item_imba_crimson_guard:OnCreated()
 
 	self.health					= self:GetAbility():GetSpecialValueFor("health")
 	self.health_regen			= self:GetAbility():GetSpecialValueFor("health_regen")
-	self.bonus_stats			= self:GetAbility():GetSpecialValueFor("bonus_stats")
+--	self.bonus_stats			= self:GetAbility():GetSpecialValueFor("bonus_stats")
 	self.armor					= self:GetAbility():GetSpecialValueFor("armor")
 	self.block_damage_melee 	= self:GetAbility():GetSpecialValueFor("block_damage_melee")
 	self.block_damage_ranged 	= self:GetAbility():GetSpecialValueFor("block_damage_ranged")
@@ -289,9 +289,9 @@ function modifier_item_imba_crimson_guard:DeclareFunctions()
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+--		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+--		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
 	}
 end
@@ -305,6 +305,7 @@ function modifier_item_imba_crimson_guard:GetModifierConstantHealthRegen()
 function modifier_item_imba_crimson_guard:GetModifierPhysicalArmorBonus()
 	return self.armor end
 
+--[[
 function modifier_item_imba_crimson_guard:GetModifierBonusStats_Strength()
 	return self.bonus_stats end
 
@@ -313,6 +314,7 @@ function modifier_item_imba_crimson_guard:GetModifierBonusStats_Agility()
 
 function modifier_item_imba_crimson_guard:GetModifierBonusStats_Intellect()
 	return self.bonus_stats end
+--]]
 
 function modifier_item_imba_crimson_guard:GetModifierPhysical_ConstantBlock()
 	if RollPseudoRandom(self.block_chance, self) then

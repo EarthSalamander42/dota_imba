@@ -19,6 +19,10 @@ ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		-- ultimate fail-safe in case something goes wrong
 		GameRules:SetCustomGameSetupRemainingTime(20.0)
+
+		if IsInToolsMode() then
+			TeamOrdering:OnPlayersLoaded() -- called when backend connected for public games
+		end
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- Call it here to re-apply players to rightful teams in case a smart boi use shuffle command as lobby leader
 
@@ -31,7 +35,7 @@ end, nil)
 function TeamOrdering:OnPlayersLoaded()
 --	if IsInToolsMode() then return end
 
-	if PlayerResource:GetPlayerCount() > 3 then
+	if PlayerResource:GetPlayerCount() > 3 or IsInToolsMode() then
 		-- re-order teams based on winrate with a delay to make sure winrate values are gathered
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
 			self:ComputeTeamSelection()
@@ -189,6 +193,8 @@ end
 
 -- hRadiant and hDire should return both an array of player id's
 function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
+	print("SetTeams_PostCompute():", hRadiant, hDire)
+
 	-- unassign players
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
 		local player = PlayerResource:GetPlayer(i)
@@ -197,15 +203,11 @@ function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
 	end
 
 	for k, v in pairs(self.Radiant or {}) do
-		local player = PlayerResource:GetPlayer(v)
-
-		player:SetTeam(DOTA_TEAM_GOODGUYS)
+		self:SetPlayerTeam(v, DOTA_TEAM_GOODGUYS)
 	end
 
 	for k, v in pairs(self.Dire or {}) do
-		local player = PlayerResource:GetPlayer(v)
-
-		player:SetTeam(DOTA_TEAM_BADGUYS)
+		self:SetPlayerTeam(v, DOTA_TEAM_BADGUYS)
 	end
 
 	GameRules:SetCustomGameSetupRemainingTime(self.start_time)
@@ -216,11 +218,8 @@ function TeamOrdering:OnPlayerReconnect(iPlayerID)
 
 	for k, v in pairs(self.Radiant or {}) do
 		if v == iPlayerID then
-			local player = PlayerResource:GetPlayer(v)
-
-			player:SetTeam(DOTA_TEAM_GOODGUYS)
+			self:SetPlayerTeam(v, DOTA_TEAM_GOODGUYS)
 			player_team_set = true
-
 			break
 		end
 	end
@@ -228,62 +227,26 @@ function TeamOrdering:OnPlayerReconnect(iPlayerID)
 	if player_team_set == false then
 		for k, v in pairs(self.Dire or {}) do
 			if v == iPlayerID then
-				local player = PlayerResource:GetPlayer(v)
-
-				player:SetTeam(DOTA_TEAM_BADGUYS)
+				self:SetPlayerTeam(v, DOTA_TEAM_BADGUYS)
 				break
 			end
 		end
 	end
 end
 
--- utils
-function PrintArray(array)
-	local text = ""
-	for i = 0, #array do
-		text = text..array[i].."|"
-	end
-	print(text)
-end
-
-function CopyArray(array, length)
-	local newArray = {}
-	for i = 0, length - 1 do
-		newArray[i] = array[i]
-	end
-	return newArray
-end
-
-
-function tableRemoveAtIndexZero(table)
-	local newTable = {}
-	for i = 0, #table - 1 do
-		newTable[i] = table[i+1]
+function TeamOrdering:SetPlayerTeam(iPlayerID, iTeam)
+	if not PlayerResource:IsValidPlayer(iPlayerID) then
+		print("ERROR: INVALID PLAYER TO SET TEAM!")
+		return
 	end
 
-	return newTable
-end
+	local player = PlayerResource:GetPlayer(iPlayerID)
 
-function TableSubtract(greaterTable, smallerTable)
-	local set = {}
-	for i = 0, #smallerTable do
-		set[smallerTable[i]] = true;
+	player:SetTeam(DOTA_TEAM_BADGUYS)
+
+	if PlayerResource.GetSelectedHeroEntity and PlayerResource:GetSelectedHeroEntity(iPlayerID) then
+		PlayerResource:GetSelectedHeroEntity(iPlayerID):SetTeam(DOTA_TEAM_GOODGUYS)
 	end
 
-	local difference = {}
-	for i = 0, #greaterTable do
-		difference[i] = greaterTable[i]
-	end
-
-	for i = #difference, 0, -1 do
-		if set[difference[i]] then
-			if i == 0 then
-				difference = tableRemoveAtIndexZero(difference)
-			else
-				table.remove(difference, i)
-			end
-		end
-	end
-
-	return difference
+	PlayerResource:SetCustomTeamAssignment(iPlayerID, DOTA_TEAM_GOODGUYS)
 end
