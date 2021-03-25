@@ -105,7 +105,9 @@ function GameMode:OnGameRulesStateChange(keys)
 		end, FrameTime())
 
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-			Say(nil, "Once the game enters strategy time, you will be disconnected automatically to prevent being banned by a bug which only Valve can fix. You can then reconnect and play safely without getting custom game bans.", false)
+			if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
+				Say(nil, "Once the game enters strategy time, you will be disconnected automatically to prevent being banned by a bug which only Valve can fix. You can then reconnect and play safely without getting custom game bans.", false)
+			end
 
 			return nil
 		end, 1.0)
@@ -128,9 +130,9 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 
+		if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
 		Say(nil, "You will be automatically disconnected in 5 seconds to prevent custom game ban, please reconnect as soon as possible afterwards.", false)
 
-		if not IsInToolsMode() then
 			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 				SendToConsole("disconnect")
 
