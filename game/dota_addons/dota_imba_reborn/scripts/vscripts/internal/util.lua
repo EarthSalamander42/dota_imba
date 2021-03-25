@@ -916,7 +916,7 @@ function ReconnectPlayer(player_id)
 				GoodGame:Call(gg_table)
 			end)
 
---			TeamOrdering:OnPlayerReconnect(player_id)
+			TeamOrdering:OnPlayerReconnect(player_id)
 		else
 --			print("Not fully reconnected yet:", player_id)
 			return 1.0

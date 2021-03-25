@@ -243,7 +243,7 @@
 "DOTA_Tooltip_ability_item_imba_crimson_guard_Note0"			"Multiple sources of damage block and Crimson Guard series damage reduction do not stack."
 "DOTA_Tooltip_ability_item_imba_crimson_guard_health"			"+$health"
 "DOTA_Tooltip_ability_item_imba_crimson_guard_health_regen"		"+$hp_regen"
-"DOTA_Tooltip_ability_item_imba_crimson_guard_bonus_stats"		"+$all"
+// "DOTA_Tooltip_ability_item_imba_crimson_guard_bonus_stats"		"+$all"
 "DOTA_Tooltip_ability_item_imba_crimson_guard_armor"            "+$armor"
 
 "DOTA_Tooltip_modifier_item_imba_crimson_guard_buff"					"Guard"

@@ -2,12 +2,14 @@
 
 "use strict";
 
+var SYSTEM_ENABLED = false;
+
 // Panels def
 var Shop;
 var ItemBuild;
 var Categories;
-
 var GuideBrowser;
+var GridUpgradeItems;
 
 // Dota Plus choose build button
 var dota_plus_button;
@@ -21,11 +23,17 @@ var category_name = [
 ];
 
 (function() {
+
 	Shop = FindDotaHudElement("shop");
 	ItemBuild = Shop.FindChildTraverse("ItemBuild");
 	Categories = Shop.FindChildTraverse("Categories");
-
 	GuideBrowser = FindDotaHudElement("GuideBrowser");
+	GridUpgradeItems = FindDotaHudElement("GridUpgradeItems");
+
+	GridUpgradeItems.style.overflow = "squish scroll";
+
+	if (SYSTEM_ENABLED == false)
+		return;
 
 	$.Msg(GuideBrowser.FindChildTraverse("GuideList").GetChildCount())
 

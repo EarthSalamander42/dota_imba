@@ -352,7 +352,7 @@
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/manifold_paradox.xml" />
-<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" /> -->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" />
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_plus_stats.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/vanilla_link_tooltips.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/icefrog_donators_popup.xml" />

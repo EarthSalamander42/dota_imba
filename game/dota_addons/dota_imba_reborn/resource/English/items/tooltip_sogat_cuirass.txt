@@ -6,7 +6,7 @@
 "DOTA_Tooltip_ability_item_imba_sogat_cuirass_Note1"          "Bulwark does not stack with Crimson Guard's active Guard ability."
 "DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_health"					"+$health"
 "DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_armor"          		"+$armor"
-"DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_stats"					"+$all"
+// "DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_stats"					"+$all"
 "DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_as"						"+$attack"	
 "DOTA_Tooltip_ability_item_imba_sogat_cuirass_bonus_health_regen"			"+$hp_regen"
 

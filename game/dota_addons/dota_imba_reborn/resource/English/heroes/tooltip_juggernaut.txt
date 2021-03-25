@@ -4,6 +4,7 @@
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note1"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Note1}"
 // "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note2"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Note2}"
 // "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note2"					"Multitasker damage penalty does not apply to enemies that are not affected by Blade Fury's damage (ie. buildings and spell immune enemies)."
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_shard_description"			"#{DOTA_Tooltip_ability_juggernaut_blade_fury_shard_description}"
 
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury"						"Blade Fury"
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_Description"			"Dealing damage every 0.2 seconds."

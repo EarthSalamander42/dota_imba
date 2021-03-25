@@ -76,9 +76,9 @@ function modifier_imba_sogat_cuirass:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+--		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+--		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
 	}
@@ -112,6 +112,7 @@ function modifier_imba_sogat_cuirass:GetModifierPhysicalArmorBonus()
 	end
 end
 
+--[[
 function modifier_imba_sogat_cuirass:GetModifierBonusStats_Strength()
 	if self:GetAbility() then
 		return self:GetAbility():GetSpecialValueFor("bonus_stats")
@@ -129,6 +130,7 @@ function modifier_imba_sogat_cuirass:GetModifierBonusStats_Intellect()
 		return self:GetAbility():GetSpecialValueFor("bonus_stats")
 	end
 end
+--]]
 
 function modifier_imba_sogat_cuirass:GetModifierPhysical_ConstantBlock()
 	if self:GetAbility() then

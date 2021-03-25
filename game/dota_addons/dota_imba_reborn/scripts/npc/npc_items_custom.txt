@@ -3799,17 +3799,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"350"
+				"bonus_health"			"250"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"11"
+				"bonus_health_regen"	"12"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stats"			"2"
+				"bonus_stats"			"2" // disabled
 			}
 			"04"
 			{
@@ -3844,13 +3844,13 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_damage_melee"	"50"
+				"block_damage_melee"	"70"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_damage_ranged"	"30"
+				"block_damage_ranged"	"35"
 				"CalculateSpellDamageTooltip"	"0"
 			}			
 			"12"
@@ -3861,7 +3861,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"2"
+				"active_armor"			"7"
 			}
 			"14"
 			{
@@ -3881,18 +3881,18 @@
 			"17"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction_pct_passive"		"10"
+				"damage_reduction_pct_passive"		"15"
 			}
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_damage_melee_active"	"60"
+				"block_damage_melee_active"	"70"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"19"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_damage_ranged_active"	"60"
+				"block_damage_ranged_active"	"70"
 				"CalculateSpellDamageTooltip"	"0"
 			}		
 			"20"
