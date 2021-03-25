@@ -128,7 +128,7 @@ function modifier_imba_drums:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
@@ -147,11 +147,13 @@ function modifier_imba_drums:GetModifierBonusStats_Strength()
 	end
 end
 
+--[[
 function modifier_imba_drums:GetModifierBonusStats_Agility()
 	if self:GetAbility() then
 		return self:GetAbility():GetSpecialValueFor("bonus_agi")
 	end
 end
+--]]
 
 function modifier_imba_drums:GetModifierConstantManaRegen()
 	if self:GetAbility() then

@@ -569,7 +569,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"400"
+				"bonus_mana"			"250"
 			}
 			"03"
 			{
@@ -579,7 +579,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_replenish_mana"	"135"
+				"base_replenish_mana"	"160"
 			}
 			"05"
 			{
@@ -3824,7 +3824,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_as_ally"			"25"
+				"aura_as_ally"			"30"
 			}
 			"07"
 			{
@@ -10655,13 +10655,13 @@
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_damage_melee"	"45"
+				"block_damage_melee"	"70"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_damage_ranged"	"27"
+				"block_damage_ranged"	"35"
 				"CalculateSpellDamageTooltip"	"0"
 			}			
 			"17"

@@ -131,7 +131,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
-		Say(nil, "You will be automatically disconnected in 5 seconds to prevent custom game ban, please reconnect as soon as possible afterwards.", false)
+			Say(nil, "You will be automatically disconnected in 5 seconds to prevent custom game ban, please reconnect as soon as possible afterwards.", false)
 
 			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 				SendToConsole("disconnect")

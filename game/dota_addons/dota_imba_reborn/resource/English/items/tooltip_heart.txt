@@ -6,7 +6,7 @@
 "DOTA_Tooltip_ability_item_imba_heart_bonus_strength"			"+$str"
 "DOTA_Tooltip_ability_item_imba_heart_bonus_health"				"+$health"
 "DOTA_Tooltip_ability_item_imba_heart_health_regen_pct"			"%+Max Health Regen"
-"DOTA_Tooltip_ability_item_imba_heart_hp_regen_amp"				"%+Health Regen Amplification"
+// "DOTA_Tooltip_ability_item_imba_heart_hp_regen_amp"				"%+Health Regen Amplification"
 
 "DOTA_Tooltip_modifier_item_imba_heart_aura_buff"				"Tarrasque Breath"
 "DOTA_Tooltip_modifier_item_imba_heart_aura_buff_Description"	"Strength increased by %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS%."

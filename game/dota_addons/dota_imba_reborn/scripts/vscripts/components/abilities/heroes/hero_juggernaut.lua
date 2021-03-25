@@ -178,7 +178,9 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 			local random_enemy = furyEnemies[RandomInt(1, #furyEnemies)]
 
 			if random_enemy and random_enemy:IsAlive() then
-				local damage = (self:GetCaster():GetAverageTrueAttackDamage(random_enemy) * self:GetAbility():GetSpecialValueFor("shard_attack_damage")) / 100
+				local base_damage = self:GetCaster():GetAttackDamage()
+				local bonus_damage = self:GetCaster():GetAverageTrueAttackDamage(random_enemy) -- This returns only bonus damage, probably because jugg damage set to 0 during blade fury so he doesn't auto-attack? BUT WHY IT FINDS BONUS DAMAGE THEN
+				local damage = ((base_damage + bonus_damage) * self:GetAbility():GetSpecialValueFor("shard_attack_damage")) / 100
 
 				self:GetCaster():PerformAttack(random_enemy, true, true, true, false, false, true, false)
 
