@@ -1,3 +1,5 @@
+"npc_dota_hero_sly_king_npedesc1"		"This is what happens when you let Sand King and Weaver play the doctor"
+
 // Burrowblast
 "DOTA_Tooltip_ability_imba_sly_king_burrow_blast"					"Burrowblast"
 "DOTA_Tooltip_ability_imba_sly_king_burrow_blast_Description"		"Sly King burrows into the ground and tunnels forward, damaging and stunning enemy units along the path. Disjoints projectiles."

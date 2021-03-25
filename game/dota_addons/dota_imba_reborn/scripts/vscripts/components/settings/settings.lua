@@ -43,7 +43,8 @@ end
 AUTO_LAUNCH_DELAY = -1
 HERO_SELECTION_TIME = 60.0
 SELECT_PENALTY_TIME = 0.0
-STRATEGY_TIME = 10.0					-- How long should strategy time last?
+-- STRATEGY_TIME = 10.0					-- How long should strategy time last?
+STRATEGY_TIME = 60.0					-- Until a fix is sent from Valve to not ban players if they don't DC and RC after picking a hero, increase Strategy Time phase
 SHOWCASE_TIME = 0.0					-- How long should showcase time last?
 AP_BAN_TIME = 10.0
 if IsInToolsMode() or GetMapName() == "imba_demo" then

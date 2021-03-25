@@ -70,10 +70,17 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 	self.tick = self:GetAbility():GetVanillaAbilitySpecial("blade_fury_damage_tick")
 	self.deflect_chance = self:GetAbility():GetTalentSpecialValueFor("deflect_chance")
 	self.deflect = true
+	self.shard_interval = self:GetAbility():GetSpecialValueFor("shard_attack_interval")
+	self.shard_interval_counter = self.shard_interval - 0.2 -- first tick starts at 0.2s
 
 --	self.damage_penalty	= self:GetAbility():GetTalentSpecialValueFor("damage_penalty")
 	self.damage_penalty	= -100
 	self.talent_movespeed	= self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_blade_fury_movement_speed")
+	self.shard_ms = 0
+
+	if self:GetCaster():HasShard() then
+		self.shard_ms = self:GetAbility():GetSpecialValueFor("shard_bonus_ms")
+	end
 
 	if IsServer() then
 		if self:GetCaster():IsAlive() then
@@ -86,12 +93,12 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 			self:StartIntervalThink(self.tick)
 			self:GetCaster():EmitSound("Hero_Juggernaut.BladeFuryStart")
 			-- StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.0})
-			
+
 			-- Disable Omnislash during Blade Fury (vanilla)
 			if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
 				self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(false)
 			end
-			
+
 			-- Disable Blade Dance during Blade Fury
 			if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
 				self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
@@ -125,6 +132,7 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 		local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
 		ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(slash_pfx)
+
 		if self.original_caster:HasTalent("special_bonus_imba_juggernaut_6") and self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance") then
 			self.bladedance = self.bladedance or self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance")
 			self.prng = self.prng or 0
@@ -159,6 +167,30 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 
 		-- Deal damage
 		ApplyDamage({attacker = self:GetCaster(), victim = enemy, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	end
+
+	if self:GetCaster():HasShard() then
+		self.shard_interval_counter = self.shard_interval_counter + self.tick
+
+		if self.shard_interval_counter >= self.shard_interval then
+			self.shard_interval_counter = 0
+
+			local random_enemy = furyEnemies[RandomInt(1, #furyEnemies)]
+
+			if random_enemy and random_enemy:IsAlive() then
+				local damage = (self:GetCaster():GetAverageTrueAttackDamage(random_enemy) * self:GetAbility():GetSpecialValueFor("shard_attack_damage")) / 100
+
+				self:GetCaster():PerformAttack(random_enemy, true, true, true, false, false, true, false)
+
+				ApplyDamage({
+					attacker = self:GetCaster(),
+					victim = random_enemy,
+					ability = self:GetAbility(),
+					damage = damage,
+					damage_type = DAMAGE_TYPE_PHYSICAL
+				})
+			end
+		end
 	end
 end
 
@@ -219,7 +251,7 @@ function modifier_imba_juggernaut_blade_fury:GetModifierDamageOutgoing_Percentag
 end
 
 function modifier_imba_juggernaut_blade_fury:GetModifierMoveSpeedBonus_Constant()
-	return self.talent_movespeed
+	return self.talent_movespeed + self.shard_ms
 end
 
 function modifier_imba_juggernaut_blade_fury:GetOverrideAnimation()

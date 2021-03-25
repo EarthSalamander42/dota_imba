@@ -49,15 +49,16 @@ function item_imba_rod_of_atos:OnSpellStart()
 	self.tooltip_range			=	self:GetSpecialValueFor("tooltip_range")
 	self.projectile_speed		=	self:GetSpecialValueFor("projectile_speed")
 
-	self.curtain_fire_radius			=	self:GetSpecialValueFor("curtain_fire_radius")
-	self.curtain_fire_length			=	self:GetSpecialValueFor("curtain_fire_length")
-	self.curtain_fire_shot_count		=	self:GetSpecialValueFor("curtain_fire_shot_count")
-	self.curtain_fire_delay				=	self:GetSpecialValueFor("curtain_fire_delay")
-	self.curtain_fire_speed				=	self:GetSpecialValueFor("curtain_fire_speed")
-	self.curtain_fire_activation_charge	=	self:GetSpecialValueFor("curtain_fire_activation_charge")
+	self.curtain_fire_radius				=	self:GetSpecialValueFor("curtain_fire_radius")
+	self.curtain_fire_length				=	self:GetSpecialValueFor("curtain_fire_length")
+	self.curtain_fire_shot_count			=	self:GetSpecialValueFor("curtain_fire_shot_count")
+	self.curtain_fire_shot_per_hero_count	=	self:GetSpecialValueFor("curtain_fire_shot_per_hero_count")
+	self.curtain_fire_delay					=	self:GetSpecialValueFor("curtain_fire_delay")
+	self.curtain_fire_speed					=	self:GetSpecialValueFor("curtain_fire_speed")
+	self.curtain_fire_activation_charge		=	self:GetSpecialValueFor("curtain_fire_activation_charge")
 	
-	self.curtain_fire_radius_second		=	self:GetSpecialValueFor("curtain_fire_radius_second")
-	self.curtain_fire_projectile_radius	=	self:GetSpecialValueFor("curtain_fire_projectile_radius")
+	self.curtain_fire_radius_second			=	self:GetSpecialValueFor("curtain_fire_radius_second")
+	self.curtain_fire_projectile_radius		=	self:GetSpecialValueFor("curtain_fire_projectile_radius")
 	
 	if not IsServer() then return end
 	
@@ -149,7 +150,7 @@ function item_imba_rod_of_atos:OnSpellStart()
 
 	local curtain_fire_starting_point	=	target_location - (direction * 1400)
 
-	for shot = 0, self.curtain_fire_shot_count + #enemies do
+	for shot = 0, self.curtain_fire_shot_count + (#enemies * self.curtain_fire_shot_per_hero_count) do
 		Timers:CreateTimer(shot * self.curtain_fire_delay, function()
 			local random_spawn_distance		=	RandomInt(-self.curtain_fire_length, self.curtain_fire_length)
 
@@ -215,7 +216,7 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 		ApplyDamage({
 			victim 			= target,
 			damage 			= target:GetIdealSpeed() * self:GetSpecialValueFor("ankle_breaker_damage_pct") * 0.01,
-			damage_type		= DAMAGE_TYPE_PURE,
+			damage_type		= DAMAGE_TYPE_MAGICAL,
 			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 			attacker 		= self.caster,
 			ability 		= self

@@ -23,12 +23,17 @@ function OnUpdateHeroSelection()
 
 	if (friends_and_foes && hero_bio == null) {
 		friends_and_foes.style.visibility = "visible";
+
+		if (friends_and_foes.FindChildTraverse("BattlePassHeroData"))
+			friends_and_foes.FindChildTraverse("BattlePassHeroData").style.visibility = "collapse";
+
 		hero_bio = $.CreatePanel('Label', friends_and_foes, 'HeroBio');
 		hero_bio.style.height = "100%";
 		hero_bio.style.paddingLeft = "4%";
 		hero_bio.style.paddingRight = "4%";
 		hero_bio.style.color = "#6283BB";
-		hero_bio.style.fontSize = "16px";
+		hero_bio.style.fontSize = "18px";
+		hero_bio.html = true;
 	}
 /*
 	// Testing purpose

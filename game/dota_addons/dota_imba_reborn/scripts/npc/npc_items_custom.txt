@@ -653,12 +653,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_all_stats"		"5" // disabled
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"6"
+				"bonus_armor"			"4"
 			}
 			"03"
 			{
@@ -668,12 +668,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"5"
+				"aura_health_regen"		"2"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"400"
+				"heal_amount"			"275"
 			}
 			"06"
 			{
@@ -688,7 +688,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_percentage"		"0.5"
+				"heal_percentage"		"1.0"
 			}
 			"09"
 			{
@@ -722,7 +722,7 @@
 
 		"ItemRequirements"
 		{
-			"01"						"item_imba_mekansm;item_imba_arcane_boots"
+			"01"						"item_imba_mekansm;item_imba_arcane_boots;item_buckler"
 		}
 	}
 
@@ -763,42 +763,42 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement"		"60"
+				"bonus_movement"		"50"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"400"
+				"bonus_mana"			"250"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_all_stats"		"5" // disabled
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"6"
+				"bonus_armor"			"3"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"5"
+				"var_type"				"FIELD_FLOAT"
+				"aura_health_regen"		"2.5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_armor"			"4"
+				"aura_armor"			"6"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen_bonus"	"20"
+				"aura_health_regen_bonus"	"16"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_armor_bonus"		"20"
+				"aura_armor_bonus"		"10"
 			}
 			"09"
 			{
@@ -808,7 +808,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1800"
+				"aura_radius"			"1200"
 			}
 			"11"
 			{
@@ -828,13 +828,12 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"replenish_radius"		"1800"
+				"replenish_radius"		"1200"
 			}
-			
 			"14"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mend_regen"			"0.6"
+				"mend_regen"			"1.6"
 			}
 			"15"
 			{
@@ -858,7 +857,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"350"
+		"ItemCost"						"600"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -868,7 +867,7 @@
 		"ItemRequirements"
 		{
 			//"01"						"item_headdress;item_ring_of_basilius;item_imba_morbid_mask"
-			"01"						"item_buckler;item_ring_of_basilius;item_imba_morbid_mask"
+			"01"						"item_buckler;item_ring_of_basilius;item_blades_of_attack;item_imba_morbid_mask"
 		}
 	}
 
@@ -941,33 +940,33 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"25"
+				"vampiric_aura"			"15"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_aura"			"5"
+				"damage_aura"			"18"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_aura"			"4"
+				"armor_aura"			"3"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_aura"		"1.5"
+				"mana_regen_aura"		"1.4"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hp_regen_aura"			"2.5"
+				"hp_regen_aura"			"3.0"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stat_bonus"			"6"
+				"stat_bonus"			"6" // disabled
 			}
 		}
 	}
@@ -1015,12 +1014,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"25"
+				"vampiric_aura"			"20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_aura"			"10"
+				"damage_aura"			"20"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -1031,17 +1030,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_aura"		"3.75"
+				"mana_regen_aura"		"5.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hp_regen_aura"			"10.5"
+				"hp_regen_aura"			"10.0"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stat_bonus"			"8"
+				"stat_bonus"			"8" // disabled
 			}
 		}
 	}
@@ -10067,13 +10066,13 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"10"
+				"var_type"						"FIELD_FLOAT"
+				"bonus_health_regen"			"8.5"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_magic_resist"			"25"
+				"bonus_magic_resist"			"20"
 			}
 			"03"
 			{
@@ -10117,7 +10116,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"1550"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -10167,8 +10166,8 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"10"
+				"var_type"						"FIELD_FLOAT"
+				"bonus_health_regen"			"8.5"
 			}
 			"02"
 			{
@@ -10178,7 +10177,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_bonus_health_regen"		"4"
+				"aura_bonus_health_regen"		"2"
 			}
 			"04"
 			{
@@ -13764,7 +13763,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"curtain_fire_shot_count"	"66"
+				"curtain_fire_shot_count"	"25"
 			}
 			"10"
 			{
@@ -13796,11 +13795,15 @@
 				"var_type"				"FIELD_INTEGER"
 				"curtain_fire_projectile_radius"		"60"
 			}
-			
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ankle_breaker_damage_pct"		"100"
+			}
+			"16"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"curtain_fire_shot_per_hero_count"	"2"
 			}
 		}
 	}

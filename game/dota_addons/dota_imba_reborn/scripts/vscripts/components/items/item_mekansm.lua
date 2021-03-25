@@ -91,7 +91,7 @@ function modifier_item_imba_mekansm:OnCreated(keys)
 		return
 	end
 
-	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+--	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
 
 	if IsServer() then
@@ -118,14 +118,15 @@ end
 -- Declare modifier events/properties
 function modifier_item_imba_mekansm:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+--		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+--		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 	}
 	return funcs
 end
 
+--[[
 function modifier_item_imba_mekansm:GetModifierBonusStats_Strength()
 	return self.bonus_all_stats end
 
@@ -134,6 +135,7 @@ function modifier_item_imba_mekansm:GetModifierBonusStats_Agility()
 
 function modifier_item_imba_mekansm:GetModifierBonusStats_Intellect()
 	return self.bonus_all_stats end
+--]]
 
 function modifier_item_imba_mekansm:GetModifierPhysicalArmorBonus()
 	return self.bonus_armor end
@@ -287,7 +289,7 @@ function modifier_item_imba_guardian_greaves:OnCreated(keys)
 
 	self.bonus_movement		= self:GetAbility():GetSpecialValueFor("bonus_movement")
 	self.bonus_mana			= self:GetAbility():GetSpecialValueFor("bonus_mana")
-	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
+--	self.bonus_all_stats	= self:GetAbility():GetSpecialValueFor("bonus_all_stats")
 	self.bonus_armor		= self:GetAbility():GetSpecialValueFor("bonus_armor")
 
 	if IsServer() then
@@ -314,9 +316,9 @@ end
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+--		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+--		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_MANA_BONUS,
@@ -329,6 +331,7 @@ function modifier_item_imba_guardian_greaves:GetModifierMoveSpeedBonus_Special_B
 function modifier_item_imba_guardian_greaves:GetModifierManaBonus()
 	return self.bonus_mana end
 
+--[[
 function modifier_item_imba_guardian_greaves:GetModifierBonusStats_Strength()
 	return self.bonus_all_stats end
 
@@ -337,6 +340,7 @@ function modifier_item_imba_guardian_greaves:GetModifierBonusStats_Agility()
 
 function modifier_item_imba_guardian_greaves:GetModifierBonusStats_Intellect()
 	return self.bonus_all_stats end
+--]]
 
 function modifier_item_imba_guardian_greaves:GetModifierPhysicalArmorBonus()
 	return self.bonus_armor end

@@ -1,5 +1,6 @@
 "npc_dota_hero_nian"			"Nian"
 "npc_dota_hero_nian_hype"		"Emerging from its slumber, the Year Beast is unrivalled in its destructive powers. Freely leaping to and from its foes, Nian sweeps away attackers with its tail and claws, and vaporizes them with its volcanic blast, sowing chaos and confusion amongst the ranks."
+"npc_dota_hero_nian_npedesc1"	"A nerfed (is it?) version of Year Beast's boss event"
 
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes"											"Frenzy Swipes"
 "DOTA_Tooltip_ability_imba_nian_frenzy_swipes_Description"								"Disarms and roots the caster while active. Bares down and savagely tears at the space in front of it, performing attacks on all units within its attack range + %bonus_attack_range% at boosted attack speed and damage. Enemies hit by Frenzy Swipes have their movement speed reduced by %move_speed_slow_pct%%% for %move_speed_slow_duration% seconds."

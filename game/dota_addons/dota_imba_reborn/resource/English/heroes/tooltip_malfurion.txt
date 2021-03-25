@@ -1,3 +1,5 @@
+"npc_dota_hero_malfurion_npedesc1"			"Summons a Living Tower"
+
 "DOTA_Tooltip_ability_imba_malfurion_entrangling_roots"							"Entrangling Roots"
 "DOTA_Tooltip_ability_imba_malfurion_entrangling_roots_Description"				"Disarm and Roots the target, dealing %dmg_per_sec% damage per second for %duration% seconds. Ignores status resistance."
 "DOTA_Tooltip_ability_imba_malfurion_entrangling_roots_Note0"					"First damage instance start on cast."

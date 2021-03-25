@@ -51,6 +51,7 @@ function modifier_item_imba_vladmir:IsPurgable()		return false end
 function modifier_item_imba_vladmir:RemoveOnDeath()	return false end
 function modifier_item_imba_vladmir:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+--[[
 -- Attribute bonuses
 function modifier_item_imba_vladmir:DeclareFunctions()
 	return {
@@ -77,6 +78,7 @@ function modifier_item_imba_vladmir:GetModifierBonusStats_Intellect()
 		return self:GetAbility():GetSpecialValueFor("stat_bonus")
 	end
 end
+--]]
 
 function modifier_item_imba_vladmir:IsAura()					return true end
 function modifier_item_imba_vladmir:IsAuraActiveOnDeath() 		return false end
@@ -229,6 +231,7 @@ function modifier_item_imba_vladmir_blood:IsPurgable()		return false end
 function modifier_item_imba_vladmir_blood:RemoveOnDeath()	return false end
 function modifier_item_imba_vladmir_blood:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+--[[
 function modifier_item_imba_vladmir_blood:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
@@ -254,6 +257,7 @@ function modifier_item_imba_vladmir_blood:GetModifierBonusStats_Intellect()
 		return self:GetAbility():GetSpecialValueFor("stat_bonus")
 	end
 end
+--]]
 
 function modifier_item_imba_vladmir_blood:IsAura()						return true end
 function modifier_item_imba_vladmir_blood:IsAuraActiveOnDeath() 		return false end

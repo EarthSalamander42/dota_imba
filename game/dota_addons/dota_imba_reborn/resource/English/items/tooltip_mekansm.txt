@@ -1,0 +1,13 @@
+// Mekansm
+"DOTA_Tooltip_Ability_item_imba_mekansm"                        "Mekansm"
+"DOTA_Tooltip_ability_item_imba_mekansm_Description"            "<h1>Active: Restore</h1>Heals %heal_amount% health to allied units in a %heal_radius% radius, <font color='#FF7800'>then grants them %heal_percentage%%% health regeneration and %heal_bonus_armor% armor for %heal_duration% seconds</font>.\n<h1>Passive: Mekansm Aura</h1>Grants %aura_health_regen% health regeneration to allied units in a %aura_radius% radius."
+"DOTA_Tooltip_ability_item_imba_mekansm_Lore"					"A glowing jewel formed out of assorted parts that somehow fit together perfectly."
+"DOTA_Tooltip_ability_item_imba_mekansm_Note0"					"Multiple instances of Mekansm Aura do not stack."
+// "DOTA_Tooltip_ability_item_imba_mekansm_bonus_all_stats"                    "+$all"
+"DOTA_Tooltip_ability_item_imba_mekansm_bonus_armor"            "+$armor"
+
+"DOTA_Tooltip_modifier_item_imba_mekansm_aura"                  "Mekansm Aura"
+"DOTA_Tooltip_modifier_item_imba_mekansm_aura_Description"		"Health regeneration increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%."
+
+"DOTA_Tooltip_modifier_item_imba_mekansm_heal"                  "Restoration"
+"DOTA_Tooltip_modifier_item_imba_mekansm_heal_Description"                  "Gaining %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE% bonus armor and regenerating %fMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% of max health per second."

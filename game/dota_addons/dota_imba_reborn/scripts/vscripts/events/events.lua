@@ -38,7 +38,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 
-		Timers:CreateTimer(2.0, function()
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 			if IsInToolsMode() then
 --				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
 					BOTS_ENABLED = true
@@ -70,7 +70,9 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 
 			HeroSelection:Init()
-		end)
+
+			return nil
+		end, 2.0)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		if IMBA_PICK_SCREEN == false then
 			-- prevent_bots_to_random_banned_heroes
@@ -94,12 +96,19 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 
-		-- IDK how to get this to print only once
-		Timers:CreateTimer(FrameTime(), function()
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 			if api:GetCustomGamemode() == 5 then
 				GameMode:SetSameHeroSelection(true)
 			end
-		end)
+
+			return nil
+		end, FrameTime())
+
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+			Say(nil, "Once the game enters strategy time, you will be disconnected automatically to prevent being banned by a bug which only Valve can fix. You can then reconnect and play safely without getting custom game bans.", false)
+
+			return nil
+		end, 1.0)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
@@ -117,6 +126,16 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				end
 			end
+		end
+
+		Say(nil, "You will be automatically disconnected in 5 seconds to prevent custom game ban, please reconnect as soon as possible afterwards.", false)
+
+		if not IsInToolsMode() then
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+				SendToConsole("disconnect")
+
+				return nil
+			end, 5.0)
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		-- shows -1 for some reason by default
@@ -140,8 +159,8 @@ function GameMode:OnGameRulesStateChange(keys)
 			SetupTower(tower)
 		end
 
-		-- Create a timer to avoid lag spike entering pick screen
-		Timers:CreateTimer(3.0, function()
+		-- Create a timer to avoid lag spike entering game
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 			-- Initialize IMBA Runes system
 			if IMBA_RUNE_SYSTEM == true then
 				ImbaRunes:Init()
@@ -164,9 +183,11 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				end
 			end
-		end)
 
-		Timers:CreateTimer(5.0, function()
+			return nil
+		end, 3.0)
+
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 			-- Welcome message
 			if IMBA_PICK_SCREEN == false then
 				local line_duration = 5
@@ -179,16 +200,22 @@ function GameMode:OnGameRulesStateChange(keys)
 				Notifications:BottomToAll( {text = "("..GAME_VERSION..")", duration = line_duration, style = {color = "Orange"}, continue = true})
 
 				-- Second line
-				Timers:CreateTimer(line_duration, function()
+				GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 					Notifications:BottomToAll( {text = "#imba_introduction_line_03", duration = line_duration, style = {color = "DodgerBlue"} }	)
 
 					-- Third line
-					Timers:CreateTimer(line_duration, function()
+					GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 						Notifications:BottomToAll( {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"} }	)
-					end)
-				end)
+
+						return nil
+					end, line_duration)
+
+					return nil
+				end, line_duration)
 			end
-		end)
+
+			return nil
+		end, 5.0)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		-- start rune timers
 		if GetMapName() == Map1v1() then
@@ -203,21 +230,6 @@ function GameMode:OnGameRulesStateChange(keys)
 				ImbaRunes:Spawn()
 			end
 		end
-
---[[
-		-- temporary gold earning through old tick time, until couriers are fixed
-		Timers:CreateTimer(function()
-			if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return nil end
-
-			for i = 0, PlayerResource:GetPlayerCount() - 1 do
-				if PlayerResource:IsValidPlayerID(i) then
-					PlayerResource:ModifyGold(i, 1, true, DOTA_ModifyGold_GameTick)
-				end
-			end
-
-			return GOLD_TICK_TIME[GetMapName()]
-		end)
---]]
 	end
 end
 
@@ -247,9 +259,11 @@ function GameMode:OnNPCSpawned(keys)
 				npc.first_spawn = true
 
 				-- Need a frame time to detect illusions
-				Timers:CreateTimer(FrameTime(), function()
+				GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 					GameMode:OnHeroFirstSpawn(npc)
-				end)
+
+					return nil
+				end, FrameTime())
 
 				return
 			end
@@ -314,7 +328,7 @@ function GameMode:OnDisconnect(keys)
 		local line_duration = 7
 		local disconnect_time = 0
 
-		Timers:CreateTimer(1, function()
+		Timers:CreateTimer(1.0, function()
 			-- Keep track of time disconnected
 			disconnect_time = disconnect_time + 1
 
@@ -689,9 +703,11 @@ function GameMode:OnConnectFull(keys)
 
 		-- only procs if the player reconnects
 		if GameMode.first_connect[playerID] then
-			Timers:CreateTimer(3.0, function()
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 				ReconnectPlayer(playerID)
-			end)
+
+				return nil
+			end, FrameTime())
 		else
 			GameMode.first_connect[playerID] = true
 		end
@@ -764,11 +780,13 @@ function GameMode:OnPlayerChat(keys)
 						PrecacheUnitByNameAsync("npc_dota_hero_" .. text, function()
 							PlayerResource:ReplaceHeroWith(caster:GetPlayerID(), "npc_dota_hero_" .. text, 0, 0)
 
-							Timers:CreateTimer(1.0, function()
+							GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 								if old_hero then
 									UTIL_Remove(old_hero)
 								end
-							end)
+
+								return nil
+							end, FrameTime())
 						end)
 					end
 				end
@@ -785,13 +803,15 @@ function GameMode:OnPlayerChat(keys)
 				
 				-- Others may be potentially abusing this so putting a failsafe
 				-- Crash if teams are less than half full (likely just testing stuff), otherwise make them auto-lose for attempting to crash
-				Timers:CreateTimer(5.0, function()
+				GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 					if PlayerResource:GetPlayerCountForTeam(caster:GetTeam()) / GameRules:GetCustomGameTeamMaxPlayers(caster:GetTeam()) < 0.5 then
 						caster:AddNewModifier(caster, nil, nil, {})
 					else
 						GameRules:MakeTeamLose(caster:GetTeam())
 					end
-				end)
+
+					return nil
+				end, FrameTime())
 			end
 
 			if str == "-toggle_ui" then

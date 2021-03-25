@@ -1,5 +1,6 @@
 "npc_dota_hero_scaldris"			"Scaldris"
 "npc_dota_hero_scaldris_hype"		"Invoker's self-declared rival, Scaldris can manipulate fiery and cold essences with unparalleled mastery, switching between both with a snap of his fingers. His spells have both a fire, damaging aspect, and an ice, control-oriented one. His quirky double ultimate, Living Flame/Absolute Zero, provides both high aoe damage and strong single-target control."
+"npc_dota_hero_scaldris_npedesc1"	"How to play: Just roll your head on the keyboard (Oh he have no head btw)"
 
 "DOTA_Tooltip_ability_imba_scaldris_antipode"           "Antipode"
 "DOTA_Tooltip_ability_imba_scaldris_antipode_Description"     "Scaldris' spells have a dual nature; he picks one of two elemental aspects when casting them.\n\nCasting the <font color='#FF7800'>fire</font> version of a spell switches it aspect to <font color='#427CFF'>cold</font>, and vice-versa.\n\nAdditionally, hitting a target with a <font color='#FF7800'>fire</font> spell causes any existing <font color='#427CFF'>cold</font>-based damage over time effects to end, dealing all their remaining damage instantly. The reverse is also true."

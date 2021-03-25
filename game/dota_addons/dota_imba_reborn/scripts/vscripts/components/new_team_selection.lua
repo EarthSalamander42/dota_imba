@@ -235,18 +235,23 @@ function TeamOrdering:OnPlayerReconnect(iPlayerID)
 end
 
 function TeamOrdering:SetPlayerTeam(iPlayerID, iTeam)
-	if not PlayerResource:IsValidPlayer(iPlayerID) then
+	if not iPlayerID or not PlayerResource:IsValidPlayer(iPlayerID) then
 		print("ERROR: INVALID PLAYER TO SET TEAM!")
+		return
+	end
+
+	if not iTeam then
+		print("EEROR: INVALID TEAM TO SET PLAYER!")
 		return
 	end
 
 	local player = PlayerResource:GetPlayer(iPlayerID)
 
-	player:SetTeam(DOTA_TEAM_BADGUYS)
+	player:SetTeam(iTeam)
 
 	if PlayerResource.GetSelectedHeroEntity and PlayerResource:GetSelectedHeroEntity(iPlayerID) then
-		PlayerResource:GetSelectedHeroEntity(iPlayerID):SetTeam(DOTA_TEAM_GOODGUYS)
+		PlayerResource:GetSelectedHeroEntity(iPlayerID):SetTeam(iTeam)
 	end
 
-	PlayerResource:SetCustomTeamAssignment(iPlayerID, DOTA_TEAM_GOODGUYS)
+	PlayerResource:SetCustomTeamAssignment(iPlayerID, iTeam)
 end

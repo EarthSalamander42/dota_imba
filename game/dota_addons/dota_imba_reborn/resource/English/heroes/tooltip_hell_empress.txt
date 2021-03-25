@@ -1,5 +1,6 @@
 "npc_dota_hero_hell_empress"			"Hellion"
 "npc_dota_hero_hell_empress_hype"		"Hellion, the ninth general of the ninth circle of Hell, is widely considered the most powerful demon outside of the Umbral Pact. His strong, unique brand of magic is chaotic and unpredictable, but will always result in enfeeblements and massive damage to all enemies in his presence."
+"npc_dota_hero_hell_empress_npedesc1"	"Curses enemies in a temporary prison of hell"
 
 "DOTA_Tooltip_ability_imba_empress_eleven_curses"           "Eleven Curses"
 "DOTA_Tooltip_ability_imba_empress_eleven_curses_Description"     "<font color='#C00000'>Curses</font> enemies in the target area for %stack_duration% seconds, causing them to take more damage from all sources. Eleven Curses stacks with itself, up to %max_stacks% times."
