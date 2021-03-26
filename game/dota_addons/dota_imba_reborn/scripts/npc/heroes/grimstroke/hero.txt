@@ -15,7 +15,7 @@
 		"Ability1"				"imba_grimstroke_dark_artistry"
 		"Ability2"				"imba_grimstroke_ink_creature"
 		"Ability3"				"imba_grimstroke_spirit_walk"
-		"Ability4"				"grimstroke_scepter"
+//		"Ability4"				"grimstroke_scepter"
 		"Ability5"				"imba_grimstroke_ink_gods_incarnation"
 		//"Ability6"				"imba_grimstroke_soul_chain"
 		"Ability6"				"grimstroke_soul_chain"

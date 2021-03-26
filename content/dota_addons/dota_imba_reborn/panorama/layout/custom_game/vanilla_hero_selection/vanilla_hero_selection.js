@@ -256,6 +256,8 @@ function SetIMBARandomButton() {
 	})
 
 	button.SetPanelEvent("onactivate", function() {
+		button.style.visibility = "collapse";
+
 		GameEvents.SendCustomGameEventToServer("imba_random", {
 			iPlayerID : Game.GetLocalPlayerID(),
 			bIMBA : true,

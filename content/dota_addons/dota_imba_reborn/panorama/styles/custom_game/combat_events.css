@@ -64,7 +64,7 @@ horizontal-align: right;
 flow-children: right; }
 
 .HUDFlipped #SlashContainer {
-opacity-mask: url("s2r://panorama/images/masks/combat_event_slant_right_psd.vtex"); }
+opacity-mask: url("file://panorama/images/masks/combat_event_slant_right_psd.png"); }
 
 .HUDFlipped .AllyEvent.LocalPlayerInvolved #SlashContainer {
 background-color: rgba(46, 72, 38, 0.8); }
@@ -103,7 +103,7 @@ height: 32px; }
 #SwitchDynamicMinimapButton {
 width: 44px;
 height: 44px;
-background-image: url("s2r://panorama/images/custom_game/hud/dynamic_minimap_switch_png.vtex");
+background-image: url("file://panorama/images/custom_game/hud/dynamic_minimap_switch_png.png");
 background-size: 100% 100%;
 border-radius: 100%;
 transition-duration: .25s;
@@ -143,7 +143,7 @@ height: 20px;
 margin-right: 2px;
 margin-left: 2px;
 vertical-align: center;
-background-image: url("s2r://panorama/images/hud/icon_gold_psd.vtex");
+background-image: url("file://panorama/images/hud/icon_gold_psd.png");
 background-size: 100%;
 transform: translateY(10px); }
 
@@ -155,7 +155,7 @@ margin-left: 2px;
 vertical-align: center;
 background-size: 100%;
 transform: translateY(10px);
-background-image: url("s2r://panorama/images/hud/icon_glyph_small_psd.vtex"); }
+background-image: url("file://panorama/images/hud/icon_glyph_small_psd.png"); }
 
 .CombatEventCourierIcon {
 width: 24px;
@@ -166,7 +166,7 @@ margin-left: 2px;
 vertical-align: center;
 background-size: 100%;
 transform: translateY(10px);
-background-image: url("s2r://panorama/images/hud/icon_courier_event_psd.vtex"); }
+background-image: url("file://panorama/images/hud/icon_courier_event_psd.png"); }
 
 .CombatEventRoshanIcon {
 width: 24px;
@@ -176,22 +176,22 @@ vertical-align: center;
 background-size: 100%;
 wash-color: #ff0000;
 transform: translateY(12px);
-background-image: url("s2r://panorama/images/hud/icon_roshan_psd.vtex"); }
+background-image: url("file://panorama/images/hud/icon_roshan_psd.png"); }
 
 .CombatEventKillIcon {
 width: 48px;
 height: 30px;
 margin-right: 2px;
 margin-left: 2px;
-background-image: url("s2r://panorama/images/hud/icon_kill_enemy_psd.vtex");
+background-image: url("file://panorama/images/hud/icon_kill_enemy_psd.png");
 background-size: 100%;
 transform: translateY(9px); }
 
 .AllyEvent .CombatEventKillIcon {
-background-image: url("s2r://panorama/images/hud/icon_kill_ally_psd.vtex"); }
+background-image: url("file://panorama/images/hud/icon_kill_ally_psd.png"); }
 
 .AllyEvent .DeniedIcon {
-background-image: url("s2r://panorama/images/hud/icon_suicide_ally_psd.vtex"); }
+background-image: url("file://panorama/images/hud/icon_suicide_ally_psd.png"); }
 
 .AllyEvent.LocalPlayerInvolved #SlashContainer {
 background-color: rgba(0, 0, 0, 0.53333); }
@@ -220,7 +220,7 @@ transform: translateY(11px); }
 .DeniedIcon {
 width: 48px;
 height: 30px;
-background-image: url("s2r://panorama/images/hud/icon_suicide_enemy_psd.vtex");
+background-image: url("file://panorama/images/hud/icon_suicide_enemy_psd.png");
 background-size: 100%;
 transform: translateY(8px); }
 
@@ -236,7 +236,7 @@ width: 18px;
 height: 100%;
 padding-right: -2px;
 overflow: clip;
-opacity-mask: url("s2r://panorama/images/masks/combat_event_slant_left_psd.vtex");
+opacity-mask: url("file://panorama/images/masks/combat_event_slant_left_psd.png");
 horizontal-align: right; }
 
 .EnemyEvent.LocalPlayerInvolved #SlashContainer {

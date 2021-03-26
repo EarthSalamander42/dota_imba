@@ -1,6 +1,6 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
 		<include src="file://{resources}/styles/custom_game/combat_events_vanilla.css" />
 	</styles>
 

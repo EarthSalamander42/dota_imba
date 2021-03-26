@@ -778,7 +778,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"3"
+				"bonus_armor"			"4"
 			}
 			"05"
 			{
@@ -3562,7 +3562,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"350"
+				"health"				"250"
 			}
 			"02"
 			{
@@ -13442,12 +13442,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"325"
+				"bonus_health"			"250"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"0"
+				"bonus_movement_speed"	"0" // disabled
 			}
 			"03"
 			{

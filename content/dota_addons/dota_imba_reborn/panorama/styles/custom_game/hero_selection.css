@@ -77,7 +77,7 @@
 }
 
 #minimap {
-	background-image: url("s2r://panorama/images/hud/reborn/bg_minimap_psd.vtex");
+	background-image: url("file://panorama/images/hud/reborn/bg_minimap_psd.png");
 	background-size: contain;
 	overflow: clip;
 	align: left center;
@@ -132,7 +132,7 @@ Label {
 }
 
 .DashboardButton {
-	background-image: url("s2r://panorama/images/control_icons/return_to_game_png.vtex");
+	background-image: url("file://panorama/images/control_icons/return_to_game_png.png");
 	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
@@ -259,10 +259,10 @@ Label {
 #TeamCustom6 .Player,
 #TeamCustom7 .Player,
 #TeamCustom8 .Player {
-	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_left_psd.vtex");
+	opacity-mask: url("file://panorama/images/masks/topbar_heroslant_left_psd.png");
 }
 #TeamDire .Player {
-	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_right_psd.vtex");
+	opacity-mask: url("file://panorama/images/masks/topbar_heroslant_right_psd.png");
 }
 .PlayerImage {
 	width: 100%;
@@ -522,7 +522,7 @@ DOTAMinimap {
 	visibility: collapse;
 	width: 400px;
 	padding-right: 90px;
-	background-image: url("s2r://panorama/images/status_icons/captain_overlay_psd.vtex");
+	background-image: url("file://panorama/images/status_icons/captain_overlay_psd.png");
 	background-position: 98% center;
 	background-size: contain;
 }
@@ -682,7 +682,7 @@ DOTAMinimap {
 }
 
 /* #StrHolder {
-	background-image: url("s2r://panorama/images/primary_attribute_icons/primary_attribute_icon_strength_psd.vtex");
+	background-image: url("file://panorama/images/primary_attribute_icons/primary_attribute_icon_strength_psd.png");
 	background-repeat: no-repeat;
 	background-size: contain;
 	height: 90%;
@@ -691,7 +691,7 @@ DOTAMinimap {
 }
 
 #AgiHolder {
-	background-image: url("s2r://panorama/images/primary_attribute_icons/primary_attribute_icon_agility_psd.vtex");
+	background-image: url("file://panorama/images/primary_attribute_icons/primary_attribute_icon_agility_psd.png");
 	background-repeat: no-repeat;
 	background-size: contain;
 	height: 90%;
@@ -700,7 +700,7 @@ DOTAMinimap {
 }
 
 #IntHolder {
-	background-image: url("s2r://panorama/images/primary_attribute_icons/primary_attribute_icon_intelligence_psd.vtex");
+	background-image: url("file://panorama/images/primary_attribute_icons/primary_attribute_icon_intelligence_psd.png");
 	background-repeat: no-repeat;
 	background-size: contain;
 	height: 90%;
@@ -861,7 +861,7 @@ DOTAChat#HudChat .ChatLine {
 
 #AghanimPreview {
 	height: 50%;
-	background-image: url("s2r://panorama/images/spellicons/aghsicon_psd.vtex");
+	background-image: url("file://panorama/images/spellicons/aghsicon_psd.png");
 	background-repeat: no-repeat;
 	background-position: left center;
 	background-size: contain;
@@ -870,7 +870,7 @@ DOTAChat#HudChat .ChatLine {
 
 #TalentPreview {
 	height: 65px;
-	background-image: url("s2r://panorama/images/spellicons/statbranch_psd.vtex");
+	background-image: url("file://panorama/images/spellicons/statbranch_psd.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	visibility: collapse;
@@ -975,7 +975,7 @@ DOTAChat#HudChat .ChatLine {
 	text-overflow: shrink;
 	width: fit-children;
 	height: fit-children;
-	background-image: url("s2r://panorama/images/hud/reborn/bg_tooltip_psd.vtex");
+	background-image: url("file://panorama/images/hud/reborn/bg_tooltip_psd.png");
 	background-color: #10171c;
 	padding: 8px;
 	background-size: cover;
@@ -1147,11 +1147,11 @@ Label.SectionTitle {
 }
 
 #CaptainLockIn.PickHero {
-	background-image: url("s2r://panorama/images/control_icons/check_shadow_png.vtex");
+	background-image: url("file://panorama/images/control_icons/check_shadow_png.png");
 }
 
 #CaptainLockIn.BanHero {
-	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+	background-image: url("file://panorama/images/control_icons/x_close_png.png");
 }
 
 #HeroRandom {
@@ -1206,7 +1206,7 @@ Label.SectionTitle {
 }
 
 .BossIcon {
-	background-image: url("s2r://panorama/images/hud/reborn/icon_armor_psd.vtex");
+	background-image: url("file://panorama/images/hud/reborn/icon_armor_psd.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	transition-property: transform, opacity;
@@ -1227,7 +1227,7 @@ Label.SectionTitle {
 }
 
 .CaveIcon {
-	background-image: url("s2r://panorama/images/hud/reborn/icon_armor_psd.vtex");
+	background-image: url("file://panorama/images/hud/reborn/icon_armor_psd.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	transition-property: transform, opacity;
@@ -1258,7 +1258,7 @@ Label.SectionTitle {
 }
 
 .DuelIcon {
-	background-image: url("s2r://panorama/images/hud/reborn/icon_damage_psd.vtex");
+	background-image: url("file://panorama/images/hud/reborn/icon_damage_psd.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	transform: translateY(5px) translateX(-5px) rotateZ(135deg);
@@ -1288,7 +1288,7 @@ Label.SectionTitle {
 	transition-delay: 3s;
 }
 
-#Boss2r {
+#Bosfile {
 	margin-left: 30%;
 	margin-top: 46%;
 	transition-delay: 3.5s;

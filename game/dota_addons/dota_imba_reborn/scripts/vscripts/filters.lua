@@ -225,6 +225,11 @@ function GameMode:ModifierFilter( keys )
 			return false
 		end
 
+		-- setting bonus strength to 0 ain't working, let's go the hard way then
+		if modifier_name == "modifier_item_minotaur_horn" then
+			return false
+		end
+
 		-------------------------------------------------------------------------------------------------
 		-- Roshan special modifier rules
 		-------------------------------------------------------------------------------------------------

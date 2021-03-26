@@ -4,7 +4,7 @@
 "DOTA_Tooltip_ability_item_imba_spirit_vessel_lore"					"Forged by a god to entrap the soul of another." 		
 "DOTA_Tooltip_ability_item_imba_spirit_vessel_Note0"					"Curse Activation does not have increased strength if the target is under any of the following modifiers:<br>  - Slark's Dark Pact's purge<br>  - Tidehunter's Kraken Shell<br>  - Witch Doctor's Voodoo Restoration"
 "DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_health"                     "+$health"
-"DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_movement_speed"				"+$move_speed"	
+// "DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_movement_speed"				"+$move_speed"	
 "DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_mana_regen"                "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_all_stats"				"+$all"
 "DOTA_Tooltip_ability_item_imba_spirit_vessel_bonus_armor"					"+$armor"

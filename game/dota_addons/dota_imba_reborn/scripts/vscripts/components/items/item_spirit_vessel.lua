@@ -348,7 +348,7 @@ function modifier_item_imba_spirit_vessel:GetAttributes() return MODIFIER_ATTRIB
 function modifier_item_imba_spirit_vessel:DeclareFunctions()
     return {
 		MODIFIER_PROPERTY_HEALTH_BONUS,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+--		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
@@ -365,11 +365,13 @@ function modifier_item_imba_spirit_vessel:GetModifierHealthBonus()
 	end
 end
 
+--[[
 function modifier_item_imba_spirit_vessel:GetModifierMoveSpeedBonus_Constant()
 	if self:GetAbility() then
 		return self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
 	end
 end
+--]]
 
 function modifier_item_imba_spirit_vessel:GetModifierConstantManaRegen()
 	if self:GetAbility() then

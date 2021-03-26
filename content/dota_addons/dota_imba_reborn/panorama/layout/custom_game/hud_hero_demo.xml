@@ -1,6 +1,6 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
 		<include src="s2r://panorama/styles/hud/hud_reborn.vcss_c" />
 		<include src="s2r://panorama/styles/ui_econ_item.vcss_c" />
 		<include src="s2r://panorama/styles/context_menus/context_menu_econ_item_style.vcss_c" />

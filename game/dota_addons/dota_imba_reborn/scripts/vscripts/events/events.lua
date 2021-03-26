@@ -32,8 +32,10 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- setup Player colors into hex for panorama
 		local hex_colors = {}
-		for i = 0, PlayerResource:GetPlayerCount() - 1 do
-			table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
+		for i = 0, 24 do
+			if PLAYER_COLORS and PLAYER_COLORS[i] then
+				table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
+			end
 		end
 
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
@@ -152,17 +154,17 @@ function GameMode:OnGameRulesStateChange(keys)
 			self:SetupShrines()
 		end
 
-		self:SetupFountains()
-
-		-- add abilities to all towers
-		local towers = Entities:FindAllByClassname("npc_dota_tower")
-
-		for _, tower in pairs(towers) do
-			SetupTower(tower)
-		end
-
 		-- Create a timer to avoid lag spike entering game
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+			self:SetupFountains()
+
+			-- add abilities to all towers
+			local towers = Entities:FindAllByClassname("npc_dota_tower")
+
+			for _, tower in pairs(towers) do
+				SetupTower(tower)
+			end
+
 			-- Initialize IMBA Runes system
 			if IMBA_RUNE_SYSTEM == true then
 				ImbaRunes:Init()

@@ -196,10 +196,8 @@ function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
 	print("SetTeams_PostCompute():", hRadiant, hDire)
 
 	-- unassign players
-	for i = 0, PlayerResource:GetPlayerCount() - 1 do
-		local player = PlayerResource:GetPlayer(i)
-
-		player:SetTeam(DOTA_TEAM_NOTEAM)
+	for i = 0, 24 do
+		self:SetPlayerTeam(i, DOTA_TEAM_NOTEAM)
 	end
 
 	for k, v in pairs(self.Radiant or {}) do

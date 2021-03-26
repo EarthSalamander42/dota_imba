@@ -147,7 +147,7 @@
 	margin-bottom: 0px;
 	horizontal-align: right;
 
-	background-image: url("s2r://panorama/images/control_icons/arrow_top_right_png.vtex");
+	background-image: url("file://panorama/images/control_icons/arrow_top_right_png.png");
 	background-repeat: no-repeat;
 	background-size: 14px 14px;
 	wash-color: #A5ADA2ff;
@@ -222,7 +222,7 @@
 	width: 32px;
 	height: 32px;
 	margin-right: 5px;
-	background-image: url("s2r://panorama/images/status_icons/information_psd.vtex");
+	background-image: url("file://panorama/images/status_icons/information_psd.png");
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-size: contain;

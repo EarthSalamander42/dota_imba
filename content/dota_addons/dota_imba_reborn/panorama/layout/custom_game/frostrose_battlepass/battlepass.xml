@@ -1,6 +1,6 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
 		<include src="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.css" />
 	</styles>
 
@@ -96,13 +96,13 @@
 							<Label class="text" text="#donator" />
 						</Button>
 
-						<Button class="color_animation" id="LeaderboardTabButton" onactivate="DOTADisplayURL('https://frostrose-studio.com/ranking');">
+						<Button class="color_animation" id="LeaderboardTabButton" onactivate="ExternalBrowserGoToURL('https://frostrose-studio.com/ranking');">
 							<Label class="image"></Label>
 							<Label class="text" id="LoadingWarning" text="#leaderboard" />
 						</Button>
 					</Panel>
 
-					<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
+					<Button id="CompanionNotification" onactivate="ExternalBrowserGoToURL('https://www.patreon.com/bePatron?u=2533325');">
 						<Label id="CompanionNotificationLabel"/>
 					</Button>
 

@@ -385,7 +385,7 @@ DOTAPostGame.MatchDataLoaded #ContainerLoaded
 	tooltip-position: top;
 	tooltip-body-position: 50% 50%;
 
-	background-image: url("s2r://panorama/images/control_icons/arrow_left_png.vtex");
+	background-image: url("file://panorama/images/control_icons/arrow_left_png.png");
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -434,15 +434,15 @@ DOTAPostGame.MatchDataLoaded #ContainerLoaded
 	wash-color: #ccc;
 }
 
-.ProgressScreenButton.HeroBadgeProgress		{ background-image: url("s2r://panorama/images/control_icons/hero_progress_icon_png.vtex"); }
-.ProgressScreenButton.HeroRelicsProgress	{ background-image: url("s2r://panorama/images/control_icons/relic_progress_icon_png.vtex"); }
-.ProgressScreenButton.CavernsProgress		{ background-image: url("s2r://panorama/images/control_icons/bp2019_jungle_icon_png.vtex"); }
-.ProgressScreenButton.MVPProgress		{ background-image: url("s2r://panorama/images/control_icons/bp2019_mvp_icon_png.vtex"); }
-.ProgressScreenButton.BattlePassProgress	{ background-image: url("s2r://panorama/images/control_icons/battlepass_logo_grayscale_small_png.vtex"); }
-.ProgressScreenButton.RubickArcanaProgress	{ background-image: url("s2r://panorama/images/control_icons/rubick_arcana_post_game_progress_icon_png.vtex"); }
-.Season_NewBloom2019 .ProgressScreenButton.EventPointsProgress	{ background-image: url("s2r://panorama/images/control_icons/newbloom_2019_post_game_progress_icon_psd.vtex"); }
-.ProgressScreenButton.CoachRatingProgress	{ background-image: url("s2r://panorama/images/coaching/coach_icon_png.vtex"); }
-.ProgressScreenButton.PlayerMatchSurveyProgress	{ background-image: url("s2r://panorama/images/control_icons/player_match_survey_icon_png.vtex"); }
+.ProgressScreenButton.HeroBadgeProgress		{ background-image: url("file://panorama/images/control_icons/hero_progress_icon_png.png"); }
+.ProgressScreenButton.HeroRelicsProgress	{ background-image: url("file://panorama/images/control_icons/relic_progress_icon_png.png"); }
+.ProgressScreenButton.CavernsProgress		{ background-image: url("file://panorama/images/control_icons/bp2019_jungle_icon_png.png"); }
+.ProgressScreenButton.MVPProgress		{ background-image: url("file://panorama/images/control_icons/bp2019_mvp_icon_png.png"); }
+.ProgressScreenButton.BattlePassProgress	{ background-image: url("file://panorama/images/control_icons/battlepass_logo_grayscale_small_png.png"); }
+.ProgressScreenButton.RubickArcanaProgress	{ background-image: url("file://panorama/images/control_icons/rubick_arcana_post_game_progress_icon_png.png"); }
+.Season_NewBloom2019 .ProgressScreenButton.EventPointsProgress	{ background-image: url("file://panorama/images/control_icons/newbloom_2019_post_game_progress_icon_psd.png"); }
+.ProgressScreenButton.CoachRatingProgress	{ background-image: url("file://panorama/images/coaching/coach_icon_png.png"); }
+.ProgressScreenButton.PlayerMatchSurveyProgress	{ background-image: url("file://panorama/images/control_icons/player_match_survey_icon_png.png"); }
 
 
 /* Details Selector (tabs) */
@@ -856,7 +856,7 @@ Panel.TeamIdentificationRow Label
 
 #RadiantTeamLogoDefault
 {
-	background-image: url("s2r://panorama/images/team_icons/radiant_png.vtex");
+	background-image: url("file://panorama/images/team_icons/radiant_png.png");
 	background-size: 100% 100%;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -869,7 +869,7 @@ Panel.TeamIdentificationRow Label
 
 #DireTeamLogoDefault
 {
-	background-image: url("s2r://panorama/images/team_icons/dire_png.vtex");
+	background-image: url("file://panorama/images/team_icons/dire_png.png");
 	background-size: 100% 100%;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -1005,7 +1005,7 @@ Panel.PlayerRowLegend
 
 .GoldIcon
 {
-	background-image: url("s2r://panorama/images/hud/icon_gold_psd.vtex");
+	background-image: url("file://panorama/images/hud/icon_gold_psd.png");
 	background-size: 100% 100%;
 	width: 24px;
 	height: 24px;
@@ -1013,7 +1013,7 @@ Panel.PlayerRowLegend
 
 .CampsStackedIcon
 {
-	background-image: url("s2r://panorama/images/hud/icon_camps_stacked_psd.vtex");
+	background-image: url("file://panorama/images/hud/icon_camps_stacked_psd.png");
 	background-size: 100% 100%;
 	width: 24px;
 	height: 24px;
@@ -1976,7 +1976,7 @@ ToggleButton#FavoriteStar
 	width: 24px;
 	height: 24px;
     padding: 0px 0px;
-    background-image: url("s2r://panorama/images/control_icons/star_favorite_psd.vtex");
+    background-image: url("file://panorama/images/control_icons/star_favorite_psd.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     wash-color: #444444;
@@ -1989,7 +1989,7 @@ ToggleButton#FavoriteStar:hover
 
 ToggleButton#FavoriteStar:selected
 {
-	background-image: url("s2r://panorama/images/control_icons/star_favorite_selected_psd.vtex");
+	background-image: url("file://panorama/images/control_icons/star_favorite_selected_psd.png");
 	wash-color: #65b9f5;
 }
 
@@ -2377,9 +2377,9 @@ DOTAAbilityImage.AbilityMaxLevel.AbilityIsUltimate
 	z-index: -2;
 }
 
-.PlayerItemPurchase_ItemNode.ItemCount2 #MultipleItemBG { background-image: url("s2r://panorama/images/status_icons/stackeditems_1_psd.vtex"); }
-.PlayerItemPurchase_ItemNode.ItemCount3 #MultipleItemBG { background-image: url("s2r://panorama/images/status_icons/stackeditems_2_psd.vtex"); }
-.PlayerItemPurchase_ItemNode.ItemCount4 #MultipleItemBG { background-image: url("s2r://panorama/images/status_icons/stackeditems_3_psd.vtex"); }
+.PlayerItemPurchase_ItemNode.ItemCount2 #MultipleItemBG { background-image: url("file://panorama/images/status_icons/stackeditems_1_psd.png"); }
+.PlayerItemPurchase_ItemNode.ItemCount3 #MultipleItemBG { background-image: url("file://panorama/images/status_icons/stackeditems_2_psd.png"); }
+.PlayerItemPurchase_ItemNode.ItemCount4 #MultipleItemBG { background-image: url("file://panorama/images/status_icons/stackeditems_3_psd.png"); }
 
 #PlayerRow0 #MultipleItemBG { wash-color: slot0color; }
 #PlayerRow1 #MultipleItemBG { wash-color: slot1color; }
@@ -3133,7 +3133,7 @@ Label.CommentText
 	//overflow: scroll clip;
 	//flow-children: right;
 	horizontal-align: center;
-//	opacity-mask: url("s2r://panorama/images/masks/armory_opacity_mask_png.vtex");
+//	opacity-mask: url("file://panorama/images/masks/armory_opacity_mask_png.png");
 }
 
 .PlusPerPlayerVisible #ContainerCenter,
@@ -3676,7 +3676,7 @@ DOTAPostGameOverviewHero.Expanded.LocalPlayer .HeroImageOverlay
 {
 	width: 100%;
 	height: 100%;
-	background-image: url("s2r://panorama/images/backgrounds/postgameherobackground_psd.vtex");
+	background-image: url("file://panorama/images/backgrounds/postgameherobackground_psd.png");
 	background-size: cover;
 	overflow: noclip;
 	opacity: 1;
@@ -3707,7 +3707,7 @@ DOTAPostGameOverviewHero.HeroNotHovered .HeroBackgroundImage
 
 #RightHeroes .HeroBackgroundImage
 {
-	background-image: url("s2r://panorama/images/backgrounds/postgameherobackground_dire_psd.vtex");
+	background-image: url("file://panorama/images/backgrounds/postgameherobackground_dire_psd.png");
 	background-position: 100% 0%;
 }
 
@@ -3745,7 +3745,7 @@ DOTAPostGameOverviewHero.HeroNotHovered .HeroBackgroundImage
 	transform: translateX( -90px ) translateY( -120px );
 	opacity: 0.01; /* hack to make sure that Paint is called which will actually cause it to load */
 	pre-transform-scale2d: 1.0;
-	opacity-mask: url("s2r://panorama/images/masks/softedge_circle_png.vtex")0;
+	opacity-mask: url("file://panorama/images/masks/softedge_circle_png.png")0;
 
 	transition-property: brightness, opacity, width, height, transform, pre-transform-scale2d, opacity-mask ;
 	transition-duration: 0.10s, 1s, 0.6s;
@@ -3761,7 +3761,7 @@ DOTAPostGameOverviewHero.HeroNotHovered .HeroBackgroundImage
 	height: 900px;
 	horizontal-align: left;
 	transform: translateX(-64px) translateY(-100px);
-	opacity-mask: url("s2r://panorama/images/masks/softedge_circle_png.vtex")1;
+	opacity-mask: url("file://panorama/images/masks/softedge_circle_png.png")1;
 	transition-delay: 0s, 0s, 0s, 0s, 0s, 0s, 0.25s;
 }
 
@@ -3837,10 +3837,10 @@ DOTAPostGameOverviewHero.PartyIndex4 #PartyIndex
 	horizontal-align: right;
 } */
 
-/* DOTAPostGameOverviewHero.PartyIndex1 #PartyIndex { background-image: url("s2r://panorama/images/post_game_party_index_1_psd.vtex"); }
-DOTAPostGameOverviewHero.PartyIndex2 #PartyIndex { background-image: url("s2r://panorama/images/post_game_party_index_2_psd.vtex"); }
-DOTAPostGameOverviewHero.PartyIndex3 #PartyIndex { background-image: url("s2r://panorama/images/post_game_party_index_3_psd.vtex"); }
-DOTAPostGameOverviewHero.PartyIndex4 #PartyIndex { background-image: url("s2r://panorama/images/post_game_party_index_4_psd.vtex"); } */
+/* DOTAPostGameOverviewHero.PartyIndex1 #PartyIndex { background-image: url("file://panorama/images/post_game_party_index_1_psd.png"); }
+DOTAPostGameOverviewHero.PartyIndex2 #PartyIndex { background-image: url("file://panorama/images/post_game_party_index_2_psd.png"); }
+DOTAPostGameOverviewHero.PartyIndex3 #PartyIndex { background-image: url("file://panorama/images/post_game_party_index_3_psd.png"); }
+DOTAPostGameOverviewHero.PartyIndex4 #PartyIndex { background-image: url("file://panorama/images/post_game_party_index_4_psd.png"); } */
 
 DOTAPostGameOverviewHero.PartyIndex1 #PartyIndex { background-color: gradient( linear, 0% 100%, 0% 0%, from( #02AB9770 ), color-stop( 0.5, #02AB9770 ), to( #02AB9700 ) ); border-bottom: 2px solid rgb(117, 238, 224); }
 DOTAPostGameOverviewHero.PartyIndex2 #PartyIndex { background-color: gradient( linear, 0% 100%, 0% 0%, from( #00B32D70 ), color-stop( 0.5, #00B32D70 ), to( #00B32D00 ) ); border-bottom: 2px solid rgb(60, 238, 105); }
@@ -4290,7 +4290,7 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	margin-bottom: 0px;
 	width: 100%;
 	height: 100%;
-	opacity-mask: url("s2r://panorama/images/masks/softedge_vertical_softer_png.vtex");
+	opacity-mask: url("file://panorama/images/masks/softedge_vertical_softer_png.png");
 
 }
 
@@ -4468,7 +4468,7 @@ DOTAPostGameOverviewHero.Expanded #MVPStarContainer
 
 .MVPStar
 {
-	background-image: url("s2r://panorama/images/control_icons/bp2019_mvp_icon_png.vtex");
+	background-image: url("file://panorama/images/control_icons/bp2019_mvp_icon_png.png");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 100% 100%;
@@ -4507,7 +4507,7 @@ DOTAPostGameOverviewHero.Expanded #MVPStarContainer
 
 #OverviewHeroMVPButton
 {
-	background-image: url("s2r://panorama/images/control_icons/bp2019_mvp_icon_png.vtex");
+	background-image: url("file://panorama/images/control_icons/bp2019_mvp_icon_png.png");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 60% 60%;
@@ -4553,7 +4553,7 @@ DOTAPostGameOverviewHero.CanMVPVote #OverviewHeroMVPButton
 
 DOTAPostGameOverviewHero #OverviewHeroReportButton
 {
-	background-image: url("s2r://panorama/images/conduct/report_flag_png.vtex");
+	background-image: url("file://panorama/images/conduct/report_flag_png.png");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 100% 100%;
@@ -4581,7 +4581,7 @@ DOTAPostGameOverviewHero #OverviewHeroReportButton
 
  DOTAPostGameOverviewHero #OverviewHeroTipButton
 {
-	background-image: url("s2r://panorama/images/conduct/bp_points_png.vtex");
+	background-image: url("file://panorama/images/conduct/bp_points_png.png");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 100% 100%;
@@ -4609,7 +4609,7 @@ DOTAPostGameOverviewHero.CanTip #OverviewHeroTipButton
 
 DOTAPostGameOverviewHero #OverviewHeroFavoriteButton
 {
-	background-image: url("s2r://panorama/images/control_icons/party_finder_icon_add_png.vtex");
+	background-image: url("file://panorama/images/control_icons/party_finder_icon_add_png.png");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: contain;
@@ -4644,7 +4644,7 @@ DOTAPostGameOverviewHero.CanFavorite #OverviewHeroFavoriteButton
 
 #OverviewHeroCommendButton
 {
-	background-image: url("s2r://panorama/images/conduct/commend_star_png.vtex");
+	background-image: url("file://panorama/images/conduct/commend_star_png.png");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 100% 100%;
@@ -4699,7 +4699,7 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 
 .OverviewHeroInviteButton
 {
-	background-image: url("s2r://panorama/images/control_icons/plus_png.vtex");
+	background-image: url("file://panorama/images/control_icons/plus_png.png");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 60% 60%;
@@ -4940,7 +4940,7 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 {
 	width: 100%;
 	height: 100%;
-	background-image: url("s2r://panorama/images/textures/minimap_game_png.vtex");
+	background-image: url("file://panorama/images/textures/minimap_game_png.png");
 	background-position: 50% 50%;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -4968,12 +4968,12 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 
 .HeatmapRadiantHeroIcon
 {
-	background-image: url("s2r://panorama/images/textures/minimap_hero_team_psd.vtex");
+	background-image: url("file://panorama/images/textures/minimap_hero_team_psd.png");
 }
 
 .HeatmapDireHeroIcon
 {
-	background-image: url("s2r://panorama/images/textures/minimap_hero_enemy_psd.vtex");
+	background-image: url("file://panorama/images/textures/minimap_hero_enemy_psd.png");
 }
 
 #HeatmapRadiantHero1 { wash-color: rgb( 51, 117, 255 ); }
@@ -5480,7 +5480,7 @@ DOTAPostGameSupportItemsRow
 
 .PicksTeamContainer Label.HeroWasRandomed
 {
-	background-image: url("s2r://panorama/images/control_icons/random_dice_psd.vtex");
+	background-image: url("file://panorama/images/control_icons/random_dice_psd.png");
 	background-position: 41px 18px;
 	background-size: 14px 14px;
 	background-repeat: no-repeat;
@@ -6159,7 +6159,7 @@ ProgressBar.PlayStyleBar
 
 #PerformanceBar
 {
-	background-image: url("s2r://panorama/images/textures/performancebar_psd.vtex");
+	background-image: url("file://panorama/images/textures/performancebar_psd.png");
 	background-size: contain;
 	background-repeat: no-repeat;
 	width: 300px;
@@ -6332,7 +6332,7 @@ ProgressBar.PlayStyleBar
 
 	border-bottom-left-radius: 8px;
 
-	background-image: url("s2r://panorama/images/bot_icon_easy_png.vtex");
+	background-image: url("file://panorama/images/bot_icon_easy_png.png");
 	background-size: contain;
 
 	horizontal-align: center;
@@ -6361,7 +6361,7 @@ DOTAPostGameHeroStats .BotIcon
 	border: 1px solid #222222;
 	border-bottom-left-radius: 8px;
 
-	background-image: url("s2r://panorama/images/bot_icon_easy_png.vtex");
+	background-image: url("file://panorama/images/bot_icon_easy_png.png");
 	background-size: contain;
 
 	horizontal-align: center;
@@ -6386,7 +6386,7 @@ DOTAPostGameHeroStats .BotIcon
 	border: 1px solid #222222;
 	border-bottom-left-radius: 8px;
 
-	background-image: url("s2r://panorama/images/bot_icon_easy_png.vtex");
+	background-image: url("file://panorama/images/bot_icon_easy_png.png");
 	background-size: contain;
 
 	visibility: collapse;
@@ -6411,27 +6411,27 @@ DOTAPostGameHeroStats .BotIcon
 
 .BotDifficulty_Passive .BotIcon
 {
-	background-image: url("s2r://panorama/images/bot_icon_passive_png.vtex");
+	background-image: url("file://panorama/images/bot_icon_passive_png.png");
 }
 
 .BotDifficulty_Easy .BotIcon
 {
-	background-image: url("s2r://panorama/images/bot_icon_easy_png.vtex");
+	background-image: url("file://panorama/images/bot_icon_easy_png.png");
 }
 
 .BotDifficulty_Medium .BotIcon
 {
-	background-image: url("s2r://panorama/images/bot_icon_medium_png.vtex");
+	background-image: url("file://panorama/images/bot_icon_medium_png.png");
 }
 
 .BotDifficulty_Hard .BotIcon
 {
-	background-image: url("s2r://panorama/images/bot_icon_hard_png.vtex");
+	background-image: url("file://panorama/images/bot_icon_hard_png.png");
 }
 
 .BotDifficulty_Unfair .BotIcon
 {
-	background-image: url("s2r://panorama/images/bot_icon_unfair_png.vtex");
+	background-image: url("file://panorama/images/bot_icon_unfair_png.png");
 }
 
 #EconItemContainer
@@ -6985,7 +6985,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 
 #GraphSelectedToggleButton .TickBox
 {
-	background-image: url("s2r://panorama/images/control_icons/eye_visibility_deselect_psd.vtex");
+	background-image: url("file://panorama/images/control_icons/eye_visibility_deselect_psd.png");
 	background-size: 26px 18px;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -7003,7 +7003,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 
 #GraphSelectedToggleButton:selected .TickBox
 {
-	background-image: url("s2r://panorama/images/control_icons/eye_visibility_psd.vtex");
+	background-image: url("file://panorama/images/control_icons/eye_visibility_psd.png");
 	opacity: 1;
 	texture-sampling: alpha-only;
 }
@@ -7356,14 +7356,14 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 
 #LoneDruid
 {
-	background-image: url("s2r://panorama/images/heroes/npc_dota_hero_lone_druid_png.vtex");
+	background-image: url("file://panorama/images/heroes/npc_dota_hero_lone_druid_png.png");
 	margin-left: 32px;
 	margin-right: 6px;
 }
 
 #LoneDruidBear
 {
-	background-image: url("s2r://panorama/images/heroes/npc_dota_hero_spirit_bear_png.vtex");
+	background-image: url("file://panorama/images/heroes/npc_dota_hero_spirit_bear_png.png");
 	margin-left: 4px;
 	margin-right: 6px;
 }
@@ -8069,7 +8069,7 @@ DOTAPostGameOverviewHero.Expanded #HeroItemsContainer
 	margin-top: 8px;
 	wash-color: #536B7E;
 	wash-color: #2090DA;
-	background-image: url("s2r://panorama/images/control_icons/comment_psd.vtex");
+	background-image: url("file://panorama/images/control_icons/comment_psd.png");
 	background-size: 100% 100%;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -8111,7 +8111,7 @@ DOTAPostGameOverviewHero.Expanded #HeroItemsContainer
 {
 	horizontal-align: center;
 	visibility: collapse;
-	background-image: url("s2r://panorama/images/hud/player_mvp_crown_png.vtex");
+	background-image: url("file://panorama/images/hud/player_mvp_crown_png.png");
 	background-repeat: no-repeat;
 	background-size: contain;
 	width: 27px;
@@ -8220,7 +8220,7 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 	width: 100%;
 	height: 100%;
 	visibility: collapse;
-	opacity-mask: url("s2r://panorama/images/masks/softedge_box_irregular_png.vtex");
+	opacity-mask: url("file://panorama/images/masks/softedge_box_irregular_png.png");
 }
 
 
@@ -8229,7 +8229,7 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 	width: 100%;
 	height: 100%;
 	visibility: collapse;
-	opacity-mask: url("s2r://panorama/images/masks/softedge_box_irregular_png.vtex");
+	opacity-mask: url("file://panorama/images/masks/softedge_box_irregular_png.png");
 }
 
 .RankTierContainer #RankLeaderboard
@@ -8437,7 +8437,7 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 {
 	width: 16px;
 	height: 6px;
-	background-image: url("s2r://panorama/images/control_icons/arrow_solid_up_png.vtex");
+	background-image: url("file://panorama/images/control_icons/arrow_solid_up_png.png");
 	background-size: 100%;
 	background-repeat: no-repeat;
 	horizontal-align: center;
@@ -8612,7 +8612,7 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 	margin-bottom: 5%;
 
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #722217 ), to( #DD4A29 ) );
-	background-image: url("s2r://panorama/images/backgrounds/background_play_button_2x_png.vtex");
+	background-image: url("file://panorama/images/backgrounds/background_play_button_2x_png.png");
 	background-size: 328px 50px;
 
 	border-top: 1px solid #ffffff05;
@@ -8711,7 +8711,7 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 	padding: 5px;
 	align: center center;
 	width: 50%;
-	background-image: url("s2r://panorama/images/backgrounds/background_play_button_2x_png.vtex");
+	background-image: url("file://panorama/images/backgrounds/background_play_button_2x_png.png");
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #404040 ), to( #606060 ) );
 }
 

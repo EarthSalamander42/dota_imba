@@ -514,14 +514,14 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 				if old_hero then
 					UTIL_Remove(old_hero)
 				end
-			end)
 
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero.GetPlayerOwnerID and hero:GetPlayerOwnerID() == -1 then
-					print("No hero owner, remove!", hero:GetUnitName())
-					UTIL_Remove(hero)
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					if hero.GetPlayerOwnerID and hero:GetPlayerOwnerID() == -1 then
+						print("No hero owner, remove!", hero:GetUnitName())
+						UTIL_Remove(hero)
+					end
 				end
-			end
+			end)
 		end)
 
 		print("banned hero randomed, re-random:", new_hero)
