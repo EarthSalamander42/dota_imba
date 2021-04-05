@@ -11,7 +11,7 @@
 	
 	transform: translate3d( -100%, 0, 0px );
 	/*background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );*/
-	background-image: url("file://{images}/custom_game/flyout/bg.png");
+	background-image: url("file://panorama/images/custom_game/flyout/bg.png");
 	padding: 10px 0 10px 0px;
 	background-size: cover;
 	overflow: clip scroll;
@@ -200,7 +200,7 @@
 {
 	height: 40px;
 	margin-bottom: 2px;
-/*	background-image: url("file://{images}/custom_game/flyout/rowbg.png"); */
+/*	background-image: url("file://panorama/images/custom_game/flyout/rowbg.png"); */
 	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
 	background-size: 100% 100%;
 	margin-bottom: 3.5px;
@@ -264,7 +264,7 @@
 #DonatorOverlay {
 	height: 40px;
 	width: 100%;
-	/*background-image: url("file://{images}/custom_game/flyout/output.webm");*/
+	/*background-image: url("file://panorama/images/custom_game/flyout/output.webm");*/
 	/*background-size: 100% 100%;*/
 	opacity: 0.5;
 	background-position: 50% 0;
@@ -672,24 +672,24 @@ align: center top;
 
 #BtnMuteVoice
 {
-	background-image: url("file://{images}/custom_game/mute_voice_off.png");
+	background-image: url("file://panorama/images/custom_game/mute_voice_off_png.png");
 }
 
 #BtnShareUnit
 {
-	background-image: url("file://{images}/custom_game/share_unit_off.png");
+	background-image: url("file://panorama/images/custom_game/share_unit_off_png.png");
 	visibility: visible;
 }
 
 #BtnShareHero
 {
-	background-image: url("file://{images}/custom_game/share_hero_off.png");
+	background-image: url("file://panorama/images/custom_game/share_hero_off_png.png");
 	visibility: visible;
 }
 
 #BtnDisableHelp
 {
-	background-image: url("file://{images}/custom_game/disable_help_off.png");
+	background-image: url("file://panorama/images/custom_game/disable_help_off_png.png");
 	visibility: visible;
 }
 
@@ -702,22 +702,22 @@ align: center top;
 
 #BtnMuteVoice.Activated
 {
-	background-image: url("file://{images}/custom_game/mute_voice_on.png");
+	background-image: url("file://panorama/images/custom_game/mute_voice_on_png.png");
 }
 
 #BtnShareUnit.Activated
 {
-	background-image: url("file://{images}/custom_game/share_unit_on.png");
+	background-image: url("file://panorama/images/custom_game/share_unit_on_png.png");
 }
 
 #BtnShareHero.Activated
 {
-	background-image: url("file://{images}/custom_game/share_hero_on.png");
+	background-image: url("file://panorama/images/custom_game/share_hero_on_png.png");
 }
 
 #BtnDisableHelp.Activated
 {
-	background-image: url("file://{images}/custom_game/disable_help_on.png");
+	background-image: url("file://panorama/images/custom_game/disable_help_on_png.png");
 }
 
 

@@ -1361,3 +1361,20 @@ function CDOTA_BaseNPC:IsCustomHero()
 
 	return false
 end
+
+-- Call custom functions whenever AddNewModifier is being called anywhere
+local original_AddNewModifier = CDOTA_BaseNPC.AddNewModifier
+CDOTA_BaseNPC.AddNewModifier = function(self, hCaster, hAbility, pszScriptName, hModifierTable)
+--	print("Add new modifier (override):", hCaster, hAbility, pszScriptName, hModifierTable)
+
+	if not self or not IsValidEntity(self) or pszScriptName == nil then
+		print("AddNewModifier: Invalid arguments which might crash the game, let's prevent that.")
+
+		return
+	end
+
+	-- call the original function
+	local response = original_AddNewModifier(self, hCaster, hAbility, pszScriptName, hModifierTable)
+
+	return response
+end

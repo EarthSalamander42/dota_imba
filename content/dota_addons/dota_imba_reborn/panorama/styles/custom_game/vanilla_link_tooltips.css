@@ -4,7 +4,7 @@
 {
 	width: 400px;	/* vanilla width: 360px; */
     background-color: #10171c;
-	background-image: url("s2r://panorama/images/hud/ability_tooltip_psd.vtex");
+	background-image: url("file://panorama/images/hud/ability_tooltip_psd.psd");
 	background-repeat: no-repeat;
 	background-position: 0px -2px;
 	transition-property: opacity;
@@ -17,7 +17,7 @@
 
 .IsItem .Contents
 {
-	background-image: url("s2r://panorama/images/hud/reborn/bg_tooltip_psd.vtex");
+	background-image: url("file://panorama/images/hud/reborn/bg_tooltip_psd.psd");
 	background-repeat: no-repeat;
     padding: 8px;
     background-position: left top;

@@ -123,7 +123,7 @@
 	width: 180px;
 	height: 180px;
 	transform: translateY( 0px ) translateX( 0px );	
-	opacity-mask: url("s2r://panorama/images/masks/killcammask_left_psd.vtex") 1;		
+	opacity-mask: url("file://panorama/images/masks/killcammask_left_psd.psd") 1;		
 }
 
 

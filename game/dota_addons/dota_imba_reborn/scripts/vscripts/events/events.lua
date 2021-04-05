@@ -112,7 +112,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 
 			return nil
-		end, 1.0)
+		end, 3.0)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
@@ -136,7 +136,13 @@ function GameMode:OnGameRulesStateChange(keys)
 			Say(nil, "You will be automatically disconnected in 5 seconds to prevent custom game ban, please reconnect as soon as possible afterwards.", false)
 
 			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-				SendToConsole("disconnect")
+				for i = 0, 24 do
+					local player_name = PlayerResource:GetPlayerName(i)
+
+					if player_name and player_name ~= "" then
+						SendToServerConsole("kick "..player_name)
+					end
+				end
 
 				return nil
 			end, 5.0)
@@ -808,11 +814,11 @@ function GameMode:OnPlayerChat(keys)
 				-- Others may be potentially abusing this so putting a failsafe
 				-- Crash if teams are less than half full (likely just testing stuff), otherwise make them auto-lose for attempting to crash
 				GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-					if PlayerResource:GetPlayerCountForTeam(caster:GetTeam()) / GameRules:GetCustomGameTeamMaxPlayers(caster:GetTeam()) < 0.5 then
+--					if PlayerResource:GetPlayerCountForTeam(caster:GetTeam()) / GameRules:GetCustomGameTeamMaxPlayers(caster:GetTeam()) < 0.5 then
 						caster:AddNewModifier(caster, nil, nil, {})
-					else
-						GameRules:MakeTeamLose(caster:GetTeam())
-					end
+--					else
+--						GameRules:MakeTeamLose(caster:GetTeam())
+--					end
 
 					return nil
 				end, FrameTime())

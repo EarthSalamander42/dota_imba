@@ -171,7 +171,7 @@
 //		OverrideVersusScreen();
 
 		function HidePickScreen() {
-			if (!Game.GameStateIs(3)) {
+			if (!Game.GameStateIsAfter(2)) {
 				PreGame.style.opacity = "0";
 				$.Schedule(0.25, HidePickScreen)
 			}

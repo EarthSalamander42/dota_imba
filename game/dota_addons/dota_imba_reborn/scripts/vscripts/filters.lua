@@ -214,7 +214,7 @@ function GameMode:ModifierFilter( keys )
 				-- end
 			-- end
 		-- end
-		
+
 		-- volvo bugfix
 		if modifier_name == "modifier_datadriven" then
 			return false

@@ -1268,7 +1268,7 @@ function imba_shadow_demon_demonic_purge:OnSpellStart()
 	-- Ability specials
 	local purge_duration = ability:GetSpecialValueFor("purge_duration")
 	local elated_demon_duration = ability:GetSpecialValueFor("elated_demon_duration")
-	local painful_purge_damage = ability:GetSpecialValueFor("painful_purge_damage")
+--	local painful_purge_damage = ability:GetSpecialValueFor("painful_purge_damage")
 
 	-- Emit cast sound
 	EmitSoundOn(cast_sound, caster)
@@ -1283,6 +1283,7 @@ function imba_shadow_demon_demonic_purge:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_cast_fx, 0, target:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_cast_fx)
 
+--[[
 	-- Dispel target + IMBAFication: Painful Purge. Only deals damage per purged buff
 	local modifiers = target:FindAllModifiers()
 	local total_damage = 0
@@ -1302,6 +1303,8 @@ function imba_shadow_demon_demonic_purge:OnSpellStart()
 						ability = ability}
 
 	ApplyDamage(damageTable) 
+--]]
+
 	target:Purge(true, false, false, false, false)
 
 	-- Give it the Demonic Purge debuff
@@ -1355,7 +1358,7 @@ function modifier_imba_demonic_purge_debuff:OnCreated()
 	self.purge_damage = self.ability:GetSpecialValueFor("purge_damage") + self.caster:FindTalentValue("special_bonus_imba_shadow_demon_demonic_purge_damage")    
 	self.max_slow = self.ability:GetSpecialValueFor("max_slow")
 	self.min_slow = self.ability:GetSpecialValueFor("min_slow")
-	self.painful_purge_damage = self.ability:GetSpecialValueFor("painful_purge_damage")
+--	self.painful_purge_damage = self.ability:GetSpecialValueFor("painful_purge_damage")
 	self.painful_slow_reset_duration = self.ability:GetSpecialValueFor("painful_slow_reset_duration")
 	self.purge_interval = self.ability:GetSpecialValueFor("purge_interval")
 
@@ -1413,9 +1416,10 @@ function modifier_imba_demonic_purge_debuff:OnIntervalThink()
 	end
 
 	if IsServer() then
-
 		-- Deal damage to the target if it has buffs to purge
 		-- Find dispellable buffs and deal damage according to them (IMBAFication: Painful Purgation)
+
+--[[
 		local modifiers = self.parent:FindAllModifiers()
 		local total_damage = 0
 		for _, modifier in pairs(modifiers) do
@@ -1443,6 +1447,7 @@ function modifier_imba_demonic_purge_debuff:OnIntervalThink()
 			-- Add dummy modifier that handles timing of the slow
 			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_slow_freeze, {duration = self.painful_slow_reset_duration})
 		end
+--]]
 		
 		-- Purge parent
 		self.parent:Purge(true, false, false, false, false)

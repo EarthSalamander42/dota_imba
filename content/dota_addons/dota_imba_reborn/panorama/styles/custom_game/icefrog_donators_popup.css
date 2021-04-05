@@ -70,7 +70,7 @@
 .HideButton {
 	width: 150px;
 	height: 30px;
-	background-image: url("s2r://panorama/images/red_large_off_png.vtex");
+	background-image: url("file://panorama/images/red_large_off_png.png");
 	background-size: 100%;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;

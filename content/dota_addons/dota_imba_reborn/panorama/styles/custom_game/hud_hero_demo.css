@@ -66,7 +66,7 @@
 	height: 16px;
 	vertical-align: middle;
 	horizontal-align: right;
-	background-image: url("s2r://panorama/images/control_icons/double_arrow_left_png.vtex");
+	background-image: url("file://panorama/images/control_icons/double_arrow_left_png.png");
 	background-position: 0% 50%;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -510,7 +510,7 @@
 	width: 680px;
 	height: 640px;
 	background-color: black;
-	background-image: url("s2r://panorama/images/hud/reborn/bg_hud_inspect_psd.vtex");
+	background-image: url("file://panorama/images/hud/reborn/bg_hud_inspect_psd.psd");
 	background-size: cover;
 	/* background-repeat: no-repeat; */
 	box-shadow: #000000 -12px -12px 24px 24px;
@@ -707,7 +707,7 @@
 	background-position: center;
 	background-size: contain;
 
-	background-image: url("s2r://panorama/images/icon_treasure_arrow_psd.vtex");
+	background-image: url("file://panorama/images/icon_treasure_arrow_psd.psd");
 }
 
 #SourceIcon
@@ -725,12 +725,12 @@
 
 #Bundle #SourceIcon
 {
-	background-image: url("s2r://panorama/images/control_icons/brackets_png.vtex");
+	background-image: url("file://panorama/images/control_icons/brackets_png.png");
 }
 
 #Single #SourceIcon
 {
-	background-image: url("s2r://panorama/images/topbar/armory_icon_off_png.vtex");
+	background-image: url("file://panorama/images/topbar/armory_icon_off_png.png");
 	brightness: 7;
 }
 
@@ -865,7 +865,7 @@
 	vertical-align: middle;
 	horizontal-align: right;
 	margin-right: 10px;
-	background-image: url("s2r://panorama/images/control_icons/double_arrow_right_png.vtex");
+	background-image: url("file://panorama/images/control_icons/double_arrow_right_png.png");
 	background-position: 0% 50%;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -999,7 +999,7 @@
 	height: 23px;
 	wash-color: none;
 	z-index:1;
-	background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_immortal_psd.vtex");
+	background-image: url("file://panorama/images/status_icons/econtooltip_equipped_immortal_psd.psd");
 	background-repeat: no-repeat;
 	transform: rotateY(180deg);
 	background-size: 100% 100%;
@@ -1077,7 +1077,7 @@
 	height: 18px;
 	wash-color: #B3DFDC;
 	z-index:1;
-	background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_psd.vtex");
+	background-image: url("file://panorama/images/status_icons/econtooltip_equipped_psd.psd");
 	background-repeat: no-repeat;
 	transform: rotateY(180deg);
 	background-size: 100% 100%;
@@ -1135,7 +1135,7 @@
 
 #HeroImageContainer .HeroImageItem
 {
-	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_left_psd.vtex");
+	opacity-mask: url("file://panorama/images/masks/topbar_heroslant_left_psd.psd");
 	max-width: 80px;
 	height: 50px;
 	overflow: clip;
@@ -1209,12 +1209,12 @@
 
 .TeamSelector.Radiant
 {
-	background-image: url("s2r://panorama/images/team_icons/radiant_png.vtex");
+	background-image: url("file://panorama/images/team_icons/radiant_png.png");
 }
 
 .TeamSelector.Dire
 {
-	background-image: url("s2r://panorama/images/team_icons/dire_png.vtex");
+	background-image: url("file://panorama/images/team_icons/dire_png.png");
 }
 
 .TeamSelector.Radiant
@@ -1267,13 +1267,13 @@
 
 .FlySelector.Ground
 {
-	background-image: url("s2r://panorama/images/items/courier_png.vtex");
+	background-image: url("file://panorama/images/items/courier_png.png");
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #a1a1a1 ), to( #757575 ));
 }
 
 .FlySelector.Fly
 {
-	background-image: url("s2r://panorama/images/items/courier_radiant_flying_png.vtex");
+	background-image: url("file://panorama/images/items/courier_radiant_flying_png.png");
 }
 
 .FlySelector.Ground:hover
