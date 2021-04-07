@@ -13,6 +13,8 @@ function modifier_patreon_donator:OnCreated()
 end
 
 function modifier_patreon_donator:OnIntervalThink()
+	if not IsServer() then return end
+
 	for _, v in ipairs(SHARED_NODRAW_MODIFIERS) do
 		if self:GetParent():HasModifier(v) then
 --			print("hide donator effect...")
@@ -27,6 +29,9 @@ function modifier_patreon_donator:OnIntervalThink()
 end
 
 function modifier_patreon_donator:RefreshEffect()
+	if not IsServer() then return end
+	if not self:GetParent() then return end
+
 	if self.current_effect_name ~= self.effect_name then
 --		print("Old Effect:", self.current_effect_name)
 --		print("Effect:", self.effect_name)
@@ -38,7 +43,9 @@ function modifier_patreon_donator:RefreshEffect()
 			ParticleManager:ReleaseParticleIndex(self.pfx)
 		end
 
-		self.pfx = ParticleManager:CreateParticle(self.effect_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		if self.effect_name then
+			self.pfx = ParticleManager:CreateParticle(self.effect_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		end
 	end
 end
 

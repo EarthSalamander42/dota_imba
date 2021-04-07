@@ -181,6 +181,8 @@ function HideButton() {
 }
 
 (function() {
-	SetHealthBar();
-	hpbarmove();
+	if (Game.GetMapInfo().map_display_name != "imba_demo") {
+		SetHealthBar();
+		hpbarmove();
+	}
 })();

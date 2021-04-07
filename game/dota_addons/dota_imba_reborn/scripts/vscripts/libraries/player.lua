@@ -890,10 +890,10 @@ CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachTyp
 		sParticleName = override["1"]
 	end
 
+--	print("CreateParticle response:", sParticleName)
+
 	-- call the original function
 	local response = original_CreateParticle(self, sParticleName, iAttachType, hParent)
-
---	print("CreateParticle response:", sParticleName)
 
 	if not ignored_pfx_list[sParticleName] then
 		if hCaster and not hCaster:IsHero() then
