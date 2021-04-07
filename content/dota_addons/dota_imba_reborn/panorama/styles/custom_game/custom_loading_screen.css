@@ -442,20 +442,22 @@
 }
 
 .vote-content {
-	width: 55%;
+	width: 65%;
 	height: 55%;
-	padding: 0% 5% 0% 5%;
-	align: center center;
+	margin-left: 10%;
+	padding: 0% 3% 0% 3%;
+	align: left center;
 	flow-children: down;
 	background-image: url("file://{images}/custom_game/gg/gg_background.png");
 	background-size: 100% 100%;
+	border-radius: 50px;
 }
 
 .vote-content-title {
 	width: 100%;
 	height: 10%;
-	margin-top: 10%;
-	margin-bottom: 20%;
+	margin-top: 5%;
+	margin-bottom: 10%;
 	font-size: 50px;
 	text-align: center center;
 	text-shadow: 2px 2px 4px black;
@@ -465,13 +467,13 @@
 
 .vote-select-panel-container {
 	width: 100%;
-	height: 100%;
+	height: 40%;
 	flow-children: right;
 }
 
 .vote-select-panel {
 	width: 23%;
-	height: 80%;
+	height: 100%;
 	margin-left: 1%;
 	margin-right: 1%;
 	box-shadow: 0 0 10px #111;
@@ -754,4 +756,106 @@
 
 #MainVoteButton {
 	opacity: 0;
+}
+
+.vote-select-panel-party {
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+}
+
+.vote-select-party {
+	align: center top;
+	height: 20%;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	font-size: 30px;
+	text-align: center center;
+	text-shadow: 2px 2px 4px black;
+	color: gradient( linear, 0% 0%, 0% 100%, from( white ), color-stop( 0.5, #ffef8a ), to( #CFC26E ) );
+/*	text-transform: uppercase; */
+	text-overflow: shrink;
+}
+
+.vote-select-panel-party-progressbar-container {
+	width: 50%;
+	height: 50%;
+	flow-children: none;
+	align: center bottom;
+}
+
+.HealthProgressBar
+{
+	width: 100%;
+	height: 20px;
+	border-radius: 1px;
+	border: 0px;
+	background-color: black;
+	vertical-align: middle;
+	horizontal-align: right;
+	box-shadow: fill #000 -3px -3px 6px 6px;
+	transition-property: width;
+	transition-duration: 0.5s;
+}
+
+#party_vote_progress_bar {
+	transition-property: width;
+	transition-duration: 0.5s;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000 ), color-stop( 0.3, #26890E ), color-stop( .5, #26890E ), to( #003200 ) );
+}
+
+#party_vote_progress_bar_Left {
+	transition-property: width;
+	transition-duration: 0.5s;
+}
+
+#party_vote_progress_bar_Right {
+	transition-property: width;
+	transition-duration: 0.5s;
+}
+
+.ProgressBarLeft
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000 ), color-stop( 0.3, #26890E ), color-stop( .5, #26890E ), to( #003200 ) );
+	border-radius: 4px;
+	border-top: 0px;
+	transition-property: width;
+	transition-duration: 0.5s;
+}
+
+.ProgressBarRight
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
+	transition-property: width;
+	transition-duration: 0.5s;
+}
+
+.HealthProgressBarContainer
+{
+	width: 100%;
+	margin-top: 6px;
+	vertical-align: bottom;
+}
+
+.vote-select-panel-party-progressbar-labels {
+	flow-children: right;
+	align: center center;
+	text-align: center;
+}
+
+.party-vote-count {
+	align: center center;
+	text-align: center;
+}
+
+.vote-select-panel-party-bottom-container {
+	width: 100%;
+	height: 80%;
+	flow-children: down;
+}
+
+#party_vote_button {
+	width: 40%;
+	height: 40%;
+	align: center top;
 }

@@ -14,6 +14,7 @@ function GameMode:_InitGameMode()
 	CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(GameMode, "OnSettingVote"))
 	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 	CustomGameEventManager:RegisterListener("effigy_destroyed", Dynamic_Wrap(GameMode, 'EffigyDestroyed'))
+	CustomGameEventManager:RegisterListener("party_vote", Dynamic_Wrap(GameMode, "OnPartyVote"))
 
 	self:SetupAncients()
 

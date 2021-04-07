@@ -1,6 +1,9 @@
 "use strict";
 
 var secret_key = {};
+var party_max_votes = 10;
+var party_game = false;
+var Parent = $.GetContextPanel().GetParent().GetParent().GetParent();
 
 var api = {
 	base : "https://api.frostrose-studio.com/",
@@ -154,6 +157,8 @@ function fetch() {
 		DisableVoting();
 	else if (Game.GetMapInfo().map_display_name == "imbathrow_3v3v3v3")
 		DisableRankingVoting();
+	else if (Game.GetMapInfo().map_display_name == "imba_10v10")
+		party_max_votes = 20;
 
 	var game_version = game_options.value;
 
@@ -189,6 +194,8 @@ function fetch() {
 		// error callback
 		$.Msg("Unable to retrieve loading screen info.")
 	});
+
+	SetPartyMaxVotes();
 };
 
 function AllPlayersLoaded() {
@@ -436,6 +443,34 @@ function DisableRankingVoting() {
 	$("#imba-loading-title-vote").FindChildTraverse("vote-content").GetChild(0).style.visibility = "collapse";
 }
 
+function PartyVote() {
+	GameEvents.SendCustomGameEventToServer("party_vote", {});
+}
+
+function PartyVoteReceived(args) {
+	$("#party_vote_progress_bar").value = args.vote_count / party_max_votes;
+	$("#party_required_votes").text = $.Localize("party_required_votes") + " " + args.vote_count + "/" + party_max_votes;
+
+	if (args.vote_count >= party_max_votes || Game.IsInToolsMode())
+		SetParty();
+}
+
+function SetPartyMaxVotes() {
+	$("#party_required_votes").text = $.Localize("party_required_votes") + " 0/" + party_max_votes;
+}
+
+function SetParty() {
+	$.Msg("No party game!")
+
+	if (party_game == false) {
+		party_game = true;
+
+		Game.SetTeamSelectionLocked( false );
+		Game.SetAutoLaunchEnabled( false );
+//		Game.SetRemainingSetupTime( 30.0 );
+	}
+}
+
 (function(){
 	var vote_info = $.GetContextPanel().FindChildrenWithClassTraverse("vote-info");
 
@@ -488,4 +523,5 @@ function DisableRankingVoting() {
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 	GameEvents.Subscribe("all_players_loaded", AllPlayersLoaded);
 	GameEvents.Subscribe("all_players_battlepass_loaded", AllPlayersBattlepassLoaded);
+	GameEvents.Subscribe("send_party_votes", PartyVoteReceived);
 })();

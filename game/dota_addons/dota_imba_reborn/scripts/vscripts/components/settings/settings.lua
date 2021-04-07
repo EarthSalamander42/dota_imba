@@ -559,3 +559,5 @@ if GetMapName() == "imba_1v1" then
 end
 
 -- if IsInToolsMode() then SAME_HERO_SELECTION = true end
+
+PARTIES_ALLOWED = false

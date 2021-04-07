@@ -34,3 +34,5 @@
 "loading_screen_custom_games_1"			"This is the list of every custom games currently managed by Frostrose Studio:"
 "loading_screen_custom_games_2"			"You can translate Dota IMBA in your native language on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forget to request your Discord role!"
 "loading_screen_custom_games_3"			"Support Frostrose Studio on Patreon and get in-game rewards! Battlepass XP boosters, companion following you on the battlefield, and more!"
+
+"party_required_votes"					"Required votes:"

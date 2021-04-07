@@ -4,7 +4,7 @@
 if not TeamOrdering then
 	TeamOrdering = class({})
 	TeamOrdering.winrates = {}
-	TeamOrdering.start_time = 5.0
+	TeamOrdering.start_time = 10.0
 	TeamOrdering.Radiant = {}
 	TeamOrdering.Dire = {}
 	TeamOrdering.minimum_level_to_reorder = 25
@@ -18,7 +18,9 @@ end
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		-- ultimate fail-safe in case something goes wrong
-		GameRules:SetCustomGameSetupRemainingTime(20.0)
+		if PARTIES_ALLOWED == false then
+			GameRules:SetCustomGameSetupRemainingTime(TeamOrdering.start_time * 2)
+		end
 
 		if IsInToolsMode() then
 			TeamOrdering:OnPlayersLoaded() -- called when backend connected for public games
@@ -42,7 +44,9 @@ function TeamOrdering:OnPlayersLoaded()
 
 			-- fail-safe
 			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_anti_stacks_fucker"), function()
-				GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+				if PARTIES_ALLOWED == false then
+					GameRules:SetCustomGameSetupRemainingTime(self.start_time * 2)
+				end
 
 				return nil
 			end, self.start_time * 2)
@@ -50,7 +54,9 @@ function TeamOrdering:OnPlayersLoaded()
 			return nil
 		end, 3.0)
 	else
-		GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+		if PARTIES_ALLOWED == false then
+			GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+		end
 	end
 end
 
@@ -208,7 +214,9 @@ function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
 		self:SetPlayerTeam(v, DOTA_TEAM_BADGUYS)
 	end
 
-	GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+	if PARTIES_ALLOWED == false then
+		GameRules:SetCustomGameSetupRemainingTime(self.start_time)
+	end
 end
 
 function TeamOrdering:OnPlayerReconnect(iPlayerID)

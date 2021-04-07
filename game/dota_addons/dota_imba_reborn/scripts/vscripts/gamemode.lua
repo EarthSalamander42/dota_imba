@@ -7,10 +7,10 @@ require('addon_init')
 
 require('components/api/init')
 if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
-	require('internal/eventtest')
+--	require('internal/eventtest')
+	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 end
 
-require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 
 require('libraries/animations')
 require('libraries/disable_help')
@@ -526,4 +526,27 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 
 		print("banned hero randomed, re-random:", new_hero)
 	end
+end
+
+local party_votes = {}
+
+function GameMode:OnPartyVote(keys)
+	local votes_count = 0
+
+	if not party_votes[keys.PlayerID] then
+		party_votes[keys.PlayerID] = true
+	end
+
+	for k, v in pairs(party_votes) do
+		if v == true then
+			votes_count = votes_count + 1
+		end
+	end
+
+	if votes_count >= PlayerResource:GetPlayerCount() or IsInToolsMode() and PARTIES_ALLOWED == false then
+		CustomGameEventManager:Send_ServerToAllClients("setup_loading_screen", {value = "visible"})
+		PARTIES_ALLOWED = true
+	end
+
+	CustomGameEventManager:Send_ServerToAllClients("send_party_votes", {vote_count = votes_count})
 end

@@ -311,3 +311,65 @@ function ToggleUI() {
 		toggle_ui = true;
 	}
 }
+
+function SetupLoadingScreen(args) {
+	var value = "collapse";
+	if (args && args.value)
+		value = args.value;
+
+	if (Parent.FindChildTraverse("GameAndPlayersRoot") == undefined || Parent.FindChildTraverse("TeamsList") == undefined || Parent.FindChildTraverse("TeamsListGroup") == undefined || Parent.FindChildTraverse("CancelAndUnlockButton") == undefined || Parent.FindChildTraverse("UnassignedPlayerPanel") == undefined || Parent.FindChildTraverse("ShuffleTeamAssignmentButton") == undefined)
+		$.Schedule(0.25, SetupLoadingScreen);
+	else {
+		Parent.FindChildTraverse("GameAndPlayersRoot").style.visibility = value;
+		var cancel = Parent.FindChildTraverse("CancelAndUnlockButton");
+		var lock = Parent.FindChildTraverse("LockAndStartButton");
+		var shuffle = Parent.FindChildTraverse("ShuffleTeamAssignmentButton");
+
+//		if (Game.IsInToolsMode() == false) {
+//			Parent.FindChildTraverse("ShuffleTeamAssignmentButton").style.visibility = value;
+//			cancel.style.visibility = value;
+//			lock.style.visibility = value;
+//		} else {
+			var parent = Parent.FindChildTraverse("TeamsList");
+			var header = Parent.FindChildTraverse("TeamsListGroup");
+
+			var game_info = Parent.FindChildTraverse("GameAndPlayersRoot").FindChildTraverse("GameInfoPanel");
+			var map_label = Parent.FindChildTraverse("MapInfoLabel");
+			var text = "Re-ordering teams based on seasonal winrate, please wait";
+
+			map_label.text = text;
+			SetTeamOrderingText(map_label);
+
+			if (game_info) {
+				game_info.SetParent(parent);
+				parent.MoveChildBefore(game_info, header);
+			}
+
+			if (parent.FindChildTraverse("GameInfoPanel"))
+				parent.MoveChildBefore(parent.FindChildTraverse("GameInfoPanel"), header);
+
+//			if (Game.IsInToolsMode() == false) {
+				if (cancel)
+					cancel.style.visibility = value;
+
+				if (lock)
+					lock.style.visibility = value;
+
+				if (shuffle)
+					shuffle.style.visibility = value;
+//			} else {
+//				if (cancel)
+//					cancel.SetParent(parent);
+
+//				if (lock)
+//					lock.SetParent(parent);
+//			}
+
+//			Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
+//			Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
+//			Parent.FindChildTraverse("TeamsListGroup").style.width = "99%";
+//		}
+	}
+}
+
+GameEvents.Subscribe("setup_loading_screen", SetupLoadingScreen);

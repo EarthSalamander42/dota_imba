@@ -55,6 +55,24 @@
 						</Button>
 					</Panel>
 				</Panel>
+
+				<Panel class="vote-select-panel-party">
+					<Label class="vote-select-party" text="No team ordering"/>
+
+					<Panel class="vote-select-panel-party-bottom-container">
+						<Button id="party_vote_button" class="vote-button" onactivate="PartyVote();">
+							<Label class="vote-button-label" hittest="false" text="No Party Vote"/>
+						</Button>
+
+						<Panel class="vote-select-panel-party-progressbar-container">
+							<ProgressBar id="party_vote_progress_bar" class="HealthProgressBar" hittest="false" value="0.0">
+								<Panel class="vote-select-panel-party-progressbar-labels">
+									<Label id="party_required_votes" class="party-vote-count vote-button-label" hittest="false" text="#party_required_votes"/>
+								</Panel>
+							</ProgressBar>
+						</Panel>
+					</Panel>
+				</Panel>
 			</Panel>
 		</Panel>
 
