@@ -548,5 +548,8 @@ function GameMode:OnPartyVote(keys)
 		PARTIES_ALLOWED = true
 	end
 
-	CustomGameEventManager:Send_ServerToAllClients("send_party_votes", {vote_count = votes_count})
+	CustomGameEventManager:Send_ServerToAllClients("send_party_votes", {
+		vote_count = votes_count,
+		max_votes = PlayerResource:GetPlayerCount(),
+	})
 end

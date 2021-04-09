@@ -107,14 +107,14 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	LevelContainerChild.BCreateChildren("<Label id='LevelLabel' text='Level: '/>");
 
 	LevelContainerChild.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='1'/>");
-	LevelContainerChild.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='0'/>");
+	LevelContainerChild.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='Rookie'/>");
 
 
 	LevelContainer.BCreateChildren("<Panel id='LevelContainerChild2'/>");
 
 	var LevelContainerChild2 = ImbaXP_Panel.FindChildTraverse("LevelContainerChild2");
 
-	LevelContainerChild2.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='0'/>");
+	LevelContainerChild2.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='0/500'/>");
 	LevelContainerChild2.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
 
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;

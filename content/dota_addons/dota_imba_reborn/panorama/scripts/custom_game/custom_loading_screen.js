@@ -448,8 +448,8 @@ function PartyVote() {
 }
 
 function PartyVoteReceived(args) {
-	$("#party_vote_progress_bar").value = args.vote_count / party_max_votes;
-	$("#party_required_votes").text = $.Localize("party_required_votes") + " " + args.vote_count + "/" + party_max_votes;
+	$("#party_vote_progress_bar").value = args.vote_count / args.max_votes;
+	$("#party_required_votes").text = $.Localize("party_required_votes") + " " + args.vote_count + "/" + args.max_votes;
 
 	if (args.vote_count >= party_max_votes || Game.IsInToolsMode())
 		SetParty();
