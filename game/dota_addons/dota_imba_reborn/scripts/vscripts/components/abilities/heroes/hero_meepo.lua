@@ -4,13 +4,9 @@ LinkLuaModifier("modifier_item_imba_lotus_orb_active", "components/items/item_lo
 
 modifier_meepo_divided_we_stand_lua = modifier_meepo_divided_we_stand_lua or class({})
 
-function modifier_meepo_divided_we_stand_lua:IsHidden()
-	return true
-end
-
-function modifier_meepo_divided_we_stand_lua:RemoveOnDeath()
-	return true
-end
+function modifier_meepo_divided_we_stand_lua:IsHidden() return true end
+function modifier_meepo_divided_we_stand_lua:RemoveOnDeath() return false end
+function modifier_meepo_divided_we_stand_lua:IsPurgable() return false end
 
 function modifier_meepo_divided_we_stand_lua:OnCreated()
 	if IsServer() then	
@@ -21,7 +17,7 @@ end
 function modifier_meepo_divided_we_stand_lua:OnIntervalThink()
 	local boots = {
 		"item_imba_guardian_greaves",
-		"item_imba_power_treads_2",
+		"item_imba_origin_treads",
 		"item_imba_arcane_boots",
 		"item_imba_lifesteal_boots",
 		"item_imba_blink_boots",
@@ -34,7 +30,7 @@ function modifier_meepo_divided_we_stand_lua:OnIntervalThink()
 		"item_travel_boots_2",
 		"item_tranquil_boots",
 		"item_imba_guardian_greaves",
-		"item_imba_power_treads_2",
+		"item_imba_origin_treads",
 		"item_imba_arcane_boots",
 		"item_imba_lifesteal_boots",
 		"item_imba_blink_boots",
@@ -81,7 +77,7 @@ function modifier_meepo_divided_we_stand_lua:OnIntervalThink()
 		end
 
 		local found_boots = self:GetParent():GetCloneSource().main_boots
-		
+
 		-- Pair of boots found, do something
 		if break_loop == true then
 --			print("Boots found in main meepo:", found_boots:GetAbilityName())
@@ -97,16 +93,16 @@ function modifier_meepo_divided_we_stand_lua:OnIntervalThink()
 				self:GetParent():RemoveItemByName(boots_name)
 			end
 		end
-		
+
 		-- Mega Treads fix
 		-- The Mega Treads lua file has a crapton of garbage code along with lines that expilcitly forbid clones from getting the bonus modifiers or something...so I guess I'll just leave it
-		if found_boots and found_boots:GetAbilityName() == "item_imba_power_treads_2" then
-			-- print(found_boots.state.." / "..self:GetParent():FindItemInInventory("item_imba_power_treads_2").state)
-			if found_boots.state ~= self:GetParent():FindItemInInventory("item_imba_power_treads_2").state then
-				self:GetParent():FindItemInInventory("item_imba_power_treads_2").state = found_boots.state
-				
-				if self:GetParent():HasModifier("modifier_imba_power_treads_2") and self:GetParent():GetCloneSource():HasModifier("modifier_imba_power_treads_2") then
-					self:GetParent():FindModifierByName("modifier_imba_power_treads_2"):SetStackCount(self:GetParent():GetCloneSource():FindModifierByName("modifier_imba_power_treads_2"):GetStackCount())
+		if found_boots and found_boots:GetAbilityName() == "item_imba_origin_treads" then
+			-- print(found_boots.state.." / "..self:GetParent():FindItemInInventory("item_imba_origin_treads").state)
+			if found_boots.state ~= self:GetParent():FindItemInInventory("item_imba_origin_treads").state then
+--				self:GetParent():FindItemInInventory("item_imba_origin_treads").state = found_boots.state
+
+				if self:GetParent():HasModifier("modifier_item_imba_origin_treads") and self:GetParent():GetCloneSource():HasModifier("modifier_item_imba_origin_treads") then
+					self:GetParent():FindModifierByName("modifier_item_imba_origin_treads"):SetStackCount(self:GetParent():GetCloneSource():FindModifierByName("modifier_item_imba_origin_treads"):GetStackCount())
 				end
 			end
 		end

@@ -56,7 +56,24 @@ function OnUpdateHeroSelection()
 		hero_portrait.style.backgroundImage = 'url("file://{images}/heroes/selection/npc_dota_hero_' + localPlayerInfo.possible_hero_selection + '.png")';
 		hero_portrait.style.backgroundSize = "100% 100%";
 	}
+}
 
+function OnHeroPicked(data) {
+	for (var i = 0; i < 24; i++) {
+		var player_info = Game.GetPlayerInfo(i);
+
+		if (player_info && player_info.player_selected_hero)
+			GameEvents.SendCustomGameEventToClient("hide_imba_random_button", i, {})
+	}
+
+	OnUpdateHeroSelection();
+}
+
+function HideImbaRandomButton() {
+	var button = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ReRandomButton");
+
+	if (button)
+		button.style.opacity = 0;
 }
 
 function UpdateTeam( teamId )
@@ -288,7 +305,8 @@ function UpdateTimer()
 
 	OnUpdateHeroSelection();
 	GameEvents.Subscribe( "dota_player_hero_selection_dirty", OnUpdateHeroSelection );
-	GameEvents.Subscribe( "dota_player_update_hero_selection", OnUpdateHeroSelection );
+	GameEvents.Subscribe( "dota_player_update_hero_selection", OnHeroPicked );
+	GameEvents.Subscribe( "hide_imba_random_button", HideImbaRandomButton );
 
 	if (gamemode) {
 		if (gamemode[1] == 2)

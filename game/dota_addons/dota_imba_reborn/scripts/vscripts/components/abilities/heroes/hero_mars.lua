@@ -1327,11 +1327,8 @@ function imba_mars_arena_of_blood:OnSpellStart()
 	local cast_position = self:GetCursorPosition()
 
 	if self:GetCaster():HasScepter() then
-		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {
-			cast_position_x = cast_position[1],
-			cast_position_y = cast_position[2],
-			cast_position_z = cast_position[3],
-		})
+		self.scepter_cast_position = cast_position
+		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {})
 	else
 		-- create thinker
 		CreateModifierThinker(
@@ -2414,10 +2411,11 @@ function modifier_imba_mars_arena_of_blood_scepter:GetMotionControllerPriority()
 function modifier_imba_mars_arena_of_blood_scepter:OnCreated(keys)
 	if not IsServer() then return end
 
-	if keys.cast_position_x == nil then
-		self.target_point = self:GetParent():GetAbsOrigin()
+	if self:GetAbility().scepter_cast_position then
+		self.target_point = self:GetAbility().scepter_cast_position
 	else
-		self.target_point = Vector(keys.cast_position_x, keys.cast_position_y, keys.cast_position_z)
+		-- fail-safe, shouldn't ever happen
+		self.target_point = self:GetParent():GetAbsOrigin()
 	end
 
 	self.max_height = self:GetAbility():GetSpecialValueFor("scepter_max_height")
