@@ -17,6 +17,8 @@ local split = function(inputstr, sep)
 end
 
 function CustomTooltips:GetTooltipsInfo(keys)
+	print(keys)
+
 	if not keys.PlayerID or keys.PlayerID == -1 then
 		print("ERROR: Invalid Player ID:", keys.PlayerID)
 		return
@@ -35,7 +37,10 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	end
 
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local hero = EntIndexToHScript(keys.iSelectedEntIndex)
+	local hero = nil
+	if keys.iSelectedEntIndex and type(keys.iSelectedEntIndex) == "number" and EntIndexToHScript(keys.iSelectedEntIndex) then
+		hero = EntIndexToHScript(keys.iSelectedEntIndex)
+	end
 	local ability_values = {}
 
 	local specials = GetAbilitySpecials(ability_name)
@@ -64,29 +69,47 @@ function CustomTooltips:GetTooltipsInfo(keys)
 --	print(imba_specials)
 
 	local hRealCooldown = split(GetAbilityCooldown(ability_name), " ")
+	local hRealManaCost = split(GetAbilityManaCost(ability_name), " ")
 
 	-- hero is nil when spectating (however currently custom tooltips are disabled for spectators)
-	for i = 1, #hRealCooldown do
-		if hRealCooldown[i] then
---			print(hRealCooldown[i], hero:GetCooldownReduction())
-			hRealCooldown[i] = hRealCooldown[i] * (hero:GetCooldownReduction() * 100) / 100
+	if hero then
+		for i = 1, #hRealCooldown do
+			if hRealCooldown[i] then
+--				print(hRealCooldown[i], hero:GetCooldownReduction())
+				hRealCooldown[i] = hRealCooldown[i] * (hero:GetCooldownReduction() * 100) / 100
+			end
 		end
-	end
 
-	local hRealManaCost = split(GetAbilityManaCost(ability_name), " ")
 --[[
-
-	for i = 1, #hRealManaCost do
-		if hRealManaCost[i] then
---			print(hRealManaCost[i], hero:GetCooldownReduction())
-			hRealManaCost[i] = hRealManaCost[i] * (hero:GetCooldownReduction() * 100) / 100
+		for i = 1, #hRealManaCost do
+			if hRealManaCost[i] then
+	--			print(hRealManaCost[i], hero:GetCooldownReduction())
+				hRealManaCost[i] = hRealManaCost[i] * (hero:GetCooldownReduction() * 100) / 100
+			end
 		end
-	end
 --]]
+	end
 
 	local cast_range = 0
 	local lua_cast_range = 0
-	local hAbility = hero:FindAbilityByName(keys.sAbilityName)
+	local bonus_cast_range = 0
+	local hAbility = nil
+	local max_level = 4
+
+	if GetAbilityKV(ability_name, "MaxLevel") then
+		if GetAbilityKV(ability_name, "MaxLevel") ~= max_level then
+			max_level = GetAbilityKV(ability_name, "MaxLevel")
+		end
+	else
+		if GetAbilityKV(ability_name, "AbilityType") and GetAbilityKV(ability_name, "AbilityType") == "DOTA_ABILITY_TYPE_ULTIMATE" then
+			max_level = 3
+		end
+	end
+
+	if hero then
+		hAbility = hero:FindAbilityByName(keys.sAbilityName)
+		bonus_cast_range = hero:GetCastRangeBonus()
+	end
 
 	if hAbility and hAbility:GetLevel() ~= 0 then
 		lua_cast_range = hAbility:GetCastRange(hero:GetAbsOrigin(), nil)
@@ -96,22 +119,22 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		else
 			cast_range = lua_cast_range or 0
 		end
-	end
 
---	print("Cast Range:", cast_range)
-	if cast_range ~= 0 then
-		if not CustomTooltips.particles[keys.PlayerID] then
-			CustomTooltips.particles[keys.PlayerID] = {}
+	--	print("Cast Range:", cast_range)
+		if cast_range ~= 0 then
+			if not CustomTooltips.particles[keys.PlayerID] then
+				CustomTooltips.particles[keys.PlayerID] = {}
+			end
+
+			if bit.band(tonumber(tostring(hAbility:GetBehavior())), DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= DOTA_ABILITY_BEHAVIOR_NO_TARGET then
+				cast_range = cast_range + GetCastRangeIncrease(hero)
+			end
+
+			local pfx = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/range_display.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, player)
+			ParticleManager:SetParticleControl(pfx, 0, hero:GetAbsOrigin())
+			ParticleManager:SetParticleControl(pfx, 1, Vector(cast_range, 0, 0))
+			table.insert(CustomTooltips.particles[keys.PlayerID], pfx)
 		end
-
-		if bit.band(tonumber(tostring(hAbility:GetBehavior())), DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= DOTA_ABILITY_BEHAVIOR_NO_TARGET then
-			cast_range = cast_range + GetCastRangeIncrease(hero)
-		end
-
-		local pfx = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/range_display.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, player)
-		ParticleManager:SetParticleControl(pfx, 0, hero:GetAbsOrigin())
-		ParticleManager:SetParticleControl(pfx, 1, Vector(cast_range, 0, 0))
-		table.insert(CustomTooltips.particles[keys.PlayerID], pfx)
 	end
 
 --	print("Send server tooltips info:", imba_specials)
@@ -122,7 +145,10 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		sSpellImmunity = GetSpellImmunityType(ability_name),
 		sSpellDispellable = GetSpellDispellableType(ability_name),
 		sSpecial = imba_specials,
-		iBonusCastRange = hero:GetCastRangeBonus(),
+		iBonusCastRange = bonus_cast_range,
+		iBehavior = GetAbilityKV(ability_name, "AbilityBehavior"),
+		iDamageType = GetAbilityKV(ability_name, "AbilityUnitDamageType"),
+		iMaxLevel = max_level,
 		iAbility = keys["iAbility"],
 	})
 end

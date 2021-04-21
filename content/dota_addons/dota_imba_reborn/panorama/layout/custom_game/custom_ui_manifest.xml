@@ -258,6 +258,32 @@
 			});
 		}
 
+		function SetupGameInfoPanel() {
+			if (Parent.FindChildTraverse("GameInfoPanel")) {
+				Parent.FindChildTraverse("GameInfoPanel").style.visibility = "visible";
+				Parent.FindChildTraverse("GameInfoPanel").style.backgroundColor = "none";
+				Parent.FindChildTraverse("GameInfoPanel").style.width = "100%";
+				Parent.FindChildTraverse("GameInfoPanel").style.marginTop = "0px";
+				Parent.FindChildTraverse("GameInfoPanel").style.boxShadow = "none";
+				Parent.FindChildTraverse("GameInfoPanel").style.transform = "translateX(0%)";
+				Parent.FindChildTraverse("GameInfoPanel").GetChild(1).style.visibility = "collapse";
+				Parent.FindChildTraverse("GameInfoPanel").GetChild(2).style.visibility = "collapse";
+				Parent.FindChildTraverse("GameInfoPanel").hittest = false;
+				Parent.FindChildTraverse("GameInfoPanel").hittestchildren = false;
+
+				Parent.FindChildTraverse("GameInfoPanelScrollArea").style.overflow = "squish";
+				Parent.FindChildTraverse("GameInfoPanelScrollArea").GetChild(0).style.visibility = "collapse";
+				Parent.FindChildTraverse("GameInfoPanelScrollArea").GetChild(2).style.visibility = "collapse";
+
+				Parent.FindChildTraverse("GameInfoPanel").FindChildTraverse("CustomUIContainer").style.height = "100%";
+				Parent.FindChildTraverse("GameInfoPanel").FindChildTraverse("CustomUIContainer").style.margin = "2% 2% 2% 2%";
+			} else {
+				$.Schedule(1.0, SetupGameInfoPanel);
+			}
+		}
+
+		SetupGameInfoPanel();
+
 		GameUI.SetupVanillaKeyBinding("HeroTaunt", PlayHeroTaunt);
 
 		// Dota Plus kill graph
@@ -273,7 +299,7 @@
 
 	<Panel>
 		<!-- CustomUIElements go here.-->
-		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" />
+<!--		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" /> -->
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay.xml" />
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/vanilla_hero_selection/vanilla_hero_selection.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
@@ -298,7 +324,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/manifold_paradox.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" />
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_plus_stats.xml" /> -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/vanilla_link_tooltips.xml" />
+		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/vanilla_link_tooltips.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/icefrog_donators_popup.xml" />
 
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.xml" />
