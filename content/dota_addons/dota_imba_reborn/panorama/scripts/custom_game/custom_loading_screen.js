@@ -259,6 +259,7 @@ function AllPlayersLoaded() {
 }
 
 function AllPlayersBattlepassLoaded() {
+/*
 	$.Msg("ALL PLAYERS BATTLEPASS LOADED!")
 
 	var player_table = CustomNetTables.GetTableValue("battlepass_player", Players.GetLocalPlayer().toString());
@@ -289,15 +290,15 @@ function AllPlayersBattlepassLoaded() {
 
 		$.GetContextPanel().FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
 		$.GetContextPanel().FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
-/*
-		rank_panel.SetPanelEvent("onmouseover", function () {
-			$.DispatchEvent("DOTAShowTextTooltip", rank_panel, player_table.mmr_title);
-		})
-		rank_panel.SetPanelEvent("onmouseout", function () {
-			$.DispatchEvent("DOTAHideTextTooltip", rank_panel);
-		})
-*/
+
+//		rank_panel.SetPanelEvent("onmouseover", function () {
+//			$.DispatchEvent("DOTAShowTextTooltip", rank_panel, player_table.mmr_title);
+//		})
+//		rank_panel.SetPanelEvent("onmouseout", function () {
+//			$.DispatchEvent("DOTAHideTextTooltip", rank_panel);
+//		})
 	}
+*/
 }
 
 function ToggleVoteContainer(bBoolean) {

@@ -1,7 +1,8 @@
-var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist')
+var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist');
 var GridCategories = FindDotaHudElement('GridCategories');
 //	var total = herocard.GetChildCount();
 var picked_heroes = [];
+var children_count = 0;
 
 //	$.Msg(herolist.customlist)
 //	$.Msg(GridCategories)
@@ -11,7 +12,6 @@ function FindDotaHudElement(panel) {
 }
 
 function InitHeroSelection()  {
-//	$.Msg(GridCategories.GetChildCount())
 	var pick_screen_title = FindDotaHudElement('HeroSelectionText');
 	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 	if (gamemode) gamemode = gamemode["1"];
@@ -36,29 +36,37 @@ function InitHeroSelection()  {
 	var i = 0;
 
 	while (i < GridCategories.GetChildCount()) {
+		var HeroListContainer = GridCategories.GetChild(i).FindChildTraverse("HeroList");
 //		$.Msg(GridCategories.GetChild(i))
-//		$.Msg(GridCategories.GetChild(i).FindChildTraverse("HeroList"))
-//		$.Msg(GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChildCount())
+//		$.Msg(HeroListContainer)
 
-		for (var j = 0; j < GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChildCount(); j++) {
-			if (GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j)) {
-				var hero_panel = GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j).GetChild(0).GetChild(0);
+		for (var j = 0; j < HeroListContainer.GetChildCount(); j++) {
+			if (HeroListContainer.GetChild(j)) {
+				var hero_panel = HeroListContainer.GetChild(j).GetChild(0).GetChild(0);
 
-				if (herolist && herolist.hotdisabledlist && typeof(herolist.hotdisabledlist) == "object" && herolist.hotdisabledlist["npc_dota_hero_" + hero_panel.heroname]) {
-					hero_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
-					hero_panel.GetParent().GetParent().AddClass("Banned")
-					hero_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
-					hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
-				}
+				if (HeroListContainer.GetChild(j).BHasClass("AllHeroChallenge"))
+					HeroListContainer.GetChild(j).RemoveClass("AllHeroChallenge");
 
-				if (herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
-					hero_panel.GetParent().AddClass("IMBA_HeroCard");
-					hero_panel.GetParent().style.boxShadow = "inset #FF7800aa 0 0 5px 0";
-				} else if (herolist.customlist["npc_dota_hero_" + hero_panel.heroname]) {
-					hero_panel.GetParent().AddClass("IMBA_HeroCard");
-					hero_panel.GetParent().style.boxShadow = "inset purple 0 0 50px 0";
-					hero_panel.style.backgroundImage = 'url("file://{images}/heroes/selection/npc_dota_hero_' + hero_panel.heroname + '.png")';
-					hero_panel.style.backgroundSize = "100% 100%";
+				if (hero_panel) {
+					if (herolist && herolist.hotdisabledlist && typeof(herolist.hotdisabledlist) == "object" && herolist.hotdisabledlist["npc_dota_hero_" + hero_panel.heroname]) {
+						hero_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
+						hero_panel.GetParent().GetParent().AddClass("Banned")
+						hero_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
+						hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
+					}
+
+					if (herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
+						hero_panel.style.boxShadow = "inset #FF7800aa 0px 0px 2px 2px";
+						hero_panel.style.transitionDuration = '0.25s';
+						hero_panel.style.transitionProperty = 'box-shadow';
+					} else if (herolist.customlist["npc_dota_hero_" + hero_panel.heroname]) {
+						hero_panel.style.boxShadow = "inset purple 0px 0px 2px 2px";
+						hero_panel.style.transitionDuration = '0.25s';
+						hero_panel.style.transitionProperty = 'box-shadow';
+
+						hero_panel.style.backgroundImage = 'url("file://{images}/heroes/selection/npc_dota_hero_' + hero_panel.heroname + '.png")';
+						hero_panel.style.backgroundSize = "100% 100%";
+					}
 				}
 			}
 		}
@@ -151,13 +159,14 @@ function UpdatePickedHeroes() {
 	var i = 0;
 
 	while (i < GridCategories.GetChildCount()) {
+		var HeroListContainer = GridCategories.GetChild(i).FindChildTraverse("HeroList");
 //		$.Msg(GridCategories.GetChild(i))
-//		$.Msg(GridCategories.GetChild(i).FindChildTraverse("HeroList"))
-//		$.Msg(GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChildCount())
+//		$.Msg(HeroListContainer)
+//		$.Msg(HeroListContainer.GetChildCount())
 
-		for (var j = 0; j < GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChildCount(); j++) {
-			if (GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j)) {
-				var hero_panel = GridCategories.GetChild(i).FindChildTraverse("HeroList").GetChild(j);
+		for (var j = 0; j < HeroListContainer.GetChildCount(); j++) {
+			if (HeroListContainer.GetChild(j)) {
+				var hero_panel = HeroListContainer.GetChild(j);
 
 				if (hero_panel.BHasClass("AlreadyPicked"))
 					hero_panel.RemoveClass("AlreadyPicked")
@@ -284,17 +293,27 @@ function SetIMBARandomButton() {
 	label.style.textAlign = "center";
 }
 
+function GridChecker() {
+	if (children_count != GridCategories.GetChildCount()) {
+		children_count = GridCategories.GetChildCount();
+		InitHeroSelection();
+	}
+
+	$.Schedule(0.03, GridChecker);
+}
+
 (function() {
 	var PreGame = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("PreGame")
 	PreGame.style.opacity = "1";
 	PreGame.style.transitionDuration = "0.0s";
 
-	$.Schedule(1.0, InitHeroSelection);
 //	$.Schedule(1.0, OnUpdateHeroSelection);
 	SetIMBARandomButton();
 
 	var clock_label = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ClockLabel");
 	clock_label.style.visibility = "visible";
+
+	GridChecker();
 
 //	GameEvents.Subscribe("dota_player_hero_selection_dirty", OnUpdateHeroSelectionDirty);
 })();

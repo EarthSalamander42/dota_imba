@@ -29,6 +29,7 @@
 "custom_end_screen_legend_mmr"					"MMR"
 "custom_end_screen_legend_mmr10v10"				"MMR 10v10"
 "custom_end_screen_legend_mmr1v1"				"MMR 1v1"
+"custom_end_screen_legend_winrate"				"WINRATE"
 "custom_end_screen_legend_battlepass_xp"		"Battlepass XP"
 
 //Combat Events

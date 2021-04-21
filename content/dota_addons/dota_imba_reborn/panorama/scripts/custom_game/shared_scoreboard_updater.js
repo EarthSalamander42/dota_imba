@@ -141,15 +141,10 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
 
 	if (player_info && Game.GetLocalPlayerInfo() && Game.GetLocalPlayerInfo().player_steamid) {
-		if (gamemode == "1") {
-			_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
-		} else {
+//		if (gamemode == "1") {
+//			_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
+//		} else {
 			var LegendIMR = $.GetContextPanel().FindChildrenWithClassTraverse("ScoreCol_WinRate");
-
-			for (var i = 0; i < LegendIMR.length; i++) {
-				LegendIMR[i].text = "WINRATE";
-			}
-
 			var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
 
 			if (player_info.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
@@ -160,7 +155,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 				else
 					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate);
 			}
-		}
+//		}
 	}
 }
 

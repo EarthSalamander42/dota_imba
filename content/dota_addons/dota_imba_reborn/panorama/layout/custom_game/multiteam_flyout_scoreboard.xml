@@ -21,7 +21,7 @@
 			<Panel class="LegendPanel ScoreCol_PlayerDetails" />
 			<Label class="LegendPanel ScoreCol_HeroLevel" text="LVL"/>
 			<Label class="LegendPanel ScoreCol_ImbaXP" text="Imba XP"/>
-			<Label class="LegendPanel ScoreCol_WinRate" text="#custom_end_screen_legend_mmr"/>
+			<Label class="LegendPanel ScoreCol_WinRate" text="#custom_end_screen_legend_winrate"/>
 			<Label class="LegendPanel ScoreCol_Kills" text="#custom_end_screen_legend_kills" />
 			<Label class="LegendPanel ScoreCol_Deaths" text="#custom_end_screen_legend_deaths" />
 			<Label class="LegendPanel ScoreCol_Assists" text="#custom_end_screen_legend_assists" />

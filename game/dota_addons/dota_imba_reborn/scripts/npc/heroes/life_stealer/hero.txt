@@ -8,7 +8,7 @@
 	"npc_dota_hero_life_stealer"
 	{
 	
-		"IsImba"					"0"
+		"IsImba"					"1"
 
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		

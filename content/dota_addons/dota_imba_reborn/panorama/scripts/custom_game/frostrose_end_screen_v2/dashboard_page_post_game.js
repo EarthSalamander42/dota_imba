@@ -307,16 +307,15 @@ function EndScoreboard(args) {
 //	$.Msg(args)
 
 	var bTenvTen = Game.GetAllPlayerIDs().length > 10;
-//	var IsRanked = Game.IsInToolsMode();
-	var IsRanked = false;
+//	var IsRanked = false;
 
-	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
-	if (gamemode) gamemode = gamemode["1"];
+//	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
+//	if (gamemode) gamemode = gamemode["1"];
 
-	if (Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") {
-		if (gamemode && gamemode == 1)
-			IsRanked = true;
-	}
+//	if (Game.GetMapInfo().map_display_name == "imba_5v5" || Game.GetMapInfo().map_display_name == "imba_10v10") {
+//		if (gamemode && gamemode == 1)
+//			IsRanked = true;
+//	}
 
 	if (bTenvTen == false) {
 		$("#DetailsScoreboardContainer").style.marginTop = "15%";
@@ -343,6 +342,7 @@ function EndScoreboard(args) {
 	var row_marginBottom = "3.5px";
 	var opposite_team = 3;
 
+/*
 	var mmr_rank_to_medals = {
 		Herald: 1,
 		Guardian: 2,
@@ -353,6 +353,7 @@ function EndScoreboard(args) {
 		Divine: 7,
 		Immortal: 8,
 	}
+*/
 
 //	$.Msg(args.players)
 
@@ -392,8 +393,8 @@ function EndScoreboard(args) {
 
 			$("#" + team_name[team_number] + "PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
 
-			if (IsRanked)
-				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
+//			if (IsRanked)
+//				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
 
 			$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
 
@@ -440,6 +441,7 @@ function EndScoreboard(args) {
 				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
 				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize(Players.GetPlayerSelectedHero(id));
 
+/*
 				if (IsRanked) {
 					if (player_table && player_table.mmr_title) {
 						var rank_panel = PinnedPlayerRow.FindChildTraverse("RankTierContainer");
@@ -468,13 +470,14 @@ function EndScoreboard(args) {
 						})
 					}
 				}
+*/
 
 				// Set middle bar player informations
 				var PlayerRowContainer = $.CreatePanel('Panel', player_row_container, 'PlayerRow' + id);
 				PlayerRowContainer.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row.xml", false, false);
 
-				if (IsRanked)
-					PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0].style.visibility = "visible";
+//				if (IsRanked)
+//					PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0].style.visibility = "visible";
 
 				PlayerRowContainer.FindChildrenWithClassTraverse("Level")[0].text = player_info.player_level;
 				PlayerRowContainer.FindChildrenWithClassTraverse("Kills")[0].text = player_info.player_kills;
