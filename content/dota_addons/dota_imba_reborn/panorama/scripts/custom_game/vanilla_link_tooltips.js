@@ -108,14 +108,14 @@ var eligible_heroes = [
 ];
 
 function InitTooltips() {
-//	$.Msg("Init Tooltips")
+	$.Msg("Init Tooltips")
 
-//	$.Msg(tooltips_class_init);
+	$.Msg(tooltips_class_init);
 	if (tooltips_class_init == false) {
 		tooltips_class_init = true;
 
 		Tooltips.RequestUnitTooltips = function(i, sAbilityName) {
-//			$.Msg(i, " / ", sAbilityName);
+			$.Msg(i, " / ", sAbilityName);
 			var hPanel = GetDotaHud().FindChildTraverse("Ability" + i);
 			var selected_entities = Players.GetSelectedEntities(Game.GetLocalPlayerID());
 
@@ -188,7 +188,7 @@ function SetHTMLNewLine(text) {
 }
 
 function SetAbilityTooltips(keys) {
-//	$.Msg(keys)
+	$.Msg(keys)
 
 	var hero = Players.GetSelectedEntities(Game.GetLocalPlayerID());
 	if (hero && hero[0])
@@ -220,10 +220,7 @@ function SetAbilityTooltips(keys) {
 		AbilityLevel.style.visibility = "collapse";		
 	}
 
-//	$.Msg(keys.sAbilityName)
-
 	// HasCooldown // ScepterUpgradable
-
 	var bIsItem = false;
 
 	if (bIsItem == false) {
