@@ -1,18 +1,12 @@
-function GetDotaHud() {
-	var p = $.GetContextPanel();
-	try {
-		while (true) {
-			if (p.id === "Hud")
-				return p;
-			else
-				p = p.GetParent();
-		}
-	} catch (e) {}
-}
+(function() {
+	$.Msg("Vanilla Link Tooltips initialization...")
+	OnThink();
 
-function isFloat(n){
-	return Number(n) === n && n % 1 !== 0;
-}
+	GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
+	GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
+	GameEvents.Subscribe("dota_player_hero_selection_dirty", InitTooltips);
+	GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
+})();
 
 Tooltips = {};
 var tooltips_class_init = false;
@@ -140,7 +134,6 @@ function InitTooltips() {
 					ability_name = ability_button.abilityname;
 			}
 
-
 			if (ability && ability_button && ability_button.paneltype != "Panel") {
 				$.Msg(ability_name);
 
@@ -168,14 +161,6 @@ function InitTooltips() {
 	}
 
 	GameUI.Tooltips = Tooltips;
-}
-
-function SetHTMLNewLine(text) {
-	while (text.indexOf("\n") !== -1) {
-		text = text.replace("\n", "<br>");
-	}
-
-	return text;
 }
 
 function SetAbilityTooltips(keys) {
@@ -553,6 +538,8 @@ function SetAbilityTooltips(keys) {
 	SetPositionLoop(ability_button, hPanel.GetPositionWithinWindow());
 
 	AbilityDetails.style.opacity = "1";
+
+	$.Msg("AbilityDetails visible : " + AbilityDetails.style.opacity);
 }
 
 function SetPositionLoop(hPanel, hPosition) {
@@ -707,18 +694,3 @@ function GetImmunityType(iEnum) {
 function ClearTooltips() {
 	AbilityDetails.AddClass("NoAbilityData");
 }
-
-// utils
-function bit_band(iBehavior, iBitCheck) {
-	return iBehavior & iBitCheck;
-}
-
-(function() {
-	$.Msg("Vanilla Link Tooltips initialization...")
-	OnThink();
-
-	GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
-	GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
-	GameEvents.Subscribe("dota_player_hero_selection_dirty", InitTooltips);
-	GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
-})();
