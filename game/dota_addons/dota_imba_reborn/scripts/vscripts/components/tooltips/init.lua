@@ -17,7 +17,7 @@ local split = function(inputstr, sep)
 end
 
 function CustomTooltips:GetTooltipsInfo(keys)
---	print(keys)
+	print(keys)
 
 	if not keys.PlayerID or keys.PlayerID == -1 then
 		print("ERROR: Invalid Player ID:", keys.PlayerID)

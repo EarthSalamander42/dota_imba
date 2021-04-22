@@ -108,12 +108,14 @@ var eligible_heroes = [
 ];
 
 function InitTooltips() {
-//	$.Msg("Init Tooltips")
+	$.Msg("Init Tooltips")
 
+	$.Msg(tooltips_class_init);
 	if (tooltips_class_init == false) {
 		tooltips_class_init = true;
 
 		Tooltips.RequestUnitTooltips = function(i, sAbilityName) {
+			$.Msg(i, sAbilityName);
 			var hPanel = GetDotaHud().FindChildTraverse("Ability" + i);
 			var selected_entities = Players.GetSelectedEntities(Game.GetLocalPlayerID());
 
@@ -124,6 +126,8 @@ function InitTooltips() {
 			})
 		}
 	}
+
+	$.Msg("Game State: " + Game.GetState());
 
 	for (var i = 0; i < 24; i++) {
 		var ability = GetDotaHud().FindChildTraverse("Ability" + i);
@@ -147,6 +151,7 @@ function InitTooltips() {
 						HideTooltips();
 					})
 
+					$.Msg(ability.FindChildTraverse("LevelUpButton"));
 					ability.FindChildTraverse("LevelUpButton").SetPanelEvent("onmouseover", function() {
 					})
 				})(ability_button, i, ability_image);
@@ -166,7 +171,7 @@ function SetHTMLNewLine(text) {
 }
 
 function SetAbilityTooltips(keys) {
-//	$.Msg(keys)
+	$.Msg(keys)
 	var hPanel = GetDotaHud().FindChildTraverse("Ability" + keys.iAbility);
 	var hero = Players.GetSelectedEntities(Game.GetLocalPlayerID());
 	if (hero && hero[0])
