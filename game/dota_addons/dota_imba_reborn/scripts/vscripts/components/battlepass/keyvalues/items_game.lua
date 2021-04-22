@@ -47,7 +47,8 @@ function ItemsGame:Init()
 	local bp_reward_table = {}
 	local bp_reward_table2 = {}
 	local nettable_limiter = 90
-	CustomNetTables:SetTableValue("battlepass_js_builder_limiter", "rewards", {nettable_limiter})
+
+--	CustomNetTables:SetTableValue("battlepass_js_builder_limiter", "rewards", {nettable_limiter})
 
 	while ItemsGame.custom_kv[tostring(count)] and count < nettable_limiter do
 		local itemKV = ItemsGame.custom_kv[tostring(count)]

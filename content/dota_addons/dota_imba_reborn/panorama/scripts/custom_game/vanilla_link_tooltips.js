@@ -1,14 +1,3 @@
-(function () {
-/*
-	if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
-		$.Msg("Vanilla Link Tooltips: Block spectators.");
-		return;
-	}
-*/
-
-	OnThink()
-})();
-
 function GetDotaHud() {
 	var p = $.GetContextPanel();
 	try {
@@ -144,7 +133,6 @@ function InitTooltips() {
 			var ability_button = ability.FindChildTraverse("AbilityButton");
 			var ability_name = undefined;
 
-
 			if (Game.GetState() <= 5) {
 				ability_button = GetDotaHud().FindChildTraverse("HeroInspect").FindChildTraverse("HeroAbilities").GetChild(i);
 
@@ -152,7 +140,10 @@ function InitTooltips() {
 					ability_name = ability_button.abilityname;
 			}
 
+
 			if (ability && ability_button && ability_button.paneltype != "Panel") {
+				$.Msg(ability_name);
+
 				(function (ability, ability_button, i, ability_name) {
 					ability_button.SetPanelEvent("onmouseover", function() {
 						Tooltips.RequestUnitTooltips(i, ability_name);
@@ -723,6 +714,9 @@ function bit_band(iBehavior, iBitCheck) {
 }
 
 (function() {
+	$.Msg("Vanilla Link Tooltips initialization...")
+	OnThink();
+
 	GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
 	GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
 	GameEvents.Subscribe("dota_player_hero_selection_dirty", InitTooltips);
