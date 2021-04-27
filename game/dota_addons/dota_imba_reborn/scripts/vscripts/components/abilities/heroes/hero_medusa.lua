@@ -435,9 +435,7 @@ function imba_medusa_mystic_snake:OnProjectileHit_ExtraData(hTarget, vLocation, 
 	end
 	
 	if hTarget:IsAlive() and not hTarget:IsInvulnerable() and not hTarget:IsOutOfGame() then
-		
 		if not hTarget:TriggerSpellAbsorb(self) then
-
 			hTarget:EmitSound("Hero_Medusa.MysticSnake.Target")
 
 			-- "Applies the mana loss first, and then the damage (and then the Stone Gaze debuff [if scepter])."

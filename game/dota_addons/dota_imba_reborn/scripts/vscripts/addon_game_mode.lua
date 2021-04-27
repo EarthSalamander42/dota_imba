@@ -63,6 +63,10 @@ function Precache( context )
 
 	PrecacheResource("model_folder", "models/items/wraith_king/arcana", context)
 
+	-- personas
+	PrecacheResource("particle_folder", "particles/units/heroes/hero_antimage_female", context)
+	PrecacheResource("model_folder", "models/heroes/antimage_female", context)
+
 	-- Custom Heroes models
 	PrecacheResource("model_folder", "models/heroes/sohei", context)
 
