@@ -197,7 +197,7 @@ end
 --------------------------------------------------------------------------------
 function GameMode:OnMaxLevelButtonPressed( eventSourceIndex, data )
 	local hPlayerHero = PlayerResource:GetSelectedHeroEntity( data.PlayerID )
-	if hPlayerHero:GetLevel() == 42 then
+	if hPlayerHero:GetLevel() == 30 then
 		self:BroadcastMsg( "#MaxLevelAlready_Msg" )
 		return
 	end
@@ -213,7 +213,7 @@ function GameMode:OnMaxLevelButtonPressed( eventSourceIndex, data )
 		end
 	end
 
-	hPlayerHero:SetAbilityPoints( 4 )
+	hPlayerHero:SetAbilityPoints( 8 )
 	self:BroadcastMsg( "#MaxLevel_Msg" )
 end
 

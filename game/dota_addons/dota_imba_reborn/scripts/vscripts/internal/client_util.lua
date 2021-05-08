@@ -87,7 +87,7 @@ function IsDaytime()
 	return true   
 end
 
-function CDOTA_BaseNPC:HasShard()
+function C_DOTA_BaseNPC:HasShard()
 	if self:HasModifier("modifier_item_aghanims_shard") then
 		return true
 	end

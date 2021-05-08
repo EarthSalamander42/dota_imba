@@ -178,11 +178,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			-- Setup topbar player colors
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
-			
-			-- ONLY SHOW THE DEMO PANEL IF IT'S ACTUALLY DEMO MODE (lest people get the wrong idea with thinking other players can use these "hacks")
-			if IsInToolsMode() or GetMapName() == "imba_demo" then
-				CustomGameEventManager:Send_ServerToAllClients("ShowDemoPanel", {})
-			end
 
 			-- MORE FAIL-SAFE
 			print("Pre-Game PreventBannedHeroToBeRandomed()")
