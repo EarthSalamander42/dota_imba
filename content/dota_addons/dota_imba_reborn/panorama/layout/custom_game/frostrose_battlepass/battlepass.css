@@ -398,7 +398,7 @@
 	width: 37px;
 	height: 37px;
 	align: left center;
-	background-image: url("file://panorama/images/control_icons/gear_png.png");
+	background-image: url("s2r://panorama/images/control_icons/gear_png.vtex");
 	background-size: cover;
 	opacity: 0.5;
 }
@@ -1081,7 +1081,7 @@
 	height: 20px;
 	margin-left: 6px;
 	margin-right: 6px;
-	background-image: url("file://panorama/images/control_icons/refresh_psd.png");
+	background-image: url("s2r://panorama/images/control_icons/refresh_psd.vtex");
 	background-size: 100% 100%;
 	align: left center;
 }
@@ -1257,7 +1257,7 @@
 	width: 100%;
 	height: 520px;
 	flow-children: down;
-	opacity-mask: url("file://panorama/images/masks/softedge_horizontal_png.png");
+	opacity-mask: url("s2r://panorama/images/masks/softedge_horizontal_png.vtex");
 }
 
 #PlayerSteamAvatar {
@@ -1284,7 +1284,7 @@
 .RewardEquipped {
 	width: 20%;
 	height: 20%;
-	background-image: url("file://panorama/images/status_icons/econtooltip_equipped_psd.png");
+	background-image: url("s2r://panorama/images/status_icons/econtooltip_equipped_psd.vtex");
 	horizontal-align: right;
 	background-repeat: no-repeat;
 	background-position: right top;

@@ -73,11 +73,6 @@
 			}
 		})();
 */
-		// fix for battlepass button being in middle of the way of clock time until
-		var Parent = $.GetContextPanel().GetParent().GetParent()
-		var hudElements = Parent.FindChildTraverse("HUDElements")
-		var TimeUntil = hudElements.FindChildTraverse("TimeUntil");
-		TimeUntil.style.marginBottom = "0px";
 
 		//Fix 3 digits levels (up to 4)
 		var Parent = $.GetContextPanel().GetParent().GetParent()

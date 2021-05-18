@@ -2,7 +2,7 @@
 .BountyGoldImage {
 	width: 23px;
 	height: 23px;
-	background-image: url("file://panorama/images/hud/icon_gold_psd.png");
+	background-image: url("s2r://panorama/images/hud/icon_gold_psd.vtex");
 	background-size: 100%;
 	margin-right: 5px;
 	margin-left: 4px;

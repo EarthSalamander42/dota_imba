@@ -1141,9 +1141,9 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 	-- Solves for the target's distance from the border of the field (negative is inside, positive is outside)
 	local distance = (target:GetAbsOrigin() - center_of_field):Length2D()
 	local distance_from_border = distance - radius
-	
+
 	-- The target's angle in the world
-	local target_angle = target:GetAnglesAsVector().y
+--	local target_angle = target:GetAnglesAsVector().y
 	
 	-- Solves for the target's angle in relation to the center of the circle in radians
 	local origin_difference =  center_of_field - target:GetAbsOrigin()

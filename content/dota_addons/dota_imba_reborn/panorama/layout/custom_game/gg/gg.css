@@ -48,7 +48,7 @@
 	align:  center center;
 	padding: 5px 20px;
 	background-color:  gradient( linear, 0% 0, 0 100%, from( #b98d4a ),  to( #d9ca81 ) );
-	background-image: url("file://panorama/images/backgrounds/background_play_button_2x_png.png");
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_2x_png.vtex");
 	background-size: 328px 50px;
 	border-bottom: 1px solid #00000088;
 	border-top: 1px solid #ffffff05;
