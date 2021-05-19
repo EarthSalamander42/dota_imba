@@ -335,10 +335,10 @@ function SetupLoadingScreen(args) {
 
 			var game_info = Parent.FindChildTraverse("GameAndPlayersRoot").FindChildTraverse("GameInfoPanel");
 			var map_label = Parent.FindChildTraverse("MapInfoLabel");
-			var text = "Re-ordering teams based on seasonal winrate, please wait";
+//			var text = "Re-ordering teams based on seasonal winrate, please wait";
 
-			map_label.text = text;
-			SetTeamOrderingText(map_label);
+//			map_label.text = text;
+//			SetTeamOrderingText(map_label);
 
 			if (game_info) {
 				game_info.SetParent(parent);

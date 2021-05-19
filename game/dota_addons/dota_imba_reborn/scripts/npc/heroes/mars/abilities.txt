@@ -205,7 +205,7 @@
 		"AbilityTextureName"			"mars_arena_of_blood"
 		"FightRecapLevel"				"2"
 		"MaxLevel"						"3"
-        "HasScepterUpgrade"				"1"
+//		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{

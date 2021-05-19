@@ -54,7 +54,7 @@ function GameMode:_InitGameMode()
 --		GameRules:SetStartingGold(0)
 --	end
 
-	GameRules:LockCustomGameSetupTeamAssignment(not IsInToolsMode())
+	GameRules:LockCustomGameSetupTeamAssignment(true)
 
 	if IMBA_PICK_SCREEN == false then
 		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(AP_GAME_TIME)

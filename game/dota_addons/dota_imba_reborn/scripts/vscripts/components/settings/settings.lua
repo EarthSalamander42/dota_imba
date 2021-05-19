@@ -40,7 +40,7 @@ else
 end
 
 -- Barebones constants
-AUTO_LAUNCH_DELAY = -1
+AUTO_LAUNCH_DELAY = 15.0
 HERO_SELECTION_TIME = 60.0
 SELECT_PENALTY_TIME = 0.0
 -- STRATEGY_TIME = 10.0					-- How long should strategy time last?

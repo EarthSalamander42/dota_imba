@@ -672,24 +672,24 @@ align: center top;
 
 #BtnMuteVoice
 {
-	background-image: url("file://panorama/images/custom_game/mute_voice_off_png.png");
+	background-image: url("s2r://panorama/images/custom_game/mute_voice_off_png.vtex");
 }
 
 #BtnShareUnit
 {
-	background-image: url("file://panorama/images/custom_game/share_unit_off_png.png");
+	background-image: url("s2r://panorama/images/custom_game/share_unit_off_png.vtex");
 	visibility: visible;
 }
 
 #BtnShareHero
 {
-	background-image: url("file://panorama/images/custom_game/share_hero_off_png.png");
+	background-image: url("s2r://panorama/images/custom_game/share_hero_off_png.vtex");
 	visibility: visible;
 }
 
 #BtnDisableHelp
 {
-	background-image: url("file://panorama/images/custom_game/disable_help_off_png.png");
+	background-image: url("s2r://panorama/images/custom_game/disable_help_off_png.vtex");
 	visibility: visible;
 }
 
@@ -702,22 +702,22 @@ align: center top;
 
 #BtnMuteVoice.Activated
 {
-	background-image: url("file://panorama/images/custom_game/mute_voice_on_png.png");
+	background-image: url("s2r://panorama/images/custom_game/mute_voice_on_png.vtex");
 }
 
 #BtnShareUnit.Activated
 {
-	background-image: url("file://panorama/images/custom_game/share_unit_on_png.png");
+	background-image: url("s2r://panorama/images/custom_game/share_unit_on_png.vtex");
 }
 
 #BtnShareHero.Activated
 {
-	background-image: url("file://panorama/images/custom_game/share_hero_on_png.png");
+	background-image: url("s2r://panorama/images/custom_game/share_hero_on_png.vtex");
 }
 
 #BtnDisableHelp.Activated
 {
-	background-image: url("file://panorama/images/custom_game/disable_help_on_png.png");
+	background-image: url("s2r://panorama/images/custom_game/disable_help_on_png.vtex");
 }
 
 

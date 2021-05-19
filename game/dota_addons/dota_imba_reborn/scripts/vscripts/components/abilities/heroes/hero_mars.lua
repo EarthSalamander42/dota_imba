@@ -1312,9 +1312,9 @@ function imba_mars_arena_of_blood:GetAOERadius()
 end
 
 function imba_mars_arena_of_blood:GetCastRange(vLocation, hTarget)
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("scepter_cast_range")
-	end
+--	if self:GetCaster():HasScepter() then
+--		return self:GetSpecialValueFor("scepter_cast_range")
+--	end
 
 	return self.BaseClass.GetCastRange(self, vLocation, hTarget)
 end
@@ -1326,10 +1326,10 @@ function imba_mars_arena_of_blood:OnSpellStart()
 
 	local cast_position = self:GetCursorPosition()
 
-	if self:GetCaster():HasScepter() then
-		self.scepter_cast_position = cast_position
-		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {})
-	else
+--	if self:GetCaster():HasScepter() then
+--		self.scepter_cast_position = cast_position
+--		local mod = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_mars_arena_of_blood_scepter", {})
+--	else
 		-- create thinker
 		CreateModifierThinker(
 			self:GetCaster(), -- player source
@@ -1340,7 +1340,7 @@ function imba_mars_arena_of_blood:OnSpellStart()
 			self:GetCaster():GetTeamNumber(),
 			false
 		)
-	end
+--	end
 end
 
 --------------------------------------------------------------------------------
