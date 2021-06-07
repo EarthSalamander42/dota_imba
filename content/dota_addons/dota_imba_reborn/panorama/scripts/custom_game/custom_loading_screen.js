@@ -472,6 +472,16 @@ function SetParty() {
 	}
 }
 
+function HidePickScreenDuringGame() {
+	$.Msg("Attempt to Hide loading screen")
+
+	if (Game.GameStateIsAfter(2)) {
+		$.GetContextPanel().style.visibility = "collapse";
+		$.Msg("Loading screen hidden!")
+	} else
+		$.Schedule(1.0, HidePickScreenDuringGame)
+}
+
 (function(){
 	var vote_info = $.GetContextPanel().FindChildrenWithClassTraverse("vote-info");
 
@@ -519,6 +529,7 @@ function SetParty() {
 	HoverableLoadingScreen();
 	fetch();
 	SetProfileName();
+	$.Schedule(1.0, HidePickScreenDuringGame); // Yeah like wtf, i really have to do this? really? like, really??
 
 	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);

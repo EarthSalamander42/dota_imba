@@ -225,11 +225,16 @@
 
 #BattlepassInfoContainer,
 #DonatorInfoContainer,
+#LeaderboardInfoContainer,
 #SettingsInfoContainer, {
 	width: 100%;
 	height: 520px;
 	flow-children: down;
 	padding: 5px;
+}
+
+#LeaderboardInfoContainer {
+	height: 550px;
 }
 
 #LocalPlayerInfoContainer {
@@ -239,6 +244,15 @@
 
 #LocalPlayerInfo {
 	align: center bottom;
+}
+
+.LeaderboardTableWrapper {
+	width: 100%;
+	background-color: #040c1850;
+	height: 445px;
+	padding-bottom: 10px;
+	overflow:  squish scroll;
+	flow-children: down;
 }
 
 #BattlepassButtons {
@@ -252,6 +266,7 @@
 
 
 #DonatorInfoContainer,
+#LeaderboardInfoContainer,
 #SettingsInfoContainer {
 	visibility: collapse;
 }
@@ -264,34 +279,146 @@
 	margin-bottom: 20px;
 }
 
-#XP {
-	background-color: #2b323fa4;
+.LeaderboardButtonLabel {
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+	align:  center center;
+}
+
+#Rank,
+#SteamAvatar,
+#XP,
+#IMR {
 	height: 90%;
 	align:  center center;
-	margin-bottom: 5px;
+	flow-children: right;
 }
 
-#XP:hover {
-	background-color: #303848;
+#Rank,
+#SteamAvatar,
+#XP {
+	background-color: #2b323fa4;
 }
 
-#XP:active {
-	background-color: #303848;
+#Rank {
+	margin: 0px 2px 3px 0px;
+}
+
+#SteamAvatar,
+#XP {
+	margin: 0px 2px 3px 2px;
 }
 
 #IMR {
+	margin: 0px 0px 3px 2px;
+}
+
+#Rank:hover,
+#SteamAvatar:hover,
+#XP:hover,
+#RoundOrderLeft:hover,
+.RoundOrder:hover,
+#RoundOrderRight:hover {
+	background-color: #303848;
+}
+
+#RoundOrderLeft {
+	horizontal-align: left;
+	background-image: url("s2r://panorama/images/control_icons/arrow_solid_left_png.vtex");
+}
+
+.RoundOrder {
+	width:  56%;
+	height: 100%;
+	align: center center;
 	background-color: #2b323fa4;
-	height: 90%;
+}
+
+#RoundOrderLabel {
 	align:  center center;
-	margin-bottom: 5px;
+	font-size: 19px;
+	color: #daebff;
 }
 
-#IMR:hover {
-	background-color: #303848;
+#RoundOrderRight {
+	horizontal-align: right;
+	background-image: url("s2r://panorama/images/control_icons/arrow_solid_right_png.vtex");
 }
 
-#IMR:active {
-	background-color: #303848;
+.LeaderboardArrowButton {
+	width:  20%;
+	height:  100%;
+	background-color: #2b323fa4;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+.LeaderboardRankLabel,
+.LeaderboardXPLabel,
+.LeaderboardAvatarLabel,
+.LeaderboardAvatar_altLabel
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+}
+
+.LeaderboardIMR {
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;	
+}
+
+.LeaderboardAvatarDiretide {
+	width: 40%;
+	height: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+}
+
+/* Leaderboard Legend */
+.LeaderboardLegend {
+	width: 100%;
+	height: 40px;
+	flow-children: right;
+	/* border-bottom: 1px solid white; */
+}
+
+/* Leaderboard */
+.LeaderboardGames {
+	width: 100%;
+	height: 45px;
+	flow-children: right-wrap;
+	border-top: 1px solid #3f464ecc;
+}
+
+.LeaderboardRank {
+	width: 10%;	
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+	align:  center center;
+}
+
+.LeaderboardAvatar {
+	width: 15%;
+	height: 90%;
+	border: 0;
+	align:  center top;
+}
+
+.LeaderboardXP {
+	width: 50%;
+	align:  center center;
+}
+
+.LeaderboardIMR {
+	width: 25%;
+	align:  center center;
 }
 
 #PlayerContent
@@ -469,7 +596,6 @@
 #DonatorTabButton .image {
 	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_donator_icon.png");
 }
-
 #LeaderboardTabButton {
 	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_leaderboard.png");
 }
@@ -573,6 +699,11 @@
 	opacity: 1;
 //	letter-spacing: 0.5px;
 	text-shadow: 1px 1px 2px 2.0 #00000030;
+}
+
+.LeaderboardInGamePlayers {
+	width: 100%;
+	flow-children: right;
 }
 
 /* Labels */
@@ -1580,4 +1711,21 @@
 	vertical-align: bottom;
 	height: 40px;
 	width: 100%;
+}
+
+#ChatContainer {
+	margin-top:  20px;
+}
+
+#GameChatEntry {
+	height: 32px;
+	margin-top: 2px;
+	background-color: #000000aa;
+	font-size: 16px;
+	padding: 6px 3px 5px 8px;
+	color: white;
+	font-weight: bold;
+	font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+	text-overflow: clip;
+	border-radius: 3px;
 }

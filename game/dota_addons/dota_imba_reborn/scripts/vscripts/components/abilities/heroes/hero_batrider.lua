@@ -420,7 +420,7 @@ end
 --   Finally, if any firefly modifiers existed, destroy the firefly loop sound early
 function imba_batrider_firefly:OnOwnerDied()
 	local firefly_modifiers = self:GetCaster():FindAllModifiersByName("modifier_imba_batrider_firefly")
-	
+
 	for _, mod in pairs(firefly_modifiers) do
 		if not mod.firefly_thinker then
 			mod:Destroy()
@@ -430,12 +430,12 @@ function imba_batrider_firefly:OnOwnerDied()
 			ParticleManager:DestroyParticle(mod.ember_particle, false)
 			ParticleManager:ReleaseParticleIndex(mod.ember_particle)
 		end
-		
+
 		if mod.truesight_modifier then
 			mod.truesight_modifier:Destroy()
 		end
 	end
-	
+
 	if #firefly_modifiers >= 1 then
 		self:GetCaster():StopSound("Hero_Batrider.Firefly.loop")
 	end

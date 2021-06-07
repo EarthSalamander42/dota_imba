@@ -64,7 +64,6 @@ else
 	POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboard before closing the server automatically?
 end
 CAMERA_DISTANCE_OVERRIDE = -1
-GOLD_PER_TICK = 1
 
 USE_AUTOMATIC_PLAYERS_PER_TEAM = false		-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
 UNIVERSAL_SHOP_MODE = true 				-- Should the main shop contain Secret Shop items as well as regular items
@@ -535,9 +534,6 @@ IMBA_DISARM_IMMUNITY = {
 IMBA_PUNISHED = {
 	[925061111] = false,
 }
-
--- BP rewards overriding unit models
-ENTITY_MODEL_OVERRIDE = {}
 
 IMBA_FIRST_BLOOD = false
 

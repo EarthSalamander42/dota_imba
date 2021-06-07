@@ -675,6 +675,7 @@ function OnSelectionChangeForCosmetics(unit, old_unit) {
 	}
 }
 */
+
 function ShowDemoPanel() {
 //	$.Msg("Enter Function ShowDemoPanel");
 	$.GetContextPanel().FindChildTraverse('ControlPanel').AddClass("visible");

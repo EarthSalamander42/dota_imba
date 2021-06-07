@@ -146,7 +146,7 @@ function UpdatePlayer( teamPanel, playerId )
 //	$.Msg(player_table.donator_level)
 //	$.Msg(player_table.donator_color)
 
-	if (player_table && player_table.donator_level && player_table.donator_color && player_table.in_game_tag && player_table.in_game_tag == 1) {
+	if (player_table && player_table.donator_level && player_table.donator_color && player_table.toggle_tag && player_table.toggle_tag == 1) {
 		if (player_table.donator_level < 10) {
 			playerName.style.color = player_table.donator_color
 		}

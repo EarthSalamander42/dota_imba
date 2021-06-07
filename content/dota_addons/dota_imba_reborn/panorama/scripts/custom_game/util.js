@@ -373,3 +373,60 @@ function SetupLoadingScreen(args) {
 }
 
 GameEvents.Subscribe("setup_loading_screen", SetupLoadingScreen);
+
+/*
+// Credits: Nibuja
+
+//Check there are changes to buffs
+$.RegisterForUnhandledEvent("StyleClassesChanged", (panel) => {
+	const mainSelected = Players.GetLocalPlayerPortraitUnit();
+	if (panel === null) return;
+	const buffIndex = GetBuffIndexFromPanel(panel);
+
+		if (buffIndex) {
+			const buffID = GetBuffIDFromIndex(buffIndex, panel);
+		const buffName = Buffs.GetName(mainSelected, buffID);
+
+			//check if its the modifier you want
+		}
+});
+
+//Retrieves the index part from the id of a buff panel
+function GetBuffIndexFromPanel(panel) {
+	if (panel.paneltype === "DOTABuff") {
+		const parent = panel.GetParent();
+		if (parent !== undefined && parent.id === "buffs") {
+			return parseInt(panel.id.slice(4), 10);
+		}
+	}
+	return -1;
+}
+
+//Checks which buff id belongs to the according panel index
+function GetBuffIDFromIndex(buffIndex, panel) {
+	const mainSelected = Players.GetLocalPlayerPortraitUnit();
+	const buffList = panel.GetParent();
+	const buffCount = buffList.GetChildCount();
+	let maxBuffID = 0;
+	for (var i = buffCount - 1; i >= 0; i--) {
+		const buffPanel = buffList.GetChild(i);
+		if (!buffPanel.BHasClass("Hidden")) {
+			maxBuffID += 1;
+		}
+	}
+	let index = maxBuffID;
+	let buffID = 0;
+
+	for (var i = Entities.GetNumBuffs(mainSelected) - 1; i >= 0; i--) {
+		const buff = Entities.GetBuff(mainSelected, i);
+		if (!Buffs.IsHidden(mainSelected, buff)) {
+			index -= 1;
+		}
+		if (index == buffIndex) {
+			buffID = buff;
+			break;
+		}
+	}
+	return buffID;
+}
+*/

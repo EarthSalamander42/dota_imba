@@ -101,7 +101,7 @@ function SetDonatorRow(panel, playerId, player_table) {
 
 	if (player_table && player_table.donator_level && player_table.donator_color) {
 		if (player_table.donator_level < 10) {
-			if (player_table.in_game_tag == 1) {
+			if (player_table.toggle_tag == 1) {
 				if (is_donator_set.indexOf( playerId.toString() ) == -1) {
 					is_donator_set.push( playerId.toString() );
 					// panel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
@@ -508,7 +508,7 @@ function EndScoreboard(args) {
 					panel_rank_name.text = player_table.title;
 					panel_rank_name.style.color = player_table.title_color;
 
-//					if (player_table.in_game_tag == 1)
+//					if (player_table.toggle_tag == 1)
 //						panel_xp_booster_text.style.color = player_table.donator_color;
 
 //					$.Msg(Math.floor(player_table.XP) + " / " + Math.floor(player_table.MaxXP))
@@ -578,7 +578,7 @@ function EndScoreboard(args) {
 						panel_xp_diff_text.AddClass("es-text-white");
 					}
 
-					if (player_table && player_table.in_game_tag == 1 && player_backend_result && player_backend_result.xp_multiplier) {
+					if (player_table && player_table.toggle_tag == 1 && player_backend_result && player_backend_result.xp_multiplier) {
 						var multiplier = Math.round(player_backend_result.xp_multiplier * 100.0);
 						panel_xp_booster_text.text = " (" + multiplier + "%)";
 					} else {

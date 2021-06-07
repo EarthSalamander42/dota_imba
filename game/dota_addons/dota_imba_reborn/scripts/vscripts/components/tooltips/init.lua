@@ -56,12 +56,19 @@ function CustomTooltips:GetTooltipsInfo(keys)
 --	print(specials_issued)
 
 	-- use imba values by default, add vanilla values if imba missing (this way imba values has priority over vanilla)
-	for k, v in pairs(specials) do
+	for k, value in pairs(specials) do
 		-- prevent adding doublons, prioritize imba values
-		if v and v[1] and not specials_issued[v[1]] then
+		if value and value[1] and not specials_issued[value[1]] then
 --			print("From now on, ignore", v[1])
-			specials_issued[v[1]] = true
-			table.insert(imba_specials, v)
+			specials_issued[value[1]] = true
+
+			if hero and hero:FindAbilityByName(keys.sAbilityName) then
+				print(value[1], hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1]))
+				table.insert(imba_specials, hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1]))
+			else
+				print(value[1], value)
+				table.insert(imba_specials, value)
+			end
 		end
 	end
 

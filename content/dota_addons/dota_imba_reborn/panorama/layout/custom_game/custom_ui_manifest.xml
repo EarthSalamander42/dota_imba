@@ -252,6 +252,8 @@
 			});
 		}
 
+		GameUI.SetupVanillaKeyBinding("HeroTaunt", PlayHeroTaunt);
+
 		function SetupGameInfoPanel() {
 			if (Parent.FindChildTraverse("GameInfoPanel")) {
 				Parent.FindChildTraverse("GameInfoPanel").style.visibility = "visible";
@@ -277,8 +279,6 @@
 		}
 
 		SetupGameInfoPanel();
-
-		GameUI.SetupVanillaKeyBinding("HeroTaunt", PlayHeroTaunt);
 
 		// Dota Plus kill graph
 //		if ($.GetContextPanel().GetParent().GetParent().FindChildTraverse("KillCam")) {

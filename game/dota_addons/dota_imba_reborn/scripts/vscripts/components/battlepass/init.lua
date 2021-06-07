@@ -4,6 +4,7 @@
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		_G.Battlepass = _G.Battlepass or class({})
+		Battlepass.ENTITY_MODEL_OVERRIDE = {}
 
 		require('components/battlepass/constants')
 		require('components/battlepass/util')

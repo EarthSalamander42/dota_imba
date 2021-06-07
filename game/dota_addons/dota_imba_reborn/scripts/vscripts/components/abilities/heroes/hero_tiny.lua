@@ -38,6 +38,7 @@ function modifier_imba_tiny_death_handler:OnDeath(params)
 
 	local death_pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(death_pfx, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControlForward(death_pfx, 0, self:GetParent():GetForwardVector())
 end
 
 modifier_imba_tiny_tree_animation = modifier_imba_tiny_tree_animation or class({})

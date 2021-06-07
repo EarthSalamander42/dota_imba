@@ -211,7 +211,7 @@ function EndScoreboard(args) {
 			values.xp.level.text = $.Localize("#battlepass_level") + ply_table.Lvl;
 			values.xp.rank_name.text = ply_table.title;
 			values.xp.rank_name.style.color = ply_table.title_color;
-			if (ply_table.in_game_tag == 1)
+			if (ply_table.toggle_tag == 1)
 				values.xp.booster.style.color = ply_table.donator_color;
 
 //			$.Msg(Math.floor(player_xp) + " / " + Math.floor(player_max_xp_in_level))
@@ -273,7 +273,7 @@ function EndScoreboard(args) {
 				values.xp.earned.AddClass("es-text-red");
 			}
 
-			if (ply_table && ply_table.in_game_tag == 1) {
+			if (ply_table && ply_table.toggle_tag == 1) {
 				var multiplier = Math.round(player.result.xp_multiplier * 100.0);
 				values.xp.booster.text = " (" + multiplier + "%)";
 			} else {

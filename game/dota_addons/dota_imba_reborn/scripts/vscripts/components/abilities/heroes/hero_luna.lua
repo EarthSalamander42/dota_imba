@@ -56,10 +56,10 @@ end
 
 function imba_luna_lucent_beam:OnSpellStart()
 	if not IsServer() then return end
-	
+
 	-- Do not continue logic if blocked by Linken's Sphere
 	if self:GetCursorTarget():TriggerSpellAbsorb(self) then return nil end
-	
+
 	self:GetCaster():EmitSound("Hero_Luna.LucentBeam.Cast")
 	self:GetCursorTarget():EmitSound("Hero_Luna.LucentBeam.Target")
 
@@ -80,7 +80,7 @@ function imba_luna_lucent_beam:OnSpellStart()
 	ParticleManager:SetParticleControlEnt(particle,	5, self:GetCursorTarget(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCursorTarget():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(particle,	6, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(particle)
-	
+
 	-- "Lucent Beam first applies the damage, then the debuff."
 	local damageTable = {
 		victim 			= self:GetCursorTarget(),
@@ -90,9 +90,9 @@ function imba_luna_lucent_beam:OnSpellStart()
 		attacker 		= self:GetCaster(),
 		ability 		= self
 	}
-	
+
 	ApplyDamage(damageTable)
-	
+
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration") * (1 - self:GetCursorTarget():GetStatusResistance())})
 	
 	if self:GetAutoCastState() then

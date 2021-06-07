@@ -1173,6 +1173,10 @@ function GameMode:OnThink()
 	end
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+--		if IsInToolsMode() then
+--			ReconnectPlayer(0)
+--		end
+
 		if GetMapName() == "imba_demo" or GameRules:IsCheatMode() then return 1 end
 
 		-- End the game if one team completely abandoned

@@ -313,7 +313,7 @@ function Battlepass:SetOverrideAssets(hero, modifier, table_name)
 			elseif j.type == "entity_model" then
 				if j.style == nil or j.style == asset_style then
 --					print("entity model:", j)
-					ENTITY_MODEL_OVERRIDE[j.asset] = j.modifier
+					Battlepass.ENTITY_MODEL_OVERRIDE[j.asset] = j.modifier
 				end
 			elseif j.type == "sheepstick_model" then
 				hero.sheepstick_model = j.modifier				

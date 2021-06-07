@@ -196,7 +196,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 
 	if (player_table && player_table.donator_level && player_table.donator_color) {
 		if (player_table.donator_level < 10) {
-			if (player_table.in_game_tag == 1) {
+			if (player_table.toggle_tag == 1) {
 				if (is_donator_set.indexOf( playerId.toString() ) == -1) {
 					is_donator_set.push( playerId.toString() );
 					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';

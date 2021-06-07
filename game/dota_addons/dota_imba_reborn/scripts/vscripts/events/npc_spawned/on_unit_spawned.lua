@@ -24,11 +24,6 @@ function GameMode:OnUnitFirstSpawn(unit)
 		unit_name = "npc_dota_eidolon"
 	end
 
-	if ENTITY_MODEL_OVERRIDE[unit_name] then
-		unit:SetOriginalModel(ENTITY_MODEL_OVERRIDE[unit_name])
-		unit:SetModel(ENTITY_MODEL_OVERRIDE[unit_name])
-	end
-
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
 		-- Give the custom mechanics like damage block and lifesteal
 		unit:AddNewModifier(unit, nil, "modifier_custom_mechanics", {})

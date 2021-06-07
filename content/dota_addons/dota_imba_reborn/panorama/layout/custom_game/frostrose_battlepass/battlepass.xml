@@ -96,18 +96,18 @@
 							<Label class="text" text="#donator" />
 						</Button>
 
-						<Button class="color_animation" id="LeaderboardTabButton" onactivate="ExternalBrowserGoToURL('https://frostrose-studio.com/ranking');">
+						<Button class="color_animation" id="LeaderboardTabButton" onactivate="SwitchTab('LeaderboardInfoContainer');">
 							<Label class="image"></Label>
 							<Label class="text" id="LoadingWarning" text="#leaderboard" />
 						</Button>
 					</Panel>
 
-					<Button id="CompanionNotification" onactivate="ExternalBrowserGoToURL('https://www.patreon.com/bePatron?u=2533325');">
+					<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
 						<Label id="CompanionNotificationLabel"/>
 					</Button>
 
 					<Panel id="MiniTabButtonContainer" class="MiniTabButtonContainer" hittest="false">
-						<Button class="sub_nav_tab" id="BattlepassTabButton">
+						<Button class="sub_nav_tab" id="LeaderboardExperienceTabButton">
 							<Label class="text" text="Overview" />
 						</Button>
 
@@ -126,7 +126,6 @@
 						<Button class="sub_nav_tab" id="PatreonTabButton" onactivate="SwitchDonatorWrapper('Patreon');">
 							<Label class="text" text="#donator_patreon" />
 						</Button>
-
 						<Panel hittest="false" class="tab_separator">
 							<Label text="/" />
 						</Panel>
@@ -150,6 +149,52 @@
 						<Button class="sub_nav_tab" id="EmblemTabButton" onactivate="SwitchDonatorWrapper('Emblem');">
 							<Label class="text" text="#donator_emblem" />
 						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+
+						<Button class="sub_nav_tab" id="TagTabButton" onactivate="SwitchDonatorWrapper('Tag');">
+							<Label class="text" text="#donator_tag" />
+						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+
+						<Panel class="sub_nav_tab">
+							<Button class="RefreshBattlepass" onactivate="RefreshBattlepass()"/>
+							<Label class="text" text="#battlepass_refresh" />
+						</Panel>
+					</Panel>
+
+					<Panel id="MiniTabButtonContainer3" class="MiniTabButtonContainer" hittest="false">
+						<Button class="sub_nav_tab" id="LeaderboardExperienceTabButton" onactivate="SwitchLeaderboardWrapper('Experience');">
+							<Label class="text" text="#leaderboard_xp" />
+						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+<!--
+						<Button class="sub_nav_tab" id="LeaderboardDonatorTabButton" onactivate="SwitchLeaderboardWrapper('Donator');">
+							<Label class="text" text="#leaderboard_donator" />
+						</Button>
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+-->
+						<Button class="sub_nav_tab" id="LeaderboardWinrateTabButton" onactivate="SwitchLeaderboardWrapper('Winrate');">
+							<Label class="text" text="#leaderboard_winrate" />
+						</Button>
+<!--
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+						<Button class="sub_nav_tab" id="LeaderboardDiretideTabButton" onactivate="SwitchLeaderboardWrapper('Diretide');">
+							<Label class="text" text="#mutation_diretide" />
+						</Button>
+-->
 
 						<Panel hittest="false" class="tab_separator">
 							<Label text="/" />
@@ -190,7 +235,6 @@
 					<Panel id="Donator1" class="patreon_donator_row" hittest="false">
 						<Image src="file://{images}/custom_game/patreon/tiers/1.png" />
 						<Panel id="Donator1Center" class="patreon_donator_row_center" hittest="false">
-
 						</Panel>
 					</Panel>
 					<Panel id="Donator2" class="patreon_donator_row" hittest="false">
@@ -229,6 +273,102 @@
 
 				<Panel id="EmblemTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
+				</Panel>
+
+				<Panel id="TagTableWrapper" hittest="false">
+					<Panel id="ChatContainer" hittest="false">
+						<TextEntry id="GameChatEntry" multiline="false" textmode="normal" oninputsubmit="SetTag()" maxchars="16" oncancel="" onblur="">
+<!--							<Label id="GameChatTarget" text="Enter a new tag name..."/> -->
+						</TextEntry>
+					</Panel>
+				</Panel>
+			</Panel>
+
+			<Panel id="LeaderboardInfoContainer" hittest="false">
+				<Panel id="LeaderboardExperienceTableWrapper" class="LeaderboardTableWrapper" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Panel id="Rank" class="LeaderboardRank" onactivate="">
+							<Label id="RankLabel" class="LeaderboardButtonLabel" text="#leaderboard_rank" />
+						</Panel>
+						<Panel id="SteamAvatar" class="LeaderboardAvatar" onactivate="">
+							<Label id="SteamAvatarLabel" class="LeaderboardButtonLabel" text="#leaderboard_steam_avatar" />
+						</Panel>
+						<Panel id="XP" class="LeaderboardXP" onactivate="">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+						</Panel>
+						<Panel id="IMR" class="LeaderboardIMR" onactivate=";">
+							<Button id="RoundOrderLeft" class="LeaderboardArrowButton" onactivate='HallOfFame("Experience", null, -1)'/>
+
+							<Panel class="RoundOrder" onactivate=";">
+								<Label id="RoundOrderLabel" text="#leaderboard_value" />
+							</Panel>
+
+							<Button id="RoundOrderRight" class="LeaderboardArrowButton" onactivate='HallOfFame("Experience", null, 1)'/>
+						</Panel>
+					</Panel>
+
+					<Panel id="ExperienceTops" class="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
+				</Panel>
+
+				<Panel id="LeaderboardDonatorTableWrapper" class="LeaderboardTableWrapper" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Button id="Rank" class="LeaderboardRank" onactivate="">
+							<Label id="Rank" class="LeaderboardRankLabel" text="#leaderboard_rank" />
+						</Button>
+						<Button id="SteamAvatar" class="LeaderboardAvatar" onactivate="">
+							<Label id="SteamAvatar" class="LeaderboardAvatarLabel" text="#leaderboard_steam_avatar" />
+						</Button>
+						<Button id="XP" class="LeaderboardXP" onactivate="">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+						</Button>
+						<Button id="IMR" class="LeaderboardIMR" onactivate="">
+							<Label class="LeaderboardButtonLabel" text="Winrate" />
+						</Button>
+					</Panel>
+
+					<Panel id="DonatorTops" class="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
+				</Panel>
+
+				<Panel id="LeaderboardWinrateTableWrapper" class="LeaderboardTableWrapper" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
+						<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
+						<Button id="XP" class="LeaderboardXP" onactivate=";">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+						</Button>
+						<Button id="IMR" class="LeaderboardIMR" onactivate=";">
+							<Label class="LeaderboardButtonLabel" text="Winrate" />
+						</Button>
+					</Panel>
+
+					<Panel id="WinrateTops" class="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
+				</Panel>
+
+				<Panel id="LeaderboardDiretideTableWrapper" class="LeaderboardTableWrapper" hittest="false">
+					<Panel id="Legend" class="LeaderboardLegend" hittest="false">
+						<Label id="Rank" class="LeaderboardButtonLabel" text="#leaderboard_rank" />
+						<Button id="XP" class="LeaderboardXP" onactivate=";">
+							<Label class="LeaderboardButtonLabel" text="#leaderboard_steam_avatar" />
+						</Button>
+						<Button id="IMR" class="LeaderboardAvatarDiretide" onactivate=";">
+							<Label class="LeaderboardButtonLabel" text="Winrate" />
+						</Button>
+					</Panel>
+
+					<Panel id="DiretideTops" class="Tops" hittest="false">
+						<!-- JS Inserts records here -->
+					</Panel>
+				</Panel>
+
+				<Panel id="LocalPlayerInfoContainer" hittest="false">
+					<Panel id="LocalPlayerInfo" class="LeaderboardGames" hittest="false">
+					</Panel>
 				</Panel>
 			</Panel>
 

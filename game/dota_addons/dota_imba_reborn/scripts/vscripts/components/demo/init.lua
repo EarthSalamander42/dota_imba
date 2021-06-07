@@ -15,7 +15,11 @@ ListenToGameEvent('game_rules_state_change', function()
 
 		-- ONLY SHOW THE DEMO PANEL IF IT'S ACTUALLY DEMO MODE (lest people get the wrong idea with thinking other players can use these "hacks")
 		if IsInToolsMode() or GetMapName() == "imba_demo" then
-			CustomGameEventManager:Send_ServerToAllClients("ShowDemoPanel", {})
+			GameRules:GetGameModeEntity():SetContextThink("show_demo_panel", function()
+				CustomGameEventManager:Send_ServerToAllClients("ShowDemoPanel", {})
+
+				return nil
+			end, 3.0)
 		end
 	elseif state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if not IsInToolsMode() then
