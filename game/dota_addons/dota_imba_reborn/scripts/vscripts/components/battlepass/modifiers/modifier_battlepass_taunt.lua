@@ -21,9 +21,9 @@ end
 
 function modifier_battlepass_taunt:OnCreated(params)
 	if IsServer() then
-		CustomNetTables:SetTableValue("player_table", "bp_taunt_translate_anim_"..self:GetParent():GetPlayerOwnerID(), {params.taunt_anim_translate})
+		self:SetHasCustomTransmitterData(true)
+		self.taunt_anim_translate = params.taunt_anim_translate
 
-		print(CustomNetTables:GetTableValue("player_table", "bp_taunt_translate_anim_"..self:GetParent():GetPlayerOwnerID())["1"])
 --[[
 		local table = {}
 		table["npc_dota_hero_invoker"] = 1
@@ -40,9 +40,17 @@ function modifier_battlepass_taunt:OnCreated(params)
 	end
 end
 
+function modifier_battlepass_taunt:AddCustomTransmitterData() return {
+	taunt_anim_translate = self.taunt_anim_translate
+} end
+
+function modifier_battlepass_taunt:HandleCustomTransmitterData(data)
+	self.taunt_anim_translate = data.taunt_anim_translate
+end
+
 function modifier_battlepass_taunt:GetActivityTranslationModifiers()
-	if CustomNetTables:GetTableValue("player_table", "bp_taunt_translate_anim_"..self:GetParent():GetPlayerOwnerID()) then
-		return CustomNetTables:GetTableValue("player_table", "bp_taunt_translate_anim_"..self:GetParent():GetPlayerOwnerID())["1"]
+	if self.taunt_anim_translate then
+		return self.taunt_anim_translate
 	else
 		return ""
 	end

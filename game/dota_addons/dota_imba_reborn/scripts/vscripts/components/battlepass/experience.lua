@@ -45,23 +45,23 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 
 	local current_xp_in_level = {}
 
-	for ID = 0, PlayerResource:GetPlayerCount() -1 do
-		local steamid = tostring(PlayerResource:GetSteamID(ID))
+	for player_id = 0, PlayerResource:GetPlayerCount() -1 do
+		local steamid = tostring(PlayerResource:GetSteamID(player_id))
 
 		if api.players[steamid] then
-			print("Player XP:", api.players[steamid].xp_in_level, api.players[steamid].xp_next_level, api.players[steamid].xp_level)
+--			print("Player XP:", api.players[steamid].xp_in_level, api.players[steamid].xp_next_level, api.players[steamid].xp_level)
 
-			local color = PLAYER_COLORS[ID]
+			local color = PLAYER_COLORS[player_id]
 
-			if api:IsDonator(ID) ~= 10 then
-				donator_color = DONATOR_COLOR[api:GetDonatorStatus(ID)]
+			if api:IsDonator(player_id) ~= 10 then
+				donator_color = DONATOR_COLOR[api:GetDonatorStatus(player_id)]
 			end
 
 			if donator_color == nil then
 				donator_color = DONATOR_COLOR[0]
 			end
 
-			CustomNetTables:SetTableValue("battlepass_player", tostring(ID),
+			CustomNetTables:SetTableValue("battlepass_player", tostring(player_id),
 			{
 				XP = api.players[steamid].xp_in_level,
 				MaxXP = api.players[steamid].xp_next_level,
@@ -69,17 +69,26 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 				ply_color = rgbToHex(color),
 				title = api.players[steamid].rank_title,
 				title_color = rgbToHex(Battlepass:GetTitleColorXP(api.players[steamid].rank_title)),
-				donator_level = api:GetDonatorStatus(ID),
+				donator_level = api:GetDonatorStatus(player_id),
 				donator_color = rgbToHex(donator_color),
-				in_game_tag = api:GetPlayerTagEnabled(ID),
-				bp_rewards = api:GetPlayerBPRewardsEnabled(ID),
-				player_xp = api:GetPlayerXPEnabled(ID),
-				winrate = api:GetPlayerSeasonalWinrate(ID),
-				winrate_toggle = api:GetPlayerWinrateShown(ID),
+				toggle_tag = api:GetPlayerTagEnabled(player_id),
+				bp_rewards = api:GetPlayerBPRewardsEnabled(player_id),
+				player_xp = api:GetPlayerXPEnabled(player_id),
+				winrate = api:GetPlayerSeasonalWinrate(player_id),
+				winrate_toggle = api:GetPlayerWinrateShown(player_id),
 				XP_change = 0,
---				mmr = api:GetPlayerMMR(ID),
---				mmr_title = api:GetPlayerRankMMR(ID),
+				ingame_tag = api:GetPlayerIngameTag(player_id),
+--				mmr = api:GetPlayerMMR(player_id),
+--				mmr_title = api:GetPlayerRankMMR(player_id),
 			})
 		end
 	end
+end
+
+function Battlepass:UpdatePlayerTable(player_id, key, value)
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(player_id))
+
+	ply_table[key] = value
+
+	CustomNetTables:SetTableValue("battlepass_player", tostring(player_id), ply_table)
 end

@@ -190,6 +190,8 @@
 	"donator_patreon_wrapper_label" "Become a Patron"
 	"donator_statue" "Statue"
 	"donator_statue_wrapper_label" "Select a Statue"
+	"donator_tag" "Tag"
+	"donator_tag_wrapper_label" "Choose a health bar tag"
 	"dotaplus" "Dota Plus"
 	"dotaplus2" "Dota Plus 2"
 	"dota_badguys" "Dire"

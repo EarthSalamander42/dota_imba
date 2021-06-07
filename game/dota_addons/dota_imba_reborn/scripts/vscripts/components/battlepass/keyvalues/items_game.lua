@@ -1,9 +1,3 @@
---[[
-todo: create a kv file with every heroes basic particles that needs to be replaced.
-then create a table of required particles, update entry for a required spell particle,
-if BP level is enough to have the new reward!
---]]
-
 --[[ useful variables:
 
 "asset_modifier" // Animation activity translations

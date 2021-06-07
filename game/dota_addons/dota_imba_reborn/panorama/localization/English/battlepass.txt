@@ -59,3 +59,5 @@
 "toggle_bp_rewards"				"Toggle battlepass rewards"
 "toggle_player_xp"				"Toggle battlepass XP visibility (will take effect on next game)"
 "toggle_winrate"				"Toggle Winrate visibility"
+"donator_tag"					"Tag"
+"donator_tag_wrapper_label"		"Choose a health bar tag"

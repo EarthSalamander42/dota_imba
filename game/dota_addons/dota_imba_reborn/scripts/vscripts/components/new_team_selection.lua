@@ -4,6 +4,7 @@
 if not TeamOrdering then
 	TeamOrdering = class({})
 	TeamOrdering.winrates = {}
+	TeamOrdering.rookies = {}
 	TeamOrdering.start_time = 10.0
 	TeamOrdering.Radiant = {}
 	TeamOrdering.Dire = {}
@@ -83,16 +84,13 @@ function TeamOrdering:ComputeTeamSelection()
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) then
 				if api:GetPlayerXPLevel(i) <= self.minimum_level_to_reorder then
-					self.winrates[i] = self.fixed_winrate_for_rookies
---					print("Rookie player! Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), self.fixed_winrate_for_rookies)
+					self.rookies[i] = true
 				else
-					local seasonal_winrate = api:GetPlayerSeasonalWinrate(i)
-					-- if calibrated
-					if type(seasonal_winrate) == "number" then
-						self.winrates[i] = seasonal_winrate or 50.00042 -- specific value to notice when winrate couldn't be gathered
---						print("Player ID/Name/Winrate:", i, PlayerResource:GetPlayerName(i), seasonal_winrate)
-					else
-						self.winrates[i] = api:GetPlayerWinrate(i)
+					local winrate = api:GetPlayerSeasonalWinrate(i)
+
+					if type(winrate) ~= "number" then
+						winrate = api:GetPlayerWinrate(i)
+						table.insert(self.winrates, i, winrate)
 					end
 				end
 			end
@@ -206,12 +204,33 @@ function TeamOrdering:SetTeams_PostCompute(hRadiant, hDire)
 		self:SetPlayerTeam(i, DOTA_TEAM_NOTEAM)
 	end
 
+	local variable = 1
+	for k, v in pairs(self.rookies) do
+		if variable % 2 == 1 then
+			self:SetPlayerTeam(k, DOTA_TEAM_GOODGUYS)
+		else
+			self:SetPlayerTeam(k, DOTA_TEAM_BADGUYS)
+		end
+
+		variable = variable + 1
+	end
+
 	for k, v in pairs(self.Radiant or {}) do
-		self:SetPlayerTeam(v, DOTA_TEAM_GOODGUYS)
+		if PlayerResource:GetPlayerCountForTeam(2) < GameRules:GetCustomGameTeamMaxPlayers(2) then
+			self:SetPlayerTeam(v, DOTA_TEAM_GOODGUYS)
+		else
+--			print("Radiant team full! Fail-safe send player to dire:", v)
+			self:SetPlayerTeam(v, DOTA_TEAM_BADGUYS) -- fail-safe in case for some reason team is full (like having 9 rookies which is quite not possible, but you know, just in case.)
+		end
 	end
 
 	for k, v in pairs(self.Dire or {}) do
-		self:SetPlayerTeam(v, DOTA_TEAM_BADGUYS)
+		if PlayerResource:GetPlayerCountForTeam(3) < GameRules:GetCustomGameTeamMaxPlayers(3) then
+			self:SetPlayerTeam(v, DOTA_TEAM_BADGUYS)
+		else
+--			print("Dire team full! Fail-safe send player to radiant:", v)
+			self:SetPlayerTeam(v, DOTA_TEAM_GOODGUYS) -- fail-safe in case for some reason team is full (like having 9 rookies which is quite not possible, but you know, just in case.)
+		end
 	end
 
 	if PARTIES_ALLOWED == false then

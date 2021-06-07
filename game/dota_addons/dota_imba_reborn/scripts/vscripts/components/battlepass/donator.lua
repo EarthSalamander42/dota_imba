@@ -1,19 +1,21 @@
+local stored_companions = {}
+
 function Battlepass:DonatorCompanion(ID, unit_name, js)
 	local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
 
-	if hero.companion then
+	if stored_companions[ID] then
 		-- ForceKill on roshan companions results in global death sound which is annoying
 	
-		--hero.companion:ForceKill(false)
+		--stored_companions[ID]:ForceKill(false)
 		
-		if hero.companion.RemoveSelf then
-			hero.companion:RemoveSelf()
+		if stored_companions[ID].RemoveSelf then
+			stored_companions[ID]:RemoveSelf()
 		end
 	end
 
 	-- Disabled companion
 	if unit_name == "" then
-		hero.companion = nil
+		stored_companions[ID] = nil
 		return
 	end
 
@@ -44,7 +46,7 @@ function Battlepass:DonatorCompanion(ID, unit_name, js)
 
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
 
-	hero.companion = companion
+	stored_companions[ID] = companion
 
 	if model == "models/courier/baby_rosh/babyroshan.vmdl" then
 		local particle_name = {}
@@ -157,9 +159,9 @@ function DonatorCompanionSkin(id, unit, skin)
 	local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
 
 --	print("Material Group:", skin)
---	print(hero.companion, hero.companion:GetUnitName(), unit)
-	if hero.companion and hero.companion:GetUnitName() == unit then
-		hero.companion:SetMaterialGroup(tostring(skin))
+--	print(stored_companions[ID], stored_companions[ID]:GetUnitName(), unit)
+	if stored_companions[ID] and stored_companions[ID]:GetUnitName() == unit then
+		stored_companions[ID]:SetMaterialGroup(tostring(skin))
 	end
 end
 

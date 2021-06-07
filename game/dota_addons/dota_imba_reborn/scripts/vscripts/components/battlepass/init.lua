@@ -13,7 +13,17 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		require('components/battlepass/experience')
 		require('components/battlepass/keyvalues/items_game')
 
-		require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
+		if CUSTOM_GAME_TYPE ~= "IMBA" and CUSTOM_GAME_TYPE ~= "PLS" then
+			require('components/battlepass/'..CUSTOM_GAME_TYPE..'_rewards')
+		end
+
+		if CUSTOM_GAME_TYPE == "PLS" then
+			require('components/battlepass/PW_rewards')
+		end
+
+		if Battlepass.Init then
+			Battlepass:Init()
+		end
 
 		Battlepass:GetPlayerInfoXP()
 	end
@@ -43,19 +53,30 @@ ListenToGameEvent('npc_spawned', function(event)
 	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(npc:GetPlayerOwnerID()))
 
 	if npc:IsIllusion() or string.find(npc:GetUnitName(), "npc_dota_lone_druid_bear") then
-		npc:SetupHealthBarLabel(donator_level, ply_table)
-		return
-	elseif npc:IsRealHero() then
-		if ply_table and ply_table.bp_rewards == 0 then
+		if ply_table and ply_table.toggle_tag == 0 or ply_table.toggle_tag == false then
 			return
 		end
 
-		Battlepass:AddItemEffects(npc, ply_table)
+		npc:SetupHealthBarLabel()
+
+		return
+	elseif npc:IsRealHero() then
+		if ply_table and ply_table.bp_rewards == 1 then
+			Battlepass:AddItemEffects(npc, ply_table)
+		end
+
+		if Battlepass.ENTITY_MODEL_OVERRIDE[unit_name] then
+			npc:SetOriginalModel(Battlepass.ENTITY_MODEL_OVERRIDE[unit_name])
+			npc:SetModel(Battlepass.ENTITY_MODEL_OVERRIDE[unit_name])
+		end
 
 		-- The commented out lines here are what I used to test in tools mode
 		if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 or string.find(GetMapName(), "demo") then
 		-- if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 or (IsInToolsMode()) then
-			npc:SetupHealthBarLabel(donator_level, ply_table)
+			if ply_table and ply_table.toggle_tag == 1 or ply_table.toggle_tag == true then
+				npc:SetupHealthBarLabel()
+			end
+
 
 			if api:GetDonatorStatus(npc:GetPlayerID()) == 10 then
 				npc:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")

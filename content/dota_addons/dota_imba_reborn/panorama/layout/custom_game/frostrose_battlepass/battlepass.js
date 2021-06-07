@@ -754,7 +754,8 @@ function HallOfFame(type, retainSubTab, iRoundCount) {
 	if (iRoundCount) {
 		current_leaderboard_round = current_leaderboard_round + iRoundCount;
 
-		const max_rounds = CustomNetTables.GetTableValue("game_options", "max_rounds")["1"];
+		var max_rounds = CustomNetTables.GetTableValue("game_options", "max_rounds");
+		if (max_rounds && max_rounds["1"]) max_rounds == max_rounds["1"]
 
 		if (current_leaderboard_round > max_rounds)
 			current_leaderboard_round = 1;

@@ -24,7 +24,8 @@ CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(Battlep
 CustomGameEventManager:RegisterListener("change_statue", Dynamic_Wrap(Battlepass, "DonatorStatueJS"))
 CustomGameEventManager:RegisterListener("change_emblem", Dynamic_Wrap(Battlepass, "DonatorEmblemJS"))
 CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(Battlepass, "DonatorCompanionSkinJS"))
-CustomGameEventManager:RegisterListener("change_ingame_tag", Dynamic_Wrap(Battlepass, 'DonatorTag'))
+CustomGameEventManager:RegisterListener("toggle_ingame_tag", Dynamic_Wrap(Battlepass, 'ToggleDonatorTag'))
+CustomGameEventManager:RegisterListener("change_ingame_tag", Dynamic_Wrap(Battlepass, 'SetDonatorTag'))
 CustomGameEventManager:RegisterListener("change_battlepass_rewards", Dynamic_Wrap(Battlepass, 'BattlepassRewards'))
 CustomGameEventManager:RegisterListener("change_player_xp", Dynamic_Wrap(Battlepass, 'PlayerXP'))
 CustomGameEventManager:RegisterListener("play_hero_taunt", Dynamic_Wrap(Battlepass, "PlayHeroTaunt"))
@@ -78,19 +79,33 @@ function Battlepass:HasArcana(ID, hero_name)
 end
 
 -- vanilla extension
-function CDOTA_BaseNPC:SetupHealthBarLabel(donator_level, ply_table)
-	if ply_table and ply_table.in_game_tag == 0 then
-		self:SetCustomHealthLabel("", 0, 0, 0)
+function CDOTA_BaseNPC:SetupHealthBarLabel(sCustomTag)
+	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(self:GetPlayerID()))
+--	print(ply_table)
+	if not ply_table then return end
 
-		return
+--	print(sCustomTag)
+	if not sCustomTag then
+		if ply_table.ingame_tag then
+			sCustomTag = ply_table.ingame_tag
+		else
+			sCustomTag = "#donator_label_" .. ply_table.donator_level
+		end
 	end
+--	print(sCustomTag)
 
 --	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
 	if api:IsDonator(self:GetPlayerOwnerID()) ~= false then
-		if donator_level and donator_level > 0 then
-			self:SetCustomHealthLabel("#donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
+		if ply_table.donator_level and ply_table.donator_level > 0 then
+			print("I'm a donator, update my tag please")
+			self:SetCustomHealthLabel(sCustomTag, DONATOR_COLOR[ply_table.donator_level][1], DONATOR_COLOR[ply_table.donator_level][2], DONATOR_COLOR[ply_table.donator_level][3])
 		end
 	end
+end
+
+function CDOTA_BaseNPC:RemoveHealthBarLabel()
+	print("Set no tag")
+	self:SetCustomHealthLabel("", 0, 0, 0)
 end
 
 function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
@@ -109,64 +124,39 @@ function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
 	end
 end
 
-function Battlepass:DonatorTag(keys)
-	local hero = PlayerResource:GetPlayer(keys.ID):GetAssignedHero()
-	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(keys.ID))
+function Battlepass:ToggleDonatorTag(keys)
+	local hero = PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero()
 
-	CustomNetTables:SetTableValue("battlepass_player", tostring(keys.ID), {
-		XP = ply_table.XP,
-		MaxXP = ply_table.MaxXP,
-		Lvl = ply_table.Lvl,
-		ply_color = ply_table.ply_color,
-		title = ply_table.title,
-		title_color = ply_table.title_color,
-		XP_change = 0,
-		donator_level = ply_table.donator_level,
-		donator_color = ply_table.donator_color,
-		in_game_tag = keys.tag,
-		bp_rewards = ply_table.bp_rewards,
-		player_xp = ply_table.player_xp
-	})
+	print(keys)
+	print(type(keys.tag))
 
-	hero:SetupHealthBarLabel()
+	Battlepass:UpdatePlayerTable(keys.PlayerID, "toggle_tag", keys.tag)
+
+	if keys.tag == 0 then
+		hero:RemoveHealthBarLabel()
+	else
+		hero:SetupHealthBarLabel()
+	end
+end
+
+function Battlepass:SetDonatorTag(keys)
+--	print(keys)
+	local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
+
+--	if api.players[steamid].changed_tag_this_game then
+--		DisplayError(keys.PlayerID, "Don't abuse the fucking feature!")
+--	else
+		api:SetPlayerIngameTag(keys.PlayerID, keys.ingame_tag)
+		hero:SetupHealthBarLabel(keys.ingame_tag)
+--	end
 end
 
 function Battlepass:BattlepassRewards(keys)
-	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(keys.ID))
-
-	CustomNetTables:SetTableValue("battlepass_player", tostring(keys.ID), {
-		XP = ply_table.XP,
-		MaxXP = ply_table.MaxXP,
-		Lvl = ply_table.Lvl,
-		ply_color = ply_table.ply_color,
-		title = ply_table.title,
-		title_color = ply_table.title_color,
-		XP_change = 0,
-		donator_level = ply_table.donator_level,
-		donator_color = ply_table.donator_color,
-		in_game_tag = ply_table.in_game_tag,
-		bp_rewards = keys.bp_rewards,
-		player_xp = ply_table.player_xp
-	})
+	Battlepass:UpdatePlayerTable(keys.PlayerID, "bp_rewards", keys.bp_rewards)
 end
 
 function Battlepass:PlayerXP(keys)
-	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(keys.ID))
-
-	CustomNetTables:SetTableValue("battlepass_player", tostring(keys.ID), {
-		XP = ply_table.XP,
-		MaxXP = ply_table.MaxXP,
-		Lvl = ply_table.Lvl,
-		ply_color = ply_table.ply_color,
-		title = ply_table.title,
-		title_color = ply_table.title_color,
-		XP_change = 0,
-		donator_level = ply_table.donator_level,
-		donator_color = ply_table.donator_color,
-		in_game_tag = ply_table.in_game_tag,
-		bp_rewards = ply_table.bp_rewards,
-		player_xp = keys.player_xp
-	})
+	Battlepass:UpdatePlayerTable(keys.PlayerID, "player_xp", keys.player_xp)
 end
 
 function Battlepass:RegisterHeroTaunt(hero)
@@ -226,23 +216,7 @@ function Battlepass:PlayHeroTaunt(keys)
 end
 
 function Battlepass:Winrate(keys)
-	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(keys.ID))
-
-	CustomNetTables:SetTableValue("battlepass_player", tostring(keys.ID), {
-		XP = ply_table.XP,
-		MaxXP = ply_table.MaxXP,
-		Lvl = ply_table.Lvl,
-		ply_color = ply_table.ply_color,
-		title = ply_table.title,
-		title_color = ply_table.title_color,
-		XP_change = 0,
-		donator_level = ply_table.donator_level,
-		donator_color = ply_table.donator_color,
-		in_game_tag = ply_table.in_game_tag,
-		bp_rewards = ply_table.bp_rewards,
-		player_xp = ply_table.player_xp,
-		winrate = keys.winrate
-	})
+	Battlepass:UpdatePlayerTable(keys.PlayerID, "winrate", keys.winrate)
 end
 
 function Battlepass:DonatorCompanionJS(event)
