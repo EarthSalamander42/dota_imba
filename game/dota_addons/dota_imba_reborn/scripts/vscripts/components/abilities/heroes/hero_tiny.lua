@@ -34,7 +34,7 @@ function modifier_imba_tiny_death_handler:OnDeath(params)
 		grow_level = grow_ability:GetLevel() + 1
 	end
 
-	local pfx_name = string.gsub(self:GetParent().death_pfx, "lvl1", "lvl"..grow_level)
+	local pfx_name = string.gsub("particles/units/heroes/hero_tiny/tiny01_death.vpcf", "lvl1", "lvl"..grow_level)
 
 	local death_pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(death_pfx, 0, self:GetParent():GetAbsOrigin())

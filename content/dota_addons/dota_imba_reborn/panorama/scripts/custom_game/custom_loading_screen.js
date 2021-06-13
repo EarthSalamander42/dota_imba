@@ -529,7 +529,9 @@ function HidePickScreenDuringGame() {
 	HoverableLoadingScreen();
 	fetch();
 	SetProfileName();
-	$.Schedule(1.0, HidePickScreenDuringGame); // Yeah like wtf, i really have to do this? really? like, really??
+
+	if (!Game.IsInToolsMode())
+		$.Schedule(1.0, HidePickScreenDuringGame); // Yeah like wtf, i really have to do this? really? like, really??
 
 	GameEvents.Subscribe("loading_screen_debug", LoadingScreenDebug);
 	GameEvents.Subscribe("send_votes", OnVotesReceived);

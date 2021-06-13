@@ -1,56 +1,34 @@
 //Ancient Apparition
-"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet"								"Cold Feet"
-"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Description"					"Places a frozen hex on an enemy unit that deals damage over time, but can be dispelled by moving away from the initial cast point.  If the enemy unit doesn't move outside of the given range, it will be stunned and frozen in place after 4 seconds.\n<font color='#FF7800'>Thoroughly Chilled:</font> Also disables healing during the stun duration.\n<font color='#FF7800'>Pole Transferral:</font> Any allies of the Cold Feet target that interact with them (such as through a move command or targeted ability cast) also receive the target's current Cold Feet debuff for its remaining duration."
-"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Lore"						"Kaldr's presence draws those around him into a frozen void, threatening to lock them in an icy prison for eternity."
+"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Imbafication_1"				"<font color='#FF7800'>Thoroughly Chilled:</font> Also disables healing during the stun duration."
+"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Imbafication_2"				"<font color='#FF7800'>Pole Transferral:</font> Any allies of the Cold Feet target that interact with them (such as through a move command or targeted ability cast) also receive the target's current Cold Feet debuff for its remaining duration."
+
 "DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Note0"						"Deals damage every second."
 "DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Note1"						"Pole Transferral applies a fresh debuff if the target that transfers it is still affected by the first phase."
 "DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Note2"						"Pole Transferral applies the stun/freeze equal to remaining duration if the target that transfers it is stunned/frozen."
-"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_damage"						"DAMAGE PER TICK:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_stun_duration"				"STUN DURATION:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_break_distance"				"BREAK DISTANCE:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_cast_range_tooltip"			"CAST RANGE:"
 
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex"							"Ice Vortex"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_Description"				"Creates a vortex of icy energy that slows movement speed and increases magic damage done in its range.\n<font color='#FF7800'>Ice Drifter:</font> Boosts movement speed of allies by the same amount."
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_Lore"						"Frozen, caustic winds are at the whim of Kaldr, chilling the field of battle."
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_movement_speed_pct"			"%SLOW:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_spell_resist_pct"			"%INCREASED MAGIC DAMAGE:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_radius"						"RADIUS:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_vortex_duration"			"DURATION:"
+"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_Imbafication_1"			"<font color='#FF7800'>Ice Drifter:</font> Boosts movement speed of allies by the same amount."
 
 "DOTA_Tooltip_modifier_ice_slide"													"Sliding On Ice"
 
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch"						"Chilling Touch"
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_Description"			"Enchances your attacks with heavy magic damage and slow. Gives increases attack range for this attack.\n<font color='#FF7800'>Packed Ice:</font> Also applies a %packed_ice_duration% second stun on impact."
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_Lore"					"The Ancient Apparition's eternal knowledge brings a frigid enchantment to his attacks."
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_damage"					"DAMAGE:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_slow"					"%MOVEMENT SLOW:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_duration"				"SLOW DURATION:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_attack_range_bonus"		"ATTACK RANGE BONUS:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_scepter_description"	"Removes cooldown."
 
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast"								"Ice Blast"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Description"					"Launches a tracer toward any location on the battlefield, which must be triggered again to mark the area to be blasted by a damaging explosion of hail. The further the tracer travels, the larger the explosion will be. Enemies caught in the explosion, or who touch the icy ball of hail as it travels, are Frostbitten, taking damage and prevented from regenerating or healing. If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter.\n<font color='#FF7800'>Absolute Freeze: </font>The debuff is also placed on creeps and illusions.\n<font color='#FF7800'>Cold Hearted:</font> Grants %cold_hearted_pct%%% of the sum of health regeneration from all enemies hit by the Ice Blast explosion to Ancient Apparition for the Frostbite duration. The health regeneration is copied from the target after Ice Blast applies its explosion damage, and does not dynamically update."
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Lore"						"Ice storms from ages past flow through Kaldr's frosty limbs, crashing into the world and turning its inhabitants into monuments to his eternal power."
+"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Imbafication_1"				"<font color='#FF7800'>Absolute Freeze: </font>The debuff is also placed on creeps and illusions.\n"
+"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Imbafication_1"				"<font color='#FF7800'>Cold Hearted:</font> Grants %cold_hearted_pct%%% of the sum of health regeneration from all enemies hit by the Ice Blast explosion to Ancient Apparition for the Frostbite duration. The health regeneration is copied from the target after Ice Blast applies its explosion damage, and does not dynamically update."
+
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Note0"						"Upon cast, this ability is replaced by Release, used to stop the tracer on the target area."
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Note1"						"The area of effect is %radius_min% + %radius_grow%*TimeTraveled, capped at %radius_max%.  The freeze area along the path is %path_radius%."
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Note2"						"Kill will be granted to the source of the damage that triggers the shatter."
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Note3"						"The HP Freeze prevents most kinds of healing, including the fountain, except Sunder, Time Lapse and Supernova."
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Note4"						"Cold Hearted rounds down to the closest whole number. Units with less than 2 HP regeneration will not provide any stacks."
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_frostbite_duration"			"FROSTBITTEN DURATION:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_dot_damage"					"FROSTBITTEN DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_kill_pct"					"%SHATTER HEALTH THRESHOLD:"
+
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_frostbite_duration_scepter"	"SCEPTER FROSTBITTEN DURATION:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_scepter_description"		    "<font color='#FF7800'>Increases frostbite duration.</font>"
+"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_scepter_description"	    "<font color='#FF7800'>Increases frostbite duration.</font>"
 
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_global_cooling"							"Global Cooling"
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_global_cooling_Description"				"Move speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% for the duration of Ice Blast's Frostbite."
 
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_cold_hearted"					"Cold Hearted"
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_cold_hearted_Description"		"Gaining %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% additional health regeneration."
-
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_release"						"Release"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_release_Description"			"Releases the ice blast to explode at the tracer's current location."
 
 "DOTA_Tooltip_ability_imba_ancient_apparition_anti_abrasion"							"Anti-Abrasion"
 "DOTA_Tooltip_ability_imba_ancient_apparition_anti_abrasion_Description"				"Creates a vortex of icy energy that causes enemies to lose traction and slip around."

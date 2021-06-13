@@ -485,6 +485,7 @@ function imba_queenofpain_scream_of_pain:OnSpellStart(scream_damage_pct, source_
 
 		local scream_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf", PATTACH_ABSORIGIN, scream_source)
 		ParticleManager:SetParticleControl(scream_pfx, 0, scream_loc )
+		ParticleManager:ReleaseParticleIndex(scream_pfx)
 
 		-- Get Targets & fire projectiles
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), scream_loc, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
