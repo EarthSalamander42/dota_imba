@@ -8,7 +8,7 @@ if not TeamOrdering then
 	TeamOrdering.Radiant = {}
 	TeamOrdering.Dire = {}
 	TeamOrdering.minimum_level_to_reorder = 25
-	TeamOrdering.fixed_winrate_for_rookies = 15
+	TeamOrdering.fixed_winrate_for_rookies = 50
 --	TeamOrdering.fixed_winrates_for_uncalibrated = 15
 end
 
