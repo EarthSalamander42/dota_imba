@@ -28,84 +28,21 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
-		// Ability Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
-		"AbilityCastPoint"				"0.6"
-
-		// Ability Resource
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
-		"AbilityManaCost"				"100 110 120 130"
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
+				"var_type"						"FIELD_FLOAT"
+				"blizzard_slow_percentage"		"15 20 25 30"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"wave_duration"					"7.0"
-			}		
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"wave_count"					"6"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"wave_damage"					"25 40 55 70"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"wave_interval"					"1.0"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"burn_damage"					"1 2 3 4"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"burn_interval"					"1.0"
-			}
-			"08"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"burn_duration"					"2.0"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"first_wave_delay"				"0.0"
-			}
-			"10"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"building_damage"				"33"
-			}
-			"11"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"blizzard_slow_percentage"		"15 20 25 30"
-			}
-			"12"
-			{
-				"var_type"						"FIELD_FLOAT"
 				"burn_damage_stack"				"0.25 0.5 0.75 1.0"
 			}
-			"13"
+			"03"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"blizzard_slow_percentage_stack"	"2 3 4 5"
@@ -143,47 +80,19 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
-		// Ability Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
-		"AbilityCastPoint"				"0.45"
-
-		// Ability Resource
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 26 22 18"
-		"AbilityManaCost"				"100 115 130 145"
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_radius_per_stack"		"10 15 20 25"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"pit_duration"					"12.0"
-			}		
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"pit_interval"					"3.6"
-			}
-			"04"
-			{
 				"var_type"						"FIELD_INTEGER"
-				"pit_damage"					"0"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"ensnare_duration"				"0.9 1.2 1.5 1.8"
+				"hp_regen_amp"					"40 60 80 100"
 			}
 		}
 	}
@@ -233,38 +142,7 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1200"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_reduction_pct"			"5 15 25 35"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_from_creep"		"5"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_from_hero"		"30 35 40 45"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"bonus_damage_duration"			"30 40 50 60"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"bonus_damage_duration_scepter"		"70 80 90 100"
-				"RequiresScepter"	"1"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
+				"var_type"				"FIELD_INTEGER"
 				"permanent_bonus"		"2 3 4 5"
 			}
 		}
@@ -317,11 +195,6 @@
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"600"
-			}
-			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"teleport_delay"				"6.0 5.0 4.0"

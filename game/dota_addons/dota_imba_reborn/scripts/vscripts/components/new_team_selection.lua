@@ -181,7 +181,7 @@ end
 function TeamOrdering:CalculateWinratesDifference(teamA, teamB)
 	local winrateTeamA = 0
 	local winrateTeamB = 0
-	
+
 	for _, playerAIndex in pairs(teamA) do
 		if self.winrates[playerAIndex] and type(self.winrates[playerAIndex]) == "number" then
 			winrateTeamA = winrateTeamA + self.winrates[playerAIndex]
