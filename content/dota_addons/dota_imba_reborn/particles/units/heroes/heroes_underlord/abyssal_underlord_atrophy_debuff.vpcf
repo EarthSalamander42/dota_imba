@@ -1,0 +1,100 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf35:version{ec5bfcca-b89d-4591-9ef4-c8679487d623} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 1
+	m_flConstantRadius = 60.0
+	m_ConstantColor = [ 167, 255, 194, 255 ]
+	m_nBehaviorVersion = 11
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 1.0
+			}
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_CreateWithinSphere"
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 49, 230, 61 ]
+		},
+		{
+			_class = "C_OP_SetToCP"
+			m_vecOffset = [ 0.0, 0.0, 20.0 ]
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_flLerpTime = 0.25
+			m_nFieldOutput = 7
+			m_flOutput = 0.0
+		},
+		{
+			_class = "C_OP_EndCapTimedDecay"
+			m_flDecayTime = 0.25
+		},
+		{
+			_class = "C_OP_LerpEndCapScalar"
+			m_flOutput = 0.0
+			m_flLerpTime = 0.25
+		},
+		{
+			_class = "C_OP_Spin"
+			m_nSpinRateDegrees = 8
+		},
+	]
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			VisibilityInputs = 
+			{
+				m_flCameraBias = -5.0
+			}
+			m_flDepthBias = -10.0
+			m_vecTexturesInput = 
+			[
+				{
+					m_hTexture = resource:"materials/particle/water_whirl_01.vtex"
+				},
+			]
+			m_OutlineColor = [ 255, 255, 255 ]
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/heroes_underlord/abyssal_underlord_atrophy_debuff_start.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/heroes_underlord/abyssal_underlord_atrophy_debuff_flash.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/heroes_underlord/abyssal_underlord_atrophy_debuff_end.vpcf"
+			m_bEndCap = true
+		},
+	]
+}

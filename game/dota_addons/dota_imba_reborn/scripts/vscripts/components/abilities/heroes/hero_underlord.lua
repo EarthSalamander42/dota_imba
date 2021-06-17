@@ -243,8 +243,6 @@ function modifier_imba_abyssal_underlord_firestorm:OnCreated( kv )
 	if not IsServer() then return end
 	self.damage_pct = (self:GetAbility():GetVanillaAbilitySpecial("burn_damage") + (self:GetAbility():GetSpecialValueFor("burn_damage_stack") * self:GetStackCount())) / 100
 
-	print("Damage pct:", self.damage_pct)
-
 	-- precache damage
 	self.damageTable = {
 		victim = self:GetParent(),
@@ -264,14 +262,12 @@ function modifier_imba_abyssal_underlord_firestorm:OnRefresh( kv )
 
 	self:IncrementStackCount()
 	self.damage_pct = (self:GetAbility():GetVanillaAbilitySpecial("burn_damage") + (self:GetAbility():GetSpecialValueFor("burn_damage_stack") * self:GetStackCount())) / 100
-	print("Damage pct:", self.damage_pct)
 end
 
 function modifier_imba_abyssal_underlord_firestorm:OnStackCountChanged(iStackCount)
 	if not IsServer() then return end
 
 	self.damage_pct = (self:GetAbility():GetVanillaAbilitySpecial("burn_damage") + (self:GetAbility():GetSpecialValueFor("burn_damage_stack") * self:GetStackCount())) / 100
-	print("Damage pct:", self.damage_pct)
 end
 
 function modifier_imba_abyssal_underlord_firestorm:OnRemoved()
@@ -445,7 +441,7 @@ function imba_abyssal_underlord_pit_of_malice:AddTwistedRealityStack()
 			self, -- ability source
 			"modifier_imba_abyssal_underlord_pit_of_malice_stack", -- modifier name
 			{
-				duration = self:GetVanillaAbilitySpecial("pit_duration"),
+				duration = self:GetVanillaAbilitySpecial("pit_increase_duration"),
 			} -- kv
 		):SetStackCount(1)
 	end
@@ -783,7 +779,7 @@ end
 modifier_imba_abyssal_underlord_pit_of_malice_stack = modifier_imba_abyssal_underlord_pit_of_malice_stack or class({})
 
 function modifier_imba_abyssal_underlord_pit_of_malice_stack:OnStackCountChanged(iStackCount)
-	self:SetDuration(self:GetAbility():GetVanillaAbilitySpecial("pit_duration"), true)
+	self:SetDuration(self:GetAbility():GetVanillaAbilitySpecial("pit_increase_duration"), true)
 end
 
 --------------------------------------------------------------------------------
@@ -793,11 +789,97 @@ LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_debuff", "compone
 LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_scepter", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_active", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 -- Passive Modifier
 function imba_abyssal_underlord_atrophy_aura:GetIntrinsicModifierName()
 	return "modifier_imba_abyssal_underlord_atrophy_aura"
+end
+
+function imba_abyssal_underlord_atrophy_aura:OnAbilityPhaseStart()
+	local mod = self:GetCaster():FindModifierByName("modifier_imba_abyssal_underlord_atrophy_aura")
+
+	if mod and mod:GetStackCount() > 0 then
+		return true
+	end
+
+	print("CRITICAL ERROR: Missing stack modifier.")
+	DisplayError(self:GetCaster():GetPlayerID(), "Not enough stacks!")
+	return false
+end
+
+function imba_abyssal_underlord_atrophy_aura:OnSpellStart()
+	if not IsServer() then return end
+
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_abyssal_underlord_atrophy_aura_active", {duration = self:GetSpecialValueFor("active_duration")})
+end
+
+modifier_imba_abyssal_underlord_atrophy_aura_active = modifier_imba_abyssal_underlord_atrophy_aura_active or class({})
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:DeclareFunctions() return {
+	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	MODIFIER_EVENT_ON_ATTACK_LANDED,
+	MODIFIER_PROPERTY_TOOLTIP,
+	MODIFIER_PROPERTY_TOOLTIP2,
+} end
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:OnCreated()
+	if not IsServer() then return end
+
+	self.attack_count = self:GetAbility():GetSpecialValueFor("active_attack_count")
+
+	local mod = self:GetParent():FindModifierByName("modifier_imba_abyssal_underlord_atrophy_aura")
+
+	if mod then
+		self:SetStackCount(mod:GetStackCount() * self:GetAbility():GetSpecialValueFor("active_bonus_damage_pct") / 100)
+
+		for k, v in pairs(self:GetParent():FindAllModifiersByName("modifier_imba_abyssal_underlord_atrophy_aura_stack")) do
+			v:Destroy()
+		end
+	else
+		print("CRITICAL ERROR: Missing stack modifier.")
+		return
+	end
+
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/heroes_underlord/abyssal_underlord_atrophy_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(self.pfx, 1, Vector(0, self.attack_count, 0))
+end
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:OnAttackLanded(keys)
+	if not IsServer() then return end
+
+	if keys.attacker == self:GetParent() then
+		self.attack_count = self.attack_count - 1
+
+		if self.attack_count <= 0 then
+			self:Destroy()
+			return
+		end
+
+		ParticleManager:SetParticleControl(self.pfx, 1, Vector(0, self.attack_count, 0))
+	end
+end
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:GetModifierPreAttack_BonusDamage()
+	return self:GetStackCount()
+end
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:OnTooltip()
+	return self:GetStackCount()
+end
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:OnTooltip2()
+	return self.attack_count
+end
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:OnRemoved()
+	if not IsServer() then return end
+
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -806,7 +888,7 @@ modifier_imba_abyssal_underlord_atrophy_aura = modifier_imba_abyssal_underlord_a
 --------------------------------------------------------------------------------
 -- Classifications
 function modifier_imba_abyssal_underlord_atrophy_aura:IsHidden()
-	return self:GetStackCount()==0
+	return self:GetStackCount() == 0
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura:IsDebuff()
@@ -840,7 +922,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura:OnCreated( kv )
 	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
 	self.hero_bonus = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_from_hero" )
 	self.creep_bonus = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_from_creep" )
-	self.bonus = self:GetAbility():GetVanillaAbilitySpecial( "permanent_bonus" )
+	self.bonus = self:GetAbility():GetSpecialValueFor( "permanent_bonus" )
 	self.duration = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_duration" )
 	self.duration_scepter = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_duration_scepter" )
 
@@ -860,7 +942,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura:OnRefresh( kv )
 	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
 	self.hero_bonus = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_from_hero" )
 	self.creep_bonus = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_from_creep" )
-	self.bonus = self:GetAbility():GetVanillaAbilitySpecial( "permanent_bonus" )
+	self.bonus = self:GetAbility():GetSpecialValueFor( "permanent_bonus" )
 	self.duration = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_duration" )
 	self.duration_scepter = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_duration_scepter" )
 
