@@ -50,19 +50,18 @@ function modifier_imba_clarity:OnCreated()
 
 	-- Ability properties
 	self.caster = self:GetCaster() 
-	self.ability = self:GetAbility()
 	self.parent = self:GetParent()	
 	self.modifier_mana_reserves = "modifier_imba_clarity_mana_reserves"
 
 	-- Ability specials
-	self.mana_regen = self.ability:GetSpecialValueFor("mana_regen")
-	self.vision_increase = self.ability:GetSpecialValueFor("vision_increase")
-	self.cast_range_increase = self.ability:GetSpecialValueFor("cast_range_increase")	
-	self.mana_reserves_duration = self.ability:GetSpecialValueFor("mana_reserves_duration")
+	self.mana_regen = self:GetAbility():GetSpecialValueFor("mana_regen")
+	self.vision_increase = self:GetAbility():GetSpecialValueFor("vision_increase")
+	self.cast_range_increase = self:GetAbility():GetSpecialValueFor("cast_range_increase")	
+	self.mana_reserves_duration = self:GetAbility():GetSpecialValueFor("mana_reserves_duration")
 
 	-- Write to parent so the modifier info could be drawn clientside
-	self.parent.item_clarity_mana_reserves_mana = self.ability:GetSpecialValueFor("mana_reserves_mana")
-	self.parent.item_clarity_max_mana_bonus = self.ability:GetSpecialValueFor("max_mana_bonus")	
+	self.parent.item_clarity_mana_reserves_mana = self:GetAbility():GetSpecialValueFor("mana_reserves_mana")
+	self.parent.item_clarity_max_mana_bonus = self:GetAbility():GetSpecialValueFor("max_mana_bonus")	
 end
 
 function modifier_imba_clarity:DeclareFunctions()

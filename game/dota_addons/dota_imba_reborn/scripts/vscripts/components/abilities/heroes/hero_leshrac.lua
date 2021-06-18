@@ -941,16 +941,15 @@ function modifier_imba_leshrac_lightning_storm_slow:OnCreated()
 		return
 	end
 
+	-- Ability specials
+	self.slow_movement_speed = self:GetAbility():GetSpecialValueFor("slow_movement_speed")
+
 	if not IsServer() then return end
 
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 	self.particle_slow = "particles/units/heroes/hero_leshrac/leshrac_lightning_slow.vpcf" --cp0 location, cp1 location
-
-	-- Ability specials
-	self.slow_movement_speed = self.ability:GetSpecialValueFor("slow_movement_speed")
 
 	-- Create particle effect
 	self.particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent, self.caster)	
@@ -966,7 +965,9 @@ function modifier_imba_leshrac_lightning_storm_slow:DeclareFunctions()
 end
 
 function modifier_imba_leshrac_lightning_storm_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self.slow_movement_speed * (-1)
+	if self.slow_movement_speed and self.slow_movement_speed ~= 0 then
+		return self.slow_movement_speed * (-1)
+	end
 end
 
 

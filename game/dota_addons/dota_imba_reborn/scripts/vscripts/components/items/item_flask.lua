@@ -50,15 +50,14 @@ function modifier_imba_flask:OnCreated()
 
     -- Ability properties
     self.caster = self:GetCaster() 
-    self.ability = self:GetAbility()
     self.parent = self:GetParent()        
 
     -- Ability specials
-    self.hp_regen = self.ability:GetSpecialValueFor("hp_regen")   
-    self.break_stacks = self.ability:GetSpecialValueFor("break_stacks")
-    self.flat_heal_reduction = self.ability:GetSpecialValueFor("flat_heal_reduction")
-    self.hp_threshold_pct = self.ability:GetSpecialValueFor("hp_threshold_pct")
-    self.heal_multiplier = self.ability:GetSpecialValueFor("heal_multiplier")
+    self.hp_regen = self:GetAbility():GetSpecialValueFor("hp_regen")   
+    self.break_stacks = self:GetAbility():GetSpecialValueFor("break_stacks")
+    self.flat_heal_reduction = self:GetAbility():GetSpecialValueFor("flat_heal_reduction")
+    self.hp_threshold_pct = self:GetAbility():GetSpecialValueFor("hp_threshold_pct")
+    self.heal_multiplier = self:GetAbility():GetSpecialValueFor("heal_multiplier")
 end
 
 function modifier_imba_flask:DeclareFunctions()

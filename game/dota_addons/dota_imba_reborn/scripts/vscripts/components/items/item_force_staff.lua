@@ -242,8 +242,6 @@ function modifier_item_imba_hurricane_pike:OnCreated()
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_hurricane_pike_unique", {})
 		end
 	end
-
-	self:StartIntervalThink(1.0)
 end
 
 function modifier_item_imba_hurricane_pike:OnDestroy()
@@ -293,12 +291,15 @@ function modifier_item_imba_hurricane_pike_unique:DeclareFunctions()
 	}
 end
 
-function modifier_item_imba_hurricane_pike_unique:GetModifierAttackRangeBonus()
-	if self:GetParent():IsRangedAttacker() then
-		return self:GetAbility():GetSpecialValueFor("base_attack_range")
-	end
+function modifier_item_imba_hurricane_pike_unique:OnCreated()
+	self.bonus_attack_range = self:GetAbility():GetSpecialValueFor("base_attack_range")
 end
 
+function modifier_item_imba_hurricane_pike_unique:GetModifierAttackRangeBonus()
+	if self:GetParent():IsRangedAttacker() then
+		return self.bonus_attack_range
+	end
+end
 
 modifier_item_imba_hurricane_pike_force_ally = modifier_item_imba_hurricane_pike_force_ally or class({})
 

@@ -828,6 +828,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura_active:OnCreated()
 	if not IsServer() then return end
 
 	self.attack_count = self:GetAbility():GetSpecialValueFor("active_attack_count")
+	self:SetHasCustomTransmitterData(true)
 
 	local mod = self:GetParent():FindModifierByName("modifier_imba_abyssal_underlord_atrophy_aura")
 
@@ -844,6 +845,14 @@ function modifier_imba_abyssal_underlord_atrophy_aura_active:OnCreated()
 
 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/heroes_underlord/abyssal_underlord_atrophy_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControl(self.pfx, 1, Vector(0, self.attack_count, 0))
+end
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:AddCustomTransmitterData() return {
+	attack_count = self.attack_count,
+} end
+
+function modifier_imba_abyssal_underlord_atrophy_aura_active:HandleCustomTransmitterData(data)
+	self.attack_count = data.attack_count
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_active:OnAttackLanded(keys)

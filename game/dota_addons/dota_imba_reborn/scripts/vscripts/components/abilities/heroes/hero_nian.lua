@@ -74,22 +74,22 @@ function modifier_imba_nian_frenzy_swipes:OnCreated()
 	self.attack_angle				= self:GetAbility():GetSpecialValueFor("attack_angle")
 	self.bonus_attack_range			= self:GetAbility():GetSpecialValueFor("bonus_attack_range")
 	self.move_speed_slow_duration	= self:GetAbility():GetSpecialValueFor("move_speed_slow_duration")
-	
+
 	if not IsServer() then return end
-	
+
 	self.attack_point	= self:GetParent():GetAttackAnimationPoint() / (1 + self:GetParent():GetIncreasedAttackSpeed())
 	self.slash_rate		= self:GetParent():GetSecondsPerAttack() / self:GetAbility():GetSpecialValueFor("attack_speed_multiplier")
-	
+
 	self.wind_up = true
-	
+
 	local glow_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/frenzy_swipes_glow.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 	ParticleManager:SetParticleControlEnt(glow_particle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
 	self:AddParticle(glow_particle, true, false, -1, true, false)
-	
+
 	local glow_particle_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_nian/frenzy_swipes_glow.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 	ParticleManager:SetParticleControlEnt(glow_particle_2, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetParent():GetAbsOrigin(), true)
 	self:AddParticle(glow_particle_2, true, false, -1, true, false)
-	
+
 	self:OnIntervalThink()
 end
 
