@@ -256,6 +256,10 @@ function AllPlayersLoaded() {
 
 //	$("#VoteGameMode1").checked = true;
 //	OnVoteButtonPressed("gamemode", 1);
+
+	$.Schedule(3.0, function() {
+		Game.ShufflePlayerTeamAssignments();
+	});
 }
 
 function AllPlayersBattlepassLoaded() {

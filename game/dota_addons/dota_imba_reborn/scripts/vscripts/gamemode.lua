@@ -46,7 +46,7 @@ require('components/neutral_creeps/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
-require('components/new_team_selection')
+-- require('components/new_team_selection')
 require('components/tooltips/init')
 
 require('events/events')
