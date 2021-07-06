@@ -1385,7 +1385,7 @@ LinkLuaModifier("modifier_terrorital_hunter_fogvision", "components/abilities/he
 LinkLuaModifier("modifier_terrorital_hunter_talent_tenacity", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ursa_territorial_hunter:GetAbilityTextureName()
-	return "custom/territorial_hunter"
+	return "territorial_hunter"
 end
 
 function imba_ursa_territorial_hunter:IsInnateAbility()

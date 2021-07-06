@@ -210,7 +210,7 @@ end
 -- function imba_wisp_tether:GetAbilityTextureName()
 	-- if not IsClient() then return end
 	-- if not self:GetCaster().arcana_style then return "wisp_tether" end
-	-- return "custom/imba_wisp_tether_arcana"
+	-- return "imba_wisp_tether_arcana"
 -- end
 
 -- function imba_wisp_tether:CastFilterResultTarget(target)
@@ -868,7 +868,7 @@ end
 -- function imba_wisp_spirits:GetAbilityTextureName()
 	-- if not IsClient() then return end
 	-- if not self:GetCaster().arcana_style then return "wisp_spirits" end
-	-- return "custom/imba_wisp_spirits_arcana"
+	-- return "imba_wisp_spirits_arcana"
 -- end
 
 -- function imba_wisp_spirits:GetCooldown(level)
@@ -1202,9 +1202,9 @@ end
 -- --[[
 -- function modifier_imba_wisp_spirits:GetTexture()
 	-- if self:GetAbility().spirits_movementFactor == 1 then
-		-- return "custom/kunnka_tide_red"
+		-- return "kunnka_tide_red"
 	-- else
-		-- return "custom/kunnka_tide_high"
+		-- return "kunnka_tide_high"
 	-- end
 -- end
 -- --]]
@@ -1443,7 +1443,7 @@ end
 -- function imba_wisp_spirits_toggle:GetAbilityTextureName()
 	-- if not IsClient() then return end
 	-- if not self:GetCaster().arcana_style then return "wisp_spirits_in" end
-	-- return "custom/imba_wisp_spirits_in_arcana"
+	-- return "imba_wisp_spirits_in_arcana"
 -- end
 
 -- function imba_wisp_spirits_toggle:IsStealable() return false end
@@ -1498,9 +1498,9 @@ end
 
 -- function imba_wisp_swap_spirits:GetAbilityTextureName()
 	-- if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
-		-- return "custom/wisp_swap_spirits_silence"
+		-- return "wisp_swap_spirits_silence"
 	-- elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
-		-- return "custom/wisp_swap_spirits_disarm"
+		-- return "wisp_swap_spirits_disarm"
 	-- end
 -- end
 
@@ -1580,7 +1580,7 @@ end
 -- function imba_wisp_overcharge:GetAbilityTextureName()
 	-- if not IsClient() then return end
 	-- if not self:GetCaster().arcana_style then return "wisp_overcharge" end
-	-- return "custom/imba_wisp_overcharge_arcana"
+	-- return "imba_wisp_overcharge_arcana"
 -- end
 
 -- function imba_wisp_overcharge:IsNetherWardStealable()
@@ -1857,7 +1857,7 @@ end
 -- function imba_wisp_relocate:GetAbilityTextureName()
 	-- if not IsClient() then return end
 	-- if not self:GetCaster().arcana_style then return "wisp_relocate" end
-	-- return "custom/imba_wisp_relocate_arcana"
+	-- return "imba_wisp_relocate_arcana"
 -- end
 
 -- function imba_wisp_relocate:GetCooldown(level)
@@ -2141,7 +2141,7 @@ end
 -- function imba_wisp_overcharge_721:GetAbilityTextureName()
 	-- if not IsClient() then return end
 	-- if not self:GetCaster().arcana_style then return "wisp_overcharge" end
-	-- return "custom/imba_wisp_overcharge_arcana"
+	-- return "imba_wisp_overcharge_arcana"
 -- end
 
 -- function imba_wisp_overcharge_721:OnSpellStart()

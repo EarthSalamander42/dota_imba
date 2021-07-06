@@ -135,7 +135,7 @@ modifier_sand_king_boss_caustic_finale = class({})
 -----------------------------------------------------------------------------------------
 
 function modifier_sand_king_boss_caustic_finale:GetTexture()
-	return "custom/the_caustic_finale"
+	return "the_caustic_finale"
 end
 
 -----------------------------------------------------------------------------------------

@@ -3,7 +3,7 @@ LinkLuaModifier("modifier_imba_illusion_rune", "components/modifiers/runes/modif
 modifier_imba_illusion_rune = class({})
 
 function modifier_imba_illusion_rune:GetTexture()
-	return "custom/imba_rune_illusion"
+	return "imba_rune_illusion"
 end
 
 function modifier_imba_illusion_rune:GetStatusEffectName()

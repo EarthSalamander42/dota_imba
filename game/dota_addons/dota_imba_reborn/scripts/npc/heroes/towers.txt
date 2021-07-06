@@ -78,7 +78,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_explosion"
+		"AbilityTextureName"					"tower_explosion"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -210,7 +210,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_toughness"
+		"AbilityTextureName"					"tower_toughness"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -251,7 +251,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_observatory"
+		"AbilityTextureName"					"tower_observatory"
 		"AbilitySharedWithTeammates"			"1"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
 
@@ -320,7 +320,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_thorns"
+		"AbilityTextureName"					"tower_thorns"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -373,7 +373,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_spellshield"
+		"AbilityTextureName"					"tower_spellshield"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -418,7 +418,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_tenacity"
+		"AbilityTextureName"					"tower_tenacity"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -459,7 +459,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_spellmastery"
+		"AbilityTextureName"					"tower_spellmastery"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -509,7 +509,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_regen"
+		"AbilityTextureName"					"tower_regen"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -551,7 +551,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_vicious"
+		"AbilityTextureName"					"tower_vicious"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -597,7 +597,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_atrophy"
+		"AbilityTextureName"					"tower_atrophy"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -633,7 +633,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_mana_burn"
+		"AbilityTextureName"					"tower_mana_burn"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -684,7 +684,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_rot"
+		"AbilityTextureName"					"tower_rot"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"700"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -726,7 +726,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_bash"
+		"AbilityTextureName"					"tower_bash"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -875,7 +875,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_starlight"
+		"AbilityTextureName"					"tower_starlight"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -926,7 +926,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_protection"
+		"AbilityTextureName"					"tower_protection"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -967,7 +967,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/disease_aura"
+		"AbilityTextureName"					"disease_aura"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -1010,7 +1010,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_doppleganger"
+		"AbilityTextureName"					"tower_doppleganger"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -1085,7 +1085,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_barrier"
+		"AbilityTextureName"					"tower_barrier"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -1142,7 +1142,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_soul_leech"
+		"AbilityTextureName"					"tower_soul_leech"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -1192,7 +1192,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_frost_shroud"
+		"AbilityTextureName"					"tower_frost_shroud"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"ScriptFile"				"components/abilities/buildings/tower_abilities"
@@ -1345,7 +1345,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/mana_flare"
+		"AbilityTextureName"					"mana_flare"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"6"
@@ -1447,7 +1447,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/imba_force_tower"
+		"AbilityTextureName"					"imba_force_tower"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"8"
@@ -1758,7 +1758,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_healing_wave"
+		"AbilityTextureName"					"tower_healing_wave"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
 		"AbilityCooldown"						"8"
@@ -1850,7 +1850,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"ScriptFile"							"components/abilities/buildings/tower_abilities"
-		"AbilityTextureName"					"custom/ancient_defense"
+		"AbilityTextureName"					"ancient_defense"
 		
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 

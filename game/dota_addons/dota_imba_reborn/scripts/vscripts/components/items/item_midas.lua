@@ -22,7 +22,7 @@ item_imba_hand_of_midas = class({})
 LinkLuaModifier("modifier_item_imba_hand_of_midas", "components/items/item_midas", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_hand_of_midas:GetAbilityTextureName()
-	return "custom/imba_hand_of_midas"
+	return "imba_hand_of_midas"
 end
 
 function item_imba_hand_of_midas:CastFilterResultTarget(target)
@@ -101,10 +101,10 @@ function item_imba_hand_of_midas:GetAbilityTextureName()
 	}
 
 	if animal_heroes[caster_name] then
-		return "custom/item_paw_of_midas"
+		return "item_paw_of_midas"
 	end
 
-	return "custom/imba_hand_of_midas"
+	return "imba_hand_of_midas"
 end
 
 function item_imba_hand_of_midas:OnSpellStart()

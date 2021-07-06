@@ -37,7 +37,7 @@ LinkLuaModifier("modifier_imba_ebb_and_flow_tide_wave", "components/abilities/he
 LinkLuaModifier("modifier_imba_ebb_and_flow_tsunami", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 
 function imba_kunkka_ebb_and_flow:GetAbilityTextureName()
-	return "custom/kunkka_ebb_and_flow"
+	return "kunkka_ebb_and_flow"
 end
 
 function imba_kunkka_ebb_and_flow:GetIntrinsicModifierName()
@@ -81,13 +81,13 @@ end
 
 function imba_kunkka_ebb_and_flow:GetAbilityTextureName()
 	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tsunami")    then return "custom/kunnka_tide_tsunami" end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_low")   then return "custom/kunnka_tide_low"     end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_red")   then return "custom/kunnka_tide_red"     end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_flood") then return "custom/kunnka_tide_flood"   end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_high")  then return "custom/kunnka_tide_high"    end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_wave")  then return "custom/kunnka_tide_wave"    end
-	return "custom/kunkka_ebb_and_flow"
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tsunami")    then return "kunnka_tide_tsunami" end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_low")   then return "kunnka_tide_low"     end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_red")   then return "kunnka_tide_red"     end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_flood") then return "kunnka_tide_flood"   end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_high")  then return "kunnka_tide_high"    end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_wave")  then return "kunnka_tide_wave"    end
+	return "kunkka_ebb_and_flow"
 end
 
 modifier_imba_ebb_and_flow_thinker = class({})
@@ -155,7 +155,7 @@ function modifier_imba_ebb_and_flow_tide_low:IsDebuff()
 end
 
 function modifier_imba_ebb_and_flow_tide_low:GetTexture()
-	return "custom/kunnka_tide_low"
+	return "kunnka_tide_low"
 end
 
 modifier_imba_ebb_and_flow_tide_red = class({})
@@ -168,7 +168,7 @@ function modifier_imba_ebb_and_flow_tide_red:IsDebuff()
 end
 
 function modifier_imba_ebb_and_flow_tide_red:GetTexture()
-	return "custom/kunnka_tide_red"
+	return "kunnka_tide_red"
 end
 
 modifier_imba_ebb_and_flow_tide_flood = class({})
@@ -181,7 +181,7 @@ function modifier_imba_ebb_and_flow_tide_flood:IsDebuff()
 end
 
 function modifier_imba_ebb_and_flow_tide_flood:GetTexture()
-	return "custom/kunnka_tide_flood"
+	return "kunnka_tide_flood"
 end
 
 modifier_imba_ebb_and_flow_tide_high = class({})
@@ -194,7 +194,7 @@ function modifier_imba_ebb_and_flow_tide_high:IsDebuff()
 end
 
 function modifier_imba_ebb_and_flow_tide_high:GetTexture()
-	return "custom/kunnka_tide_high"
+	return "kunnka_tide_high"
 end
 
 modifier_imba_ebb_and_flow_tide_wave = class({})
@@ -207,7 +207,7 @@ function modifier_imba_ebb_and_flow_tide_wave:IsDebuff()
 end
 
 function modifier_imba_ebb_and_flow_tide_wave:GetTexture()
-	return "custom/kunnka_tide_wave"
+	return "kunnka_tide_wave"
 end
 
 modifier_imba_ebb_and_flow_tsunami = class({})
@@ -220,7 +220,7 @@ function modifier_imba_ebb_and_flow_tsunami:IsDebuff()
 end
 
 function modifier_imba_ebb_and_flow_tsunami:GetTexture()
-	return "custom/kunnka_tide_tsunami"
+	return "kunnka_tide_tsunami"
 end
 
 -- Flexible list of all possible tides (excluding tsunami)

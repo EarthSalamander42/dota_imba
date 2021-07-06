@@ -24,9 +24,9 @@ end
 -- function item_imba_ethereal_blade:GetAbilityTextureName()
 	-- if self:GetLevel() == 2 then
 		-- if self:GetCaster():GetModifierStackCount("modifier_item_imba_rod_of_atos", self:GetCaster()) == self:GetSpecialValueFor("curtain_fire_activation_charge") then
-			-- return "custom/imba_rod_of_atos_2_cfs"
+			-- return "imba_rod_of_atos_2_cfs"
 		-- else
-			-- return "custom/imba_rod_of_atos_2"
+			-- return "imba_rod_of_atos_2"
 		-- end
 	-- else
 		-- return "item_rod_of_atos"

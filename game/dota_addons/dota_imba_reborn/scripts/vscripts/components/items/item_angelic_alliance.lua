@@ -33,7 +33,7 @@ LinkLuaModifier( "modifier_imba_angelic_alliance_passive_disarm_cooldown", "comp
 -----------------------------------------------------------------------------------------------------------
 
 function item_imba_angelic_alliance:GetAbilityTextureName()
-	return "custom/imba_angelic_alliance"
+	return "imba_angelic_alliance"
 end
 
 function item_imba_angelic_alliance:GetBehavior()		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET 	end
@@ -216,7 +216,7 @@ if modifier_imba_angelic_alliance_debuff == nil then modifier_imba_angelic_allia
 function modifier_imba_angelic_alliance_debuff:IsDebuff() 				return true end
 function modifier_imba_angelic_alliance_debuff:IsHidden() 				return false end
 function modifier_imba_angelic_alliance_debuff:IsPurgable() 			return false end
-function modifier_imba_angelic_alliance_debuff:GetTexture() 			return "custom/imba_angelic_alliance" end
+function modifier_imba_angelic_alliance_debuff:GetTexture() 			return "imba_angelic_alliance" end
 function modifier_imba_angelic_alliance_debuff:GetEffectName()			return "particles/item/angelic_alliance/angelic_alliance_debuff.vpcf" end
 function modifier_imba_angelic_alliance_debuff:GetEffectAttachType()	return PATTACH_OVERHEAD_FOLLOW end
 
@@ -266,7 +266,7 @@ end
 if modifier_imba_angelic_alliance_buff == nil then modifier_imba_angelic_alliance_buff = class({}) end
 function modifier_imba_angelic_alliance_buff:IsHidden() return false end
 function modifier_imba_angelic_alliance_buff:IsDebuff() return false end
-function modifier_imba_angelic_alliance_buff:GetTexture() return "custom/imba_angelic_alliance" end
+function modifier_imba_angelic_alliance_buff:GetTexture() return "imba_angelic_alliance" end
 
 function modifier_imba_angelic_alliance_buff:GetEffectName()
 	return "particles/item/angelic_alliance/angelic_alliance_buff.vpcf"
@@ -330,7 +330,7 @@ end
 
 modifier_imba_angelic_alliance_buff_self	= modifier_imba_angelic_alliance_buff_self or class({})
 
-function modifier_imba_angelic_alliance_buff_self:GetTexture() return "custom/imba_angelic_alliance" end
+function modifier_imba_angelic_alliance_buff_self:GetTexture() return "imba_angelic_alliance" end
 
 function modifier_imba_angelic_alliance_buff_self:GetEffectName()
 	return "particles/items2_fx/sange_active.vpcf"
@@ -417,4 +417,4 @@ if modifier_imba_angelic_alliance_passive_disarm_cooldown == nil then modifier_i
 function modifier_imba_angelic_alliance_passive_disarm_cooldown:IsHidden() return false end
 function modifier_imba_angelic_alliance_passive_disarm_cooldown:IsDebuff() return true end
 function modifier_imba_angelic_alliance_passive_disarm_cooldown:IsPurgable() return false end
-function modifier_imba_angelic_alliance_passive_disarm_cooldown:GetTexture() return "custom/imba_angelic_alliance" end
+function modifier_imba_angelic_alliance_passive_disarm_cooldown:GetTexture() return "imba_angelic_alliance" end

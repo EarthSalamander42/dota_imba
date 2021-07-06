@@ -1086,7 +1086,7 @@ end
 modifier_vardor_graceful_jump_root = modifier_vardor_graceful_jump_root or class({})
 
 function modifier_vardor_graceful_jump_root:GetTexture()
-	return "custom/vardor/vardor_graceful_jump"
+	return "vardor/vardor_graceful_jump"
 end
 
 function modifier_vardor_graceful_jump_root:IsHidden() return false end
@@ -1200,7 +1200,7 @@ function modifier_vardor_mental_thrusts_debuff:IsPurgable() return true end
 function modifier_vardor_mental_thrusts_debuff:IsHidden() return false end
 
 function modifier_vardor_mental_thrusts_debuff:GetTexture()
-	return "custom/vardor/vardor_mental_thrusts"
+	return "vardor/vardor_mental_thrusts"
 end
 
 function modifier_vardor_mental_thrusts_debuff:OnCreated()

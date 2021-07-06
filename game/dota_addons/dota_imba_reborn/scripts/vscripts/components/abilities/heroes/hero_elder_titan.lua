@@ -15,7 +15,7 @@ end
 imba_elder_titan_echo_stomp = class({})
 
 function imba_elder_titan_echo_stomp:GetAbilityTextureName()
-	return "custom/imba_elder_titan_echo_stomp"
+	return "imba_elder_titan_echo_stomp"
 end
 
 function imba_elder_titan_echo_stomp:IsHiddenWhenStolen()
@@ -776,7 +776,7 @@ end
 imba_elder_titan_echo_stomp_spirit = class({})
 
 function imba_elder_titan_echo_stomp_spirit:GetAbilityTextureName()
-	return "custom/imba_elder_titan_echo_stomp"
+	return "imba_elder_titan_echo_stomp"
 end
 
 function imba_elder_titan_echo_stomp_spirit:GetPlaybackRateOverride()

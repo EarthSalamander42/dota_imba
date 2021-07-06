@@ -27,7 +27,7 @@ function imba_venomancer_toxicity:IsNetherWardStealable() return false end
 function imba_venomancer_toxicity:IsInnateAbility() return true end
 
 function imba_venomancer_toxicity:GetAbilityTextureName()
-	return "custom/venomancer_toxicity"
+	return "venomancer_toxicity"
 end
 -------------------------------------------
 

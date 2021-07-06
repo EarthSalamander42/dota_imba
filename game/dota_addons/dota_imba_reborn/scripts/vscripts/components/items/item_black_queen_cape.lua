@@ -28,7 +28,7 @@ function item_imba_black_queen_cape:GetIntrinsicModifierName()
 end
 
 function item_imba_black_queen_cape:GetAbilityTextureName()
-	return "custom/imba_black_queen_cape"
+	return "imba_black_queen_cape"
 end
 
 function item_imba_black_queen_cape:OnSpellStart()

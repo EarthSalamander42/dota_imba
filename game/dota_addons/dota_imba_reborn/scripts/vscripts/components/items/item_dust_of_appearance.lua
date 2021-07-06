@@ -27,7 +27,7 @@ if item_imba_dust_of_appearance == nil then item_imba_dust_of_appearance = class
 function item_imba_dust_of_appearance:GetBehavior() return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET end
 
 function item_imba_dust_of_appearance:GetAbilityTextureName()
-	return "custom/imba_dust_of_appearance"
+	return "imba_dust_of_appearance"
 end
 
 function item_imba_dust_of_appearance:OnSpellStart()

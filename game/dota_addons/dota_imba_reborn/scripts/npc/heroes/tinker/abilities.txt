@@ -533,7 +533,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_tinker"
 		"AbilityBehavior"       	 	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"FightRecapLevel"				"2"
-		"AbilityTextureName"    	 	"custom/tinker_tinkermaster"
+		"AbilityTextureName"    	 	"tinker_tinkermaster"
 		"MaxLevel"						"3"
 		"LevelsBetweenUpgrades"			"6"
 		"RequiredLevel"					"6"

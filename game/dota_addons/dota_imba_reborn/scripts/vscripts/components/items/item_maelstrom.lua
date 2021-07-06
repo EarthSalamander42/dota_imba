@@ -832,7 +832,7 @@ end
 -- end
 
 -- function item_imba_jarnbjorn:GetAbilityTextureName()
-	-- return "custom/imba_jarnbjorn"
+	-- return "imba_jarnbjorn"
 -- end
 
 -- function item_imba_jarnbjorn:GetCooldown(level)

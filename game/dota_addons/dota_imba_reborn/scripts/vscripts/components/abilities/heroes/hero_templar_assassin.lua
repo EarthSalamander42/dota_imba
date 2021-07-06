@@ -68,7 +68,7 @@ function imba_templar_assassin_refraction:GetAbilityTextureName()
 	elseif self:GetCaster():GetModifierStackCount("modifier_imba_templar_assassin_refraction_handler", self:GetCaster()) == 1 then
 		return "templar_assassin_refraction_damage"
 	elseif self:GetCaster():GetModifierStackCount("modifier_imba_templar_assassin_refraction_handler", self:GetCaster()) == 2 then
-		return "custom/templar_assassin/refraction_defense"
+		return "templar_assassin/refraction_defense"
 	else
 		return "templar_assassin_refraction"
 	end
@@ -874,7 +874,7 @@ end
 -- MODIFIER_IMBA_TEMPLAR_ASSASSIN_TRAP_EYES --
 ----------------------------------------------
 
-function modifier_imba_templar_assassin_trap_eyes:GetTexture()	return "custom/templar_assassin/psionic_trap_eyes" end
+function modifier_imba_templar_assassin_trap_eyes:GetTexture()	return "templar_assassin/psionic_trap_eyes" end
 
 function modifier_imba_templar_assassin_trap_eyes:OnCreated(params)
 	if self:GetAbility() then
@@ -905,7 +905,7 @@ end
 -- MODIFIER_IMBA_TEMPLAR_ASSASSIN_TRAP_NERVES --
 ------------------------------------------------
 
-function modifier_imba_templar_assassin_trap_nerves:GetTexture()	return "custom/templar_assassin/psionic_trap_nerves" end
+function modifier_imba_templar_assassin_trap_nerves:GetTexture()	return "templar_assassin/psionic_trap_nerves" end
 
 function modifier_imba_templar_assassin_trap_nerves:OnCreated(params)
 	if self:GetAbility() then
@@ -1092,9 +1092,9 @@ function imba_templar_assassin_psionic_trap:GetAbilityTextureName()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_templar_assassin_psionic_trap_handler", self:GetCaster()) <= 0 then
 		return "templar_assassin_psionic_trap"
 	elseif self:GetCaster():GetModifierStackCount("modifier_imba_templar_assassin_psionic_trap_handler", self:GetCaster()) == 1 then
-		return "custom/templar_assassin/psionic_trap_eyes"
+		return "templar_assassin/psionic_trap_eyes"
 	elseif self:GetCaster():GetModifierStackCount("modifier_imba_templar_assassin_psionic_trap_handler", self:GetCaster()) == 2 then
-		return "custom/templar_assassin/psionic_trap_nerves"
+		return "templar_assassin/psionic_trap_nerves"
 	else
 		return "templar_assassin_psionic_trap"
 	end

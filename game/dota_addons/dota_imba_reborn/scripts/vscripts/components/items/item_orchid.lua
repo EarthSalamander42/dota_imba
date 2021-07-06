@@ -28,7 +28,7 @@ LinkLuaModifier( "modifier_item_imba_orchid", "components/items/item_orchid.lua"
 LinkLuaModifier( "modifier_item_imba_orchid_debuff", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
 function item_imba_orchid:GetAbilityTextureName()
-	return "custom/imba_orchid"
+	return "imba_orchid"
 end
 
 function item_imba_orchid:GetIntrinsicModifierName()
@@ -211,7 +211,7 @@ LinkLuaModifier( "modifier_item_imba_bloodthorn_attacker_crit", "components/item
 LinkLuaModifier( "modifier_item_imba_bloodthorn_debuff", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
 function item_imba_bloodthorn:GetAbilityTextureName()
-	return "custom/imba_bloodthorn"
+	return "imba_bloodthorn"
 end
 
 function item_imba_bloodthorn:GetIntrinsicModifierName()

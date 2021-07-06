@@ -37,7 +37,7 @@ function item_imba_echo_sabre:GetIntrinsicModifierName()
 end
 
 function item_imba_echo_sabre:GetAbilityTextureName()
-	return "custom/imba_echo_sabre"
+	return "imba_echo_sabre"
 end
 
 modifier_imba_echo_sabre = modifier_imba_echo_sabre or class({})
@@ -179,7 +179,7 @@ function item_imba_reverb_rapier:GetIntrinsicModifierName()
 end
 
 function item_imba_reverb_rapier:GetAbilityTextureName()
-	return "custom/imba_reverb_rapier"
+	return "imba_reverb_rapier"
 end
 
 -------------------------------------------
@@ -358,8 +358,8 @@ end
 
 function modifier_imba_echo_rapier_debuff_slow:GetTexture()
 	if self:GetAbility():GetName() == "item_imba_reverb_rapier" then
-		return "custom/imba_reverb_rapier"
+		return "imba_reverb_rapier"
 	else
-		return "custom/imba_echo_sabre"
+		return "imba_echo_sabre"
 	end
 end

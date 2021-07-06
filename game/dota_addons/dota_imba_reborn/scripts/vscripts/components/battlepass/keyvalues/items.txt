@@ -36,13 +36,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink1"
+				"modifier"		"imba_blink1"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots1"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots1"
 //			}
 		}
 	}
@@ -76,13 +76,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink2"
+				"modifier"		"imba_blink2"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots2"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots2"
 //			}
 		}
 	}
@@ -116,13 +116,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink3"
+				"modifier"		"imba_blink3"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots3"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots3"
 //			}
 		}
 	}
@@ -156,13 +156,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink4"
+				"modifier"		"imba_blink4"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots4"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots4"
 //			}
 		}
 	}
@@ -196,13 +196,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink5"
+				"modifier"		"imba_blink5"
 			}
 
 			"asset_modifier1"
 			{
-				"asset"			"custom/imba_blink_boots"
-				"modifier"		"custom/imba_blink_boots5"
+				"asset"			"imba_blink_boots"
+				"modifier"		"imba_blink_boots5"
 			}
 		}
 	}
@@ -237,13 +237,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink6"
+				"modifier"		"imba_blink6"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots6"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots6"
 //			}
 		}
 	}
@@ -277,13 +277,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink7"
+				"modifier"		"imba_blink7"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots7"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots7"
 //			}
 		}
 	}
@@ -317,13 +317,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink8"
+				"modifier"		"imba_blink8"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots8"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots8"
 //			}
 		}
 	}
@@ -358,13 +358,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink9"
+				"modifier"		"imba_blink9"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots9"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots9"
 //			}
 		}
 	}
@@ -399,13 +399,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink10"
+				"modifier"		"imba_blink10"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots10"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots10"
 //			}
 		}
 	}
@@ -439,13 +439,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink11"
+				"modifier"		"imba_blink11"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots11"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots11"
 //			}
 		}
 	}
@@ -479,13 +479,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink12"
+				"modifier"		"imba_blink12"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots12"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots12"
 //			}
 		}
 	}
@@ -519,13 +519,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink13"
+				"modifier"		"imba_blink13"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots13"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots13"
 //			}
 		}
 	}
@@ -559,13 +559,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_blink"
-				"modifier"		"custom/imba_blink14"
+				"modifier"		"imba_blink14"
 			}
 
 //			"asset_modifier1"
 //			{
-//				"asset"			"custom/imba_blink_boots"
-//				"modifier"		"custom/imba_blink_boots14"
+//				"asset"			"imba_blink_boots"
+//				"modifier"		"imba_blink_boots14"
 //			}
 		}
 	}
@@ -719,19 +719,19 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_force_staff"
-				"modifier"		"custom/imba_force_staff1"
+				"modifier"		"imba_force_staff1"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_hurricane_pike"
-				"modifier"		"custom/imba_hurricane_pike1"
+				"modifier"		"imba_hurricane_pike1"
 			}
 
 //			"asset_modifier0"
 //			{
 //				"asset"			"item_lance_of_longinus"
-//				"modifier"		"custom/imba_lance_of_longinus1"
+//				"modifier"		"imba_lance_of_longinus1"
 //			}
 		}
 	}
@@ -759,13 +759,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_force_staff"
-				"modifier"		"custom/imba_force_staff2"
+				"modifier"		"imba_force_staff2"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_hurricane_pike"
-				"modifier"		"custom/imba_hurricane_pike2"
+				"modifier"		"imba_hurricane_pike2"
 			}
 		}
 	}
@@ -793,13 +793,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_force_staff"
-				"modifier"		"custom/imba_force_staff3"
+				"modifier"		"imba_force_staff3"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_hurricane_pike"
-				"modifier"		"custom/imba_hurricane_pike3"
+				"modifier"		"imba_hurricane_pike3"
 			}
 		}
 	}
@@ -827,13 +827,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_force_staff"
-				"modifier"		"custom/imba_force_staff4"
+				"modifier"		"imba_force_staff4"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_hurricane_pike"
-				"modifier"		"custom/imba_hurricane_pike4"
+				"modifier"		"imba_hurricane_pike4"
 			}
 		}
 	}
@@ -861,13 +861,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_force_staff"
-				"modifier"		"custom/imba_force_staff5"
+				"modifier"		"imba_force_staff5"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_hurricane_pike"
-				"modifier"		"custom/imba_hurricane_pike5"
+				"modifier"		"imba_hurricane_pike5"
 			}
 		}
 	}
@@ -895,13 +895,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_force_staff"
-				"modifier"		"custom/imba_force_staff6"
+				"modifier"		"imba_force_staff6"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_hurricane_pike"
-				"modifier"		"custom/imba_hurricane_pike6"
+				"modifier"		"imba_hurricane_pike6"
 			}
 		}
 	}
@@ -1374,7 +1374,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_maelstrom"
-				"modifier"		"custom/imba_maelstrom1"
+				"modifier"		"imba_maelstrom1"
 			}
 		}
 	}
@@ -1422,7 +1422,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_maelstrom"
-				"modifier"		"custom/imba_maelstrom2"
+				"modifier"		"imba_maelstrom2"
 			}
 		}
 	}
@@ -1463,7 +1463,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_maelstrom"
-				"modifier"		"custom/imba_maelstrom3"
+				"modifier"		"imba_maelstrom3"
 			}
 		}
 	}
@@ -1504,7 +1504,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_maelstrom"
-				"modifier"		"custom/imba_maelstrom4"
+				"modifier"		"imba_maelstrom4"
 			}
 		}
 	}
@@ -1545,7 +1545,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_maelstrom"
-				"modifier"		"custom/imba_maelstrom5"
+				"modifier"		"imba_maelstrom5"
 			}
 		}
 	}
@@ -1602,13 +1602,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_mekansm"
-				"modifier"		"custom/imba_mekansm1"
+				"modifier"		"imba_mekansm1"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_guardian_greaves"
-				"modifier"		"custom/imba_guardian_greaves1"
+				"modifier"		"imba_guardian_greaves1"
 			}
 		}
 	}
@@ -1661,13 +1661,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_mekansm"
-				"modifier"		"custom/imba_mekansm2"
+				"modifier"		"imba_mekansm2"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_guardian_greaves"
-				"modifier"		"custom/imba_guardian_greaves2"
+				"modifier"		"imba_guardian_greaves2"
 			}
 		}
 	}
@@ -1720,13 +1720,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_mekansm"
-				"modifier"		"custom/imba_mekansm3"
+				"modifier"		"imba_mekansm3"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_guardian_greaves"
-				"modifier"		"custom/imba_guardian_greaves3"
+				"modifier"		"imba_guardian_greaves3"
 			}
 		}
 	}
@@ -1779,13 +1779,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_mekansm"
-				"modifier"		"custom/imba_mekansm4"
+				"modifier"		"imba_mekansm4"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_guardian_greaves"
-				"modifier"		"custom/imba_guardian_greaves4"
+				"modifier"		"imba_guardian_greaves4"
 			}
 		}
 	}
@@ -1824,13 +1824,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_radiance"
-				"modifier"		"custom/imba_radiance1"
+				"modifier"		"imba_radiance1"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_radiance_inactive"
-				"modifier"		"custom/imba_radiance1_inactive"
+				"modifier"		"imba_radiance1_inactive"
 			}
 		}
 	}
@@ -1865,13 +1865,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_radiance"
-				"modifier"		"custom/imba_radiance2"
+				"modifier"		"imba_radiance2"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_radiance_inactive"
-				"modifier"		"custom/imba_radiance2_inactive"
+				"modifier"		"imba_radiance2_inactive"
 			}
 		}
 	}
@@ -1906,13 +1906,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_radiance"
-				"modifier"		"custom/imba_radiance3"
+				"modifier"		"imba_radiance3"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_radiance_inactive"
-				"modifier"		"custom/imba_radiance3_inactive"
+				"modifier"		"imba_radiance3_inactive"
 			}
 		}
 	}
@@ -1947,13 +1947,13 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_radiance"
-				"modifier"		"custom/imba_radiance4"
+				"modifier"		"imba_radiance4"
 			}
 
 			"asset_modifier1"
 			{
 				"asset"			"item_radiance_inactive"
-				"modifier"		"custom/imba_radiance4_inactive"
+				"modifier"		"imba_radiance4_inactive"
 			}
 		}
 	}
@@ -1992,7 +1992,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_sheepstick"
-				"modifier"		"custom/imba_sheepstick1"
+				"modifier"		"imba_sheepstick1"
 			}
 		}
 	}
@@ -2028,7 +2028,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_sheepstick"
-				"modifier"		"custom/imba_sheepstick2"
+				"modifier"		"imba_sheepstick2"
 			}
 		}
 	}
@@ -2067,7 +2067,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_shivas_guard"
-				"modifier"		"custom/imba_shiva1"
+				"modifier"		"imba_shiva1"
 			}
 		}
 	}
@@ -2103,7 +2103,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_shivas_guard"
-				"modifier"		"custom/imba_shiva2"
+				"modifier"		"imba_shiva2"
 			}
 		}
 
@@ -2112,7 +2112,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_shivas_guard"
-				"modifier"		"custom/imba_shiva2"
+				"modifier"		"imba_shiva2"
 			}
 		}
 	}
@@ -2147,7 +2147,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_shivas_guard"
-				"modifier"		"custom/imba_shiva3"
+				"modifier"		"imba_shiva3"
 			}
 		}
 
@@ -2156,7 +2156,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_shivas_guard"
-				"modifier"		"custom/imba_shiva3"
+				"modifier"		"imba_shiva3"
 			}
 		}
 	}
@@ -2191,7 +2191,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_shivas_guard"
-				"modifier"		"custom/imba_shiva4"
+				"modifier"		"imba_shiva4"
 			}
 		}
 
@@ -2200,7 +2200,7 @@
 			"asset_modifier0"
 			{
 				"asset"			"item_shivas_guard"
-				"modifier"		"custom/imba_shiva4"
+				"modifier"		"imba_shiva4"
 			}
 		}
 	}

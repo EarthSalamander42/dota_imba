@@ -332,7 +332,7 @@ function modifier_imba_purification_omniguard_recharging:IsPurgable() return fal
 function modifier_imba_purification_omniguard_recharging:IsDebuff() return false end
 
 function modifier_imba_purification_omniguard_recharging:GetTexture()
-	return "custom/omnikinight_purification_cooldown"
+	return "omnikinight_purification_cooldown"
 end
 
 function modifier_imba_purification_omniguard_recharging:OnDestroy()
@@ -716,7 +716,7 @@ end
 -- end
 
 function imba_omniknight_hammer_of_virtue:GetAbilityTextureName()
-   return "custom/omniknight_hammer_of_virtue"
+   return "omniknight_hammer_of_virtue"
 end
 
 function imba_omniknight_hammer_of_virtue:GetIntrinsicModifierName()

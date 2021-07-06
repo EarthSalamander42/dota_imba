@@ -53,7 +53,7 @@ end
 modifier_imba_lifesteal_boots = modifier_imba_lifesteal_boots or class({})
 
 function modifier_imba_lifesteal_boots:GetTexture()
-	return "custom/imba_lifesteal_boots"
+	return "imba_lifesteal_boots"
 end
 
 function modifier_imba_lifesteal_boots:OnCreated()

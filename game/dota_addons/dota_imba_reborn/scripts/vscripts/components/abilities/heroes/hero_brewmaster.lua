@@ -496,11 +496,11 @@ end
 
 function imba_brewmaster_drunken_brawler:GetAbilityTextureName()
 	if not self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_crit_cooldown") and not self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown") then
-		return "custom/brewmaster/drunken_brawler_both"
+		return "brewmaster/drunken_brawler_both"
 	elseif not self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_crit_cooldown") and self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown") then
-		return "custom/brewmaster/drunken_brawler_crit"
+		return "brewmaster/drunken_brawler_crit"
 	elseif self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_crit_cooldown") and not self:GetCaster():HasModifier("modifier_imba_brewmaster_drunken_brawler_miss_cooldown") then
-		return "custom/brewmaster/drunken_brawler_miss"
+		return "brewmaster/drunken_brawler_miss"
 	else
 		return "brewmaster_drunken_brawler"
 	end

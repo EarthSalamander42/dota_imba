@@ -28,9 +28,9 @@ end
 
 function item_imba_armlet_of_dementor:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_item_imba_armlet_of_dementor_active") then
-		return "custom/armlet_of_dementor_active"
+		return "armlet_of_dementor_active"
 	else
-		return "custom/armlet_of_dementor_inactive"
+		return "armlet_of_dementor_inactive"
 	end
 end
 

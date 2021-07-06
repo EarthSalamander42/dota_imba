@@ -1590,7 +1590,7 @@ MergeTables(LinkedModifiers,{
 imba_alchemist_mammonite = imba_alchemist_mammonite or class({})
 
 function imba_alchemist_mammonite:GetAbilityTextureName()
-	return "custom/alchemist_mammonite"
+	return "alchemist_mammonite"
 end
 
 function imba_alchemist_mammonite:IsStealable()	return false end

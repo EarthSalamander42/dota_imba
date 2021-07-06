@@ -14435,28 +14435,28 @@
 				"asset_modifier83"
 				{
 					"type"		"ability_icon"
-					"asset"		"custom/pudge_sharp_hook"
-					"modifier"		"custom/pudge_sharp_hook_arcana_style0"
+					"asset"		"pudge_sharp_hook"
+					"modifier"		"pudge_sharp_hook_arcana_style0"
 					"style"		"0"
 				}
 				"asset_modifier84"
 				{
 					"type"		"ability_icon"
-					"asset"		"custom/pudge_sharp_hook"
-					"modifier"		"custom/pudge_sharp_hook_arcana_style1"
+					"asset"		"pudge_sharp_hook"
+					"modifier"		"pudge_sharp_hook_arcana_style1"
 					"style"		"1"
 				}
 				"asset_modifier85"
 				{
 					"type"		"ability_icon"
-					"asset"		"custom/pudge_light_hook"
-					"modifier"		"custom/pudge_light_hook_arcana_style0"
+					"asset"		"pudge_light_hook"
+					"modifier"		"pudge_light_hook_arcana_style0"
 					"style"		"0"
 				}
 				"asset_modifier86"
 				{
 					"type"		"ability_icon"
-					"asset"		"custom/pudge_light_hook"
+					"asset"		"pudge_light_hook"
 					"modifier"		"pudge/arcana/pudge_light_hook_arcana_style1"
 					"style"		"1"
 				}
@@ -47355,8 +47355,8 @@
 				"asset_modifier44"
 				{
 					"type"		"ability_icon"
-					"asset"		"custom/wraith_king_wraithfire_aura"
-					"modifier"		"custom/wraith_king_wraithfire_aura_arcana"
+					"asset"		"wraith_king_wraithfire_aura"
+					"modifier"		"wraith_king_wraithfire_aura_arcana"
 				}
 				"alternate_icons"
 				{

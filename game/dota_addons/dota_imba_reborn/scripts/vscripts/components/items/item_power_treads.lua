@@ -65,12 +65,12 @@ end
 
 function item_imba_power_treads_2:GetAbilityTextureName()
 	if IsClient() then
-		-- if not self.state then return "custom/imba_power_treads" end
+		-- if not self.state then return "imba_power_treads" end
 
 		if self.state then
-			return "custom/imba_mega_treads_"..self.state
+			return "imba_mega_treads_"..self.state
 		else
-			return "custom/imba_mega_treads_"..self:GetCaster():GetModifierStackCount("modifier_imba_power_treads_2", self:GetCaster())
+			return "imba_mega_treads_"..self:GetCaster():GetModifierStackCount("modifier_imba_power_treads_2", self:GetCaster())
 		end
 	end
 end

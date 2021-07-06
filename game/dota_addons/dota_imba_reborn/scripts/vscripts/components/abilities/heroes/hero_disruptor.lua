@@ -26,7 +26,7 @@ function imba_disruptor_stormbearer:IsInnateAbility()
 end
 
 function imba_disruptor_stormbearer:GetAbilityTextureName()
-   return "custom/disruptor_stormbearer"
+   return "disruptor_stormbearer"
 end
 -------------------------------------------
 --		Stormbearer's stacks buffs

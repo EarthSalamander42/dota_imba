@@ -27,7 +27,7 @@ if item_imba_octarine_core == nil then item_imba_octarine_core = class({}) end
 LinkLuaModifier( "modifier_imba_octarine_core_basic", "components/items/item_octarine_core.lua", LUA_MODIFIER_MOTION_NONE )	-- Item stats
 
 function item_imba_octarine_core:GetAbilityTextureName()
-	return "custom/imba_octarine_core"
+	return "imba_octarine_core"
 end
 
 function item_imba_octarine_core:GetIntrinsicModifierName()
@@ -53,9 +53,9 @@ end
 
 function item_imba_octarine_core:GetAbilityTextureName()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_octarine_core_basic", self:GetCaster()) == 1 then
-		return "custom/imba_octarine_core_off"
+		return "imba_octarine_core_off"
 	else
-		return "custom/imba_octarine_core"
+		return "imba_octarine_core"
 	end
 end
 

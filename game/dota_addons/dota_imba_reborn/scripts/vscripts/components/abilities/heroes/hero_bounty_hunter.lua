@@ -1465,7 +1465,7 @@ LinkLuaModifier("modifier_imba_headhunter_buff_handler", "components/abilities/h
 LinkLuaModifier("modifier_imba_headhunter_debuff_illu", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 
 function imba_bounty_hunter_headhunter:GetAbilityTextureName()
-	return "custom/bounty_hunter_headhunter"
+	return "bounty_hunter_headhunter"
 end
 
 function imba_bounty_hunter_headhunter:GetIntrinsicModifierName()

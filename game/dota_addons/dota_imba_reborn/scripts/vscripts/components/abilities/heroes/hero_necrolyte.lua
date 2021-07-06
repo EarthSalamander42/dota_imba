@@ -14,7 +14,7 @@ LinkLuaModifier("modifier_imba_sadist_stack", "components/abilities/heroes/hero_
 imba_necrolyte_sadist = imba_necrolyte_sadist or class({})
 
 function imba_necrolyte_sadist:GetAbilityTextureName()
-	return "custom/necrolyte_sadist"
+	return "necrolyte_sadist"
 end
 
 function imba_necrolyte_sadist:GetIntrinsicModifierName()

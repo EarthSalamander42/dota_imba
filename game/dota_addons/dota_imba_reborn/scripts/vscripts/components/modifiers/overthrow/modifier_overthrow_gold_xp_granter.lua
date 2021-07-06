@@ -7,7 +7,7 @@ function modifier_overthrow_gold_xp_granter:IsPurgable() return false end
 function modifier_overthrow_gold_xp_granter:IsPurgeException() return false end
 
 function modifier_overthrow_gold_xp_granter:GetTexture()
-	return "custom/custom_games_xp_coin"
+	return "custom_games_xp_coin"
 end
 
 function modifier_overthrow_gold_xp_granter:OnCreated()

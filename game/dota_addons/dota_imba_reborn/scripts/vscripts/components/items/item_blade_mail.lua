@@ -44,9 +44,9 @@ function item_imba_blade_mail:GetAbilityTextureName()
 	}
 	
 	if self:GetLevel() == 2 then
-		return "custom/item_bladestorm_mail"
+		return "item_bladestorm_mail"
 	elseif uniqueBM[self:GetCaster():GetName()] then
-		return "custom/imba_blade_mail_"..uniqueBM[self:GetCaster():GetName()]
+		return "imba_blade_mail_"..uniqueBM[self:GetCaster():GetName()]
 	else
 		return "item_blade_mail"
 	end

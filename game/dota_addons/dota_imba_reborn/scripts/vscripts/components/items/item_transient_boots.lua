@@ -20,9 +20,9 @@ end
 
 function item_imba_transient_boots:GetAbilityTextureName()
 	if not self:GetCaster():HasModifier("modifier_item_imba_transient_boots_break") then
-		return "custom/imba_transient_boots"
+		return "imba_transient_boots"
 	else
-		return "custom/imba_transient_boots_broken"
+		return "imba_transient_boots_broken"
 	end
 end
 

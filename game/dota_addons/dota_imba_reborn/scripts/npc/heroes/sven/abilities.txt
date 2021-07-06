@@ -493,7 +493,7 @@
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"MaxLevel"							"3"
-		"AbilityTextureName"				"custom/sven_colossal_strike"
+		"AbilityTextureName"				"sven_colossal_strike"
 		"ScriptFile"				"components/abilities/heroes/hero_sven"
 
 		// Casting

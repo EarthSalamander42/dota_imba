@@ -24,9 +24,9 @@ end
 
 function item_imba_valiance:GetAbilityTextureName()
 	if not self:GetCaster():HasModifier("modifier_item_imba_valiance_counter") then
-		return "custom/item_valiance"
+		return "item_valiance"
 	else
-		return "custom/item_valiance_counter"
+		return "item_valiance_counter"
 	end
 end
 
@@ -148,7 +148,7 @@ end
 function modifier_item_imba_valiance_guard:IsPurgable()	return false end
 
 function modifier_item_imba_valiance_guard:GetTexture()
-	return "custom/item_valiance"
+	return "item_valiance"
 end
 
 function modifier_item_imba_valiance_guard:GetStatusEffectName()
@@ -249,7 +249,7 @@ end
 function modifier_item_imba_valiance_counter:IsPurgable()	return false end
 
 function modifier_item_imba_valiance_counter:GetTexture()
-	return "custom/item_valiance_counter"
+	return "item_valiance_counter"
 end
 
 function modifier_item_imba_valiance_counter:OnCreated(params)

@@ -79,7 +79,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_enchantress.lua"
 		"AbilityTextureName"			"enchantress_impetus"
-		//"AbilityTextureName"			"custom/virga's_arc_impetus"
+		//"AbilityTextureName"			"virga's_arc_impetus"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -346,7 +346,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_enchantress.lua"
-		"AbilityTextureName"			"custom/natura_shift_inactive"
+		"AbilityTextureName"			"natura_shift_inactive"
 		
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -388,7 +388,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_enchantress.lua"
 		"AbilityTextureName"			"enchantress_impetus"
-		//"AbilityTextureName"			"custom/virga's_arc_impetus"
+		//"AbilityTextureName"			"virga's_arc_impetus"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------

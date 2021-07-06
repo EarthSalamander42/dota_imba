@@ -29,7 +29,7 @@ LinkLuaModifier( "modifier_imba_armlet_unholy_strength", 				"components/items/i
 LinkLuaModifier( "modifier_imba_armlet_toggle_prevention", 				"components/items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Toggle prevention
 
 function item_imba_armlet:GetAbilityTextureName()
-	return "custom/imba_armlet"
+	return "imba_armlet"
 end
 
 function item_imba_armlet:GetIntrinsicModifierName()
@@ -62,9 +62,9 @@ end
 
 function item_imba_armlet:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_armlet_unholy_strength") then
-		return "custom/imba_armlet_active"
+		return "imba_armlet_active"
 	else
-		return "custom/imba_armlet"
+		return "imba_armlet"
 	end
 end
 

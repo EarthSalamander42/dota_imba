@@ -9,7 +9,7 @@ function modifier_mutation_kill_streak_power:IsPurgable() return false end
 function modifier_mutation_kill_streak_power:RemoveOnDeath() return false end
 
 function modifier_mutation_kill_streak_power:GetTexture()
-	return "custom/tower_toughness"
+	return "tower_toughness"
 end
 
 function modifier_mutation_kill_streak_power:DeclareFunctions()

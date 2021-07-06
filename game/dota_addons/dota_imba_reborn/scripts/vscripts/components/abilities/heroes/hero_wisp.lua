@@ -1033,9 +1033,9 @@ end
 --[[
 function modifier_imba_wisp_spirits:GetTexture()
 	if self:GetAbility().spirits_movementFactor == 1 then
-		return "custom/kunnka_tide_red"
+		return "kunnka_tide_red"
 	else
-		return "custom/kunnka_tide_high"
+		return "kunnka_tide_high"
 	end
 end
 --]]
@@ -1322,9 +1322,9 @@ end
 
 function imba_wisp_swap_spirits:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
-		return "custom/wisp_swap_spirits_silence"
+		return "wisp_swap_spirits_silence"
 	elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
-		return "custom/wisp_swap_spirits_disarm"
+		return "wisp_swap_spirits_disarm"
 	end
 end
 

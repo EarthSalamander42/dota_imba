@@ -14,9 +14,9 @@ function modifier_imba_double_damage_rune:GetModifierAura() return "modifier_imb
 
 function modifier_imba_double_damage_rune:GetTexture()
 	if CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier > 1 then
-		return "custom/imba_rune_double_damage_super"
+		return "imba_rune_double_damage_super"
 	else
-		return "custom/imba_rune_double_damage"
+		return "imba_rune_double_damage"
 	end
 end
 
@@ -94,9 +94,9 @@ function modifier_imba_rune_doubledamage_aura:IsDebuff() return false end
 
 function modifier_imba_rune_doubledamage_aura:GetTexture()
 	if CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier > 1 then
-		return "custom/imba_rune_double_damage_super"
+		return "imba_rune_double_damage_super"
 	else
-		return "custom/imba_rune_double_damage"
+		return "imba_rune_double_damage"
 	end
 end
 

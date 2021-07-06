@@ -28,7 +28,7 @@ LinkLuaModifier( "modifier_item_imba_vladmir", "components/items/item_vladmir.lu
 LinkLuaModifier( "modifier_item_imba_vladmir_aura", "components/items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 
 function item_imba_vladmir:GetAbilityTextureName()
-	return "custom/imba_vladmir"
+	return "imba_vladmir"
 end
 
 function item_imba_vladmir:GetBehavior()
@@ -100,7 +100,7 @@ function modifier_item_imba_vladmir_aura:IsPurgable() return false end
 
 -- Aura icon
 function modifier_item_imba_vladmir_aura:GetTexture()
-	return "custom/imba_vladmir" end
+	return "imba_vladmir" end
 
 -- Stores the aura's parameters to prevent errors when the item is unequipped
 function modifier_item_imba_vladmir_aura:OnCreated(keys)
@@ -208,7 +208,7 @@ LinkLuaModifier( "modifier_item_imba_vladmir_blood_aura_emitter", "components/it
 LinkLuaModifier( "modifier_item_imba_vladmir_blood_aura", "components/items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 
 function item_imba_vladmir_2:GetAbilityTextureName()
-	return "custom/imba_vladmir_2"
+	return "imba_vladmir_2"
 end
 
 function item_imba_vladmir_2:GetBehavior()
@@ -277,7 +277,7 @@ modifier_item_imba_vladmir_blood_aura = modifier_item_imba_vladmir_blood_aura or
 
 -- Aura icon
 function modifier_item_imba_vladmir_blood_aura:GetTexture()
-	return "custom/imba_vladmir_2" end
+	return "imba_vladmir_2" end
 
 -- Stores the aura's parameters to prevent errors when the item is unequipped
 function modifier_item_imba_vladmir_blood_aura:OnCreated(keys)

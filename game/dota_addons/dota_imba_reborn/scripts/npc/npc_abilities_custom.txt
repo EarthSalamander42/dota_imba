@@ -376,7 +376,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/ancient_defense"
+		"AbilityTextureName"					"ancient_defense"
 		"MaxLevel"								"1"
 		"ScriptFile"							"components/abilities/buildings/ancient_abilities"
 		"AbilityCastRange"						"2400"
@@ -428,7 +428,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/ancient_last_resort"
+		"AbilityTextureName"					"ancient_last_resort"
 		"MaxLevel"								"1"
 		"ScriptFile"							"components/abilities/buildings/ancient_abilities"
 		"AbilityCastRange"						"1200"
@@ -557,7 +557,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/fountain_relief"
+		"AbilityTextureName"					"fountain_relief"
 		"MaxLevel"								"1"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"1200"
@@ -1223,7 +1223,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/centaur_thick_hide"
+		"AbilityTextureName"			"centaur_thick_hide"
 		"ScriptFile"				"components/abilities/heroes/hero_centaur.lua"
 		"MaxLevel"						"1"
 
@@ -1814,7 +1814,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_crystal_maiden"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"custom/crystal_maiden_arcane_dynamo"
+		"AbilityTextureName"			"crystal_maiden_arcane_dynamo"
 		"MaxLevel"						"1"
 
 		// Special
@@ -3107,7 +3107,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
-		"AbilityTextureName"							"custom/dazzle_ressurection"
+		"AbilityTextureName"							"dazzle_ressurection"
 		"ScriptFile"				"components/abilities/heroes/hero_dazzle.lua"
 		"FightRecapLevel"								"1"
 
@@ -3451,7 +3451,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/disruptor_stormbearer"
+		"AbilityTextureName"			"disruptor_stormbearer"
 		"ScriptFile"				"components/abilities/heroes/hero_disruptor"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"1"
@@ -4215,7 +4215,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
+		"AbilityTextureName"			"imba_elder_titan_echo_stomp"
 		"ScriptFile"				"components/abilities/heroes/hero_elder_titan.lua"
 		//"HasScepterUpgrade"				"1"
 
@@ -4281,7 +4281,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
+		"AbilityTextureName"			"imba_elder_titan_echo_stomp"
 		"ScriptFile"				"components/abilities/heroes/hero_elder_titan.lua"
 
 		// Stats
@@ -5346,7 +5346,7 @@
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"					"1"
-		"AbilityTextureName"				"custom/jakiro_fire_breath"
+		"AbilityTextureName"				"jakiro_fire_breath"
 		"MaxLevel"               			"4"
 
 		// Casting
@@ -5436,7 +5436,7 @@
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"					"1"
 		"MaxLevel"               			"4"
-		"AbilityTextureName"				"custom/jakiro_ice_breath"
+		"AbilityTextureName"				"jakiro_ice_breath"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -6235,7 +6235,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"BaseClass"						"ability_lua"
-		"AbilityTextureName"			"custom/kunkka_ebb_and_flow"
+		"AbilityTextureName"			"kunkka_ebb_and_flow"
 		"ScriptFile"				"components/abilities/heroes/hero_kunkka"
 		"MaxLevel"						"1"
 
@@ -7044,7 +7044,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                             "ability_lua"
 		"AbilityBehavior"                       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"                    "custom/lich_cold_front"
+		"AbilityTextureName"                    "lich_cold_front"
 		"MaxLevel"                              "1"
 		"ScriptFile"							"components/abilities/heroes/hero_lich.lua"
 
@@ -9640,7 +9640,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"			"custom/wolfsbane"
+		"AbilityTextureName"			"wolfsbane"
 		"ScriptFile"				"components/abilities/heroes/hero_lycan"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"1"
@@ -10037,7 +10037,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_lycan.lua"
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"FightRecapLevel"			"1"
-		"AbilityTextureName"     	"custom/hunter_instincts"
+		"AbilityTextureName"     	"hunter_instincts"
 		"MaxLevel"					"3"
 
 		// Special
@@ -11231,7 +11231,7 @@
 		"FightRecapLevel"				"1"
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"custom/necrolyte_sadist"
+		"AbilityTextureName"			"necrolyte_sadist"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12736,7 +12736,7 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/omniknight_hammer_of_virtue"
+		"AbilityTextureName"			"omniknight_hammer_of_virtue"
 		"MaxLevel"						"4"
 		"ScriptFile"				"components/abilities/heroes/hero_omniknight.lua"
 
@@ -13728,7 +13728,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_phoenix"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/phoenix_burningwings"
+		"AbilityTextureName"			"phoenix_burningwings"
 
 		"MaxLevel"						"1"
 
@@ -14374,7 +14374,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_pudge.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"custom/pudge_sharp_hook"
+		"AbilityTextureName"			"pudge_sharp_hook"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -14408,7 +14408,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_pudge.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"custom/pudge_light_hook"
+		"AbilityTextureName"			"pudge_light_hook"
 		"MaxLevel"						"4"
 
 		// Special
@@ -15049,7 +15049,7 @@
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ALLIES_YES"
-		"AbilityTextureName"				"custom/pugna_life_drain_end"
+		"AbilityTextureName"				"pugna_life_drain_end"
 		"MaxLevel"							"1"
 		"ScriptFile"				"components/abilities/heroes/hero_pugna.lua"
 
@@ -15399,7 +15399,7 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"					"custom/queenofpain_delightful_torment"
+		"AbilityTextureName"					"queenofpain_delightful_torment"
 		"MaxLevel"								"1"
 		"ScriptFile"				"components/abilities/heroes/hero_queenofpain.lua"
 
@@ -18369,7 +18369,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"			"custom/slardar_rain_cloud"
+		"AbilityTextureName"			"slardar_rain_cloud"
 		"MaxLevel"						"1"
 		"ScriptFile"				"components/abilities/heroes/hero_slardar"
 		"FightRecapLevel"				"1"
@@ -18782,7 +18782,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/shredder_dendrophobia"
+		"AbilityTextureName"			"shredder_dendrophobia"
 		"MaxLevel"						"1"
 
 		// Special
@@ -19004,7 +19004,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/shredder_reactive"
+		"AbilityTextureName"			"shredder_reactive"
 		"MaxLevel"						"4"
 		"LevelsBetweenUpgrades"			"2"
 
@@ -19372,7 +19372,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_tiny"												// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"custom/imba_tiny_rolling_stone"
+		"AbilityTextureName"			"imba_tiny_rolling_stone"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"1"
 
@@ -19628,7 +19628,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_tiny"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/tiny_craggy_exterior"
+		"AbilityTextureName"			"tiny_craggy_exterior"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"4"
 
@@ -21919,7 +21919,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"			"custom/wraith_king_wraithfire_aura"
+		"AbilityTextureName"			"wraith_king_wraithfire_aura"
 		"MaxLevel"						"1"
 		"ScriptFile"				"components/abilities/heroes/hero_skeleton_king.lua"		
 
@@ -22505,7 +22505,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                     "ability_lua"
-		"AbilityTextureName"            "custom/storegga_grab_throw"
+		"AbilityTextureName"            "storegga_grab_throw"
 		"ScriptFile"				"components/abilities/heroes/hero_storegga"
 		"AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_5"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
@@ -23650,7 +23650,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/bounty_hunter_headhunter"
+		"AbilityTextureName"			"bounty_hunter_headhunter"
 		"ScriptFile"				"components/abilities/heroes/hero_bounty_hunter"
 		"MaxLevel"						"1"
 
@@ -24983,7 +24983,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_dragon_knight.lua"
-		"AbilityTextureName"			"custom/dragon_knight_elder_dragon_charge"
+		"AbilityTextureName"			"dragon_knight_elder_dragon_charge"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -25360,7 +25360,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/drow_deadeye"
+		"AbilityTextureName"					"drow_deadeye"
 		"MaxLevel"								"1"
 		"ScriptFile"				"components/abilities/heroes/hero_drow_ranger.lua"
 
@@ -32213,7 +32213,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"custom/territorial_hunter"
+		"AbilityTextureName"			"territorial_hunter"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
 		"ScriptFile"				"components/abilities/heroes/hero_ursa"
 		"MaxLevel"						"1"
@@ -32817,7 +32817,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_ALL"
 		"MaxLevel"							"1"
-		"AbilityTextureName"				"custom/vengeful_rancor"
+		"AbilityTextureName"				"vengeful_rancor"
 		"ScriptFile"						"components/abilities/heroes/hero_vengefulspirit"
 
 		// Special
@@ -32993,7 +32993,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_vengefulspirit"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"							"1"
-		"AbilityTextureName"				"custom/vengeful_swap_back"
+		"AbilityTextureName"				"vengeful_swap_back"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -33738,7 +33738,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/venomancer_toxicity"
+		"AbilityTextureName"			"venomancer_toxicity"
 		"MaxLevel"						"1"
 
 		// Precache
@@ -34239,7 +34239,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"AbilityTextureName"			"custom/empress_eleven_curses"
+		"AbilityTextureName"			"empress_eleven_curses"
 		"MaxLevel"						"4"
 		"AOERadius"						"%effect_area"
 
@@ -34314,7 +34314,7 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/empress_hellbolt"
+		"AbilityTextureName"			"empress_hellbolt"
 		"MaxLevel"						"4"
 
 		// Casting
@@ -34385,7 +34385,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"AbilityTextureName"			"custom/empress_royal_wrath"
+		"AbilityTextureName"			"empress_royal_wrath"
 		"MaxLevel"						"4"
 
 		// Time
@@ -34439,7 +34439,7 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"custom/empress_hurl_through_hell"
+		"AbilityTextureName"			"empress_hurl_through_hell"
 		"MaxLevel"						"3"
 		"HasScepterUpgrade"				"1"
 		"AOERadius"						"%hurl_radius"
@@ -34738,7 +34738,7 @@
 		"AbilityName"					"creature_fire_breath"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/roshan_fire_breath"
+		"AbilityTextureName"			"roshan_fire_breath"
 		"MaxLevel"						"1"
 
 		// Time		
@@ -34834,7 +34834,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"AbilityTextureName"			"custom/roshan_apocalypse"
+		"AbilityTextureName"			"roshan_apocalypse"
 		"AbilityCooldown"				"45.0"
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"1.0"
@@ -35015,7 +35015,7 @@
 		"MaxLevel"						"1"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/roshan_wave_of_force"
+		"AbilityTextureName"			"roshan_wave_of_force"
 		"AbilitySound"					"Hero_Invoker.DeafeningBlast"
 
 		// Stats
@@ -35107,7 +35107,7 @@
 		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/sly_king_burrowblast"
+		"AbilityTextureName"			"sly_king_burrowblast"
 		"MaxLevel"						"4"
 
 		// Casting
@@ -35184,7 +35184,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/sly_king_frost_gale"
+		"AbilityTextureName"			"sly_king_frost_gale"
 		"MaxLevel"						"4"
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 
@@ -35282,7 +35282,7 @@
 		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/sly_king_frozen_skin"
+		"AbilityTextureName"			"sly_king_frozen_skin"
 		"MaxLevel"						"4"
 
 		// Casting
@@ -35353,7 +35353,7 @@
 		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/sly_king_hypothermic_wisdom"
+		"AbilityTextureName"			"sly_king_hypothermic_wisdom"
 		"MaxLevel"						"4"
 		"HasScepterUpgrade"				"1"
 		
@@ -35392,7 +35392,7 @@
 		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/sly_king_winterbringer"
+		"AbilityTextureName"			"sly_king_winterbringer"
 		"MaxLevel"						"3"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 
@@ -35525,7 +35525,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/scaldris_antipode"
+		"AbilityTextureName"			"scaldris_antipode"
 		"ScriptFile"					"components/abilities/heroes/hero_scaldris.lua"
 		"MaxLevel"						"1"
 		"HasScepterUpgrade"     	"1"
@@ -35569,7 +35569,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
-		"AbilityTextureName"			"custom/scaldris_heatwave"
+		"AbilityTextureName"			"scaldris_heatwave"
 		"ScriptFile"					"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
@@ -35643,7 +35643,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
-		"AbilityTextureName"			"custom/scaldris_cold_front"
+		"AbilityTextureName"			"scaldris_cold_front"
 		"ScriptFile"					"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
@@ -35719,7 +35719,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
-		"AbilityTextureName"			"custom/scaldris_scorch"
+		"AbilityTextureName"			"scaldris_scorch"
 		"ScriptFile"				"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
@@ -35793,7 +35793,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
-		"AbilityTextureName"			"custom/scaldris_freeze"
+		"AbilityTextureName"			"scaldris_freeze"
 		"ScriptFile"				"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
@@ -35882,7 +35882,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
-		"AbilityTextureName"			"custom/scaldris_jet_blaze"
+		"AbilityTextureName"			"scaldris_jet_blaze"
 		"ScriptFile"				"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
@@ -35972,7 +35972,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
-		"AbilityTextureName"			"custom/scaldris_ice_floes"
+		"AbilityTextureName"			"scaldris_ice_floes"
 		"ScriptFile"					"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
@@ -36048,7 +36048,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"3"
-		"AbilityTextureName"			"custom/scaldris_living_flame"
+		"AbilityTextureName"			"scaldris_living_flame"
 		"ScriptFile"				"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
@@ -36113,7 +36113,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"3"
-		"AbilityTextureName"			"custom/scaldris_absolute_zero"
+		"AbilityTextureName"			"scaldris_absolute_zero"
 		"ScriptFile"				"components/abilities/heroes/hero_scaldris.lua"
 
 		// Casting
@@ -36680,7 +36680,7 @@
 		"ID"						"9500"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_NONE"
-		"AbilityTextureName"		"custom/ronin_dash"
+		"AbilityTextureName"		"ronin_dash"
 		"ScriptFile"				"components/abilities/heroes/hero_sohei.lua"
 
 		// Casting
@@ -36767,7 +36767,7 @@
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"		"custom/ronin_flurry_of_blows"
+		"AbilityTextureName"		"ronin_flurry_of_blows"
 		"ScriptFile"				"components/abilities/heroes/hero_sohei.lua"
 
 		// Casting
@@ -36834,7 +36834,7 @@
 		"AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"     "SPELL_IMMUNITY_ALLIES_YES"
-		"AbilityTextureName"    "custom/ronin_guard"
+		"AbilityTextureName"    "ronin_guard"
 		"ScriptFile"			"components/abilities/heroes/hero_sohei.lua"
 
 		// Casting
@@ -36908,7 +36908,7 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"		"custom/ronin_momentum"
+		"AbilityTextureName"		"ronin_momentum"
 		"ScriptFile"				"components/abilities/heroes/hero_sohei.lua"
 
 		// Casting
@@ -37359,7 +37359,7 @@
 		// General
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/custom_creep_scaling.lua"
-		"AbilityTextureName"			"custom/unlimited_level_powerup"
+		"AbilityTextureName"			"unlimited_level_powerup"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"1"
 		
@@ -37538,7 +37538,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"components/abilities/imba_form_change"
-		"AbilityTextureName"							"custom/form_change_new"
+		"AbilityTextureName"							"form_change_new"
 		
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"MaxLevel"										"1"
@@ -37574,7 +37574,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"components/abilities/imba_form_change"
-		"AbilityTextureName"							"custom/form_change_new"
+		"AbilityTextureName"							"form_change_new"
 		
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"MaxLevel"										"1"
@@ -37610,7 +37610,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"components/abilities/imba_form_change"
-		"AbilityTextureName"							"custom/form_change_new"
+		"AbilityTextureName"							"form_change_new"
 		
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"MaxLevel"										"1"
@@ -37646,7 +37646,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"components/abilities/imba_form_change"
-		"AbilityTextureName"							"custom/form_change_new"
+		"AbilityTextureName"							"form_change_new"
 		
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"MaxLevel"										"1"
@@ -37682,7 +37682,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"components/abilities/imba_form_change"
-		"AbilityTextureName"							"custom/form_change_new"
+		"AbilityTextureName"							"form_change_new"
 		
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"MaxLevel"										"1"
@@ -37718,7 +37718,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"components/abilities/imba_form_change"
-		"AbilityTextureName"							"custom/form_change_new"
+		"AbilityTextureName"							"form_change_new"
 		
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"MaxLevel"										"1"

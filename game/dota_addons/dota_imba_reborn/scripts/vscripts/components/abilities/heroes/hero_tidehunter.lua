@@ -53,7 +53,7 @@ function imba_tidehunter_gush:GetAbilityTextureName()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_tidehunter_gush_handler", self:GetCaster()) < 3 then
 		return "tidehunter_gush"
 	else
-		return "custom/tidehunter_gush_filtration"
+		return "tidehunter_gush_filtration"
 	end
 end
 

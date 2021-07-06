@@ -31,7 +31,7 @@ function item_imba_curseblade:GetIntrinsicModifierName()
 end
 
 function item_imba_curseblade:GetAbilityTextureName()
-	return "custom/imba_curseblade"
+	return "imba_curseblade"
 end
 
 function item_imba_curseblade:OnSpellStart()

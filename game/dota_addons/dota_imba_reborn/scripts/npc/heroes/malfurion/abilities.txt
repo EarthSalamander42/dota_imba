@@ -13,7 +13,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/malfurion/entrangling_roots"
+		"AbilityTextureName"			"malfurion/entrangling_roots"
 		"AbilityCastRange"				"750"
 		"AbilityCastPoint"				"0.35"
 		"AbilityCooldown"				"9.0"
@@ -62,7 +62,7 @@
 		"AbilityCastRange"			"900"
 		"AbilityCooldown"			"18.0"
 		"AbilityManaCost"			"100 115 130 145"
-		"AbilityTextureName"		"custom//malfurion/rejuvenation"
+		"AbilityTextureName"		"/malfurion/rejuvenation"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 
@@ -121,7 +121,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"			"custom/malfurion/mark_of_the_claw"
+		"AbilityTextureName"			"malfurion/mark_of_the_claw"
 
 		"precache"
 		{
@@ -175,7 +175,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"			"custom/brewmaster_thunder_clap_new"
+		"AbilityTextureName"			"brewmaster_thunder_clap_new"
 		"MaxLevel"						"1"
 
 		"AbilitySpecial"
@@ -218,7 +218,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"		"custom/holdout_shield"
+		"AbilityTextureName"		"holdout_shield"
 		"RequiredLevel"				"8"
 		"LevelsBetweenUpgrades"		"3"
 		"AbilitySpecial"
@@ -256,7 +256,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityTextureName"			"custom/holdout_bear_form"
+		"AbilityTextureName"			"holdout_bear_form"
 		"RequiredLevel"					"10"
 		"LevelsBetweenUpgrades"			"5"
 

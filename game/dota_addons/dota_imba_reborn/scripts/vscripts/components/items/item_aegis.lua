@@ -31,7 +31,7 @@ modifier_item_imba_aegis		= modifier_item_imba_aegis or class({})
 modifier_item_imba_aegis_pfx	= modifier_item_imba_aegis_pfx or class({})
 
 function item_imba_aegis:GetAbilityTextureName()
-	return "custom/imba_aegis"
+	return "imba_aegis"
 end
 
 function modifier_item_imba_aegis:OnCreated()
@@ -56,7 +56,7 @@ function modifier_item_imba_aegis:DeclareFunctions()
 end
 
 function modifier_item_imba_aegis:GetTexture()
-	return "custom/imba_aegis"
+	return "imba_aegis"
 end
 
 function modifier_item_imba_aegis:GetPriority()

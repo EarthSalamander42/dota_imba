@@ -1449,7 +1449,7 @@ end
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_secret_blade", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_blade_dance_secret_blade = modifier_imba_juggernaut_blade_dance_secret_blade or class({})
 
-function modifier_imba_juggernaut_blade_dance_secret_blade:GetTexture()	return "custom/juggernaut_secret_blade" end
+function modifier_imba_juggernaut_blade_dance_secret_blade:GetTexture()	return "juggernaut_secret_blade" end
 
 function modifier_imba_juggernaut_blade_dance_secret_blade:OnRefresh()
 	if IsServer() then

@@ -16,7 +16,7 @@ function item_imba_aether_lens:GetIntrinsicModifierName()
 end
 
 function item_imba_aether_lens:GetAbilityTextureName()
-	return "custom/imba_aether_lens"
+	return "imba_aether_lens"
 end
 
 -------------------------------------------

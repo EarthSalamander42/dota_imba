@@ -1695,7 +1695,7 @@ end
 modifier_imba_mirana_silence_stance_visible = modifier_imba_mirana_silence_stance_visible or class({})
 
 function modifier_imba_mirana_silence_stance_visible:GetTexture()
-	return "custom/mirana_princess_of_the_night"
+	return "mirana_princess_of_the_night"
 end
 
 function modifier_imba_mirana_silence_stance_visible:IsHidden()

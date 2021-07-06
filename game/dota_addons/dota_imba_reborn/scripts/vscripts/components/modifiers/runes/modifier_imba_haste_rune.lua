@@ -15,7 +15,7 @@ function modifier_imba_haste_rune:IsPurgable()	return true end
 function modifier_imba_haste_rune:IsDebuff() 	return false end
 
 function modifier_imba_haste_rune:GetTexture()
-	return "rune_haste"	-- "custom/imba_rune_haste"
+	return "rune_haste"	-- "imba_rune_haste"
 end
 
 function modifier_imba_haste_rune:CheckState()

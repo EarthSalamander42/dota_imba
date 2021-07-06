@@ -13,7 +13,7 @@ function modifier_imba_war_veteran_0:OnCreated()
 end
 
 function modifier_imba_war_veteran_0:GetTexture()
-	return "custom/war_veteran_0"
+	return "war_veteran_0"
 end
 
 function modifier_imba_war_veteran_0:DeclareFunctions()
@@ -45,7 +45,7 @@ function modifier_imba_war_veteran_1:OnCreated()
 end
 
 function modifier_imba_war_veteran_1:GetTexture()
-	return "custom/war_veteran_1"
+	return "war_veteran_1"
 end
 
 function modifier_imba_war_veteran_1:DeclareFunctions()
@@ -77,7 +77,7 @@ function modifier_imba_war_veteran_2:OnCreated()
 end
 
 function modifier_imba_war_veteran_2:GetTexture()
-	return "custom/war_veteran_2"
+	return "war_veteran_2"
 end
 
 function modifier_imba_war_veteran_2:DeclareFunctions()

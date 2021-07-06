@@ -8,7 +8,7 @@ ghost_revenant_wraith = class({})
 LinkLuaModifier("modifier_ghost_revenant_wraith", "components/abilities/heroes/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE)
 
 function ghost_revenant_wraith:GetAbilityTextureName()
-	return "custom/ghost_revenant_wraith"
+	return "ghost_revenant_wraith"
 end
 
 function ghost_revenant_wraith:IsHiddenWhenStolen()
@@ -91,7 +91,7 @@ if ghost_revenant_blackjack == nil then ghost_revenant_blackjack = class({}) end
 LinkLuaModifier( "modifier_ghost_revenant_blackjack_debuff", "components/abilities/heroes/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )	-- Armor/vision debuff
 
 function ghost_revenant_blackjack:GetAbilityTextureName()
-	return "custom/ghost_revenant_blackjack"
+	return "ghost_revenant_blackjack"
 end
 
 function ghost_revenant_blackjack:OnSpellStart()
@@ -217,7 +217,7 @@ LinkLuaModifier( "modifier_ghost_revenant_miasma", "components/abilities/heroes/
 if ghost_revenant_miasma == nil then ghost_revenant_miasma = class({}) end
 
 function ghost_revenant_miasma:GetAbilityTextureName()
-	return "custom/ghost_revenant_miasma"
+	return "ghost_revenant_miasma"
 end
 
 function ghost_revenant_miasma:GetAOERadius()	 
@@ -362,7 +362,7 @@ end
 ghost_revenant_ghost_immolation = ghost_revenant_ghost_immolation or class({})
 
 function ghost_revenant_ghost_immolation:GetAbilityTextureName()
-	return "custom/ghost_revenant_ghost_immolation"
+	return "ghost_revenant_ghost_immolation"
 end
 
 function ghost_revenant_ghost_immolation:GetIntrinsicModifierName()
@@ -526,7 +526,7 @@ LinkLuaModifier( "modifier_ghost_revenant_exhaustion", "components/abilities/her
 if ghost_revenant_exhaustion == nil then ghost_revenant_exhaustion = class({}) end
 
 function ghost_revenant_exhaustion:GetAbilityTextureName()
-	return "custom/ghost_revenant_exhaustion"
+	return "ghost_revenant_exhaustion"
 end
 
 function ghost_revenant_exhaustion:OnAbilityPhaseStart()

@@ -937,7 +937,7 @@ LinkLuaModifier( "modifier_item_imba_triumvirate_stacks_buff", "components/items
 LinkLuaModifier( "modifier_item_imba_triumvirate_proc_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Move speed proc
 
 function item_imba_triumvirate:GetAbilityTextureName()
-	return "custom/imba_sange_and_kaya_and_yasha"
+	return "imba_sange_and_kaya_and_yasha"
 end
 
 function item_imba_triumvirate:GetIntrinsicModifierName()

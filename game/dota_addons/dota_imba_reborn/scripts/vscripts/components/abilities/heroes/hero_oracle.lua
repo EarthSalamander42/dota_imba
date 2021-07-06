@@ -52,7 +52,7 @@ function imba_oracle_fortunes_end:GetAbilityTextureName()
 	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
 		return "oracle_fortunes_end"
 	else
-		return "custom/oracle/fortunes_end_alter"
+		return "oracle/fortunes_end_alter"
 	end
 end
 
@@ -250,7 +250,7 @@ function modifier_imba_oracle_fortunes_end_delay:OnCreated(params)
 	self.texture_name = "oracle_fortunes_end"
 	
 	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
-		self.texture_name = "custom/oracle/fortunes_end_alter"
+		self.texture_name = "oracle/fortunes_end_alter"
 	end
 	
 	if not IsServer() then return end
@@ -299,7 +299,7 @@ end
 ---------------------------------------------------
 
 function modifier_imba_oracle_fortunes_end_purge_alter:GetTexture()
-	return "custom/oracle/fortunes_end_alter"
+	return "oracle/fortunes_end_alter"
 end
 
 function modifier_imba_oracle_fortunes_end_purge_alter:GetEffectName()
@@ -343,7 +343,7 @@ function imba_oracle_fates_edict:GetAbilityTextureName()
 	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
 		return "oracle_fates_edict"
 	else
-		return "custom/oracle/fates_edict_alter"
+		return "oracle/fates_edict_alter"
 	end
 end
 
@@ -426,7 +426,7 @@ function modifier_imba_oracle_fates_edict_delay:OnCreated(params)
 	self.texture_name = "oracle_fates_edict"
 	
 	if self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
-		self.texture_name = "custom/oracle/fates_edict_alter"
+		self.texture_name = "oracle/fates_edict_alter"
 	end
 
 	if not IsServer() then return end
@@ -496,7 +496,7 @@ function modifier_imba_oracle_fates_edict_alter:GetEffectName()
 end
 
 function modifier_imba_oracle_fates_edict_alter:GetTexture()
-	return "custom/oracle/fates_edict_alter"
+	return "oracle/fates_edict_alter"
 end
 
 function modifier_imba_oracle_fates_edict_alter:OnCreated()
@@ -545,7 +545,7 @@ function imba_oracle_purifying_flames:GetAbilityTextureName()
 	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
 		return "oracle_purifying_flames"
 	else
-		return "custom/oracle/purifying_flames_alter"
+		return "oracle/purifying_flames_alter"
 	end
 end
 
@@ -693,7 +693,7 @@ function modifier_imba_oracle_purifying_flames_alter:IsPurgable()		return false 
 function modifier_imba_oracle_purifying_flames_alter:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_oracle_purifying_flames_alter:GetTexture()
-	return "custom/oracle/purifying_flames_alter"
+	return "oracle/purifying_flames_alter"
 end
 
 function modifier_imba_oracle_purifying_flames_alter:GetEffectName()
@@ -739,9 +739,9 @@ function imba_oracle_alter_self:IsStealable()		return false end
 
 function imba_oracle_alter_self:GetAbilityTextureName()
 	if not self:GetCaster():HasModifier("modifier_imba_oracle_alter_self") then
-		return "custom/oracle/alter_self"
+		return "oracle/alter_self"
 	else
-		return "custom/oracle/alter_self_return"
+		return "oracle/alter_self_return"
 	end
 end
 
@@ -789,7 +789,7 @@ function modifier_imba_oracle_alter_self:IsPurgable()		return false end
 function modifier_imba_oracle_alter_self:RemoveOnDeath()	return false end
 
 function modifier_imba_oracle_alter_self:GetTexture()
-	return "custom/oracle/alter_self"
+	return "oracle/alter_self"
 end
 
 function modifier_imba_oracle_alter_self:GetStatusEffectName()
@@ -920,7 +920,7 @@ function modifier_imba_oracle_false_promise_delay:GetTexture()
 	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 		return "oracle_false_promise"
 	else
-		return "custom/oracle/false_promise_alter"
+		return "oracle/false_promise_alter"
 	end
 end
 
@@ -1194,7 +1194,7 @@ function modifier_imba_oracle_false_promise_timer_alter:IsPurgable()		return fal
 function modifier_imba_oracle_false_promise_timer_alter:IgnoreTenacity()	return true end
 
 function modifier_imba_oracle_false_promise_timer_alter:GetTexture()
-	return "custom/oracle/false_promise_alter"
+	return "oracle/false_promise_alter"
 end
 
 function modifier_imba_oracle_false_promise_timer_alter:GetStatusEffectName()
@@ -1277,7 +1277,7 @@ function modifier_imba_oracle_false_promise_timer_alter_targets:IsPurgable()		re
 function modifier_imba_oracle_false_promise_timer_alter_targets:IgnoreTenacity()	return true end
 
 function modifier_imba_oracle_false_promise_timer_alter_targets:GetTexture()
-	return "custom/oracle/false_promise_alter"
+	return "oracle/false_promise_alter"
 end
 
 function modifier_imba_oracle_false_promise_timer_alter_targets:GetEffectName()

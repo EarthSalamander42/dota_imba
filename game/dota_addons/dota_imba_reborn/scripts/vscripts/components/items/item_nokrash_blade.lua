@@ -24,9 +24,9 @@ end
 
 function item_nokrash_blade:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_item_nokrash_blade_unique") then
-		return "custom/nokrash_blade_active"
+		return "nokrash_blade_active"
 	else
-		return "custom/nokrash_blade"
+		return "nokrash_blade"
 	end
 end
 
@@ -240,7 +240,7 @@ function modifier_item_nokrash_blade_debuff:IsDebuff() return true end
 function modifier_item_nokrash_blade_debuff:IsPurgable() return true end
 
 function modifier_item_nokrash_blade_debuff:GetTexture()
-	return "custom/nokrash_blade_active"
+	return "nokrash_blade_active"
 end
 
 function modifier_item_nokrash_blade_debuff:DeclareFunctions()

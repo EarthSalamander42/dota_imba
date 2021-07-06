@@ -31,7 +31,7 @@ function modifier_imba_polarize_debuff:IsHidden()
 end
 
 function modifier_imba_polarize_debuff:GetTexture()
-	return "custom/magnus_polarize"
+	return "magnus_polarize"
 end
 
 
@@ -179,7 +179,7 @@ function modifier_imba_magnetize_debuff:IsHidden()
 end
 
 function modifier_imba_magnetize_debuff:GetTexture()
-	return "custom/magnus_magnetize"
+	return "magnus_magnetize"
 end
 
 function modifier_imba_magnetize_debuff:GetEffectName()
@@ -1289,7 +1289,7 @@ function modifier_imba_supercharged:GetEffectAttachType()
 end
 
 function modifier_imba_supercharged:GetTexture()
-	return "custom/magnus_supercharge"
+	return "magnus_supercharge"
 end
 
 function modifier_imba_supercharged:DeclareFunctions()
@@ -1417,7 +1417,7 @@ function modifier_imba_ubercharged:GetEffectAttachType()
 end
 
 function modifier_imba_ubercharged:GetTexture()
-	return "custom/magnus_ubercharge"
+	return "magnus_ubercharge"
 end
 
 modifier_imba_ubercharged_indicator = modifier_imba_ubercharged_indicator or class({})
@@ -1435,7 +1435,7 @@ function modifier_imba_ubercharged_indicator:IsPurgable()
 end
 
 function modifier_imba_ubercharged_indicator:GetTexture()
-	return "custom/magnus_ubercharge"
+	return "magnus_ubercharge"
 end
 
 function modifier_imba_ubercharged_indicator:DestroyOnExpire()
@@ -1598,7 +1598,7 @@ end
 
 function imba_magnataur_skewer:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_skewer_motion_controller") then
-		return "custom/magnataur_beg_my_pardon"
+		return "magnataur_beg_my_pardon"
 	else
 		return "magnataur_skewer"
 	end

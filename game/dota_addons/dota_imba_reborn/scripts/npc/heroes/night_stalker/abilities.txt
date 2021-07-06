@@ -9,7 +9,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"custom/stalker_in_the_night"
+		"AbilityTextureName"			"stalker_in_the_night"
 		"MaxLevel"						"1"
 		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
 

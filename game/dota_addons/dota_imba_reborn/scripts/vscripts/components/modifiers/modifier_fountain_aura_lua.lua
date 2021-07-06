@@ -174,7 +174,7 @@ modifier_imba_cursed_fountain = class({})
 
 function modifier_imba_cursed_fountain:IsDebuff()	return true end
 function modifier_imba_cursed_fountain:IsPurgable()	return false end
-function modifier_imba_cursed_fountain:GetTexture()	return "custom/tower_rot" end
+function modifier_imba_cursed_fountain:GetTexture()	return "tower_rot" end
 
 function modifier_imba_cursed_fountain:OnCreated()
 	if not IsServer() then return end

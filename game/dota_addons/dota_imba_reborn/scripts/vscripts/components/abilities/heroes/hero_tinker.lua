@@ -1575,7 +1575,7 @@ end
 imba_tinker_technomancy = class({})
 
 function imba_tinker_technomancy:GetAbilityTextureName()
-   return "custom/tinker_tinkermaster"
+   return "tinker_tinkermaster"
 end
 
 function imba_tinker_technomancy:OnUpgrade()

@@ -365,7 +365,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_brewmaster"
-		"AbilityTextureName"			"custom/brewmaster/primal_unison"
+		"AbilityTextureName"			"brewmaster/primal_unison"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"

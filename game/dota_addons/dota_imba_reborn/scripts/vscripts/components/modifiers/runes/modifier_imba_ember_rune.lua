@@ -22,7 +22,7 @@ function modifier_imba_ember_rune:GetAuraSearchFlags() return DOTA_UNIT_TARGET_F
 function modifier_imba_ember_rune:GetModifierAura() return "modifier_imba_ember_rune_burn" end
 
 function modifier_imba_ember_rune:GetTexture()
-	return "custom/imba_rune_double_damage"
+	return "imba_rune_double_damage"
 end
 
 function modifier_imba_ember_rune:GetEffectName()

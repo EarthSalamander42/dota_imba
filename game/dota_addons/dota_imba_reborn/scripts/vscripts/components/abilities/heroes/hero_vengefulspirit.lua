@@ -60,7 +60,7 @@ function imba_vengefulspirit_rancor:IsNetherWardStealable() return false end
 function imba_vengefulspirit_rancor:IsInnateAbility() return true end
 
 function imba_vengefulspirit_rancor:GetAbilityTextureName()
-	return "custom/vengeful_rancor"
+	return "vengeful_rancor"
 end
 -------------------------------------------
 
@@ -1403,7 +1403,7 @@ function imba_vengefulspirit_swap_back:IsStealable() return true end
 function imba_vengefulspirit_swap_back:IsNetherWardStealable() return false end
 
 function imba_vengefulspirit_swap_back:GetAbilityTextureName()
-	return "custom/vengeful_swap_back"
+	return "vengeful_swap_back"
 end
 -------------------------------------------
 function imba_vengefulspirit_swap_back:GetAssociatedPrimaryAbilities()

@@ -899,7 +899,7 @@ function imba_sven_colossal_slash:IsStealable() return true end
 function imba_sven_colossal_slash:IsNetherWardStealable() return false end
 
 function imba_sven_colossal_slash:GetAbilityTextureName()
-	return "custom/sven_colossal_strike"
+	return "sven_colossal_strike"
 end
 -------------------------------------------
 

@@ -36,7 +36,7 @@ function item_imba_siege_cuirass:GetIntrinsicModifierName()
 end
 
 function item_imba_siege_cuirass:GetAbilityTextureName()
-	return "custom/imba_siege_cuirass"
+	return "imba_siege_cuirass"
 end
 
 function item_imba_siege_cuirass:OnSpellStart()

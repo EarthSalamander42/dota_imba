@@ -17,7 +17,7 @@ function imba_queenofpain_delightful_torment:IsNetherWardStealable() return fals
 function imba_queenofpain_delightful_torment:IsInnateAbility() return true end
 
 function imba_queenofpain_delightful_torment:GetAbilityTextureName()
-	return "custom/queenofpain_delightful_torment"
+	return "queenofpain_delightful_torment"
 end
 -------------------------------------------
 

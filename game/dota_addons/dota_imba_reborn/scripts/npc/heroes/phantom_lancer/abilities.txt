@@ -286,7 +286,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_phantom_lancer"
-		"AbilityTextureName"			"custom/phantom_lancer/sun_catcher"	
+		"AbilityTextureName"			"phantom_lancer/sun_catcher"	
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"

@@ -14,7 +14,7 @@ function imba_crystal_maiden_arcane_dynamo:GetIntrinsicModifierName() return "mo
 function imba_crystal_maiden_arcane_dynamo:IsInnateAbility() return true end
 
 function imba_crystal_maiden_arcane_dynamo:GetAbilityTextureName()
-	return "custom/crystal_maiden_arcane_dynamo"
+	return "crystal_maiden_arcane_dynamo"
 end
 
 ---------------------------------
@@ -743,7 +743,7 @@ end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsHidden() return false end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsDebuff() return true end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsPurgable() return false end
-function modifier_imba_crystal_maiden_frostbite_passive_recharging:GetTexture() return "custom/crystal_maiden_frostbite_cooldown" end
+function modifier_imba_crystal_maiden_frostbite_passive_recharging:GetTexture() return "crystal_maiden_frostbite_cooldown" end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:OnDestroy()
 	if IsServer() then
 		self.caster:AddNewModifier(self.caster, self.ability, self.modifier_ready, {})

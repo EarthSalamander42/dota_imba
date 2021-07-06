@@ -17,7 +17,7 @@ function item_imba_ring_of_aquila:GetAbilityTextureName()
 		return "item_ring_of_aquila"
 	else
 		-- IDK the vanilla name of the item so I'll have to shove the image in the custom folder
-		return "custom/item_ring_of_aquila_inactive"
+		return "item_ring_of_aquila_inactive"
 	end
 end
 

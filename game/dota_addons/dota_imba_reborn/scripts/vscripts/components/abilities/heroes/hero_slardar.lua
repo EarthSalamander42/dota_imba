@@ -21,7 +21,7 @@ function imba_slardar_guardian_sprint:GetAbilityTextureName()
 	local sprint_buff = "modifier_imba_guardian_sprint_buff"
 
 	if caster:HasModifier(sprint_buff) then
-		return "custom/slardar_forward_propel"
+		return "slardar_forward_propel"
 	else
 		return "slardar_sprint"
 	end
@@ -288,7 +288,7 @@ end
 modifier_imba_rip_current_movement = class({})
 
 function modifier_imba_rip_current_movement:GetTexture()
-	return "custom/slardar_forward_propel"
+	return "slardar_forward_propel"
 end
 
 function modifier_imba_rip_current_movement:OnCreated()
@@ -460,7 +460,7 @@ end
 modifier_imba_rip_current_stun = class({})
 
 function modifier_imba_rip_current_stun:GetTexture()
-	return "custom/slardar_forward_propel"
+	return "slardar_forward_propel"
 end
 
 function modifier_imba_rip_current_stun:IsDebuff()
@@ -496,7 +496,7 @@ end
 modifier_imba_rip_current_slow = class({})
 
 function modifier_imba_rip_current_slow:GetTexture()
-	return "custom/slardar_forward_propel"
+	return "slardar_forward_propel"
 end
 
 function modifier_imba_rip_current_slow:DeclareFunctions()
@@ -1638,7 +1638,7 @@ LinkLuaModifier("modifier_imba_rain_cloud_buff", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_rain_cloud_dummy", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 function imba_slardar_rain_cloud:GetAbilityTextureName()
-	return "custom/slardar_rain_cloud"
+	return "slardar_rain_cloud"
 end
 
 function imba_slardar_rain_cloud:GetIntrinsicModifierName()

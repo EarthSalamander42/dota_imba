@@ -35,7 +35,7 @@ function item_imba_nether_wand:GetIntrinsicModifierName()
 end
 
 function item_imba_nether_wand:GetAbilityTextureName()
-	return "custom/imba_nether_wand"
+	return "imba_nether_wand"
 end
 
 -------------------------------------------

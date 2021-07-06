@@ -634,8 +634,8 @@ imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
 
 function imba_tiny_rolling_stone:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().arcana_style then return "custom/imba_tiny_rolling_stone" end
-	return "custom/imba_tiny_rolling_stone_immortal"
+	if not self:GetCaster().arcana_style then return "imba_tiny_rolling_stone" end
+	return "imba_tiny_rolling_stone_immortal"
 end
 
 function imba_tiny_rolling_stone:IsInnateAbility()

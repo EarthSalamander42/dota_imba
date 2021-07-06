@@ -98,7 +98,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_dark_seer.lua"
-		"AbilityTextureName"			"custom/dark_seer/wormhole"			
+		"AbilityTextureName"			"dark_seer/wormhole"			
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -328,7 +328,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_dark_seer.lua"
-		"AbilityTextureName"			"custom/dark_seer/close_portal"
+		"AbilityTextureName"			"dark_seer/close_portal"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------

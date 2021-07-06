@@ -683,9 +683,9 @@ end
 
 function modifier_imba_dazzle_nothl_protection:GetTexture()
 	if self:GetStackCount() > 0 then
-		return "custom/dazzle_shallow_grave_cooldown"
+		return "dazzle_shallow_grave_cooldown"
 	else
-		return "custom/dazzle_nothl_protection"
+		return "dazzle_nothl_protection"
 	end
 end
 

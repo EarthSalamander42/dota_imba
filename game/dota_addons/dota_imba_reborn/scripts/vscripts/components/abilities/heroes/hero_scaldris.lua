@@ -106,7 +106,7 @@ function imba_scaldris_antipode:IsNetherWardStealable() return false end
 function imba_scaldris_antipode:IsInnateAbility() return true end
 
 function imba_scaldris_antipode:GetAbilityTextureName()
-	return "custom/scaldris_antipode"
+	return "scaldris_antipode"
 end
 
 function imba_scaldris_antipode:GetIntrinsicModifierName()
@@ -225,7 +225,7 @@ function imba_scaldris_heatwave:IsStealable() return true end
 function imba_scaldris_heatwave:IsNetherWardStealable() return true end
 
 function imba_scaldris_heatwave:GetAbilityTextureName()
-	return "custom/scaldris_heatwave"
+	return "scaldris_heatwave"
 end
 
 function imba_scaldris_heatwave:GetIntrinsicModifierName()
@@ -362,7 +362,7 @@ function imba_scaldris_cold_front:GetAOERadius()
 end
 
 function imba_scaldris_cold_front:GetAbilityTextureName()
-	return "custom/scaldris_cold_front"
+	return "scaldris_cold_front"
 end
 
 function imba_scaldris_cold_front:GetIntrinsicModifierName()
@@ -538,7 +538,7 @@ function imba_scaldris_scorch:IsStealable() return true end
 function imba_scaldris_scorch:IsNetherWardStealable() return true end
 
 function imba_scaldris_scorch:GetAbilityTextureName()
-	return "custom/scaldris_scorch"
+	return "scaldris_scorch"
 end
 
 function imba_scaldris_scorch:GetIntrinsicModifierName()
@@ -677,7 +677,7 @@ function imba_scaldris_freeze:IsStealable() return true end
 function imba_scaldris_freeze:IsNetherWardStealable() return true end
 
 function imba_scaldris_freeze:GetAbilityTextureName()
-	return "custom/scaldris_freeze"
+	return "scaldris_freeze"
 end
 
 function imba_scaldris_freeze:GetIntrinsicModifierName()
@@ -830,7 +830,7 @@ function imba_scaldris_jet_blaze:IsStealable() return true end
 function imba_scaldris_jet_blaze:IsNetherWardStealable() return true end
 
 function imba_scaldris_jet_blaze:GetAbilityTextureName()
-	return "custom/scaldris_jet_blaze"
+	return "scaldris_jet_blaze"
 end
 
 function imba_scaldris_jet_blaze:GetIntrinsicModifierName()
@@ -1035,7 +1035,7 @@ function imba_scaldris_ice_floes:IsStealable() return true end
 function imba_scaldris_ice_floes:IsNetherWardStealable() return true end
 
 function imba_scaldris_ice_floes:GetAbilityTextureName()
-	return "custom/scaldris_ice_floes"
+	return "scaldris_ice_floes"
 end
 
 function imba_scaldris_ice_floes:GetIntrinsicModifierName()
@@ -1220,7 +1220,7 @@ function imba_scaldris_living_flame:IsStealable() return true end
 function imba_scaldris_living_flame:IsNetherWardStealable() return true end
 
 function imba_scaldris_living_flame:GetAbilityTextureName()
-	return "custom/scaldris_living_flame"
+	return "scaldris_living_flame"
 end
 
 function imba_scaldris_living_flame:GetIntrinsicModifierName()
@@ -1374,7 +1374,7 @@ function imba_scaldris_absolute_zero:IsStealable() return true end
 function imba_scaldris_absolute_zero:IsNetherWardStealable() return true end
 
 function imba_scaldris_absolute_zero:GetAbilityTextureName()
-	return "custom/scaldris_absolute_zero"
+	return "scaldris_absolute_zero"
 end
 
 function imba_scaldris_absolute_zero:GetIntrinsicModifierName()

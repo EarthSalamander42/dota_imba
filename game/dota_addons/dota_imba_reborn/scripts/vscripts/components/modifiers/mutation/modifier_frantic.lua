@@ -17,7 +17,7 @@ function modifier_frantic:IsPurgable() return false end
 function modifier_frantic:IsPurgeException() return false end
 
 function modifier_frantic:GetTexture()
-	return "custom/frantic"
+	return "frantic"
 end
 
 -- Update this list here with abilities you don't want affected by frantic CDR

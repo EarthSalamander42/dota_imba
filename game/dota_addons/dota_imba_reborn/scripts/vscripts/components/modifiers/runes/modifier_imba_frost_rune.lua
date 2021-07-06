@@ -13,7 +13,7 @@ function modifier_imba_frost_rune:IsPurgable() return true end
 function modifier_imba_frost_rune:IsDebuff() return false end
 
 function modifier_imba_frost_rune:GetTexture()
-	return "custom/imba_rune_frost"
+	return "imba_rune_frost"
 end
 
 function modifier_imba_frost_rune:OnCreated(keys)
@@ -83,7 +83,7 @@ function modifier_imba_frost_rune_aura:IsPurgable()	return false end
 function modifier_imba_frost_rune_aura:IsDebuff() 	return false end
 
 function modifier_imba_frost_rune_aura:GetTextureName()
-	return "custom/imba_rune_frost"
+	return "imba_rune_frost"
 end
 
 -- Function declarations

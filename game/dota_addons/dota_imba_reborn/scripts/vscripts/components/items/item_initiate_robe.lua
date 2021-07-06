@@ -36,7 +36,7 @@ function item_imba_initiate_robe:GetIntrinsicModifierName()
 end
 
 function item_imba_initiate_robe:GetAbilityTextureName()
-	return "custom/imba_initiate_robe"
+	return "imba_initiate_robe"
 end
 
 modifier_imba_initiate_robe_passive = modifier_imba_initiate_robe_passive or class({})

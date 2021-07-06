@@ -18,7 +18,7 @@ if imba_faceless_void_timelord == nil then imba_faceless_void_timelord = class({
 LinkLuaModifier("modifier_imba_faceless_void_timelord", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- increases attack speed by [current attack speed] * 0.15
 
 function imba_faceless_void_timelord:GetAbilityTextureName()
-	return "custom/faceless_void_timelord"
+	return "faceless_void_timelord"
 end
 
 function imba_faceless_void_timelord:IsInnateAbility()

@@ -20,7 +20,7 @@ function modifier_imba_invisibility_rune_handler:IsPurgable() return false end
 function modifier_imba_invisibility_rune_handler:IsPurgeException() return false end
 
 function modifier_imba_invisibility_rune_handler:GetTexture()
-	return "custom/imba_rune_invisibility"
+	return "imba_rune_invisibility"
 end
 
 function modifier_imba_invisibility_rune_handler:OnCreated(keys)
@@ -42,7 +42,7 @@ function modifier_imba_invisibility_rune:IsDebuff() return false end
 function modifier_imba_invisibility_rune:IsPurgable() return true end
 
 function modifier_imba_invisibility_rune:GetTexture()
-	return "custom/imba_rune_invisibility"
+	return "imba_rune_invisibility"
 end
 
 function modifier_imba_invisibility_rune:CheckState()

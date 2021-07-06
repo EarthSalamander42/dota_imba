@@ -339,7 +339,7 @@ end
 
 function imba_luna_lunar_blessing:GetAbilityTextureName()
 	if self.full_moon and GameRules:GetDOTATime(true, true) - self.full_moon <= self:GetSpecialValueFor("full_moon_duration") then
-		return "custom/luna_lunar_blessing_full_moon"
+		return "luna_lunar_blessing_full_moon"
 	else
 		return "luna_lunar_blessing"
 	end
@@ -451,7 +451,7 @@ end
 
 function imba_luna_lunar_blessing_723:GetAbilityTextureName()
 	if self.full_moon and GameRules:GetDOTATime(true, true) - self.full_moon <= self:GetSpecialValueFor("full_moon_duration") then
-		return "custom/luna_lunar_blessing_full_moon"
+		return "luna_lunar_blessing_full_moon"
 	else
 		return "luna_lunar_blessing"
 	end

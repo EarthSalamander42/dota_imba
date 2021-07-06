@@ -49,7 +49,7 @@ function item_imba_bottle:SetStorageRune(type)
 end
 
 function item_imba_bottle:GetAbilityTextureName()
-	local texture = "custom/bottle_0_3"
+	local texture = "bottle_0_3"
 	texture = self.texture_name or texture
 	return texture
 end
@@ -107,9 +107,9 @@ function modifier_item_imba_bottle_texture_controller:OnIntervalThink()
 	end
 
 	if self:GetStackCount() >= 1 and self:GetStackCount() <= 4 then
-		self:GetAbility().texture_name = "custom/bottle_"..rune_table[self:GetStackCount()]
+		self:GetAbility().texture_name = "bottle_"..rune_table[self:GetStackCount()]
 	else
-		self:GetAbility().texture_name = "custom/bottle_rune_"..rune_table[self:GetStackCount()]
+		self:GetAbility().texture_name = "bottle_rune_"..rune_table[self:GetStackCount()]
 	end
 end
 
@@ -142,7 +142,7 @@ function modifier_item_imba_bottle_texture_controller_2:OnCreated()
 end
 
 modifier_item_imba_bottle_heal = class({
-	GetTexture =			function() return "custom/bottle_0_3" end,
+	GetTexture =			function() return "bottle_0_3" end,
 	IsPurgable =			function() return false end,
 	GetEffectAttachType =	function() return PATTACH_ABSORIGIN_FOLLOW end,
 })

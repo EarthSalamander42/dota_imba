@@ -370,7 +370,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_rubick.lua"
 		
-		"AbilityTextureName"			"custom/rubick_clandestine_librarian"
+		"AbilityTextureName"			"rubick_clandestine_librarian"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 

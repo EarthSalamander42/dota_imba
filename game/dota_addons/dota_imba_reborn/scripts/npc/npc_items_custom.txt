@@ -95,7 +95,7 @@
 		"ID"							"3000"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"			"custom/greevil_taffy"
+		"AbilityTextureName"			"greevil_taffy"
 		"ScriptFile"					"components/items/item_candy.lua"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
@@ -261,7 +261,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2000"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -424,7 +424,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2005"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -511,7 +511,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2094"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -598,7 +598,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2013"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -707,7 +707,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2122"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -852,7 +852,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2017"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -877,7 +877,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2018"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -981,7 +981,7 @@
 		"ID"							"2020"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_vladmir.lua"
-		"AbilityTextureName"			"custom/imba_vladmir_2"
+		"AbilityTextureName"			"imba_vladmir_2"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1054,7 +1054,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2027"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1172,7 +1172,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2029"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1277,7 +1277,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2139"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1403,7 +1403,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2037"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1427,7 +1427,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2038"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1451,7 +1451,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2039"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1475,7 +1475,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2040"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1499,7 +1499,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2041"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1527,7 +1527,7 @@
 		"ID"							"1222"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_dagon.lua"
-		"AbilityTextureName" 			"custom/imba_dagon"
+		"AbilityTextureName" 			"imba_dagon"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -1595,7 +1595,7 @@
 		"ID"							"1223"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_dagon.lua"
-		"AbilityTextureName" 			"custom/imba_dagon_2"
+		"AbilityTextureName" 			"imba_dagon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -1663,7 +1663,7 @@
 		"ID"							"1224"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_dagon.lua"
-		"AbilityTextureName" 			"custom/imba_dagon_3"
+		"AbilityTextureName" 			"imba_dagon_3"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -1731,7 +1731,7 @@
 		"ID"							"2042"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_dagon.lua"
-		"AbilityTextureName" 			"custom/imba_dagon_4"
+		"AbilityTextureName" 			"imba_dagon_4"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -1799,7 +1799,7 @@
 		"ID"							"2043"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_dagon.lua"
-		"AbilityTextureName" 			"custom/imba_dagon_5"
+		"AbilityTextureName" 			"imba_dagon_5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -1866,7 +1866,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2044"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -1890,7 +1890,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2045"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1914,7 +1914,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2046"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1938,7 +1938,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2192"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1962,7 +1962,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2193"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1990,7 +1990,7 @@
 		"ID"							"2047"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_necronomicon.lua"
-		"AbilityTextureName" 			"custom/imba_necronomicon"
+		"AbilityTextureName" 			"imba_necronomicon"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2103,7 +2103,7 @@
 		"ID"							"2048"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_necronomicon.lua"
-		"AbilityTextureName" 			"custom/imba_necronomicon_2"
+		"AbilityTextureName" 			"imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2216,7 +2216,7 @@
 		"ID"							"2049"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_necronomicon.lua"
-		"AbilityTextureName" 			"custom/imba_necronomicon_2"
+		"AbilityTextureName" 			"imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2441,7 +2441,7 @@
 		"ID"							"2195"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_necronomicon.lua"
-		"AbilityTextureName" 			"custom/imba_necronomicon_5"
+		"AbilityTextureName" 			"imba_necronomicon_5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2553,7 +2553,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2052"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -2643,7 +2643,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2149"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -2670,7 +2670,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2150"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_siege_cuirass"
+		"AbilityTextureName" 			"imba_siege_cuirass"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"FightRecapLevel"				"1"
 		"ScriptFile"					"components/items/item_siege_cuirass.lua"
@@ -2812,7 +2812,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2053"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -2922,7 +2922,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2055"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -3053,7 +3053,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2056"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -3425,7 +3425,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2032"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -3453,7 +3453,7 @@
 		"ID"							"2033"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_vanguard.lua"
-		"AbilityTextureName" 			"custom/imba_poor_mans_shield"
+		"AbilityTextureName" 			"imba_poor_mans_shield"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
 		"AbilityCooldown"				"25.0"
@@ -3516,7 +3516,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2058"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -3598,7 +3598,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2059"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -3742,7 +3742,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2183"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -3770,7 +3770,7 @@
 		"ID"							"2184"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_sogat_cuirass.lua"
-		"AbilityTextureName"			"custom/imba_sogat_cuirass"
+		"AbilityTextureName"			"imba_sogat_cuirass"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -3959,7 +3959,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2066"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4038,7 +4038,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2067"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -4137,7 +4137,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2069"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4275,7 +4275,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2071"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -4350,7 +4350,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2076"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -4471,7 +4471,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2167"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -4580,7 +4580,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2118"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4750,7 +4750,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2084"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -4777,7 +4777,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2088"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4803,7 +4803,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2107"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -4830,7 +4830,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2080"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4979,7 +4979,7 @@
 		"ID"							"2108"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
-		"AbilityTextureName"			"custom/imba_kaya"
+		"AbilityTextureName"			"imba_kaya"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		// Stats
@@ -5122,7 +5122,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2236"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -5150,7 +5150,7 @@
 		"ID"							"2237"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_spell_fencer.lua"
-		"AbilityTextureName" 			"custom/imba_spell_fencer"
+		"AbilityTextureName" 			"imba_spell_fencer"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -5245,7 +5245,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2083"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5398,7 +5398,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2142"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -5494,7 +5494,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2144"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -5698,7 +5698,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2087"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -5813,7 +5813,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2198"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -5937,7 +5937,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2090"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -5961,7 +5961,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2091"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6078,7 +6078,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2202"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_diffusal_blade_2"
+		"AbilityTextureName" 			"imba_diffusal_blade_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -6182,7 +6182,7 @@
 		"ID"							"2096"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.vmdl"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6315,7 +6315,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2100"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -6421,7 +6421,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2104"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6526,7 +6526,7 @@
 //		//-------------------------------------------------------------------------------------------------------------
 //		"ID"							"2109"
 //		"BaseClass"						"item_datadriven"
-//		"AbilityTextureName" 			"custom/imba_recipe"
+//		"AbilityTextureName" 			"imba_recipe"
 //		"Model"							"models/props_gameplay/recipe.vmdl"
 //
 //		// Item Info
@@ -6554,7 +6554,7 @@
 		"ID"							"1243"
 		"BaseClass"						"item_black_king_bar"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"custom/imba_white_queen_cape"
+		"AbilityTextureName"			"imba_white_queen_cape"
 		"FightRecapLevel"				"1"
 
 		// Stats
@@ -6683,7 +6683,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2120"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -6789,7 +6789,7 @@
 	//	//-------------------------------------------------------------------------------------------------------------
 	//	"ID"							"255"
 	//	"BaseClass"						"item_datadriven"
-	//	"AbilityTextureName" 			"custom/imba_recipe"
+	//	"AbilityTextureName" 			"imba_recipe"
 	//	"Model"							"models/props_gameplay/recipe.vmdl"
 
 	//	// Item Info
@@ -6816,7 +6816,7 @@
 	//	//-------------------------------------------------------------------------------------------------------------
 	//	"ID"							"256"
 	//	"BaseClass"						"item_lua"
-	//	"AbilityTextureName" 			"custom/imba_aeon_disk_icon"
+	//	"AbilityTextureName" 			"imba_aeon_disk_icon"
 	//	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	//	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 	//	"ScriptFile"                    "components/items/item_aeon_disk.lua"
@@ -6969,7 +6969,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2176"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -7000,7 +7000,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
-		"AbilityTextureName" 			"custom/imba_shotgun"
+		"AbilityTextureName" 			"imba_shotgun"
 		"ScriptFile"					"components/items/item_starfury.lua"
 
 		// Item Info
@@ -7091,7 +7091,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2178"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -7121,7 +7121,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
-		"AbilityTextureName" 			"custom/imba_starfury"
+		"AbilityTextureName" 			"imba_starfury"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"ScriptFile"					"components/items/item_starfury.lua"
 
@@ -7208,7 +7208,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2353"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -7238,7 +7238,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName" 			"custom/imba_soul_of_truth"
+		"AbilityTextureName" 			"imba_soul_of_truth"
 		"Model"							"models/props_gameplay/gem01.vmdl"
 		"ScriptFile"                    "components/items/item_soul_of_truth.lua"
 
@@ -7309,7 +7309,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2186"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -7336,7 +7336,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2187"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/origin_treads_str"
+		"AbilityTextureName" 			"origin_treads_str"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"ScriptFile"                    "components/items/item_origin_treads.lua"
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -7501,7 +7501,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2188"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -7528,7 +7528,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2189"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_phase_boots_2"
+		"AbilityTextureName" 			"imba_phase_boots_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"					"components/items/item_haste_boots"
@@ -7611,7 +7611,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2190"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7638,7 +7638,7 @@
 		"ID"							"2191"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/imba_tranquil_boots_2"
+		"AbilityTextureName"			"imba_tranquil_boots_2"
 		"ScriptFile"					"components/items/item_ironleaf"				
 
 		// Item Info
@@ -7831,7 +7831,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2152"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -7858,7 +7858,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2153"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_blink_boots"
+		"AbilityTextureName"			"imba_blink_boots"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -7936,7 +7936,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2154"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -8051,7 +8051,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2156"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -8079,7 +8079,7 @@
 		"ID"							"2157"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/imba_reverb_rapier"
+		"AbilityTextureName"			"imba_reverb_rapier"
 		"FightRecapLevel"				"1"
 		"ScriptFile"					"components/items/item_echo_sabre.lua"
 
@@ -8166,7 +8166,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2158"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -8194,7 +8194,7 @@
 		"ID"							"2159"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/imba_initiate_robe"
+		"AbilityTextureName"			"imba_initiate_robe"
 		"FightRecapLevel"				"1"
 		"ScriptFile"					"components/items/item_initiate_robe.lua"
 
@@ -8258,7 +8258,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2160"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -8288,7 +8288,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName" 			"custom/imba_ultimate_scepter_synth"
+		"AbilityTextureName" 			"imba_ultimate_scepter_synth"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -8392,7 +8392,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2162"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8466,7 +8466,7 @@
 		"ID"							"2204"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/imba_nether_wand"
+		"AbilityTextureName"			"imba_nether_wand"
 		"ScriptFile"					"components/items/item_nether_wand.lua"
 
 		// Item Info
@@ -8497,7 +8497,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2205"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8525,7 +8525,7 @@
 		"ID"							"2206"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"			"custom/imba_arcane_nexus"
+		"AbilityTextureName"			"imba_arcane_nexus"
 		"ScriptFile"					"components/items/item_nether_wand.lua"
 
 		// Stats
@@ -8583,7 +8583,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2064"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8610,7 +8610,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2207"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8636,7 +8636,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2208"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8663,7 +8663,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2209"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8689,7 +8689,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2210"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8760,7 +8760,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2211"
 		"BaseClass"								"item_lua"
-		"AbilityTextureName" 					"custom/imba_rapier_2"
+		"AbilityTextureName" 					"imba_rapier_2"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
@@ -8805,7 +8805,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2137"
 		"BaseClass"								"item_lua"
-		"AbilityTextureName" 					"custom/imba_rapier_magic"
+		"AbilityTextureName" 					"imba_rapier_magic"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
@@ -8849,7 +8849,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2212"
 		"BaseClass"								"item_lua"
-		"AbilityTextureName" 					"custom/imba_rapier_magic_2"
+		"AbilityTextureName" 					"imba_rapier_magic_2"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
@@ -8893,7 +8893,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2213"
 		"BaseClass"								"item_lua"
-		"AbilityTextureName" 					"custom/imba_rapier_cursed"
+		"AbilityTextureName" 					"imba_rapier_cursed"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/cursed_rapier.vmdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
@@ -9032,7 +9032,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
 		"ID"							"2224"
-		"AbilityTextureName"			"custom/imba_recipe"
+		"AbilityTextureName"			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -9060,7 +9060,7 @@
 		"ID"							"2225"
 		"BaseClass"						"item_lua"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/imba_angelic_alliance"
+		"AbilityTextureName"			"imba_angelic_alliance"
 		"ScriptFile"					"components/items/item_angelic_alliance.lua"
 
 		// Ability
@@ -9192,7 +9192,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2226"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9216,7 +9216,7 @@
 	{
 		"ID"							"2227"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_curseblade"
+		"AbilityTextureName"			"imba_curseblade"
 		"ScriptFile"					"components/items/item_curseblade.lua"
 
 		// Item Info
@@ -9332,7 +9332,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2228"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9356,7 +9356,7 @@
 	{
 		"ID"							"2229"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_hellblade"
+		"AbilityTextureName"			"imba_hellblade"
 		"ScriptFile"					"components/items/item_hellblade.lua"
 
 		// Item Info
@@ -9519,7 +9519,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2231"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9644,7 +9644,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2233"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9761,7 +9761,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2239"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -9882,7 +9882,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2241"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -9907,7 +9907,7 @@
 	{
 		"ID"							"2242"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_black_queen_cape"
+		"AbilityTextureName"			"imba_black_queen_cape"
 		"ScriptFile"					"components/items/item_black_queen_cape.lua"
 
 		// Item Info
@@ -10012,7 +10012,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2243"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10231,7 +10231,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2247"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -10337,7 +10337,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2249"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -10362,7 +10362,7 @@
 	{
 		"ID"							"2250"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/occult_mask"
+		"AbilityTextureName"			"occult_mask"
 		"ScriptFile"					"components/items/item_occult.lua"
 
 		// Item Info
@@ -10425,7 +10425,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2251"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -10527,7 +10527,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2253"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -10682,7 +10682,7 @@
 		"ID"							"2255"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.vmdl"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -10859,7 +10859,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2257"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -10929,7 +10929,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2261"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -10957,7 +10957,7 @@
 		"ID"							"2262"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_maelstrom.lua"
-		"AbilityTextureName"			"custom/imba_jarnbjorn"
+		"AbilityTextureName"			"imba_jarnbjorn"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_TREE"
@@ -11155,7 +11155,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2263"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/the_caustic_finale"
+		"AbilityTextureName"			"the_caustic_finale"
 		"ScriptFile"					"components/items/item_the_caustic_finale"
 		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
 		"Effect"						"particles/generic_gameplay/dropped_aegis.vpcf"
@@ -11228,7 +11228,7 @@
 		"ID"							"2264"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"Model"							"models/props_gameplay/recipe.vmdl"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 				"custom/imba_recipe"
+		"AbilityTextureName" 				"imba_recipe"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11321,7 +11321,7 @@
 		"ID"							"2266"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"Model"							"models/props_gameplay/recipe.vmdl"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11521,7 +11521,7 @@
 //		"ID"							"2269"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 //		"Model"							"models/props_gameplay/recipe.vmdl"
 //		"BaseClass"						"item_datadriven"
-//		"AbilityTextureName" 			"custom/imba_recipe"
+//		"AbilityTextureName" 			"imba_recipe"
 //		
 //		// Item Info
 //		//-------------------------------------------------------------------------------------------------------------
@@ -11548,7 +11548,7 @@
 //		"ID"							"2270"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 //		"Model"							"models/props_gameplay/recipe.vmdl"
 //		"BaseClass"						"item_datadriven"
-//		"AbilityTextureName" 			"custom/imba_recipe"
+//		"AbilityTextureName" 			"imba_recipe"
 //		
 //		// Item Info
 //		//-------------------------------------------------------------------------------------------------------------
@@ -11899,7 +11899,7 @@
 		"ID"							"2282"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"Model"							"models/props_gameplay/recipe.vmdl"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 				"custom/imba_recipe"
+		"AbilityTextureName" 				"imba_recipe"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11991,7 +11991,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2284"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -12019,7 +12019,7 @@
 		"ID"							"2285"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_plancks_artifact.lua"
-		"AbilityTextureName" 			"custom/imba_plancks_artifact"
+		"AbilityTextureName" 			"imba_plancks_artifact"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -12241,7 +12241,7 @@
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ItemCost"						"1350"
-		"AbilityTextureName"			"custom/cloak_of_flames"
+		"AbilityTextureName"			"imba_cloak_of_flames"
 
 		//"SecretShop"					"1"
 
@@ -12277,7 +12277,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2289"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -12304,7 +12304,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2290"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_lifesteal_boots"
+		"AbilityTextureName" 			"imba_lifesteal_boots"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"					"components/items/item_lifesteal_boots"
@@ -12392,7 +12392,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2291"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12504,7 +12504,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2293"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12620,7 +12620,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2295"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 		
 		// Item Info
@@ -12771,7 +12771,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		
 		"ID"							"2297"
 		"Model"							"models/props_gameplay/recipe.vmdl"
@@ -12922,7 +12922,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		
 		"ID"							"2299"
 		"Model"							"models/props_gameplay/recipe.vmdl"
@@ -13072,7 +13072,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		
 		"ID"							"2301"
 		"Model"							"models/props_gameplay/recipe.vmdl"
@@ -13223,7 +13223,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		
 		"ID"							"2303"
 		"Model"							"models/props_gameplay/recipe.vmdl"
@@ -13373,7 +13373,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		
 		"ID"							"2305"
 		"Model"							"models/props_gameplay/recipe.vmdl"
@@ -13535,7 +13535,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		"ID"							"2307"
 		
@@ -13653,7 +13653,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 
 		"ID"							"2309"
 		
@@ -13682,7 +13682,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_rod_of_atos.lua"
-		"AbilityTextureName"			"custom/imba_rod_of_atos_2"
+		"AbilityTextureName"			"imba_rod_of_atos_2"
 
 		"ID"							"2310"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
@@ -13817,7 +13817,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2311"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -13844,7 +13844,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_witchblade.lua"
-		"AbilityTextureName"			"custom/imba_diffusal_blade_3"
+		"AbilityTextureName"			"imba_diffusal_blade_3"
 		
 		"ID"							"2312"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -14023,7 +14023,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		"ID"							"2314"
@@ -14170,7 +14170,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 		"ID"							"2316"
 
@@ -14324,7 +14324,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2318"
@@ -14353,7 +14353,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_gungnir.lua"
-		"AbilityTextureName"			"custom/imba_gungnir"		
+		"AbilityTextureName"			"imba_gungnir"		
 		
 		"ID"							"2319"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
@@ -14500,7 +14500,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2320"
@@ -14529,7 +14529,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2321"		
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/wand_of_the_brine"
+		"AbilityTextureName"			"wand_of_the_brine"
 		"ScriptFile"					"components/items/item_wand_of_the_brine"
 
 		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
@@ -14620,7 +14620,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2322"			
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/stonework_pendant"
+		"AbilityTextureName"			"stonework_pendant"
 		"ScriptFile"					"components/items/item_stonework_pendant"
 
 		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
@@ -14688,7 +14688,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2323"
@@ -14716,7 +14716,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2324"	
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/glimmerdark_shield"
+		"AbilityTextureName"			"glimmerdark_shield"
 		"ScriptFile"					"components/items/item_glimmerdark_shield"
 
 		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
@@ -14810,7 +14810,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 
 		"ID"							"2325"
@@ -14839,7 +14839,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2326"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_transient_boots"
+		"AbilityTextureName"			"imba_transient_boots"
 		"ScriptFile"					"components/items/item_transient_boots"
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
@@ -14929,7 +14929,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2327"
@@ -14959,7 +14959,7 @@
 		"ID"							"2328"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_ogre_seal_totem"
-		"AbilityTextureName"			"custom/ogre_seal_totem"
+		"AbilityTextureName"			"ogre_seal_totem"
 
 		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
 		"Effect"						"particles/generic_gameplay/dropped_aegis.vpcf"
@@ -15035,7 +15035,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2329"
@@ -15064,7 +15064,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_armlet_of_dementor.lua"
-		"AbilityTextureName"			"custom/armlet_of_dementor_inactive"
+		"AbilityTextureName"			"armlet_of_dementor_inactive"
 		
 		"ID"							"2330"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
@@ -15138,7 +15138,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2331"
@@ -15167,7 +15167,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_lance_of_longinus.lua"
-		"AbilityTextureName"			"custom/lance_of_longinus"		
+		"AbilityTextureName"			"lance_of_longinus"		
 		
 		"ID"							"2332"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
@@ -15318,7 +15318,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 		
 		// Item Info
@@ -15676,7 +15676,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2341"
@@ -15705,7 +15705,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_nullifier.lua"
-		"AbilityTextureName"			"custom/item_nullifier_2"
+		"AbilityTextureName"			"item_nullifier_2"
 		
 		"ID"							"2342"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -15801,7 +15801,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2343"
@@ -15830,7 +15830,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_blade_mail"
-		"AbilityTextureName"			"custom/item_bladestorm_mail"
+		"AbilityTextureName"			"item_bladestorm_mail"
 		
 		"ID"							"2344"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -15914,7 +15914,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2345"
@@ -15943,7 +15943,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_aether_specs"
-		"AbilityTextureName"			"custom/item_aether_specs"
+		"AbilityTextureName"			"item_aether_specs"
 		
 		"ID"							"2346"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -16076,7 +16076,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2347"
@@ -16105,7 +16105,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_valiance"
-		"AbilityTextureName"			"custom/item_valiance"
+		"AbilityTextureName"			"item_valiance"
 		
 		"ID"							"2348"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -16257,7 +16257,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2349"
@@ -16286,7 +16286,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_cyclone"
-		"AbilityTextureName"			"custom/item_cyclone_2"
+		"AbilityTextureName"			"item_cyclone_2"
 		
 		"ID"							"2350"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
@@ -16409,7 +16409,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"		
 		
 		"ID"							"2351"
@@ -16551,7 +16551,7 @@
 		"ID"							"2354"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.vmdl"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -17537,7 +17537,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2367"	
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info
@@ -17742,7 +17742,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2371"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 
 		// Item Info

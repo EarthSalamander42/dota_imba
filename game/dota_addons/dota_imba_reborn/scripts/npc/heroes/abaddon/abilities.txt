@@ -118,7 +118,7 @@
 		"BaseClass"										"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-		"AbilityTextureName"							"custom/abaddon_over_channel"
+		"AbilityTextureName"							"abaddon_over_channel"
 
 		"AbilityCooldown"								"0.5"
 

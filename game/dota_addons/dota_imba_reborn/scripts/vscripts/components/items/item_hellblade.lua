@@ -33,7 +33,7 @@ function item_imba_hellblade:GetIntrinsicModifierName()
 end
 
 function item_imba_hellblade:GetAbilityTextureName()
-	return "custom/imba_hellblade"
+	return "imba_hellblade"
 end
 
 function item_imba_hellblade:OnSpellStart()

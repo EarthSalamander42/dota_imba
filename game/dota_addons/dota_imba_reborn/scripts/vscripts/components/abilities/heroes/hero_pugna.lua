@@ -1460,7 +1460,7 @@ end
 imba_pugna_life_drain_end = class({})
 
 function imba_pugna_life_drain_end:GetAbilityTextureName()
-	return "custom/pugna_life_drain_end"
+	return "pugna_life_drain_end"
 end
 
 function imba_pugna_life_drain_end:IsNetherWardStealable()

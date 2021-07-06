@@ -13,7 +13,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/malfurion/entrangling_roots"
+		"AbilityTextureName"			"malfurion/entrangling_roots"
 		"AbilityCastRange"				"750"
 		"AbilityCastPoint"				"0.35"
 		"AbilityCooldown"				"13.0"
@@ -62,7 +62,7 @@
 		"AbilityCastRange"			"600"
 		"AbilityCooldown"			"18.0"
 		"AbilityManaCost"			"110 120 130 140"
-		"AbilityTextureName"		"custom//malfurion/rejuvenation"
+		"AbilityTextureName"		"/malfurion/rejuvenation"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
 
@@ -117,7 +117,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"			"custom/malfurion/mark_of_the_claw"
+		"AbilityTextureName"			"malfurion/mark_of_the_claw"
 
 		"precache"
 		{
@@ -170,7 +170,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_malfurion.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom//malfurion/strength_of_the_wild"
+		"AbilityTextureName"			"/malfurion/strength_of_the_wild"
 		"MaxLevel"						"1"
 
 		"AbilitySpecial"
@@ -202,7 +202,7 @@
 		"MaxLevel"						"3"
 		"LevelsBetweenUpgrades"			"6"
 		"RequiredLevel"					"6"
-		"AbilityTextureName"			"custom/tower_tenacity"
+		"AbilityTextureName"			"tower_tenacity"
 		"AbilityManaCost"				"150 200 250"
 		"AbilityCooldown"				"120 105 90"
 		"AbilityCastPoint"				"0.3"

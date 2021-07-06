@@ -899,7 +899,7 @@ end
 
 -- Thanks @Luxcerv for the image!
 function modifier_imba_howl_flying_movement_talent:GetTexture()
-	return "custom/howl_batwolf"
+	return "howl_batwolf"
 end
 
 -------------------------
@@ -1568,7 +1568,7 @@ LinkLuaModifier("modifier_imba_wolfsbane_lycan_prevent", "components/abilities/h
 LinkLuaModifier("modifier_imba_wolfsbane_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_wolfsbane:GetAbilityTextureName()
-   return "custom/wolfsbane"
+   return "wolfsbane"
 end
 
 function imba_lycan_wolfsbane:IsInnateAbility()
@@ -2353,7 +2353,7 @@ function modifier_imba_summoned_wolf_wicked_crunch_damage:OnTooltip()
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch_damage:GetTexture()
-	return "custom/summoned_wolf_deep_claws"
+	return "summoned_wolf_deep_claws"
 end
 
 ---------------------------------------------------
@@ -2367,7 +2367,7 @@ imba_summoned_wolf_hunter_instincts = class({})
 LinkLuaModifier("modifier_imba_summoned_wolf_hunter_instincts", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_hunter_instincts:GetAbilityTextureName()
-   return "custom/hunter_instincts"
+   return "hunter_instincts"
 end
 
 function imba_summoned_wolf_hunter_instincts:GetIntrinsicModifierName()

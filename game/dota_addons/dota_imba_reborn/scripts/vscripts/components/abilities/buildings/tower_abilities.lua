@@ -573,7 +573,7 @@ LinkLuaModifier("modifier_imba_tower_thorns_aura", "components/abilities/buildin
 LinkLuaModifier("modifier_imba_tower_thorns_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_thorns:GetAbilityTextureName()
-	return "custom/tower_thorns"
+	return "tower_thorns"
 end
 
 function imba_tower_thorns:GetIntrinsicModifierName()
@@ -845,7 +845,7 @@ LinkLuaModifier("modifier_imba_tower_toughness_aura", "components/abilities/buil
 LinkLuaModifier("modifier_imba_tower_toughness_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_toughness:GetAbilityTextureName()
-	return "custom/tower_toughness"
+	return "tower_toughness"
 end
 
 function imba_tower_toughness:GetIntrinsicModifierName()
@@ -1089,7 +1089,7 @@ LinkLuaModifier("modifier_imba_tower_splash_fire_aura", "components/abilities/bu
 LinkLuaModifier("modifier_imba_tower_splash_fire_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_splash_fire:GetAbilityTextureName()
-	return "custom/tower_explosion"
+	return "tower_explosion"
 end
 
 function imba_tower_splash_fire:GetIntrinsicModifierName()
@@ -1357,7 +1357,7 @@ function imba_tower_observatory:GetIntrinsicModifierName()
 end
 
 function imba_tower_observatory:GetAbilityTextureName()
-	return "custom/tower_observatory"
+	return "tower_observatory"
 end
 
 -- unobstructed vision modifier
@@ -1425,7 +1425,7 @@ LinkLuaModifier("modifier_imba_tower_spell_shield_aura", "components/abilities/b
 LinkLuaModifier("modifier_imba_tower_spell_shield_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_spell_shield:GetAbilityTextureName()
-	return "custom/tower_spellshield"
+	return "tower_spellshield"
 end
 
 function imba_tower_spell_shield:GetIntrinsicModifierName()
@@ -1539,7 +1539,7 @@ LinkLuaModifier("modifier_imba_tower_mana_burn_aura", "components/abilities/buil
 LinkLuaModifier("modifier_imba_tower_mana_burn_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_mana_burn:GetAbilityTextureName()
-	return "custom/tower_mana_burn"
+	return "tower_mana_burn"
 end
 
 function imba_tower_mana_burn:GetIntrinsicModifierName()
@@ -1709,7 +1709,7 @@ function imba_tower_permabash:GetIntrinsicModifierName()
 end
 
 function imba_tower_permabash:GetAbilityTextureName()
-	return "custom/tower_bash"
+	return "tower_bash"
 end
 
 -- Tower Aura
@@ -1865,7 +1865,7 @@ LinkLuaModifier("modifier_imba_tower_vicious_aura", "components/abilities/buildi
 LinkLuaModifier("modifier_imba_tower_vicious_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_vicious:GetAbilityTextureName()
-	return "custom/tower_vicious"
+	return "tower_vicious"
 end
 
 function imba_tower_vicious:GetIntrinsicModifierName()
@@ -1990,7 +1990,7 @@ LinkLuaModifier("modifier_imba_tower_spellmastery_aura", "components/abilities/b
 LinkLuaModifier("modifier_imba_tower_spellmastery_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_spellmastery:GetAbilityTextureName()
-	return "custom/tower_spellmastery"
+	return "tower_spellmastery"
 end
 
 function imba_tower_spellmastery:GetIntrinsicModifierName()
@@ -2114,7 +2114,7 @@ LinkLuaModifier("modifier_imba_tower_plague_aura", "components/abilities/buildin
 LinkLuaModifier("modifier_imba_tower_plague_aura_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_plague:GetAbilityTextureName()
-	return "custom/tower_rot"
+	return "tower_rot"
 end
 
 function imba_tower_plague:GetIntrinsicModifierName()
@@ -2245,7 +2245,7 @@ LinkLuaModifier("modifier_imba_tower_atrophy_aura", "components/abilities/buildi
 LinkLuaModifier("modifier_imba_tower_atrophy_aura_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_atrophy:GetAbilityTextureName()
-	return "custom/tower_atrophy"
+	return "tower_atrophy"
 end
 
 function imba_tower_atrophy:GetIntrinsicModifierName()
@@ -2358,7 +2358,7 @@ LinkLuaModifier("modifier_imba_tower_regeneration_aura", "components/abilities/b
 LinkLuaModifier("modifier_imba_tower_regeneration_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_regeneration:GetAbilityTextureName()
-	return "custom/tower_regen"
+	return "tower_regen"
 end
 
 function imba_tower_regeneration:GetIntrinsicModifierName()
@@ -2477,7 +2477,7 @@ LinkLuaModifier("modifier_imba_tower_starlight_aura_buff", "components/abilities
 LinkLuaModifier("modifier_imba_tower_starlight_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_starlight:GetAbilityTextureName()
-	return "custom/tower_starlight"
+	return "tower_starlight"
 end
 
 function imba_tower_starlight:GetIntrinsicModifierName()
@@ -3244,7 +3244,7 @@ LinkLuaModifier("modifier_imba_tower_protection_aura", "components/abilities/bui
 LinkLuaModifier("modifier_imba_tower_protection_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_protection:GetAbilityTextureName()
-	return "custom/tower_protection"
+	return "tower_protection"
 end
 
 function imba_tower_protection:GetIntrinsicModifierName()
@@ -3361,7 +3361,7 @@ LinkLuaModifier("modifier_imba_tower_disease_aura", "components/abilities/buildi
 LinkLuaModifier("modifier_imba_tower_disease_aura_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_disease:GetAbilityTextureName()
-	return "custom/disease_aura"
+	return "disease_aura"
 end
 
 function imba_tower_disease:GetIntrinsicModifierName()
@@ -3494,7 +3494,7 @@ LinkLuaModifier("modifier_imba_tower_doppleganger_aura_buff", "components/abilit
 LinkLuaModifier("modifier_imba_tower_doppleganger_cooldown", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_doppleganger:GetAbilityTextureName()
-	return "custom/tower_doppleganger"
+	return "tower_doppleganger"
 end
 
 function imba_tower_doppleganger:GetIntrinsicModifierName()
@@ -3790,7 +3790,7 @@ function imba_tower_barrier:GetIntrinsicModifierName()
 end
 
 function imba_tower_barrier:GetAbilityTextureName()
-	return "custom/tower_barrier"
+	return "tower_barrier"
 end
 
 -- Tower Aura
@@ -3929,7 +3929,7 @@ LinkLuaModifier("modifier_imba_tower_soul_leech_aura", "components/abilities/bui
 LinkLuaModifier("modifier_imba_tower_soul_leech_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_soul_leech:GetAbilityTextureName()
-	return "custom/tower_soul_leech"
+	return "tower_soul_leech"
 end
 
 function imba_tower_soul_leech:GetIntrinsicModifierName()
@@ -4085,7 +4085,7 @@ LinkLuaModifier("modifier_imba_tower_frost_shroud_aura_buff", "components/abilit
 LinkLuaModifier("modifier_imba_tower_frost_shroud_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_frost_shroud:GetAbilityTextureName()
-	return "custom/tower_frost_shroud"
+	return "tower_frost_shroud"
 end
 
 function imba_tower_frost_shroud:GetIntrinsicModifierName()
@@ -4350,7 +4350,7 @@ function imba_tower_healing_tower:GetIntrinsicModifierName()
 end
 
 function imba_tower_healing_tower:GetAbilityTextureName()
-	return "custom/tower_healing_wave"
+	return "tower_healing_wave"
 end
 
 modifier_tower_healing_think = modifier_tower_healing_think or class({})
@@ -4522,7 +4522,7 @@ LinkLuaModifier("modifier_imba_tower_tenacity_aura", "components/abilities/build
 LinkLuaModifier("modifier_imba_tower_tenacity_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_tenacity:GetAbilityTextureName()
-	return "custom/tower_tenacity"
+	return "tower_tenacity"
 end
 
 function imba_tower_tenacity:GetIntrinsicModifierName()

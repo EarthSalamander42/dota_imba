@@ -250,7 +250,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_oracle"
-		"AbilityTextureName"			"custom/oracle/alter_self"
+		"AbilityTextureName"			"oracle/alter_self"
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"MaxLevel"						"1"
@@ -356,7 +356,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_oracle"
-		"AbilityTextureName"			"custom/oracle/false_promise_alter"
+		"AbilityTextureName"			"oracle/false_promise_alter"
 		
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"

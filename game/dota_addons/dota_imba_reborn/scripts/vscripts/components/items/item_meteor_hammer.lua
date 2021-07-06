@@ -20,7 +20,7 @@ item_imba_meteor_hammer_4					= item_imba_meteor_hammer
 -- IDK how to get the icon for the channel bar
 -- function item_imba_meteor_hammer:GetAbilityTexture()
 	-- if self:GetLevel() >= 2 then
-		-- return "images/items/custom/imba_meteor_hammer_"..self:GetLevel()
+		-- return "images/items/imba_meteor_hammer_"..self:GetLevel()
 	-- end
 -- end
 

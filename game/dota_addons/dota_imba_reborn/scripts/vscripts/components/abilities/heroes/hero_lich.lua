@@ -27,7 +27,7 @@ LinkLuaModifier("modifier_imba_cold_front_debuff", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_cold_front_freeze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_cold_front:GetAbilityTextureName()
-	return "custom/lich_cold_front"
+	return "lich_cold_front"
 end
 
 function imba_lich_cold_front:IsInnateAbility()

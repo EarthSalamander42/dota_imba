@@ -28,7 +28,7 @@ function imba_ancient_defense:IsStealable() return false end
 function imba_ancient_defense:IsNetherWardStealable() return false end
 
 function imba_ancient_defense:GetAbilityTextureName()
-	return "custom/ancient_defense"
+	return "ancient_defense"
 end
 
 function imba_ancient_defense:GetIntrinsicModifierName()
@@ -87,7 +87,7 @@ function imba_ancient_last_resort:IsStealable() return false end
 function imba_ancient_last_resort:IsNetherWardStealable() return false end
 
 function imba_ancient_last_resort:GetAbilityTextureName()
-	return "custom/ancient_last_resort"
+	return "ancient_last_resort"
 end
 
 function imba_ancient_last_resort:GetIntrinsicModifierName()

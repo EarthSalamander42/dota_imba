@@ -36,7 +36,7 @@ LinkLuaModifier( "modifier_item_imba_spell_fencer_spirit_strike", "components/it
 LinkLuaModifier( "modifier_item_imba_spell_fencer_cooldown", "components/items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )  			-- Passive silence cooldown modifier
 
 function item_imba_spell_fencer:GetAbilityTextureName()
-	return "custom/imba_spell_fencer"
+	return "imba_spell_fencer"
 end
 
 function item_imba_spell_fencer:GetBehavior()
@@ -58,10 +58,10 @@ end
 
 function item_imba_spell_fencer:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_item_imba_spell_fencer_unique") then
-		return "custom/imba_spell_fencer"
+		return "imba_spell_fencer"
 	end
 
-	return "custom/imba_spell_fencer_off"
+	return "imba_spell_fencer_off"
 end
 -----------------------------------------------------------------------------------------------------------
 --	Spellfencer passive modifier (stackable)
@@ -390,5 +390,5 @@ function modifier_item_imba_spell_fencer_cooldown:IsPurgable() return false end
 function modifier_item_imba_spell_fencer_cooldown:IsPermanent() return true end
 
 function modifier_item_imba_spell_fencer_cooldown:GetTexture()
-	return "custom/imba_spell_fencer"
+	return "imba_spell_fencer"
 end

@@ -19,9 +19,9 @@ end
 
 function imba_form_change:GetAbilityTextureName()
    if self:GetCaster():GetModifierStackCount("modifier_imba_form_change", self:GetCaster()) == 0 then
-		return "custom/form_change_new"
+		return "form_change_new"
    else
-		return "custom/form_change_old"
+		return "form_change_old"
    end
 end
 

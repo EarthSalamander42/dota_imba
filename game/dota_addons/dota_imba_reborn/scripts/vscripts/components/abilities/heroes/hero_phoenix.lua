@@ -2618,7 +2618,7 @@ function imba_phoenix_burning_wings:IsStealable() 				return false end
 function imba_phoenix_burning_wings:IsNetherWardStealable() 	return false end
 function imba_phoenix_burning_wings:IsInnateAbility()			return true end
 
-function imba_phoenix_burning_wings:GetAbilityTextureName()   	return "custom/phoenix_burningwings" end
+function imba_phoenix_burning_wings:GetAbilityTextureName()   	return "phoenix_burningwings" end
 
 function imba_phoenix_burning_wings:OnToggle()
 	if not IsServer() then
@@ -2651,7 +2651,7 @@ function modifier_imba_phoenix_burning_wings_buff:DeclareFunctions()		return {MO
 
 function modifier_imba_phoenix_burning_wings_buff:GetEffectName()			return "particles/hero/phoenix/phoenix_burning_wings.vpcf" end
 
-function modifier_imba_phoenix_burning_wings_buff:GetTexture()				return "custom/phoenix_burningwings" end
+function modifier_imba_phoenix_burning_wings_buff:GetTexture()				return "phoenix_burningwings" end
 
 function modifier_imba_phoenix_burning_wings_buff:OnCreated()
 	if not IsServer() then

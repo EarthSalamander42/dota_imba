@@ -32,7 +32,7 @@ function item_imba_shotgun:GetIntrinsicModifierName()
 end
 
 function item_imba_shotgun:GetAbilityTextureName()
-	return "custom/imba_shotgun"
+	return "imba_shotgun"
 end
 
 -------------------------------------------
@@ -215,7 +215,7 @@ function item_imba_starfury:GetIntrinsicModifierName()
 end
 
 function item_imba_starfury:GetAbilityTextureName()
-	return "custom/imba_starfury"
+	return "imba_starfury"
 end
 -------------------------------------------
 modifier_imba_starfury_passive = modifier_imba_starfury_passive or class({})

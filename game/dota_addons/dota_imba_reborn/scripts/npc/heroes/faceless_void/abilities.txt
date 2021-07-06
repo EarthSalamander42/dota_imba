@@ -288,7 +288,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
-		"AbilityTextureName"				"custom/faceless_void_timelord"
+		"AbilityTextureName"				"faceless_void_timelord"
 		"ScriptFile"				"components/abilities/heroes/hero_faceless_void.lua"
 		"MaxLevel"							"1"
 

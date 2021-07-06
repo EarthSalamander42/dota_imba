@@ -281,7 +281,7 @@
 
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName" 				"custom/arcane_supremacy"
+		"AbilityTextureName" 				"arcane_supremacy"
 
 		"MaxLevel"							"1"
 

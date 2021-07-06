@@ -28,7 +28,7 @@ LinkLuaModifier( "modifier_imba_aeon_disk", "components/items/item_aeon_disk", L
 if item_imba_aeon_disk == nil then item_imba_aeon_disk = class({}) end
 
 function item_imba_aeon_disk:GetAbilityTextureName()
-	return "custom/imba_aeon_disk_icon"
+	return "imba_aeon_disk_icon"
 end
 
 function item_imba_aeon_disk:GetIntrinsicModifierName()
@@ -53,9 +53,9 @@ end
 
 function item_imba_aeon_disk:GetAbilityTextureName()
 	if self:GetCaster():GetModifierStackCount("modifier_imba_aeon_disk_basic", self:GetCaster()) == 1 then
-		return "custom/imba_aeon_disk_icon_off"
+		return "imba_aeon_disk_icon_off"
 	else
-		return "custom/imba_aeon_disk_icon"
+		return "imba_aeon_disk_icon"
 	end
 end
 

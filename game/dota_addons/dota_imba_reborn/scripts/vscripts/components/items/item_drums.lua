@@ -32,7 +32,7 @@ function item_imba_ancient_janggo:GetIntrinsicModifierName()
 end
 
 function item_imba_ancient_janggo:GetAbilityTextureName()
-	return "custom/imba_ancient_janggo"
+	return "imba_ancient_janggo"
 end
 
 function item_imba_ancient_janggo:OnSpellStart()

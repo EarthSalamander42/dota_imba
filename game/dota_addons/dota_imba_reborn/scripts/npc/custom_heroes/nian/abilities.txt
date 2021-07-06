@@ -7,7 +7,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_nian"
-		"AbilityTextureName"			"custom/nian/frenzy_swipes"		
+		"AbilityTextureName"			"nian/frenzy_swipes"		
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_nian"
-		"AbilityTextureName"			"custom/nian/crushing_leap"
+		"AbilityTextureName"			"nian/crushing_leap"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -156,7 +156,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_nian"
-		"AbilityTextureName"			"custom/nian/tail_spin"
+		"AbilityTextureName"			"nian/tail_spin"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -225,7 +225,7 @@
 	{
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_nian"
-		"AbilityTextureName"			"custom/nian/volcanic_burster"
+		"AbilityTextureName"			"nian/volcanic_burster"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------

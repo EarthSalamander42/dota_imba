@@ -1184,7 +1184,7 @@ end
 imba_silencer_arcane_supremacy = imba_silencer_arcane_supremacy or class({})
 
 function imba_silencer_arcane_supremacy:GetAbilityTextureName()
-	return "custom/arcane_supremacy"
+	return "arcane_supremacy"
 end
 
 LinkLuaModifier("modifier_imba_silencer_arcane_supremacy", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
@@ -1200,7 +1200,7 @@ function imba_silencer_arcane_supremacy:GetIntrinsicModifierName()
 	return "modifier_imba_silencer_arcane_supremacy" end
 
 function modifier_imba_silencer_arcane_supremacy:GetTexture()
-	return "custom/arcane_supremacy"
+	return "arcane_supremacy"
 end
 -------------
 

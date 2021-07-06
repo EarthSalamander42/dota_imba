@@ -436,7 +436,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                     "ability_lua" 
 		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
-		"AbilityTextureName"			"custom/kunnka_tide_high"
+		"AbilityTextureName"			"kunnka_tide_high"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"MaxLevel"						"1"

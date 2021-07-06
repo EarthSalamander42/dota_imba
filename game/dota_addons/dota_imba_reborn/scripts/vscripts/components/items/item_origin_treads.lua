@@ -60,13 +60,13 @@ function item_imba_origin_treads:GetAbilityTextureName()
 	
 	if origin_modifier_stack_count then
 		if origin_modifier_stack_count <= 1 then
-			return "custom/origin_treads_str"
+			return "origin_treads_str"
 		elseif origin_modifier_stack_count == 2 then
-			return "custom/origin_treads_agi"
+			return "origin_treads_agi"
 		elseif origin_modifier_stack_count == 3 then
-			return "custom/origin_treads_int"
+			return "origin_treads_int"
 		else -- This should never be called but just in case...
-			return "custom/origin_treads_str"
+			return "origin_treads_str"
 		end
 	end
 end
@@ -143,7 +143,7 @@ function modifier_item_imba_origin_treads_health:GetEffectName()
 end
 
 function modifier_item_imba_origin_treads_health:GetTexture()
-	return "custom/origin_treads_str"
+	return "origin_treads_str"
 end
 
 function modifier_item_imba_origin_treads_health:OnCreated(params)
@@ -214,7 +214,7 @@ function modifier_item_imba_origin_treads_power:GetEffectName()
 end
 
 function modifier_item_imba_origin_treads_power:GetTexture()
-	return "custom/origin_treads_agi"
+	return "origin_treads_agi"
 end
 
 function modifier_item_imba_origin_treads_power:OnCreated()
@@ -277,7 +277,7 @@ function modifier_item_imba_origin_treads_chaos:GetStatusEffectName()
 end
 
 function modifier_item_imba_origin_treads_chaos:GetTexture()
-	return "custom/origin_treads_int"
+	return "origin_treads_int"
 end
 
 function modifier_item_imba_origin_treads_chaos:OnCreated()

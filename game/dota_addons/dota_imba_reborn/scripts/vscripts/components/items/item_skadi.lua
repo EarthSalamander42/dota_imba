@@ -36,7 +36,7 @@ function item_imba_skadi:GetIntrinsicModifierName()
 end
 
 function item_imba_skadi:GetAbilityTextureName()
-	return "custom/imba_skadi"
+	return "imba_skadi"
 end
 
 -- Dynamic cast range

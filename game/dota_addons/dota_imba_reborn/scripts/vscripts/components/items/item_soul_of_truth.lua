@@ -29,7 +29,7 @@ item_imba_soul_of_truth = item_imba_soul_of_truth or class({})
 LinkLuaModifier("modifier_imba_soul_of_truth_buff","components/items/item_soul_of_truth", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_soul_of_truth:GetAbilityTextureName()
-	return "custom/imba_soul_of_truth"
+	return "imba_soul_of_truth"
 end
 -------------------------------------------
 
@@ -143,5 +143,5 @@ function modifier_imba_soul_of_truth_buff:OnDestroy()
 end
 
 function modifier_imba_soul_of_truth_buff:GetTexture()
-	return "custom/imba_soul_of_truth"
+	return "imba_soul_of_truth"
 end

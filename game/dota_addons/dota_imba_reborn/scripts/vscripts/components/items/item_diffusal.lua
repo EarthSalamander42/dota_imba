@@ -472,7 +472,7 @@ end
 -- end
 
 -- function item_imba_diffusal_blade:GetAbilityTextureName()
-	-- return "custom/imba_diffusal_blade"
+	-- return "imba_diffusal_blade"
 -- end
 
 -- function item_imba_diffusal_blade:OnSpellStart()
@@ -808,7 +808,7 @@ end
 -- LinkLuaModifier("modifier_item_imba_diffusal_2_unique", "components/items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 
 -- function item_imba_diffusal_blade_2:GetAbilityTextureName()
-	-- return "custom/imba_diffusal_blade_2"
+	-- return "imba_diffusal_blade_2"
 -- end
 
 -- function item_imba_diffusal_blade_2:GetIntrinsicModifierName()

@@ -381,7 +381,7 @@ LinkLuaModifier("modifier_imba_fire_breath_debuff", "components/abilities/heroes
 LinkLuaModifier("modifier_imba_fire_breath_caster", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_fire_breath:GetAbilityTextureName()
-	return "custom/jakiro_fire_breath"
+	return "jakiro_fire_breath"
 end
 
 -- Fire breath debuff (applied to enemies to deal damage)
@@ -435,7 +435,7 @@ LinkLuaModifier("modifier_imba_ice_breath_debuff", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_ice_breath_caster", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_ice_breath:GetAbilityTextureName()
-	return "custom/jakiro_ice_breath"
+	return "jakiro_ice_breath"
 end
 
 -- Ice breath debuff (applied to enemies to deal damage)

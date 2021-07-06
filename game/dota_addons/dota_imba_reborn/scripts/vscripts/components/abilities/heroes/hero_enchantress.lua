@@ -789,13 +789,13 @@ function imba_enchantress_natura_shift:GetAbilityTextureName()
 		local state = caster:GetModifierStackCount("modifier_imba_enchantress_natura_shift", caster)
 		
 		if state == 1 then
-			return "custom/natura_shift_inactive"
+			return "natura_shift_inactive"
 		elseif state == 2 then
-			return "custom/natura_shift_fast"
+			return "natura_shift_fast"
 		elseif state == 3 then
-			return "custom/natura_shift_slow"
+			return "natura_shift_slow"
 		else
-			return "custom/natura_shift_inactive"
+			return "natura_shift_inactive"
 		end
 	end
 end

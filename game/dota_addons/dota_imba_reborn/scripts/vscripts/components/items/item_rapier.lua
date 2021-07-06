@@ -81,7 +81,7 @@ function item_imba_rapier:GetIntrinsicModifierName()
 end
 
 function item_imba_rapier:GetAbilityTextureName()
-	return "custom/imba_rapier"
+	return "imba_rapier"
 end
 -------------------------------------------
 modifier_imba_divine_rapier = ShallowCopy( modifier_rapier_base_class )
@@ -125,7 +125,7 @@ function item_imba_rapier_2:GetIntrinsicModifierName()
 end
 
 function item_imba_rapier_2:GetAbilityTextureName()
-	return "custom/imba_rapier_2"
+	return "imba_rapier_2"
 end
 -------------------------------------------
 modifier_imba_divine_rapier_2 = ShallowCopy( modifier_rapier_base_class )
@@ -189,7 +189,7 @@ function item_imba_rapier_magic:GetIntrinsicModifierName()
 end
 
 function item_imba_rapier_magic:GetAbilityTextureName()
-	return "custom/imba_rapier_magic"
+	return "imba_rapier_magic"
 end
 -------------------------------------------
 modifier_imba_arcane_rapier = ShallowCopy( modifier_rapier_base_class )
@@ -227,7 +227,7 @@ function item_imba_rapier_magic_2:GetIntrinsicModifierName()
 end
 
 function item_imba_rapier_magic_2:GetAbilityTextureName()
-	return "custom/imba_rapier_magic_2"
+	return "imba_rapier_magic_2"
 end
 -------------------------------------------
 modifier_imba_arcane_rapier_2 = ShallowCopy( modifier_rapier_base_class )
@@ -284,7 +284,7 @@ function item_imba_rapier_cursed:GetIntrinsicModifierName()
 end
 
 function item_imba_rapier_cursed:GetAbilityTextureName()
-	return "custom/imba_rapier_cursed"
+	return "imba_rapier_cursed"
 end
 -------------------------------------------
 modifier_imba_rapier_cursed = ShallowCopy( modifier_rapier_base_class )
