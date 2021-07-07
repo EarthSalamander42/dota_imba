@@ -488,7 +488,7 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 
 		for k, v in pairs(herolist) do
 			-- only add non-picked heroes
-			if string.find(k, "npc_dota_hero_") and not picked_heroes[k] and not api.disabled_heroes[k] then
+			if string.find(k, "npc_dota_hero_") and not picked_heroes[k] and not api.disabled_heroes[k] and k ~= "npc_dota_hero_target_dummy" then
 				if keys.bIMBA == 1 then
 					if HeroSelection.imbalist[k] and HeroSelection.imbalist[k] == 1 then
 						table.insert(hero_table, k)
