@@ -1,0 +1,3 @@
+[submodule "game/dota_addons/dota_imba_reborn/scripts/vscripts/components/api"]
+	path = game/dota_addons/dota_imba_reborn/scripts/vscripts/components/api
+	url = https://github.com/FrostroseStudio/frostrose_api.git
