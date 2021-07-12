@@ -16286,7 +16286,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_cyclone"
-		"AbilityTextureName"			"item_cyclone_2"
+		"AbilityTextureName"			"cyclone_2"
 		
 		"ID"							"2350"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
