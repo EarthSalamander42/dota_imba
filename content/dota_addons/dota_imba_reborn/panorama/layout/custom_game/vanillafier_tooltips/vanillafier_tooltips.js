@@ -190,12 +190,14 @@ function SetAbilityTooltips(keys) {
 	var bIsItem = false;
 
 	if (bIsItem == false) {
-		ItemScepterDescription.style.visibility = "collapse";
+		if (ItemScepterDescription)
+			ItemScepterDescription.style.visibility = "collapse";
 
 		if (!AbilityDetails.BHasClass("IsAbility"))
 			AbilityDetails.AddClass("IsAbility");
 	} else {
-		ItemScepterDescription.style.visibility = "visible";
+		if (ItemScepterDescription)
+			ItemScepterDescription.style.visibility = "visible";
 	}
 
 	if (AbilityDetails.BHasClass("NoAbilityData"))

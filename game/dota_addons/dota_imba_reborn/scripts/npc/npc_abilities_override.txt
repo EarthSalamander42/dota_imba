@@ -302,6 +302,7 @@
 	"item_recipe_trident"
 	{
 		"ItemResult"					"item_imba_the_triumvirate_v2"
+		"ItemAlertable"					"0"
 
 		"ItemRequirements"
 		{
@@ -369,6 +370,8 @@
 	//=================================================================================================================
 	"item_helm_of_the_undying"
 	{
+		"ItemAlertable"					"0"
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -562,6 +565,332 @@
 			}
 		}
 	}
+
+			"item_elixer"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_keen_optic"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_ironwood_tree"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_royal_jelly"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_mango_tree"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_ocean_heart"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_broom_handle"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_imba_trusty_shovel"	
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_faded_broach"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_arcane_ring"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_chipped_vest"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_possessed_mask"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_mysterious_hat"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+
+			"item_grove_bow"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_vampire_fangs"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_pupils_gift"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_imp_claw"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_philosophers_stone"	
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_nether_shawl"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_dragon_scale"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_essence_ring"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_vambrace"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_clumsy_net"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_bullwhip"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_quicksilver_amulet"	
+			{
+				"ItemAlertable"					"0"
+			}
+
+
+			"item_helm_of_the_undying"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_repair_kit"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_craggy_coat"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_greater_faerie_fire"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_quickening_charm"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_spider_legs"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_enchanted_quiver"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_paladin_sword"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_orb_of_destruction"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_titan_sliver"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_mind_breaker"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_elven_tunic"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_ceremonial_robe"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_psychic_headband"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+
+			"item_witless_shako"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_timeless_relic"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_spell_prism"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_princes_knife"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_flicker"				
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_ninja_gear"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_illusionsts_cape"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_havoc_hammer"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_panic_button"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_the_leveller"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_spy_gadget"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_trickster_cloak"		
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_stormcrafter"			
+			{
+				"ItemAlertable"					"0"
+			}
+
+			"item_penta_edged_sword"	
+			{
+				"ItemAlertable"					"0"
+			}
+
+
+			"item_force_boots"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_phoenix_ash"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_seer_stone"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_mirror_shield"				
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_fusion_rune"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_apex"							
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_ballista"						
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_woodland_striders"			
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_demonicon"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_fallen_sky"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_pirate_hat"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_ex_machina"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_giants_ring"					
+			{
+				"ItemAlertable"					"0"
+			}
+			"item_book_of_shadows"				
+			{
+				"ItemAlertable"					"0"
+			}
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
