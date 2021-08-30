@@ -117,6 +117,36 @@
 				PreGame.style.opacity = "1";
 			}
 		}
+
+		function OverrideDotaNeutralItemsShop() {
+			var shop_grid_1 = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("TeamNeutralItemsTierList");
+
+			if (!Game.GameStateIsAfter(6)) {
+				$.Schedule(1.0, OverrideDotaNeutralItemsShop);
+				return;
+			}
+
+			for (var i = 0; i <= shop_grid_1.GetChildCount() - 1; i++) {
+				var child = shop_grid_1.GetChild(i);
+
+				if (child) {
+					for (var j = 0; j <= child.GetChildCount() - 1; j++) {
+						var sub_child = child.GetChild(j);
+
+						if (sub_child && sub_child.id && sub_child.id == "TierItemsList") {
+							sub_child.style.height = "75px";
+							sub_child.style.overflow = "scroll squish";
+						}
+					}
+				}
+			}
+
+//			child.style.width = "42px";
+//			child.style.height = "width-percentage(72.7%)";
+		}
+
+		OverrideDotaNeutralItemsShop();
+
 /*
 		//Buff Bar
 		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
