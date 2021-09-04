@@ -206,7 +206,6 @@ function SetAbilityTooltips(keys) {
 	if (!AbilityDetails.BHasClass("TooltipContainer"))
 		AbilityDetails.AddClass("TooltipContainer");
 
-
 	var AbilityName_String = "DOTA_Tooltip_Ability_" + keys.sAbilityName;
 	var AbilityNameText = $.Localize(AbilityName_String);
 
