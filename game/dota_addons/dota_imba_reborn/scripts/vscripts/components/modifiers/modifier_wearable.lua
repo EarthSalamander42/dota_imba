@@ -17,7 +17,7 @@ function modifier_wearable:IsHidden() return true end
 function modifier_wearable:OnCreated()
 	if not IsServer() then return end
 
-	self:StartIntervalThink(FrameTime())
+	self:StartIntervalThink(FrameTime() * 2)
 	self.render_color = nil
 end
 

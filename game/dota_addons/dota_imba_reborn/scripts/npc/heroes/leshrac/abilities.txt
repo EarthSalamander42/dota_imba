@@ -1,4 +1,4 @@
-// Credits: EarthSalamander
+// Credits: Shush
 
 "DOTAAbilities"
 {

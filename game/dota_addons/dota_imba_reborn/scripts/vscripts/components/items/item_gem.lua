@@ -36,6 +36,8 @@ function item_imba_gem:OnItemEquipped(hItem)
 	if hItem == self then
 		if self.dummy_unit and IsValidEntity(self.dummy_unit) and self.dummy_unit:HasModifier("modifier_item_imba_gem_of_true_sight_dropped") then
 			self.dummy_unit:RemoveModifierByName("modifier_item_imba_gem_of_true_sight_dropped")
+			self.dummy_unit:RemoveSelf()
+			self.dummy_unit = nil
 		end
 	end
 end
@@ -94,7 +96,7 @@ function modifier_item_imba_gem_of_true_sight:DropGem()
 		end
 	end
 
-	-- Non-heroes should automatically drop rapier and return so they can't crash script at self:GetParent():IsReincarnating() check
+	-- Non-heroes should automatically drop gem and return so they can't crash script at self:GetParent():IsReincarnating() check
 	if not self:GetParent():IsRealHero() then
 		self:GetParent():DropItem(self:GetAbility(), true)
 		self:GetAbility().dummy_unit = CreateUnitByName("npc_dummy_unit_perma", pos, true, nil, nil, self:GetCaster():GetTeam())
@@ -158,7 +160,7 @@ function modifier_item_imba_gem_of_true_sight_dropped:OnIntervalThink()
 		self:StartIntervalThink(-1)
 
 		if self:GetParent() then
-			self:GetParent():RemoveModifierByName("modifier_item_imba_gem_of_true_sight_dropped")
+			self:Destroy()
 		end
 	else
 		-- delay particle creation so it doesn't create if combining to soul of truth...
@@ -169,7 +171,6 @@ function modifier_item_imba_gem_of_true_sight_dropped:OnIntervalThink()
 		end
 	end
 end
-
 
 function modifier_item_imba_gem_of_true_sight_dropped:OnRemoved()
 	if not IsServer() then return end
