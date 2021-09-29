@@ -1,1012 +1,287 @@
+
 // Dota Abilities Override File
-// Vanilla Items: https://raw.githubusercontent.com/SteamDatabase/GameTracking-Dota2/master/game/dota/pak01_dir/scripts/npc/items.txt
-
-#base heroes/winter_wyvern/abilities.txt
-#base npc_jungle_creep_abilities.txt
-
 "DOTAAbilities"
 {
-	"Version"		"1"
+  "Version"   "1"
+  
+  
+  // -----------------------------------------------------------
+  // - UNCOMMENT ANY ITEM YOU DON'T WANT TO APPEAR IN THE SHOP -
+  // -----------------------------------------------------------
+  
+  //"item_blink"      "REMOVE"
+  //"item_blades_of_attack"     "REMOVE"
+  //"item_broadsword"     "REMOVE"
+  //"item_chainmail"      "REMOVE"
+  //"item_claymore"     "REMOVE"
+  //"item_helm_of_iron_will"      "REMOVE"
+  //"item_javelin"      "REMOVE"
+  //"item_mithril_hammer"     "REMOVE"
+  //"item_platemail"      "REMOVE"
+  //"item_quarterstaff"     "REMOVE"
+  //"item_quelling_blade"     "REMOVE"
+  //"item_ring_of_protection"     "REMOVE"
+  //"item_stout_shield"     "REMOVE"
+  //"item_gauntlets"      "REMOVE"
+  //"item_slippers"     "REMOVE"
+  //"item_mantle"     "REMOVE"
+  //"item_branches"     "REMOVE"
+  //"item_belt_of_strength"     "REMOVE"
+  //"item_boots_of_elves"     "REMOVE"
+  //"item_robe"     "REMOVE"
+  //"item_circlet"      "REMOVE"
+  //"item_ogre_axe"     "REMOVE"
+  //"item_blade_of_alacrity"      "REMOVE"
+  //"item_staff_of_wizardry"      "REMOVE"
+  //"item_ultimate_orb"     "REMOVE"
+  //"item_gloves"     "REMOVE"
+  //"item_lifesteal"      "REMOVE"
+  //"item_ring_of_regen"      "REMOVE"
+  //"item_sobi_mask"      "REMOVE"
+  //"item_boots"      "REMOVE"
+  //"item_gem"      "REMOVE"
+  //"item_cloak"      "REMOVE"
+  //"item_talisman_of_evasion"      "REMOVE"
+  //"item_cheese"     "REMOVE"
+  //"item_magic_stick"      "REMOVE"
+  //"item_recipe_magic_wand"      "REMOVE"
+  //"item_magic_wand"     "REMOVE"
+  //"item_ghost"      "REMOVE"
+  //"item_clarity"      "REMOVE"
+  //"item_flask"      "REMOVE"
+  //"item_dust"     "REMOVE"
+  //"item_bottle"     "REMOVE"
+  //"item_ward_observer"      "REMOVE"
+  //"item_ward_sentry"      "REMOVE"
+  //"item_tango"      "REMOVE"
+  //"item_tango_single"     "REMOVE"
+  //"item_tpscroll"     "REMOVE"
+  //"item_recipe_travel_boots"      "REMOVE"
+  //"item_travel_boots"     "REMOVE"
+  //"item_recipe_phase_boots"     "REMOVE"
+  //"item_phase_boots"      "REMOVE"
+  //"item_demon_edge"     "REMOVE"
+  //"item_eagle"      "REMOVE"
+  //"item_reaver"     "REMOVE"
+  //"item_relic"      "REMOVE"
+  //"item_hyperstone"     "REMOVE"
+  //"item_ring_of_health"     "REMOVE"
+  //"item_void_stone"     "REMOVE"
+  //"item_mystic_staff"     "REMOVE"
+  //"item_energy_booster"     "REMOVE"
+  //"item_point_booster"      "REMOVE"
+  //"item_vitality_booster"     "REMOVE"
+  //"item_recipe_power_treads"      "REMOVE"
+  //"item_power_treads"     "REMOVE"
+  //"item_recipe_hand_of_midas"     "REMOVE"
+  //"item_hand_of_midas"      "REMOVE"
+  //"item_recipe_oblivion_staff"      "REMOVE"
+  //"item_oblivion_staff"     "REMOVE"
+  //"item_recipe_pers"      "REMOVE"
+  //"item_pers"     "REMOVE"
+  //"item_recipe_poor_mans_shield"      "REMOVE"
+  //"item_poor_mans_shield"     "REMOVE"
+  //"item_recipe_bracer"      "REMOVE"
+  //"item_bracer"     "REMOVE"
+  //"item_recipe_wraith_band"     "REMOVE"
+  //"item_wraith_band"      "REMOVE"
+  //"item_recipe_null_talisman"     "REMOVE"
+  //"item_null_talisman"      "REMOVE"
+  //"item_recipe_mekansm"     "REMOVE"
+  //"item_mekansm"      "REMOVE"
+  //"item_recipe_vladmir"     "REMOVE"
+  //"item_vladmir"      "REMOVE"
+  //"item_recipe_buckler"     "REMOVE"
+  //"item_buckler"      "REMOVE"
+  //"item_recipe_ring_of_basilius"      "REMOVE"
+  //"item_ring_of_basilius"     "REMOVE"
+  //"item_recipe_pipe"      "REMOVE"
+  //"item_pipe"     "REMOVE"
+  //"item_recipe_urn_of_shadows"      "REMOVE"
+  //"item_urn_of_shadows"     "REMOVE"
+  //"item_recipe_headdress"     "REMOVE"
+  //"item_headdress"      "REMOVE"
+  //"item_recipe_sheepstick"      "REMOVE"
+  //"item_sheepstick"     "REMOVE"
+  //"item_recipe_orchid"      "REMOVE"
+  //"item_orchid"     "REMOVE"
+  //"item_recipe_cyclone"     "REMOVE"
+  //"item_cyclone"      "REMOVE"
+  //"item_recipe_force_staff"     "REMOVE"
+  //"item_force_staff"      "REMOVE"
+  //"item_recipe_dagon"     "REMOVE"
+  //"item_recipe_dagon_2"     "REMOVE"
+  //"item_recipe_dagon_3"     "REMOVE"
+  //"item_recipe_dagon_4"     "REMOVE"
+  //"item_recipe_dagon_5"     "REMOVE"
+  //"item_dagon"      "REMOVE"
+  //"item_dagon_2"      "REMOVE"
+  //"item_dagon_3"      "REMOVE"
+  //"item_dagon_4"      "REMOVE"
+  //"item_dagon_5"      "REMOVE"
+  //"item_recipe_necronomicon"      "REMOVE"
+  //"item_recipe_necronomicon_2"      "REMOVE"
+  //"item_recipe_necronomicon_3"      "REMOVE"
+  //"item_necronomicon"     "REMOVE"
+  //"item_necronomicon_2"     "REMOVE"
+  //"item_necronomicon_3"     "REMOVE"
+  //"item_recipe_ultimate_scepter"      "REMOVE"
+  //"item_ultimate_scepter"     "REMOVE"
+  //"item_recipe_refresher"     "REMOVE"
+  //"item_refresher"      "REMOVE"
+  //"item_recipe_assault"     "REMOVE"
+  //"item_assault"      "REMOVE"
+  //"item_recipe_heart"     "REMOVE"
+  //"item_heart"      "REMOVE"
+  //"item_recipe_black_king_bar"      "REMOVE"
+  //"item_black_king_bar"     "REMOVE"
+  //"item_aegis"      "REMOVE"
+  //"item_recipe_shivas_guard"      "REMOVE"
+  //"item_shivas_guard"     "REMOVE"
+  //"item_recipe_bloodstone"      "REMOVE"
+  //"item_bloodstone"     "REMOVE"
+  //"item_recipe_sphere"      "REMOVE"
+  //"item_sphere"     "REMOVE"
+  //"item_recipe_reflex_energy_regen_booster"     "REMOVE"
+  //"item_vanguard"     "REMOVE"
+  //"item_recipe_blade_mail"      "REMOVE"
+  //"item_blade_mail"     "REMOVE"
+  //"item_recipe_soul_booster"      "REMOVE"
+  //"item_soul_booster"     "REMOVE"
+  //"item_recipe_hood_of_defiance"      "REMOVE"
+  //"item_hood_of_defiance"     "REMOVE"
+  //"item_recipe_rapier"      "REMOVE"
+  //"item_rapier"     "REMOVE"
+  //"item_recipe_monkey_king_bar"     "REMOVE"
+  //"item_monkey_king_bar"      "REMOVE"
+  //"item_recipe_radiance"      "REMOVE"
+  //"item_radiance"     "REMOVE"
+  //"item_recipe_butterfly"     "REMOVE"
+  //"item_butterfly"      "REMOVE"
+  //"item_recipe_greater_crit"      "REMOVE"
+  //"item_greater_crit"     "REMOVE"
+  //"item_recipe_basher"      "REMOVE"
+  //"item_basher"     "REMOVE"
+  //"item_recipe_bfury"     "REMOVE"
+  //"item_bfury"      "REMOVE"
+  //"item_recipe_manta"     "REMOVE"
+  //"item_manta"      "REMOVE"
+  //"item_recipe_lesser_crit"     "REMOVE"
+  //"item_lesser_crit"      "REMOVE"
+  //"item_recipe_armlet"      "REMOVE"
+  //"item_armlet"     "REMOVE"
+  //"item_recipe_invis_sword"     "REMOVE"
+  //"item_invis_sword"      "REMOVE"
+  //"item_recipe_sange_and_yasha"     "REMOVE"
+  //"item_sange_and_yasha"      "REMOVE"
+  //"item_recipe_satanic"     "REMOVE"
+  //"item_satanic"      "REMOVE"
+  //"item_recipe_mjollnir"      "REMOVE"
+  //"item_mjollnir"     "REMOVE"
+  //"item_recipe_skadi"     "REMOVE"
+  //"item_skadi"      "REMOVE"
+  //"item_recipe_sange"     "REMOVE"
+  //"item_sange"      "REMOVE"
+  //"item_recipe_helm_of_the_dominator"     "REMOVE"
+  //"item_helm_of_the_dominator"      "REMOVE"
+  //"item_recipe_maelstrom"     "REMOVE"
+  //"item_maelstrom"      "REMOVE"
+  //"item_recipe_desolator"     "REMOVE"
+  //"item_desolator"      "REMOVE"
+  //"item_recipe_yasha"     "REMOVE"
+  //"item_yasha"      "REMOVE"
+  //"item_recipe_mask_of_madness"     "REMOVE"
+  //"item_mask_of_madness"      "REMOVE"
+  //"item_recipe_diffusal_blade"      "REMOVE"
+  //"item_recipe_diffusal_blade_2"      "REMOVE"
+  //"item_diffusal_blade"     "REMOVE"
+  //"item_diffusal_blade_2"     "REMOVE"
+  //"item_recipe_ethereal_blade"      "REMOVE"
+  //"item_ethereal_blade"     "REMOVE"
+  //"item_recipe_soul_ring"     "REMOVE"
+  //"item_soul_ring"      "REMOVE"
+  //"item_recipe_arcane_boots"      "REMOVE"
+  //"item_arcane_boots"     "REMOVE"
+  //"item_orb_of_venom"     "REMOVE"
+  //"item_recipe_ancient_janggo"      "REMOVE"
+  //"item_ancient_janggo"     "REMOVE"
+  //"item_recipe_medallion_of_courage"      "REMOVE"
+  //"item_medallion_of_courage"     "REMOVE"
+  //"item_smoke_of_deceit"      "REMOVE"
+  //"item_recipe_veil_of_discord"     "REMOVE"
+  //"item_veil_of_discord"      "REMOVE"
+  //"item_recipe_rod_of_atos"     "REMOVE"
+  //"item_rod_of_atos"      "REMOVE"
+  //"item_recipe_abyssal_blade"     "REMOVE"
+  //"item_abyssal_blade"      "REMOVE"
+  //"item_recipe_heavens_halberd"     "REMOVE"
+  //"item_heavens_halberd"      "REMOVE"
+  //"item_recipe_ring_of_aquila"      "REMOVE"
+  //"item_ring_of_aquila"     "REMOVE"
+  //"item_recipe_tranquil_boots"      "REMOVE"
+  //"item_tranquil_boots"     "REMOVE"
+  //"item_shadow_amulet"      "REMOVE"
+  
+  
+  //"item_halloween_candy_corn"     "REMOVE"
+  //"item_mystery_hook"     "REMOVE"
+  //"item_mystery_arrow"      "REMOVE"
+  //"item_mystery_missile"      "REMOVE"
+  //"item_mystery_toss"     "REMOVE"
+  //"item_mystery_vacuum"     "REMOVE"
+  //"item_halloween_rapier"     "REMOVE"
+  //"item_greevil_whistle"      "REMOVE"
+  //"item_greevil_whistle_toggle"     "REMOVE"
+  //"item_present"      "REMOVE"
+  //"item_winter_stocking"      "REMOVE"
+  //"item_winter_skates"      "REMOVE"
+  //"item_winter_cake"      "REMOVE"
+  //"item_winter_cookie"      "REMOVE"
+  //"item_winter_coco"      "REMOVE"
+  //"item_winter_ham"     "REMOVE"
+  //"item_winter_kringle"     "REMOVE"
+  //"item_winter_mushroom"      "REMOVE"
+  //"item_winter_greevil_treat"     "REMOVE"
+  //"item_winter_greevil_garbage"     "REMOVE"
+  //"item_winter_greevil_chewy"     "REMOVE"
+  
+  //"item_recipe_moon_shard"      "REMOVE"
+  //"item_moon_shard"     "REMOVE"  
+  //"item_enchanted_mango"      "REMOVE"  
+  //"item_recipe_travel_boots_2"      "REMOVE"  
+  //"item_travel_boots_2"     "REMOVE"  
+  //"item_recipe_lotus_orb"     "REMOVE"  
+  //"item_lotus_orb"      "REMOVE"  
+  //"item_recipe_crimson_guard"     "REMOVE"  
+  //"item_crimson_guard"      "REMOVE"  
+  //"item_recipe_silver_edge"     "REMOVE"  
+  //"item_silver_edge"      "REMOVE"  
+  //"item_recipe_octarine_core"     "REMOVE"  
+  //"item_octarine_core"      "REMOVE"  
+  //"item_recipe_solar_crest"     "REMOVE"  
+  //"item_solar_crest"      "REMOVE"  
+  //"item_recipe_guardian_greaves"      "REMOVE"  
+  //"item_guardian_greaves"     "REMOVE"  
+  //"item_recipe_glimmer_cape"      "REMOVE"  
+  //"item_glimmer_cape"     "REMOVE"  
 
-	// Default item removal 
-	// -----------------------------------------------------------
-	"item_blink"								"REMOVE"
-	"item_javelin"								"REMOVE"
-	"item_stout_shield"							"REMOVE"
-	"item_lifesteal"							"REMOVE"
-	"item_cheese"								"REMOVE"
-	"item_magic_stick"							"REMOVE"
-	"item_recipe_magic_wand"					"REMOVE"
-	"item_magic_wand"							"REMOVE"
-	"item_dust"									"REMOVE"
-	"item_recipe_hand_of_midas"					"REMOVE"
-	"item_hand_of_midas"						"REMOVE"
-	"item_recipe_poor_mans_shield"				"REMOVE"
-	"item_poor_mans_shield"						"REMOVE"
-	"item_recipe_mekansm"						"REMOVE"
-	"item_mekansm"								"REMOVE"
-	"item_recipe_vladmir"						"REMOVE"
-	"item_vladmir"								"REMOVE"
-	"item_flying_courier"						"REMOVE"
-	"item_recipe_pipe"							"REMOVE"
-	"item_pipe"									"REMOVE"
-	"item_recipe_urn_of_shadows"				"REMOVE"
-	"item_urn_of_shadows"						"REMOVE"
-	"item_recipe_sheepstick"					"REMOVE"
-	"item_sheepstick"							"REMOVE"
-	"item_recipe_orchid"						"REMOVE"
-	"item_orchid"								"REMOVE"
-	"item_recipe_necronomicon"					"REMOVE"
-	"item_recipe_necronomicon_2"				"REMOVE"
-	"item_recipe_necronomicon_3"				"REMOVE"
-	"item_necronomicon"							"REMOVE"
-	"item_necronomicon_2"						"REMOVE"
-	"item_necronomicon_3"						"REMOVE"
-	"item_recipe_assault"						"REMOVE"
-	"item_assault"								"REMOVE"
-	"item_recipe_heart"							"REMOVE"
-	"item_heart"								"REMOVE"
-//	"item_aegis"								"REMOVE" // Using vanilla Aegis to keep combat events notifications on pickup/snatch/deny
-	"item_recipe_shivas_guard"					"REMOVE"
-	"item_shivas_guard"							"REMOVE"
-	"item_recipe_bloodstone"					"REMOVE"
-	"item_bloodstone"							"REMOVE"
-	"item_recipe_vanguard"						"REMOVE"
-	"item_vanguard"								"REMOVE"
-	"item_recipe_hood_of_defiance"				"REMOVE"
-	"item_hood_of_defiance"						"REMOVE"
-	"item_recipe_rapier"						"REMOVE"
-	"item_rapier"								"REMOVE"
-	"item_recipe_monkey_king_bar"				"REMOVE"
-	"item_monkey_king_bar"						"REMOVE"
-	"item_recipe_radiance"						"REMOVE"
-	"item_radiance"								"REMOVE"
-	"item_recipe_butterfly"						"REMOVE"
-	"item_butterfly"							"REMOVE"
-	"item_recipe_greater_crit"					"REMOVE"
-	"item_greater_crit"							"REMOVE"
-	"item_recipe_basher"						"REMOVE"
-	"item_basher"								"REMOVE"
-	"item_recipe_lesser_crit"					"REMOVE"
-	"item_lesser_crit"							"REMOVE"
-	"item_recipe_armlet"						"REMOVE"
-	"item_armlet"								"REMOVE"
-	"item_recipe_invis_sword"					"REMOVE"
-	"item_invis_sword"							"REMOVE"
-	"item_recipe_sange_and_yasha"				"REMOVE"
-	"item_sange_and_yasha"						"REMOVE"
-	"item_recipe_satanic"						"REMOVE"
-	"item_satanic"								"REMOVE"
-	"item_recipe_mjollnir"						"REMOVE"
-	"item_mjollnir"								"REMOVE"
-	"item_recipe_skadi"							"REMOVE"
-	"item_skadi"								"REMOVE"
-	"item_recipe_sange"							"REMOVE"
-	"item_sange"								"REMOVE"
-	"item_recipe_maelstrom"						"REMOVE"
-	"item_maelstrom"							"REMOVE"
-	"item_recipe_desolator"						"REMOVE"
-	"item_desolator"							"REMOVE"
-	"item_recipe_yasha"							"REMOVE"
-	"item_yasha"								"REMOVE"
-	"item_recipe_mask_of_madness"				"REMOVE"
-	"item_mask_of_madness"						"REMOVE"
-	"item_recipe_diffusal_blade"				"REMOVE"
-	"item_recipe_diffusal_blade_2"				"REMOVE"
-	"item_diffusal_blade"						"REMOVE"
-	"item_diffusal_blade_2"						"REMOVE"
-	"item_recipe_arcane_boots"					"REMOVE"
-	"item_arcane_boots"							"REMOVE"
-	"item_recipe_ancient_janggo"				"REMOVE"
-	"item_ancient_janggo"						"REMOVE"
-	"item_recipe_veil_of_discord"				"REMOVE"
-	"item_veil_of_discord"						"REMOVE"
-	"item_recipe_abyssal_blade"					"REMOVE"
-	"item_abyssal_blade"						"REMOVE"
-	"item_recipe_heavens_halberd"				"REMOVE"
-	"item_heavens_halberd"						"REMOVE"
-  	"item_halloween_candy_corn"					"REMOVE"
-	"item_mystery_hook"							"REMOVE"
-	"item_mystery_arrow"						"REMOVE"
-	"item_mystery_missile"						"REMOVE"
-	"item_mystery_toss"							"REMOVE"
-	"item_mystery_vacuum"						"REMOVE"
-	"item_halloween_rapier"						"REMOVE"
-	"item_greevil_whistle"						"REMOVE"
-	"item_greevil_whistle_toggle"				"REMOVE"
-	"item_present"								"REMOVE"
-	"item_winter_stocking"						"REMOVE"
-	"item_winter_skates"						"REMOVE"
-	"item_winter_cake"							"REMOVE"
-	"item_winter_cookie"						"REMOVE"
-	"item_winter_coco"							"REMOVE"
-	"item_winter_ham"							"REMOVE"
-	"item_winter_kringle"						"REMOVE"
-	"item_winter_mushroom"						"REMOVE"
-	"item_winter_greevil_treat"					"REMOVE"
-	"item_winter_greevil_garbage"				"REMOVE"
-	"item_winter_greevil_chewy"					"REMOVE"
-	"item_recipe_moon_shard"					"REMOVE"
-    "item_moon_shard"							"REMOVE"
-    "item_recipe_crimson_guard"					"REMOVE"
-    "item_crimson_guard"						"REMOVE"
-    "item_recipe_silver_edge"					"REMOVE"
-    "item_silver_edge"							"REMOVE"
-    "item_recipe_octarine_core"					"REMOVE"
-    "item_octarine_core"						"REMOVE"
-    "item_recipe_guardian_greaves"				"REMOVE"
-    "item_guardian_greaves"						"REMOVE"
-    "item_recipe_bloodthorn"					"REMOVE"
-    "item_bloodthorn"							"REMOVE"
-    "item_recipe_echo_sabre"					"REMOVE"
-    "item_echo_sabre"							"REMOVE"
-    "item_recipe_aether_lens"					"REMOVE"
-	"item_aether_lens"							"REMOVE"
-	"item_blight_stone"							"REMOVE"
-	"item_kaya"									"REMOVE"
-	"item_force_staff"							"REMOVE"
-	"item_hurricane_pike"						"REMOVE"
-//	"item_travel_boots"							"REMOVE"
-//	"item_travel_boots_2"						"REMOVE"
-//	"item_recipe_cyclone"						"REMOVE"
-	"item_recipe_kaya_and_sange"				"REMOVE"
-	"item_kaya_and_sange"						"REMOVE"
-	"item_recipe_yasha_and_kaya"				"REMOVE"
-	"item_yasha_and_kaya"						"REMOVE"
-	"item_recipe_meteor_hammer"					"REMOVE"
-	"item_meteor_hammer"						"REMOVE"
-	"item_meteor_hammer"						"REMOVE" // Apparently only calling this once didn't work
-	"item_recipe_spirit_vessel"					"REMOVE"
-	"item_recipe_spirit_vessel"					"REMOVE"
-	"item_spirit_vessel"						"REMOVE"
-	"item_spirit_vessel"						"REMOVE" // Apparently only calling this once didn't work
-	"item_recipe_rod_of_atos"					"REMOVE"
-	"item_rod_of_atos"							"REMOVE"
-	"item_rod_of_atos"							"REMOVE" // Not even gonna bother testing this one and just double tap
-	"item_ghost"								"REMOVE"
-	"item_ghost"								"REMOVE" 
-	"item_recipe_ethereal_blade"				"REMOVE" 
-	"item_ethereal_blade"						"REMOVE" 
-	"item_recipe_blade_mail"					"REMOVE"
-	"item_blade_mail"							"REMOVE"
-	"item_recipe_nullifier"						"REMOVE" 
-	"item_nullifier"							"REMOVE"
-	"item_recipe_manta"							"REMOVE"
-	"item_recipe_manta"							"REMOVE"
-	"item_manta"								"REMOVE"
-	"item_manta"								"REMOVE"
-	"item_third_eye"							"REMOVE"
-	"item_third_eye"							"REMOVE"
-	"item_black_king_bar"						"REMOVE"
-	"item_gem"									"REMOVE"
-	"item_lotus_orb"							"REMOVE"
-	"item_dagon"								"REMOVE"
-	"item_dagon_2"								"REMOVE"
-	"item_dagon_3"								"REMOVE"
-	"item_dagon_4"								"REMOVE"
-	"item_dagon_5"								"REMOVE"
-//	"item_recipe_dagon"							"REMOVE" // used for imba dagon
-	"item_recipe_dagon_2"						"REMOVE"
-	"item_recipe_dagon_3"						"REMOVE"
-	"item_recipe_dagon_4"						"REMOVE"
-	"item_recipe_dagon_5"						"REMOVE"
-	
-	//Banned items
-	"item_imba_ironleaf_boots"					"REMOVE"
+  //"item_faerie_fire"     "REMOVE"
+  //"item_recipe_aether_lens"     "REMOVE"
+  //"item_aether_lens"     "REMOVE"
+  //"item_recipe_dragon_lance"     "REMOVE"
+  //"item_dragon_lance"     "REMOVE"
+  //"item_recipe_iron_talon"     "REMOVE"
+  //"item_iron_talon"     "REMOVE"
 
-	//Imba Removed Items
-	"item_imba_triumvirate"						"REMOVE"
-	"item_imba_sange_azura"						"REMOVE"
-	"item_imba_azura_yasha"						"REMOVE"
-	"item_imba_travel_boots"					"REMOVE"
-	"item_imba_travel_boots_2"					"REMOVE"
-	"item_imba_cyclone"							"REMOVE"
-	"item_imba_recipe_cyclone"					"REMOVE"
-	"item_nokrash_blade"						"REMOVE"
-	"item_recipe_nokrash_blade"					"REMOVE"
-	"item_imba_haste_boots"						"REMOVE"
-	"item_recipe_imba_haste_boots"				"REMOVE"
-	"item_imba_bottle"							"REMOVE"
-	"item_recipe_imba_spell_fencer"				"REMOVE"
-	"item_imba_spell_fencer"					"REMOVE"
-	"item_recipe_imba_bloodstone"				"REMOVE"
-	"item_imba_bloodstone"						"REMOVE"
-	"item_recipe_imba_gungnir"					"REMOVE"
-	"item_imba_gungnir"							"REMOVE" // Goodbye sweet prince
-	"item_imba_stonework_pendant"				"REMOVE" // Currently all sorts of broken
-	"item_imba_ultimate_scepter_synth"			"REMOVE"
-	"item_recipe_imba_ultimate_scepter_synth"	"REMOVE"
-	//"item_imba_soul_of_truth"					"REMOVE"
-	"item_recipe_imba_curseblade"				"REMOVE"
-	"item_imba_curseblade"						"REMOVE"
-	"item_recipe_imba_hellblade"				"REMOVE"
-	"item_imba_hellblade"						"REMOVE"
-	"item_imba_white_queen_cape"				"REMOVE"
-	"item_clarity"								"REMOVE"
-	"item_flask"								"REMOVE"
-	"item_tango"								"REMOVE"
-	"item_tango_single"							"REMOVE"
-	"item_smoke_of_deceit"						"REMOVE"
-	"item_imba_circlet"							"REMOVE"
-	"item_imba_gauntlets"						"REMOVE"
-	"item_imba_mantle"							"REMOVE"
-	"item_imba_enchanted_mango"					"REMOVE"
-	"item_imba_faerie_fire"						"REMOVE"
-	"item_banana"								"REMOVE"
-	"item_imba_banana"							"REMOVE"
-	"item_imba_plancks_artifact"				"REMOVE"
-
-	//=================================================================================================================
-	//-----------------------------------------------------------------------------------------------------------------
-	// 								ABILITY OVERRIDES
-	//-----------------------------------------------------------------------------------------------------------------
-	//=================================================================================================================
-
-	//=================================================================================================================
-	// Tinker: March of the Machines
-	//=================================================================================================================
-	"tinker_march_of_the_machines"
-	{
-		"AbilitySpecial"
-		{
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"400 500 600 700"
-			}
-
-		}
-	}
-
-	//=================================================================================================================
-	//-----------------------------------------------------------------------------------------------------------------
-	// 								ITEM OVERRIDES
-	//-----------------------------------------------------------------------------------------------------------------
-	//=================================================================================================================
-
-	"item_aegis"
-	{
-		"AllowedInBackpack"					"1"
-	}
-
-	"item_courier"
-	{
-		"ItemPurchasable"					"0"
-	}
-
-	//=================================================================================================================
-	// Recipe: Medallion of Courage
-	//=================================================================================================================
-	"item_recipe_medallion_of_courage"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_chainmail;item_sobi_mask;item_imba_blight_stone"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Fallen Sky
-	//=================================================================================================================
-	"item_recipe_fallen_sky"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_imba_blink;item_imba_meteor_hammer"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Trident
-	//=================================================================================================================
-	"item_recipe_trident"
-	{
-		"ItemResult"					"item_imba_the_triumvirate_v2"
-		"ItemAlertable"					"0"
-
-		"ItemRequirements"
-		{
-			"01"						"item_imba_kaya_and_sange;item_imba_yasha;"
-			"02"						"item_imba_sange_yasha;item_imba_kaya;"
-			"03"						"item_imba_yasha_and_kaya;item_imba_sange;"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Holy Locket
-	//=================================================================================================================
-	"item_recipe_holy_locket"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_headdress;item_fluffy_hat;item_energy_booster;item_imba_magic_wand"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Spirit Vessel
-	//=================================================================================================================
-	"item_recipe_spirit_vessel"
-	{
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"	
-		
-		"ItemRequirements"
-		{
-			"01"						"item_imba_urn_of_shadows;item_vitality_booster;item_wind_lace"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Manta
-	//=================================================================================================================
-	"item_recipe_manta"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_imba_yasha;item_ultimate_orb"
-		}
-	}
-
-	//=================================================================================================================
-	// Minotaur Horn
-	//=================================================================================================================
-	"item_minotaur_horn"
-	{
-		"ItemCost"						"1450"
-		"ItemIsNeutralDrop"				"0"
-		"ItemPurchasable"				"1"
-
-		"01"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"bonus_strength"			"0"
-		}
-	}
-
-	//=================================================================================================================
-	// Helm of the Undying
-	//=================================================================================================================
-	"item_helm_of_the_undying"
-	{
-		"ItemAlertable"					"0"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"91"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_damage_pct_threshold"		"30"
-			}
-			"92"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration_reduction_per_threshold"	"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Blink dagger
-	//=================================================================================================================
-	"item_overwhelming_blink"
-	{
-		"AbilityCooldown"				"10.0"
-	}
-
-	//=================================================================================================================
-	// Blink dagger
-	//=================================================================================================================
-	"item_swift_blink"
-	{
-		"AbilityCooldown"				"10.0"
-	}
-
-	//=================================================================================================================
-	// Blink dagger
-	//=================================================================================================================
-	"item_arcane_blink"
-	{
-		"AbilityCooldown"				"10.0"
-	}
-
-	//=================================================================================================================
-	// Recipe: Arcane Blink
-	//=================================================================================================================
-	"item_recipe_arcane_blink"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"606"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"Model"							"models/props_gameplay/recipe.vmdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1750"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_arcane_blink"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_blink;item_mystic_staff"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Swift Blink
-	//=================================================================================================================
-	"item_recipe_swift_blink"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"607"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"Model"							"models/props_gameplay/recipe.vmdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1750"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_swift_blink"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_blink;item_eagle"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Overwhelming Blink
-	//=================================================================================================================
-	"item_recipe_overwhelming_blink"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"608"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"Model"							"models/props_gameplay/recipe.vmdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1750"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_overwhelming_blink"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_blink;item_reaver"
-		}
-	}
-
-	//=================================================================================================================
-	// Aghanim's Shard
-	//=================================================================================================================
-	"item_aghanims_shard"
-	{
-		"ItemInitialStockTime"			"600.0"
-	}
-
-	//=================================================================================================================
-	// Recipe: Eternal Shroud
-	//=================================================================================================================
-	"item_recipe_eternal_shroud"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_voodoo_mask;item_imba_hood_of_defiance"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Gleipnir
-	//=================================================================================================================
-	"item_recipe_gungir"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_imba_maelstrom;item_imba_rod_of_atos"
-		}
-	}
-
-	//=================================================================================================================
-	//-----------------------------------------------------------------------------------------------------------------
-	// 								HERO OVERRIDES
-	//-----------------------------------------------------------------------------------------------------------------
-	//=================================================================================================================
-
-	//=================================================================================================================
-	// Ability: Juggernaut Omni Slash (keeping these KVs around for the Swift Slash Aghanim's Scepter ability)
-	//=================================================================================================================
-	"juggernaut_omni_slash"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-	}
-
-	//=================================================================================================================
-	// Lycan: Shapeshift (keeping these KVs around for the Shapeshift Aghanim's Scepter ability)
-	//=================================================================================================================
-	"lycan_shapeshift"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-	}
-
-	//=================================================================================================================
-	// Kunkka: Torrent (keeping these KVs around for the Torrent Storm Aghanim's Scepter ability)
-	//=================================================================================================================
-	"kunkka_torrent"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"torrent_damage"			"100 200 300 400"
-				"LinkedSpecialBonus"		"special_bonus_unique_kunkka_2"
-			}
-		}
-	}
-
-	// Tier 1 
-	"item_elixer"				{ "ItemAlertable" "0" }
-	"item_keen_optic"			{ "ItemAlertable" "0" }
-	"item_ironwood_tree"		{ "ItemAlertable" "0" }
-	"item_royal_jelly"			{ "ItemAlertable" "0" }
-	"item_mango_tree"			{ "ItemAlertable" "0" }
-	"item_ocean_heart"			{ "ItemAlertable" "0" }
-	"item_broom_handle"			{ "ItemAlertable" "0" }
-	"item_imba_trusty_shovel"	{ "ItemAlertable" "0" }
-	"item_faded_broach"			{ "ItemAlertable" "0" }
-	"item_arcane_ring"			{ "ItemAlertable" "0" }
-	"item_chipped_vest"			{ "ItemAlertable" "0" }
-	"item_possessed_mask"		{ "ItemAlertable" "0" }
-	"item_mysterious_hat"		{ "ItemAlertable" "0" }
-
-	// Tier 2
-	"item_grove_bow"			{ "ItemAlertable" "0" }
-	"item_vampire_fangs"		{ "ItemAlertable" "0" }
-	"item_pupils_gift"			{ "ItemAlertable" "0" }
-	"item_imp_claw"				{ "ItemAlertable" "0" }
-	"item_philosophers_stone"	{ "ItemAlertable" "0" }
-	"item_nether_shawl"			{ "ItemAlertable" "0" }
-	"item_dragon_scale"			{ "ItemAlertable" "0" }
-	"item_essence_ring"			{ "ItemAlertable" "0" }
-	"item_vambrace"				{ "ItemAlertable" "0" }
-	"item_clumsy_net"			{ "ItemAlertable" "0" }
-	"item_bullwhip"				{ "ItemAlertable" "0" }
-	"item_quicksilver_amulet"	{ "ItemAlertable" "0" }
-
-	// Tier 3
-	"item_helm_of_the_undying"	{ "ItemAlertable" "0" }
-	"item_repair_kit"			{ "ItemAlertable" "0" }
-	"item_craggy_coat"			{ "ItemAlertable" "0" }
-	"item_greater_faerie_fire"	{ "ItemAlertable" "0" }
-	"item_quickening_charm"		{ "ItemAlertable" "0" }
-	"item_spider_legs"			{ "ItemAlertable" "0" }
-	"item_enchanted_quiver"		{ "ItemAlertable" "0" }
-	"item_paladin_sword"		{ "ItemAlertable" "0" }
-	"item_orb_of_destruction"	{ "ItemAlertable" "0" }
-	"item_titan_sliver"			{ "ItemAlertable" "0" }
-	"item_mind_breaker"			{ "ItemAlertable" "0" }
-	"item_elven_tunic"			{ "ItemAlertable" "0" }
-	"item_ceremonial_robe"		{ "ItemAlertable" "0" }
-	"item_psychic_headband"		{ "ItemAlertable" "0" }
-
-	// Tier 4
-	"item_witless_shako"		{ "ItemAlertable" "0" }
-	"item_timeless_relic"		{ "ItemAlertable" "0" }
-	"item_spell_prism"			{ "ItemAlertable" "0" }
-	"item_princes_knife"		{ "ItemAlertable" "0" }
-	"item_flicker"				{ "ItemAlertable" "0" }
-	"item_ninja_gear"			{ "ItemAlertable" "0" }
-	"item_illusionsts_cape"		{ "ItemAlertable" "0" }
-	"item_havoc_hammer"			{ "ItemAlertable" "0" }
-	"item_panic_button"			{ "ItemAlertable" "0" }
-	"item_the_leveller"			{ "ItemAlertable" "0" }
-	"item_spy_gadget"			{ "ItemAlertable" "0" }
-	"item_trickster_cloak"		{ "ItemAlertable" "0" }
-	"item_stormcrafter"			{ "ItemAlertable" "0" }
-	"item_penta_edged_sword"	{ "ItemAlertable" "0" }
-
-	// Tier 5
-	"item_force_boots"			{ "ItemAlertable" "0" }
-	"item_phoenix_ash"			{ "ItemAlertable" "0" }
-	"item_seer_stone"			{ "ItemAlertable" "0" }
-	"item_mirror_shield"		{ "ItemAlertable" "0" }
-	"item_fusion_rune"			{ "ItemAlertable" "0" }
-	"item_apex"					{ "ItemAlertable" "0" }
-	"item_ballista"				{ "ItemAlertable" "0" }
-	"item_woodland_striders"	{ "ItemAlertable" "0" }
-	"item_demonicon"			{ "ItemAlertable" "0" }
-	"item_fallen_sky"			{ "ItemAlertable" "0" }
-	"item_pirate_hat"			{ "ItemAlertable" "0" }
-	"item_ex_machina"			{ "ItemAlertable" "0" }
-	"item_giants_ring"			{ "ItemAlertable" "0" }
-	"item_book_of_shadows"		{ "ItemAlertable" "0" }
-
-	//=================================================================================================================
-	//-----------------------------------------------------------------------------------------------------------------
-	// 								STRUCTURES, NEUTRALS AND OTHER UNIT OVERRIDES
-	//-----------------------------------------------------------------------------------------------------------------
-	//=================================================================================================================
-
-	//=================================================================================================================
-	// Backdoor Protection
-	//=================================================================================================================
-	"backdoor_protection"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"activation_time"		"15.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"regen_rate"			"750"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Backdoor Protection In Base
-	//=================================================================================================================
-	"backdoor_protection_in_base"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"activation_time"		"15.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"regen_rate"			"750"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Shrine: healing aura
-	//=================================================================================================================
-	"filler_ability"
-	{
-		"AbilityCooldown"				"90"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_heal"				"144"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mp_heal"				"80"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"initial_cooldown"		"60"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Necronomicon Warrior's Last Will
-	//=================================================================================================================
-	"necronomicon_warrior_last_will"
-	{
-		"MaxLevel"						"5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"explosion"				"600 700 800 900 1000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necronomicon Warrior's Sight
-	//=================================================================================================================
-	"necronomicon_warrior_sight"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1000"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Necronomicon Warrior's Mana Break
-	//=================================================================================================================
-	"necronomicon_warrior_mana_burn"
-	{
-		"MaxLevel"							"5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"burn_amount"				"30 40 50 60 70"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necronomicon Archer's Mana Burn
-	//=================================================================================================================
-	"necronomicon_archer_mana_burn"
-	{
-		"MaxLevel"						"5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_amount"			"125 175 225 275 325"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necronomicon Archer's AoE
-	//=================================================================================================================
-	"necronomicon_archer_aoe"
-	{
-		"MaxLevel"						"5"
-
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_bonus"				"5 7 9 11 13"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"as_bonus"				"5 7 9 11 13"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Giant Wolf: Critical Strike
-	//=================================================================================================================
-	"giant_wolf_critical_strike"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_mult"					"250"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tornado: Tempest
-	//=================================================================================================================
-	"tornado_tempest"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"far_radius"			"700"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_slow"		"-20"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackspeed_slow"		"-20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"near_radius"			"225"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"near_damage"			"60"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"far_damage"			"20"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_rate"				"0.25"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient Granite Golem: Bash
-	//=================================================================================================================
-	"granite_golem_bash"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bash_chance"		"15"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"50"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"stun_duration"		"1.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Bash
-	//=================================================================================================================
-	"roshan_bash"
-	{
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bash_chance"		"20"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Spell Block
-	//=================================================================================================================
-	"roshan_spell_block"
-	{
-		"AbilityCooldown"				"10.0"
-	}
-
-	//=================================================================================================================
-	// Roshan: Slam
-	//=================================================================================================================
-	"roshan_slam"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"350"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"slow_duration_hero"	"2.0"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"slow_duration_unit"	"4.0"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"slow_amount"		"50"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"280"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ability: Courier Burst
-	//=================================================================================================================
-	"courier_burst"
-	{
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityCooldown"			"30.0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"3.5"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movement_speed"	"3000"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"damage_absorb"		"250"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ability: Courier Shield
-	//=================================================================================================================
-	"courier_shield"
-	{
-//		"AbilityTextureName"		"courier_burst"
-		"AbilityCooldown"			"30.0"
-	}
+  //"item_recipe_bloodthorn"      "REMOVE"
+  //"item_bloodthorn"      "REMOVE"
+  //"item_wind_lace"      "REMOVE"
+  //"item_infused_raindrop"      "REMOVE"
+  //"item_blight_stone"      "REMOVE"
+  //"item_recipe_echo_sabre"      "REMOVE"
+  //"item_echo_sabre"      "REMOVE"
+  //"item_tome_of_knowledge"      "REMOVE"
+  //"item_recipe_hurricane_pike"      "REMOVE"
+  //"item_hurricane_pike"      "REMOVE"
+  //"item_banana"      "REMOVE"
 }

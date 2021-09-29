@@ -1,3 +1,0 @@
-"DOTA_Tooltip_Ability_item_imba_trusty_shovel"						"#{DOTA_Tooltip_Ability_item_trusty_shovel}"
-"DOTA_Tooltip_Ability_item_imba_trusty_shovel_Description"			"#{DOTA_Tooltip_Ability_item_trusty_shovel_Description}"
-"DOTA_Tooltip_Ability_item_imba_trusty_shovel_bonus_health"			"#{DOTA_Tooltip_Ability_item_trusty_shovel_bonus_health}"

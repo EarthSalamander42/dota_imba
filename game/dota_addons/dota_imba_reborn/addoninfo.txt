@@ -1,42 +1,36 @@
-"AddonInfo"
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
 {
-	"addonSteamAppID"				"570"
-	"addontitle"					"Dota IMBA"
-	"addon_game_name"				"Dota IMBA"
-	"addonversion"					"7.19h"
-	"addontagline"					"IMBA"
-	"addonauthor"					"EarthSalamander #42"
-	"addonSteamGroupName"			""
-	"addonauthorSteamID"			"76561198015161808"
-	"addonContent_Campaign"			"0"
-	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
-	"HeroGuidesSupported"			"1"
-	"PenaltiesEnabled"				"1"
-	"CheckAFKPlayers"				"1"
-	"EnablePickRules"				"1"
+	maps = [
 
-	"maps"							"imba_5v5 imba_10v10 imba_1v1 imba_demo"
-//	"maps"							"imba_5v5 imba_10v10 imba_1v1 imbathrow_3v3v3v3 imba_demo"
-
-	"IsPlayable"					"1"
-
-	"imba_10v10"
+	]
+	IsPlayable = 1
+	HeroGuidesSupported = 1
+	PenaltiesEnabled = 0
+	EnablePickRules = 1
+	CheckAFKPlayers = 1
+	TeamCount = 2
+	map_options = 
+	[
+		{
+			MaxPlayers = 10
+			map = "5v5"
+		},
+		{
+			MaxPlayers = 20
+			map = "10v10"
+		},
+	]
+	HideInTools = false
+	IsTemplate = false
+	DefaultMap = "5v5"
+	DisableIK = false
+	EventGame = false
+	hero_picker = 
 	{
-		"MaxPlayers"				"20"
 	}
-
-	"imba_1v1"
-	{
-		"MaxPlayers"				"2"
-	}
-
-	"imbathrow_3v3v3v3"
-	{
-		"MaxPlayers"				"12"
-	}
-
-	"imba_demo"
-	{
-		"MaxPlayers"				"2"
-	}
+	ForceDefaultGuide = false
+	MinimalPrecache = false
+	MinPlayers = 1
+	MaxPlayers = 10
+	TeamCount = -1
 }

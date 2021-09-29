@@ -1,6 +1,0 @@
-"DOTA_Tooltip_Ability_item_imba_flask"                    "Healing Salve"
-"DOTA_Tooltip_Ability_item_imba_flask_Description"        "<h1> Use: Salve</h1> Grants %hp_regen% health regeneration to the target for %duration% seconds.<br><br> Range: %cast_range_tooltip% \n<h1><font color='#FF7800'>Passive: Sturdy Salve</font></h1> Flask begins with %break_stacks% stacks, which are removed each time the target takes damage. Each stack that was removed reduces the healing of the salve by %flat_heal_reduction% health per second. When all stacks are lost, the healing effect ends. \n<h1><font color='#FF7800'>Passive: Essence Oil</font></h1> Multiplies the healing granted by the Healing Salve by %heal_multiplier% whenever the target has less than %hp_threshold_pct%%% health."
-"DOTA_Tooltip_Ability_item_imba_flask_Lore"               "A magical salve that can quickly mend even the deepest of wounds."
-
-"DOTA_Tooltip_modifier_imba_flask"                        "Healing Salve"
-"DOTA_Tooltip_modifier_imba_flask_Description"            "Health regeneration increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%. Salve will withstand a few damage instances before breaking."

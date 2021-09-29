@@ -1,4 +1,4 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
+-- Copyright (C) 2021  The Dota IMBA Development Team
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -19,8 +19,7 @@
 
 if Log == nil then
 
-	log = {
-	}
+	log = {}
 
 	Log = {
 		Levels = {
@@ -288,7 +287,7 @@ if Log == nil then
 			end
 
 			-- ultimate debugging
-			Say(nil, "Error: " .. err, false)
+--			Say(nil, "Error: " .. err, false)
 		end, unpack(args))
 
 		return status, err

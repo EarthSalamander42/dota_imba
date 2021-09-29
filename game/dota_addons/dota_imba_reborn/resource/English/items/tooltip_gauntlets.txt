@@ -1,4 +1,0 @@
-"DOTA_Tooltip_Ability_item_imba_gauntlets"                  "Gauntlets of Strength"
-"DOTA_Tooltip_Ability_item_imba_gauntlets_Description"      "<h1><font color='#FF7800'>Passive: Gauntlet Brace</font></h1> When off cooldown, blocks %damage_block% physical damage. Goes into cooldown after blocking a damage instance."
-"DOTA_Tooltip_Ability_item_imba_gauntlets_Lore"             "Studded leather gloves that add brute strength."
-"DOTA_Tooltip_Ability_item_imba_gauntlets_bonus_str"        "+$str"
