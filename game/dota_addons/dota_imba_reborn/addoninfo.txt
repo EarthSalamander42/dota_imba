@@ -1,36 +1,23 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+"AddonInfo"
 {
-	maps = [
-
-	]
-	IsPlayable = 1
-	HeroGuidesSupported = 1
-	PenaltiesEnabled = 0
-	EnablePickRules = 1
-	CheckAFKPlayers = 1
-	TeamCount = 2
-	map_options = 
-	[
-		{
-			MaxPlayers = 10
-			map = "5v5"
-		},
-		{
-			MaxPlayers = 20
-			map = "10v10"
-		},
-	]
-	HideInTools = false
-	IsTemplate = false
-	DefaultMap = "5v5"
-	DisableIK = false
-	EventGame = false
-	hero_picker = 
+	"maps"					"5v5 10v10"
+	"MinimalPrecache"		"1"
+	"IsPlayable"			"1"
+	"EventGame"				"0"
+	"EnablePickRules"		"1"
+	"HeroGuidesSupported"	"1"
+	"ForceDefaultGuide"		"0"
+	"MinPlayers"			"1"
+	"MaxPlayers"			"20"
+	"TeamCount"				"2"
+	"CheckAFKPlayers"		"1"
+	"PenaltiesEnabled"		"0"
+	"5v5"
 	{
+		"MaxPlayers"	"10"
 	}
-	ForceDefaultGuide = false
-	MinimalPrecache = false
-	MinPlayers = 1
-	MaxPlayers = 10
-	TeamCount = -1
+	"10v10"
+	{
+		"MaxPlayers"	"20"
+	}
 }

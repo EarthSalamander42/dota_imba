@@ -268,13 +268,11 @@ if Log == nil then
 	-- and logs errors
 	---------------------------------------------
 	function Log:ExecuteInSafeContext(fun, args)
-
 		if args == nil then
 			args = {}
 		end
 
 		local status, err = xpcall(fun, function(err)
-
 			if err == nil then
 				err = "Unknown Error"
 			end
@@ -287,7 +285,7 @@ if Log == nil then
 			end
 
 			-- ultimate debugging
---			Say(nil, "Error: " .. err, false)
+			Say(nil, "Error: " .. err, false)
 		end, unpack(args))
 
 		return status, err
