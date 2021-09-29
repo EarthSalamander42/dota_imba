@@ -1,0 +1,9 @@
+"DOTA_Tooltip_Ability_imba_courier_autodeliver"					"#{DOTA_Tooltip_Ability_courier_autodeliver}"
+"DOTA_Tooltip_Ability_imba_courier_autodeliver_Description"		"#{DOTA_Tooltip_Ability_courier_autodeliver_Description}"
+"DOTA_Tooltip_Ability_imba_courier_autodeliver_delay"			"AUTO-DELIVER DELAY:"
+
+"DOTA_Tooltip_modifier_imba_courier_autodeliver"				"#{DOTA_Tooltip_modifier_courier_autodeliver}"
+
+"dota_hud_error_control_courier_with_abilities_only"			"Couriers can only be controlled with ability hotkeys."
+"dota_hud_error_select_own_courier"								"You can buy items with your courier only! Try again now."
+"dota_hud_error_courier_in_use"									"Courier is already being used by another player!"

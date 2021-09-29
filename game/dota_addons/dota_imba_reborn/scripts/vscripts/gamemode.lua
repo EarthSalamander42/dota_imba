@@ -9,6 +9,9 @@ if GameMode == nil then
 	_G.GameMode = class({})
 end
 
+-- clientside KV loading
+require('addon_init')
+
 require('libraries/adv_log')
 require('libraries/timers')
 require('libraries/notifications')
@@ -22,6 +25,8 @@ require('events')
 require('filters')
 
 require('components/hero_selection')
+require('components/vanillafier_tooltips/init')
+VANILLA_ABILITIES_BASECLASS = require('components/abilities/vanilla_baseclass')
 
 function GameMode:PostLoadPrecache()
 	--PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)

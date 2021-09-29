@@ -1,0 +1,1 @@
+"DOTA_Tooltip_ability_tusk_frozen_sigil_Note3"		"Frozen Sigil is automatically leveled up at Levels 3, 6, 9, and 12."

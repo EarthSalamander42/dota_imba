@@ -1,0 +1,165 @@
+// Obsidian Destroyer's Arcane Orb
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb"              "Arcane Orb"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Description"               "Adds extra pure damage to Outworld Devourer's attacks, based on his remaining mana pool. Steals intelligence for %int_steal_duration% seconds per hit when attacking an enemy hero. Arcane Orb damage splashes in a small area. \n<font color='#FF7800'>Universe Unleashed: </font>Deals %illusion_bonus_dmg% bonus damage to illusions and summoned units. Killing an illusion or a summoned unit with Arcane Orb causes the mystical energies of the killed unit to scatter violently, dealing Arcane Orb's damage in %splash_radius% radius around it."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Note0"                     "Each instance of bonus Intelligence has a separate duration."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Note1"                     "Universe Unleashed deals the normal Arcane Orb damage, before adding bonus damage to the illusion or summoned unit."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Lore"          "Harbinger's outworldly knowledge allows it to tap into the ebb and flow of all spiritual energy, infusing it into his being."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_mana_pool_damage_pct"      "%MANA POOL TO DAMAGE:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_int_steal_count"           "INTELLIGENCE STEAL PER ATTACK:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_radius"					"DAMAGE RADIUS:"
+
+"DOTA_Tooltip_modifier_imba_arcane_orb_buff"                            "Intelligence Steal"
+"DOTA_Tooltip_modifier_imba_arcane_orb_buff_Description"                "%dMODIFIER_PROPERTY_STATS_INTELLECT_BONUS% intelligence stolen from enemies."
+
+"DOTA_Tooltip_modifier_imba_arcane_orb_debuff"                          "Intelligence Steal"
+"DOTA_Tooltip_modifier_imba_arcane_orb_debuff_Description"              "%dMODIFIER_PROPERTY_STATS_INTELLECT_BONUS% intelligence was stolen from you."
+
+"DOTA_Tooltip_modifier_imba_arcane_orb_instance"                  "Imminent Eclipse"
+"DOTA_Tooltip_modifier_imba_arcane_orb_instance_Description"            "Reduced cooldown for Sanity's Eclipse."
+
+// Obsidian Destroyer's Astral Imprisonment
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment"                  "Astral Imprisonment"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Description"      "Places a target hero into an astral prison, where it is invulnerable and disabled. When the prison implodes, it deals damage to it and nearby enemies.\n<font color='#FF7800'>Universal Movement:</font> While Astral Imprisonment is in effect, casting it again on a location will move the prison slowly towards it, carrying the imprisoned target. The prison can be moved indefinitely until it ends. Move speed is doubled for non-self allies."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Lore"             "Locked away in the pocket between this world and the Outworld, victims realize their infantile knowledge and mortality."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_radius"           "IMPLOSION RADIUS:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage"           "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_duration"  "PRISON DURATION:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_movespeed" "PRISON MOVE SPEED:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_scepter_description"  "Astral Imprisonment now steals 5 intelligence when it is applied on an enemy target."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_cast_range"       "CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_astral_imprisonment"                        "Astral Imprisonment"
+"DOTA_Tooltip_modifier_imba_astral_imprisonment_Description"            "Trapped in a prison, disabled and invulnerable."
+
+// Obsidian Destroyer's Essence Aura
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura"            "Essence Aura"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Description"             "Has a %restore_chance_pct%%% chance to restore a percentage of nearby allies' mana pool whenever they cast a spell.\n<font color='#FF7800'>Essence Synergy:</font> Whenever an ally triggers Essence Aura, its owner will temporarily gain bonus intelligence."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note0"                   "Each of Essence Synergy's stacks has independent durations."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note1"                   "The aura owner cannot get Essence Synergy stacks from triggering Essence Aura."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note2"                   "Cannot proc spells that have no mana cost or no cooldown, except for Arcane Orb. Also does not proc on items."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Lore"                    "The crystals of the Outworld produce arcane power, and the Harbinger channels it into the world of mortals."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_radius"                  "AURA RADIUS:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_restore_mana_pct"        "%MANA RESTORED:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_bonus_int_on_proc"       "ESSENCE SYNERGY INT PER STACK:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_int_proc_duration"       "ESSESNCE SYNERGY DURATION:"
+
+"DOTA_Tooltip_modifier_imba_essence_aura_buff"                          "Essence Aura"
+"DOTA_Tooltip_modifier_imba_essence_aura_buff_Description"              "Casting a spell has a chance to restore a portion of your mana."
+
+"DOTA_Tooltip_modifier_imba_essence_aura_proc"                          "Essence Synergy"
+"DOTA_Tooltip_modifier_imba_essence_aura_proc_Description"              "Gains intelligence from nearby allies triggering Essence Aura."
+
+"DOTA_Tooltip_modifier_imba_essence_aura_over_maximum_indicator"          "Obsidiance"
+"DOTA_Tooltip_modifier_imba_essence_aura_over_maximum_indicator_Description"    "Gaining Maximum Mana from Essence Aura."
+
+// Obsidian Destroyer's Equilibrium
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium"					"Equilibrium"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_Description"		"Passively provides %mana_steal%%% Mana Restoration based on damage dealt. When activated, the mana restoration is tripled and enemies damaged by you are slowed.\n<font color='#FF7800'>More Equal Than Others:</font> Each instance of damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_mana_steal"				"%PASSIVE MANA RESTORE:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_mana_steal_active"		"%ACTIVE MANA RESTORE:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_movement_slow"	"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_slow_duration"			"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
+
+"DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_active"				"Equilibrium"
+"DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_active_Description"	"Your damage steals mana and slows your enemies. Additionally gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
+
+"DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_debuff"	"Equilibrium"
+"DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_debuff_Description"	"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%.  Additionally losing %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
+
+// Obsidian Destroyer's Sanity's Eclipse
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse"          "Sanity's Eclipse"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Description"           "Unleashes a psychic blast that removes %max_mana_burn_pct%%% of the mana from affected heroes, while also damaging them based on the difference between the affected hero's Intelligence and Outworld Devourer's. If an enemy hero has the same or higher Intelligence than Outworld Devourer, Sanity's Eclipse will not cause damage. Sanity's Eclipse can hit units trapped by Astral Imprisonment.\n<font color='#FF7800'>Occam's Bazooka:</font> Instantly kills illusions.\n<font color='#FF7800'>Shattering Sanity:</font> Steals intelligence from heroes that were hit on the blast."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note0"                 "The damage is based on the intelligence difference times the intelligence multiplier."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note1"                 "Intelligence steal and Scepter's Astral Imprisonments are applied even if the target wasn't damaged by the spell."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Lore"                  "When an Outworld crystal ruptures, cataclysmic energies are released, and the reverberations of this power are felt interdimensionally."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_radius"                "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_int_multiplier"        "INTELLIGENCE MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_max_mana_burn_pct"     "%MAX MANA LOSS:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_int_steal_count"       "INTELLIGENCE STEAL:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_scepter_description"   "Applies Astral Imprisonment to all targets hit by Sanity's Eclipse. This effect occurs after calculating damage."
+
+// Obsidian Destroyer's Custom Talents
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_1"				"Intelligence Differential"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_1_Description"	"Arcane Orb applies the caster's and targets' difference in INT as damage in a 300 AoE radius."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_2" 				"Sanity's Eclipse cooldown reduction"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_2_Description" 	"Sanity Eclipse's cooldown is reduced by 1 second for every time the caster steals INT while it is off-cooldown. Cannot reduce cooldown by more than 50%."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_3"				"Essence Synergy Upgrade"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_3_Description"	"Essence Aura's Essence Synergy can proc from enemies as well."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_4"				"Astral Imprisonment's sucks up nearby enemy units"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_5"				"Essence Aura Heal"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_5_Description"	"Essence Aura heals according to Outworld Devourer's INT when triggered."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_6"				"Sanity's Eclipse Upgrade"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_6_Description"	"Sanity's Eclipse applies 2x the Mana Burn and 50% more damage towards enemies with INT less than 50% of Outworld Devourer's."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_7"				"Sanity's Eclipse pierces magic immunity"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8"				"Essence Aura Overflow"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8_Description"	"Excess Mana gained from Essence Aura is converted into Max Mana for 10 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_9"				"+60s Arcane Orb Int Steal"
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_10"				"+2 Sanity's Eclipse Multiplier"
+
+//////////////////////////
+
+//OUTWORLD Devourer
+"DOTA_Tooltip_ability_imba_outworld_devourer_arcane_orb"						"Arcane Orb"
+"DOTA_Tooltip_ability_imba_outworld_devourer_arcane_orb_Description"			"Adds extra pure damage to Outworld Devourer's attacks, based on his remaining mana pool. Gains one Sanity's Eclipse charge.\n<font color='#FF7800'>Universe Unleashed:</font> Deals %universe_bonus_dmg% bonus damage to illusions and summoned units. Killing an illusion or a summoned unit with Arcane Orb causes the mystical energies of the killed unit to scatter violently, dealing Arcane Orb's damage in %universe_splash_radius% radius around it."
+"DOTA_Tooltip_ability_imba_outworld_devourer_arcane_orb_Lore"					"Harbinger's outworldly knowledge allows it to tap into the ebb and flow of all spiritual energy, infusing it into his being."
+"DOTA_Tooltip_ability_imba_outworld_devourer_arcane_orb_Note0"					"The damage is calculated after the mana cost is spent."
+"DOTA_Tooltip_ability_imba_outworld_devourer_arcane_orb_mana_pool_damage_pct"	"%MANA POOL TO DAMAGE:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_arcane_orb_mana_cost"	"%CURRENT MANA COST:"
+
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment"				"Astral Imprisonment"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Description"	"Places a target unit into an astral prison. The hidden unit is invulnerable and disabled. When the astral prison implodes, it deals damage to the target and nearby enemies with %radius% range. Gains three Sanity's Eclipse charges.\n<font color='#FF7800'>Universal Movement:</font> While Astral Imprisonment is in effect, casting it again on a location will move the prison slowly towards it at a move speed of %universal_movespeed%, carrying the imprisoned target. The prison can be moved indefinitely until it ends. Move speed is doubled for non-self allies.\n<font color='#FF7800'>Dimensional Casting:</font> If Astral Imprisonment is self-cast, the caster can freely cast abilities. They are treated as disarmed, muted, and rooted, instead of stunned."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Lore"			"Locked away in the pocket between this world and the Outworld, victims realize their infantile knowledge and mortality."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Note0"			"Imprisoned units can still be hit by Sanity's Eclipse."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_Note1"			"If Astral Imprisonment triggers spell reflect, Universal Movement cannot be used while stunned by the prison."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_int_steal"       "INT STEAL:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_damage"        "DAMAGE:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_radius"		"RADIUS:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_prison_duration"		"DURATION:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_abilitycastrange"	"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_max_charges_scepter"	"SCEPTER MAX CHARGES:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_scepter_range_bonus"	"SCEPTER CAST RANGE BONUS:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_charge_restore_time_scepter"	"SCEPTER CHARGE RESTORE TIME:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_scepter_description"	"Grants charges to Astral Imprisonment. Damage areas stack. Also increases cast range."
+
+"DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux"					"Essence Flux"
+"DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_Description"		"Passively grants you a chance to restore a percentage of your max mana each time you cast an ability. When activated, causes all abilities to slow enemies when they deal damage.\n<font color='#FF7800'>More Equal Than Others:</font> Each instance of damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."
+"DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_proc_chance"		"%CHANCE:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_mana_restore"		"%MAX MANA RESTORE:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_movement_slow"	"%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_slow_duration"			"SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_essence_flux_duration"			"BUFF DURATION:"
+
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_movement"				"A.I. Sub-Ability"
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_movement_Description"	"Can be cast to move all active, owned Astral Imprisonments towards the target location."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_movement_Lore"			"As the worlds shift, so too do the target's feelings of hopelessness."
+"DOTA_Tooltip_ability_imba_outworld_devourer_astral_imprisonment_movement_Note0"		"Cannot be used if the Astral Imprisonment is the result of a spell reflect onto the caster."
+
+"dota_hud_error_no_astral_imprisonments_active"								"No Owned Astral Imprisonments Active"	
+
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse"					"Sanity's Eclipse"
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_Description"		"Unleashes a psychic blast that deals to enemies based on the difference between your mana and the target's mana. Sanity's Eclipse can hit units trapped by Astral Imprisonment.\n <h1>Charge Counter</h1> Eclipse increases Outworld Devourer's max mana with each charge of it's buff. 1 charge is gained per arcane orb hit, and 3 per astral imprisonment, against heroes. Each charge replenishes the existing duration.\n<font color='#FF7800'>Occam's Bazooka:</font> Instantly kills illusions.\n<font color='#FF7800'>Remnants of Sanity's Eclipse:</font> Also mana burns %max_mana_burn_pct%%% of the enemy's max mana."
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_Lore"				"When an Outworld crystal ruptures, cataclysmic energies are released, and the reverberations of this power are felt interdimensionally."
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_base_damage"	"BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_damage_multiplier"	"MANA DIFFERENCE MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_radius"				"RADIUS:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_cast_range"			"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_counter_duration"		"SANITY ECLIPSE CHARGE DURATION:" 
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_stack_mana"				"MAX MANA PER CHARGE:"
+"DOTA_Tooltip_ability_imba_outworld_devourer_sanity_eclipse_Note0"				"Does not damage creeps or neutral units."
+
+"DOTA_Tooltip_modifier_imba_outworld_devourer_astral_imprisonment_prison"				"Astral Imprisonment"
+"DOTA_Tooltip_modifier_imba_outworld_devourer_astral_imprisonment_prison_Description"	"Locked away in an Astral Prison, cannot act or be acted upon."
+"DOTA_Tooltip_modifier_imba_outworld_devourer_astral_imprisonment_charge_counter"	"Astral Imprisonment Charges"
+"DOTA_Tooltip_modifier_imba_outworld_devourer_astral_imprisonment_charge_counter_Description"	"You may cast Astral Imprisonment whenever there is a charge available."
+"DOTA_Tooltip_modifier_imba_outworld_devourer_sanity_eclipse_charge"	"Sanity's Eclipse Charge Counter"
+"DOTA_Tooltip_modifier_imba_outworld_devourer_sanity_eclipse_charge_Description"	"Max mana increased by %dMODIFIER_PROPERTY_MANA_BONUS%."
+
+"DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_active"	"Essence Flux"
+"DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_active_Description"	"All damage dealt slows enemy movement. Additionally gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
+
+"DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_debuff"	"Essence Flux"
+"DOTA_Tooltip_modifier_imba_outworld_devourer_essence_flux_debuff_Description"	"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%. Additionally losing %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
+
+"DOTA_Tooltip_ability_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier"	"+{s:value} Sanity's Eclipse Mana Difference Multiplier"
+"DOTA_Tooltip_ability_special_bonus_imba_outworld_devourer_arcane_orb_damage"			"+{s:value}% Arcane Orb Damage"

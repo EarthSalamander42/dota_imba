@@ -92,9 +92,6 @@ function imba_abaddon_death_coil:OnSpellStart(unit, special_cast)
 
 		-- If caster is alive
 		if not special_cast then
-			local responses = {"abaddon_abad_deathcoil_01","abaddon_abad_deathcoil_02","abaddon_abad_deathcoil_06","abaddon_abad_deathcoil_08",}
-			caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20,"coil")
-
 			local health_cost = self:GetVanillaAbilitySpecial("self_damage")
 			
 			if getOverChannelDamageIncrease then
@@ -162,15 +159,18 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 			if caster:HasModifier(self:GetIntrinsicModifierName()) then
 				caster:FindModifierByName(self:GetIntrinsicModifierName()).applied_damage = dealt_damage
 			end
-			-- Apply curse of avernus debuff
-			local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_frostmourne")
 
-			if curse_of_avernus then
-				local debuff_duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")
+			if caster:HasShard() then
+				-- Apply curse of avernus debuff
+				local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_frostmourne")
 
-				-- debuff_duration can be 0 if caster has ability but not learnt it yet
-				if debuff_duration > 0 and not caster:PassivesDisabled() then
-					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", { duration = debuff_duration * (1 - target:GetStatusResistance()) })
+				if curse_of_avernus then
+					local debuff_duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")
+
+					-- debuff_duration can be 0 if caster has ability but not learnt it yet
+					if debuff_duration > 0 and not caster:PassivesDisabled() then
+						target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", {duration = debuff_duration})
+					end
 				end
 			end
 		else
@@ -198,17 +198,6 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 
 			over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf", PATTACH_POINT, target)
 			ParticleManager:ReleaseParticleIndex(over_channel_particle)
-		end
-
-		-- Cast response
-		if not special_cast and caster:GetName() == "npc_dota_hero_abaddon" then
-			Timers:CreateTimer(0.4, function()
-				if self.killed then
-					local responses = {"abaddon_abad_deathcoil_03","abaddon_abad_deathcoil_07","abaddon_abad_deathcoil_04","abaddon_abad_deathcoil_05","abaddon_abad_deathcoil_09","abaddon_abad_deathcoil_10"}
-					caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil,nil)
-					self.killed = nil
-				end
-			end)
 		end
 	end
 end
@@ -325,8 +314,6 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 
 		-- Play Sound
 		caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
-		local responses = {"abaddon_abad_aphoticshield_01","abaddon_abad_aphoticshield_02","abaddon_abad_aphoticshield_03","abaddon_abad_aphoticshield_04","abaddon_abad_aphoticshield_05","abaddon_abad_aphoticshield_06","abaddon_abad_aphoticshield_07"}
-		caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 20,"aphotic_shield")
 
 		-- Check health cost required due to over channel
 		local health_cost = getOverChannelDamageIncrease(caster)
@@ -432,11 +419,6 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 		local damage_type = DAMAGE_TYPE_MAGICAL
 		local curse_of_avernus 	= caster:FindAbilityByName("imba_abaddon_frostmourne")
 
-		local debuff_duration
-		if curse_of_avernus then
-			debuff_duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")
-		end
-
 		-- Talent : When Aphotic Shield is destroyed, cast Mist Coil in 425 AoE
 		local mist_coil_ability
 		local mist_coil_range
@@ -447,23 +429,32 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 			end
 		end
 
-		for _, unit in pairs(units) do
-			if unit:GetTeam() ~= caster:GetTeam() then
-				ApplyDamage({ victim = unit, attacker = caster, damage = damage, damage_type = damage_type })
+		if caster:HasShard() then
+			local debuff_duration
 
-				if debuff_duration and debuff_duration > 0 then
-					if not caster:PassivesDisabled() and curse_of_avernus then
-						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", { duration = debuff_duration * (1 - unit:GetStatusResistance()) })
+			if curse_of_avernus then
+				debuff_duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")
+			end
+
+			for _, unit in pairs(units) do
+				if unit:GetTeam() ~= caster:GetTeam() then
+					ApplyDamage({ victim = unit, attacker = caster, damage = damage, damage_type = damage_type })
+
+					if debuff_duration and debuff_duration > 0 then
+						if not caster:PassivesDisabled() and curse_of_avernus then
+							unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", { duration = debuff_duration * (1 - unit:GetStatusResistance()) })
+						end
+
+						-- Show particle when hit
+						particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, unit)
+						ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT, "attach_hitloc", unit:GetAbsOrigin(), true)
+						local hit_size = unit:GetModelRadius() * 0.3
+						ParticleManager:SetParticleControl(particle, 1, Vector(hit_size, hit_size, hit_size))
+						ParticleManager:ReleaseParticleIndex(particle)
 					end
-
-					-- Show particle when hit
-					particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, unit)
-					ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT, "attach_hitloc", unit:GetAbsOrigin(), true)
-					local hit_size = unit:GetModelRadius() * 0.3
-					ParticleManager:SetParticleControl(particle, 1, Vector(hit_size, hit_size, hit_size))
-					ParticleManager:ReleaseParticleIndex(particle)
 				end
 			end
+
 			-- Talent Mist Coil stuff. Hopefully, just passing it the ability + making the projectile is enough without any
 			-- skill-copy/dummy-unit stuff
 			if mist_coil_ability and CalculateDistance(target, unit) < mist_coil_range then
@@ -775,8 +766,7 @@ function modifier_imba_curse_of_avernus_debuff_counter:OnRefresh(kv)
 	if self:GetStackCount() >= self:GetAbility():GetVanillaAbilitySpecial("hit_count") then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_curse_of_avernus_debuff_slow", {duration = self:GetAbility():GetVanillaAbilitySpecial("curse_duration")})
 		self:GetParent():RemoveModifierByName("modifier_imba_curse_of_avernus_debuff_counter")
-		local responses = {"abaddon_abad_frostmourne_01","abaddon_abad_frostmourne_02","abaddon_abad_frostmourne_03","abaddon_abad_frostmourne_04","abaddon_abad_frostmourne_05","abaddon_abad_frostmourne_06","abaddon_abad_frostmourne_06"}
-		self:GetCaster():EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 30,"curse_of_avernus")
+
 		self:GetCaster():EmitSound("Hero_Abaddon.Curse.Proc")
 	end
 end
@@ -1118,10 +1108,7 @@ function imba_abaddon_borrowed_time:OnSpellStart()
 			buff_duration = self:GetVanillaAbilitySpecial("duration_scepter")
 		end
 		caster:AddNewModifier(caster, self, "modifier_imba_borrowed_time_buff_hot_caster", { duration = buff_duration })
-		local responses = {"abaddon_abad_borrowedtime_02","abaddon_abad_borrowedtime_03","abaddon_abad_borrowedtime_04","abaddon_abad_borrowedtime_05","abaddon_abad_borrowedtime_06","abaddon_abad_borrowedtime_07","abaddon_abad_borrowedtime_08","abaddon_abad_borrowedtime_09","abaddon_abad_borrowedtime_10","abaddon_abad_borrowedtime_11"}
-		if not caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS,nil,nil) then
-			caster:EmitCasterSound("npc_dota_hero_abaddon",{"abaddon_abad_borrowedtime_01"}, 1, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil,nil)
-		end
+
 		-- Talent : Strong Purge allies in redirect range on cast
 		if caster:HasTalent("special_bonus_imba_abaddon_7") then
 			local target_team 	= DOTA_UNIT_TARGET_TEAM_FRIENDLY

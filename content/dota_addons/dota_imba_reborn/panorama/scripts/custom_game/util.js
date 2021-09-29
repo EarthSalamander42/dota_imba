@@ -9,18 +9,7 @@ function CheckInit() {
 }
 
 // local functions, this file only!
-function GetDotaHud() {
-	var panel = $.GetContextPanel();
-	while (panel && panel.id !== 'Hud') {
-		panel = panel.GetParent();
-	}
 
-	if (!panel) {
-		throw new Error('Could not find Hud root from panel with id: ' + $.GetContextPanel().id);
-	}
-
-	return panel;
-}
 
 // global functions that must be initialized after pick screen
 function InitIngameGlobalUtils() {
@@ -42,8 +31,37 @@ function InitIngameGlobalUtils() {
 }
 
 function InitGlobalUtilFuncs() {
+	Utils.isFloat = function(n) {
+		return Number(n) === n && n % 1 !== 0;
+	}
+	
+	Utils.SetHTMLNewLine = function(text) {
+		while (text.indexOf("\n") !== -1) {
+			text = text.replace("\n", "<br>");
+		}
+	
+		return text;
+	}
+	
+	Utils.bit_band = function(iBehavior, iBitCheck) {
+		return iBehavior & iBitCheck;
+	}
+	
+	Utils.GetDotaHud = function() {
+		var panel = $.GetContextPanel();
+		while (panel && panel.id !== 'Hud') {
+			panel = panel.GetParent();
+		}
+	
+		if (!panel) {
+			throw new Error('Could not find Hud root from panel with id: ' + $.GetContextPanel().id);
+		}
+	
+		return panel;
+	}
+
 	Utils.FindDotaHudElement = function(id) {
-		return GetDotaHud().FindChildTraverse(id);
+		return Utils.GetDotaHud().FindChildTraverse(id);
 	}
 
 	Utils.RawTimetoGameTime = function(time) {

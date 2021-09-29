@@ -1,0 +1,13 @@
+"DOTA_Tooltip_Ability_item_imba_ghost"				"Ghost Scepter"
+
+"DOTA_Tooltip_ability_item_imba_ghost_Description"							"<h1>Active: Ghost Form</h1> You enter ghost form for %duration% seconds, becoming immune to physical damage, but are unable to attack and %extra_spell_damage_percent%%% more vulnerable to magic damage.\n<h1><font color='#FF7800'>Active: Luminate</font></h1>Ghost Form provides %luminate_radius% radius flying and true sight vision around the target for its duration.\n<h1><font color='#FF7800'>Active: Extrasensory</font></h1>Ghost Form allows the ally target to ignore cast angles."
+"DOTA_Tooltip_ability_item_imba_ghost_Note0"								"Ends if you become Spell Immune, and will have no effect if you are already Spell Immune."
+"DOTA_Tooltip_ability_item_imba_ghost_Note1"								"Shares cooldown with Ethereal Blade."
+"DOTA_Tooltip_ability_item_imba_ghost_Note2"								"For Extrasensory, abilities can begin their ability phase before the unit needs to turn to face their target."
+"DOTA_Tooltip_ability_item_imba_ghost_bonus_all_stats"						"+$all"
+//"DOTA_Tooltip_ability_item_imba_ghost_duration"							"GHOST DURATION:"
+//"DOTA_Tooltip_ability_item_imba_ghost_extra_spell_damage_percent"							"%GHOST ADDED MAGIC DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_ghost_Lore"								"Imbues the wielder with a ghostly presence, allowing them to evade physical damage."
+
+"DOTA_Tooltip_modifier_imba_ghost_state"						"Ghost Form"
+"DOTA_Tooltip_modifier_imba_ghost_state_Description"			"Ethereal Form. Taking %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE%%% increased magic damage and cannot attack or be attacked."

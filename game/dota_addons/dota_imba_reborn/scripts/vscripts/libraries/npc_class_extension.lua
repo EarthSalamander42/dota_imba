@@ -253,6 +253,7 @@ CScriptParticleManager.CreateParticle = function(self, sParticleName, iAttachTyp
 	local response = original_CreateParticle(self, sParticleName, iAttachType, hParent)
 
 	if not ignored_pfx_list[sParticleName] then
+		if not CScriptParticleManager.ACTIVE_PARTICLES then CScriptParticleManager.ACTIVE_PARTICLES = {} end
 		table.insert(CScriptParticleManager.ACTIVE_PARTICLES, {response, 0})
 	end
 
@@ -307,6 +308,7 @@ CScriptParticleManager.CreateParticleForPlayer = function(self, sParticleName, i
 	local response = original_CreateParticleForPlayer(self, sParticleName, iAttachType, hParent, hPlayer)
 
 	if not ignored_pfx_list[sParticleName] then
+		if not CScriptParticleManager.ACTIVE_PARTICLES then CScriptParticleManager.ACTIVE_PARTICLES = {} end
 		table.insert(CScriptParticleManager.ACTIVE_PARTICLES, {response, 0})
 	end
 
@@ -527,6 +529,24 @@ function CDOTA_BaseNPC:IsCustomHero()
 	end
 
 	return false
+end
+
+function CDOTA_BaseNPC:GetCastRangeIncrease()
+	local cast_range_increase = 0
+	-- Only the greatefd st increase counts for items, they do not stack
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do        
+		if parent_modifier.GetModifierCastRangeBonus then
+			cast_range_increase = math.max(cast_range_increase,parent_modifier:GetModifierCastRangeBonus())
+		end
+	end
+
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do        
+		if parent_modifier.GetModifierCastRangeBonusStacking and parent_modifier:GetModifierCastRangeBonusStacking() then
+			cast_range_increase = cast_range_increase + parent_modifier:GetModifierCastRangeBonusStacking()
+		end
+	end
+
+	return cast_range_increase
 end
 
 -- Call custom functions whenever AddNewModifier is being called anywhere

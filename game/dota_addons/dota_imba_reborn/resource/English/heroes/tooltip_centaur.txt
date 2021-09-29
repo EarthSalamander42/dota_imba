@@ -1,0 +1,87 @@
+// Centaur Warrunner's Thick Hide
+"DOTA_Tooltip_ability_imba_centaur_thick_hide"                          "Thick Hide"
+"DOTA_Tooltip_ability_imba_centaur_thick_hide_Description"              "Bradwarden's skin is hard and thick, absorbing part of every spell and blow. Decreases damage received from all sources, as well as increasing status resistance."
+"DOTA_Tooltip_ability_imba_centaur_thick_hide_Lore"							"Centaurs are naturally tough, but the Warrunner's endless pride makes him go much beyond his race's natural limits."
+"DOTA_Tooltip_ability_imba_centaur_thick_hide_damage_reduction_pct"			"%DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_centaur_thick_hide_debuff_duration_red_pct"		"%STATUS RESISTANCE:"
+
+"DOTA_Tooltip_modifier_imba_thick_hide"									"Thick Hide"
+"DOTA_Tooltip_modifier_imba_thick_hide_Description"						"Reducing incoming damage and debuff durations."
+
+// Centaur Warrunner's Hoof Stomp
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp"                          "Hoof Stomp"
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Description"              "Slams the ground, stunning and damaging nearby enemies.\n<font color='#FF7800'>Gladiators' Pit:</font> Creates an arena where Centaur and his enemies can fight. Enemies cannot leave the arena by normal means, and the Warrunner, while inside it, takes %pit_dmg_reduction%%% reduced damage from all sources."
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note0"                    "Enemies which enter the arena after its creation are also stuck inside."
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note1"                    "Enemies can escape the arena if they move more than %maximum_distance% units instantly."
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note2"                    "Gladiators' Pit does not affect enemies that are spell-immune upon entering the pit."
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Lore"                    "The champion of the pit can create his own arena with a mighty hoof stomp."
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_radius"                  "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_stomp_damage"            "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_stun_duration"            "STUN DURATION:"
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_pit_duration"            "ARENA DURATION:"
+
+"DOTA_Tooltip_modifier_imba_hoof_stomp_arena_debuff"                    "Gladiators' Arena"
+"DOTA_Tooltip_modifier_imba_hoof_stomp_arena_debuff_Description"		"Forced to stay at the arena for its duration."
+
+"DOTA_Tooltip_modifier_imba_hoof_stomp_arena_buff"                      "Gladiator's Pride"
+"DOTA_Tooltip_modifier_imba_hoof_stomp_arena_buff_Description"          "Taking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%% reduced damage while in the arena."
+
+// Centaur Warrunner's Double Edge
+"DOTA_Tooltip_ability_imba_centaur_double_edge"                        "Double Edge"
+"DOTA_Tooltip_ability_imba_centaur_double_edge_Description"            "Centaur strikes a mighty blow at melee range, damaging both himself and a small area around the target. Centaur cannot die from Double Edge.\n<font color='#FF7800'>Shake It Off:</font> Self-damage from Double Edge is reduced by an amount equal to a percentage of your strength."
+"DOTA_Tooltip_ability_imba_centaur_double_edge_Lore"                    "In the spurs of combat, Bradwarden's mighty strikes sometimes cause self-inflicted collateral damage."
+"DOTA_Tooltip_ability_imba_centaur_double_edge_radius"                  "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_centaur_double_edge_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_centaur_double_edge_str_damage_reduction"	"%SHAKE IT OFF STR AS DAMAGE REDUCTION:"
+
+// Centaur Warrunner's Return
+"DOTA_Tooltip_ability_imba_centaur_return"								"Retaliate"
+"DOTA_Tooltip_ability_imba_centaur_return_Description"					"Centaur counters all attacks, dealing damage back to the attacker. Each time Centaur gets attacked by a hero or a tower, he gains a charge counter. Can be cast to consume all charges, granting you a percentage base damage increase for %duration% seconds.\n<font color='#FF7800'>Remnants of Return:</font> Retaliate damage is increased by %str_pct_as_damage%%% of the owner's strength.\n<font color='#FF7800'>Bulging Hide:</font> Centaur gains %return_damage_block% passive damage block for %block_duration% seconds each time he is hit by an attack. Stacks with, but does not refresh itself."
+"DOTA_Tooltip_ability_imba_centaur_return_Lore"							"#{DOTA_Tooltip_ability_centaur_return_Lore}"
+"DOTA_Tooltip_ability_imba_centaur_return_Note"							"Bulging Hide does not trigger from tower attacks."
+"DOTA_Tooltip_ability_imba_centaur_return_damage"						"#{DOTA_Tooltip_ability_centaur_return_return_damage}"
+// "DOTA_Tooltip_ability_imba_centaur_return_bonus_damage"					"#{DOTA_Tooltip_ability_centaur_return_damage_gain_pct}"
+// "DOTA_Tooltip_ability_imba_centaur_return_max_stacks"					"#{DOTA_Tooltip_ability_centaur_return_max_stacks}"
+
+"DOTA_Tooltip_modifier_imba_return_passive"								"Retaliate Passive"
+"DOTA_Tooltip_modifier_imba_return_passive_Description"					"Counterattacking every time someone attacks you."
+
+"DOTA_Tooltip_modifier_imba_return_bonus_damage"						"Retaliate"
+"DOTA_Tooltip_modifier_imba_return_bonus_damage_Description"			"Gaining %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%% additional attack damage."
+
+"DOTA_Tooltip_modifier_imba_return_damage_block"                        "Bulging Hide"
+"DOTA_Tooltip_modifier_imba_return_damage_block_Description"            "Gaining %dMODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK% physical damage block."
+
+// Centaur Warrunner's Stampede
+"DOTA_Tooltip_ability_imba_centaur_stampede"                            "Stampede"
+"DOTA_Tooltip_ability_imba_centaur_stampede_Description"                "Centaur leads all allies into a vicious charge, causing them to move through units at max speed. Trampled enemies take damage based on the Warrunner's strength.\n<font color='#FF7800'>Charging Impact:</font> Stuns any enemies hit by the Stampede, then slows them afterwards."
+"DOTA_Tooltip_ability_imba_centaur_stampede_Lore"                      "rumblerumbleRUMBLERUMBLE"
+"DOTA_Tooltip_ability_imba_centaur_stampede_Note0"                      "If Nether Ward steals this spell, it makes every trample deal fixed damage instead of being based on strength."
+"DOTA_Tooltip_ability_imba_centaur_stampede_strength_damage"            "%CENTAUR'S STRENGTH AS DAMAGE:"
+"DOTA_Tooltip_ability_imba_centaur_stampede_duration"                  "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_centaur_stampede_stun_duration"              "STUN DURATION:"
+"DOTA_Tooltip_ability_imba_centaur_stampede_damage_reduction_scepter"	"%SCEPTER DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_centaur_stampede_ms_slow_pct"                "%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_centaur_stampede_scepter_description"		"Heroes affected by Stampede take reduced damage, and are able to run through obstructions, including trees and up cliffs."
+
+"DOTA_Tooltip_modifier_imba_stampede_haste"								"Stampede"
+"DOTA_Tooltip_modifier_imba_stampede_haste_Description"					"Moving at maximum speed and trampling nearby enemies."
+
+"DOTA_Tooltip_modifier_imba_centaur_stampede_scepter"					"Stampede Scepter"
+"DOTA_Tooltip_modifier_imba_centaur_stampede_scepter_Description"		"Gaining free pathing and destroying trees. Incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%."
+
+"DOTA_Tooltip_modifier_imba_stampede_trample_slow"                      "Stampede"
+"DOTA_Tooltip_modifier_imba_stampede_trample_slow_Description"          "Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+
+// Centaur Warrunner's Custom Talents
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_1"                     "+{s:value}% Double Edge Shake It Off"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_2"                     "Hoof Stomp's arena buff applies to allies"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_3"                     "Hoof Stomp Arena now follows Centaur"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_4"                     "+{s:value}% Strength as Double Edge bonus damage"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_5"                     "Heroes under stampede effect gain 75% tenacity"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_6"                     "Gains Retaliate Aura"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_6_Description"			"Allied heroes within 1200 range of Centaur gain the Return Damage aspect of Retaliate."
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_7"                     "Retaliate Upgrade"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_7_Description"			"Realiate's return damage also triggers on spell damage above {s:value} (after reductions). Does not increase the charge counter or trigger Bulging Hide."
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_8"                     "+1 second Stampede duration for every hero trampled"
+"Dota_Tooltip_Ability_special_bonus_imba_centaur_9"                     "+{s:value} Retaliate Damage"

@@ -1,0 +1,137 @@
+// Clinkz's Strafe
+"DOTA_Tooltip_ability_imba_clinkz_strafe"                              "Strafe"
+"DOTA_Tooltip_ability_imba_clinkz_strafe_Description"                  "Clinkz nimbly attacks with a barrage of arrows. Dramatically increases attack speed for a short time and grants Clinkz the ability to automatically dodge projectiles.\n<font color='#FF7800'>Ranger's Efficacy:</font> Also boosts attack range by %bonus_attack_range%.\n<font color='#FF7800'>Assume The Position:</font> Strafe can be cast as an ally-targeted ability to mount them for Strafe's duration. While mounted, Clinkz cannot freely move, but automatically follows the target and gains double of Strafe's bonus attack speed. Strafe can be activated again while mounted to dismount early."
+"DOTA_Tooltip_ability_imba_clinkz_strafe_Note0"                        "While mounted, Clinkz is rooted and phased, but is not invulnerable and can still be attacked normally."
+"DOTA_Tooltip_ability_imba_clinkz_strafe_Lore"                          "It's hard to say whether the blur around the Bone Fletcher is from his flaming heart or his speed with the quiver."
+"DOTA_Tooltip_ability_imba_clinkz_strafe_as_bonus"                      "BONUS ATTACK SPEED:"
+"DOTA_Tooltip_ability_imba_clinkz_strafe_duration"                      "STRAFE DURATION:"
+
+"DOTA_Tooltip_modifier_imba_strafe_aspd"                    "Strafe"
+"DOTA_Tooltip_modifier_imba_strafe_aspd_Description"                    "Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and attack range by %dMODIFIER_PROPERTY_ATTACK_RANGE_BONUS%."
+
+"DOTA_Tooltip_modifier_imba_strafe_mount"                              "Strafe Mount"
+"DOTA_Tooltip_modifier_imba_strafe_mount_Description"                  "Mounted on an ally! Gaining double bonuses from Strafe."
+
+"DOTA_Tooltip_modifier_imba_strafe_self_root"                          "Arrow Barrage Root"
+"DOTA_Tooltip_modifier_imba_strafe_self_root_Description"              "Rooted. Dramatically increased Strafe's attack range bonus."
+
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723"										"Death Pact"
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Description"							"Clinkz consumes the target enemy unit or skeleton, gaining max health and armor reduction on attack. If a hero dies under this debuff, Clinkz will gain a permanent damage bonus and Death Pact will be refreshed.\n<font color='#FF7800'>Soul High:</font> Can also be cast on enemy heroes, dealing %soul_high_hp_damage%%% of the target's maximum health as pure, unamplifiable damage and reducing the buff duration to %soul_high_duration% seconds, but also granting %soul_high_hp_to_attack%%% of the health damage as bonus attack damage for its duration."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Lore"									"Sutherex' bond of life and death has become a part of Clinkz, and his old bones are refreshed with repetition of the pact on lesser beings."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Note0"									"If the target is an enemy, Clinkz will gain the correct experience and gold."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Note1"									"Increases Clinkz' current and max HP."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_Note2"									"When the duration ends, max HP returns to normal, but current HP stays the same."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_duration"								"DURATION:"
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_health_gain"							"HEALTH GAIN:"
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_armor_reduction"						"ARMOR REDUCTION:"
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_723_permanent_bonus"						"PERMANENT BONUS DAMAGE:"
+
+"DOTA_Tooltip_modifier_imba_clinkz_death_pact_723"						"Death Pact"
+"DOTA_Tooltip_modifier_imba_clinkz_death_pact_723_Description"			"Damage and health increased."
+"DOTA_Tooltip_modifier_imba_clinkz_death_pact_723_enemy"						"Soul Feast"
+"DOTA_Tooltip_modifier_imba_clinkz_death_pact_723_enemy_Description"			"Soul Feast."
+"DOTA_Tooltip_modifier_imba_clinkz_death_pact_723_permanent_buff"			"Death Pact Damage"
+"DOTA_Tooltip_modifier_imba_clinkz_death_pact_723_permanent_buff_Description"	"Permanently increased damage gained from killing heroes during Death Pact"
+
+"dota_hud_error_cant_cast_hero_level"									"Ability Can't Target Heroes of This Level"
+
+// Clinkz's Searing Arrows
+"DOTA_Tooltip_ability_imba_clinkz_searing_arrows"                      "Searing Arrows"
+"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Description"          "<font color='#FF7800'>Passively</font> imbues Clinkz's arrows with fire for extra damage.\n<font color='#FF7800'>Light My Way:</font> Clinkz shoots a huge flaming arrow at the target enemy, lighting it on fire, burning %armor_burn_per_stack% of its armor every second and granting vision in %vision_radius% radius around it for some seconds."
+"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Note0"                "When the active debuff is removed, the armor lost is immediately returned to the target."
+"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Lore"                  "Clinkz simply lights his arrows from his flaming essence for quite the destructive effect."
+"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_bonus_damage"          "BONUS DAMAGE:"
+"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_active_duration"                   "VISION DURATION:"
+
+"DOTA_Tooltip_modifier_imba_searing_arrows_active"                      "Light My Way"
+"DOTA_Tooltip_modifier_imba_searing_arrows_active_Description"          "YOU'RE ON FIRE! Granting vision to enemies and losing armor over time."
+
+// Clinkz's Skeleton Walk
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk"                        "Skeleton Walk (Pre 7.23)"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Description"            "Clinkz gains bonus movement speed, phasing, and invisibility until the moment he attacks or uses an ability.\n<font color='#FF7800'>Spooky Scary Skeleton:</font> When breaking out of invisibility, all enemy heroes in %spook_radius% radius become spooked. While spooked, they are unable to do anything, and are forced to run in circles in terror. The closer Clinkz is when breaking invisibility, the longer enemies will be spooked. Does nothing if Clinkz could be seen by the enemy before breaking out of invisiblity."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Note0"                  "Any form of detection renders Spooky Scary Skeleton useless."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Lore"                  "With a burst of fire and puff of smoke, the Bone Fletcher is nowhere to be seen."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_ms_bonus_pct"          "%BONUS MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_base_spook_duration"                "MINIMUM SPOOK DURATION:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_max_spook_duration"                 "MAX SPOOK DURATION:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_scepter_bonus"					"%SCEPTER BONUS MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_scepter_skeleton_count"			"%SCEPTER SKELETONS COUNT:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_scepter_description"                "Creates two skeletons near Clinkz when exiting Skeleton Walk. Increases Skeleton Walk movement speed by %scepter_bonus%%% and unlocks max movement speed. <font color='#FF7800'>Shares Skeleton Walk's invisibility and part of the movement speed bonus with any ally you mount. Both Clinkz and the mounted ally can spook enemies, and their invisibilities are independent from each other. Skeleton Walk bonuses are lost if you unmount.</font>"
+
+"DOTA_Tooltip_modifier_imba_skeleton_walk_invis"                        "Skeleton Walk"
+"DOTA_Tooltip_modifier_imba_skeleton_walk_invis_Description"            "Invisible, phased, and moving %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% faster."
+
+"DOTA_Tooltip_modifier_imba_skeleton_walk_spook"                        "Spooked!"
+"DOTA_Tooltip_modifier_imba_skeleton_walk_spook_Description"            "Skeletons are spooky! Forced to run in circles."
+
+"DOTA_Tooltip_modifier_imba_skeleton_walk_talent_ms"                    "Skeleton Walk"
+"DOTA_Tooltip_modifier_imba_skeleton_walk_talent_ms_Description"                    "Moving %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% faster."
+
+"DOTA_Tooltip_modifier_imba_skeleton_walk_talent_root"                  "Frighteningly Spooked!"
+"DOTA_Tooltip_modifier_imba_skeleton_walk_talent_root_Description"                  "Rooted."
+
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723"											"Skeleton Walk"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_Description"								"Clinkz moves invisibly through units until the moment he attacks or uses an ability. When exiting invisibility, Clinkz gains bonus attack speed.\n<font color='#FF7800'>Spooky Scary Skeleton:</font> When breaking out of invisibility, all enemy heroes in %spook_radius% radius become spooked. While spooked, they are unable to do anything, and are forced to run in circles in terror. The closer Clinkz is when breaking invisibility, the longer enemies will be spooked. Does nothing if Clinkz could be seen by the enemy before breaking out of invisiblity."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_Lore"									"With a burst of fire and puff of smoke, the Bone Fletcher was nowhere to be seen."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_scepter_description"						"Creates two skeletons near Clinkz when exiting Skeleton Walk. Increases Skeleton Walk movement speed and unlocks max movement speed."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_Note0"									"Will not break most channeling of spells or items upon activation."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_Note1"									"Has a fadetime of %fade_time% seconds."
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_duration"								"DURATION:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_move_speed_bonus_pct"					"%BONUS MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_attack_speed_bonus_pct"					"BONUS ATTACK SPEED:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_attack_speed_duration"					"BONUS ATTACK SPEED DURATION:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_scepter_bonus_tooltip"					"%SCEPTER BONUS MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_723_scepter_skeleton_count"					"SCEPTER SKELETON COUNT:"
+
+"DOTA_Tooltip_modifier_imba_clinkz_skeleton_walk_723_strafe"							"Skeleton Walk"
+"DOTA_Tooltip_modifier_imba_clinkz_skeleton_walk_723_strafe_Description"				"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
+
+// Clinkz's Death Pact
+"DOTA_Tooltip_ability_imba_clinkz_death_pact"                          "Death Pact"
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_Description"              "Forms a Deathly Pact with the target unit (allied or enemy) for %duration% seconds, gaining damage and health based on their current health.\n<font color='#FF7800'>Creeps</font> are instantly killed.\n<font color='#FF7800'>Heroes</font> take %hero_current_hp_damage_pct%%% of their current health as damage.\n<font color='#FF7800'>Spiritual Pact:</font> Clinkz forms a pact with Death Pacted target when it dies. It is then forced to follow him until the pact ends. While the spirit is alive, Clinkz gains bonus damage and armor equal to the spirit's original unit's damage and armor at the time of death. Spirits die after being dealt %spirit_health_tooltip% attacks, or when the Death Pact duration ends. When it dies, Clinkz immediately loses the spirit's bonuses."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_Note0"                    "Does not affect ancients."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_Note1"                    "Not blocked by Spell Immunity."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_Note2"                    "When losing the spirits bonuses, Clinkz does not lose the Death Pact bonuses."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_Note3"                    "Only one spirit can be alive at the same time."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_Lore"                      "Sutherex' bond of life and death has become a part of Clinkz, and his old bones are refreshed with repetition of the pact on lesser beings."
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_creep_bonus_hp_pct"                    "%HEALTH FROM CREEPS:"
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_creep_bonus_dmg_pct"                   "%DAMAGE FROM CREEPS:"
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_hero_bonus_hp_tooltip"                 "%HEALTH FROM HEROES:"
+"DOTA_Tooltip_ability_imba_clinkz_death_pact_hero_bonus_dmg_tooltip"                "%DAMAGE FROM HEROES:"
+
+"DOTA_Tooltip_modifier_imba_death_pact_buff"                            "Death Pact"
+"DOTA_Tooltip_modifier_imba_death_pact_buff_Description"                "Damage and health increased."
+
+"DOTA_Tooltip_modifier_imba_death_pact_talent_debuff"                  "Marked for Death"
+"DOTA_Tooltip_modifier_imba_death_pact_talent_debuff_Description"                   "Dying will grant permanent bonuses to the Death Pact's caster."
+
+"DOTA_Tooltip_modifier_imba_death_pact_talent_buff"                    "Completed Death Pacts"
+"DOTA_Tooltip_modifier_imba_death_pact_talent_buff_Description"                     "Gaining %dMODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE% bonus damage and %dMODIFIER_PROPERTY_EXTRA_HEALTH_BONUS% health from completed Death Pacts."
+
+"DOTA_Tooltip_modifier_imba_death_pact_spirit_attack_range"            "Spirit Attribute"
+"DOTA_Tooltip_modifier_imba_death_pact_spirit_attack_range_Description"             "Grants the spirit Clinkz's attack range and damage."
+
+"DOTA_Tooltip_modifier_imba_death_pact_bonus_spirited"                  "Spiritual Pact"
+"DOTA_Tooltip_modifier_imba_death_pact_bonus_spirited_Description"                  "Gains bonus damage and armor equal to the attributes of the spirit you are linked to."
+
+"npc_imba_clinkz_spirits"                                  "Pact Spirit"
+
+// Clinkz's Burning Army
+// "DOTA_Tooltip_ability_clinkz_burning_army_Description"							"#{DOTA_Tooltip_ability_clinkz_burning_army_Description}\n<font color='#FF7800'>Big Boned:</font> Skeletons share Clinkz items."
+
+// Clinkz's Custom Talents
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_1"          "Death Pact Spirits can now attack with spirit strikes"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_2"          "Skeletal Quickness"
+"Dota_Tooltip_Ability_special_bonus_imba_clinkz_2_Description"    "+25% move speed if an enemy is near while in Skeleton Walk (350 radius)"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_3"          "Skeleton Walking through an enemy roots target, Clinkz loses invis"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_4"          "Searing Arrows active gets 400 AoE"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_5"          "x4 attack range for Strafe, but Clinkz is rooted"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_6"          "Skeleton Walk's move speed persists for 5 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_7"          "Searing Arrows 20% chance to attack target again"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_8"          "Burning Army Skeletons attacks burns 20 mana"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_9"          "+{s:value}s Strafe Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_10"					"Searing Arrows Multishot"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_10_Description"		"When using Searing Arrows, a second Searing Arrow targets a random enemy within the spell's range."
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_death_pact_723_health"					"+{s:value} Death Pact Health"
+"DOTA_Tooltip_ability_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration"		"+{s:value}s Skeleton Walk Attack Speed Duration"

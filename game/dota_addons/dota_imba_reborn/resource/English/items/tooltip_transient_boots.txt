@@ -1,0 +1,18 @@
+"DOTA_Tooltip_ability_item_imba_transient_boots"					"Transient Boots"
+
+"DOTA_Tooltip_ability_item_recipe_imba_transient_boots"				"Transient Boots Recipe"
+
+"DOTA_Tooltip_ability_item_imba_transient_boots_Description"					"<h1>Active: Glimmer of Tranquility</h1> After a %fade_delay% second delay, grants invisibility and %active_magical_armor%%% magic resistance to you or a target allied unit for %duration% seconds. If the targetted unit is not the caster, and the boots are not broken, they also gain the boots' movement speed and health regeneration while invisible.<br><br>Range: %tooltip_range%<br><br>Can be cast while channelling.\n<h1>Passive: Break</h1> Whenever you attack a hero or are attacked by any unit, the bonus %bonus_health_regen% HP regen is lost and the movement speed bonus is reduced to %broken_movement_speed%%% for %break_time% seconds.\nMovement speed bonuses from multiple pairs of boots do not stack."
+"DOTA_Tooltip_ability_item_imba_transient_boots_Lore"							"In distancing oneself from the world's distractions, these boots grant the one wearing them true peace, allowing greater connection with another life."
+"DOTA_Tooltip_ability_item_imba_transient_boots_Note0"							"The bonus movement speed from Glimmer of Tranquility does not stack with other boots."
+"DOTA_Tooltip_ability_item_imba_transient_boots_bonus_movement_speed"			"%+$move_speed"
+"DOTA_Tooltip_ability_item_imba_transient_boots_bonus_health_regen"				"+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_transient_boots_bonus_attack_speed"				"+$attack"
+"DOTA_Tooltip_ability_item_imba_transient_boots_bonus_magical_armor"			"%+$spell_resist"
+
+"DOTA_Tooltip_modifier_item_imba_transient_boots_invis"							"Transient Boots Glimmer"
+"DOTA_Tooltip_modifier_item_imba_transient_boots_invis_Description"				"While this is active, the owner will turn invisible after a fade delay. Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE% boot movement speed and %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% bonus health regeneration."
+
+"DOTA_Tooltip_modifier_item_imba_transient_boots_break"							"Transient Boots Break"
+"DOTA_Tooltip_modifier_item_imba_transient_boots_break_Description"				"Recently attacked, and health regeneration and partial movement speed is disabled."
+

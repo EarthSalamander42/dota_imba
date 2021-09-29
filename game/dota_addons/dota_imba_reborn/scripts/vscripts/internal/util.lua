@@ -58,24 +58,11 @@ function PrintTable(t, indent, done)
 	end
 end
 
--- Colors
-COLOR_NONE = '\x06'
-COLOR_GRAY = '\x06'
-COLOR_GREY = '\x06'
-COLOR_GREEN = '\x0C'
-COLOR_DPURPLE = '\x0D'
-COLOR_SPINK = '\x0E'
-COLOR_DYELLOW = '\x10'
-COLOR_PINK = '\x11'
-COLOR_RED = '\x12'
-COLOR_LGREEN = '\x15'
-COLOR_BLUE = '\x16'
-COLOR_DGREEN = '\x18'
-COLOR_SBLUE = '\x19'
-COLOR_PURPLE = '\x1A'
-COLOR_ORANGE = '\x1B'
-COLOR_LRED = '\x1C'
-COLOR_GOLD = '\x1D'
+function MergeTables( t1, t2 )
+	for name,info in pairs(t2) do
+		t1[name] = info
+	end
+end
 
 function DebugAllCalls()
 	if not GameRules.DebugCalls then
@@ -95,4 +82,14 @@ function DebugAllCalls()
 		GameRules.DebugCalls = false
 		debug.sethook(nil, "c")
 	end
+end
+
+-- Yahnich's calculate distance and direction functions
+function CalculateDistance(ent1, ent2)
+	local pos1 = ent1
+	local pos2 = ent2
+	if ent1.GetAbsOrigin then pos1 = ent1:GetAbsOrigin() end
+	if ent2.GetAbsOrigin then pos2 = ent2:GetAbsOrigin() end
+	local distance = (pos1 - pos2):Length2D()
+	return distance
 end

@@ -1,0 +1,17 @@
+"DOTA_Tooltip_Ability_item_imba_gungnir" 								"Gungnir"
+
+"DOTA_Tooltip_Ability_item_recipe_imba_gungnir" 						"Gungnir Recipe"
+
+"DOTA_Tooltip_Ability_item_imba_gungnir_Description"                    "<h1>Active: Divergent Thrust</h1>Pushes you and target enemy %enemy_length% units away from each other <b>(towards if the caster is melee)</b>, and for %range_duration% seconds, allows you to make %max_attacks% attacks against the target without range restrictions (ranged casters only) and with +%bonus_attack_speed% attack speed.<br><br>Works like Force Staff when used on self or allies.<br><br>Allied Range: %tooltip_range%<br>Enemy Range: %cast_range_enemy%\n<h1>Active: God Piercing</h1>When used on self or allies, they disjoint all projectiles and are invulnerable for the %duration% second duration, and perform an instant attack on any enemy unit within %god_piercing_radius% radius they pass through.\n<h1>Passive: Pierce</h1>Grants each attack a %bonus_chance%%% chance to pierce through evasion and deal %bonus_chance_damage% bonus magical damage.\n<h1>Passive: God Spear's Reach</h1> Increases attack range of ranged heroes by %base_attack_range%, and melee heroes by %base_attack_range_melee%."
+"DOTA_Tooltip_Ability_item_imba_gungnir_Lore"                           "The spear of almighty Odin pierces through any armor and shatters any weapon it comes across."
+"DOTA_Tooltip_Ability_item_imba_gungnir_Note0"                          "Gungnir doesn't interrupt the target's actions."
+"DOTA_Tooltip_Ability_item_imba_gungnir_Note1"                          "Will not work on a unit inside Chronosphere, Duel, or Black Hole."
+"DOTA_Tooltip_ability_item_imba_gungnir_bonus_damage"					"+$damage"
+"DOTA_Tooltip_ability_item_imba_gungnir_bonus_attack_speed_passive"		"+$attack"
+"DOTA_Tooltip_Ability_item_imba_gungnir_bonus_intellect"                "+$int"
+"DOTA_Tooltip_Ability_item_imba_gungnir_bonus_health_regen"             "+$hp_regen"
+"DOTA_Tooltip_Ability_item_imba_gungnir_bonus_agility"                  "+$agi"
+"DOTA_Tooltip_Ability_item_imba_gungnir_bonus_strength"                 "+$str"
+
+"DOTA_Tooltip_modifier_item_imba_gungnir_attack_speed"					"Gungnir Attack Speed"
+"DOTA_Tooltip_modifier_item_imba_gungnir_attack_speed_Description"		"Gaining additional attack speed against the Divergent Thrusted target. If the caster is a ranged attacker, they can attack the target without range restrictions."

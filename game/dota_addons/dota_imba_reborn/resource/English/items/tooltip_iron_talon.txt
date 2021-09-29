@@ -1,0 +1,17 @@
+"DOTA_Tooltip_Ability_item_imba_iron_talon"									"Iron Talon"
+"DOTA_Tooltip_Ability_item_recipe_imba_iron_talon"							"Iron Talon Recipe"		
+
+"DOTA_Tooltip_ability_item_imba_iron_talon_Description"						"<h1>Active: Chop</h1>Targets a non-hero enemy unit to remove %creep_damage_pct%%% of its current HP.<br><br><font color='#FF7800'>If cast on a tree or ward, instantly destroys it.</font><br><br>Unit Range: %tooltip_range%<br>Tree Range: %quelling_range_tooltip%<BR>Ward Range: %cast_range_ward%\n<h1>Passive: Quell</h1>Increases attack damage against non-hero units by %damage_bonus% for melee heroes, and %damage_bonus_range% for ranged.\n<h1><font color='#FF7800'>Passive: The Hunt</font></h1> Whenever you kill a neutral creep, increase Quell's bonus damage by %hunt_bonus% (+%hunt_bonus_ranged% if the wielder is ranged), up to +%hunt_max% (+%hunt_max_ranged% if the wielder is ranged)."
+
+"DOTA_Tooltip_ability_item_imba_iron_talon_Note0"							"Has a greatly reduced cooldown on Trees."
+"DOTA_Tooltip_ability_item_imba_iron_talon_Note1"							"Can target all of Techies' mines."
+"DOTA_Tooltip_ability_item_imba_iron_talon_Note2"							"Quell stacks with the Quell of Battle Fury, but not with Quelling Blade and additional Iron Talons."
+"DOTA_Tooltip_ability_item_imba_iron_talon_bonus_armor"						"+$armor"
+//"DOTA_Tooltip_ability_item_imba_iron_talon_damage_bonus"					"QUELL MELEE DAMAGE:"
+//"DOTA_Tooltip_ability_item_imba_iron_talon_damage_bonus_ranged"			"QUELL RANGED DAMAGE:"
+//"DOTA_Tooltip_ability_item_imba_iron_talon_quelling_range_tooltip"		"CAST RANGE:"
+//"DOTA_Tooltip_ability_item_imba_iron_talon_cast_range_ward"				"CAST RANGE ON WARDS:"
+"DOTA_Tooltip_ability_item_imba_iron_talon_Lore"							"A simple but effective weapon devised to quell a great Hellbear uprising."
+
+"DOTA_Tooltip_modifier_item_imba_iron_talon"								"The Hunt"
+"DOTA_Tooltip_modifier_item_imba_iron_talon_Description"					"Gaining bonus attack damage against creeps."

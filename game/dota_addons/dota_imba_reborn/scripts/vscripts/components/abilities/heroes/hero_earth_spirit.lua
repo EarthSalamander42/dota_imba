@@ -519,7 +519,7 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 		local pointTarget = self:GetCursorPosition()
 		local target = self:GetCursorTarget()
 		local caster = self:GetCaster()
-		local searchRadius = self:GetVanillaAbilitySpecial("rock_search_aoe") + GetCastRangeIncrease(caster)
+		local searchRadius = self:GetVanillaAbilitySpecial("rock_search_aoe") + caster:GetCastRangeIncrease()
 
 		-- remove thinker modifier for when casting outside of unit/remnant search range
 		caster:RemoveModifierByName("modifier_imba_boulder_smash_cast_thinker")
@@ -786,7 +786,7 @@ function modifier_imba_boulder_smash_cast_thinker:OnCreated()
 		self.ignoredOrders[DOTA_UNIT_ORDER_GLYPH] = true
 		
 		self.caster = self:GetParent()
-		self.castRange = self:GetAbility():GetVanillaAbilitySpecial("rock_search_aoe") + GetCastRangeIncrease(self.caster) - 20
+		self.castRange = self:GetAbility():GetVanillaAbilitySpecial("rock_search_aoe") + self.caster:GetCastRangeIncrease() - 20
 		
 		Timers:CreateTimer(FrameTime(), function()
 			if not self:IsNull() then

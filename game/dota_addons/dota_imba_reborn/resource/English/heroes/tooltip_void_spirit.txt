@@ -1,0 +1,120 @@
+//"DOTA_Tooltip_ability_void_spirit_aether_remnant"					"Aether Remnant"
+//"DOTA_Tooltip_ability_void_spirit_aether_remnant_Description"		"Vector targeted. Void Spirit dispatches a remnant to the target location. The remnant stands watch over the region, facing the direction of his vector. When a unit crosses its gaze, the remnant pulls it in and damages it."
+//"DOTA_Tooltip_ability_void_spirit_aether_remnant_Lore"				"Inai exists far beyond the scope of a single point in space and time."
+//"DOTA_Tooltip_ability_void_spirit_aether_remnant_pull_duration"		"PULL DURATION:"
+//"DOTA_Tooltip_ability_void_spirit_aether_remnant_impact_damage"		"DAMAGE:"
+//"DOTA_Tooltip_ability_void_spirit_aether_remnant_duration"			"REMNANT LIFETIME:"
+//"DOTA_Tooltip_ability_void_spirit_aether_remnant_activation_delay"	"ACTIVATION TIME:"
+
+//"DOTA_Tooltip_ability_void_spirit_aether_remnant_Description"		"Vector targeted. Void Spirit dispatches a remnant to the target location. The remnant stands watch over the region, facing the direction of his vector. When a unit crosses its gaze, the remnant pulls it in and damages it.\n<font color='#FF7800'>Dimensional Swiftness:</font> Damaging an enemy hero with Aether Remnant increases Void Spirit's attack damage by %damage_bonus%, movement speed by %move_speed_bonus%, and evasion by %evasion_bonus%%% for %swiftness_duration% seconds. Stacks with, but does not refresh itself.\n<font color='#FF7800'>Aether Sense:</font> Enemy heroes hit by Aether Remnant are revealed through invisibility for %vision_duration% seconds."
+
+"npc_dota_hero_void_spirit"					"Void Spirit (IMBA)"
+
+"DOTA_Tooltip_modifier_imba_void_spirit_aether_remnant_helper_buff"		"Dimensional Swiftness"
+"DOTA_Tooltip_modifier_imba_void_spirit_aether_remnant_helper_buff_Description"	"Attack damage increased by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%, movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%, and evasion increased by %dMODIFIER_PROPERTY_EVASION_CONSTANT%%%."
+
+"DOTA_Tooltip_modifier_imba_void_spirit_aether_remnant_target_vision"				"Aether Sense"
+"DOTA_Tooltip_modifier_imba_void_spirit_aether_remnant_target_vision_Description"	"Can be seen through invisibility."
+
+"DOTA_Tooltip_ability_imba_void_spirit_dissimilate"						"Dissimilate"
+"DOTA_Tooltip_ability_imba_void_spirit_dissimilate_Description"			"Void Spirit temporarily fades into the aether, creating a number of portals through which he can reassemble himself. Upon exiting a portal, he damages all enemies in the area.\n<font color='#FF7800'>Shared Incorporeality:</font> Can be set to auto-cast to make Dissimilate also pull allies into the center portal. They will appear at Void Spirit's chosen portal after the phase duration at a similar position offset."
+"DOTA_Tooltip_ability_imba_void_spirit_dissimilate_Lore"					"Inai much prefers to observe our plane free from the confines of corporeal form."
+//"DOTA_Tooltip_ability_imba_void_spirit_dissimilate_scepter_description" "Increases size and distance of portals by %scepter_size_increase_pct%%%."
+"DOTA_Tooltip_ability_imba_void_spirit_dissimilate_phase_duration"		"PHASE DURATION:"
+"DOTA_Tooltip_ability_imba_void_spirit_dissimilate_armor_reduction"		"ARMOR REDUCTION:"
+
+"DOTA_Tooltip_ability_modifier_imba_void_spirit_dissimilate_ally"					"Dissimilate - Ally"
+"DOTA_Tooltip_ability_modifier_imba_void_spirit_dissimilate_ally_Description"		"Will re-emerge at Void Spirit's chosen portal location after expiry."
+
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse"						"Resonant Pulse"
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_Description"			"Void Spirit wraps himself in a protective shield that absorbs physical damage and emits a single damaging pulse around him. The shield gains increased damage absorption for each enemy hero the pulse hits.\n<font color='#FF7800'>Equal Exchange:</font> Enemies affected by Resonant Pulse have damage block disabled for the next %equal_exchange_attacks% attacks. Lasts for %equal_exchange_duration% seconds.\n<font color='#FF7800'>Expansion Dome:</font> Also casts a protective field at Void Spirit's location, with a radius equal to the pulse radius. Absorbs similar damage to the primary shield for allied units within the radius. Void Spirit does not benefit from Expansion Dome."
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_Lore"					"Inai never hesitates to shroud himself in the essence of his true self when forced to interact with the mortal plane."
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_Note0"				"Expansion Dome does not affect allied buildings or ward-type units."
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_radius"					"PULSE RADIUS:"
+//"DOTA_Tooltip_ability_imba_void_spirit_pulse_speed"					"SPEED:"
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_buff_duration"			"SHIELD DURATION:"
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_damage"					"DAMAGE:"
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_base_absorb_amount"		"BASE SHIELD ABSORB:"
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_absorb_per_hero_hit"	"BONUS ABSORB PER HERO HIT:"
+"DOTA_Tooltip_ability_imba_void_spirit_resonant_pulse_scepter_description"    "Causes Resonant Pulse to silence for %silence_duration_scepter% seconds and gain %max_charges% charges."
+
+"DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_physical_buff"				"Resonant Pulse"
+"DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_physical_buff_Description"	"Absorbing physical damage."
+
+"DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_buff"					"Resonant Pulse"
+"DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_buff_Description"		"This unit has a shield that absorbs physical damage."
+
+"DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_thinker_buff"				"Resonant Pulse"
+"DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_thinker_buff_Description"	"This unit is under a dome that absorbs physical damage."
+
+"DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_equal_exchange"				"Equal Exchange"
+"DOTA_Tooltip_modifier_imba_void_spirit_resonant_pulse_equal_exchange_Description"	"Unable to block for the next %dMODIFIER_PROPERTY_TOOLTIP% attacks taken."
+
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper"					"Echo Slash"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_Description"		"Can only be activated between %grace_time_start% and %grace_time_end% seconds after Astral Step is cast. Doing so immediately performs an Astral Step in the opposite direction at max distance. Costs Astral Step's mana cost plus %max_mana_pct%%% of the caster's max mana to activate."
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_Lore"					"A small step for Inai creates great devastation on the mortal plane."
+
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_2"					"Warp Slash"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_2_Description"		"CHANNELED - Allows Void Spirit to perform an Astral Step at %bonus_range_pct%%% increased max range without moving to the cast position. If successfully channeled for %abilitychanneltime% seconds, the instant attack will ignore armor."
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_2_Lore"					"A small step for Inai creates great devastation on the mortal plane."
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_helper_2_Note0"					"Requires and uses Astral Step charges."
+
+"DOTA_Tooltip_ability_imba_void_spirit_void_stasis"					"Void Stasis"
+"DOTA_Tooltip_ability_imba_void_spirit_void_stasis_Description"		"After channeling for %abilitychanneltime% seconds, Inai puts all heroes within the cast area into stasis for %duration% seconds, interrupting their current action and granting them invulnerability and spell immunity. Enemies are stunned and frozen, while allies are disarmed, muted, and silenced."
+"DOTA_Tooltip_ability_imba_void_spirit_void_stasis_Lore"			"From a point beyond time and space, Inai violently displaces dimensionality within a distant realm."
+"DOTA_Tooltip_ability_imba_void_spirit_void_stasis_abilitycastrange"	"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_void_spirit_void_stasis_radius"				"RADIUS:"
+
+"DOTA_Tooltip_modifier_imba_void_spirit_void_stasis"				"Void Stasis"
+"DOTA_Tooltip_modifier_imba_void_spirit_void_stasis_Description"	"Invulnerable and spell immune. Enemies of the caster are stunned and frozen, while allies are disarmed, muted, and silenced."
+
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step"						"Astral Step"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_Description"			"Void Spirit tears a rift through the astral plane to appear at the target location, attacking all enemies along the path. This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates.\n<font color='#FF7800'>I am ALL The Hidden Ones:</font> Successfully hitting at least one hero with Astral Step grants Inai invisibility for %hidden_ones_duration% seconds. Can stack with itself, increasing its duration.\n<font color='#FF7800'>Warp Slash:</font> Gains access to the Warp Slash sub-ability, which allows Astral Step to be channeled and cast without teleporting."
+
+//\n<font color='#FF7800'>Echo Slash:</font> Gains access to the Echo Slash sub-ability, which allows Astral Step to be re-cast in the opposite direction. Echo Slashes do not contribute to 'I am ALL The Hidden Ones'.
+
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_Note0"				"Astral Step attacks do not cleave."
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_Lore"					"A small step for Inai creates great devastation on the mortal plane."
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_bonus_damage"			"BONUS ATTACK DAMAGE:"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_max_charges"			"MAX CHARGES:"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_charge_restore_time"	"CHARGE RESTORE TIME:"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_max_travel_distance"	"RANGE:"
+//"DOTA_Tooltip_ability_imba_void_spirit_astral_step_pop_damage_delay"		"VOID MARK DAMAGE DELAY:"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_pop_damage"			"VOID MARK DAMAGE:"
+"DOTA_Tooltip_ability_imba_void_spirit_astral_step_movement_slow_pct"	"%MOVEMENT SLOW:"
+
+"DOTA_Tooltip_modifier_imba_void_spirit_astral_step_charge_counter"				"Astral Step Charges"
+"DOTA_Tooltip_modifier_imba_void_spirit_astral_step_charge_counter_Description"	"Number of charges left on Astral Step."
+
+"DOTA_Tooltip_modifier_imba_void_spirit_astral_step_debuff"				"Astral Step"
+"DOTA_Tooltip_modifier_imba_void_spirit_astral_step_debuff_Description"	"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE% and will take damage on expiration."
+
+"DOTA_Tooltip_modifier_imba_void_spirit_astral_step_invis"				"Astral Step Invisibility"
+
+"dota_hud_error_astral_step_no_charges"							"No Astral Step Charges"
+
+"dota_hud_error_planeshift_no_charges"								"No Planeshift Charges"
+
+"DOTA_Tooltip_modifier_imba_void_spirit_planeshift_passive_charges"				"Planeshift Charges"
+"DOTA_Tooltip_modifier_imba_void_spirit_planeshift_passive_charges_Description"	"Charges gained from enemy spellcasts."
+
+"DOTA_Tooltip_modifier_imba_void_spirit_planeshift_untargetable"					"Shifted Form"
+"DOTA_Tooltip_modifier_imba_void_spirit_planeshift_untargetable_Description"		"Unit is untargetable"
+
+"DOTA_Tooltip_modifier_imba_void_spirit_planeshift_on_hit"				"Planeshift - Special Attack"
+"DOTA_Tooltip_modifier_imba_void_spirit_planeshift_on_hit_Description"	""
+
+"DOTA_Tooltip_modifier_imba_void_spirit_planeshift_caster_buff"				"Planeshift - Unleashed"
+"DOTA_Tooltip_modifier_imba_void_spirit_planeshift_caster_buff_Description"	"Has %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage and %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% bonus evasion."
+
+"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_charge_cooldown"				"{s:value}s Astral Step Charge Restore Time"
+
+"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_dissimilate_stun"				"Dissimilate Stuns for {s:value}s"
+"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_resonant_pulse_damage"				"+{s:value} Resonant Pulse Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit"				"Astral Step {s:value}% Crit"
+"DOTA_Tooltip_ability_special_bonus_imba_void_spirit_astral_step_crit_Description"	"Attacks made with Astral Step deal a critical strike."
+
+//"DOTA_Tooltip_ability_special_bonus_unique_imba_void_spirit_2"				"+{s:value} Astral Step Range"
+//"DOTA_Tooltip_ability_special_bonus_unique_imba_void_spirit_5"				"{s:value}% Larger Dissimilate Portals"
+//"DOTA_Tooltip_ability_special_bonus_unique_imba_void_spirit_6"				"Dissimilate Grants {s:value}s Invisibility"
+//"DOTA_Tooltip_ability_special_bonus_unique_imba_void_spirit_9"				"+{s:value} Astral Step Charges"

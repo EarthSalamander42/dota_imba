@@ -1,0 +1,3 @@
+"gg_button"						"Call GG"
+"gg_panel_description"			"GG confirmed in"
+"gg_cancel"						"Cancel"
