@@ -15,13 +15,6 @@ function GameMode:OnGameRulesStateChange(keys)
 		GameRules:GetGameModeEntity():SetModifyGoldFilter(Dynamic_Wrap(self, "GoldFilter"), self)
 		GameRules:GetGameModeEntity():SetModifyExperienceFilter(Dynamic_Wrap(self, "ExperienceFilter"), self)
 
-		if IsInToolsMode() then
-			Timers:CreateTimer(2.0, function()
-				SendToServerConsole('sm_gmode 1')
-				SendToServerConsole('dota_bot_populate')
-			end)
-		end
-
 		-- setup Player colors into hex for panorama
 		local hex_colors = {}
 
@@ -40,6 +33,8 @@ function GameMode:OnGameRulesStateChange(keys)
 				PlayerResource:GetPlayer(i):MakeRandomHeroSelection()
 			end
 		end
+
+		SendToServerConsole('dota_bot_populate')
 
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:HasSelectedHero(i) then
