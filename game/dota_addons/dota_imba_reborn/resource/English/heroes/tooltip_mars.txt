@@ -1,5 +1,3 @@
-"npc_dota_hero_mars"						"Mars (IMBA)"
-
 // Spear of Mars
 "DOTA_Tooltip_ability_imba_mars_spear"									"#{DOTA_Tooltip_ability_mars_spear}"
 "DOTA_Tooltip_ability_imba_mars_spear_Imbafication_1"					"<font color='#FF7800'>Heaven Spear:</font> When auto-cast is on, Mars calls a spear falling from the sky after a delay of %heaven_spear_delay%s, stunning the closest unit within %heaven_spear_radius% radius and knockback other units in range by %heaven_spear_knockback%. Heaven Spear can be cast globally."

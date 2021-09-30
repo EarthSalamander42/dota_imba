@@ -37,12 +37,18 @@ function GameMode:OnGameRulesStateChange(keys)
 		SendToServerConsole('dota_bot_populate')
 
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			PlayerResource:SetGold(i, HERO_INITIAL_GOLD - VANILA_HERO_INITIAL_GOLD, true)
+
 			if PlayerResource:HasSelectedHero(i) then
 				PrecacheUnitByNameAsync(PlayerResource:GetSelectedHeroName(i), function(...) end)
 			end
 		end
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
-		CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("delay_init_top_bar_colors"), function()
+			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
+		end, 1.0)
+
+		GameMode:SetupPostTurboRules()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 
 	end
@@ -103,6 +109,15 @@ function GameMode:OnHeroFirstSpawn(hero)
 			hero:HeroLevelUp(false)
 		end
 	end
+
+	hero:AddNewModifier(hero, nil, "modifier_frantic", {})
+
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("delay_init_tooltips"), function()
+		-- init tooltips
+		local player = PlayerResource:GetPlayer(hero:GetPlayerID())
+
+		CustomGameEventManager:Send_ServerToPlayer(player, "vanillafier_init_tooltips_first_spawn", {})
+	end, 1.0)
 
 --	PlayerResource:SetCustomPlayerColor(hero:GetPlayerID(), PLAYER_COLORS[hero:GetPlayerID()][1], PLAYER_COLORS[hero:GetPlayerID()][2], PLAYER_COLORS[hero:GetPlayerID()][3])
 end

@@ -1,4 +1,6 @@
-	// Dota Units File
+#base units/vanilla_override.txt
+
+// Dota Units File
 "DOTAUnits"
 {
 	"Version" "1"

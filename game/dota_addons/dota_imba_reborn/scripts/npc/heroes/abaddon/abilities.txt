@@ -88,6 +88,7 @@
 		"ScriptFile"									"components/abilities/heroes/hero_abaddon.lua"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"							"abaddon_frostmourne"
+		"HasShardUpgrade"								"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

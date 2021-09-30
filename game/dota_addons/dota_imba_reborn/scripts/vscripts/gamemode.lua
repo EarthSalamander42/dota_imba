@@ -25,6 +25,7 @@ require('events')
 require('filters')
 
 require('components/hero_selection')
+require('components/respawn_timer')
 require('components/vanillafier_tooltips/init')
 VANILLA_ABILITIES_BASECLASS = require('components/abilities/vanilla_baseclass')
 
@@ -35,4 +36,13 @@ end
 -- CAREFUL, FOR REASONS THIS FUNCTION IS ALWAYS CALLED TWICE
 function GameMode:InitGameMode()
 	self:_InitGameMode()
+end
+
+function GameMode:SetupPostTurboRules()
+	-- Ancients don't regen
+	local forts = Entities:FindAllByClassname("npc_dota_fort")
+
+	for _, fort in pairs(forts) do
+		fort:SetBaseHealthRegen(0.0)
+	end
 end

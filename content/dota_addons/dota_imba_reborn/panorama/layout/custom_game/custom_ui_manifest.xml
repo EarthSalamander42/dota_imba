@@ -25,7 +25,7 @@
 
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );      //Lefthand flyout scoreboard.
 
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );      //Endgame scoreboard.    
+//		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );      //Endgame scoreboard.    
 	</script>
 
 	<Panel>
@@ -33,6 +33,8 @@
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/vanillafier_tooltips/vanillafier_tooltips.xml" />
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay/multiteam_hero_select_overlay.xml" />
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/vanilla_hero_selection/vanilla_hero_selection.xml" /> 
+
+		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications/barebones_notifications.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ingame_advertizing/ingame_advertizing.xml" /> 
@@ -49,9 +51,6 @@
 <!--
 
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.xml" />
-		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
-
-        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fix_custom_game/fix_custom_game.xml" />
 -->
 	</Panel>
 </root>

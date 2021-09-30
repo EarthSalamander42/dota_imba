@@ -10,7 +10,7 @@ function modifier_frantic:IsPurgable() return false end
 function modifier_frantic:IsPurgeException() return false end
 
 function modifier_frantic:GetTexture()
-	return "custom/frantic"
+	return "frantic"
 end
 
 function modifier_frantic:GetEffectName()

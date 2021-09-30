@@ -4,5 +4,6 @@
   [
     "game_options",
     "battlepass_player",
+    "player_table",
   ]
 }

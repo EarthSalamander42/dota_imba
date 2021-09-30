@@ -166,7 +166,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 			-- Apply curse of avernus debuff
 			local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_frostmourne")
 
-			if curse_of_avernus and curse_of_avernus:GetLevel() > 0 and not caster:PassivesDisabled() then
+			if curse_of_avernus and curse_of_avernus:GetLevel() > 0 and not caster:PassivesDisabled() and not target:HasModifier("modifier_imba_curse_of_avernus_debuff_slow") and not target:IsMagicImmune() then
 				local debuff_duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")
 
 				target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", {duration = debuff_duration})
@@ -312,6 +312,7 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 
 	-- Check health cost required due to over channel
 	local health_cost = getOverChannelDamageIncrease(caster)
+
 	if health_cost > 0 then
 		ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL})
 	end
@@ -424,53 +425,46 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 		end
 	end
 
-	if caster:HasShard() then
-		local debuff_duration
-		local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_frostmourne")
+	for _, unit in pairs(units) do
+		if unit:GetTeam() ~= caster:GetTeam() then
+			ApplyDamage({ victim = unit, attacker = caster, damage = damage, damage_type = damage_type })
 
-		if curse_of_avernus and curse_of_avernus:GetLevel() > 0 then
-			debuff_duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")
+			if caster:HasShard() then
+				local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_frostmourne")
 
-			for _, unit in pairs(units) do
-				if unit:GetTeam() ~= caster:GetTeam() then
-					ApplyDamage({ victim = unit, attacker = caster, damage = damage, damage_type = damage_type })
-
-					if debuff_duration and debuff_duration > 0 then
-						if not caster:PassivesDisabled() and curse_of_avernus then
-							unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", { duration = debuff_duration * (1 - unit:GetStatusResistance()) })
-						end
-
-						-- Show particle when hit
-						particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, unit)
-						ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT, "attach_hitloc", unit:GetAbsOrigin(), true)
-						local hit_size = unit:GetModelRadius() * 0.3
-						ParticleManager:SetParticleControl(particle, 1, Vector(hit_size, hit_size, hit_size))
-						ParticleManager:ReleaseParticleIndex(particle)
-					end
+				if not caster:PassivesDisabled() and curse_of_avernus and curse_of_avernus:GetLevel() > 0 and not unit:HasModifier("modifier_imba_curse_of_avernus_debuff_slow") and not unit:IsMagicImmune() then
+					unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", {duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")})
 				end
 			end
-		end
 
-		-- Talent Mist Coil stuff. Hopefully, just passing it the ability + making the projectile is enough without any
-		-- skill-copy/dummy-unit stuff
-		if mist_coil_ability and CalculateDistance(target, unit) < mist_coil_range then
-			local info = {
-				Target = unit,
-				Source = target,
-				Ability = mist_coil_ability,
-				EffectName = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf",
-				bDodgeable = false,
-				bProvidesVision = true,
-				bVisibleToEnemies = true,
-				bReplaceExisting = false,
-				iMoveSpeed = mist_coil_ability:GetVanillaAbilitySpecial("missile_speed"),
-				iVisionRadius = 0,
-				iVisionTeamNumber = caster:GetTeamNumber(),
-				ExtraData = {special_cast = true}
-			}
-
-			ProjectileManager:CreateTrackingProjectile( info )
+			-- Show particle when hit
+			particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, unit)
+			ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT, "attach_hitloc", unit:GetAbsOrigin(), true)
+			local hit_size = unit:GetModelRadius() * 0.3
+			ParticleManager:SetParticleControl(particle, 1, Vector(hit_size, hit_size, hit_size))
+			ParticleManager:ReleaseParticleIndex(particle)
 		end
+	end
+
+	-- Talent Mist Coil stuff. Hopefully, just passing it the ability + making the projectile is enough without any
+	-- skill-copy/dummy-unit stuff
+	if mist_coil_ability and target and unit and CalculateDistance(target, unit) < mist_coil_range then
+		local info = {
+			Target = unit,
+			Source = target,
+			Ability = mist_coil_ability,
+			EffectName = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf",
+			bDodgeable = false,
+			bProvidesVision = true,
+			bVisibleToEnemies = true,
+			bReplaceExisting = false,
+			iMoveSpeed = mist_coil_ability:GetVanillaAbilitySpecial("missile_speed"),
+			iVisionRadius = 0,
+			iVisionTeamNumber = caster:GetTeamNumber(),
+			ExtraData = {special_cast = true}
+		}
+
+		ProjectileManager:CreateTrackingProjectile( info )
 	end
 end
 
@@ -670,9 +664,9 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 				end
 
 				-- Apply debuff if enemy
-				if self:GetAbility() then
+				if self:GetAbility() and not target:IsMagicImmune() then
 					local slow_duration = self:GetAbility():GetVanillaAbilitySpecial("slow_duration") -- Not possible for this to be 0 here
-					target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_curse_of_avernus_debuff_counter", { duration = slow_duration * (1 - target:GetStatusResistance())})
+					target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_curse_of_avernus_debuff_counter", {duration = slow_duration})
 				end
 			end
 		end
@@ -852,6 +846,7 @@ end
 
 function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 	if not IsServer() then return end
+	if self:GetParent():IsBuilding() then return end
 
 	-- Caster gain heal equal to damage to taken (heal_convert)
 	local heal_convert = self.heal_convert

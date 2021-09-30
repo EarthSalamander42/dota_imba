@@ -155,16 +155,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_stacks"			"3"
 			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"greevil_duration"		"10"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"periodic_gold_percentage"	"25"
-			}
 		}
 	}
 

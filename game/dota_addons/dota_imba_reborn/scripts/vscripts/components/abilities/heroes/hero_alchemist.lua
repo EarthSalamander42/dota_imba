@@ -497,7 +497,7 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 	duration = duration / speed_multiplier
 
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_unstable_concoction_handler", {duration = duration,})
-	CustomNetTables:SetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID()), { brew_start = GameRules:GetGameTime(), radius_increase = self.radius_increase,})
+	CustomNetTables:SetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID()), { brew_start = GameRules:GetGameTime(), radius_increase = self.radius_increase})
 	self.radius = self:GetVanillaAbilitySpecial("radius")
 
 	-- Play the sound, which will be stopped when the sub ability fires
@@ -856,7 +856,6 @@ MergeTables(LinkedModifiers,{
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_imba_greevils_greed_handler"]= LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_greevil_gold"]			= LUA_MODIFIER_MOTION_NONE,
 })
 imba_alchemist_goblins_greed = imba_alchemist_goblins_greed or class(VANILLA_ABILITIES_BASECLASS)
 
@@ -913,13 +912,6 @@ end
 
 function imba_alchemist_goblins_greed:OnSpellStart()
 	if IsServer() then
-		-- Can't spawn multiple greevils
-		if self.greevil_active then
-			self:EndCooldown()
-			DisplayError(self:GetCaster():GetPlayerID(), "#dota_hud_error_active_greevil")
-			return
-		end
-
 		-- Ability properties
 		local caster	= 	self:GetCaster()
 		local target	=	self:GetCursorTarget()
@@ -931,8 +923,7 @@ function imba_alchemist_goblins_greed:OnSpellStart()
 		local total_gold		=	target:GetGoldBounty() * gold_multiplier
 		local total_exp			=	target:GetDeathXP()	* exp_multiplier
 		local bonus_stacks		=	self:GetSpecialValueFor("bonus_stacks")
-		local greevil_duration	=	self:GetSpecialValueFor("greevil_duration")
-		self.greevil_active = true
+
 		-- Play sound and show gold gain message to the owner
 		target:EmitSound(cast_sound)
 		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_GOLD, target, total_gold, nil)
@@ -952,79 +943,8 @@ function imba_alchemist_goblins_greed:OnSpellStart()
 		caster:ModifyGold(total_gold, true, DOTA_ModifyGold_Unspecified)
 
 		modifier:SetStackCount(modifier:GetStackCount() + bonus_stacks )
-
-
-		-- Spawn greevil
-		self.greevil = CreateUnitByName("npc_imba_alchemist_greevil", target:GetAbsOrigin(), true, caster, caster, caster:GetTeam())
-		self.greevil:SetOwner(caster)
-		self.greevil_ability = self.greevil:FindAbilityByName("imba_alchemist_greevils_greed")
-		self.greevil_ability:SetLevel(1)
-
-		--Destroy the greevil after the duration ends
-		Timers:CreateTimer(greevil_duration,function()
-			self.greevil:Destroy()
-			self.greevil_active = false
-		end)
-
-		Timers:CreateTimer(0.1, function()
-			self.greevil:MoveToNPC(caster)
-		end)
-
-		-- Apply periodic gold modifier
-		caster:AddNewModifier(caster, self, "modifier_imba_greevil_gold", {duration = greevil_duration} )
 	end
 end
-
-
--- Periodic gold modifier
-modifier_imba_greevil_gold 	=	modifier_imba_greevil_gold or class({})
-
-function modifier_imba_greevil_gold:OnCreated()
-	if IsServer() then
-		-- Start giffing gold
-		self:StartIntervalThink(2)
-	end
-end
-
-function modifier_imba_greevil_gold:OnIntervalThink()
-	if IsServer() then
-		-- Ability properties
-		local caster	=	self:GetCaster()
-		local ability	=	self:GetAbility()
-		local gold_particle	= "particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
-		local player 	= PlayerResource:GetPlayer(caster:GetPlayerID())
-		local greed_modifier = caster:FindModifierByName("modifier_imba_goblins_greed_passive")
-		local stacks
-		if greed_modifier then
-			stacks = greed_modifier:GetStackCount()
-		end
-
-		-- Ability paramaters
-		local gold_pct	=	ability:GetSpecialValueFor("periodic_gold_percentage")
-		local total_gold=	math.floor(stacks * (gold_pct/100))
-
-		-- Apply gold particle
-		local gold_particle_fx = ParticleManager:CreateParticleForPlayer(gold_particle, PATTACH_ABSORIGIN, caster, player)
-		ParticleManager:SetParticleControl(gold_particle_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(gold_particle_fx, 1, caster:GetAbsOrigin())
-
-
-		-- Gold message
-		local msg_particle = "particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
-		local msg_particle_fx = ParticleManager:CreateParticleForPlayer(msg_particle, PATTACH_ABSORIGIN, caster, player)
-		ParticleManager:SetParticleControl(msg_particle_fx, 1, Vector(0, total_gold, 0))
-		ParticleManager:SetParticleControl(msg_particle_fx, 2, Vector(2, string.len(total_gold) + 1, 0))
-		ParticleManager:SetParticleControl(msg_particle_fx, 3, Vector(255, 200, 33) )-- Gold
-
-		-- Give gold
-		caster:ModifyGold(total_gold, false, DOTA_ModifyGold_Unspecified)
-
-	end
-end
-
-function modifier_imba_greevil_gold:IsHidden() return true end
-function modifier_imba_greevil_gold:IsPurgable() return true end
-function modifier_imba_greevil_gold:IsDebuff() return false end
 
 modifier_imba_goblins_greed_passive = modifier_imba_goblins_greed_passive or class ({})
 

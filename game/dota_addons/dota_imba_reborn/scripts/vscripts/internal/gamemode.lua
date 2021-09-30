@@ -30,10 +30,6 @@ function GameMode:_InitGameMode()
 	GameRules:SetCustomGameEndDelay( GAME_END_DELAY )
 	GameRules:SetCustomVictoryMessageDuration( VICTORY_MESSAGE_DURATION )
 
-	if STARTING_GOLD ~= -1 then
-		GameRules:SetStartingGold( STARTING_GOLD[GetMapName()] )
-	end
-
 	if SKIP_TEAM_SETUP then
 		GameRules:SetCustomGameSetupAutoLaunchDelay( 0 )
 		GameRules:LockCustomGameSetupTeamAssignment( true )
@@ -135,5 +131,26 @@ function GameMode:_CaptureGameMode()
 
 		mode:SetItemAddedToInventoryFilter(Dynamic_Wrap(self, "ItemAddedFilter"), self)
 		mode:SetBountyRunePickupFilter(Dynamic_Wrap(self, "BountyRuneFilter"), self)
+
+		mode:SetRuneEnabled(DOTA_RUNE_DOUBLEDAMAGE , true) -- Double Damage
+		mode:SetRuneEnabled(DOTA_RUNE_HASTE, true) -- Haste
+		mode:SetRuneEnabled(DOTA_RUNE_ILLUSION, true) -- Illusion
+		mode:SetRuneEnabled(DOTA_RUNE_INVISIBILITY, true) -- Invis
+		mode:SetRuneEnabled(DOTA_RUNE_REGENERATION, true) -- Regen
+		mode:SetRuneEnabled(DOTA_RUNE_ARCANE, true) -- Arcane
+
+--		mode:SetDraftingHeroPickSelectTimeOverride(0.0)
+		mode:SetDraftingBanningTimeOverride(AP_BAN_TIME)
+
+		GameMode:SetupTurboRules()
 	end 
+end
+
+function GameMode:SetupTurboRules()
+	-- starting gold
+	local custom_gold_bonus = CUSTOM_GOLD_BONUS[GetMapName()] or 100
+	
+	if custom_gold_bonus > 100 then
+		HERO_INITIAL_GOLD = VANILA_HERO_INITIAL_GOLD * custom_gold_bonus / 100
+	end
 end
