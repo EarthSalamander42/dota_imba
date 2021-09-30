@@ -50,6 +50,14 @@ function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 	return base
 end
 
+function C_DOTA_BaseNPC:HasShard()
+	if self:HasModifier("modifier_item_aghanims_shard") then
+		return true
+	end
+
+	return false
+end
+
 --[[
 function C_DOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	local hParent = self:GetParent()
@@ -86,14 +94,6 @@ function IsDaytime()
 	end
 
 	return true   
-end
-
-function C_DOTA_BaseNPC:HasShard()
-	if self:HasModifier("modifier_item_aghanims_shard") then
-		return true
-	end
-
-	return false
 end
 --]]
 

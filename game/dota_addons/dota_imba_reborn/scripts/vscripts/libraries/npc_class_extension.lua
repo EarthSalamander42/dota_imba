@@ -335,8 +335,6 @@ CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nP
 	return response
 end
 
---[[
-
 -- Call custom functions whenever EmitSound is being called anywhere
 local original_EmitSound = CDOTA_BaseNPC.EmitSound
 CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
@@ -435,7 +433,6 @@ EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hParent, hCaster
 
 	return response
 end
---]]
 
 -- Currently only checks stuff for monkey king
 function CDOTA_BaseNPC:IsEligibleHero()
@@ -577,4 +574,29 @@ function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, 
 	end
 
 	return nil
+end
+
+function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
+	PlayerResource:SetCameraTarget(self:GetPlayerID(), hTarget)
+	if iDuration == nil then iDuration = FrameTime() end
+	if iDuration ~= -1 then
+		Timers:CreateTimer(iDuration, function()
+			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			Timers:CreateTimer(FrameTime(), function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+			Timers:CreateTimer(FrameTime() * 3, function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+		end)
+	end
+end
+
+function CDOTA_BaseNPC:SetCreatureHealth(health, update_current_health)
+	self:SetBaseMaxHealth(health)
+	self:SetMaxHealth(health)
+
+	if update_current_health then
+		self:SetHealth(health)
+	end
 end

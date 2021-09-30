@@ -20,6 +20,7 @@ require('libraries/rgb_to_hex')
 require('libraries/keyvalues')
 require('libraries/disable_help')
 require('libraries/modifiers')
+require('libraries/animations')
 
 require('internal/gamemode')
 require('settings')
