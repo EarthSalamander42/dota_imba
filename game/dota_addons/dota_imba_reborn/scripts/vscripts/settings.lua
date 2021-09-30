@@ -11,8 +11,10 @@ TREE_REGROW_TIME = 60.0                 -- How long should it take individual tr
 STRATEGY_TIME = 10.0
 SHOWCASE_TIME = 0.0
 AP_BAN_TIME = 10.0
+AUTO_LAUNCH_DELAY = 10.0                -- How long should the default team selection launch timer be?  The default for custom games is 30.  Setting to 0 will skip team selection.
 
 if IsInToolsMode() then
+	AUTO_LAUNCH_DELAY = 0.0
 	AP_BAN_TIME = 0.0
 	STRATEGY_TIME = 0.0
 end
@@ -78,7 +80,6 @@ DISABLE_KILLING_SPREE_ANNOUNCER = false -- Shuold we disable the killing spree a
 DISABLE_STICKY_ITEM = false             -- Should we disable the sticky item button in the quick buy area?
 SKIP_TEAM_SETUP = false                 -- Should we skip the team setup entirely?
 ENABLE_AUTO_LAUNCH = true               -- Should we automatically have the game complete team setup after AUTO_LAUNCH_DELAY seconds?
-AUTO_LAUNCH_DELAY = 10.0                -- How long should the default team selection launch timer be?  The default for custom games is 30.  Setting to 0 will skip team selection.
 LOCK_TEAM_SETUP = false                 -- Should we lock the teams initially?  Note that the host can still unlock the teams 
 USE_MULTIPLE_COURIERS = true            -- Vanilla couriers?
 
@@ -155,12 +156,12 @@ _G.IMBA_FRANTIC_VALUE = 40
 VANILLA_POWER_RUNE_TIME = 120.0
 VANILLA_BOUNTY_RUNE_TIME = 180.0
 
-local global_gold_bonus = 300 -- %
+local global_gold_bonus = 200 -- %
 CUSTOM_GOLD_BONUS = {}
 CUSTOM_GOLD_BONUS["5v5"] = global_gold_bonus
 CUSTOM_GOLD_BONUS["10v10"] = global_gold_bonus
 
-local global_xp_bonus = 300 -- %
+local global_xp_bonus = 200 -- %
 CUSTOM_XP_BONUS = {}
 CUSTOM_XP_BONUS["5v5"] = global_xp_bonus
 CUSTOM_XP_BONUS["10v10"] = global_xp_bonus

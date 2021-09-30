@@ -40,6 +40,15 @@ function GameMode:_InitGameMode()
 		GameRules:EnableCustomGameSetupAutoLaunch( ENABLE_AUTO_LAUNCH )
 	end
 
+	-- WHY DON'T YOU WORK FOR CHAT PLAYER COLORS, WHAT HAPPENED TO YOU BUDDY
+	if PlayerResource:GetPlayerCount() > 5 then
+		for ID = 0, PlayerResource:GetPlayerCount() - 1 do
+			if PlayerResource:IsValidPlayer(ID) then
+				PlayerResource:SetCustomPlayerColor(ID, PLAYER_COLORS[ID][1], PLAYER_COLORS[ID][2], PLAYER_COLORS[ID][3])
+			end
+		end
+	end
+
 	if CUSTOM_TEAM_PLAYER_COUNT and CUSTOM_TEAM_PLAYER_COUNT[GetMapName()] and type(CUSTOM_TEAM_PLAYER_COUNT[GetMapName()]) == "table" then
 		for team_number, player_count in pairs(CUSTOM_TEAM_PLAYER_COUNT[GetMapName()]) do
 			GameRules:SetCustomGameTeamMaxPlayers(team_number, player_count)
@@ -131,6 +140,7 @@ function GameMode:_CaptureGameMode()
 
 		mode:SetItemAddedToInventoryFilter(Dynamic_Wrap(self, "ItemAddedFilter"), self)
 		mode:SetBountyRunePickupFilter(Dynamic_Wrap(self, "BountyRuneFilter"), self)
+		mode:SetModifierGainedFilter(Dynamic_Wrap(self, "ModifierFilter"), self)
 
 		mode:SetRuneEnabled(DOTA_RUNE_DOUBLEDAMAGE , true) -- Double Damage
 		mode:SetRuneEnabled(DOTA_RUNE_HASTE, true) -- Haste

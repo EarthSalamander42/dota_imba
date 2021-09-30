@@ -335,7 +335,7 @@ CreateIllusions = function(hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nP
 	return response
 end
 
-CDOTA_BaseNPC.SOUNDS_OVERRIDE = {}
+--[[
 
 -- Call custom functions whenever EmitSound is being called anywhere
 local original_EmitSound = CDOTA_BaseNPC.EmitSound
@@ -344,7 +344,6 @@ CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 
 	local override_sound = nil
 
---[[
 	if IsValidEntity(self) and self.GetPlayerOwnerID and self:GetPlayerOwnerID() and self:GetPlayerOwnerID() ~= -1 then
 		override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..self:GetPlayerOwnerID())
 	elseif IsValidEntity(hCaster) and hCaster.GetPlayerOwnerID and hCaster:GetPlayerOwnerID() and hCaster:GetPlayerOwnerID() ~= -1 then
@@ -355,7 +354,6 @@ CDOTA_BaseNPC.EmitSound = function(self, sSoundName, hCaster)
 		--		print("EmitSoundOn (override):", sSoundName, override_sound["1"])
 		sSoundName = override_sound["1"]
 	end
---]]
 
 	-- call the original function
 	local response = original_EmitSound(self, sSoundName)
@@ -370,7 +368,6 @@ CDOTA_BaseNPC.StopSound = function(self, sSoundName, hCaster)
 
 local override_sound = nil
 
---[[
 	if IsValidEntity(self) and self.GetPlayerOwnerID and self:GetPlayerOwnerID() and self:GetPlayerOwnerID() ~= -1 then
 		override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..self:GetPlayerOwnerID())
 	elseif IsValidEntity(hCaster) and hCaster.GetPlayerOwnerID and hCaster:GetPlayerOwnerID() and hCaster:GetPlayerOwnerID() ~= -1 then
@@ -381,7 +378,6 @@ local override_sound = nil
 		--		print("EmitSoundOn (override):", sSoundName, override_sound["1"])
 		sSoundName = override_sound["1"]
 	end
---]]
 
 	-- call the original function
 	local response = original_StopSound(self, sSoundName)
@@ -395,7 +391,6 @@ EmitSoundOn = function(sSoundName, hParent, hCaster)
 
 local override_sound = nil
 
---[[
 	if IsValidEntity(hParent) and hParent.GetPlayerOwnerID and hParent:GetPlayerOwnerID() and hParent:GetPlayerOwnerID() ~= -1 then
 		override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hParent:GetPlayerOwnerID())
 	elseif IsValidEntity(hCaster) and hCaster.GetPlayerOwnerID and hCaster:GetPlayerOwnerID() and hCaster:GetPlayerOwnerID() ~= -1 then
@@ -406,7 +401,6 @@ local override_sound = nil
 		--		print("EmitSoundOn (override):", sSoundName, override_sound["1"])
 		sSoundName = override_sound["1"]
 	end
---]]
 
 	-- call the original function
 	local response = original_EmitSoundOn(sSoundName, hParent)
@@ -425,7 +419,6 @@ EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hParent, hCaster
 
 	local override_sound = nil
 
---[[
 	if IsValidEntity(hParent) and hParent.GetPlayerOwnerID and hParent:GetPlayerOwnerID() and hParent:GetPlayerOwnerID() ~= -1 then
 		override_sound = CustomNetTables:GetTableValue("battlepass_player", sSoundName..'_'..hParent:GetPlayerOwnerID())
 	elseif IsValidEntity(hCaster) and hCaster.GetPlayerOwnerID and hCaster:GetPlayerOwnerID() and hCaster:GetPlayerOwnerID() ~= -1 then
@@ -436,13 +429,13 @@ EmitSoundOnLocationWithCaster = function(vLocation, sSoundName, hParent, hCaster
 		--		print("EmitSoundOn (override):", sSoundName, override_sound["1"])
 		sSoundName = override_sound["1"]
 	end
---]]
 
 	-- call the original function
 	local response = original_EmitSoundOnLocationWithCaster(vLocation, sSoundName, hCaster)
 
 	return response
 end
+--]]
 
 -- Currently only checks stuff for monkey king
 function CDOTA_BaseNPC:IsEligibleHero()
@@ -564,4 +557,24 @@ CDOTA_BaseNPC.AddNewModifier = function(self, hCaster, hAbility, pszScriptName, 
 	local response = original_AddNewModifier(self, hCaster, hAbility, pszScriptName, hModifierTable)
 
 	return response
+end
+
+function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, iRed, iGreen, iBlue, bShowOnCooldown, bShowAlways, bWithCastRangeIncrease, bRemoveOnDeath)
+	local modifier = self:AddNewModifier(hCaster or self,hAbility, "modifier_imba_range_indicator", {
+		sAttribute = sAttribute,
+		iRange = iRange,
+		iRed = iRed,
+		iGreen = iGreen,
+		iBlue = iBlue,
+		bShowOnCooldown = bShowOnCooldown,
+		bShowAlways = bShowAlways,
+		bWithCastRangeIncrease = bWithCastRangeIncrease,
+		bRemoveOnDeath = bRemoveOnDeath
+	})
+
+	if modifier then
+		return modifier
+	end
+
+	return nil
 end

@@ -1,5 +1,9 @@
 #base units/vanilla_override.txt
 
+#base heroes/earth_spirit/units.txt
+#base heroes/enigma/units.txt
+#base heroes/techies/units.txt
+
 // Dota Units File
 "DOTAUnits"
 {

@@ -1,0 +1,314 @@
+"DOTAUnits"
+{
+    //=================================================================================
+	// Enigma: Eidolon I
+	//=================================================================================
+	"npc_imba_enigma_eidolon_1"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/heroes/enigma/eidelon.vmdl"
+		"SoundSet"					"Creep_Good_Range"
+		"Level"						"1"
+		"ModelScale"				"0.75"
+		"IsSummoned"				"1"
+		"SelectionGroup"			"Eidolons"
+		"UnitLabel"					"eidolons"
+		"wearable"					"8638"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"16"
+		"AttackDamageMax"			"24"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.5"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"450"
+		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"HealthBarOffset"			"130"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"12"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"280"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"180"
+		"StatusHealthRegen"			"0.4"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+
+	//=================================================================================
+	// Enigma: Eidolon II
+	//=================================================================================
+	"npc_imba_enigma_eidolon_2"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/heroes/enigma/eidelon.vmdl"
+		"SoundSet"					"Creep_Good_Range"
+		"Level"						"1"
+		"ModelScale"				"0.8"
+		"IsSummoned"				"1"
+		"SelectionGroup"			"Eidolons"
+		"UnitLabel"					"eidolons"
+		"wearable"					"8638"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"3"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"24"
+		"AttackDamageMax"			"32"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.5"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"450"
+		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"HealthBarOffset"			"135"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"12"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"310"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"210"
+		"StatusHealthRegen"			"0.4"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+
+	//=================================================================================
+	// Enigma: Eidolon III
+	//=================================================================================
+	"npc_imba_enigma_eidolon_3"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/heroes/enigma/eidelon.vmdl"
+		"SoundSet"					"Creep_Good_Range"
+		"Level"						"1"
+		"ModelScale"				"0.85"
+		"IsSummoned"				"1"
+		"SelectionGroup"			"Eidolons"
+		"UnitLabel"					"eidolons"
+		"wearable"					"8638"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"34"
+		"AttackDamageMax"			"42"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.5"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"450"
+		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"HealthBarOffset"			"140"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"12"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"340"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"220"
+		"StatusHealthRegen"			"0.4"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+
+	//=================================================================================
+	// Enigma: Eidolon IV
+	//=================================================================================
+	"npc_imba_enigma_eidolon_4"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/heroes/enigma/eidelon.vmdl"
+		"SoundSet"					"Creep_Good_Range"
+		"Level"						"1"
+		"ModelScale"				"0.9"
+		"IsSummoned"				"1"
+		"SelectionGroup"			"Eidolons"
+		"UnitLabel"					"eidolons"
+		"wearable"					"8638"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"43"
+		"AttackDamageMax"			"51"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.5"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"450"
+		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack_eidolon.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"HealthBarOffset"			"145"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"12"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"26"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"370"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"240"
+		"StatusHealthRegen"			"0.4"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+}

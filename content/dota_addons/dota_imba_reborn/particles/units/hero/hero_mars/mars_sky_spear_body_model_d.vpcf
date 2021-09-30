@@ -1,0 +1,113 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf31:version{593cd181-a1d6-4c6f-9a8c-0534e8d44db0} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 1
+	m_flCullRadius = 100.0
+	m_nCullControlPoint = 3
+	m_flConstantRadius = 1.0
+	m_bShouldSort = false
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 3
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iControlPoint = 3
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ 0.0, 0.0, 0.0 ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 1.0
+			}
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 0.2
+			m_fLifetimeMin = 0.2
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 3
+		},
+		{
+			_class = "C_INIT_NormalAlignToCP"
+			m_nControlPointNumber = 3
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+			m_flDegreesMax = 0.0
+			m_flDegrees = 90.0
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMin = 1
+			m_nSequenceMax = 1
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+			m_nOpEndCapState = "PARTICLE_ENDCAP_ENDCAP_ON"
+		},
+		{
+			_class = "C_OP_BasicMovement"
+		},
+		{
+			_class = "C_OP_RampScalarLinear"
+			m_nField = "4"
+			m_RateMin = 4.0
+			m_RateMax = 4.0
+		},
+		{
+			_class = "C_OP_RemapVelocityToVector"
+			m_bNormalize = true
+			m_nFieldOutput = "21"
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 3
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndTime = 0.6
+			m_flStartScale = 0.0
+		},
+	]
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderModels"
+			m_ModelList = 
+			[
+				{
+					m_model = resource:"models/heroes/mars/mars_spear.vmdl"
+				},
+			]
+			m_EconSlotName = "weapon"
+			m_vecColorScale = 
+			{
+				m_nType = "PVEC_TYPE_LITERAL_COLOR"
+				m_LiteralColor = [ 255, 255, 255 ]
+			}
+		},
+	]
+}

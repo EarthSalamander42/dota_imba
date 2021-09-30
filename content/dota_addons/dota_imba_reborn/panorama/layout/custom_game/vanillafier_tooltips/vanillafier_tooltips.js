@@ -1,3 +1,5 @@
+var hud_init = false;
+
 (function() {
 	// Ignore bots
 
@@ -8,11 +10,93 @@
 //	$.Msg("Vanilla Link Tooltips initialization...");
 	OnThink();
 
+	InitMainPanelCSS();
+
+	// Call it on file load in case player reconnects
+	$.Schedule(1.0, TransferMainPanelFromHeroSelectionToHud);
+
 	GameEvents.Subscribe('dota_player_update_selected_unit', InitTooltips);
-	GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', InitTooltips);
+	GameEvents.Subscribe('vanillafier_init_tooltips_first_spawn', TransferMainPanelFromHeroSelectionToHud);
 	GameEvents.Subscribe("dota_player_hero_selection_dirty", InitTooltips);
 	GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
 })();
+
+var DotaHud;
+var AbilityDetails;
+var AbilityName;
+var AbilityLevel;
+var CurrentAbilityManaCost;
+var CurrentAbilityCooldown;
+var AbilityCastType;
+var AbilityTargetType;
+var AbilityDamageType;
+var AbilitySpellImmunityType;
+var AbilityDispelType;
+var AbilityAttributes;
+var AbilityExtraDescription;
+var AbilityExtraAttributes;
+var AbilityCooldown;
+var AbilityManaCost;
+var AbilityLore;
+var AbilityUpgradeLevel;
+
+function InitMainPanelCSS(bFirst) {
+	if (hud_init == false) {
+		DotaHud = $.GetContextPanel();
+	}
+
+	AbilityDetails = DotaHud.FindChildTraverse("AbilityDetails");
+	AbilityName = DotaHud.FindChildTraverse("AbilityName");
+	AbilityLevel = DotaHud.FindChildTraverse("AbilityLevel");
+	CurrentAbilityManaCost = DotaHud.FindChildTraverse("CurrentAbilityManaCost");
+	CurrentAbilityCooldown = DotaHud.FindChildTraverse("CurrentAbilityCooldown");
+	AbilityCastType = DotaHud.FindChildTraverse("AbilityCastType");
+	AbilityTargetType = DotaHud.FindChildTraverse("AbilityTargetType"); // Not setup yet!
+	AbilityDamageType = DotaHud.FindChildTraverse("AbilityDamageType");
+	AbilitySpellImmunityType = DotaHud.FindChildTraverse("AbilitySpellImmunityType");
+	AbilityDispelType = DotaHud.FindChildTraverse("AbilityDispelType");
+	AbilityAttributes = DotaHud.FindChildTraverse("AbilityAttributes");
+	AbilityExtraDescription = DotaHud.FindChildTraverse("AbilityExtraDescription");
+	AbilityExtraAttributes = DotaHud.FindChildTraverse("AbilityExtraAttributes");
+	AbilityCooldown = DotaHud.FindChildTraverse("AbilityCooldown");
+	AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
+	AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
+	AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
+
+	DotaHud.style.width = "100%";
+	DotaHud.style.height = "100%";
+	AbilityLore.style.width = "370px";
+	AbilityDetails.AddClass("AbilityContentsCustom");
+}
+
+function TransferMainPanelFromHeroSelectionToHud() {
+	if (Game.GetState() < 7) {
+		return;
+	}
+
+	if (hud_init == true) return;
+
+	hud_init = true;
+
+	var new_parent = GameUI.Utils.FindDotaHudElement("CustomUIContainer_Hud").FindChildrenWithClassTraverse("AbilityContents")[0];
+
+	if (new_parent) {
+//		$.Msg(DotaHud);
+
+		if (DotaHud)
+			DotaHud.RemoveAndDeleteChildren();
+
+		DotaHud = new_parent;
+
+//		$.Msg(DotaHud);
+
+		InitMainPanelCSS()
+	} else {
+		$.Msg("CRITICAL ERROR! Can't find new parent for custom tooltips system.");
+	}
+
+	InitTooltips();
+}
 
 var Array_BehaviorTooltips = [];
 Array_BehaviorTooltips[DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_PASSIVE] = "Passive";
@@ -43,33 +127,6 @@ Array_AbilityDispellableType["SPELL_DISPELLABLE_YES"] = "Yes_Soft";
 Array_AbilityDispellableType["SPELL_DISPELLABLE_NO"] = "No";
 Array_AbilityDispellableType[4] = "Item_Yes_Strong";
 Array_AbilityDispellableType[5] = "Item_Yes_Soft";
-
-var DotaHud = $.GetContextPanel();
-
-var AbilitiesAndStatBranch = GameUI.Utils.GetDotaHud().FindChildTraverse("AbilitiesAndStatBranch");
-
-var AbilityDetails = DotaHud.FindChildTraverse("AbilityDetails");
-var AbilityName = DotaHud.FindChildTraverse("AbilityName");
-var AbilityLevel = DotaHud.FindChildTraverse("AbilityLevel");
-var CurrentAbilityManaCost = DotaHud.FindChildTraverse("CurrentAbilityManaCost");
-var CurrentAbilityCooldown = DotaHud.FindChildTraverse("CurrentAbilityCooldown");
-var AbilityCastType = DotaHud.FindChildTraverse("AbilityCastType");
-var AbilityTargetType = DotaHud.FindChildTraverse("AbilityTargetType"); // Not setup yet!
-var AbilityDamageType = DotaHud.FindChildTraverse("AbilityDamageType");
-var AbilitySpellImmunityType = DotaHud.FindChildTraverse("AbilitySpellImmunityType");
-var AbilityDispelType = DotaHud.FindChildTraverse("AbilityDispelType");
-var AbilityAttributes = DotaHud.FindChildTraverse("AbilityAttributes");
-var AbilityExtraDescription = DotaHud.FindChildTraverse("AbilityExtraDescription");
-var AbilityExtraAttributes = DotaHud.FindChildTraverse("AbilityExtraAttributes");
-var AbilityCooldown = DotaHud.FindChildTraverse("AbilityCooldown");
-var AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
-var AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
-var AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
-
-DotaHud.style.width = "100%";
-DotaHud.style.height = "100%";
-AbilityLore.style.width = "370px";
-AbilityDetails.AddClass("AbilityContentsCustom");
 
 var ItemScepterDescription = DotaHud.FindChildTraverse("ItemScepterDescription");
 
@@ -299,93 +356,91 @@ function SetAbilityTooltips(keys) {
 //	$.Msg(keys["sSpecial"])
 	if (keys["sSpecial"]) {
 		for (var i in keys["sSpecial"]) {
-			if (keys["sSpecial"][i] && keys["sSpecial"][i][1]) {
-				var special_key = keys["sSpecial"][i][1];
+			var special_key = i;
 
-				// Turn weird values with 10 decimals into 2 decimals max
-				if (keys["sSpecial"][i][2])
-					special_value = Number(keys["sSpecial"][i][2]).toFixed(0);
+			// Turn weird values with 10 decimals into 2 decimals max
+			if (keys["sSpecial"][i])
+				special_value = Number(keys["sSpecial"][i]).toFixed(0);
 
-				if (GameUI.Utils.isFloat(keys["sSpecial"][i][2]))
-					keys["sSpecial"][i][2] = keys["sSpecial"][i][2].toFixed(2);
+			if (GameUI.Utils.isFloat(keys["sSpecial"][i]))
+				keys["sSpecial"][i] = keys["sSpecial"][i].toFixed(2);
 
-				var special_values = keys["sSpecial"][i][2].toString().split(" ");
-				var special_value = special_values[Math.min(ability_level - 1, special_values.length - 1)];
+			var special_values = keys["sSpecial"][i].toString().split(" ");
+			var special_value = special_values[Math.min(ability_level - 1, special_values.length - 1)];
 
-//				$.Msg(special_key)
-//				$.Msg(special_values)
-//				$.Msg(special_value)
+//			$.Msg(special_key)
+//			$.Msg(special_values)
+//			$.Msg(special_value)
 
-				var tooltip_string = "DOTA_Tooltip_Ability_" + keys.sAbilityName.replace("imba_", "") + "_" + special_key;
-				var tooltip_string_localized = $.Localize(tooltip_string);
+			var tooltip_string = "DOTA_Tooltip_Ability_" + keys.sAbilityName.replace("imba_", "") + "_" + special_key;
+			var tooltip_string_localized = $.Localize(tooltip_string);
 
-				// Check for IMBA KV extra attributes tooltips
-				var imba_tooltip_string = "DOTA_Tooltip_Ability_" + keys.sAbilityName + "_" + special_key;
-				var imba_tooltip_string_localized = $.Localize(imba_tooltip_string);
+			// Check for IMBA KV extra attributes tooltips
+			var imba_tooltip_string = "DOTA_Tooltip_Ability_" + keys.sAbilityName + "_" + special_key;
+			var imba_tooltip_string_localized = $.Localize(imba_tooltip_string);
 
-				var IsPercentage = false;
-//				$.Msg(tooltip_string)
-//				$.Msg(tooltip_string_localized)
+			var IsPercentage = false;
+//			$.Msg(tooltip_string)
+//			$.Msg(tooltip_string_localized)
 
-				if (imba_tooltip_string_localized != tooltip_string) {
-					if (imba_tooltip_string_localized.startsWith("%")) {
-						imba_tooltip_string_localized = imba_tooltip_string_localized.replace("%", "");
-						IsPercentage = true;
-					}
-				} 
-
-				if (tooltip_string_localized != tooltip_string) {
-					if (tooltip_string_localized.startsWith("%")) {
-						tooltip_string_localized = tooltip_string_localized.replace("%", "");
-						IsPercentage = true;
-					}
+			if (imba_tooltip_string_localized != tooltip_string) {
+				if (imba_tooltip_string_localized.startsWith("%")) {
+					imba_tooltip_string_localized = imba_tooltip_string_localized.replace("%", "");
+					IsPercentage = true;
 				}
+			} 
 
-				// Percentage checker
-//				$.Msg("%" + special_key + "%%%")
+			if (tooltip_string_localized != tooltip_string) {
+				if (tooltip_string_localized.startsWith("%")) {
+					tooltip_string_localized = tooltip_string_localized.replace("%", "");
+					IsPercentage = true;
+				}
+			}
 
-				if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1 || IsPercentage == true) {
-//					$.Msg("Percentage value: " + special_key)
-					special_values = special_values.join("% / ") + "%";
+			// Percentage checker
+//			$.Msg("%" + special_key + "%%%")
+
+			if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1 || IsPercentage == true) {
+//				$.Msg("Percentage value: " + special_key)
+				special_values = special_values.join("% / ") + "%";
+
+				if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1) {
+					special_values = special_values.replace(special_value + "%%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
 
 					if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1) {
-						special_values = special_values.replace(special_value + "%%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
+	//					$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
 
-						if (AbilityDescription.indexOf("%" + special_key + "%%%") !== -1) {
-	//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
-
-							AbilityDescription = AbilityDescription.replace("%" + special_key + "%%%", special_values);
-						}
-					} else {
-						special_values = special_values.replace(special_value + "%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
-
-						if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1) {
-	//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
-
-							AbilityDescription = AbilityDescription.replace("%" + special_key + "%%", special_values);
-						}
+						AbilityDescription = AbilityDescription.replace("%" + special_key + "%%%", special_values);
 					}
 				} else {
-//					$.Msg("Non Percentage value: " + special_key)
-					special_values = special_values.join(" / ");
-					special_values = SetActiveValue(special_values, special_value);
+					special_values = special_values.replace(special_value + "%", '<span class="GameplayValues"><span class="GameplayVariable"><span class="GameplayVariable">' + special_value + '%</span></span></span> ')
 
-					if (AbilityDescription.indexOf("%" + special_key + "%") !== -1) {
-//						$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
+					if (AbilityDescription.indexOf("%" + special_key + "%%") !== -1) {
+	//					$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
 
-						AbilityDescription = AbilityDescription.replace("%" + special_key + "%", special_values);
+						AbilityDescription = AbilityDescription.replace("%" + special_key + "%%", special_values);
 					}
 				}
+			} else {
+//				$.Msg("Non Percentage value: " + special_key)
+				special_values = special_values.join(" / ");
+				special_values = SetActiveValue(special_values, special_value);
 
-				if (tooltip_string_localized != tooltip_string) {
-					AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + tooltip_string_localized + " " + special_values + "<br>";
-				}
+				if (AbilityDescription.indexOf("%" + special_key + "%") !== -1) {
+//					$.Msg("Replace " + "%" + special_key + "%" + " with: " + special_values)
 
-				if (keys.sAbilityName.indexOf("imba_") !== -1 && imba_tooltip_string_localized != imba_tooltip_string) {
-//					$.Msg(imba_tooltip_string)
-//					$.Msg(imba_tooltip_string_localized)
-					AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + imba_tooltip_string_localized + " " + special_values + "<br>";
+					AbilityDescription = AbilityDescription.replace("%" + special_key + "%", special_values);
 				}
+			}
+
+			if (tooltip_string_localized != tooltip_string) {
+				AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + tooltip_string_localized + " " + special_values + "<br>";
+			}
+
+			if (keys.sAbilityName.indexOf("imba_") !== -1 && imba_tooltip_string_localized != imba_tooltip_string) {
+//				$.Msg(imba_tooltip_string)
+//				$.Msg(imba_tooltip_string_localized)
+				AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + imba_tooltip_string_localized + " " + special_values + "<br>";
 			}
 		}
 	}
@@ -432,6 +487,8 @@ function SetAbilityTooltips(keys) {
 		AbilityExtraDescription_Text = AbilityExtraDescription_Text + "<br><br>" + $.Localize("DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Note" + i);
 		i++;
 	}
+
+//	$.Msg(AbilityExtraDescription_Text);
 
 	AbilityExtraDescription_Text = AbilityExtraDescription_Text.slice(8);
 	AbilityExtraDescription.SetDialogVariable("extradescription", AbilityExtraDescription_Text);

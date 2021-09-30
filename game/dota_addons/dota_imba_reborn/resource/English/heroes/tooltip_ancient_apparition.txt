@@ -22,7 +22,7 @@
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Note4"						"Cold Hearted rounds down to the closest whole number. Units with less than 2 HP regeneration will not provide any stacks."
 
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_frostbite_duration_scepter"	"SCEPTER FROSTBITTEN DURATION:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_scepter_description"	    "<font color='#FF7800'>Increases frostbite duration.</font>"
+"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_scepter_description"	    "Increases frostbite duration."
 
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_global_cooling"							"Global Cooling"
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_global_cooling_Description"				"Move speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% for the duration of Ice Blast's Frostbite."

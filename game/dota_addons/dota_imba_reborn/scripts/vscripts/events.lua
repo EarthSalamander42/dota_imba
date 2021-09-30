@@ -44,9 +44,11 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
-		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("delay_init_top_bar_colors"), function()
-			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
-		end, 1.0)
+		if PlayerResource:GetPlayerCount() > 5 then
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("delay_init_top_bar_colors"), function()
+				CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
+			end, 1.0)
+		end
 
 		GameMode:SetupPostTurboRules()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
@@ -68,6 +70,14 @@ function GameMode:OnNPCSpawned(keys)
 		GameMode:OnHeroSpawn(npc)
 
 		return
+	end
+
+	if npc:IsCourier() then
+		if npc.first_spawn == nil then
+			npc:AddNewModifier(npc, nil, "modifier_imba_turbo_courier", {})
+	
+			npc.first_spawn = true
+		end
 	end
 end
 
@@ -109,6 +119,8 @@ function GameMode:OnHeroFirstSpawn(hero)
 			hero:HeroLevelUp(false)
 		end
 	end
+
+	hero:InitializeAbilities()
 
 	hero:AddNewModifier(hero, nil, "modifier_frantic", {})
 

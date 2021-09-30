@@ -549,7 +549,7 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 						if not target:IsInvulnerable() then
 							if not target:IsOutOfGame() then
 								ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = damage_type,})
-								target:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
+								target:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_stunned", {duration = stun_duration})
 							end
 						end
 					end
@@ -565,7 +565,7 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 			for _,unit in pairs(units) do
 				if unit:GetTeam() ~= caster:GetTeam() then
 					ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = damage_type,})
-					unit:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_stunned", {duration = stun_duration * (1 - unit:GetStatusResistance())})
+					unit:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_stunned", {duration = stun_duration})
 
 					-- See if enemy survive the impact to decide if to roll for a kill response
 					Timers:CreateTimer(FrameTime(), function()

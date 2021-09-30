@@ -1,0 +1,430 @@
+"DOTAUnits"
+{
+    //=================================================================================
+	//	Techies: Proximity Mine
+	//=================================================================================
+	"npc_imba_techies_land_mines"
+	{
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/heroes/techies/fx_techiesfx_mine.vmdl"
+		"BaseClass"					"npc_dota_techies_mines"
+		"SoundSet"					"0"
+		"Level"						"1"
+		"ModelScale"				"1"
+		"SelectionGroup"			"techies_land_mines"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"140"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"50"
+		"BountyGoldMax"				"50"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"1.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"64"
+		"VisionNighttimeRange"		"64"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	}
+
+	//=================================================================================
+	//	Techies: Proximity Mine
+	//=================================================================================
+	"npc_imba_techies_land_mines_big_boom"
+	{
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/heroes/techies/fx_techiesfx_mine.vmdl"
+		"BaseClass"					"npc_dota_techies_mines"
+		"SoundSet"					"0"
+		"Level"						"1"
+		"ModelScale"				"1.5"
+		"SelectionGroup"			"techies_land_mines"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"140"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"50"
+		"BountyGoldMax"				"50"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"1.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"4"
+		"StatusHealthRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"64"
+		"VisionNighttimeRange"		"64"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	}
+
+	//=================================================================================
+	// Techies: Stasis Trap
+	//=================================================================================
+	"npc_imba_techies_stasis_trap"
+	{
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/heroes/techies/fx_techiesfx_stasis.vmdl"
+		"BaseClass"					"npc_dota_techies_mines"
+		"SoundSet"					"0"
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"SelectionGroup"			"techies_stasis_traps"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"140"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"6"
+		"BountyGoldMin"				"10"
+		"BountyGoldMax"				"10"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+	}
+
+	//=================================================================================
+	// Techies: Minefield Sign
+	//=================================================================================
+	"npc_imba_techies_minefield_sign"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_techies_minefield_sign"
+		"Model"						"models/heroes/techies/techies_sign.vmdl"
+		"Level"						"1"
+		"ModelScale" 				"1.0"
+		"SelectionGroup"			"techies_minefield_sign"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+		"HealthBarOffset"			"170"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"0"
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"0"
+
+		//Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"0"
+	}
+
+	//=================================================================================
+	// Techies: Remote Mine
+	//=================================================================================
+	"npc_imba_techies_remote_mines"
+	{
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/heroes/techies/fx_techies_remotebomb.vmdl"
+		"BaseClass"					"npc_dota_techies_mines"
+		"SoundSet"					"0"
+		"Level"						"1"
+		"ModelScale"				"1"
+		"SelectionGroup"			"techies_remote_mines"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_techies_remote_mines_pinpoint_detonation"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"140"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"6"
+		"BountyGoldMin"				"10"
+		"BountyGoldMax"				"10"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"200"
+		"StatusHealthRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"700"
+		"VisionNighttimeRange"		"700"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+	}
+
+	//=================================================================================
+	// Techies: Blast Off little Piggy
+	//=================================================================================
+	"npc_imba_techies_suicide_piggy"
+	{
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/props_gameplay/pig.vmdl"
+		"BaseClass"					"npc_dota_creature"		
+		"Level"						"1"
+		"ModelScale"				"1"		
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"140"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"50"
+		"BountyGoldMin"				"100"
+		"BountyGoldMax"				"100"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1000"
+		"StatusHealthRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+	}
+}

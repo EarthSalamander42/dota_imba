@@ -389,7 +389,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 				end
 
 				-- Apply the slow
-				enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", {duration = duration * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", {duration = duration})
 			end
 		end
 
@@ -431,14 +431,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnRemoved()
 	end
 end
 
-function modifier_imba_faceless_void_time_walk_cast:OnDestroy()
-	if IsServer() then
-	end
-end
-
 function modifier_imba_faceless_void_time_walk_cast:HorizontalMotion( me, dt )
-		print(self.distance_traveled)
-		print(self.distance)
 	if self.distance_traveled < self.distance then
 		self:GetCaster():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + (self.direction * math.min(self.velocity * dt, self.distance - self.distance_traveled)))
 		self.distance_traveled = self.distance_traveled + math.min(self.velocity * dt, self.distance - self.distance_traveled)
@@ -579,7 +572,7 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 			end
 
 			if abilities_on_cooldown > 0 then
-				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", {duration = cd_increase * (1 - enemy:GetStatusResistance())})
+				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", {duration = cd_increase})
 				
 				if debuff then
 					debuff:SetStackCount(abilities_on_cooldown)
@@ -856,9 +849,9 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 					-- Stun, based on if it's a hero or a creep
 					if target:IsHero() then
-						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration})
 					else
-						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration})
 					end
 
 					-- Emit sound
@@ -921,9 +914,9 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 							-- Stun, based on if it's a hero or a creep
 							if target:IsHero() then
-								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration * (1 - target:GetStatusResistance())})
+								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration})
 							else
-								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration * (1 - target:GetStatusResistance())})
+								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration})
 							end
 
 							-- Bonus damage to main target is already bundled in "GetModifierProcAttack_BonusDamage_Magical", so no need to damage the main target.
@@ -1502,10 +1495,10 @@ function modifier_imba_faceless_void_time_lock_720:ApplyTimeLock(target)
 
 	-- Hero stun duration
 	if target:IsConsideredHero() or target:IsRoshan() then
-		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration})
 	-- Creep stun duration
 	else
-		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration_creep * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration_creep})
 	end
 	
 	-- IMBAfication: Chronocharges

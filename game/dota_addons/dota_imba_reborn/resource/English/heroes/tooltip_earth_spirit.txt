@@ -39,7 +39,7 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_1_Description"		"Stone Remnant vision radius is reduced to 200, but it now follows the Remnant."
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2"                    "Can't Stop The Rock"
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2_Description"		"Rolling Boulder disjoints projectiles and makes you invulneruable."
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2_Description"		"Rolling Boulder disjoints projectiles and makes you invulnerable."
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3"                    "Mineral Healing"
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3_Description"		"Magnetized enemies heal you for (5 * Earth Marks) every damage tick."

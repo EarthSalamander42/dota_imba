@@ -408,15 +408,17 @@ function modifier_imba_proximity_mine:_Explode()
 	ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
 
 	-- Look for nearby enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-										casterAbsOrigin,
-										nil,
-										trigger_range,
-										DOTA_UNIT_TARGET_TEAM_ENEMY,
-										DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
-										DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-										FIND_ANY_ORDER,
-										false)
+	local enemies = FindUnitsInRadius(
+		caster:GetTeamNumber(),
+		casterAbsOrigin,
+		nil,
+		trigger_range,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		FIND_ANY_ORDER,
+		false
+	)
 
 	local modifier_building_res = "modifier_imba_proximity_mine_building_res"
 	local modifier_talent_shrapnel = "modifier_imba_proximity_mine_talent"
@@ -428,10 +430,8 @@ function modifier_imba_proximity_mine:_Explode()
 
 	-- Deal damage to nearby non-flying enemies
 	for _,enemy in pairs(enemies) do
-
 		-- If an enemy doesn't have flying movement, ignore it, otherwise continue
 		if not enemy:HasFlyMovementCapability() then
-
 			-- If this is a Big Boom, add damage to the blast!
 			local damage = self.mine_damage
 			if self.is_big_boom then
@@ -444,13 +444,14 @@ function modifier_imba_proximity_mine:_Explode()
 			end
 
 			-- Deal damage
-			local damageTable = {victim = enemy,
-									attacker = caster, 
---									damage = damage * ((1+(PlayerResource:GetSelectedHeroEntity(self.caster:GetPlayerOwnerID()):GetSpellAmplification(false) * 0.01))),
-									damage = damage,
-									damage_type = DAMAGE_TYPE_MAGICAL,
-									ability = self.ability
-									}
+			local damageTable = {
+				victim = enemy,
+				attacker = caster, 
+--				damage = damage * ((1+(PlayerResource:GetSelectedHeroEntity(self.caster:GetPlayerOwnerID()):GetSpellAmplification(false) * 0.01))),
+				damage = damage,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				ability = self.ability
+			}
 
 			ApplyDamage(damageTable)
 
@@ -905,12 +906,12 @@ function modifier_imba_statis_trap:_Explode()
 	-- Root enemies nearby if not disarmed, and apply a electrocharge
 	for _,enemy in pairs(enemies) do
 		if not caster:HasModifier(modifier_disarmed) then
-			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration})
 		end
 
 		-- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
 		if not enemy:HasModifier(modifier_electrocharge) then
-			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration})
 		else
 			RefreshElectroCharge(enemy)
 		end
@@ -1396,7 +1397,7 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
 			ApplyDamage(damageTable)
 
 			-- Add silence modifier to them
-			enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration})
 
 			-- Check (and mark) if an enemy died from the blast
 			Timers:CreateTimer(FrameTime(), function()

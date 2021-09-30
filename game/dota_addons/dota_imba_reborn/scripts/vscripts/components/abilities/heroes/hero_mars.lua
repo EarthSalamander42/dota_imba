@@ -438,7 +438,7 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 
 	-- init data
 	local tree_radius = 120
-	local wall_radius = 50
+	local wall_radius = 100
 	local building_radius = 30
 	local blocker_radius = 70
 
@@ -451,7 +451,7 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 	if not data.active then
 		-- check distance, mainly to avoid being pinned while behind the tree/cliffs
 		local difference = (data.unit:GetOrigin()-data.init_pos):Length2D() - (data.location-data.init_pos):Length2D()
-		if difference>0 then return end
+		if difference > 0 then return end
 		data.active = true
 	end
 
@@ -465,7 +465,7 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 	end
 
 	-- search for blocker
-	local thinkers = Entities:FindAllByClassnameWithin( "npc_dota_thinker", data.location, wall_radius )
+	local thinkers = Entities:FindAllByClassnameWithin("npc_dota_thinker", data.location, wall_radius )
 	for _,thinker in pairs(thinkers) do
 		if thinker:IsPhantomBlocker() then
 			self:Pinned( iProjectileHandle )
@@ -501,7 +501,7 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 		false	-- bool, can grow cache
 	)
 
-	if #buildings>0 then
+	if #buildings > 0 then
 		-- pinned
 		self:Pinned( iProjectileHandle )
 		return
@@ -890,12 +890,12 @@ function imba_mars_gods_rebuke:OnSpellStart()
 	buff:Destroy()
 
 	-- play effects
-	self:PlayEffects1(caught, (point - origin):Normalized())
+	self:PlayEffects1(caught, (point - origin):Normalized(), (origin - point):Normalized())
 end
 
 --------------------------------------------------------------------------------
 -- Play Effects
-function imba_mars_gods_rebuke:PlayEffects1( caught, direction )
+function imba_mars_gods_rebuke:PlayEffects1( caught, direction, opposite_direction )
 	local sound_cast = "Hero_Mars.Shield.Cast"
 
 	if caught == false then
@@ -904,9 +904,14 @@ function imba_mars_gods_rebuke:PlayEffects1( caught, direction )
 
 	-- Create Particle
 	if self:GetCaster():HasTalent("special_bonus_imba_mars_1") then
-		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash_full_circle.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
+		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
 		ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
 		ParticleManager:SetParticleControlForward( effect_cast, 0, direction )
+		ParticleManager:ReleaseParticleIndex( effect_cast )
+
+		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
+		ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
+		ParticleManager:SetParticleControlForward( effect_cast, 0, opposite_direction )
 		ParticleManager:ReleaseParticleIndex( effect_cast )
 	else
 		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
@@ -984,11 +989,11 @@ end
 
 function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_BonusDamagePostCrit( params )
 	if not IsServer() then return end
-	print("Bonus Damage:", self.bonus_damage)
+
 	return self.bonus_damage
 end
+
 function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_CriticalStrike( params )
-	print("Bonus Crit:", self.bonus_crit)
 	return self.bonus_crit
 end
 
@@ -1092,41 +1097,47 @@ function modifier_imba_mars_bulwark:DeclareFunctions()
 end
 
 function modifier_imba_mars_bulwark:GetModifierPhysical_ConstantBlock( params )
+	if not IsServer() then return end
+
 	-- cancel if from ability
 	if params.inflictor then return 0 end
 
+	local parent = self:GetParent()
+
 	-- cancel if break
-	if params.target:PassivesDisabled() then return 0 end
+	if parent:PassivesDisabled() then return 0 end
 
 	-- get data
-	local parent = params.target
 	local attacker = params.attacker
 	local reduction = 0
+	local damage_blocked = 0
 
-	-- Check target position
-	local facing_direction = parent:GetAnglesAsVector().y
-	local attacker_vector = (attacker:GetOrigin() - parent:GetOrigin())
-	local attacker_direction = VectorToAngles( attacker_vector ).y
-	local angle_diff = math.abs( AngleDiff( facing_direction, attacker_direction ) )
-
-	-- calculate damage reduction
-	if angle_diff < self.angle_front then
-		reduction = self.reduction_front
-		self:PlayEffects( true, attacker_vector )
-	elseif angle_diff < self.angle_side then
-		reduction = self.reduction_side
-		self:PlayEffects( false, attacker_vector )
-	end
-
-	local damage_blocked = reduction * params.damage / 100
-
-	local stacks = damage_blocked * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
-	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
-
-	if mod then
-		mod:SetStackCount(mod:GetStackCount() + stacks)
-	else
-		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {}):SetStackCount(stacks)
+	if attacker and parent then
+		-- Check target position
+		local facing_direction = parent:GetAnglesAsVector().y
+		local attacker_vector = (attacker:GetOrigin() - parent:GetOrigin())
+		local attacker_direction = VectorToAngles( attacker_vector ).y
+		local angle_diff = math.abs( AngleDiff( facing_direction, attacker_direction ) )
+		
+		-- calculate damage reduction
+		if angle_diff < self.angle_front then
+			reduction = self.reduction_front
+			self:PlayEffects( true, attacker_vector )
+		elseif angle_diff < self.angle_side then
+			reduction = self.reduction_side
+			self:PlayEffects( false, attacker_vector )
+		end
+		
+		damage_blocked = reduction * params.damage / 100
+		
+		local stacks = damage_blocked * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
+		local mod = parent:FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
+		
+		if mod then
+			mod:SetStackCount(mod:GetStackCount() + stacks)
+		else
+			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {}):SetStackCount(stacks)
+		end
 	end
 
 	return damage_blocked
@@ -1872,17 +1883,13 @@ end
 --------------------------------------------------------------------------------
 -- Graphics & Animations
 function modifier_imba_mars_arena_of_blood_projectile_aura:PlayEffects( loc )
-	-- Get Resources
-	local particle_cast = "particles/units/heroes/hero_mars/mars_arena_of_blood_impact.vpcf"
-	local sound_cast = "Hero_Mars.Block_Projectile"
-
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, nil )
+	local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_arena_of_blood_impact.vpcf", PATTACH_WORLDORIGIN, nil )
 	ParticleManager:SetParticleControl( effect_cast, 0, loc )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	EmitSoundOnLocationWithCaster( loc, sound_cast, self:GetCaster() )
+	EmitSoundOnLocationWithCaster( loc, "Hero_Mars.Block_Projectile", self:GetCaster() )
 end
 
 --------------------------------------------------------------------------------

@@ -38,7 +38,7 @@
 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications/barebones_notifications.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ingame_advertizing/ingame_advertizing.xml" /> 
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/vanillafier_tooltips/vanillafier_tooltips.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/vanillafier_tooltips/vanillafier_tooltips_ingame.xml" /> 
 
 <!--
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg/gg.xml" /> 

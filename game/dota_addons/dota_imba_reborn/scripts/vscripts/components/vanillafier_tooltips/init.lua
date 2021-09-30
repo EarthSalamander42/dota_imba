@@ -46,34 +46,34 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	local specials = GetAbilitySpecials(ability_name)
 	local imba_specials = GetAbilitySpecials("imba_"..ability_name)
 	local specials_issued = {}
+--	print(imba_specials)
+	local ability_specials = {}
 
-	for k, v in pairs(imba_specials) do
-		if v and v[1] and not specials_issued[v[1]] then
-			specials_issued[v[1]] = true
-		end
-	end
-
---	print(specials_issued)
-
-	-- use imba values by default, add vanilla values if imba missing (this way imba values has priority over vanilla)
-	for k, value in pairs(specials) do
-		-- prevent adding doublons, prioritize imba values
-		if value and value[1] and not specials_issued[value[1]] then
---			print("From now on, ignore", v[1])
+	for k, value in pairs(imba_specials) do
+		if value and value[1] and value[2] and not specials_issued[value[1]] then
 			specials_issued[value[1]] = true
 
 			if hero and hero:FindAbilityByName(keys.sAbilityName) then
---				print(value[1], hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1]))
-				table.insert(imba_specials, hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1]))
+				ability_specials[value[1]] = hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1])
 			else
---				print(value[1], value)
-				table.insert(imba_specials, value)
+				ability_specials[value[1]] = value[2]
 			end
 		end
 	end
 
---	print(specials_issued)
---	print(imba_specials)
+	-- use imba values by default, add vanilla values if imba missing (this way imba values has priority over vanilla)
+	for k, value in pairs(specials) do
+		-- prevent adding doublons, prioritize imba values
+		if value and value[1] and value[2] and not specials_issued[value[1]] then
+--			print("From now on, ignore", value[1])
+			specials_issued[value[1]] = true
+
+			-- todo: make GetTalentSpecialValueFor work with GetVanillaAbilitySpecial
+			ability_specials[value[1]] = value[2]
+		end
+	end
+
+--	print(ability_specials)
 
 	local hRealCooldown = split(GetAbilityCooldown(ability_name), " ")
 	local hRealManaCost = split(GetAbilityManaCost(ability_name), " ")
@@ -144,14 +144,14 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		end
 	end
 
---	print("Send server tooltips info:", imba_specials)
+--	print("Send server tooltips info:", ability_specials)
 	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", {
 		sAbilityName = keys.sAbilityName,
 		iCooldown = hRealCooldown,
 		iManaCost = hRealManaCost,
 		sSpellImmunity = GetSpellImmunityType(ability_name),
 		sSpellDispellable = GetSpellDispellableType(ability_name),
-		sSpecial = imba_specials,
+		sSpecial = ability_specials,
 		iBonusCastRange = bonus_cast_range,
 		iBehavior = GetAbilityKV(ability_name, "AbilityBehavior"),
 		iDamageType = GetAbilityKV(ability_name, "AbilityUnitDamageType"),

@@ -170,182 +170,177 @@ function GameMode:ModifierFilter( keys )
 	-- entindex_caster_const	215
 	-- name_const				modifier_imba_roshan_rage_stack
 
-	if IsServer() then
-		local disableHelpResult = DisableHelp.ModifierGainedFilter(keys)
-		if disableHelpResult == false then
-			return false
-		end
+	if not IsServer() then return end
 
-		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
-		local modifier_name = keys.name_const
-		local modifier_caster
-		local modifier_class
-		local modifier_ability
+	local disableHelpResult = DisableHelp.ModifierGainedFilter(keys)
+	if disableHelpResult == false then
+		return false
+	end
 
-		if keys.entindex_caster_const then
-			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
-		else
-			return true
-		end
+	local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
+	local modifier_name = keys.name_const
+	local modifier_caster
+	local modifier_class
+	local modifier_ability
 
-		if keys.entindex_ability_const then
-			modifier_ability = EntIndexToHScript(keys.entindex_ability_const)
-		end
+	if keys.entindex_caster_const then
+		modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+	else
+		return true
+	end
 
-		-- This is causing too much grief with having to use SetDuration to just override times due to this filter not respecting refreshes, so I'm just going to nuke this once and for all and work from there...
-		-- if modifier_owner ~= nil then
-			-- modifier_class = modifier_owner:FindModifierByName(modifier_name)
-			-- if modifier_class == nil then return end
+	if keys.entindex_ability_const then
+		modifier_ability = EntIndexToHScript(keys.entindex_ability_const)
+	end
 
-			-- -- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
-			-- local ignore_frantic = false
+	-- This is causing too much grief with having to use SetDuration to just override times due to this filter not respecting refreshes, so I'm just going to nuke this once and for all and work from there...
+	-- if modifier_owner ~= nil then
+		-- modifier_class = modifier_owner:FindModifierByName(modifier_name)
+		-- if modifier_class == nil then return end
 
-			-- for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
-				-- if modifier == modifier_name then
-					-- ignore_frantic = true
-				-- end
+		-- -- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
+		-- local ignore_frantic = false
+
+		-- for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
+			-- if modifier == modifier_name then
+				-- ignore_frantic = true
 			-- end
+		-- end
 
-			-- if keys.entindex_ability_const and modifier_ability.GetAbilityName then
-				-- if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
+		-- if keys.entindex_ability_const and modifier_ability.GetAbilityName then
+			-- if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
+				-- local original_duration = keys.duration
+				-- local actual_duration = original_duration
+				-- local status_resistance = modifier_owner:GetStatusResistance()
+-- --				print("Old duration:", actual_duration)
+
+				-- if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
+					-- actual_duration = actual_duration * (1 - status_resistance)
+				-- end
+
+-- --				print("New duration:", actual_duration)
+
+				-- keys.duration = actual_duration
+			-- else
+				-- -- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
+				-- if ignore_frantic == true then
 					-- local original_duration = keys.duration
 					-- local actual_duration = original_duration
 					-- local status_resistance = modifier_owner:GetStatusResistance()
--- --					print("Old duration:", actual_duration)
 
-					-- if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
-						-- actual_duration = actual_duration * (1 - status_resistance)
-					-- end
-
--- --					print("New duration:", actual_duration)
-
+					-- actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
 					-- keys.duration = actual_duration
-				-- else
-					-- -- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
-					-- if ignore_frantic == true then
-						-- local original_duration = keys.duration
-						-- local actual_duration = original_duration
-						-- local status_resistance = modifier_owner:GetStatusResistance()
-
-						-- actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
-						-- keys.duration = actual_duration
-					-- end
 				-- end
 			-- end
 		-- end
+	-- end
 
-		-- volvo bugfix
-		if modifier_name == "modifier_datadriven" then
-			return false
-		end
-
-		-- don't add buyback penalty
-		if modifier_name == "modifier_buyback_gold_penalty" then
-			return false
-		end
-
-		-- setting bonus strength to 0 ain't working, let's go the hard way then
-		if modifier_name == "modifier_item_minotaur_horn" then
-			return false
-		end
-
-		-------------------------------------------------------------------------------------------------
-		-- Roshan special modifier rules
-		-------------------------------------------------------------------------------------------------
-
-		-- if modifier_owner:IsRoshan() then
-			-- -- Ignore stuns
-			-- print("Roshan modifier name:", modifier_name)
-			-- if modifier_name == "modifier_stunned" then
-				-- return false
-			-- end
-
-			-- -- Halve the duration of everything else
-			-- if modifier_caster ~= modifier_owner and keys.duration > 0 then
-				-- keys.duration = keys.duration / (100 / 50)
-			-- end
-
-			-- -- Fury swipes capping
-			-- if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
-				-- modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
-			-- end
-
-			-- if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
-				-- return false
-			-- end
-		-- end
-
-		-- -- add particle or sound playing to notify
-		-- if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
-			-- for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
-				-- if modifier_name == modifier then
-					-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
-					-- return false
-				-- end
-			-- end
-		-- end
-		
-		-- Tried some fancy stuff in the frantic file but you cannot properly override vanilla durations so I will do it here for Legion Commander's Duel
-		-- Because Duel ends if either of the modifiers (on caster and target) ends, we need a way to equalize the durations even if the two units have differing status resistance
-		-- Because Duel first applies a modifier on the target, I will use it to store the proper duration to set it to, and use that for the caster duration
-		if modifier_name == "modifier_legion_commander_duel" and keys.duration > 0 then
-			if modifier_owner:HasModifier("modifier_frantic") and not modifier_ability.frantic_adjusted_duration then
-				modifier_ability.frantic_adjusted_duration = keys.duration / ((100 - modifier_owner:FindModifierByName("modifier_frantic"):GetStackCount()) * 0.01)
-				keys.duration = modifier_ability.frantic_adjusted_duration
-			elseif modifier_ability.frantic_adjusted_duration then
-				keys.duration = modifier_ability.frantic_adjusted_duration
-				modifier_ability.frantic_adjusted_duration = nil
-			end
-		end
-		
-		-- Bringing Helm of the Undying back but giving it Wraith King's Reincarnation Wraith mechanics for balance
-		if modifier_name == "modifier_item_helm_of_the_undying_active" then
-			-- "An ally enters Death Delay when their health reaches 1, unless they are affected by Shallow Grave, Battle Trance, Wraith Delay, or have Reincarnation."
-			if modifier_owner:HasModifier("modifier_imba_dazzle_shallow_grave") or 
-			modifier_owner:HasModifier("modifier_imba_dazzle_nothl_protection") or 
-			modifier_owner:HasModifier("modifier_imba_battle_trance_720") or 
-			modifier_owner:HasModifier("modifier_imba_reincarnation_wraith_form") or 
-			modifier_owner:HasModifier("modifier_item_imba_bloodstone_active_720") then
-				return false
-			else
-				modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_helm_of_the_undying_addendum", {duration = keys.duration + FrameTime()})
-			end
-		end
-		
-		-- Deactivate Tusk's Snowball so you don't allow multiple casting while Snowball is active (resulting in permanently lingering particles)
-		if modifier_name == "modifier_tusk_snowball_movement" then
-			if modifier_owner:FindAbilityByName("tusk_snowball") then
-				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
-				Timers:CreateTimer(9.0, function()
-					if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
-						modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
-					end
-				end)
-			end
-		end
-
-		if modifier_owner:GetUnitName() == "npc_imba_warlock_demonic_ascension" then
-			if modifier_name == "modifier_fountain_aura_effect_lua" then
-				return false
-			end
-		end
-
-		-- Replaces rune vanilla modifier with imba rune modifier
-		if string.find(modifier_name, "modifier_rune_") then
-			local rune_name = string.gsub(modifier_name, "modifier_rune_", "")
-			ImbaRunes:PickupRune(rune_name, modifier_owner, false)
-
-			return false
-		end
-
-		if modifier_name == "modifier_bottle_regeneration" then
-			local duration = modifier_ability:GetSpecialValueFor("restore_time")
-
-			modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_bottle_heal", {duration = duration})
-
-			return false
-		end
-
-		return true
+	-- volvo bugfix
+	if modifier_name == "modifier_datadriven" then
+		return false
 	end
+
+	-- don't add buyback penalty
+	if modifier_name == "modifier_buyback_gold_penalty" then
+		return false
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Roshan special modifier rules
+	-------------------------------------------------------------------------------------------------
+
+	-- if modifier_owner:IsRoshan() then
+		-- -- Ignore stuns
+		-- print("Roshan modifier name:", modifier_name)
+		-- if modifier_name == "modifier_stunned" then
+			-- return false
+		-- end
+
+		-- -- Halve the duration of everything else
+		-- if modifier_caster ~= modifier_owner and keys.duration > 0 then
+			-- keys.duration = keys.duration / (100 / 50)
+		-- end
+
+		-- -- Fury swipes capping
+		-- if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
+			-- modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+		-- end
+
+		-- if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
+			-- return false
+		-- end
+	-- end
+
+	-- -- add particle or sound playing to notify
+	-- if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
+		-- for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
+			-- if modifier_name == modifier then
+				-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
+				-- return false
+			-- end
+		-- end
+	-- end
+	
+	-- Tried some fancy stuff in the frantic file but you cannot properly override vanilla durations so I will do it here for Legion Commander's Duel
+	-- Because Duel ends if either of the modifiers (on caster and target) ends, we need a way to equalize the durations even if the two units have differing status resistance
+	-- Because Duel first applies a modifier on the target, I will use it to store the proper duration to set it to, and use that for the caster duration
+	if modifier_name == "modifier_legion_commander_duel" and keys.duration > 0 then
+		if modifier_owner:HasModifier("modifier_frantic") and not modifier_ability.frantic_adjusted_duration then
+			modifier_ability.frantic_adjusted_duration = keys.duration / ((100 - modifier_owner:FindModifierByName("modifier_frantic"):GetStackCount()) * 0.01)
+			keys.duration = modifier_ability.frantic_adjusted_duration
+		elseif modifier_ability.frantic_adjusted_duration then
+			keys.duration = modifier_ability.frantic_adjusted_duration
+			modifier_ability.frantic_adjusted_duration = nil
+		end
+	end
+	
+	-- Bringing Helm of the Undying back but giving it Wraith King's Reincarnation Wraith mechanics for balance
+	if modifier_name == "modifier_item_helm_of_the_undying_active" then
+		-- "An ally enters Death Delay when their health reaches 1, unless they are affected by Shallow Grave, Battle Trance, Wraith Delay, or have Reincarnation."
+		if modifier_owner:HasModifier("modifier_imba_dazzle_shallow_grave") or 
+		modifier_owner:HasModifier("modifier_imba_dazzle_nothl_protection") or 
+		modifier_owner:HasModifier("modifier_imba_battle_trance_720") or 
+		modifier_owner:HasModifier("modifier_imba_reincarnation_wraith_form") or 
+		modifier_owner:HasModifier("modifier_item_imba_bloodstone_active_720") then
+			return false
+		else
+			modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_helm_of_the_undying_addendum", {duration = keys.duration + FrameTime()})
+		end
+	end
+	
+	-- Deactivate Tusk's Snowball so you don't allow multiple casting while Snowball is active (resulting in permanently lingering particles)
+	if modifier_name == "modifier_tusk_snowball_movement" then
+		if modifier_owner:FindAbilityByName("tusk_snowball") then
+			modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
+			Timers:CreateTimer(9.0, function()
+				if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
+					modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
+				end
+			end)
+		end
+	end
+
+	if modifier_owner:GetUnitName() == "npc_imba_warlock_demonic_ascension" then
+		if modifier_name == "modifier_fountain_aura_effect_lua" then
+			return false
+		end
+	end
+
+	-- Replaces rune vanilla modifier with imba rune modifier
+	if string.find(modifier_name, "modifier_rune_") then
+		local rune_name = string.gsub(modifier_name, "modifier_rune_", "")
+		ImbaRunes:PickupRune(rune_name, modifier_owner, false)
+
+		return false
+	end
+
+	if modifier_name == "modifier_bottle_regeneration" then
+		local duration = modifier_ability:GetSpecialValueFor("restore_time")
+
+		modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_bottle_heal", {duration = duration})
+
+		return false
+	end
+
+	return true
 end

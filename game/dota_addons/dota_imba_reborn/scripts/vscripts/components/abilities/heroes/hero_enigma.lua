@@ -67,7 +67,7 @@ function SearchForEngimaThinker(caster, victim, length, talent)
 	if Black_Hole.thinker and not Black_Hole.thinker:IsNull() then hThinker = Black_Hole.thinker end -- black hole
 
 	iLenght = CalculatePullLength(caster, victim, length)
-	victim:AddNewModifier(caster, nil, "modifier_imba_enigma_generic_pull", {duration = 1.0 * (1 - victim:GetStatusResistance()), target = hThinker:entindex(), length = iLenght})
+	victim:AddNewModifier(caster, nil, "modifier_imba_enigma_generic_pull", {duration = 1.0, target = hThinker:entindex(), length = iLenght})
 end
 
 modifier_imba_enigma_generic_pull = modifier_imba_enigma_generic_pull or class({})
@@ -286,7 +286,7 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
 		damage_type = DAMAGE_TYPE_MAGICAL,
 		ability = ability}
 	ApplyDamage(damageTable)
-	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = self.stun_duration * (1 - target:GetStatusResistance())})
+	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = self.stun_duration})
 	EmitSoundOn("Hero_Enigma.MaleficeTick", target)
 	
 	if ability:GetAutoCastState() then
@@ -422,7 +422,7 @@ function modifier_imba_enigma_eidolon:OnAttackLanded(keys)
 				self.last_target:FindModifierByNameAndCaster("modifier_imba_enigma_eidolon_attacks_debuff", self:GetParent()):Destroy()
 			end
 			self.last_target = target
-			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attacks_debuff", {duration = self:GetAbility():GetSpecialValueFor("increased_mass_duration") * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attacks_debuff", {duration = self:GetAbility():GetSpecialValueFor("increased_mass_duration")})
 		end
 
 		if self.attacks > 1 then
@@ -827,7 +827,7 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 			for _, building in pairs(buildings) do
 				ApplyDamage({victim = building, attacker = self:GetCaster(), damage = self.dmg, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
 				
-				building:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 1.0 * (1 - building:GetStatusResistance())})
+				building:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = 1.0})
 			end
 		end
 	end
