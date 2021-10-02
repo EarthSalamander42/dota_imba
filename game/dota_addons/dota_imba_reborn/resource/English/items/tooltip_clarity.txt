@@ -1,9 +1,0 @@
-"DOTA_Tooltip_Ability_item_imba_clarity"                    "Clarity"
-"DOTA_Tooltip_Ability_item_imba_clarity_Description"        "<h1> Use: Replenish</h1> Grants %mana_regen% mana regeneration to the target for %duration% seconds.<br><br> If the unit is attacked by an enemy hero or Roshan, the effect is lost.<br><br> Range: %cast_range_tooltip% \n<h1><font color='#FF7800'>Passive: Clear Sight</font></h1> While Clarity is active, the buff also increases vision range by %vision_increase% and cast range by %cast_range_increase%. \n<h1><font color='#FF7800'>Passive: Mana Reserves</font></h1> When Clarity's effect ends, the target is granted the Mana Reserves buff, which increases max mana by %max_mana_bonus% and grants %mana_reserves_mana% mana. Lasts %mana_reserves_duration% seconds."
-"DOTA_Tooltip_Ability_item_imba_clarity_Lore"               "Clear water that enhances the ability to meditate."
-
-"DOTA_Tooltip_modifier_imba_clarity"                        "Clarity"
-"DOTA_Tooltip_modifier_imba_clarity_Description"            "Mana regeneration increased by %fMODIFIER_PROPERTY_MANA_REGEN_CONSTANT%. Cast and vision range are increased by %dMODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING%."
-
-"DOTA_Tooltip_modifier_imba_clarity_mana_reserves"          "Mana Reserves"
-"DOTA_Tooltip_modifier_imba_clarity_mana_reserves_Description"  "Maximum mana increased by %dMODIFIER_PROPERTY_EXTRA_MANA_BONUS%."

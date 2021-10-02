@@ -6,7 +6,8 @@
 #base heroes/abyssal_underlord/abilities.txt
 #base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
-#base heroes/earth_spirit/abilities.txt
+#base heroes/axe/abilities.txt
+// #base heroes/earth_spirit/abilities.txt
 #base heroes/enigma/abilities.txt
 #base heroes/faceless_void/abilities.txt
 #base heroes/juggernaut/abilities.txt

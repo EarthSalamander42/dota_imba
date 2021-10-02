@@ -600,3 +600,72 @@ function CDOTA_BaseNPC:SetCreatureHealth(health, update_current_health)
 		self:SetHealth(health)
 	end
 end
+
+-- Checks if a unit is near units of a certain class on the same team
+function CDOTA_BaseNPC:IsNearFriendlyClass(radius, class)
+	local class_units = Entities:FindAllByClassnameWithin(class, self:GetAbsOrigin(), radius)
+
+	for _,found_unit in pairs(class_units) do
+		if found_unit:GetTeam() == self:GetTeam() then
+			return true
+		end
+	end
+	
+	return false
+end
+
+-- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
+function CDOTA_BaseNPC:TrueKill(target, ability)
+	local modifiers_to_remove = {
+		"modifier_invulnerable",
+		"modifier_imba_dazzle_shallow_grave",
+		"modifier_imba_aphotic_shield_buff_block",
+		"modifier_imba_spiked_carapace",
+		"modifier_borrowed_time",
+		"modifier_imba_centaur_return",
+		"modifier_item_greatwyrm_plate_unique",
+		"modifier_item_greatwyrm_plate_active",
+		"modifier_item_crimson_guard_unique",
+		"modifier_item_crimson_guard_active",
+		"modifier_item_vanguard_unique",
+		"modifier_item_imba_initiate_robe_stacks",
+		"modifier_imba_cheese_death_prevention",
+		"modifier_imba_rapier_cursed",
+		"modifier_imba_dazzle_nothl_protection_aura_talent",
+		"modifier_imba_battle_trance_720",
+		"modifier_imba_huskar_berserkers_blood_crimson_priest",
+	}
+
+	-- Extremely specific blademail interaction because fuck everything
+	if self:HasModifier("modifier_item_blade_mail_reflect") then
+		target:RemoveModifierByName("modifier_imba_purification_passive")
+	end
+
+	local nothlProtection = target:FindModifierByName("modifier_imba_dazzle_nothl_protection")
+
+	if nothlProtection and nothlProtection:GetStackCount() < 1 then
+		nothlProtection:SetStackCount(1)
+		nothlProtection:StartIntervalThink(1)
+	end
+
+	-- Deals lethal damage in order to trigger death-preventing abilities... Except for Reincarnation
+	if not ( target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_reincarnation_wraith_form_buff") or target:HasModifier("modifier_imba_reincarnation_wraith_form") ) then
+		target:Kill(ability, self)
+	end
+	
+	if target:HasAbility("imba_huskar_berserkers_blood") and target:FindAbilityByName("imba_huskar_berserkers_blood"):IsCooldownReady() then
+		target:FindAbilityByName("imba_huskar_berserkers_blood"):StartCooldown(FrameTime())
+	end
+
+	-- Removes the relevant modifiers
+	for k, v in pairs(modifiers_to_remove) do
+		if target:HasModifier(v) then
+			target:RemoveModifierByName(v)
+		end
+	end
+
+	-- Kills the target
+	if not target:HasModifier("modifier_imba_reincarnation_wraith_form") then
+		target:Kill(ability, self)
+	end
+end

@@ -1,5 +1,0 @@
-"DOTA_Tooltip_Ability_item_imba_gem"							"#{DOTA_Tooltip_Ability_item_gem}"
-"DOTA_Tooltip_ability_item_imba_gem_Description"				"#{DOTA_Tooltip_ability_item_gem_Description}"
-//"DOTA_Tooltip_ability_item_imba_gem_radius"					"#{DOTA_Tooltip_ability_item_gem_radius}"
-"DOTA_Tooltip_ability_item_imba_gem_Note0"						"#{DOTA_Tooltip_ability_item_gem_Note0}"
-"DOTA_Tooltip_ability_item_imba_gem_Lore"						"#{DOTA_Tooltip_ability_item_gem_Lore}"

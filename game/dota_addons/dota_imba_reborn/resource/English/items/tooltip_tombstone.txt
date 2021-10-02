@@ -1,2 +1,0 @@
-"DOTA_Tooltip_ability_item_tombstone"			"Revive Ally Hero!"
-"DOTA_Chat_Tombstone_Pinged"					"Fallen teammate here."

@@ -384,6 +384,7 @@ function modifier_imba_earths_mark:DeclareFunctions()
 
 function modifier_imba_earths_mark:OnCreated()
 	self.caster = self:GetCaster()	-- Required for client as well
+
 	if IsServer() then
 		local stone_caller = self:GetCaster():FindAbilityByName("imba_earth_spirit_stone_caller")
 		self.duration = stone_caller:GetSpecialValueFor("earths_mark_duration")
@@ -465,6 +466,7 @@ function modifier_imba_earth_spirit_layout_fix:GetModifierAbilityLayout()
 -------------------------	Boulder Smash	-------------------------
 ---------------------------------------------------------------------
 
+-- cause game crash, cause not found and unable to replicate in tools mode
 imba_earth_spirit_boulder_smash = imba_earth_spirit_boulder_smash or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_boulder_smash_push", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)			-- Movement modifier
