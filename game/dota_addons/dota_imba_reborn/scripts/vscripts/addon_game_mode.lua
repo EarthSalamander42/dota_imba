@@ -18,6 +18,9 @@ function Precache( context )
 	-- Periodic Spellcast
 --	PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
 
+	-- vanilla item override
+--	LinkLuaModifier("modifier_item_imba_bottle_heal", "components/items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE) -- imba bottle using vanilla replacing modifier in ModifierFilter
+
 	PrecacheResource("soundfile", "soundevents/game_sounds_custom.vsndevts", context)
 end
 

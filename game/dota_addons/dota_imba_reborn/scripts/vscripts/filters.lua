@@ -307,8 +307,10 @@ function GameMode:ModifierFilter( keys )
 			modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_helm_of_the_undying_addendum", {duration = keys.duration + FrameTime()})
 		end
 	end
-	
+
+--[[
 	-- Deactivate Tusk's Snowball so you don't allow multiple casting while Snowball is active (resulting in permanently lingering particles)
+	-- let's deactivate this weird fix to see if that issue is still a thing
 	if modifier_name == "modifier_tusk_snowball_movement" then
 		if modifier_owner:FindAbilityByName("tusk_snowball") then
 			modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
@@ -319,6 +321,7 @@ function GameMode:ModifierFilter( keys )
 			end)
 		end
 	end
+--]]
 
 	if modifier_owner:GetUnitName() == "npc_imba_warlock_demonic_ascension" then
 		if modifier_name == "modifier_fountain_aura_effect_lua" then
@@ -330,14 +333,6 @@ function GameMode:ModifierFilter( keys )
 	if string.find(modifier_name, "modifier_rune_") then
 		local rune_name = string.gsub(modifier_name, "modifier_rune_", "")
 		ImbaRunes:PickupRune(rune_name, modifier_owner, false)
-
-		return false
-	end
-
-	if modifier_name == "modifier_bottle_regeneration" then
-		local duration = modifier_ability:GetSpecialValueFor("restore_time")
-
-		modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_bottle_heal", {duration = duration})
 
 		return false
 	end
