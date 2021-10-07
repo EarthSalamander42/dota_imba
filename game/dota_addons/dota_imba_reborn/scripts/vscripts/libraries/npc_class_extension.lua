@@ -1,3 +1,32 @@
+-- Extension of CEntityInstance class.
+
+-- Checks if the entity is any kind of tree (either regular or temporary)
+function CEntityInstance:Custom_IsTree()
+	if self:Custom_IsRegularTree() or self:Custom_IsTempTree() then
+		return true
+	end
+
+	return false
+end
+
+-- Checks if the entity is a regular tree that spawns in the map
+function CEntityInstance:Custom_IsRegularTree()
+	if self.CutDown then
+		return true	
+	end
+
+	return false
+end
+
+-- Checks if the entity is a temporary tree that despawns after a while (Furion's Sprout, gg branch etc.)
+function CEntityInstance:Custom_IsTempTree()
+	if self:GetClassname() == "dota_temp_tree" then
+		return true
+	end
+
+	return false
+end
+
 -- Extension of CDOTA_BaseNPC class.
 
 function CDOTA_BaseNPC:GetNetworth()
@@ -667,5 +696,51 @@ function CDOTA_BaseNPC:TrueKill(target, ability)
 	-- Kills the target
 	if not target:HasModifier("modifier_imba_reincarnation_wraith_form") then
 		target:Kill(ability, self)
+	end
+end
+
+function CDOTA_BaseNPC:ChangeAttackProjectileImba()
+	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
+	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
+	local particle_lifesteal = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+	local particle_deso_skadi = "particles/item/desolator/desolator_skadi_projectile_2.vpcf"
+	local particle_clinkz_arrows = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+	local particle_dragon_form_green = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
+	local particle_dragon_form_red = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+	local particle_dragon_form_blue = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
+	local particle_terrorblade_transform = "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+
+	-- If the unit has a Desolator and a Skadi, use the special projectile
+	if self:HasModifier("modifier_item_imba_desolator") or self:HasModifier("modifier_item_imba_desolator_2") then
+		if self:HasModifier("modifier_item_imba_skadi") then
+			self:SetRangedProjectileName(particle_deso_skadi)
+		-- If only a Desolator, use its attack projectile instead
+		else
+			self:SetRangedProjectileName(particle_deso)
+		end
+	-- If only a Skadi, use its attack projectile instead
+	elseif self:HasModifier("modifier_item_imba_skadi") then
+		self:SetRangedProjectileName(particle_skadi)
+
+	-- If the unit has any form of lifesteal, use the lifesteal projectile
+	elseif self:HasModifier("modifier_imba_morbid_mask") or self:HasModifier("modifier_imba_mask_of_madness") or self:HasModifier("modifier_imba_satanic") or self:HasModifier("modifier_item_imba_vladmir") or self:HasModifier("modifier_item_imba_vladmir_blood") then		
+		self:SetRangedProjectileName(particle_lifesteal)	
+
+	-- If it's one of Dragon Knight's forms, use its attack projectile instead
+	elseif self:HasModifier("modifier_dragon_knight_corrosive_breath") then
+		self:SetRangedProjectileName(particle_dragon_form_green)
+	elseif self:HasModifier("modifier_dragon_knight_splash_attack") then
+		self:SetRangedProjectileName(particle_dragon_form_red)
+	elseif self:HasModifier("modifier_dragon_knight_frost_breath") then
+		self:SetRangedProjectileName(particle_dragon_form_blue)
+
+	-- If it's a metamorphosed Terrorblade, use its attack projectile instead
+	elseif self:HasModifier("modifier_terrorblade_metamorphosis") then
+		self:SetRangedProjectileName(particle_terrorblade_transform)
+
+	-- Else, default to the base ranged projectile
+	else
+--		print(self:GetKeyValue("ProjectileModel"))
+		self:SetRangedProjectileName(self:GetKeyValue("ProjectileModel"))
 	end
 end

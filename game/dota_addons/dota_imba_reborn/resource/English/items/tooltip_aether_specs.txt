@@ -1,0 +1,23 @@
+"DOTA_Tooltip_ability_item_recipe_imba_aether_specs"			"Aether Specs Recipe"
+
+"DOTA_Tooltip_ability_item_imba_aether_specs"					"Aether Specs"
+"DOTA_Tooltip_ability_item_imba_aether_specs_Description"		"<h1>Active: Detach Contacts</h1> Plants an enhanced vision ward, granting %radius% truesight vision. This ward does not have any terrain placement restrictions, takes %hits_to_kill% hero hits to kill, and lasts for %ward_duration% seconds.<br><br>Cast Range: %cast_range_tooltip%\n<h1>Passive: Aethereal Focus</h1> Increases targeted spell and item cast range by %cast_range_bonus%.\n<h1>Passive: Aquila Watcher Aura</h1>Grants %aura_mana_regen% mana regeneration, %aura_bonus_armor% armor, %aura_bonus_vision% bonus vision, and %aura_bonus_cast_range% cast range to nearby allies.<br><br>Radius: %aura_radius%"
+"DOTA_Tooltip_ability_item_imba_aether_specs_Lore"				"Polished with the incantation of his final breath, the gift of a dying mage to his sickly son."
+"DOTA_Tooltip_ability_item_imba_aether_specs_Note0"				"Cast range bonus and spell damage amplification from multiple Nether Wand-based items (Nether Wand, Aether Lens) do not stack."
+"DOTA_Tooltip_ability_item_imba_aether_specs_Note1"					"Does not stack with auras from Ring of Basilius or Ring of Aquila."
+"DOTA_Tooltip_ability_item_imba_aether_specs_Note2"					"The Detach Contacts ward grants similar bounty and experience to a standard Observer Ward when destroyed by the enemy team."
+"DOTA_Tooltip_ability_item_imba_aether_specs_Note3"					"The Detach Contacts ward takes 4 times the amount of hits from non-hero units to kill it."
+"DOTA_Tooltip_ability_item_imba_aether_specs_bonus_mana"			"+$mana"
+"DOTA_Tooltip_ability_item_imba_aether_specs_bonus_mana_regen"	"+$mana_regen"
+"DOTA_Tooltip_ability_item_imba_aether_specs_spell_power"		"%+Spell Amplification"
+
+"DOTA_Tooltip_ability_item_imba_aether_specs_bonus_strength"			"+$str"
+"DOTA_Tooltip_ability_item_imba_aether_specs_bonus_agility"			"+$agi"
+"DOTA_Tooltip_ability_item_imba_aether_specs_bonus_intellect"			"+$int"
+"DOTA_Tooltip_ability_item_imba_aether_specs_bonus_aspd"				"+$attack"
+"DOTA_Tooltip_ability_item_imba_aether_specs_bonus_damage"				"+$damage"
+
+"DOTA_Tooltip_modifier_item_imba_aether_specs_aura_bonus"					"Aquila Watcher Aura"
+"DOTA_Tooltip_modifier_item_imba_aether_specs_aura_bonus_Description"		"Mana regeneration increased by %fMODIFIER_PROPERTY_MANA_REGEN_CONSTANT_UNIQUE%, armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE%, vision increased by %dMODIFIER_PROPERTY_BONUS_DAY_VISION%, and cast range increased by %dMODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING%."
+
+"npc_dota_aether_spec_ward"										"Aether Specs Ward"

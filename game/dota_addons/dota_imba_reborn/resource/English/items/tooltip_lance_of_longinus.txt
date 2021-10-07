@@ -1,0 +1,24 @@
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus" 								"Lance of Longinus"
+
+"DOTA_Tooltip_Ability_item_recipe_imba_lance_of_longinus" 						"Lance of Longinus Recipe"
+
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_Description"                    "<h1>Active: Divergent Thrust</h1>Pushes you and target enemy %enemy_length% units away from each other <b>(towards if the caster is melee)</b>, and for %range_duration% seconds, allows you to make %max_attacks% attacks against the target without range restrictions (ranged casters only) and with +%bonus_attack_speed% attack speed.<br><br>Works like Force Staff when used on self or allies.<br><br>Allied Range: %tooltip_range%<br>Enemy Range: %cast_range_enemy%\n<h1>Active: God Piercing</h1>When used on self or allies, they disjoint all projectiles and are invulnerable for the %duration% second duration, and perform an instant attack on any enemy unit within %god_piercing_radius% radius they pass through. All attacks while piercing deal %god_piercing_pure_pct%%% bonus pure damage.\n<h1>Active: Linked Restoration</h1>Enemies targeted by Divergent Thrust or enemy heroes passed through by God Piercing share all their healing and health regeneration with the attacker for %god_piercing_duration% seconds. This effect is unpurgable and unaffected by status resistance.\n<h1>Passive: God Spear's Reach</h1> Increases attack range of ranged heroes by %base_attack_range%, and melee heroes by %base_attack_range_melee%."
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_Lore"                           "The spear of destiny that was used to pierce the side of a divine being. As blood and water flowed from the wound, a revelation was in midst."
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_Note0"						"Lance of Longinus does not interrupt the target's actions."
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_Note1"						"Will not work on a unit inside Chronosphere, Duel, or Black Hole."
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_Note1"						"God Piercing's pass-through attack cannot miss."
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_bonus_health"					"+$health"
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_bonus_mana"					"+$mana"
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_bonus_intellect"				"+$int"
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_bonus_health_regen"			"+$hp_regen"
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_bonus_agility"				"+$agi"
+"DOTA_Tooltip_Ability_item_imba_lance_of_longinus_bonus_strength"				"+$str"
+
+"DOTA_Tooltip_modifier_item_imba_lance_of_longinus_attack_speed"					"Divergent Thrust"
+"DOTA_Tooltip_modifier_item_imba_lance_of_longinus_attack_speed_Description"		"Gaining bonus attack speed against the Divergent Thrusted target, and range-unrestricted attacks equal to stack count if the caster is ranged."
+
+"DOTA_Tooltip_modifier_item_imba_lance_of_longinus_god_piercing_ally"					"Linked Restoration"
+"DOTA_Tooltip_modifier_item_imba_lance_of_longinus_god_piercing_ally_Description"		"Receiving all heals and health regeneration from the God Pierced target."
+
+"DOTA_Tooltip_modifier_item_imba_lance_of_longinus_god_piercing_enemy"					"Linked Restoration"
+"DOTA_Tooltip_modifier_item_imba_lance_of_longinus_god_piercing_enemy_Description"		"Sharing all heals and health regeneration with the God Piercing user."

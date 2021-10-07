@@ -1,0 +1,156 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf13:version{10b35a8e-b1ee-4f14-87a6-a7b6aae37699} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 200
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_bSaturateColorPreAlphaBlend = false
+			m_bAdditive = true
+			m_flOverbrightFactor = 2.0
+			m_hTexture = resource:"materials/particle/blueflare1.vtex"
+			m_flDiffuseAmount = 0.269
+			m_nFeatheringMode = "PARTICLE_DEPTH_FEATHERING_ON_OPTIONAL"
+		},
+		{
+			_class = "C_OP_RenderRopes"
+			m_nMinTesselation = 3
+			m_nMaxTesselation = 3
+			m_flTextureVWorldSize = 10000.0
+			m_nOrientationType = 2
+			m_flRadiusScale = 0.1
+			m_flSourceAlphaValueToMapToOne = 0.261
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_hTexture = resource:"materials/particle/beam_arc.vtex"
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.05
+			m_Gravity = [ 0.0, 0.0, 100.0 ]
+		},
+		{
+			_class = "C_OP_PositionLock"
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 24, 209, 223, 255 ]
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 2.0
+			m_flBias = 0.85
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 0.5
+			m_fLifetimeMin = 0.5
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_INIT_CreateInEpitrochoid"
+			m_flParticleDensity = 38.0
+			m_flOffset = 9.0
+			m_flRadius1 = 30.0
+			m_flRadius2 = 55.0
+			m_bUseCount = true
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin = [ 0.0, 0.0, 20.0 ]
+			m_OffsetMax = [ 0.0, 0.0, 20.0 ]
+		},
+		{
+			_class = "C_INIT_PositionWarp"
+			m_vecWarpMin = [ 1.1, 1.1, 1.1 ]
+			m_vecWarpMax = [ 1.1, 1.1, 1.1 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flEmitRate = 400.0
+		},
+	]
+	m_ForceGenerators = 
+	[
+		{
+			_class = "C_OP_TwistAroundAxis"
+			m_fForceAmount = 500.0
+		},
+		{
+			_class = "C_OP_AttractToControlPoint"
+			m_fForceAmount = 
+			{
+				m_flLiteralValue = -1200.0
+			}
+			m_fFalloffPower = 0.15
+			m_vecComponentScale = [ 0.0, 0.0, 1.0 ]
+		},
+		{
+			_class = "C_OP_AttractToControlPoint"
+			m_fForceAmount = 
+			{
+				m_flLiteralValue = 400.0
+			}
+			m_fFalloffPower = 0.0
+			m_vecComponentScale = [ 1.0, 1.0, 0.0 ]
+		},
+		{
+			_class = "C_OP_AttractToControlPoint"
+			m_fForceAmount = 
+			{
+				m_flLiteralValue = 1500.0
+				m_nBiasType = "PF_BIAS_TYPE_STANDARD"
+				m_Curve = 
+				{
+					m_spline = [  ]
+					m_tangents = [  ]
+					m_vDomainMins = [ 0.0, 0.0 ]
+					m_vDomainMaxs = [ 0.0, 0.0 ]
+				}
+			}
+			m_fFalloffPower = 0.0
+			m_nOpEndCapState = 1
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_nBehaviorVersion = 6
+	m_nFirstMultipleOverride_BackwardCompat = 4
+	m_ConstantColor = [ 0, 86, 98, 255 ]
+	m_flConstantRadius = 20.0
+}

@@ -1,0 +1,7 @@
+"DOTA_Tooltip_modifier_imba_aeon_disk"											"#{DOTA_Tooltip_modifier_item_aeon_disk_buff}"
+"DOTA_Tooltip_modifier_imba_aeon_disk_description"								"All incoming damage negated, and outgoing damage reduced by %dMODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE%%%."
+"DOTA_Tooltip_ability_item_imba_aeon_disk" 										"#{DOTA_Tooltip_ability_item_aeon_disk}"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_bonus_health" 						"+$health"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_bonus_mana" 							"+$mana"
+"DOTA_Tooltip_ability_item_imba_aeon_disk_description" 							"<h1>Passive: Combo Breaker</h1> When you take damage and your health falls below %health_threshold_pct%%, a strong dispel is applied and you gain a %buff_duration% second buff that provides +%status_resistance%%% Status Resistance and causes all damage you are dealt to be reduced to zero, <font color='#FF7800'>while damage you deal is reduced by %damage_reduction%%%.</font> Only triggers on player based damage.\n<h1><font color='#FF7800'>Toggle: Control Fate</font></h1> Can be toggled off to prevent Aeon Disk from triggering."
+"DOTA_Tooltip_ability_item_imba_aeon_disk_lore" 								"#{DOTA_Tooltip_ability_item_aeon_disk_Lore}"

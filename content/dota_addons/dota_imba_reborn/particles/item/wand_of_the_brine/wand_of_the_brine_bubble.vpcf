@@ -1,0 +1,35 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf19:version{aafc65d8-7a5a-4e01-bd8d-3ac118422503} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 4
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/item/wand_of_the_brine/wand_of_the_brine_bubble_disruption_center.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/item/wand_of_the_brine/wand_of_the_brine_bubble_disruption_clouds_blue.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/item/wand_of_the_brine/wand_of_the_brine_bubble_disruption_core.vpcf"
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_ConstantColor = [ 255, 255, 255, 90 ]
+	m_nBehaviorVersion = 9
+}

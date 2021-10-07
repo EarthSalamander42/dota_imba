@@ -1,0 +1,34 @@
+// Manta Style
+"DOTA_Tooltip_Ability_item_imba_recipe_manta"					"Manta Style Recipe"
+
+"DOTA_Tooltip_Ability_item_imba_manta"							"Manta Style"
+
+"DOTA_Tooltip_ability_item_imba_manta_Description"							"<h1>Active: Mirror Image</h1>Creates %images_count% images of your hero that last %tooltip_illusion_duration% seconds. <br><br>Melee images deal %tooltip_damage_outgoing_melee%%% damage and take %tooltip_damage_incoming_melee_total_pct%%% damage, while Ranged images deal %tooltip_damage_outgoing_ranged%%% and take %tooltip_damage_incoming_ranged_total_pct%%% damage. <br><br>Cooldown increased by %tooltip_ranged_cooldown_increase% seconds on ranged heroes.<br><br>Dispel Type: <span class=\"GameplayValues GameplayVariable\">Basic Dispel</span>\n<h1><font color='#FF7800'>Active: Sword Dance</font></h1>Grants %bonus_evasion_active%%% evasion to the caster and all Mirror Image illusions for %active_duration% seconds."
+"DOTA_Tooltip_ability_item_imba_manta_Lore"								"An axe made of reflective materials that causes confusion amongst enemy ranks."
+"DOTA_Tooltip_ability_item_imba_manta_Note0"									"Has a %invuln_duration% second cast time during which you are invulnerable."
+"DOTA_Tooltip_ability_item_imba_manta_Note1"									"Many effects are removed upon using Manta."
+//"DOTA_Tooltip_ability_item_imba_manta_Note2"									"Yasha based movement speed bonuses from multiple items do not stack."
+"DOTA_Tooltip_ability_item_imba_manta_bonus_agility"							"+$agi"
+"DOTA_Tooltip_ability_item_imba_manta_bonus_strength"						"+$str"
+"DOTA_Tooltip_ability_item_imba_manta_bonus_intellect"						"+$int"
+"DOTA_Tooltip_ability_item_imba_manta_bonus_attack_speed"					"+$attack"
+"DOTA_Tooltip_ability_item_imba_manta_bonus_movement_speed"					"+$move_speed"
+
+"DOTA_Tooltip_Ability_item_imba_recipe_manta_2"					"Manta Style EX Recipe"
+
+"DOTA_Tooltip_Ability_item_imba_manta_2"						"Manta Style EX"
+
+"DOTA_Tooltip_ability_item_imba_manta_2_Description"							"<h1>Active: Mirror Image</h1>Creates %images_count% images of your hero that last %tooltip_illusion_duration% seconds. <br><br>Melee images deal %tooltip_damage_outgoing_melee%%% damage and take %tooltip_damage_incoming_melee_total_pct%%% damage, while Ranged images deal %tooltip_damage_outgoing_ranged%%% and take %tooltip_damage_incoming_ranged_total_pct%%% damage. <br><br>Cooldown increased by %tooltip_ranged_cooldown_increase% seconds on ranged heroes.<br><br>Dispel Type: <span class=\"GameplayValues GameplayVariable\">Basic Dispel</span>\n<h1>Active: Sword Dance</h1>Grants %bonus_evasion_active%%% evasion to the caster and all Mirror Image illusions for %active_duration% seconds.\n<h1>Active: Gaze Into Abyss</h1> Manta Style is now a unit target ability, allowing Mirror Image to also be cast on allied or enemy heroes. If cast on an enemy, the Mirror Image illusions also gain %abyss_boost_pct%%% of the enemy's bonus attack damage as base attack damage. Can be cast on magic-immune enemies.<br><br>Cast Range: %abilitycastrange%\n<h1>Passive: Gaze Into Thee</h1> If the item wielder is killed by a real hero, a Mirror Image illusion of the attacker will spawn near them. This illusion benefits from the Gaze Into Abyss base attack damage boost."
+"DOTA_Tooltip_ability_item_imba_manta_2_Lore"								"An axe made of reflective materials that causes confusion amongst enemy ranks."
+"DOTA_Tooltip_ability_item_imba_manta_2_Note0"									"Has a %invuln_duration% second cast time during which you are invulnerable."
+"DOTA_Tooltip_ability_item_imba_manta_2_Note1"									"Many effects are removed upon using Manta."
+//"DOTA_Tooltip_ability_item_imba_manta_2_Note2"									"Yasha based movement speed bonuses from multiple items do not stack."
+"DOTA_Tooltip_ability_item_imba_manta_2_Note3"									"Gaze Into Abyss ignores spell block and spell reflect."
+"DOTA_Tooltip_ability_item_imba_manta_2_bonus_agility"							"+$agi"
+"DOTA_Tooltip_ability_item_imba_manta_2_bonus_strength"						"+$str"
+"DOTA_Tooltip_ability_item_imba_manta_2_bonus_intellect"						"+$int"
+"DOTA_Tooltip_ability_item_imba_manta_2_bonus_attack_speed"					"+$attack"
+"DOTA_Tooltip_ability_item_imba_manta_2_bonus_movement_speed"					"+$move_speed"
+
+"DOTA_Tooltip_modifier_item_imba_manta_abyss_boost"						"Abyss Boost"
+"DOTA_Tooltip_modifier_item_imba_manta_abyss_boost_Description"			"Gaining %dMODIFIER_PROPERTY_TOOLTIP%%% of the copied hero's bonus attack damage as base attack damage."
