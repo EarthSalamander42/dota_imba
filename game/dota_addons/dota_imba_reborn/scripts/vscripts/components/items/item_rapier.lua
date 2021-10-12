@@ -39,7 +39,7 @@ LinkLuaModifier("modifier_imba_rapier_cursed", "components/items/item_rapier.lua
 LinkLuaModifier("modifier_imba_rapier_cursed_damage_reduction", "components/items/item_rapier.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rapier_cursed_curse", "components/items/item_rapier.lua", LUA_MODIFIER_MOTION_NONE)
 
-rapier_base_class = class({})
+rapier_base_class = rapier_base_class or class({})
 
 function rapier_base_class:OnOwnerDied(params)
 	local hOwner = self:GetOwner()
@@ -59,7 +59,7 @@ function rapier_base_class:IsRapier()
 end
 
 -------------------------------------------
-modifier_rapier_base_class = class({})
+modifier_rapier_base_class = modifier_rapier_base_class or class({})
 
 function modifier_rapier_base_class:IsHidden() return true end
 function modifier_rapier_base_class:IsPurgable() return false end
@@ -74,7 +74,7 @@ end
 -------------------------------------------
 --			  DIVINE RAPIER
 -------------------------------------------
-item_imba_rapier = ShallowCopy( rapier_base_class )
+item_imba_rapier = item_imba_rapier or ShallowCopy( rapier_base_class )
 -------------------------------------------
 function item_imba_rapier:GetIntrinsicModifierName()
 	return "modifier_imba_divine_rapier"
@@ -84,7 +84,9 @@ function item_imba_rapier:GetAbilityTextureName()
 	return "imba_rapier"
 end
 -------------------------------------------
-modifier_imba_divine_rapier = ShallowCopy( modifier_rapier_base_class )
+
+modifier_imba_divine_rapier = modifier_imba_divine_rapier or ShallowCopy( modifier_rapier_base_class )
+
 function modifier_imba_divine_rapier:DeclareFunctions()
 	local decFuns =
 		{
@@ -118,7 +120,7 @@ end
 -------------------------------------------
 --			  TRINITY RAPIER
 -------------------------------------------
-item_imba_rapier_2 = ShallowCopy( rapier_base_class )
+item_imba_rapier_2 = item_imba_rapier_2 or ShallowCopy( rapier_base_class )
 -------------------------------------------
 function item_imba_rapier_2:GetIntrinsicModifierName()
 	return "modifier_imba_divine_rapier_2"
@@ -182,7 +184,9 @@ end
 -------------------------------------------
 --			  ARCANE RAPIER
 -------------------------------------------
-item_imba_rapier_magic = ShallowCopy( rapier_base_class )
+
+item_imba_rapier_magic = item_imba_rapier_magic or ShallowCopy( rapier_base_class )
+
 -------------------------------------------
 function item_imba_rapier_magic:GetIntrinsicModifierName()
 	return "modifier_imba_arcane_rapier"
@@ -192,7 +196,9 @@ function item_imba_rapier_magic:GetAbilityTextureName()
 	return "imba_rapier_magic"
 end
 -------------------------------------------
-modifier_imba_arcane_rapier = ShallowCopy( modifier_rapier_base_class )
+
+modifier_imba_arcane_rapier = modifier_imba_arcane_rapier or ShallowCopy( modifier_rapier_base_class )
+
 function modifier_imba_arcane_rapier:DeclareFunctions()
 	local decFuns =
 		{
@@ -220,7 +226,9 @@ end
 -------------------------------------------
 --			  ARCHMAGE RAPIER
 -------------------------------------------
-item_imba_rapier_magic_2 = ShallowCopy( rapier_base_class )
+
+item_imba_rapier_magic_2 = item_imba_rapier_magic_2 or ShallowCopy( rapier_base_class )
+
 -------------------------------------------
 function item_imba_rapier_magic_2:GetIntrinsicModifierName()
 	return "modifier_imba_arcane_rapier_2"
@@ -230,7 +238,9 @@ function item_imba_rapier_magic_2:GetAbilityTextureName()
 	return "imba_rapier_magic_2"
 end
 -------------------------------------------
-modifier_imba_arcane_rapier_2 = ShallowCopy( modifier_rapier_base_class )
+
+modifier_imba_arcane_rapier_2 = modifier_imba_arcane_rapier_2 or ShallowCopy( modifier_rapier_base_class )
+
 function modifier_imba_arcane_rapier_2:DeclareFunctions()
 	local decFuns =
 		{
@@ -277,7 +287,9 @@ end
 -------------------------------------------
 --			  CURSED RAPIER
 -------------------------------------------
-item_imba_rapier_cursed = ShallowCopy( rapier_base_class )
+
+item_imba_rapier_cursed = item_imba_rapier_cursed or ShallowCopy( rapier_base_class )
+
 -------------------------------------------
 function item_imba_rapier_cursed:GetIntrinsicModifierName()
 	return "modifier_imba_rapier_cursed"
@@ -287,7 +299,7 @@ function item_imba_rapier_cursed:GetAbilityTextureName()
 	return "imba_rapier_cursed"
 end
 -------------------------------------------
-modifier_imba_rapier_cursed = ShallowCopy( modifier_rapier_base_class )
+modifier_imba_rapier_cursed = modifier_imba_rapier_cursed or ShallowCopy( modifier_rapier_base_class )
 
 function modifier_imba_rapier_cursed:OnCreated()
 	if IsServer() then
@@ -396,6 +408,7 @@ function modifier_imba_rapier_cursed_damage_reduction:GetModifierIncomingDamage_
 	return self.damage_reduction * (-1)
 end
 -------------------------------------------
+
 modifier_imba_rapier_cursed_curse = modifier_imba_rapier_cursed_curse or class({})
 
 function modifier_imba_rapier_cursed_curse:IsDebuff() return false end
@@ -445,4 +458,5 @@ function modifier_imba_rapier_cursed_curse:OnIntervalThink()
 		})
 	end
 end
+
 -------------------------------------------

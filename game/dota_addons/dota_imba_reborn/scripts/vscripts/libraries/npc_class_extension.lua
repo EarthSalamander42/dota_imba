@@ -744,3 +744,98 @@ function CDOTA_BaseNPC:ChangeAttackProjectileImba()
 		self:SetRangedProjectileName(self:GetKeyValue("ProjectileModel"))
 	end
 end
+
+function CDOTA_BaseNPC:CalculateDirection(target)
+	local pos1 = self
+	local pos2 = target
+	if self.GetAbsOrigin then pos1 = self:GetAbsOrigin() end
+	if target.GetAbsOrigin then pos2 = target:GetAbsOrigin() end
+	local direction = (pos1 - pos2):Normalized()
+	return direction
+end
+
+-- Serversided function only
+function CDOTA_BaseNPC:DropItem(hItem, sNewItemName, bLaunchLoot)
+	local vLocation = GetGroundPosition(self:GetAbsOrigin(), self)
+	local sName
+	local vRandomVector = RandomVector(100)
+
+	if hItem then
+		sName = hItem:GetName()
+		self:DropItemAtPositionImmediate(hItem, vLocation)
+	else
+		sName = sNewItemName
+		hItem = CreateItem(sNewItemName, nil, nil)
+		CreateItemOnPositionSync(vLocation, hItem)
+	end
+
+	if sName == "item_imba_rapier" then
+		hItem:GetContainer():SetRenderColor(230,240,35)
+	elseif sName == "item_imba_rapier_2" then
+		hItem:GetContainer():SetRenderColor(240,150,30)
+		hItem.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_trinity.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hItem.rapier_pfx, 0, vLocation + vRandomVector)
+	elseif sName == "item_imba_rapier_magic" then
+		hItem:GetContainer():SetRenderColor(35,35,240)
+	elseif sName == "item_imba_rapier_magic_2" then
+		hItem:GetContainer():SetRenderColor(140,70,220)
+		hItem.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_archmage.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hItem.rapier_pfx, 0, vLocation + vRandomVector)
+	elseif sName == "item_imba_rapier_cursed" then
+		hItem.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_cursed.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hItem.rapier_pfx, 0, vLocation + vRandomVector)
+		hItem.x_pfx = ParticleManager:CreateParticle("particles/item/rapier/cursed_x.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hItem.x_pfx, 0, vLocation + vRandomVector)
+	end
+
+	if bLaunchLoot then
+		hItem:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
+	end
+end
+
+-- TEMPORARY: No class defined yet
+
+-- Gets all Ethereal abilities
+function GetEtherealAbilities()
+	local abilities = {
+		"modifier_imba_ghost_shroud_active",
+		"modifier_imba_ghost_state",
+		"modifier_item_imba_ethereal_blade_ethereal",
+	}
+
+	return abilities
+end
+
+-- Cleave-like cone search - returns the units in front of the caster in a cone.
+function FindUnitsInCone(teamNumber, vDirection, vPosition, startRadius, endRadius, flLength, hCacheUnit, targetTeam, targetUnit, targetFlags, findOrder, bCache)
+	local vDirectionCone = Vector( vDirection.y, -vDirection.x, 0.0 )
+	local enemies = FindUnitsInRadius(teamNumber, vPosition, hCacheUnit, endRadius + flLength, targetTeam, targetUnit, targetFlags, findOrder, bCache )
+	local unitTable = {}
+
+	if #enemies > 0 then
+		for _,enemy in pairs(enemies) do
+			if enemy ~= nil then
+				local vToPotentialTarget = enemy:GetOrigin() - vPosition
+				local flSideAmount = math.abs( vToPotentialTarget.x * vDirectionCone.x + vToPotentialTarget.y * vDirectionCone.y + vToPotentialTarget.z * vDirectionCone.z )
+				local enemy_distance_from_caster = ( vToPotentialTarget.x * vDirection.x + vToPotentialTarget.y * vDirection.y + vToPotentialTarget.z * vDirection.z )
+				
+				-- Author of this "increase over distance": Fudge, pretty proud of this :D 
+				
+				-- Calculate how much the width of the check can be higher than the starting point
+				local max_increased_radius_from_distance = endRadius - startRadius
+				
+				-- Calculate how close the enemy is to the caster, in comparison to the total distance
+				local pct_distance = enemy_distance_from_caster / flLength
+				
+				-- Calculate how much the width should be higher due to the distance of the enemy to the caster.
+				local radius_increase_from_distance = max_increased_radius_from_distance * pct_distance
+				
+				if ( flSideAmount < startRadius + radius_increase_from_distance ) and ( enemy_distance_from_caster > 0.0 ) and ( enemy_distance_from_caster < flLength ) then
+					table.insert(unitTable, enemy)
+				end
+			end
+		end
+	end
+
+	return unitTable
+end

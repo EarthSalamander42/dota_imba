@@ -1064,6 +1064,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:CheckState()
 	local state = {
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_DISARMED] = true,
 	}
 	return state
 end
