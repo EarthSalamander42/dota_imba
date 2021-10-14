@@ -64,7 +64,7 @@
 "DOTA_Tooltip_ability_imba_alchemist_mammonite_Note1"                  "The amount of gold spent is based on your current gold, so the more gold you have, the more gold spent. This amount is added to your attacks. It uses unreliable gold first, if possible."
 "DOTA_Tooltip_ability_imba_alchemist_mammonite_Lore"                    "You can use money to do other things than just buy items."
 "DOTA_Tooltip_ability_imba_alchemist_mammonite_gold_damage"            "%CURRENT GOLD TO DAMAGE:"
-"DOTA_Tooltip_ability_imba_alchemist_mammonite_scepter_description"		"Adds a new ability: Mammonite. Deals a portion of your current gold as damage, but spends that amount of gold on every attack."
+"DOTA_Tooltip_ability_imba_alchemist_mammonite_scepter_description"		"Deals a portion of your current gold as damage, but spends that amount of gold on every attack."
 
 // Alchemist's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_1"                   "+{s:value}% Sticky Acid Slow"

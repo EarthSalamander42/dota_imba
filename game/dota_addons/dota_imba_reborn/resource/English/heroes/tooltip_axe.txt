@@ -30,10 +30,11 @@
 "DOTA_Tooltip_modifier_imba_battle_hunger_buff_haste_Description"		"Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% bonus movement speed."
 
 // Axe's Counter Helix
-"DOTA_Tooltip_ability_imba_axe_counter_helix"                          "#{DOTA_Tooltip_ability_axe_counter_helix}"
-"DOTA_Tooltip_ability_imba_axe_counter_helix_Imbafication_1"              "<font color='#FF7800'>Unceasing Top:</font> Counter Helix has no cooldown."
-"DOTA_Tooltip_ability_imba_axe_counter_helix_Imbafication_2"              "<font color='#FF7800'>Brute Force:</font> Counter Helix damage is increased by %taunted_damage_bonus_pct%%% against units affected by Berseker's Call's debuff."
-"DOTA_Tooltip_ability_imba_axe_counter_helix_Imbafication_3"              "<font color='#FF7800'>Spin To Win:</font> When Counter Helix triggers, you gain a stack of a buff (up to %stack_limit% stacks). Each stack increases radius by %radius_increase_per_stack%. Stacks last %stack_duration% seconds and are refreshed on spin."
+"DOTA_Tooltip_ability_imba_axe_counter_helix"                           "#{DOTA_Tooltip_ability_axe_counter_helix}"
+"DOTA_Tooltip_ability_imba_axe_counter_helix_shard_description"         "#{DOTA_Tooltip_ability_axe_counter_helix_shard_description}"
+"DOTA_Tooltip_ability_imba_axe_counter_helix_Imbafication_1"            "<font color='#FF7800'>Unceasing Top:</font> Counter Helix has no cooldown."
+"DOTA_Tooltip_ability_imba_axe_counter_helix_Imbafication_2"            "<font color='#FF7800'>Brute Force:</font> Counter Helix damage is increased by %taunted_damage_bonus_pct%%% against units affected by Berseker's Call's debuff."
+"DOTA_Tooltip_ability_imba_axe_counter_helix_Imbafication_3"            "<font color='#FF7800'>Spin To Win:</font> When Counter Helix triggers, you gain a stack of a buff (up to %stack_limit% stacks). Each stack increases radius by %radius_increase_per_stack%. Stacks last %stack_duration% seconds and are refreshed on spin."
 
 "DOTA_Tooltip_modifier_imba_counter_helix_spin_stacks"                  "Spin To Win"
 "DOTA_Tooltip_modifier_imba_counter_helix_spin_stacks_Description"		"Each stack increases Counter Helix's radius."

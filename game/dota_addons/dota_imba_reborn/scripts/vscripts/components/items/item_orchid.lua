@@ -68,6 +68,8 @@ function modifier_item_imba_orchid:RemoveOnDeath()	return false end
 function modifier_item_imba_orchid:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_orchid:OnDestroy()
+	if not IsServer() then return end
+
 	self:CheckUnique(false)
 end
 
@@ -84,7 +86,10 @@ function modifier_item_imba_orchid:OnCreated()
 		self.bonus_damage = self.item:GetSpecialValueFor("bonus_damage")
 		self.bonus_mana_regen = self.item:GetSpecialValueFor("bonus_mana_regen")
 		self.spell_power = self.item:GetSpecialValueFor("spell_power")
-		self:CheckUnique(true)
+
+		if IsServer() then
+			self:CheckUnique(false)
+		end
 	end
 end
 
@@ -264,13 +269,17 @@ function modifier_item_imba_bloodthorn:OnCreated()
 
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
+
 	if self.parent:IsHero() and self.item then
 		self.bonus_intellect = self.item:GetSpecialValueFor("bonus_intellect")
 		self.bonus_attack_speed = self.item:GetSpecialValueFor("bonus_attack_speed")
 		self.bonus_damage = self.item:GetSpecialValueFor("bonus_damage")
 		self.bonus_mana_regen = self.item:GetSpecialValueFor("bonus_mana_regen")
 		self.spell_power = self.item:GetSpecialValueFor("spell_power")
-		self:CheckUnique(true)
+
+		if IsServer() then
+			self:CheckUnique(false)
+		end
 	end
 end
 

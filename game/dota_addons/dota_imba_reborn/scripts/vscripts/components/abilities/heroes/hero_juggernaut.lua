@@ -479,7 +479,7 @@ end
 
 function modifier_imba_juggernaut_blade_fury_deflect_buff:GetModifierIncomingDamage_Percentage(params)	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, self.caster, params.damage, nil)
-	return -100	
+	return -100
 end
 
 -- HEALING WARD --

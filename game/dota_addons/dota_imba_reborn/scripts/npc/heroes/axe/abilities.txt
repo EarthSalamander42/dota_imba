@@ -110,6 +110,7 @@
 		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"
 		"AbilityTextureName"            "axe_counter_helix"
+		"HasShardUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -144,6 +145,11 @@
 				"var_type"								"FIELD_INTEGER"
 				"taunted_damage_bonus_pct"				"10 15 20 25"
 				"CalculateSpellDamageTooltip"			"0"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"shard_damage_reduction"				"20" // This should not be required, vanilla shard values hardcoded?
 			}
 		}
 	}

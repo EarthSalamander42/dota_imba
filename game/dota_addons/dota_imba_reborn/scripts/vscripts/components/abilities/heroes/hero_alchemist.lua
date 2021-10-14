@@ -32,10 +32,6 @@ MergeTables(LinkedModifiers,{
 
 imba_alchemist_acid_spray = imba_alchemist_acid_spray or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_alchemist_acid_spray:GetAbilityTextureName()
-	return "alchemist_acid_spray"
-end
-
 function imba_alchemist_acid_spray:IsHiddenWhenStolen()
 --	local caster = self:GetCaster()
 --	if caster:HasAbility("imba_alchemist_chemical_rage") then
@@ -404,10 +400,6 @@ MergeTables(LinkedModifiers,{
 })
 imba_alchemist_unstable_concoction = imba_alchemist_unstable_concoction or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_alchemist_unstable_concoction:GetAbilityTextureName()
-	return "alchemist_unstable_concoction"
-end
-
 function imba_alchemist_unstable_concoction:IsHiddenWhenStolen()
 	return false
 end
@@ -418,6 +410,25 @@ function imba_alchemist_unstable_concoction:OnUpgrade()
 	end
 
 	self.vanilla_ability:SetLevel(self:GetLevel())
+end
+
+function imba_alchemist_unstable_concoction:OnInventoryContentsChanged()
+	-- Checks if Alchemist now has a shard
+	if IsServer() then
+		local caster = self:GetCaster()
+		local berserk_potion_ability = "alchemist_berserk_potion"
+
+		if caster:HasAbility(berserk_potion_ability) then
+			local berserk_potion_ability_handler = caster:FindAbilityByName(berserk_potion_ability)
+
+			if berserk_potion_ability_handler then
+				if caster:HasShard() then
+					berserk_potion_ability_handler:SetLevel(1)
+					berserk_potion_ability_handler:SetHidden(false)
+				end
+			end
+		end
+	end
 end
 
 function imba_alchemist_unstable_concoction:OnUnStolen()
@@ -646,7 +657,6 @@ function imba_alchemist_unstable_concoction:GetManaCost(level)
 	return self:GetVanillaKeyValue("AbilityManaCost")
 end
 
-
 function imba_alchemist_unstable_concoction:GetCastTime()
 	local caster = self:GetCaster()
 	if caster:HasModifier("modifier_imba_unstable_concoction_handler") then
@@ -859,10 +869,6 @@ MergeTables(LinkedModifiers,{
 })
 imba_alchemist_goblins_greed = imba_alchemist_goblins_greed or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_alchemist_goblins_greed:GetAbilityTextureName()
-	return "alchemist_goblins_greed"
-end
-
 function imba_alchemist_goblins_greed:IsStealable()
 	return false
 end
@@ -1031,10 +1037,6 @@ end
 
 imba_alchemist_greevils_greed = imba_alchemist_greevils_greed or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_alchemist_greevils_greed:GetAbilityTextureName()
-	return "alchemist_goblins_greed"
-end
-
 function imba_alchemist_greevils_greed:GetCastRange()
 	return 1
 end
@@ -1134,10 +1136,6 @@ MergeTables(LinkedModifiers,{
 	-- ["modifier_imba_chemical_rage_scepter_handler"]	= LUA_MODIFIER_MOTION_NONE
 })
 imba_alchemist_chemical_rage = imba_alchemist_chemical_rage or class(VANILLA_ABILITIES_BASECLASS)
-
-function imba_alchemist_chemical_rage:GetAbilityTextureName()
-	return "alchemist_chemical_rage"
-end
 
 -- function imba_alchemist_chemical_rage:GetIntrinsicModifierName()
 	-- return "modifier_imba_chemical_rage_scepter_handler"
@@ -1509,12 +1507,7 @@ MergeTables(LinkedModifiers,{
 })
 imba_alchemist_mammonite = imba_alchemist_mammonite or class({})
 
-function imba_alchemist_mammonite:GetAbilityTextureName()
-	return "alchemist_mammonite"
-end
-
 function imba_alchemist_mammonite:IsStealable()	return false end
-
 function imba_alchemist_mammonite:OnToggle() return end
 
 function imba_alchemist_mammonite:GetIntrinsicModifierName()

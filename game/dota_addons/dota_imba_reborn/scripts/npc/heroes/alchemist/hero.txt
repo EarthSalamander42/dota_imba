@@ -14,7 +14,7 @@
 		"Ability2"					"imba_alchemist_unstable_concoction"
 		"Ability3"					"imba_alchemist_goblins_greed"		
 		"Ability4"					"imba_alchemist_mammonite"	
-		"Ability5"					"generic_hidden"
+		"Ability5"					"alchemist_berserk_potion"
 		"Ability6"					"imba_alchemist_chemical_rage"
 		"Ability7"					"alchemist_unstable_concoction_throw" // This ability is here only to gather vanilla values from it
 

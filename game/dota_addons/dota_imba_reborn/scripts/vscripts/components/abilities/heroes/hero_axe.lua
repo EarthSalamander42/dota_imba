@@ -722,7 +722,9 @@ end
 MergeTables(LinkedModifiers,{
 	["modifier_imba_counter_helix_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_counter_helix_spin_stacks"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_counter_helix_shard"] = LUA_MODIFIER_MOTION_NONE,
 })
+
 imba_axe_counter_helix = imba_axe_counter_helix or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_axe_counter_helix:GetCastRange()
@@ -731,6 +733,12 @@ end
 
 function imba_axe_counter_helix:GetIntrinsicModifierName()
 	return "modifier_imba_counter_helix_passive"
+end
+
+function imba_axe_counter_helix:OnInventoryContentsChanged()
+	if self:GetCaster():HasShard() and not self:GetCaster():HasModifier("modifier_imba_counter_helix_shard") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_counter_helix_shard", {})
+	end
 end
 
 -------------------------------------------
@@ -886,6 +894,11 @@ end
 ----------------------------------------------------------------------------------------------------
 modifier_imba_counter_helix_spin_stacks = modifier_imba_counter_helix_spin_stacks or class({})
 
+
+function modifier_imba_counter_helix_spin_stacks:IsHidden() return false end
+function modifier_imba_counter_helix_spin_stacks:IsBuff() return true end
+function modifier_imba_counter_helix_spin_stacks:IsPurgable() return false end
+
 function modifier_imba_counter_helix_spin_stacks:OnCreated()
 	self.stack_limit = self:GetAbility():GetSpecialValueFor("stack_limit")
 end
@@ -896,17 +909,19 @@ function modifier_imba_counter_helix_spin_stacks:OnStackCountChanged( oldstacks 
 	end
 end
 
-function modifier_imba_counter_helix_spin_stacks:IsHidden()
-	return false
-end
-function modifier_imba_counter_helix_spin_stacks:IsBuff()
-	return true
-end
-function modifier_imba_counter_helix_spin_stacks:IsPurgable()
-	return false
-end
 ----------------------------------------------------------------------------------------------------
 
+modifier_imba_counter_helix_shard = modifier_imba_counter_helix_shard or class({})
+
+function modifier_imba_counter_helix_shard:DeclareFunctions() return {
+	MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
+} end
+
+function modifier_imba_counter_helix_shard:GetModifierDamageOutgoing_Percentage(keys)
+	if keys.target and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
+		return self:GetAbility():GetSpecialValueFor("shard_damage_reduction") * self:GetStackCount()
+	end
+end
 
 -------------------------------------------
 -- Culling Blade
