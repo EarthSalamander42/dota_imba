@@ -97,6 +97,11 @@ end
 -- Rolls a Psuedo Random chance. If failed, chances increases, otherwise chances are reset
 -- Numbers taken from https://gaming.stackexchange.com/a/290788
 function RollPseudoRandom(base_chance, entity)
+	if not entity then
+		print("Missing or invalid entity!")
+		return
+	end
+
 	local chances_table = {
 		{1, 0.015604},
 		{2, 0.062009},
@@ -201,7 +206,9 @@ function RollPseudoRandom(base_chance, entity)
 	}
 
 	entity.pseudoRandomModifier = entity.pseudoRandomModifier or 0
+
 	local prngBase
+
 	for i = 1, #chances_table do
 		if base_chance == chances_table[i][1] then		  
 			prngBase = chances_table[i][2]
