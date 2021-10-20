@@ -158,12 +158,12 @@ _G.IMBA_FRANTIC_VALUE = 40
 VANILLA_POWER_RUNE_TIME = 120.0
 VANILLA_BOUNTY_RUNE_TIME = 180.0
 
-local global_gold_bonus = 200 -- %
+local global_gold_bonus = 300 -- %
 CUSTOM_GOLD_BONUS = {}
 CUSTOM_GOLD_BONUS["5v5"] = global_gold_bonus
 CUSTOM_GOLD_BONUS["10v10"] = global_gold_bonus
 
-local global_xp_bonus = 200 -- %
+local global_xp_bonus = 300 -- %
 CUSTOM_XP_BONUS = {}
 CUSTOM_XP_BONUS["5v5"] = global_xp_bonus
 CUSTOM_XP_BONUS["10v10"] = global_xp_bonus
@@ -177,7 +177,7 @@ HERO_STARTING_LEVEL["10v10"] = global_starting_level
 
 -- vanilla, keep it as a static value because it is multiplied by gold multiplier
 VANILA_HERO_INITIAL_GOLD = 600
-HERO_INITIAL_GOLD = 600 -- will be multiplied based on gold map multiplier
+HERO_INITIAL_GOLD = VANILA_HERO_INITIAL_GOLD -- will be multiplied based on gold map multiplier
 
 local global_gold_tick_time = 0.6
 local global_10v10_gold_tick_time = 0.4

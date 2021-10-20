@@ -907,7 +907,7 @@
 		"ID"							"2019"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_vladmir.lua"
-		"AbilityTextureName"			"item_vladmir"
+		"AbilityTextureName"			"imba_vladmir"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------

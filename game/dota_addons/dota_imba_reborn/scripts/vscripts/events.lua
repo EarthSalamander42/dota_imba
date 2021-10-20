@@ -60,23 +60,30 @@ end
 function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
-	if npc:IsRealHero() then
-		if npc.first_spawn == nil then
-			GameMode:OnHeroFirstSpawn(npc)
+	if npc then
+		-- act on heroes only
+		if npc:IsRealHero() then
+			if npc.first_spawn == nil then
+				GameMode:OnHeroFirstSpawn(npc)
+				npc.first_spawn = true
+			end
 
-			npc.first_spawn = true
-		end
+			GameMode:OnHeroSpawn(npc)
 
-		GameMode:OnHeroSpawn(npc)
+			return
+		-- act on couriers only
+		elseif npc:IsCourier() then
+			if npc.first_spawn == nil then
+				npc:AddNewModifier(npc, nil, "modifier_imba_turbo_courier", {})
+				npc.first_spawn = true
+			end
+		-- act on everything else
+		else
+			if npc.first_spawn == nil then
+				npc:AddNewModifier(npc, nil, "modifier_custom_mechanics", {})
 
-		return
-	end
-
-	if npc:IsCourier() then
-		if npc.first_spawn == nil then
-			npc:AddNewModifier(npc, nil, "modifier_imba_turbo_courier", {})
-	
-			npc.first_spawn = true
+				npc.first_spawn = true
+			end
 		end
 	end
 end
@@ -123,6 +130,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 	hero:InitializeAbilities()
 
 	hero:AddNewModifier(hero, nil, "modifier_frantic", {})
+	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("delay_init_tooltips"), function()
 		-- init tooltips

@@ -27,10 +27,6 @@ if item_imba_vladmir == nil then item_imba_vladmir = class({}) end
 LinkLuaModifier( "modifier_item_imba_vladmir", "components/items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )					-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_vladmir_aura", "components/items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 
-function item_imba_vladmir:GetAbilityTextureName()
-	return "imba_vladmir"
-end
-
 function item_imba_vladmir:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE + DOTA_ABILITY_BEHAVIOR_AURA end
 
@@ -100,7 +96,8 @@ function modifier_item_imba_vladmir_aura:IsPurgable() return false end
 
 -- Aura icon
 function modifier_item_imba_vladmir_aura:GetTexture()
-	return "imba_vladmir" end
+	return "imba_vladmir"
+end
 
 -- Stores the aura's parameters to prevent errors when the item is unequipped
 function modifier_item_imba_vladmir_aura:OnCreated(keys)
@@ -126,7 +123,8 @@ end
 
 -- Lifesteal
 function modifier_item_imba_vladmir_aura:GetModifierLifesteal()
-	return self:GetAbility():GetSpecialValueFor("vampiric_aura") end
+	return self:GetAbility():GetSpecialValueFor("vampiric_aura")
+end
 
 -- Bonuses (does not stack with Vladmir's Blood)
 function modifier_item_imba_vladmir_aura:DeclareFunctions()
@@ -135,8 +133,6 @@ function modifier_item_imba_vladmir_aura:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
 end
 
@@ -173,31 +169,6 @@ function modifier_item_imba_vladmir_aura:GetModifierConstantManaRegen()
 	end
 end
 
---- Enum DamageCategory_t
--- DOTA_DAMAGE_CATEGORY_ATTACK = 1
--- DOTA_DAMAGE_CATEGORY_SPELL = 0
-function modifier_item_imba_vladmir_aura:OnTakeDamage( keys )
-	if not keys.attacker:HasModifier("modifier_item_imba_vladmir_blood_aura") and not keys.attacker:HasModifier("modifier_custom_mechanics") and keys.attacker == self:GetParent() and not keys.unit:IsBuilding() and not keys.unit:IsOther() and keys.unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
-		-- Spell lifesteal handler
-		if keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.inflictor and self:GetParent():GetSpellLifesteal() > 0 and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL) ~= DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then			
-			-- Particle effect
-			self.lifesteal_pfx = ParticleManager:CreateParticle("particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
-			ParticleManager:SetParticleControl(self.lifesteal_pfx, 0, keys.attacker:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(self.lifesteal_pfx)
-			
-			keys.attacker:Heal(math.max(keys.damage, 0) * self.vampiric_aura * 0.01, keys.attacker)
-		-- Attack lifesteal handler
-		elseif keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and self:GetParent():GetLifesteal() > 0 then
-			-- Heal and fire the particle			
-			self.lifesteal_pfx = ParticleManager:CreateParticle("particles/item/vladmir/vladmir_blood_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
-			ParticleManager:SetParticleControl(self.lifesteal_pfx, 0, keys.attacker:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(self.lifesteal_pfx)
-			
-			keys.attacker:Heal(keys.damage * self.vampiric_aura * 0.01, keys.attacker)
-		end
-	end
-end
-
 -----------------------------------------------------------------------------------------------------------
 --	Vladmir's Blood definition
 -----------------------------------------------------------------------------------------------------------
@@ -206,10 +177,6 @@ if item_imba_vladmir_2 == nil then item_imba_vladmir_2 = class({}) end
 LinkLuaModifier( "modifier_item_imba_vladmir_blood", "components/items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_vladmir_blood_aura_emitter", "components/items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )	-- Aura emitter
 LinkLuaModifier( "modifier_item_imba_vladmir_blood_aura", "components/items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
-
-function item_imba_vladmir_2:GetAbilityTextureName()
-	return "imba_vladmir_2"
-end
 
 function item_imba_vladmir_2:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE + DOTA_ABILITY_BEHAVIOR_AURA end
@@ -277,7 +244,8 @@ modifier_item_imba_vladmir_blood_aura = modifier_item_imba_vladmir_blood_aura or
 
 -- Aura icon
 function modifier_item_imba_vladmir_blood_aura:GetTexture()
-	return "imba_vladmir_2" end
+	return "imba_vladmir_2"
+end
 
 -- Stores the aura's parameters to prevent errors when the item is unequipped
 function modifier_item_imba_vladmir_blood_aura:OnCreated(keys)
@@ -320,46 +288,21 @@ function modifier_item_imba_vladmir_blood_aura:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
 end
 
 function modifier_item_imba_vladmir_blood_aura:GetModifierBaseDamageOutgoing_Percentage()
-	return self.damage_aura end
+	return self.damage_aura
+end
 
 function modifier_item_imba_vladmir_blood_aura:GetModifierPhysicalArmorBonusUnique()
-	return self.armor_aura end
+	return self.armor_aura
+end
 
 function modifier_item_imba_vladmir_blood_aura:GetModifierConstantHealthRegen()
-	return self.hp_regen_aura end
+	return self.hp_regen_aura
+end
 
 function modifier_item_imba_vladmir_blood_aura:GetModifierConstantManaRegen()
-	return self.mana_regen_aura end
-
--- Lifesteal handler (for units not covered by the generic talent handler modifier)
-
---- Enum DamageCategory_t
--- DOTA_DAMAGE_CATEGORY_ATTACK = 1
--- DOTA_DAMAGE_CATEGORY_SPELL = 0
-function modifier_item_imba_vladmir_blood_aura:OnTakeDamage( keys )
-	if not keys.attacker:HasModifier("modifier_custom_mechanics") and keys.attacker == self:GetParent() and not keys.unit:IsBuilding() and not keys.unit:IsOther() and keys.unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
-		-- Spell lifesteal handler
-		if keys.damage_category == DOTA_DAMAGE_CATEGORY_SPELL and keys.inflictor and self:GetParent():GetSpellLifesteal() > 0 and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL) ~= DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then			
-			-- Particle effect
-			self.lifesteal_pfx = ParticleManager:CreateParticle("particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
-			ParticleManager:SetParticleControl(self.lifesteal_pfx, 0, keys.attacker:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(self.lifesteal_pfx)
-			
-			keys.attacker:Heal(math.max(keys.damage, 0) * self.vampiric_aura * 0.01, keys.attacker)
-		-- Attack lifesteal handler
-		elseif keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and self:GetParent():GetLifesteal() > 0 then
-			-- Heal and fire the particle			
-			self.lifesteal_pfx = ParticleManager:CreateParticle("particles/item/vladmir/vladmir_blood_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
-			ParticleManager:SetParticleControl(self.lifesteal_pfx, 0, keys.attacker:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(self.lifesteal_pfx)
-			
-			keys.attacker:Heal(keys.damage * self.vampiric_aura * 0.01, keys.attacker)
-		end
-	end
+	return self.mana_regen_aura
 end

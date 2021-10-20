@@ -793,6 +793,107 @@ function CDOTA_BaseNPC:DropItem(hItem, sNewItemName, bLaunchLoot)
 	end
 end
 
+-- Autoattack lifesteal
+function CDOTA_BaseNPC:GetLifesteal()
+	local lifesteal = 0
+	local multiplier = 0
+
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierLifesteal and parent_modifier:GetModifierLifesteal() then
+			lifesteal = lifesteal + parent_modifier:GetModifierLifesteal()
+		end
+	end
+
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierLifestealAmplify and parent_modifier:GetModifierLifestealAmplify() then
+			multiplier = multiplier + parent_modifier:GetModifierLifestealAmplify()
+		end
+	end
+
+	if lifesteal ~= 0 and multiplier ~= 0 then
+		lifesteal = lifesteal * (multiplier / 100)
+	end
+
+	return lifesteal
+end
+
+-- Spell lifesteal
+function CDOTA_BaseNPC:GetSpellLifesteal()
+	local lifesteal = 0
+	local multiplier = 0
+
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierSpellLifesteal and parent_modifier:GetModifierSpellLifesteal() then
+			lifesteal = lifesteal + parent_modifier:GetModifierSpellLifesteal()
+		end
+	end
+
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierSpellLifestealAmplify and parent_modifier:GetModifierSpellLifestealAmplify() then
+			multiplier = multiplier + parent_modifier:GetModifierSpellLifestealAmplify()
+		end
+	end
+
+	if lifesteal ~= 0 and multiplier ~= 0 then
+		lifesteal = lifesteal * (multiplier / 100)
+	end
+
+	return lifesteal
+end
+
+-- Universal damage amplification
+function CDOTA_BaseNPC:GetIncomingDamagePct()
+	-- Fetch damage amp from modifiers
+	local damage_amp = 1
+	local vanguard_damage_reduction = 1
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+
+		-- Vanguard-based damage reduction does not stack
+		if parent_modifier.GetCustomIncomingDamageReductionUnique then
+			vanguard_damage_reduction = math.min(vanguard_damage_reduction, (100 - parent_modifier:GetCustomIncomingDamageReductionUnique()) * 0.01)
+		end
+
+		-- Stack all other custom sources of damage amp
+		if parent_modifier.GetCustomIncomingDamagePct then
+			damage_amp = damage_amp * (100 + parent_modifier:GetCustomIncomingDamagePct()) * 0.01
+		end
+	end
+
+	-- Calculate total damage amp
+	damage_amp = damage_amp * vanguard_damage_reduction
+
+	return (damage_amp - 1) * 100
+end
+
+-- Physical damage block
+function CDOTA_BaseNPC:GetDamageBlock()
+
+	-- Fetch damage block from custom modifiers
+	local damage_block = 0
+	local unique_damage_block = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		-- Vanguard-based damage block does not stack
+		if parent_modifier.GetCustomDamageBlockUnique then
+			unique_damage_block = math.max(unique_damage_block, parent_modifier:GetCustomDamageBlockUnique())
+		end
+
+		-- Stack all other sources of damage block
+		if parent_modifier.GetCustomDamageBlock then
+			damage_block = damage_block + parent_modifier:GetCustomDamageBlock()
+		end
+	end
+
+	-- Calculate total damage block
+	damage_block = damage_block + unique_damage_block
+
+	-- Ranged attackers only benefit from part of the damage block
+	if self:IsRangedAttacker() then
+		return 0.6 * damage_block
+	else
+		return damage_block
+	end
+end
+
 -- TEMPORARY: No class defined yet
 
 -- Gets all Ethereal abilities

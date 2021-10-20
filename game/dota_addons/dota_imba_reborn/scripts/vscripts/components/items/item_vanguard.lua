@@ -122,7 +122,9 @@ function modifier_item_imba_poor_mans_shield:GetModifierBonusStats_Agility()
 end
 
 function modifier_item_imba_poor_mans_shield:GetModifierPhysical_ConstantBlock(keys)
-	if keys.attacker:IsHero() and self:GetAbility() and self:GetAbility():IsCooldownReady() then
+	if not IsServer() then return end
+
+	if keys.attacker and keys.attacker:IsHero() and self:GetAbility() and self:GetAbility():IsCooldownReady() then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_poor_mans_shield_active", {duration = self.bonus_block_duration})
 		self:GetAbility():UseResources(false, false, true)
 	end
