@@ -735,12 +735,6 @@ function imba_axe_counter_helix:GetIntrinsicModifierName()
 	return "modifier_imba_counter_helix_passive"
 end
 
-function imba_axe_counter_helix:OnInventoryContentsChanged()
-	if self:GetCaster():HasShard() and not self:GetCaster():HasModifier("modifier_imba_counter_helix_shard") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_counter_helix_shard", {})
-	end
-end
-
 -------------------------------------------
 -- Counter Helix modifier
 -------------------------------------------
@@ -793,12 +787,16 @@ function modifier_imba_counter_helix_passive:OnAttackLanded(keys)
 		self.proc_chance = self:GetAbility():GetVanillaAbilitySpecial("trigger_chance")
 		self.base_damage = self:GetAbility():GetVanillaAbilitySpecial("damage")
 
+		if self.caster:HasShard() then
+			self.proc_chance = self.proc_chance + self.ability:GetSpecialValueFor("shard_bonus_helix_chance")
+		end
+
 		-- Talent : Double Helix chance, but reduce base damage by 1/3
 		if self.caster:HasTalent("special_bonus_imba_axe_5") then
 			self.proc_chance = self.proc_chance * self.caster:FindTalentValue("special_bonus_imba_axe_5", "proc_chance_multiplier")
 			self.base_damage = self.base_damage * self.caster:FindTalentValue("special_bonus_imba_axe_5", "damage_multiplier") / 100
 		end
-	
+
 		-- +30% of your strength added to Counter Helix damage.
 		if self.caster:HasTalent("special_bonus_imba_axe_4") then
 			self.str = self.caster:GetStrength() / 100
@@ -861,6 +859,10 @@ function modifier_imba_counter_helix_passive:Spin( repeat_allowed )
 		end
 
 		ApplyDamage({attacker = self.caster, victim = enemy, ability = self.ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+
+		if self.caster:HasShard() and not enemy:IsMagicImmune() then
+			enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_counter_helix_shard", {duration = self.ability:GetSpecialValueFor("shard_debuff_duration")})
+		end
 	end
 
 	if spin_to_win then
@@ -917,10 +919,20 @@ function modifier_imba_counter_helix_shard:DeclareFunctions() return {
 	MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
 } end
 
+function modifier_imba_counter_helix_shard:OnCreated()
+	if not IsServer() then return end
+
+	self:SetStackCount(1)
+end
+
+function modifier_imba_counter_helix_shard:OnRefresh()
+	if not IsServer() then return end
+
+	self:SetStackCount(math.min(self:GetStackCount() + 1, 5))
+end
+
 function modifier_imba_counter_helix_shard:GetModifierDamageOutgoing_Percentage(keys)
-	if keys.target and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
-		return self:GetAbility():GetSpecialValueFor("shard_damage_reduction") * self:GetStackCount()
-	end
+	return self:GetAbility():GetSpecialValueFor("shard_damage_reduction") * self:GetStackCount() * (-1)
 end
 
 -------------------------------------------

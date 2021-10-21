@@ -322,6 +322,14 @@ function modifier_imba_ancient_apparition_ice_vortex:GetStatusEffectName()
 	return "particles/status_fx/status_effect_frost.vpcf"
 end
 
+function modifier_imba_ancient_apparition_ice_vortex:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	}	
+end
+
 function modifier_imba_ancient_apparition_ice_vortex:OnCreated()
 	if self:GetAbility() then
 		self.radius				= self:GetAbility():GetVanillaAbilitySpecial("radius")
@@ -332,13 +340,27 @@ function modifier_imba_ancient_apparition_ice_vortex:OnCreated()
 		self.movement_speed_pct	= 0
 		self.spell_resist_pct	= 0
 	end
+
+	if IsServer() then
+		self:StartIntervalThink(1.0)
+	end
 end
 
-function modifier_imba_ancient_apparition_ice_vortex:DeclareFunctions()
-	return {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-	}	
+function modifier_imba_ancient_apparition_ice_vortex:OnIntervalThink()
+	if self:GetCaster():HasShard() then
+		local damage = self:GetAbility():GetVanillaAbilitySpecial("vortex_shard_dps")
+
+		ApplyDamage({
+			victim 			= self:GetParent(),
+			damage 			= damage,
+			damage_type		= DAMAGE_TYPE_MAGICAL,
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self:GetAbility()
+		})
+
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), damage, nil)
+	end
 end
 
 function modifier_imba_ancient_apparition_ice_vortex:GetModifierMoveSpeedBonus_Percentage()
@@ -354,6 +376,12 @@ function modifier_imba_ancient_apparition_ice_vortex:GetModifierMagicalResistanc
 		return self.spell_resist_pct
 	else
 		return 0
+	end
+end
+
+function modifier_imba_ancient_apparition_ice_vortex:GetModifierAttackSpeedBonus_Constant()
+	if self:GetCaster():HasShard() then
+		return self:GetAbility():GetSpecialValueFor("vortex_shard_as_reduction")
 	end
 end
 

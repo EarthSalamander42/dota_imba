@@ -151,6 +151,16 @@
 				"var_type"								"FIELD_INTEGER"
 				"shard_damage_reduction"				"20" // This should not be required, vanilla shard values hardcoded?
 			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"shard_debuff_duration"					"6" // This should not be required, vanilla shard values hardcoded?
+			}
+			"07"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"shard_bonus_helix_chance"				"10" // This should not be required, vanilla shard values hardcoded?
+			}
 		}
 	}
 

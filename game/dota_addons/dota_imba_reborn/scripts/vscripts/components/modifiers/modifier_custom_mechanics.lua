@@ -86,13 +86,13 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 			if keys.unit:IsIllusion() then
 				if keys.damage_type == DAMAGE_TYPE_PHYSICAL and keys.unit.GetPhysicalArmorValue and GetReductionFromArmor then
 					keys.damage = keys.original_damage * (1 - GetReductionFromArmor(keys.unit:GetPhysicalArmorValue(false)))
-				elseif keys.damage_type == DAMAGE_TYPE_MAGICAL and keys.unit.GetMagicalArmorValue then
+				elseif keys.damage_type == DAMAGE_TYPE_MAGICAL and GetReductionFromArmor and keys.unit.GetMagicalArmorValue then
 					keys.damage = keys.original_damage * (1 - GetReductionFromArmor(keys.unit:GetMagicalArmorValue()))
 				elseif keys.damage_type == DAMAGE_TYPE_PURE then
 					keys.damage = keys.original_damage
 				end
 			end
-			
+
 			keys.attacker:Heal(math.max(keys.damage, 0) * self:GetParent():GetSpellLifesteal() / 100, keys.attacker) -- IDK if this will fix it but there's reports of health randomly getting deleted and I assume it has to do with the custom lifesteal
 		-- Attack lifesteal handler
 		elseif keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and self:GetParent():GetLifesteal() > 0 then

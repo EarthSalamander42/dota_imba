@@ -68,12 +68,16 @@
 "DOTA_Tooltip_modifier_imba_statis_trap_disarmed"                      "Disarmed Stasis Trap"
 "DOTA_Tooltip_modifier_imba_statis_trap_disarmed_Description"          "This Stasis Trap is disarmed; when it explodes, it will not root nearby enemies."
 
+"DOTA_Tooltip_ability_imba_techies_suicide"           "#{DOTA_Tooltip_ability_techies_suicide}"
+"DOTA_Tooltip_ability_imba_techies_suicide_shard_description"           "#{DOTA_Tooltip_ability_techies_suicide_shard_description}"
+
 ////===============================================================================================================
 // Techies's Blast Off!
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_techies_blast_off"                          "Blast Off!"
 "DOTA_Tooltip_ability_imba_techies_blast_off_Description"              "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and silence enemies. Upon landing, the assault deals Techies damage a portion of their max health.\n<font color='#FF7800'>Infinity Chain:</font> Techies can continue jumping the same distance again and again, dealing damage to enemies and themselves, up to a maximum. Issuing any attack, move, or stop order stops Techies from jumping further."
+"DOTA_Tooltip_ability_imba_techies_blast_off_shard_Description"              "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and silence enemies. Upon landing, the assault deals Techies damage a portion of their max health.\n<font color='#FF7800'>Infinity Chain:</font> Techies can continue jumping the same distance again and again, dealing damage to enemies and themselves, up to a maximum. Issuing any attack, move, or stop order stops Techies from jumping further."
 "DOTA_Tooltip_ability_imba_techies_blast_off_Lore"                      "Where we going?"
 "DOTA_Tooltip_ability_imba_techies_blast_off_Note0"                    "Dying or becoming disabled while jumping also stops the Infinity Chain jumps."
 "DOTA_Tooltip_ability_imba_techies_blast_off_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"

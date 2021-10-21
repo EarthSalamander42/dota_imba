@@ -39,6 +39,9 @@
 "DOTA_Tooltip_modifier_imba_counter_helix_spin_stacks"                  "Spin To Win"
 "DOTA_Tooltip_modifier_imba_counter_helix_spin_stacks_Description"		"Each stack increases Counter Helix's radius."
 
+"DOTA_Tooltip_modifier_imba_counter_helix_shard"						"#{DOTA_Tooltip_modifier_axe_counter_helix_damage_reduction}"
+"DOTA_Tooltip_modifier_imba_counter_helix_shard_Description"			"#{DOTA_Tooltip_modifier_axe_counter_helix_damage_reduction_Description}"
+
 // Axe's Culling Blade
 "DOTA_Tooltip_ability_imba_axe_culling_blade"                               "#{DOTA_Tooltip_ability_axe_culling_blade}"
 "DOTA_Tooltip_ability_imba_axe_culling_blade_Imbafication_1"                   "<font color='#FF7800'>War Spoils:</font> Killing an enemy hero with Culling Blade heals Axe by %max_health_kill_heal_pct%%% of his max health."

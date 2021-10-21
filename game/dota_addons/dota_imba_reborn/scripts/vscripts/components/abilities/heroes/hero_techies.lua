@@ -1078,13 +1078,10 @@ function modifier_imba_statis_trap_disarmed:IsDebuff() return false end
 --        BLAST OFF!        --
 ------------------------------
 imba_techies_suicide = imba_techies_suicide or class(VANILLA_ABILITIES_BASECLASS)
+
 LinkLuaModifier("modifier_imba_blast_off", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_movement", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_silence", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_techies_suicide:GetAbilityTextureName()
-   return "techies_suicide"
-end
 
 function imba_techies_suicide:IsHiddenWhenStolen()
 	return false
@@ -1097,6 +1094,18 @@ end
 
 function imba_techies_suicide:IsNetherWardStealable()
 	return false
+end
+
+function imba_techies_suicide:GetCastRange(location, target)
+	local cast_range = self.BaseClass.GetCastRange(self, location, target)
+
+--[[ Causes cast range to be 300 instead of base + 300.. Who gives a fuck about techies anyway
+	if self:GetCaster():HasShard() then
+		cast_range = self.BaseClass.GetCastRange(self, location, target) + self:GetSpecialValueFor("shard_bonus_cast_range")
+	end
+--]]
+
+	return cast_range
 end
 
 function imba_techies_suicide:OnSpellStart()
@@ -1277,6 +1286,7 @@ function modifier_imba_blast_off_movement:OnCreated( keys )
 		self.radius = self.ability:GetVanillaAbilitySpecial("radius")
 		self.self_damage_pct = self.ability:GetVanillaAbilitySpecial("hp_cost")
 		self.silence_duration = self.ability:GetVanillaAbilitySpecial("silence_duration")
+		self.shard_stun_duration = self.ability:GetSpecialValueFor("shard_stun_duration")
 		self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")
 		self.jump_max_height = self.ability:GetSpecialValueFor("jump_max_height")
 
@@ -1398,6 +1408,10 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
 
 			-- Add silence modifier to them
 			enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration})
+
+			if self.caster:HasShard() then
+				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.shard_stun_duration})
+			end
 
 			-- Check (and mark) if an enemy died from the blast
 			Timers:CreateTimer(FrameTime(), function()

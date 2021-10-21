@@ -57,6 +57,12 @@ function imba_mars_spear:OnSpellStart()
 	local projectile_radius = self:GetVanillaAbilitySpecial("spear_width")
 	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
 	local heaven_spear_delay = self:GetSpecialValueFor("heaven_spear_delay")
+	self.spear_target_count = 1
+
+	if self:GetCaster():HasShard() then
+		self.spear_target_count = 2
+	end
+
 	self.trailblazer_particles = {}
 
 	if not IsServer() then return end
@@ -315,6 +321,7 @@ Fields:
 local mars_projectiles = {}
 function mars_projectiles:Init( projectileID )
 	self[projectileID] = {}
+	self[projectileID].unit = {}
 
 	-- set location
 	self[projectileID].location = ProjectileManager:GetLinearProjectileLocation( projectileID )
@@ -362,27 +369,27 @@ function imba_mars_spear:OnProjectileHitHandle( target, location, iProjectileHan
 	local damage = self:GetVanillaAbilitySpecial("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_spear_bonus_damage")
 
 	-- apply damage
-	local damageTable = {
+	ApplyDamage({
 		victim = target,
 		attacker = self:GetCaster(),
 		damage = damage,
 		damage_type = self:GetAbilityDamageType(),
 		ability = self, --Optional.
 		damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
-	}
-	ApplyDamage(damageTable)
+	})
 
 	-- check if it has skewered a unit, or target is not a hero
-	if (not target:IsHero()) or self.projectiles[iProjectileHandle].unit then
+	if (not target:IsHero()) or #self.projectiles[iProjectileHandle].unit >= self.spear_target_count then
 		-- calculate knockback direction
 		local direction = self.projectiles[iProjectileHandle].direction
 		local proj_angle = VectorToAngles( direction ).y
 		local unit_angle = VectorToAngles( target:GetOrigin()-location ).y
 		local angle_diff = unit_angle - proj_angle
-		if AngleDiff( unit_angle, proj_angle )>=0 then
-			direction = RotatePosition( Vector(0,0,0), QAngle( 0, 90, 0 ), direction )
+
+		if AngleDiff( unit_angle, proj_angle ) >= 0 then
+			direction = RotatePosition( Vector(0, 0, 0), QAngle( 0, 90, 0 ), direction )
 		else
-			direction = RotatePosition( Vector(0,0,0), QAngle( 0, -90, 0 ), direction )
+			direction = RotatePosition( Vector(0, 0, 0), QAngle( 0, -90, 0 ), direction )
 		end
 
 		-- add sidestep modifier to other unit
@@ -418,7 +425,8 @@ function imba_mars_spear:OnProjectileHitHandle( target, location, iProjectileHan
 			projectile = iProjectileHandle,
 		} -- kv
 	)
-	self.projectiles[iProjectileHandle].unit = target
+
+	table.insert(self.projectiles[iProjectileHandle].unit, target)
 	self.projectiles[iProjectileHandle].modifier = modifier
 	self.projectiles[iProjectileHandle].active = false
 
@@ -447,10 +455,11 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 	data.location = location
 
 	-- check skewered unit, and dragged (caught unit not necessarily dragged)
-	if not data.unit then return end
+	if #data.unit == 0 then return end
+
 	if not data.active then
 		-- check distance, mainly to avoid being pinned while behind the tree/cliffs
-		local difference = (data.unit:GetOrigin()-data.init_pos):Length2D() - (data.location-data.init_pos):Length2D()
+		local difference = (data.unit[1]:GetOrigin() - data.init_pos):Length2D() - (data.location-data.init_pos):Length2D()
 		if difference > 0 then return end
 		data.active = true
 	end
@@ -474,8 +483,8 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 	end
 
 	-- search for high ground
-	local base_loc = GetGroundPosition( data.location, data.unit )
-	local search_loc = GetGroundPosition( base_loc + data.direction*wall_radius, data.unit )
+	local base_loc = GetGroundPosition( data.location, data.unit[1] )
+	local search_loc = GetGroundPosition( base_loc + data.direction*wall_radius, data.unit[1] )
 	if search_loc.z-base_loc.z>10 and (not GridNav:IsTraversable( search_loc )) then
 		self:Pinned( iProjectileHandle )
 		return
@@ -514,26 +523,29 @@ function imba_mars_spear:Pinned( iProjectileHandle )
 	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
 
 	-- add viewer
-	AddFOWViewer( self:GetCaster():GetTeamNumber(), data.unit:GetOrigin(), projectile_vision, duration, false)
+	AddFOWViewer( self:GetCaster():GetTeamNumber(), data.unit[1]:GetOrigin(), projectile_vision, duration, false)
 
 	-- destroy projectile and modifier
 	ProjectileManager:DestroyLinearProjectile( iProjectileHandle )
-	if data.modifier and not data.modifier:IsNull() then
-		data.modifier:Destroy()
 
-		data.unit:SetOrigin( GetGroundPosition( data.location, data.unit ) )
+	for k, v in pairs(data.unit) do
+		if data.modifier and not data.modifier:IsNull() then
+			data.modifier:Destroy()
+
+			v:SetOrigin( GetGroundPosition( data.location, v ) )
+		end
+
+		-- add stun modifier
+		v:AddNewModifier(
+			self:GetCaster(), -- player source
+			self, -- ability source
+			"modifier_imba_mars_spear_debuff", -- modifier name
+			{
+				duration = duration,
+				projectile = iProjectileHandle,
+			} -- kv
+		)
 	end
-
-	-- add stun modifier
-	data.unit:AddNewModifier(
-		self:GetCaster(), -- player source
-		self, -- ability source
-		"modifier_imba_mars_spear_debuff", -- modifier name
-		{
-			duration = duration,
-			projectile = iProjectileHandle,
-		} -- kv
-	)
 
 	-- play effects
 	self:PlayEffects( iProjectileHandle, duration )
@@ -550,7 +562,7 @@ function imba_mars_spear:PlayEffects( projID, duration )
 	-- Get Data
 	local data = self.projectiles[projID]
 	local delta = 50
-	local location = GetGroundPosition( data.location, data.unit ) + data.direction*delta
+	local location = GetGroundPosition( data.location, data.unit[1] ) + data.direction * delta
 
 	-- Create Particle
 	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, nil )
@@ -561,7 +573,7 @@ function imba_mars_spear:PlayEffects( projID, duration )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	EmitSoundOn( sound_cast, data.unit )
+	EmitSoundOn( sound_cast, data.unit[1] )
 end
 
 --------------------------------------------------------------------------------

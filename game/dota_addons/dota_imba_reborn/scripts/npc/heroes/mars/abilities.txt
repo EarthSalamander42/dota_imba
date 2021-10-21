@@ -15,6 +15,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
 		"AbilityTextureName"			"mars_spear"
 		"FightRecapLevel"				"1"
+		"HasShardUpgrade"				"1"
 
 		"precache"
 		{

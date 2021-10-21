@@ -197,7 +197,8 @@
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"				"techies_suicide"	
-		"ScriptFile"						"components/abilities/heroes/hero_techies.lua"	
+		"ScriptFile"						"components/abilities/heroes/hero_techies.lua"
+		"HasShardUpgrade"					"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -232,6 +233,16 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"jump_continue_delay"		"0.5"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"shard_bonus_cast_range"	"300"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"shard_stun_duration"		"1.75"
 			}
 		}			
 	}
