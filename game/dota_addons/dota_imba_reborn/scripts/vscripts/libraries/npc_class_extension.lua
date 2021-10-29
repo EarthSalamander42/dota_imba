@@ -940,3 +940,14 @@ function FindUnitsInCone(teamNumber, vDirection, vPosition, startRadius, endRadi
 
 	return unitTable
 end
+
+-- Check if an unit is near the enemy fountain
+function IsNearFountain(location, distance)
+	for _, fountain in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
+		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
+			return true
+		end
+	end
+
+	return false
+end

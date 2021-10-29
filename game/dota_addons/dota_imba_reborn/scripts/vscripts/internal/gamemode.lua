@@ -66,8 +66,9 @@ function GameMode:_InitGameMode()
 	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, 'OnGameRulesStateChange'), self)
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap(self, 'OnNPCSpawned'), self)
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, 'OnEntityKilled'), self)
---	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, 'OnConnectFull'), self)
---	ListenToGameEvent('player_disconnect', Dynamic_Wrap(self, 'OnDisconnect'), self)
+	ListenToGameEvent('player_disconnect', Dynamic_Wrap(self, 'OnDisconnect'), self)
+
+	--	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, 'OnConnectFull'), self)
 --	ListenToGameEvent('tree_cut', Dynamic_Wrap(self, 'OnTreeCut'), self)
 --	ListenToGameEvent("player_reconnected", Dynamic_Wrap(self, 'OnPlayerReconnect'), self)
 --	ListenToGameEvent("player_chat", Dynamic_Wrap(self, 'OnPlayerChat'), self)
@@ -141,6 +142,8 @@ function GameMode:_CaptureGameMode()
 		mode:SetItemAddedToInventoryFilter(Dynamic_Wrap(self, "ItemAddedFilter"), self)
 		mode:SetBountyRunePickupFilter(Dynamic_Wrap(self, "BountyRuneFilter"), self)
 		mode:SetModifierGainedFilter(Dynamic_Wrap(self, "ModifierFilter"), self)
+		mode:SetExecuteOrderFilter(Dynamic_Wrap(self, "OrderFilter"), self)
+		mode:SetDamageFilter(Dynamic_Wrap(self, "DamageFilter"), self)
 
 		mode:SetRuneEnabled(DOTA_RUNE_DOUBLEDAMAGE , true) -- Double Damage
 		mode:SetRuneEnabled(DOTA_RUNE_HASTE, true) -- Haste

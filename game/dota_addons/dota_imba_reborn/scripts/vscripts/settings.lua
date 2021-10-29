@@ -152,6 +152,37 @@ RESPAWN_TIME_VANILLA[30] = 100
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 
+IMBA_INVISIBLE_MODIFIERS = {
+	"modifier_imba_moonlight_shadow_invis",
+	"modifier_item_imba_shadow_blade_invis",
+	"modifier_imba_vendetta",
+	"modifier_nyx_assassin_burrow",
+	"modifier_item_imba_silver_edge_invis",
+	"modifier_item_glimmer_cape_fade",
+	"modifier_weaver_shukuchi",
+	"modifier_imba_weaver_shukuchi",
+	"modifier_treant_natures_guise_invis",
+	"modifier_templar_assassin_meld",
+	"modifier_imba_templar_assassin_meld",
+	"modifier_imba_skeleton_walk_dummy",
+	"modifier_invoker_ghost_walk_self",
+	"modifier_rune_invis",
+	"modifier_imba_skeleton_walk_invis",
+	"modifier_imba_riki_invisibility",
+	"modifier_imba_riki_cloak_and_dagger_723",
+	"modifier_imba_riki_smoke_screen_723_buff",
+	"modifier_imba_shadow_walk_buff_invis",
+	"modifier_imba_invisibility_rune",
+	"modifier_imba_blur_smoke",
+	"modifier_windrunner_windrun_invis",
+	"modifier_imba_windranger_windrun_invis",
+}
+
+IMBA_NODRAW_MODIFIERS = {
+	"modifier_vardor_graceful_jump",
+	"modifier_mutation_monkey_business_transform",
+}
+
 -- FRANTIC
 _G.IMBA_FRANTIC_VALUE = 40
 

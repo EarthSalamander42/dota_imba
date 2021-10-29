@@ -51,6 +51,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		GameMode:SetupPostTurboRules()
+		GameMode:SetupFountains()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 
 	end
@@ -157,4 +158,44 @@ function GameMode:OnHeroDeath(hero)
 		end
 	end, FrameTime())
 --]]
+end
+
+function GameMode:OnDisconnect(keys)
+	-- GetConnectionState values:
+	-- 0 - no connection
+	-- 1 - bot connected
+	-- 2 - player connected
+	-- 3 - bot/player disconnected.
+
+	-- Typical keys:
+	-- PlayerID: 2
+	-- name: Zimberzimber
+	-- networkid: [U:1:95496383]
+	-- reason: 2
+	-- splitscreenplayer: -1
+	-- userid: 7
+	-- xuid: 76561198055762111
+
+	-- IMBA: Player disconnect/abandon logic
+	-- If the game hasn't started, or has already ended, do nothing
+	if (GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME) or (GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME) then
+		return nil
+		-- Else, start tracking player's reconnect/abandon state
+	else
+		local player_id = keys.PlayerID
+		local player_name = keys.name
+
+		-- Fetch player's player and hero information
+		if player_id == nil or player_id == -1 then
+			return
+		end
+
+		if PlayerResource:GetPlayer(player_id):GetAssignedHero() == nil then
+			return
+		end
+
+		for team = 2, 3 do
+			GameMode:CheckFullTeamDisconnect(team)
+		end
+	end
 end

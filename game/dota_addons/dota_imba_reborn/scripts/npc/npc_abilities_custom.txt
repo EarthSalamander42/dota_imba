@@ -2,6 +2,7 @@
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 // Vanilla Abilities File: https://raw.githubusercontent.com/SteamDatabase/GameTracking-Dota2/master/game/dota/scripts/npc/npc_abilities.txt
 
+#base buildings/ancient/abilities.txt
 #base heroes/abaddon/abilities.txt
 #base heroes/abyssal_underlord/abilities.txt
 #base heroes/alchemist/abilities.txt

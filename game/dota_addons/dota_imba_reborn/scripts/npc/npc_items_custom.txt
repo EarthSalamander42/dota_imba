@@ -9685,8 +9685,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCooldown"				"35"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityCooldown"				"35.0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------

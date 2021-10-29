@@ -50,3 +50,38 @@ function GameMode:SetupPostTurboRules()
 		fort:SetBaseHealthRegen(0.0)
 	end
 end
+
+function GameMode:SetupFountains()
+	for _, fountainEnt in pairs(Entities:FindAllByClassname("ent_dota_fountain") or {}) do
+		fountainEnt:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
+
+		-- remove vanilla fountain healing
+		if fountainEnt:HasModifier("modifier_fountain_aura") then
+			fountainEnt:RemoveModifierByName("modifier_fountain_aura")
+			fountainEnt:AddNewModifier(fountainEnt, nil, "modifier_fountain_aura_lua", {})
+		end
+
+		local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
+	end
+end
+
+function GameMode:CheckFullTeamDisconnect(iTeam)
+	local count = 0
+
+	for i = 1, PlayerResource:GetPlayerCountForTeam(iTeam) do
+		local iPlayerID = PlayerResource:GetNthPlayerIDOnTeam(iTeam, i)
+
+		if PlayerResource:GetConnectionState(iPlayerID) ~= DOTA_CONNECTION_STATE_CONNECTED then
+			count = count + 1
+		end
+	end
+
+	if count == PlayerResource:GetPlayerCountForTeam(iTeam) then
+		local winner_team = 2
+		if iTeam == 2 then winner_team = 3 end
+
+		GameRules:SetGameWinner(winner_team)
+	end
+end

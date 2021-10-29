@@ -5,9 +5,12 @@ require('gamemode')
 
 function Precache( context )
 	-- general modifiers
+	LinkLuaModifier("modifier_item_imba_aegis", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE )
+
 	LinkLuaModifier("modifier_frantic", "components/modifiers/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_custom_mechanics", "components/modifiers/modifier_custom_mechanics", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_range_indicator", "components/modifiers/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_fountain_aura_lua", "components/modifiers/modifier_fountain_aura_lua.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- courier modifiers
 	LinkLuaModifier("modifier_imba_turbo_courier", "components/modifiers/courier/modifier_imba_turbo_courier", LUA_MODIFIER_MOTION_NONE)
