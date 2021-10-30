@@ -4,9 +4,13 @@ require('internal/util')
 require('gamemode')
 
 function Precache( context )
-	-- general modifiers
-	LinkLuaModifier("modifier_item_imba_aegis", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE )
+	-- hero modifiers
+	LinkLuaModifier("modifier_imba_pudge_flesh_heap_handler", "components/abilities/heroes/hero_pudge.lua", LUA_MODIFIER_MOTION_NONE )
 
+	-- item modifiers
+	LinkLuaModifier("modifier_item_imba_aegis", "components/items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE )
+	
+	-- general modifiers
 	LinkLuaModifier("modifier_frantic", "components/modifiers/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_custom_mechanics", "components/modifiers/modifier_custom_mechanics", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_range_indicator", "components/modifiers/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )

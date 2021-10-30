@@ -1,0 +1,76 @@
+"DOTA_Tooltip_ability_imba_pudge_meat_hook"							"#{DOTA_Tooltip_ability_pudge_meat_hook}"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_Imbafication_1"			"<font color='#FF7800'>TI 3 Archive:</font> Meat Hook drags its victims until they reach Pudge's current location, rather than the initial position.\nEach stack of <font color='#FF7800'>Power Hook</font> makes Meat Hook deal more damage.\nEach stack of <font color='#FF7800'>Swift Hook</font> gives Meat Hook more range and speed.\n<font color='#FF0000'>Can't hit enemies if either entity is within the fountain danger zone.</font>"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_hook_stacks"				"POWER/SWIFT STACKS:"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_scepter_hook_stacks"		"SCEPTER BONUS POWER/SWIFT STACKS:"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_scepter_description"		"<font color='#FF7800'>Increase Power and Swift Hook stack count.</font>"
+
+"DOTA_Tooltip_ability_imba_pudge_rot"						"#{DOTA_Tooltip_ability_pudge_rot}"
+"DOTA_Tooltip_ability_imba_pudge_rot_Imbafication_1"		"<font color='#FF7800'>Death and Decay:</font> Deals bonus damage per second equal to %bonus_damage%%% of Pudge's maximum health.\n<font color='#FF7800'>Gas Giant:</font> Each stack of Flesh Heap increases Rot's radius by %stack_radius%, up to a maximum of %max_radius%.\n<font color='#FF7800'>Too Stinky to Live:</font> Rot can self-deny."
+"DOTA_Tooltip_ability_imba_pudge_rot_Imbafication_2"		"<font color='#FF7800'>Gas Giant:</font> Each stack of Flesh Heap increases Rot's radius by %stack_radius%, up to a maximum of %max_radius%.\n<font color='#FF7800'>Too Stinky to Live:</font> Rot can self-deny."
+"DOTA_Tooltip_ability_imba_pudge_rot_stack_radius"			"EXTRA RADIUS PER STACK:"
+"DOTA_Tooltip_ability_imba_pudge_rot_bonus_damage"			"%HEALTH-BASED DAMAGE:"
+
+"DOTA_Tooltip_ability_imba_pudge_flesh_heap"						"#{DOTA_Tooltip_ability_pudge_flesh_heap}"
+"DOTA_Tooltip_ability_imba_pudge_flesh_heap_Imbafication_1"			"<font color='#FF7800'>Fat Boy:</font> Each stack of Flesh Heap (up to %max_stacks%) increases Pudge's size and health regeneration."
+"DOTA_Tooltip_ability_imba_pudge_flesh_heap_stack_health_regen"		"FAT BOY HEALTH REGENERATION BONUS PER STACK:"
+"DOTA_Tooltip_ability_imba_pudge_flesh_heap_max_stacks"				"%FAT BOY MAX STACKS:"
+
+"DOTA_Tooltip_ability_imba_pudge_sharp_hook"							"Power Hook"
+"DOTA_Tooltip_ability_imba_pudge_sharp_hook_Description"				"Activate to make Meat Hook lose range and speed, but deal more damage.\nEach time Pudge levels up, he gains another stack of Power Hook."
+"DOTA_Tooltip_ability_imba_pudge_sharp_hook_Lore"						"Pudge's heavy-duty 'Fat Man' hook possesses unbelievable destructive force."
+"DOTA_Tooltip_ability_imba_pudge_sharp_hook_tooltip_stacks_per_second"	"STACKS CONVERTED PER SECOND:"
+"DOTA_Tooltip_ability_imba_pudge_sharp_hook_stack_damage"				"BONUS DAMAGE PER STACK:"
+
+"DOTA_Tooltip_ability_imba_pudge_light_hook"							"Swift Hook"
+"DOTA_Tooltip_ability_imba_pudge_light_hook_Description"				"Activate to make Meat Hook deal less damage, but travel farther and faster.\nEach time Pudge levels up, he gains another stack of Swift Hook."
+"DOTA_Tooltip_ability_imba_pudge_light_hook_Lore"						"Pudge's lightweight 'fishing' hook can reach incredible distances."
+"DOTA_Tooltip_ability_imba_pudge_light_hook_tooltip_stacks_per_second"	"STACKS CONVERTED PER SECOND:"
+"DOTA_Tooltip_ability_imba_pudge_light_hook_stack_speed"				"BONUS SPEED PER STACK:"
+"DOTA_Tooltip_ability_imba_pudge_light_hook_stack_range"				"BONUS RANGE PER STACK:"
+
+"DOTA_Tooltip_ability_imba_pudge_dismember"								"#{DOTA_Tooltip_ability_pudge_dismember}"
+"DOTA_Tooltip_ability_imba_pudge_dismember_Imbafication_1"				"<font color='#FF7800'>An Hungry Abomination:</font> Deals extra damage based on Pudge's strength."
+"DOTA_Tooltip_ability_imba_pudge_dismember_Imbafication_2"				"<font color='#FF7800'>Feeding Time!:</font> While channeling Dismember, Pudge gains %spell_lifesteal%%% spell lifesteal for the duration."
+
+// Unable to gather dota 2 vanilla tooltips for reasons
+"DOTA_Tooltip_ability_imba_pudge_eject"					"Eject"
+"DOTA_Tooltip_ability_imba_pudge_eject_Description"		"Ejects the swallowed allied hero inside of you."
+
+"DOTA_Tooltip_modifier_imba_dismember"								"Dismember"
+"DOTA_Tooltip_modifier_imba_dismember_Description"					"FRESH MEAT!!!"
+
+"DOTA_Tooltip_modifier_imba_pudge_dismember_pull"				"Dismember Pull"
+"DOTA_Tooltip_modifier_imba_pudge_dismember_pull_Description"	"Being sucked in by a large mass..."
+
+"DOTA_Tooltip_modifier_imba_hook_sharp_stack"					"Power Hook"
+"DOTA_Tooltip_modifier_imba_hook_sharp_stack_Description"		"Meat Hook's damage increased by %dMODIFIER_PROPERTY_TOOLTIP%."
+
+"DOTA_Tooltip_modifier_imba_hook_light_stack"					"Swift Hook"
+"DOTA_Tooltip_modifier_imba_hook_light_stack_Description"		"Meat Hook's speed increased by %dMODIFIER_PROPERTY_TOOLTIP%. Meat Hook's range increased by %dMODIFIER_PROPERTY_TOOLTIP2%."
+
+"DOTA_Tooltip_modifier_imba_hook_target_enemy"					"Meat Hook"
+"DOTA_Tooltip_modifier_imba_hook_target_enemy_Description"		"Helpless, and flying towards a hungry Pudge"
+
+"DOTA_Tooltip_modifier_imba_hook_target_ally"					"Meat Hook"
+"DOTA_Tooltip_modifier_imba_hook_target_ally_Description"		"Pudge just saved you! Or did he...?"
+
+"DOTA_Tooltip_modifier_imba_rot_slow"							"Rot"
+"DOTA_Tooltip_modifier_imba_rot_slow_Description"				"Slowed and taking damage"
+
+"DOTA_Tooltip_modifier_imba_flesh_heap_stacks"					"Flesh Heap"
+"DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"		"Gaining bonus strength and magic resistance."
+
+"DOTA_Tooltip_modifier_imba_dismember_scepter"					"Swallowed"		
+"DOTA_Tooltip_modifier_imba_dismember_scepter_Description"		"Swallowed by pudge and regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% health per second. Issue a command to eject."
+
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_1"				"+10 Power and Swift stacks"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_2"				"+300 Meat Hook speed"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_3"				"+60 Meat Hook width"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_4"				"+10 Flesh Heap Fat Boy Max Stacks"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_4_Description"	"+10 max limit Flesh Heap 'Fat Boy' stacks"
+"DOTA_Tooltip_Ability_special_bonus_imba_pudge_5"				"+1000 Hook Range"
+"DOTA_Tooltip_Ability_special_bonus_imba_pudge_6"				"+75 Rot Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_7"				"Rupture Hook"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_7_Description"	"Meat Hook applies Rupture, dealing 0.05 damage per distance unit, 1500 distance cap."
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_8"				"+{s:value}s Dismember Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_9"				"+20% Rot Slow"

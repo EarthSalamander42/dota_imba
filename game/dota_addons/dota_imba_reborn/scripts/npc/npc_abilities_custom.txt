@@ -3,6 +3,7 @@
 // Vanilla Abilities File: https://raw.githubusercontent.com/SteamDatabase/GameTracking-Dota2/master/game/dota/scripts/npc/npc_abilities.txt
 
 #base buildings/ancient/abilities.txt
+
 #base heroes/abaddon/abilities.txt
 #base heroes/abyssal_underlord/abilities.txt
 #base heroes/alchemist/abilities.txt
@@ -13,6 +14,7 @@
 #base heroes/faceless_void/abilities.txt
 #base heroes/juggernaut/abilities.txt
 #base heroes/mars/abilities.txt
+#base heroes/pudge/abilities.txt
 #base heroes/techies/abilities.txt
 
 "DOTAAbilities"

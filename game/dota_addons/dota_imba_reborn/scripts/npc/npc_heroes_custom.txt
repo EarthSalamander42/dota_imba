@@ -8,6 +8,7 @@
 #base heroes/faceless_void/hero.txt
 #base heroes/juggernaut/hero.txt
 #base heroes/mars/hero.txt
+#base heroes/pudge/hero.txt
 #base heroes/techies/hero.txt
 
 "DOTAHeroes"

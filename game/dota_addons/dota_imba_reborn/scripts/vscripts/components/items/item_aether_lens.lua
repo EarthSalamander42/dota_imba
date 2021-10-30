@@ -107,5 +107,7 @@ function modifier_imba_aether_lens_passive:GetModifierManaBonus()
 end
 
 function modifier_imba_aether_lens_passive:GetModifierCastRangeBonusStacking()
+	-- todo: Fix script error
+	print(IsServer())
 	return self:CheckUniqueValue(self.cast_range_bonus, {"modifier_imba_elder_staff","modifier_item_imba_aether_specs"})
 end
