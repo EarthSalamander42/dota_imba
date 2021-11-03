@@ -95,11 +95,13 @@ function imba_techies_land_mines:GetIntrinsicModifierName()
 	return "modifier_generic_charges"
 end
 
-function imba_techies_land_mines:GetManaCost(level)
+function imba_techies_land_mines:GetManaCost()
+	local level = self:GetLevel()
+	if level < 1 then return 0 end
+
 	-- Ability properties
 	local caster = self:GetCaster()
-	local vanilla_ability_name = GetVanillaAbilityName(self:GetAbilityName())
-	local initial_mana_cost = GetAbilityKV(vanilla_ability_name, "AbilityManaCost", self:GetLevel())
+	local initial_mana_cost = GetAbilityKV(self:GetVanillaAbilityName(), "AbilityManaCost", level)
 	local modifier_charges = "modifier_generic_charges"
 
 	-- Ability specials

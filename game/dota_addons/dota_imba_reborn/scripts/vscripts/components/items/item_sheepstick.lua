@@ -36,7 +36,7 @@ function item_imba_sheepstick:CastFilterResultTarget(target)
 	-- Can't cast on allies, except for yourself
 	if self:GetCaster():GetTeamNumber() == target:GetTeamNumber() and self:GetCaster() ~= target then
 		return UF_FAIL_CUSTOM
---	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
+--	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_voodoo") or target:HasModifier("modifier_shadow_shaman_voodoo") then
 --		return UF_FAIL_CUSTOM
 	end
 	
@@ -47,7 +47,7 @@ function item_imba_sheepstick:GetCustomCastErrorTarget(target)
 	local caster = self:GetCaster()
 	if caster:GetTeamNumber() == target:GetTeamNumber() and caster ~= target then
 		return "#dota_hud_error_only_cast_on_self"
---	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
+--	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_voodoo") or target:HasModifier("modifier_shadow_shaman_voodoo") then
 --		return "#dota_hud_error_cant_use_already_hexed"
 	end
 end

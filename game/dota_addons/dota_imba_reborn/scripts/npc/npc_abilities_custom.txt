@@ -13,6 +13,7 @@
 #base heroes/enigma/abilities.txt
 #base heroes/faceless_void/abilities.txt
 #base heroes/juggernaut/abilities.txt
+#base heroes/lion/abilities.txt
 #base heroes/mars/abilities.txt
 #base heroes/pudge/abilities.txt
 #base heroes/techies/abilities.txt

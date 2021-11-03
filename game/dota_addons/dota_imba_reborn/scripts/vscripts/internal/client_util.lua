@@ -58,7 +58,6 @@ function C_DOTA_BaseNPC:HasShard()
 	return false
 end
 
---[[
 function C_DOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	local hParent = self:GetParent()
 	if tSuperiorModifierNames then
@@ -76,6 +75,7 @@ function C_DOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	return value
 end
 
+--[[
 function C_DOTA_Modifier_Lua:CheckUnique(bCreated)
 	return nil
 end

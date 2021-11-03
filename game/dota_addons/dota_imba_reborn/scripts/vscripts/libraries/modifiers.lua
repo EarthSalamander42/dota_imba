@@ -24,6 +24,7 @@ end
 
 function CDOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	local hParent = self:GetParent()
+
 	if tSuperiorModifierNames then
 		for _,sSuperiorMod in pairs(tSuperiorModifierNames) do
 			if hParent:HasModifier(sSuperiorMod) then
@@ -31,11 +32,13 @@ function CDOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 			end
 		end
 	end
+
 	if bit.band(self:GetAttributes(), MODIFIER_ATTRIBUTE_MULTIPLE) == MODIFIER_ATTRIBUTE_MULTIPLE then
 		if self:GetStackCount() == 1 then
 			return 0
 		end
 	end
+
 	return value
 end
 
