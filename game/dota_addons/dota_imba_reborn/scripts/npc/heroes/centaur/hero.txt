@@ -1,0 +1,34 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Centaur
+	//=================================================================================================================
+	"npc_dota_hero_centaur"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+ 
+		"Ability1"					"imba_centaur_hoof_stomp"
+		"Ability2"					"imba_centaur_double_edge"
+		"Ability3"					"imba_centaur_return"
+		"Ability4"					"imba_centaur_thick_hide"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_centaur_stampede"
+
+		"Ability10"					"special_bonus_imba_centaur_1" //Double Edge self-damage reduction
+		"Ability11"					"special_bonus_imba_centaur_4" //Double edge damage in increased by x * strength
+		"Ability12"					"special_bonus_attack_base_damage_30" //Stampede duration increase per trampled enemy
+		"Ability13"					"special_bonus_imba_centaur_2" //Arena damage reduction extends to allies
+		"Ability14"					"special_bonus_imba_centaur_9" // +X Retaliate Damage
+		"Ability15"					"special_bonus_strength_20"
+		"Ability16"					"special_bonus_imba_centaur_6" //Return becomes an aura
+		"Ability17"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
+		
+		// Removed Talents
+		//"Ability12"					"special_bonus_imba_centaur_8" //Stampede duration increase per trampled enemy
+		//"Ability14"					"special_bonus_imba_centaur_3" //Centaur hoof stomp arena moves along with hero
+		//"Ability17"					"special_bonus_imba_centaur_5" //Heroes with Stampede haste get 75% tenacity. 
+	}
+}

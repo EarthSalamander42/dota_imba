@@ -133,7 +133,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 	hero:AddNewModifier(hero, nil, "modifier_frantic", {})
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 
-	print(hero:GetUnitName())
 	if hero:GetUnitName() == "npc_dota_hero_pudge" then
 		local flesh_heap_ability = hero:FindAbilityByName("imba_pudge_flesh_heap")
 		hero:AddNewModifier(hero, flesh_heap_ability, "modifier_imba_pudge_flesh_heap_handler", {})

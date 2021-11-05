@@ -1,4 +1,5 @@
 #base units/vanilla_override.txt
+#base units/necronomicon.txt
 
 // #base heroes/earth_spirit/units.txt
 #base heroes/enigma/units.txt

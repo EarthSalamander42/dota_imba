@@ -3,7 +3,8 @@
 #base heroes/alchemist/hero.txt
 #base heroes/ancient_apparition/hero.txt
 #base heroes/axe/hero.txt
-// #base heroes/earth_spirit/hero.txt
+#base heroes/centaur/hero.txt
+// #base heroes/earth_spirit/hero.txt // Causes game crash
 #base heroes/enigma/hero.txt
 #base heroes/faceless_void/hero.txt
 #base heroes/juggernaut/hero.txt

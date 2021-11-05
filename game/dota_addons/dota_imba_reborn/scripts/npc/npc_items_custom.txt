@@ -2218,7 +2218,7 @@
 		"ID"							"2049"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_necronomicon.lua"
-		"AbilityTextureName" 			"imba_necronomicon_2"
+		"AbilityTextureName" 			"imba_necronomicon_3"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -2332,6 +2332,7 @@
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_necronomicon.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName" 			"imba_necronomicon_4"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
