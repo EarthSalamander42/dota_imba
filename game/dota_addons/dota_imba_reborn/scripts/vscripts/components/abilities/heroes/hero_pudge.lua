@@ -460,23 +460,29 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		if hTarget then
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookImpact", hTarget, self:GetCaster())
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookRetract", hTarget)
+
 			local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget, self:GetCaster())
 			ParticleManager:SetParticleControlEnt(nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin() + Vector( 0, 0, 96 ), true)
 			ParticleManager:ReleaseParticleIndex(nFXIndex)
+
 			bVision = true
+
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-				local dmg = ExtraData.hook_dmg
-				local damageTable = {
-					victim = hTarget,
-					attacker = self:GetCaster(),
-					damage = dmg,
-					damage_type = DAMAGE_TYPE_PURE,
-					damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
-					ability = self, --Optional.
-				}
-				local actually_dmg = ApplyDamage(damageTable)
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, actually_dmg, nil)
-				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_enemy", {})
+				if hTarget:IsCreep() then
+					hTarget:Kill(self, self:GetCaster())
+				else
+					ApplyDamage({
+						victim = hTarget,
+						attacker = self:GetCaster(),
+						damage = ExtraData.hook_dmg,
+						damage_type = DAMAGE_TYPE_PURE,
+						damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
+						ability = self, --Optional.
+					})
+
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, ExtraData.hook_dmg, nil)
+					hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_enemy", {})
+				end
 
 				if self:GetCaster():HasModifier("modifier_pudge_arcana") then -- error for reasons, maybe because target is dead
 					if hTarget:IsRealHero() then

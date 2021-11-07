@@ -178,7 +178,6 @@ function modifier_imba_acid_spray_thinker:GetModifierAura()
 	return "modifier_imba_acid_spray_handler"
 end
 
-
 function modifier_imba_acid_spray_thinker:OnDestroy(keys)
 	if IsServer() then
 		local thinker = self:GetParent()

@@ -14,12 +14,14 @@
 		"AbilityTextureName"			"abyssal_underlord_firestorm"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
+		"HasShardUpgrade"				"1"
+
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"
 //			"particle"	"particles/units/heroes/hero_<hero>/<hero>_<ability>.vpcf"
 		}
-		
+
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
@@ -35,7 +37,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"blizzard_slow_percentage"		"15 20 25 30"
+				"blizzard_slow_percentage"		"20.0"
 			}
 			"02"
 			{
@@ -45,7 +47,7 @@
 			"03"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"blizzard_slow_percentage_stack"	"2 3 4 5"
+				"blizzard_slow_percentage_stack"	"2.0 3.0 4.0 5.0"
 			}
 		}
 	}
@@ -87,7 +89,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_radius_per_stack"		"10 15 20 25"
+				"bonus_radius_per_stack"		"20 30 40 50"
 			}
 			"02"
 			{
@@ -116,7 +118,6 @@
 		"AbilityTextureName"			"abyssal_underlord_atrophy_aura"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
-		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -127,7 +128,7 @@
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"	
 		
@@ -187,7 +188,8 @@
 		"ScriptFile"					"components/abilities/heroes/hero_underlord"
 		"AbilityTextureName"			"abyssal_underlord_dark_rift"
 		"FightRecapLevel"				"2"
-		"MaxLevel"						"3"
+		"HasScepterUpgrade"				"1"
+
 //		"precache"
 //		{
 //			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_<hero>.vsndevts"
@@ -199,7 +201,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 
@@ -224,6 +226,16 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"teleport_delay"				"6.0 5.0 4.0"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_movespeed_per_hero"			"3.0 5.0 7.0"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_status_resistance_per_hero"	"3.0 5.0 7.0"
 			}
 		}
 	}
