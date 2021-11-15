@@ -13,7 +13,6 @@
 		"ScriptFile"					"components/abilities/heroes/hero_underlord"
 		"AbilityTextureName"			"abyssal_underlord_firestorm"
 		"FightRecapLevel"				"1"
-		"MaxLevel"						"4"
 		"HasShardUpgrade"				"1"
 
 		"precache"
@@ -49,6 +48,11 @@
 				"var_type"							"FIELD_FLOAT"
 				"blizzard_slow_percentage_stack"	"2.0 3.0 4.0 5.0"
 			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"shard_bonus_wave_count"			"3"
+			}
 		}
 	}
 
@@ -65,7 +69,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_underlord"
 		"AbilityTextureName"			"abyssal_underlord_pit_of_malice"
 		"FightRecapLevel"				"1"
-		"MaxLevel"						"4"
+
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"

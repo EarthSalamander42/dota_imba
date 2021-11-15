@@ -5,12 +5,41 @@ imba_abyssal_underlord_firestorm = imba_abyssal_underlord_firestorm or class(VAN
 LinkLuaModifier( "modifier_imba_abyssal_underlord_firestorm", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_firestorm_thinker", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_blizzard", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 -- Custom KV
 -- AOE Radius
 function imba_abyssal_underlord_firestorm:GetAOERadius()
 	return self:GetVanillaAbilitySpecial( "radius" )
+end
+
+function imba_abyssal_underlord_firestorm:GetBehavior()
+	if self:GetCaster():HasShard() then
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+	end
+
+	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+function imba_abyssal_underlord_firestorm:CastFilterResultTarget(target)
+	if not IsServer() then return end
+	local caster = self:GetCaster()
+
+	-- Self-cast if we have shard
+	if caster == target and caster:HasShard() then
+		return UF_SUCCESS
+	end
+
+	return UF_FAIL_CUSTOM
+end
+
+function imba_abyssal_underlord_firestorm:GetCustomCastError()
+	if self:GetCaster() ~= target then
+		return "#dota_hud_error_cant_only_cast_self"
+	end
+
+	return ""
 end
 
 --------------------------------------------------------------------------------
@@ -37,6 +66,11 @@ function imba_abyssal_underlord_firestorm:OnSpellStart()
 	-- unit identifier
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
+	self.self_cast = false
+
+	if caster == self:GetCursorTarget() then
+		self.self_cast = true
+	end
 
 	-- create thinker
 	CreateModifierThinker(
@@ -99,13 +133,29 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:OnCreated( kv )
 	local delay = self.ability:GetVanillaAbilitySpecial( "first_wave_delay" )
 	self.radius = self.ability:GetVanillaAbilitySpecial( "radius" )
 	self.count = self.ability:GetVanillaAbilitySpecial( "wave_count" )
+	self.burn_duration = self.ability:GetVanillaAbilitySpecial( "burn_duration" )
 	self.interval = self.ability:GetVanillaAbilitySpecial( "wave_interval" )
 
-	self.burn_duration = self.ability:GetVanillaAbilitySpecial( "burn_duration" )
+	if self:GetCaster():HasShard() then
+		self.count = self.count + self.ability:GetSpecialValueFor("shard_bonus_wave_count")
+		local duration = self.ability:GetVanillaAbilitySpecial( "wave_duration" ) - 1
+		self.interval = duration / self.count
+
+		if self.ability.self_cast == true then
+			self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster", {})
+		end
+	end
 
 	if not IsServer() then return end
 
+	self.particle_cast = "particles/units/heroes/heroes_underlord/abyssal_underlord_firestorm_wave.vpcf"
+	self.sound_cast = "Hero_AbyssalUnderlord.Firestorm"
+
 	self.autocast_state = self.ability:GetAutoCastState()
+
+	if self.autocast_state then
+		self.particle_cast = "particles/units/heroes/heroes_underlord/abyssal_underlord_firestorm_wave_frost.vpcf"
+	end
 
 	-- init
 	self.wave = 0
@@ -139,8 +189,10 @@ end
 function modifier_imba_abyssal_underlord_firestorm_thinker:OnIntervalThink()
 	if not self.delayed then
 		self.delayed = true
+
 		self:StartIntervalThink( self.interval )
 		self:OnIntervalThink()
+
 		return
 	end
 
@@ -192,7 +244,8 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:OnIntervalThink()
 
 	-- count wave
 	self.wave = self.wave + 1
-	if self.wave>=self.count then
+
+	if self.wave >= self.count then
 		self:Destroy()
 	end
 end
@@ -200,18 +253,29 @@ end
 --------------------------------------------------------------------------------
 -- Graphics & Animations
 function modifier_imba_abyssal_underlord_firestorm_thinker:PlayEffects()
-	-- Get Resources
-	local particle_cast = "particles/units/heroes/heroes_underlord/abyssal_underlord_firestorm_wave.vpcf"
-	local sound_cast = "Hero_AbyssalUnderlord.Firestorm"
-
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, nil )
+	local effect_cast = ParticleManager:CreateParticle( self.particle_cast, PATTACH_WORLDORIGIN, nil )
 	ParticleManager:SetParticleControl( effect_cast, 0, self.parent:GetOrigin() )
 	ParticleManager:SetParticleControl( effect_cast, 4, Vector( self.radius, 0, 0 ) )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	EmitSoundOn( sound_cast, self.parent )
+	EmitSoundOn( self.sound_cast, self.parent )
+end
+
+modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster = modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster or class({})
+
+function modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster:IsHidden() return true end
+function modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster:IsPurgable() return false end
+
+function modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster:OnCreated()
+	if not IsServer() then return end
+
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster:OnIntervalThink()
+	self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin())
 end
 
 --------------------------------------------------------------------------------
@@ -328,6 +392,8 @@ function modifier_imba_abyssal_underlord_blizzard:DeclareFunctions() return {
 -- Initializations
 function modifier_imba_abyssal_underlord_blizzard:OnCreated( kv )
 	if not IsServer() then return end
+
+	self.slow = self:GetAbility():GetSpecialValueFor("blizzard_slow_percentage") + (self:GetAbility():GetSpecialValueFor("blizzard_slow_percentage_stack") * 1)
 
 	-- precache damage
 	self.damageTable = {
@@ -1451,6 +1517,25 @@ function imba_abyssal_underlord_cancel_dark_rift:OnSpellStart()
 	-- kill modifier
 	self.modifier:Cancel()
 	self.modifier = nil
+end
+
+function imba_abyssal_underlord_cancel_dark_rift:OnInventoryContentsChanged()
+	if not IsServer() then return end
+
+	-- Checks if hero now has shard / scepter
+	local caster = self:GetCaster()
+	local ability = "abyssal_underlord_dark_portal"
+
+	if caster:HasAbility(ability) then
+		local ability_handler = caster:FindAbilityByName(ability)
+
+		if ability_handler then
+			if caster:HasScepter() then
+				ability_handler:SetLevel(1)
+				ability_handler:SetHidden(false)
+			end
+		end
+	end
 end
 
 --------------------------------------------------------------------------------

@@ -44,7 +44,6 @@
 "DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift"										"#{DOTA_Tooltip_ability_abyssal_underlord_dark_rift}"
 "DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_Imbafication_1"						"<font color='#FF7800'>Black Magic:</font> Dark Rift can target ally heroes."
 "DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_Imbafication_2"						"<font color='#FF7800'>Foulfell Energy:</font> Increase movement speed by %bonus_movespeed_per_hero%% and Status Resistance by %bonus_status_resistance_per_hero%% for every heroes on radius."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_scepter_description"					"#{DOTA_Tooltip_ability_abyssal_underlord_dark_rift_scepter_description}"
 
 "DOTA_Tooltip_modifier_imba_abyssal_underlord_dark_rift_foulfell_energy"					"Foulfell Energy"
 "DOTA_Tooltip_modifier_imba_abyssal_underlord_dark_rift_foulfell_energy_Description"		"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and Status Resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."

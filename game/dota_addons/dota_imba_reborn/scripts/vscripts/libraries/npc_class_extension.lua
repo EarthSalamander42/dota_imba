@@ -310,6 +310,7 @@ CScriptParticleManager.CreateParticleForTeam = function(self, sParticleName, iAt
 	local response = original_CreateParticleForTeam(self, sParticleName, iAttachType, hParent, iTeamNumber)
 
 	if not ignored_pfx_list[sParticleName] then
+		if not CScriptParticleManager.ACTIVE_PARTICLES then CScriptParticleManager.ACTIVE_PARTICLES = {} end
 		table.insert(CScriptParticleManager.ACTIVE_PARTICLES, {response, 0})
 	end
 

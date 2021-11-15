@@ -11,7 +11,7 @@
 		"Ability1"		"imba_abyssal_underlord_firestorm"
 		"Ability2"		"imba_abyssal_underlord_pit_of_malice"
 		"Ability3"		"imba_abyssal_underlord_atrophy_aura"
-		"Ability4"		"generic_hidden"
+		"Ability4"		"abyssal_underlord_dark_portal"
 		"Ability5"		"generic_hidden"
 		"Ability6"		"imba_abyssal_underlord_dark_rift"
 		"Ability7"		"imba_abyssal_underlord_cancel_dark_rift"
