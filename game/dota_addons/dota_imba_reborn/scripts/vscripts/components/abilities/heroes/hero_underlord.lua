@@ -1021,7 +1021,9 @@ function modifier_imba_abyssal_underlord_atrophy_aura:OnRefresh( kv )
 	if not IsServer() then return end
 
 	-- refresh scepter modifier
-	self.scepter_aura:ForceRefresh()
+	if self.scepter_aura then
+		self.scepter_aura:ForceRefresh()
+	end
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura:OnRemoved()
@@ -1572,6 +1574,7 @@ function modifier_imba_abyssal_underlord_dark_rift:CheckState() return {
 function modifier_imba_abyssal_underlord_dark_rift:OnCreated( kv )
 	-- references
 	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
+	self.max_stacks = self:GetAbility():GetSpecialValueFor("foulfell_max_stacks")
 
 	if not IsServer() then return end
 
@@ -1603,7 +1606,7 @@ function modifier_imba_abyssal_underlord_dark_rift:OnIntervalThink()
 		local buff = ally:FindModifierByName("modifier_imba_abyssal_underlord_dark_rift_foulfell_energy")
 
 		if buff then
-			buff:SetStackCount(#allies)
+			buff:SetStackCount(math.min(#allies, self.max_stacks))
 		end
 	end
 end

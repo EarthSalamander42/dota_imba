@@ -10,7 +10,7 @@
 "DOTA_Tooltip_modifier_imba_abyssal_underlord_firestorm_Description"						"#{DOTA_Tooltip_modifier_abyssal_underlord_firestorm_burn_Description}"
 
 "DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice"									"#{DOTA_Tooltip_ability_abyssal_underlord_pit_of_malice}"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_Imbafication_1"					"<font color='#FF7800'>Twisted Reality:</font> Pit of Malice radius increases by %bonus_radius_per_stack% for each heroes rooted. Stacks lasts %pit_increase_duration% and can be stacked upon multiple casts."
+"DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_Imbafication_1"					"<font color='#FF7800'>Twisted Reality:</font> Pit of Malice radius increases by %bonus_radius_per_stack% for each heroes rooted."
 "DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_Imbafication_2"					"<font color='#FF7800'>Abyss Souls:</font> Increase ally heroes health regeneration amplification in pit by %hp_regen_amp%%."
 "DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_bonus_radius_per_stack"			"BONUS RADIUS:"
 "DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_pit_increase_duration"			"BONUS RADIUS STACKS DURATION:"
@@ -29,8 +29,8 @@
 "DOTA_Tooltip_ability_imba_abyssal_underlord_atrophy_aura_permanent_ms_pct"					"%PERMANENT MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_imba_abyssal_underlord_atrophy_aura_hp_regen_amp"						"%HP REGEN AMP:"
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_active"					"Atrophy Aura"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_active_Description"		"Increased damage by %dMODIFIER_PROPERTY_TOOLTIP% for the next %dMODIFIER_PROPERTY_TOOLTIP2% attacks."
+"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_active"							"Atrophy Aura"
+"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_active_Description"				"Increased damage by %dMODIFIER_PROPERTY_TOOLTIP% for the next %dMODIFIER_PROPERTY_TOOLTIP2% attacks."
 
 "DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura"									"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_dmg_buff_counter}"
 "DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_Description"						"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_dmg_buff_counter_Description}"
@@ -42,8 +42,8 @@
 "DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack_Description"		"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_hero_permanent_buff_Description}"
 
 "DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift"										"#{DOTA_Tooltip_ability_abyssal_underlord_dark_rift}"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_Imbafication_1"						"<font color='#FF7800'>Black Magic:</font> Dark Rift can target ally heroes."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_Imbafication_2"						"<font color='#FF7800'>Foulfell Energy:</font> Increase movement speed by %bonus_movespeed_per_hero%% and Status Resistance by %bonus_status_resistance_per_hero%% for every heroes on radius."
+"DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_Imbafication_1"						"<font color='#FF7800'>Realm Break:</font> Dark Rift can target ally heroes."
+"DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_Imbafication_2"						"<font color='#FF7800'>Foulfell Energy:</font> Increase movement speed by %bonus_movespeed_per_hero%% and Status Resistance by %bonus_status_resistance_per_hero%% for every heroes on radius for a maximum of %foulfell_max_stacks%."
 
 "DOTA_Tooltip_modifier_imba_abyssal_underlord_dark_rift_foulfell_energy"					"Foulfell Energy"
 "DOTA_Tooltip_modifier_imba_abyssal_underlord_dark_rift_foulfell_energy_Description"		"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and Status Resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
