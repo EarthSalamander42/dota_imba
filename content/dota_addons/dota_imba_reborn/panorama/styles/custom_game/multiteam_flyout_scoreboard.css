@@ -1,0 +1,922 @@
+
+.FlyoutScoreboardRoot
+{
+	horizontal-align: left;
+	vertical-align: top;
+	margin-top: 45px;
+	flow-children: down;
+	
+	transition-property: transform;
+	transition-duration: 0.10s;
+	
+	transform: translate3d( -100%, 0, 0px );
+	/*background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );*/
+	background-image: url("file://panorama/images/custom_game/flyout/bg.png");
+	padding: 10px 0 10px 0px;
+	background-size: cover;
+	overflow: clip scroll;
+	max-height: 97%;
+}
+
+.ScoreCol_DisplayPic DOTAAvatarImage
+{
+	height: 32px;
+	width: 32px;
+	vertical-align: middle;
+}
+ 
+.FlyoutScoreboardRoot.flyout_scoreboard_visible
+{
+	transform: translatey( 0px );
+}
+
+.Legend
+{
+	flow-children: right;
+	width: 100%; 
+	color: #dfd7b9;
+}
+
+.LegendPanel
+{
+	margin-top: 1px;
+	margin-left: 1px;
+}
+
+.Legend Label
+{
+	text-transform: uppercase;
+	font-size: 18px;
+	color: #dfd7b9;
+	padding-top: 8px;
+	height: 32px;
+	text-align: center;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+}
+
+.ScoreCol_DisplayPic,
+.ScoreCol_HeroPic,
+.ScoreCol_TeamScore
+{
+	margin-right: 6px;
+}
+#PlayerColorBar
+{
+	margin-right: 11px;
+}
+#PlayerColorBar
+{
+	align : left center;
+	height: 100%;
+}
+
+.ScoreCol_TeamScore
+{
+	width: 48px;
+}
+
+.ScoreCol_DisplayPic
+{
+	flow-children: right;
+	width: 55px;
+}
+
+.ScoreCol_TeamName
+{
+	width: 210px;
+	z-index: 1001;
+}
+
+.ScoreCol_HeroPic
+{
+	width: 54px;
+}
+
+.ScoreCol_PlayerDetails
+{
+	width: 140px;
+}
+
+.ScoreCol_HeroLevel
+{
+	width: 80px;
+}
+
+.ScoreCol_ImbaXP
+{
+	width: 300px;
+}
+.ScoreCol_WinRate
+{
+	width: 200px;
+}
+.Legend .ScoreCol_WinRate
+{
+	font-size: 13px;
+	align: center center;
+	line-height: 19px;
+}
+.ScoreCol_Gold
+{
+	width: 70px;
+}
+
+.ScoreCol_ImbaImr5v5,
+.ScoreCol_ImbaImr10v10,
+.ScoreCol_ImbaImr1v1
+{
+	width: 70px;
+	visibility: collapse;
+}
+
+.ScoreCol_Kills,
+.ScoreCol_Deaths,
+.ScoreCol_Assists
+{
+	width: 32px;
+	margin-right: 6px;
+}
+
+.ScoreCol_Ultimate
+{
+	width: 40px;
+}
+
+.ScoreCol_Buttons
+{
+	width: 140px;
+	vertical-align: center;
+	flow-children: right;
+}
+
+.spectator_view .ScoreCol_Buttons
+{
+	width: 35px;
+}
+
+#TeamsContainer
+{
+	flow-children: down;
+	horizontal-align: left;
+}
+
+.FlyoutTeamData
+{
+	margin-top: -28px;
+	flow-children: right;
+	height: 50px;
+	padding-left: 10px;
+}
+
+.FlyoutPlayer
+{ 
+	flow-children: right;
+}
+
+#PlayersContainer
+{
+	flow-children: down;
+	padding-bottom: 30px;
+	padding-top: 12px;
+}
+
+#TeamScore,
+#TeamName
+{
+	color: #dfd7b9;
+	font-size: 18px;
+	padding: 5px 0px;
+	text-transform: uppercase;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+}
+
+#TeamScore,
+{
+	color: #eee;
+	horizontal-align: center;
+}
+
+.PlayerRow
+{
+	height: 40px;
+	margin-bottom: 2px;
+/*	background-image: url("file://panorama/images/custom_game/flyout/rowbg.png"); */
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
+	background-size: 100% 100%;
+	margin-bottom: 3.5px;
+	overflow: clip;
+}
+
+@keyframes 'bg_move'
+{
+	0%
+	{
+		background-position: 0 0;
+	}
+
+	50%
+	{
+		opacity: 0.9;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
+@keyframes 'color_transition'
+{
+	0%
+	{
+		opacity:  0.2;
+	}
+
+	50%
+	{
+		opacity:  0.4;
+	}
+
+	100%
+	{
+		opacity:  0.2;
+	}
+}
+
+@keyframes 'color_transition_bright'
+{
+	0%
+	{
+		opacity:  0.5;
+	}
+
+	50%
+	{
+		opacity:  1;
+	}
+
+	100%
+	{
+		opacity:  0.5;
+	}
+}
+
+#DonatorOverlay {
+	height: 40px;
+	width: 100%;
+	/*background-image: url("file://panorama/images/custom_game/flyout/output.webm");*/
+	/*background-size: 100% 100%;*/
+	opacity: 0.5;
+	background-position: 50% 0;
+	animation-name: color_transition;
+	animation-duration: 3.0s;
+	animation-timing-function: ease-in-out;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
+#DonatorTitleOverlay {
+	height: 40px;
+	width: 100%;
+	background-color: #000000;
+	z-index: 1;
+	align: center center;
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out 0.0s;
+	visibility: collapse;
+}
+
+#DonatorTitleOverlay Label {
+	align: center center;
+	color: #ffffff;
+	font-size: 17px;
+	text-transform: uppercase;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+//	letter-spacing: 1px;
+}
+
+.PlayerRow:hover #DonatorTitleOverlay  {
+	opacity: 1;
+}
+
+@keyframes 'bubbles' {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translate3d(0, 20%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -140%, 0);
+  }
+}
+
+.particle {
+	border-radius: 100%;
+	opacity: 0;
+	animation-name: bubbles;
+	animation-duration: 4.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.is_local_player #PlayerRowContainer
+{
+	/*background-color: gradient( linear, 100% 0, 0 0, from( #13161a ), color-stop( 0.4, #13161a ), to( #2b3139ee ) );*/
+}
+
+#PlayerRowContainer
+{
+	flow-children: right;
+	height: 100%;
+}
+
+#PlayerColorBar
+{
+	width: 5px;
+	height: 100%;
+}
+
+#HeroIcon
+{
+	vertical-align: middle;
+	height: 32px;
+}
+
+#LevelContainer,
+#KillsContainer,
+#DeathsContainer,
+#AssistsContainer
+{
+	height: 100%;
+}
+
+.ScoreboardPanel
+{
+	height : 100%;
+	margin-top: 1px;
+	margin-left: 1px;
+}
+
+.ScoreboardPanel Label
+{
+	font-size: 30px;
+	text-align: center;
+	horizontal-align: center;
+}
+
+.UltimateIndicatorShared
+{
+	margin-top: 4px;
+	height: 30px;
+	background-size: 20px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+
+#Level, #Rank
+{
+	vertical-align: center;
+	horizontal-align: center;
+	color: #fefeff;
+	/*text-shadow: 0 0 0.3px 0 #fff;*/
+	font-weight: medium;
+	font-size: 20px;
+	margin-top: 3px;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+}
+
+#Rank {
+	color: #b5a2de;
+	font-size: 19px;
+	font-weight: normal;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+}
+
+#KillsContainer,
+#DeathsContainer,
+#AssistsContainer
+{
+	margin-right: 6px;
+}
+
+
+#Kills,
+#Deaths,
+#Assists
+{
+	vertical-align: center;
+	font-size: 21px;
+	margin-top: 0;
+	width: 100%;
+	color: #ece4ff;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	padding: 2px 2px 0px 2px;
+	background-color: #110921cc;
+	border: 1px solid #2c2144cc;
+	line-height: 18px;
+	height: 30px;
+	/*margin-right: 6px;*/
+	text-align: center;
+	align: center center;
+}
+#AssistsContainer
+{
+	margin-right: 20px;
+}
+
+#PanelImbaXP 
+{
+	padding: 3px 10px 5px;
+	background-color: #0d061dcc;
+}
+#LevelContainer
+{
+	flow-children: right;
+align: center top;
+	width: 100%;
+	padding: 0 3px;
+}
+#LevelContainerChild {
+	align: left top;
+	flow-children: right;
+	margin-right:  15px;
+	margin-top: 1px;
+}
+#LevelContainerChild2 {
+	align: right top;
+}
+#LevelLabel
+{
+	color: #c3b9d8;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	align: center top;
+}
+
+#ImbaXPRank0,
+#ImbaXPRank1,
+#ImbaXPRank2,
+#ImbaXPRank3,
+#ImbaXPRank4,
+#ImbaXPRank5,
+#ImbaXPRank6,
+#ImbaXPRank7,
+#ImbaXPRank8,
+#ImbaXPRank9,
+#ImbaXPRank10,
+#ImbaXPRank11,
+#ImbaXPRank12,
+#ImbaXPRank13,
+#ImbaXPRank14,
+#ImbaXPRank15,
+#ImbaXPRank16,
+#ImbaXPRank17,
+#ImbaXPRank18,
+#ImbaXPRank19,
+#ImbaXPRank20,
+#ImbaXPRank21,
+#ImbaXPRank22,
+#ImbaXPRank23
+{
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	align: center top;
+	/*margin-top: 1px;*/
+	/*margin-right: 5%;
+	margin-bottom: 1px;
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	text-shadow: 0 0 3px #000000cc;
+	align: center center;*/
+}
+
+#ImbaXP0,
+#ImbaXP1,
+#ImbaXP2,
+#ImbaXP3,
+#ImbaXP4,
+#ImbaXP5,
+#ImbaXP6,
+#ImbaXP7,
+#ImbaXP8,
+#ImbaXP9,
+#ImbaXP10,
+#ImbaXP11,
+#ImbaXP12,
+#ImbaXP13,
+#ImbaXP14,
+#ImbaXP15,
+#ImbaXP16,
+#ImbaXP17,
+#ImbaXP18,
+#ImbaXP19,
+#ImbaXP20,
+#ImbaXP21,
+#ImbaXP22,
+#ImbaXP23
+{
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	color: #c3b9d8;
+	align: center center;
+}
+
+#ImbaXPEarned0,
+#ImbaXPEarned1,
+#ImbaXPEarned2,
+#ImbaXPEarned3,
+#ImbaXPEarned4,
+#ImbaXPEarned5,
+#ImbaXPEarned6,
+#ImbaXPEarned7,
+#ImbaXPEarned8,
+#ImbaXPEarned9,
+#ImbaXPEarned10,
+#ImbaXPEarned11,
+#ImbaXPEarned12,
+#ImbaXPEarned13,
+#ImbaXPEarned14,
+#ImbaXPEarned15,
+#ImbaXPEarned16,
+#ImbaXPEarned17,
+#ImbaXPEarned18,
+#ImbaXPEarned19,
+#ImbaXPEarned20,
+#ImbaXPEarned21,
+#ImbaXPEarned22,
+#ImbaXPEarned23
+{
+	visibility: collapse;
+}
+
+#ImbaLvl0,
+#ImbaLvl1,
+#ImbaLvl2,
+#ImbaLvl3,
+#ImbaLvl4,
+#ImbaLvl5,
+#ImbaLvl6,
+#ImbaLvl7,
+#ImbaLvl8,
+#ImbaLvl9,
+#ImbaLvl10,
+#ImbaLvl11,
+#ImbaLvl12,
+#ImbaLvl13,
+#ImbaLvl14,
+#ImbaLvl15,
+#ImbaLvl16,
+#ImbaLvl17,
+#ImbaLvl18,
+#ImbaLvl19,
+#ImbaLvl20,
+#ImbaLvl21,
+#ImbaLvl22,
+#ImbaLvl23
+{
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	align: center bottom;
+	color: #c3b9d8;
+	/*font-size: 16px;
+	font-weight: bold;
+	margin-top: 2px;
+	margin-left: 3%;
+	color: white;
+	align: left center;
+	opacity: 0.75;*/
+}
+
+#PlayerAndHeroName
+{
+	padding-top: 4px;
+	padding-bottom: 1px;
+}
+
+#PlayerName
+{
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 16px;
+	margin-top: 0px;
+	white-space: nowrap;
+	text-align: left;
+	horizontal-align: left;
+	font-weight: medium;
+	/*text-shadow: 0 0 0.2px 0 #fff;
+	letter-spacing: 0.2px;*/
+	margin-bottom: -4px;
+}
+
+#HeroNameAndDescription
+{
+	color: #6a9561;
+	font-size: 13px;
+	text-align: left;
+	horizontal-align: left;
+	opacity: 0.7;
+}
+
+#TeammateGoldAmount
+{
+	margin-bottom: -2px;
+	vertical-align: middle;
+	horizontal-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffcc33;
+	text-shadow: 0 0 5px 2.0 #000;
+	visibility: collapse;
+}
+
+#TeammateIMRAmount
+{
+	margin-bottom: -2px;
+	vertical-align: middle;
+	horizontal-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: green;
+}
+
+#TeammateIMR10v10Amount
+{
+	margin-bottom: -2px;
+	vertical-align: middle;
+	horizontal-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: green;
+}
+
+.is_local_player .ScoreCol_Buttons Button
+{
+	visibility: collapse;
+}
+
+.ScoreCol_Buttons Button
+{
+	width: 20px;
+	height: 20px;
+	margin-right: 15px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: contain;
+	vertical-align: middle;
+}
+
+#BtnMuteVoice
+{
+	background-image: url("s2r://panorama/images/custom_game/mute_voice_off_png.vtex");
+}
+
+#BtnShareUnit
+{
+	background-image: url("s2r://panorama/images/custom_game/share_unit_off_png.vtex");
+	visibility: visible;
+}
+
+#BtnShareHero
+{
+	background-image: url("s2r://panorama/images/custom_game/share_hero_off_png.vtex");
+	visibility: visible;
+}
+
+#BtnDisableHelp
+{
+	background-image: url("s2r://panorama/images/custom_game/disable_help_off_png.vtex");
+	visibility: visible;
+}
+
+.local_player_teammate #BtnShareUnit,
+.local_player_teammate #BtnShareHero,
+.local_player_teammate #BtnDisableHelp,
+{
+	visibility: visible;
+}
+
+#BtnMuteVoice.Activated
+{
+	background-image: url("s2r://panorama/images/custom_game/mute_voice_on_png.vtex");
+}
+
+#BtnShareUnit.Activated
+{
+	background-image: url("s2r://panorama/images/custom_game/share_unit_on_png.vtex");
+}
+
+#BtnShareHero.Activated
+{
+	background-image: url("s2r://panorama/images/custom_game/share_hero_on_png.vtex");
+}
+
+#BtnDisableHelp.Activated
+{
+	background-image: url("s2r://panorama/images/custom_game/disable_help_on_png.vtex");
+}
+
+
+.local_player_team #TeammateGoldAmount,
+.spectator_view #TeammateGoldAmount
+{
+	visibility: visible;
+}
+
+#PlayerDetailsContainer
+{
+	height: 100%;
+}
+
+#PlayerAndHeroName
+{
+	flow-children: down;
+}
+
+.is_local_player #Kills,
+.is_local_player #Deaths,
+.is_local_player #Assists,
+.is_local_player #Level,
+.is_local_player #HeroName
+{
+	/*text-shadow: 0 0 5px 2.0 #000;
+	color: white;*/
+}
+
+#XPProgressBar0,
+#XPProgressBar1,
+#XPProgressBar2,
+#XPProgressBar3,
+#XPProgressBar4,
+#XPProgressBar5,
+#XPProgressBar6,
+#XPProgressBar7,
+#XPProgressBar8,
+#XPProgressBar9,
+#XPProgressBar10,
+#XPProgressBar11,
+#XPProgressBar12,
+#XPProgressBar13,
+#XPProgressBar14,
+#XPProgressBar15,
+#XPProgressBar16,
+#XPProgressBar17,
+#XPProgressBar18,
+#XPProgressBar19,
+#XPProgressBar20,
+#XPProgressBar21,
+#XPProgressBar22,
+#XPProgressBar23
+{
+	width: 100%;
+	height: 9px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+#XPProgressBar0_Left,
+#XPProgressBar1_Left,
+#XPProgressBar2_Left,
+#XPProgressBar3_Left,
+#XPProgressBar4_Left,
+#XPProgressBar5_Left,
+#XPProgressBar6_Left,
+#XPProgressBar7_Left,
+#XPProgressBar8_Left,
+#XPProgressBar9_Left,
+#XPProgressBar10_Left,
+#XPProgressBar11_Left,
+#XPProgressBar12_Left,
+#XPProgressBar13_Left,
+#XPProgressBar14_Left,
+#XPProgressBar15_Left,
+#XPProgressBar16_Left,
+#XPProgressBar17_Left,
+#XPProgressBar18_Left,
+#XPProgressBar19_Left,
+#XPProgressBar20_Left,
+#XPProgressBar21_Left,
+#XPProgressBar22_Left,
+#XPProgressBar23_Left
+{
+	background-color: gradient( linear,  100% 0%, 0 0 , from (#3e3060), color-stop( 0.5, #58418b ), to(#3e3060));
+	border-radius: 50px 0 0 50px;
+	border-top: 0px;
+}
+
+#XPProgressBar0_Right,
+#XPProgressBar1_Right,
+#XPProgressBar2_Right,
+#XPProgressBar3_Right,
+#XPProgressBar4_Right,
+#XPProgressBar5_Right,
+#XPProgressBar6_Right,
+#XPProgressBar7_Right,
+#XPProgressBar8_Right,
+#XPProgressBar9_Right,
+#XPProgressBar10_Right,
+#XPProgressBar11_Right,
+#XPProgressBar12_Right,
+#XPProgressBar13_Right,
+#XPProgressBar14_Right,
+#XPProgressBar15_Right,
+#XPProgressBar16_Right,
+#XPProgressBar17_Right,
+#XPProgressBar18_Right,
+#XPProgressBar19_Right,
+#XPProgressBar20_Right,
+#XPProgressBar21_Right,
+#XPProgressBar22_Right,
+#XPProgressBar23_Right
+{
+	background-color: #2d2839;
+	border-radius:  0 50px 50px 0;
+}
+
+#XPProgressBarContainer0,
+#XPProgressBarContainer1,
+#XPProgressBarContainer2,
+#XPProgressBarContainer3,
+#XPProgressBarContainer4,
+#XPProgressBarContainer5,
+#XPProgressBarContainer6,
+#XPProgressBarContainer7,
+#XPProgressBarContainer8,
+#XPProgressBarContainer9,
+#XPProgressBarContainer10,
+#XPProgressBarContainer11,
+#XPProgressBarContainer12,
+#XPProgressBarContainer13,
+#XPProgressBarContainer14,
+#XPProgressBarContainer15,
+#XPProgressBarContainer16,
+#XPProgressBarContainer17,
+#XPProgressBarContainer18,
+#XPProgressBarContainer19,
+#XPProgressBarContainer20,
+#XPProgressBarContainer21,
+#XPProgressBarContainer22,
+#XPProgressBarContainer23
+{
+	vertical-align: bottom;
+	height: 40px;
+	width: 100%;
+}
+
+/* party_highlighter.css not working somehow */
+.Party_1 {
+	color: #fefeff; /* 01df3a */
+}
+
+.Party_2 {
+	color: #d7df01;
+}
+
+.Party_3 {
+	color: #df0101;
+}
+
+.Party_4 {
+	color: #2e2efe;
+}
+
+.Party_5 {
+	color: #58d3f7;
+}
+
+.Party_6 {
+	color: #ff8000;
+}
+
+.Party_7 {
+	color: #00ffff;
+}
+
+.Party_8 {
+	color: #04b404;
+}
+
+.Party_9 {
+	color: #bf00ff;
+}
+
+.Party_10 {
+	color: #088a68;
+}
+
+.Party_11 {
+	color: #86b404;
+}
+
+.Party_12 {
+	color: #82fa58;
+}
+
+.NoParty {
+	color: #d4d4d4;
+}
