@@ -1,0 +1,91 @@
+// Rubick's Telekinesis
+"DOTA_Tooltip_ability_imba_rubick_telekinesis"							"Telekinesis"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_Description"				"Rubick uses his telekinetic powers to lift an unit into the air briefly, then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.\n<font color='#FF7800'>Mind The Drop:</font> Also damages all enemies in the impact radius.\n<font color='#FF7800'>Puppeteer:</font> Transposition can also be used on allies. When used in this manner, its cooldown will be %ally_cooldown%x that of standard. Allies are rooted instead of stunned, and can be hurled a greater distance away."
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_Lore"						"All living beings are Rubick's playthings."
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_lift_duration"		"ENEMY LIFT TIME:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_lift_duration"		"ALLY LIFT TIME:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_impact_radius"			"LANDING RADIUS:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_impact_stun_duration"		"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_range"				"ENEMY HURL DISTANCE:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_range"				"ALLY HURL DISTANCE:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_damage"					"LANDING DAMAGE:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_cast_range"				"CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_telekinesis"								"Telekinesis"
+"DOTA_Tooltip_modifier_imba_telekinesis_Description"					"Held in the air."
+
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt"								"#{DOTA_Tooltip_ability_rubick_fade_bolt}"
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt_Description"					"Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack damage. <font color='#FF7800'>Each jump deals the same damage.</font>\n<font color='#FF7800'>Frail Flow:</font> Also increases mana cost and mana loss by %frail_mana_cost_increase_pct%%% for the debuff's duration."
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt_Lore"							"Rubick's favorite spell for dispatching would-be assassins is a rather simple conjuration."
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt_Note0"							"Has a bounce radius of %radius% and a bounce delay of %jump_delay% seconds."
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt_damage"							"#{DOTA_Tooltip_ability_rubick_fade_bolt_damage}"
+//"DOTA_Tooltip_ability_imba_rubick_fade_bolt_jump_damage_bonus_pct"			"%BONUS DAMAGE PER JUMP:"
+// "DOTA_Tooltip_ability_imba_rubick_fade_bolt_hero_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_hero_attack_damage_reduction}"
+// "DOTA_Tooltip_ability_imba_rubick_fade_bolt_creep_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_creep_attack_damage_reduction}"
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt_duration"						"#{DOTA_Tooltip_ability_rubick_fade_bolt_duration}"
+
+"DOTA_Tooltip_modifier_imba_rubick_fade_bolt"							"Fade Bolt"
+"DOTA_Tooltip_modifier_imba_rubick_fade_bolt_Description"				"Base attack damage reduced by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%. Mana cost and mana loss increased by %dMODIFIER_PROPERTY_MANACOST_PERCENTAGE_STACKING%%%."
+
+"DOTA_Tooltip_modifier_imba_rubick_fade_bolt_break"						"Break Bolt"
+"DOTA_Tooltip_modifier_imba_rubick_fade_bolt_break_Description"			"Passives disabled!"
+
+"DOTA_Tooltip_ability_imba_rubick_null_field"									"#{DOTA_Tooltip_ability_rubick_null_field}"
+"DOTA_Tooltip_ability_imba_rubick_null_field_Description"						"#{DOTA_Tooltip_ability_rubick_null_field_Description}\n<font color='#FF7800'>Magus Path:</font> Grants %status_resistance_reduction_pct%% bonus status resistance."
+"DOTA_Tooltip_ability_imba_rubick_null_field_Lore"								"Not every magus can be a Grand Magus..."
+"DOTA_Tooltip_ability_imba_rubick_null_field_magic_damage_reduction_pct"		"#{DOTA_Tooltip_ability_rubick_null_field_magic_damage_reduction_pct}"
+"DOTA_Tooltip_ability_imba_rubick_null_field_status_resistance_reduction_pct"	"%STATUS RESISTANCE:"
+"DOTA_Tooltip_ability_imba_rubick_null_field_radius"							"#{DOTA_Tooltip_ability_rubick_null_field_radius}"
+
+"DOTA_Tooltip_modifier_imba_rubick_null_field"							"Null Field (Defensive)"
+"DOTA_Tooltip_modifier_imba_rubick_null_field_Description"				"Magical resistance increased by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%. Status Resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+
+"DOTA_Tooltip_modifier_imba_rubick_null_field_debuff"					"Null Field (Offensive)"
+"DOTA_Tooltip_modifier_imba_rubick_null_field_debuff_Description"		"Magical resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%. Status Resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy"								"Arcane Supremacy"
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy_Description"					"Rubick's mastery of the arcane allows him to deal more spell damage and create spells that last longer on enemies.\n<font color='#FF7800'>Magus Adaption:</font> Can be freely toggled to the reverse affinity, instead reducing spell damage of all enemies within %radius% radius by %spell_amp%%%, and increasing Rubick's status resistance by %status_resistance%%%."
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy_Lore"							"Not every magus can be a Grand Magus..."
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy_spell_amp"				"%SPELL AMPLIFICATION:"
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy_status_resistance"				"%DEBUFF AMPLIFICATION:"
+
+"DOTA_Tooltip_modifier_imba_rubick_arcane_supremacy_flip"						"Magus Adaption"
+"DOTA_Tooltip_modifier_imba_rubick_arcane_supremacy_flip_Description"			"Spell amplification reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
+
+"DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own <font color='#FF7800'>indefinitely</font> or until he dies.\n<font color='#FF7800'>All Copy:</font> Spell Steal can also target creeps.\n<font color='#FF7800'>Clandestine Librarian:</font> Grants %clandestine_spell_amp_per_cast%%% spell amplification every time Spell Steal is cast, up to a maximum of %clandestine_max_spell_amp% stacks. %clandestine_loss_pct%%% of the stacks (rounded down) are lost upon death."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_Lore"						"...but even their lesser magics can be a source of much utility..."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_Note0"						"Cannot steal Monkey King's Wukong's Command or Void Spirit's Aether Remnant. Attempting to do so results in a cast error."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_scepter_description"		"Decreases cooldown, increases cast range and upgrades the spell to the Scepter level.\n<font color='#FF7800'>Copies the target's spell amplification values, adding it to Rubick's own. Expires on death or when another spell is stolen.</font>"
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_cooldown_scepter"			"SCEPTER COOLDOWN:"
+
+"dota_hud_error_spell_steal_banned_ability"								"This ability cannot be stolen due to crash issues!"	
+"dota_hud_error_spell_steal_monkey_king_tree_dance"						"Tree Dance cannot be stolen consecutively due to ability slot issues."
+
+"DOTA_Tooltip_ability_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
+"DOTA_Tooltip_ability_imba_rubick_clandestine_librarian_Description"	"Grants %spell_amp_per_cast%%% spell amplification every time Spell Steal is cast, up to a maximum of %max_spell_amp% stacks. %loss_pct%%% of the stacks (rounded down) are lost upon death."
+"DOTA_Tooltip_ability_imba_rubick_clandestine_librarian_Lore"			"...and with each conjuration, his combat prowess grew greater still."	
+
+"DOTA_Tooltip_modifier_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
+"DOTA_Tooltip_modifier_imba_rubick_clandestine_librarian_Description"	"Spell amplification increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
+
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_1"						"Spell Steal can target creeps"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_2"						"-0.5s Tekekinesis ally lift time"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_3"						"Fade Bolt applies Break for 5 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_4"						"+300 Telekinesis hurl distance"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_5"						"Fade Bolt deals +8% damage per bounce"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_6"						"+300 radius for Null Field"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_7"						"Explosive Bolt"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_7_Description"			"Fade Bolt's final bounce explodes, dealing {s:value}% of its damage in Fade Bolt's radius. Does not affect the target which it explodes off of."
+
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_fade_bolt_cooldown"		"-{s:value}s Fade Bolt Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_remnants_of_null_field"	"Remnants of Null Field"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_remnants_of_null_field_Description"	"Applies a {s:radius} radius aura that increases allies' (green) or decreases enemies' (red) magic resistance by {s:magic_resistance}%."
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_spell_steal_spell_amp"	"+{s:value}% Spell Amp For Stolen Spells"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_spell_steal_spell_amp_Description"	"Does not stack with Spell Steal's Aghanim's Scepter spell amplification, but ensures a minimum of {s:value}%."
+
+"DOTA_Tooltip_modifier_special_bonus_imba_rubick_remnants_of_null_field_positive"	"Null Field"
+"DOTA_Tooltip_modifier_special_bonus_imba_rubick_remnants_of_null_field_positive_Description"	"Magic resistance increased by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
+
+"DOTA_Tooltip_modifier_special_bonus_imba_rubick_remnants_of_null_field_negative"	"Null Field"
+"DOTA_Tooltip_modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_Description"	"Magic resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."

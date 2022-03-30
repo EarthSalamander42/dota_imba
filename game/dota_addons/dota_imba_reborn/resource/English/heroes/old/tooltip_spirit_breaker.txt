@@ -1,0 +1,86 @@
+//SPIRIT BREAKER
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness"					"Charge of Darkness"
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_Lore"				"Barathrum erupts from the darkness with unwieldy force."
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_Description"		"Spirit Breaker fixes his sight on an enemy unit and starts charging through all objects.  All enemy units passed through and the targeted unit will be hit by a Greater Bash.  If the targeted unit dies, Spirit Breaker will change his target to the nearest enemy unit to that location.\n<font color='#FF7800'>Darkness Imprisoning Me:</font> For every second the charge is carried on while not in vision of the enemy team, Spirit Breaker's move speed increases by %darkness_speed%, scaling linearly.\n<font color='#FF7800'>Mad Cow:</font> If the targetted unit is killed by Charge of Darkness, the next closest unit within range is automatically targetted to continue the charge.\n<font color='#FF7800'>Clothesline:</font> If auto-cast is on, the first enemy hero passed through is instead stunned and forced in front of Spirit Breaker for %clothesline_duration% seconds. Applies Greater Bash after Clothesline ends, and affects magic immune enemies. \n<font color='#FF7800'>Taxi!:</font> If an ally unit targets (right-clicks) Spirit Breaker before or while Charge of Darkness is activated, and within %taxi_radius% radius, they will latch behind and be dragged along with the charge. Can manually dismount by issuing a stop or hold command, and also dismounts when the base charge ends, the unit is disabled, or they undergo forced movement."
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_Note0"				"Spirit Breaker passes through trees, cliffs, and units."
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_Note1"				"The charge indicator is visible only to allies."
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_Note2"				"Spirit Breaker gains shared vision of the target."
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_Note3"				"Taxi passengers can freely act."
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_movement_speed"		"CHARGE BONUS SPEED:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_stun_duration"		"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_scepter_cooldown"		"SCEPTER COOLDOWN:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_scepter_speed"		"SCEPTER SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_charge_of_darkness_scepter_description"		"Increases Charge of Darkness movement speed and reduces cooldown."
+
+
+"DOTA_Tooltip_ability_imba_spirit_breaker_bulldoze"								"Bulldoze"
+"DOTA_Tooltip_ability_imba_spirit_breaker_bulldoze_Description"					"Spirit Breaker gains movement speed and status resistance to ram through enemies. Can be used while charging.\n<font color='#FF7800'>Remnants of Empowering Haste:</font> Passively increases movement speed of all allies within %empowering_aura_radius% radius by %empowering_aura_move_speed%%%. Does not work if passives are disabled."
+"DOTA_Tooltip_ability_imba_spirit_breaker_bulldoze_movement_speed"				"%MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_bulldoze_status_resistance"			"%STATUS RESISTANCE:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_bulldoze_duration"						"DURATION:"
+
+
+"DOTA_Tooltip_ability_imba_spirit_breaker_empowering_haste"						"Empowering Haste"
+"DOTA_Tooltip_ability_imba_spirit_breaker_empowering_haste_Lore"					"Aspiring heroes gain speed and power from simply observing the Spirit Breaker's dominance on the battle field."
+"DOTA_Tooltip_ability_imba_spirit_breaker_empowering_haste_Description"			"Causes Spirit Breaker to gain power with higher movement speed. His presence increases the movement speed of nearby allied units. Can be cast to improve the movement speed bonus for %duration% seconds."
+"DOTA_Tooltip_ability_imba_spirit_breaker_empowering_haste_bonus_movespeed_pct_self"	"%BONUS MOVE SPEED SELF:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_empowering_haste_bonus_movespeed_pct_allies"	"%BONUS MOVE SPEED ALLIES:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_empowering_haste_aura_radius"			"AURA RADIUS:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_empowering_haste_bonus_movespeed_pct_extra"			"%CAST ADDED BONUS SPEED:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_empowering_haste_duration"			"CAST ADDED SPEED DURATION:"
+
+
+"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash"							"Greater Bash"
+"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_Lore"						"The signature strike of Barathrum's ghostly ball and chain."
+"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_Description"				"Gives a chance to stun and knockback an enemy unit on an attack. Deals a percentage of movement speed as damage.\n<font color='#FF7800'>Power Forward:</font> Spirit Breaker gains %bonus_movespeed_pct%%% bonus movement speed and becomes unslowable for %movespeed_duration% seconds after a bash occurs."
+"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_Note0"					"Does not stack with Skull Basher."
+"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_chance_pct"				"%CHANCE TO BASH:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_damage"					"%MOVESPEED AS DAMAGE:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_knockback_duration"		"KNOCKBACK DURATION:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_duration"					"STUN DURATION:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_bonus_movespeed_pct"		"%BONUS MOVE SPEED:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_greater_bash_movespeed_duration"		"SPEED DURATION:"
+
+
+"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike"							"Nether Strike"
+"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_Lore"					"Barathrum temporarily returns to the realm from where he came, bringing with him the retribution of both worlds."
+"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_Description"				"Spirit Breaker slips into the nether realm, reappearing next to his hapless victim. Upon reappearing, a Greater Bash of the current level occurs and deals bonus damage. Knocks back for double the normal distance.\n<font color='#FF7800'>BIG DICK ENERGY:</font> Spirit Breaker receives %big_dmg_reduction%%% less damage during Nether Strike's original cast point.\n<font color='#FF7800'>Warp Beast:</font> Disjoints projectiles.\n<font color='#FF7800'>Planeswalker:</font> If auto-cast is on, after casting Nether Strike, all non-magic immune enemies within cast range around the original target are marked for dimensional warping for %planeswalker_duration% seconds. During this duration, Spirit Breaker can freely cast Nether Strike on the marked targets once each at %planeswalker_reduction%%% reduced cast point and mana cost."
+"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_Note0"					"Spirit Breaker appears behind the target to deliver the bash."
+"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_damage"					"BONUS DAMAGE:"
+"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_tooltip_range"			"RANGE:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_cast_range_scepter"		"SCEPTER RANGE:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_bash_radius_scepter"		"SCEPTER BASH RADIUS:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_cooldown_scepter"		"SCEPTER COOLDOWN:"
+//"DOTA_Tooltip_ability_imba_spirit_breaker_nether_strike_scepter_description"		"Causes the Greater Bash to hit an area around the initial target, decreases cooldown, and increases cast range."
+
+"DOTA_Tooltip_modifier_knockback"												"Greater Bash"
+"DOTA_Tooltip_modifier_knockback_Description"									"Stunned"
+
+"DOTA_Tooltip_modifier_imba_spirit_breaker_charge_of_darkness"					"Charge of Darkness"
+"DOTA_Tooltip_modifier_imba_spirit_breaker_charge_of_darkness_Description"		"Charging! Move speed boosted by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%."
+
+"DOTA_Tooltip_modifier_imba_spirit_breaker_charge_of_darkness_clothesline"					"Clothesline"
+"DOTA_Tooltip_modifier_imba_spirit_breaker_charge_of_darkness_clothesline_Description"		"On the receiving end of a brutal tackle."
+
+"DOTA_Tooltip_modifier_imba_spirit_breaker_charge_of_darkness_taxi"				"Taxi!"
+"DOTA_Tooltip_modifier_imba_spirit_breaker_charge_of_darkness_taxi_Description"	"Hitching a ride on the Darkness Express. Dismount by issuing a hold or stop command."
+
+"DOTA_Tooltip_modifier_imba_spirit_breaker_bulldoze"									"Bulldoze"
+"DOTA_Tooltip_modifier_imba_spirit_breaker_bulldoze_Description"						"Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% movement speed and %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance."
+
+"DOTA_Tooltip_modifier_imba_spirit_breaker_bulldoze_empowering_haste"				"Empowering Haste"
+"DOTA_Tooltip_modifier_imba_spirit_breaker_bulldoze_empowering_haste_Description"	"Moving %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% faster."
+
+"DOTA_Tooltip_modifier_imba_spirit_breaker_greater_bash_speed"						"Greater Bash Speed"
+"DOTA_Tooltip_modifier_imba_spirit_breaker_greater_bash_speed_Description"			"Gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% movement speed."
+
+"DOTA_Tooltip_modifier_imba_spirit_breaker_nether_strike_planeswalker"				"Planeswalker"
+"DOTA_Tooltip_modifier_imba_spirit_breaker_nether_strike_planeswalker_Description"	"Temporarily gaining the ability to rapidly warp between dimensions."
+
+"DOTA_Tooltip_modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy"				"Planeswalker Marking"
+"DOTA_Tooltip_modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy_Description"	"Marked as a potential target for dimensional warping."
+
+"DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_charge_speed"			"+{s:value} Charge of Darkness Bonus Speed"
+"DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_bash_chance"			"+25% Greater Bash Chance"
+"DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_bulldoze_cooldown"		"-7s Bulldoze Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_spirit_breaker_bonus_health"			"+1000 Health"

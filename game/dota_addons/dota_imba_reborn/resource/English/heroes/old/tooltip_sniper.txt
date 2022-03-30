@@ -1,0 +1,80 @@
+// Sniper's Shrapnel
+"DOTA_Tooltip_ability_imba_sniper_shrapnel"                            "Shrapnel"
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_Description"                "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every %charge_replenish_rate% seconds.\n<font color='#FF7800'>Rain of Bullets:</font> Enemies under the effect of Shrapnel can always be attacked by you from any range, but take less damage if outside of the regular attack range."
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_Lore"                        "Kardel's modular rifle also fires incendiary rounds, useful for assaulting entrenched locations."
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_Note0"                      "Calculates the distance every game tick, and adjusts the damage reduction based on your current attack range."
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_damage"                      "SHRAPNEL DAMAGE:"
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_ms_slow_pct"                "%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_radius"                      "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_duration"                    "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_distance_damage_pct"                     "%OUT OF RANGE DAMAGE:"
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_max_charge_count"            "MAX CHARGES:"
+
+"DOTA_Tooltip_modifier_imba_shrapnel_charges"                          "Shrapnel Charges"
+"DOTA_Tooltip_modifier_imba_shrapnel_charges_Description"              "Can fire a Shrapnel whenever you have at least one charge."
+
+"DOTA_Tooltip_modifier_imba_shrapnel_slow"                              "Shrapnel"
+"DOTA_Tooltip_modifier_imba_shrapnel_slow_Description"                  "Slowed. Sniper can always attack you, from any distance, while you remain in the Shrapnel."
+
+// Sniper's Headshot
+"DOTA_Tooltip_ability_imba_sniper_headshot"								"Headshot"
+"DOTA_Tooltip_ability_imba_sniper_headshot_Description"					"Sniper increases his accuracy, giving him a chance to deal extra damage and briefly stop the movements of his enemies.\n<font color='#FF7800'>Perfect Shot:</font> Applies a Perfect Shot every %perfectshot_attacks% attacks, dealing %perfectshot_critical_dmg_pct%%% critical damage and stunning the enemy for %perfectshot_stun_duration% seconds."
+"DOTA_Tooltip_ability_imba_sniper_headshot_Lore"						"Taking potshots at steepstalkers in his childhood has been thoroughly refined into perfect leads on enemy combatants."
+"DOTA_Tooltip_ability_imba_sniper_headshot_Note0"						"Headshot attacks are accumulated and kept forever, even if Sniper changes targets."
+"DOTA_Tooltip_ability_imba_sniper_headshot_Note1"						"When landing a Perfect Shot, it also lands a Headshot, dealing bonus damage and slowing."
+"DOTA_Tooltip_ability_imba_sniper_headshot_knockback_distance"			"KNOCKBACK DISTANCE:"
+"DOTA_Tooltip_ability_imba_sniper_headshot_proc_chance"					"%CHANCE:"
+"DOTA_Tooltip_ability_imba_sniper_headshot_headshot_damage"				"HEADSHOT DAMAGE:"
+"DOTA_Tooltip_ability_imba_sniper_headshot_headshot_ms_slow_pct"		"%HEADSHOT MOVE/ATTACK SLOW:"
+
+"DOTA_Tooltip_modifier_imba_sniper_headshot"							"Perfect Shot Counter"
+"DOTA_Tooltip_modifier_imba_sniper_headshot_Description"				"After eight attacks, the next attack will apply a Perfect Shot."
+
+"DOTA_Tooltip_modifier_imba_headshot_slow"                              "Headshot"
+"DOTA_Tooltip_modifier_imba_headshot_slow_Description"                  "Slowed by Headshot."
+
+"DOTA_Tooltip_modifier_imba_perfectshot_stun"                          "Perfect Shot"
+"DOTA_Tooltip_modifier_imba_perfectshot_stun_Description"              "Stunned."
+
+"DOTA_Tooltip_modifier_imba_headshot_eyeshot"                   "Eye Shot"
+"DOTA_Tooltip_modifier_imba_headshot_eyeshot_Description"             "You have been shot in the eye! Bleeding heavily, losing vision range and taking damage for the duration."
+
+// Sniper's Take Aim
+"DOTA_Tooltip_ability_imba_sniper_take_aim"                            "Take Aim"
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Description"                "Passively extends the attack range of Sniper's rifle.\n<font color='#FF7800'>Aimed Assault:</font> When off cooldown and cast or attacking with auto-cast on, increases Sniper's attack range by an additional %aim_bonus_range% for that attack, and applies Headshot's Perfect Shot if appilcable."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Lore"						"Kardel always takes it upon himself to stay as far from harm as he can while still performing his role - taking perfect aim."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Note0"						"A Perfect Shot can only proc if Headshot is leveled. Otherwise, Sniper will only benefit from the bonus range."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_Note1"						"Aimed Assault's range bonus stacks fully with the passive bonus range."
+"DOTA_Tooltip_ability_imba_sniper_take_aim_passive_bonus_range"			"PASSIVE RANGE BONUS:"
+
+// Sniper's Assassinate
+"DOTA_Tooltip_ability_imba_sniper_assassinate"							"Assassinate"
+"DOTA_Tooltip_ability_imba_sniper_assassinate_Description"				"Sniper locks onto a target enemy unit and, after a short aiming duration of %charge_time% seconds, fires a devastating shot that deals damage at long range and mini-stuns the target.\n<font color='#FF7800'>Armor Piercing Bullet:</font> The shot also deals damage and fully affects all enemies in its path."
+"DOTA_Tooltip_ability_imba_sniper_assassinate_Lore"						"In order to fulfill the prophecy and return to his home town, Kardel must make another shot as perfect as the one on the day of his ancient test."
+"DOTA_Tooltip_ability_imba_sniper_assassinate_Note0"					"Crosshair effect is visible only to allies. While the crosshair is in effect, targets are revealed to your team."
+"DOTA_Tooltip_ability_imba_sniper_assassinate_Note1"					"Only primary targets can block the shot with a Linken Sphere. Enemies that stand in the path of the bullet are always hit."
+"DOTA_Tooltip_ability_imba_sniper_assassinate_damage"					"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_sniper_assassinate_bullet_radius"			"BULLET SEARCH RADIUS:"
+"DOTA_Tooltip_ability_imba_sniper_assassinate_cast_range"				"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_sniper_assassinate_scepter_description"		"Reduces cast time on Assassinate by %scepter_cast_time% and causes it to disable the target for %scepter_stun_duration% seconds."
+
+"DOTA_Tooltip_modifier_imba_assassinate_cross"                          "Assassinate"
+"DOTA_Tooltip_modifier_imba_assassinate_cross_Description"              "Revealed to the enemy. A devastating shot will come shortly!"
+
+"DOTA_Tooltip_modifier_imba_assassinate_ministun"                      "Assassinate Ministun"
+"DOTA_Tooltip_modifier_imba_assassinate_ministun_Description"          "Ministunned."
+
+// Sniper's Custom Talents
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_1"          	"Shrapnel's cast range is doubled"
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_2"          	"Assassinate knockbacks all units hit"
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_3"          	"Heavy Artillery"
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_3_Description"  "Enemy units under Shrapnel lose armor and have a chance to miss attacks."
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_4"          	"Doubles maximum Shrapnel (re)charges"
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_5"          	"Headshots have a 30% chance to become Perfectshots"
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_6"				"True Assassination"
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_6_Description"  "Increases Assassination's cast point by {s:cast_point_increase} seconds, but fires {s:total_projectiles} projectiles at the target; turn auto-cast off to revert to standard."
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_7"         	 	"Eye Scream"
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_7_Description" 	"Take Aim's Aimed Assault apply 500 vision loss and deal 80 damage per second for 5 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_8"          	"Let it Rain"
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_8_Description" 	"Shrapnel's out of range attacks increase your damage instead of lowering it."
+"DOTA_Tooltip_ability_special_bonus_imba_sniper_9"          	"-1.5s Assassinate Cast Time"

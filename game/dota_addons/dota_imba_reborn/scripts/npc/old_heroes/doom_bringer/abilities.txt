@@ -1,0 +1,284 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Doom Bringer: Doom
+	//=================================================================================================================
+	"imba_doom_bringer_doom"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"				"components/abilities/heroes/hero_doom_bringer.lua"
+		"AbilityTextureName"			"doom_bringer_doom"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AURA + DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"FightRecapLevel"				"2"
+		//"HasScepterUpgrade"				"1"
+		"MaxLevel"						"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550"
+		"AbilityCooldown"				"145.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 200 250"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"16.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"25 40 55"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
+			}
+//			"03"
+//			{
+//				"var_type"				"FIELD_FLOAT"
+//				"duration_scepter"		"20.0"
+//			}
+//			"04"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"damage_scepter"		"45 75 105"
+//			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deniable_pct"			"25"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"450"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_bonus"			"100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_duration"			"13.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_7"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe_radius"			"400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_doom_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6073"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"				"3.25"
+				"ad_linked_ability"			"doom_bringer_infernal_blade"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_doom_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6314"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"0"
+				"ad_linked_ability"			"doom_bringer_devour"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_doom_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6369"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"133"
+				"ad_linked_ability"			"doom_bringer_devour"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_doom_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6370"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"51"
+				"ad_linked_ability"			"doom_bringer_scorched_earth"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_doom_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6371"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"167"
+				"ad_linked_ability"			"doom_bringer_doom"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_doom_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"7123"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"18"
+				"ad_linked_ability"			"doom_bringer_scorched_earth"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_doom_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"459"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"				"3"
+				"ad_linked_ability"			"doom_bringer_doom"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_doom_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"594"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"				"0"
+				"ad_linked_ability"			"doom_bringer_scorched_earth"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+}

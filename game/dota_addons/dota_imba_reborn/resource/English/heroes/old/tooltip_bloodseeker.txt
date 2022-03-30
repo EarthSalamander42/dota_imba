@@ -1,0 +1,78 @@
+// Bloodseeker's Bloodrage
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage"                      "Bloodrage"
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Description"          "Drives a unit into a bloodthirsty rage during which a unit deals, and takes, increased damage. Units affected by Bloodrage will be healed for a percentage of the max health of any units they kill. Units affected by Bloodrage when killed will heal a percentage of their max health to their killer. If you do not get the last hit, but are within %health_bonus_aoe% AoE of the dying hero, you will take %health_bonus_share_percent%%% of the heal.\n<font color='#FF7800'>Boiling Blood:</font> Units affected by Bloodrage deal damage to all enemies within %aoe_radius% radius every second."
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Lore"					"Strygwyr shares his animalistic thirst for bloodshed."
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Note0"					"Bloodrage can be cast on enemy and allied units, as well as Bloodseeker himself."
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Note1"					"<font color='#FF0000'>Damage amplification is halved whenever the damage dealer and receiver are further than %red_val_distance% units apart.</font>"
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_damage_increase_outgoing_pct"		"%OUTGOING DAMAGE INCREASE:"
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_damage_increase_incoming_pct"		"%INCOMING DAMAGE INCREASE:"
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_health_bonus_pct"                  "%KILLED UNIT MAX HP TO HEAL:"
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_aoe_damage"            "BOILING BLOOD DAMAGE:"
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_cast_range_tooltip"                "CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_bloodrage_buff_stats"                      "Bloodrage"
+"DOTA_Tooltip_modifier_imba_bloodrage_buff_stats_Description"          "Taking and dealing increased damage. Also dealing damage over time to yourself and nearby units."
+
+"DOTA_Tooltip_modifier_imba_bloodrage_blood_frenzy"						"Blood Frenzy"
+"DOTA_Tooltip_modifier_imba_bloodrage_blood_frenzy_Description"			"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+
+// Bloodseeker's Blood Rite
+"DOTA_Tooltip_ability_imba_bloodseeker_blood_bath"                      "Blood Rite"
+"DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_Description"          "Bloodseeker baptizes an area in sacred blood. After %delay_plus_castpoint_tooltip% seconds, the ritual completes, causing any enemies caught in its area to take damage and become silenced.\n<font color='#FF7800'>Sacrificial Lamb:</font> Heroes that die while silenced by Blood Rite will reduce Bloodseeker's cooldowns by %cooldown_reduction%%%.\n<font color='#FF7800'>Nanauatzin:</font> Bloodseeker gains %dmg_to_overheal%%  of the total damage dealt by Blood Rite as maximum and current health for %overheal_duration% seconds."
+"DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_Lore"					"The Flayed Twins are ever willing to aid those who spill blood upon the field of battle."
+"DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_radius"				"#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_silence_duration"		"SILENCE DURATION:"
+"DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_damage"				"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+
+"DOTA_Tooltip_modifier_imba_blood_bath_debuff_silence"                  "Blood Rite"
+"DOTA_Tooltip_modifier_imba_blood_bath_debuff_silence_Description"		"Silenced. Dying will reduce Bloodseeker's cooldowns."
+
+"DOTA_Tooltip_modifier_imba_blood_bath_buff_stats"                      "Nanauatzin"
+"DOTA_Tooltip_modifier_imba_blood_bath_buff_stats_Description"          "Gains bonus max health based on the damage dealt to enemies through Blood Rite."
+
+// Bloodseeker's Thirst
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst"                          "Thirst"
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_Description"              "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed and attack speed whenever an enemy hero's health falls below %max_threshold_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %visibility_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero.\n<font color='#FF7800'>Sanguinary:</font> Whenever an enemy hero is damaged, Bloodseeker also gains a smaller amount of attack speed and movement speed for %atk_buff_duration% seconds. These bonuses are doubled when the attacker is Bloodseeker himself. Those bonuses stack when attacking different heroes, and will override if the new bonus is higher.\n<font color='#FF7800'>Illusionary Thirst:</font> Illusions fully benefit from Thirst's effects."
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_Lore"                    "Strygwyr becomes frenzied when blood is spilled."
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_movement_speed"                 "%MAX MOVE SPEED PER HERO:"
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_damage"            "MAX ATTACK SPEED PER HERO:"
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_movement_speed_atk"             "%SANGUINARY MOVE SPEED:"
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_damage_atk"                     "SANGUINARY ATTACK SPEED:"
+
+"DOTA_Tooltip_modifier_imba_thirst_debuff_vision"                      "Thirst"
+"DOTA_Tooltip_modifier_imba_thirst_debuff_vision_Description"          "Bloodseeker's thirst for blood exposes you."
+
+// Bloodseeker's Rupture
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture"                        "Rupture"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Description"            "Causes an enemy unit's skin to rupture. If the unit moves, it takes a percentage of damage per 100 units moved. The damage is dealt through spell immunity.\n<font color='#FF7800'>Haemophilia:</font> When Rupture is applied to a unit above %damage_initial_pct%%% health, it will instantly drop them down to %damage_initial_pct%%%.\n<font color='#FF7800'>Varicose Veins:</font> Rupture will deal damage whenever the afflicted unit starts casting an ability or starts attacking."
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Lore"                    "When the Bloodseeker hunts you, injuries become fatalities."
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note0"                  "Moving more than 1300 units in under 0.25 seconds will cause Rupture to ignore that movement."
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note1"                  "Scepter Rupture charges can be fully refreshed by using a Refresher."
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_duration"                "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_movement_damage_pct"                 "%MOVED DISTANCE AS DAMAGE:"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_abilitycastrange"		"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_attack_damage"          "DAMAGE PER ATTACK:"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_cast_damage"            "DAMAGE PER CAST:"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_scepter_description"                 "Allows Rupture to store up to 2 charges. A charge is replenished every 40 seconds and can be reduced with cooldown reductions effects."
+
+"DOTA_Tooltip_modifier_imba_rupture_debuff_dot"                        "Rupture"
+"DOTA_Tooltip_modifier_imba_rupture_debuff_dot_Description"            "Ruptured! Moving will cause you to take damage."
+
+"DOTA_Tooltip_modifier_imba_rupture_charges"                            "Rupture Charges"
+"DOTA_Tooltip_modifier_imba_rupture_charges_Description"                "Can cast Rupture whenever you have at least one charge."
+
+// Bloodseeker's Custom Talents
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1"                 "10% Bloodrage Amplification Shift"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1_Description"		"Increases outgoing damage and reduces incoming damage for allies by 10%, and vice-versa for enemies."
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_2"                 "Bleeding Your Way Out"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_2_Description"   	"Enemies hit by Blood Rite are pushed away from the circle and take Rupture damage for 0.3 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_3"                 "Rupture heals for 100% of the damage dealt"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_4"                 "Blood Rite's silence debuff becomes unpurgable"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_5"                 "Blood Rite Triplicate (left/right/front of cast area)"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_6"                 "+1700 Rupture Distance Trigger Cap"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7"                 "Blood Frenzy"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7_Description"   	"Killing or dying with Bloodrage active grants the killer a 100% movespeed bonus for 3.5 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_8"                 "Bloodrage Bonus +3% Amp per 5% Missing Health"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_9"					"-6s Blood Rite Cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_rupture_cast_range"		"+{s:value} Rupture Cast Range"

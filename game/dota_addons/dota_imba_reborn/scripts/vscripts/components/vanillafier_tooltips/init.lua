@@ -17,19 +17,18 @@ local split = function(inputstr, sep)
 end
 
 function CustomTooltips:GetTooltipsInfo(keys)
---	print(keys)
-
 	if not keys.PlayerID or keys.PlayerID == -1 then
 		print("ERROR: Invalid Player ID:", keys.PlayerID)
 		return
 	end
+
 --[[
 	if PlayerResource:GetPlayer(keys.PlayerID):GetTeam() == 1 then
 		print("Custom Tooltips: Block Spectators.")
 		return
 	end
 --]]
---	print(keys)
+
 	local ability_name = GetVanillaAbilityName(keys.sAbilityName)
 	if not ability_name then
 		print("ERROR: Vanilla ability name not found.", keys.sAbilityName)
@@ -46,7 +45,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	local specials = GetAbilitySpecials(ability_name)
 	local imba_specials = GetAbilitySpecials("imba_"..ability_name)
 	local specials_issued = {}
---	print(imba_specials)
 	local ability_specials = {}
 
 	for k, value in pairs(imba_specials) do
@@ -65,15 +63,12 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	for k, value in pairs(specials) do
 		-- prevent adding doublons, prioritize imba values
 		if value and value[1] and value[2] and not specials_issued[value[1]] then
---			print("From now on, ignore", value[1])
 			specials_issued[value[1]] = true
 
 			-- todo: make GetTalentSpecialValueFor work with GetVanillaAbilitySpecial
 			ability_specials[value[1]] = value[2]
 		end
 	end
-
---	print(ability_specials)
 
 	local hRealCooldown = split(GetAbilityCooldown(ability_name), " ")
 	local hRealManaCost = split(GetAbilityManaCost(ability_name), " ")
@@ -82,7 +77,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	if hero then
 		for i = 1, #hRealCooldown do
 			if hRealCooldown[i] then
---				print(hRealCooldown[i], hero:GetCooldownReduction())
 				hRealCooldown[i] = hRealCooldown[i] * (hero:GetCooldownReduction() * 100) / 100
 			end
 		end
@@ -90,7 +84,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 --[[
 		for i = 1, #hRealManaCost do
 			if hRealManaCost[i] then
-	--			print(hRealManaCost[i], hero:GetCooldownReduction())
 				hRealManaCost[i] = hRealManaCost[i] * (hero:GetCooldownReduction() * 100) / 100
 			end
 		end
@@ -127,7 +120,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 			cast_range = lua_cast_range or 0
 		end
 
-	--	print("Cast Range:", cast_range)
 		if cast_range ~= 0 then
 			if not CustomTooltips.particles[keys.PlayerID] then
 				CustomTooltips.particles[keys.PlayerID] = {}
@@ -144,7 +136,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		end
 	end
 
---	print("Send server tooltips info:", ability_specials)
 	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", {
 		sAbilityName = keys.sAbilityName,
 		iCooldown = hRealCooldown,

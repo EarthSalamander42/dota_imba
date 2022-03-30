@@ -1,0 +1,697 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Broodmother: Spawn Spiderlings
+	//=================================================================================================================
+	"imba_broodmother_spawn_spiderlings"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_spawn_spiderlings"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Broodmother.SpawnSpiderlingsImpact"
+
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"11 10 9 8"
+		"AbilityManaCost"				"100"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"spiderling_duration"	"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"70 140 210 280"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count"					"1 2 3 4"
+			}	 
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"avenger_radius"		"900"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"avenger_damage_pct"	"5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"avenger_duration"		"8"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Broodmother: Spin Web
+	//=================================================================================================================
+	"imba_broodmother_spin_web"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_spin_web"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_Broodmother.SpinWebCast"
+        "HasScepterUpgrade"				"1"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCooldown"				"0.0"
+		"AbilityManaCost"				"50"
+		"AoERadius"						"%radius"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count"					"2 4 6 8"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_regen"			"3 5 7 9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"25 40 55 70"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"2 4 6 8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_restore_time"	"45"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges_scepter"	"6 10 14 18"
+				"RequiresScepter"		"1"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movespeed_scepter"	"30 50 70 90"
+				"RequiresScepter"			"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count_scepter"			"6 10 14 18"
+				"RequiresScepter"		"1"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"web_menuever_dmg_pct"	"30"				
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"web_sense_duration"		"5"				
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Broodmother: Incapacitating Bite
+	//=================================================================================================================
+	"imba_broodmother_incapacitating_bite"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_incapacitating_bite"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_chance"			"30 40 50 60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"16 26 36 46"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"web_up_stacks_threshold" "12"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"web_up_stacks_hero"	 "2"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"web_up_stacks_spider"	 "1"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"web_up_miss_chance_pct" "100"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"web_up_duration"		"1"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_speed_slow_pct"	"10 15 20 25"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"web_up_counter_duration" "12"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+	
+	//=================================================================================================================
+	// Broodmother: Insatiable Hunger
+	//=================================================================================================================
+	"imba_broodmother_insatiable_hunger"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_insatiable_hunger"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"2"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		"AbilityCooldown"				"45.0"
+		"AbilityManaCost"				"100"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"60 100 140"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifesteal_pct"			"60 100 140"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"14"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"queen_brood_aura_radius"	"1200"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"queen_brood_damage_bonus" "15 20 25"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"queen_brood_hp_regen" 		"2 4 6"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"satisfied_status_resist_pct" "100"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"satisfied_movespeed_pct" 	"20"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"satisfied_duration" 		"5"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"queen_brood_aura_radius"	"1200"
+			}
+
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"satisfy_trigger_duration_increase"	"5"
+			}
+
+		}
+	}
+
+	//=================================================================================================================
+	// Broodmother: Spawn spiderking
+	//=================================================================================================================
+	"imba_broodmother_spawn_spiderking"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother.lua"
+		"AbilityTextureName"			"broodmother_spawn_spiderite"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"		        
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"150"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCooldown"				"60"
+		"AbilityManaCost"				"120"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cocoon_time"			"15"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_spiderkings"		"1"
+			}
+		}		
+	}
+	
+
+	//=================================================================================================================
+	// Broodmother's Spiderling: Poison Sting
+	//=================================================================================================================
+	"imba_broodmother_poison_sting"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother"
+		"AbilityTextureName"			"broodmother_poison_sting"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
+		"MaxLevel"						"4"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"		"15"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"11 14 17 20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"-11 -14 -17 -20"
+			}
+			"03"
+			{		
+				"var_type"				"FIELD_FLOAT"
+				"duration_hero"			"2.5"
+			}			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_starting_width"	"80"
+			}		
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_ending_width"	"200"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_distance"		"250"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_damage"			"30"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scale"					"2"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_scale"			"10"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Broodmother's Spiderling: Volatile Spiderlings
+	//=================================================================================================================
+	"imba_broodmother_spiderling_volatile"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother"
+		"AbilityTextureName"			"broodmother_spawn_spiderite"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
+		"MaxLevel"						"4"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion_damage"		"20 40 60 80"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"350"
+			}	
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_stack"		"10 12 14 16"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_per_stack_pct"	"2 3 4 5"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.5"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"35"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Broodmother's spiderking: Poison Sting
+	//=================================================================================================================
+	"imba_broodmother_spiderking_poison_sting"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother"
+		"AbilityTextureName"			"broodmother_poison_sting"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
+		"MaxLevel"						"4"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"		"15"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"20 30 40 50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"-18 -22 -26 -30"
+			}
+			"03"
+			{		
+				"var_type"				"FIELD_FLOAT"
+				"duration_hero"			"2.5"
+			}			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_starting_width"	"80"
+			}		
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_ending_width"	"200"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_distance"		"250"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_damage"			"45"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scale"					"3"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_scale"			"12"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Broodmother's spiderking: Volatile spiderking
+	//=================================================================================================================
+	"imba_broodmother_spiderking_volatile"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother"
+		"AbilityTextureName"			"broodmother_spawn_spiderite"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
+		"MaxLevel"						"4"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion_damage"		"100 125 150 200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"350"
+			}	
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_stack"		"20 30 40 50"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_per_stack_pct"	"4 6 8 10"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.5"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"35"
+			}		
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Broodmother's spiderking: Hardened Brood Aura
+	//=================================================================================================================
+	"imba_broodmother_spiderking_hardened_brood_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_broodmother"
+		"AbilityTextureName"			"broodmother_poison_sting"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		
+		"MaxLevel"						"4"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}			
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+}

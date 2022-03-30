@@ -1,0 +1,343 @@
+// Credits: Elfansoer.
+// Fissure: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/earthshaker_fissure_lua/earthshaker_fissure_lua.txt
+// Enchant Totem: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/earthshaker_enchant_totem_lua/earthshaker_enchant_totem_lua.txt
+// Aftershock: https://github.com/Elfansoer/dota-2-lua-abilities/blob/master/scripts/vscripts/lua_abilities/earthshaker_aftershock_lua/earthshaker_aftershock_lua.txt
+
+"DOTAAbilities"
+{	
+	//=================================================================================================================
+	// Earthshaker: Fissure (Lua version)
+	//=================================================================================================================
+	"earthshaker_fissure_lua"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earthshaker"
+		"AbilityTextureName"			"earthshaker_fissure"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"4"
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
+			//"particle"	"particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
+			"particle"	"particles/rubick_fissure.vpcf"
+		}
+		
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.69"
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"21 19 17 15"
+		"AbilityManaCost"				"110 130 150 170"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"110 160 210 260"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fissure_range"				"1400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fissure_duration"			"6.5 7 7.5 8.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fissure_radius"			"225"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.0 1.25 1.5 1.75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Earthshaker: Enchant Totem (Lua version)
+	//=================================================================================================================
+	"earthshaker_enchant_totem_lua"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earthshaker"
+		"AbilityTextureName"			"earthshaker_enchant_totem"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"4"
+		"HasScepterUpgrade"				"1"
+
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
+			"particle"	"particles/units/heroes/hero_earthshaker/earthshaker_totem_buff.vpcf"
+		}
+
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.69"
+		"AbilityDuration"				"14"
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+		"AbilityManaCost"				"35 40 45 50"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"totem_damage_percentage"	"100 200 300 400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tooltip_duration"			"14"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"distance_scepter"			"1100"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"1.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aftershock_range"			"300"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_height"			"950"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_height_arcbuffer"	"100"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_acceleration_z"	"4000"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_acceleration_horizontal"	"3000"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_range"		"75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Earthshaker: Aftershock (Lua version)
+	//=================================================================================================================
+	"earthshaker_aftershock_lua"
+	{
+		// Ability Technical Aspect
+		// base script folder	: scripts/vscripts
+		// base texture folder	: resource/flash3/images/spellicons
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earthshaker"
+		"AbilityTextureName"			"earthshaker_aftershock"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"4"
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_earthshaker/earthshaker_aftershock.vpcf"
+		}
+		
+		// Ability General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
+		// Ability Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDuration"				"0.6 0.9 1.2 1.5"
+
+		// Ability Resource
+		//-------------------------------------------------------------------------------------------------------------
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"75 100 125 150"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aftershock_range"		"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_duration"		"0.6 0.9 1.2 1.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Earthshaker Echo Slam
+	//=================================================================================================================
+	"imba_earthshaker_echo_slam"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earthshaker"
+		"AbilityTextureName"			"earthshaker_echo_slam"			
+		
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_EarthShaker.EchoSlam"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0 0 0 0"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150.0 130.0 110.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"145 205 265"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"echo_slam_damage_range"		"600"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"echo_slam_echo_search_range"	"600"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"echo_slam_echo_range"			"600"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"echo_slam_echo_damage"			"70 90 110"
+				"LinkedSpecialBonus"		"special_bonus_unique_earthshaker_2"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"echo_slam_initial_damage"		"100 140 180"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_earthshaker_bonus_magic_resistance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"70"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_earthshaker_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6425"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"160"
+				"ad_linked_ability"			"earthshaker_echo_slam"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+}

@@ -1,0 +1,639 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Gyrocopter: Rocket Barrage
+	//=================================================================================================================
+	"imba_gyrocopter_rocket_barrage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_gyrocopter"
+		"AbilityTextureName"			"gyrocopter_rocket_barrage"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0 6.5 6.0 5.5"
+		"AbilityDuration"				"3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rockets_per_second"		"10"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rocket_damage"				"7 12 17 22"
+				//"LinkedSpecialBonus"		"special_bonus_unique_gyrocopter_3"
+				"LinkedSpecialBonus"		"special_bonus_imba_gyrocopter_rocket_barrage_damage"
+			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"ballistic_spell_amp_reduction"	"0.5 0.6 0.7 0.8"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ballistic_duration"	"4"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"sniping_speed"				"2400"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"sniping_distance"			"2400"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}	
+
+	//=================================================================================================================
+	// Gyrocopter: Homing Missile
+	//=================================================================================================================
+	"imba_gyrocopter_homing_missile"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_gyrocopter"
+		"AbilityTextureName"			"gyrocopter_homing_missile"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"FightRecapLevel"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1050"
+		"AbilityCastPoint"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"26 21 16 11"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120 130 140 150"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"100 175 250 325"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hits_to_kill_tooltip"		"3 4 5 6"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tower_hits_to_kill_tooltip"		"6 8 10 12"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"2.25 2.5 2.75 3.0"
+				//"LinkedSpecialBonus"		"special_bonus_unique_gyrocopter_6"
+				"LinkedSpecialBonus"		"special_bonus_imba_gyrocopter_homing_missile_stun"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_bonus_pct"	"400 400 400 400"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"				"50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_distance"				"1800"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"pre_flight_time"			"3"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hero_damage"				"34 26 21 17"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed"						"500"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"acceleration"				"20 30 40 50"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"enemy_vision_time"			"4"
+			}	
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"AbilityCharges"		""
+				"LinkedSpecialBonus"	"special_bonus_unique_gyrocopter_1"
+			}
+			
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"0"
+				"LinkedSpecialBonus"	"special_bonus_imba_gyrocopter_homing_missile_charges"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"20 17 14 11"
+			}
+			
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"propulsion_speed_pct"	"10"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"propulsion_duration_pct"	"500"
+			}
+			
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lock_on_duration"		"20"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lock_on_attack_range_bonus"		"200"
+			}
+			
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rc_turn_speed_degrees"	"180"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+	
+	//=================================================================================================================
+	// Gyrocopter: Flak Cannon
+	//=================================================================================================================
+	"imba_gyrocopter_flak_cannon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_gyrocopter"
+		"AbilityTextureName"			"gyrocopter_flak_cannon"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Gyrocopter.FlackCannon"
+		"HasScepterUpgrade"				"1"
+
+		"AbilityCastPoint"				"0 0 0 0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 50 50 50"
+
+		//Duration
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDuration"				"10"
+						
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1250"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_attacks"					"2 3 4 5"
+				//"LinkedSpecialBonus"			"special_bonus_unique_gyrocopter_2"
+				"LinkedSpecialBonus"			"special_bonus_imba_gyrocopter_flak_cannon_attacks"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"projectile_speed"				"800"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"fire_rate"						"0.9"
+				"RequiresScepter"				"1"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_radius"				"700"
+				"RequiresScepter"				"1"
+			}
+			
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fresh_rounds"					"2"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+	
+	//=================================================================================================================
+	// Gyrocopter: Gatling Guns
+	//=================================================================================================================
+	"imba_gyrocopter_gatling_guns"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_gyrocopter"
+		"AbilityTextureName"			"gyrocopter/gatling_guns"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"1"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_ammo"				"100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wind_up_time"				"1"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fire_interval"				"0.08"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_move_speed"			"50"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_range_bonus_pct"	"400"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spread_angle"				"25"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ammo_restore_per_second"	"10"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_damage_pct"			"60"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"incoming_damage_pct"		"15"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Gyrocopter: Call Down
+	//=================================================================================================================
+	"imba_gyrocopter_call_down"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_gyrocopter"
+		"AbilityTextureName"			"gyrocopter_call_down"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_Gyrocopter.CallDown.Fire"
+
+		
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastAnimation"			"ACT_INVALID"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90"		
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 125 125"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration_first"		"2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration_second"		"4"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_first"				"150 250 350"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_second"				"200 275 350"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_first"				"30 30 30"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_second"				"60 60 60"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"600"
+			}			
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range_scepter"					"0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_second_scepter"		"225 300 375"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"missile_delay_tooltip"		"2"
+			}
+			
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_standard"		"1000 1500 2000" // Should be same as cast range
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_gyrocopter_rocket_barrage_damage" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_gyrocopter_rocket_barrage"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"11"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_gyrocopter_homing_missile_stun" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_gyrocopter_homing_missile"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_gyrocopter_flak_cannon_attacks" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_gyrocopter_flak_cannon"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_gyrocopter_call_down_cooldown" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_gyrocopter_call_down"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"50"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_gyrocopter_gatling_guns_activate" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_gyrocopter_gatling_guns"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_gyrocopter_homing_missile_charges" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_gyrocopter_homing_missile"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"3"
+			}
+		}
+	}
+}

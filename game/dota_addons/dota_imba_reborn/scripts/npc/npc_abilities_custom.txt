@@ -4,6 +4,7 @@
 
 #base buildings/ancient/abilities.txt
 
+// New imbafication format
 #base heroes/abaddon/abilities.txt
 #base heroes/abyssal_underlord/abilities.txt
 #base heroes/alchemist/abilities.txt
@@ -18,6 +19,79 @@
 #base heroes/mars/abilities.txt
 #base heroes/pudge/abilities.txt
 #base heroes/techies/abilities.txt
+
+// Old imbafication format
+#base old_heroes/arc_warden/abilities.txt
+#base old_heroes/bane/abilities.txt
+#base old_heroes/batrider/abilities.txt
+#base old_heroes/beastmaster/abilities.txt
+#base old_heroes/bloodseeker/abilities.txt
+#base old_heroes/brewmaster/abilities.txt
+#base old_heroes/bristleback/abilities.txt
+// #base old_heroes/broodmother/abilities.txt
+#base old_heroes/chaos_knight/abilities.txt
+#base old_heroes/chen/abilities.txt
+#base old_heroes/dark_seer/abilities.txt
+#base old_heroes/dark_willow/abilities.txt
+#base old_heroes/death_prophet/abilities.txt
+#base old_heroes/doom_bringer/abilities.txt
+#base old_heroes/earthshaker/abilities.txt
+#base old_heroes/ember_spirit/abilities.txt
+#base old_heroes/enchantress/abilities.txt
+#base old_heroes/furion/abilities.txt
+#base old_heroes/grimstroke/abilities.txt
+#base old_heroes/gyrocopter/abilities.txt
+#base old_heroes/hoodwink/abilities.txt
+#base old_heroes/huskar/abilities.txt
+#base old_heroes/invoker/abilities.txt
+#base old_heroes/keeper_of_the_light/abilities.txt
+#base old_heroes/legion_commander/abilities.txt
+#base old_heroes/leshrac/abilities.txt
+#base old_heroes/life_stealer/abilities.txt
+#base old_heroes/lone_druid/abilities.txt
+#base old_heroes/luna/abilities.txt
+#base custom_heroes/malfurion/abilities.txt
+#base old_heroes/medusa/abilities.txt
+#base old_heroes/meepo/abilities.txt
+#base old_heroes/monkey_king/abilities.txt
+#base old_heroes/morphling/abilities.txt
+#base old_heroes/naga_siren/abilities.txt
+#base custom_heroes/nian/abilities.txt
+#base old_heroes/night_stalker/abilities.txt
+#base old_heroes/ogre_magi/abilities.txt
+#base old_heroes/oracle/abilities.txt
+#base old_heroes/outworld_devourer/abilities.txt
+// #base old_heroes/puck/abilities.txt
+#base old_heroes/phantom_lancer/abilities.txt
+#base old_heroes/rattletrap/abilities.txt
+#base old_heroes/razor/abilities.txt
+#base old_heroes/riki/abilities.txt
+#base old_heroes/rubick/abilities.txt
+#base old_heroes/silencer/abilities.txt
+#base old_heroes/slark/abilities.txt
+#base old_heroes/shadow_demon/abilities.txt
+#base old_heroes/shadow_shaman/abilities.txt
+#base old_heroes/snapfire/abilities.txt
+#base old_heroes/spectre/abilities.txt
+#base old_heroes/spirit_breaker/abilities.txt
+#base old_heroes/sven/abilities.txt
+#base old_heroes/templar_assassin/abilities.txt
+#base old_heroes/terrorblade/abilities.txt
+#base old_heroes/tidehunter/abilities.txt
+#base old_heroes/timbersaw/abilities.txt
+#base old_heroes/tinker/abilities.txt
+#base old_heroes/treant/abilities.txt
+#base old_heroes/tusk/abilities.txt
+#base old_heroes/undying/abilities.txt
+#base custom_heroes/vardor/abilities.txt
+#base old_heroes/visage/abilities.txt
+#base old_heroes/viper/abilities.txt
+#base old_heroes/void_spirit/abilities.txt
+#base old_heroes/weaver/abilities.txt
+#base old_heroes/windranger/abilities.txt
+#base old_heroes/winter_wyvern/abilities.txt
+#base old_heroes/wisp/abilities.txt
+#base old_heroes/zeus/abilities.txt
 
 "DOTAAbilities"
 {

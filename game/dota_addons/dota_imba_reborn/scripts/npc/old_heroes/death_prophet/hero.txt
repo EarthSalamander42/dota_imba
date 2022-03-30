@@ -1,0 +1,23 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Death Prophet
+	//=================================================================================================================
+	"npc_dota_hero_death_prophet"
+	{
+		"AttributePrimary"	"DOTA_ATTRIBUTE_INTELLECT"
+		
+		"Ability2"		"imba_death_prophet_silence"
+
+		"Ability10"		"special_bonus_hp_375" 
+		"Ability11"		"special_bonus_unique_death_prophet_2"
+		"Ability12"		"special_bonus_armor_12"
+		"Ability13"		"special_bonus_cast_range_350"
+		"Ability14"		"special_bonus_unique_death_prophet_5"
+		"Ability15"		"special_bonus_spell_lifesteal_30"
+		"Ability16"		"special_bonus_unique_death_prophet_3"
+		"Ability17"		"special_bonus_unique_death_prophet"
+	}
+}

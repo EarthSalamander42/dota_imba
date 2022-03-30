@@ -1,0 +1,33 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Winter Wyvern
+	//=================================================================================================================
+	"npc_dota_hero_winter_wyvern"
+	{
+	
+		"IsImba"					"1"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability1"					"imba_winter_wyvern_arctic_burn"
+		"Ability2"					"imba_winter_wyvern_splinter_blast"
+		"Ability3"					"imba_winter_wyvern_cold_embrace"
+		"Ability6"					"imba_winter_wyvern_winters_curse"
+
+		"Ability10"					"special_bonus_armor_6"
+		"Ability11"					"special_bonus_attack_damage_60" 		// +60 damage
+		"Ability12"					"special_bonus_hp_350"					// +350 hp
+		"Ability13"					"special_bonus_night_vision_500"
+		"Ability14"					"special_bonus_imba_winter_wyvern_7"	// IMBA Winter's Curse
+		"Ability15"					"special_bonus_imba_winter_wyvern_6"	// -5sec cold embrace cd	
+		"Ability16"					"special_bonus_imba_winter_wyvern_5"	// Pure Arctic Burn
+		"Ability17" 				"special_bonus_unique_winter_wyvern_4"	// Splinter Blast 2s stun
+		
+		// Removed Talents
+		// "Ability13"					"special_bonus_imba_winter_wyvern_4"	// 15% magic resistance during cold embrace
+	}
+}

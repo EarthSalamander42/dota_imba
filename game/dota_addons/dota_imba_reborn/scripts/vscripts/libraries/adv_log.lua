@@ -43,6 +43,7 @@ if Log == nil then
 		}
 	}
 
+	Log.disable_dedis_print = true
 
 	---------------------------------------------
 	-- Utility
@@ -395,6 +396,7 @@ if Log == nil then
 	print = nil
 
 	function print(...)
+		if not IsInToolsMode() and disable_dedis_print then return end
 
 		local args = { ... }
 

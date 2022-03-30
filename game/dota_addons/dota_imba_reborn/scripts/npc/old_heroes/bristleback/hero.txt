@@ -1,0 +1,22 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Bristleback
+	//=================================================================================================================
+	"npc_dota_hero_bristleback"
+	{
+	
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
+		"Ability1"		"imba_bristleback_viscous_nasal_goo"
+		"Ability2"		"imba_bristleback_quill_spray"
+		"Ability3"		"imba_bristleback_bristleback"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_bristleback_warpath"
+		
+		"Ability17"		"special_bonus_imba_bristleback_3"
+	}
+}

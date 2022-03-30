@@ -1,0 +1,54 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Outworld Devourer
+	//=================================================================================================================
+	"npc_dota_hero_obsidian_destroyer"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability1"					"imba_outworld_devourer_arcane_orb"
+		"Ability2"					"imba_outworld_devourer_astral_imprisonment"
+		"Ability3"					"imba_outworld_devourer_essence_flux"
+		"Ability4"					"imba_outworld_devourer_astral_imprisonment_movement"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_outworld_devourer_sanity_eclipse"
+		
+//		"Ability9"					"imba_form_change_obsidian_destroyer"
+
+		"Ability10"					"special_bonus_hp_250"
+		"Ability11"					"special_bonus_attack_speed_20"
+		"Ability12"					"special_bonus_mp_350"
+		"Ability13"					"special_bonus_armor_6"
+		"Ability14"					"special_bonus_strength_20"
+		"Ability15"					"special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier"
+		"Ability16"					"special_bonus_imba_outworld_devourer_arcane_orb_damage"
+		"Ability17"					"special_bonus_spell_lifesteal_15"
+		
+		// Form Change Abilities
+		// "Ability1"					"imba_obsidian_destroyer_arcane_orb"
+		// "Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
+		// "Ability3"					"imba_obsidian_destroyer_equilibrium"
+		// "Ability6"					"imba_obsidian_destroyer_sanity_eclipse"
+		
+		// Form Change Talents
+		// "Ability11"					"special_bonus_imba_obsidian_destroyer_2"
+		// "Ability12"					"special_bonus_movement_speed_25"
+		// "Ability13"					"special_bonus_imba_obsidian_destroyer_4"
+		// "Ability15"					"special_bonus_imba_obsidian_destroyer_10"
+		// "Ability16"					"special_bonus_imba_obsidian_destroyer_9"
+		
+		// Removed Talents (All Essence Aura based)
+		// "Ability10"					"special_bonus_imba_obsidian_destroyer_1"
+		// "Ability12"					"special_bonus_imba_obsidian_destroyer_3"
+		// "Ability14"					"special_bonus_imba_obsidian_destroyer_5"
+		// "Ability16"					"special_bonus_imba_obsidian_destroyer_8"
+		
+		// "Ability15"					"special_bonus_imba_obsidian_destroyer_6"
+		// "Ability16"					"special_bonus_imba_obsidian_destroyer_7"
+	}
+}

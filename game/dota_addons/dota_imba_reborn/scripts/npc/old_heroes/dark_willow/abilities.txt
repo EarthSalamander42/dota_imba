@@ -1,0 +1,74 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_dark_willow_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"6465"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"value"				"2.6"
+				"ad_linked_ability"			"dark_willow_terrorize"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_dark_willow_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"7655"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"250"
+				"ad_linked_ability"			"dark_willow_bedlam"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_dark_willow_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"515"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"value"				"2.6"
+				"ad_linked_ability"			"dark_willow_cursed_crown"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+}

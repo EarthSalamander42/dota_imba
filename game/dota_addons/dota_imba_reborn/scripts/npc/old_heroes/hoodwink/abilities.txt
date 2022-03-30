@@ -1,0 +1,73 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Talent: Hoodwink Acorn Shot Charges
+	//=================================================================================================================
+  	"special_bonus_unique_hoodwink_acorn_shot_charges"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"						"9509"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"value"							"3"
+				"ad_linked_ability"			"hoodwink_acorn_shot"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: Hoodwink Camouflage
+	//=================================================================================================================
+  	"special_bonus_unique_hoodwink_camouflage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"9505"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"fade_time"						"0.5"
+				"ad_linked_ability"			"hoodwink_scurry"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Talent: Hoodwink Sharpshooter Speed
+	//=================================================================================================================
+  	"special_bonus_unique_hoodwink_sharpshooter_speed"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"9506"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"value"							"-0.25"  // used for tooltip only
+				"ad_linked_ability"			"hoodwink_sharpshooter"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"pct_change"							"75.0"
+			}
+		}
+	}
+}
