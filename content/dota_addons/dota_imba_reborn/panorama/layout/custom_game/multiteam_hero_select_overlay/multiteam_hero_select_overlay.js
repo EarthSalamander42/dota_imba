@@ -14,7 +14,7 @@ function OnUpdateHeroSelection()
 		return;
 
 	if (localPlayerInfo.possible_hero_selection !== "")
-		var hype_text = $.Localize("npc_dota_hero_" + localPlayerInfo.possible_hero_selection + "_hype");
+		var hype_text = $.Localize("#npc_dota_hero_" + localPlayerInfo.possible_hero_selection + "_hype");
 
 	if (hype_text == undefined)
 		return;
@@ -197,6 +197,7 @@ function UpdateTimer()
 	
 	var timerPanel = $.CreatePanel( "Panel", $.GetContextPanel(), "TimerPanel" );
 	timerPanel.BLoadLayout( "file://{resources}/layout/custom_game/multiteam_hero_select_overlay_timer.xml", false, false );
+	timerPanel.style.marginBottom = "0px";
 
 	var nTeamsCreated = 0;
 	var nTeams = Game.GetAllTeamIDs().length
@@ -226,7 +227,7 @@ function UpdateTimer()
 		var teamName = teamPanel.FindChildInLayoutFile( "TeamName" );
 		if ( teamName )
 		{
-			teamName.text = $.Localize( Game.GetTeamDetails( teamId ).team_name );
+			teamName.text = $.Localize( "#" + Game.GetTeamDetails( teamId ).team_name );
 		}
 
 		var logo_xml = GameUI.CustomUIConfig().team_logo_xml;
@@ -249,7 +250,7 @@ function UpdateTimer()
 
 		if ( teamName )
 		{
-			teamName.text = $.Localize( Game.GetTeamDetails( teamId ).team_name );
+			teamName.text = $.Localize( "#" + Game.GetTeamDetails( teamId ).team_name );
 		}
 		teamPanel.AddClass( "TeamPanel" );
 

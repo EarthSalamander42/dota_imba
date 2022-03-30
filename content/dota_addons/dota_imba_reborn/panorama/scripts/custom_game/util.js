@@ -102,18 +102,34 @@ function InitGlobalUtilFuncs() {
 	GameUI.CustomUIConfig().team_colors = {}
 	GameUI.CustomUIConfig().team_names = {}
 
+	GameUI.CustomUIConfig().team_colors[1] = "grey;";
 	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 
+	GameUI.CustomUIConfig().team_names[1] = "Spectators";
 	GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#DOTA_GoodGuysShort";
 	GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "#DOTA_BadGuysShort";
 
 	// Fix 3 digits levels on buff bar modifier (up to 4)
-	var Parent = $.GetContextPanel().GetParent().GetParent()
-	Parent.FindChildTraverse("LevelLabel").style.width = "50px";
+	var LevelLabel = Utils.FindDotaHudElement("LevelLabel");
+	if (LevelLabel)
+		LevelLabel.style.width = "50px";
 
 	// Hide Pick Screen until hero selection starts
-	var PreGame = Parent.FindChildTraverse("PreGame");
+	var PreGame = Utils.FindDotaHudElement("PreGame");
+
+	// Spectator slots
+//	if (Game.IsInToolsMode())
+//		GameUI.CustomUIConfig().team_select = {"bShowSpectatorTeam" : true};
+
+/*
+		(function () {
+			if (Players.GetTeam(Players.GetLocalPlayer()) == 1) {
+				$.Msg("Custom UI Manifest: Block spectators.");
+				return;
+			}
+		})();
+*/
 
 	HidePickScreen();
 

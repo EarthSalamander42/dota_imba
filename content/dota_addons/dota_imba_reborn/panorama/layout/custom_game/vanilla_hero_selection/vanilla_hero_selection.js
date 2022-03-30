@@ -13,7 +13,7 @@ function InitHeroSelection()  {
 	if (gamemode) gamemode = gamemode["1"];
 
 	if (gamemode && typeof(gamemode) == "string") {
-		pick_screen_title.text = ($.Localize("LobbySetting_GameMode") + ": " + $.Localize("vote_gamemode_" + gamemode)).toUpperCase();
+		pick_screen_title.text = ($.Localize("#LobbySetting_GameMode") + ": " + $.Localize("#vote_gamemode_" + gamemode)).toUpperCase();
 		pick_screen_title.style.marginTop = "30px";
 		pick_screen_title.style.height = "37px";
 		pick_screen_title.style.fontSize = "300px"; // This was originally 30px, but it was overlapping with the All Pick text; changing this to 300px seems extremely wrong, but it makes it aligned anyways?...
@@ -239,7 +239,7 @@ function SetIMBARandomButton() {
 	button.style.padding = "8px 0px 0px 0px";
 
 	button.SetPanelEvent("onmouseover", function() {
-		$.DispatchEvent("UIShowTextTooltip", button, $.Localize("imba_random_description"));
+		$.DispatchEvent("UIShowTextTooltip", button, $.Localize("#imba_random_description"));
 	})
 
 	button.SetPanelEvent("onmouseout", function() {
