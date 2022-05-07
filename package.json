@@ -1,0 +1,21 @@
+{
+	"private": false,
+	"name": "dota_imba",
+	"scripts": {
+		"postinstall": "node scripts/install.js",
+		"launch": "node scripts/launch.js",
+		"compileimages": "node scripts/compileimages.js",
+		"encrypt": "node scripts/encryption/encrypt-custom-game.js"
+	},
+	"devDependencies": {
+		"@moddota/find-steam-app": "^1.1.0",
+		"fs-extra": "^9.1.0",
+		"valve-kv": "^1.2.0",
+		"glob": "^7.1.6",
+		"luamin": "1.0.4",
+		"postcss": "^8.3.6",
+		"postcss-selector-parser": "^6.0.6",
+		"micromatch": "^4.0.4",
+		"prettier": "2.2.1"
+	}
+}
