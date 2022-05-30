@@ -63,7 +63,7 @@ function modifier_imba_lifesteal_boots:OnCreated()
 	
 	if IsServer() then
 		-- Change to lifesteal projectile, if there's nothing "stronger"
-		self:GetCaster():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetCaster())
 	end
 end
 
@@ -71,7 +71,7 @@ end
 function modifier_imba_lifesteal_boots:OnDestroy()
 	if IsServer() then
 		-- Remove lifesteal projectile
-		self:GetCaster():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetCaster())
 	end
 end
 

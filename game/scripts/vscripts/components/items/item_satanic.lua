@@ -63,14 +63,14 @@ function modifier_imba_satanic:OnCreated()
 
 	if IsServer() then
 		-- Change to lifesteal projectile, if there's nothing "stronger"
-		self:GetCaster():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetCaster())
 	end
 end
 
 -- Removes the unique modifier from the caster if this is the last Satanic in its inventory
 function modifier_imba_satanic:OnDestroy()
 	if IsServer() then
-		self:GetCaster():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetCaster())
 	end
 end
 

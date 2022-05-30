@@ -50,13 +50,13 @@ function modifier_item_imba_blight_stone:OnCreated()
     end
 
 	if IsServer() then
-		self:GetParent():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
 
 function modifier_item_imba_blight_stone:OnDestroy()
 	if IsServer() then
-		self:GetParent():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
 
@@ -239,13 +239,13 @@ function modifier_item_imba_desolator:OnCreated()
     end
 
 	if IsServer() then
-		self:GetParent():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
 
 function modifier_item_imba_desolator:OnDestroy()
 	if IsServer() then
-		self:GetParent():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
 
@@ -444,13 +444,13 @@ function modifier_item_imba_desolator_2:OnCreated()
     end
 
 	if IsServer() then
-		self:GetParent():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
 
 function modifier_item_imba_desolator_2:OnDestroy()
 	if IsServer() then
-		self:GetParent():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
 

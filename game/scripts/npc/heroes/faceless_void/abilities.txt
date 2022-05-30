@@ -340,6 +340,8 @@
 		"AbilityCooldown"				"160.0"
 		"AbilityManaCost"				"150 225 300"
 
+		"HasScepterUpgrade"				"1"
+
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_ALL"

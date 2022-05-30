@@ -1,0 +1,96 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf23:version{636cefcd-6551-40ad-801c-6085f7e67e27} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 0
+	m_flConstantRadius = 2.0
+	m_bShouldSort = false
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a17.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a15.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a11.vpcf"
+		},
+		{
+			m_bEndCap = true
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a6.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a9.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a4.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a16.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a19.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a18.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a3.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a7.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a2.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a14.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a0.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a13.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a5.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a12.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a10.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a8.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_windrunner/windrunner_spell_powershot_godshot_a1.vpcf"
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 3
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+}

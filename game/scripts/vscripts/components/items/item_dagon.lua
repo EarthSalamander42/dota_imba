@@ -72,6 +72,8 @@ function item_imba_dagon:OnSpellStart()
 		return nil
 	end
 
+	print("Target not immune")
+
 	-- Parameters
 	local damage = self:GetSpecialValueFor("damage")
 	local bounce_damage = damage / 100 * self:GetSpecialValueFor("bounce_damage_pct")
@@ -83,6 +85,8 @@ function item_imba_dagon:OnSpellStart()
 	local search_sources = {
 		target
 	}
+
+	print("Damage:", damage, bounce_damage)
 
 	-- Play cast sound
 	caster:EmitSound("DOTA_Item.Dagon.Activate")

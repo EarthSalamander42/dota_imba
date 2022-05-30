@@ -162,21 +162,19 @@ function modifier_item_imba_static_charge:GetStatusEffectName()
 end
 
 function modifier_item_imba_static_charge:OnCreated()
-	self.ability = self:GetAbility()
-
 	if IsServer() then
-        if not self.ability then self:Destroy() end
+        if not self:GetAbility() then self:Destroy() end
     end
 
-	if self.ability then
-		self.static_chance	 	= self.ability:GetSpecialValueFor("static_chance")
-		self.static_strikes	 	= self.ability:GetSpecialValueFor("static_strikes")
-		self.static_damage	 	= self.ability:GetSpecialValueFor("static_damage")
-		self.static_radius		= self.ability:GetSpecialValueFor("static_radius")
-		self.static_cooldown	= self.ability:GetSpecialValueFor("static_cooldown")
+	if self:GetAbility() then
+		self.static_chance	 	= self:GetAbility():GetSpecialValueFor("static_chance")
+		self.static_strikes	 	= self:GetAbility():GetSpecialValueFor("static_strikes")
+		self.static_damage	 	= self:GetAbility():GetSpecialValueFor("static_damage")
+		self.static_radius		= self:GetAbility():GetSpecialValueFor("static_radius")
+		self.static_cooldown	= self:GetAbility():GetSpecialValueFor("static_cooldown")
 
-		self.static_slow			= self.ability:GetSpecialValueFor("static_slow")
-		self.static_slow_duration	= self.ability:GetSpecialValueFor("static_slow_duration")
+		self.static_slow			= self:GetAbility():GetSpecialValueFor("static_slow")
+		self.static_slow_duration	= self:GetAbility():GetSpecialValueFor("static_slow_duration")
 	else
 		self.static_chance	 	= 0
 		self.static_strikes	 	= 0
@@ -217,7 +215,7 @@ end
 
 function modifier_item_imba_static_charge:OnTakeDamage(keys)
 	-- "Can only proc on damage instances of 5 or greater (after reductions)."
-	if keys.unit == self:GetParent() and keys.attacker ~= self:GetParent() and not self.bStaticCooldown and keys.damage >= 5 and RollPseudoRandom(self.static_chance, self.ability) then
+	if keys.unit == self:GetParent() and keys.attacker ~= self:GetParent() and not self.bStaticCooldown and keys.damage >= 5 and RollPseudoRandom(self.static_chance, self:GetAbility()) then
 		self:GetParent():EmitSound("Item.Maelstrom.Chain_Lightning.Jump")
 			
 		if (keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self.static_radius and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
@@ -234,10 +232,10 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 				damage_type		= DAMAGE_TYPE_MAGICAL,
 				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 				attacker 		= self:GetCaster(),
-				ability 		= self.ability
+				ability 		= self:GetAbility()
 			})
 			
-			keys.attacker:AddNewModifier(self:GetCaster(), self.ability, "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration * (1 - keys.attacker:GetStatusResistance())})
+			keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration * (1 - keys.attacker:GetStatusResistance())})
 		end
 		
 		local unit_count = 0
@@ -255,10 +253,10 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 					damage_type		= DAMAGE_TYPE_MAGICAL,
 					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 					attacker 		= self:GetCaster(),
-					ability 		= self.ability
+					ability 		= self:GetAbility()
 				})
 				
-				enemy:AddNewModifier(self:GetCaster(), self.ability, "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_static_charge_slow", {duration = self.static_slow_duration * (1 - enemy:GetStatusResistance())})
 				
 				unit_count = unit_count + 1
 				

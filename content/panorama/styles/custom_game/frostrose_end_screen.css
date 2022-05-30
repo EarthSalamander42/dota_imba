@@ -1,0 +1,762 @@
+@define COMMON_COLOR: #b0c3d9;
+@define UNCOMMON_COLOR: #5e98d9;
+@define RARE_COLOR: #4b69ff;
+@define MYTHICAL_COLOR: #8847ff;
+@define LEGENDARY_COLOR: #d32ce6;
+@define IMMORTAL_COLOR: #b28a33;
+@define ARCANA_COLOR: #ade55c;
+@define ANCIENT_COLOR: #eb4b4b;
+
+@keyframes 'fade_in'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	50%
+	{
+		opacity: 0.0;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
+@keyframes 'level_up'
+{
+	0%
+	{
+		box-shadow: inset gold 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset gold 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset gold 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_rare'
+{
+	0%
+	{
+		box-shadow: inset RARE_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset RARE_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset RARE_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_mythical'
+{
+	0%
+	{
+		box-shadow: inset MYTHICAL_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset MYTHICAL_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset MYTHICAL_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_legendary'
+{
+	0%
+	{
+		box-shadow: inset LEGENDARY_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset LEGENDARY_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset LEGENDARY_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_immortal'
+{
+	0%
+	{
+		box-shadow: inset IMMORTAL_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset IMMORTAL_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset IMMORTAL_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_arcana'
+{
+	0%
+	{
+		box-shadow: inset ARCANA_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset ARCANA_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset ARCANA_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_ancient'
+{
+	0%
+	{
+		box-shadow: inset ANCIENT_COLOR 0 0 0px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset ANCIENT_COLOR 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset ANCIENT_COLOR 0 0 0px 0;
+	}
+}
+
+@keyframes 'level_down'
+{
+	0%
+	{
+		border: 0px solid red;
+	}
+
+	50%
+	{
+		border: 2px solid red;
+	}
+
+	100%
+	{
+		border: 0px solid red;
+	}
+}
+
+.es-root {
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000FF ), color-stop( 0.12, #000000ff ), color-stop( 0.5, #00000022 ), to( #00000000 ) );
+}
+
+.end-screen {
+	width: 100%;
+	height: 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000FF ), color-stop( 0.12, #000000ff ), color-stop( 0.5, #00000022 ), to( #00000000 ) );
+	flow-children: down;
+}
+
+#es-victory-info,
+#es-teams,
+#es-buttons
+.es-player-reward-container {
+	animation-name: fade_in;
+	animation-duration: 1.25s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: 1;
+}
+
+.es-text-red { color: #f03333; }
+.es-text-green { color: #72a144; }
+.es-text-white { color: #ffffff; }
+
+#es-victory-info { 
+	margin-top: 14%;
+	margin-bottom: 20px;
+	flow-children: down;
+	horizontal-align: center;
+	text-align: center;
+} 
+
+#es-game-time-text,
+#es-victory-info-text {
+	font-size: 40px;
+	color: #fff;
+	horizontal-align: center;
+	text-transform: uppercase;
+	text-shadow: 0px 0px 5px 5 #000;
+}
+
+#es-teams {
+	height: 700px;
+	flow-children: down;
+	horizontal-align: center;
+	width: 100%;
+	padding: 10px 5px 10px 5px;
+	overflow:  squish scroll;
+}
+
+.es-teams-columns {
+	flow-children: right;
+	horizontal-align: center;
+}
+
+.es-team {
+	flow-children: down;
+	margin: 10px;
+	border-top:  1px solid #3a363a;	
+	border-left:  1px solid #3a363a;
+	border-bottom: 1px solid #1d2126;	
+	border-right: 1px solid #1d2126;
+	padding: 20px 0px;
+	box-shadow: 0px 0px 12px 0px #000000a5;
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
+}
+
+#es-3-team,
+#es-6-team,
+#es-7-team,
+#es-8-team {
+	visibility: collapse;
+}
+
+#es-2-team .es-team-name,
+#es-2-team .es-team-name,
+#es-6-team .es-team-name,
+#es-7-team .es-team-name,
+#es-8-team .es-team-name, {
+	text-shadow: 0 0 5px 2.0 #111;
+}
+
+#es-2-team .es-team-name {
+	color: #326114;
+}
+
+#es-3-team .es-team-name {
+	color: #f03333;
+}
+
+#es-6-team .es-team-name {
+	color: #f3c909;
+}
+
+#es-7-team .es-team-name {
+	color: #FF6C00;
+}
+
+#es-8-team .es-team-name {
+	color: #3455FF;
+}
+/*
+#es-9-team .es-team-name {
+	color: #65d413;
+}
+
+#es-10-team .es-team-name {
+	color: #815336;
+}
+
+#es-11-team .es-team-name {
+	color: #1bc0d8;
+}
+
+#es-12-team .es-team-name {
+	color: #c7e40d;
+}
+
+#es-13-team .es-team-name {
+	color: #8c2af4;
+}
+*/
+.es-team-title {
+	width: 100%;
+}
+
+.es-team-name {
+	font-size: 30px;
+	color: #fff;
+	text-transform: uppercase; 
+	horizontal-align: center;
+}
+
+.es-team-score {
+	font-size: 30px;
+	margin-right: 20px;
+	color: #fff;
+	horizontal-align: right;
+}
+
+.es-legend {
+	height: 40px;
+	flow-children: right;
+	padding-left: 284px;
+}
+
+.es-legend Label {
+	color: #ddd;
+	text-align: center;
+	vertical-align: center;
+	font-size: 16px;
+}
+
+.es-legend-gold { width: 50px; }
+
+.es-legend-xp { width: 250px; }
+
+.es-legend-rank { width: 80px; }
+
+.es-legend-xp-diff { width: 70px; }
+
+.es-legend-xp-booster { width: 70px; }
+
+.es-player-root {
+	flow-children: right;
+	border-top: 2px solid #333;
+	padding: 3px 5px;
+	background-color: #1c1c1c77;
+}
+
+.es-players {
+	width: 100%;
+	flow-children: down;
+}
+
+.es-player-name-and-desc {
+	flow-children: down;
+	width: 180px;
+}
+
+#es-player-name {
+	font-size: 18px;
+	color: #fff;
+	height: 18px;
+	margin-top: -3px;
+}
+
+#es-player-desc {
+	font-size: 12px;
+	color: #ccc;
+}
+
+.es-player-line-text {
+	font-size: 16px;
+}
+
+#es-player-avatar {
+	border: 1px solid #666;
+	height: 30px;
+	width: 30px;
+	margin-right: 5px;
+} 
+
+#es-player-hero {
+	border: 1px solid #999;
+	height: 30px;
+	width: 53px;
+	margin-right: 5px;
+}
+.es-legend-kdalevel {
+	width: 30px;
+}
+
+.es-player-kdalevel {
+	width: 30px;
+	vertical-align: center;
+	text-align: center;
+	color: #eee;
+}
+
+#es-player-gold {
+	width: 50px;
+	vertical-align: center;
+	text-align: center;
+	color: #ee7;
+}
+
+.es-legend-imr,
+.es-legend-imr10v10,
+.es-legend-imr1v1 {
+	width: 60px; 
+	margin-right: 15px;
+	text-align: center;
+	visibility: collapse;
+}
+
+#es-player-imr,
+#es-player-imr10v10,
+#es-player-imr1v1 {
+	width: 60px;
+	vertical-align: center;
+	text-align: center;
+	margin-right: 15px;
+	visibility: collapse;
+}
+
+.es-player-xp {
+	flow-children: none; 
+	width: 250px;
+	vertical-align: center;
+	background-color: black;
+	border: 1px solid #222;
+	height: 26px;
+	box-shadow: 0 0 5px 0 #00000022 inset;
+}
+
+.level-up {
+	animation-name: level_up;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.level-down {
+	animation-name: level_down;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+#es-player-xp-progress { 
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006E2E ),  to( #00540E ) );
+	border-radius: 1px;
+	width: 0%;
+	height: 24px;
+	transition-property: width;
+	transition-duration: 2s;
+}
+
+#es-player-xp-progress-diff { 
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #B2A603 ),  to( #857D05 ) );
+	border-radius: 1px;
+	width: 0%;
+	height: 24px;
+	transition-property: width;
+	transition-duration: 2s;
+}
+
+.es-player-xp Label {
+	color: #fff;
+	width: 100%;
+	font-size: 16px;
+	vertical-align: center;
+	padding: 2px 5px;
+}
+
+#es-player-xp-rank { text-align: right; }
+#es-player-xp-level { text-align: left; }
+#es-player-xp-xp { text-align: right; }
+
+#es-player-xp-rank-name {
+	vertical-align: center;
+	text-align: center;
+}
+
+#es-player-xp-earned,
+#es-player-xp-booster {
+	width: 70px;
+	vertical-align: center;
+	text-align: center;
+}
+
+#es-player-xp-booster {
+	color: white;
+}
+
+#es-buttons {
+	flow-children: right;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+#es-buttons Button {
+	padding: 7px 25px;
+	margin: 10px;
+	border: 1px solid #333;
+	box-shadow: #111 0 0 4px 0;
+}
+
+#es-buttons-stats, #es-buttons-website {
+	background-color: #222222ee;
+}
+
+#es-buttons-survey {
+	background-color: darkorange;
+}
+
+#es-buttons-close {
+	background-color: green;
+}
+
+#es-buttons Label {
+	font-size: 20px;
+	color: #fff;
+}
+
+#es-buttons Button:hover {
+	background-color: #333333ee;
+}
+
+#es-buttons Button:active {
+	background-color: #222222ff;
+	border: 1px transparent;
+	box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#LeaderboardInfoContainer {
+	width: 50%;
+	height: 80%;
+	margin-top: 22%;
+	padding: 5px;
+	z-index: 10;
+	align: center center;
+	flow-children: down;
+	visibility: collapse;
+}
+
+#LocalPlayerInfoContainer {
+	width: 100%;
+	height: 60px;
+}
+
+#LocalPlayerInfo {
+	align: center bottom;
+}
+
+#LeaderboardMainContainer {
+	width: 100%;
+	background-color: #040c1850;
+	height: 550px;
+	padding: 10px;
+	overflow:  squish scroll;
+	flow-children: down;
+}
+
+.LeaderboardButtonLabel {
+	width: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+	align:  center center;
+}
+
+#XP {
+	background-color: #2b323fa4;
+	height: 90%;
+	align:  center center;
+	margin-bottom: 5px;
+}
+
+#XP:hover {
+	background-color: #303848;
+}
+
+#XP:active {
+	background-color: #303848;
+}
+
+#IMR {
+	background-color: #2b323fa4;
+	height: 90%;
+	align:  center center;
+	margin-bottom: 5px;
+}
+
+#IMR:hover {
+	background-color: #303848;
+}
+
+#IMR:active {
+	background-color: #303848;
+}
+
+.LeaderboardRank,
+.LeaderboardAvatar,
+.LeaderboardXP,
+.LeaderboardIMR,
+.LeaderboardTitle
+{
+	height: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+}
+
+.LeaderboardLegend {
+	width: 100%;
+	height: 40px;
+	flow-children: right;
+	/* border-bottom: 1px solid white; */
+}
+
+/* Leaderboard */
+.LeaderboardGames {
+	width: 100%;
+	height: 45px;
+	flow-children: right-wrap;
+	border-top: 1px solid #3f464ecc;
+}
+
+.LeaderboardRank {
+	width: 10%;	
+	align:  center center;
+}
+
+.LeaderboardAvatar {
+	margin-left: 1%;	
+	margin-right: 1%;	
+	align:  center center;
+}
+
+.LeaderboardXP {
+	width: 50%;	
+	align:  left center;
+}
+
+.LeaderboardIMR {
+	width: 40%;	
+	align:  center center;
+}
+
+.LeaderboardTitle {
+	width: 95%;
+	padding-left: 5%;
+	font-size: 28px;
+}
+
+#Tops {
+	width: 100%;
+	height: fit-children;
+	flow-children: down;
+}
+
+.imbar-progress-bar
+{
+	width: 100%;
+	border-radius: 10px;
+	background-color: #282f39;
+	height: 28px;
+	vertical-align: center;
+	overflow:  clip;
+}
+
+.ProgressBarLeft
+{
+	border-radius:  0 6px 6px 0;
+	background-color: gradient( linear,  100% 0%, 0 0 , from (#0a9153), color-stop( 0.5, #09bb6a ), to(#0a9153));
+}
+
+#ProgressBarRight
+{
+	background-color: gradient( linear, 0% 0%, 0 0%, from( #222222FF ), to( black ) );
+}
+
+.imbar-lvl
+{
+	width: 35%;
+	font-size: 16px;
+	margin-top: 2px;
+	margin-left: 15px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: left;
+	text-align: left;
+	opacity: 1;
+	text-shadow: 1px 1px 2px 2.0 #00000030;
+}
+.imbar-rank-wrapper {
+	width: 40%;
+	margin-left: 12%;
+	flow-children:  right;
+	align: center center;
+}
+.imbar-rank
+{
+	margin-top: 2px;
+	font-size: 14px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: left;
+	text-align: left;
+	opacity: 1;
+	text-transform: uppercase;
+	border-radius: 5px;
+	margin-left: 8px;
+
+	text-shadow: 1px 1px 2px 3.0 #00000030;
+}
+
+.imbar-rank-cicle {
+	width: 12px;
+	height: 12px;
+	align:  center center;
+	border-radius: 50%;
+	opacity: 0.9;
+	box-shadow: 0px 0px 2px 0px #00000085;
+	brightness: 0.9;
+}
+
+#CloseButton {
+	width: 5%;
+	height: 37px;
+	align: right center;
+}
+#CloseButtonImage {
+	width: 37px;
+	height: 37px;
+	align: right center;
+	background-image: url("file://panorama/images/custom_game/battlepass/assets/close.png");
+	opacity: 0.5;
+}
+#CloseButton:hover #CloseButtonImage {
+	opacity: 1;
+}

@@ -5,28 +5,27 @@
 --             EARTH SPIKE              --
 ------------------------------------------
 
-imba_lion_impale = imba_lion_impale or class(VANILLA_ABILITIES_BASECLASS)
-
+imba_lion_earth_spike = class({})
 LinkLuaModifier("modifier_imba_earthspike_stun", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_earthspike_death_spike", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
-function imba_lion_impale:GetAbilityTextureName()
+function imba_lion_earth_spike:GetAbilityTextureName()
    return "lion_impale"
 end
 
-function imba_lion_impale:IsHiddenWhenStolen()
+function imba_lion_earth_spike:IsHiddenWhenStolen()
 	return false
 end 
 
-function imba_lion_impale:GetCastRange(location, target)
+function imba_lion_earth_spike:GetCastRange(location, target)
 	if IsClient() then
-		return GetAbilityKV(self:GetVanillaAbilityName(), "AbilityCastRange", self:GetLevel())
+		return self.BaseClass.GetCastRange(self, location, target)
 	else
-		return GetAbilityKV(self:GetVanillaAbilityName(), "AbilityCastRange", self:GetLevel()) + self:GetCaster():FindTalentValue("special_bonus_imba_lion_9")
+		return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_lion_9")
 	end
 end
  
-function imba_lion_impale:OnSpellStart()
+function imba_lion_earth_spike:OnSpellStart()
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
@@ -41,10 +40,10 @@ function imba_lion_impale:OnSpellStart()
 	local particle_projectile = "particles/units/heroes/hero_lion/lion_spell_impale.vpcf"    
 	
 	-- Ability specials
-	local speed = ability:GetVanillaAbilitySpecial("speed")    
-	local width = ability:GetVanillaAbilitySpecial("width")
+	local spike_speed = ability:GetSpecialValueFor("spike_speed")    
+	local spikes_radius = ability:GetSpecialValueFor("spikes_radius")
 	local max_bounces_per_cast = ability:GetSpecialValueFor("max_bounces_per_cast")
-	local travel_distance = ability:GetCastRange(target, nil) + ability:GetVanillaAbilitySpecial("length_buffer")
+	local travel_distance = ability:GetSpecialValueFor("travel_distance")
 
 	-- Roll for a cast response
 	if RollPercentage(15) then
@@ -72,34 +71,34 @@ function imba_lion_impale:OnSpellStart()
 	end) 
 	
 	-- Adjust length if caster has cast increase
-	travel_distance = travel_distance + caster:GetCastRangeIncrease()
+	local travel_distance = travel_distance + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_lion_9")
 
 	-- Decide direction
 	local direction = (target - caster:GetAbsOrigin()):Normalized()
 	
 	-- Launch line projectile
-	local spikes_projectile = {
-		Ability = ability,
-		EffectName = particle_projectile,
-		vSpawnOrigin = caster:GetAbsOrigin(),
-		fDistance = travel_distance,
-		fStartRadius = width,
-		fEndRadius = width,
-		Source = caster,
-		bHasFrontalCone = false,
-		bReplaceExisting = false,
-		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,                          
-		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,                           
-		bDeleteOnHit = false,
-		vVelocity = direction * speed * Vector(1, 1, 0),
-		bProvidesVision = false,
-		ExtraData = {hit_targets_index = hit_targets_index, incoming_targets_index = incoming_targets_index, bounces_left = max_bounces_per_cast}
-	}
+	local spikes_projectile = { Ability = ability,
+								EffectName = particle_projectile,
+								vSpawnOrigin = caster:GetAbsOrigin(),
+								fDistance = travel_distance,
+								fStartRadius = spikes_radius,
+								fEndRadius = spikes_radius,
+								Source = caster,
+								bHasFrontalCone = false,
+								bReplaceExisting = false,
+								iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,                          
+								iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,                           
+								bDeleteOnHit = false,
+								vVelocity = direction * spike_speed * Vector(1, 1, 0),
+								bProvidesVision = false,
+								ExtraData = {hit_targets_index = hit_targets_index, incoming_targets_index = incoming_targets_index, bounces_left = max_bounces_per_cast}
+							}
 							
 	ProjectileManager:CreateLinearProjectile(spikes_projectile)
 end
 
-function imba_lion_impale:OnProjectileHit_ExtraData(target, location, extra_data)
+function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra_data)
+
 	-- If there was no target, do nothing
 	if not target then
 		return nil
@@ -123,11 +122,11 @@ function imba_lion_impale:OnProjectileHit_ExtraData(target, location, extra_data
 	-- Ability specials 
 	local knock_up_height = ability:GetSpecialValueFor("knock_up_height")
 	local knock_up_time = ability:GetSpecialValueFor("knock_up_time")
-	local damage = ability:GetVanillaKeyValue("AbilityDamage", ability:GetLevel())
-	local stun_duration = ability:GetVanillaAbilitySpecial("duration")
-	local speed = ability:GetVanillaAbilitySpecial("speed")
-	local travel_distance = ability:GetCastRange(location, target) + ability:GetVanillaAbilitySpecial("length_buffer")
-	local width = ability:GetVanillaAbilitySpecial("width")   
+	local damage = ability:GetSpecialValueFor("damage")
+	local stun_duration = ability:GetSpecialValueFor("stun_duration")
+	local spike_speed = ability:GetSpecialValueFor("spike_speed")
+	local travel_distance = ability:GetSpecialValueFor("travel_distance")
+	local spikes_radius = ability:GetSpecialValueFor("spikes_radius")   
 	local extra_spike_AOE = ability:GetSpecialValueFor("extra_spike_AOE")
 	local wait_interval = ability:GetSpecialValueFor("wait_interval")    
 
@@ -142,7 +141,7 @@ function imba_lion_impale:OnProjectileHit_ExtraData(target, location, extra_data
 	table.insert(self[hit_targets_index], target)
 
 	-- Adjust length if caster has cast increase
-	travel_distance = travel_distance + caster:GetCastRangeIncrease()
+	travel_distance = travel_distance + GetCastRangeIncrease(caster)
 
 	local target_position = target:GetAbsOrigin()
 	target_position.z = 0 
@@ -178,19 +177,19 @@ function imba_lion_impale:OnProjectileHit_ExtraData(target, location, extra_data
 	
 	-- If it can bounce, start a timer and look for bounce target
 	if should_branch then
+		
 		Timers:CreateTimer(wait_interval, function() 
+
 			-- Find closest enemy around target that is not on the hit table and has no lines coming to them.                                
-			local enemies = FindUnitsInRadius(
-				caster:GetTeam(),
-				target:GetAbsOrigin(),
-				nil,
-				extra_spike_AOE,
-				DOTA_UNIT_TARGET_TEAM_ENEMY, 
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-				FIND_CLOSEST,
-				false
-			)                                      
+			local enemies = FindUnitsInRadius(caster:GetTeam(),
+											 target:GetAbsOrigin(),
+											 nil,
+											 extra_spike_AOE,
+											 DOTA_UNIT_TARGET_TEAM_ENEMY, 
+											 DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+											 DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+											 FIND_CLOSEST,
+											 false)                                      
 					
 			for _,enemy in pairs(enemies) do
 				local hit_by_earth_spikes = false
@@ -226,45 +225,50 @@ function imba_lion_impale:OnProjectileHit_ExtraData(target, location, extra_data
 					local direction = (enemy:GetAbsOrigin() - target:GetAbsOrigin()):Normalized()
 							
 					-- Play sound
-					caster:EmitSound(sound_cast)
-
+					caster:EmitSound(sound_cast)        
+								
 					-- Launch line projectile
 					local spikes_projectile = { Ability = ability,
-						EffectName = particle_projectile,
-						vSpawnOrigin = target:GetAbsOrigin(),
-						fDistance = travel_distance / 2,
-						fStartRadius = width,
-						fEndRadius = width,
-						Source = caster,
-						bHasFrontalCone = false,
-						bReplaceExisting = false,
-						iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,                          
-						iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,                           
-						bDeleteOnHit = false,
-						vVelocity = direction * speed * Vector(1, 1, 0),
-						bProvidesVision = false, 
-						ExtraData = {hit_targets_index = hit_targets_index, incoming_targets_index = incoming_targets_index, bounces_left = bounces_left}                           
-					}
-
+												EffectName = particle_projectile,
+												vSpawnOrigin = target:GetAbsOrigin(),
+												fDistance = travel_distance/2,
+												fStartRadius = spikes_radius,
+												fEndRadius = spikes_radius,
+												Source = caster,
+												bHasFrontalCone = false,
+												bReplaceExisting = false,
+												iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,                          
+												iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,                           
+												bDeleteOnHit = false,
+												vVelocity = direction * spike_speed * Vector(1, 1, 0),
+												bProvidesVision = false, 
+												ExtraData = {hit_targets_index = hit_targets_index, incoming_targets_index = incoming_targets_index, bounces_left = bounces_left}                           
+											 }
+													
 					ProjectileManager:CreateLinearProjectile(spikes_projectile)
 
-					-- Stop at the first valid enemy                                        
-					break
+					
+
+				-- Stop at the first valid enemy                                        
+				break
 				end
 			end         
 		end)
 	end
-
+	
 	-- Immediately apply stun
 	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
-
+	
 	-- #7 Talent: Earth Spikes slows target by 25% and they take 30% more damage from Finger of Death
 	if caster:HasTalent("special_bonus_imba_lion_7") then
 		target:AddNewModifier(caster, ability, modifier_death_spike, {duration = (knock_up_time + caster:FindTalentValue("special_bonus_imba_lion_7","duration")) * (1 - target:GetStatusResistance())})
 	end
 
+	
+		
 	-- Knockback unit to the air    
-	local knockbackProperties = {
+	local knockbackProperties =
+	{
 		center_x = target.x,
 		center_y = target.y,
 		center_z = target.z,
@@ -281,20 +285,19 @@ function imba_lion_impale:OnProjectileHit_ExtraData(target, location, extra_data
 		-- Add target to table of enemies hit
 			
 		
-		local damageTable = {
-			victim = target,
-			attacker = caster, 
-			damage = damage,
-			damage_type = DAMAGE_TYPE_MAGICAL,
-			ability = ability
-		}
-
+		local damageTable = {victim = target,
+							 attacker = caster, 
+							 damage = damage,
+							 damage_type = DAMAGE_TYPE_MAGICAL,
+							 ability = ability
+							}
+	
 		ApplyDamage(damageTable)        
 	end)
 end
 
 -- Earthspike stun modifier
-modifier_imba_earthspike_stun = modifier_imba_earthspike_stun or class({})
+modifier_imba_earthspike_stun = class({})
 
 function modifier_imba_earthspike_stun:IsHidden() return false end
 function modifier_imba_earthspike_stun:IsPurgeException() return true end
@@ -314,7 +317,7 @@ function modifier_imba_earthspike_stun:GetEffectAttachType()
 end
 
 -- Earthspike talent modifier
-modifier_imba_earthspike_death_spike = modifier_imba_earthspike_death_spike or class({})
+modifier_imba_earthspike_death_spike = class({})
 
 function modifier_imba_earthspike_death_spike:IsHidden() return false end
 function modifier_imba_earthspike_death_spike:IsPurgable() return true end
@@ -331,20 +334,19 @@ end
 --                HEX                   --
 ------------------------------------------
 
-imba_lion_voodoo = imba_lion_voodoo or class(VANILLA_ABILITIES_BASECLASS)
+imba_lion_hex = class({})
+LinkLuaModifier("modifier_imba_lion_hex", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lion_hex_chain_cooldown", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_lion_voodoo", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_lion_voodoo_chain_cooldown", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
-
-function imba_lion_voodoo:GetAbilityTextureName()
+function imba_lion_hex:GetAbilityTextureName()
    return "lion_voodoo"
 end
 
-function imba_lion_voodoo:IsHiddenWhenStolen()
+function imba_lion_hex:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_lion_voodoo:GetBehavior()
+function imba_lion_hex:GetBehavior()
 	if self:GetCaster():HasTalent("special_bonus_imba_lion_10") then
 		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE
 	else
@@ -352,7 +354,7 @@ function imba_lion_voodoo:GetBehavior()
 	end
 end
 
-function imba_lion_voodoo:GetAOERadius()
+function imba_lion_hex:GetAOERadius()
 	if self:GetCaster():HasTalent("special_bonus_imba_lion_10") then
 		return self:GetCaster():FindTalentValue("special_bonus_imba_lion_10")
 	else
@@ -360,7 +362,7 @@ function imba_lion_voodoo:GetAOERadius()
 	end
 end
 
-function imba_lion_voodoo:OnSpellStart()
+function imba_lion_hex:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -368,10 +370,10 @@ function imba_lion_voodoo:OnSpellStart()
 	local cast_response = {"lion_lion_ability_voodoo_03", "lion_lion_ability_voodoo_04", "lion_lion_ability_voodoo_05", "lion_lion_ability_voodoo_06", "lion_lion_ability_voodoo_07", "lion_lion_ability_voodoo_08", "lion_lion_ability_voodoo_09", "lion_lion_ability_voodoo_10"}
 	local sound_cast = "Hero_Lion.Voodoo"
 	local particle_hex = "particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-	local modifier_hex = "modifier_imba_lion_voodoo"
+	local modifier_hex = "modifier_imba_lion_hex"
 
 	-- Ability specials
-	local duration = ability:GetVanillaAbilitySpecial("duration")    
+	local duration = ability:GetSpecialValueFor("duration")    
 
 	-- Roll for a cast response
 	if RollPercentage(75) then
@@ -426,9 +428,9 @@ function imba_lion_voodoo:OnSpellStart()
 end
 
 -- Hex modifier
-modifier_imba_lion_voodoo = modifier_imba_lion_voodoo or class({})
+modifier_imba_lion_hex = class({})
 
-function modifier_imba_lion_voodoo:OnCreated()    
+function modifier_imba_lion_hex:OnCreated()    
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -437,13 +439,13 @@ function modifier_imba_lion_voodoo:OnCreated()
 	self.sound_meme_firetoad = "Imba.LionHexREEE"
 	self.particle_hex = "particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
 	self.particle_flaming_frog = "particles/hero/lion/firetoad.vpcf"
-	self.modifier_hex = "modifier_imba_lion_voodoo"
+	self.modifier_hex = "modifier_imba_lion_hex"
 	self.caster_team = self.caster:GetTeamNumber() -- Pugna ward problems
 	self.firetoad_chance = 10
 
 	-- Ability specials
-	self.duration = self.ability:GetVanillaAbilitySpecial("duration")
-	self.move_speed = self.ability:GetVanillaAbilitySpecial("movespeed")
+	self.duration = self.ability:GetSpecialValueFor("duration")
+	self.move_speed = self.ability:GetSpecialValueFor("move_speed")
 	self.hex_bounce_radius = self.ability:GetSpecialValueFor("hex_bounce_radius")
 	self.maximum_hex_enemies = self.ability:GetSpecialValueFor("maximum_hex_enemies")
 	
@@ -457,8 +459,10 @@ function modifier_imba_lion_voodoo:OnCreated()
 	end
 
 	if IsServer() then
+
 		-- Roll for a Firetoad
 		if RollPercentage(self.firetoad_chance) then
+
 			-- REEEEEEEEEEEEE
 			EmitSoundOn(self.sound_meme_firetoad, self.parent)    
 
@@ -473,36 +477,32 @@ function modifier_imba_lion_voodoo:OnCreated()
 
 		-- Slight modification to wait a frame before applying bounces to respect frantic status resistance (while still applying Chain Hex if duration is less than the standard requirements)
 		Timers:CreateTimer(FrameTime(), function()
-			if self and self.GetRemainingTime and self:GetRemainingTime() then
-				self.bounce_interval = math.min(self.ability:GetSpecialValueFor("bounce_interval"), (self:GetRemainingTime() - FrameTime()))
-
-				-- Start interval think
-				self:StartIntervalThink(self.bounce_interval)
-			end
+			self.bounce_interval = math.min(self.ability:GetSpecialValueFor("bounce_interval"), (self:GetRemainingTime() - FrameTime()))
+				
+			-- Start interval think
+			self:StartIntervalThink(self.bounce_interval)
 		end)
 	end
 end
 
-function modifier_imba_lion_voodoo:OnIntervalThink()
+function modifier_imba_lion_hex:OnIntervalThink()
 	if IsServer() then
 		local hexed_enemies = 0        
 
 		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(
-			self.caster_team,
-			self.parent:GetAbsOrigin(),
-			nil,
-			self.hex_bounce_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-			FIND_ANY_ORDER,
-			false
-		)
+		local enemies = FindUnitsInRadius(self.caster_team,
+										  self.parent:GetAbsOrigin(),
+										  nil,
+										  self.hex_bounce_radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+										  FIND_ANY_ORDER,
+										  false)
 
 		-- Get the first enemy that is not the parent, or an hexed target
 		for _,enemy in pairs(enemies) do
-			if self.parent ~= enemy and not enemy:HasModifier(self.modifier_hex) and not enemy:HasModifier("modifier_imba_lion_voodoo_chain_cooldown") then
+			if self.parent ~= enemy and not enemy:HasModifier(self.modifier_hex) and not enemy:HasModifier("modifier_imba_lion_hex_chain_cooldown") then
 
 				-- Play hex sound
 				EmitSoundOn(self.sound_cast, enemy)
@@ -534,11 +534,11 @@ function modifier_imba_lion_voodoo:OnIntervalThink()
 	end
 end
 
-function modifier_imba_lion_voodoo:IsHidden() return false end
-function modifier_imba_lion_voodoo:IsPurgable() return true end
-function modifier_imba_lion_voodoo:IsDebuff() return true end
+function modifier_imba_lion_hex:IsHidden() return false end
+function modifier_imba_lion_hex:IsPurgable() return true end
+function modifier_imba_lion_hex:IsDebuff() return true end
 
-function modifier_imba_lion_voodoo:CheckState()
+function modifier_imba_lion_hex:CheckState()
 	local state
 	-- #2 Talent: Hexed targets have break applied to them
 	if self:GetCaster():HasTalent("special_bonus_imba_lion_2") then
@@ -557,22 +557,22 @@ function modifier_imba_lion_voodoo:CheckState()
 	return state
 end
 
-function modifier_imba_lion_voodoo:DeclareFunctions()
+function modifier_imba_lion_hex:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MODEL_CHANGE,
 					  MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE}
 
 	return decFuncs
 end
 
-function modifier_imba_lion_voodoo:GetModifierModelChange()
+function modifier_imba_lion_hex:GetModifierModelChange()
 	return "models/props_gameplay/frog.vmdl"
 end
 
-function modifier_imba_lion_voodoo:GetModifierMoveSpeed_Absolute()
+function modifier_imba_lion_hex:GetModifierMoveSpeed_Absolute()
 	return self.move_speed
 end
 
-function modifier_imba_lion_voodoo:OnDestroy()
+function modifier_imba_lion_hex:OnDestroy()
 	if IsServer() then
 		-- Prevent conflict with Lina's Talent. REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE !
 		if self.parent:HasModifier("modifier_imba_fiery_soul_blaze_burn") then
@@ -580,30 +580,28 @@ function modifier_imba_lion_voodoo:OnDestroy()
 		self.parent:SetRenderColor(255,255,255)        
 		end
 		
-		self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_lion_voodoo_chain_cooldown", {duration = self.ability:GetSpecialValueFor("chain_hex_cooldown")})
+		self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_lion_hex_chain_cooldown", {duration = self.ability:GetSpecialValueFor("chain_hex_cooldown")})
 	end
 end
 
 -- Eh, might as well make it somewhat not chain infinitely
-modifier_imba_lion_voodoo_chain_cooldown = modifier_imba_lion_voodoo_chain_cooldown or class({})
+modifier_imba_lion_hex_chain_cooldown = class({})
 
-function modifier_imba_lion_voodoo_chain_cooldown:IgnoreTenacity() 	return true end
-function modifier_imba_lion_voodoo_chain_cooldown:IsDebuff() 			return true end
-function modifier_imba_lion_voodoo_chain_cooldown:IsHidden() 			return false end
-function modifier_imba_lion_voodoo_chain_cooldown:IsPurgable() 		return false end
+function modifier_imba_lion_hex_chain_cooldown:IgnoreTenacity() 	return true end
+function modifier_imba_lion_hex_chain_cooldown:IsDebuff() 			return true end
+function modifier_imba_lion_hex_chain_cooldown:IsHidden() 			return false end
+function modifier_imba_lion_hex_chain_cooldown:IsPurgable() 		return false end
 
 ------------------------------------------
 --             Mana Drain               --
 ------------------------------------------
 
-imba_lion_mana_drain = imba_lion_mana_drain or class(VANILLA_ABILITIES_BASECLASS)
-
+imba_lion_mana_drain = class({})
 LinkLuaModifier("modifier_imba_manadrain_aura", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_aura_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_buff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_manaovercharge", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_lion_mana_drain_shard_immune", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lion_mana_drain:GetAbilityTextureName()
    return "lion_mana_drain"
@@ -670,9 +668,9 @@ function imba_lion_mana_drain:OnSpellStart()
 	local modifier_drain_ally = "modifier_imba_manadrain_buff"
 	
 	-- Ability specials    
-	local break_distance = ability:GetVanillaAbilitySpecial("break_distance") + caster:GetCastRangeIncrease()
-	local interval = ability:GetVanillaAbilitySpecial("tick_interval")    
-	local aura_radius = ability:GetSpecialValueFor("aura_radius") + caster:GetCastRangeIncrease()
+	local break_distance = ability:GetSpecialValueFor("break_distance") + GetCastRangeIncrease(caster)
+	local interval = ability:GetSpecialValueFor("interval")    
+	local aura_radius = ability:GetSpecialValueFor("aura_radius") + GetCastRangeIncrease(caster)
 
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
@@ -687,6 +685,8 @@ function imba_lion_mana_drain:OnSpellStart()
 			return nil
 		end
 	end 
+	
+
 
 	-- Assign the correct modifier based on enemy or ally
 	local modifier_manadrain
@@ -703,41 +703,29 @@ function imba_lion_mana_drain:OnSpellStart()
 
 	-- If it is an enemy target, decide behavior depending on if caster has #8 talent
 	-- #8 Talent: Mana Drain now targets all units in aura radius
-	if enemy_target and caster:HasShard() then
-		local shard_target_count = 3
-
-		caster:AddNewModifier(caster, ability, "modifier_imba_lion_mana_drain_shard_immune", {duration = ability:GetChannelTime()})
-
+	if enemy_target and caster:HasTalent("special_bonus_imba_lion_8") then
 		Timers:CreateTimer(interval, function()
-			local current_target_count = 0
-
 			-- If the caster is no longer channeling, stop everything
 			if not caster:IsChanneling() then    
-				caster:StopSound(sound_cast)
-				caster:RemoveModifierByName("modifier_imba_lion_mana_drain_shard_immune")
+				caster:StopSound(sound_cast)                                       
 				return nil
 			end     
 
 			-- Find all nearby enemies
-			local enemies = FindUnitsInRadius(
-				caster:GetTeamNumber(),
-				caster:GetAbsOrigin(),
-				nil,
-				aura_radius,
-				DOTA_UNIT_TARGET_TEAM_ENEMY, 
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MANA_ONLY,
-				FIND_ANY_ORDER,
-				false
-			)
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+											  caster:GetAbsOrigin(),
+											  nil,
+											  aura_radius,
+											  DOTA_UNIT_TARGET_TEAM_ENEMY, 
+											  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+											  DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MANA_ONLY,
+											  FIND_ANY_ORDER,
+											  false)
 
 			-- If there are any enemies, apply debuff modifier to them for the duration of the interval
 			if #enemies > 0 then
 				for _,enemy in pairs(enemies) do
-					if current_target_count < shard_target_count then
-						enemy:AddNewModifier(caster, ability, modifier_manadrain, {duration = interval*2})
-						current_target_count = current_target_count + 1
-					end
+					enemy:AddNewModifier(caster, ability, modifier_manadrain, {duration = interval*2})
 				end
 
 				return interval
@@ -780,19 +768,12 @@ function imba_lion_mana_drain:OnSpellStart()
 			return interval 
 		end)    
 	end
+
+	
 end
 
-modifier_imba_lion_mana_drain_shard_immune = modifier_imba_lion_mana_drain_shard_immune or class({})
-
-function modifier_imba_lion_mana_drain_shard_immune:GetEffectName() return "particles/items_fx/black_king_bar_avatar.vpcf" end
-function modifier_imba_lion_mana_drain_shard_immune:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
-
-function modifier_imba_lion_mana_drain_shard_immune:CheckState() return {
-	[MODIFIER_STATE_MAGIC_IMMUNE] = true,
-} end
-
 -- Mana Drain Aura
-modifier_imba_manadrain_aura = modifier_imba_manadrain_aura or class({})
+modifier_imba_manadrain_aura = class({})
 
 function modifier_imba_manadrain_aura:OnCreated()
 	-- Ability properties
@@ -854,7 +835,7 @@ end
 
 
 -- Mana Drain aura debuff
-modifier_imba_manadrain_aura_debuff = modifier_imba_manadrain_aura_debuff or class({})
+modifier_imba_manadrain_aura_debuff = class({})
 
 function modifier_imba_manadrain_aura_debuff:OnCreated()
 	if IsServer() then
@@ -864,7 +845,7 @@ function modifier_imba_manadrain_aura_debuff:OnCreated()
 		self.parent = self:GetParent()
 
 		-- Ability specials
-		self.interval = self.ability:GetVanillaAbilitySpecial("tick_interval")
+		self.interval = self.ability:GetSpecialValueFor("interval")
 		self.aura_mana_drain_pct = self.ability:GetSpecialValueFor("aura_mana_drain_pct")
 
 		-- Start interval
@@ -897,7 +878,7 @@ function modifier_imba_manadrain_aura_debuff:OnIntervalThink()
 end
 
 -- Active Mana Drain debuff modifier (enemies)
-modifier_imba_manadrain_debuff = modifier_imba_manadrain_debuff or class({})
+modifier_imba_manadrain_debuff = class({})
 
 function modifier_imba_manadrain_debuff:OnCreated()    
 		-- Ability properties
@@ -913,8 +894,8 @@ function modifier_imba_manadrain_debuff:OnCreated()
 		end
 
 		-- Ability specials
-		self.interval = self.ability:GetVanillaAbilitySpecial("tick_interval")
-		self.mana_drain_sec = self.ability:GetVanillaAbilitySpecial("mana_per_second")
+		self.interval = self.ability:GetSpecialValueFor("interval")
+		self.mana_drain_sec = self.ability:GetSpecialValueFor("mana_drain_sec")
 		self.mana_pct_as_damage = self.ability:GetSpecialValueFor("mana_pct_as_damage")
 
 		-- Initalize variables        
@@ -996,20 +977,20 @@ function modifier_imba_manadrain_debuff:GetModifierMoveSpeedBonus_Percentage()
 		return (100 - ((current_mana/maximum_mana) * 100)) * (-1)
 	end
 	
-	return self:GetAbility():GetVanillaAbilitySpecial("movespeed") * (-1)
+	return self:GetAbility():GetSpecialValueFor("movespeed") * (-1)
 end
 
 function modifier_imba_manadrain_debuff:OnTooltip()
-	return self:GetAbility():GetVanillaAbilitySpecial("mana_per_second")
+	return self:GetAbility():GetSpecialValueFor("mana_drain_sec")
 end
 
-modifier_imba_manadrain_manaovercharge = modifier_imba_manadrain_manaovercharge or class({})
+modifier_imba_manadrain_manaovercharge = class({})
 
 function modifier_imba_manadrain_manaovercharge:IsHidden() return false end
 function modifier_imba_manadrain_manaovercharge:IsPurgable() return false end
 
 -- Active Mana Drain buff modifier (allies)
-modifier_imba_manadrain_buff = modifier_imba_manadrain_buff or class({})
+modifier_imba_manadrain_buff = class({})
 
 function modifier_imba_manadrain_buff:OnCreated()
 	if IsServer() then
@@ -1020,8 +1001,8 @@ function modifier_imba_manadrain_buff:OnCreated()
 		self.particle_drain = "particles/econ/items/lion/lion_demon_drain/lion_spell_mana_drain_demon.vpcf"
 
 		-- Ability specials
-		self.interval = self.ability:GetVanillaAbilitySpecial("tick_interval")
-		self.mana_drain_sec = self.ability:GetVanillaAbilitySpecial("mana_per_second")        
+		self.interval = self.ability:GetSpecialValueFor("interval")
+		self.mana_drain_sec = self.ability:GetSpecialValueFor("mana_drain_sec")        
 
 		-- Initalize variables        
 		self.mana_drain_per_interval = self.mana_drain_sec * self.interval
@@ -1058,8 +1039,7 @@ end
 ------------------------------------------
 --          FINGER OF DEATH             --
 ------------------------------------------
-imba_lion_finger_of_death = imba_lion_finger_of_death or class(VANILLA_ABILITIES_BASECLASS)
-
+imba_lion_finger_of_death = class({})
 LinkLuaModifier("modifier_imba_trigger_finger_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_finger_of_death_hex", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_finger_of_death_delay", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
@@ -1079,15 +1059,12 @@ function imba_lion_finger_of_death:GetAOERadius()
 	end
 end
 
-function imba_lion_finger_of_death:GetManaCost()
-	local level = self:GetLevel()
-	if level < 1 then return 0 end
-
+function imba_lion_finger_of_death:GetManaCost(level)
 	-- Ability properties
 	local caster = self:GetCaster()    
 	local ability = self
 	local modifier_finger = "modifier_imba_trigger_finger_debuff"
-	local base_mana_cost = GetAbilityKV(ability:GetVanillaAbilityName(), "AbilityManaCost", level)
+	local base_mana_cost = self.BaseClass.GetManaCost(self, level)
 
 	-- Ability special
 	local triggerfinger_mana_inc_pct = ability:GetSpecialValueFor("triggerfinger_mana_inc_pct")
@@ -1110,7 +1087,7 @@ function imba_lion_finger_of_death:GetCooldown(level)
 
 	-- Ability specials
 	local cooldown = self.BaseClass.GetCooldown(self, level)
-	local scepter_cooldown = ability:GetVanillaAbilitySpecial("cooldown_scepter")
+	local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
 
 	-- Assign correct cooldown based on whether or not caster has a scepter
 	local base_cooldown
@@ -1138,9 +1115,9 @@ function imba_lion_finger_of_death:OnSpellStart()
 	local scepter = caster:HasScepter()
 
 	-- Ability specials    
-	local damage = ability:GetVanillaAbilitySpecial("damage")
-	local scepter_damage = ability:GetVanillaAbilitySpecial("damage_scepter")    
-	local scepter_radius = ability:GetVanillaAbilitySpecial("splash_radius_scepter")    
+	local damage = ability:GetSpecialValueFor("damage")
+	local scepter_damage = ability:GetSpecialValueFor("scepter_damage")    
+	local scepter_radius = ability:GetSpecialValueFor("scepter_radius")    
 	local triggerfinger_duration = ability:GetSpecialValueFor("triggerfinger_duration")    
 	local projectile_speed = ability:GetSpecialValueFor("projectile_speed")        
 	local enemies_frog_radius = ability:GetSpecialValueFor("enemies_frog_radius")        
@@ -1237,15 +1214,11 @@ function imba_lion_finger_of_death:OnSpellStart()
 			end
 
 			local modifier_finger_handler = caster:FindModifierByName(modifier_finger)
-
-			if modifier_finger_handler then
-				if modifier_finger_handler:GetDuration() > triggerfinger_duration then
-					modifier_finger_handler:SetDuration(triggerfinger_duration,true)
-				end
-	
-				modifier_finger_handler:IncrementStackCount()
-				modifier_finger_handler:ForceRefresh()
+			if modifier_finger_handler:GetDuration() > triggerfinger_duration then
+			modifier_finger_handler:SetDuration(triggerfinger_duration,true)
 			end
+			modifier_finger_handler:IncrementStackCount()
+			modifier_finger_handler:ForceRefresh()
 
 			-- Refresh cooldown completely            
 			Timers:CreateTimer(FrameTime(), function()
@@ -1259,12 +1232,9 @@ function imba_lion_finger_of_death:OnSpellStart()
 			end
 				
 			local modifier_finger_handler = caster:FindModifierByName(modifier_finger)
-
-			if modifier_finger_handler then
-				modifier_finger_handler:SetDuration(caster:FindTalentValue("special_bonus_imba_lion_5"),true)
-				modifier_finger_handler:IncrementStackCount()
-				modifier_finger_handler:ForceRefresh()
-			end
+			modifier_finger_handler:SetDuration(caster:FindTalentValue("special_bonus_imba_lion_5"),true)
+			modifier_finger_handler:IncrementStackCount()
+			modifier_finger_handler:ForceRefresh()
 
 			-- Refresh cooldown completely            
 			Timers:CreateTimer(FrameTime(), function()
@@ -1282,11 +1252,11 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 	local modifier_hex = "modifier_imba_finger_of_death_hex"    
 
 	-- Ability specials
-	local damage_delay = ability:GetVanillaAbilitySpecial("damage_delay")    
+	local damage_delay = ability:GetSpecialValueFor("damage_delay")    
 	local enemies_frog_duration = ability:GetSpecialValueFor("enemies_frog_duration")
-	local damage_per_kill = ability:GetVanillaAbilitySpecial("damage_per_kill")
-	local kill_grace_duration = ability:GetVanillaAbilitySpecial("grace_period")
-
+	local damage_per_kill = ability:GetSpecialValueFor("damage_per_kill")
+	local kill_grace_duration = ability:GetSpecialValueFor("kill_grace_duration")
+	
 	-- Add particle effects
 	local particle_finger_fx = ParticleManager:CreateParticle(particle_finger, PATTACH_ABSORIGIN_FOLLOW, caster)
 
@@ -1298,6 +1268,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 
 	-- Wait a short delay
 	Timers:CreateTimer(damage_delay, function()
+
 		-- Hex all nearby units when Finger hits, however, only if this the main target being fingered
 		
 		-- Frog Panic IMBAfication removed for now
@@ -1359,7 +1330,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 end
 
 -- Trigger Finger modifier
-modifier_imba_trigger_finger_debuff = modifier_imba_trigger_finger_debuff or class({})
+modifier_imba_trigger_finger_debuff = class({})
 
 function modifier_imba_trigger_finger_debuff:IsHidden() return false end
 function modifier_imba_trigger_finger_debuff:IsPurgable() return false end
@@ -1367,7 +1338,7 @@ function modifier_imba_trigger_finger_debuff:IsDebuff() return true end
 
 
 -- Finger's Hex modifier
-modifier_imba_finger_of_death_hex = modifier_imba_finger_of_death_hex or class({})
+modifier_imba_finger_of_death_hex = class({})
 
 function modifier_imba_finger_of_death_hex:IsHidden() return false end
 function modifier_imba_finger_of_death_hex:IsPurgable() return true end
@@ -1400,7 +1371,7 @@ function modifier_imba_finger_of_death_hex:GetModifierMoveSpeed_Absolute()
 	return self:GetAbility():GetSpecialValueFor("hex_move_speed")
 end
 
-modifier_imba_finger_of_death_delay = modifier_imba_finger_of_death_delay or class({})
+modifier_imba_finger_of_death_delay = class({})
 function modifier_imba_finger_of_death_delay:IsPurgable() 		return false end
 
 function modifier_imba_finger_of_death_delay:OnRemoved()
@@ -1411,7 +1382,7 @@ function modifier_imba_finger_of_death_delay:OnRemoved()
 	end
 end
 
-modifier_imba_finger_of_death_counter = modifier_imba_finger_of_death_counter or class({})
+modifier_imba_finger_of_death_counter = class({})
 function modifier_imba_finger_of_death_counter:IsDebuff() 		return false end
 function modifier_imba_finger_of_death_counter:IsHidden() 		return false end
 function modifier_imba_finger_of_death_counter:IsPurgable() 	return false end
@@ -1434,7 +1405,7 @@ function modifier_imba_finger_of_death_counter:DeclareFunctions()
 end
 
 function modifier_imba_finger_of_death_counter:OnTooltip()
-	return self:GetStackCount() * self:GetAbility():GetVanillaAbilitySpecial("damage_per_kill")
+	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("damage_per_kill")
 end
 
 
@@ -1444,13 +1415,13 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_lion_3", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lion_5", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
--- LinkLuaModifier("modifier_special_bonus_imba_lion_8", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lion_8", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lion_7", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lion_2", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_lion_3	= modifier_special_bonus_imba_lion_3 or class({})
 modifier_special_bonus_imba_lion_5	= modifier_special_bonus_imba_lion_5 or class({})
--- modifier_special_bonus_imba_lion_8	= modifier_special_bonus_imba_lion_8 or class({})
+modifier_special_bonus_imba_lion_8	= modifier_special_bonus_imba_lion_8 or class({})
 modifier_special_bonus_imba_lion_7	= modifier_special_bonus_imba_lion_7 or class({})
 modifier_special_bonus_imba_lion_2	= modifier_special_bonus_imba_lion_2 or class({})
 
@@ -1462,9 +1433,9 @@ function modifier_special_bonus_imba_lion_5:IsHidden() 		return true end
 function modifier_special_bonus_imba_lion_5:IsPurgable()		return false end
 function modifier_special_bonus_imba_lion_5:RemoveOnDeath() 	return false end
 
--- function modifier_special_bonus_imba_lion_8:IsHidden() 		return true end
--- function modifier_special_bonus_imba_lion_8:IsPurgable()		return false end
--- function modifier_special_bonus_imba_lion_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_lion_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_lion_8:IsPurgable()		return false end
+function modifier_special_bonus_imba_lion_8:RemoveOnDeath() 	return false end
 
 function modifier_special_bonus_imba_lion_7:IsHidden() 		return true end
 function modifier_special_bonus_imba_lion_7:IsPurgable()		return false end
@@ -1481,23 +1452,23 @@ LinkLuaModifier("modifier_special_bonus_imba_lion_9", "components/abilities/hero
 -- #10 Talent: +325 AoE Hex
 LinkLuaModifier("modifier_special_bonus_imba_lion_10", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lion_9 = modifier_special_bonus_imba_lion_9 or class({})
+modifier_special_bonus_imba_lion_9 = class({})
 function modifier_special_bonus_imba_lion_9:IsHidden() 			return true end
 function modifier_special_bonus_imba_lion_9:IsPurgable() 		return false end
 function modifier_special_bonus_imba_lion_9:RemoveOnDeath() 	return false end
 
-modifier_special_bonus_imba_lion_10 = modifier_special_bonus_imba_lion_10 or class({})
+modifier_special_bonus_imba_lion_10 = class({})
 function modifier_special_bonus_imba_lion_10:IsHidden() 		return true end
 function modifier_special_bonus_imba_lion_10:IsPurgable() 		return false end
 function modifier_special_bonus_imba_lion_10:RemoveOnDeath() 	return false end
 
-function imba_lion_impale:OnOwnerSpawned()
+function imba_lion_earth_spike:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_lion_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lion_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lion_9"), "modifier_special_bonus_imba_lion_9", {})
 	end
 end
 
-function imba_lion_voodoo:OnOwnerSpawned()
+function imba_lion_hex:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_lion_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lion_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lion_10"), "modifier_special_bonus_imba_lion_10", {})
 	end

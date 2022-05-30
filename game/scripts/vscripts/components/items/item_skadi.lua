@@ -228,7 +228,7 @@ function modifier_item_imba_skadi_unique:OnCreated(keys)
     end
 
 	if IsServer() then
-		self:GetParent():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetParent())
 
 		-- Store ability KVs for later usage
 		local ability = self:GetAbility()
@@ -242,7 +242,7 @@ end
 -- Changes the caster's attack projectile, if applicable
 function modifier_item_imba_skadi_unique:OnDestroy()
 	if IsServer() then
-		self:GetParent():ChangeAttackProjectileImba()
+		ChangeAttackProjectileImba(self:GetParent())
 	end
 end
 

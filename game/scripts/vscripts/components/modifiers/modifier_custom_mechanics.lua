@@ -10,13 +10,13 @@ function modifier_custom_mechanics:RemoveOnDeath() return false end
 function modifier_custom_mechanics:OnCreated()
 	if IsServer() then
 		self.health_regen_amp = 0
-
+		
 		self.forbidden_inflictors = {
 			"item_imba_blade_mail",
 			"luna_moon_glaive"
 		}
-
-		self:StartIntervalThink(1.0)
+		
+		self:StartIntervalThink(1)
 	end
 end
 
@@ -33,6 +33,7 @@ function modifier_custom_mechanics:OnIntervalThink()
 	end
 end
 
+
 -- Damage block handler
 -- function modifier_custom_mechanics:GetModifierPhysical_ConstantBlock()
 	-- if IsServer() then
@@ -42,26 +43,28 @@ end
 
 -- Damage amp/reduction handler
 function modifier_custom_mechanics:GetModifierIncomingDamage_Percentage()
-	if not IsServer() then return end
-
-	return self:GetParent():GetIncomingDamagePct()
+	if IsServer() then
+		return self:GetParent():GetIncomingDamagePct()
+	end
 end
 
-function modifier_custom_mechanics:DeclareFunctions() return {
-	MODIFIER_PROPERTY_HEALTH_BONUS,
-	MODIFIER_EVENT_ON_TAKEDAMAGE,
-	MODIFIER_EVENT_ON_ATTACK_START,
---	MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
-	MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-	MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
---	MODIFIER_PROPERTY_RESPAWNTIME,
---	MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE,
-} end
+function modifier_custom_mechanics:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+	
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_START,
+		-- MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+--		MODIFIER_PROPERTY_RESPAWNTIME,
+--		MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE,
+	}
+	return funcs
+end
 
 function modifier_custom_mechanics:GetModifierHealthBonus()
-	if self:GetParent():IsRealHero() then
-		return 300
-	end
+	return 300
 end
 
 --- Enum DamageCategory_t
@@ -86,14 +89,14 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 			if keys.unit:IsIllusion() then
 				if keys.damage_type == DAMAGE_TYPE_PHYSICAL and keys.unit.GetPhysicalArmorValue and GetReductionFromArmor then
 					keys.damage = keys.original_damage * (1 - GetReductionFromArmor(keys.unit:GetPhysicalArmorValue(false)))
-				elseif keys.damage_type == DAMAGE_TYPE_MAGICAL and GetReductionFromArmor and keys.unit.GetMagicalArmorValue then
+				elseif keys.damage_type == DAMAGE_TYPE_MAGICAL and keys.unit.GetMagicalArmorValue then
 					keys.damage = keys.original_damage * (1 - GetReductionFromArmor(keys.unit:GetMagicalArmorValue()))
 				elseif keys.damage_type == DAMAGE_TYPE_PURE then
 					keys.damage = keys.original_damage
 				end
 			end
-
-			keys.attacker:Heal(math.max(keys.damage, 0) * self:GetParent():GetSpellLifesteal() / 100, keys.attacker) -- IDK if this will fix it but there's reports of health randomly getting deleted and I assume it has to do with the custom lifesteal
+			
+			keys.attacker:Heal(math.max(keys.damage, 0) * self:GetParent():GetSpellLifesteal() * 0.01, keys.attacker) -- IDK if this will fix it but there's reports of health randomly getting deleted and I assume it has to do with the custom lifesteal
 		-- Attack lifesteal handler
 		elseif keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and self:GetParent():GetLifesteal() > 0 then
 			-- Attempted fixing of invulnerable 0 hp illusions...again
@@ -123,8 +126,19 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 				keys.damage = keys.original_damage * (1 - GetReductionFromArmor(keys.unit:GetPhysicalArmorValue(false)))
 			end
 			
-			keys.attacker:Heal(keys.damage * self:GetParent():GetLifesteal() / 100, keys.attacker)
+			keys.attacker:Heal(keys.damage * self:GetParent():GetLifesteal() * 0.01, keys.attacker)
 		end
+	end
+end
+
+-- Test fix for invincible 0 HP illusions
+function modifier_custom_mechanics:OnAttackStart( keys )
+	if not IsServer() then return end
+	
+	-- Don't know if this is going to work but might as well try something to remedy the illusion issue
+	if keys.attacker == self:GetParent() and (self:GetParent():IsIllusion() and self:GetParent():GetHealth() <= 0) or (self:GetParent().GetPlayerID and self:GetParent():GetPlayerID() == -1 and not self:GetParent():GetName() == "npc_dota_target_dummy") then
+		self:GetParent():ForceKill(false)
+		self:GetParent():RemoveSelf()
 	end
 end
 
@@ -144,4 +158,3 @@ function modifier_custom_mechanics:GetModifierPercentageRespawnTime()
 	return 50
 end
 --]]
-		

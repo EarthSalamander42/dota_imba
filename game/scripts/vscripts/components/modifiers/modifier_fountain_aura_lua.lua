@@ -2,7 +2,7 @@ LinkLuaModifier("modifier_fountain_aura_effect_lua", "components/modifiers/modif
 LinkLuaModifier("modifier_fountain_invulnerable", "components/modifiers/modifier_fountain_aura_lua.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_cursed_fountain", "components/modifiers/modifier_fountain_aura_lua.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_fountain_aura_lua = modifier_fountain_aura_lua or class({})
+modifier_fountain_aura_lua = class({})
 
 function modifier_fountain_aura_lua:IsHidden() return true end
 function modifier_fountain_aura_lua:IsAura() return true end
@@ -170,7 +170,7 @@ end
 -- CURSED FOUNTAIN MODIFIER --
 ------------------------------
 
-modifier_imba_cursed_fountain = modifier_imba_cursed_fountain or class({})
+modifier_imba_cursed_fountain = class({})
 
 function modifier_imba_cursed_fountain:IsDebuff()	return true end
 function modifier_imba_cursed_fountain:IsPurgable()	return false end

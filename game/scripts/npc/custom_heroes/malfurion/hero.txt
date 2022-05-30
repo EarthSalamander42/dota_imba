@@ -1,0 +1,102 @@
+"DOTAHeroes"
+{
+	//======================================================================================================
+	// HERO: Malfurion
+	//======================================================================================================
+	"npc_dota_hero_malfurion"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_ursa"
+		"HeroID"					"130"
+		"Model"						"models/items/lone_druid/true_form/form_of_the_atniw/form_of_the_atniw.vmdl"
+		"ModelScale"				"0.87"
+		"SoundSet"					"Hero_Ursa"
+//		"Portrait"					"vgui/hud/heroportraits/portrait_treant"
+		"GibType"					"wood"
+
+		//Picking Screen
+		"IsCustom"					"1"
+
+		"Role"			"Carry,Support,Disabler,Jungler,Durable,Initiator"
+		"Rolelevels"	"1,2,1,2,1,1"
+		"Complexity"	"1"
+		
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"2.1"									// Physical protection.
+		"MagicalResistance"			"25"									// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"26"
+		"AttackDamageMax"			"36"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"				// Type of damage dealt. 
+		"AttackRate"				"1.6"
+		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
+		"AttackRange"				"128"
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"42"						// Base strength
+		"AttributeStrengthGain"		"3.15"
+		"AttributeBaseIntelligence"	"21"						// Base intelligence
+		"AttributeIntelligenceGain"	"2.1"
+		"AttributeBaseAgility"		"31.5"						// Base agility
+		"AttributeAgilityGain"		"2.1"
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"imba_malfurion_entrangling_roots"
+		"Ability2"					"imba_malfurion_rejuvenation"
+		"Ability3"					"imba_malfurion_mark_of_the_claw"
+		"Ability4"					"imba_malfurion_strength_of_the_wild"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_malfurion_living_tower"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_imba_malfurion_1"
+		"Ability11"					"special_bonus_imba_malfurion_2"
+		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability13"					"special_bonus_cooldown_reduction_12"
+		"Ability14"					"special_bonus_strength_25" 
+		"Ability15"					"special_bonus_imba_malfurion_5"
+		"Ability16"					"special_bonus_imba_malfurion_4"
+		"Ability17"					"special_bonus_imba_malfurion_3"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"220"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"310"
+		"MovementTurnRate"			"0.4"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"2.1"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.05"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+		"HasInventory"				"1" // This KV is required for units file only
+		
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+	}
+}

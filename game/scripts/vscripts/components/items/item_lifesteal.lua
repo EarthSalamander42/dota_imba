@@ -58,7 +58,7 @@ function modifier_imba_morbid_mask:OnCreated()
 
 		if IsServer() then
 			-- Change to lifesteal projectile, if there's nothing "stronger"
-			self.caster:ChangeAttackProjectileImba()
+			ChangeAttackProjectileImba(self.caster)
 
 			if not self.caster:HasModifier("modifier_imba_morbid_mask_unique") then
 				self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_morbid_mask_unique", {})
@@ -77,7 +77,7 @@ function modifier_imba_morbid_mask:OnDestroy()
 			self.caster:RemoveModifierByName("modifier_imba_morbid_mask_unique")
 			
 			-- Remove lifesteal projectile
-			self.caster:ChangeAttackProjectileImba()
+			ChangeAttackProjectileImba(self.caster)
 		end
 	end
 end

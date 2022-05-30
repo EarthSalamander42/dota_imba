@@ -5,41 +5,12 @@ imba_abyssal_underlord_firestorm = imba_abyssal_underlord_firestorm or class(VAN
 LinkLuaModifier( "modifier_imba_abyssal_underlord_firestorm", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_firestorm_thinker", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_blizzard", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 -- Custom KV
 -- AOE Radius
 function imba_abyssal_underlord_firestorm:GetAOERadius()
 	return self:GetVanillaAbilitySpecial( "radius" )
-end
-
-function imba_abyssal_underlord_firestorm:GetBehavior()
-	if self:GetCaster():HasShard() then
-		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
-	end
-
-	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
-function imba_abyssal_underlord_firestorm:CastFilterResultTarget(target)
-	if not IsServer() then return end
-	local caster = self:GetCaster()
-
-	-- Self-cast if we have shard
-	if caster == target and caster:HasShard() then
-		return UF_SUCCESS
-	end
-
-	return UF_FAIL_CUSTOM
-end
-
-function imba_abyssal_underlord_firestorm:GetCustomCastError()
-	if self:GetCaster() ~= target then
-		return "#dota_hud_error_cant_only_cast_self"
-	end
-
-	return ""
 end
 
 --------------------------------------------------------------------------------
@@ -66,11 +37,6 @@ function imba_abyssal_underlord_firestorm:OnSpellStart()
 	-- unit identifier
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
-	self.self_cast = false
-
-	if caster == self:GetCursorTarget() then
-		self.self_cast = true
-	end
 
 	-- create thinker
 	CreateModifierThinker(
@@ -133,29 +99,13 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:OnCreated( kv )
 	local delay = self.ability:GetVanillaAbilitySpecial( "first_wave_delay" )
 	self.radius = self.ability:GetVanillaAbilitySpecial( "radius" )
 	self.count = self.ability:GetVanillaAbilitySpecial( "wave_count" )
-	self.burn_duration = self.ability:GetVanillaAbilitySpecial( "burn_duration" )
 	self.interval = self.ability:GetVanillaAbilitySpecial( "wave_interval" )
 
-	if self:GetCaster():HasShard() then
-		self.count = self.count + self.ability:GetSpecialValueFor("shard_bonus_wave_count")
-		local duration = self.ability:GetVanillaAbilitySpecial( "wave_duration" ) - 1
-		self.interval = duration / self.count
-
-		if self.ability.self_cast == true then
-			self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster", {})
-		end
-	end
+	self.burn_duration = self.ability:GetVanillaAbilitySpecial( "burn_duration" )
 
 	if not IsServer() then return end
 
-	self.particle_cast = "particles/units/heroes/heroes_underlord/abyssal_underlord_firestorm_wave.vpcf"
-	self.sound_cast = "Hero_AbyssalUnderlord.Firestorm"
-
 	self.autocast_state = self.ability:GetAutoCastState()
-
-	if self.autocast_state then
-		self.particle_cast = "particles/units/heroes/heroes_underlord/abyssal_underlord_firestorm_wave_frost.vpcf"
-	end
 
 	-- init
 	self.wave = 0
@@ -189,10 +139,8 @@ end
 function modifier_imba_abyssal_underlord_firestorm_thinker:OnIntervalThink()
 	if not self.delayed then
 		self.delayed = true
-
 		self:StartIntervalThink( self.interval )
 		self:OnIntervalThink()
-
 		return
 	end
 
@@ -244,8 +192,7 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:OnIntervalThink()
 
 	-- count wave
 	self.wave = self.wave + 1
-
-	if self.wave >= self.count then
+	if self.wave>=self.count then
 		self:Destroy()
 	end
 end
@@ -253,29 +200,18 @@ end
 --------------------------------------------------------------------------------
 -- Graphics & Animations
 function modifier_imba_abyssal_underlord_firestorm_thinker:PlayEffects()
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/heroes_underlord/abyssal_underlord_firestorm_wave.vpcf"
+	local sound_cast = "Hero_AbyssalUnderlord.Firestorm"
+
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( self.particle_cast, PATTACH_WORLDORIGIN, nil )
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, nil )
 	ParticleManager:SetParticleControl( effect_cast, 0, self.parent:GetOrigin() )
 	ParticleManager:SetParticleControl( effect_cast, 4, Vector( self.radius, 0, 0 ) )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	EmitSoundOn( self.sound_cast, self.parent )
-end
-
-modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster = modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster or class({})
-
-function modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster:IsHidden() return true end
-function modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster:IsPurgable() return false end
-
-function modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster:OnCreated()
-	if not IsServer() then return end
-
-	self:StartIntervalThink(FrameTime())
-end
-
-function modifier_imba_abyssal_underlord_firestorm_thinker_follow_caster:OnIntervalThink()
-	self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin())
+	EmitSoundOn( sound_cast, self.parent )
 end
 
 --------------------------------------------------------------------------------
@@ -305,6 +241,7 @@ end
 function modifier_imba_abyssal_underlord_firestorm:OnCreated( kv )
 	-- references
 	if not IsServer() then return end
+	self.damage_pct = (self:GetAbility():GetVanillaAbilitySpecial("burn_damage") + (self:GetAbility():GetSpecialValueFor("burn_damage_stack") * self:GetStackCount())) / 100
 
 	-- precache damage
 	self.damageTable = {
@@ -316,13 +253,11 @@ function modifier_imba_abyssal_underlord_firestorm:OnCreated( kv )
 	}
 	-- ApplyDamage(damageTable)
 
-	self:OnRefresh()
-
 	-- Start interval
 	self:StartIntervalThink(self:GetAbility():GetVanillaAbilitySpecial( "burn_interval" ))
 end
 
-function modifier_imba_abyssal_underlord_firestorm:OnRefresh()
+function modifier_imba_abyssal_underlord_firestorm:OnRefresh( kv )
 	if not IsServer() then return end
 
 	self:IncrementStackCount()
@@ -391,9 +326,11 @@ function modifier_imba_abyssal_underlord_blizzard:DeclareFunctions() return {
 --------------------------------------------------------------------------------
 -- Initializations
 function modifier_imba_abyssal_underlord_blizzard:OnCreated( kv )
-	if not IsServer() then return end
+	-- references
+	self.slow = self:GetAbility():GetSpecialValueFor("blizzard_slow_percentage")
 
-	self.slow = self:GetAbility():GetSpecialValueFor("blizzard_slow_percentage") + (self:GetAbility():GetSpecialValueFor("blizzard_slow_percentage_stack") * 1)
+	if not IsServer() then return end
+	self.damage_pct = self:GetAbility():GetVanillaAbilitySpecial("burn_damage") / 100
 
 	-- precache damage
 	self.damageTable = {
@@ -404,16 +341,13 @@ function modifier_imba_abyssal_underlord_blizzard:OnCreated( kv )
 		ability = self:GetAbility(), --Optional.
 	}
 	-- ApplyDamage(damageTable)
-
-	self:OnRefresh()
 end
 
-function modifier_imba_abyssal_underlord_blizzard:OnRefresh()
-	if IsServer() then
-		self:IncrementStackCount()
-		self.damage_pct = self:GetAbility():GetVanillaAbilitySpecial("burn_damage") / 100
-	end
+function modifier_imba_abyssal_underlord_blizzard:OnRefresh( kv )
+	if not IsServer() then return end
 
+	self:IncrementStackCount()
+	self.damage_pct = self:GetAbility():GetVanillaAbilitySpecial("burn_damage") / 100
 	self.slow = self:GetAbility():GetSpecialValueFor("blizzard_slow_percentage") + (self:GetAbility():GetSpecialValueFor("blizzard_slow_percentage_stack") * self:GetStackCount())
 end
 
@@ -442,6 +376,7 @@ imba_abyssal_underlord_pit_of_malice = imba_abyssal_underlord_pit_of_malice or c
 LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice_cooldown", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice_thinker", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
@@ -460,11 +395,11 @@ function imba_abyssal_underlord_pit_of_malice:OnAbilityPhaseStart()
 
 	return true -- if success
 end
-
 function imba_abyssal_underlord_pit_of_malice:OnAbilityPhaseInterrupted()
 	-- kill effect
 	ParticleManager:DestroyParticle( self.effect_cast, true )
 	ParticleManager:ReleaseParticleIndex( self.effect_cast )
+
 end
 
 --------------------------------------------------------------------------------
@@ -483,7 +418,7 @@ function imba_abyssal_underlord_pit_of_malice:OnSpellStart()
 	local duration = self:GetVanillaAbilitySpecial( "pit_duration" )
 
 	-- create thinker
-	self.pit_thinker = CreateModifierThinker(
+	CreateModifierThinker(
 		caster, -- player source
 		self, -- ability source
 		"modifier_imba_abyssal_underlord_pit_of_malice_thinker", -- modifier name
@@ -495,14 +430,20 @@ function imba_abyssal_underlord_pit_of_malice:OnSpellStart()
 end
 
 function imba_abyssal_underlord_pit_of_malice:AddTwistedRealityStack()
-	if IsValidEntity(self.pit_thinker) then
-		local stack_modifier = self.pit_thinker:FindModifierByName("modifier_imba_abyssal_underlord_pit_of_malice_thinker")
-		
-		if stack_modifier then
-			stack_modifier:IncrementStackCount()
-		else
-			print("CRITICAL ERROR! Missing twisted reality stack modifier on modifier thinker.")
-		end
+	local stack_modifier = self:GetCaster():FindModifierByName("modifier_imba_abyssal_underlord_pit_of_malice_stack")
+
+	if stack_modifier then
+		stack_modifier:IncrementStackCount()
+	else
+		-- create cooldown modifier
+		self:GetCaster():AddNewModifier(
+			self:GetCaster(), -- player source
+			self, -- ability source
+			"modifier_imba_abyssal_underlord_pit_of_malice_stack", -- modifier name
+			{
+				duration = self:GetVanillaAbilitySpecial("pit_increase_duration"),
+			} -- kv
+		):SetStackCount(1)
 	end
 
 	self:PlayEffects(self.point)
@@ -516,12 +457,8 @@ function imba_abyssal_underlord_pit_of_malice:PlayEffects( point, bPlaySound )
 
 	-- Get Data
 	local radius = self:GetVanillaAbilitySpecial( "radius" )
+	local stack_modifier = self:GetCaster():FindModifierByName("modifier_imba_abyssal_underlord_pit_of_malice_stack")
 	local bonus_radius = self:GetSpecialValueFor("bonus_radius_per_stack")
-	local stack_modifier = nil
-
-	if IsValidEntity(self.pit_thinker) then
-		stack_modifier = self.pit_thinker:FindModifierByName("modifier_imba_abyssal_underlord_pit_of_malice_thinker")
-	end
 
 	if stack_modifier then
 		radius = radius + (bonus_radius * stack_modifier:GetStackCount())
@@ -625,10 +562,8 @@ function modifier_imba_abyssal_underlord_pit_of_malice_thinker:OnIntervalThink()
 				{ duration = self.duration } -- kv
 			)
 
-			if enemy:IsRealHero() then
-				self:GetAbility():AddTwistedRealityStack()
-				self:PlayEffects()
-			end
+			self:GetAbility():AddTwistedRealityStack()
+			self:PlayEffects()
 		end
 	end
 end
@@ -686,12 +621,8 @@ function modifier_imba_abyssal_underlord_pit_of_malice_thinker:PlayEffects()
 	-- Get Data
 	local parent = self:GetParent()
 	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
-	local stack_modifier = nil
+	local stack_modifier = self:GetCaster():FindModifierByName("modifier_imba_abyssal_underlord_pit_of_malice_stack")
 	local bonus_radius = self:GetAbility():GetSpecialValueFor("bonus_radius_per_stack")
-
-	if IsValidEntity(self:GetAbility().pit_thinker) then
-		stack_modifier = self:GetAbility().pit_thinker:FindModifierByName("modifier_imba_abyssal_underlord_pit_of_malice_thinker")
-	end
 
 	if stack_modifier then
 		self.radius = self.radius + (bonus_radius * stack_modifier:GetStackCount())
@@ -843,6 +774,12 @@ end
 
 function modifier_imba_abyssal_underlord_pit_of_malice:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+modifier_imba_abyssal_underlord_pit_of_malice_stack = modifier_imba_abyssal_underlord_pit_of_malice_stack or class({})
+
+function modifier_imba_abyssal_underlord_pit_of_malice_stack:OnStackCountChanged(iStackCount)
+	self:SetDuration(self:GetAbility():GetVanillaAbilitySpecial("pit_increase_duration"), true)
 end
 
 --------------------------------------------------------------------------------
@@ -1021,9 +958,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura:OnRefresh( kv )
 	if not IsServer() then return end
 
 	-- refresh scepter modifier
-	if self.scepter_aura then
-		self.scepter_aura:ForceRefresh()
-	end
+	self.scepter_aura:ForceRefresh()
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura:OnRemoved()
@@ -1037,7 +972,7 @@ end
 function modifier_imba_abyssal_underlord_atrophy_aura:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_DEATH,
-		MODIFIER_PROPERTY_TOOLTIP,
+		
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 	}
 
@@ -1101,10 +1036,6 @@ function modifier_imba_abyssal_underlord_atrophy_aura:OnDeath( params )
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura:GetModifierPreAttack_BonusDamage()
-	return self:GetStackCount()
-end
-
-function modifier_imba_abyssal_underlord_atrophy_aura:OnTooltip()
 	return self:GetStackCount()
 end
 
@@ -1439,9 +1370,7 @@ end
 
 --------------------------------------------------------------------------------
 imba_abyssal_underlord_dark_rift = imba_abyssal_underlord_dark_rift or class(VANILLA_ABILITIES_BASECLASS)
-
 LinkLuaModifier( "modifier_imba_abyssal_underlord_dark_rift", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_dark_rift_foulfell_energy", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -1521,60 +1450,32 @@ function imba_abyssal_underlord_cancel_dark_rift:OnSpellStart()
 	self.modifier = nil
 end
 
-function imba_abyssal_underlord_cancel_dark_rift:OnInventoryContentsChanged()
-	if not IsServer() then return end
-
-	-- Checks if hero now has shard / scepter
-	local caster = self:GetCaster()
-	local ability = "abyssal_underlord_dark_portal"
-
-	if caster:HasAbility(ability) then
-		local ability_handler = caster:FindAbilityByName(ability)
-
-		if ability_handler then
-			if caster:HasScepter() then
-				ability_handler:SetLevel(1)
-				ability_handler:SetHidden(false)
-			end
-		end
-	end
-end
-
 --------------------------------------------------------------------------------
 modifier_imba_abyssal_underlord_dark_rift = modifier_imba_abyssal_underlord_dark_rift or class({})
 
 --------------------------------------------------------------------------------
 -- Classifications
-function modifier_imba_abyssal_underlord_dark_rift:IsHidden() return false end
-function modifier_imba_abyssal_underlord_dark_rift:IsDebuff() return false end
-function modifier_imba_abyssal_underlord_dark_rift:IsPurgable() return false end
--- function modifier_imba_abyssal_underlord_dark_rift:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_abyssal_underlord_dark_rift:IsHidden()
+	return false
+end
 
--- aura specials
-function modifier_imba_abyssal_underlord_dark_rift:IsAura() return true end
-function modifier_imba_abyssal_underlord_dark_rift:GetModifierAura() return "modifier_imba_abyssal_underlord_dark_rift_foulfell_energy" end
-function modifier_imba_abyssal_underlord_dark_rift:GetAuraRadius() return self.radius end
-function modifier_imba_abyssal_underlord_dark_rift:GetAuraDuration() return 0.2 end
-function modifier_imba_abyssal_underlord_dark_rift:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_imba_abyssal_underlord_dark_rift:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO end
-function modifier_imba_abyssal_underlord_dark_rift:GetAuraSearchFlags() return 0 end
+function modifier_imba_abyssal_underlord_dark_rift:IsDebuff()
+	return false
+end
 
--- Modifier Effects
-function modifier_imba_abyssal_underlord_dark_rift:DeclareFunctions() return {
-	MODIFIER_EVENT_ON_DEATH,
-} end
+function modifier_imba_abyssal_underlord_dark_rift:IsPurgable()
+	return false
+end
 
--- Status Effects
-function modifier_imba_abyssal_underlord_dark_rift:CheckState() return {
-	[MODIFIER_STATE_LOW_ATTACK_PRIORITY] = true,
-} end
+function modifier_imba_abyssal_underlord_dark_rift:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
 
 --------------------------------------------------------------------------------
 -- Initializations
 function modifier_imba_abyssal_underlord_dark_rift:OnCreated( kv )
 	-- references
 	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
-	self.max_stacks = self:GetAbility():GetSpecialValueFor("foulfell_max_stacks")
 
 	if not IsServer() then return end
 
@@ -1582,33 +1483,6 @@ function modifier_imba_abyssal_underlord_dark_rift:OnCreated( kv )
 
 	self:PlayEffects1()
 	self:PlayEffects2()
-
-	print("Created Dark Rift modifier (aura)")
-
-	self:StartIntervalThink(0.1)
-end
-
-function modifier_imba_abyssal_underlord_dark_rift:OnIntervalThink()
-	-- Find all allied heroes and player controlled creeps
-	local allies = FindUnitsInRadius(
-		self:GetCaster():GetTeamNumber(),
-		self:GetCaster():GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-		DOTA_UNIT_TARGET_HERO,
-		DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-		FIND_ANY_ORDER,
-		false
-	)
-
-	for _, ally in pairs(allies) do
-		local buff = ally:FindModifierByName("modifier_imba_abyssal_underlord_dark_rift_foulfell_energy")
-
-		if buff then
-			buff:SetStackCount(math.min(#allies, self.max_stacks))
-		end
-	end
 end
 
 function modifier_imba_abyssal_underlord_dark_rift:OnRefresh( kv )
@@ -1662,6 +1536,16 @@ end
 function modifier_imba_abyssal_underlord_dark_rift:OnDestroy()
 end
 
+--------------------------------------------------------------------------------
+-- Modifier Effects
+function modifier_imba_abyssal_underlord_dark_rift:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_DEATH,
+	}
+
+	return funcs
+end
+
 function modifier_imba_abyssal_underlord_dark_rift:OnDeath( params )
 	if not IsServer() then return end
 
@@ -1669,6 +1553,16 @@ function modifier_imba_abyssal_underlord_dark_rift:OnDeath( params )
 
 	-- either caster or target dies, destroy
 	self:Cancel()
+end
+
+--------------------------------------------------------------------------------
+-- Status Effects
+function modifier_imba_abyssal_underlord_dark_rift:CheckState()
+	local state = {
+		[MODIFIER_STATE_LOW_ATTACK_PRIORITY] = true,
+	}
+
+	return state
 end
 
 --------------------------------------------------------------------------------
@@ -1801,24 +1695,4 @@ function modifier_imba_abyssal_underlord_dark_rift:PlayEffects4()
 	StopSoundOn( sound_cast2, parent )
 	EmitSoundOn( sound_cancel, caster )
 	EmitSoundOn( sound_cancel, parent )
-end
-
-modifier_imba_abyssal_underlord_dark_rift_foulfell_energy = modifier_imba_abyssal_underlord_dark_rift_foulfell_energy or class({})
-
-function modifier_imba_abyssal_underlord_dark_rift_foulfell_energy:DeclareFunctions() return {
-	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-	MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
-} end
-
-function modifier_imba_abyssal_underlord_dark_rift_foulfell_energy:OnCreated()
-	self.bonus_movespeed = self:GetAbility():GetSpecialValueFor("bonus_movespeed_per_hero")
-	self.bonus_status_resistance = self:GetAbility():GetSpecialValueFor("bonus_status_resistance_per_hero")
-end
-
-function modifier_imba_abyssal_underlord_dark_rift_foulfell_energy:GetModifierMoveSpeedBonus_Percentage()
-	return self.bonus_movespeed * self:GetStackCount()
-end
-
-function modifier_imba_abyssal_underlord_dark_rift_foulfell_energy:GetModifierStatusResistanceStacking()
-	return self.bonus_status_resistance * self:GetStackCount()
 end

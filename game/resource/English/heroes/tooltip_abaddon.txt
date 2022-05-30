@@ -1,5 +1,4 @@
 // Abaddon's Mist Coil
-"DOTA_Tooltip_ability_imba_abaddon_death_coil"                          "#{DOTA_Tooltip_ability_abaddon_death_coil}"
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_1"			"<font color='#FF7800'>Inner Mists:</font> Can be self-cast."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_2"			"<font color='#FF7800'>Parting Gift:</font> On death, Mist Coil is cast on all allies within cast range."
 "DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_3"			"<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target."
@@ -12,7 +11,6 @@
 "DOTA_Tooltip_modifier_imba_mist_coil_mist_ally_Description"            "At the end of the duration, receive a portion of the damage sustained as a heal."
 
 // Abaddon's Aphotic Shield
-"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield"                          "#{DOTA_Tooltip_ability_abaddon_aphotic_shield}"
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Note0"                "Self-castable, can be casted on buildings."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Imbafication_1"		"<font color='#FF7800'>Black Mist:</font> Can be cast on spell-immune allies."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Imbafication_2"		"<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
@@ -21,12 +19,10 @@
 "DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block_Description"		"Incoming damage blocked by Aphotic Shield's protection"
 
 // Abaddon's Curse of Avernus
-"DOTA_Tooltip_ability_imba_abaddon_frostmourne"                          "#{DOTA_Tooltip_ability_abaddon_frostmourne}"
-"DOTA_Tooltip_ability_imba_abaddon_frostmourne_shard_description"		"#{DOTA_Tooltip_ability_abaddon_frostmourne_shard_description}"
-"DOTA_Tooltip_ability_imba_abaddon_frostmourne_Imbafication_1"			"<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal Abaddon by %heal_convert%% of the damage."
+"DOTA_Tooltip_ability_imba_abaddon_frostmourne_Imbafication_1"		"<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal Abaddon by %heal_convert%% of the damage."
 
-"DOTA_Tooltip_modifier_imba_frostmourne_debuff_slow"					"Curse of Avernus"
-"DOTA_Tooltip_modifier_imba_frostmourne_debuff_slow_Description"		"Slowed and granting bonus speed to attackers."
+"DOTA_Tooltip_modifier_imba_frostmourne_debuff_slow"              "Curse of Avernus"
+"DOTA_Tooltip_modifier_imba_frostmourne_debuff_slow_Description"	"Slowed and granting bonus speed to attackers."
 
 "DOTA_Tooltip_modifier_imba_frostmourne_buff_haste"                "Curse of Avernus"
 "DOTA_Tooltip_modifier_imba_frostmourne_buff_haste_Description"	"Gaining bonus move and attack speed due to attacking Abaddon's target."
@@ -51,8 +47,6 @@
 "DOTA_Tooltip_modifier_over_channel_reduction_Description"				"Overchanneling mist lessens your grip of the physical realm. Attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, and movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%."
 
 // Abaddon's Borrowed Time
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time"                       "#{DOTA_Tooltip_ability_abaddon_borrowed_time}"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_scepter_description"	"#{DOTA_Tooltip_ability_abaddon_borrowed_time_scepter_description}"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will not activate if the incoming damage is more than Abaddon's current health."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Imbafication_1"		"<font color='#FF7800'>Borrowed Pain:</font> %redirect%% of damage taken by Abaddon's nearby allies will be redirected to him while Borrowed Time is active."

@@ -1,90 +1,2076 @@
 #base heroes/abaddon/hero.txt
 #base heroes/abyssal_underlord/hero.txt
-#base heroes/alchemist/hero.txt
 #base heroes/ancient_apparition/hero.txt
-#base heroes/axe/hero.txt
-#base heroes/centaur/hero.txt
-// #base heroes/earth_spirit/hero.txt // Causes game crash
-#base heroes/enigma/hero.txt
-#base heroes/faceless_void/hero.txt
-#base heroes/juggernaut/hero.txt
-#base heroes/lion/hero.txt
+#base heroes/batrider/hero.txt
+#base heroes/beastmaster/hero.txt
+#base heroes/brewmaster/hero.txt
+#base heroes/bristleback/hero.txt
+// #base heroes/broodmother/hero.txt
+#base heroes/chaos_knight/hero.txt
+#base heroes/chen/hero.txt
+#base heroes/dark_seer/hero.txt
+#base heroes/dark_willow/hero.txt
+#base heroes/death_prophet/hero.txt
+#base heroes/doom_bringer/hero.txt
+#base heroes/earthshaker/hero.txt
+#base heroes/ember_spirit/hero.txt
+#base heroes/enchantress/hero.txt
+#base heroes/furion/hero.txt
+#base heroes/grimstroke/hero.txt
+#base heroes/gyrocopter/hero.txt
+#base heroes/hoodwink/hero.txt
+#base heroes/huskar/hero.txt
+#base heroes/keeper_of_the_light/hero.txt
+#base heroes/legion_commander/hero.txt
+#base heroes/leshrac/hero.txt
+#base heroes/life_stealer/hero.txt
+#base heroes/lone_druid/hero.txt
+#base heroes/luna/hero.txt
 #base heroes/mars/hero.txt
-#base heroes/pudge/hero.txt
+#base heroes/medusa/hero.txt
+#base heroes/meepo/hero.txt
+#base heroes/monkey_king/hero.txt
+#base heroes/morphling/hero.txt
+#base heroes/naga_siren/hero.txt
+#base heroes/ogre_magi/hero.txt
+#base heroes/oracle/hero.txt
+#base heroes/outworld_devourer/hero.txt
+#base heroes/phantom_lancer/hero.txt
+// #base heroes/puck/hero.txt
+#base heroes/rattletrap/hero.txt
+#base heroes/razor/hero.txt
+#base heroes/riki/hero.txt
+#base heroes/rubick/hero.txt
+#base heroes/shadow_shaman/hero.txt
+#base heroes/silencer/hero.txt
+#base heroes/slark/hero.txt
+#base heroes/snapfire/hero.txt
+#base heroes/spectre/hero.txt
+#base heroes/spirit_breaker/hero.txt
+#base heroes/shadow_demon/hero.txt
 #base heroes/techies/hero.txt
-
-#base old_heroes/abaddon/hero.txt
-#base old_heroes/abyssal_underlord/hero.txt
-#base old_heroes/ancient_apparition/hero.txt
-#base old_heroes/batrider/hero.txt
-#base old_heroes/beastmaster/hero.txt
-#base old_heroes/brewmaster/hero.txt
-#base old_heroes/bristleback/hero.txt
-// #base old_heroes/broodmother/hero.txt
-#base old_heroes/chaos_knight/hero.txt
-#base old_heroes/chen/hero.txt
-#base old_heroes/dark_seer/hero.txt
-#base old_heroes/dark_willow/hero.txt
-#base old_heroes/death_prophet/hero.txt
-#base old_heroes/doom_bringer/hero.txt
-#base old_heroes/earthshaker/hero.txt
-#base old_heroes/ember_spirit/hero.txt
-#base old_heroes/enchantress/hero.txt
-#base old_heroes/furion/hero.txt
-#base old_heroes/grimstroke/hero.txt
-#base old_heroes/gyrocopter/hero.txt
-#base old_heroes/hoodwink/hero.txt
-#base old_heroes/huskar/hero.txt
-#base old_heroes/keeper_of_the_light/hero.txt
-#base old_heroes/legion_commander/hero.txt
-#base old_heroes/leshrac/hero.txt
-#base old_heroes/life_stealer/hero.txt
-#base old_heroes/lone_druid/hero.txt
-#base old_heroes/luna/hero.txt
-#base old_heroes/mars/hero.txt
-#base old_heroes/medusa/hero.txt
-#base old_heroes/meepo/hero.txt
-#base old_heroes/monkey_king/hero.txt
-#base old_heroes/morphling/hero.txt
-#base old_heroes/naga_siren/hero.txt
-#base old_heroes/ogre_magi/hero.txt
-#base old_heroes/oracle/hero.txt
-#base old_heroes/outworld_devourer/hero.txt
-#base old_heroes/phantom_lancer/hero.txt
-// #base old_heroes/puck/hero.txt
-#base old_heroes/rattletrap/hero.txt
-#base old_heroes/razor/hero.txt
-#base old_heroes/riki/hero.txt
-#base old_heroes/rubick/hero.txt
-#base old_heroes/shadow_shaman/hero.txt
-#base old_heroes/silencer/hero.txt
-#base old_heroes/slark/hero.txt
-#base old_heroes/snapfire/hero.txt
-#base old_heroes/spectre/hero.txt
-#base old_heroes/spirit_breaker/hero.txt
-#base old_heroes/shadow_demon/hero.txt
-#base old_heroes/techies/hero.txt
 // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
-#base old_heroes/templar_assassin/hero.txt
-#base old_heroes/terrorblade/hero.txt
-#base old_heroes/tidehunter/hero.txt
-#base old_heroes/timbersaw/hero.txt
-#base old_heroes/tinker/hero.txt
-#base old_heroes/treant/hero.txt
-#base old_heroes/tusk/hero.txt
-#base old_heroes/undying/hero.txt
-#base old_heroes/visage/hero.txt
-#base old_heroes/viper/hero.txt
-#base old_heroes/void_spirit/hero.txt
-#base old_heroes/weaver/hero.txt
-#base old_heroes/wisp/hero.txt
-#base old_heroes/zeus/hero.txt
-#base old_heroes/windranger/hero.txt
-#base old_heroes/winter_wyvern/hero.txt
+#base heroes/templar_assassin/hero.txt
+#base heroes/terrorblade/hero.txt
+#base heroes/tidehunter/hero.txt
+#base heroes/timbersaw/hero.txt
+#base heroes/tinker/hero.txt
+#base heroes/treant/hero.txt
+#base heroes/tusk/hero.txt
+#base heroes/undying/hero.txt
+#base heroes/visage/hero.txt
+#base heroes/viper/hero.txt
+#base heroes/void_spirit/hero.txt
+#base heroes/weaver/hero.txt
+#base heroes/wisp/hero.txt
+#base heroes/zeus/hero.txt
+#base heroes/windranger/hero.txt
+#base heroes/winter_wyvern/hero.txt
 // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
-#base old_heroes/invoker/hero.txt
+#base heroes/invoker/hero.txt
+#base custom_heroes/hell_empress/hero.txt
+#base custom_heroes/malfurion/hero.txt
+#base custom_heroes/nian/hero.txt
+#base custom_heroes/sohei/hero.txt
+#base custom_heroes/vardor/hero.txt
 
 "DOTAHeroes"
 {
+	//=================================================================================================================
+	// HERO: Arc Warden
+	//=================================================================================================================
+	"npc_dota_hero_arc_warden"
+	{
+		"Ability12"					"special_bonus_magic_resistance_20"
+	}
 
+	//=================================================================================================================
+	// HERO: Alchemist
+	//=================================================================================================================
+	"npc_dota_hero_alchemist"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_alchemist_acid_spray"
+		"Ability2"					"imba_alchemist_unstable_concoction"
+		"Ability3"					"imba_alchemist_goblins_greed"		
+		"Ability4"					"imba_alchemist_mammonite"	
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_alchemist_chemical_rage"
+		"Ability7"					"alchemist_unstable_concoction_throw" // This ability is here only to gather vanilla values from it
+
+		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains +150% gold (additive) from bounty runes
+		"Ability11"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
+		"Ability12"					"special_bonus_hp_500"
+		"Ability13"					"special_bonus_attack_damage_50"
+		"Ability14"					"special_bonus_cleave_30"
+		"Ability15"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
+		"Ability16"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
+		"Ability17"					"special_bonus_imba_alchemist_8" // Chemical Rage grants a damage aura
+
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_alchemist_3" // Bounty runes spawn gold bags
+		// "Ability13"					"special_bonus_imba_alchemist_4" // Enemies affected by Acid Spray have a chance to drop gold bags on death.
+		//"Ability14"					"special_bonus_imba_alchemist_6" // When in Chemical Rage, Alchemist brews Unstable Concoction faster.
+	}
+
+	//=================================================================================================================
+	// HERO: Antimage
+	//=================================================================================================================
+	"npc_dota_hero_antimage"
+	{
+	
+
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_antimage_mana_break"
+		"Ability2"					"imba_antimage_blink"
+		"Ability3"					"imba_antimage_spell_shield"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_antimage_mana_void"
+
+		"Ability10"					"special_bonus_strength_13"
+		"Ability11"					"special_bonus_attack_speed_25"
+		"Ability12"					"special_bonus_imba_antimage_blink_range"
+		"Ability13"					"special_bonus_agility_15"
+		"Ability14"					"special_bonus_imba_antimage_9" // Blink Uncontrollable Illusion
+		"Ability15"					"special_bonus_imba_antimage_10" // -Xs Blink Cooldown
+		"Ability16"					"special_bonus_imba_antimage_11" // +X% Counterspell Magic Resistance
+		"Ability17"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
+		
+		// Removed Abilities
+		// "Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
+		// "Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
+		// "Ability12"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
+		// "Ability12"					""special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
+		// "Ability14"					"special_bonus_imba_antimage_1" //Blink now has charges
+		// "Ability15"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
+		// "Ability17"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
+	}
+
+	//=================================================================================================================
+	// HERO: Axe
+	//=================================================================================================================
+	"npc_dota_hero_axe"
+	{
+	
+
+		//Picking Screen
+		"IsImba"					"1"
+		
+		"Ability1"					"imba_axe_berserkers_call"
+		"Ability2"					"imba_axe_battle_hunger"
+		"Ability3"					"imba_axe_counter_helix"
+		"Ability4"					"generic_hidden"
+		"Ability6"					"imba_axe_culling_blade"
+
+		"Ability10"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
+		"Ability11"					"special_bonus_attack_speed_40"
+		"Ability12"					"special_bonus_imba_axe_3" // Allows self-casting of Battle Hunger - applies it to everyone affected by Berserker's Call.
+		"Ability13"					"special_bonus_imba_axe_8" // +X Culling Blade cast range (leaps into the target to execute it).
+		"Ability14"					"special_bonus_hp_regen_30"
+		"Ability15"					"special_bonus_imba_axe_9" // Attacking procs Counter Helix
+		"Ability16"					"special_bonus_imba_axe_4" // +30% of your strength added to Counter Helix damage.
+		"Ability17"					"special_bonus_imba_axe_5" // Counter Helix chance doubles, but each Counter Helix deals 66% of the original base damage. 
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_axe_1" // If an enemy unit with Battle Hunger attacks an ally, that ally also gains the Battle Hunger debuff
+		// "Ability11"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
+		// "Ability16"					"special_bonus_imba_axe_6" // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
+	}
+
+	//=================================================================================================================
+	// HERO: Bane
+	//=================================================================================================================
+	"npc_dota_hero_bane"
+	{
+	
+
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_bane_enfeeble_723"
+		"Ability2"					"imba_bane_brain_sap_723"
+		"Ability3"					"imba_bane_nightmare"
+		"Ability4"					"imba_bane_nightmare_end"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_bane_fiends_grip_723"		
+
+		"Ability10"					"special_bonus_armor_7"
+		"Ability11"					"special_bonus_cast_range_100"
+		"Ability12"					"special_bonus_spell_amplify_8"
+		"Ability13"					"special_bonus_imba_bane_7" //Nightmare invulnerability duration increase for allies
+		"Ability14"					"special_bonus_spell_lifesteal_20"
+		"Ability15"					"special_bonus_imba_bane_3" //Fiend's Grip is no longer channeled
+		"Ability16"					"special_bonus_imba_bane_brain_sap_damage"
+		"Ability17"					"special_bonus_imba_bane_fiends_grip_duration"
+		
+		// Removed Abilities
+		// "Ability1"					"imba_bane_enfeeble"
+		// "Ability2"					"imba_bane_brain_sap"
+		// "Ability6"					"imba_bane_fiends_grip"
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
+		// "Ability11"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
+		// "Ability12"					"special_bonus_imba_bane_6" //Nightmare also mutes items for enemies affected.
+		// "Ability14"					"special_bonus_imba_bane_2" //Enfeeble is now cast in a AoE to all targets around the main target.
+		// "Ability16"					"special_bonus_imba_bane_8" //Fiend's Grip spread during channeling
+		// "Ability17"					"special_bonus_imba_bane_5" //Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
+	}
+
+	//=================================================================================================================
+	// HERO: Bloodseeker
+	//=================================================================================================================
+	"npc_dota_hero_bloodseeker"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_bloodseeker_bloodrage"
+		"Ability2"					"imba_bloodseeker_blood_bath"
+		"Ability3"					"bloodseeker_thirst"
+		//"Ability3"					"imba_bloodseeker_thirst"
+		//"Ability3"					"imba_bloodseeker_thirst_v2"
+		"Ability4"					"generic_hidden"
+		"Ability6"					"imba_bloodseeker_rupture"
+
+		"Ability10"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
+		"Ability11"					"special_bonus_armor_6"
+		"Ability12"					"special_bonus_hp_300"
+		"Ability13"					"special_bonus_imba_bloodseeker_7" //Killing a Bloodraged unit grants the killer huge speed buff
+		"Ability14"					"special_bonus_imba_bloodseeker_rupture_cast_range"
+		"Ability15"					"special_bonus_lifesteal_25"
+		"Ability16"					"special_bonus_imba_bloodseeker_9" //-6s Blood Rite Cooldown
+		"Ability17"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
+		
+//		Removed Abilities
+//		"Ability10"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
+//		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase
+//		"Ability12"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
+//		"Ability14"					"special_bonus_imba_bloodseeker_4" //Blood Rite's silence becomes unpurgable
+//		"Ability15"					"special_bonus_imba_bloodseeker_3" //Rupture Damage Heals Bloodseeker	
+//
+	}
+
+	//=================================================================================================================
+	// HERO: Bounty Hunter
+	//=================================================================================================================
+	"npc_dota_hero_bounty_hunter"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_bounty_hunter_shuriken_toss"
+		"Ability2"			 		"imba_bounty_hunter_jinada"
+		"Ability3"					"imba_bounty_hunter_shadow_walk"
+		"Ability4"					"imba_bounty_hunter_headhunter"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_bounty_hunter_track"
+
+		"Ability10"					"special_bonus_imba_bounty_hunter_6" //While in Shadow Walk, as long as Bounty Hunter is moving, he gains bonus move speed
+		"Ability11"					"special_bonus_imba_bounty_hunter_3" //Jinada can now be cast on allies, granting them the ensured Jinada buff
+		"Ability12"					"special_bonus_imba_bounty_hunter_2" //Tracked enemies grant normal vision instead of fogvision for the duration.
+		"Ability13"					"special_bonus_imba_bounty_hunter_7" //Shadow Jaunt can be cast on Headhunter's contract targets from huge range
+		"Ability14"					"special_bonus_attack_speed_60"
+		"Ability15"					"special_bonus_imba_bounty_hunter_9" // +X Jinada Gold Steal
+		"Ability16"					"special_bonus_imba_bounty_hunter_1" //Tracked enemies take increased damage from any source
+		"Ability17"					"special_bonus_imba_bounty_hunter_8" //Track becomes hidden and unpurgable
+		
+		// Removed Talents
+		// "Ability14"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit // DISABLED
+		// "Ability15"					"special_bonus_imba_bounty_hunter_5" // Global Shuriken bounce range on all Tracked target
+	}
+
+	//=================================================================================================================
+	// HERO: Centaur
+	//=================================================================================================================
+	"npc_dota_hero_centaur"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+ 
+		"Ability1"					"imba_centaur_hoof_stomp"
+		"Ability2"					"imba_centaur_double_edge"
+		"Ability3"					"imba_centaur_return"
+		"Ability4"					"imba_centaur_thick_hide"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_centaur_stampede"
+
+		"Ability10"					"special_bonus_imba_centaur_1" //Double Edge self-damage reduction
+		"Ability11"					"special_bonus_imba_centaur_4" //Double edge damage in increased by x * strength
+		"Ability12"					"special_bonus_attack_base_damage_30" //Stampede duration increase per trampled enemy
+		"Ability13"					"special_bonus_imba_centaur_2" //Arena damage reduction extends to allies
+		"Ability14"					"special_bonus_imba_centaur_9" // +X Retaliate Damage
+		"Ability15"					"special_bonus_strength_20"
+		"Ability16"					"special_bonus_imba_centaur_6" //Return becomes an aura
+		"Ability17"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
+		
+		// Removed Talents
+		//"Ability12"					"special_bonus_imba_centaur_8" //Stampede duration increase per trampled enemy
+		//"Ability14"					"special_bonus_imba_centaur_3" //Centaur hoof stomp arena moves along with hero
+		//"Ability17"					"special_bonus_imba_centaur_5" //Heroes with Stampede haste get 75% tenacity. 
+	}
+
+	//=================================================================================================================
+	//	HERO: Clinkz
+	//=================================================================================================================
+	"npc_dota_hero_clinkz"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_clinkz_strafe"
+		"Ability2"					"imba_clinkz_searing_arrows"
+		"Ability3"					"imba_clinkz_skeleton_walk_723"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_clinkz_death_pact"
+		
+//		"Ability9"					"imba_form_change_clinkz"
+
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_armor_6"
+		"Ability12"					"special_bonus_imba_clinkz_8"
+		"Ability13"					"special_bonus_strength_15"
+		"Ability14"					"special_bonus_attack_range_125"
+		"Ability15"					"special_bonus_imba_clinkz_death_pact_723_health"
+		"Ability16"					"special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration"
+		"Ability17"					"special_bonus_imba_clinkz_10" // Searing Arrows Multishot
+		
+		// Form Change Abilities
+		// "Ability1"					"imba_clinkz_strafe"
+		// "Ability3"					"imba_clinkz_skeleton_walk"
+		
+		// Form Change Talents
+		// "Ability15"					"special_bonus_hp_regen_16"
+		// "Ability16"					"special_bonus_imba_clinkz_9"
+		
+		// Removed Talents
+		//"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
+		//"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
+		//"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
+		// "Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
+		// "Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
+		//"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
+		//"Ability17"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
+	}
+
+	//=================================================================================================================
+	// HERO: Crystal Maiden
+	//=================================================================================================================
+	"npc_dota_hero_crystal_maiden"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+		
+		"Ability1"					"imba_crystal_maiden_crystal_nova"
+		"Ability2"					"imba_crystal_maiden_frostbite"
+		"Ability3"					"imba_crystal_maiden_brilliance_aura"
+		"Ability4"					"imba_crystal_maiden_arcane_dynamo"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_crystal_maiden_freezing_field"
+
+		"Ability10"					"special_bonus_hp_300"
+		"Ability11"					"special_bonus_cast_range_100"
+		"Ability12"					"special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction"
+		"Ability13"					"special_bonus_imba_crystal_maiden_4" //Double Arcane Dynamo's bonuses
+		"Ability14"					"special_bonus_attack_speed_250"
+		"Ability15"					"special_bonus_imba_crystal_maiden_8" //+50% Freezing Field explosion rate
+		"Ability16"					"special_bonus_imba_crystal_maiden_frostbite_duration"
+		"Ability17"					"special_bonus_imba_crystal_maiden_crystal_nova_damage"
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_crystal_maiden_2" //Frostbite can be cast on allies to regen health and mana and reduce damage taken
+		// "Ability11"					"special_bonus_imba_crystal_maiden_5" //Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds
+		// "Ability13"					"special_bonus_imba_crystal_maiden_1" //Icy Touch causes a 100% movement speed slow that is slowly regained over 6 seconds
+		//"Ability14"					"special_bonus_imba_crystal_maiden_7" //Freezing Field no longer drops projectiles - instead, at the end of channel, the damage (based on channeled time) is distributed randomly amongst enemies in Freezing Field's AoE
+		// "Ability16"					"special_bonus_imba_crystal_maiden_6" //Freezing Field constantly Frostbites enemies in it during the duration of the spell
+		// "Ability17"					"special_bonus_imba_crystal_maiden_3" //Crystal Nova's Snowfield grants damage reduction and increases health regeneration. 
+	}
+
+	//=================================================================================================================
+	// HERO: Dazzle
+	//=================================================================================================================
+	"npc_dota_hero_dazzle"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_dazzle_poison_touch_707"
+		"Ability2"					"imba_dazzle_shallow_grave"
+		"Ability3"					"imba_dazzle_shadow_wave"
+//		"Ability4"                  "imba_dazzle_ressurection"
+		"Ability4"                  "generic_hidden"
+		"Ability5"                  "generic_hidden"
+		"Ability6"					"imba_dazzle_bad_juju"
+
+		"Ability10"					"special_bonus_attack_damage_75"
+		"Ability11"					"special_bonus_hp_300"
+		"Ability12"					"special_bonus_cast_range_200"
+		"Ability13"					"special_bonus_imba_dazzle_7" // Weave now fully affects buildings
+		"Ability14"					"special_bonus_movement_speed_40"
+		"Ability15"					"special_bonus_imba_dazzle_poison_touch_damage"
+		"Ability16"					"special_bonus_imba_dazzle_poison_touch_slow"
+		"Ability17"					"special_bonus_imba_dazzle_8" // Shadow Wave applies a basic dispel
+		
+		// Removed Abilities
+		// "Ability1"					"imba_dazzle_poison_touch"
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage 
+		// "Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
+		// "Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
+		// "Ability15"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
+		// "Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
+		// "Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends	
+	}
+
+	//=================================================================================================================
+	// HERO: Disruptor
+	//=================================================================================================================
+	"npc_dota_hero_disruptor"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_disruptor_thunder_strike"
+		"Ability2"					"imba_disruptor_glimpse"
+		"Ability3"					"imba_disruptor_kinetic_field"
+		"Ability4"					"imba_disruptor_stormbearer"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_disruptor_static_storm"
+
+		"Ability10"					"special_bonus_hp_300"
+		"Ability11"					"special_bonus_imba_disruptor_1"
+		"Ability12"					"special_bonus_cast_range_150"
+		"Ability13"					"special_bonus_imba_disruptor_3"
+		"Ability14"					"special_bonus_imba_disruptor_kinetic_field_true_sight"
+		"Ability15"					"special_bonus_imba_disruptor_8"
+		"Ability16"					"special_bonus_imba_disruptor_9"
+		"Ability17"					"special_bonus_imba_disruptor_10"
+		
+		// Removed Talents (they're...bad.)
+		// "Ability11"					"special_bonus_imba_disruptor_2" // Glimpse Storm lingers longer
+		// "Ability13"					"special_bonus_imba_disruptor_4" // Thunder Strike Slow
+		// "Ability14"					"special_bonus_imba_disruptor_5" (Glimpse Storm Expansion - Glimpsing an enemy into an already formed Kinetic Field expands Glimpse Storm's size to match.)
+		// "Ability15"					"special_bonus_imba_disruptor_6" (Static Storm builds stacks of mini-stun (applies upon exit))
+		// "Ability16"					"special_bonus_imba_disruptor_7"
+	}
+
+	//=================================================================================================================
+	// HERO: Dragon Knight
+	//=================================================================================================================
+	"npc_dota_hero_dragon_knight"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_dragon_knight_breathe_fire"
+		"Ability2"					"imba_dragon_knight_dragon_tail"
+		"Ability3"					"imba_dragon_knight_dragon_blood"
+		"Ability4"					"imba_dragon_knight_elder_dragon_charge"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_dragon_knight_elder_dragon_form"
+
+		"Ability10"					"special_bonus_imba_dragon_knight_1"
+		"Ability11"					"special_bonus_imba_dragon_knight_3"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_hp_400"
+		"Ability14"					"special_bonus_imba_dragon_knight_5"
+		"Ability15"					"special_bonus_strength_25"
+		"Ability16"					"special_bonus_imba_dragon_knight_7"
+		"Ability17"					"special_bonus_imba_dragon_knight_4"
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_dragon_knight_2" // "x2 range for Elder Dragon Charge"
+		// "Ability15"					"special_bonus_imba_dragon_knight_6" // "EDF reduces enemies' damage by 20% in 600 radius"
+		// "Ability17"					"special_bonus_imba_dragon_knight_8" // "+3% of current health as movespeed"
+	}
+
+	//=================================================================================================================
+	// HERO: Drow Ranger
+	//=================================================================================================================
+	"npc_dota_hero_drow_ranger"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+		
+		"Ability1"					"imba_drow_ranger_frost_arrows_723"
+		"Ability2"					"imba_drow_ranger_gust"
+		"Ability3"					"imba_drow_ranger_multishot"
+		"Ability4"					"imba_drow_ranger_deadeye"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_drow_ranger_marksmanship_723"
+		
+//		"Ability9"					"imba_form_change_drow_ranger"
+
+		"Ability10"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
+		"Ability11"					"special_bonus_all_stats_6"
+		"Ability12"					"special_bonus_agility_12"
+		"Ability13"					"special_bonus_imba_drow_ranger_9" //+x Gust Distance/Knockback
+		"Ability14"					"special_bonus_unique_drow_ranger_1"
+		"Ability15"					"special_bonus_imba_drow_ranger_frost_arrows_damage"
+		"Ability16"					"special_bonus_unique_drow_ranger_3"
+		"Ability17"					"special_bonus_cooldown_reduction_40"
+	
+		// Form Change Abilities
+		// "Ability1"					"imba_drow_ranger_frost_arrows"
+		// "Ability3"					"imba_drow_ranger_trueshot_720"
+		// "Ability6"					"imba_drow_ranger_marksmanship"
+		
+		// Form Change Talents
+		// "Ability12"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by x%.
+		// "Ability14"					"special_bonus_evasion_25"
+		// "Ability15"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
+		// "Ability16"					"special_bonus_imba_drow_ranger_10" // +25% Precision Aura Attack Speed
+		// "Ability17"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for x seconds. This small gust wave pushes the main target back x units for x seconds, deals no damage, and does not silence.
+		
+		// Removed Abilities
+		// "Ability3"				"imba_drow_ranger_trueshot"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
+		// "Ability14"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+		// "Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disabled by distance
+	}
+
+	//=================================================================================================================
+	// HERO: Earth Spirit
+	//=================================================================================================================
+	"npc_dota_hero_earth_spirit"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_earth_spirit_boulder_smash"
+		"Ability2"					"imba_earth_spirit_rolling_boulder"
+		"Ability3"					"imba_earth_spirit_geomagnetic_grip"
+		"Ability4"					"imba_earth_spirit_stone_caller"
+		"Ability5"					"imba_earth_spirit_petrify"
+		"Ability6"					"imba_earth_spirit_magnetize"
+
+		"Ability10"					"special_bonus_imba_earth_spirit_1"
+		"Ability11"					"special_bonus_attack_damage_65"
+		"Ability12"					"special_bonus_imba_earth_spirit_3"
+		"Ability13"					"special_bonus_armor_8"
+		"Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
+		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
+		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
+		"Ability17"					"special_bonus_imba_earth_spirit_2"
+		
+		// Removed Talents
+		// "Ability14"					"special_bonus_spell_amplify_20"
+		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
+		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
+		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
+		// "Ability17"					"special_bonus_imba_earth_spirit_8"
+	}
+
+	//=================================================================================================================
+	// HERO: Elder Titan
+	//=================================================================================================================
+	"npc_dota_hero_elder_titan"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_elder_titan_echo_stomp"
+		"Ability2"					"imba_elder_titan_ancestral_spirit"
+		"Ability3"					"imba_elder_titan_natural_order"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_elder_titan_earth_splitter"
+		"Ability7"					"imba_elder_titan_return_spirit"
+
+		"Ability10"					"special_bonus_imba_elder_titan_1" // 2400 cast range ancestral spirit
+		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
+		"Ability12"					"special_bonus_magic_resistance_20"
+		"Ability13"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
+		"Ability14"					"special_bonus_attack_speed_70"
+		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
+		"Ability16"					"special_bonus_imba_elder_titan_9" // -Xs Earth Splitter Cooldown
+		"Ability17"					"special_bonus_lifesteal_100"
+		
+		// Removed Talents
+		//"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity (also disabled in code)
+		//"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
+		//"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
+	}
+
+	//=================================================================================================================
+	// HERO: Enigma
+	//=================================================================================================================
+	"npc_dota_hero_enigma"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_enigma_malefice"
+		"Ability2"					"imba_enigma_demonic_conversion"
+		"Ability3"					"imba_enigma_midnight_pulse"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_enigma_black_hole"
+
+		"Ability10"					"special_bonus_imba_enigma_demonic_conversion_attack_range"
+		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
+		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
+		"Ability13"					"special_bonus_imba_enigma_malefice_damage"
+		"Ability14"					"special_bonus_imba_enigma_5" // +500 Black Hole cast range
+		"Ability15"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
+		"Ability16"					"special_bonus_imba_enigma_2" // Malefice 325 AoE Radius
+		"Ability17"					"special_bonus_imba_enigma_4" // Black Hole cast on death
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_movement_speed_25"
+		// "Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 6 seconds.
+		// "Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
+	}
+
+	//=================================================================================================================
+	// HERO: Faceless Void
+	//=================================================================================================================
+	"npc_dota_hero_faceless_void"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_faceless_void_time_walk"
+		"Ability2"					"imba_faceless_void_time_dilation"
+		//"Ability3"					"imba_faceless_void_time_lock"
+		"Ability3"					"imba_faceless_void_time_lock_720"
+		//"Ability4"					"imba_faceless_void_timelord"
+		"Ability5"					"imba_faceless_void_time_walk_reverse"
+		"Ability6"					"imba_faceless_void_chronosphere"
+
+		"Ability10"					"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
+		"Ability11"					"special_bonus_strength_12"
+		"Ability12"					"special_bonus_imba_faceless_void_12" // +X Time Lock Damage
+		"Ability13"					"special_bonus_imba_faceless_void_11" // -Xs Time Walk
+		"Ability14"					"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
+		"Ability15"					"special_bonus_imba_faceless_void_9" // Increased Time Walk cast range
+		"Ability16"					"special_bonus_unique_faceless_void_4" // Backtrack
+		"Ability17"					"special_bonus_imba_faceless_void_10" // Increased Chronosphere radius
+		
+		// Removed Talents
+		
+		//"Ability11"					"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
+		//"Ability12"					"special_bonus_imba_faceless_void_6" // Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
+		//"Ability13"					"special_bonus_imba_faceless_void_8" // Chronosphere causes Faceless Void attacks to cleav
+		//"Ability15"					"special_bonus_imba_faceless_void_4" // Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
+		//"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
+		//"Ability17"					"special_bonus_imba_faceless_void_1" // Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
+	}
+
+	//=================================================================================================================
+	// HERO: Jakiro
+	//=================================================================================================================
+	"npc_dota_hero_jakiro"
+	{
+		"AttackRange"				"500"
+
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_jakiro_dual_breath"
+		"Ability2"					"imba_jakiro_ice_path"
+		"Ability3"					"imba_jakiro_liquid_fire"
+		"Ability4"					"imba_jakiro_fire_breath"
+		"Ability5"					"imba_jakiro_ice_breath"
+		"Ability6"					"imba_jakiro_macropyre"
+
+		"Ability10"					"special_bonus_imba_jakiro_1"
+		"Ability11"					"special_bonus_imba_jakiro_2"
+		"Ability12"					"special_bonus_hp_350"
+		"Ability13"					"special_bonus_spell_amplify_12"
+		"Ability14"					"special_bonus_imba_jakiro_7"
+		"Ability15"					"special_bonus_imba_jakiro_6"
+		"Ability16"					"special_bonus_imba_jakiro_3"
+		"Ability17"					"special_bonus_imba_jakiro_9"
+		
+		// Removed Talents
+		// "Ability13"				"special_bonus_imba_jakiro_4" // +X Liquid Fire cast range
+		// "Ability16"				"special_bonus_imba_jakiro_5" // +Xs Ice Path stun duration
+		// "Ability17"				"special_bonus_imba_jakiro_8" // Macropyre slows enemies (X% * Y% per tick)
+		
+	}
+
+	//=================================================================================================================
+	// HERO: Juggernaut
+	//=================================================================================================================
+	"npc_dota_hero_juggernaut"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_juggernaut_blade_fury"
+		"Ability2"					"imba_juggernaut_healing_ward"
+		"Ability3"					"imba_juggernaut_blade_dance"
+		"Ability4"					"juggernaut_swift_slash"
+		"Ability5"					"juggernaut_omni_slash"
+		"Ability6"					"imba_juggernaut_omni_slash"
+
+		"Ability10"					"special_bonus_all_stats_6"
+		"Ability11"					"special_bonus_imba_juggernaut_2" // Blade Fury radius increases by 20 every 0.2 seconds
+		"Ability12"					"special_bonus_imba_juggernaut_blade_fury_movement_speed"
+		"Ability13"					"special_bonus_imba_juggernaut_3" // Healing Ward gives 50/100 (base/totem) attack speed
+		"Ability14"					"special_bonus_armor_10"
+		"Ability15"					"special_bonus_imba_juggernaut_1" // Blade Fury Vacuum
+		"Ability16"					"special_bonus_imba_juggernaut_4" // Secret Blade Triplicate
+		"Ability17"					"special_bonus_imba_juggernaut_10" // Omnislash increased duration
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_juggernaut_5" // Enhanced Blade
+		// "Ability12"					"special_bonus_imba_juggernaut_6" // Dance of Fury
+		// "Ability14"					"special_bonus_imba_juggernaut_7" // Omnislash Doppelgänger Replacement
+		// "Ability16"				"special_bonus_imba_juggernaut_9" // Omnislash EX
+	}
+
+	//=================================================================================================================
+	// HERO: Kunkka
+	//=================================================================================================================
+	"npc_dota_hero_kunkka"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+		
+		"Ability1"					"imba_kunkka_torrent"		
+		"Ability2"					"imba_kunkka_tidebringer"	
+		"Ability3"					"imba_kunkka_x_marks_the_spot"
+		"Ability4"					"kunkka_torrent_storm"
+		"Ability5"					"imba_kunkka_ebb_and_flow"
+		"Ability6"					"imba_kunkka_ghostship"
+		"Ability7"					"imba_kunkka_return"
+		"Ability8"					"kunkka_torrent"
+
+		"Ability10"					"special_bonus_imba_kunkka_1"
+		"Ability11"					"special_bonus_imba_kunkka_2"
+		"Ability12"					"special_bonus_hp_regen_15"
+		"Ability13"					"special_bonus_imba_kunkka_4"
+		"Ability14"					"special_bonus_imba_kunkka_6"
+		"Ability15"					"special_bonus_strength_25"
+		"Ability16"					"special_bonus_imba_kunkka_8"
+		"Ability17"					"special_bonus_imba_kunkka_9"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_kunkka_3" // X Marks bonus movespeed effect (hilariously bad)
+		// "Ability14"					"special_bonus_imba_kunkka_5" // X marks the spot now marks all enemies in 275 AoE (way too situational to be useful)
+		// "Ability16"					"special_bonus_imba_kunkka_7" // Tidebringer now hits all enemies affected by Torrent (really bad compared to other talent)
+	}
+
+	//=================================================================================================================
+	// HERO: Lich
+	//=================================================================================================================
+	"npc_dota_hero_lich"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+		
+		"Ability1"					"imba_lich_frost_nova"
+		"Ability2"					"imba_lich_frost_shield"
+		"Ability3"					"imba_lich_sinister_gaze"
+		"Ability4"					"imba_lich_cold_front"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_lich_chain_frost"
+		
+		"Ability10"					"special_bonus_imba_lich_10" // +30% Sinister Gaze Distance Moved					
+		"Ability11"					"special_bonus_imba_lich_6" // Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.
+		"Ability12"					"special_bonus_attack_damage_120"
+		"Ability13"					"special_bonus_imba_lich_1" // Chain Frost bounces instantly after hitting a target
+		"Ability14"					"special_bonus_imba_lich_11" // Death Blossom
+		"Ability15"					"special_bonus_imba_lich_7" // Chain Frost bounces now procs two little Mini Frosts when bouncing
+		"Ability16"					"special_bonus_imba_lich_9"
+		"Ability17"					"special_bonus_unique_lich_2" // Attacks Apply 50% MS and AS Slow for 3 seconds
+
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_lich_2" // Sacrifice can now be used on self, granting you and nearby allies the damage reduction buff.
+		// "Ability12"					"special_bonus_imba_lich_3" // Frost Nova now deals a portion of the main target's current health as damage
+		// "Ability13"					"special_bonus_imba_lich_4" // Frost Nova draws a line of exploding Frost Novas that explode after a small delay			
+		// "Ability14"					"special_bonus_imba_lich_5" // Frost Armor adds a portion of the Lich's intelligence to the armor bonus				
+		// "Ability17"					"special_bonus_imba_lich_8" // Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
+	}
+
+	//=================================================================================================================
+	// HERO: Lina
+	//=================================================================================================================
+	"npc_dota_hero_lina"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+		
+		"Ability1"					"imba_lina_dragon_slave"
+		"Ability2"					"imba_lina_light_strike_array"
+		"Ability3"					"imba_lina_fiery_soul"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_lina_laguna_blade"
+
+		"Ability10"					"special_bonus_attack_damage_35"
+		"Ability11"					"special_bonus_cast_range_125"
+		"Ability12"					"special_bonus_hp_400"
+		"Ability13"					"special_bonus_imba_lina_6" // Laguna Blade stuns targets
+		"Ability14"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
+		"Ability15"					"special_bonus_imba_lina_9" // +X/Y% Fiery Soul Per Stack
+		"Ability16"					"special_bonus_imba_lina_10" // -6s Dragon Slave Cooldown
+		"Ability17"					"special_bonus_attack_range_200"
+		
+		// Removed Abilities
+		// "Ability10"					"special_bonus_imba_lina_1" // Additional Dragon Slaves
+		// "Ability11"					"special_bonus_imba_lina_3" // Reaching 3 Fiery Soul stacks allows Lina to unleash a blast of hot shockwave (this will no longer work because it's now built-in to the ability)
+		// "Ability12"					"special_bonus_imba_lina_2" // Spawns a main Dragon Slave at the end of the second Dragon Slaves
+		// "Ability13"					"special_bonus_imba_lina_5" // Lina's Spells causes DoT based on Fiery Soul stacks
+		// "Ability16"					"special_bonus_imba_lina_4" // After a Light Strike Array hits the ground, magma erupts and damages nearby enemy units
+		// "Ability17"					"special_bonus_imba_lina_8" // Blazing Fire
+	}
+
+	//=================================================================================================================
+	// HERO: Lion
+	//=================================================================================================================
+	"npc_dota_hero_lion"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_lion_earth_spike"
+		"Ability2"					"imba_lion_hex"
+		"Ability3"					"imba_lion_mana_drain"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_lion_finger_of_death"
+		
+		"Ability10"					"special_bonus_imba_lion_3"
+		"Ability11"					"special_bonus_attack_damage_90"
+		"Ability12"					"special_bonus_imba_lion_5"
+		"Ability13"					"special_bonus_imba_lion_8"
+		"Ability14"					"special_bonus_imba_lion_7"
+		"Ability15"					"special_bonus_imba_lion_2"
+		"Ability16"					"special_bonus_imba_lion_9"
+		"Ability17"					"special_bonus_imba_lion_10"
+		
+		// Removed Talents
+		//"Ability10"					"special_bonus_imba_lion_1" // Earth Spikes branches off creeps as well
+		//"Ability13"					"special_bonus_imba_lion_4" // Mana Drain slows target based on missing mana
+		//"Ability15"					"special_bonus_imba_lion_6" // Chain Hex spreads to two enemies simultaneously		
+	}
+
+	//=================================================================================================================
+	// HERO: Lycan
+	//=================================================================================================================
+	"npc_dota_hero_lycan"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_lycan_summon_wolves"
+		"Ability2"					"imba_lycan_howl_723"
+		"Ability3"					"imba_lycan_feral_impulse"
+		"Ability4"					"lycan_wolf_bite"
+		"Ability5"					"imba_lycan_wolfsbane"
+		"Ability6"					"imba_lycan_shapeshift"
+		
+		"Ability9"					"lycan_shapeshift"
+		
+		"Ability10"					"special_bonus_imba_lycan_5"
+		"Ability11"					"special_bonus_attack_damage_20"
+		"Ability12"					"special_bonus_imba_lycan_3"
+		"Ability13"					"special_bonus_imba_lycan_1"
+		"Ability14"					"special_bonus_imba_lycan_2"
+		"Ability15"					"special_bonus_imba_lycan_6"
+		"Ability16"					"special_bonus_imba_lycan_9"
+		"Ability17"					"special_bonus_imba_lycan_10"
+		
+		// Removed Abilities
+		// "Ability2"					"imba_lycan_howl"
+
+		// Removed Talents
+		// "Ability16"					"special_bonus_imba_lycan_7" // Shapeshift hasted speed increased to 1200
+		// "Ability17"					"special_bonus_imba_lycan_8" // Blood Hunt
+	}
+
+	//=================================================================================================================
+	// HERO: Magnus
+	//=================================================================================================================
+	"npc_dota_hero_magnataur"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+		
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle_folder"			"particles/units/heroes/hero_magnataur"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_magnataur.vsndevts"
+		
+		"Ability1"					"imba_magnataur_shockwave"
+		"Ability2"					"imba_magnataur_empower"
+		"Ability3"					"imba_magnataur_skewer"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_magnataur_reverse_polarity"
+
+		"Ability10"					"special_bonus_imba_magnataur_1"
+		"Ability11"					"special_bonus_imba_magnataur_2"
+		"Ability12"					"special_bonus_imba_magnataur_3"
+		"Ability13"					"special_bonus_imba_magnataur_4"
+		"Ability14"					"special_bonus_armor_10"
+		"Ability15"					"special_bonus_imba_magnataur_6"
+		"Ability16"					"special_bonus_imba_magnataur_8"
+		"Ability17"					"special_bonus_imba_magnataur_9"
+		
+		// Removed Talents
+		// "Ability14"					"special_bonus_imba_magnataur_5" // "Shockwave roots target"
+		//"Ability16"					"special_bonus_imba_magnataur_7"
+	}
+
+	//=================================================================================================================
+	// HERO: Mirana
+	//=================================================================================================================
+	"npc_dota_hero_mirana"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_mirana_starfall"
+		"Ability2"					"imba_mirana_arrow"
+		"Ability3"					"imba_mirana_leap"		
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_mirana_moonlight_shadow"
+
+		"Ability10"					"special_bonus_attack_damage_15"
+		"Ability11"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
+		"Ability12"					"special_bonus_mana_break_25"
+		"Ability13"					"special_bonus_imba_mirana_9" // +1 Leap Charge Replenish
+		"Ability14"					"special_bonus_corruption_4"
+		"Ability15"					"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
+		"Ability16"					"special_bonus_imba_mirana_8" // Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
+		"Ability17"					"special_bonus_imba_mirana_10" // +1000 Sacred Arrow speed
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
+		// "Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
+		// "Ability11"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+		// "Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
+		// "Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
+	}
+
+	//=================================================================================================================
+	// HERO: Necrolyte
+	//=================================================================================================================
+	"npc_dota_hero_necrolyte"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_necrolyte_death_pulse"
+		"Ability2"					"imba_necrolyte_ghost_shroud"
+		"Ability3"					"imba_necrolyte_heartstopper_aura"
+		"Ability4"					"imba_necrolyte_sadist"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_necrolyte_reapers_scythe"
+
+		"Ability10"					"special_bonus_imba_necrolyte_1"
+		"Ability11"					"special_bonus_imba_necrolyte_5"
+		"Ability12"					"special_bonus_imba_necrolyte_2"
+		"Ability13"					"special_bonus_imba_necrolyte_4"
+		"Ability14"					"special_bonus_imba_necrolyte_3"
+		"Ability15"					"special_bonus_imba_necrolyte_6"
+		"Ability16"					"special_bonus_imba_necrolyte_7"
+		"Ability17"					"special_bonus_imba_necrolyte_8"
+	}
+
+	//=================================================================================================================
+	// HERO: Night Stalker
+	//=================================================================================================================
+	"npc_dota_hero_night_stalker"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_night_stalker_void"
+		"Ability2"					"imba_night_stalker_crippling_fear_720"
+		"Ability3"					"imba_night_stalker_hunter_in_the_night"
+		"Ability4"					"imba_night_stalker_stalker_in_the_night"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_night_stalker_darkness"
+
+		"Ability10"					"special_bonus_hp_225"
+		"Ability11"					"special_bonus_mp_225"
+		"Ability12"					"special_bonus_strength_15"
+		"Ability13"					"special_bonus_lifesteal_25"
+		"Ability14"					"special_bonus_movement_speed_40"
+		"Ability15"					"special_bonus_attack_damage_50"
+		"Ability16"					"special_bonus_imba_night_stalker_9"
+		"Ability17"					"special_bonus_imba_night_stalker_10"
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_night_stalker_1"
+		// "Ability11"					"special_bonus_imba_night_stalker_2"
+		// "Ability12"					"special_bonus_imba_night_stalker_3"
+		// "special_bonus_imba_night_stalker_4"               "+1 Night Terror duration"
+		// "special_bonus_imba_night_stalker_5"               "+400 Stalker in the Night night vision bonus"
+		// "special_bonus_imba_night_stalker_6"               "Crippling Fear now also mutes the target"
+		// "special_bonus_imba_night_stalker_7"               "-150 vision range to enemies in Darkness"
+		// "special_bonus_imba_night_stalker_8"               "-8s Crippling Fear Cooldown"
+	}
+
+	//=================================================================================================================
+	// HERO: Nyx Assassin
+	//=================================================================================================================
+	"npc_dota_hero_nyx_assassin"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_nyx_assassin_impale"
+		"Ability2"					"imba_nyx_assassin_mana_burn"
+		"Ability3"					"imba_nyx_assassin_spiked_carapace"
+		"Ability4"					"nyx_assassin_burrow"
+		"Ability5"					"nyx_assassin_unburrow"
+		"Ability6"					"imba_nyx_assassin_vendetta"
+		
+		"Ability10"					"special_bonus_imba_nyx_assassin_6" //Impale causes random spikes to appear around targets hit
+		"Ability11"					"special_bonus_imba_nyx_assassin_2" //Vendetta hits apply Mana Burn
+		"Ability12"					"special_bonus_imba_nyx_assassin_3" //Mana Burn uses targets main attribute
+		"Ability13"					"special_bonus_imba_nyx_assassin_13" // +10% Impale Relive Suffering damage
+		"Ability14"					"special_bonus_imba_nyx_assassin_4" //Spiked Carapace returns all damage instances
+		"Ability15"					"special_bonus_imba_nyx_assassin_12" // +1000 Vendetta Maximum Stored Damage
+		"Ability16"					"special_bonus_agility_100"
+		"Ability17"					"special_bonus_imba_nyx_assassin_11" // Vendetta Unobstructed Pathing
+
+		// Removed Abilities
+		// "Ability11"					"special_bonus_imba_nyx_assassin_5" //Spiked Carapace auto-casts < 30% HP
+		// "Ability14"					"special_bonus_imba_nyx_assassin_7" //Impale slows people down the more they move
+		// "Ability15"					"special_bonus_imba_nyx_assassin_1" //Vendetta kill doesn't use Eye for Eye stacks
+		// "Ability11"					"special_bonus_imba_nyx_assassin_8" //If unit dies during Mana Burn, Nyx gets the parasite
+		// Unused						"special_bonus_imba_nyx_assassin_10" // +75% Spiked Carapace Damage
+		// Unused						"special_bonus_imba_nyx_assassin_9" // Scarab Parasite has no duration
+	}
+
+	//=================================================================================================================
+	// HERO: Omniknight
+	//=================================================================================================================
+	"npc_dota_hero_omniknight"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_omniknight_purification"
+		//"Ability2"					"imba_omniknight_repel"
+		"Ability2"					"imba_omniknight_heavenly_grace"
+		"Ability3"					"imba_omniknight_hammer_of_virtue"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_omniknight_guardian_angel"
+
+		"Ability10"					"special_bonus_imba_omniknight_1"
+		"Ability11"					"special_bonus_imba_omniknight_9"
+		"Ability12"					"special_bonus_imba_omniknight_4"
+		"Ability13"					"special_bonus_attack_damage_90"
+		"Ability14"					"special_bonus_imba_omniknight_3"
+		"Ability15"					"special_bonus_imba_omniknight_2"
+		"Ability16"					"special_bonus_imba_omniknight_8" // +200 Purification Damage/Heal
+		"Ability17"					"special_bonus_imba_omniknight_10" // -Xs Heavenly Grace Cooldown
+		
+		// Removed Talents
+		// "Ability14"					"special_bonus_imba_omniknight_5"
+		// "Ability16"					"special_bonus_imba_omniknight_7"
+		// "Ability17"					"special_bonus_imba_omniknight_6"
+	}
+
+	//=================================================================================================================
+	// HERO: Pangolier
+	//=================================================================================================================
+	"npc_dota_hero_pangolier"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_pangolier_swashbuckle"
+		"Ability2"					"imba_pangolier_shield_crash"
+		//"Ability3"					"imba_pangolier_heartpiercer"
+		"Ability3"					"imba_pangolier_lucky_shot"
+		"Ability5"					"imba_pangolier_gyroshell_stop"
+		"Ability6"					"imba_pangolier_gyroshell"
+
+		"Ability10"					"special_bonus_imba_pangolier_1"
+		"Ability11"					"special_bonus_imba_pangolier_2"
+		"Ability12"					"special_bonus_imba_pangolier_3"
+		"Ability13"					"special_bonus_imba_pangolier_4"
+		"Ability14"					"special_bonus_imba_pangolier_lucky_shot_status_resist"
+		"Ability15"					"special_bonus_strength_20"
+		"Ability16"					"special_bonus_imba_pangolier_7"
+		"Ability17"					"special_bonus_imba_pangolier_8"
+		
+		// Removed Talents
+		// "Ability14"					"special_bonus_imba_pangolier_5"	// Heartpiercer Damage
+		// "Ability15"					"special_bonus_imba_pangolier_6"	// Heartpiercer Tenacity
+	}
+
+	//=================================================================================================================
+	// HERO: Phantom Assassin
+	//=================================================================================================================
+	"npc_dota_hero_phantom_assassin"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_phantom_assassin_stifling_dagger"
+		"Ability2"					"imba_phantom_assassin_phantom_strike"
+		"Ability3"					"imba_phantom_assassin_blur"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_phantom_assassin_coup_de_grace"
+
+		"Ability10"					"special_bonus_hp_250"
+		"Ability11"					"special_bonus_attack_damage_20"
+		"Ability12"					"special_bonus_lifesteal_15"
+		"Ability13"					"special_bonus_cleave_25"
+		"Ability14"					"special_bonus_corruption_4"
+		"Ability15"					"special_bonus_imba_phantom_assassin_10" // "+X% Blur Evasion"
+		"Ability16"					"special_bonus_imba_phantom_assassin_9" // +X% Coup de Grace chance
+		"Ability17"					"special_bonus_imba_phantom_assassin_3" // "+X Stifling Dagger thrown"
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_phantom_assassin_1" // "+35 Stifling Dagger damage"
+		// "Ability11"					"special_bonus_imba_phantom_assassin_2" // "+30 Phantom Strike bonus attack speed"
+		// "Ability13"				""special_bonus_imba_phantom_assassin_5" // "+100% Coup de Grace crit damage"
+		// "Ability13"				"special_bonus_imba_phantom_assassin_4" // "+5% Phantom Strike bonus crit chance"
+		// "Ability15"				"special_bonus_imba_phantom_assassin_6" // "+2 Phantom Strike attacks"
+		// "Ability17"					"special_bonus_imba_phantom_assassin_8" // "Blur now grants a X% chance to evade any damage"
+		//"Ability17"					"special_bonus_imba_phantom_assassin_7" // "+Xs Coup de Grace's Die Hard duration"
+	}
+
+	//=================================================================================================================
+	// HERO: Phoenix
+	//=================================================================================================================
+	"npc_dota_hero_phoenix"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_phoenix_icarus_dive"
+		"Ability2"					"imba_phoenix_fire_spirits"
+		"Ability3"					"imba_phoenix_sun_ray"
+		"Ability4"					"imba_phoenix_sun_ray_toggle_move"
+		"Ability5"					"imba_phoenix_burning_wings"
+		"Ability6"					"imba_phoenix_supernova"
+		"Ability7"					"imba_phoenix_launch_fire_spirit"
+		"Ability8"					"imba_phoenix_icarus_dive_stop"
+		"Ability9"					"imba_phoenix_sun_ray_stop"
+
+		"Ability10"					"special_bonus_imba_phoenix_2" // Icarus Dive stuns for 0.5 seconds
+		"Ability11"					"special_bonus_spell_amplify_8"
+		"Ability12"					"special_bonus_imba_phoenix_7" // Fire Spirits duration halved, maximum charges removed, costs 100 mana to cast.
+		"Ability13"					"special_bonus_imba_phoenix_4" // Sun Ray applies a strong dispell on allies on end
+		"Ability14"					"special_bonus_imba_phoenix_5" // If egg dies, Phoenix and the ally will rebirth at 10% of max HP and MP with refreshed abilities
+		"Ability15"					"special_bonus_imba_phoenix_6" // Creates another egg with allies, egg health decreased by 25%
+		"Ability16"					"special_bonus_imba_phoenix_3" // Fire spirits can stack up to 3
+		"Ability17"					"special_bonus_imba_phoenix_8" // Can move freely when casting Sun Ray
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_phoenix_1" // Double Dive speed, removed cast point, and doubled hp cost on Icarus Dive
+	}
+
+	//========================================================================================================
+	// HERO: Pudge
+	//========================================================================================================
+	"npc_dota_hero_pudge"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_pudge_meat_hook"
+		"Ability2"					"imba_pudge_rot"
+		"Ability3"					"imba_pudge_flesh_heap"
+		"Ability4"					"imba_pudge_sharp_hook"
+		"Ability5"					"imba_pudge_light_hook"
+		"Ability6"					"imba_pudge_dismember"
+		"Ability7"					"imba_pudge_eject"
+
+		"Ability10"					"special_bonus_armor_5"
+		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
+		"Ability12"					"special_bonus_spell_lifesteal_13"
+		"Ability13"					"special_bonus_imba_pudge_9" // +X% Rot Slow
+		"Ability14"					"special_bonus_imba_pudge_8" // +Xs Dismember Duration
+		"Ability15"					"special_bonus_cooldown_reduction_15"
+		"Ability16"					"special_bonus_imba_pudge_7" // Meat Hook applies Rupture
+		"Ability17"					"special_bonus_imba_pudge_5" // +1000 Hook Distance
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_armor_10" // +10 armor
+		// "Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
+		// "Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
+	}
+
+	//=================================================================================================================
+	// HERO: Pugna
+	//=================================================================================================================
+	"npc_dota_hero_pugna"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_pugna_nether_blast"
+		"Ability2"					"imba_pugna_decrepify"
+		"Ability3"					"imba_pugna_nether_ward"
+		"Ability4"					"imba_pugna_life_drain_end"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_pugna_life_drain"
+		
+		"Ability10"					"special_bonus_hp_275"				
+		"Ability11"					"special_bonus_movement_speed_20"
+		"Ability12"					"special_bonus_imba_pugna_3"		//+1 Decrepify duration
+		"Ability13"					"special_bonus_imba_pugna_4"		//Life Drain cannot be broken by distance for the first 2 seconds of Life Drain.
+		"Ability14"					"special_bonus_imba_pugna_5"		//Nether Blast secondary blasts deal 10% of original damage.
+		"Ability15"					"special_bonus_imba_pugna_6"		//Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second. This occurs before zap damage is applied.
+		"Ability16"					"special_bonus_imba_pugna_7"		//+3% Target current health as Life Drain's per sec damage
+		"Ability17"					"special_bonus_imba_pugna_nether_ward_damage"		//+2 Nether Wards, -66% duration
+		
+		// Removed Talents
+		// "Ability17"					"special_bonus_imba_pugna_8"		//+2 Nether Wards, -66% duration
+	}
+
+	//=================================================================================================================
+	// HERO: Queen of Pain
+	//=================================================================================================================
+	"npc_dota_hero_queenofpain"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_queenofpain_shadow_strike"
+		"Ability2"					"imba_queenofpain_blink"
+		"Ability3"					"imba_queenofpain_scream_of_pain"
+		"Ability4"					"imba_queenofpain_delightful_torment"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_queenofpain_sonic_wave"
+
+		"Ability10"					"special_bonus_imba_queenofpain_4" // "Delightful Torment Bonus Attack Speed"
+		"Ability11"					"special_bonus_imba_queenofpain_2" // "Sonic Wave deals damage in five instances"
+		"Ability12"					"special_bonus_imba_queenofpain_1" // "Shadow Struck targets can be seen through fog"
+		"Ability13"					"special_bonus_imba_queen_of_pain_shadow_strike_aoe"
+		"Ability14"					"special_bonus_spell_lifesteal_30"
+		"Ability15"					"special_bonus_imba_queenofpain_3" // Damaging an enemy causes Shadow Strike to deal its tick damage
+		"Ability16"					"special_bonus_imba_queen_of_pain_scream_of_pain_fear"
+		"Ability17"					"special_bonus_spell_block_15"
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_strength_10"
+		// "Ability12"					
+		// "Ability14"					"special_bonus_imba_queenofpain_5" // Blink can be used twice in quick succession, with increased mana cost
+		// "Ability15"					"special_bonus_imba_queenofpain_6" // Enemies affected by Shadow Strike release Screams of Pain every damage tick
+		// "Ability16"					"special_bonus_imba_queenofpain_7" // Scream of Pain now causes confusion
+		// "Ability17"					"special_bonus_imba_queenofpain_8" // Your abilities apply Shadow Strike to all enemies hit
+	}
+
+	//=================================================================================================================
+	// HERO: Sand King
+	//=================================================================================================================
+	"npc_dota_hero_sand_king"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_sandking_burrowstrike"
+		"Ability2"					"imba_sandking_sand_storm_720"
+		"Ability3"					"imba_sandking_caustic_finale"		
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sandking_epicenter"
+
+		"Ability10"					"special_bonus_imba_sand_king_1"
+		"Ability11"					"special_bonus_imba_sand_king_2"
+		"Ability12"					"special_bonus_imba_sand_king_9"
+		"Ability13"					"special_bonus_imba_sand_king_4"
+		"Ability14"					"special_bonus_armor_10"
+		"Ability15"					"special_bonus_imba_sand_king_6"
+		"Ability16"					"special_bonus_hp_regen_50"
+		"Ability17"					"special_bonus_imba_sand_king_8"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_sand_king_3"
+		// "Ability14"					"special_bonus_imba_sand_king_5"
+		// "Ability16"					"special_bonus_imba_sand_king_7"
+	}
+
+	//=================================================================================================================
+	// HERO: Shadow Fiend
+	//=================================================================================================================
+	"npc_dota_hero_nevermore"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+	
+		"Ability1"					"imba_nevermore_shadowraze_close"
+		"Ability2"					"imba_nevermore_shadowraze_medium"
+		"Ability3"					"imba_nevermore_shadowraze_far"
+		"Ability4"					"imba_nevermore_necromastery"
+		"Ability5"					"imba_nevermore_dark_lord"
+		"Ability6"					"imba_nevermore_requiem"		
+
+		"Ability10"					"special_bonus_imba_nevermore_1"
+		"Ability11"					"special_bonus_attack_speed_25"
+		"Ability12"					"special_bonus_imba_nevermore_3"
+		"Ability13"					"special_bonus_imba_nevermore_4" // "+X% lifesteal per Necromastery soul"
+		"Ability14"					"special_bonus_imba_nevermore_5"
+		"Ability15"					"special_bonus_imba_nevermore_8"
+		"Ability16"					"special_bonus_imba_nevermore_7"
+		"Ability17"					"special_bonus_cooldown_reduction_40"
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_nevermore_2" // Necromastery Siphon
+		// "Ability13"					"special_bonus_movement_speed_30"
+		// "Ability15"					"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
+	}
+
+	//=================================================================================================================
+	// HERO: Skeleton King
+	//=================================================================================================================
+	"npc_dota_hero_skeleton_king"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_wraith_king_wraithfire_blast"
+		"Ability2"					"imba_wraith_king_vampiric_aura"
+		"Ability3"					"imba_wraith_king_mortal_strike"
+		"Ability4"					"imba_wraith_king_kingdom_come"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_wraith_king_reincarnation"
+
+		"Ability10"					"special_bonus_imba_skeleton_king_1"
+		"Ability11"					"special_bonus_imba_skeleton_king_2"
+		"Ability12"					"special_bonus_strength_15"
+		"Ability13"					"special_bonus_imba_skeleton_king_4"
+		"Ability14"					"special_bonus_imba_skeleton_king_6"
+		"Ability15"					"special_bonus_imba_skeleton_king_5"
+		"Ability16"					"special_bonus_imba_skeleton_king_9"
+		"Ability17"					"special_bonus_imba_skeleton_king_10"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_skeleton_king_3" // Wraithfire Burn (extremely meh and uncreative talent)
+		// "Ability16"					"special_bonus_imba_skeleton_king_7" // Wraithfire Blast summons Wraiths on all enemies hit
+		// "Ability17"					"special_bonus_imba_skeleton_king_8" // Mortal Strike criticals grant 10 Strength (meh talent)
+	}
+
+	//=================================================================================================================
+	// HERO: Skywrath Mage
+	//=================================================================================================================
+	"npc_dota_hero_skywrath_mage"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_skywrath_mage_arcane_bolt"
+		"Ability2"					"imba_skywrath_mage_concussive_shot"
+		"Ability3"					"imba_skywrath_mage_ancient_seal"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_skywrath_mage_mystic_flare"
+
+		"Ability10"					"special_bonus_movement_speed_25"
+		"Ability11"					"special_bonus_spell_lifesteal_8"
+		"Ability12"					"special_bonus_imba_skywrath_mage_3" // "-Xs Ancient Seal Cooldown"
+		"Ability13"					"special_bonus_imba_skywrath_mage_9" // "+1 Arcane Bolt Per Cast"
+		"Ability14"					"special_bonus_imba_skywrath_mage_11" // "Global Concussive Shot"
+		"Ability15"					"special_bonus_imba_skywrath_mage_10" // "+15% Ancient Seal Magic Resistance Reduction"
+		"Ability16"					"special_bonus_imba_skywrath_mage_arcane_bolt_pierce"
+		"Ability17"					"special_bonus_imba_skywrath_mage_6" // "Mystic Flare deals the damage in half the duration"
+
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_skywrath_mage_1" // -25 Arcane Bolt mana cost
+		// "Ability11"					"special_bonus_imba_skywrath_mage_2" // "+1s Ancient Seal duration"
+		// "Ability13"					"special_bonus_imba_skywrath_mage_4" // "+100% Mystic Flare radius"
+		// "Ability14"					"special_bonus_imba_skywrath_mage_5" // -1s Arcane Bolt cooldown
+		// "Ability17"					"special_bonus_imba_skywrath_mage_8" // "Concussive Shot hits all visible heroes in range"
+	}
+
+	//=================================================================================================================
+	// HERO: Slardar
+	//=================================================================================================================
+	"npc_dota_hero_slardar"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_slardar_guardian_sprint"
+		"Ability2"					"imba_slardar_slithereen_crush"
+		//"Ability3"					"imba_slardar_bash_of_the_deep"
+		"Ability3"					"imba_slardar_bash_720"
+		"Ability4"					"imba_slardar_rain_cloud"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_slardar_corrosive_haze"
+		
+		//"Ability10"					"special_bonus_imba_slardar_1"
+		//"Ability11"					"special_bonus_imba_slardar_2"
+		//"Ability12"					"special_bonus_imba_slardar_3"
+		//"Ability13"					"special_bonus_imba_slardar_4"
+		//"Ability14"					"special_bonus_imba_slardar_5"
+		//"Ability15"					"special_bonus_imba_slardar_6"
+		//"Ability16"					"special_bonus_imba_slardar_7"
+		//"Ability17"					"special_bonus_imba_slardar_8"
+		
+		"Ability10"					"special_bonus_hp_regen_10"
+		"Ability11"					"special_bonus_imba_slardar_1" // 2x radius and damage to Rip Current
+		"Ability12"					"special_bonus_night_vision_1000"
+		"Ability13"					"special_bonus_imba_slardar_13" // +X Bash Damage
+		"Ability14"					"special_bonus_lifesteal_30"
+		"Ability15"					"special_bonus_imba_slardar_11" // Corrosive Haze Armor Transfer
+		"Ability16"					"special_bonus_imba_slardar_6" // Casts a second free Slithereen Crush
+		"Ability17"					"special_bonus_imba_slardar_12" // Corrosive Haze Undispellable
+		
+		// Removed Talents
+		//"Ability11"					"special_bonus_imba_slardar_4" // +10% Slipstream miss/trigger chance
+		//"Ability12"					"special_bonus_imba_slardar_9" // Bash of the Deep Upgrade
+		// "Ability14"					"special_bonus_imba_slardar_10" // Depression
+	}
+
+	//=================================================================================================================
+	// HERO: Sniper
+	//=================================================================================================================
+	"npc_dota_hero_sniper"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_sniper_shrapnel"
+		"Ability2"					"imba_sniper_headshot"
+		"Ability3"					"imba_sniper_take_aim"		
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sniper_assassinate"
+
+		"Ability10"					"special_bonus_cooldown_reduction_25"
+		"Ability11"					"special_bonus_attack_damage_25"
+		"Ability12"					"special_bonus_attack_speed_40"
+		"Ability13"					"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
+		"Ability14"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
+		"Ability15"					"special_bonus_movement_speed_40"
+		"Ability16"					"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision
+		"Ability17"					"special_bonus_imba_sniper_8" // Shrapnel attacks increase the damage done to the target instead of lowering it
+
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_sniper_1" // Shrapnel's cast range is doubled
+		// "Ability11"					"special_bonus_imba_sniper_2" // Infamous Assassinate knockback talent
+		// "Ability12"					"special_bonus_imba_sniper_3" // Enemy units under Shrapnel's lose armor and can miss attacks.
+		// "Ability14"					"special_bonus_imba_sniper_5" // Normal headshots have a chance to become Perfectshots (note that I have completely disabled this ability due to really messy code, so you cannot re-enable it without fixing it yourself)
+	}
+
+	//=================================================================================================================
+	// HERO: Storm Spirit
+	//=================================================================================================================
+	"npc_dota_hero_storm_spirit"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_storm_spirit_static_remnant"
+		"Ability2"					"imba_storm_spirit_electric_vortex"
+		"Ability3"					"imba_storm_spirit_overload"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_storm_spirit_ball_lightning"
+
+		"Ability10"					"special_bonus_hp_275"
+		"Ability11"					"special_bonus_mp_regen_3"
+		"Ability12"					"special_bonus_imba_storm_spirit_6"
+		"Ability13"					"special_bonus_imba_storm_spirit_2"
+		"Ability14"					"special_bonus_imba_storm_spirit_1"
+		"Ability15"					"special_bonus_unique_storm_spirit_3"
+		"Ability16"					"special_bonus_imba_storm_spirit_7"
+		"Ability17"					"special_bonus_unique_storm_spirit_4"
+		
+		// Removed Talents
+		//"Ability10"				"special_bonus_imba_storm_spirit_8"		// Increased self move speed during Electric Vortex (obsolete)
+		//"Ability12"				"special_bonus_unique_storm_spirit_5"	// Increased Static Remnant damage; didn't even work
+	}
+
+	//=================================================================================================================
+	// HERO: Sven
+	//=================================================================================================================
+	"npc_dota_hero_sven"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_sven_storm_bolt"
+		"Ability2"					"imba_sven_great_cleave"
+		"Ability3"					"imba_sven_warcry_723"
+		"Ability4"					"imba_sven_colossal_slash"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sven_gods_strength"
+
+		"Ability10"					"special_bonus_strength_10"
+		"Ability11"					"special_bonus_mp_regen_4"
+		"Ability12"					"special_bonus_imba_sven_4"
+		"Ability13"					"special_bonus_imba_sven_10"
+		"Ability14"					"special_bonus_imba_sven_5"
+		"Ability15"					"special_bonus_imba_sven_6"
+		"Ability16"					"special_bonus_imba_sven_7"
+		"Ability17"					"special_bonus_imba_sven_8"
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_sven_1" // +X Storm Hammer effect radius
+		// "Ability11"					"special_bonus_imba_sven_2" // +X Great Cleave length/end radius
+		// "Ability12"					"special_bonus_imba_sven_3" // +X% Warcry movement speed
+	}
+
+	//=================================================================================================================
+	// HERO: Tiny
+	//=================================================================================================================
+	"npc_dota_hero_tiny"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_tiny_avalanche"
+		"Ability2"					"imba_tiny_toss"
+		"Ability3"					"tiny_tree_grab"
+		"Ability4"					"tiny_tree_channel"
+		"Ability5"					"imba_tiny_rolling_stone"
+		"Ability6"					"imba_tiny_grow"
+		"Ability7"					"tiny_toss_tree"
+
+		"Ability10"					"special_bonus_imba_tiny_1"
+		"Ability11"					"special_bonus_imba_tiny_2"
+		"Ability12"					"special_bonus_hp_500"
+		"Ability13"					"special_bonus_imba_tiny_6"
+		"Ability14"					"special_bonus_strength_20"
+		"Ability15"					"special_bonus_imba_tiny_avalanche_cooldown"
+		"Ability16"					"special_bonus_imba_tiny_7"
+		"Ability17"					"special_bonus_imba_tiny_8"
+		
+		// Removed Abilities
+		//"Ability3"					"imba_tiny_tree_grab" // Buggy and has no IMBAfications
+		//"Ability7"					"imba_tiny_tree_throw"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_tiny_3" // Avalanche 400 Unit Projectile (what even is this talent...)
+		// "Ability13"					"special_bonus_imba_tiny_4" // -7s Tree Grab Cooldown (replaced with vanilla talent)
+		// "Ability14"					"special_bonus_imba_tiny_5" // Tree Throw knockbacks enemies on impact (vanilla ability now, plus wtf this talent is dumpster)
+		// "Ability14"					"special_bonus_unique_tiny_4"
+	}
+
+	//=================================================================================================================
+	// HERO: Troll Warlord
+	//=================================================================================================================
+	"npc_dota_hero_troll_warlord"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_troll_warlord_berserkers_rage"
+		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
+		"Ability3"					"imba_troll_warlord_whirling_axes_ranged"
+		"Ability4"					"imba_troll_warlord_fervor"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_troll_warlord_battle_trance"
+
+		"Ability10"					"special_bonus_imba_troll_warlord_2"
+		"Ability11"					"special_bonus_imba_troll_warlord_1"
+		"Ability12"					"special_bonus_imba_troll_warlord_7"
+		"Ability13"					"special_bonus_imba_troll_warlord_4"
+		"Ability14"					"special_bonus_imba_troll_warlord_5"
+		"Ability15"					"special_bonus_attack_damage_40"
+		"Ability16"					"special_bonus_imba_troll_warlord_battle_trance_upgrade"
+		"Ability17"					"special_bonus_imba_troll_warlord_8"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_troll_warlord_3" // -X% Fervor stack loss on target change
+		// "Ability15"					"special_bonus_imba_troll_warlord_6" // +50% Battle Trance duration
+		// "Ability16"					"special_bonus_imba_troll_warlord_9" // Remnants of Berserker's Rage
+	}
+
+	//=================================================================================================================
+	// HERO: Undying
+	//=================================================================================================================
+	"npc_dota_hero_undying"
+	{
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
+		"Ability16"		"special_bonus_reincarnation_200"
+	}
+
+	//=================================================================================================================
+	// HERO: Ursa
+	//=================================================================================================================
+	"npc_dota_hero_ursa"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_ursa_earthshock"
+		"Ability2"					"imba_ursa_overpower"
+		"Ability3"					"imba_ursa_fury_swipes"
+		"Ability4"					"imba_ursa_territorial_hunter"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_ursa_enrage"
+
+		"Ability10"					"special_bonus_imba_ursa_2" // Every x points in Strength improves the cooldown of Earthshock's Trembling Steps cooldown.
+		"Ability11"					"special_bonus_strength_10"
+		"Ability12"					"special_bonus_imba_ursa_3" // Territorial Hunter grants 25% Tenacity to Ursa in its AoE, and has its cooldown refreshed if Ursa kills an enemy hero in it
+		"Ability13"					"special_bonus_imba_ursa_4" // Fury Swipes' Devastating Blow reduces the armor of the target. Stackable and refreshable.
+		"Ability14"					"special_bonus_imba_ursa_5" // If the target has more than the threshold, Devastating Blow deals a bonus of the target's maximum health.
+		"Ability15"					"special_bonus_imba_ursa_6" // Overpower also roots targets in addition to disarming them.
+		"Ability16"					"special_bonus_imba_ursa_7" // Enrage adds a portion of your current health as damage.
+		"Ability17"					"special_bonus_imba_ursa_8" // Overpower becomes a passive, granting Ursa free attacks for 4 seconds whenever he starts an attack and Overpower is off cooldown.
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_ursa_1" // Enrage is activated automatically after taking enough damage. Resets after a few seconds
+	}
+
+	//=================================================================================================================
+	// HERO: Vengeful Spirit
+	//=================================================================================================================
+	"npc_dota_hero_vengefulspirit"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_vengefulspirit_magic_missile"
+		"Ability2"					"imba_vengefulspirit_wave_of_terror"
+		"Ability3"					"imba_vengefulspirit_command_aura_723"
+		"Ability4"					"imba_vengefulspirit_rancor"
+		"Ability5"					"imba_vengefulspirit_swap_back"
+		"Ability6"					"imba_vengefulspirit_nether_swap"
+		"Ability7"					"vengefulspirit_command_aura"
+
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_imba_vengefulspirit_2" // -Xs Nether Swap Swapback Delay
+		"Ability12"					"special_bonus_agility_15"
+		"Ability13"					"special_bonus_imba_vengefulspirit_11" // -Xs Magic Missile Cooldown
+		"Ability14"					"special_bonus_imba_vengefulspirit_1" // +X Magic Missile Damage
+		"Ability15"					"special_bonus_unique_vengeful_spirit_2"
+		"Ability16"					"special_bonus_unique_vengeful_spirit_7"
+		"Ability17"					"special_bonus_imba_vengefulspirit_5" // Magic Missile Pierces Spell Immunity
+		
+		// Removed Talents
+		//"Ability13"					"special_bonus_imba_vengefulspirit_4" // Allied Rancor
+		//"Ability13"					"special_bonus_imba_vengefulspirit_10" // -Xs Wave of Terror Cooldown
+		//"Ability15"					"special_bonus_imba_vengefulspirit_6" // Nether Missile
+		//"Ability15"					"special_bonus_imba_vengefulspirit_3" // +X% Vengeance Aura Damage
+		//"Ability16"					"special_bonus_imba_vengefulspirit_7" // -X% buyback cost, -X% buyback cooldown
+		//"Ability17"					"special_bonus_imba_vengefulspirit_8" // Full-blown Vengeance
+
+		// These work but are removed because of the illusion thing not working
+		// "Ability15"					"special_bonus_imba_vengefulspirit_command_aura_attributes"
+	}
+
+	//=================================================================================================================
+	// HERO: Venomancer
+	//=================================================================================================================
+	"npc_dota_hero_venomancer"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_venomancer_venomous_gale"
+		"Ability2"					"imba_venomancer_poison_sting"
+		//"Ability3"					"imba_venomancer_plague_ward"
+		"Ability3"					"imba_venomancer_plague_ward_v2"
+		"Ability4"					"imba_venomancer_toxicity"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_venomancer_poison_nova"
+
+		"Ability10"					"special_bonus_imba_venomancer_1"
+		"Ability11"					"special_bonus_imba_venomancer_4"
+		"Ability12"					"special_bonus_imba_venomancer_venomous_gale_plague_wards"
+		"Ability13"					"special_bonus_imba_venomancer_poison_sting_slow"
+		"Ability14"					"special_bonus_imba_venomancer_6"
+		"Ability15"					"special_bonus_spell_lifesteal_15"
+		"Ability16"					"special_bonus_imba_venomancer_poison_nova_radius"
+		"Ability17"					"special_bonus_imba_venomancer_plague_ward_upgrade"
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_venomancer_3" // "+{s:value}% Compound Toxicity Magic Resistance Reduction"
+		// "Ability13"					"special_bonus_imba_venomancer_2" // "Poison Sting adds +1% additional slow per stack" (disabled in script too so you can't use this)
+		// "Ability14"					"special_bonus_imba_venomancer_5" // "+150% Scourge/Plague Ward health/damage"
+		// "Ability16"					"special_bonus_imba_venomancer_7" // "Venomous Gale 360° AOE"
+		// "Ability17"					"special_bonus_imba_venomancer_8" // "Scourge Ward has its own stacking Poison Sting"
+	}
+
+	//=================================================================================================================
+	// HERO: Warlock
+	//=================================================================================================================
+	"npc_dota_hero_warlock"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_warlock_fatal_bonds"
+		"Ability2"					"imba_warlock_shadow_word"
+		"Ability3"					"imba_warlock_upheaval"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_warlock_rain_of_chaos"
+
+		"Ability10"					"special_bonus_imba_warlock_1" // "+30 Shadow Word attack speed on Golems"
+		"Ability11"					"special_bonus_cast_range_175"
+		"Ability12"					"special_bonus_armor_10"
+		"Ability13"					"special_bonus_imba_warlock_3" // "+7% Fatal Bonds shared damage"
+		"Ability14"					"special_bonus_imba_warlock_9" // "Summons a Warlock Golem on Death"
+		"Ability15"					"special_bonus_imba_warlock_5" // "+4 Shadow Word duration"
+		"Ability16"					"special_bonus_imba_warlock_4" // "+X Golem armor"
+		"Ability17"					"special_bonus_imba_warlock_chaotic_offering_magic_resistance"
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_warlock_2" // "Upheaval also reduces attack speed"
+		// "Ability13"					"special_bonus_imba_warlock_6" // "Upheaval is channeled by a demon in steed"
+		// "Ability16"					"special_bonus_imba_warlock_7" // "Golems share damage taken to all linked enemies"
+		// "Ability17"					"special_bonus_imba_warlock_8" // "Golems gain Spell Immunity"
+	}
+
+	//=================================================================================================================
+	// HERO: Witch Doctor
+	//=================================================================================================================
+	"npc_dota_hero_witch_doctor"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_witch_doctor_paralyzing_cask"
+		"Ability2"					"imba_witch_doctor_voodoo_restoration"
+		"Ability3"					"imba_witch_doctor_maledict"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_witch_doctor_death_ward"
+
+		"Ability10"					"special_bonus_attack_damage_75"
+		"Ability11"					"special_bonus_armor_8"
+		"Ability12"					"special_bonus_imba_witch_doctor_6" //Voodoo Restoration turns into a aura
+		"Ability13"					"special_bonus_imba_witch_doctor_maledict_radius"
+		"Ability14"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+		"Ability15"					"special_bonus_imba_witch_doctor_maledict_duration"
+		"Ability16"					"special_bonus_imba_witch_doctor_9" //+X% Maledict FeelsBadMan Heal/Regen Reduction
+		"Ability17"					"special_bonus_imba_witch_doctor_8" //Now spawns two Death Wards; if channeling is broken, only one of them disappears.
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_witch_doctor_7" //When Maledict's curse bursts, health regen is completely disabled for a period.
+		// "Ability12"					"special_bonus_imba_witch_doctor_2" //When toggling Voodoo Restoration on, it applies the basic purge effect immediately.
+		// "Ability14"					"special_bonus_imba_witch_doctor_4" //Paralyzing Cask spreads Maledict if it bounces from a cursed unit.
+		// "Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
+		// "Ability15"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
+	}
+
+	//=================================================================================================================
+	// HERO: Sly King // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_sly_king"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_weaver"
+		"HeroID"					"117"
+		"Model"						"models/heroes/slyli/model_weaver.vmdl"
+		"ModelScale"				"0.940000"
+		"SoundSet"					"Hero_Weaver"
+
+		//Picking Screen
+		"IsCustom"					"1"
+
+		"Role"			"Nuker,Disabler,Durable,Escape,Initiator"
+		"Rolelevels"	"2,3,1,2,3"
+		"Complexity"	"1"
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"3"									// Physical protection.
+		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30"							// Damage range min.
+		"AttackDamageMax"			"40"							// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+		"AttackRate"				"1.700"							// Speed of attack.
+		"AttackAnimationPoint"		"0.300"							// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"600"							// Range within a target can be acquired.
+		"AttackRange"				"150"							// Range within a target can be attacked.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
+		"AttributeBaseStrength"		"20"						// Base strength
+		"AttributeStrengthGain"		"2.4"						// Strength bonus per level.
+		"AttributeBaseIntelligence"	"16"							// Base intelligence
+		"AttributeIntelligenceGain"	"3.3"						// Intelligence bonus per level.
+		"AttributeBaseAgility"		"18"						// Base agility
+		"AttributeAgilityGain"		"1.9"						// Agility bonus per level.
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"imba_sly_king_burrow_blast"
+		"Ability2"					"imba_sly_king_frost_gale"
+		//"Ability3"					"imba_sly_king_frozen_skin"
+		"Ability3"					"imba_sly_king_hypothermic_wisdom"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sly_king_winterbringer"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_12"
+		"Ability11"					"special_bonus_armor_6"
+		"Ability12"					"special_bonus_imba_unique_sly_king_1"
+		"Ability13"					"special_bonus_hp_regen_10"
+		"Ability14"					"special_bonus_imba_unique_sly_king_2" 
+		"Ability15"					"special_bonus_attack_damage_90"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_spell_lifesteal_15"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"240"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"325"									// Speed.
+		"MovementTurnRate"			"0.4"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		//"particle_folder"			"particles/units/heroes/hero_abaddon"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
+		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
+	}
+
+	//=================================================================================================================
+	// HERO: Scaldris // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_scaldris"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_invoker"
+		"HeroID"					"118"
+		"Model"						"models/heroes/invoker/invoker.vmdl"
+		"ModelScale"				"0.810000" //0.74
+		"SoundSet"					"Hero_Invoker"
+
+		//Picking Screen
+		"IsCustom"					"1"
+
+		"Role"			"Carry,Nuker,Disabler,Escape,Initiator"
+		"Rolelevels"	"1,3,2,3,2"
+		"Complexity"	"2"
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"5"									// Physical protection.
+		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"19"							// Damage range min.
+		"AttackDamageMax"			"25"							// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+		"AttackRate"				"1.700"							// Speed of attack.
+		"AttackAnimationPoint"		"0.400"							// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
+		"AttackRange"				"600"							// Range within a target can be attacked.
+		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"								// Particle system model for projectile.
+		"ProjectileSpeed"			"900"							// Speed of projectile.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
+		"AttributeBaseStrength"		"20"
+		"AttributeStrengthGain"		"2.200000"
+		"AttributeBaseAgility"		"14"
+		"AttributeAgilityGain"		"1.900000"
+		"AttributeBaseIntelligence"	"20"
+		"AttributeIntelligenceGain"	"4.000000"
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"			"imba_scaldris_heatwave"
+		"Ability2"			"imba_scaldris_scorch"
+		"Ability3"			"imba_scaldris_jet_blaze"
+		"Ability4"			"generic_hidden"
+		"Ability5"			"imba_scaldris_antipode"
+		"Ability6"			"imba_scaldris_living_flame"
+		"Ability7"			"imba_scaldris_cold_front"
+		"Ability8"			"imba_scaldris_freeze"
+		"Ability9"			"imba_scaldris_ice_floes"
+		"Ability18"			"imba_scaldris_absolute_zero"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_movement_speed_30"
+		"Ability12"					"special_bonus_attack_damage_100"
+		"Ability13"					"special_bonus_mp_400"
+		"Ability14"					"special_bonus_cast_range_200" 
+		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_spell_block_15"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"240"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"305"									// Speed.
+		"MovementTurnRate"			"0.5"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"300"									// Base health.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+	}
+
+	//=================================================================================================================
+	// HERO: Storegga // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_storegga"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_tiny"
+		"HeroID"					"255"
+		"Model"						"models/creeps/ice_biome/storegga/storegga.vmdl"
+		"ModelScale"				"0.8"
+		"SoundSet"					"Hero_Tiny"
+
+		//Picking Screen
+		"IsCustom"					"1"
+		"IsNew"						"1"
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"8"									// Physical protection.
+		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"59"							// Damage range min.
+		"AttackDamageMax"			"75"							// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+		"AttackRate"				"1.700"							// Speed of attack.
+		"AttackAnimationPoint"		"1.000"							// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
+		"AttackRange"				"150"							// Range within a target can be attacked.
+		"ProjectileModel"			""								// Particle system model for projectile.
+		"ProjectileSpeed"			"0"								// Speed of projectile.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"	// Primary Attribute
+		"AttributeBaseStrength"		"26"
+		"AttributeStrengthGain"		"4.400000"
+		"AttributeBaseAgility"		"19"
+		"AttributeAgilityGain"		"2.900000"
+		"AttributeBaseIntelligence"	"16"
+		"AttributeIntelligenceGain"	"2.600000"
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"			"storegga_arm_slam"
+		"Ability2"			"storegga_grab"
+		"Ability3"			"storegga_grab_throw"
+		"Ability4"			"generic_hidden"
+		"Ability5"			"generic_hidden"
+		"Ability6"			"storegga_avalanche"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_exp_boost_10"
+		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability13"					"special_bonus_mp_300"
+		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_gold_income_300"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"240"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"285"									// Speed.
+		"MovementTurnRate"			"0.5"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
+	}
+
+	//=================================================================================================================
+	// HERO: Dummy
+	//=================================================================================================================
+//	"npc_dota_hero_dummy_dummy"
+//	{
+//		"BaseClass"			"npc_dota_hero"
+//		"HeroID"			"255"
+//		"Model"				"models/development/invisiblebox.vmdl"
+//	}		
 }

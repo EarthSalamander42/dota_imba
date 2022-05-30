@@ -1,4 +1,4 @@
--- Copyright (C) 2021  The Dota IMBA Development Team
+-- Copyright (C) 2018  The Dota IMBA Development Team
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@
 
 if Log == nil then
 
-	log = {}
+	log = {
+	}
 
 	Log = {
 		Levels = {
@@ -43,7 +44,6 @@ if Log == nil then
 		}
 	}
 
-	Log.disable_dedis_print = true
 
 	---------------------------------------------
 	-- Utility
@@ -269,11 +269,13 @@ if Log == nil then
 	-- and logs errors
 	---------------------------------------------
 	function Log:ExecuteInSafeContext(fun, args)
+
 		if args == nil then
 			args = {}
 		end
 
 		local status, err = xpcall(fun, function(err)
+
 			if err == nil then
 				err = "Unknown Error"
 			end
@@ -396,7 +398,6 @@ if Log == nil then
 	print = nil
 
 	function print(...)
-		if not IsInToolsMode() and disable_dedis_print then return end
 
 		local args = { ... }
 

@@ -13,14 +13,13 @@
 		"ScriptFile"					"components/abilities/heroes/hero_underlord"
 		"AbilityTextureName"			"abyssal_underlord_firestorm"
 		"FightRecapLevel"				"1"
-		"HasShardUpgrade"				"1"
-
+		"MaxLevel"						"4"
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"
 //			"particle"	"particles/units/heroes/hero_<hero>/<hero>_<ability>.vpcf"
 		}
-
+		
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
@@ -36,22 +35,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"blizzard_slow_percentage"		"10.0"
+				"blizzard_slow_percentage"		"15 20 25 30"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"burn_damage_stack"				"0.2 0.4 0.6 0.8"
+				"burn_damage_stack"				"0.25 0.5 0.75 1.0"
 			}
 			"03"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"blizzard_slow_percentage_stack"	"2.0 3.0 4.0 5.0"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"shard_bonus_wave_count"			"3"
+				"blizzard_slow_percentage_stack"	"2 3 4 5"
 			}
 		}
 	}
@@ -69,7 +63,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_underlord"
 		"AbilityTextureName"			"abyssal_underlord_pit_of_malice"
 		"FightRecapLevel"				"1"
-
+		"MaxLevel"						"4"
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"
@@ -93,7 +87,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_radius_per_stack"		"20 30 40 50"
+				"bonus_radius_per_stack"		"10 15 20 25"
 			}
 			"02"
 			{
@@ -122,6 +116,7 @@
 		"AbilityTextureName"			"abyssal_underlord_atrophy_aura"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -132,7 +127,7 @@
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"	
 		
@@ -169,7 +164,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_attack_count"	"3 4 5 6"
+				"active_attack_count"	"4"
 			}
 			"05"
 			{
@@ -192,8 +187,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_underlord"
 		"AbilityTextureName"			"abyssal_underlord_dark_rift"
 		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"				"1"
-
+		"MaxLevel"						"3"
 //		"precache"
 //		{
 //			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_<hero>.vsndevts"
@@ -205,7 +199,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 
@@ -228,18 +222,8 @@
 		{
 			"01"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"bonus_movespeed_per_hero"			"5.0 7.5 10.0"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"bonus_status_resistance_per_hero"	"5.0 7.5 10.0"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"foulfell_max_stacks"				"5"
+				"var_type"						"FIELD_FLOAT"
+				"teleport_delay"				"6.0 5.0 4.0"
 			}
 		}
 	}
@@ -344,7 +328,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"1"
+				"value"				"25"
 				"ad_linked_ability"			"abyssal_underlord_firestorm"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
 			}
 		}

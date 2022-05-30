@@ -24,7 +24,6 @@ end
 
 function CDOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	local hParent = self:GetParent()
-
 	if tSuperiorModifierNames then
 		for _,sSuperiorMod in pairs(tSuperiorModifierNames) do
 			if hParent:HasModifier(sSuperiorMod) then
@@ -32,13 +31,11 @@ function CDOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 			end
 		end
 	end
-
 	if bit.band(self:GetAttributes(), MODIFIER_ATTRIBUTE_MULTIPLE) == MODIFIER_ATTRIBUTE_MULTIPLE then
 		if self:GetStackCount() == 1 then
 			return 0
 		end
 	end
-
 	return value
 end
 
@@ -49,22 +46,22 @@ function CDOTA_Modifier_Lua:CheckMotionControllers()
 	local motion_controller_priority
 	local found_modifier_handler
 
-	local non_imba_motion_controllers = {
-		"modifier_brewmaster_storm_cyclone",
-		"modifier_dark_seer_vacuum",
-		"modifier_eul_cyclone",
-		"modifier_earth_spirit_rolling_boulder_caster",
-		"modifier_huskar_life_break_charge",
-		"modifier_invoker_tornado",
-		"modifier_item_forcestaff_active",
-		"modifier_rattletrap_hookshot",
-		"modifier_phoenix_icarus_dive",
-		"modifier_shredder_timber_chain",
-		"modifier_slark_pounce",
-		"modifier_spirit_breaker_charge_of_darkness",
-		"modifier_tusk_walrus_punch_air_time",
-		"modifier_earthshaker_enchant_totem_leap"
-	}
+	local non_imba_motion_controllers =
+	{"modifier_brewmaster_storm_cyclone",
+	 "modifier_dark_seer_vacuum",
+	 "modifier_eul_cyclone",
+	 "modifier_earth_spirit_rolling_boulder_caster",
+	 "modifier_huskar_life_break_charge",
+	 "modifier_invoker_tornado",
+	 "modifier_item_forcestaff_active",
+	 "modifier_rattletrap_hookshot",
+	 "modifier_phoenix_icarus_dive",
+	 "modifier_shredder_timber_chain",
+	 "modifier_slark_pounce",
+	 "modifier_spirit_breaker_charge_of_darkness",
+	 "modifier_tusk_walrus_punch_air_time",
+	 "modifier_earthshaker_enchant_totem_leap"}
+	
 
 	-- Fetch all modifiers
 	local modifiers = parent:FindAllModifiers()	

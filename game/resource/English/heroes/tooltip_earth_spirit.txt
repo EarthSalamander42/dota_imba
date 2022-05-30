@@ -28,8 +28,7 @@
 
 "DOTA_Tooltip_Ability_imba_earth_spirit_rolling_boulder_Imbafication_1"				"<font color='#FF7800'>Blunting Stone:</font> Disarms hit enemies for %disarm_duration_per_mark% seconds per Earth's Mark stack."
 
-// todo: Re-enable when imbafication is added back
-// "DOTA_Tooltip_Ability_earth_spirit_geomagnetic_grip_Description"					"Earth Spirit pulls the target Stone Remnant <font color='#FF7800'>or ally</font>. Enemies struck by the gripped target will be silenced, and take damage if the gripped target is a Stone Remnant."
+"DOTA_Tooltip_Ability_earth_spirit_geomagnetic_grip_Description"					"Earth Spirit pulls the target Stone Remnant <font color='#FF7800'>or ally</font>. Enemies struck by the gripped target will be silenced, and take damage if the gripped target is a Stone Remnant."
 "DOTA_Tooltip_Ability_imba_earth_spirit_geomagnetic_grip_Imbafication_1"			"<font color='#FF7800'>Sink Hole:</font> Roots hit targets for %root_time_per_mark% seconds per Earth's Mark stack."
 
 "DOTA_Tooltip_Ability_imba_earth_spirit_magnetize_Imbafication_1"					"<font color='#FF7800'>Earth's Wrath:</font> Constantly refreshes Earth's Mark duration and deals %mark_damage_per_sec_per_stack% increased damage per second per stack. Exploding Stone Remnants apply an Earth's Mark stack."
@@ -40,7 +39,7 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_1_Description"		"Stone Remnant vision radius is reduced to 200, but it now follows the Remnant."
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2"                    "Can't Stop The Rock"
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2_Description"		"Rolling Boulder disjoints projectiles and makes you invulnerable."
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2_Description"		"Rolling Boulder disjoints projectiles and makes you invulneruable."
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3"                    "Mineral Healing"
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3_Description"		"Magnetized enemies heal you for (5 * Earth Marks) every damage tick."

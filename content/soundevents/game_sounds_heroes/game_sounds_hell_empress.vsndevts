@@ -1,0 +1,159 @@
+"Imba.HellEmpressCurseHit"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/shadow_demon/shadow_poison_damage01.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.850000"  }
+					"pitch_rand_min"	{   "value"     "-0.050000"  }
+					"pitch_rand_max"	{   "value"     "0.0500000"  }
+					"pitch"				{   "value"     "0.800000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "2500.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.HellEmpressHurlCast"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/obsidian_destroyer/sanity_cast.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.900000"  }
+					"pitch_rand_min"	{   "value"     "-0.050000"  }
+					"pitch_rand_max"	{   "value"     "0.0500000"  }
+					"pitch"				{   "value"     "1.400000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "2500.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.HellEmpressHurlHit"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/obsidian_destroyer/sanity_eclipse.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.850000"  }
+					"pitch_rand_min"	{   "value"     "-0.050000"  }
+					"pitch_rand_max"	{   "value"     "0.0500000"  }
+					"pitch"				{   "value"     "1.700000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "2500.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.HellEmpressHurlLoop"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/obsidian_destroyer/astral_imprison.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.700000"  }
+					"pitch_rand_min"	{   "value"     "-0.050000"  }
+					"pitch_rand_max"	{   "value"     "0.0500000"  }
+					"pitch"				{   "value"     "1.800000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "750.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.HellEmpressHurlEnd"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/weapons/hero/obsidian_destroyer/astral_imprison_stop.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.800000"  }
+					"pitch_rand_min"	{   "value"     "-0.050000"  }
+					"pitch_rand_max"	{   "value"     "0.0500000"  }
+					"pitch"				{   "value"     "3.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "750.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}

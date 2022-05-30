@@ -1,0 +1,13 @@
+"DOTA_Tooltip_ability_item_imba_banana"								"Banana"
+"DOTA_Tooltip_ability_item_imba_banana_Description"					"<h1>Active: Eat Banana</h1> Permanently grants %int_gain% intelligence. Drops a banana peel when consumed, which causes the next enemy which steps on it to slip for %banana_slide_duration% second, moving around randomly and getting disabled. The peel disappears once an enemy slips on it, or after %banana_duration% seconds.<br><br>Bananas are fully shareable, can be stacked infinitely, and have global cast range. Eating a banana consumes a charge.<br><br>Banana Peel Radius: %banana_peel_radius%<br>Banana Slide Distance: %banana_slide_distance%"
+"DOTA_Tooltip_ability_item_imba_banana_Lore"							"Why is this so expensive you ask? Because it's art."
+"DOTA_Tooltip_ability_item_imba_banana_Note0"							"Pierces spell immunity, and ignores status ressitance."
+"DOTA_Tooltip_ability_item_imba_banana_Note1"							"The banana peel is dropped %banana_drop_distance% range behind the user's location, and is visible to everyone."
+"DOTA_Tooltip_ability_item_imba_banana_Note2"							"Any tree within %banana_peel_radius% radius of the sliding unit is destroyed while sliding."
+"DOTA_Tooltip_ability_item_imba_banana_Note3"							"The peel provides %banana_flying_vision% radius flying vision around it."
+
+"DOTA_Tooltip_modifier_item_imba_banana"							"Eaten Bananas"
+"DOTA_Tooltip_modifier_item_imba_banana_Description"				"Permanently gaining %dMODIFIER_PROPERTY_STATS_INTELLECT_BONUS% intelligence."
+
+"DOTA_Tooltip_modifier_item_imba_banana_stun"						"Banana Slip"
+"DOTA_Tooltip_modifier_item_imba_banana_stun_Description"			"Watch where you're walking! Stunned."

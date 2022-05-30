@@ -1,5 +1,4 @@
 //Ancient Apparition
-"DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet"                                 "#{DOTA_Tooltip_ability_ancient_apparition_cold_feet}"
 "DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Imbafication_1"				"<font color='#FF7800'>Thoroughly Chilled:</font> Also disables healing during the stun duration."
 "DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Imbafication_2"				"<font color='#FF7800'>Pole Transferral:</font> Any allies of the Cold Feet target that interact with them (such as through a move command or targeted ability cast) also receive the target's current Cold Feet debuff for its remaining duration."
 
@@ -7,16 +6,12 @@
 "DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Note1"						"Pole Transferral applies a fresh debuff if the target that transfers it is still affected by the first phase."
 "DOTA_Tooltip_ability_imba_ancient_apparition_cold_feet_Note2"						"Pole Transferral applies the stun/freeze equal to remaining duration if the target that transfers it is stunned/frozen."
 
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex"                                 "#{DOTA_Tooltip_ability_ancient_apparition_ice_vortex}"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_shard_description"         "#{DOTA_Tooltip_ability_ancient_apparition_ice_vortex_shard_description}"
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_vortex_Imbafication_1"			"<font color='#FF7800'>Ice Drifter:</font> Boosts movement speed of allies by the same amount."
 
 "DOTA_Tooltip_modifier_ice_slide"													"Sliding On Ice"
 
-"DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch"                                 "#{DOTA_Tooltip_ability_ancient_apparition_chilling_touch}"
 "DOTA_Tooltip_ability_imba_ancient_apparition_chilling_touch_Description"			"Enchances your attacks with heavy magic damage and slow. Gives increases attack range for this attack.\n<font color='#FF7800'>Packed Ice:</font> Also applies a %packed_ice_duration% second stun on impact."
 
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast"                                 "#{DOTA_Tooltip_ability_ancient_apparition_ice_blast}"
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Imbafication_1"				"<font color='#FF7800'>Absolute Freeze: </font>The debuff is also placed on creeps and illusions.\n"
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Imbafication_1"				"<font color='#FF7800'>Cold Hearted:</font> Grants %cold_hearted_pct%%% of the sum of health regeneration from all enemies hit by the Ice Blast explosion to Ancient Apparition for the Frostbite duration. The health regeneration is copied from the target after Ice Blast applies its explosion damage, and does not dynamically update."
 
@@ -27,7 +22,7 @@
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_Note4"						"Cold Hearted rounds down to the closest whole number. Units with less than 2 HP regeneration will not provide any stacks."
 
 "DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_frostbite_duration_scepter"	"SCEPTER FROSTBITTEN DURATION:"
-"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_scepter_description"	    "Increases frostbite duration."
+"DOTA_Tooltip_ability_imba_ancient_apparition_ice_blast_scepter_description"	    "<font color='#FF7800'>Increases frostbite duration.</font>"
 
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_global_cooling"							"Global Cooling"
 "DOTA_Tooltip_modifier_imba_ancient_apparition_ice_blast_global_cooling_Description"				"Move speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% for the duration of Ice Blast's Frostbite."

@@ -1,12 +1,10 @@
-// Keep this file for Frostrose Studio wiki compiler to work properly (must be updated along with other shop files)
-
-"5v5_shops"
+"imba_10v10_shops"
 {
 	"consumables"
 	{
 		"item"		"item_tpscroll"
 		"item"		"item_imba_clarity"	
-		"item"		"item_imba_faerie_fire"				
+		"item"		"item_faerie_fire"				
 		"item"		"item_imba_smoke_of_deceit"
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
@@ -124,10 +122,10 @@
 		"item"		"item_medallion_of_courage"
 		"item"		"item_imba_arcane_boots"
 		"item"		"item_imba_ancient_janggo"
-		"item"		"item_imba_mekansm"			
-		"item"		"item_holy_locket"	
+		"item"		"item_imba_mekansm"
+		"item"		"item_holy_locket"
 		"item"		"item_imba_vladmir"
-		"item"		"item_imba_spirit_vessel"			
+		"item"		"item_imba_spirit_vessel"
 		"item"		"item_imba_pipe"
 		"item" 		"item_imba_guardian_greaves"
 
@@ -283,7 +281,7 @@
 	"pregame"
 	{
 //		"item"		"item_clarity"
-//		"item"		"item_imba_faerie_fire"
+//		"item"		"item_faerie_fire"
 //		"item"		"item_enchanted_mango"
 //		"item"		"item_imba_tango"
 //		"item"		"item_flask"
@@ -315,7 +313,7 @@
 //		"item"		"item_recipe_soul_ring"
 
 		"item"		"item_imba_clarity"
-		"item"		"item_imba_faerie_fire"
+		"item"		"item_faerie_fire"
 		"item"		"item_enchanted_mango"
 		"item"		"item_imba_tango"
 		"item"		"item_imba_flask"

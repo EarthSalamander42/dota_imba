@@ -2,7 +2,7 @@
 KEYVALUES_VERSION = "1.01"
 
  -- Change to false to skip loading the base files
-LOAD_BASE_FILES = true
+LOAD_BASE_FILES = false
 
 --[[
 	Simple Lua KeyValues library
@@ -73,15 +73,16 @@ function LoadGameKeyValues()
 --	local override = LoadKeyValues(scriptPath.."npc_abilities_override.txt")
 	local files = {
 		AbilityKV = {base="npc_abilities",custom="npc_abilities_custom"},
+		AbilityKV2 = {base="",custom="npc_abilities"},
 		ItemKV = {base="items",custom="npc_items_custom"},
 		UnitKV = {base="npc_units",custom="npc_units_custom"}, -- npc_units_custom
 		HeroKV = {base="npc_heroes",custom="npc_heroes_custom"},
+		HeroKV2 = {base="",custom="npc_heroes"}
 	}
 
 	-- Load and validate the files
 	for k,v in pairs(files) do
 		local file = {}
-
 		if LOAD_BASE_FILES then
 			file = LoadKeyValues(scriptPath..v.base..".txt")
 		end
@@ -99,7 +100,7 @@ function LoadGameKeyValues()
 				file[k] = v
 			end
 		else
-			print("[KeyValues] Critical Error on "..v.custom..".txt")
+--			print("[KeyValues] Critical Error on "..v.custom..".txt")
 			return
 		end
 
@@ -112,7 +113,6 @@ function LoadGameKeyValues()
 
 	-- Merge All KVs
 	KeyValues.All = {}
-
 	for name,path in pairs(files) do
 		for key,value in pairs(KeyValues[name]) do
 			if not KeyValues.All[key] then
@@ -127,7 +127,27 @@ function LoadGameKeyValues()
 			KeyValues.UnitKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then
-				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+--				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+			end
+		end
+	end
+
+	for key,value in pairs(KeyValues.HeroKV2) do
+		if KeyValues.UnitKV[key] ~= key then
+			KeyValues.UnitKV[key] = value
+		else
+			if type(KeyValues.All[key]) == "table" then
+--				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+			end
+		end
+	end
+
+	for key,value in pairs(KeyValues.AbilityKV2) do
+		if not KeyValues.AbilityKV[key] then
+			KeyValues.AbilityKV[key] = value
+		else
+			if type(KeyValues.All[key]) == "table" then
+--				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
 			end
 		end
 	end
@@ -239,7 +259,7 @@ function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
 end
 
 function GetAbilitySpecials(name)
-	local t = KeyValues.AbilityKV[name]
+	local t = KeyValues.All[name]
 	local ability_specials = {}
 
 	if t then
@@ -248,7 +268,7 @@ function GetAbilitySpecials(name)
 		if tspecial then
 			for k, v in pairs(tspecial) do
 				for i, j in pairs(v) do
-					if i ~= "var_type" and i ~= "LinkedSpecialBonus" and i ~= "RequiresScepter" and i ~= "CalculateSpellDamageTooltip" and i ~= "AbilityCharges" then
+					if i ~= "var_type" and i ~= "LinkedSpecialBonus" and i ~= "RequiresScepter" and i ~= "CalculateSpellDamageTooltip" then
 						ability_specials[tonumber(k)] = {i, j}
 						break
 					end
@@ -265,8 +285,8 @@ function GetAbilitySpecials(name)
 end
 
 function GetAbilityCooldown(name)
-	local imba_t = KeyValues.AbilityKV["imba_"..name]
-	local t = KeyValues.AbilityKV[name]
+	local imba_t = KeyValues.All["imba_"..name]
+	local t = KeyValues.All[name]
 
 	if t and imba_t and imba_t["AbilityCooldown"] then
 		local value = t["AbilityCooldown"]
@@ -288,7 +308,7 @@ function GetAbilityCooldown(name)
 end
 
 function GetAbilityManaCost(name)
-	local t = KeyValues.AbilityKV[name]
+	local t = KeyValues.All[name]
 
 	if t then
 		local value = t["AbilityManaCost"]
@@ -302,7 +322,7 @@ function GetAbilityManaCost(name)
 end
 
 function GetSpellImmunityType(name)
-	local t = KeyValues.AbilityKV[name]
+	local t = KeyValues.All[name]
 
 --	print(name)
 --	print(t)
@@ -319,7 +339,7 @@ function GetSpellImmunityType(name)
 end
 
 function GetSpellDispellableType(name)
-	local t = KeyValues.AbilityKV[name]
+	local t = KeyValues.All[name]
 
 --	print(name)
 --	print(t)

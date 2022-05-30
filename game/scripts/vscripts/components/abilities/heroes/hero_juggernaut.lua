@@ -205,10 +205,16 @@ function modifier_imba_juggernaut_blade_fury:OnRemoved()
 		if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
 			self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(true)
 		end
-
+		
 		-- Re-enable Blade Dance at the end of Blade Fury
 		if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
 			self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
+		end
+		
+		if self:GetCaster():HasModifier("modifier_imba_omni_slash_caster") then
+			StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
+		else
+			EndAnimation(self:GetCaster())
 		end
 
 		if self.blade_fury_spin_pfx then
@@ -221,12 +227,6 @@ function modifier_imba_juggernaut_blade_fury:OnRemoved()
 			ParticleManager:DestroyParticle(self.blade_fury_spin_pfx_2, false)
 			ParticleManager:ReleaseParticleIndex(self.blade_fury_spin_pfx_2)
 			self.blade_fury_spin_pfx_2 = nil
-		end
-
-		if self:GetCaster():HasModifier("modifier_imba_omni_slash_caster") then
-			StartAnimation(self:GetCaster(), {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
-		else
-			EndAnimation(self:GetCaster())
 		end
 	end
 end
@@ -322,8 +322,8 @@ function modifier_imba_juggernaut_blade_fury:OnAttackLanded(keys)
 						end,
 					}
 
---					TrackingProjectiles:Projectile(projectile_deflected)
-					ProjectileManager:CreateTrackingProjectile(projectile_deflected)
+					TrackingProjectiles:Projectile(projectile_deflected)
+					-- ProjectileManager:CreateTrackingProjectile(projectile_deflected)
 				end
 			end
 		end
@@ -479,7 +479,7 @@ end
 
 function modifier_imba_juggernaut_blade_fury_deflect_buff:GetModifierIncomingDamage_Percentage(params)	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, self.caster, params.damage, nil)
-	return -100
+	return -100	
 end
 
 -- HEALING WARD --
@@ -496,7 +496,7 @@ function imba_juggernaut_healing_ward:OnSpellStart()
 	local healing_ward = CreateUnitByName("npc_dota_juggernaut_healing_ward", targetPoint, true, caster, caster, caster:GetTeamNumber())
 	
 	-- Increase the ward's health, if appropriate
-	healing_ward:SetCreatureHealth(self:GetTalentSpecialValueFor("health"), true)
+	SetCreatureHealth(healing_ward, self:GetTalentSpecialValueFor("health"), true)
 	-- Apply the Healing Ward duration modifier
 	healing_ward:AddNewModifier(caster, self, "modifier_kill", {duration = self:GetDuration()})
 	-- Grant the Healing Ward its abilities
@@ -540,7 +540,7 @@ function imba_juggernaut_healing_ward_passive:OnSpellStart()
 	-- Transform ward into totem
 	caster:SetMoveCapability(DOTA_UNIT_CAP_MOVE_NONE)
 	-- caster:SetModel("models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl")
-	caster:SetCreatureHealth(totem_health, true)
+	SetCreatureHealth(caster, totem_health, true)
 	caster:FindModifierByName("modifier_imba_juggernaut_healing_ward_passive"):ForceRefresh()
 	
 	-- Use this modifier to help with the client/server-side nonsense, as movement capability cannot be properly tracked (i.e. the IsTotem() function)
@@ -1064,7 +1064,6 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:CheckState()
 	local state = {
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		[MODIFIER_STATE_INVULNERABLE] = true,
-		[MODIFIER_STATE_DISARMED] = true,
 	}
 	return state
 end

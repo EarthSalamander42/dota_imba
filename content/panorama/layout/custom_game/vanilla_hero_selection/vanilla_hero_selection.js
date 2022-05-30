@@ -1,5 +1,5 @@
-var herolist = CustomNetTables.GetTableValue('game_options', 'herolist');
 var GridCategories = GameUI.Utils.FindDotaHudElement('GridCategories');
+var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist');
 //	var total = herocard.GetChildCount();
 var picked_heroes = [];
 var children_count = 0;
@@ -11,6 +11,14 @@ function InitHeroSelection()  {
 	var pick_screen_title = GameUI.Utils.FindDotaHudElement('HeroSelectionText');
 	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 	if (gamemode) gamemode = gamemode["1"];
+	var same_selection = CustomNetTables.GetTableValue("game_options", "same_hero_pick");
+
+	if (same_selection && same_selection.value == 1) {
+		$.Schedule(0.5, SetPickButtonAlwaysEnabled)
+		$.Schedule(0.5, UpdatePickedHeroes)
+
+		GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
+	}
 
 	if (gamemode && typeof(gamemode) == "string") {
 		pick_screen_title.text = ($.Localize("#LobbySetting_GameMode") + ": " + $.Localize("#vote_gamemode_" + gamemode)).toUpperCase();
@@ -47,6 +55,13 @@ function InitHeroSelection()  {
 						hero_panel.style.boxShadow = "inset #FF7800aa 0px 0px 2px 2px";
 						hero_panel.style.transitionDuration = '0.25s';
 						hero_panel.style.transitionProperty = 'box-shadow';
+					} else if (herolist.customlist["npc_dota_hero_" + hero_panel.heroname]) {
+						hero_panel.style.boxShadow = "inset purple 0px 0px 2px 2px";
+						hero_panel.style.transitionDuration = '0.25s';
+						hero_panel.style.transitionProperty = 'box-shadow';
+
+						hero_panel.style.backgroundImage = 'url("file://{images}/heroes/selection/npc_dota_hero_' + hero_panel.heroname + '.png")';
+						hero_panel.style.backgroundSize = "100% 100%";
 					}
 				}
 			}
@@ -207,7 +222,6 @@ function SetPickButtonAlwaysEnabled() {
 //	$.Schedule(0.1, SetPickButtonEnabled)
 }
 
-/*
 function SetIMBARandomButton() {
 	var button = GameUI.Utils.FindDotaHudElement("ReRandomButton");
 
@@ -274,7 +288,6 @@ function SetIMBARandomButton() {
 	label.style.horizontalAlign = "center";
 	label.style.textAlign = "center";
 }
-*/
 
 function GridChecker() {
 	if (children_count != GridCategories.GetChildCount()) {

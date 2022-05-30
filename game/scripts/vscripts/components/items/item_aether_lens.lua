@@ -28,8 +28,6 @@ function modifier_imba_aether_lens_passive:RemoveOnDeath()	return false end
 function modifier_imba_aether_lens_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_aether_lens_passive:OnDestroy()
-	if not IsServer() then return end
-
 	self:CheckUnique(false)
 end
 
@@ -40,16 +38,12 @@ function modifier_imba_aether_lens_passive:OnCreated()
     
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
-
 	if self.parent:IsHero() and item then
 		self.bonus_mana = item:GetSpecialValueFor("bonus_mana")
 		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
 		self.cast_range_bonus = item:GetSpecialValueFor("cast_range_bonus")
 		self.spell_power = item:GetSpecialValueFor("spell_power")
-
-		if IsServer() then
-			self:CheckUnique(true)
-		end
+		self:CheckUnique(true)
 	end
 
 	if not IsServer() then return end

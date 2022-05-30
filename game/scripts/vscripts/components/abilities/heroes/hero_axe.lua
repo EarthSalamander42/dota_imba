@@ -29,7 +29,7 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_berserkers_call_talent"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_axe_berserkers_call = imba_axe_berserkers_call or class(VANILLA_ABILITIES_BASECLASS)
+imba_axe_berserkers_call = imba_axe_berserkers_call or class({})
 
 function imba_axe_berserkers_call:OnAbilityPhaseStart()
 	if IsServer() then
@@ -44,7 +44,7 @@ function imba_axe_berserkers_call:OnSpellStart()
 	local ability                   =       self
 
 	-- Ability specials
-	local radius                    =      ability:GetVanillaAbilitySpecial("radius")
+	local radius                    =      ability:GetSpecialValueFor("radius")
 	self:GetCaster():EmitSound("Hero_Axe.Berserkers_Call")
 
 	-- On cast, hit 1 or more units
@@ -79,7 +79,7 @@ function imba_axe_berserkers_call:OnSpellStart()
 			ExecuteOrderFromTable(newOrder)
 		end
 		self:AddCalledTarget(target)
-		target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetVanillaAbilitySpecial("duration")})
+		target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance())})
 	end
 
 	-- if enemies table is empty play random responses_zero_enemy
@@ -89,11 +89,11 @@ function imba_axe_berserkers_call:OnSpellStart()
 		self:GetCaster():EmitSound(responses_1_or_more_enemies)
 	end
 
-	caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_buff_armor", {duration = ability:GetVanillaAbilitySpecial("duration")})
+	caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_buff_armor", {duration = ability:GetSpecialValueFor("duration")})
 
 	if caster:HasTalent("special_bonus_imba_axe_2") then
 		local talent_duration = caster:FindTalentValue("special_bonus_imba_axe_2")
-		caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_talent", {duration = ability:GetVanillaAbilitySpecial("duration") + talent_duration})
+		caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_talent", {duration = ability:GetSpecialValueFor("duration") + talent_duration})
 	end
 
 end
@@ -146,7 +146,7 @@ function modifier_imba_berserkers_call_buff_armor:DeclareFunctions()
 end
 
 function modifier_imba_berserkers_call_buff_armor:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetVanillaAbilitySpecial( "bonus_armor")
+	return self:GetAbility():GetSpecialValueFor( "bonus_armor")
 end
 
 function modifier_imba_berserkers_call_buff_armor:OnCreated()
@@ -301,7 +301,7 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_battle_hunger_debuff_deny"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_axe_battle_hunger = imba_axe_battle_hunger or class(VANILLA_ABILITIES_BASECLASS)
+imba_axe_battle_hunger = imba_axe_battle_hunger or class({})
 
 function imba_axe_battle_hunger:CastFilterResultTarget(target)
 	if IsServer() then
@@ -329,7 +329,7 @@ end
 
 function imba_axe_battle_hunger:GetAOERadius()
 	if self:GetCaster():HasScepter() then
-		return self:GetVanillaAbilitySpecial("scepter_range")
+		return self:GetSpecialValueFor("scepter_range")
 	end
 
 	return 0
@@ -394,7 +394,7 @@ end
 function imba_axe_battle_hunger:ApplyBattleHunger(caster, target)
 	local caster_modifier = "modifier_imba_battle_hunger_buff_haste"
 	local target_modifier = "modifier_imba_battle_hunger_debuff_dot"
-	local duration = self:GetVanillaAbilitySpecial("duration")
+	local duration = self:GetSpecialValueFor("duration")
 
 	if not caster:HasModifier(caster_modifier) then
 		caster:AddNewModifier(caster, self, caster_modifier, {})
@@ -421,7 +421,7 @@ end
 modifier_imba_battle_hunger_buff_haste = modifier_imba_battle_hunger_buff_haste or class({})
 
 function modifier_imba_battle_hunger_buff_haste:OnCreated()
-	self.speed_bonus	= self:GetAbility():GetVanillaAbilitySpecial("speed_bonus")
+	self.speed_bonus	= self:GetAbility():GetSpecialValueFor("speed_bonus")
 end
 
 function modifier_imba_battle_hunger_buff_haste:DeclareFunctions()
@@ -473,14 +473,14 @@ function modifier_imba_battle_hunger_debuff_dot:OnCreated( params )
 	self.tick_rate = 1 --once per second
 	self.cmd_restrict_modifier = "modifier_imba_battle_hunger_debuff_cmd"
 	self.deny_allow_modifier = "modifier_imba_battle_hunger_debuff_deny"
-	self.damage_over_time = self:GetAbility():GetVanillaAbilitySpecial( "damage_per_second" )
+	self.damage_over_time = self:GetAbility():GetSpecialValueFor( "damage" )
 	self.maddening_chance_pct = self:GetAbility():GetSpecialValueFor("maddening_chance_pct")
 	self.max_maddening_duration = self:GetAbility():GetSpecialValueFor("max_maddening_duration")
 	self.maddening_buffer_distance = self:GetAbility():GetSpecialValueFor("maddening_buffer_distance")
-	self.scepter_damage_reduction = self:GetAbility():GetVanillaAbilitySpecial( "damage_reduction_scepter" )
+	self.scepter_damage_reduction = self:GetAbility():GetSpecialValueFor( "scepter_damage_reduction" )
 	self.pause_time = self:GetAbility():GetSpecialValueFor("pause_time")
 	self.units	= self:GetAbility():GetSpecialValueFor("units")
-	self.slow	= self:GetAbility():GetVanillaAbilitySpecial("slow") * (-1)
+	self.slow	= self:GetAbility():GetSpecialValueFor("slow") * (-1)
 	
 	if not IsServer() then return end
 	
@@ -504,7 +504,7 @@ end
 function modifier_imba_battle_hunger_debuff_dot:OnIntervalThink()
 	if IsServer() then
 		-- Check if target is in fountain area
-		if self.parent:IsNearFriendlyClass(1360, "ent_dota_fountain") then
+		if IsNearFriendlyClass(self.parent, 1360, "ent_dota_fountain") then
 			self:Destroy()
 			return nil
 		end
@@ -565,7 +565,7 @@ end
 
 function modifier_imba_battle_hunger_debuff_dot:GetModifierTotalDamageOutgoing_Percentage()
 	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetCaster():HasScepter() then
-		return self.scepter_damage_reduction * (-1)
+		return self.scepter_damage_reduction
 	else
 		return 0
 	end
@@ -722,13 +722,11 @@ end
 MergeTables(LinkedModifiers,{
 	["modifier_imba_counter_helix_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_counter_helix_spin_stacks"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_counter_helix_shard"] = LUA_MODIFIER_MOTION_NONE,
 })
-
-imba_axe_counter_helix = imba_axe_counter_helix or class(VANILLA_ABILITIES_BASECLASS)
+imba_axe_counter_helix = imba_axe_counter_helix or class({})
 
 function imba_axe_counter_helix:GetCastRange()
-	return self:GetVanillaAbilitySpecial("radius")
+	return self:GetSpecialValueFor("radius")
 end
 
 function imba_axe_counter_helix:GetIntrinsicModifierName()
@@ -749,13 +747,12 @@ function modifier_imba_counter_helix_passive:OnCreated()
 	self.spin_to_win_modifier = "modifier_imba_counter_helix_spin_stacks"
 
 	--ability specials
-	self.radius = self.ability:GetVanillaAbilitySpecial("radius")
+	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.radius_increase_per_stack = self.ability:GetSpecialValueFor("radius_increase_per_stack")
 	self.stack_limit = self.ability:GetSpecialValueFor("stack_limit")
 	self.stack_duration = self.ability:GetSpecialValueFor("stack_duration")
-	self.proc_chance = self.ability:GetVanillaAbilitySpecial("trigger_chance")
-	self.base_damage = self.ability:GetVanillaAbilitySpecial("damage")
-
+	self.proc_chance = self.ability:GetSpecialValueFor("proc_chance")
+	self.base_damage = self.ability:GetSpecialValueFor("base_damage")
 	-- Talent : Double Helix chance, but reduce base damage by 1/3
 	if self.caster:HasTalent("special_bonus_imba_axe_5") then
 		self.proc_chance = self.proc_chance * self.caster:FindTalentValue("special_bonus_imba_axe_5", "proc_chance_multiplier")
@@ -784,19 +781,14 @@ end
 function modifier_imba_counter_helix_passive:OnAttackLanded(keys)
 	-- "Cannot proc on attacks from buildings, wards and allies."
 	if self:GetAbility() and not self:GetCaster():PassivesDisabled() and ((keys.target == self:GetParent() and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() and keys.attacker:GetTeamNumber() ~= keys.target:GetTeamNumber()) or (keys.attacker == self:GetCaster() and self:GetCaster():HasTalent("special_bonus_imba_axe_9"))) then
-		self.proc_chance = self:GetAbility():GetVanillaAbilitySpecial("trigger_chance")
-		self.base_damage = self:GetAbility():GetVanillaAbilitySpecial("damage")
-
-		if self.caster:HasShard() then
-			self.proc_chance = self.proc_chance + self.ability:GetSpecialValueFor("shard_bonus_helix_chance")
-		end
-
+		self.proc_chance = self:GetAbility():GetSpecialValueFor("proc_chance")
+		self.base_damage = self:GetAbility():GetSpecialValueFor("base_damage")
 		-- Talent : Double Helix chance, but reduce base damage by 1/3
 		if self.caster:HasTalent("special_bonus_imba_axe_5") then
 			self.proc_chance = self.proc_chance * self.caster:FindTalentValue("special_bonus_imba_axe_5", "proc_chance_multiplier")
-			self.base_damage = self.base_damage * self.caster:FindTalentValue("special_bonus_imba_axe_5", "damage_multiplier") / 100
+			self.base_damage = self.base_damage * self.caster:FindTalentValue("special_bonus_imba_axe_5", "damage_multiplier") * 0.01
 		end
-
+	
 		-- +30% of your strength added to Counter Helix damage.
 		if self.caster:HasTalent("special_bonus_imba_axe_4") then
 			self.str = self.caster:GetStrength() / 100
@@ -822,13 +814,11 @@ end
 function modifier_imba_counter_helix_passive:Spin( repeat_allowed )
 	self.helix_pfx_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
 	ParticleManager:SetParticleControl(self.helix_pfx_1, 0, self.caster:GetAbsOrigin())
-
 	if Battlepass and Battlepass:HasArcana(self.caster:GetPlayerID(), "axe") then
 		ParticleManager:SetParticleControlEnt(self.helix_pfx_1, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.helix_pfx_1, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_attack2", self.caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.helix_pfx_1, 3, self.caster:GetAbsOrigin())
 	end
-
 	ParticleManager:ReleaseParticleIndex(self.helix_pfx_1)
 
 --	self.helix_pfx_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_counterhelix.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster)
@@ -840,29 +830,23 @@ function modifier_imba_counter_helix_passive:Spin( repeat_allowed )
 
 	local spin_to_win = self.caster:FindModifierByName(self.spin_to_win_modifier)
 	local radius = self.radius
-
 	if spin_to_win then
 		radius = radius + spin_to_win:GetStackCount() * self.radius_increase_per_stack
 	end
 
 	-- Find nearby enemies
 	self.enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-
 	-- Apply damage to valid enemies
 	for _,enemy in pairs(self.enemies) do
 		local damage = self.total_damage
 
 		-- If an enemy is tauned, increase damage on it
 		if enemy:HasModifier(self.modifier_enemy_taunt) then
-			damage = damage * (1 + self.taunted_damage_bonus_pct / 100)
+			damage = damage * (1 + self.taunted_damage_bonus_pct * 0.01)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, enemy, damage, nil)
 		end
 
 		ApplyDamage({attacker = self.caster, victim = enemy, ability = self.ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-
-		if self.caster:HasShard() and not enemy:IsMagicImmune() then
-			enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_counter_helix_shard", {duration = self.ability:GetSpecialValueFor("shard_debuff_duration")})
-		end
 	end
 
 	if spin_to_win then
@@ -896,11 +880,6 @@ end
 ----------------------------------------------------------------------------------------------------
 modifier_imba_counter_helix_spin_stacks = modifier_imba_counter_helix_spin_stacks or class({})
 
-
-function modifier_imba_counter_helix_spin_stacks:IsHidden() return false end
-function modifier_imba_counter_helix_spin_stacks:IsBuff() return true end
-function modifier_imba_counter_helix_spin_stacks:IsPurgable() return false end
-
 function modifier_imba_counter_helix_spin_stacks:OnCreated()
 	self.stack_limit = self:GetAbility():GetSpecialValueFor("stack_limit")
 end
@@ -911,29 +890,17 @@ function modifier_imba_counter_helix_spin_stacks:OnStackCountChanged( oldstacks 
 	end
 end
 
+function modifier_imba_counter_helix_spin_stacks:IsHidden()
+	return false
+end
+function modifier_imba_counter_helix_spin_stacks:IsBuff()
+	return true
+end
+function modifier_imba_counter_helix_spin_stacks:IsPurgable()
+	return false
+end
 ----------------------------------------------------------------------------------------------------
 
-modifier_imba_counter_helix_shard = modifier_imba_counter_helix_shard or class({})
-
-function modifier_imba_counter_helix_shard:DeclareFunctions() return {
-	MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
-} end
-
-function modifier_imba_counter_helix_shard:OnCreated()
-	if not IsServer() then return end
-
-	self:SetStackCount(1)
-end
-
-function modifier_imba_counter_helix_shard:OnRefresh()
-	if not IsServer() then return end
-
-	self:SetStackCount(math.min(self:GetStackCount() + 1, 5))
-end
-
-function modifier_imba_counter_helix_shard:GetModifierDamageOutgoing_Percentage(keys)
-	return self:GetAbility():GetSpecialValueFor("shard_damage_reduction") * self:GetStackCount() * (-1)
-end
 
 -------------------------------------------
 -- Culling Blade
@@ -947,7 +914,7 @@ MergeTables(LinkedModifiers,{
 MergeTables(LinkedModifiers,{
 	["modifier_imba_culling_blade_motion"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_axe_culling_blade = imba_axe_culling_blade or class(VANILLA_ABILITIES_BASECLASS)
+imba_axe_culling_blade = imba_axe_culling_blade or class({})
 
 function imba_axe_culling_blade:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_axe_8")
@@ -966,14 +933,15 @@ function imba_axe_culling_blade:OnSpellStart()
 
 	--ability specials
 	self.culling_modifier = "modifier_imba_culling_blade_cull_stacks"
-	self.kill_threshold = self.ability:GetVanillaAbilitySpecial("kill_threshold")
+	self.kill_threshold = self.ability:GetSpecialValueFor("kill_threshold")
 	self.kill_threshold_max_hp_pct = self.ability:GetSpecialValueFor("kill_threshold_max_hp_pct") / 100
-	self.damage = self.ability:GetVanillaAbilitySpecial("damage")
-	self.speed_bonus = self.ability:GetVanillaAbilitySpecial("speed_bonus")
-	self.as_bonus = self.ability:GetVanillaAbilitySpecial("atk_speed_bonus")
-	self.speed_duration = self.ability:GetVanillaAbilitySpecial("speed_duration")
-	self.speed_aoe_radius = self.ability:GetVanillaAbilitySpecial("speed_aoe")
+	self.damage = self.ability:GetSpecialValueFor("damage")
+	self.speed_bonus = self.ability:GetSpecialValueFor("speed_bonus")
+	self.as_bonus = self.ability:GetSpecialValueFor("as_bonus")
+	self.speed_duration = self.ability:GetSpecialValueFor("speed_duration")
+	self.speed_aoe_radius = self.ability:GetSpecialValueFor("speed_aoe")
 	self.max_health_kill_heal_pct = self.ability:GetSpecialValueFor("max_health_kill_heal_pct")
+	self.scepter_battle_hunger_radius = self.ability:GetSpecialValueFor("scepter_battle_hunger_radius")
 	self.culling_stack_duration = self.ability:GetSpecialValueFor("stack_duration")
 	self.threshold_increase = self.ability:GetSpecialValueFor("threshold_increase")
 	self.threshold_max_hp_pct_increase = self.ability:GetSpecialValueFor("threshold_max_hp_pct_increase")
@@ -1045,28 +1013,28 @@ function imba_axe_culling_blade:OnSpellStart()
 
 		for _,target in pairs(self.allies_in_radius) do
 			target:AddNewModifier(self.caster, self, "modifier_imba_culling_blade_buff_haste", {duration = self.speed_duration})
-
-			-- scepter apply battle hunger to enemies in radius
-			if self.scepter then
-				self.battle_hunger_ability = self.caster:FindAbilityByName("imba_axe_battle_hunger")
-
-				if self.battle_hunger_ability and self.battle_hunger_ability:GetLevel() > 0 then
-					self.battle_hunger_ability:ApplyBattleHunger(self.caster, target)
-				end
-			end
 		end
 
 		-- refresh cooldown if killed unit is player
 		if (self.target:IsHero()) then
 			self.ability:EndCooldown()
-
 			if dunk_modifier then
 				dunk_modifier:ForceRefresh()
 			else
 				dunk_modifier = self.caster:AddNewModifier(self.caster, self, self.culling_modifier, {duration = self.culling_stack_duration})
 			end
-
 			dunk_modifier:IncrementStackCount()
+		end
+
+		--scepter apply battle hunger to enemies in radius
+		if self.scepter then
+			self.targets = FindUnitsInRadius(self.caster:GetTeamNumber(), self.target:GetAbsOrigin(), nil, self.scepter_battle_hunger_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
+			self.battle_hunger_ability = self.caster:FindAbilityByName("imba_axe_battle_hunger")
+			if self.battle_hunger_ability and self.battle_hunger_ability:GetLevel() > 0 then
+				for _,enemies in pairs(self.targets) do
+					self.battle_hunger_ability:ApplyBattleHunger(self.caster, enemies)
+				end
+			end
 		end
 	else
 		if self.caster:HasTalent("special_bonus_imba_axe_8") and (self:GetCaster():GetAbsOrigin() - self.target_location):Length2D() > self.BaseClass.GetCastRange(self, self.target_location, self.target) then
@@ -1087,7 +1055,7 @@ function imba_axe_culling_blade:OnSpellStart()
 end
 
 function imba_axe_culling_blade:KillUnit(target)
-	self.caster:TrueKill(target, self)
+	TrueKill(self.caster, target, self)
 	self.heal_amount = (self.caster:GetMaxHealth() / 100) * self.max_health_kill_heal_pct
 	self.caster:Heal(self.heal_amount, self.caster)
 	-- Play the kill particle

@@ -1,0 +1,129 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 12
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_bAdditive = true
+			m_hTexture = resource:"materials/particle/particle_flares/aircraft_blue.vtex"
+			m_flAnimationRate = 4.0
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_FadeInSimple"
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 1.0
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartTime = 0.6
+			m_flStartScale = 0.1
+			m_flEndScale = 6.0
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 0.2
+			m_flStartTime = 0.1
+			m_flEndTime = 0.85
+			m_flEndScale = 4.0
+			m_flBias = 0.85
+		},
+		{
+			_class = "C_OP_LerpScalar"
+			m_nFieldOutput = 12
+			m_flOutput = 1.570796
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_flOpEndFadeInTime = 0.15
+			m_flOpStartFadeInTime = 0.1
+			m_Gravity = [ 0.0, 0.0, 200.0 ]
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 252, 255, 0, 255 ]
+			m_flFadeStartTime = 1.0
+			m_flFadeEndTime = 0.0
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 1
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomSequence"
+		},
+		{
+			_class = "C_INIT_RandomYaw"
+			m_flDegreesMax = 90.0
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 148, 153, 255, 255 ]
+			m_ColorMax = [ 246, 77, 252, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 0.2
+			m_fLifetimeMax = 0.8
+		},
+		{
+			_class = "C_INIT_CreateWithinBox"
+			m_vecMax = [ 5.0, 5.0, 5.0 ]
+			m_vecMin = [ -5.0, -5.0, -5.0 ]
+			m_nControlPointNumber = 1
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 30.0
+			m_flRadiusMax = 50.0
+		},
+		{
+			_class = "C_INIT_RemapScalar"
+			m_flInputMax = 2.0
+			m_nFieldInput = 9
+			m_flOutputMin = 1.0
+			m_flOutputMax = 0.5
+			m_nSetMethod = "PARTICLE_SET_SCALE_INITIAL_VALUE"
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 12.0
+			}
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 7
+}

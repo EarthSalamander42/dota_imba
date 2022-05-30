@@ -155,6 +155,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_stacks"			"3"
 			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"greevil_duration"		"10"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"periodic_gold_percentage"	"25"
+			}
 		}
 	}
 
@@ -213,10 +223,11 @@
 	{
 		"BaseClass"             		"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_alchemist"
-		"AbilityTextureName"			"alchemist/alchemist_mammonite"
+		"AbilityTextureName"			"alchemist_mammonite"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"		
 		"MaxLevel" 						"1"		
-		"IsGrantedByScepter"			"1"
+
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -232,7 +243,7 @@
 		{
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
 				"gold_damage"	"2.5"				
 			}
 		}		

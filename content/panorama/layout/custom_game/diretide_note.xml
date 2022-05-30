@@ -1,0 +1,67 @@
+<root>
+
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+<!--		<include src="s2r://panorama/styles/hud.vcss_c"/> -->
+		<include src="s2r://panorama/styles/hudstyles.vcss_c"/>
+		<include src="s2r://panorama/styles/hud/hud_reborn.vcss_c" />	
+	  
+		<include src="s2r://panorama/styles/custom_game/diretide_note.vcss_c" />
+	</styles>
+
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/diretide_note.vjs_c" />
+	</scripts>
+
+	<Panel hittest="false" class="CustomHudRoot">
+		<Panel id="FloatingDialogPanel" hittest="false">
+			<Panel id="Floating	Background" hittest="false"/>
+			<Panel id="FloatingDialogPanelContent" hittest="false">
+				<Panel class="SpeechBubble" hittest="false">
+					<Panel id="SpeechBubbleContainer" hittest="false">
+						<Panel class="SpeechBubbleBackgroundOutline" hittest="false"/>
+						<Panel class="SpeechBubbleCalloutSquash" hittest="false">
+							<Panel class="SpeechBubbleCallout" hittest="false"/>
+						</Panel>
+						<Panel class="SpeechBubbleBackground" hittest="false"/>
+					</Panel>
+					<Label id="FloatingDialogLabelSizer" html="true" class="DialogPanelText" text="#DialogTest" hittest="false" />
+					<Label id="FloatingDialogLabel" html="true" class="DialogPanelText" text="#DialogTest" hittest="false" />
+				</Panel>
+
+				<Panel class="DialogButtonContainer LeftRightFlow">
+					<Button id="ContinueFloatingDialogButton" class="ButtonBevel CloseButton" onactivate="OnAdvanceDialogButtonPressed()" hittest="true"/>
+					<Button id="CloseFloatingDialogButton" class="ButtonBevel CloseButton" onactivate="OnCloseDialogButtonPressed()" hittest="true"/>	
+				</Panel>
+			</Panel>
+		</Panel>
+
+		<Panel id="DialogPanel" hittest="false">
+			<Panel id="DialogPanelBackground" hittest="false"/>
+			<DOTAScenePanel id="DialogPortrait" unit="npc_dota_hero_pudge" environment="default" particleonly="	false" hittest="false"/>
+			<Panel id="GlassBallOverlay" hittest="false"/>
+			<Label id="DialogTitle" class="DialogPanelTitle TitleFont" text="" hittest="false"/>		
+	
+			<Panel id="DialogPanelContent" hittest="false">
+				<Panel class="SpeechBubble" hittest="false">
+					<Panel id="SpeechBubbleContainer" hittest="false">
+						<Panel class="SpeechBubbleBackgroundOutline" hittest="false"/>
+						<Panel class="SpeechBubbleCalloutSquash" hittest="false">
+							<Panel class="SpeechBubbleCallout" hittest="false"/>
+						</Panel>
+						<Panel class="SpeechBubbleBackground" hittest="false"/>
+					</Panel>
+					<Panel id="JournalPageBackground"/>
+					<Label id="DialogLabelSizer" html="true" class="DialogPanelText" text="#DialogTest" hittest=	"false" />
+					<Label id="DialogLabel" html="true" class="DialogPanelText" text="#DialogTest" hittest="	false" />
+				</Panel>
+
+				<Button id="ConfirmButton" class="ButtonBevel" onactivate="OnConfirmButtonPressed()"><Panel 	class="CheckMark"/><Label text="#DOTA_Siltbreaker_ContinueSpeechText"/></Button>			
+				<Panel class="DialogButtonContainer LeftRightFlow">
+					<Button id="ContinueDialogButton" class="ButtonBevel CloseButton"  onactivate="	OnAdvanceDialogButtonPressed()" hittest="true"/>
+					<Button id="CloseDialogButton" class="ButtonBevel CloseButton" onactivate="	OnCloseDialogButtonPressed()" hittest="true"/>		
+				</Panel>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

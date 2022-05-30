@@ -50,14 +50,6 @@ function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 	return base
 end
 
-function C_DOTA_BaseNPC:HasShard()
-	if self:HasModifier("modifier_item_aghanims_shard") then
-		return true
-	end
-
-	return false
-end
-
 function C_DOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	local hParent = self:GetParent()
 	if tSuperiorModifierNames then
@@ -75,7 +67,6 @@ function C_DOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	return value
 end
 
---[[
 function C_DOTA_Modifier_Lua:CheckUnique(bCreated)
 	return nil
 end
@@ -95,7 +86,14 @@ function IsDaytime()
 
 	return true   
 end
---]]
+
+function C_DOTA_BaseNPC:HasShard()
+	if self:HasModifier("modifier_item_aghanims_shard") then
+		return true
+	end
+
+	return false
+end
 
 --[[
 function C_DOTA_BaseNPC:IsInRiver()
@@ -106,8 +104,6 @@ function C_DOTA_BaseNPC:IsInRiver()
 	end
 end
 --]]
-
---[[
 
 -- Call custom functions whenever GetAbilityTextureName is being called anywhere
 original_Ability_GetAbilityTextureName = C_DOTA_Ability_Lua.GetAbilityTextureName
@@ -151,7 +147,6 @@ C_DOTA_Item_Lua.GetAbilityTextureName = function(self)
 
 	return response
 end
---]]
 
 --[[ -- not procing somehow, leaving it there in case
 original_Ability_GetEffectName = C_DOTA_Modifier_Lua.GetEffectName

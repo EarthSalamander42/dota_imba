@@ -5,7 +5,7 @@ LinkLuaModifier("modifier_item_imba_bottle_heal", "components/items/item_bottle.
 LinkLuaModifier("modifier_item_imba_bottle_texture_controller", "components/items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_bottle_texture_controller_2", "components/items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE)
 
-item_imba_bottle = item_imba_bottle or class({})
+item_imba_bottle = class({})
 
 function item_imba_bottle:GetIntrinsicModifierName() return "modifier_item_imba_bottle_texture_controller" end
 
@@ -141,7 +141,7 @@ function modifier_item_imba_bottle_texture_controller_2:OnCreated()
 	end
 end
 
-modifier_item_imba_bottle_heal = modifier_item_imba_bottle_heal or class({
+modifier_item_imba_bottle_heal = class({
 	GetTexture =			function() return "bottle_0_3" end,
 	IsPurgable =			function() return false end,
 	GetEffectAttachType =	function() return PATTACH_ABSORIGIN_FOLLOW end,
@@ -158,7 +158,7 @@ function modifier_item_imba_bottle_heal:OnCreated()
 	if IsServer() then
         if not self:GetAbility() then self:Destroy() end
     end
-
+	
 	-- the ability is added in ModifierFilter, using vanilla bottle. Clientside is not called OnCreated, and CustomNetTables are sending values to client to show on UI, but it doesn't show up on UI somehow.
 	self.health_restore = self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
 	self.mana_restore = self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
@@ -173,7 +173,6 @@ function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen() return se
 
 function modifier_item_imba_bottle_heal:OnDestroy()
 	if not IsServer() then return end
-
 	ParticleManager:DestroyParticle(self.pfx, false)
 	ParticleManager:ReleaseParticleIndex(self.pfx)
 end

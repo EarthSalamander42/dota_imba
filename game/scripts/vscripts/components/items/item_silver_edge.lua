@@ -168,7 +168,7 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 				self:GetParent():SetAbsOrigin(target_pos)
 
 				-- Give the dummy which direction to look at
-				local direction = (params.target:CalculateDirection(self:GetParent()))
+				local direction = (CalculateDirection(params.target, self:GetParent()))
 
 				-- Create a particle for the cleave effect for ranged heroes
 				CreateModifierThinker(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_attack_cleave_particle",
@@ -184,7 +184,7 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 
 			-- Find units hit by the cleave (amazing custom function from funcs.lua)
 			local enemies = FindUnitsInCone(self:GetParent():GetTeamNumber(),
-				params.target:CalculateDirection(self:GetParent()),
+				CalculateDirection(params.target, self:GetParent()),
 				self:GetParent():GetAbsOrigin(),
 				cleave_radius_start,
 				cleave_radius_end,
@@ -258,16 +258,17 @@ function modifier_item_imba_silver_edge_passive:RemoveOnDeath() return false end
 function modifier_item_imba_silver_edge_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_silver_edge_passive:OnCreated()
-	self.slow_duration = self:GetAbility():GetSpecialValueFor("slow_duration")
-
 	if IsServer() then
         if not self:GetAbility() then self:Destroy() return end
         self.echo_ready = true
-
-		if self:GetParent():IsHero() and self:GetAbility() then
-			self:CheckUnique(true)
-		end
     end
+
+	self.slow_duration = self:GetAbility():GetSpecialValueFor("slow_duration")
+
+	-- Ability parameters
+	if self:GetParent():IsHero() and self:GetAbility() then
+		self:CheckUnique(true)
+	end
 end
 
 -- Attack speed, damage and stat bonuses

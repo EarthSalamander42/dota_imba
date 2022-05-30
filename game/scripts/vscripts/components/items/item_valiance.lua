@@ -206,6 +206,7 @@ function modifier_item_imba_valiance_guard:DeclareFunctions()
 	}
 end
 
+
 function modifier_item_imba_valiance_guard:GetAbsoluteNoDamagePhysical(keys)
 	if keys.attacker and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and math.abs(AngleDiff(VectorToAngles(self:GetParent():GetForwardVector()).y, VectorToAngles(keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()).y)) <= self.guard_angle then
 		return 1

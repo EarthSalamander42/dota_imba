@@ -11,25 +11,31 @@
 				"2" "14"
 				"3" "14"
 				"4" "14"
+				"5" "14"
+				"6" "14"
+				"7" "14"
+				"8" "14"
+				"9" "14"
 			}
 		}
 		
 		"items"
 		{
-			"item_keen_optic"				  "1"
-			//"item_ironwood_tree"				  "1"
-			"item_ocean_heart"				  "1"
-			"item_broom_handle"				  "1"
-			"item_imba_trusty_shovel"			  "1"
-			//"item_faded_broach"				  "1"
-			"item_arcane_ring"				  "1"
-			"item_chipped_vest"				  "1"
-			"item_possessed_mask"				  "1"
-			"item_mysterious_hat"				  "1"
-			
-			"item_unstable_wand"				"1"
-			"item_pogo_stick"				  "1"						
-			//"item_royal_jelly"				  "1"
+			"item_elixer"					"1"
+			"item_keen_optic"				"1"
+//			"item_poor_mans_shield"			"1" // Item purchasable in shop
+//			"item_iron_talon"				"1" // Item purchasable in shop
+			"item_ironwood_tree"			"1"
+			"item_royal_jelly"				"1"
+			"item_mango_tree"				"1"
+			"item_ocean_heart"				"1"
+			"item_broom_handle"				"1"
+			"item_imba_trusty_shovel"		"1"
+			"item_faded_broach"				"1"
+			"item_arcane_ring"				"1"
+			"item_chipped_vest"				"1"
+			"item_possessed_mask"			"1"
+			"item_mysterious_hat"			"1"
 		}
 	}
 	"2"
@@ -43,28 +49,29 @@
 				"2" "10"
 				"3" "10"
 				"4" "10"
+				"5" "10"
+				"6" "10"
+				"7" "10"
+				"8" "10"
+				"9" "10"
 			}
 		}
 
 		"items"
 		{
-			"item_ring_of_aquila"			  "1"
-			//"item_imp_claw"					  "1"
-			"item_nether_shawl"				  "1"
-			"item_dragon_scale"				  "1"
-			
-			
-			"item_pupils_gift"				  "1"
-			"item_vambrace"			  "1"
-			
-			
-			"item_misericorde"				  "1"
-			"item_grove_bow"				  "1"
-			"item_philosophers_stone"				  "1"
-			"item_essence_ring"				  "1"
-			"item_paintball"				"1"
-			"item_bullwhip"			  "1"
-			"item_quicksilver_amulet"				  "1"
+			"item_grove_bow"				"1"
+			"item_vampire_fangs"			"1"
+			//"item_ring_of_aquila"			"1" // Item purchasable in shop
+			"item_pupils_gift"				"1"
+			"item_imp_claw"					"1"
+			"item_philosophers_stone"		"1"
+			"item_nether_shawl"				"1"
+			"item_dragon_scale"				"1"
+			"item_essence_ring"				"1"
+			"item_vambrace"					"1"
+			"item_clumsy_net"				"1"
+			"item_bullwhip"					"1"
+			"item_quicksilver_amulet"		"1"
 		}
 	}
 	"3"
@@ -78,24 +85,32 @@
 				"2" "10"
 				"3" "10"
 				"4" "10"
+				"5" "10"
+				"6" "10"
+				"7" "10"
+				"8" "10"
+				"9" "10"
 			}
 		}
 
 		"items"
 		{
-			"item_quickening_charm"			  "1"
-			"item_black_powder_bag"				  "1"
-			"item_spider_legs"				  "1"
-			//"item_icarus_wings"					"1"
-			"item_paladin_sword"			  "1"
-			//"item_orb_of_destruction"		  "1"
-			"item_titan_sliver"				  "1"
-			"item_mind_breaker"				  "1"
-			"item_enchanted_quiver"				  "1"
-			"item_elven_tunic"				  "1"
-			"item_cloak_of_flames"				  "1"
-			"item_ceremonial_robe"				  "1"
-			"item_psychic_headband"				  "1"
+			"item_helm_of_the_undying"			"1"
+			"item_repair_kit"					"1"
+			"item_craggy_coat"					"1"
+			"item_greater_faerie_fire"			"1"
+			"item_quickening_charm"				"1"
+			"item_spider_legs"					"1"
+			"item_enchanted_quiver"				"1"
+			"item_paladin_sword"				"1"
+			"item_orb_of_destruction"			"1"
+//			"item_third_eye"					"1"
+			"item_titan_sliver"					"1"
+			"item_mind_breaker"					"1"
+			"item_elven_tunic"					"1"
+//			"item_cloak_of_flames"				"1" // Item purchasable in shop
+			"item_ceremonial_robe"				"1"
+			"item_psychic_headband"				"1"
 		}
 	}
 	"4"
@@ -109,58 +124,71 @@
 				"2" "10"
 				"3" "10"
 				"4" "10"
+				"5" "10"
+				"6" "10"
+				"7" "10"
+				"8" "10"
+				"9" "10"
 			}
 		}
 
 		"items"
 		{
-			"item_timeless_relic"			  "1"
-			"item_spell_prism"				  "1"
-			"item_ascetic_cap"				  "1"
-			"item_heavy_blade"				  "1"
-			"item_flicker"					  "1"
-			"item_ninja_gear"				  "1"
-			//"item_illusionsts_cape"		  "1"
-			//"item_fortitude_ring"			  "1"
-			"item_the_leveller"				  "1"
-			//"item_minotaur_horn"			  "1"
-			"item_spy_gadget"				  "1"
-			"item_trickster_cloak"			  "1"
-			"item_stormcrafter"				  "1"
-			"item_penta_edged_sword"		  "1"
+			"item_witless_shako"				"1"
+			"item_timeless_relic"				"1"
+			"item_spell_prism"					"1"
+			"item_princes_knife"				"1"
+			"item_flicker"						"1"
+			"item_ninja_gear"					"1"
+			"item_illusionsts_cape"				"1"
+			"item_havoc_hammer"					"1"
+			"item_panic_button"					"1"
+			"item_the_leveller"					"1"
+			"item_spy_gadget"					"1"
+//			"item_minotaur_horn"				"1" // Item purchasable in shop
+			"item_trickster_cloak"				"1"
+			"item_stormcrafter"					"1"
+			"item_penta_edged_sword"			"1"
 		}
 	}
 	"5"
 	{
 		"drop_rates"
 		{
-			"53:00"
+			"40:00"
 			{
 				"0" "10"
 				"1" "10"
 				"2" "10"
 				"3" "10"
 				"4" "10"
+				"5" "10"
+				"6" "10"
+				"7" "10"
+				"8" "10"
+				"9" "10"
 			}
 		}
 
 		"items"
 		{
-			"item_force_boots"				  "1"
-			"item_desolator_2"				  "1"
-			"item_seer_stone"				  "1"
-			"item_mirror_shield"			  	  "1"
-			"item_apex"					  "1"
-			//"item_ballista"					  "1"
-			"item_demonicon"				  "1"
-			"item_fallen_sky"		  	  "1"
-			"item_force_field"				  "1"
-			"item_pirate_hat"				  "1"
-			"item_ex_machina"				  "1"
-			"item_giants_ring"				  "1"
-			//"item_vengeances_shadow"				  "1"
-			"item_book_of_shadows"			  "1"
-			
+			"item_force_boots"					"1"
+//			"item_desolator_2"					"1" // Item purchasable in shop
+			"item_phoenix_ash"					"1"
+			"item_seer_stone"					"1"
+			"item_mirror_shield"				"1"
+			"item_fusion_rune"					"1"
+			"item_apex"							"1"
+			"item_ballista"						"1"
+			"item_woodland_striders"			"1"
+//			"item_recipe_trident"				"1" // Item purchasable in shop
+			"item_demonicon"					"1"
+			"item_fallen_sky"					"1"
+			"item_pirate_hat"					"1"
+			"item_ex_machina"					"1"
+			"item_giants_ring"					"1"
+//			"item_vengeances_shadow"			"1" // Unreleased tier 5 item?
+			"item_book_of_shadows"				"1"
 		}
 	}
 }

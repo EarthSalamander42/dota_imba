@@ -1,0 +1,41 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf24:version{c9a29215-bb77-47b2-af5d-67eb30ba6578} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 1
+	m_Operators = [  ]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_oracle/oracle_fatesedict_alter_b2.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_oracle/oracle_fatesedict_alter_b0.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_oracle/oracle_fatesedict_alter_b3.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_oracle/oracle_fatesedict_alter_b1.vpcf"
+		},
+	]
+	m_PreEmissionOperators = 
+	[
+		{
+			_class = "C_OP_SetSingleControlPointPosition"
+			m_vecCP1Pos = [ 0.0, 0.0, 75.0 ]
+			m_nCP1 = 4
+		},
+		{
+			_class = "C_OP_SetControlPointRotation"
+			m_nCP = 4
+			m_flRotRate = 60.0
+		},
+		{
+			_class = "C_OP_SetControlPointRotation"
+			m_vecRotAxis = [ 0.0, 1.0, 0.0 ]
+			m_flRotRate = 100.0
+			m_nCP = 4
+		},
+	]
+}

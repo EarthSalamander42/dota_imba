@@ -1,0 +1,11 @@
+<root> 
+	<scripts>
+		<!-- Making a very rough new one that doesn't deal with nettables (I just want to select basic units for now) -->
+<!--		<include src="file://{resources}/scripts/custom_game/selection/selection_basic.js" /> -->
+		
+		<include src="file://{resources}/scripts/custom_game/selection/selection.js" />
+		<include src="file://{resources}/scripts/custom_game/selection/selection_filter.js" />
+	</scripts>
+
+	<Panel></Panel>
+</root>

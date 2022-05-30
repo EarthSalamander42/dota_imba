@@ -1,0 +1,142 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 12
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_flAddSelfAmount = 1.0
+			m_bAdditive = true
+			m_hTexture = resource:"materials/particle/spark_glow_01.vtex"
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.08
+		},
+		{
+			_class = "C_OP_Decay"
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 6
+		},
+		{
+			_class = "C_OP_OscillateVector"
+			m_RateMax = [ 0.2, 0.2, 0.5 ]
+			m_FrequencyMin = [ 0.25, 0.25, 0.25 ]
+			m_flEndTime_min = 9999999999999.0
+			m_flEndTime_max = 999999999.0
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_OP_SpinUpdate"
+		},
+		{
+			_class = "C_OP_OscillateScalar"
+			m_RateMin = 7.0
+			m_RateMax = 12.0
+			m_FrequencyMax = 3.0
+			m_nField = "3"
+			m_flEndTime_min = 99999.0
+			m_flEndTime_max = 9999999.0
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_Rate = -5.0
+			m_flEndTime = 9999999999999.0
+			m_nField = "16"
+			m_nOpEndCapState = 1
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 3.0
+			m_fLifetimeMax = 3.0
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 45.0
+			m_flRadiusMax = 85.0
+			m_flRadiusRandExponent = 2.0
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_fRadiusMin = 8.0
+			m_fRadiusMax = 15.0
+			m_vecDistanceBias = [ 1.0, 1.0, 0.25 ]
+			m_nControlPointNumber = 6
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMax = 1
+		},
+		{
+			_class = "C_INIT_RandomRotationSpeed"
+			m_flDegreesMin = 2.0
+			m_flDegreesMax = 5.0
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 135, 12, 237, 255 ]
+			m_ColorMax = [ 194, 6, 232, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 100
+			m_nAlphaMax = 200
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_nMapType = "PF_MAP_TYPE_DIRECT"
+				m_flLiteralValue = 2.0
+				m_nControlPoint = 0
+				m_nScalarAttribute = 3
+				m_nVectorAttribute = 6
+				m_nVectorComponent = 0
+				m_flRandomMin = 0.0
+				m_flRandomMax = 1.0
+				m_nRandomMode = "PF_RANDOM_MODE_CONSTANT"
+				m_flMultFactor = 1.0
+				m_flInput0 = 0.0
+				m_flInput1 = 1.0
+				m_flOutput0 = 0.0
+				m_flOutput1 = 1.0
+				m_nBiasType = "PF_BIAS_TYPE_STANDARD"
+				m_flBiasParameter = 0.0
+				m_Curve = 
+				{
+					m_spline = [  ]
+					m_tangents = [  ]
+					m_vDomainMins = [ 0.0, 0.0 ]
+					m_vDomainMaxs = [ 0.0, 0.0 ]
+				}
+			}
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+		},
+	]
+	m_nBehaviorVersion = 10
+	m_nFirstMultipleOverride_BackwardCompat = 6
+}

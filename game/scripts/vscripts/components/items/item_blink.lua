@@ -24,7 +24,6 @@
 --	Blink Dagger definition
 -----------------------------------------------------------------------------------------------------------
 if item_imba_blink == nil then item_imba_blink = class({}) end
-
 LinkLuaModifier( "modifier_imba_blink_dagger_handler", "components/items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown
 
 -- function item_imba_blink:GetBehavior()
@@ -65,7 +64,7 @@ function item_imba_blink:OnAbilityPhaseStart()
 			end
 		end
 	end
-
+	
 	return true
 end
 
@@ -226,7 +225,6 @@ end
 --	Blink Boots Handler
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_blink_boots_handler == nil then modifier_imba_blink_boots_handler = class({}) end
-
 function modifier_imba_blink_boots_handler:IsHidden() return true end
 function modifier_imba_blink_boots_handler:IsDebuff() return false end
 function modifier_imba_blink_boots_handler:IsPurgable() return false end
@@ -262,7 +260,7 @@ function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 	end
 end
 
-modifier_imba_blink_boots_flash_step = modifier_imba_blink_boots_flash_step or class({})
+modifier_imba_blink_boots_flash_step = class ({})
 function modifier_imba_blink_boots_flash_step:IsDebuff() 		return true end
 function modifier_imba_blink_boots_flash_step:IsPurgable() 		return false end
 function modifier_imba_blink_boots_flash_step:IgnoreTenacity()	return true end

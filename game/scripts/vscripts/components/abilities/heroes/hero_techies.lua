@@ -95,13 +95,11 @@ function imba_techies_land_mines:GetIntrinsicModifierName()
 	return "modifier_generic_charges"
 end
 
-function imba_techies_land_mines:GetManaCost()
-	local level = self:GetLevel()
-	if level < 1 then return 0 end
-
+function imba_techies_land_mines:GetManaCost(level)
 	-- Ability properties
 	local caster = self:GetCaster()
-	local initial_mana_cost = GetAbilityKV(self:GetVanillaAbilityName(), "AbilityManaCost", level)
+	local vanilla_ability_name = GetVanillaAbilityName(self:GetAbilityName())
+	local initial_mana_cost = GetAbilityKV(vanilla_ability_name, "AbilityManaCost", self:GetLevel())
 	local modifier_charges = "modifier_generic_charges"
 
 	-- Ability specials
@@ -410,17 +408,15 @@ function modifier_imba_proximity_mine:_Explode()
 	ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
 
 	-- Look for nearby enemies
-	local enemies = FindUnitsInRadius(
-		caster:GetTeamNumber(),
-		casterAbsOrigin,
-		nil,
-		trigger_range,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
-		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		FIND_ANY_ORDER,
-		false
-	)
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+										casterAbsOrigin,
+										nil,
+										trigger_range,
+										DOTA_UNIT_TARGET_TEAM_ENEMY,
+										DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+										DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+										FIND_ANY_ORDER,
+										false)
 
 	local modifier_building_res = "modifier_imba_proximity_mine_building_res"
 	local modifier_talent_shrapnel = "modifier_imba_proximity_mine_talent"
@@ -432,8 +428,10 @@ function modifier_imba_proximity_mine:_Explode()
 
 	-- Deal damage to nearby non-flying enemies
 	for _,enemy in pairs(enemies) do
+
 		-- If an enemy doesn't have flying movement, ignore it, otherwise continue
 		if not enemy:HasFlyMovementCapability() then
+
 			-- If this is a Big Boom, add damage to the blast!
 			local damage = self.mine_damage
 			if self.is_big_boom then
@@ -446,14 +444,13 @@ function modifier_imba_proximity_mine:_Explode()
 			end
 
 			-- Deal damage
-			local damageTable = {
-				victim = enemy,
-				attacker = caster, 
---				damage = damage * ((1+(PlayerResource:GetSelectedHeroEntity(self.caster:GetPlayerOwnerID()):GetSpellAmplification(false) * 0.01))),
-				damage = damage,
-				damage_type = DAMAGE_TYPE_MAGICAL,
-				ability = self.ability
-			}
+			local damageTable = {victim = enemy,
+									attacker = caster, 
+--									damage = damage * ((1+(PlayerResource:GetSelectedHeroEntity(self.caster:GetPlayerOwnerID()):GetSpellAmplification(false) * 0.01))),
+									damage = damage,
+									damage_type = DAMAGE_TYPE_MAGICAL,
+									ability = self.ability
+									}
 
 			ApplyDamage(damageTable)
 
@@ -908,12 +905,12 @@ function modifier_imba_statis_trap:_Explode()
 	-- Root enemies nearby if not disarmed, and apply a electrocharge
 	for _,enemy in pairs(enemies) do
 		if not caster:HasModifier(modifier_disarmed) then
-			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration})
+			enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
 		end
 
 		-- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
 		if not enemy:HasModifier(modifier_electrocharge) then
-			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration})
+			enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration * (1 - enemy:GetStatusResistance())})
 		else
 			RefreshElectroCharge(enemy)
 		end
@@ -1080,10 +1077,13 @@ function modifier_imba_statis_trap_disarmed:IsDebuff() return false end
 --        BLAST OFF!        --
 ------------------------------
 imba_techies_suicide = imba_techies_suicide or class(VANILLA_ABILITIES_BASECLASS)
-
 LinkLuaModifier("modifier_imba_blast_off", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_movement", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_silence", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_techies_suicide:GetAbilityTextureName()
+   return "techies_suicide"
+end
 
 function imba_techies_suicide:IsHiddenWhenStolen()
 	return false
@@ -1096,18 +1096,6 @@ end
 
 function imba_techies_suicide:IsNetherWardStealable()
 	return false
-end
-
-function imba_techies_suicide:GetCastRange(location, target)
-	local cast_range = self.BaseClass.GetCastRange(self, location, target)
-
---[[ Causes cast range to be 300 instead of base + 300.. Who gives a fuck about techies anyway
-	if self:GetCaster():HasShard() then
-		cast_range = self.BaseClass.GetCastRange(self, location, target) + self:GetSpecialValueFor("shard_bonus_cast_range")
-	end
---]]
-
-	return cast_range
 end
 
 function imba_techies_suicide:OnSpellStart()
@@ -1288,7 +1276,6 @@ function modifier_imba_blast_off_movement:OnCreated( keys )
 		self.radius = self.ability:GetVanillaAbilitySpecial("radius")
 		self.self_damage_pct = self.ability:GetVanillaAbilitySpecial("hp_cost")
 		self.silence_duration = self.ability:GetVanillaAbilitySpecial("silence_duration")
-		self.shard_stun_duration = self.ability:GetSpecialValueFor("shard_stun_duration")
 		self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")
 		self.jump_max_height = self.ability:GetSpecialValueFor("jump_max_height")
 
@@ -1409,11 +1396,7 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
 			ApplyDamage(damageTable)
 
 			-- Add silence modifier to them
-			enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration})
-
-			if self.caster:HasShard() then
-				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.shard_stun_duration})
-			end
+			enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration * (1 - enemy:GetStatusResistance())})
 
 			-- Check (and mark) if an enemy died from the blast
 			Timers:CreateTimer(FrameTime(), function()

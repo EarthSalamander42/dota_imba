@@ -31,7 +31,7 @@ modifier_item_imba_aegis		= modifier_item_imba_aegis or class({})
 modifier_item_imba_aegis_pfx	= modifier_item_imba_aegis_pfx or class({})
 
 function item_imba_aegis:GetAbilityTextureName()
-	return "item_aegis"
+	return "imba_aegis"
 end
 
 function modifier_item_imba_aegis:OnCreated()

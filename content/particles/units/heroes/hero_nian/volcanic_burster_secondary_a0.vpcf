@@ -1,0 +1,149 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf21:version{7a150ecc-d865-438f-ad53-5963fe1a2720} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 8
+	m_flConstantRadius = 16.0
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_flStartFadeSize = 0.21
+			m_flEndFadeSize = 0.35
+			m_flMaxSize = 0.21
+			m_flOverbrightFactor = 5.0
+			m_flAddSelfAmount = 1.0
+			m_bSaturateColorPreAlphaBlend = false
+			m_hTexture = resource:"materials/particle/fire_burning_character/fire_burning_character.vtex"
+			m_flAnimationRate = 1.35
+			m_flAnimationRate2 = 1.0
+		},
+		{
+			_class = "C_OP_RenderDeferredLight"
+			m_ColorScale = [ 255, 54, 0 ]
+			m_flRadiusScale = 3.0
+			m_flAlphaScale = 4.0
+			m_flStartFalloff = 0.1
+			m_hTexture = resource:"materials/particle/fire_burning_character/fire_burning_character.vtex"
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_Gravity = [ 0.0, 0.0, -420.0 ]
+			m_fDrag = 0.1
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 0.7
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+			m_flFadeInTime = 0.125
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 1.5
+			m_flEndScale = 6.0
+			m_flBias = 0.35
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_flEndTime_max = 0.25
+			m_flEndTime_min = 0.25
+			m_flStartTime_max = 0.0
+			m_flStartTime_min = 0.0
+			m_nControlPointNumber = 3
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 46, 22, 12, 255 ]
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 0.5
+			m_fLifetimeMin = 0.4
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_fRadiusMax = 1.0
+			m_nControlPointNumber = 9
+			m_LocalCoordinateSystemSpeedMin = [ 420.0, 0.0, 0.0 ]
+			m_LocalCoordinateSystemSpeedMax = [ 570.0, 0.0, 0.0 ]
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+			m_nSequenceMin = 7
+			m_nSequenceMax = 8
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 160, 182, 200, 255 ]
+			m_ColorMax = [ 202, 250, 254, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomSecondSequence"
+			m_nSequenceMin = 49
+			m_nSequenceMax = 53
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+		{
+			_class = "C_INIT_PositionWarp"
+			m_vecWarpMax = [ 0.25, 1.0, 0.1 ]
+			m_flWarpTime = 12.0
+			m_bUseCount = true
+			m_vecWarpMin = [ 1.0, 1.0, 0.1 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 4.0
+			}
+		},
+		{
+			_class = "C_OP_ContinuousEmitter"
+			m_flEmissionDuration = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.125
+			}
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 30.0
+			}
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 9
+	m_nFirstMultipleOverride_BackwardCompat = 6
+}

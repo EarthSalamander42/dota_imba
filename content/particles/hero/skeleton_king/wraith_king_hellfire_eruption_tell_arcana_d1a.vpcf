@@ -1,0 +1,139 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf26:version{26288658-411e-4f14-b698-2e1e5d00dec6} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 96
+	m_ConstantColor = [ 39, 211, 100, 55 ]
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderRopes"
+			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_bAdditive = true
+			m_nOrientationType = 3
+			m_hTexture = resource:"materials/particle/beam_edge_05.vtex"
+			m_flRadiusScale = 0.5
+			m_flTextureVWorldSize = 7999.999512
+			m_nMaxTesselation = 1
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.25
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_OscillateVector"
+			m_FrequencyMin = [ 2.0, 2.0, 2.0 ]
+			m_RateMin = [ -8.0, -8.0, -8.0 ]
+			m_RateMax = [ 8.0, 8.0, 8.0 ]
+			m_FrequencyMax = [ 3.0, 3.0, 3.0 ]
+		},
+		{
+			_class = "C_OP_OscillateVector"
+			m_FrequencyMax = [ 18.0, 18.0, 18.0 ]
+			m_RateMax = [ 80.0, 80.0, 80.0 ]
+			m_RateMin = [ -80.0, -80.0, -80.0 ]
+			m_FrequencyMin = [ 8.0, 8.0, 8.0 ]
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 1.0
+		},
+		{
+			_class = "C_OP_OscillateVector"
+			m_RateMin = [ -12.0, -12.0, -12.0 ]
+			m_RateMax = [ 12.0, 12.0, 12.0 ]
+			m_FrequencyMin = [ 0.1, 0.1, 0.1 ]
+			m_FrequencyMax = [ 0.2, 0.2, 0.2 ]
+			m_flStartTime_min = 0.4
+			m_flStartTime_max = 0.6
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flBias = 0.35
+			m_flEndScale = 32.0
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 0.25
+			m_fLifetimeMax = 0.25
+		},
+		{
+			_class = "C_INIT_RingWave"
+			m_flInitialRadius = 32.0
+			m_bEvenDistribution = true
+			m_flParticlesPerOrbit = 31.0
+			m_flInitialSpeedMin = 3505.0
+			m_flInitialSpeedMax = 3555.0
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 15.0
+			m_flRadiusMax = 20.0
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMax = [ 0.0, 0.0, 18.0 ]
+			m_OffsetMin = [ 0.0, 0.0, 18.0 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_flStartTime = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 0.0
+			}
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 96.0
+			}
+		},
+	]
+	m_ForceGenerators = 
+	[
+		{
+			_class = "C_OP_AttractToControlPoint"
+			m_fForceAmount = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = -4.0
+			}
+			m_fFalloffPower = -1.0
+			m_fForceAmountMin = null
+			m_bApplyMinForce = false
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell_arcana_d1a1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell_arcana_d1a2.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell_arcana_d1a0.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell_arcana_d1a3.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell_arcana_d1a4.vpcf"
+		},
+	]
+	m_PreEmissionOperators = [  ]
+	m_nBehaviorVersion = 5
+	m_nFirstMultipleOverride_BackwardCompat = 3
+}

@@ -57,12 +57,6 @@ function imba_mars_spear:OnSpellStart()
 	local projectile_radius = self:GetVanillaAbilitySpecial("spear_width")
 	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
 	local heaven_spear_delay = self:GetSpecialValueFor("heaven_spear_delay")
-	self.spear_target_count = 1
-
-	if self:GetCaster():HasShard() then
-		self.spear_target_count = 2
-	end
-
 	self.trailblazer_particles = {}
 
 	if not IsServer() then return end
@@ -321,7 +315,6 @@ Fields:
 local mars_projectiles = {}
 function mars_projectiles:Init( projectileID )
 	self[projectileID] = {}
-	self[projectileID].unit = {}
 
 	-- set location
 	self[projectileID].location = ProjectileManager:GetLinearProjectileLocation( projectileID )
@@ -369,27 +362,27 @@ function imba_mars_spear:OnProjectileHitHandle( target, location, iProjectileHan
 	local damage = self:GetVanillaAbilitySpecial("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_spear_bonus_damage")
 
 	-- apply damage
-	ApplyDamage({
+	local damageTable = {
 		victim = target,
 		attacker = self:GetCaster(),
 		damage = damage,
 		damage_type = self:GetAbilityDamageType(),
 		ability = self, --Optional.
 		damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
-	})
+	}
+	ApplyDamage(damageTable)
 
 	-- check if it has skewered a unit, or target is not a hero
-	if (not target:IsHero()) or #self.projectiles[iProjectileHandle].unit >= self.spear_target_count then
+	if (not target:IsHero()) or self.projectiles[iProjectileHandle].unit then
 		-- calculate knockback direction
 		local direction = self.projectiles[iProjectileHandle].direction
 		local proj_angle = VectorToAngles( direction ).y
 		local unit_angle = VectorToAngles( target:GetOrigin()-location ).y
 		local angle_diff = unit_angle - proj_angle
-
-		if AngleDiff( unit_angle, proj_angle ) >= 0 then
-			direction = RotatePosition( Vector(0, 0, 0), QAngle( 0, 90, 0 ), direction )
+		if AngleDiff( unit_angle, proj_angle )>=0 then
+			direction = RotatePosition( Vector(0,0,0), QAngle( 0, 90, 0 ), direction )
 		else
-			direction = RotatePosition( Vector(0, 0, 0), QAngle( 0, -90, 0 ), direction )
+			direction = RotatePosition( Vector(0,0,0), QAngle( 0, -90, 0 ), direction )
 		end
 
 		-- add sidestep modifier to other unit
@@ -425,8 +418,7 @@ function imba_mars_spear:OnProjectileHitHandle( target, location, iProjectileHan
 			projectile = iProjectileHandle,
 		} -- kv
 	)
-
-	table.insert(self.projectiles[iProjectileHandle].unit, target)
+	self.projectiles[iProjectileHandle].unit = target
 	self.projectiles[iProjectileHandle].modifier = modifier
 	self.projectiles[iProjectileHandle].active = false
 
@@ -446,7 +438,7 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 
 	-- init data
 	local tree_radius = 120
-	local wall_radius = 100
+	local wall_radius = 50
 	local building_radius = 30
 	local blocker_radius = 70
 
@@ -455,12 +447,11 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 	data.location = location
 
 	-- check skewered unit, and dragged (caught unit not necessarily dragged)
-	if #data.unit == 0 then return end
-
+	if not data.unit then return end
 	if not data.active then
 		-- check distance, mainly to avoid being pinned while behind the tree/cliffs
-		local difference = (data.unit[1]:GetOrigin() - data.init_pos):Length2D() - (data.location-data.init_pos):Length2D()
-		if difference > 0 then return end
+		local difference = (data.unit:GetOrigin()-data.init_pos):Length2D() - (data.location-data.init_pos):Length2D()
+		if difference>0 then return end
 		data.active = true
 	end
 
@@ -474,7 +465,7 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 	end
 
 	-- search for blocker
-	local thinkers = Entities:FindAllByClassnameWithin("npc_dota_thinker", data.location, wall_radius )
+	local thinkers = Entities:FindAllByClassnameWithin( "npc_dota_thinker", data.location, wall_radius )
 	for _,thinker in pairs(thinkers) do
 		if thinker:IsPhantomBlocker() then
 			self:Pinned( iProjectileHandle )
@@ -483,8 +474,8 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 	end
 
 	-- search for high ground
-	local base_loc = GetGroundPosition( data.location, data.unit[1] )
-	local search_loc = GetGroundPosition( base_loc + data.direction*wall_radius, data.unit[1] )
+	local base_loc = GetGroundPosition( data.location, data.unit )
+	local search_loc = GetGroundPosition( base_loc + data.direction*wall_radius, data.unit )
 	if search_loc.z-base_loc.z>10 and (not GridNav:IsTraversable( search_loc )) then
 		self:Pinned( iProjectileHandle )
 		return
@@ -510,7 +501,7 @@ function imba_mars_spear:OnProjectileThinkHandle( iProjectileHandle )
 		false	-- bool, can grow cache
 	)
 
-	if #buildings > 0 then
+	if #buildings>0 then
 		-- pinned
 		self:Pinned( iProjectileHandle )
 		return
@@ -523,29 +514,26 @@ function imba_mars_spear:Pinned( iProjectileHandle )
 	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
 
 	-- add viewer
-	AddFOWViewer( self:GetCaster():GetTeamNumber(), data.unit[1]:GetOrigin(), projectile_vision, duration, false)
+	AddFOWViewer( self:GetCaster():GetTeamNumber(), data.unit:GetOrigin(), projectile_vision, duration, false)
 
 	-- destroy projectile and modifier
 	ProjectileManager:DestroyLinearProjectile( iProjectileHandle )
+	if data.modifier and not data.modifier:IsNull() then
+		data.modifier:Destroy()
 
-	for k, v in pairs(data.unit) do
-		if data.modifier and not data.modifier:IsNull() then
-			data.modifier:Destroy()
-
-			v:SetOrigin( GetGroundPosition( data.location, v ) )
-		end
-
-		-- add stun modifier
-		v:AddNewModifier(
-			self:GetCaster(), -- player source
-			self, -- ability source
-			"modifier_imba_mars_spear_debuff", -- modifier name
-			{
-				duration = duration,
-				projectile = iProjectileHandle,
-			} -- kv
-		)
+		data.unit:SetOrigin( GetGroundPosition( data.location, data.unit ) )
 	end
+
+	-- add stun modifier
+	data.unit:AddNewModifier(
+		self:GetCaster(), -- player source
+		self, -- ability source
+		"modifier_imba_mars_spear_debuff", -- modifier name
+		{
+			duration = duration,
+			projectile = iProjectileHandle,
+		} -- kv
+	)
 
 	-- play effects
 	self:PlayEffects( iProjectileHandle, duration )
@@ -562,7 +550,7 @@ function imba_mars_spear:PlayEffects( projID, duration )
 	-- Get Data
 	local data = self.projectiles[projID]
 	local delta = 50
-	local location = GetGroundPosition( data.location, data.unit[1] ) + data.direction * delta
+	local location = GetGroundPosition( data.location, data.unit ) + data.direction*delta
 
 	-- Create Particle
 	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, nil )
@@ -573,7 +561,7 @@ function imba_mars_spear:PlayEffects( projID, duration )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	EmitSoundOn( sound_cast, data.unit[1] )
+	EmitSoundOn( sound_cast, data.unit )
 end
 
 --------------------------------------------------------------------------------
@@ -902,12 +890,12 @@ function imba_mars_gods_rebuke:OnSpellStart()
 	buff:Destroy()
 
 	-- play effects
-	self:PlayEffects1(caught, (point - origin):Normalized(), (origin - point):Normalized())
+	self:PlayEffects1(caught, (point - origin):Normalized())
 end
 
 --------------------------------------------------------------------------------
 -- Play Effects
-function imba_mars_gods_rebuke:PlayEffects1( caught, direction, opposite_direction )
+function imba_mars_gods_rebuke:PlayEffects1( caught, direction )
 	local sound_cast = "Hero_Mars.Shield.Cast"
 
 	if caught == false then
@@ -916,14 +904,9 @@ function imba_mars_gods_rebuke:PlayEffects1( caught, direction, opposite_directi
 
 	-- Create Particle
 	if self:GetCaster():HasTalent("special_bonus_imba_mars_1") then
-		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
+		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash_full_circle.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
 		ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
 		ParticleManager:SetParticleControlForward( effect_cast, 0, direction )
-		ParticleManager:ReleaseParticleIndex( effect_cast )
-
-		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
-		ParticleManager:SetParticleControl( effect_cast, 0, self:GetCaster():GetOrigin() )
-		ParticleManager:SetParticleControlForward( effect_cast, 0, opposite_direction )
 		ParticleManager:ReleaseParticleIndex( effect_cast )
 	else
 		local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_shield_bash.vpcf", PATTACH_WORLDORIGIN, self:GetCaster() )
@@ -1001,11 +984,11 @@ end
 
 function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_BonusDamagePostCrit( params )
 	if not IsServer() then return end
-
+	print("Bonus Damage:", self.bonus_damage)
 	return self.bonus_damage
 end
-
 function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_CriticalStrike( params )
+	print("Bonus Crit:", self.bonus_crit)
 	return self.bonus_crit
 end
 
@@ -1109,47 +1092,41 @@ function modifier_imba_mars_bulwark:DeclareFunctions()
 end
 
 function modifier_imba_mars_bulwark:GetModifierPhysical_ConstantBlock( params )
-	if not IsServer() then return end
-
 	-- cancel if from ability
 	if params.inflictor then return 0 end
 
-	local parent = self:GetParent()
-
 	-- cancel if break
-	if parent:PassivesDisabled() then return 0 end
+	if params.target:PassivesDisabled() then return 0 end
 
 	-- get data
+	local parent = params.target
 	local attacker = params.attacker
 	local reduction = 0
-	local damage_blocked = 0
 
-	if attacker and parent then
-		-- Check target position
-		local facing_direction = parent:GetAnglesAsVector().y
-		local attacker_vector = (attacker:GetOrigin() - parent:GetOrigin())
-		local attacker_direction = VectorToAngles( attacker_vector ).y
-		local angle_diff = math.abs( AngleDiff( facing_direction, attacker_direction ) )
-		
-		-- calculate damage reduction
-		if angle_diff < self.angle_front then
-			reduction = self.reduction_front
-			self:PlayEffects( true, attacker_vector )
-		elseif angle_diff < self.angle_side then
-			reduction = self.reduction_side
-			self:PlayEffects( false, attacker_vector )
-		end
-		
-		damage_blocked = reduction * params.damage / 100
-		
-		local stacks = damage_blocked * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
-		local mod = parent:FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
-		
-		if mod then
-			mod:SetStackCount(mod:GetStackCount() + stacks)
-		else
-			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {}):SetStackCount(stacks)
-		end
+	-- Check target position
+	local facing_direction = parent:GetAnglesAsVector().y
+	local attacker_vector = (attacker:GetOrigin() - parent:GetOrigin())
+	local attacker_direction = VectorToAngles( attacker_vector ).y
+	local angle_diff = math.abs( AngleDiff( facing_direction, attacker_direction ) )
+
+	-- calculate damage reduction
+	if angle_diff < self.angle_front then
+		reduction = self.reduction_front
+		self:PlayEffects( true, attacker_vector )
+	elseif angle_diff < self.angle_side then
+		reduction = self.reduction_side
+		self:PlayEffects( false, attacker_vector )
+	end
+
+	local damage_blocked = reduction * params.damage / 100
+
+	local stacks = damage_blocked * self:GetAbility():GetSpecialValueFor("jupiters_strength_stored_damage_pct") / 100
+	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
+
+	if mod then
+		mod:SetStackCount(mod:GetStackCount() + stacks)
+	else
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {}):SetStackCount(stacks)
 	end
 
 	return damage_blocked
@@ -1895,13 +1872,17 @@ end
 --------------------------------------------------------------------------------
 -- Graphics & Animations
 function modifier_imba_mars_arena_of_blood_projectile_aura:PlayEffects( loc )
+	-- Get Resources
+	local particle_cast = "particles/units/heroes/hero_mars/mars_arena_of_blood_impact.vpcf"
+	local sound_cast = "Hero_Mars.Block_Projectile"
+
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( "particles/units/heroes/hero_mars/mars_arena_of_blood_impact.vpcf", PATTACH_WORLDORIGIN, nil )
+	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, nil )
 	ParticleManager:SetParticleControl( effect_cast, 0, loc )
 	ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
-	EmitSoundOnLocationWithCaster( loc, "Hero_Mars.Block_Projectile", self:GetCaster() )
+	EmitSoundOnLocationWithCaster( loc, sound_cast, self:GetCaster() )
 end
 
 --------------------------------------------------------------------------------

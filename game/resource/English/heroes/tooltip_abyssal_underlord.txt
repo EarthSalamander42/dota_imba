@@ -1,49 +1,62 @@
-"DOTA_Tooltip_ability_imba_abyssal_underlord_firestorm"										"#{DOTA_Tooltip_ability_abyssal_underlord_firestorm}"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_firestorm_Imbafication_1"						"<font color='#FF7800'>Dracarys:</font> Burn damage increases by %burn_damage_stack%% based on the amount of waves hitting an enemy."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_firestorm_Imbafication_2"						"<font color='#FF7800'>Ice & Fire:</font> When auto-cast is on, replace wave of fire with blizzard slowing units caught by %blizzard_slow_percentage%% + %blizzard_slow_percentage_stack%% per wave hit."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_firestorm_shard_description"					"#{DOTA_Tooltip_ability_abyssal_underlord_firestorm_shard_description}"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_firestorm_burn_damage_stack"					"%BURN BONUS DAMAGE PER WAVE:"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_firestorm_blizzard_slow_percentage"			"%BLIZZARD BASE SLOW:"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_firestorm_blizzard_slow_percentage_stack"		"%BLIZZARD BONUS SLOW PER WAVE:"
+// Abaddon's Mist Coil
+"DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_1"			"<font color='#FF7800'>Inner Mists:</font> Can be self-cast."
+"DOTA_Tooltip_ability_imba_abaddon_death_coil_Imbafication_2"			"<font color='#FF7800'>Parting Gift:</font> On death, Mist Coil is cast on all allies within cast range."
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_firestorm"									"#{DOTA_Tooltip_modifier_abyssal_underlord_firestorm_burn}"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_firestorm_Description"						"#{DOTA_Tooltip_modifier_abyssal_underlord_firestorm_burn_Description}"
+// "DOTA_Tooltip_ability_imba_abaddon_death_coil_abilitycastrange"			"#{DOTA_Tooltip_ability_abaddon_death_coil_abilitycastrange}"
 
-"DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice"									"#{DOTA_Tooltip_ability_abyssal_underlord_pit_of_malice}"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_Imbafication_1"					"<font color='#FF7800'>Twisted Reality:</font> Pit of Malice radius increases by %bonus_radius_per_stack% for each heroes rooted."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_Imbafication_2"					"<font color='#FF7800'>Abyss Souls:</font> Increase ally heroes health regeneration amplification in pit by %hp_regen_amp%%."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_bonus_radius_per_stack"			"BONUS RADIUS:"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_pit_increase_duration"			"BONUS RADIUS STACKS DURATION:"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_pit_of_malice_hp_regen_amp"					"%HP REGEN AMP:"
+"DOTA_Tooltip_modifier_imba_mist_coil_mist_ally"                        "Shrouding Mist"
+"DOTA_Tooltip_modifier_imba_mist_coil_mist_ally_Description"            "At the end of the duration, receive a portion of the damage sustained as a heal."
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_pit_of_malice"								"#{DOTA_Tooltip_modifier_abyssal_underlord_pit_of_malice_ensare}"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_pit_of_malice_Description"					"#{DOTA_Tooltip_modifier_abyssal_underlord_pit_of_malice_ensare_Description}"
+// Abaddon's Aphotic Shield
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Note0"                "Self-castable, can be casted on buildings."
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Imbafication_1"		"<font color='#FF7800'>Black Mist:</font> Can be cast on spell-immune allies."
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Imbafication_2"		"<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls"					"Abyss Souls"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls_Description"		"Health regen amplification increased by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block"                  "Aphotic Shield"
+"DOTA_Tooltip_modifier_imba_aphotic_shield_buff_block_Description"		"Incoming damage blocked by Aphotic Shield's protection"
 
-"DOTA_Tooltip_ability_imba_abyssal_underlord_atrophy_aura"									"#{DOTA_Tooltip_ability_abyssal_underlord_atrophy_aura}"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_atrophy_aura_Imbafication_1"					"<font color='#FF7800'>Power is Power:</font> Consume stacks to deal %active_bonus_damage_pct%% damage for the next %active_attack_count% attacks. Lasts %active_duration% seconds."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_atrophy_aura_Imbafication_2"					"<font color='#FF7800'>Swift Abyss:</font> Underlords gain %permanent_bonus_damage% damage and %permanent_ms_pct%% movement speed permanently for every enemy heroes dying in Atrophy Aura's radius."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_atrophy_aura_permanent_bonus"					"PERMANENT DAMAGE:"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_atrophy_aura_permanent_ms_pct"					"%PERMANENT MOVEMENT SPEED:"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_atrophy_aura_hp_regen_amp"						"%HP REGEN AMP:"
+// Underlord's Atrophy Aura
+"DOTA_Tooltip_ability_imba_abaddon_frostmourne_Imbafication_1"			"<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal Abaddon by %heal_convert%% of the damage."
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_active"							"Atrophy Aura"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_active_Description"				"Increased damage by %dMODIFIER_PROPERTY_TOOLTIP% for the next %dMODIFIER_PROPERTY_TOOLTIP2% attacks."
+"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_active"					"Atrophy Aura"
+"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_active_Description"		"Increased damage by %dMODIFIER_PROPERTY_TOOLTIP% for the next %dMODIFIER_PROPERTY_TOOLTIP2% attacks."
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura"									"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_dmg_buff_counter}"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_Description"						"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_dmg_buff_counter_Description}"
+"DOTA_Tooltip_modifier_imba_frostmourne_buff_haste"						"Curse of Avernus"
+"DOTA_Tooltip_modifier_imba_frostmourne_buff_haste_Description"			"Gaining bonus move and attack speed due to attacking Abaddon's target."
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_debuff"							"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_effect}"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_debuff_Description"				"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_effect_Description}"
+"DOTA_Tooltip_modifier_imba_frostmourne_buff_haste_aura"				"Blessing of Avernus"
+"DOTA_Tooltip_modifier_imba_frostmourne_buff_haste_aura_Description"	"Attack speed and move speed increased."
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack"					"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_hero_permanent_buff}"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack_Description"		"#{DOTA_Tooltip_modifier_abyssal_underlord_atrophy_aura_hero_permanent_buff_Description}"
+// Abaddon's Borrowed Time
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will not activate if the incoming damage is more than Abaddon's current health."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Imbafication_1"		"<font color='#FF7800'>Borrowed Pain:</font> %redirect%% of damage taken by Abaddon's nearby allies will be redirected to him while Borrowed Time is active."
 
-"DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift"										"#{DOTA_Tooltip_ability_abyssal_underlord_dark_rift}"
-"DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_Imbafication_1"						"<font color='#FF7800'>Realm Break:</font> Dark Rift can target ally heroes."
-"DOTA_Tooltip_ability_imba_abyssal_underlord_dark_rift_Imbafication_2"						"<font color='#FF7800'>Foulfell Energy:</font> Increase movement speed by %bonus_movespeed_per_hero%% and Status Resistance by %bonus_status_resistance_per_hero%% for every heroes on radius for a maximum of %foulfell_max_stacks%."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect_range"       "BORROWED PAIN RANGE:"
 
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_dark_rift_foulfell_energy"					"Foulfell Energy"
-"DOTA_Tooltip_modifier_imba_abyssal_underlord_dark_rift_foulfell_energy_Description"		"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and Status Resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster"              "Borrowed Time"
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster_Description"	"Being healed by all incoming damage."
+
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_ally"                "Borrowed Time"
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_ally_Description"	"Redirecting part of incoming damage to Abaddon."
+
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_mist"                    "Mist of Borrowed Time"
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_mist_Description"        "Health regeneration increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%."
+
+// Abaddon's Custom Talents
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_1"						"Coil Unleashed"
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_1_Description"			"When Aphotic Shield breaks, applies Mist Coil to all allies and enemies within 425 radius."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_2"						"Curse of the Seer"
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_2_Description"			"+{s:value}% Curse of Avernus MS/AS shift; Curse of Avernus buff/debuff refresh increases duration by {s:extend_duration} second each hit."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_3"						"Aphotic Bulwark"
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_3_Description"			"During the first {s:value} seconds of Aphotic Shield, all damage done to it is absorbed and added to its health and damage."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_4"						"Smiting of Avernus"
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_4_Description"			"Curse of Avernus can be activated to sacrifice {s:health_cost_pct}% of max health as extra physical damage on attack. Cooldown of {s:active_cooldown} seconds."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_5"						"Blessing of Avernus"
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_5_Description"			"Curse of Avernus buff now applies as an aura around Abaddon, affecting all allies in {s:value} range."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_6"						"Perfect Vessel"
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_6_Description"			"Increases Overchannel's health drain by 50%, and the bonus to spells affected by it by the same amount."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_7"						"Purging Mist"
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_7_Description"			"Borrowed Time applies a strong purge on all allies on cast. Global range."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_8"						"Overflowing Redirection"
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_8_Description"			"Damage taken during Borrowed Time grants a health regen buff upon end ({s:ratio_pct}% of damage as health regen for {s:mist_duration}s)."
