@@ -8,14 +8,6 @@
 })();
 */
 
-function isInt(n) {
-   return n % 1 === 0;
-}
-
-function isFloat(n){
-	return Number(n) === n && n % 1 !== 0;
-}
-
 function LightenDarkenColor(col, amt) {
 	var usePound = false;
   
@@ -148,9 +140,9 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 			var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
 
 			if (player_info.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
-				if (isInt(player_info.winrate))
+				if (GameUI.Utils.isInt(player_info.winrate))
 					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
-				else if (isFloat(player_info.winrate))
+				else if (GameUI.Utils.isFloat(player_info.winrate))
 					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(2) + "%");					
 				else
 					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate);

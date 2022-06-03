@@ -1087,8 +1087,6 @@ function GameMode:OnThink()
 		return 1
 	end
 
-	if not CScriptParticleManager.ACTIVE_PARTICLES then CScriptParticleManager.ACTIVE_PARTICLES = {} end
-
 	for k, v in pairs(CScriptParticleManager.ACTIVE_PARTICLES) do
 		if v[2] >= 60 then
 			ParticleManager:DestroyParticle(v[1], false)

@@ -1,7 +1,6 @@
 <root>
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/mutation.js" /> 
-		<include src="file://{resources}/scripts/custom_game/util.js" />
 	</scripts>
 	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />

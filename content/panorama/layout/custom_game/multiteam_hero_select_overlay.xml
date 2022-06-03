@@ -6,7 +6,6 @@
 
 	<scripts>
 		<include src="s2r://panorama/scripts/custom_game/multiteam_hero_select_overlay.js" />
-		<include src="file://{resources}/scripts/custom_game/util.js" /> 
 	</scripts>
 
 	<Panel class="HeroSelectOverlayRoot">

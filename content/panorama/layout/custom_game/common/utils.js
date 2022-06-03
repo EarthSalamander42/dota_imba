@@ -36,6 +36,7 @@ function SubscribeToNetTableKey(tableName, key, callback) {
 
 function GetDotaHud() {
 	var panel = $.GetContextPanel();
+
 	while (panel && panel.id !== 'Hud') {
 		panel = panel.GetParent();
 	}

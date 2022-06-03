@@ -901,28 +901,12 @@ function HallOfFame(type, retainSubTab, iRoundCount) {
 				var score = user_info.round_score[current_leaderboard_round];
 
 				if (current_leaderboard_round == 4)
-					imr.text = RawTimetoGameTime(score);
+					imr.text = GameUI.Utils.RawTimetoGameTime(score);
 				else
 					imr.text = score;
 			}
 		}
 	}
-}
-
-function RawTimetoGameTime(time) {
-	var sec = Math.floor( time % 60 );
-	var min = Math.floor( time / 60 );
-
-	var timerText = "";
-	timerText += min;
-	timerText += ":";
-
-	if ( sec < 10 )
-	{
-		timerText += "0";
-	}
-	timerText += sec;
-	return timerText;
 }
 
 function SafeToLeave() {
@@ -1539,10 +1523,8 @@ function CreateBattlepassButton() {
 	var playerId = Game.GetLocalPlayerID();
 
 	if (ImbaXP_Panel != null) {
-
 		// get player data
 		var plyData = CustomNetTables.GetTableValue("battlepass_player", playerId.toString());
-
 
 		if (plyData != null) {
 			// set xp values
@@ -1551,20 +1533,22 @@ function CreateBattlepassButton() {
 	}
 
 	if (game_type == "IMBA") {
-		// Update the game options display
-		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
-		var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
-		var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
-		var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
-		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
-		var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
+		var values = [
+			"bounty_multiplier", // todo: add % in text
+			"exp_multiplier", // todo: add % in text
+			"initial_gold",
+			"initial_level",
+			"max_level",
+			"gold_tick",
+		]
 
-		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
-		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
-		$("#InitialGoldValue").text = initial_gold[1];
-		$("#InitialLevelValue").text = initial_level[1];
-		$("#MaxLevelValue").text = max_level[1];
-		$("#GoldTickValue").text = gold_tick[1].toFixed(1);
+		// Update the game options display
+		for (var i in values) {
+			var value = CustomNetTables.GetTableValue("game_options", values[i]);
+
+			if (value && value[1] && $("#" + value + "_value"))
+				$("#" + value + "_value").text = value[1];
+		}
 	} else {
 		$("#BountyMultiplierDesc").style.visibility = "collapse";
 		$("#ExpMultiplierDesc").style.visibility = "collapse";

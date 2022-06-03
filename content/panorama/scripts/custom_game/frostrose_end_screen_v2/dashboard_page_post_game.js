@@ -258,22 +258,6 @@ function CreateBattlepassRewardPanel(level, levelup_count) {
 	}
 }
 
-function RawTimetoGameTime(time) {
-	var sec = Math.floor( time % 60 );
-	var min = Math.floor( time / 60 );
-
-	var timerText = "";
-	timerText += min;
-	timerText += ":";
-
-	if ( sec < 10 )
-	{
-		timerText += "0";
-	}
-	timerText += sec;
-	return timerText;
-}
-
 function EndScoreboard(args) {
 	// Whenever data is available, hide loading panel and show actual end screen panel
 	$("#ContainerLoading").style.opacity = "0";
@@ -290,7 +274,7 @@ function EndScoreboard(args) {
 	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel())
 
 	// Set game time
-	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
+	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  GameUI.Utils.RawTimetoGameTime(Game.GetDOTATime(false, false));
 
 //	for (var i = 0; i < Game.GetAllPlayerIDs().length; i++) {
 //		Game.GetAllPlayerIDs()[i]

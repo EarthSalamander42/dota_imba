@@ -67,22 +67,6 @@
 	GameEvents.Subscribe("diretide_hall_of_fame", HallOfFame);
 })();
 
-function RawTimetoGameTime(time) {
-	var sec = Math.floor( time % 60 );
-	var min = Math.floor( time / 60 );
-
-	var timerText = "";
-	timerText += min;
-	timerText += ":";
-
-	if ( sec < 10 )
-	{
-		timerText += "0";
-	}
-	timerText += sec;
-	return timerText;
-}
-
 function EndScoreboard(args) {
 //	$.Msg(args)
 
@@ -294,7 +278,7 @@ function EndScoreboard(args) {
 		}
 	}
 
-	$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
+	$("#es-game-time-text").text = GameUI.Utils.RawTimetoGameTime(Game.GetDOTATime(false, false));
 }
 
 function CloseBottlepassReward(panel) {

@@ -176,7 +176,7 @@ function fetch() {
 		for (var i in result) {
 			var info = result[i];
 
-			if (info.lang == $.Localize("lang")) {
+			if (info.lang == $.Localize("#lang")) {
 				view.text.text = info.content;
 //				view.link_text.text = info.link_text;
 				found_lang = true;
@@ -213,7 +213,7 @@ function AllPlayersLoaded() {
 
 		(function (panel, gamemode) {
 			panel.SetPanelEvent("onmouseover", function () {
-				$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("description_gamemode_" + gamemode));
+				$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("#description_gamemode_" + gamemode));
 			})
 
 			panel.SetPanelEvent("onmouseout", function () {
@@ -236,8 +236,8 @@ function AllPlayersLoaded() {
 				gamemode = panel.GetChild(2).id.replace("VoteGameModeMainText", "");
 				button = panel.GetChild(2);
 
-				panel.GetChild(0).text = $.Localize("vote_gamemode_" + gamemode);
-				panel.GetChild(1).text = $.Localize("description_gamemode_" + gamemode);
+				panel.GetChild(0).text = $.Localize("#vote_gamemode_" + gamemode);
+				panel.GetChild(1).text = $.Localize("#description_gamemode_" + gamemode);
 			}
 
 //			if (!panel.BHasClass("Active"))
@@ -325,7 +325,7 @@ function OnVoteButtonPressed(category, vote)
 //	$.Msg("Category: ", category);
 //	$.Msg("Vote: ", vote);
 	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote, "PlayerID":Game.GetLocalPlayerID() } );
-	var gamemode_name = $.Localize("vote_gamemode_" + vote)
+	var gamemode_name = $.Localize("#vote_gamemode_" + vote)
 	$("#VoteGameModeCheck").text = "You have voted for " + gamemode_name + "."
 }
 
@@ -454,14 +454,14 @@ function PartyVote() {
 
 function PartyVoteReceived(args) {
 	$("#party_vote_progress_bar").value = args.vote_count / args.max_votes;
-	$("#party_required_votes").text = $.Localize("party_required_votes") + " " + args.vote_count + "/" + args.max_votes;
+	$("#party_required_votes").text = $.Localize("#party_required_votes") + " " + args.vote_count + "/" + args.max_votes;
 
 	if (args.vote_count >= party_max_votes || Game.IsInToolsMode())
 		SetParty();
 }
 
 function SetPartyMaxVotes() {
-	$("#party_required_votes").text = $.Localize("party_required_votes") + " 0/" + party_max_votes;
+	$("#party_required_votes").text = $.Localize("#party_required_votes") + " 0/" + party_max_votes;
 }
 
 function SetParty() {
@@ -491,7 +491,7 @@ function HidePickScreenDuringGame() {
 
 	if (vote_info && vote_info[0]) {
 		vote_info[0].SetPanelEvent("onmouseover", function () {
-			$.DispatchEvent("UIShowTextTooltip", vote_info[0], $.Localize("vote_gamemode_description"));
+			$.DispatchEvent("UIShowTextTooltip", vote_info[0], $.Localize("#vote_gamemode_description"));
 		})
 
 		vote_info[0].SetPanelEvent("onmouseout", function () {
@@ -525,8 +525,11 @@ function HidePickScreenDuringGame() {
 			companionpreview.style.width = "100%";
 			companionpreview.style.height = "100%";
 
-			companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_list[i] + '"/></Panel></root>', false, false);
-			companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+			var companion_scene = $.CreatePanelWithProperties('DOTAScenePanel', companionpreview, "", {
+				class: `companion_scene`,
+				particleonly: "false",
+				unit: companion_list[i],
+			});
 		}
 	}
 

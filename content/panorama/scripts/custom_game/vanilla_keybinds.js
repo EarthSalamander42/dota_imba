@@ -4,7 +4,10 @@ Game.Events = {};
 var contextPanel = $.GetContextPanel();
 
 function GetKeyBind(name) {
-	contextPanel.BCreateChildren('<DOTAHotkey keybind="' + name + '" />');
+	$.CreatePanelWithProperties('DOTAHotkey', contextPanel, "", {
+		keybind: name,
+	});
+
 	var keyElement = contextPanel.GetChild(contextPanel.GetChildCount() - 1);
 	keyElement.DeleteAsync(0);
 	return keyElement.GetChild(0).text;

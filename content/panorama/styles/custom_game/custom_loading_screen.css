@@ -859,3 +859,9 @@
 	height: 40%;
 	align: center top;
 }
+
+.companion_scene {
+	width: 100%;
+	height: 100%;
+	opacity-mask: url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");
+}

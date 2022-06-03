@@ -5,8 +5,6 @@
 	</styles>
 
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/util.js" />
-		<include src="file://{resources}/scripts/custom_game/api.js" />
 		<include src="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.js" />
 	</scripts>
 
@@ -64,9 +62,9 @@
 					</Panel>
 
 					<Panel class="GameModeValuePanel">
-						<Label id="BountyMultiplierValue" class="ImbaGameInfoLabel gold" text="" />
-						<Label id="InitialGoldValue" class="ImbaGameInfoLabel gold" text="" />
-						<Label id="GoldTickValue" class="ImbaGameInfoLabel gold" text="" />
+						<Label id="bounty_multiplier_value" class="ImbaGameInfoLabel gold" text="" />
+						<Label id="initial_gold_value" class="ImbaGameInfoLabel gold" text="" />
+						<Label id="gold_tick_value" class="ImbaGameInfoLabel gold" text="" />
 					</Panel>
 
 					<Panel class="Separator" />
@@ -78,9 +76,9 @@
 					</Panel>
 
 					<Panel class="GameModeValuePanel">
-						<Label id="ExpMultiplierValue" class="ImbaGameInfoLabel blue" text="" />
-						<Label id="InitialLevelValue" class="ImbaGameInfoLabel" text="" />
-						<Label id="MaxLevelValue" class="ImbaGameInfoLabel" text="" />
+						<Label id="exp_multiplier_value" class="ImbaGameInfoLabel blue" text="" />
+						<Label id="initial_level_value" class="ImbaGameInfoLabel" text="" />
+						<Label id="max_level_value" class="ImbaGameInfoLabel" text="" />
 					</Panel>
 				</Panel>
 
