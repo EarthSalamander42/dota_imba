@@ -74,7 +74,7 @@ end
 
 function GameMode:OnAllPlayersLoaded()
 	-- Setup filters
-	GameRules:GetGameModeEntity():SetHealingFilter( Dynamic_Wrap(GameMode, "HealingFilter"), self )
+	GameRules:GetGameModeEntity():SetHealingFilter(Dynamic_Wrap(GameMode, "HealingFilter"), self)
 	GameRules:GetGameModeEntity():SetExecuteOrderFilter(Dynamic_Wrap(GameMode, "OrderFilter"), self)
 	GameRules:GetGameModeEntity():SetDamageFilter(Dynamic_Wrap(GameMode, "DamageFilter"), self)
 	GameRules:GetGameModeEntity():SetModifyGoldFilter(Dynamic_Wrap(GameMode, "GoldFilter"), self)
@@ -84,11 +84,11 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter(Dynamic_Wrap(GameMode, "BountyRuneFilter"), self)
 	GameRules:GetGameModeEntity():SetThink("OnThink", self, 1)
 	-- GameRules:GetGameModeEntity():SetPauseEnabled(not IMBA_PICK_SCREEN)
-	
+
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter(Dynamic_Wrap(GameMode, "RuneSpawnFilter"), self)
-	
+
 	GameRules:GetGameModeEntity():SetPauseEnabled(false)
-	
+
 	if IsInToolsMode() then
 		Convars:RegisterCommand('events_test', function() GameMode:StartEventTest() end, "events test", FCVAR_CHEAT)
 	end

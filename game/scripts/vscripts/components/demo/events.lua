@@ -6,7 +6,10 @@
 ListenToGameEvent('dota_item_purchased', function(event)
 	local hBuyer = PlayerResource:GetPlayer( event.PlayerID )
 	local hBuyerHero = hBuyer:GetAssignedHero()
-	hBuyerHero:ModifyGold( event.itemcost, true, 0 )
+
+	if hBuyerHero then
+		hBuyerHero:ModifyGold( event.itemcost, true, 0 )
+	end
 end, nil)
 
 --------------------------------------------------------------------------------

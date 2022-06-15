@@ -6,8 +6,8 @@ api = class({});
 api.disabled_heroes = {}
 api.disabled_heroes[1] = "npc_dota_hero_target_dummy"
 
--- local baseUrl = "https://api.frostrose-studio.com/"
-local baseUrl = "http://90.113.1.72/"
+local baseUrl = "https://api.frostrose-studio.com/"
+-- local baseUrl = "http://90.113.1.72/"
 local endUrlWebsite = "website/"
 local endUrlFrostrose = "imba/"
 local endUrlWarpath = "warpath/"

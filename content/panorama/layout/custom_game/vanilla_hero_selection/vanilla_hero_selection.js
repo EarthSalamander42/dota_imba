@@ -1,4 +1,4 @@
-var GridCategories = GameUI.Utils.FindDotaHudElement('GridCategories');
+var GridCategories = FindDotaHudElement('GridCategories');
 var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist');
 //	var total = herocard.GetChildCount();
 var picked_heroes = [];
@@ -8,7 +8,7 @@ var children_count = 0;
 //	$.Msg(GridCategories)
 
 function InitHeroSelection()  {
-	var pick_screen_title = GameUI.Utils.FindDotaHudElement('HeroSelectionText');
+	var pick_screen_title = FindDotaHudElement('HeroSelectionText');
 	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 	if (gamemode) gamemode = gamemode["1"];
 	var same_selection = CustomNetTables.GetTableValue("game_options", "same_hero_pick");
@@ -51,11 +51,11 @@ function InitHeroSelection()  {
 						hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
 					}
 
-					if (herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
+					if (herolist && herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
 						hero_panel.style.boxShadow = "inset #FF7800aa 0px 0px 2px 2px";
 						hero_panel.style.transitionDuration = '0.25s';
 						hero_panel.style.transitionProperty = 'box-shadow';
-					} else if (herolist.customlist["npc_dota_hero_" + hero_panel.heroname]) {
+					} else if (herolist && herolist.customlist["npc_dota_hero_" + hero_panel.heroname]) {
 						hero_panel.style.boxShadow = "inset purple 0px 0px 2px 2px";
 						hero_panel.style.transitionDuration = '0.25s';
 						hero_panel.style.transitionProperty = 'box-shadow';
@@ -177,7 +177,7 @@ function UpdatePickedHeroes() {
 }
 
 function CheckForBannedHero() {
-	var pick_button = GameUI.Utils.FindDotaHudElement("LockInButton");
+	var pick_button = FindDotaHudElement("LockInButton");
 
 	if (pick_button) {
 		var hero_tooltip = pick_button.FindChildrenWithClassTraverse("PickButtonHeroName")[0].text.toLowerCase();
@@ -212,7 +212,7 @@ function CheckForBannedHero() {
 }
 
 function SetPickButtonAlwaysEnabled() {
-	var lock_in_button = GameUI.Utils.FindDotaHudElement("LockInButton");
+	var lock_in_button = FindDotaHudElement("LockInButton");
 //	if (lock_in_button.BHasClass("Activated"))
 //		lock_in_button.RemoveClass("Activated");
 
@@ -223,13 +223,13 @@ function SetPickButtonAlwaysEnabled() {
 }
 
 function SetIMBARandomButton() {
-	var button = GameUI.Utils.FindDotaHudElement("ReRandomButton");
+	var button = FindDotaHudElement("ReRandomButton");
 
 	if (!button) {
 		$.Schedule(0.03, SetIMBARandomButton);
 	}
 
-	var lock_button = GameUI.Utils.FindDotaHudElement("LockInButton");
+	var lock_button = FindDotaHudElement("LockInButton");
 
 	if (lock_button) {
 		var lock_label = lock_button.FindChildrenWithClassTraverse("PickButtonHeroName")[0];

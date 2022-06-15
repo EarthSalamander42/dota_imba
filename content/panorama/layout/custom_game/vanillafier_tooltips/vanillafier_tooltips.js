@@ -77,7 +77,7 @@ function TransferMainPanelFromHeroSelectionToHud() {
 
 	hud_init = true;
 
-	var new_parent = GameUI.Utils.FindDotaHudElement("CustomUIContainer_Hud").FindChildrenWithClassTraverse("AbilityContents")[0];
+	var new_parent = FindDotaHudElement("CustomUIContainer_Hud").FindChildrenWithClassTraverse("AbilityContents")[0];
 
 	if (new_parent) {
 		if (DotaHud)
@@ -139,17 +139,17 @@ function OverrideAbilityTooltips(sAbilityName) {
 
 function InitTooltips() {
 	for (var i = 0; i < 24; i++) {
-		var ability = GameUI.Utils.GetDotaHud().FindChildTraverse("Ability" + i);
+		var ability = FindDotaHudElement("Ability" + i);
 
 		if (Game.GetState() <= 5)
-			ability = GameUI.Utils.GetDotaHud().FindChildTraverse("HeroInspect").FindChildTraverse("HeroAbilities").GetChild(i);
+			ability = FindDotaHudElement("HeroInspect").FindChildTraverse("HeroAbilities").GetChild(i);
 
 		if (ability) {
 			var ability_button = ability.FindChildTraverse("AbilityButton");
 			var ability_name = undefined;
 
 			if (Game.GetState() <= 5) {
-				ability_button = GameUI.Utils.GetDotaHud().FindChildTraverse("HeroInspect").FindChildTraverse("HeroAbilities").GetChild(i);
+				ability_button = FindDotaHudElement("HeroInspect").FindChildTraverse("HeroAbilities").GetChild(i);
 
 				if (ability_button)
 					ability_name = ability_button.abilityname;
@@ -181,7 +181,7 @@ function InitTooltips() {
 }
 
 function RequestUnitTooltips(i, sAbilityName) {
-	var hPanel = GameUI.Utils.GetDotaHud().FindChildTraverse("Ability" + i);
+	var hPanel = FindDotaHudElement("Ability" + i);
 	var selected_entities = Players.GetSelectedEntities(Game.GetLocalPlayerID());
 
 	if (!sAbilityName) {
@@ -280,7 +280,7 @@ function SetAbilityTooltips(keys) {
 		var cd_level = Math.min(ability_level, cooldowns.length)
 		var active_cd = keys["iCooldown"][cd_level];
 
-		if (GameUI.Utils.isFloat(active_cd))
+		if (isFloat(active_cd))
 			active_cd = active_cd.toFixed(1);
 
 		if (cd_level != 0)
@@ -324,7 +324,7 @@ function SetAbilityTooltips(keys) {
 	}
 
 	// set newline to supported format
-	AbilityDescription = GameUI.Utils.SetHTMLNewLine(AbilityDescription);
+	AbilityDescription = SetHTMLNewLine(AbilityDescription);
 
 	for (let index = 1; index <= 10; index++) {
 		var imbafication_string = "#DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Imbafication_" + index;
@@ -348,7 +348,7 @@ function SetAbilityTooltips(keys) {
 			if (keys["sSpecial"][i])
 				special_value = Number(keys["sSpecial"][i]).toFixed(0);
 
-			if (GameUI.Utils.isFloat(keys["sSpecial"][i]))
+			if (isFloat(keys["sSpecial"][i]))
 				keys["sSpecial"][i] = keys["sSpecial"][i].toFixed(2);
 
 			var special_values = keys["sSpecial"][i].toString().split(" ");
@@ -467,7 +467,7 @@ function SetAbilityTooltips(keys) {
 			for (var i in keys["iCooldown"]) {
 				var fixed_cd = keys["iCooldown"][i];
 
-				if (GameUI.Utils.isFloat(fixed_cd))
+				if (isFloat(fixed_cd))
 					fixed_cd = fixed_cd.toFixed(1);
 
 				cd[i - 1] = fixed_cd;
@@ -534,11 +534,11 @@ function SetAbilityTooltips(keys) {
 		AbilityUpgradeLevel.style.visibility = "collapse";		
 	}
 
-	var hPanel = GameUI.Utils.GetDotaHud().FindChildTraverse("Ability" + keys.iAbility);
+	var hPanel = FindDotaHudElement("Ability" + keys.iAbility);
 	var ability_button = undefined;
 
 	if (Game.GetState() <= 4) {
-		hPanel = GameUI.Utils.GetDotaHud().FindChildTraverse("HeroInspect").FindChildTraverse("HeroAbilities");
+		hPanel = FindDotaHudElement("HeroInspect").FindChildTraverse("HeroAbilities");
 		ability_button = hPanel.GetChild(keys["iAbility"]);
 	} else {
 		ability_button = hPanel.FindChildTraverse("AbilityButton");
@@ -659,7 +659,7 @@ function SetActiveValue(values, active_value, bFloat) {
 
 function GetAbilityType(iBehavior) {
 	for (var i in DOTA_ABILITY_BEHAVIOR) {
-		if (Array_BehaviorTooltips[GameUI.Utils.bit_band(iBehavior, DOTA_ABILITY_BEHAVIOR[i])])
+		if (Array_BehaviorTooltips[bit_band(iBehavior, DOTA_ABILITY_BEHAVIOR[i])])
 			return DOTA_ABILITY_BEHAVIOR[i];
 	}
 

@@ -1,6 +1,4 @@
-/* global $ */
-"use strict";
-var Utils = {};
+var Util_Func = {};
 
 var HudNotFoundException = /** @class */
 (function() {
@@ -253,6 +251,7 @@ function ToggleUI() {
 }
 
 function SetupLoadingScreen(args) {
+	$.Msg("Setup loading screen!");
 	var value = "collapse";
 	if (args && args.value)
 		value = args.value;
@@ -312,142 +311,114 @@ function SetupLoadingScreen(args) {
 	}
 }
 
-function InitGlobalUtilFuncs() {
-	Utils.FindDotaHudElement = function(id) {
-		return GetDotaHud().FindChildTraverse(id);
+function FindDotaHudElement(id) {
+	return GetDotaHud().FindChildTraverse(id);
+}
+
+function GetDonatorColor(status) {
+	// lua donator status are still using old numbers
+	//	var donator_colors = CustomNetTables.GetTableValue("game_options", "donator_colors")
+	//	$.Msg("Donator colors:")
+	//	$.Msg(donator_colors)
+
+	// Placeholder
+	var donator_colors = [];
+	donator_colors[1] = "#00CC00";
+	donator_colors[2] = "#DAA520";
+	donator_colors[3] = "#DC2828";
+	donator_colors[4] = "#993399";
+	donator_colors[5] = "#2F5B97";
+	donator_colors[6] = "#BB4B0A";
+	donator_colors[7] = "#871414";
+	donator_colors[100] = "#0066FF";
+	donator_colors[101] = "#641414";
+	donator_colors[102] = "#871414";
+
+	return donator_colors[status];
+}
+
+function isInt(n) {
+	return n % 1 === 0;
+}
+
+function isFloat(n) {
+	return Number(n) === n && n % 1 !== 0;
+}
+
+function SetHTMLNewLine(text) {
+	while (text.indexOf("\n") !== -1) {
+		text = text.replace("\n", "<br>");
 	}
 
-	Utils.isInt = function(n) {
-		return n % 1 === 0;
+	return text;
+}
+
+function bit_band(iBehavior, iBitCheck) {
+	return iBehavior & iBitCheck;
+}
+
+function RawTimetoGameTime(time, bMilliSecs) {
+	var millisecs_decimals = 2;
+
+	if (bMilliSecs == true)
+		time = time.toFixed(millisecs_decimals);
+
+	var millisecs = time.toString().slice(-millisecs_decimals);
+	var sec = Math.floor( time % 60 );
+	var min = Math.floor( time / 60 );
+
+	var timerText = "";
+	timerText += min;
+	timerText += ":";
+
+	if (sec < 10) {
+		timerText += "0";
 	}
-	
-	Utils.isFloat = function(n) {
-		return Number(n) === n && n % 1 !== 0;
-	}
-	
-	Utils.SetHTMLNewLine = function(text) {
-		while (text.indexOf("\n") !== -1) {
-			text = text.replace("\n", "<br>");
-		}
-	
-		return text;
-	}
 
-	Utils.bit_band == function(iBehavior, iBitCheck) {
-		return iBehavior & iBitCheck;
-	}
+	timerText += sec;
 
-	Utils.RawTimetoGameTime = function(time, bMilliSecs) {
-		var millisecs_decimals = 2;
+	if (bMilliSecs == true) {
+		timerText += ".";
 
-		if (bMilliSecs == true)
-			time = time.toFixed(millisecs_decimals);
-
-		var millisecs = time.toString().slice(-millisecs_decimals);
-		var sec = Math.floor( time % 60 );
-		var min = Math.floor( time / 60 );
-
-		var timerText = "";
-		timerText += min;
-		timerText += ":";
-
-		if (sec < 10) {
+		if (millisecs < 10) {
 			timerText += "0";
 		}
 
-		timerText += sec;
-
-		if (bMilliSecs == true) {
-			timerText += ".";
-		
-			if (millisecs < 10) {
-				timerText += "0";
-			}
-
-			timerText += millisecs;
-		}
-
-		return timerText;
+		timerText += millisecs;
 	}
 
-	Utils.GetDonatorColor = function(status) {
-		// lua donator status are still using old numbers
-		//	var donator_colors = CustomNetTables.GetTableValue("game_options", "donator_colors")
-		//	$.Msg("Donator colors:")
-		//	$.Msg(donator_colors)
+	return timerText;
+}
 
-		// Placeholder
-		var donator_colors = [];
-		donator_colors[1] = "#00CC00";
-		donator_colors[2] = "#DAA520";
-		donator_colors[3] = "#DC2828";
-		donator_colors[4] = "#993399";
-		donator_colors[5] = "#2F5B97";
-		donator_colors[6] = "#BB4B0A";
-		donator_colors[7] = "#871414";
-		donator_colors[100] = "#0066FF";
-		donator_colors[101] = "#641414";
-		donator_colors[102] = "#871414";
+function HideIMR(panel) {
+	var map_info = Game.GetMapInfo();
+	var imr_panel = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr5v5");
+	var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr10v10");
+	var imr_panel_1v1 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr1v1");
 
-		return donator_colors[status];
+	var end_imr5v5 = panel.FindChildrenWithClassTraverse("es-legend-imr");
+	var end_imr10v10 = panel.FindChildrenWithClassTraverse("es-legend-imr10v10");
+	var end_imr1v1 = panel.FindChildrenWithClassTraverse("es-legend-imr1v1");
+
+	var show = function(panels) {
+		for ( var i in panels)
+			panels[i].style.visibility = "visible";
+	};
+
+	if (map_info.map_display_name == "ranked_5v5") {
+		show(imr_panel);
+		show(end_imr5v5);
+	} else if (map_info.map_display_name == "ranked_10v10") {
+		show(imr_panel_10v10);
+		show(end_imr10v10);
+	} else if (map_info.map_display_name == "ranked_1v1") {
+		show(imr_panel_1v1);
+		show(end_imr1v1);
 	}
-
-	const HideIMR = function(panel) {
-		var map_info = Game.GetMapInfo();
-		var imr_panel = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr5v5");
-		var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr10v10");
-		var imr_panel_1v1 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr1v1");
-	
-		var end_imr5v5 = panel.FindChildrenWithClassTraverse("es-legend-imr");
-		var end_imr10v10 = panel.FindChildrenWithClassTraverse("es-legend-imr10v10");
-		var end_imr1v1 = panel.FindChildrenWithClassTraverse("es-legend-imr1v1");
-	
-		var show = function(panels) {
-			for ( var i in panels)
-				panels[i].style.visibility = "visible";
-		};
-	
-		if (map_info.map_display_name == "ranked_5v5") {
-			show(imr_panel);
-			show(end_imr5v5);
-		} else if (map_info.map_display_name == "ranked_10v10") {
-			show(imr_panel_10v10);
-			show(end_imr10v10);
-		} else if (map_info.map_display_name == "ranked_1v1") {
-			show(imr_panel_1v1);
-			show(end_imr1v1);
-		}
-	}
-/*
-	Utils.GetBuffIDByName = function(selectedEntityID, buff_name, ability_name) {
-		var num_buffs = Entities.GetNumBuffs(selectedEntityID);
-
-		if (num_buffs) {
-			for (var i = 0; i <= num_buffs + 100; i++) {
-				var buff = Buffs.GetName(selectedEntityID, i);
-
-				if (buff && buff == buff_name) {
-					if (ability_name) {
-						if (Abilities.GetAbilityName(Buffs.GetAbility(selectedEntityID, i)) == ability_name)
-							return i;
-					} else {
-						return i;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-*/
-	$.Msg(Utils);
-	GameUI.Utils = Utils;
-
-	GameEvents.Subscribe("setup_loading_screen", SetupLoadingScreen);
 }
 
 (function () {
-	InitGlobalUtilFuncs();
+	GameEvents.Subscribe("setup_loading_screen", SetupLoadingScreen);
 })();
 
 /*

@@ -51,6 +51,7 @@ ListenToGameEvent('npc_spawned', function(event)
 	end
 
 	local ply_table = CustomNetTables:GetTableValue("battlepass_player", tostring(npc:GetPlayerOwnerID()))
+	if type(ply_table) == nil then ply_table = nil end
 
 	if npc:IsIllusion() or string.find(npc:GetUnitName(), "npc_dota_lone_druid_bear") then
 		if ply_table and ply_table.toggle_tag == 0 or ply_table.toggle_tag == false then
@@ -76,7 +77,6 @@ ListenToGameEvent('npc_spawned', function(event)
 			if ply_table and ply_table.toggle_tag == 1 or ply_table.toggle_tag == true then
 				npc:SetupHealthBarLabel()
 			end
-
 
 			if api:GetDonatorStatus(npc:GetPlayerID()) == 10 then
 				npc:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")

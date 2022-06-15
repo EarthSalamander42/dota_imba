@@ -17,6 +17,7 @@ var game_type = undefined;
 if (game_version)
 	game_type = game_version.game_type;
 
+/*
 var api = {
 	base : "https://api.frostrose-studio.com/",
 	urls : {
@@ -53,30 +54,28 @@ var api = {
 			}
 		});
 	},
-/*
-	updateStatue : function(data, success_callback, error_callback) {
-		$.AsyncWebRequest(api.base + api.urls.modifyStatue, {
-			type : "POST",
-			dataType : "json",
-			data : data,
-			timeout : 5000,
-			headers : {'X-Dota-Server-Key' : secret_key},
-			success : function(obj) {
-				if (obj.error) {
-					$.Msg("Error updating statue");
-					error_callback();
-				} else {
-					$.Msg("Updated statue");
-					success_callback();
-				}
-			},
-			error : function(err) {
-				$.Msg("Error updating statue " + JSON.stringify(err));
-				error_callback();
-			}
-		});
-	},
-*/
+	// updateStatue : function(data, success_callback, error_callback) {
+		// $.AsyncWebRequest(api.base + api.urls.modifyStatue, {
+			// type : "POST",
+			// dataType : "json",
+			// data : data,
+			// timeout : 5000,
+			// headers : {'X-Dota-Server-Key' : secret_key},
+			// success : function(obj) {
+				// if (obj.error) {
+					// $.Msg("Error updating statue");
+					// error_callback();
+				// } else {
+					// $.Msg("Updated statue");
+					// success_callback();
+				// }
+			// },
+			// error : function(err) {
+				// $.Msg("Error updating statue " + JSON.stringify(err));
+				// error_callback();
+			// }
+		// });
+	// },
 	updateEmblem : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyEmblem, {
 			type : "POST",
@@ -255,6 +254,7 @@ var api = {
 		});
 	},
 };
+*/
 
 function ToggleBattlepass() {
 	if (toggle === false) {
@@ -901,7 +901,7 @@ function HallOfFame(type, retainSubTab, iRoundCount) {
 				var score = user_info.round_score[current_leaderboard_round];
 
 				if (current_leaderboard_round == 4)
-					imr.text = GameUI.Utils.RawTimetoGameTime(score);
+					imr.text = FindDotaHudElementRawTimetoGameTime(score);
 				else
 					imr.text = score;
 			}

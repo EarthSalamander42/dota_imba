@@ -10,6 +10,7 @@ var api = {
 	urls : {
 		loadingScreenMessage : "imba/loading-screen-info",
 	},
+/*
 	getLoadingScreenMessage : function(success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.loadingScreenMessage, {
 			type : "GET",
@@ -31,6 +32,7 @@ var api = {
 			}
 		});
 	},
+*/
 }
 
 var view = {
@@ -168,6 +170,7 @@ function fetch() {
 	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
 	view.subtitle.text = $.Localize("#game_version_name").toUpperCase();
 
+/*
 	api.getLoadingScreenMessage(function(data) {
 		var found_lang = false;
 		var result = data.data;
@@ -194,6 +197,7 @@ function fetch() {
 		// error callback
 		$.Msg("Unable to retrieve loading screen info.")
 	});
+*/
 
 	SetPartyMaxVotes();
 };

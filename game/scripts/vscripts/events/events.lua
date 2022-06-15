@@ -687,13 +687,10 @@ end
 --]]
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:OnConnectFull(keys)
-	local entIndex = keys.index + 1
-	local ply = EntIndexToHScript(entIndex)
-	local playerID = ply:GetPlayerID()
 	if not GameMode.first_connect then GameMode.first_connect = {} end
 
 	-- OVER MEGA DDOS DON'T USE THIS AGAIN, FIND ANOTHER WAY DUMBASS FUCK
---	if playerID == -1 then
+--	if keys.PlayerID == -1 then
 --		Timers:CreateTimer(1.0, function()
 --			self:OnConnectFull(keys)
 --			return 1.0
@@ -707,14 +704,14 @@ function GameMode:OnConnectFull(keys)
 --		end
 
 		-- only procs if the player reconnects
-		if GameMode.first_connect[playerID] then
+		if GameMode.first_connect[keys.PlayerID] then
 			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-				ReconnectPlayer(playerID)
+				ReconnectPlayer(keys.PlayerID)
 
 				return nil
 			end, FrameTime())
 		else
-			GameMode.first_connect[playerID] = true
+			GameMode.first_connect[keys.PlayerID] = true
 		end
 --	end
 end

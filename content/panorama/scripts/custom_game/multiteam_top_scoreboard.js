@@ -9,22 +9,6 @@ function UpdateScoreboard()
 	$.Schedule( 0.2, UpdateScoreboard );
 }
 
-function FindDotaHudElement(id) {
-	return GetDotaHud().FindChildTraverse(id);
-}
-
-function GetDotaHud() {
-	var p = $.GetContextPanel();
-	while (p !== null && p.id !== 'Hud') {
-		p = p.GetParent();
-	}
-	if (p === null) {
-		throw new HudNotFoundException('Could not find Hud root as parent of panel with id: ' + $.GetContextPanel().id);
-	} else {
-		return p;
-	}
-}
-
 (function()
 {
 	if (Game.GetMapInfo().map_display_name == "imbathrow_mines_3v3v3") {

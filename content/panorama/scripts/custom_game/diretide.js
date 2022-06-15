@@ -119,6 +119,7 @@ var api = {
 	urls : {
 		rankingsXp : "website/statistics/ranking/xp",
 	},
+/*
 	getTopPlayerXP : function(callback) {
 		$.AsyncWebRequest(api.base + api.urls.rankingsXp, {
 			type : "GET",
@@ -137,6 +138,7 @@ var api = {
 			}
 		});
 	},
+*/
 };
 
 (function()

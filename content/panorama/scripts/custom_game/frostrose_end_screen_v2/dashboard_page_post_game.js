@@ -274,7 +274,7 @@ function EndScoreboard(args) {
 	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel())
 
 	// Set game time
-	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  GameUI.Utils.RawTimetoGameTime(Game.GetDOTATime(false, false));
+	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  FindDotaHudElementRawTimetoGameTime(Game.GetDOTATime(false, false));
 
 //	for (var i = 0; i < Game.GetAllPlayerIDs().length; i++) {
 //		Game.GetAllPlayerIDs()[i]
@@ -927,23 +927,6 @@ function ResetEndScoreboardPanels() {
 	// Show loading panel
 	FindDotaHudElement("topbar").style.visibility = "collapse";
 	$.GetContextPanel().AddClass("MatchDataLoading");
-
-	// bla bla temporary make it clean later
-	function FindDotaHudElement(id) {
-		return GetDotaHud().FindChildTraverse(id);
-	}
-
-	function GetDotaHud() {
-		var p = $.GetContextPanel();
-		while (p !== null && p.id !== 'Hud') {
-			p = p.GetParent();
-		}
-		if (p === null) {
-			throw new HudNotFoundException('Could not find Hud root as parent of panel with id: ' + $.GetContextPanel().id);
-		} else {
-			return p;
-		}
-	}
 
 	GameEvents.Subscribe("end_game", EndScoreboard);
 /*

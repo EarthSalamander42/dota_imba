@@ -47,7 +47,8 @@ function GameMode:_InitGameMode()
 --	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_BOUNTY, false) --Bounty
 
 	GameRules:GetGameModeEntity():SetFreeCourierModeEnabled(b_USE_MULTIPLE_COURIERS)
-	
+	GameRules:GetGameModeEntity():SetUseDefaultDOTARuneSpawnLogic(true)
+
 --	if IMBA_PICK_SCREEN == false then
 --		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
 --	else
