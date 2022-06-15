@@ -151,7 +151,6 @@
 		"item"		"item_refresher"
 		"item"		"item_imba_octarine_core"
 		"item"		"item_imba_sheepstick"
-		"item"		"item_gungir"
 		"item"		"item_wind_waker"
 
 		// IMBA
