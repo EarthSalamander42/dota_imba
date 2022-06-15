@@ -1,6 +1,8 @@
 -- not working: team kill tower, courier dead, courier respawn, 
 -- hero kill tower says hero denied
 function CombatEvents(event_type, reason, victim, attacker, custom_gold)
+	if true then return end -- disable old system while rewriting the new one
+
 	if IMBA_COMBAT_EVENTS == false then
 		return
 	end

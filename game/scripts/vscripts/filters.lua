@@ -1292,6 +1292,7 @@ end
 -- This function runs once for each hero that gets affected by a picked up bounty rune, and keys.player_id_const is ONLY the player who actually picked it up, so the previous implementation gave Alcehmist 5 or 10 instances of boosted gold if he picked it up himself which is...bad.
 -- Need to try a different (aka. jank) way to implement this.
 function GameMode:BountyRuneFilter(keys)
+	print(keys)
 	if not keys.player_id_const then return end
 	if not PlayerResource:GetPlayer(keys.player_id_const) then return end
 	if not PlayerResource:GetPlayer(keys.player_id_const).GetAssignedHero then return end
