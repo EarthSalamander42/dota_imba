@@ -195,7 +195,14 @@ function api:GetPlayerCosmetics(player_id, cosmetic_type)
 	end
 
 	local cosmetic = CustomNetTables:GetTableValue("battlepass_player", cosmetic_type)
-	if cosmetic and cosmetic["1"] then cosmetic = cosmetic["1"] end
+	if cosmetic and cosmetic["1"] and type(cosmetic["1"] == "table" and next(cosmetic["1"])) then
+		print(cosmetic, type(cosmetic["1"]))
+		cosmetic = cosmetic["1"]
+	else
+		print("api:GetPlayerCosmetics: cosmetic table value is empty!")
+		return false
+	end
+
 	local cosmetic_variable = nil
 
 	if cosmetic_type == "companions" then
@@ -489,6 +496,7 @@ function api:GetArmory(player_id)
 end
 
 function api:GetDisabledHeroes()
+	if not api.disabled_heroes then return end
 	if not api.disabled_heroes["npc_dota_hero_target_dummy"] then api.disabled_heroes["npc_dota_hero_target_dummy"] = true end
 	return api.disabled_heroes
 end

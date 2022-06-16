@@ -117,7 +117,7 @@ function CreateGGButton() {
 	});
 
 	GGButton.SetPanelEvent("onmouseover", function() {
-		$.DispatchEvent("UIShowTextTooltip", GGButton, $.Localize("gg_button"));
+		$.DispatchEvent("UIShowTextTooltip", GGButton, $.Localize("#gg_button"));
 	})
 
 	GGButton.SetPanelEvent("onmouseout", function() {

@@ -622,7 +622,12 @@ function SetTag() {
 		if (chat.text === "-ping") {
 			Game.ServerCmd("dota_ping");
 		}
-
+/*
+		GameEvents.SendCustomGameEventToServer("battlepass:update_tag", {
+			steamid : Game.GetLocalPlayerInfo().player_steamid,
+			tag_name : chat.text,
+		})
+*/
 		api.updateTag({
 			steamid : Game.GetLocalPlayerInfo().player_steamid,
 			tag_name : chat.text

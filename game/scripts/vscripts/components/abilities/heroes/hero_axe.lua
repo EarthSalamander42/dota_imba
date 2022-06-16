@@ -83,7 +83,7 @@ function imba_axe_berserkers_call:OnSpellStart()
 	end
 
 	-- if enemies table is empty play random responses_zero_enemy
-	if next (enemies_in_radius) == nil then
+	if next(enemies_in_radius) == nil then
 		self:GetCaster():EmitSound(responses_zero_enemy)
 	else
 		self:GetCaster():EmitSound(responses_1_or_more_enemies)
