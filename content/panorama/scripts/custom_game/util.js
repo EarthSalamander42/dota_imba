@@ -251,7 +251,7 @@ function ToggleUI() {
 }
 
 function SetupLoadingScreen(args) {
-	$.Msg("Setup loading screen!");
+//	$.Msg("Setup loading screen!");
 	var value = "collapse";
 	if (args && args.value)
 		value = args.value;

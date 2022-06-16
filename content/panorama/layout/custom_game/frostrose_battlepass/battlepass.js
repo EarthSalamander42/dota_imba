@@ -1125,8 +1125,14 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		companionpreview.style.width = "132px";
 		companionpreview.style.height = "135px";
 
+		var companion_scene = $.CreatePanelWithProperties('DOTAScenePanel', companionpreview, "", {
+			class: `companion_scene`,
+			particleonly: "false",
+			unit: companion_name[i],
+		});
+
 //		companionpreview.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_emblem_' + i + '.png")';
-		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
+//		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
 		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 
 		var companion_unit_name = companion_unit[i];

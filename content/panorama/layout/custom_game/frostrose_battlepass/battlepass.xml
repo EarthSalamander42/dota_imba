@@ -5,6 +5,7 @@
 	</styles>
 
 	<scripts>
+		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.js" />
 	</scripts>
 

@@ -54,7 +54,7 @@ function HeroSelection:Init()
 		imbalist = HeroSelection.imbalist,
 		newlist = newlist,
 		customlist = customlist,
-		hotdisabledlist = api.disabled_heroes,
+		hotdisabledlist = api:GetDisabledHeroes(),
 		mutation = IMBA_MUTATION,
 	})
 

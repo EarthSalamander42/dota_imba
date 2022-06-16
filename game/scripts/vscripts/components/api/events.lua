@@ -36,8 +36,6 @@ ListenToGameEvent('game_rules_state_change', function()
 			CustomGameEventManager:Send_ServerToAllClients("all_players_battlepass_loaded", {})
 		end)
 
-		api:GetDisabledHeroes()
-
 		CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		api:InitDonatorTableJS()

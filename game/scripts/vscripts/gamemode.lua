@@ -467,8 +467,9 @@ end
 
 function GameMode:PreventBannedHeroToBeRandomed(keys)
 --	print(keys)
+	local disabled_heroes = api:GetDisabledHeroes()
 
-	if PlayerResource:GetSelectedHeroName(keys.iPlayerID) and api.disabled_heroes[PlayerResource:GetSelectedHeroName(keys.iPlayerID)] or keys.bIMBA == 1 then
+	if PlayerResource:GetSelectedHeroName(keys.iPlayerID) and disabled_heroes[PlayerResource:GetSelectedHeroName(keys.iPlayerID)] or keys.bIMBA == 1 then
 		local old_hero = PlayerResource:GetSelectedHeroEntity(keys.iPlayerID)
 		local herolist = LoadKeyValues("scripts/npc/npc_heroes.txt")
 		local hero_table = {}
@@ -488,7 +489,7 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 
 		for k, v in pairs(herolist) do
 			-- only add non-picked heroes
-			if string.find(k, "npc_dota_hero_") and not picked_heroes[k] and not api.disabled_heroes[k] and k ~= "npc_dota_hero_target_dummy" then
+			if string.find(k, "npc_dota_hero_") and not picked_heroes[k] and not disabled_heroes[k] and k ~= "npc_dota_hero_target_dummy" then
 				if keys.bIMBA == 1 then
 					if HeroSelection.imbalist[k] and HeroSelection.imbalist[k] == 1 then
 						table.insert(hero_table, k)
