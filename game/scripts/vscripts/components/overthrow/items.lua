@@ -1,7 +1,9 @@
 --[[ items.lua ]]
+print("Overthrow items.lua init")
 
 --Spawns Bags of Gold in the middle
 function COverthrowGameMode:ThinkGoldDrop()
+	print("ThinkGoldDrop")
 	local r = RandomInt( 1, 100 )
 	if r > ( 100 - self.m_GoldDropPercent ) then
 		self:SpawnGold()
@@ -9,6 +11,7 @@ function COverthrowGameMode:ThinkGoldDrop()
 end
 
 function COverthrowGameMode:SpawnGold()
+	print("SpawnGold")
 	local overBoss = Entities:FindByName( nil, "@overboss" )
 	local throwCoin = nil
 	local throwCoin2 = nil
@@ -28,6 +31,7 @@ function COverthrowGameMode:SpawnGold()
 end
 
 function COverthrowGameMode:SpawnGoldEntity( spawnPoint )
+	print("SpawnGoldEntity")
 	EmitGlobalSound("Item.PickUpGemWorld")
 	local newItem = CreateItem( "item_bag_of_gold", nil, nil )
 	local drop = CreateItemOnPositionForLaunch( spawnPoint, newItem )
@@ -39,7 +43,7 @@ end
 
 --Removes Bags of Gold after they expire
 function COverthrowGameMode:KillLoot( item, drop )
-
+	print("KillLoot")
 	if drop:IsNull() then
 		return
 	end
@@ -55,6 +59,7 @@ function COverthrowGameMode:KillLoot( item, drop )
 end
 
 function COverthrowGameMode:SpecialItemAdd( event )
+	print("SpecialItemAdd")
 	local item = EntIndexToHScript( event.ItemEntityIndex )
 	local owner = EntIndexToHScript( event.HeroEntityIndex )
 	local hero = owner:GetClassname()

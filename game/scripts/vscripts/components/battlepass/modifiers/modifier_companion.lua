@@ -119,7 +119,7 @@ function modifier_companion:OnIntervalThink()
 		hero.companion = companion
 		local fountain_abs
 
-		if GetMapName() == "imbathrow_3v3v3v3" then
+		if GetMapName() == "imbathrow_ffa" then
 			fountain_abs = Entities:FindByName(nil, "@overboss"):GetAbsOrigin()
 		elseif GetMapName() == "imba_demo" then
 			for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do

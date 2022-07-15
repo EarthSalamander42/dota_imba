@@ -1,0 +1,151 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/multiteam_top_scoreboard.css" />
+		<include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
+		<include src="file://{resources}/layout/custom_game/common/party_highlighter/party_highlighter.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/util.js" />
+		<include src="file://{resources}/layout/custom_game/common/utils.js" />
+		<include src="file://{resources}/layout/custom_game/common/party_highlighter/party_highlighter.js" />
+		<include src="file://{resources}/scripts/custom_game/shared_scoreboard_updater.js" />
+		<include src="file://{resources}/scripts/custom_game/multiteam_top_scoreboard.js" />
+	</scripts>
+
+	<Panel hittest="false" class="CustomHudRoot">
+		<Panel hittest="false" id="TopBarScoreboard">
+			<Panel hittest="false" id="ScoreboardContainer">
+				<Panel hittest="false" id="LeftInjectXMLFile" />
+				<Panel hittest="false" id="MultiteamScoreboard" />
+				<Panel hittest="false" id="RightInjectXMLFile" />
+			</Panel>
+		</Panel>
+
+		<Panel hittest="false" id="BGScore">
+
+			<Panel hittest="false" id="BGScoreRow1" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel1" text="20" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero1" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow2" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel2" text="19" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero2" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow3" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel3" text="18" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero3" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow4" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel4" text="17" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero4" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow5" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel5" text="16" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero5" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow6" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel6" text="15" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero6" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow7" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel7" text="14" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero7" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow8" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel8" text="13" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero8" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow9" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel9" text="12" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero9" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow10" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel10" text="11" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero10" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow11" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel11" text="10" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero11" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow12" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel12" text="19" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero12" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow13" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel13" text="18" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero13" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow14" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel14" text="17" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero14" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow15" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel15" text="16" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero15" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow16" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel16" text="15" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero16" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow17" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel17" text="14" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero17" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow18" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel18" text="13" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero18" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow19" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel19" text="12" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero19" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow20" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel20" text="11" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero20" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow21" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel21" text="10" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero21" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow22" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel22" text="10" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero22" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow23" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel23" text="10" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero23" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+			<Panel hittest="false" id="BGScoreRow24" class="BGScoreRow">
+				<Label hittest="false" id="BGScoreLabel24" text="10" class="BGScoreLabel" />
+				<DOTAHeroImage id="BGScoreHero24" class="BGScoreHeroIcon" heroname="npc_dota_hero_antimage" heroimagestyle="landscape" scaling="stretch-to-fit-x-preserve-aspect" />
+			</Panel>
+
+		</Panel>
+	</Panel>
+</root>
+

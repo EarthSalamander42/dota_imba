@@ -169,7 +169,7 @@ end
 function Map1v1() return "imba_1v1" end
 function Map10v10() return "imba_10v10" end
 function MapTournament() return "map_tournament" end
-function MapOverthrow() return "imbathrow_3v3v3v3" end
+function MapOverthrow() return "imbathrow_ffa" end
 function MapDemo() return "imba_demo" end
 
 function Is10v10Map()

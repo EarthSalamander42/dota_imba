@@ -157,8 +157,6 @@ function fetch() {
 
 	if (Game.GetMapInfo().map_display_name == "imba_1v1")
 		DisableVoting();
-	else if (Game.GetMapInfo().map_display_name == "imbathrow_3v3v3v3")
-		DisableRankingVoting();
 	else if (Game.GetMapInfo().map_display_name == "imba_10v10")
 		party_max_votes = 20;
 
@@ -445,11 +443,8 @@ function OnVotesReceived(data)
 */
 
 function DisableVoting() {
-	$("#imba-loading-title-vote").style.visibility = "collapse";
-}
-
-function DisableRankingVoting() {
-	$("#imba-loading-title-vote").FindChildTraverse("vote-content").GetChild(0).style.visibility = "collapse";
+	if ($("#vote-content")) $("#vote-content").style.opacity = "0";
+	if ($("#MainVoteButton")) $("#MainVoteButton").style.opacity = "0";
 }
 
 function PartyVote() {

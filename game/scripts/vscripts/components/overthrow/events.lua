@@ -9,7 +9,7 @@ ListenToGameEvent("game_rules_state_change", function()
 			--self.TEAM_KILLS_TO_WIN = 15
 			nCOUNTDOWNTIMER = 601
 		end
-		if GetMapName() == "imbathrow_3v3v3" then
+		if GetMapName() == "imbathrow_ffa" then
 			self.TEAM_KILLS_TO_WIN = 50
 		else
 			self.TEAM_KILLS_TO_WIN = 30

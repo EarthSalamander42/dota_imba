@@ -1,127 +1,150 @@
-<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
-CVModel CVModel_0
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
 {
-	CVmeshList m_meshList = CVmeshList
+	m_meshList = 
 	{
-		CVmesh[] m_meshList = 
+		m_meshList = 
 		[
-			CVmesh
 			{
-				string m_meshName = "kobold_underboss"
-				string m_meshFile = "models/props_structures/midas_throne/dmx/mesh/kobold_underboss.dmx"
-				string m_materialSearchPath = ""
-				bool m_bSkinParentedObjects = true
-				bool m_bLegacySkinParentedTransforms = false
-				bool m_bExpensiveTangents = false
-				bool m_bExpensiveVertices = false
-				bool m_bIgnoreCloth = false
-				bool m_bGetSkinningFromLod0 = false
-				CVmorphInfo* m_pMorphInfo = NULL
-			}
+				m_meshName = "kobold_underboss"
+				m_meshFile = "models/props_structures/midas_throne/dmx/mesh/kobold_underboss.dmx"
+				m_materialSearchPath = ""
+				m_bSkinParentedObjects = true
+				m_bLegacySkinParentedTransforms = false
+				m_bExpensiveTangents = false
+				m_bHighPrecisionTexCoords = false
+				m_bPerVertexCurvature = false
+				m_bBentNormals = false
+				m_bIgnoreCloth = false
+				m_bGetSkinningFromLod0 = false
+				m_bPreferHighDensityTrianglesInUvDensityCalculation = false
+				m_pMorphInfo = null
+			},
 		]
 	}
-	CVClothProxyMeshList m_clothProxyMeshList = CVClothProxyMeshList
+	m_clothProxyMeshList = 
 	{
-		CVClothProxyMesh[] m_clothProxyMeshList = 
-		[
-			
-		]
-		float m_flClothEnableThreshold = 0.050000
-		bool m_bCreateStaticBone = false
-		int m_nMaxBonesPerVertex = 4
-		bool m_bRemoveUnusedBonesEnabled = false
-		bool m_bDriveMeshesWithBacksolvedJointsOnly = true
-		float m_flMatchProxiesToMeshes = 1.000000
-		float m_flReservedFloat = 0.000000
-		int m_nReservedInt = 0
-		bool m_bReservedBool1 = false
-		bool m_bReservedBool2 = false
-		bool m_bReservedBool3 = false
-		bool m_bReservedBool4 = false
+		_class = "CVClothProxyMeshList"
+		m_flClothEnableThreshold = 0.05
+		m_bCreateStaticBone = false
+		m_nMaxBonesPerVertex = 4
+		m_bRemoveUnusedBonesEnabled = false
+		m_bDriveMeshesWithBacksolvedJointsOnly = true
+		m_flMatchProxiesToMeshes = 1.0
+		m_flFallbackEnvelope = 1.0
+		m_nReservedInt = 0
+		m_bSoftSkinAnimation = false
+		m_bReservedBool2 = false
+		m_bReservedBool3 = false
+		m_bReservedBool4 = false
+		m_clothProxyMeshList = [  ]
 	}
-	CVphysicsMeshList m_physicsMeshList = CVphysicsMeshList
+	m_physicsMeshList = 
 	{
-		CVphysicsMesh[] m_meshList = 
-		[
-			
-		]
+		m_meshList = [  ]
 	}
-	CVmodelInfo* m_pModelInfo = NULL
-	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	m_pModelInfo = null
+	m_pBoneFlagList = 
 	{
-		CVBoneFlagList* m_pObject = NULL
-		string m_sFileName = ""
+		m_pObject = null
 	}
-	CVhitBoxSetListReference[] m_pHitBoxSetLists = 
+	m_pHitBoxSetLists = [  ]
+	m_pAttachmentLists = 
 	[
-		
-	]
-	CVattachmentListReference[] m_pAttachmentLists = 
-	[
-		
-	]
-	CVanimGroupReference[] m_pAnimGroups = 
-	[
-		CVanimGroupReference
 		{
-			CVanimGroup* m_pObject = NULL
-			string m_sFileName = "models\\props_structures\\midas_throne\\kobold_overboss.vagrp"
+			m_pObject = 
+			{
+				m_name = ""
+				m_attachments = 
+				[
+					{
+						m_name = "bubbles"
+						m_influences = 
+						[
+							{
+								m_influenceName = "LiquidRoot_JNT"
+								m_vTranslationOffset = [ 0.0, 0.0, 0.0 ]
+								m_vRotationOffset = [ 0.0, 0.0, 0.0 ]
+								m_flWeight = 1.0
+								m_bRoot = false
+							},
+						]
+					},
+				]
+			}
+		},
+	]
+	m_pAnimGroup = 
+	{
+		m_pObject = 
+		{
+			m_Name = ""
+			m_pBoneFlagList = 
+			{
+				m_pObject = null
+			}
+			m_pSeqGroup = 
+			{
+				m_pObject = null
+			}
+			m_pAnimGroups = 
+			[
+				{
+					m_sFileName = "models\\props_structures\\midas_throne\\kobold_overboss.vagrp"
+				},
+			]
+			m_Vanim = [  ]
+			m_sScripts = [  ]
+			m_folderNames = [  ]
+			m_sCompileScripts = [  ]
+			m_pActivityWhiteList = 
+			{
+				m_pObject = null
+			}
 		}
-	]
-	CVNodeMaterialGroupListReference m_pMaterialGroupList = CVNodeMaterialGroupListReference
-	{
-		NodeMaterialGroupList_t* m_pObject = NULL
-		string m_sFileName = ""
 	}
-	CVMeshGroupListReference m_pMeshGroupList = CVMeshGroupListReference
+	m_pMaterialGroupList = 
 	{
-		MeshGroupList_t* m_pObject = NULL
-		string m_sFileName = ""
+		m_pObject = null
 	}
-	CVLODGroupListReference m_pLodGroupList = CVLODGroupListReference
+	m_pMeshGroupList = 
 	{
-		LODGroupList_t* m_pObject = NULL
-		string m_sFileName = ""
+		m_pObject = null
 	}
-	CVpropBreakableListReference m_pPropBreakableList = CVpropBreakableListReference
+	m_pLodGroupList = 
 	{
-		CVpropBreakableList* m_pObject = NULL
-		string m_sFileName = ""
+		m_pObject = null
 	}
-	CVpropDataListReference m_pPropDataList = CVpropDataListReference
+	m_pPropBreakableList = 
 	{
-		CVpropDataList* m_pObject = NULL
-		string m_sFileName = ""
+		m_pObject = null
 	}
-	CVConstraintListReference[] m_pConstraintLists = 
-	[
-		
-	]
-	string m_collision = ""
-	string m_softbody = ""
-	string m_sMDLFilename = ""
-	string[] m_sOffsetHitboxSets = 
-	[
-		
-	]
-	float(3) m_vHitboxSetOffset = ( 0.000000, 0.000000, 0.000000 )
-	string[] m_scriptFiles = 
-	[
-		
-	]
-	CVMaterialRemapList* m_pMaterialRemapList = NULL
-	float m_flFbxScale = 1.000000
-	float m_flQCScale = 1.000000
-	float(3) m_vOrigin = ( 0.000000, 0.000000, 0.000000 )
-	CVPsf* m_pvPsf = NULL
-	string m_keyValueText = ""
-	bool m_bStaticProp = false
-	bool m_bEnableClothProcessing = true
-	float m_flClothEnableThreshold = 0.050000
-	int m_nMaxClothVertsPerMesh = 2048
-	bool m_bBuildClothBoneHierarchy = false
-	symbol m_nNavType = AUTH_NAV_MESH
-	bool m_bMakeUniqueVMeshes = false
-	bool m_bMakeImplicitBindPoseSequence = false
-	bool m_bAdjustSkeletonFromBoneFlags = false
+	m_pPropDataList = 
+	{
+		m_pObject = null
+	}
+	m_pConstraintLists = [  ]
+	m_collision = ""
+	m_softbody = ""
+	m_sMDLFilename = ""
+	m_sOffsetHitboxSets = [  ]
+	m_vHitboxSetOffset = [ 0.0, 0.0, 0.0 ]
+	m_scriptFiles = [  ]
+	m_pMaterialRemapList = null
+	m_flFbxScale = 1.0
+	m_flQCScale = 1.0
+	m_vOrigin = [ 0.0, 0.0, 0.0 ]
+	m_bEmbedAnimsInAnimGroup = false
+	m_pPsfList = null
+	m_keyValueText = ""
+	m_bStaticProp = false
+	m_bEnableClothProcessing = true
+	m_flClothEnableThreshold = 0.05
+	m_nMaxClothVertsPerMesh = 2048
+	m_bBuildClothBoneHierarchy = false
+	m_nNavType = "AUTH_NAV_MESH"
+	m_bMakeUniqueVMeshes = false
+	m_bMakeImplicitBindPoseSequence = false
+	m_bAdjustSkeletonFromBoneFlags = false
+	m_bHiddenAssetFlag = false
+	m_pAnimGroups = [  ]
 }

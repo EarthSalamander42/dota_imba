@@ -1248,7 +1248,6 @@ function modifier_imba_snapfire_mortimer_kisses:CreateBlob(kv)
 
 	self.blob_count = self.blob_count + 1
 
-	print(self.blob_count, self:GetAbility():GetSpecialValueFor("mini_blob_counter"))
 	if self.blob_count == self:GetAbility():GetSpecialValueFor("mini_blob_counter") then
 		self.blob_count = 0
 		thinker.mega_blob = true

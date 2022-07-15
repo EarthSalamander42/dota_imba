@@ -9,12 +9,12 @@ function UpdateScoreboard()
 	$.Schedule( 0.2, UpdateScoreboard );
 }
 
-(function()
-{
-	if (Game.GetMapInfo().map_display_name == "imbathrow_mines_3v3v3") {
+(function() {
+	$.Msg("Hello");
+	if (Game.GetMapInfo().map_display_name == "imbathrow_ffa") {
 		$("#TopBarScoreboard").style.visibility = "visible";
 
-		FindDotaHudElement("topbar").style.visibility = "collapse";
+		$.GetContextPanel().GetParent().GetParent().GetParent().GetParent().FindChildTraverse("topbar").style.visibility = "collapse";
 	} else {
 		return;
 	}

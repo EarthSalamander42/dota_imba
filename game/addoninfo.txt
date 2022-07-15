@@ -3,7 +3,7 @@
 	"addonSteamAppID"				"570"
 	"addontitle"					"Dota IMBA"
 	"addon_game_name"				"Dota IMBA"
-	"addonversion"					"7.19h"
+	"addonversion"					"7.21"
 	"addontagline"					"IMBA"
 	"addonauthor"					"EarthSalamander #42"
 	"addonSteamGroupName"			""
@@ -15,8 +15,7 @@
 	"CheckAFKPlayers"				"1"
 	"EnablePickRules"				"1"
 
-	"maps"							"imba_5v5 imba_10v10 imba_1v1 imba_demo"
-//	"maps"							"imba_5v5 imba_10v10 imba_1v1 imbathrow_3v3v3v3 imba_demo"
+	"maps"							"imba_5v5 imba_10v10 imbathrow_ffa imba_1v1 imba_demo"
 
 	"IsPlayable"					"1"
 
@@ -30,9 +29,9 @@
 		"MaxPlayers"				"2"
 	}
 
-	"imbathrow_3v3v3v3"
+	"imbathrow_ffa"
 	{
-		"MaxPlayers"				"12"
+		"MaxPlayers"				"10"
 	}
 
 	"imba_demo"

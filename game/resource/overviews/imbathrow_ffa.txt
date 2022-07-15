@@ -1,0 +1,8 @@
+imbathrow_ffa
+{
+	material materials/overviews/imbathrow_ffa.vmat
+	pos_x -5632
+	pos_y 5632
+	scale 11.000
+}
+

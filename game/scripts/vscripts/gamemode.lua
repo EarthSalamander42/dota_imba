@@ -469,7 +469,7 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 --	print(keys)
 	local disabled_heroes = api:GetDisabledHeroes()
 
-	if PlayerResource:GetSelectedHeroName(keys.iPlayerID) and disabled_heroes[PlayerResource:GetSelectedHeroName(keys.iPlayerID)] or keys.bIMBA == 1 then
+	if PlayerResource:GetSelectedHeroName(keys.iPlayerID) and disabled_heroes and disabled_heroes[PlayerResource:GetSelectedHeroName(keys.iPlayerID)] or keys.bIMBA == 1 then
 		local old_hero = PlayerResource:GetSelectedHeroEntity(keys.iPlayerID)
 		local herolist = LoadKeyValues("scripts/npc/npc_heroes.txt")
 		local hero_table = {}

@@ -55,6 +55,11 @@ function SetHealthBar() {
 	var radiant_spawn_point = Entities.GetAllEntitiesByClassname("info_player_start_goodguys")[0];
 	var dire_spawn_point = Entities.GetAllEntitiesByClassname("info_player_start_badguys")[0];
 
+	if (!radiant_spawn_point || !dire_spawn_point) {
+		// $.Msg("Icefrog Popup: Can't find team spawn point.");
+		return;
+	}
+
 	all.forEach(function (v) {
 		if (Entities.IsAlive(v)) {
 			if (!radiant_shop)

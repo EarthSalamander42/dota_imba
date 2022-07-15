@@ -1,0 +1,30 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	Overthrow.Item.Warning = 
+	{
+		type = "dota_src1_3d"
+		volume = 0.5
+		pitch = 1.0
+		soundlevel = 90.0
+		limiter_on = 1.0
+		vsnd_files = "sounds/ui/power_up_03.vsnd"
+	}
+	Overthrow.Item.Spawn = 
+	{
+		type = "dota_src1_3d"
+		volume = 0.5
+		pitch = 1.0
+		soundlevel = 90.0
+		limiter_on = 1.0
+		vsnd_files = "sounds/ui/power_up_05.vsnd"
+	}
+	Overthrow.Item.Claimed = 
+	{
+		type = "dota_src1_3d"
+		volume = 0.5
+		pitch = 1.0
+		soundlevel = 90.0
+		limiter_on = 1.0
+		vsnd_files = "sounds/ui/power_up_04.vsnd"
+	}
+}

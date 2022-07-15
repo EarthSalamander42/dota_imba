@@ -85,29 +85,29 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	};
 
 	// setup panels
-	ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" + playerId + "' value='0.0'/>");
-	var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" + playerId + "'/>");
+	// ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" + playerId + "' value='0.0'/>");
+	// var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" + playerId + "'/>");
 
 
-	ImbaXP_Panel.BCreateChildren("<Panel id='LevelContainer'/>");
+	// ImbaXP_Panel.BCreateChildren("<Panel id='LevelContainer'/>");
 
-	var LevelContainer = ImbaXP_Panel.FindChildTraverse("LevelContainer");
-	LevelContainer.BCreateChildren("<Panel id='LevelContainerChild'/>");
+	// var LevelContainer = ImbaXP_Panel.FindChildTraverse("LevelContainer");
+	// LevelContainer.BCreateChildren("<Panel id='LevelContainerChild'/>");
 
-	var LevelContainerChild = ImbaXP_Panel.FindChildTraverse("LevelContainerChild");
+	// var LevelContainerChild = ImbaXP_Panel.FindChildTraverse("LevelContainerChild");
 
-	LevelContainerChild.BCreateChildren("<Label id='LevelLabel' text='Level: '/>");
+	// LevelContainerChild.BCreateChildren("<Label id='LevelLabel' text='Level: '/>");
 
-	LevelContainerChild.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='1'/>");
-	LevelContainerChild.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='Rookie'/>");
+	// LevelContainerChild.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='1'/>");
+	// LevelContainerChild.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='Rookie'/>");
 
 
-	LevelContainer.BCreateChildren("<Panel id='LevelContainerChild2'/>");
+	// LevelContainer.BCreateChildren("<Panel id='LevelContainerChild2'/>");
 
-	var LevelContainerChild2 = ImbaXP_Panel.FindChildTraverse("LevelContainerChild2");
+	// var LevelContainerChild2 = ImbaXP_Panel.FindChildTraverse("LevelContainerChild2");
 
-	LevelContainerChild2.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='0/500'/>");
-	LevelContainerChild2.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
+	// LevelContainerChild2.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='0/500'/>");
+	// LevelContainerChild2.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
 
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
 
@@ -122,7 +122,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl + ' - ');
 		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
-		playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;		
+		// playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;		
 		// playerPanel.FindChildTraverse(ids.level).style.color = player_info.title_color;		
 	}
 
@@ -139,14 +139,14 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 			var LegendIMR = $.GetContextPanel().FindChildrenWithClassTraverse("ScoreCol_WinRate");
 			var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
 
-			if (player_info.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
-				if (FindDotaHudElementisInt(player_info.winrate))
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
-				else if (isFloat(player_info.winrate))
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(2) + "%");					
-				else
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate);
-			}
+			// if (player_info.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
+			// 	if (isInt(player_info.winrate))
+			// 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
+			// 	else if (isFloat(player_info.winrate))
+			// 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(2) + "%");					
+			// 	else
+			// 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate);
+			// }
 //		}
 	}
 }
@@ -182,20 +182,21 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	var donatorPanel = playerPanel.FindChildInLayoutFile("DonatorOverlay");
 	var donatorTitlePanel = playerPanel.FindChildInLayoutFile("DonatorTitleOverlay");
 
-	if (playerId == Game.GetLocalPlayerID()) {
-		donatorPanel.style.boxShadow = 'inset #c3b9d855 0px 0px 0px 1px';
-	}
-
-	if (player_table && player_table.donator_level && player_table.donator_color) {
+	if (player_table && player_table.donator_level && player_table.donator_color && donatorPanel && donatorTitlePanel) {
 		if (player_table.donator_level < 10) {
 			if (player_table.toggle_tag == 1) {
 				if (is_donator_set.indexOf( playerId.toString() ) == -1) {
 					is_donator_set.push( playerId.toString() );
+
+					if (playerId == Game.GetLocalPlayerID()) {
+						donatorPanel.style.boxShadow = 'inset #c3b9d855 0px 0px 0px 1px';
+					}
+
 					// donatorPanel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
 
 					donatorTitlePanel.style.backgroundColor = player_table.donator_color + "dd";
 					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_label_" + player_table.donator_level) || "Donator";
-
+	
 					donatorTitlePanel.style.visibility = "visible";
 
 					var dark_donator_levels = [ 1, 2, 7, 9 ];
@@ -226,30 +227,30 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.color = "#FFFFFF";
 					playerPanel.FindChildInLayoutFile("HeroNameAndDescription").style.opacity = 0.7;
 
-					if (!donatorPanel.FindChildTraverse("particle-holder")) {
-						donatorPanel.BCreateChildren('<Panel id="particle-holder" />');
-						var holder = donatorPanel.FindChildTraverse("particle-holder");
-						var bubblecount = 30;
+					// if (!donatorPanel.FindChildTraverse("particle-holder")) {
+					// 	donatorPanel.BCreateChildren('<Panel id="particle-holder" />');
+					// 	var holder = donatorPanel.FindChildTraverse("particle-holder");
+					// 	var bubblecount = 30;
 
-						for (var i = 0; i <= bubblecount; i++) {
-							var size = rnd(50, 80) / 10;
+					// 	for (var i = 0; i <= bubblecount; i++) {
+					// 		var size = rnd(50, 80) / 10;
 
-							holder.BCreateChildren(
-								'<Panel class="particle" style="background-color: ' + LightenDarkenColor(donator_color, 70) +
-								';x:' +
-								rnd(5, 90) +
-								"%; y:" +
-								rnd(95, 85) +
-								"%;width:" +
-								size +
-								"px; height:" +
-								size +
-								"px;animation-delay: " +
-								rnd(0, 40) / 10 +
-								's;" />'
-							);
-						}
-					}
+					// 		holder.BCreateChildren(
+					// 			'<Panel class="particle" style="background-color: ' + LightenDarkenColor(donator_color, 70) +
+					// 			';x:' +
+					// 			rnd(5, 90) +
+					// 			"%; y:" +
+					// 			rnd(95, 85) +
+					// 			"%;width:" +
+					// 			size +
+					// 			"px; height:" +
+					// 			size +
+					// 			"px;animation-delay: " +
+					// 			rnd(0, 40) / 10 +
+					// 			's;" />'
+					// 		);
+					// 	}
+					// }
 				}
 			} else {
 				if (is_donator_set.indexOf( playerId.toString() ) != -1) {
@@ -289,7 +290,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Kills", playerInfo.player_kills);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Deaths", playerInfo.player_deaths);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Assists", playerInfo.player_assists);
-		HighlightByParty(playerId, playerPanel.FindChildInLayoutFile("PlayerName"));
+		// HighlightByParty(playerId, playerPanel.FindChildInLayoutFile("PlayerName"));
 
 		var btnMuteVoice = playerPanel.FindChildInLayoutFile("BtnMuteVoice");
 
