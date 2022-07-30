@@ -164,7 +164,7 @@
 {
 	margin-top: -28px;
 	flow-children: right;
-	height: 50px;
+	height: 30px;
 	padding-left: 10px;
 }
 
@@ -176,8 +176,8 @@
 #PlayersContainer
 {
 	flow-children: down;
-	padding-bottom: 30px;
-	padding-top: 12px;
+	padding-bottom: 25px;
+	padding-top: 5px;
 }
 
 #TeamScore,

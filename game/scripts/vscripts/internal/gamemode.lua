@@ -66,30 +66,6 @@ function GameMode:_InitGameMode()
 		GameRules:SetCustomGameTeamMaxPlayers(1, 1)
 	end
 
-	-- This is multiteam configuration stuff
-	if USE_AUTOMATIC_PLAYERS_PER_TEAM then
-		local num = math.floor(10 / MAX_NUMBER_OF_TEAMS)
-		local count = 0
-		for team,number in pairs(TEAM_COLORS) do
-			if count >= MAX_NUMBER_OF_TEAMS then
-				GameRules:SetCustomGameTeamMaxPlayers(team, 0)
-			else
-				GameRules:SetCustomGameTeamMaxPlayers(team, num)
-			end
-			count = count + 1
-		end
-	else
-		local count = 0
-		for team,number in pairs(CUSTOM_TEAM_PLAYER_COUNT) do
-			if count >= MAX_NUMBER_OF_TEAMS then
-				GameRules:SetCustomGameTeamMaxPlayers(team, 0)
-			else
-				GameRules:SetCustomGameTeamMaxPlayers(team, number)
-			end
-			count = count + 1
-		end
-	end
-
 	-- team colors are not working in chat, so use team colors instead
 --	SetTeamCustomHealthbarColor(DOTA_TEAM_GOODGUYS, 0, 128, 0)
 --	SetTeamCustomHealthbarColor(DOTA_TEAM_BADGUYS, 128, 0, 0)

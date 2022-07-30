@@ -1,3 +1,5 @@
+if not IsOverthrowMap() then return end
+
 if COverthrowGameMode == nil then
 	COverthrowGameMode = class({})
 
@@ -15,12 +17,12 @@ function COverthrowGameMode:InitGameMode()
 	self.m_TeamColors[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }		--		Yellow
 	self.m_TeamColors[DOTA_TEAM_CUSTOM_1] = { 197, 77, 168 }	--      Pink
 	self.m_TeamColors[DOTA_TEAM_CUSTOM_2] = { 255, 108, 0 }		--		Orange
---	self.m_TeamColors[DOTA_TEAM_CUSTOM_3] = { 52, 85, 255 }		--		Blue
---	self.m_TeamColors[DOTA_TEAM_CUSTOM_4] = { 101, 212, 19 }	--		Green
---	self.m_TeamColors[DOTA_TEAM_CUSTOM_5] = { 129, 83, 54 }		--		Brown
---	self.m_TeamColors[DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }	--		Cyan
---	self.m_TeamColors[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }	--		Olive
---	self.m_TeamColors[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }	--		Purple
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_3] = { 52, 85, 255 }		--		Blue
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_4] = { 101, 212, 19 }	--		Green
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_5] = { 129, 83, 54 }		--		Brown
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }	--		Cyan
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }	--		Olive
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }	--		Purple
 
 	for k, v in pairs(self.m_TeamColors) do
 		if color then
@@ -65,20 +67,10 @@ function COverthrowGameMode:InitGameMode()
 	
 	---------------------------------------------------------------------------
 	
-	self:GatherAndRegisterValidTeams()
+	-- self:GatherAndRegisterValidTeams()
 	
 	-- Adding Many Players
 	if IsOverthrowMap() then
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_5, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
 		self.m_GoldRadiusMin = 300
 		self.m_GoldRadiusMax = 1400
 		self.m_GoldDropPercent = 8
@@ -95,11 +87,8 @@ function COverthrowGameMode:InitGameMode()
 	GameRules:SetStrategyTime( 0.0 )
 	GameRules:SetShowcaseTime( 0.0 )
 	--GameRules:SetHideKillMessageHeaders( true )
-	GameRules:GetGameModeEntity():SetTopBarTeamValuesOverride( true )
-	GameRules:GetGameModeEntity():SetTopBarTeamValuesVisible( false )
 	GameRules:SetHideKillMessageHeaders( true )
 	GameRules:SetUseUniversalShopMode( true )
-	GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
 	
 	Convars:RegisterCommand( "overthrow_force_item_drop", function(...) self:ForceSpawnItem() end, "Force an item drop.", FCVAR_CHEAT )
 	Convars:RegisterCommand( "overthrow_force_gold_drop", function(...) self:ForceSpawnGold() end, "Force gold drop.", FCVAR_CHEAT )
@@ -233,7 +222,7 @@ end
 -- Scan the map to see which teams have spawn points
 ---------------------------------------------------------------------------
 function COverthrowGameMode:GatherAndRegisterValidTeams()
---	print( "GatherValidTeams:" )
+	print( "GatherValidTeams:" )
 
 	local foundTeams = {}
 	for _, playerStart in pairs( Entities:FindAllByClassname( "info_player_start_dota" ) ) do
@@ -255,7 +244,7 @@ function COverthrowGameMode:GatherAndRegisterValidTeams()
 		numTeams = 2
 	end
 
-	local maxPlayersPerValidTeam = math.floor( 10 / numTeams )
+	local maxPlayersPerValidTeam = math.floor( 10 / math.min(numTeams, 10) )
 
 	self.m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
 
@@ -265,7 +254,7 @@ function COverthrowGameMode:GatherAndRegisterValidTeams()
 	end
 
 	print( "Setting up teams:" )
-	for team = 0, (DOTA_TEAM_COUNT-1) do
+	for team = 0, (DOTA_TEAM_COUNT - 1) do
 		local maxPlayers = 0
 		if ( nil ~= TableFindKey( foundTeamsList, team ) ) then
 			maxPlayers = maxPlayersPerValidTeam

@@ -10,7 +10,6 @@ function UpdateScoreboard()
 }
 
 (function() {
-	$.Msg("Hello");
 	if (Game.GetMapInfo().map_display_name == "imbathrow_ffa") {
 		$("#TopBarScoreboard").style.visibility = "visible";
 
@@ -20,8 +19,6 @@ function UpdateScoreboard()
 	}
 
 	var shouldSort = true;
-
-	$.Msg(GameUI.CustomUIConfig().multiteam_top_scoreboard)
 
 	if ( GameUI.CustomUIConfig().multiteam_top_scoreboard )
 	{

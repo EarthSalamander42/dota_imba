@@ -53,6 +53,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
+			-- todo: move this into an overthrow component file
 			if IsOverthrowMap() then
 				GoodCamera = Entities:FindByName(nil, "@overboss")
 				BadCamera = Entities:FindByName(nil, "@overboss")
@@ -66,7 +67,7 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				end
 
-				require("components/overthrow/init")
+				GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
 			else
 				GoodCamera = Entities:FindByName(nil, "good_healer_6")
 				BadCamera = Entities:FindByName(nil, "bad_healer_6")

@@ -48,6 +48,7 @@ require('components/runes') -- Rune system override
 require('components/settings/settings')
 -- require('components/new_team_selection')
 require('components/tooltips/init')
+require("components/overthrow/init")
 
 require('events/events')
 require('filters')

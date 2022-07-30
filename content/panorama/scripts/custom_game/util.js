@@ -256,6 +256,8 @@ function SetupLoadingScreen(args) {
 	if (args && args.value)
 		value = args.value;
 
+	var Parent = $.GetContextPanel().GetParent().GetParent().GetParent();
+
 	if (Parent.FindChildTraverse("GameAndPlayersRoot") == undefined || Parent.FindChildTraverse("TeamsList") == undefined || Parent.FindChildTraverse("TeamsListGroup") == undefined || Parent.FindChildTraverse("CancelAndUnlockButton") == undefined || Parent.FindChildTraverse("UnassignedPlayerPanel") == undefined || Parent.FindChildTraverse("ShuffleTeamAssignmentButton") == undefined)
 		$.Schedule(0.25, SetupLoadingScreen);
 	else {
