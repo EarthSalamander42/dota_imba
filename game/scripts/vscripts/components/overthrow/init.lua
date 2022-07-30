@@ -1,5 +1,3 @@
-if not IsOverthrowMap() then return end
-
 if COverthrowGameMode == nil then
 	COverthrowGameMode = class({})
 
@@ -70,15 +68,9 @@ function COverthrowGameMode:InitGameMode()
 	-- self:GatherAndRegisterValidTeams()
 	
 	-- Adding Many Players
-	if IsOverthrowMap() then
-		self.m_GoldRadiusMin = 300
-		self.m_GoldRadiusMax = 1400
-		self.m_GoldDropPercent = 8
-	else
-		self.m_GoldRadiusMin = 250
-		self.m_GoldRadiusMax = 550
-		self.m_GoldDropPercent = 4
-	end
+	self.m_GoldRadiusMin = 250
+	self.m_GoldRadiusMax = 550
+	self.m_GoldDropPercent = 4
 	
 	-- Show the ending scoreboard immediately
 	GameRules:SetCustomGameEndDelay( 0 )

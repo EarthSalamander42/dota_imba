@@ -2,7 +2,7 @@ LinkLuaModifier("modifier_overthrow_gold_xp_granter_global", "components/modifie
 
 modifier_overthrow_gold_xp_granter = modifier_overthrow_gold_xp_granter or class({})
 
-function modifier_overthrow_gold_xp_granter:IsHidden() return true end
+function modifier_overthrow_gold_xp_granter:IsHidden() return false end
 function modifier_overthrow_gold_xp_granter:IsPurgable() return false end
 function modifier_overthrow_gold_xp_granter:IsPurgeException() return false end
 
@@ -12,7 +12,7 @@ end
 
 function modifier_overthrow_gold_xp_granter:OnCreated()
 	if IsServer() then
-		self.radius = 1400
+		self.radius = 900
 		self.gold = 2
 		self.xp = 6
 

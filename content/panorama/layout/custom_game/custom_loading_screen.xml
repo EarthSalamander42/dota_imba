@@ -10,7 +10,7 @@
 
 	<Panel class="addon-root">
 		<Panel class="vote-container-main">
-			<Panel class="vote-content">
+			<Panel id="vote-content" class="vote-content">
 				<Label class="vote-content-title" text="Choose a Mode"/>
 
 				<Panel class="vote-select-panel-container">

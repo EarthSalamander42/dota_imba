@@ -6,10 +6,10 @@ end
 require('addon_init')
 
 require('components/api/init')
---	if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
+if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
 --	require('internal/eventtest')
 	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
---	end
+end
 
 require('libraries/animations')
 require('libraries/disable_help')
@@ -22,8 +22,8 @@ require('libraries/projectiles')
 require('libraries/rgb_to_hex')
 require('libraries/selection') -- For Turbo Couriers
 require('libraries/timers')
-require('libraries/wearables')
-require('libraries/wearables_warmful_ancient')
+-- require('libraries/wearables')
+-- require('libraries/wearables_warmful_ancient')
 
 require('internal/gamemode')
 require('internal/events')
@@ -31,8 +31,8 @@ require('internal/events')
 -- add components below the api
 VANILLA_ABILITIES_BASECLASS = require('components/abilities/vanilla_baseclass')
 require('components/abandon')
-require('components/battlepass/init')
-require('components/chat_wheel/init')
+-- require('components/battlepass/init')
+-- require('components/chat_wheel/init')
 require('components/courier/init')
 if GetMapName() == "imba_demo" or IsInToolsMode() then
 	require("components/demo/init")
@@ -41,14 +41,16 @@ require("components/frantic/init")
 -- require("components/diretide/diretide")
 require('components/gold')
 require('components/hero_selection/init')
-require('components/mutation/init')
+-- require('components/mutation/init')
 require('components/neutral_creeps/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
 -- require('components/new_team_selection')
-require('components/tooltips/init')
-require("components/overthrow/init")
+-- require('components/tooltips/init')
+if IsOverthrowMap() then
+	require("components/overthrow/init")
+end
 
 require('events/events')
 require('filters')

@@ -155,10 +155,10 @@ function fetch() {
 		secret_key = secret_key["1"];
 	}
 
-	if (Game.GetMapInfo().map_display_name == "imba_1v1")
-		DisableVoting();
-	else if (Game.GetMapInfo().map_display_name == "imba_10v10")
-		party_max_votes = 20;
+	// if (Game.GetMapInfo().map_display_name == "imba_1v1")
+		EnableVoting();
+	// else if (Game.GetMapInfo().map_display_name == "imba_10v10")
+		// party_max_votes = 20;
 
 	var game_version = game_options.value;
 
@@ -167,6 +167,7 @@ function fetch() {
 
 	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
 	view.subtitle.text = $.Localize("#game_version_name").toUpperCase();
+
 
 /*
 	api.getLoadingScreenMessage(function(data) {
@@ -197,13 +198,11 @@ function fetch() {
 	});
 */
 
-	SetPartyMaxVotes();
+	// SetPartyMaxVotes();
 };
 
 function AllPlayersLoaded() {
-	$.Msg("ALL PLAYERS LOADED IN!")
-
-	$("#MainVoteButton").style.opacity = "1";
+	$.Msg("ALL PLAYERS LOADED IN!");
 
 	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
 		//$.Msg("Game Mode: ", i)
@@ -223,8 +222,6 @@ function AllPlayersLoaded() {
 			})
 		})(panel, gamemode);
 	}
-
-	ToggleVoteContainer(true);
 
 	var vote_panel = $.GetContextPanel().FindChildrenWithClassTraverse("vote-select-panel-container");
 
@@ -249,7 +246,7 @@ function AllPlayersLoaded() {
 				(function (button, gamemode) {
 					button.SetPanelEvent("onactivate", function () {
 						OnVoteButtonPressed('gamemode', gamemode);
-						ToggleVoteContainer(false);
+						$.GetContextPanel().RemoveClass("EnableVote");
 					})
 				})(button, gamemode);
 			}
@@ -305,14 +302,6 @@ function AllPlayersBattlepassLoaded() {
 //		})
 	}
 */
-}
-
-function ToggleVoteContainer(bBoolean) {
-	var vote_container = $.GetContextPanel().FindChildrenWithClassTraverse("vote-container-main");
-
-	if (vote_container && vote_container[0]) {
-		vote_container[0].SetHasClass("Visible", bBoolean);
-	}
 }
 
 function HoverableLoadingScreen() {
@@ -442,9 +431,8 @@ function OnVotesReceived(data)
 }
 */
 
-function DisableVoting() {
-	if ($("#vote-content")) $("#vote-content").style.opacity = "0";
-	if ($("#MainVoteButton")) $("#MainVoteButton").style.opacity = "0";
+function EnableVoting() {
+	$.GetContextPanel().AddClass("EnableVote");
 }
 
 function PartyVote() {

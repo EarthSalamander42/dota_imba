@@ -431,10 +431,6 @@
 	background-color: #000000ba;
 	z-index: 10;
 	opacity: 0;
-}
-
-.Visible {
-	opacity: 1;
 	animation-duration: .41s;
 	animation-name: VoteVisible;
 	transition-duration: .2s;
@@ -451,6 +447,11 @@
 	background-image: url("file://{images}/custom_game/gg/gg_background.png");
 	background-size: 100% 100%;
 	border-radius: 50px;
+}
+
+.EnableVote .vote-button,
+.EnableVote .vote-container-main {
+	opacity: 1;
 }
 
 .vote-content-title {
@@ -516,6 +517,7 @@
 	saturation: 1.0;
 	align: center center;
 	background-color: black;
+	opacity: 0;
 }
 
 .vote-button:hover {

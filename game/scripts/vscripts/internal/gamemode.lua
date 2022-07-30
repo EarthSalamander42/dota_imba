@@ -36,7 +36,6 @@ function GameMode:_InitGameMode()
 	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
 	GameRules:SetUseCustomHeroXPValues ( USE_NONSTANDARD_HERO_XP_BOUNTY )
 	GameRules:SetUseBaseGoldBountyOnHeroes( USE_NONSTANDARD_HERO_GOLD_BOUNTY )
-	GameRules:SetCustomGameBansPerTeam(IMBA_PLAYERS_ON_GAME / #CUSTOM_TEAM_PLAYER_COUNT)
 
 	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_DOUBLEDAMAGE , true) --Double Damage
 	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_HASTE, true) --Haste
@@ -59,7 +58,14 @@ function GameMode:_InitGameMode()
 
 	if IMBA_PICK_SCREEN == false then
 		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(AP_GAME_TIME)
-		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
+
+		if IsOverthrowMap() or GetMapName() == "imba_demo" then
+			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(0)
+			GameRules:SetCustomGameBansPerTeam(0)
+		else
+			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
+			GameRules:SetCustomGameBansPerTeam(IMBA_PLAYERS_ON_GAME / #CUSTOM_TEAM_PLAYER_COUNT)
+		end
 	end
 
 	if IsInToolsMode() then

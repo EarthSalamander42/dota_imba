@@ -864,9 +864,9 @@ function modifier_imba_treant_natures_guise_tree_walking:OnDestroy()
 end
 
 
-function modifier_imba_treant_natures_guise_tree_walking:CheckState()
-	return {[MODIFIER_STATE_ALLOW_PATHING_TROUGH_TREES] = true}
-end
+function modifier_imba_treant_natures_guise_tree_walking:CheckState() return {
+	[MODIFIER_STATE_ALLOW_PATHING_THROUGH_TREES] = true,
+} end
 
 function modifier_imba_treant_natures_guise_tree_walking:DeclareFunctions()
 	return {
