@@ -288,7 +288,7 @@ if Log == nil then
 			end
 
 			-- ultimate debugging
-			Say(nil, "Error: " .. err, false)
+			-- Say(nil, "Error: " .. err, false)
 		end, unpack(args))
 
 		return status, err

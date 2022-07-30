@@ -134,21 +134,21 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 
-		if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
-			Say(nil, "You will be automatically disconnected in 5 seconds to prevent custom game ban, please reconnect as soon as possible afterwards.", false)
+		-- if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
+		-- 	Say(nil, "You will be automatically disconnected in 5 seconds to prevent custom game ban, please reconnect as soon as possible afterwards.", false)
 
-			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-				for i = 0, 24 do
-					local player_name = PlayerResource:GetPlayerName(i)
+		-- 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+		-- 		for i = 0, 24 do
+		-- 			local player_name = PlayerResource:GetPlayerName(i)
 
-					if player_name and player_name ~= "" then
-						SendToServerConsole("kick "..player_name)
-					end
-				end
+		-- 			if player_name and player_name ~= "" then
+		-- 				SendToServerConsole("kick "..player_name)
+		-- 			end
+		-- 		end
 
-				return nil
-			end, 5.0)
-		end
+		-- 		return nil
+		-- 	end, 5.0)
+		-- end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		-- shows -1 for some reason by default
 		GameRules:GetGameModeEntity():SetCustomDireScore(0)

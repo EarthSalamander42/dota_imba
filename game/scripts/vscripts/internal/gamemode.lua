@@ -173,15 +173,15 @@ end
 function GameMode:EffigyDestroyed(keys)
 	if keys.player_name and keys.player_name ~= "" then
 		if string.find(keys.unit_name, "developer") then
-			Say(nil, keys.player_name.." destroyed "..keys.real_unit_name.."'s effigy! Incoming ban in 3, 2, 1...", false)
+			-- Say(nil, keys.player_name.." destroyed "..keys.real_unit_name.."'s effigy! Incoming ban in 3, 2, 1...", false)
 		else
-			Say(nil, keys.player_name.." destroyed "..keys.real_unit_name.."'s effigy!", false)
+			-- Say(nil, keys.player_name.." destroyed "..keys.real_unit_name.."'s effigy!", false)
 		end
 	else
 		if string.find(keys.real_unit_name, "developer") then
-			Say(nil, keys.real_unit_name.."'s effigy has been destroyed! Incoming ban in 3, 2, 1...", false)
+			-- Say(nil, keys.real_unit_name.."'s effigy has been destroyed! Incoming ban in 3, 2, 1...", false)
 		else
-			Say(nil, keys.real_unit_name.."'s effigy has been destroyed!", false)
+			-- Say(nil, keys.real_unit_name.."'s effigy has been destroyed!", false)
 		end
 	end
 end
