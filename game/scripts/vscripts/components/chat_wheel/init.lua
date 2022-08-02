@@ -1629,7 +1629,7 @@ SelectVO = function(keys)
 			end
 			
 			--GameRules:SendCustomMessage("<font color='#70EA72'>".."test".."</font>",-1,0)
-			Say(PlayerResource:GetPlayer(keys.PlayerID), chat_prefix..chat["dota_chatwheel_message_"..selectedstr], false)
+			-- Say(PlayerResource:GetPlayer(keys.PlayerID), chat_prefix..chat["dota_chatwheel_message_"..selectedstr], false)
 			votimer[keys.PlayerID] = GameRules:GetGameTime()
 		end
 	end

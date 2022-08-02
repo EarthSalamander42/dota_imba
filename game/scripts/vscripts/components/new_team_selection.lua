@@ -194,7 +194,7 @@ function TeamOrdering:CalculateWinratesDifference(teamA, teamB)
 		end
 	end
 
-	Say(nil, "Winrate difference between teams: "..math.abs(winrateTeamA - winrateTeamB), false)
+	-- Say(nil, "Winrate difference between teams: "..math.abs(winrateTeamA - winrateTeamB), false)
 
 	return math.abs(winrateTeamA - winrateTeamB)
 end

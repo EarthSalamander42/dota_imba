@@ -108,13 +108,13 @@ function GameMode:OnGameRulesStateChange(keys)
 			return nil
 		end, FrameTime())
 
-		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-			if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
-				Say(nil, "Once the game enters strategy time, you will be disconnected automatically to prevent being banned by a bug which only Valve can fix. You can then reconnect and play safely without getting custom game bans.", false)
-			end
+		-- GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+		-- 	if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
+		-- 		Say(nil, "Once the game enters strategy time, you will be disconnected automatically to prevent being banned by a bug which only Valve can fix. You can then reconnect and play safely without getting custom game bans.", false)
+		-- 	end
 
-			return nil
-		end, 3.0)
+		-- 	return nil
+		-- end, 3.0)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
