@@ -23,7 +23,7 @@ function GameMode:_InitGameMode()
 	GameRules:SetSameHeroSelectionEnabled( SAME_HERO_SELECTION ) -- Let server handle hero duplicates
 	GameRules:SetHeroSelectionTime( HERO_SELECTION_TIME )
 	GameRules:SetHeroSelectPenaltyTime( SELECT_PENALTY_TIME )
-	GameRules:SetPreGameTime( 90 ) -- Some variable SOMEWHERE is messing this up and constantly forcing it to 60 seconds so I'm overriding it here
+	GameRules:SetPreGameTime( PRE_GAME_TIME )
 	GameRules:SetPostGameTime( POST_GAME_TIME )
 	GameRules:SetShowcaseTime( SHOWCASE_TIME )
 	GameRules:SetStrategyTime( STRATEGY_TIME )
@@ -57,15 +57,9 @@ function GameMode:_InitGameMode()
 	GameRules:LockCustomGameSetupTeamAssignment(true)
 
 	if IMBA_PICK_SCREEN == false then
-		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(AP_GAME_TIME)
-
-		if IsOverthrowMap() or GetMapName() == "imba_demo" then
-			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(0)
-			GameRules:SetCustomGameBansPerTeam(0)
-		else
-			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
-			GameRules:SetCustomGameBansPerTeam(IMBA_PLAYERS_ON_GAME / #CUSTOM_TEAM_PLAYER_COUNT)
-		end
+		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
+		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
+		GameRules:SetCustomGameBansPerTeam(IMBA_PLAYERS_ON_GAME / #CUSTOM_TEAM_PLAYER_COUNT)
 	end
 
 	if IsInToolsMode() then

@@ -1,5 +1,5 @@
 if COverthrowGameMode == nil then
-	COverthrowGameMode = class({})
+	_G.COverthrowGameMode = class({})
 
 	require("components/overthrow/items")
 end
@@ -62,20 +62,18 @@ function COverthrowGameMode:InitGameMode()
 	
 	self.TEAM_KILLS_TO_WIN = 25
 	self.CLOSE_TO_VICTORY_THRESHOLD = 5
-	
+
 	---------------------------------------------------------------------------
-	
-	-- self:GatherAndRegisterValidTeams()
-	
+
 	-- Adding Many Players
 	self.m_GoldRadiusMin = 250
 	self.m_GoldRadiusMax = 550
 	self.m_GoldDropPercent = 4
-	
+	self.spawncamps = {}
+
 	-- Show the ending scoreboard immediately
 	GameRules:SetCustomGameEndDelay( 0 )
 	GameRules:SetCustomVictoryMessageDuration( 10 )
-	GameRules:SetPreGameTime( 10 )
 	GameRules:SetStrategyTime( 0.0 )
 	GameRules:SetShowcaseTime( 0.0 )
 	--GameRules:SetHideKillMessageHeaders( true )
@@ -87,19 +85,21 @@ function COverthrowGameMode:InitGameMode()
 	Convars:RegisterCommand( "overthrow_set_timer", function(...) return SetTimer( ... ) end, "Set the timer.", FCVAR_CHEAT )
 	Convars:RegisterCommand( "overthrow_force_end_game", function(...) return self:EndGame( DOTA_TEAM_GOODGUYS ) end, "Force the game to end.", FCVAR_CHEAT )
 	Convars:SetInt( "dota_server_side_animation_heroesonly", 0 )
-	
+
+	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, 'OnGameRulesStateChange'), self)
+
 --	GameMode:SetUpFountains()
 	
 	-- Spawning monsters
-	spawncamps = {}
 	for i = 1, self.numSpawnCamps do
 		local campname = "camp"..i.."_path_customspawn"
-		spawncamps[campname] =
-		{
+		self.spawncamps[campname] = {
 			NumberToSpawn = RandomInt(3,5),
 			WaypointName = "camp"..i.."_path_wp1"
 		}
 	end
+
+	require("components/overthrow/events")
 end
 
 ---------------------------------------------------------------------------
@@ -163,8 +163,7 @@ function COverthrowGameMode:UpdateScoreboard()
 		local clr = self:ColorForTeam( t.teamID )
 
 		-- Scaleform UI Scoreboard
-		local score = 
-		{
+		local score =  {
 			team_id = t.teamID,
 			team_score = t.teamScore
 		}
@@ -263,7 +262,7 @@ end
 
 -- Simple Custom Spawn
 function spawnunits(campname)
-	local spawndata = spawncamps[campname]
+	local spawndata = self.spawncamps[campname]
 	local NumberToSpawn = spawndata.NumberToSpawn --How many to spawn
     local SpawnLocation = Entities:FindByName( nil, campname )
     local waypointlocation = Entities:FindByName ( nil, spawndata.WaypointName )

@@ -2,7 +2,7 @@
 
 function UpdateTimer( data )
 {
-	//$.Msg( "UpdateTimer: ", data );
+	// $.Msg( "UpdateTimer: ", data );
 	//var timerValue = Game.GetDOTATime( false, false );
 
 	//var sec = Math.floor( timerValue % 60 );
@@ -45,20 +45,16 @@ function HideTimer( data )
 	$( "#Timer" ).AddClass( "timer_hidden" );
 }
 
-function UpdateKillsToWin()
-{
-/*
-	var victory_condition = CustomNetTables.GetTableValue( "game_state", "victory_condition" );
-	if ( victory_condition )
-	{
+function UpdateKillsToWin() {
+	var victory_condition = CustomNetTables.GetTableValue( "game_options", "victory_condition" );
+
+	if ( victory_condition ) {
 		$("#VictoryPoints").text = victory_condition.kills_to_win;
 	}
-*/
 }
 
-function OnGameStateChanged( table, key, data )
-{
-	$.Msg( "Table '", table, "' changed: '", key, "' = ", data );
+function OnGameStateChanged( table, key, data ) {
+	// $.Msg( "Table '", table, "' changed: '", key, "' = ", data );
 	UpdateKillsToWin();
 }
 
@@ -66,7 +62,7 @@ function OnGameStateChanged( table, key, data )
 {
 	// We use a nettable to communicate victory conditions to make sure we get the value regardless of timing.
 	UpdateKillsToWin();
-	CustomNetTables.SubscribeNetTableListener( "game_state", OnGameStateChanged );
+	CustomNetTables.SubscribeNetTableListener( "game_options", OnGameStateChanged );
 
     GameEvents.Subscribe( "countdown", UpdateTimer );
     GameEvents.Subscribe( "show_timer", ShowTimer );

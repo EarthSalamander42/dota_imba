@@ -40,19 +40,13 @@ else
 end
 
 -- Barebones constants
-AUTO_LAUNCH_DELAY = 15.0
+AUTO_LAUNCH_DELAY = 10.0
 HERO_SELECTION_TIME = 60.0
 SELECT_PENALTY_TIME = 0.0
-STRATEGY_TIME = 10.0					-- How long should strategy time last?
+STRATEGY_TIME = 0.0					-- How long should strategy time last?
 SHOWCASE_TIME = 0.0					-- How long should showcase time last?
 AP_BAN_TIME = 10.0
-AP_GAME_TIME = 60.0
-
-if GetMapName() == MapOverthrow() or GetMapName() == "imba_demo" then
-	PRE_GAME_TIME = 10.0 + AP_GAME_TIME
-else
-	PRE_GAME_TIME = 90 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
-end
+PRE_GAME_TIME = 90.0	-- How long after people select their heroes should the horn blow and the game start?
 
 TREE_REGROW_TIME = 180.0				-- How long should it take individual trees to respawn after being cut down/destroyed?
 
@@ -165,7 +159,7 @@ if GetMapName() == Map1v1() then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 1
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
 	IMBA_1V1_SCORE = 3
-	PRE_GAME_TIME = 30.0 + AP_GAME_TIME
+	PRE_GAME_TIME = 30.0
 elseif string.find(GetMapName(), "10v10") then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
@@ -189,7 +183,12 @@ elseif GetMapName() == "imba_demo" then
 	IMBA_PLAYERS_ON_GAME = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 1
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
+	PRE_GAME_TIME = 10.0
+	AP_BAN_TIME = 0.0
 elseif IsOverthrowMap() then
+	PRE_GAME_TIME = 10.0
+	AP_BAN_TIME = 0.0
+
 	for team = 2, 13 do
 		if team ~= 4 and team ~= 5 then
 			print("Set team "..team.." player  count to 1")
@@ -557,10 +556,6 @@ IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
 IMBA_PICK_SCREEN = false -- Should we use custom pick screen?
 IMBA_GREEVILING = false -- Should we use fancy greevil creeps?
-
-if IMBA_PICK_SCREEN == false then
-	PRE_GAME_TIME = 60.0
-end
 
 SAME_HERO_SELECTION = false
 -- SAME_HERO_SELECTION = IsSaturday()

@@ -3,7 +3,6 @@ print("Overthrow items.lua init")
 
 --Spawns Bags of Gold in the middle
 function COverthrowGameMode:ThinkGoldDrop()
-	print("ThinkGoldDrop")
 	local r = RandomInt( 1, 100 )
 	if r > ( 100 - self.m_GoldDropPercent ) then
 		self:SpawnGold()
@@ -71,80 +70,76 @@ function COverthrowGameMode:SpecialItemAdd( event )
 
 	-- reverse-sort by score
 	table.sort( sortedTeams, function(a,b) return ( a.teamScore > b.teamScore ) end )
-	local n = TableCount( sortedTeams )
+	local n = #sortedTeams
 	local leader = sortedTeams[1].teamID
 	local lastPlace = sortedTeams[n].teamID
 
 	local tableindex = 0
-	local tier1 = 
-	{
-		"item_urn_of_shadows",
+	local tier1 = {
+		"item_imba_urn_of_shadows",
 		"item_ring_of_basilius",
 		"item_ring_of_aquila",
-		"item_arcane_boots",
-		"item_tranquil_boots",
-		"item_phase_boots",
-		"item_power_treads",
-		"item_medallion_of_courage",
-		"item_soul_ring",
-		"item_imba_gem",
-		"item_orb_of_venom"
+		"item_imba_arcane_boots",
+		"item_imba_tranquil_boots",
+		"item_imba_phase_boots",
+		"item_imba_power_treads",
+		"item_imba_medallion_of_courage",
+		"item_imba_soul_ring",
+		"item_imba_imba_gem",
+		"item_imba_orb_of_venom"
 	}
-	local tier2 = 
-	{
-		"item_blink",
-		"item_force_staff",
-		"item_cyclone",
-		"item_ghost",
-		"item_vanguard",
-		"item_mask_of_madness",
-		"item_blade_mail",
-		"item_helm_of_the_dominator",
-		"item_vladmir",
-		"item_yasha",
-		"item_mekansm",
-		"item_hood_of_defiance",
-		"item_veil_of_discord",
-		"item_glimmer_cape"
+	local tier2 = {
+		"item_imba_blink",
+		"item_imba_force_staff",
+		"item_imba_cyclone",
+		"item_imba_ghost",
+		"item_imba_vanguard",
+		"item_imba_mask_of_madness",
+		"item_imba_blade_mail",
+		"item_imba_helm_of_the_dominator",
+		"item_imba_vladmir",
+		"item_imba_yasha",
+		"item_imba_mekansm",
+		"item_imba_hood_of_defiance",
+		"item_imba_veil_of_discord",
+		"item_imba_glimmer_cape"
 	}
-	local tier3 = 
-	{
-		"item_shivas_guard",
+	local tier3 = {
+		"item_imba_shivas_guard",
 		"item_sphere",
-		"item_diffusal_blade",
-		"item_maelstrom",
-		"item_basher",
-		"item_invis_sword",
-		"item_desolator",
+		"item_imba_diffusal_blade",
+		"item_imba_maelstrom",
+		"item_imba_basher",
+		"item_imba_invis_sword",
+		"item_imba_desolator",
 		"item_ultimate_scepter",
-		"item_bfury",
-		"item_pipe",
-		"item_heavens_halberd",
-		"item_crimson_guard",
+		"item_imba_bfury",
+		"item_imba_pipe",
+		"item_imba_heavens_halberd",
+		"item_imba_crimson_guard",
 		"item_imba_black_king_bar",
-		"item_bloodstone",
+		"item_imba_bloodstone_720",
 		"item_imba_lotus_orb",
-		"item_guardian_greaves",
-		"item_moon_shard"
+		"item_imba_guardian_greaves",
+		"item_imba_moon_shard"
 	}
-	local tier4 = 
-	{
-		"item_skadi",
-		"item_sange_and_yasha",
-		"item_greater_crit",
-		"item_sheepstick",
-		"item_orchid",
-		"item_heart",
-		"item_mjollnir",
-		"item_ethereal_blade",
-		"item_radiance",
-		"item_abyssal_blade",
-		"item_butterfly",
-		"item_monkey_king_bar",
-		"item_satanic",
-		"item_octarine_core",
-		"item_silver_edge",
-		"item_rapier"
+	local tier4 = {
+		"item_imba_skadi",
+		"item_imba_sange_and_yasha",
+		"item_imba_greater_crit",
+		"item_imba_sheepstick",
+		"item_imba_orchid",
+		"item_imba_heart",
+		"item_imba_mjollnir",
+		"item_imba_ethereal_blade",
+		"item_imba_radiance",
+		"item_imba_abyssal_blade",
+		"item_imba_butterfly",
+		"item_imba_monkey_king_bar",
+		"item_imba_satanic",
+		"item_imba_octarine_core",
+		"item_imba_silver_edge",
+		"item_imba_rapier"
 	}
 
 	local t1 = PickRandomShuffle( tier1, self.tier1ItemBucket )
@@ -178,8 +173,7 @@ function COverthrowGameMode:SpecialItemAdd( event )
 	-- add the item to the inventory and broadcast
 	owner:AddItemByName( spawnedItem )
 	EmitGlobalSound("powerup_04")
-	local overthrow_item_drop =
-	{
+	local overthrow_item_drop = {
 		hero_id = hero,
 		dropped_item = spawnedItem
 	}
@@ -192,7 +186,7 @@ function COverthrowGameMode:ThinkSpecialItemDrop()
 		return
 	end
 	-- Don't spawn if the game is about to end
-	if nCOUNTDOWNTIMER < 20 then
+	if COverthrowGameMode.nCOUNTDOWNTIMER < 20 then
 		return
 	end
 	local t = GameRules:GetDOTATime( false, false )

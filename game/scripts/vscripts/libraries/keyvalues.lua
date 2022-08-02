@@ -235,6 +235,35 @@ function GetAbilitySpecial(name, key, level)
 	else return t end
 end
 
+function GetAbilityValue(name, key, level)
+	local t = KeyValues.All[name]
+
+	if key and t then
+		local tspecial = t["AbilityValues"]
+
+		if tspecial then
+			-- Find the key we are looking for
+			for ability_key, value in pairs(tspecial) do
+				if ability_key == key then
+					if not level or type(value) == "number" then -- no level specified or there is only 1 ability value regardless of level
+						return value
+					else
+						if type(value) == "table" and value["value"] then
+							value = value["value"]
+						end
+						
+						local s = split(value)
+						if s[level] then return tonumber(s[level]) -- If we match the level, return that one
+						else return tonumber(s[#s]) end -- Otherwise, return the max
+					end
+
+					break
+				end
+			end
+		end
+	else return t end
+end
+
 function CDOTABaseAbility:GetVanillaAbilityName()
 	return GetVanillaAbilityName(self:GetAbilityName())
 end
@@ -254,8 +283,8 @@ function CDOTABaseAbility:GetVanillaKeyValue(key, level)
 end
 
 function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
---	print("GetVanillaAbilitySpecial:", GetAbilitySpecial(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0)
-	return GetAbilitySpecial(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
+	-- print("GetVanillaAbilitySpecial:", GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0)
+	return GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
 end
 
 function GetAbilitySpecials(name)
@@ -263,10 +292,10 @@ function GetAbilitySpecials(name)
 	local ability_specials = {}
 
 	if t then
-		local tspecial = t["AbilitySpecial"]
+		local AbilitySpecials = t["AbilitySpecial"]
 
-		if tspecial then
-			for k, v in pairs(tspecial) do
+		if AbilitySpecials then
+			for k, v in pairs(AbilitySpecials) do
 				for i, j in pairs(v) do
 					if i ~= "var_type" and i ~= "LinkedSpecialBonus" and i ~= "RequiresScepter" and i ~= "CalculateSpellDamageTooltip" then
 						ability_specials[tonumber(k)] = {i, j}
@@ -276,11 +305,32 @@ function GetAbilitySpecials(name)
 			end
 		else
 			print("KV: AbilitySpecial not found.", name)
+
+			local AbilityValues = t["AbilityValues"]
+
+			if AbilityValues then
+				for value_name, value in pairs(AbilityValues) do
+					if value_name ~= "var_type" and value_name ~= "LinkedSpecialBonus" and value_name ~= "RequiresScepter" and i ~= "CalculateSpellDamageTooltip" then
+						-- if type(value) == "table" then
+							-- for i, j in pairs(value) do
+								-- table.insert(ability_specials, {value_name, value})
+							-- end
+						-- else
+							table.insert(ability_specials, {value_name, value})
+						-- end
+
+						-- break
+					end
+				end
+			else
+				print("KV: AbilityValues not found either.", name)
+			end
 		end
 	else
 		print("KV: not found.", name)
 	end
 
+	-- print(name, ability_specials)
 	return ability_specials
 end
 

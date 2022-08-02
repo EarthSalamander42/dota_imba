@@ -47,6 +47,13 @@
 			})
 		})
 
+		GameUI.CustomUIConfig().multiteam_top_scoreboard =
+		{
+			reorder_team_scores: true,
+			LeftInjectXMLFile: "file://{resources}/layout/custom_game/overthrow_scoreboard_left.xml",
+			TeamOverlayXMLFile: "file://{resources}/layout/custom_game/overthrow_scoreboard_team_overlay.xml"
+		};
+
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_names = {}
 
@@ -343,7 +350,7 @@
 	<Panel>
 		<!-- CustomUIElements go here.-->
 		<!-- <CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" /> -->
-		<!-- <CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/vanillafier_tooltips/vanillafier_tooltips.xml" /> -->
+		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/vanillafier_tooltips/vanillafier_tooltips.xml" />
 
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay.xml" />
 		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/vanilla_hero_selection/vanilla_hero_selection.xml" /> 

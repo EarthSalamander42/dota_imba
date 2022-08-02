@@ -158,3 +158,4 @@
 "Playback_ButtonCategory"						"Controllers"
 
 "imba_random_description"						"Randomly picks from every IMBAfied heroes."
+"OverthrowGoal"									"Goal"

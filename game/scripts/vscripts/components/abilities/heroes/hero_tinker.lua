@@ -128,7 +128,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_refresher",
 				"item_refresher_shard",
 				"item_imba_skadi",
-				"item_sphere",
+				"item_imba_sphere",
 				"item_imba_plancks_artifact",
 				"item_minotaur_horn",
 				"item_imba_white_queen_cape",

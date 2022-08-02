@@ -38,11 +38,12 @@ function CustomTooltips:GetTooltipsInfo(keys)
 
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local hero = nil
+
 	if keys.iSelectedEntIndex and type(keys.iSelectedEntIndex) == "number" and EntIndexToHScript(keys.iSelectedEntIndex) then
 		hero = EntIndexToHScript(keys.iSelectedEntIndex)
 	end
-	local ability_values = {}
 
+	local ability_values = {}
 	local specials = GetAbilitySpecials(ability_name)
 	local imba_specials = GetAbilitySpecials("imba_"..ability_name)
 	local specials_issued = {}
@@ -53,7 +54,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		end
 	end
 
---	print(specials_issued)
+	-- print(specials_issued)
 
 	-- use imba values by default, add vanilla values if imba missing (this way imba values has priority over vanilla)
 	for k, value in pairs(specials) do
@@ -63,17 +64,22 @@ function CustomTooltips:GetTooltipsInfo(keys)
 			specials_issued[value[1]] = true
 
 			if hero and hero:FindAbilityByName(keys.sAbilityName) then
-				print(value[1], hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1]))
-				table.insert(imba_specials, hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1]))
+				local talent_value = hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1])
+
+				-- imba talent value found
+				if talent_value and talent_value ~= 0 then
+					table.insert(imba_specials, talent_value)
+				else -- default to vanilla
+					table.insert(imba_specials, value)
+				end
 			else
-				print(value[1], value)
 				table.insert(imba_specials, value)
 			end
 		end
 	end
 
---	print(specials_issued)
---	print(imba_specials)
+	-- print(specials_issued)
+	-- print(imba_specials)
 
 	local hRealCooldown = split(GetAbilityCooldown(ability_name), " ")
 	local hRealManaCost = split(GetAbilityManaCost(ability_name), " ")

@@ -41,13 +41,13 @@ require("components/frantic/init")
 -- require("components/diretide/diretide")
 require('components/gold')
 require('components/hero_selection/init')
--- require('components/mutation/init')
+require('components/mutation/init')
 require('components/neutral_creeps/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
 -- require('components/new_team_selection')
--- require('components/tooltips/init')
+require('components/tooltips/init')
 if IsOverthrowMap() then
 	require("components/overthrow/init")
 end

@@ -1,74 +1,36 @@
-ListenToGameEvent("game_rules_state_change", function()
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
-
-		local numberOfPlayers = PlayerResource:GetPlayerCount()
-		if numberOfPlayers > 7 then
-			--self.TEAM_KILLS_TO_WIN = 25
-			nCOUNTDOWNTIMER = 901
-		else
-			--self.TEAM_KILLS_TO_WIN = 15
-			nCOUNTDOWNTIMER = 601
-		end
-		if GetMapName() == "imbathrow_ffa" then
-			self.TEAM_KILLS_TO_WIN = 50
-		else
-			self.TEAM_KILLS_TO_WIN = 30
-		end
-		--print( "Kills to win = " .. tostring(self.TEAM_KILLS_TO_WIN) )
-
---		CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = self.TEAM_KILLS_TO_WIN } );
-
-		self._fPreGameStartTime = GameRules:GetGameTime()
-
-		-- OnThink
-		Timers:CreateTimer(function()
-			for nPlayerID = 0, (DOTA_MAX_TEAM_PLAYERS-1) do
-				self:UpdatePlayerColor( nPlayerID )
-			end
-			
-			self:UpdateScoreboard()
-			-- Stop thinking if game is paused
-			if GameRules:IsGamePaused() == true then
-				return 1
-			end
-
-			if self.countdownEnabled == true then
-				CountdownTimer()
-				if nCOUNTDOWNTIMER == 30 then
-					CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
-				end
-				if nCOUNTDOWNTIMER <= 0 then
-					--Check to see if there's a tie
-					if self.isGameTied == false then
-						GameRules:SetCustomVictoryMessage( self.m_VictoryMessages[self.leadingTeam] )
-						COverthrowGameMode:EndGame( self.leadingTeam )
-						self.countdownEnabled = false
-					else
-						self.TEAM_KILLS_TO_WIN = self.leadingTeamScore + 1
-						local broadcast_killcount = 
-						{
-							killcount = self.TEAM_KILLS_TO_WIN
-						}
-						CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
-					end
-				end
-			end
-			
-			if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-				--Spawn Gold Bags
-				COverthrowGameMode:ThinkGoldDrop()
-				COverthrowGameMode:ThinkSpecialItemDrop()
-			end
-
-			return 1.0
-		end)
+function COverthrowGameMode:OnGameRulesStateChange()
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		self:GatherAndRegisterValidTeams()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
+		local numberOfPlayers = PlayerResource:GetPlayerCount()
+
+		if numberOfPlayers > 7 then
+			--COverthrowGameMode.TEAM_KILLS_TO_WIN = 25
+			COverthrowGameMode.nCOUNTDOWNTIMER = 901
+		else
+			--COverthrowGameMode.TEAM_KILLS_TO_WIN = 15
+			COverthrowGameMode.nCOUNTDOWNTIMER = 601
+		end
+
+		if GetMapName() == "imbathrow_ffa" then
+			COverthrowGameMode.TEAM_KILLS_TO_WIN = 50
+		else
+			COverthrowGameMode.TEAM_KILLS_TO_WIN = 30
+		end
+		-- print( "Kills to win = " .. tostring(COverthrowGameMode.TEAM_KILLS_TO_WIN) )
+
+		CustomNetTables:SetTableValue( "game_options", "victory_condition", { kills_to_win = COverthrowGameMode.TEAM_KILLS_TO_WIN } )
+
+		COverthrowGameMode._fPreGameStartTime = GameRules:GetGameTime()
+
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		--print( "OnGameRulesStateChange: Game In Progress" )
-		self.countdownEnabled = true
+		COverthrowGameMode:OnThink()
+		COverthrowGameMode.countdownEnabled = true
 		CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
-		DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self  )
+		DoEntFire( "center_experience_ring_particles", "Start", "0", 0, COverthrowGameMode, COverthrowGameMode  )
 	end
-end , nil)
+end
 
 --------------------------------------------------------------------------------
 -- Event: OnNPCSpawned
@@ -82,10 +44,10 @@ ListenToGameEvent("npc_spawned", function(event)
 			ParticleManager:DestroyParticle( deathEffects, true )
 			spawnedUnit:DeleteAttribute( "effectsID" )
 		end
-		if self.allSpawned == false then
+		if COverthrowGameMode.allSpawned == false then
 			if GetMapName() == "mines_trio" then
 				--print("mines_trio is the map")
-				--print("self.allSpawned is " .. tostring(self.allSpawned) )
+				--print("COverthrowGameMode.allSpawned is " .. tostring(COverthrowGameMode.allSpawned) )
 				local unitTeam = spawnedUnit:GetTeam()
 				local particleSpawn = ParticleManager:CreateParticleForTeam( "particles/addons_gameplay/player_deferred_light.vpcf", PATTACH_ABSORIGIN, spawnedUnit, unitTeam )
 				ParticleManager:SetParticleControlEnt( particleSpawn, PATTACH_ABSORIGIN, spawnedUnit, PATTACH_ABSORIGIN, "attach_origin", spawnedUnit:GetAbsOrigin(), true )
@@ -104,7 +66,7 @@ ListenToGameEvent("dota_team_kill_credit", function(event)
 	local nKillerID = event.killer_userid
 	local nTeamID = event.teamnumber
 	local nTeamKills = event.herokills
-	local nKillsRemaining = self.TEAM_KILLS_TO_WIN - nTeamKills
+	local nKillsRemaining = COverthrowGameMode.TEAM_KILLS_TO_WIN - nTeamKills
 	
 	local broadcast_kill_event =
 	{
@@ -118,13 +80,13 @@ ListenToGameEvent("dota_team_kill_credit", function(event)
 	}
 
 	if nKillsRemaining <= 0 then
-		GameRules:SetCustomVictoryMessage( self.m_VictoryMessages[nTeamID] )
+		GameRules:SetCustomVictoryMessage( COverthrowGameMode.m_VictoryMessages[nTeamID] )
 		GameRules:SetGameWinner( nTeamID )
 		broadcast_kill_event.victory = 1
 	elseif nKillsRemaining == 1 then
 		EmitGlobalSound( "ui.npe_objective_complete" )
 		broadcast_kill_event.very_close_to_victory = 1
-	elseif nKillsRemaining <= self.CLOSE_TO_VICTORY_THRESHOLD then
+	elseif nKillsRemaining <= COverthrowGameMode.CLOSE_TO_VICTORY_THRESHOLD then
 		EmitGlobalSound( "ui.npe_objective_given" )
 		broadcast_kill_event.close_to_victory = 1
 	end
@@ -142,7 +104,7 @@ ListenToGameEvent("entity_killed", function(event)
 	local heroTeam = hero:GetTeam()
 	local extraTime = 0
 	if killedUnit:IsRealHero() then
-		self.allSpawned = true
+		COverthrowGameMode.allSpawned = true
 		--print("Hero has been killed")
 		--Add extra time if killed by Necro Ult
 		if hero:IsRealHero() == true then
@@ -163,7 +125,7 @@ ListenToGameEvent("entity_killed", function(event)
 		end
 		if hero:IsRealHero() and heroTeam ~= killedTeam then
 			--print("Granting killer xp")
-			if killedUnit:GetTeam() == self.leadingTeam and self.isGameTied == false then
+			if killedUnit:GetTeam() == COverthrowGameMode.leadingTeam and COverthrowGameMode.isGameTied == false then
 				local memberID = hero:GetPlayerID()
 				PlayerResource:ModifyGold( memberID, 500, true, 0 )
 				hero:AddExperience( 100, 0, false, false )
@@ -205,7 +167,7 @@ end, nil)
 
 function COverthrowGameMode:SetRespawnTime( killedTeam, killedUnit, extraTime )
 	--print("Setting time for respawn")
-	if killedTeam == self.leadingTeam and self.isGameTied == false then
+	if killedTeam == COverthrowGameMode.leadingTeam and COverthrowGameMode.isGameTied == false then
 		killedUnit:SetTimeUntilRespawn( 20 + extraTime )
 	else
 		killedUnit:SetTimeUntilRespawn( 10 + extraTime )
@@ -227,7 +189,7 @@ ListenToGameEvent("dota_item_picked_up", function(event)
 		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
 	elseif event.itemname == "item_treasure_chest" then
 		--print("Special Item Picked Up")
-		DoEntFire( "item_spawn_particle_" .. self.itemSpawnIndex, "Stop", "0", 0, self, self )
+		DoEntFire( "item_spawn_particle_" .. COverthrowGameMode.itemSpawnIndex, "Stop", "0", 0, COverthrowGameMode, COverthrowGameMode )
 		COverthrowGameMode:SpecialItemAdd( event )
 		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
 	end
@@ -242,3 +204,69 @@ ListenToGameEvent("dota_npc_goal_reached", function(event)
 		COverthrowGameMode:TreasureDrop( npc )
 	end
 end, nil)
+
+function COverthrowGameMode:CountdownTimer()
+	COverthrowGameMode.nCOUNTDOWNTIMER = COverthrowGameMode.nCOUNTDOWNTIMER - 1
+	local t = COverthrowGameMode.nCOUNTDOWNTIMER
+	-- print( t )
+	local minutes = math.floor(t / 60)
+	local seconds = t - (minutes * 60)
+	local m10 = math.floor(minutes / 10)
+	local m01 = minutes - (m10 * 10)
+	local s10 = math.floor(seconds / 10)
+	local s01 = seconds - (s10 * 10)
+	local broadcast_gametimer = {
+			timer_minute_10 = m10,
+			timer_minute_01 = m01,
+			timer_second_10 = s10,
+			timer_second_01 = s01,
+		}
+	CustomGameEventManager:Send_ServerToAllClients( "countdown", broadcast_gametimer )
+	if t <= 120 then
+		CustomGameEventManager:Send_ServerToAllClients( "time_remaining", broadcast_gametimer )
+	end
+end
+
+function COverthrowGameMode:OnThink()
+	Timers:CreateTimer(function()
+		for nPlayerID = 0, (DOTA_MAX_TEAM_PLAYERS-1) do
+			COverthrowGameMode:UpdatePlayerColor( nPlayerID )
+		end
+		
+		COverthrowGameMode:UpdateScoreboard()
+		-- Stop thinking if game is paused
+		if GameRules:IsGamePaused() == true then
+			return 1
+		end
+
+		if COverthrowGameMode.countdownEnabled == true then
+			COverthrowGameMode:CountdownTimer()
+			if COverthrowGameMode.nCOUNTDOWNTIMER == 30 then
+				CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
+			end
+			if COverthrowGameMode.nCOUNTDOWNTIMER <= 0 then
+				--Check to see if there's a tie
+				if COverthrowGameMode.isGameTied == false then
+					GameRules:SetCustomVictoryMessage( COverthrowGameMode.m_VictoryMessages[COverthrowGameMode.leadingTeam] )
+					COverthrowGameMode:EndGame( COverthrowGameMode.leadingTeam )
+					COverthrowGameMode.countdownEnabled = false
+				else
+					COverthrowGameMode.TEAM_KILLS_TO_WIN = COverthrowGameMode.leadingTeamScore + 1
+					local broadcast_killcount = 
+					{
+						killcount = COverthrowGameMode.TEAM_KILLS_TO_WIN
+					}
+					CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
+				end
+			end
+		end
+		
+		if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+			--Spawn Gold Bags
+			COverthrowGameMode:ThinkGoldDrop()
+			COverthrowGameMode:ThinkSpecialItemDrop()
+		end
+
+		return 1.0
+	end)
+end

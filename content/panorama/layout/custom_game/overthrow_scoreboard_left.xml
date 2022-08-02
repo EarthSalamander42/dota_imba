@@ -8,7 +8,7 @@
 	</scripts>
 	<Panel class="ScoreboardLeft">
 		<Panel class="VictoryPanel">
-			<Label id="Goal" text="#Goal" />
+			<Label id="Goal" text="#OverthrowGoal" />
 			<Label id="VictoryPoints" text="999" />
 			<Label id="Timer" text="--:--" />
 		</Panel>

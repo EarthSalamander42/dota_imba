@@ -341,7 +341,7 @@ function SetAbilityTooltips(keys) {
 	// Set IMBA KV in description
 	if (keys["sSpecial"]) {
 		for (var i in keys["sSpecial"]) {
-			var special_key = i;
+			var special_key = keys["sSpecial"][i][1];
 
 			// Turn weird values with 10 decimals into 2 decimals max
 			if (keys["sSpecial"][i])
@@ -349,8 +349,14 @@ function SetAbilityTooltips(keys) {
 
 			if (isFloat(keys["sSpecial"][i]))
 				keys["sSpecial"][i] = keys["sSpecial"][i].toFixed(2);
+				
+			var value = keys["sSpecial"][i][2];
 
-			var special_values = keys["sSpecial"][i].toString().split(" ");
+			if (typeof(value) == "object" && typeof(value["value"]) == "string" || typeof(value["value"]) == "number") {
+				value = value["value"].toString();
+			}
+
+			var special_values = value.toString().split(" ");
 			var special_value = special_values[Math.min(ability_level - 1, special_values.length - 1)];
 
 			var tooltip_string = localized_ability_name + "_" + special_key;

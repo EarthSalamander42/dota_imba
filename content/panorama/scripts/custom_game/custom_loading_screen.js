@@ -464,13 +464,10 @@ function SetParty() {
 }
 
 function HidePickScreenDuringGame() {
-	$.Msg("Attempt to Hide loading screen")
-
-	if (Game.GameStateIsAfter(2)) {
+	if (Game.GetState() == 3) {
 		$.GetContextPanel().style.visibility = "collapse";
-		$.Msg("Loading screen hidden!")
 	} else
-		$.Schedule(1.0, HidePickScreenDuringGame)
+		$.Schedule(1.0, HidePickScreenDuringGame);
 }
 
 (function(){

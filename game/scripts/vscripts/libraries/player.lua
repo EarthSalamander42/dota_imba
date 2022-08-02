@@ -483,20 +483,53 @@ end
 function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 	local base = self:GetSpecialValueFor(value)
 	local talentName
-	local kv = self:GetAbilityKeyValues()
-	for k,v in pairs(kv) do -- trawl through keyvalues
+
+	for k,v in pairs(self:GetAbilityKeyValues()) do -- trawl through keyvalues
 		if k == "AbilitySpecial" then
 			for l,m in pairs(v) do
 				if m[value] then
 					talentName = m["LinkedSpecialBonus"]
+				else
+					-- print("GetTalentSpecialValueFor: Special ability value not found:", value)
+					local vanilla_ability_name = string.gsub(self:GetAbilityName(), "imba_", "")
+					-- print("Switch to vanilla ability:", vanilla_ability_name)
+
+					for k,v in pairs(GetAbilitySpecials(vanilla_ability_name)) do
+						if k == "AbilitySpecial" then
+							for l,m in pairs(v) do
+								if m[value] then
+									talentName = m["LinkedSpecialBonus"]
+								end
+							end
+
+							break
+						end
+					end
 				end
 			end
+
+			break
+		elseif k == "AbilityValues" then -- new vanilla format
+			for l,m in pairs(v) do
+				print(l, m)
+				if type(m) == "table" then
+					if m[value] then
+						talentName = m["LinkedSpecialBonus"]
+					end
+				else
+					print("GetTalentSpecialValueFor: No talent for this vanilla ability value:", value)
+				end
+			end
+
+			break
 		end
 	end
+
 	if talentName then 
 		local talent = self:GetCaster():FindAbilityByName(talentName)
 		if talent and talent:GetLevel() > 0 then base = base + talent:GetSpecialValueFor("value") end
 	end
+
 	return base
 end
 
