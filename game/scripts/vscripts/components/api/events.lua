@@ -10,14 +10,6 @@ ListenToGameEvent('game_rules_state_change', function()
 					steamid = tostring(k),
 				}
 
-				if CUSTOM_GAME_TYPE ~= "WARPATH" then
-					api:Request("armory", function(data)
-						if api.players[k] then
-							api.players[k]["armory"] = data
-						end
-					end, nil, "POST", payload);
-				end
-			end
 
 --[[
 			if CUSTOM_GAME_TYPE == "IMBA" then
@@ -30,6 +22,11 @@ ListenToGameEvent('game_rules_state_change', function()
 --]]
 			if CUSTOM_GAME_TYPE == "PLS" then
 				api:GenerateGameModeLeaderboard()
+				api:Request("armory", function(data)
+					if api.players[k] then
+						api.players[k]["armory"] = data
+					end
+				end, nil, "POST", payload);
 			end
 
 			print("ALL PLAYERS LOADED IN!")
@@ -78,8 +75,9 @@ function api:OnGameEnd()
 	end
 
 	api:CompleteGame(function(data, payload)
---			print(data)
---			print(payload)
+		-- print(data)
+		-- print(payload)
+
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {
 			players = payload.players,
 			data = data,
@@ -96,6 +94,7 @@ end
 
 ListenToGameEvent('dota_item_purchased', function(event)
 	-- itemcost, itemname, PlayerID, splitscreenplayer
+	local hero = PlayerResource:GetSelectedHeroEntity(event.PlayerID)
 
 	if CUSTOM_GAME_TYPE == "IMBA" then
 		PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
@@ -104,6 +103,11 @@ ListenToGameEvent('dota_item_purchased', function(event)
 --	if not PlayerResource.ItemTimer then PlayerResource.ItemTimer = {} end
 
 --	PlayerResource.ItemTimer = Timers:CreateTimer(10.0, CheckIfItemSold(event))
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("check_item_sold"), function()
+		if hero and not hero:IsNull() and IsValidEntity(hero) and hero:HasItemInInventory(event.itemname) then
+			PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
+		end
+	end, 11.0)
 end, nil)
 
 -- creepy way to check if an item was sold and fully refund
@@ -111,4 +115,11 @@ function CheckIfItemSold(event)
 	if PlayerResource:GetSelectedHeroEntity(event.PlayerID):HasItemInInventory(event.itemname) then
 		PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
 	end
+-- Call custom functions whenever SetGameWinner is being called anywhere
+original_SetGameWinner = CDOTAGameRules.SetGameWinner
+CDOTAGameRules.SetGameWinner = function(self, iTeamNumber)
+	GAME_WINNER_TEAM = iTeamNumber
+	api:OnGameEnd()
+
+	return original_SetGameWinner(self, iTeamNumber)
 end

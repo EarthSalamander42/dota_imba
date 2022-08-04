@@ -1,16 +1,18 @@
 -- Copyright (C) 2020 - Frostrose Studio Development Team
 -- Api Interface for every custom games managed/created by Frostrose Studio
 
-api = class({})
+api = api or class({})
 
 local baseUrl = "https://api.frostrose-studio.com/"
--- local baseUrl = "http://90.113.1.72/"
 local endUrlWebsite = "website/"
 local endUrlFrostrose = "imba/"
-local endUrlWarpath = "warpath/"
 local timeout = 5000
-
 local native_print = print
+
+function api:Init()
+	CustomGameEventManager:RegisterListener("get_companions_table", Dynamic_Wrap(self, "SendCompanionsTable"))
+	CustomGameEventManager:RegisterListener("api_change_companion", Dynamic_Wrap(self, "SetCompanion"))
+end
 
 -- Utils
 function api:GetUrl(endpoint)
@@ -19,11 +21,7 @@ function api:GetUrl(endpoint)
 	if endpoint == "statistics/ranking/xp" or endpoint == "statistics/ranking/winrate" then
 		url = url..endUrlWebsite
 	else
-		if CUSTOM_GAME_TYPE == "WARPATH" then
-			url = url..endUrlWarpath
-		else
-			url = url..endUrlFrostrose
-		end
+		url = url..endUrlFrostrose
 	end
 
 	print("URL:", url..endpoint)
@@ -54,7 +52,7 @@ function api:GetDonatorStatus(player_id)
 		return 0
 	end
 
-	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+	local steamid = tostring(PlayerResource:GetSteamID(player_id))
 
 	-- if the game isnt registered yet, we have no way to know if the player is a donator
 	if self.players == nil then
@@ -122,6 +120,7 @@ function api:InitDonatorTableJS()
 		end
 	end
 
+	-- print(donators)
 	CustomNetTables:SetTableValue("game_options", "donators", donators)
 end
 
@@ -131,7 +130,7 @@ function api:GetPlayerXP(player_id)
 		return 0
 	end
 
-	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+	local steamid = tostring(PlayerResource:GetSteamID(player_id))
 
 	-- if the game isnt registered yet, we have no way to know player xp
 	if self.players == nil then
@@ -162,7 +161,7 @@ function api:GetPlayerXPLevel(player_id)
 	end
 
 	if self.players[steamid] ~= nil then
-		return self.players[steamid].xp_level
+		return self.players[steamid].xp_level + 1
 	else
 		native_print("api:GetPlayerXP: api players steamid not valid!")
 		return 0
@@ -282,7 +281,7 @@ function api:GetPlayerBPRewardsEnabled(player_id)
 		return false
 	end
 
-	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+	local steamid = tostring(PlayerResource:GetSteamID(player_id))
 
 	-- if the game isnt registered yet, we have no way to know player xp
 	if self.players == nil then
@@ -684,7 +683,7 @@ end
 
 function api:RegisterGame(callback)
 	self:Request("game-register", function(data)
-		api.game_id = data.game_id
+		api.game_id = tonumber(data.game_id)
 		api.players = data.players
 		api.companions = data.companions or nil
 		api.emblems = data.emblems or nil
@@ -809,18 +808,13 @@ function api:CompleteGame(successCallback)
 				pa_arcana_kills = api:GetPhantomAssassinArcanaKills(id),
 				abandon = abandon,
 				leaderboard = leaderboard,
+				heroes = Warpath.selected_heroes[id] or {},
 			}
-
-			if CUSTOM_GAME_TYPE == "WARPATH" then
-				player.heroes = Warpath.selected_heroes[id] or {}
-			end
 
 			local steamid = tostring(PlayerResource:GetSteamID(id))
 
 			if steamid == 0 then
 				steamid = tostring(id)
-			else
-
 			end
 
 			players[steamid] = player
@@ -872,7 +866,7 @@ function api:CompleteGame(successCallback)
 		if successCallback ~= nil then
 			successCallback(data, payload)
 		end
-	end, "POST", payload);
+	end, "POST", payload)
 end
 
 function api:DiretideHallOfFame(successCallback, failCallback)
@@ -947,6 +941,9 @@ function api:FindPlayerParty(iPlayerID)
 		print("No party detected.")
 		return
 	end
+function api:SetCompanion(data)
+	local player_id = data.PlayerID
+	local unit_name = data.sUnitName
 
 	for id, party in pairs(self.parties) do
 		if iPlayerID == id then
@@ -954,14 +951,24 @@ function api:FindPlayerParty(iPlayerID)
 		end
 	end
 end
+	local payload = {
+		companion_id = data.companion_id,
+		steamid = tostring(PlayerResource:GetSteamID(player_id))
+	}
 
 function api:GetParties(iPlayerID)
 	if not self.parties then
 		print("No party detected.")
 		return
 	end
+	api:Request("modify-companion", function(data)
+		Battlepass:DonatorCompanion(player_id, unit_name, true)
+	end,
 
 	return self.parties
+	function(data)
+		CustomGameEventManager:Send_ServerToPlayer(player, "change_companion_failure", {})
+	end, "POST", payload)
 end
 
 function api:GenerateGameModeLeaderboard()
@@ -969,6 +976,8 @@ function api:GenerateGameModeLeaderboard()
 --	print("Amount of rounds:", round_count)
 
 	self:GetGameModeLeaderboard(1, round_count)
+function api:SendCompanionsTable(data)
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(data.PlayerID), "receive_companions_table", api.companions)
 end
 
 function api:GetGameModeLeaderboard(iRound, iMaxRound)
@@ -1006,5 +1015,6 @@ function api:GetGameModeLeaderboard(iRound, iMaxRound)
 		round_range = iRound,
 	});
 end
+api:Init()
 
 require("components/api/events")

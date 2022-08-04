@@ -227,6 +227,25 @@ function COverthrowGameMode:CountdownTimer()
 	end
 end
 
+function PickRandomShuffle( reference_list, bucket )
+    if ( #reference_list == 0 ) then
+        return nil
+    end
+    
+    if ( #bucket == 0 ) then
+        -- ran out of options, refill the bucket from the reference
+        for k, v in pairs(reference_list) do
+            bucket[k] = v
+        end
+    end
+
+    -- pick a value from the bucket and remove it
+    local pick_index = RandomInt( 1, #bucket )
+    local result = bucket[ pick_index ]
+    table.remove( bucket, pick_index )
+    return result
+end
+
 function COverthrowGameMode:OnThink()
 	Timers:CreateTimer(function()
 		for nPlayerID = 0, (DOTA_MAX_TEAM_PLAYERS-1) do
