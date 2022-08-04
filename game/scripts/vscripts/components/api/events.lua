@@ -10,23 +10,21 @@ ListenToGameEvent('game_rules_state_change', function()
 					steamid = tostring(k),
 				}
 
-
---[[
-			if CUSTOM_GAME_TYPE == "IMBA" then
-				GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
-					TeamOrdering:OnPlayersLoaded()
-
-					return nil
-				end, 3.0)
-			elseif CUSTOM_GAME_TYPE == "PLS" then
---]]
-			if CUSTOM_GAME_TYPE == "PLS" then
-				api:GenerateGameModeLeaderboard()
 				api:Request("armory", function(data)
 					if api.players[k] then
 						api.players[k]["armory"] = data
 					end
-				end, nil, "POST", payload);
+				end, nil, "POST", payload)
+			end
+
+			if CUSTOM_GAME_TYPE == "IMBA" then
+				-- GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
+					-- TeamOrdering:OnPlayersLoaded()
+
+					-- return nil
+				-- end, 3.0)
+			elseif CUSTOM_GAME_TYPE == "PLS" then
+				api:GenerateGameModeLeaderboard()
 			end
 
 			print("ALL PLAYERS LOADED IN!")
@@ -115,6 +113,8 @@ function CheckIfItemSold(event)
 	if PlayerResource:GetSelectedHeroEntity(event.PlayerID):HasItemInInventory(event.itemname) then
 		PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
 	end
+end
+
 -- Call custom functions whenever SetGameWinner is being called anywhere
 original_SetGameWinner = CDOTAGameRules.SetGameWinner
 CDOTAGameRules.SetGameWinner = function(self, iTeamNumber)

@@ -808,7 +808,6 @@ function api:CompleteGame(successCallback)
 				pa_arcana_kills = api:GetPhantomAssassinArcanaKills(id),
 				abandon = abandon,
 				leaderboard = leaderboard,
-				heroes = Warpath.selected_heroes[id] or {},
 			}
 
 			local steamid = tostring(PlayerResource:GetSteamID(id))
@@ -941,9 +940,6 @@ function api:FindPlayerParty(iPlayerID)
 		print("No party detected.")
 		return
 	end
-function api:SetCompanion(data)
-	local player_id = data.PlayerID
-	local unit_name = data.sUnitName
 
 	for id, party in pairs(self.parties) do
 		if iPlayerID == id then
@@ -951,24 +947,35 @@ function api:SetCompanion(data)
 		end
 	end
 end
+
+function api:SetCompanion(data)
+	local player_id = data.PlayerID
+	local unit_name = data.sUnitName
+
 	local payload = {
 		companion_id = data.companion_id,
 		steamid = tostring(PlayerResource:GetSteamID(player_id))
 	}
+
+	api:Request("modify-companion", function(data)
+		Battlepass:DonatorCompanion(player_id, unit_name, true)
+	end,
+	function(data)
+		CustomGameEventManager:Send_ServerToPlayer(player, "change_companion_failure", {})
+	end, "POST", payload)
+end
 
 function api:GetParties(iPlayerID)
 	if not self.parties then
 		print("No party detected.")
 		return
 	end
-	api:Request("modify-companion", function(data)
-		Battlepass:DonatorCompanion(player_id, unit_name, true)
-	end,
 
 	return self.parties
-	function(data)
-		CustomGameEventManager:Send_ServerToPlayer(player, "change_companion_failure", {})
-	end, "POST", payload)
+end
+
+function api:SendCompanionsTable(data)
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(data.PlayerID), "receive_companions_table", api.companions)
 end
 
 function api:GenerateGameModeLeaderboard()
@@ -976,8 +983,6 @@ function api:GenerateGameModeLeaderboard()
 --	print("Amount of rounds:", round_count)
 
 	self:GetGameModeLeaderboard(1, round_count)
-function api:SendCompanionsTable(data)
-	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(data.PlayerID), "receive_companions_table", api.companions)
 end
 
 function api:GetGameModeLeaderboard(iRound, iMaxRound)
@@ -1013,8 +1018,9 @@ function api:GetGameModeLeaderboard(iRound, iMaxRound)
 		end
 	end, "POST", {
 		round_range = iRound,
-	});
+	})
 end
+
 api:Init()
 
 require("components/api/events")
