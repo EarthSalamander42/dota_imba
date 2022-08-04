@@ -704,7 +704,7 @@ function api:RegisterGame(callback)
 		match_id = self:GetMatchID(),
 		players = self:GetAllPlayerSteamIds(),
 		cheat_mode = self:IsCheatGame(),
-	});
+	})
 
 	-- call in BP scripts after battlepass_player is set to show mmr medal in loading screen
 --	print("ALL PLAYERS LOADED IN!")
@@ -853,6 +853,7 @@ function api:CompleteGame(successCallback)
 		rosh_lvl = rosh_lvl,
 		rosh_hp = rosh_hp,
 		rosh_max_hp = rosh_max_hp,
+		cheat_mode = self:IsCheatGame(),
 	}
 
 	self:Request("game-complete", function(data)
