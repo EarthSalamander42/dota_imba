@@ -1109,6 +1109,7 @@
 								<Label class="WinnerTag" text="#DOTATournamentGameWinner"/>
 							</Panel>
 						</Panel>
+
 						<Panel id="PinnedRadiant" class="PinnedTeam TopBottomFlow" />
 
 						<Panel class="DireTeamTitle TeamName StatRowHeight PinnedTeamHeader">

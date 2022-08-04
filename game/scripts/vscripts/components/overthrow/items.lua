@@ -93,13 +93,13 @@ function COverthrowGameMode:SpecialItemAdd( event )
 		"item_imba_vanguard",
 		"item_imba_mask_of_madness",
 		"item_imba_blade_mail",
-		"item_imba_helm_of_the_dominator",
+		"item_helm_of_the_dominator",
 		"item_imba_vladmir",
 		"item_imba_yasha",
 		"item_imba_mekansm",
 		"item_imba_hood_of_defiance",
 		"item_imba_veil_of_discord",
-		"item_imba_glimmer_cape"
+		"item_glimmer_cape"
 	}
 	local tier3 = {
 		"item_imba_shivas_guard",

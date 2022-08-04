@@ -107,7 +107,7 @@ function SetDonatorRow(panel, playerId, player_table) {
 					// panel.style.backgroundImage = 'url("file://{images}/custom_game/flyout/donator_' + player_table.donator_level + '.webm")';
 
 //					donatorTitlePanel.style.backgroundColor = player_table.donator_color + "dd";
-//					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("donator_label_" + player_table.donator_level) || "Donator";
+//					donatorTitlePanel.FindChildInLayoutFile("DonatorTitle").text = $.Localize("#donator_label_" + player_table.donator_level) || "Donator";
 
 //					donatorTitlePanel.style.visibility = "visible";
 
@@ -235,8 +235,8 @@ function CreateBattlepassRewardPanel(level, levelup_count) {
 		}
 
 		rp.style.visibility = 'visible';
-		rewards.desc.text = $.Localize("battlepass_reward_description") + " " + level;
-		rewards.name.text = $.Localize("battlepass_" + battlepass_reward);
+		rewards.desc.text = $.Localize("#battlepass_reward_description") + " " + level;
+		rewards.name.text = $.Localize("#battlepass_" + battlepass_reward);
 		rewards.rarity.AddClass(battlepass_rarity);
 		rewards.rarity.text = battlepass_rarity;
 		rewards.image.style.backgroundImage = 'url("file://{resources}/images/custom_game/battlepass/' + battlepass_reward + '.png")';
@@ -259,6 +259,7 @@ function CreateBattlepassRewardPanel(level, levelup_count) {
 }
 
 function EndScoreboard(args) {
+	$.Msg(args);
 	// Whenever data is available, hide loading panel and show actual end screen panel
 	$("#ContainerLoading").style.opacity = "0";
 	$.GetContextPanel().RemoveClass("MatchDataLoading");
@@ -274,19 +275,11 @@ function EndScoreboard(args) {
 	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel())
 
 	// Set game time
-	$("#GameTimeText").text = $.Localize("DOTA_Tooltip_ability_fountain_glyph_duration") +  FindDotaHudElementRawTimetoGameTime(Game.GetDOTATime(false, false));
+	$("#GameTimeText").text = $.Localize("#DOTA_Tooltip_ability_fountain_glyph_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
 
 //	for (var i = 0; i < Game.GetAllPlayerIDs().length; i++) {
 //		Game.GetAllPlayerIDs()[i]
 //	}
-
-	var team_name = []
-	team_name[2] = "Radiant";
-	team_name[3] = "Dire";
-
-	var team_localization_name = []
-	team_localization_name[2] = "#DOTA_Goodguys";
-	team_localization_name[3] = "#DOTA_Badguys";
 
 //	$.Msg(args)
 
@@ -341,49 +334,49 @@ function EndScoreboard(args) {
 
 //	$.Msg(args.players)
 
-	for (var team_number = 2; team_number <= 3; team_number++) {
+	for (var team_number = 2; team_number <= 13; team_number++) {
 		if (team_number == 3)
 			opposite_team = 2;
 
-		var pinned_team_container = $("#Pinned" + team_name[team_number]);
+		var pinned_team_container = $("#Pinned" + team_number);
 		pinned_team_container.AddClass("PinnedTeam");
 		pinned_team_container.AddClass("TomBottomFlow");
 
-		var player_row_container = $("#" + team_name[team_number] + "PlayerRows");
+		var player_row_container = $("#" + team_number + "PlayerRows");
 		// not sure why i have to hardcode it yet
 		player_row_container.style.flowChildren = "down";
 		player_row_container.style.height = "fit-children";
 //		$.Msg("Team: " + team_number)
 
-		var player_damage_dealt_row_container = $("#" + team_name[team_number] + "DamageDealtRows");
-//		var player_damage_received_row_container = $("#" + team_name[team_number] + "DamageReceivedRows");
-		var panel_kill_matrix_row_container = $("#" + team_name[team_number] + "KillMatrixRows");
+		var player_damage_dealt_row_container = $("#" + team_number + "DamageDealtRows");
+//		var player_damage_received_row_container = $("#" + team_number + "DamageReceivedRows");
+		var panel_kill_matrix_row_container = $("#" + team_number + "KillMatrixRows");
 		panel_kill_matrix_row_container.RemoveClass("StatRowHeight");
-		var panel_support_items_row_container = $("#" + team_name[team_number] + "SupportItemsRows");
+		var panel_support_items_row_container = $("#" + team_number + "SupportItemsRows");
 
-		var panel_abilities_row_legend_container = $("#Abilities" + team_name[team_number] + "PlayerRowLegend");
+		var panel_abilities_row_legend_container = $("#Abilities" + team_number + "PlayerRowLegend");
 		var panel_support_item = $.CreatePanel('Panel', panel_abilities_row_legend_container, '');
 		panel_support_item.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_abilities_row_legend.xml", false, false);
 
-		var panel_abilities_row_container = $("#Abilities" + team_name[team_number] + "PlayerRows");
+		var panel_abilities_row_container = $("#Abilities" + team_number + "PlayerRows");
 
 //		if (Game.GetTeamDetails(team_number).team_num_players > 0) {
 			// Set Team name and score
-			$("#HeroIconsColumn").FindChildTraverse(team_name[team_number] + "TeamName").text = $.Localize(team_localization_name[team_number]);
-			$("#" + team_name[team_number] + "TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
+			$("#HeroIconsColumn").FindChildTraverse(team_number + "TeamName").text = $.Localize("#Overthrow_Team_" + team_number);
+			$("#" + team_number + "TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
 
 			if (Game.GetGameWinner() == team_number)
-				$("#" + team_name[team_number] + "Winner").style.visibility = "visible";
+				$("#" + team_number + "Winner").style.visibility = "visible";
 
-			$("#" + team_name[team_number] + "PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
+			$("#" + team_number + "PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
 
 //			if (IsRanked)
-//				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
+//				$("#" + team_number + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
 
 			$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
 
 			$("#NormalMatchPlayers").AddClass("PermanentBuffs" + buff_length);
-			$("#" + team_name[team_number] + "PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
+			$("#" + team_number + "PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
 
 //			$.Msg(args.data)
 //			$.Msg(args.players)
@@ -423,7 +416,7 @@ function EndScoreboard(args) {
 
 				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").SetDialogVariable("user_account_id", player_info.player_name);
 				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
-				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize(Players.GetPlayerSelectedHero(id));
+				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize("#" + Players.GetPlayerSelectedHero(id));
 
 /*
 				if (IsRanked) {
@@ -798,7 +791,7 @@ function EndScoreboard(args) {
 //					pinned_team_container.GetChild(child).style.height = row_height;
 //				}
 
-				$("#" + team_name[team_number] + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendLevel")[0].style.visibility = "collapse";
+				$("#" + team_number + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendLevel")[0].style.visibility = "collapse";
 			}
 //		}
 	}
@@ -929,7 +922,7 @@ function ResetEndScoreboardPanels() {
 	$.GetContextPanel().AddClass("MatchDataLoading");
 
 	GameEvents.Subscribe("end_game", EndScoreboard);
-/*
+
 	// Placeholder
 	if (Game.IsInToolsMode()) {
 		ResetEndScoreboardPanels();
@@ -1099,5 +1092,5 @@ function ResetEndScoreboardPanels() {
 
 		EndScoreboard(args);
 	}
-*/
+
 })();

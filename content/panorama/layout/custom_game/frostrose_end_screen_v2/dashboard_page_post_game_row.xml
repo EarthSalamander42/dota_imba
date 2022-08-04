@@ -15,7 +15,8 @@
 
 	<Panel class="PlayerRow StatRowHeight">
 		<Panel class="PlayerRowContainer">
-			<DOTATalentDisplay id="TalentTree" class="TalentTree" />
+			<!-- <DOTATalentDisplay id="TalentTree" class="TalentTree" /> -->
+			<Image id="TalentTree" class="TalentTree" />
 			<Label class="Level" text="0" />
 			<Label class="Kills KillsColumn" text="0" />
 			<Label class="Deaths DeathsColumn" text="0" />

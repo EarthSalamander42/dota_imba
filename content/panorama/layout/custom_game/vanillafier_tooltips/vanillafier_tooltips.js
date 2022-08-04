@@ -349,14 +349,14 @@ function SetAbilityTooltips(keys) {
 
 			if (isFloat(keys["sSpecial"][i]))
 				keys["sSpecial"][i] = keys["sSpecial"][i].toFixed(2);
-				
-			var value = keys["sSpecial"][i][2];
 
-			if (typeof(value) == "object" && typeof(value["value"]) == "string" || typeof(value["value"]) == "number") {
-				value = value["value"].toString();
+			var ability_value = keys["sSpecial"][i][2];
+
+			if (ability_value && typeof(ability_value) == "object" && ability_value["value"] && typeof(ability_value["value"]) == "string" || typeof(ability_value["value"]) == "number") {
+				ability_value = ability_value["value"].toString();
 			}
 
-			var special_values = value.toString().split(" ");
+			var special_values = ability_value.toString().split(" ");
 			var special_value = special_values[Math.min(ability_level - 1, special_values.length - 1)];
 
 			var tooltip_string = localized_ability_name + "_" + special_key;

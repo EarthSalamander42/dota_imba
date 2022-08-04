@@ -906,7 +906,7 @@ function HallOfFame(type, retainSubTab, iRoundCount) {
 				var score = user_info.round_score[current_leaderboard_round];
 
 				if (current_leaderboard_round == 4)
-					imr.text = FindDotaHudElementRawTimetoGameTime(score);
+					imr.text = RawTimetoGameTime(score);
 				else
 					imr.text = score;
 			}

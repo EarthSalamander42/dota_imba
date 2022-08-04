@@ -278,7 +278,7 @@ function EndScoreboard(args) {
 		}
 	}
 
-	$("#es-game-time-text").text = FindDotaHudElementRawTimetoGameTime(Game.GetDOTATime(false, false));
+	$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
 }
 
 function CloseBottlepassReward(panel) {

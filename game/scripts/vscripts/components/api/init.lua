@@ -521,7 +521,7 @@ end
 
 function api:IsCheatGame()
 	if IsInToolsMode() then
-		return false
+		return true
 	end
 
 	if CustomNetTables:GetTableValue("game_options", "game_count").value == 0 then
