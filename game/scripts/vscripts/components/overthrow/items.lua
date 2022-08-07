@@ -55,7 +55,7 @@ function COverthrowGameMode:KillLoot( item, drop )
 end
 
 function COverthrowGameMode:SpecialItemAdd( event )
-	print("SpecialItemAdd")
+	-- print("SpecialItemAdd")
 	local item = EntIndexToHScript( event.ItemEntityIndex )
 	local owner = EntIndexToHScript( event.HeroEntityIndex )
 	local hero = owner:GetClassname()
