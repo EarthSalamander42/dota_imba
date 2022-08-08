@@ -640,6 +640,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 
 	request:Send(function(result)
 		local code = result.StatusCode;
+		print("Status code:", code)
 
 		local fail = function(message)
 			if (code == nil) then
@@ -830,7 +831,7 @@ function api:CompleteGame(successCallback)
 	local rosh_max_hp
 
 	if CUSTOM_GAME_TYPE == "IMBA" then
-		print("Cheat game?", api:IsCheatGame(), api:GetCustomGamemode() == 4)
+		-- print("Cheat game?", api:IsCheatGame(), api:GetCustomGamemode() == 4)
 
 		if api:IsCheatGame() == false and api:GetCustomGamemode() == 4 then
 			rosh_lvl = ROSHAN_ENT:GetLevel()

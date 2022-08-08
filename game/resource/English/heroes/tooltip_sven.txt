@@ -9,7 +9,6 @@
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_stun_duration"              "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_crit_pct"                    "%CRITICAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_cast_range_bonus_scepter"	"SCEPTER BONUS CAST RANGE:"
-"DOTA_Tooltip_ability_imba_sven_storm_bolt_shard_description"			"#{DOTA_Tooltip_ability_sven_storm_bolt_shard_description}"
 "DOTA_Tooltip_ability_imba_sven_storm_bolt_scepter_description"			"Increases cast range."
 
 "DOTA_Tooltip_modifier_imba_storm_bolt_crit"                            "MANmentum"

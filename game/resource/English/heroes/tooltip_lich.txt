@@ -93,7 +93,7 @@
 "DOTA_Tooltip_ability_imba_lich_frost_shield_damage_reduction"						"%DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_lich_frost_shield_damage"									"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_lich_frost_shield_movement_slow"							"%SLOW:"
-"DOTA_Tooltip_ability_imba_lich_frost_shield_range"									"#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_imba_lich_frost_shield_range"									"#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 "DOTA_Tooltip_ability_imba_lich_frost_shield_slow_duration"							"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_lich_frost_shield_duration"								"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 

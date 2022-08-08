@@ -15,7 +15,7 @@
 "DOTA_Tooltip_ability_imba_antimage_blink_Description"                  "Short distance teleportation that allows Anti-Mage to move in and out of combat.\n<font color='#FF7800'>Mana Distortion:</font> Burns %percent_mana_burn%%% of every enemy's current mana in a %radius% radius around the destination. Deals %percent_damage%%% of mana burnt as magic damage, up to a limit."
 "DOTA_Tooltip_ability_imba_antimage_blink_Note0"                        "Blink can be used to dodge incoming projectiles."
 "DOTA_Tooltip_ability_imba_antimage_blink_Lore"                        "In his encounter with the Dead Gods, Anti-Mage learned the value of being elusive."
-"DOTA_Tooltip_ability_imba_antimage_blink_percent_blink_range"          "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_imba_antimage_blink_percent_blink_range"          "#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 "DOTA_Tooltip_ability_imba_antimage_blink_radius"                      "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_antimage_blink_mana_burn_limit"              "MAX MANA DISTORTION DAMAGE:"
 

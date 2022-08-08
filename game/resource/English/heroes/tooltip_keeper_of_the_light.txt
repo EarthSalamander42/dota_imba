@@ -8,7 +8,7 @@
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_Note2"				"Transient Form's vision penalty shares the caster's vision with the enemy team."
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_damage_per_second"	"DAMAGE PER SECOND CHANNELED:"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_radius"			"WIDTH:"
-"DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_range"				"#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_range"				"#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_max_channel_time"	"MAX CHANNEL TIME:"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_total_damage"		"TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_illuminate_end"				"Release Illuminate"

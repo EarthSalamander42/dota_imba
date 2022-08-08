@@ -5,7 +5,7 @@
 "DOTA_Tooltip_ability_imba_chaos_knight_reality_rift_Description"     "Teleports you, any images you have and the target unit to a random point along the line between the two of you. Reduces the target's armor for %armor_duration% seconds."
 "DOTA_Tooltip_ability_imba_chaos_knight_reality_rift_Lore"          "Armageddon rides between the planes, bringing Chaos Knight to his victim wherever he may hide."
 "DOTA_Tooltip_ability_imba_chaos_knight_reality_rift_Note0"         "Chaos Knight and the target unit are made to face each other, and Chaos Knight and his phantasms are issued an attack order against the target."
-"DOTA_Tooltip_ability_imba_chaos_knight_reality_rift_cast_range"      "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_imba_chaos_knight_reality_rift_cast_range"      "#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 "DOTA_Tooltip_ability_imba_chaos_knight_reality_rift_armor_reduction"   "ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_chaos_knight_reality_rift_armor_duration"    "REDUCTION DURATION:"
 

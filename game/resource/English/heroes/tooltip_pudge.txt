@@ -36,7 +36,7 @@
 "DOTA_Tooltip_ability_imba_pudge_flesh_heap_stack_health_regen"		"FAT BOY HEALTH REGENERATION BONUS PER STACK:"
 "DOTA_Tooltip_ability_imba_pudge_flesh_heap_max_stacks"				"%FAT BOY MAX STACKS:"
 "DOTA_Tooltip_ability_imba_pudge_flesh_heap_stack_str"				"STRENGTH PER STACK:"
-"DOTA_Tooltip_ability_imba_pudge_flesh_heap_range"					"#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_imba_pudge_flesh_heap_range"					"#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 
 "DOTA_Tooltip_ability_imba_pudge_sharp_hook"							"Power Hook"
 "DOTA_Tooltip_ability_imba_pudge_sharp_hook_Description"				"Activate to make Meat Hook lose range and speed, but deal more damage.\nEach time Pudge levels up, he gains another stack of Power Hook."

@@ -73,20 +73,21 @@ function api:OnGameEnd()
 	end
 
 	api:CompleteGame(function(data, payload)
-		-- print(data)
-		-- print(payload)
+		print(data)
+		print(payload)
 
-		CustomGameEventManager:Send_ServerToAllClients("end_game", {
+		local full_data = {
 			players = payload.players,
 			data = data,
 			info = {
 				winner = GAME_WINNER_TEAM,
 				id = api:GetApiGameId(),
-				radiant_score = GetTeamHeroKills(2),
-				dire_score = GetTeamHeroKills(3),
 				gamemode = api:GetCustomGamemode(),
-			},
-		})
+			}
+		}
+
+		CustomNetTables:SetTableValue("game_options", "end_game", full_data)
+		-- CustomGameEventManager:Send_ServerToAllClients("end_game", full_data)
 	end)
 end
 

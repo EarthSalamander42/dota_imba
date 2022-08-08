@@ -847,7 +847,7 @@ Panel.TeamIdentificationRow Label
 	vertical-align: middle;
 }
 
-#RadiantTeamLogoDefault
+#2_TeamLogoDefault
 {
 	background-image: url("s2r://panorama/images/team_icons/radiant_png.vtex");
 	background-size: 100% 100%;
@@ -855,12 +855,12 @@ Panel.TeamIdentificationRow Label
 	background-repeat: no-repeat;
 }
 
-.RadiantHasCustomLogo #RadiantTeamLogoDefault
+.RadiantHasCustomLogo #2_TeamLogoDefault
 {
 	visibility: collapse;
 }
 
-#DireTeamLogoDefault
+#3_TeamLogoDefault
 {
 	background-image: url("s2r://panorama/images/team_icons/dire_png.vtex");
 	background-size: 100% 100%;
@@ -868,7 +868,7 @@ Panel.TeamIdentificationRow Label
 	background-repeat: no-repeat;
 }
 
-.DireHasCustomLogo #DireTeamLogoDefault
+.DireHasCustomLogo #3_TeamLogoDefault
 {
 	visibility: collapse;
 }
@@ -950,12 +950,12 @@ Panel.TeamIdentificationRow Label
 //	letter-spacing: 1px;
 }
 
-#RadiantTeamName
+#2_TeamName
 {
 	text-shadow: 0px 0px 6px 1.0 #9BE40C8F;
 }
 
-#DireTeamName
+#3_TeamName
 {
 	text-shadow: 0px 0px 6px 1.0 #E74D088F;
 }
@@ -1175,8 +1175,8 @@ Panel.PlayerRow Label, Panel.PlayerRow DOTAHeroImage
 	visibility: collapse;
 }
 
-#DirePlayerRowLegend,
-#RadiantPlayerRowLegend
+#3_PlayerRowLegend,
+#2_PlayerRowLegend
 {
 	margin-left: 406px;
 }
@@ -4217,7 +4217,7 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	transition-timing-function: ease-in-out;
 }
 
-#RadiantVictoryBanner
+#2_VictoryBanner
 {
 	transform: translateX( -400px );
 	visibility: collapse;
@@ -4233,10 +4233,10 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 .LeftExpanded .TeamScore,
 .LeftExpanded #DurationContainer,
 .RightExpanded #DurationContainer,
-.RightExpanded #DireVictoryBanner,
-.LeftExpanded #RadiantVictoryBanner,
-.LeftExpanded #RadiantTeamNameContainer,
-.RightExpanded #DireTeamNameContainer
+.RightExpanded #3_VictoryBanner,
+.LeftExpanded #2_VictoryBanner,
+.LeftExpanded #2_TeamNameContainer,
+.RightExpanded #3_TeamNameContainer
 {
 	opacity:0;
 }
@@ -4245,31 +4245,31 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 .GameMode1v1.LeftExpanded .TeamScore,
 .GameMode1v1.LeftExpanded #DurationContainer,
 .GameMode1v1.RightExpanded #DurationContainer,
-.GameMode1v1.RightExpanded #DireVictoryBanner,
-.GameMode1v1.LeftExpanded #RadiantVictoryBanner,
-.GameMode1v1.LeftExpanded #RadiantTeamNameContainer,
-.GameMode1v1.RightExpanded #DireTeamNameContainer
+.GameMode1v1.RightExpanded #3_VictoryBanner,
+.GameMode1v1.LeftExpanded #2_VictoryBanner,
+.GameMode1v1.LeftExpanded #2_TeamNameContainer,
+.GameMode1v1.RightExpanded #3_TeamNameContainer
 {
 	opacity:1;
 }
 
-.RadiantVictory #RadiantVictoryBanner
+.RadiantVictory #2_VictoryBanner
 {
 	visibility: visible;
 }
 
-#DireVictoryBanner
+#3_VictoryBanner
 {
 	transform: translateX( 400px );
 	visibility: collapse;
 }
 
-.DireVictory #DireVictoryBanner
+.DireVictory #3_VictoryBanner
 {
 	visibility: visible;
 }
 
-.RadiantVictory #DireVictoryBanner
+.RadiantVictory #3_VictoryBanner
 {
 	visibility: collapse;
 }
@@ -4284,27 +4284,27 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 
 }
 
-#RadiantVictoryBanner .VictoryBannerBackground
+#2_VictoryBanner .VictoryBannerBackground
 {
 	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), color-stop( .2, #5bb10b77 ), to( #00000000 ) );
 }
 
-.LocalPlayerIsDire #RadiantVictoryBanner .VictoryBannerBackground
+.LocalPlayerIsDire #2_VictoryBanner .VictoryBannerBackground
 {
 	//background-color: gradient( linear, 0% 0%, 100% 0%,  from( #00000000 ), color-stop( .2, #ae332177 ), to( #00000000 ) );
 }
 
-#DireVictoryBanner .VictoryBannerBackground
+#3_VictoryBanner .VictoryBannerBackground
 {
 	background-color: gradient( linear, 100% 0%, 0% 0%,  from( #00000000 ), color-stop( .2, #ae332177 ), to( #00000000 ) );
 }
 
-.LocalPlayerIsDire #DireVictoryBanner .VictoryBannerBackground
+.LocalPlayerIsDire #3_VictoryBanner .VictoryBannerBackground
 {
 	//background-color: gradient( linear, 100% 0%, 0% 0%,  from( #00000000 ), color-stop( .2, #5bb10b77 ), to( #00000000 ) );
 }
 
-#RadiantTeamNameContainer
+#2_TeamNameContainer
 {
 	flow-children: right;
 	margin-left: 32px;
@@ -4314,13 +4314,13 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	visibility: collapse;
 }
 
-.RadiantVictory #RadiantTeamNameContainer,
-.RadiantHasTeamID #RadiantTeamNameContainer
+.RadiantVictory #2_TeamNameContainer,
+.RadiantHasTeamID #2_TeamNameContainer
 {
 	visibility: visible;
 }
 
-#RadiantVictoryText
+#2_VictoryText
 {
 	horizontal-align: left;
 	color: #B4FAB6;
@@ -4333,17 +4333,17 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	height: 60px;
 }
 
-.LocalPlayerIsDire #RadiantVictoryText
+.LocalPlayerIsDire #2_VictoryText
 {
 	//color: #FA755F;
 }
 
-.LocalPlayerIsDire #DireVictoryText
+.LocalPlayerIsDire #3_VictoryText
 {
 	//color: #B4FAB6;
 }
 
-#DireTeamNameContainer
+#3_TeamNameContainer
 {
 	flow-children: left;
 	margin-right: 32px;
@@ -4353,13 +4353,13 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	margin-top: 24px;
 }
 
-.DireVictory #DireTeamNameContainer,
-.DireHasTeamID #DireTeamNameContainer
+.DireVictory #3_TeamNameContainer,
+.DireHasTeamID #3_TeamNameContainer
 {
 	visibility: visible;
 }
 
-#DireVictoryText
+#3_VictoryText
 {
 	horizontal-align: right;
 	text-align: right;
@@ -4382,13 +4382,13 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	transition-timing-function: ease-in-out;
 }
 
-#RadiantScore
+#2_Score
 {
 	text-shadow: 0px 0px 24px 1.0 #009900aa;
 	transform: translateX( -110px );
 }
 
-#DireScore
+#3_Score
 {
 	text-shadow: 0px 0px 24px 1.0 #990000aa;
 	transform: translateX( 110px );
@@ -4890,17 +4890,17 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 	width: 48px;
 }
 
-#RadiantPenalty, #DirePenalty
+#2_Penalty, #3_Penalty
 {
 	visibility: collapse;
 }
 
-.RadiantDraftPenalty #RadiantPenalty
+.RadiantDraftPenalty #2_Penalty
 {
 	visibility: visible;
 }
 
-.DireDraftPenalty #DirePenalty
+.DireDraftPenalty #3_Penalty
 {
 	visibility: visible;
 }
@@ -4966,16 +4966,16 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 	background-image: url("s2r://panorama/images/textures/minimap_hero_enemy_psd.vtex");
 }
 
-#HeatmapRadiantHero1 { wash-color: rgb( 51, 117, 255 ); }
-#HeatmapRadiantHero2 { wash-color: rgb( 102, 255, 191 ); }
-#HeatmapRadiantHero3 { wash-color: rgb( 191, 0, 191 ); }
-#HeatmapRadiantHero4 { wash-color: rgb( 243, 240, 11 ); }
-#HeatmapRadiantHero5 { wash-color: rgb( 255, 107, 0 ); }
-#HeatmapDireHero1 { wash-color: rgb( 254, 134, 194 ); }
-#HeatmapDireHero2 { wash-color: rgb( 161, 180, 71 ); }
-#HeatmapDireHero3 { wash-color: rgb( 101, 217, 247 ); }
-#HeatmapDireHero4 { wash-color: rgb( 0, 131, 33 ); }
-#HeatmapDireHero5 { wash-color: rgb( 164, 105, 0 ); }
+#Heatmap_2_Hero1 { wash-color: rgb( 51, 117, 255 ); }
+#Heatmap_2_Hero2 { wash-color: rgb( 102, 255, 191 ); }
+#Heatmap_2_Hero3 { wash-color: rgb( 191, 0, 191 ); }
+#Heatmap_2_Hero4 { wash-color: rgb( 243, 240, 11 ); }
+#Heatmap_2_Hero5 { wash-color: rgb( 255, 107, 0 ); }
+#Heatmap_3_Hero1 { wash-color: rgb( 254, 134, 194 ); }
+#Heatmap_3_Hero2 { wash-color: rgb( 161, 180, 71 ); }
+#Heatmap_3_Hero3 { wash-color: rgb( 101, 217, 247 ); }
+#Heatmap_3_Hero4 { wash-color: rgb( 0, 131, 33 ); }
+#Heatmap_3_Hero5 { wash-color: rgb( 164, 105, 0 ); }
 
 /* Plus Per Player Checkboxes */
 
@@ -6576,8 +6576,8 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	margin-top: -8px;
 }
 
-#DireTeamScore,
-#RadiantTeamScore
+#3_TeamScore,
+#2_TeamScore
 {
 	font-size: 18px;
 	//color: white;
@@ -6906,8 +6906,8 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	opacity: 0.0;
 }
 
-#GraphRadiantSelectedToggleButton,
-#GraphDireSelectedToggleButton
+#Graph_2_SelectedToggleButton,
+#Graph_3_SelectedToggleButton
 {
 	//vertical-align: middle;
 	margin-top: 12px;
@@ -6920,24 +6920,24 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 }
 
 
-.DireVictory #GraphDireSelectedToggleButton,
-.RadiantVictory #GraphRadiantSelectedToggleButton
+.DireVictory #Graph_3_SelectedToggleButton,
+.RadiantVictory #Graph_2_SelectedToggleButton
 {
 	background-color: #CAD3E7;
 }
 
-#GraphRadiantSelectedToggleButton .TickBox,
-#GraphDireSelectedToggleButton .TickBox
+#Graph_2_SelectedToggleButton .TickBox,
+#Graph_3_SelectedToggleButton .TickBox
 {
 	horizontal-align: center;
 }
 
 
-.GraphsVisible.GraphPlayerNetWorth #GraphDireSelectedToggleButton,
-.GraphsVisible.GraphPlayerNetWorth #GraphRadiantSelectedToggleButton,
+.GraphsVisible.GraphPlayerNetWorth #Graph_3_SelectedToggleButton,
+.GraphsVisible.GraphPlayerNetWorth #Graph_2_SelectedToggleButton,
 .GraphsVisible.GraphPlayerNetWorth .GraphCheckboxContainer,
-.GraphsVisible.GraphPlayerLevel #GraphDireSelectedToggleButton,
-.GraphsVisible.GraphPlayerLevel #GraphRadiantSelectedToggleButton,
+.GraphsVisible.GraphPlayerLevel #Graph_3_SelectedToggleButton,
+.GraphsVisible.GraphPlayerLevel #Graph_2_SelectedToggleButton,
 .GraphsVisible.GraphPlayerLevel .GraphCheckboxContainer
 {
 	opacity: 1;
@@ -7180,15 +7180,15 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 //  margin-top: 32px;
 }
 
-#PinnedDireNames,
-#PinnedDire
+#Pinned_3_Names,
+#Pinned_3
 {
 	//vertical-align: bottom;
 	//margin-bottom: 32px;
 }
 
-#RadiantTeamName,
-#DireTeamName
+#2_TeamName,
+#3_TeamName
 {
 
 	color: white;
@@ -7582,20 +7582,20 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	z-index: 0;
 }
 
-#RadiantWinner,
-#DireWinner
+#2_Winner,
+#3_Winner
 {
 	margin-top: 12px;
 }
 
-.DireVictory #DireWinner,
-.RadiantVictory #RadiantWinner
+.DireVictory #3_Winner,
+.RadiantVictory #2_Winner
 {
 	visibility: visible;
 }
 
-.DireVictory #RadiantWinner,
-.RadiantVictory #DireWinner
+.DireVictory #2_Winner,
+.RadiantVictory #3_Winner
 {
 	visibility: collapse;
 }
@@ -8242,31 +8242,31 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 }
 
 .RadiantVictory #LeftHeroes #BackgroundFX,
-.RadiantVictory #PinnedRadiant #BackgroundFX,
+.RadiantVictory #Pinned_2 #BackgroundFX,
 .RadiantVictory #LeftHeroes #LevelUpFX,
-.RadiantVictory #PinnedRadiant #LevelUpFX
+.RadiantVictory #Pinned_2 #LevelUpFX
 {
 	visibility: visible;
 }
 .RadiantVictory #LeftHeroes .RankDataMissing #BackgroundFX,
-.RadiantVictory #PinnedRadiant .RankDataMissing #BackgroundFX,
+.RadiantVictory #Pinned_2 .RankDataMissing #BackgroundFX,
 .RadiantVictory #LeftHeroes .RankDataMissing #LevelUpFX,
-.RadiantVictory #PinnedRadiant .RankDataMissing #LevelUpFX
+.RadiantVictory #Pinned_2 .RankDataMissing #LevelUpFX
 {
 	visibility: collapse;
 }
 
 .DireVictory #RightHeroes #BackgroundFX,
-.DireVictory #PinnedDire #BackgroundFX,
+.DireVictory #Pinned_3 #BackgroundFX,
 .DireVictory #RightHeroes #LevelUpFX,
-.DireVictory #PinnedDire #LevelUpFX
+.DireVictory #Pinned_3 #LevelUpFX
 {
 	visibility: visible;
 }
 .DireVictory #RightHeroes .RankDataMissing #BackgroundFX,
-.DireVictory #PinnedDire .RankDataMissing #BackgroundFX,
+.DireVictory #Pinned_3 .RankDataMissing #BackgroundFX,
 .DireVictory #RightHeroes .RankDataMissing #LevelUpFX,
-.DireVictory #PinnedDire .RankDataMissing #LevelUpFX
+.DireVictory #Pinned_3 .RankDataMissing #LevelUpFX
 {
 	visibility: collapse;
 }

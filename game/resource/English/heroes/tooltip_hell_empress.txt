@@ -30,7 +30,7 @@
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_Note0"           "Hurl Through Hell's initial effect and debuffs pierce spell immunity."
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_hurl_radius"       "EFFECT RADIUS:"
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_hurl_damage"       "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
-"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_debuff_duration"     "#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_abilityduration}"
+"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_debuff_duration"     "#{DOTA_Tooltip_ability_sandking_caustic_finale_caustic_finale_slow_duration}"
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_cast_range"        "CAST RANGE:"
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_scepter_description"   "Causes targets to be affected by four random debuffs instead of two."
 

@@ -52,48 +52,6 @@ function TogglePlayPause()
 	}
 };
 
-function LightenDarkenColor(col, amt) {
-	var usePound = false;
-  
-	if (col[0] == "#") {
-		col = col.slice(1);
-		usePound = true;
-	}
- 
-	var num = parseInt(col,16);
- 
-	var r = (num >> 16) + amt;
- 
-	if (r > 255) r = 255;
-	else if  (r < 0) r = 0;
- 
-	var b = ((num >> 8) & 0x00FF) + amt;
- 
-	if (b > 255) b = 255;
-	else if  (b < 0) b = 0;
- 
-	var g = (num & 0x0000FF) + amt;
- 
-	if (g > 255) g = 255;
-	else if (g < 0) g = 0;
-	
-	var color = ("") + (g | (b << 8) | (r << 16)).toString(16);
-
-	var length = color.length;
-
-	if ( length < 6 ) {
-		for (var i = 0; i < (6-length); i++) {
-			color = "0" + color;
-		}
-	}
-
-	return (usePound?"#":"") + color;
-}
-
-function rnd(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function SetDonatorRow(panel, playerId, player_table) {
 //	$.Schedule(0.1, function(){
 //		SetDonatorRow(panel, playerId)
@@ -317,7 +275,6 @@ function EndScoreboard(args) {
 
 	var row_height = "56px";
 	var row_marginBottom = "3.5px";
-	var opposite_team = 3;
 
 /*
 	var mmr_rank_to_medals = {
@@ -332,43 +289,44 @@ function EndScoreboard(args) {
 	}
 */
 
-//	$.Msg(args.players)
-
+	// $.Msg(args.players);
 	for (var team_number = 2; team_number <= 13; team_number++) {
-		if (team_number == 3)
-			opposite_team = 2;
+		var pinned_team_container = $("#Pinned_" + team_number);
+		if (!pinned_team_container) {
+			$.Msg("Skipping team: " + team_number);
+			continue;
+		}
 
-		var pinned_team_container = $("#Pinned" + team_number);
 		pinned_team_container.AddClass("PinnedTeam");
 		pinned_team_container.AddClass("TomBottomFlow");
 
-		var player_row_container = $("#" + team_number + "PlayerRows");
+		var player_row_container = $("#" + team_number + "_PlayerRows");
 		// not sure why i have to hardcode it yet
 		player_row_container.style.flowChildren = "down";
 		player_row_container.style.height = "fit-children";
 //		$.Msg("Team: " + team_number)
 
-		var player_damage_dealt_row_container = $("#" + team_number + "DamageDealtRows");
+		var player_damage_dealt_row_container = $("#" + team_number + "_DamageDealtRows");
 //		var player_damage_received_row_container = $("#" + team_number + "DamageReceivedRows");
-		var panel_kill_matrix_row_container = $("#" + team_number + "KillMatrixRows");
+		var panel_kill_matrix_row_container = $("#" + team_number + "_KillMatrixRows");
 		panel_kill_matrix_row_container.RemoveClass("StatRowHeight");
-		var panel_support_items_row_container = $("#" + team_number + "SupportItemsRows");
+		var panel_support_items_row_container = $("#" + team_number + "_SupportItemsRows");
 
-		var panel_abilities_row_legend_container = $("#Abilities" + team_number + "PlayerRowLegend");
+		var panel_abilities_row_legend_container = $("#Abilities_" + team_number + "_PlayerRowLegend");
 		var panel_support_item = $.CreatePanel('Panel', panel_abilities_row_legend_container, '');
 		panel_support_item.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_abilities_row_legend.xml", false, false);
 
-		var panel_abilities_row_container = $("#Abilities" + team_number + "PlayerRows");
+		var panel_abilities_row_container = $("#Abilities_" + team_number + "_PlayerRows");
 
 //		if (Game.GetTeamDetails(team_number).team_num_players > 0) {
 			// Set Team name and score
-			$("#HeroIconsColumn").FindChildTraverse(team_number + "TeamName").text = $.Localize("#Overthrow_Team_" + team_number);
-			$("#" + team_number + "TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
+			$("#HeroIconsColumn").FindChildTraverse(team_number + "_TeamName").text = $.Localize("#Overthrow_Team_" + team_number);
+			$("#" + team_number + "_TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
 
 			if (Game.GetGameWinner() == team_number)
-				$("#" + team_number + "Winner").style.visibility = "visible";
+				$("#" + team_number + "_Winner").style.visibility = "visible";
 
-			$("#" + team_number + "PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
+			$("#" + team_number + "_PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
 
 //			if (IsRanked)
 //				$("#" + team_number + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
@@ -376,7 +334,7 @@ function EndScoreboard(args) {
 			$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
 
 			$("#NormalMatchPlayers").AddClass("PermanentBuffs" + buff_length);
-			$("#" + team_number + "PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
+			$("#" + team_number + "_PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
 
 //			$.Msg(args.data)
 //			$.Msg(args.players)
@@ -635,26 +593,26 @@ function EndScoreboard(args) {
 				var panel_kill_matrix_row = $.CreatePanel('DOTAPostGameKillMatrixRow', panel_kill_matrix_row_container, 'KillMatrixHero' + id);
 				panel_kill_matrix_row.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_kill_matrix_row.xml", false, false);
 
-				var iteration = -1;
-				$.Each(Game.GetPlayerIDsOnTeam(opposite_team), function(enemy_id) {
-					iteration++;
-					var enemy_info = Game.GetPlayerInfo(enemy_id);
+// 				var iteration = -1;
+// 				$.Each(Game.GetPlayerIDsOnTeam(opposite_team), function(enemy_id) {
+// 					iteration++;
+// 					var enemy_info = Game.GetPlayerInfo(enemy_id);
 
-					if (player_result && player_result.kills_done_to_hero && player_result.kills_done_to_hero[enemy_id] > 0 && panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration)) {
-						panel_kill_matrix_row.AddClass("Victim_" + iteration + "_Active")
-						panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration).text = "x" + player_result.kills_done_to_hero[enemy_id];
-					}
+// 					if (player_result && player_result.kills_done_to_hero && player_result.kills_done_to_hero[enemy_id] > 0 && panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration)) {
+// 						panel_kill_matrix_row.AddClass("Victim_" + iteration + "_Active")
+// 						panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration).text = "x" + player_result.kills_done_to_hero[enemy_id];
+// 					}
 
-					// TODO: Somehow, panel 5 to 9 are not created in 10v10, despite dashboard_page_post_game_kill_matrix_row.xml being edited with 10 panels
-//					$.Msg(iteration + " / " + panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration))
-					if (panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration)) {
-						// using panel.heroname doesn't work for custom heroes
-						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundImage = 'url("s2r://panorama/images/heroes/icons/' + enemy_info.player_selected_hero + '.png")';
-						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundSize = "cover";
+// 					// TODO: Somehow, panel 5 to 9 are not created in 10v10, despite dashboard_page_post_game_kill_matrix_row.xml being edited with 10 panels
+// //					$.Msg(iteration + " / " + panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration))
+// 					if (panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration)) {
+// 						// using panel.heroname doesn't work for custom heroes
+// 						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundImage = 'url("s2r://panorama/images/heroes/icons/' + enemy_info.player_selected_hero + '.png")';
+// 						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundSize = "cover";
 
-						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).heroname = enemy_info.player_selected_hero;
-					}
-				});
+// 						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).heroname = enemy_info.player_selected_hero;
+// 					}
+// 				});
 
 				panel_kill_matrix_row.FindChildTraverse("TotalKills").GetChild(0).text = player_info.player_kills;
 
@@ -791,7 +749,7 @@ function EndScoreboard(args) {
 //					pinned_team_container.GetChild(child).style.height = row_height;
 //				}
 
-				$("#" + team_number + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendLevel")[0].style.visibility = "collapse";
+				$("#" + team_number + "_PlayerRowLegend").FindChildrenWithClassTraverse("LegendLevel")[0].style.visibility = "collapse";
 			}
 //		}
 	}
@@ -847,67 +805,47 @@ function SetBuffTooltips(selectedEntityID, buff_panel, buff_serial) {
 
 function ResetEndScoreboardPanels() {
 	if (Game.IsInToolsMode()) {
-		for (var i = 0; i < $("#PinnedRadiant").GetChildCount(); i++) {
-			$("#PinnedRadiant").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#PinnedDire").GetChildCount(); i++) {
-			$("#PinnedDire").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#RadiantPlayerRows").GetChildCount(); i++) {
-			$("#RadiantPlayerRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#DirePlayerRows").GetChildCount(); i++) {
-			$("#DirePlayerRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#RadiantDamageDealtRows").GetChildCount(); i++) {
-			$("#RadiantDamageDealtRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#DireDamageDealtRows").GetChildCount(); i++) {
-			$("#DireDamageDealtRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#RadiantDamageReceivedRows").GetChildCount(); i++) {
-			$("#RadiantDamageReceivedRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#DireDamageReceivedRows").GetChildCount(); i++) {
-			$("#DireDamageReceivedRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#RadiantKillMatrixRows").GetChildCount(); i++) {
-			$("#RadiantKillMatrixRows").GetChild(i).DeleteAsync(0);
-		}
-
-		for (var i = 0; i < $("#DireKillMatrixRows").GetChildCount(); i++) {
-			$("#DireKillMatrixRows").GetChild(i).DeleteAsync(0);
-		}
-
-		if ($("#RadiantSupportItemsRows")) {
-			for (var i = 0; i < $("#RadiantSupportItemsRows").GetChildCount(); i++) {
-				$("#RadiantSupportItemsRows").GetChild(i).DeleteAsync(0);
+		for (let team = 2; team <= 13; team++) {
+			if ($("#Pinned_" + team)) {
+				for (var i = 0; i < $("#Pinned_" + team).GetChildCount(); i++) {
+					$("#Pinned_" + team).GetChild(i).DeleteAsync(0);
+				}
 			}
-		}
 
-		if ($("#DireSupportItemsRows")) {
-			for (var i = 0; i < $("#DireSupportItemsRows").GetChildCount(); i++) {
-				$("#DireSupportItemsRows").GetChild(i).DeleteAsync(0);
+			if ($("#" + team + "_PlayerRows")) {
+				for (var i = 0; i < $("#" + team + "_PlayerRows").GetChildCount(); i++) {
+					$("#" + team + "_PlayerRows").GetChild(i).DeleteAsync(0);
+				}
 			}
-		}
 
-		if ($("#AbilitiesRadiantPlayerRows")) {
-			for (var i = 0; i < $("#AbilitiesRadiantPlayerRows").GetChildCount(); i++) {
-				$("#AbilitiesRadiantPlayerRows").GetChild(i).DeleteAsync(0);
+			if ($("#" + team + "_DamageDealtRows")) {
+				for (var i = 0; i < $("#" + team + "_DamageDealtRows").GetChildCount(); i++) {
+					$("#" + team + "_DamageDealtRows").GetChild(i).DeleteAsync(0);
+				}
 			}
-		}
 
-		if ($("#AbilitiesDirePlayerRows")) {
-			for (var i = 0; i < $("#AbilitiesDirePlayerRows").GetChildCount(); i++) {
-				$("#AbilitiesDirePlayerRows").GetChild(i).DeleteAsync(0);
+			if ($("#" + team + "_DamageReceivedRows")) {
+				for (var i = 0; i < $("#RadiantDamageReceivedRows").GetChildCount(); i++) {
+					$("#RadiantDamageReceivedRows").GetChild(i).DeleteAsync(0);
+				}
+			}
+
+			if ($("#" + team + "_KillMatrixRows")) {
+				for (var i = 0; i < $("#" + team + "_KillMatrixRows").GetChildCount(); i++) {
+					$("#" + team + "_KillMatrixRows").GetChild(i).DeleteAsync(0);
+				}
+			}
+
+			if ($("#" + team + "_SupportItemsRows")) {
+				for (var i = 0; i < $("#" + team + "_SupportItemsRows").GetChildCount(); i++) {
+					$("#" + team + "_SupportItemsRows").GetChild(i).DeleteAsync(0);
+				}
+			}
+
+			if ($("#Abilities_" + team + "_PlayerRows")) {
+				for (var i = 0; i < $("#Abilities_" + team + "_PlayerRows").GetChildCount(); i++) {
+					$("#Abilities_" + team + "_PlayerRows").GetChild(i).DeleteAsync(0);
+				}
 			}
 		}
 	}
@@ -931,6 +869,10 @@ function ResetEndScoreboardPanels() {
 			"data":{
 				"players":{
 					"76561198015161808":{
+						"xp_change": 1234,
+						"xp_multiplier": 10,
+					},
+					"90071996842377216":{
 						"xp_change": 1234,
 						"xp_multiplier": 10,
 					},
@@ -1090,7 +1032,9 @@ function ResetEndScoreboardPanels() {
 			},
 		}
 
-		EndScoreboard(args);
-	}
+		var data = CustomNetTables.GetTableValue("game_options", "end_game");
+		$.Msg(data);
 
+		// EndScoreboard(args);
+	}
 })();

@@ -53,7 +53,7 @@
 "DOTA_Tooltip_ability_imba_jakiro_ice_path_dmg_amp"                    "%ANTIPODE BONUS:"
 "DOTA_Tooltip_ability_imba_jakiro_ice_path_attack_slow"                "ATTACK SLOW:"
 "DOTA_Tooltip_ability_imba_jakiro_ice_path_move_slow"                  "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
-"DOTA_Tooltip_ability_imba_jakiro_ice_path_range"                      "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_imba_jakiro_ice_path_range"                      "#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 
 "DOTA_Tooltip_modifier_imba_ice_path_freeze_debuff"						"Ice Path"
 "DOTA_Tooltip_modifier_imba_ice_path_freeze_debuff_Description"			"Stunned. Jakiro's other abilities will deal increased damage."

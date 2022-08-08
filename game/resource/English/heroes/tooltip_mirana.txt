@@ -37,7 +37,7 @@
 "DOTA_Tooltip_ability_imba_mirana_leap"                                 "Leap"
 "DOTA_Tooltip_ability_imba_mirana_leap_Description"                    "Mirana leaps forward into battle, empowering herself with a ferocious roar that grants bonus attack and movement speed. Speed bonus lasts %aura_duration% seconds.\n<font color='#FF7800'>Sagan's Cunning:</font> Jumps to a target point, instead of always forward. Can be self-cast to leap forward normally. Turn auto-cast on to allow leaping in place.\n<font color='#FF7800'>Through the Night:</font> Increases jump range during the night by an additional %night_leap_range_bonus%.\n<font color='#FF7800'>Roar of the Stars:</font> After jumping, emanates a %aura_aoe% radius aura which grants allies bonus movement and attack speed. The aura lasts for %aura_duration% seconds, and its efects linger for %aura_linger_duration% seconds."
 "DOTA_Tooltip_ability_imba_mirana_leap_Lore"                            "None can fail to recognize Mirana's iconic white beast in the heat of battle."
-"DOTA_Tooltip_ability_imba_mirana_leap_leap_range"                      "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_imba_mirana_leap_leap_range"                      "#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 "DOTA_Tooltip_ability_imba_mirana_leap_move_speed_pct"                  "%MOVEMENT BONUS:"
 "DOTA_Tooltip_ability_imba_mirana_leap_attack_speed"                    "ATTACK SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_mirana_leap_max_charges"						"MAX CHARGES:"

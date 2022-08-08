@@ -3,7 +3,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_Note0"					"Units take primary damage on their first shockwave hit, then secondary damage on all other instances based on the same cast of the ability."
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_Lore"					"#{DOTA_Tooltip_ability_magnataur_shockwave_Lore}"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_damage"					"#{DOTA_Tooltip_ability_magnataur_shockwave_shock_damage}"
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_shock_distance"			"#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_imba_magnataur_shockwave_shock_distance"			"#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_polarize_duration"		"POLARIZE DURATION:"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_scepter_description"		"<font color='#FF7800'>Increases travel distance and speed, and causes Shockwave to come back. Return wave slows units, but deals half damage to creeps.</font>"
 

@@ -157,7 +157,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
 		else
-			self:SetupContributors()
+			-- self:SetupContributors()
 			self:SetupFrostivus()
 			self:SetupShrines()
 		end
@@ -422,9 +422,11 @@ function GameMode:OnEntityKilled(keys)
 		-------------------------------------------------------------------------------------------------
 		if killed_unit:GetUnitName() == "npc_dota_badguys_fort" then
 			GAME_WINNER_TEAM = 2
+			api:OnGameEnd()
 			return
 		elseif killed_unit:GetUnitName() == "npc_dota_goodguys_fort" then
 			GAME_WINNER_TEAM = 3
+			api:OnGameEnd()
 			return
 		end
 

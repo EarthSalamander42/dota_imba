@@ -246,7 +246,7 @@
 "DOTA_Tooltip_ability_roshan_toss_Lore"                     "Roshan's gargantuan stature allows him to catapult even the sturdiest of warriors."
 "DOTA_Tooltip_ability_roshan_toss_Note0"                    "You can toss allies, but they don't take damage."
 "DOTA_Tooltip_ability_roshan_toss_radius"                   "#{DOTA_Tooltip_ability_filler_ability_radius}"
-"DOTA_Tooltip_ability_roshan_toss_tooltip_range"                "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_roshan_toss_tooltip_range"                "#{DOTA_Tooltip_ability_antimage_blink_abilitycastrange}"
 "DOTA_Tooltip_ability_roshan_toss_toss_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 "DOTA_Tooltip_ability_roshan_berserkers_blood"                  "Berserker's Blood"
