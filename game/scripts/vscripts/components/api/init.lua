@@ -690,9 +690,11 @@ function api:RegisterGame(callback)
 		api.emblems = data.emblems or nil
 		api.disabled_heroes = data.disabled_heroes or nil
 
-		if IsInToolsMode() then
-			print(data)
-		end
+		-- if IsInToolsMode() then
+		-- 	print(data.game_id)
+		-- 	print(data.players)
+		-- 	print(data.disabled_heroes)
+		-- end
 
 		if callback ~= nil then
 			callback(data)

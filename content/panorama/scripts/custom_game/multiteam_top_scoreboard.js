@@ -23,18 +23,16 @@ function UpdateScoreboard()
 	if ( GameUI.CustomUIConfig().multiteam_top_scoreboard )
 	{
 		var cfg = GameUI.CustomUIConfig().multiteam_top_scoreboard;
-		$.Msg(cfg)
-		if ( cfg.LeftInjectXMLFile )
-		{
+
+		if ( cfg.LeftInjectXMLFile ) {
 			$( "#LeftInjectXMLFile" ).BLoadLayout( cfg.LeftInjectXMLFile, false, false );
 		}
-		if ( cfg.RightInjectXMLFile )
-		{
+
+		if ( cfg.RightInjectXMLFile ) {
 			$( "#RightInjectXMLFile" ).BLoadLayout( cfg.RightInjectXMLFile, false, false );
 		}
 
-		if ( typeof(cfg.shouldSort) !== 'undefined')
-		{
+		if ( typeof(cfg.shouldSort) !== 'undefined') {
 			shouldSort = cfg.shouldSort;
 		}
 	}

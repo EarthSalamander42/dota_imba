@@ -23,7 +23,7 @@ require('libraries/rgb_to_hex')
 require('libraries/selection') -- For Turbo Couriers
 require('libraries/timers')
 -- require('libraries/wearables')
--- require('libraries/wearables_warmful_ancient')
+require('libraries/wearables_warmful_ancient')
 
 require('internal/gamemode')
 require('internal/events')
@@ -31,7 +31,7 @@ require('internal/events')
 -- add components below the api
 VANILLA_ABILITIES_BASECLASS = require('components/abilities/vanilla_baseclass')
 require('components/abandon')
--- require('components/battlepass/init')
+require('components/battlepass/init')
 -- require('components/chat_wheel/init')
 require('components/courier/init')
 if GetMapName() == "imba_demo" or IsInToolsMode() then
@@ -90,7 +90,7 @@ function GameMode:OnAllPlayersLoaded()
 
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter(Dynamic_Wrap(GameMode, "RuneSpawnFilter"), self)
 
-	GameRules:GetGameModeEntity():SetPauseEnabled(false)
+	GameRules:GetGameModeEntity():SetPauseEnabled(IsInToolsMode())
 
 	if IsInToolsMode() then
 		Convars:RegisterCommand('events_test', function() GameMode:StartEventTest() end, "events test", FCVAR_CHEAT)

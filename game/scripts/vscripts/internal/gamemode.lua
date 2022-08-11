@@ -60,7 +60,7 @@ function GameMode:_InitGameMode()
 		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
 		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
 
-		if IsInToolsMode() or GetMapName() == "imba_demo" then
+		if not IsInToolsMode() or GetMapName() ~= "imba_demo" then
 			GameRules:SetCustomGameBansPerTeam(IMBA_PLAYERS_ON_GAME / #CUSTOM_TEAM_PLAYER_COUNT)
 		end
 	end

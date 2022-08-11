@@ -54,7 +54,7 @@ ListenToGameEvent('npc_spawned', function(event)
 	if type(ply_table) == nil then ply_table = nil end
 
 	if npc:IsIllusion() or string.find(npc:GetUnitName(), "npc_dota_lone_druid_bear") then
-		if ply_table and ply_table.toggle_tag == 0 or ply_table.toggle_tag == false then
+		if ply_table and (not ply_table.toggle_tag or ply_table.toggle_tag == 0 or ply_table.toggle_tag) == false then
 			return
 		end
 
@@ -74,7 +74,7 @@ ListenToGameEvent('npc_spawned', function(event)
 		-- The commented out lines here are what I used to test in tools mode
 		if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 or string.find(GetMapName(), "demo") then
 		-- if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 or (IsInToolsMode()) then
-			if ply_table and ply_table.toggle_tag == 1 or ply_table.toggle_tag == true then
+			if ply_table and ply_table.toggle_tag and ply_table.toggle_tag == 1 or ply_table.toggle_tag == true then
 				npc:SetupHealthBarLabel()
 			end
 
