@@ -96,14 +96,87 @@
 			</Panel>
 		</snippet>
 
-		<snippet name="JungleSpiritEssenceCollected">
-			<Panel class="JungleSpiritEssenceCollected">
-				<Panel id="EssenceImage" />
-				<Label id="EssenceCollected" text="{i:essence_collected}" />
-				<Label id="EssenceCollectedLabel" text="#DOTA_TI9_PostGame_EssenceCollected" />
+		<snippet name="PinnedTeam">
+			<Panel class="FillWidth">
+				<Panel class="TeamTitle TeamName StatRowHeight PinnedTeamHeader">
+					<Panel id="TeamLogoDefault" class="LobbyTeamIconDefault" />
+
+					<DOTAUGCImage class="TeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect" />
+
+					<Panel class="TopBottomFlow SlidingName TeamBlock">
+						<Panel class="LeftRightFlow">
+							<Label id="TeamName"  text="{s:team_name}" />
+						</Panel>
+
+						<Label id="TeamScore" class="PinnedTeamScore" text="#dota_page_match_details_radiant_score" html="true"/>
+					</Panel>
+
+					<Panel id="Winner" class="WinnerPanel LeftRightFlow">
+						<Panel class="WinnerSides"/>
+						<Label class="WinnerTag" text="#DOTATournamentGameWinner"/>
+					</Panel>
+				</Panel>
+
+				<Panel id="PinnedTeam" class="PinnedTeam TopBottomFlow" />
 			</Panel>
 		</snippet>
 
+		<snippet name="PlayerRows">
+			<Panel class="FillWidth">
+				<!-- <Panel class="TeamIdentificationRow">
+					<Panel id="RadiantTeamLogoDefault" class="LobbyTeamIconDefault" />
+					<DOTAUGCImage class="RadiantTeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect" />
+					<Label id="TeamName" text="{s:team_name}" />
+				</Panel> -->
+
+				<!-- Full of dashboard_page_post_game_row.xml blocks -->
+				<Panel class="PlayerRows" id="PlayerRows" />
+			</Panel>
+		</snippet>
+
+		<snippet name="KillMatrixRows">
+			<Panel class="FillWidth">
+				<Panel class="KillMatrixTeamContainer" id="KillMatrixRows" />
+
+				<Panel id="KillMatrixHeader" class="StatSectionTitle">
+					<Label id="KillMatrixTitle" text="#dota_page_match_details_radiant_kills" />
+					<Label id="KillMatrixTitleTotal" text="#dota_page_match_details_header_total" />
+				</Panel>
+			</Panel>
+		</snippet>
+
+		<snippet name="AbilitiesPlayerRowLegend">
+			<Panel class="FillWidth">
+				<Panel class="TeamIdentificationRow">
+					<Panel id="TeamLogoDefault" class="LobbyTeamIconDefault" />
+					<DOTAUGCImage class="TeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect"/>
+					<Label id="TeamName" text="{s:team_name}" />
+				</Panel>
+
+				<!-- Loaded via dashboard_page_match_details_abilities_row_legend.xml -->
+				<Panel class="AbilityUpgradesRowLegend StatRowHeight" id="AbilitiesPlayerRowLegend" />
+
+				<!-- Full of dashboard_page_post_game_abilities_row.xml blocks -->
+				<Panel class="AbilitiesPlayerRows" id="AbilitiesPlayerRows"/>
+			</Panel>
+		</snippet>
+
+		<snippet name="DamageDealtLegend">
+			<Panel class="FillWidth">
+				<Panel class="DamageDealtLegend StatRowHeight StatSectionTitle">
+					<Label class="DamageDealtTitle" text="#dota_page_post_game_damage_dealt" />
+
+					<Panel class="DamageDealtSubLegend">
+						<Label class="DamageDealtSubTitleHero" text="#dota_page_post_game_damage_dealt_hero" />
+						<Label class="DamageDealtSubTitleBuilding" text="#dota_page_post_game_damage_dealt_building" />
+					</Panel>
+				</Panel>
+
+				<Panel class="DamageDealtTeamContainer" id="DamageDealtRows">
+					<!-- DetailsDamageDealtPlayerRow -->
+				</Panel>
+			</Panel>
+		</snippet>
 	</snippets>
 
 	<DOTAPostGame>
@@ -358,33 +431,14 @@
 
 					<Panel id="DetailsScoreboardContainer" class="DetailsPanel">
 						<Panel id="DetailsScoreboard" class="">
+							<!-- Loaded via dashboard_page_post_game_row_legend.xml -->
+
 							<Panel id="NormalMatchPlayers">
-								<Panel class="TeamIdentificationRow">
-									<Panel id="RadiantTeamLogoDefault" class="LobbyTeamIconDefault" />
-									<DOTAUGCImage class="RadiantTeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect" />
-									<Label id="2_TeamName" text="{s:team_name}" />
-								</Panel>
+								<Panel class="PlayerRowLegend StatRowHeight" id="PlayerRowLegend" />
 
-								<!-- Loaded via dashboard_page_post_game_row_legend.xml -->
-								<Panel class="PlayerRowLegend StatRowHeight" id="2_PlayerRowLegend" />
-
-								<!-- Full of dashboard_page_post_game_row.xml blocks -->
-								<Panel class="PlayerRows" id="2_PlayerRows" />
-
-								<Panel class="TeamIdentificationRow">
-									<Panel id="DireTeamLogoDefault" class="LobbyTeamIconDefault" />
-									<DOTAUGCImage class="DireTeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect" />
-									<Label id="3_TeamName" text="{s:team_name}" />
-								</Panel>
-
-								<!-- Loaded via dashboard_page_post_game_row_legend.xml -->
-								<Panel class="PlayerRowLegend StatRowHeight" id="3_PlayerRowLegend" />
-
-								<!-- Full of dashboard_page_post_game_row.xml blocks -->
-								<Panel class="PlayerRows" id="3_PlayerRows" />
+								<!-- PlayerRows snippet -->
 							</Panel>
 						</Panel>
-
 						
 						<!--
 			<Label class="HeroDamage HeroDamageColumn" text="{i:hero_damage}" />
@@ -392,30 +446,7 @@
 -->
 						
 						<Panel id="DetailsDamageDealt">
-							<Panel class="DamageDealtLegend StatRowHeight StatSectionTitle">
-								<Label class="DamageDealtTitle" text="#dota_page_post_game_damage_dealt" />
-
-								<Panel class="DamageDealtSubLegend">
-									<Label class="DamageDealtSubTitleHero" text="#dota_page_post_game_damage_dealt_hero" />
-									<Label class="DamageDealtSubTitleBuilding" text="#dota_page_post_game_damage_dealt_building" />
-								</Panel>
-							</Panel>
-
-							<Panel class="DamageDealtTeamContainer" id="2_DamageDealtRows">
-								<!-- DetailsDamageDealtPlayerRow -->
-							</Panel>
-
-							<Panel class="DamageDealtLegend StatRowHeight StatSectionTitle">
-								<Label class="DamageDealtTitle" text="#dota_page_post_game_damage_dealt" />
-								<Panel class="DamageDealtSubLegend">
-									<Label class="DamageDealtSubTitleHero" text="#dota_page_post_game_damage_dealt_hero" />
-									<Label class="DamageDealtSubTitleBuilding" text="#dota_page_post_game_damage_dealt_building" />
-								</Panel>
-							</Panel>
-
-							<Panel class="DamageDealtTeamContainer" id="3_DamageDealtRows">
-								<!-- DetailsDamageDealtPlayerRow -->
-							</Panel>
+							<!-- DamageDealtLegend snippet -->
 						</Panel>
 
 						<Panel id="DetailsDamageReceived">
@@ -484,14 +515,7 @@
 							</Panel>
 
 							<Panel class="KillMatrixContainer">
-								<Panel class="KillMatrixTeamContainer" id="2_KillMatrixRows" />
-
-								<Panel id="KillMatrixHeader" class="StatRowHeight StatSectionTitle">
-									<Label id="KillMatrixTitle" text="#dota_page_match_details_radiant_kills" />
-									<Label id="KillMatrixTitleTotal" text="#dota_page_match_details_header_total" />
-								</Panel>
-
-								<Panel class="KillMatrixTeamContainer KillMatrixRightColumn" id="3_KillMatrixRows" />
+								<!-- KillMatrixRows snippet -->
 							</Panel>
 						</Panel>
 
@@ -515,30 +539,7 @@
 						</Panel>
 
 						<Panel id="DetailsAbilities">
-							<Panel class="TeamIdentificationRow">
-								<Panel id="RadiantTeamLogoDefault" class="LobbyTeamIconDefault" />
-								<DOTAUGCImage class="RadiantTeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect"/>
-								<Label id="RadiantTeamName" text="{s:radiant_name}" />
-							</Panel>
-
-							<!-- Loaded via dashboard_page_match_details_abilities_row_legend.xml -->
-							<Panel class="AbilityUpgradesRowLegend StatRowHeight" id="Abilities_2_PlayerRowLegend" />
-
-							<!-- Full of dashboard_page_post_game_abilities_row.xml blocks -->
-							<Panel class="AbilitiesPlayerRows" id="Abilities_2_PlayerRows"/>
-
-							<Panel class="TeamIdentificationRow">
-								<Panel id="DireTeamLogoDefault" class="LobbyTeamIconDefault" />
-								<DOTAUGCImage class="DireTeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect" />
-								<Label id="DireTeamName" text="{s:dire_name}" />
-							</Panel>
-
-							<!-- Loaded via dashboard_page_match_details_abilities_row_legend.xml -->
-							<Panel class="AbilityUpgradesRowLegend StatRowHeight" id="Abilities_3_PlayerRowLegend" />
-
-							<!-- Full of dashboard_page_post_game_abilities_row.xml blocks -->
-							<Panel class="AbilitiesPlayerRows" id="Abilities_3_PlayerRows" />
-
+							<!-- AbilitiesPlayerRowLegend snippet -->
 						</Panel>
 					</Panel>
 
@@ -746,45 +747,9 @@
 
 				<Panel id="PinnedHeroes" class="LeftRightFlow">
 					<Panel id="PinnedHeroesLeftMargin"/>
+
 					<Panel id="HeroIconsColumn" class="PinnedColumn TopBottomFlow">
-						<Panel class="2_TeamTitle TeamName StatRowHeight PinnedTeamHeader">
-							<Panel id="2_TeamLogoDefault" class="LobbyTeamIconDefault" />
-							<DOTAUGCImage class="2_TeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect" />
-							<Panel class="TopBottomFlow SlidingName TeamBlock">
-								<Panel class="LeftRightFlow">
-									<Label id="2_TeamName"  text="{s:team_name}" />
-								</Panel>
-								<Label id="2_TeamScore" class="PinnedTeamScore" text="#dota_page_match_details_radiant_score" html="true"/>
-							</Panel>
-							<ToggleButton id="Graph_2_SelectedToggleButton" onactivate="DOTAPostGameToggleTeamSelected( 2 )"/>
-							<Panel id="2_Winner" class="WinnerPanel LeftRightFlow">
-								<Panel class="WinnerSides"/>
-								<Label class="WinnerTag" text="#DOTATournamentGameWinner"/>
-							</Panel>
-						</Panel>
-
-						<Panel id="Pinned_2" class="PinnedTeam TopBottomFlow" />
-
-						<Panel class="3_TeamTitle TeamName StatRowHeight PinnedTeamHeader">
-							<Panel id="3_TeamLogoDefault" class="LobbyTeamIconDefault" />
-							<DOTAUGCImage class="3_TeamLogo LobbyTeamIcon" scaling="stretch-to-fit-preserve-aspect" />
-							<Panel class="TopBottomFlow SlidingName TeamBlock">
-								<Panel class="LeftRightFlow">
-									<Label id="3_TeamName" text="{s:team_name}" />
-								</Panel>
-
-								<Label id="3_TeamScore" class="PinnedTeamScore" text="#dota_page_match_details_dire_score" html="true"/>
-							</Panel>
-
-							<ToggleButton id="Graph_3_SelectedToggleButton" onactivate="DOTAPostGameToggleTeamSelected( 3 )"/>
-
-							<Panel id="3_Winner" class="WinnerPanel LeftRightFlow">
-								<Panel class="WinnerSides"/>
-								<Label class="WinnerTag" text="#DOTATournamentGameWinner"/>
-							</Panel>
-						</Panel>
-
-						<Panel id="Pinned_3" class="PinnedTeam TopBottomFlow" />
+						<!-- PinnedTeam snippet -->
 					</Panel>
 
 					<Panel id="PinnedHeroesRightMargin"/>

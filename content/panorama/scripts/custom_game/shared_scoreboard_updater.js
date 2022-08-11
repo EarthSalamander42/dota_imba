@@ -74,61 +74,29 @@ function _ScoreboardUpdater_SetValueSafe(panel, childName, Value) {
 }
 
 function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Panel, player_info) {
-//	$.Msg("Updating player xp panel");
-
-	var ids = {
-		xpRank:  "ImbaXPRank" + playerId,
-		xp: "ImbaXP" + playerId,
-		xpEarned: "ImbaXPEarned" + playerId,
-		level: "ImbaLvl" + playerId,
-		progress_bar: "XPProgressBar" + playerId
-	};
+	// $.Msg("Updating player xp panel");
 
 	// setup panels
-	// ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" + playerId + "' value='0.0'/>");
-	// var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" + playerId + "'/>");
-
-
-	// ImbaXP_Panel.BCreateChildren("<Panel id='LevelContainer'/>");
-
-	// var LevelContainer = ImbaXP_Panel.FindChildTraverse("LevelContainer");
-	// LevelContainer.BCreateChildren("<Panel id='LevelContainerChild'/>");
-
-	// var LevelContainerChild = ImbaXP_Panel.FindChildTraverse("LevelContainerChild");
-
-	// LevelContainerChild.BCreateChildren("<Label id='LevelLabel' text='Level: '/>");
-
-	// LevelContainerChild.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='1'/>");
-	// LevelContainerChild.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='Rookie'/>");
-
-
-	// LevelContainer.BCreateChildren("<Panel id='LevelContainerChild2'/>");
-
-	// var LevelContainerChild2 = ImbaXP_Panel.FindChildTraverse("LevelContainerChild2");
-
-	// LevelContainerChild2.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='0/500'/>");
-	// LevelContainerChild2.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
-
-	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
+	if (!ImbaXP_Panel.FindChildTraverse("ImbaXPRank"))
+		ImbaXP_Panel.BLoadLayoutSnippet("ExperienceProgressBar");
 
 	if (!player_info || player_info.player_xp == 0) {
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, "N/A");
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, "N/A");
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, "N/A");
-		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, 0);
-		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#FFFFFF";
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXPRank", "N/A");
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXP", "N/A");
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaLvl", "N/A");
+		_ScoreboardUpdater_SetValueSafe(playerPanel, "XPProgressBar", 0);
+		playerPanel.FindChildTraverse(ImbaXP_Panel.FindChildTraverse("ImbaXPRank")).style.color = "#FFFFFF";
 	} else if (player_info.player_xp == 1) {
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, player_info.title);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl + ' - ');
-		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
-		// playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;		
-		// playerPanel.FindChildTraverse(ids.level).style.color = player_info.title_color;		
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXPRank", player_info.title);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXP", player_info.XP + "/" + player_info.MaxXP);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaLvl", player_info.Lvl);
+		_ScoreboardUpdater_SetValueSafe(playerPanel, "XPProgressBar", player_info.XP / player_info.MaxXP);
+		playerPanel.FindChildTraverse("ImbaXPRank").style.color = player_info.title_color;		
 	}
 
 	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 	if (gamemode)
-		gamemode = gamemode["1"];
+	gamemode = gamemode["1"];
 
 	_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", "-");
 
@@ -136,17 +104,14 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 //		if (gamemode == "1") {
 //			_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.mmr_title);
 //		} else {
-			var LegendIMR = $.GetContextPanel().FindChildrenWithClassTraverse("ScoreCol_WinRate");
-			var winrate = "winrate" + Game.GetMapInfo().map_display_name.replace("imba", "");
-
-			// if (player_info.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
-			// 	if (isInt(player_info.winrate))
-			// 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
-			// 	else if (isFloat(player_info.winrate))
-			// 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(2) + "%");					
-			// 	else
-			// 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate);
-			// }
+			if (player_info.winrate_toggle == 1 || Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198134407752") {
+				if (isInt(player_info.winrate))
+					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(0) + "%");
+				else if (isFloat(player_info.winrate))
+					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate.toFixed(2) + "%");					
+				else
+					_ScoreboardUpdater_SetTextSafe(playerPanel, "Rank", player_info.winrate);
+			}
 //		}
 	}
 }

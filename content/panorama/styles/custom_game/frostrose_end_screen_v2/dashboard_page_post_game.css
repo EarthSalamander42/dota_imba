@@ -860,35 +860,12 @@ Panel.TeamIdentificationRow Label
 	visibility: collapse;
 }
 
-#3_TeamLogoDefault
-{
-	background-image: url("s2r://panorama/images/team_icons/dire_png.vtex");
-	background-size: 100% 100%;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-}
-
-.DireHasCustomLogo #3_TeamLogoDefault
+.TeamLogo
 {
 	visibility: collapse;
 }
 
-.RadiantTeamLogo
-{
-	visibility: collapse;
-}
-
-.RadiantHasCustomLogo .RadiantTeamLogo
-{
-	visibility: visible;
-}
-
-.DireTeamLogo
-{
-	visibility: collapse;
-}
-
-.DireHasCustomLogo .DireTeamLogo
+.HasCustomLogo .TeamLogo
 {
 	visibility: visible;
 }
@@ -947,10 +924,10 @@ Panel.TeamIdentificationRow Label
 {
 	font-size: 20px;
 	font-weight: bold;
-//	letter-spacing: 1px;
+	/* letter-spacing: 1px; */
 }
 
-#2_TeamName
+#TeamName
 {
 	text-shadow: 0px 0px 6px 1.0 #9BE40C8F;
 }
@@ -1175,8 +1152,7 @@ Panel.PlayerRow Label, Panel.PlayerRow DOTAHeroImage
 	visibility: collapse;
 }
 
-#3_PlayerRowLegend,
-#2_PlayerRowLegend
+#PlayerRowLegend
 {
 	margin-left: 406px;
 }
@@ -1268,9 +1244,8 @@ Panel.PlayerRow Panel#Hero:hover Label.HeroName
 Panel.PlayerRow Label.Level
 {
 	text-align: right;
-	width: 28px;
+	width: 39px;
 	margin-right: 13px;
-	visibility: collapse;
 }
 
 Panel.PlayerRow Label.Deaths,
@@ -1303,6 +1278,7 @@ Panel.PlayerRow Label.NetWorth
 	color: #E7BA01FF;
 	font-size: 22px;
 	text-overflow: shrink;
+	text-align: center;
 }
 
 Panel.PlayerRow Label.LastHits
@@ -1327,7 +1303,7 @@ Panel.PlayerRow Label.HeroDamage,
 Panel.PlayerRow Label.HeroHealing,
 Panel.PlayerRow Label.MMRChange
 {
-	text-align: right;
+	text-align: center;
 }
 
 Panel.PlayerRow Label.TowerDamage
@@ -4233,10 +4209,8 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 .LeftExpanded .TeamScore,
 .LeftExpanded #DurationContainer,
 .RightExpanded #DurationContainer,
-.RightExpanded #3_VictoryBanner,
-.LeftExpanded #2_VictoryBanner,
-.LeftExpanded #2_TeamNameContainer,
-.RightExpanded #3_TeamNameContainer
+.LeftExpanded #VictoryBanner,
+.LeftExpanded #TeamNameContainer
 {
 	opacity:0;
 }
@@ -4245,32 +4219,20 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 .GameMode1v1.LeftExpanded .TeamScore,
 .GameMode1v1.LeftExpanded #DurationContainer,
 .GameMode1v1.RightExpanded #DurationContainer,
-.GameMode1v1.RightExpanded #3_VictoryBanner,
-.GameMode1v1.LeftExpanded #2_VictoryBanner,
-.GameMode1v1.LeftExpanded #2_TeamNameContainer,
-.GameMode1v1.RightExpanded #3_TeamNameContainer
+.GameMode1v1.LeftExpanded #VictoryBanner,
+.GameMode1v1.LeftExpanded #TeamNameContainer,
 {
 	opacity:1;
 }
 
-.RadiantVictory #2_VictoryBanner
+.RadiantVictory #VictoryBanner
 {
 	visibility: visible;
 }
 
-#3_VictoryBanner
+#VictoryBanner
 {
 	transform: translateX( 400px );
-	visibility: collapse;
-}
-
-.DireVictory #3_VictoryBanner
-{
-	visibility: visible;
-}
-
-.RadiantVictory #3_VictoryBanner
-{
 	visibility: collapse;
 }
 
@@ -4284,14 +4246,14 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 
 }
 
-#2_VictoryBanner .VictoryBannerBackground
+#VictoryBanner .VictoryBannerBackground
 {
 	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), color-stop( .2, #5bb10b77 ), to( #00000000 ) );
 }
 
-.LocalPlayerIsDire #2_VictoryBanner .VictoryBannerBackground
+.LocalPlayerIsDire #VictoryBanner .VictoryBannerBackground
 {
-	//background-color: gradient( linear, 0% 0%, 100% 0%,  from( #00000000 ), color-stop( .2, #ae332177 ), to( #00000000 ) );
+	/* background-color: gradient( linear, 0% 0%, 100% 0%,  from( #00000000 ), color-stop( .2, #ae332177 ), to( #00000000 ) ); */
 }
 
 #3_VictoryBanner .VictoryBannerBackground
@@ -4299,12 +4261,12 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	background-color: gradient( linear, 100% 0%, 0% 0%,  from( #00000000 ), color-stop( .2, #ae332177 ), to( #00000000 ) );
 }
 
-.LocalPlayerIsDire #3_VictoryBanner .VictoryBannerBackground
+.LocalPlayerIsDire #VictoryBanner .VictoryBannerBackground
 {
-	//background-color: gradient( linear, 100% 0%, 0% 0%,  from( #00000000 ), color-stop( .2, #5bb10b77 ), to( #00000000 ) );
+	/* background-color: gradient( linear, 100% 0%, 0% 0%,  from( #00000000 ), color-stop( .2, #5bb10b77 ), to( #00000000 ) ); */
 }
 
-#2_TeamNameContainer
+#TeamNameContainer
 {
 	flow-children: right;
 	margin-left: 32px;
@@ -4314,13 +4276,13 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	visibility: collapse;
 }
 
-.RadiantVictory #2_TeamNameContainer,
-.RadiantHasTeamID #2_TeamNameContainer
+.RadiantVictory #TeamNameContainer,
+.RadiantHasTeamID #TeamNameContainer
 {
 	visibility: visible;
 }
 
-#2_VictoryText
+#VictoryText
 {
 	horizontal-align: left;
 	color: #B4FAB6;
@@ -4343,7 +4305,7 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	//color: #B4FAB6;
 }
 
-#3_TeamNameContainer
+#TeamNameContainer
 {
 	flow-children: left;
 	margin-right: 32px;
@@ -4353,8 +4315,8 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	margin-top: 24px;
 }
 
-.DireVictory #3_TeamNameContainer,
-.DireHasTeamID #3_TeamNameContainer
+.DireVictory #TeamNameContainer,
+.DireHasTeamID #TeamNameContainer
 {
 	visibility: visible;
 }
@@ -4382,7 +4344,7 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 	transition-timing-function: ease-in-out;
 }
 
-#2_Score
+#Score
 {
 	text-shadow: 0px 0px 24px 1.0 #009900aa;
 	transform: translateX( -110px );
@@ -4890,7 +4852,7 @@ DOTAPostGameOverviewHero.CanSuggestInvite .OverviewHeroInviteButton
 	width: 48px;
 }
 
-#2_Penalty, #3_Penalty
+#Penalty
 {
 	visibility: collapse;
 }
@@ -6554,8 +6516,7 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 .SlidingName.TeamBlock
 {
 	width: 152px;
-	background-color: #1D1F20;
-	//background-color: transparent;
+	background-color: transparent;
 	horizontal-align: left;
 	margin-left: 72px;
 }
@@ -6574,10 +6535,10 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 .PinnedTeamScore
 {
 	margin-top: -8px;
+	margin-left: 6px;
 }
 
-#3_TeamScore,
-#2_TeamScore
+#TeamScore
 {
 	font-size: 18px;
 	//color: white;
@@ -7177,7 +7138,8 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 .PinnedTeam
 {
 	horizontal-align: center;
-//  margin-top: 32px;
+	/* margin-top: 32px; */
+	flow-children: down;
 }
 
 #Pinned_3_Names,
@@ -7187,11 +7149,11 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	//margin-bottom: 32px;
 }
 
-#2_TeamName,
-#3_TeamName
+#TeamName
 {
 
 	color: white;
+	margin-left: 6px;
 	margin-top: 6px;
 	font-size: 26px;
 //	letter-spacing: 1px;
@@ -7582,22 +7544,9 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	z-index: 0;
 }
 
-#2_Winner,
-#3_Winner
+#Winner
 {
 	margin-top: 12px;
-}
-
-.DireVictory #3_Winner,
-.RadiantVictory #2_Winner
-{
-	visibility: visible;
-}
-
-.DireVictory #2_Winner,
-.RadiantVictory #3_Winner
-{
-	visibility: collapse;
 }
 
 DOTAPostGameOverviewHero.CanReport:hover #ButtonDrawer,

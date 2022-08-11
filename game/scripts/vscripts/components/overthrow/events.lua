@@ -14,6 +14,7 @@ function COverthrowGameMode:OnGameRulesStateChange()
 
 		if GetMapName() == "imbathrow_ffa" then
 			COverthrowGameMode.TEAM_KILLS_TO_WIN = 50
+			if IsInToolsMode() then COverthrowGameMode.TEAM_KILLS_TO_WIN = 1 end
 		else
 			COverthrowGameMode.TEAM_KILLS_TO_WIN = 30
 		end
@@ -113,7 +114,7 @@ ListenToGameEvent("entity_killed", function(event)
 				if inflictor_index ~= nil then
 					local ability = EntIndexToHScript( event.entindex_inflictor )
 					if ability ~= nil then
-						if ability:GetAbilityName() ~= nil then
+						if ability.GetAbilityName and ability:GetAbilityName() ~= nil then
 							if ability:GetAbilityName() == "necrolyte_reapers_scythe" then
 								print("Killed by Necro Ult")
 								extraTime = 20

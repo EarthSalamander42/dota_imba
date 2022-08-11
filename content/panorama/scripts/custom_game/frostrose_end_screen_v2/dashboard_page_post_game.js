@@ -289,469 +289,491 @@ function EndScoreboard(args) {
 	}
 */
 
+	if (Game.IsInToolsMode()) {
+		$("#HeroIconsColumn").RemoveAndDeleteChildren();
+		$("#DetailsDamageDealt").RemoveAndDeleteChildren();
+		$("#DetailsAbilities").RemoveAndDeleteChildren();
+
+		for (let index = 0; index < $("#NormalMatchPlayers").GetChildCount(); index++) {
+			if ($("#NormalMatchPlayers").GetChild(index) && $("#NormalMatchPlayers").GetChild(index).id != "PlayerRowLegend") {
+				$("#NormalMatchPlayers").GetChild(index).DeleteAsync(0);
+			}
+		}
+	}
+
+	$("#PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
+	$("#PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
+
+	// if (IsRanked)
+	// 	$("#" + team_number + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
+
 	// $.Msg(args.players);
 	for (var team_number = 2; team_number <= 13; team_number++) {
-		var pinned_team_container = $("#Pinned_" + team_number);
+		if (team_number == 4 || team_number == 5) continue;
+
+		var pinned_team_container = $.CreatePanel('Panel', $("#HeroIconsColumn"), 'PinnedSnippet_' + team_number);
+		pinned_team_container.BLoadLayoutSnippet("PinnedTeam");
+		
 		if (!pinned_team_container) {
 			$.Msg("Skipping team: " + team_number);
 			continue;
 		}
 
+		$.Msg("Proceed to team " + team_number);
+		
 		pinned_team_container.AddClass("PinnedTeam");
 		pinned_team_container.AddClass("TomBottomFlow");
 
-		var player_row_container = $("#" + team_number + "_PlayerRows");
+		var player_row_container = $.CreatePanel('Panel', $("#NormalMatchPlayers"), 'PlayerRows_' + team_number);
+		player_row_container.BLoadLayoutSnippet("PlayerRows");
 		// not sure why i have to hardcode it yet
 		player_row_container.style.flowChildren = "down";
 		player_row_container.style.height = "fit-children";
-//		$.Msg("Team: " + team_number)
 
-		var player_damage_dealt_row_container = $("#" + team_number + "_DamageDealtRows");
-//		var player_damage_received_row_container = $("#" + team_number + "DamageReceivedRows");
-		var panel_kill_matrix_row_container = $("#" + team_number + "_KillMatrixRows");
-		panel_kill_matrix_row_container.RemoveClass("StatRowHeight");
-		var panel_support_items_row_container = $("#" + team_number + "_SupportItemsRows");
+		var player_damage_dealt_row_container = $.CreatePanel('Panel', $("#DetailsDamageDealt"), 'DamageDealtLegend_' + team_number);
+		player_damage_dealt_row_container.BLoadLayoutSnippet("DamageDealtLegend");
 
-		var panel_abilities_row_legend_container = $("#Abilities_" + team_number + "_PlayerRowLegend");
+		// var player_damage_received_row_container = $("#" + team_number + "DamageReceivedRows");
+
+		var panel_kill_matrix_row_container = $.CreatePanel('Panel', $.GetContextPanel().FindChildrenWithClassTraverse("KillMatrixContainer")[0], 'KillMatrixRows_' + team_number);
+		panel_kill_matrix_row_container.BLoadLayoutSnippet("KillMatrixRows");
+
+		var panel_abilities_row_legend_container = $.CreatePanel('Panel', $("#DetailsAbilities"), 'AbilitiesPlayerRowLegend_' + team_number);
+		panel_abilities_row_legend_container.BLoadLayoutSnippet("AbilitiesPlayerRowLegend");
+
 		var panel_support_item = $.CreatePanel('Panel', panel_abilities_row_legend_container, '');
 		panel_support_item.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_abilities_row_legend.xml", false, false);
 
-		var panel_abilities_row_container = $("#Abilities_" + team_number + "_PlayerRows");
+		var panel_abilities_row_container = pinned_team_container.FindChildTraverse("AbilitiesPlayerRows");
 
-//		if (Game.GetTeamDetails(team_number).team_num_players > 0) {
-			// Set Team name and score
-			$("#HeroIconsColumn").FindChildTraverse(team_number + "_TeamName").text = $.Localize("#Overthrow_Team_" + team_number);
-			$("#" + team_number + "_TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
+		// Set Team name and score
+		pinned_team_container.FindChildTraverse("TeamName").text = $.Localize("#Overthrow_Team_" + team_number);
+		pinned_team_container.FindChildTraverse("TeamName").style.textShadow = "0px 0px 6px 1.0 " + GameUI.CustomUIConfig().team_colors[team_number];
+		pinned_team_container.FindChildTraverse("TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
 
-			if (Game.GetGameWinner() == team_number)
-				$("#" + team_number + "_Winner").style.visibility = "visible";
+		if (Game.GetGameWinner() == team_number)
+			pinned_team_container.FindChildTraverse("Winner").style.visibility = "visible";
 
-			$("#" + team_number + "_PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
+
+		$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
+
+		$("#NormalMatchPlayers").AddClass("PermanentBuffs" + buff_length);
+
+//		$.Msg(args.data)
+//		$.Msg(args.players)
+
+		$.Each(Game.GetPlayerIDsOnTeam(team_number), function(id) {
+//			$.Msg("Player ID " + id + " in team " + team_number)
+			var player_info = Game.GetPlayerInfo(id);
+			var player_items = Game.GetPlayerItems(id);
+			var player_table = CustomNetTables.GetTableValue("battlepass_player", id.toString());
+			var player_result = undefined;
+			var player_backend_result = undefined;
+
+			if (player_info && args.players && args.players[player_info.player_steamid])
+				player_result = args.players[player_info.player_steamid];
+
+			if (player_info && args.data && args.data.players && args.data.players[player_info.player_steamid])
+				player_backend_result = args.data.players[player_info.player_steamid];
+
+//			$.Msg(player_info)
+//			$.Msg(player_table)
+//			$.Msg(player_result)
+
+			// Set left bar player informations
+			var PinnedPlayerRow = $.CreatePanel('Panel', pinned_team_container, 'PinnedPlayerRow' + id);
+			PinnedPlayerRow.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_pinned_player_row.xml", false, false);
+			PinnedPlayerRow.AddClass("PlayerName");
+
+			if (bTenvTen) {
+				PinnedPlayerRow.AddClass("StatRowHeight10v10");
+			} else {
+				PinnedPlayerRow.AddClass("StatRowHeight5v5");
+			}
+
+			// using panel.heroname doesn't work for custom heroes
+			PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundImage = 'url("s2r://panorama/images/heroes/' + Players.GetPlayerSelectedHero(id) + '.png")';
+			PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundSize = "cover";
+
+			PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").SetDialogVariable("user_account_id", player_info.player_name);
+			PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
+			PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize("#" + Players.GetPlayerSelectedHero(id));
+
+/*
+			if (IsRanked) {
+				if (player_table && player_table.mmr_title) {
+					var rank_panel = PinnedPlayerRow.FindChildTraverse("RankTierContainer");
+					rank_panel.style.visibility = "visible";
+
+					var short_title = player_table.mmr_title;
+					var title_stars = player_table.mmr_title.substring(player_table.mmr_title.length - 1, player_table.mmr_title.length)
+
+					// if last character is a number (horrible hack, look away please)
+					if (parseInt(title_stars)) {
+						short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
+						title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
+					} else {
+						short_title = player_table.mmr_title;
+						title_stars = "1";
+					}
+
+					PinnedPlayerRow.FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
+					PinnedPlayerRow.FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
+
+					rank_panel.SetPanelEvent("onmouseover", function () {
+						$.DispatchEvent("DOTAShowTextTooltip", rank_panel, player_table.mmr_title);
+					})
+					rank_panel.SetPanelEvent("onmouseout", function () {
+						$.DispatchEvent("DOTAHideTextTooltip", rank_panel);
+					})
+				}
+			}
+*/
+
+			// Set middle bar player informations
+			var PlayerRowContainer = $.CreatePanel('Panel', player_row_container, 'PlayerRow' + id);
+			PlayerRowContainer.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row.xml", false, false);
 
 //			if (IsRanked)
-//				$("#" + team_number + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
-
-			$("#DetailsSupportItems").AddClass("MaxItems" + item_length);
-
-			$("#NormalMatchPlayers").AddClass("PermanentBuffs" + buff_length);
-			$("#" + team_number + "_PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
-
-//			$.Msg(args.data)
-//			$.Msg(args.players)
-
-			$.Each(Game.GetPlayerIDsOnTeam(team_number), function(id) {
-//				$.Msg("Player ID " + id + " in team " + team_number)
-				var player_info = Game.GetPlayerInfo(id);
-				var player_items = Game.GetPlayerItems(id);
-				var player_table = CustomNetTables.GetTableValue("battlepass_player", id.toString());
-				var player_result = undefined;
-				var player_backend_result = undefined;
-
-				if (player_info && args.players && args.players[player_info.player_steamid])
-					player_result = args.players[player_info.player_steamid];
-
-				if (player_info && args.data && args.data.players && args.data.players[player_info.player_steamid])
-					player_backend_result = args.data.players[player_info.player_steamid];
-
-//				$.Msg(player_info)
-//				$.Msg(player_table)
-//				$.Msg(player_result)
-
-				// Set left bar player informations
-				var PinnedPlayerRow = $.CreatePanel('Panel', pinned_team_container, 'PinnedPlayerRow' + id);
-				PinnedPlayerRow.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_pinned_player_row.xml", false, false);
-				PinnedPlayerRow.AddClass("PlayerName");
-
-				if (bTenvTen) {
-					PinnedPlayerRow.AddClass("StatRowHeight10v10");
-				} else {
-					PinnedPlayerRow.AddClass("StatRowHeight5v5");
-				}
-
-				// using panel.heroname doesn't work for custom heroes
-				PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundImage = 'url("s2r://panorama/images/heroes/' + Players.GetPlayerSelectedHero(id) + '.png")';
-				PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundSize = "cover";
-
-				PinnedPlayerRow.FindChildTraverse("PlayerNameScoreboard").SetDialogVariable("user_account_id", player_info.player_name);
-				PinnedPlayerRow.FindChildrenWithClassTraverse("HeroLevelLabel")[0].text = player_info.player_level;
-				PinnedPlayerRow.FindChildrenWithClassTraverse("LevelAndHero")[0].text = $.Localize("#" + Players.GetPlayerSelectedHero(id));
-
-/*
-				if (IsRanked) {
-					if (player_table && player_table.mmr_title) {
-						var rank_panel = PinnedPlayerRow.FindChildTraverse("RankTierContainer");
-						rank_panel.style.visibility = "visible";
-
-						var short_title = player_table.mmr_title;
-						var title_stars = player_table.mmr_title.substring(player_table.mmr_title.length - 1, player_table.mmr_title.length)
-
-						// if last character is a number (horrible hack, look away please)
-						if (parseInt(title_stars)) {
-							short_title = player_table.mmr_title.substring(0, player_table.mmr_title.length - 2);
-							title_stars = player_table.mmr_title[player_table.mmr_title.length -1];
-						} else {
-							short_title = player_table.mmr_title;
-							title_stars = "1";
-						}
-
-						PinnedPlayerRow.FindChildTraverse("RankTier").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/rank' + mmr_rank_to_medals[short_title] + '_psd.vtex")';
-						PinnedPlayerRow.FindChildTraverse("RankPips").style.backgroundImage = 'url("s2r://panorama/images/rank_tier_icons/pip' + title_stars + '_psd.vtex")';
-
-						rank_panel.SetPanelEvent("onmouseover", function () {
-							$.DispatchEvent("DOTAShowTextTooltip", rank_panel, player_table.mmr_title);
-						})
-						rank_panel.SetPanelEvent("onmouseout", function () {
-							$.DispatchEvent("DOTAHideTextTooltip", rank_panel);
-						})
-					}
-				}
-*/
-
-				// Set middle bar player informations
-				var PlayerRowContainer = $.CreatePanel('Panel', player_row_container, 'PlayerRow' + id);
-				PlayerRowContainer.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row.xml", false, false);
-
-//				if (IsRanked)
-//					PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0].style.visibility = "visible";
-
-				PlayerRowContainer.FindChildrenWithClassTraverse("Level")[0].text = player_info.player_level;
-				PlayerRowContainer.FindChildrenWithClassTraverse("Kills")[0].text = player_info.player_kills;
-				PlayerRowContainer.FindChildrenWithClassTraverse("Deaths")[0].text = player_info.player_deaths;
-				PlayerRowContainer.FindChildrenWithClassTraverse("Assists")[0].text = player_info.player_assists;
-//				PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0]
-
-				if (player_result && player_result.networth)
-					PlayerRowContainer.FindChildrenWithClassTraverse("NetWorth")[0].text = player_result.networth;
-
-				SetDonatorRow(PlayerRowContainer.GetChild(0), id, player_table)
-
-				var panel_progress_bar = PlayerRowContainer.FindChildTraverse("es-player-xp-progress");
-				var panel_xp_text = PlayerRowContainer.FindChildTraverse("es-player-xp-rank");
-				var panel_level_text = PlayerRowContainer.FindChildTraverse("es-player-xp-level");
-				var panel_rank_name = PlayerRowContainer.FindChildTraverse("es-player-xp-rank-name");
-				var panel_xp_booster_text = PlayerRowContainer.FindChildTraverse("es-player-xp-booster");
-
-				// temporary
-				panel_xp_text.style.marginTop = "0px";
-				panel_level_text.style.marginTop = "0px";
-				panel_rank_name.style.marginTop = "0px";
-
-				// setup Battlepass XP progress bar
-				if (player_table && player_table.XP && player_table.MaxXP && player_table.player_xp == 1) {
-					panel_xp_text.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
-					panel_level_text.text = $.Localize("#battlepass_level") + player_table.Lvl;
-					panel_rank_name.text = player_table.title;
-					panel_rank_name.style.color = player_table.title_color;
-
-//					if (player_table.toggle_tag == 1)
-//						panel_xp_booster_text.style.color = player_table.donator_color;
-
-//					$.Msg(Math.floor(player_table.XP) + " / " + Math.floor(player_table.MaxXP))
-//					$.Msg(Math.floor(player_table.XP) / Math.floor(player_table.MaxXP))
-
-					var progress = Math.round((100.0 * Math.floor(player_table.XP)) / Math.floor(player_table.MaxXP));
-					panel_progress_bar.style.width = progress + "%";
-				} else {			
-					panel_xp_text.text = "N/A";
-					panel_level_text.text = "N/A";
-					panel_rank_name.text = "N/A";
-					panel_rank_name.style.color = "#FFFFFF";
-					panel_progress_bar.style.width = "0%";
-				}
-
-				var panel_xp_diff_progress_bar = PlayerRowContainer.FindChildTraverse("es-player-xp-progress-diff");
-				var panel_xp_diff_text = PlayerRowContainer.FindChildTraverse("es-player-xp-earned");
-
-				// setup Battlepass XP diff and booster
-				if (player_backend_result != null) {
-//					$.Msg("XP earned: " + player_backend_result.xp_change)
-					var xpDiff = Math.floor(player_backend_result.xp_change);
-//					if (Game.IsInToolsMode())
-//						xpDiff = 1000000;
-
-//					$.Msg("XP DIFF: " + xpDiff)
-					if (xpDiff > 0) {
-						if (player_table && player_table.player_xp == 1) {
-							panel_xp_diff_text.text = "+" + xpDiff;
-						} else {
-							panel_xp_diff_text.text = "+N/A";
-						}
-
-						panel_xp_diff_text.AddClass("es-text-green");
-
-						if (player_table) {
-							if (progress) {
-								var progress_diff = Math.round(100.0 * (xpDiff / player_table.MaxXP));
-
-								panel_xp_diff_progress_bar.style.width = progress_diff + "%";
-								panel_xp_diff_progress_bar.style.marginLeft = (progress - 1) + "%";
-							}
-
-							var levelup_count = Math.floor(player_table.XP + xpDiff) / Math.floor(player_table.MaxXP);
-
-							if (levelup_count >= 1) {
-								panel_progress_bar.GetParent().AddClass("level-up");						
-							}
-
-							if (player_info.player_id == Players.GetLocalPlayer()) {
-								for (var i = 1; i <= levelup_count; i++) {
-									var level = player_table.Lvl + i;
-									// Comment me please
-//									if (Game.IsInToolsMode())
-//										var level = 0 + i;
-
-									CreateBattlepassRewardPanel(level, i);
-								}
-							}
-						}
-					} else if (xpDiff < 0) {
-						panel_xp_diff_text.text = new String(xpDiff);
-						panel_xp_diff_text.AddClass("es-text-red");
-					} else {
-						// fail-safe to prevent text being grey
-						panel_xp_diff_text.text = "0";
-						panel_xp_diff_text.AddClass("es-text-white");
-					}
-
-					if (player_table && player_table.toggle_tag == 1 && player_backend_result && player_backend_result.xp_multiplier) {
-						var multiplier = Math.round(player_backend_result.xp_multiplier * 100.0);
-						panel_xp_booster_text.text = " (" + multiplier + "%)";
-					} else {
-						panel_xp_booster_text.text = " (100%)";
-					}
-
-					if (player_result.healing)
-						PlayerRowContainer.FindChildrenWithClassTraverse("HeroHealing")[0].text = player_result.healing;
-				} else {
-					panel_xp_diff_text.text = "N/A";
-				}
-
-				// setup player items in inventory
-				if (player_items) {
-					for (var i = player_items.inventory_slot_min; i < player_items.inventory_slot_max; i++) {
-						var item = player_items.inventory[i];
-
-						if (item && PlayerRowContainer.FindChildTraverse("ItemIcon" + i))
-							PlayerRowContainer.FindChildTraverse("ItemIcon" + i).itemname = item.item_name;
-					}
-				}
-
-//				$.Msg("Player ID: " + id)
-				var perm_buffs = GetPermanentBuffs(player_info.player_selected_hero_entity_index);
-				var buff_count = 0;
-
-				for (var buff_id in perm_buffs) {
-					buff_count++;
-					var buff_name = perm_buffs[buff_id];
-					var buff_image = Buffs.GetTexture(player_info.player_selected_hero_entity_index, parseInt(buff_id)).replace("item_", "");
-					var buff_stacks = Buffs.GetStackCount(player_info.player_selected_hero_entity_index, parseInt(buff_id));
-//					$.Msg('file://{images}/' + permanent_buffs[buff_name] + '/' + buff_image + '.png')
-
-					var BuffPanel = $.CreatePanel('Panel', PlayerRowContainer.FindChildTraverse("PermanentBuffs"), buff_name);
-					BuffPanel.BLoadLayoutSnippet('PermanentBuff');
-					SetBuffTooltips(player_info.player_selected_hero_entity_index, BuffPanel, buff_id);
-					BuffPanel.FindChildTraverse("PermanentBuffIcon").SetImage('file://{images}/' + permanent_buffs[buff_name] + '/' + buff_image + '.png');
-
-					if (buff_stacks > 0)
-						BuffPanel.FindChildTraverse("PermanentBuffStackCount").text = buff_stacks;
-				}
-
-				if (buff_count > buff_length)
-					buff_length = buff_count;
-
-				PlayerRowContainer.FindChildTraverse("PermanentBuffs").AddClass("PermanentBuffs" + buff_length);
-
-				PlayerRowContainer.FindChildrenWithClassTraverse("LastHits")[0].text = Players.GetLastHits(id);
-				PlayerRowContainer.FindChildrenWithClassTraverse("Denies")[0].text = Players.GetDenies(id);
-				PlayerRowContainer.FindChildrenWithClassTraverse("GoldPerMin")[0].text = Players.GetGoldPerMin(id).toFixed(0);
-				PlayerRowContainer.FindChildrenWithClassTraverse("XPPerMin")[0].text = (Players.GetTotalEarnedXP(id).toFixed(0) / Players.GetLevel(id)).toFixed(0);
-
-				var DamageDealtContainer = $.CreatePanel('Panel', player_damage_dealt_row_container, '');
-				DamageDealtContainer.BLoadLayoutSnippet('DetailsDamageDealtPlayerRow');
-				DamageDealtContainer.style.height = row_height;
-				DamageDealtContainer.style.marginBottom = row_marginBottom;
-
-				if (player_result) {
-					if (player_result.damage_done_to_heroes)
-						DamageDealtContainer.FindChildTraverse("DamageDealtHeroValue").text = player_result.damage_done_to_heroes;
-
-					if (player_result.damage_done_to_buildings)
-						DamageDealtContainer.FindChildTraverse("DamageDealtBuildingValue").text = player_result.damage_done_to_buildings;
-				}
-
-				// todo: calculate raw damage and reduced damage received for each heroes (in lua)
-/*
-				$("#DetailsDamageReceived").style.visibility = "visible";
-				var DamageReceivedContainer = $.CreatePanel('Panel', player_damage_received_row_container, '');
-				DamageReceivedContainer.BLoadLayoutSnippet('DetailsDamageReceivedPlayerRow');
-				DamageReceivedContainer.style.height = row_height;
-				DamageReceivedContainer.style.marginBottom = row_marginBottom;
-				DamageReceivedContainer.FindChildTraverse("DamageReceivedPreValue").text = player_result.damage_done_to_heroes;
-				DamageReceivedContainer.FindChildTraverse("DamageReceivedPostValue").text = player_result.damage_done_to_buildings;
-*/
-
-				var panel_kill_matrix_row = $.CreatePanel('DOTAPostGameKillMatrixRow', panel_kill_matrix_row_container, 'KillMatrixHero' + id);
-				panel_kill_matrix_row.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_kill_matrix_row.xml", false, false);
-
-// 				var iteration = -1;
-// 				$.Each(Game.GetPlayerIDsOnTeam(opposite_team), function(enemy_id) {
-// 					iteration++;
-// 					var enemy_info = Game.GetPlayerInfo(enemy_id);
-
-// 					if (player_result && player_result.kills_done_to_hero && player_result.kills_done_to_hero[enemy_id] > 0 && panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration)) {
-// 						panel_kill_matrix_row.AddClass("Victim_" + iteration + "_Active")
-// 						panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration).text = "x" + player_result.kills_done_to_hero[enemy_id];
-// 					}
-
-// 					// TODO: Somehow, panel 5 to 9 are not created in 10v10, despite dashboard_page_post_game_kill_matrix_row.xml being edited with 10 panels
-// //					$.Msg(iteration + " / " + panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration))
-// 					if (panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration)) {
-// 						// using panel.heroname doesn't work for custom heroes
-// 						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundImage = 'url("s2r://panorama/images/heroes/icons/' + enemy_info.player_selected_hero + '.png")';
-// 						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundSize = "cover";
-
-// 						panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).heroname = enemy_info.player_selected_hero;
-// 					}
-// 				});
-
-				panel_kill_matrix_row.FindChildTraverse("TotalKills").GetChild(0).text = player_info.player_kills;
-
-				var panel_support_items_row = $.CreatePanel('DOTAPostGameSupportItemsRow', panel_support_items_row_container, 'SupportItems' + id);
-				panel_support_items_row.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_support_items_row.xml", false, false);
-
-				// temporary
-				panel_support_items_row.FindChildTraverse("SupportItemsValue").text = 0;
-				panel_support_items_row.FindChildTraverse("SupportItemsCampsStacked").text = 0;
-
-				if (player_result) {
-					if (player_result.support_items) {
-						for (var item_id in player_result.support_items) {
-							if (item_id > item_length)
-								item_length = item_id;
-
-							var item_name = player_result.support_items[item_id].item_name;
-							var item_count = player_result.support_items[item_id].item_count;
-
-							var panel_support_item = $.CreatePanel('Panel', panel_support_items_row.FindChildTraverse("SupportItemContainer"), '');
-							panel_support_item.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_support_items_item_entry.xml", false, false);
-							panel_support_item.AddClass("ItemEntry")
-
-							panel_support_item.FindChildTraverse("ItemImage").itemname = item_name;
-							panel_support_item.FindChildrenWithClassTraverse("SupportItemCount")[0].text = "x" + item_count;
-						};
-					}
-
-					if (item_length > 0)
-						panel_support_items_row.AddClass("MaxItems" + item_length);
-
-					if (player_result.gold_spent_on_support) {
-						panel_support_items_row.FindChildTraverse("SupportItemsValue").text = player_result.gold_spent_on_support;
-					}
-
-					var panel_abilities = $.CreatePanel('Panel', panel_abilities_row_container, '');
-					panel_abilities.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_abilities_row.xml", false, false);
-
-//					$.Msg(player_result.abilities_level_up_order)
-					if (player_result.abilities_level_up_order) {
-						for (var i = 1; i <= 25; i++) {
-							var ability_name = player_result.abilities_level_up_order[i];
-							var ability_entity = Entities.GetAbilityByName(player_info.player_selected_hero_entity_index, ability_name);
-							var ability_level = GetAbilityLevel(player_result.abilities_level_up_order, ability_name, i);
-							var ability_max_level = Abilities.GetMaxLevel(ability_entity);
-
-							var ability = $.CreatePanel('DOTAAbilityImage', panel_abilities, '');
-							ability.abilityname = ability_name;
-
-							if (ability_level == ability_max_level) {
-//								ability.AddClass("AbilityMaxLevel"); // not working somehow
-								ability.style.saturation = "1";
-								ability.style.washColor = "#00000000";
-								ability.style.border = "1px solid #6CABAD32";
-							}
-
-							if (ability_name != "generic_hidden") {
-								(function (ability, ability_name) {
-									ability.SetPanelEvent("onmouseover", function () {
-										$.DispatchEvent("DOTAShowAbilityTooltip", ability, ability_name);
-									})
-									ability.SetPanelEvent("onmouseout", function () {
-										$.DispatchEvent("DOTAHideAbilityTooltip", ability);
-									})
-								})(ability, ability_name);
-							}
-						}
-					}
-				}
-
-				if (id == Players.GetLocalPlayer()) {
-					PinnedPlayerRow.AddClass("LocalPlayer")
-					PlayerRowContainer.AddClass("LocalPlayer")
-					panel_kill_matrix_row.AddClass("LocalPlayer")
-					panel_support_items_row.AddClass("LocalPlayer")
-				}
-
-				// temporary fix
-				PlayerRowContainer.style.backgroundImage = "none";
-
-//				panel_kill_matrix_row.FindChildTraverse("TotalKills").GetChild(0).text = player_info.player_kills;
-			});
-
-			// Would be good to use css class at some point...
-			if (bTenvTen) {
-				for (var child = 0; child < player_row_container.GetChildCount(); child++) {
-					player_row_container.GetChild(child).style.height = "42px";
-					player_row_container.GetChild(child).style.marginTop = "2.5px";
-					player_row_container.GetChild(child).style.marginBottom = "2.5px";
-					player_row_container.GetChild(child).GetChild(0).style.paddingBottom = "0px";
-					player_row_container.GetChild(child).FindChildTraverse("TalentTree").style.width = "40px";
-					player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.visibility = "visible";
-					player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.fontSize = "26px";
-					player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.textAlign = "right";
-					player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.marginRight = "23px";
-				}
-
-				pinned_team_container.style.marginTop = "1px";
-
-				for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
-					pinned_team_container.GetChild(child).AddClass("StatRowHeight10v10");
-					pinned_team_container.GetChild(child).style.height = "42px";
-					pinned_team_container.GetChild(child).style.marginBottom = "5px";
-					pinned_team_container.GetChild(child).FindChildrenWithClassTraverse("HeroLevelLabel")[0].style.visibility = "collapse";
-					pinned_team_container.GetChild(child).FindChildrenWithClassTraverse("LevelAndHero")[0].style.marginLeft = "30px";
-				}
-
-				for (var child = 0; child < player_damage_dealt_row_container.GetChildCount(); child++) {
-					player_damage_dealt_row_container.GetChild(child).style.height = "42px"
-					player_damage_dealt_row_container.GetChild(child).style.marginTop = "2.5px"
-					player_damage_dealt_row_container.GetChild(child).style.marginBottom = "2.5px"
-				}
-
-				for (var child = 0; child < panel_kill_matrix_row_container.GetChildCount(); child++) {
-					panel_kill_matrix_row_container.GetChild(child).style.height = "42px"
-					panel_kill_matrix_row_container.GetChild(child).style.marginTop = "2.5px"
-					panel_kill_matrix_row_container.GetChild(child).style.marginBottom = "2.5px"
-				}
-
-				for (var child = 0; child < panel_support_items_row_container.GetChildCount(); child++) {
-					panel_support_items_row_container.GetChild(child).style.height = "42px"
-					panel_support_items_row_container.GetChild(child).style.marginTop = "2.5px"
-					panel_support_items_row_container.GetChild(child).style.marginBottom = "2.5px"
-				}
-
-				for (var child = 0; child < panel_abilities_row_container.GetChildCount(); child++) {
-					panel_abilities_row_container.GetChild(child).style.height = "42px"
-					panel_abilities_row_container.GetChild(child).style.marginTop = "2.5px"
-					panel_abilities_row_container.GetChild(child).style.marginBottom = "2.5px"
-				}
-			} else {
-//				for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
-//					pinned_team_container.GetChild(child).AddClass("StatRowHeight");
-//					pinned_team_container.GetChild(child).style.height = row_height;
-//				}
-
-				$("#" + team_number + "_PlayerRowLegend").FindChildrenWithClassTraverse("LegendLevel")[0].style.visibility = "collapse";
+//				PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0].style.visibility = "visible";
+
+			PlayerRowContainer.FindChildrenWithClassTraverse("Level")[0].text = player_info.player_level;
+			PlayerRowContainer.FindChildrenWithClassTraverse("Kills")[0].text = player_info.player_kills;
+			PlayerRowContainer.FindChildrenWithClassTraverse("Deaths")[0].text = player_info.player_deaths;
+			PlayerRowContainer.FindChildrenWithClassTraverse("Assists")[0].text = player_info.player_assists;
+//			PlayerRowContainer.FindChildrenWithClassTraverse("MMRChange")[0]
+
+			if (player_result && player_result.networth)
+				PlayerRowContainer.FindChildrenWithClassTraverse("NetWorth")[0].text = player_result.networth;
+
+			SetDonatorRow(PlayerRowContainer.GetChild(0), id, player_table)
+
+			var panel_progress_bar = PlayerRowContainer.FindChildTraverse("es-player-xp-progress");
+			var panel_xp_text = PlayerRowContainer.FindChildTraverse("es-player-xp-rank");
+			var panel_level_text = PlayerRowContainer.FindChildTraverse("es-player-xp-level");
+			var panel_rank_name = PlayerRowContainer.FindChildTraverse("es-player-xp-rank-name");
+			var panel_xp_booster_text = PlayerRowContainer.FindChildTraverse("es-player-xp-booster");
+
+			// temporary
+			panel_xp_text.style.marginTop = "0px";
+			panel_level_text.style.marginTop = "0px";
+			panel_rank_name.style.marginTop = "0px";
+
+			// setup Battlepass XP progress bar
+			if (player_table && player_table.XP && player_table.MaxXP && player_table.player_xp == 1) {
+				panel_xp_text.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
+				panel_level_text.text = $.Localize("#battlepass_level") + player_table.Lvl;
+				panel_rank_name.text = player_table.title;
+				panel_rank_name.style.color = player_table.title_color;
+
+//				if (player_table.toggle_tag == 1)
+//					panel_xp_booster_text.style.color = player_table.donator_color;
+
+//				$.Msg(Math.floor(player_table.XP) + " / " + Math.floor(player_table.MaxXP))
+//				$.Msg(Math.floor(player_table.XP) / Math.floor(player_table.MaxXP))
+
+				var progress = Math.round((100.0 * Math.floor(player_table.XP)) / Math.floor(player_table.MaxXP));
+				panel_progress_bar.style.width = progress + "%";
+			} else {			
+				panel_xp_text.text = "N/A";
+				panel_level_text.text = "N/A";
+				panel_rank_name.text = "N/A";
+				panel_rank_name.style.color = "#FFFFFF";
+				panel_progress_bar.style.width = "0%";
 			}
-//		}
+
+			var panel_xp_diff_progress_bar = PlayerRowContainer.FindChildTraverse("es-player-xp-progress-diff");
+			var panel_xp_diff_text = PlayerRowContainer.FindChildTraverse("es-player-xp-earned");
+
+			// setup Battlepass XP diff and booster
+			if (player_backend_result != null) {
+//				$.Msg("XP earned: " + player_backend_result.xp_change)
+				var xpDiff = Math.floor(player_backend_result.xp_change);
+//				if (Game.IsInToolsMode())
+//					xpDiff = 1000000;
+
+//				$.Msg("XP DIFF: " + xpDiff)
+				if (xpDiff > 0) {
+					if (player_table && player_table.player_xp == 1) {
+						panel_xp_diff_text.text = "+" + xpDiff;
+					} else {
+						panel_xp_diff_text.text = "+N/A";
+					}
+
+					panel_xp_diff_text.AddClass("es-text-green");
+
+					if (player_table) {
+						if (progress) {
+							var progress_diff = Math.round(100.0 * (xpDiff / player_table.MaxXP));
+
+							panel_xp_diff_progress_bar.style.width = progress_diff + "%";
+							panel_xp_diff_progress_bar.style.marginLeft = (progress - 1) + "%";
+						}
+
+						var levelup_count = Math.floor(player_table.XP + xpDiff) / Math.floor(player_table.MaxXP);
+
+						if (levelup_count >= 1) {
+							panel_progress_bar.GetParent().AddClass("level-up");						
+						}
+
+						if (player_info.player_id == Players.GetLocalPlayer()) {
+							for (var i = 1; i <= levelup_count; i++) {
+								var level = player_table.Lvl + i;
+								// Comment me please
+//								if (Game.IsInToolsMode())
+//									var level = 0 + i;
+
+								CreateBattlepassRewardPanel(level, i);
+							}
+						}
+					}
+				} else if (xpDiff < 0) {
+					panel_xp_diff_text.text = new String(xpDiff);
+					panel_xp_diff_text.AddClass("es-text-red");
+				} else {
+					// fail-safe to prevent text being grey
+					panel_xp_diff_text.text = "0";
+					panel_xp_diff_text.AddClass("es-text-white");
+				}
+
+				if (player_table && player_table.toggle_tag == 1 && player_backend_result && player_backend_result.xp_multiplier) {
+					var multiplier = Math.round(player_backend_result.xp_multiplier * 100.0);
+					panel_xp_booster_text.text = " (" + multiplier + "%)";
+				} else {
+					panel_xp_booster_text.text = " (100%)";
+				}
+
+				if (player_result.healing)
+					PlayerRowContainer.FindChildrenWithClassTraverse("HeroHealing")[0].text = player_result.healing;
+			} else {
+				panel_xp_diff_text.text = "N/A";
+			}
+
+			// setup player items in inventory
+			if (player_items) {
+				for (var i = player_items.inventory_slot_min; i < player_items.inventory_slot_max; i++) {
+					var item = player_items.inventory[i];
+
+					if (item && PlayerRowContainer.FindChildTraverse("ItemIcon" + i))
+						PlayerRowContainer.FindChildTraverse("ItemIcon" + i).itemname = item.item_name;
+				}
+			}
+
+//			$.Msg("Player ID: " + id)
+			var perm_buffs = GetPermanentBuffs(player_info.player_selected_hero_entity_index);
+			var buff_count = 0;
+
+			for (var buff_id in perm_buffs) {
+				buff_count++;
+				var buff_name = perm_buffs[buff_id];
+				var buff_image = Buffs.GetTexture(player_info.player_selected_hero_entity_index, parseInt(buff_id)).replace("item_", "");
+				var buff_stacks = Buffs.GetStackCount(player_info.player_selected_hero_entity_index, parseInt(buff_id));
+//				$.Msg('file://{images}/' + permanent_buffs[buff_name] + '/' + buff_image + '.png')
+
+				var BuffPanel = $.CreatePanel('Panel', PlayerRowContainer.FindChildTraverse("PermanentBuffs"), buff_name);
+				BuffPanel.BLoadLayoutSnippet('PermanentBuff');
+				SetBuffTooltips(player_info.player_selected_hero_entity_index, BuffPanel, buff_id);
+				BuffPanel.FindChildTraverse("PermanentBuffIcon").SetImage('file://{images}/' + permanent_buffs[buff_name] + '/' + buff_image + '.png');
+
+				if (buff_stacks > 0)
+					BuffPanel.FindChildTraverse("PermanentBuffStackCount").text = buff_stacks;
+			}
+
+			if (buff_count > buff_length)
+				buff_length = buff_count;
+
+			PlayerRowContainer.FindChildTraverse("PermanentBuffs").AddClass("PermanentBuffs" + buff_length);
+
+			PlayerRowContainer.FindChildrenWithClassTraverse("LastHits")[0].text = Players.GetLastHits(id);
+			PlayerRowContainer.FindChildrenWithClassTraverse("Denies")[0].text = Players.GetDenies(id);
+			PlayerRowContainer.FindChildrenWithClassTraverse("GoldPerMin")[0].text = Players.GetGoldPerMin(id).toFixed(0);
+			PlayerRowContainer.FindChildrenWithClassTraverse("XPPerMin")[0].text = (Players.GetTotalEarnedXP(id).toFixed(0) / Players.GetLevel(id)).toFixed(0);
+
+			var DamageDealtContainer = $.CreatePanel('Panel', player_damage_dealt_row_container, '');
+			DamageDealtContainer.BLoadLayoutSnippet('DetailsDamageDealtPlayerRow');
+			DamageDealtContainer.style.height = row_height;
+			DamageDealtContainer.style.marginBottom = row_marginBottom;
+
+			if (player_result) {
+				if (player_result.damage_done_to_heroes)
+					DamageDealtContainer.FindChildTraverse("DamageDealtHeroValue").text = player_result.damage_done_to_heroes;
+
+				if (player_result.damage_done_to_buildings)
+					DamageDealtContainer.FindChildTraverse("DamageDealtBuildingValue").text = player_result.damage_done_to_buildings;
+			}
+
+			// todo: calculate raw damage and reduced damage received for each heroes (in lua)
+/*
+			$("#DetailsDamageReceived").style.visibility = "visible";
+			var DamageReceivedContainer = $.CreatePanel('Panel', player_damage_received_row_container, '');
+			DamageReceivedContainer.BLoadLayoutSnippet('DetailsDamageReceivedPlayerRow');
+			DamageReceivedContainer.style.height = row_height;
+			DamageReceivedContainer.style.marginBottom = row_marginBottom;
+			DamageReceivedContainer.FindChildTraverse("DamageReceivedPreValue").text = player_result.damage_done_to_heroes;
+			DamageReceivedContainer.FindChildTraverse("DamageReceivedPostValue").text = player_result.damage_done_to_buildings;
+*/
+
+			var panel_kill_matrix_row = $.CreatePanel('DOTAPostGameKillMatrixRow', panel_kill_matrix_row_container, 'KillMatrixHero' + id);
+			panel_kill_matrix_row.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_kill_matrix_row.xml", false, false);
+
+// 			var iteration = -1;
+// 			$.Each(Game.GetPlayerIDsOnTeam(opposite_team), function(enemy_id) {
+// 				iteration++;
+// 				var enemy_info = Game.GetPlayerInfo(enemy_id);
+
+// 				if (player_result && player_result.kills_done_to_hero && player_result.kills_done_to_hero[enemy_id] > 0 && panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration)) {
+// 					panel_kill_matrix_row.AddClass("Victim_" + iteration + "_Active")
+// 					panel_kill_matrix_row.FindChildTraverse("VictimDeathCount" + iteration).text = "x" + player_result.kills_done_to_hero[enemy_id];
+// 				}
+
+// 				// TODO: Somehow, panel 5 to 9 are not created in 10v10, despite dashboard_page_post_game_kill_matrix_row.xml being edited with 10 panels
+// //				$.Msg(iteration + " / " + panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration))
+// 				if (panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration)) {
+// 					// using panel.heroname doesn't work for custom heroes
+// 					panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundImage = 'url("s2r://panorama/images/heroes/icons/' + enemy_info.player_selected_hero + '.png")';
+// 					panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).style.backgroundSize = "cover";
+
+// 					panel_kill_matrix_row.FindChildTraverse("VictimHero" + iteration).heroname = enemy_info.player_selected_hero;
+// 				}
+// 			});
+
+			panel_kill_matrix_row.FindChildTraverse("TotalKills").GetChild(0).text = player_info.player_kills;
+
+			var panel_support_items_row_container = $("#" + team_number + "_SupportItemsRows");
+
+			var panel_support_items_row = $.CreatePanel('DOTAPostGameSupportItemsRow', panel_support_items_row_container, 'SupportItems' + id);
+			panel_support_items_row.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_support_items_row.xml", false, false);
+
+			// temporary
+			panel_support_items_row.FindChildTraverse("SupportItemsValue").text = 0;
+			panel_support_items_row.FindChildTraverse("SupportItemsCampsStacked").text = 0;
+
+			if (player_result) {
+				if (player_result.support_items) {
+					for (var item_id in player_result.support_items) {
+						if (item_id > item_length)
+							item_length = item_id;
+
+						var item_name = player_result.support_items[item_id].item_name;
+						var item_count = player_result.support_items[item_id].item_count;
+
+						var panel_support_item = $.CreatePanel('Panel', panel_support_items_row.FindChildTraverse("SupportItemContainer"), '');
+						panel_support_item.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_support_items_item_entry.xml", false, false);
+						panel_support_item.AddClass("ItemEntry")
+
+						panel_support_item.FindChildTraverse("ItemImage").itemname = item_name;
+						panel_support_item.FindChildrenWithClassTraverse("SupportItemCount")[0].text = "x" + item_count;
+					};
+				}
+
+				if (item_length > 0)
+					panel_support_items_row.AddClass("MaxItems" + item_length);
+
+				if (player_result.gold_spent_on_support) {
+					panel_support_items_row.FindChildTraverse("SupportItemsValue").text = player_result.gold_spent_on_support;
+				}
+
+				var panel_abilities = $.CreatePanel('Panel', panel_abilities_row_container, '');
+				panel_abilities.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_abilities_row.xml", false, false);
+
+//				$.Msg(player_result.abilities_level_up_order)
+				if (player_result.abilities_level_up_order) {
+					for (var i = 1; i <= 25; i++) {
+						var ability_name = player_result.abilities_level_up_order[i];
+						var ability_entity = Entities.GetAbilityByName(player_info.player_selected_hero_entity_index, ability_name);
+						var ability_level = GetAbilityLevel(player_result.abilities_level_up_order, ability_name, i);
+						var ability_max_level = Abilities.GetMaxLevel(ability_entity);
+
+						var ability = $.CreatePanel('DOTAAbilityImage', panel_abilities, '');
+						ability.abilityname = ability_name;
+
+						if (ability_level == ability_max_level) {
+//							ability.AddClass("AbilityMaxLevel"); // not working somehow
+							ability.style.saturation = "1";
+							ability.style.washColor = "#00000000";
+							ability.style.border = "1px solid #6CABAD32";
+						}
+
+						if (ability_name != "generic_hidden") {
+							(function (ability, ability_name) {
+								ability.SetPanelEvent("onmouseover", function () {
+									$.DispatchEvent("DOTAShowAbilityTooltip", ability, ability_name);
+								})
+								ability.SetPanelEvent("onmouseout", function () {
+									$.DispatchEvent("DOTAHideAbilityTooltip", ability);
+								})
+							})(ability, ability_name);
+						}
+					}
+				}
+			}
+
+			if (id == Players.GetLocalPlayer()) {
+				PinnedPlayerRow.AddClass("LocalPlayer")
+				PlayerRowContainer.AddClass("LocalPlayer")
+				panel_kill_matrix_row.AddClass("LocalPlayer")
+				panel_support_items_row.AddClass("LocalPlayer")
+			}
+
+			// temporary fix
+			PlayerRowContainer.style.backgroundImage = "none";
+
+//			panel_kill_matrix_row.FindChildTraverse("TotalKills").GetChild(0).text = player_info.player_kills;
+		});
+
+		// Would be good to use css class at some point...
+		if (bTenvTen) {
+			for (var child = 0; child < player_row_container.GetChildCount(); child++) {
+				player_row_container.GetChild(child).style.height = "42px";
+				player_row_container.GetChild(child).style.marginTop = "2.5px";
+				player_row_container.GetChild(child).style.marginBottom = "2.5px";
+				player_row_container.GetChild(child).GetChild(0).style.paddingBottom = "0px";
+				player_row_container.GetChild(child).FindChildTraverse("TalentTree").style.width = "40px";
+				player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.visibility = "visible";
+				player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.fontSize = "26px";
+				player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.textAlign = "right";
+				player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.marginRight = "23px";
+			}
+
+			pinned_team_container.style.marginTop = "1px";
+
+			for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
+				pinned_team_container.GetChild(child).AddClass("StatRowHeight10v10");
+				pinned_team_container.GetChild(child).style.height = "42px";
+				pinned_team_container.GetChild(child).style.marginBottom = "5px";
+				pinned_team_container.GetChild(child).FindChildrenWithClassTraverse("HeroLevelLabel")[0].style.visibility = "collapse";
+				pinned_team_container.GetChild(child).FindChildrenWithClassTraverse("LevelAndHero")[0].style.marginLeft = "30px";
+			}
+
+			for (var child = 0; child < player_damage_dealt_row_container.GetChildCount(); child++) {
+				player_damage_dealt_row_container.GetChild(child).style.height = "42px"
+				player_damage_dealt_row_container.GetChild(child).style.marginTop = "2.5px"
+				player_damage_dealt_row_container.GetChild(child).style.marginBottom = "2.5px"
+			}
+
+			for (var child = 0; child < panel_kill_matrix_row_container.GetChildCount(); child++) {
+				panel_kill_matrix_row_container.GetChild(child).style.height = "42px"
+				panel_kill_matrix_row_container.GetChild(child).style.marginTop = "2.5px"
+				panel_kill_matrix_row_container.GetChild(child).style.marginBottom = "2.5px"
+			}
+
+			for (var child = 0; child < panel_support_items_row_container.GetChildCount(); child++) {
+				panel_support_items_row_container.GetChild(child).style.height = "42px"
+				panel_support_items_row_container.GetChild(child).style.marginTop = "2.5px"
+				panel_support_items_row_container.GetChild(child).style.marginBottom = "2.5px"
+			}
+
+			for (var child = 0; child < panel_abilities_row_container.GetChildCount(); child++) {
+				panel_abilities_row_container.GetChild(child).style.height = "42px"
+				panel_abilities_row_container.GetChild(child).style.marginTop = "2.5px"
+				panel_abilities_row_container.GetChild(child).style.marginBottom = "2.5px"
+			}
+		} else {
+//			for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
+//				pinned_team_container.GetChild(child).AddClass("StatRowHeight");
+//				pinned_team_container.GetChild(child).style.height = row_height;
+//			}
+		}
 	}
 }
 
@@ -858,6 +880,11 @@ function ResetEndScoreboardPanels() {
 	// Show loading panel
 	FindDotaHudElement("topbar").style.visibility = "collapse";
 	$.GetContextPanel().AddClass("MatchDataLoading");
+	$.Schedule(0.0, function() {
+		if ($.GetContextPanel().BHasClass("MatchDataLoading")) {
+			EndScoreboard({});
+		}
+	})
 
 	GameEvents.Subscribe("end_game", EndScoreboard);
 

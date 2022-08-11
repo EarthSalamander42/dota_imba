@@ -1472,12 +1472,12 @@ function modifier_imba_juggernaut_blade_dance_secret_blade:OnStackCountChanged()
 	self:GetAbility().GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_IMMEDIATE end
 	self:GetAbility():GetBehavior()
 	self:GetAbility():GetCastRange(self:GetCaster(), self:GetCaster():GetAbsOrigin())
-	self:GetAbility():GetCooldown()
+	self:GetAbility():GetCooldown(self:GetAbility():GetLevel())
 	elseif self:GetStackCount() + serverCheck < self:GetAbility():GetTalentSpecialValueFor("active_min_stacks") and self:GetAbility():GetBehavior() == DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_IMMEDIATE  then
 	self:GetAbility().GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 	self:GetAbility():GetBehavior()
 	self:GetAbility():GetCastRange(self:GetCaster(), self:GetCaster():GetAbsOrigin())
-	self:GetAbility():GetCooldown()
+	self:GetAbility():GetCooldown(self:GetAbility():GetLevel())
 	end
 	
 end
@@ -1486,7 +1486,7 @@ function modifier_imba_juggernaut_blade_dance_secret_blade:OnRemoved()
 	self:GetAbility().GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 	self:GetAbility():GetBehavior()
 	self:GetAbility():GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster())
-	self:GetAbility():GetCooldown()
+	self:GetAbility():GetCooldown(self:GetAbility():GetLevel())
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_jade_blossom", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)

@@ -491,6 +491,7 @@ end
 function api:GetDisabledHeroes()
 	if not api.disabled_heroes then return end
 	if not api.disabled_heroes["npc_dota_hero_target_dummy"] then api.disabled_heroes["npc_dota_hero_target_dummy"] = true end
+	print(api.disabled_heroes)
 	return api.disabled_heroes
 end
 
@@ -603,7 +604,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 
 	if request == nil then
 		native_print("Failed to create http request. skipping")
-		return failCallback()
+		return failCallback();
 	end
 
 	request:SetHTTPRequestAbsoluteTimeoutMS(timeout)
@@ -644,7 +645,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 				code = 0
 			end
 			print("Request to " .. endpoint .. " failed with message " .. message .. " (" .. tostring(code) .. ")")
-			failCallback()
+			failCallback();
 		end
 
 		if code == 0 then
@@ -652,7 +653,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 		elseif code >= 500 then
 			return fail("Server Error")
 		elseif code == 204 then
-			return okCallback()
+			return okCallback();
 		else
 			local obj, pos, err = json.decode(result.Body)
 
@@ -664,7 +665,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 				return fail("Unknown Server error")
 			end
 
-			print(obj)
+			-- print(obj)
 			if obj.error == nil then
 				return fail("Invalid response from server")
 			elseif obj.error == true and obj.message ~= nil then
@@ -672,7 +673,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 			elseif obj.error == true and obj.message == nil then
 				return fail("Unknown server error. (message is nil)")
 			elseif code >= 200 and code < 400 then
-				return okCallback(obj.data)
+				return okCallback(obj.data);
 			else
 				return fail("Wtf")
 			end
@@ -688,9 +689,9 @@ function api:RegisterGame(callback)
 		api.emblems = data.emblems or nil
 		api.disabled_heroes = data.disabled_heroes or nil
 
-		-- if IsInToolsMode() then
-		-- 	print(data)
-		-- end
+		if IsInToolsMode() then
+			print(data.disabled_heroes)
+		end
 
 		if callback ~= nil then
 			callback(data)

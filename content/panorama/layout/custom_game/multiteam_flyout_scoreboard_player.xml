@@ -9,6 +9,29 @@
 		<include src="file://{resources}/scripts/custom_game/multiteam_flyout_scoreboard_player.js" />
 	</scripts>
 
+	<snippets>
+		<snippet name="ExperienceProgressBar">
+			<Panel id="XPProgressBarContainer" value="0.0">
+				<ProgressBar id="XPProgressBar" value="0.0">
+				
+				</ProgressBar>
+
+				<Panel id="LevelContainer">
+					<Panel id="LevelContainerChild">
+						<Label id="LevelLabel" text="Level: "/>
+						<Label id="ImbaLvl" text="1"/>
+						<Label id="ImbaLvlSeparator" text=" - "/>
+						<Label id="ImbaXPRank" text="Rookie"/>
+					</Panel>
+
+					<Panel id="LevelContainerChild2">
+						<Label id="ImbaXP" text="0/500"/>
+					</Panel>
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
 	<Panel class="PlayerRow">
 		<Panel id="DonatorOverlay" />
 		<Panel id="DonatorTitleOverlay">
