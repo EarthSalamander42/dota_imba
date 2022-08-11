@@ -246,6 +246,7 @@ function GetAbilityValue(name, key, level)
 			for ability_key, value in pairs(tspecial) do
 				if ability_key == key then
 					if not level or type(value) == "number" then -- no level specified or there is only 1 ability value regardless of level
+						-- print("Return table value:", value)
 						return value
 					else
 						if type(value) == "table" and value["value"] then
@@ -273,13 +274,15 @@ function GetVanillaAbilityName(ability_name)
 end
 
 function CDOTABaseAbility:GetVanillaKeyValue(key, level)
-	if level then
---		print("GetVanillaKeyValue:", GetAbilityKV(self:GetVanillaAbilityName(), key, level))
-		return GetAbilityKV(self:GetVanillaAbilityName(), key, level)
+	if GetAbilityKV(self:GetVanillaAbilityName(), key, level or self:GetLevel()) then
+		-- print("GetVanillaKeyValue:", GetAbilityKV(self:GetVanillaAbilityName(), key, level or self:GetLevel()))
+		return GetAbilityKV(self:GetVanillaAbilityName(), key, level or self:GetLevel())
 	else
---		print("GetVanillaKeyValue:", self:GetVanillaAbilityName(), key, GetAbilityKV(self:GetVanillaAbilityName(), self:GetLevel()))
-		return GetAbilityKV(self:GetVanillaAbilityName(), key, self:GetLevel())
+		-- print("GetVanillaAbilityValue:", GetAbilitySpecial(self:GetVanillaAbilityName(), key, level or self:GetLevel()))
+		return GetAbilityValue(self:GetVanillaAbilityName(), key, level or self:GetLevel())
 	end
+
+	print("CRITICAL ERROR: GetVanillaKeyValue not found:", self:GetVanillaAbilityName())
 end
 
 function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
@@ -335,23 +338,17 @@ function GetAbilitySpecials(name)
 end
 
 function GetAbilityCooldown(name)
-	local imba_t = KeyValues.All["imba_"..name]
-	local t = KeyValues.All[name]
+	local imba_name = "imba_"..name
 
-	if t and imba_t and imba_t["AbilityCooldown"] then
-		local value = t["AbilityCooldown"]
-
-		if value then
-			return value
-		end
-	else
-		if t then
-			local value = t["AbilityCooldown"]
-
-			if value then
-				return value
-			end
-		end
+	if GetAbilityKV(imba_name, "AbilityCooldown") then -- imba cd (override all)
+		-- print("GetImbaCooldown:", GetAbilityKV(imba_name, "AbilityCooldown"))
+		return GetAbilityKV(imba_name, "AbilityCooldown")
+	elseif GetAbilityKV(name, "AbilityCooldown") then -- vanilla cd (default)
+		-- print("GetVanillaCooldown:", GetAbilityKV(name, "AbilityCooldown"))
+		return GetAbilityKV(name, "AbilityCooldown")
+	elseif GetAbilityValue(name, "AbilityCooldown") then -- vanilla cd (in AbilityValues because tied to a talent)
+		-- print("GetVanillaValueCooldown:", GetAbilityValue(name, "AbilityCooldown"))
+		return GetAbilityValue(name, "AbilityCooldown").value
 	end
 
 	return 0

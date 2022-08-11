@@ -180,25 +180,24 @@ function api:GetPlayerCosmetics(player_id, cosmetic_type)
 		return false
 	end
 
-	local steamid = tostring(PlayerResource:GetSteamID(player_id))
-
 	-- if the game isnt registered yet, we have no way to know player xp
 	if self.players == nil then
 		native_print("api:GetPlayerCosmetics() self.players == nil")
 		return false
 	end
 
+	local steamid = tostring(PlayerResource:GetSteamID(player_id))
+
 	if self.players[steamid] == nil then
 		native_print("api:GetPlayerCosmetics: api players steamid not valid!")
 		return false
 	end
 
-	local cosmetic = CustomNetTables:GetTableValue("battlepass_player", cosmetic_type)
-	if cosmetic and cosmetic["1"] and type(cosmetic["1"] == "table" and next(cosmetic["1"])) then
-		print(cosmetic, type(cosmetic["1"]))
-		cosmetic = cosmetic["1"]
+	local cosmetics = api[cosmetic_type]
+
+	if cosmetics and type(cosmetics == "table" and next(cosmetics)) then
 	else
-		print("api:GetPlayerCosmetics: cosmetic table value is empty!")
+		print("api:GetPlayerCosmetics: cosmetics table value is empty for cosmetic_type:", cosmetic_type)
 		return false
 	end
 
@@ -213,7 +212,7 @@ function api:GetPlayerCosmetics(player_id, cosmetic_type)
 	end
 
 	if cosmetic_variable == nil then
-		print("api:GetPlayerCosmetics: invalid cosmetic variable for cosmetic type:", cosmetic_type)
+		print("api:GetPlayerCosmetics: invalid cosmetics variable for cosmetics type:", cosmetic_type)
 		return false
 	end
 
@@ -224,20 +223,15 @@ function api:GetPlayerCosmetics(player_id, cosmetic_type)
 		return false
 	end
 
-	cosmetic = cosmetic[tostring(self.players[steamid][cosmetic_variable])]["file"]
+	return self:GetCosmeticByID(cosmetics, cosmetic_id)
+end
 
-	if cosmetic and cosmetic ~= "" and type(cosmetic) == "string" then
-		return cosmetic
-	else
-		native_print("api:GetPlayerCosmetics: Invalid cosmetic for "..cosmetic_type.."")
-
-		if type(cosmetic) == "table" then
-			print(cosmetic)
-		else
-			native_print(cosmetic)
+function api:GetCosmeticByID(hCosmetics, nIndex)
+	for k, v in pairs(hCosmetics) do
+		if v.id == tostring(nIndex) then
+			-- print("Cosmetic found:", v)
+			return v.file
 		end
-
-		return false
 	end
 end
 
@@ -633,21 +627,24 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 	request:SetHTTPRequestHeaderValue("X-Dota-Game-Type", CUSTOM_GAME_TYPE)
 
 	-- encode payload
+	print(payload)
 	if payload ~= nil then
 		local encoded = json.encode(payload)
 		request:SetHTTPRequestRawPostBody("application/json", encoded)
 	end
 
+	print("About to send request...")
 	request:Send(function(result)
+		print(result)
 		local code = result.StatusCode;
-		print("Status code:", code)
+		print("Result status code:", code)
 
 		local fail = function(message)
 			if (code == nil) then
 				code = 0
 			end
 			print("Request to " .. endpoint .. " failed with message " .. message .. " (" .. tostring(code) .. ")")
-			failCallback();
+			failCallback()
 		end
 
 		if code == 0 then
@@ -655,7 +652,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 		elseif code >= 500 then
 			return fail("Server Error")
 		elseif code == 204 then
-			return okCallback();
+			return okCallback()
 		else
 			local obj, pos, err = json.decode(result.Body)
 
@@ -667,6 +664,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 				return fail("Unknown Server error")
 			end
 
+			print(obj)
 			if obj.error == nil then
 				return fail("Invalid response from server")
 			elseif obj.error == true and obj.message ~= nil then
@@ -691,9 +689,7 @@ function api:RegisterGame(callback)
 		api.disabled_heroes = data.disabled_heroes or nil
 
 		-- if IsInToolsMode() then
-		-- 	print(data.game_id)
-		-- 	print(data.players)
-		-- 	print(data.disabled_heroes)
+		-- 	print(data)
 		-- end
 
 		if callback ~= nil then
@@ -714,7 +710,8 @@ function api:RegisterGame(callback)
 --	CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 end
 
-function api:CompleteGame(successCallback)
+function api:CompleteGame()
+	print("CompleteGame")
 	local players = {}
 
 	for id = 0, PlayerResource:GetPlayerCount() - 1 do
@@ -848,8 +845,8 @@ function api:CompleteGame(successCallback)
 		winner = winnerTeam,
 		game_id = self:GetApiGameId(),
 		players = players,
-		radiant_score = self:GetKillsForTeam(2),
-		dire_score = self:GetKillsForTeam(3),
+		-- radiant_score = self:GetKillsForTeam(2),
+		-- dire_score = self:GetKillsForTeam(3),
 		game_time = GameRules:GetDOTATime(false, false),
 		game_type = CUSTOM_GAME_TYPE,
 		gamemode = api:GetCustomGamemode(),
@@ -860,12 +857,15 @@ function api:CompleteGame(successCallback)
 	}
 
 	self:Request("game-complete", function(data)
+		print("Game complete successful!")
 		if successCallback ~= nil then
 			successCallback(data, payload)
 		end
 	end,
 
 	function(data)
+		print("Error on game complete!")
+		print(data)
 		if successCallback ~= nil then
 			successCallback(data, payload)
 		end
@@ -879,9 +879,8 @@ function api:DiretideHallOfFame(successCallback, failCallback)
 		end
 	end, failCallback, "POST", {
 		map = GetMapName(),
-	});
+	})
 end
-
 
 function api:SetCustomGamemode(iValue)
 	if iValue and type(iValue) == "number" then
@@ -999,9 +998,9 @@ function api:GetGameModeLeaderboard(iRound, iMaxRound)
 	self:Request("pls_ranking", function(data)
 		self.pls_ranking[iRound] = data.players
 
-		if IsInToolsMode() then
---			print("GameMode Leaderboard for round "..iRound..":", data.players)
-		end
+		-- if IsInToolsMode() then
+			-- print("GameMode Leaderboard for round "..iRound..":", data.players)
+		-- end
 
 		print("Leaderboard round "..iRound..": success!")
 		iRound = iRound + 1

@@ -6,6 +6,8 @@
 "OverthrowTextPickup"							"HAS PICKED UP"
 "OverthrowItemPickup"							"{s:item_id}!"
 
+"RecentScore"									"+{d:score}"
+
 "Remaining"										"REMAINING"
 
 "Overtime"										"OVERTIME!"

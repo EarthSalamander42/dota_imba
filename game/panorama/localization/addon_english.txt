@@ -562,6 +562,7 @@
 	"playing_to_win" "That's ing to win, baby!"
 	"po_liang_lu" "破两路更好打, 是吧?"
 	"quitdemo_button" "Quit"
+	"recentscore" "+{d:score}"
 	"record_scratch" "Record Scratch"
 	"refresh_button" "Refresh"
 	"refresh_msg" "Hero Refreshed"

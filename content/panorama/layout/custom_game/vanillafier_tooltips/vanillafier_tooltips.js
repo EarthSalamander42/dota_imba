@@ -215,6 +215,8 @@ function SetAbilityTooltips(keys) {
 		ability_level = Abilities.GetLevel(ability);
 	}
 
+	$.Msg(keys);
+
 	if (ability && ability_level != 0 && ability_level != -1) {
 		ability_mana_cost = keys.iManaCost[ability_level];
 		ability_cooldown = keys.iCooldown[ability_level];
@@ -352,8 +354,12 @@ function SetAbilityTooltips(keys) {
 
 			var ability_value = keys["sSpecial"][i][2];
 
-			if (ability_value && typeof(ability_value) == "object" && ability_value["value"] && typeof(ability_value["value"]) == "string" || typeof(ability_value["value"]) == "number") {
-				ability_value = ability_value["value"].toString();
+			if (ability_value) {
+				if (typeof(ability_value) == "object" && ability_value["value"] && typeof(ability_value["value"]) == "string" || typeof(ability_value["value"]) == "number") {
+					ability_value = ability_value["value"].toString();
+				}
+			} else {
+				continue;
 			}
 
 			var special_values = ability_value.toString().split(" ");
