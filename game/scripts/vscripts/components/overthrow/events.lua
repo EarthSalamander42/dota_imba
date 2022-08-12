@@ -5,20 +5,17 @@ function COverthrowGameMode:OnGameRulesStateChange()
 		local numberOfPlayers = PlayerResource:GetPlayerCount()
 
 		if numberOfPlayers > 7 then
-			--COverthrowGameMode.TEAM_KILLS_TO_WIN = 25
+			COverthrowGameMode.TEAM_KILLS_TO_WIN = 25
 			COverthrowGameMode.nCOUNTDOWNTIMER = 901
 		else
-			--COverthrowGameMode.TEAM_KILLS_TO_WIN = 15
+			COverthrowGameMode.TEAM_KILLS_TO_WIN = 15
 			COverthrowGameMode.nCOUNTDOWNTIMER = 601
 		end
 
 		if GetMapName() == "imbathrow_ffa" then
-			COverthrowGameMode.TEAM_KILLS_TO_WIN = 50
 			if IsInToolsMode() then COverthrowGameMode.TEAM_KILLS_TO_WIN = 1 end
-		else
-			COverthrowGameMode.TEAM_KILLS_TO_WIN = 30
 		end
-		-- print( "Kills to win = " .. tostring(COverthrowGameMode.TEAM_KILLS_TO_WIN) )
+		print( "Kills to win = " .. tostring(COverthrowGameMode.TEAM_KILLS_TO_WIN) )
 
 		CustomNetTables:SetTableValue( "game_options", "victory_condition", { kills_to_win = COverthrowGameMode.TEAM_KILLS_TO_WIN } )
 
@@ -272,11 +269,10 @@ function COverthrowGameMode:OnThink()
 					COverthrowGameMode.countdownEnabled = false
 				else
 					COverthrowGameMode.TEAM_KILLS_TO_WIN = COverthrowGameMode.leadingTeamScore + 1
-					local broadcast_killcount = 
-					{
+
+					CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", {
 						killcount = COverthrowGameMode.TEAM_KILLS_TO_WIN
-					}
-					CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
+					})
 				end
 			end
 		end

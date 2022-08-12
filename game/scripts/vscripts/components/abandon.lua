@@ -11,8 +11,6 @@ function GoodGame:Call(event)
 	if init == false then
 		GG_TABLE = {}
 
-		-- if IsInToolsMode() then PlayerResource:GetPlayerCount() = 20 end
-
 		-- temporary
 		for i = 0, 24 - 1 do
 		--for i = 0, count - 1 do

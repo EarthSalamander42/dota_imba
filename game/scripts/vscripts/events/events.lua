@@ -43,9 +43,9 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 			if IsInToolsMode() then
---				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
 					BOTS_ENABLED = true
---				end
+				end
 
 				if BOTS_ENABLED == true then
 					SendToServerConsole('sm_gmode 1')
@@ -107,14 +107,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			return nil
 		end, FrameTime())
-
-		-- GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-		-- 	if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
-		-- 		Say(nil, "Once the game enters strategy time, you will be disconnected automatically to prevent being banned by a bug which only Valve can fix. You can then reconnect and play safely without getting custom game bans.", false)
-		-- 	end
-
-		-- 	return nil
-		-- end, 3.0)
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
@@ -133,22 +125,6 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 		end
-
-		-- if not IsInToolsMode() and PlayerResource:GetPlayerCount() > 1 then
-		-- 	Say(nil, "You will be automatically disconnected in 5 seconds to prevent custom game ban, please reconnect as soon as possible afterwards.", false)
-
-		-- 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-		-- 		for i = 0, 24 do
-		-- 			local player_name = PlayerResource:GetPlayerName(i)
-
-		-- 			if player_name and player_name ~= "" then
-		-- 				SendToServerConsole("kick "..player_name)
-		-- 			end
-		-- 		end
-
-		-- 		return nil
-		-- 	end, 5.0)
-		-- end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		-- shows -1 for some reason by default
 		GameRules:GetGameModeEntity():SetCustomDireScore(0)
@@ -1172,10 +1148,6 @@ function GameMode:OnThink()
 	end
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
---		if IsInToolsMode() then
---			ReconnectPlayer(0)
---		end
-
 		if GetMapName() == "imba_demo" or GameRules:IsCheatMode() then return 1 end
 
 		-- End the game if one team completely abandoned

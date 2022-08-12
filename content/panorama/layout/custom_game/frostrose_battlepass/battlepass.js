@@ -1508,14 +1508,14 @@ function CreateBattlepassButton() {
 	$.Schedule(2.0, CreateBattlepassButton);
 
 	// prevent running an api call everytime this file is edited
-	if (!Game.IsInToolsMode()) {
-		var args = {
-			steamid: Game.GetLocalPlayerInfo().player_steamid,
-			language: $.Localize("lang"),
-		}
+	// if (!Game.IsInToolsMode()) {
+	// 	var args = {
+	// 		steamid: Game.GetLocalPlayerInfo().player_steamid,
+	// 		language: $.Localize("lang"),
+	// 	}
 
-		api.getPlayerPosition(args, function(players) {});
-	}
+	// 	api.getPlayerPosition(args, function(players) {});
+	// }
 
 	// Portraits recorder
 /*

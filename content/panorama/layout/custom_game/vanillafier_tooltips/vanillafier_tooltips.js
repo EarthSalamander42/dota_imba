@@ -2,7 +2,7 @@ var hud_init = false;
 
 (function() {
 	// Ignore bots
-	if (Game.GetLocalPlayerInfo().player_connection_state != 2) {
+	if (Game.GetLocalPlayerInfo() && Game.GetLocalPlayerInfo().player_connection_state & Game.GetLocalPlayerInfo().player_connection_state != 2) {
 		return;
 	}
 

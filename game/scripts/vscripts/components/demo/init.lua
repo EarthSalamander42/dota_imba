@@ -14,13 +14,11 @@ ListenToGameEvent('game_rules_state_change', function()
 --		SendToServerConsole( "dota_dev forcegamestart" )
 
 		-- ONLY SHOW THE DEMO PANEL IF IT'S ACTUALLY DEMO MODE (lest people get the wrong idea with thinking other players can use these "hacks")
-		if IsInToolsMode() or GetMapName() == "imba_demo" then
-			GameRules:GetGameModeEntity():SetContextThink("show_demo_panel", function()
-				CustomGameEventManager:Send_ServerToAllClients("ShowDemoPanel", {})
+		GameRules:GetGameModeEntity():SetContextThink("show_demo_panel", function()
+			CustomGameEventManager:Send_ServerToAllClients("ShowDemoPanel", {})
 
-				return nil
-			end, 3.0)
-		end
+			return nil
+		end, 3.0)
 	elseif state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if not IsInToolsMode() then
 			Notifications:TopToAll({text = "Do not abandon the game, click the red QUIT button bottom left or type -exit in chat to avoid custom game ban.", duration = 3600.0, style = {color = "Red"}})
