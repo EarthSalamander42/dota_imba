@@ -230,18 +230,17 @@ function EndScoreboard(args) {
 	$("#PinnedHeroes").style.opacity = "1";
 
 	// Bring chat on top of end screen
-	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel())
+	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel());
 
 	// Set game time
 	$("#GameTimeText").text = $.Localize("#DOTA_Tooltip_ability_fountain_glyph_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
 
-//	for (var i = 0; i < Game.GetAllPlayerIDs().length; i++) {
-//		Game.GetAllPlayerIDs()[i]
-//	}
+	const map_name = Game.GetMapInfo().map_display_name;
 
-//	$.Msg(args)
+	if (map_name == "imbathrow_ffa") {
+		$.GetContextPanel().AddClass("Multiteam");
+	}
 
-	var bTenvTen = Game.GetAllPlayerIDs().length > 10;
 //	var IsRanked = false;
 
 //	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
@@ -251,11 +250,6 @@ function EndScoreboard(args) {
 //		if (gamemode && gamemode == 1)
 //			IsRanked = true;
 //	}
-
-	if (bTenvTen == false) {
-		$("#DetailsScoreboardContainer").style.marginTop = "15%";
-		$("#PinnedHeroes").style.marginTop = "15%";
-	}
 
 /*
 	$("#DetailsDeathStats").style.visibility = "collapse";
@@ -301,9 +295,6 @@ function EndScoreboard(args) {
 		}
 	}
 
-	$("#PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
-	$("#PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
-
 	// if (IsRanked)
 	// 	$("#" + team_number + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
 
@@ -322,13 +313,16 @@ function EndScoreboard(args) {
 		$.Msg("Proceed to team " + team_number);
 		
 		pinned_team_container.AddClass("PinnedTeam");
-		pinned_team_container.AddClass("TomBottomFlow");
+		pinned_team_container.AddClass("TomBottomFlow");	
 
 		var player_row_container = $.CreatePanel('Panel', $("#NormalMatchPlayers"), 'PlayerRows_' + team_number);
 		player_row_container.BLoadLayoutSnippet("PlayerRows");
 		// not sure why i have to hardcode it yet
 		player_row_container.style.flowChildren = "down";
 		player_row_container.style.height = "fit-children";
+
+		player_row_container.FindChildTraverse("PlayerRowLegend").BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_row_legend.xml", false, false);
+		player_row_container.FindChildTraverse("PlayerRowLegend").FindChildTraverse("PermanentBuffsLegend").AddClass("PermanentBuffs" + buff_length);
 
 		var player_damage_dealt_row_container = $.CreatePanel('Panel', $("#DetailsDamageDealt"), 'DamageDealtLegend_' + team_number);
 		player_damage_dealt_row_container.BLoadLayoutSnippet("DamageDealtLegend");
@@ -384,12 +378,6 @@ function EndScoreboard(args) {
 			var PinnedPlayerRow = $.CreatePanel('Panel', pinned_team_container, 'PinnedPlayerRow' + id);
 			PinnedPlayerRow.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_pinned_player_row.xml", false, false);
 			PinnedPlayerRow.AddClass("PlayerName");
-
-			if (bTenvTen) {
-				PinnedPlayerRow.AddClass("StatRowHeight10v10");
-			} else {
-				PinnedPlayerRow.AddClass("StatRowHeight5v5");
-			}
 
 			// using panel.heroname doesn't work for custom heroes
 			PinnedPlayerRow.FindChildTraverse("HeroImage").style.backgroundImage = 'url("s2r://panorama/images/heroes/' + Players.GetPlayerSelectedHero(id) + '.png")';
@@ -639,7 +627,8 @@ function EndScoreboard(args) {
 
 			panel_kill_matrix_row.FindChildTraverse("TotalKills").GetChild(0).text = player_info.player_kills;
 
-			var panel_support_items_row_container = $("#" + team_number + "_SupportItemsRows");
+			var panel_support_items_row_container = $.CreatePanel('Panel', $.GetContextPanel().FindChildTraverse("DetailsSupportItems"), 'SupportItems_' + team_number);
+			panel_support_items_row_container.BLoadLayoutSnippet("SupportItems");
 
 			var panel_support_items_row = $.CreatePanel('DOTAPostGameSupportItemsRow', panel_support_items_row_container, 'SupportItems' + id);
 			panel_support_items_row.BLoadLayout("file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game_support_items_row.xml", false, false);
@@ -720,60 +709,6 @@ function EndScoreboard(args) {
 
 //			panel_kill_matrix_row.FindChildTraverse("TotalKills").GetChild(0).text = player_info.player_kills;
 		});
-
-		// Would be good to use css class at some point...
-		if (bTenvTen) {
-			for (var child = 0; child < player_row_container.GetChildCount(); child++) {
-				player_row_container.GetChild(child).style.height = "42px";
-				player_row_container.GetChild(child).style.marginTop = "2.5px";
-				player_row_container.GetChild(child).style.marginBottom = "2.5px";
-				player_row_container.GetChild(child).GetChild(0).style.paddingBottom = "0px";
-				player_row_container.GetChild(child).FindChildTraverse("TalentTree").style.width = "40px";
-				player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.visibility = "visible";
-				player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.fontSize = "26px";
-				player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.textAlign = "right";
-				player_row_container.GetChild(child).FindChildrenWithClassTraverse("Level")[0].style.marginRight = "23px";
-			}
-
-			pinned_team_container.style.marginTop = "1px";
-
-			for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
-				pinned_team_container.GetChild(child).AddClass("StatRowHeight10v10");
-				pinned_team_container.GetChild(child).style.height = "42px";
-				pinned_team_container.GetChild(child).style.marginBottom = "5px";
-				pinned_team_container.GetChild(child).FindChildrenWithClassTraverse("HeroLevelLabel")[0].style.visibility = "collapse";
-				pinned_team_container.GetChild(child).FindChildrenWithClassTraverse("LevelAndHero")[0].style.marginLeft = "30px";
-			}
-
-			for (var child = 0; child < player_damage_dealt_row_container.GetChildCount(); child++) {
-				player_damage_dealt_row_container.GetChild(child).style.height = "42px"
-				player_damage_dealt_row_container.GetChild(child).style.marginTop = "2.5px"
-				player_damage_dealt_row_container.GetChild(child).style.marginBottom = "2.5px"
-			}
-
-			for (var child = 0; child < panel_kill_matrix_row_container.GetChildCount(); child++) {
-				panel_kill_matrix_row_container.GetChild(child).style.height = "42px"
-				panel_kill_matrix_row_container.GetChild(child).style.marginTop = "2.5px"
-				panel_kill_matrix_row_container.GetChild(child).style.marginBottom = "2.5px"
-			}
-
-			for (var child = 0; child < panel_support_items_row_container.GetChildCount(); child++) {
-				panel_support_items_row_container.GetChild(child).style.height = "42px"
-				panel_support_items_row_container.GetChild(child).style.marginTop = "2.5px"
-				panel_support_items_row_container.GetChild(child).style.marginBottom = "2.5px"
-			}
-
-			for (var child = 0; child < panel_abilities_row_container.GetChildCount(); child++) {
-				panel_abilities_row_container.GetChild(child).style.height = "42px"
-				panel_abilities_row_container.GetChild(child).style.marginTop = "2.5px"
-				panel_abilities_row_container.GetChild(child).style.marginBottom = "2.5px"
-			}
-		} else {
-//			for (var child = 0; child < pinned_team_container.GetChildCount(); child++) {
-//				pinned_team_container.GetChild(child).AddClass("StatRowHeight");
-//				pinned_team_container.GetChild(child).style.height = row_height;
-//			}
-		}
 	}
 }
 

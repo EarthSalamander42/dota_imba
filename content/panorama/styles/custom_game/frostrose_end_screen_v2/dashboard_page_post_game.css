@@ -1243,9 +1243,8 @@ Panel.PlayerRow Panel#Hero:hover Label.HeroName
 
 Panel.PlayerRow Label.Level
 {
-	text-align: right;
-	width: 39px;
-	margin-right: 13px;
+	text-align: center;
+	width: 52px;
 }
 
 Panel.PlayerRow Label.Deaths,
@@ -6344,14 +6343,6 @@ DOTAPostGameHeroStats .BotIcon
 	visibility: collapse;
 }
 
-.PinnedPlayerRow .StatRowHeight5v5 {
-	height: 40px;
-}
-
-.PinnedPlayerRow .StatRowHeight10v10 {
-	height: 40px;
-}
-
 .BotDifficulty_Passive.IsBot .BotIcon,
 .BotDifficulty_Easy.IsBot .BotIcon,
 .BotDifficulty_Medium.IsBot .BotIcon,
@@ -6515,7 +6506,6 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 
 .SlidingName.TeamBlock
 {
-	width: 152px;
 	background-color: transparent;
 	horizontal-align: left;
 	margin-left: 72px;
@@ -6538,6 +6528,10 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	margin-left: 6px;
 }
 
+.Multiteam .PinnedTeamScore {
+	margin-top: 12px;
+}
+
 #TeamScore
 {
 	font-size: 18px;
@@ -6545,6 +6539,10 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	font-weight: thin;
 	opacity: 1;
 	text-transform: uppercase;
+}
+
+.Multiteam #TeamScore {
+
 }
 
 #PinnedHeroesLeftMargin
@@ -6569,10 +6567,9 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	horizontal-align: right;
 }
 
-#PinnedHeroes
-{
+#PinnedHeroes {
 	height: 100%;
-	//width: 156px;
+	/* width: 156px; */
 	transform: translateX(-740px);
 	opacity: 0;
 	transition-property: transform, opacity;
@@ -6580,6 +6577,9 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	transition-duration: 0.34s, .5s;
 }
 
+.Multiteam #PinnedHeroes {
+	
+}
 
 .ScoreboardVisible #PinnedHeroes,
 .GraphsVisible #PinnedHeroes,
@@ -6648,9 +6648,9 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	height: 60px;
 }
 
-.StatRowHeight10v10
+.Multiteam .StatRowHeight
 {
-	height: 46px;
+	height: 40px;
 }
 
 #PlayerItemsRowContainer
@@ -6740,13 +6740,16 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	//background-color: transparent;
 }
 
-.StatRowHeight10v10.TeamName,
 .StatRowHeight.TeamName
 {
 	background-color: #00000033;
 	margin-left: 0px;
 	margin-bottom: 0px;
 	height: 60px;
+}
+
+.Multiteam .StatRowHeight.TeamName {
+	height: 40px;
 }
 
 .StatSectionTitle.StatRowHeight
@@ -6763,6 +6766,11 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	font-weight: thin;
 
 	color: #768e8dff;
+}
+
+.Multiteam .DamageDealtSubTitleHero,
+.Multiteam .DamageDealtSubTitleBuilding {
+	font-size: 14px;
 }
 
 .KillMatrixLegend
@@ -6810,6 +6818,11 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	height: 42px;
 	vertical-align: middle;
 	border: 1px solid black;
+}
+
+.Multiteam .HeroIcon {
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 
 .HeroIcon #HeroBadge
@@ -6976,8 +6989,8 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 .NameAndHero .HeroLevelLabel
 {
 	background-color: black;
-	//vertical-align: bottom;
-	//horizontal-align: right;
+	/* vertical-align: bottom; */
+	/* horizontal-align: right; */
 	width: 24px;
 	height: 24px;
 	color: #E7D291;
@@ -7015,6 +7028,10 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #373C3B ), color-stop( 0.4, #505959 ), color-stop( 0.6, #505959 ), to( #2F3535 ) );
 }
 
+.Multiteam .SlidingName {
+	flow-children: right;
+}
+
 
 .PlayerName
 {
@@ -7043,19 +7060,13 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	wash-color: #b9d3d3;
 }
 
+.Multiteam #PlayerNameScoreboard {
+	height: 24px;
+}
+
 .IsBot #PlayerNameScoreboard
 {
 	visibility: collapse;
-}
-
-#BotPlayerNameScoreboard
-{
-	visibility: collapse;
-}
-
-.IsBot #BotPlayerNameScoreboard
-{
-	visibility: visible;
 }
 
 .LocalPlayer #PlayerNameScoreboard
@@ -7113,6 +7124,11 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	brightness: 1;
 }
 
+.Multiteam .NameAndHero Label
+{
+	font-size: 18px;
+}
+
 .LocalPlayer Label.LevelAndHero
 {
 	color: #cccccc;
@@ -7156,12 +7172,15 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 	margin-left: 6px;
 	margin-top: 6px;
 	font-size: 26px;
-//	letter-spacing: 1px;
+	/* letter-spacing: 1px; */
 	font-weight: thin;
 	vertical-align: middle;
-	width: 174px;
 	text-overflow: shrink;
 	height: 36px;
+}
+
+.Multiteam #TeamName {
+	font-size: 24px;
 }
 
 
@@ -7547,6 +7566,11 @@ DOTAPostGameOverviewHero.Expanded #MainHeroImage
 #Winner
 {
 	margin-top: 12px;
+}
+
+.Multiteam #Winner {
+	transform: translateX(0px);
+	horizontal-align: right;
 }
 
 DOTAPostGameOverviewHero.CanReport:hover #ButtonDrawer,
