@@ -44,9 +44,10 @@ function InitHeroSelection()  {
 					HeroListContainer.GetChild(j).RemoveClass("AllHeroChallenge");
 
 				if (hero_panel) {
-					if (herolist && herolist.hotdisabledlist && typeof(herolist.hotdisabledlist) == "object" && herolist.hotdisabledlist["npc_dota_hero_" + hero_panel.heroname]) {
+					if (IsHeroDisabled("npc_dota_hero_" + hero_panel.heroname)) {
 						hero_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
-						hero_panel.GetParent().GetParent().AddClass("Banned")
+						hero_panel.GetParent().GetParent().AddClass("Banned");
+						hero_panel.GetParent().GetParent().AddClass("Unavailable");
 						hero_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
 						hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
 					}
@@ -69,6 +70,17 @@ function InitHeroSelection()  {
 
 		i++;
 	}
+}
+
+function IsHeroDisabled(sHeroName) {
+	if (herolist && herolist.hotdisabledlist && typeof(herolist.hotdisabledlist) == "object") {
+		for (var i in herolist.hotdisabledlist) {
+			if (herolist.hotdisabledlist[i] && herolist.hotdisabledlist[i] == sHeroName)
+				return true;
+		}
+	}
+
+	return false;
 }
 
 function OnUpdateHeroSelection() {

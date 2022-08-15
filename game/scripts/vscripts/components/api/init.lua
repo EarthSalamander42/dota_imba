@@ -490,9 +490,20 @@ end
 
 function api:GetDisabledHeroes()
 	if not api.disabled_heroes then return end
-	if not api.disabled_heroes["npc_dota_hero_target_dummy"] then api.disabled_heroes["npc_dota_hero_target_dummy"] = true end
-	print(api.disabled_heroes)
+	if not api:IsHeroDisabled("npc_dota_hero_target_dummy") then table.insert(api.disabled_heroes, "npc_dota_hero_target_dummy") end
 	return api.disabled_heroes
+end
+
+function api:IsHeroDisabled(sHeroName)
+	if api.disabled_heroes and type(api.disabled_heroes) == "table" then
+		for index, hero_name in pairs(api.disabled_heroes) do
+			if hero_name == sHeroName then
+				return true
+			end
+		end
+	end
+
+	return false
 end
 
 function api:GetApiGameId()
@@ -689,9 +700,11 @@ function api:RegisterGame(callback)
 		api.emblems = data.emblems or nil
 		api.disabled_heroes = data.disabled_heroes or nil
 
-		if IsInToolsMode() then
-			print(data.disabled_heroes)
-		end
+		-- if IsInToolsMode() then
+			-- for k, v in pairs(data) do
+			-- 	print(k, v)
+			-- end
+		-- end
 
 		if callback ~= nil then
 			callback(data)

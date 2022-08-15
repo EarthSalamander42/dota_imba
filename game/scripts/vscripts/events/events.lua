@@ -25,7 +25,6 @@ end
 
 function GameMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
-	local disabled_heroes = api:GetDisabledHeroes()
 
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		InitItemIds()
@@ -118,7 +117,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				else
 					local new_hero = PlayerResource:GetSelectedHeroName(i)
 
-					if new_hero and disabled_heroes and disabled_heroes[new_hero] then
+					if new_hero and api:IsHeroDisabled(new_hero) then
 						GameMode:PreventBannedHeroToBeRandomed({iPlayerID = i})
 						PlayerResource:SetCanRepick(i, false)
 					end
@@ -160,10 +159,8 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- MORE FAIL-SAFE
 			print("Pre-Game PreventBannedHeroToBeRandomed()")
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if new_hero and disabled_heroes[new_hero] then
-					if new_hero and disabled_heroes[new_hero] then
-						GameMode:PreventBannedHeroToBeRandomed({iPlayerID = hero:GetPlayerID()})
-					end
+				if new_hero and api:IsHeroDisabled(new_hero) then
+					GameMode:PreventBannedHeroToBeRandomed({iPlayerID = hero:GetPlayerID()})
 				end
 			end
 
