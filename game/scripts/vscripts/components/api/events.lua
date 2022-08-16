@@ -34,43 +34,38 @@ ListenToGameEvent('game_rules_state_change', function()
 		CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		api:InitDonatorTableJS()
-		
+
 		if api.parties then
 			CustomNetTables:SetTableValue("game_options", "parties", api.parties)
 		end
-		
+
 		if CUSTOM_GAME_TYPE == "IMBA" then
 			if api:GetCustomGamemode() == 4 then
 				api:DiretideHallOfFame(
 					function(data)
 						CustomNetTables:SetTableValue("battlepass", "leaderboard_diretide", {data = data})
 					end,
-					
+
 					function(data)
 						print("FAIL:", data)
 					end
 				)
 			end
 		end
-		
+
 		Timers:CreateTimer(function()
 			api:CheatDetector()
-			
+
 			if GAME_IS_OVER then
 				return nil
 			end
-			
+
 			return 1.0
 		end)
-	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		-- if IsInToolsMode() then
-		-- 	GameRules:SetGameWinner(2)
-		-- end
 	end
 end, nil)
 
 function api:OnGameEnd()
-	print("OnGameEnd")
 	if CUSTOM_GAME_TYPE == "IMBA" then
 		if api:GetCustomGamemode() == 4 then
 			CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
@@ -78,20 +73,20 @@ function api:OnGameEnd()
 	end
 
 	api:CompleteGame(function(data, payload)
-		print(data)
-		print(payload)
-		local full_data = {
+		-- print(data)
+		-- print(payload)
+
+		CustomGameEventManager:Send_ServerToAllClients("end_game", {
 			players = payload.players,
 			data = data,
 			info = {
 				winner = GAME_WINNER_TEAM,
 				id = api:GetApiGameId(),
+				radiant_score = GetTeamHeroKills(2),
+				dire_score = GetTeamHeroKills(3),
 				gamemode = api:GetCustomGamemode(),
-			}
-		}
-
-		CustomNetTables:SetTableValue("game_options", "end_game", full_data)
-		-- CustomGameEventManager:Send_ServerToAllClients("end_game", full_data)
+			},
+		})
 	end)
 end
 

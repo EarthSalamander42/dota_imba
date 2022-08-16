@@ -502,7 +502,6 @@ function api:IsHeroDisabled(sHeroName)
 			end
 		end
 	end
-
 	return false
 end
 
@@ -597,6 +596,11 @@ end
 
 -- Core
 function api:Request(endpoint, okCallback, failCallback, method, payload)
+	print(endpoint)
+	print(okCallback)
+	print(failCallback)
+	print(method)
+	print(payload)
 	if okCallback == nil then
 		okCallback = function()
 		end
@@ -639,7 +643,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 	request:SetHTTPRequestHeaderValue("X-Dota-Game-Type", CUSTOM_GAME_TYPE)
 
 	-- encode payload
-	print(payload)
+	-- print(payload)
 	if payload ~= nil then
 		local encoded = json.encode(payload)
 		request:SetHTTPRequestRawPostBody("application/json", encoded)
@@ -672,11 +676,11 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 				return fail("Json error: " .. tostring(err))
 			end
 
+			print(obj)
 			if obj == nil then
 				return fail("Unknown Server error")
 			end
 
-			-- print(obj)
 			if obj.error == nil then
 				return fail("Invalid response from server")
 			elseif obj.error == true and obj.message ~= nil then
@@ -700,11 +704,9 @@ function api:RegisterGame(callback)
 		api.emblems = data.emblems or nil
 		api.disabled_heroes = data.disabled_heroes or nil
 
-		-- if IsInToolsMode() then
-			-- for k, v in pairs(data) do
-			-- 	print(k, v)
-			-- end
-		-- end
+		if IsInToolsMode() then
+			print(data)
+		end
 
 		if callback ~= nil then
 			callback(data)
@@ -844,7 +846,7 @@ function api:CompleteGame(successCallback)
 	local rosh_max_hp
 
 	if CUSTOM_GAME_TYPE == "IMBA" then
-		-- print("Cheat game?", api:IsCheatGame(), api:GetCustomGamemode() == 4)
+		print("Cheat game?", api:IsCheatGame(), api:GetCustomGamemode() == 4)
 
 		if api:IsCheatGame() == false and api:GetCustomGamemode() == 4 then
 			rosh_lvl = ROSHAN_ENT:GetLevel()
@@ -859,8 +861,8 @@ function api:CompleteGame(successCallback)
 		winner = winnerTeam,
 		game_id = self:GetApiGameId(),
 		players = players,
-		-- radiant_score = self:GetKillsForTeam(2),
-		-- dire_score = self:GetKillsForTeam(3),
+		radiant_score = self:GetKillsForTeam(2),
+		dire_score = self:GetKillsForTeam(3),
 		game_time = GameRules:GetDOTATime(false, false),
 		game_type = CUSTOM_GAME_TYPE,
 		gamemode = api:GetCustomGamemode(),
@@ -868,6 +870,7 @@ function api:CompleteGame(successCallback)
 		rosh_hp = rosh_hp,
 		rosh_max_hp = rosh_max_hp,
 		cheat_mode = self:IsCheatGame(),
+		map = GetMapName(),
 	}
 
 	self:Request("game-complete", function(data)
