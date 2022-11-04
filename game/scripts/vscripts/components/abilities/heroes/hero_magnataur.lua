@@ -2168,7 +2168,6 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 
 			ParticleManager:SetParticleControl(pull_pfx, 1, particle_loc)
 			ParticleManager:ReleaseParticleIndex(pull_pfx)
-
 		end
 	end
 end

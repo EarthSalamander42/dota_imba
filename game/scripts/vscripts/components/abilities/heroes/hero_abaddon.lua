@@ -496,7 +496,6 @@ function modifier_imba_aphotic_shield_buff_block:GetModifierTotal_ConstantBlock(
 		local shield_hit_particle 		= "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
 		-- Avoid blocking when borrowed time is active						--No need for block when there is no damage
 		if not target:HasModifier("modifier_imba_borrowed_time_buff_hot_caster")  and kv.damage > 0 and bit.band(kv.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
-
 			if self.has_talent and not self.invulnerability_expired then
 				-- damage_absorbtion_end is calculated in OnCreated
 				if GameRules:GetGameTime() <= self.damage_absorption_end then
