@@ -401,7 +401,7 @@ function GameMode:ItemAddedFilter( keys )
 				local color = "white"
 
 				if unit.GetPlayerID and PLAYER_COLORS[unit:GetPlayerID()] then
-					rgbToHex(PLAYER_COLORS[unit:GetPlayerID()])
+					color = rgbToHex(PLAYER_COLORS[unit:GetPlayerID()])
 				end
 
 				Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})

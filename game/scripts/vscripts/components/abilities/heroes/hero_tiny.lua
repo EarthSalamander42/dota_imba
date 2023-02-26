@@ -1581,8 +1581,6 @@ function imba_tiny_grow:OnUpgrade()
 	self:GetCaster():StartGesture(ACT_TINY_GROWL)
 	EmitSoundOn("Tiny.Grow", self:GetCaster())
 
-	local grow_pfx_name = string.gsub(self:GetCaster().grow_effect, "lvl1", "lvl"..level)
-
 	local grow = ParticleManager:CreateParticle(self:GetCaster().grow_effect, PATTACH_POINT_FOLLOW, self:GetCaster()) 
 	ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(grow)
