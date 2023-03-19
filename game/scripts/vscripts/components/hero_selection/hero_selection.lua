@@ -317,11 +317,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 		end)
 	end
 
-	-- temporary fix
-	if not hero:GetUnitName() == "npc_dota_hero_monkey_king" then
-		HeroSelection:Attachments(hero)
-	end
-
 	-- Make heroes briefly visible on spawn (to prevent bad fog interactions)
 --	Timers:CreateTimer(0.5, function()
 --		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)

@@ -78,8 +78,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 	-- Initialize innate hero abilities
 	hero:InitializeAbilities()
 
-	HeroSelection:Attachments(hero)
-
 	-- Set starting gold
 	PlayerResource:SetGold(hero:GetPlayerID(), hero:IMBA_GetHeroStartingGold(), false)
 

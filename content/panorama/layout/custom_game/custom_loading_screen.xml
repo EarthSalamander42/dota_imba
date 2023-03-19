@@ -124,7 +124,7 @@
 
 						<Label id="loading-description-text" />
 
-						<Button id="WebsiteButton" class="vote-button" onactivate="ExternalBrowserGoToURL('https://frostrose-studio.com')">
+						<Button id="WebsiteButton" class="vote-button" onactivate="ExternalBrowserGoToURL('https://mods.frostrose-studio.com')">
 							<Label class="vote-button-label" text="#loading_screen_button" />
 						</Button>
 					</Panel>

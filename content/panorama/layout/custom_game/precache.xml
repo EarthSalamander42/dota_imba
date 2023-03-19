@@ -3,13 +3,6 @@
 		<Panel id="container" style="visibility:collapse;">
 			<!-- Those selection icons are not used, but Valve calls them, increasing loading time if they don't exist. -->
 
-			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_malfurion.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_sohei.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_hell_empress.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_scaldris.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_sly_king.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_storegga.png" hittest="false" />
-
 			<Image src="file://panorama/images/custom_game/overthrow_background_01.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/overthrow_victory_trophy.psd" hittest="false" />
 			<Image src="file://panorama/images/custom_game/imba_random.png" hittest="false" />
@@ -79,22 +72,6 @@
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike4.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike5.png" hittest="false" />
-	
-			<Image src="file://panorama/images/heroes/npc_dota_hero_malfurion.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_sohei.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_hell_empress.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_scaldris.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_sly_king.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_storegga.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_dummy_dummy.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_nian.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_vardor.png" hittest="false" />
-
-			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_malfurion.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_scaldris.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_sly_king.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_storegga.png" hittest="false" />
 
 			<Image src="file://panorama/images/hud/icon_kill_enemy_fb.png" hittest="false" />
 
