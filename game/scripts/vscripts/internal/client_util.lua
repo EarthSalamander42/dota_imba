@@ -50,7 +50,7 @@ function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 	return base
 end
 
-function C_DOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
+function CDOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	local hParent = self:GetParent()
 	if tSuperiorModifierNames then
 		for _,sSuperiorMod in pairs(tSuperiorModifierNames) do
@@ -67,7 +67,7 @@ function C_DOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
 	return value
 end
 
-function C_DOTA_Modifier_Lua:CheckUnique(bCreated)
+function CDOTA_Modifier_Lua:CheckUnique(bCreated)
 	return nil
 end
 
@@ -149,8 +149,8 @@ C_DOTA_Item_Lua.GetAbilityTextureName = function(self)
 end
 
 --[[ -- not procing somehow, leaving it there in case
-original_Ability_GetEffectName = C_DOTA_Modifier_Lua.GetEffectName
-C_DOTA_Modifier_Lua.GetEffectName = function(self)
+original_Ability_GetEffectName = CDOTA_Modifier_Lua.GetEffectName
+CDOTA_Modifier_Lua.GetEffectName = function(self)
 	-- call the original function
 	local response = original_Ability_GetEffectName(self)
 	local override = CustomNetTables:GetTableValue("battlepass_player", response..'_'..self:GetCaster():GetPlayerOwnerID()) 
