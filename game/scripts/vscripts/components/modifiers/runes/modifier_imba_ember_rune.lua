@@ -5,7 +5,6 @@
 
 	Contributors: Lindbrum (14th March 2018)
 ]]
-
 LinkLuaModifier("modifier_imba_ember_rune_burn", "modifier/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ember_rune_on_hit", "modifier/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
 
@@ -15,10 +14,15 @@ LinkLuaModifier("modifier_imba_ember_rune_on_hit", "modifier/runes/modifier_imba
 modifier_imba_ember_rune = modifier_imba_ember_rune or class({})
 
 function modifier_imba_ember_rune:IsAura() return true end
+
 function modifier_imba_ember_rune:GetAuraRadius() return self.aura_radius end
+
 function modifier_imba_ember_rune:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
+
 function modifier_imba_ember_rune:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+
 function modifier_imba_ember_rune:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
+
 function modifier_imba_ember_rune:GetModifierAura() return "modifier_imba_ember_rune_burn" end
 
 function modifier_imba_ember_rune:GetTexture()
@@ -48,7 +52,7 @@ function modifier_imba_ember_rune:GetAuraEntityReject(target)
 end
 
 function modifier_imba_ember_rune:DeclareFunctions()
-	local funcs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local funcs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return funcs
 end
@@ -67,7 +71,7 @@ function modifier_imba_ember_rune:OnAttackLanded(kv)
 		modifier:SetStackCount(modifier:GetStackCount() + 1)
 		modifier:SetDuration(self.burn_duration, true)
 	else
-		target:AddNewModifier(self:GetParent(), nil, "modifier_imba_ember_rune_on_hit", {duration = self.burn_duration})
+		target:AddNewModifier(self:GetParent(), nil, "modifier_imba_ember_rune_on_hit", { duration = self.burn_duration })
 		local modifier = target:FindModifierByName("modifier_imba_ember_rune_on_hit")
 		modifier:SetStackCount(1)
 	end
@@ -78,15 +82,17 @@ end
 ----------------------------------------------------------------------
 modifier_imba_ember_rune_burn = modifier_imba_ember_rune_burn or class({})
 function modifier_imba_ember_rune_burn:IsHidden() return false end
+
 function modifier_imba_ember_rune_burn:IsDebuff() return true end
+
 function modifier_imba_ember_rune_burn:IsPurgable() return false end
 
 function modifier_imba_ember_rune_burn:DeclareFunctions()
-	return { MODIFIER_PROPERTY_MISS_PERCENTAGE } end
+	return { MODIFIER_PROPERTY_MISS_PERCENTAGE }
+end
 
 function modifier_imba_ember_rune_burn:OnCreated()
 	if IsServer() then
-
 		-- Particle creation
 		self.particle = ParticleManager:CreateParticle(self:GetCaster().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 
@@ -121,8 +127,8 @@ function modifier_imba_ember_rune_burn:OnIntervalThink()
 		if caster:IsRealHero() then
 			real_hero_nearby = true
 		else
-			local real_hero_finder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false)
-			for _,hero in pairs(real_hero_finder) do
+			local real_hero_finder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+			for _, hero in pairs(real_hero_finder) do
 				if hero:FindModifierByName("modifier_imba_ember_rune") then
 					real_hero_nearby = true
 					break
@@ -132,13 +138,14 @@ function modifier_imba_ember_rune_burn:OnIntervalThink()
 
 		-- If the real hero is nearby, increase damage
 		if real_hero_nearby then
-			damage = damage + self.extra_damage * parent:GetHealth() * 0.01
+			damage = damage + self.extra_damage * parent:GetHealth() / 100
 		end
 
-		local damage_table = {victim = parent, 
-			attacker = caster, 
-			ability = nil, 
-			damage = damage, 
+		local damage_table = {
+			victim = parent,
+			attacker = caster,
+			ability = nil,
+			damage = damage,
 			damage_type = DAMAGE_TYPE_MAGICAL
 		}
 
@@ -155,14 +162,15 @@ function modifier_imba_ember_rune_burn:GetModifierMiss_Percentage()
 	return self.miss_chance
 end
 
-
 -------------------------------------------------------------------------------------------
 -- On-hit burning debuff
 -------------------------------------------------------------------------------------------
 modifier_imba_ember_rune_on_hit = modifier_imba_ember_rune_on_hit or class({})
 
 function modifier_imba_ember_rune_on_hit:IsHidden() return false end
+
 function modifier_imba_ember_rune_on_hit:IsDebuff() return true end
+
 function modifier_imba_ember_rune_on_hit:IsPurgable() return true end
 
 function modifier_imba_ember_rune_on_hit:OnCreated()
@@ -171,7 +179,7 @@ function modifier_imba_ember_rune_on_hit:OnCreated()
 
 	--Add burning effect
 	self.particle = ParticleManager:CreateParticle(self:GetParent().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, parent)
---	ParticleManager:AddParticle(self.particle, false, true, 10, true, false)
+	--	ParticleManager:AddParticle(self.particle, false, true, 10, true, false)
 
 	self:OnIntervalThink()
 
@@ -185,9 +193,9 @@ function modifier_imba_ember_rune_on_hit:OnIntervalThink()
 	local total_damage = self.damage_per_sec * self:GetStackCount()
 	local damage_table = {
 		victim = self:GetParent(),
-		attacker = self:GetCaster(), 
-		ability = nil, 
-		damage = total_damage, 
+		attacker = self:GetCaster(),
+		ability = nil,
+		damage = total_damage,
 		damage_type = DAMAGE_TYPE_MAGICAL
 	}
 

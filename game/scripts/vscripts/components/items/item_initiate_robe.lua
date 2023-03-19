@@ -41,9 +41,11 @@ end
 
 modifier_imba_initiate_robe_passive = modifier_imba_initiate_robe_passive or class({})
 
-function modifier_imba_initiate_robe_passive:IsPurgable()		return false end
-function modifier_imba_initiate_robe_passive:RemoveOnDeath()	return false end
-function modifier_imba_initiate_robe_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_initiate_robe_passive:IsPurgable() return false end
+
+function modifier_imba_initiate_robe_passive:RemoveOnDeath() return false end
+
+function modifier_imba_initiate_robe_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_initiate_robe_passive:DeclareFunctions()
 	return {
@@ -57,10 +59,10 @@ end
 
 function modifier_imba_initiate_robe_passive:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
-	if IsServer() then 
+	if IsServer() then
 		local item = self:GetAbility()
 		self.parent = self:GetParent()
 		if self.parent:IsHero() and item then
@@ -79,7 +81,7 @@ end
 function modifier_imba_initiate_robe_passive:OnIntervalThink()
 	-- If mana percentage at any frame is lower than the frame before it, set stacks
 	if self:GetAbility() and self.parent:GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then
-		self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self:GetAbility():GetSpecialValueFor("mana_conversion_rate") * 0.01), self:GetAbility():GetSpecialValueFor("max_stacks")))
+		self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self:GetAbility():GetSpecialValueFor("mana_conversion_rate") / 100), self:GetAbility():GetSpecialValueFor("max_stacks")))
 	end
 
 	self.mana_raw = self:GetParent():GetMana()
@@ -112,10 +114,10 @@ end
 
 function modifier_imba_initiate_robe_passive:GetModifierTotal_ConstantBlock(keys)
 	local blocked = self:GetStackCount()
-	
+
 	-- Block for the smaller value between total current stacks and total damage
-	if blocked > 0 and keys.damage > 0 then 		
-		SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), min(self:GetStackCount(), keys.damage), self:GetParent())				
+	if blocked > 0 and keys.damage > 0 then
+		SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), min(self:GetStackCount(), keys.damage), self:GetParent())
 		self:SetStackCount(max(self:GetStackCount() - keys.damage, 0))
 	end
 

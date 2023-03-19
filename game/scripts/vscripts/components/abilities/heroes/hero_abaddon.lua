@@ -31,7 +31,8 @@ local function getOverChannelDamageIncrease(caster)
 		local over_channel = caster:FindAbilityByName("imba_abaddon_over_channel")
 		if over_channel then
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetSpecialValueFor("extra_dmg") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
+			return over_channel:GetSpecialValueFor("extra_dmg") *
+				(1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
 		end
 	end
 
@@ -44,7 +45,8 @@ local function getOverChannelMistIncrease(caster)
 		if over_channel then
 			local ability_level = over_channel:GetLevel() - 1
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetSpecialValueFor("extra_mist_duration") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
+			return over_channel:GetSpecialValueFor("extra_mist_duration") *
+				(1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
 		end
 	end
 
@@ -57,7 +59,8 @@ local function getOverChannelShieldIncrease(caster)
 		if over_channel then
 			local ability_level = over_channel:GetLevel() - 1
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetSpecialValueFor("extra_dmg") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6")) --+ over_channel:GetLevelSpecialValueFor( "extra_shield_health" , ability_level )
+			return over_channel:GetSpecialValueFor("extra_dmg") *
+				(1 + caster:FindTalentValue("special_bonus_imba_abaddon_6")) --+ over_channel:GetLevelSpecialValueFor( "extra_shield_health" , ability_level )
 		end
 	end
 
@@ -68,7 +71,7 @@ end
 --		Mist Coil          --
 -----------------------------
 -- Hidden Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_mist_coil_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_mist_coil_mist_ally"] = LUA_MODIFIER_MOTION_NONE,
 })
@@ -92,25 +95,40 @@ function imba_abaddon_death_coil:OnSpellStart(unit, special_cast)
 
 		-- If caster is alive
 		if not special_cast then
-			local responses = {"abaddon_abad_deathcoil_01","abaddon_abad_deathcoil_02","abaddon_abad_deathcoil_06","abaddon_abad_deathcoil_08",}
-			caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20,"coil")
+			local responses = { "abaddon_abad_deathcoil_01", "abaddon_abad_deathcoil_02", "abaddon_abad_deathcoil_06",
+				"abaddon_abad_deathcoil_08", }
+			caster:EmitCasterSound("npc_dota_hero_abaddon", responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20, "coil")
 
 			local health_cost = self:GetVanillaAbilitySpecial("self_damage")
-			
+
 			if getOverChannelDamageIncrease then
-				ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = getOverChannelDamageIncrease(caster), damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL})
+				ApplyDamage({
+					victim = caster,
+					attacker = caster,
+					ability = self,
+					damage = getOverChannelDamageIncrease(caster),
+					damage_type = DAMAGE_TYPE_PURE,
+					damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL
+				})
 			end
-			
-			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL})
+
+			ApplyDamage({
+				victim = caster,
+				attacker = caster,
+				ability = self,
+				damage = health_cost,
+				damage_type = DAMAGE_TYPE_PURE,
+				damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL
+			})
 		end
 
 		-- Use up overchannel
 		if not special_cast then
-			self.overchannel_damage_increase	=	getOverChannelDamageIncrease(caster)
-			self.overchannel_mist_increase		=	getOverChannelMistIncrease(caster)
+			self.overchannel_damage_increase = getOverChannelDamageIncrease(caster)
+			self.overchannel_mist_increase   = getOverChannelMistIncrease(caster)
 		else
-			self.overchannel_damage_increase	=	0
-			self.overchannel_mist_increase		=	0
+			self.overchannel_damage_increase = 0
+			self.overchannel_mist_increase   = 0
 		end
 
 		-- Create the projectile
@@ -126,13 +144,13 @@ function imba_abaddon_death_coil:OnSpellStart(unit, special_cast)
 			iMoveSpeed = self:GetVanillaAbilitySpecial("missile_speed"),
 			iVisionRadius = 0,
 			iVisionTeamNumber = caster:GetTeamNumber(),
-			ExtraData = {special_cast = special_cast}
+			ExtraData = { special_cast = special_cast }
 		}
-		ProjectileManager:CreateTrackingProjectile( info )
+		ProjectileManager:CreateTrackingProjectile(info)
 	end
 end
 
-function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, ExtraData)
+function imba_abaddon_death_coil:OnProjectileHit_ExtraData(hTarget, vLocation, ExtraData)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = hTarget
@@ -158,7 +176,12 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 			local damage_type = DAMAGE_TYPE_MAGICAL
 
 			-- Apply damage + parsing if the ability killed the target
-			local dealt_damage = ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = damage_type })
+			local dealt_damage = ApplyDamage({
+				victim = target,
+				attacker = caster,
+				damage = damage,
+				damage_type = damage_type
+			})
 			if caster:HasModifier(self:GetIntrinsicModifierName()) then
 				caster:FindModifierByName(self:GetIntrinsicModifierName()).applied_damage = dealt_damage
 			end
@@ -170,18 +193,19 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 
 				-- debuff_duration can be 0 if caster has ability but not learnt it yet
 				if debuff_duration > 0 and not caster:PassivesDisabled() then
-					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", { duration = debuff_duration * (1 - target:GetStatusResistance()) })
+					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter",
+						{ duration = debuff_duration * (1 - target:GetStatusResistance()) })
 				end
 			end
 		else
 			--Apply spellpower to heal
-			-- local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
+			-- local heal_amp = 1 + (caster:GetSpellAmplification(false) / 100)
 
 			local heal = (self:GetVanillaAbilitySpecial("heal_amount") + self.overchannel_damage_increase) -- * heal_amp
 
 			-- heal allies or self and apply mist
 			target:Heal(heal, caster)
-			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_ally", {duration = mist_duration})
+			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_ally", { duration = mist_duration })
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 
 			-- Refresh health and extend duration of Aphotic Shield
@@ -193,10 +217,12 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 
 		-- Extra effect if coil was casted with over channel
 		if not special_cast and caster:HasModifier("modifier_over_channel_handler") then
-			local over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_detail.vpcf", PATTACH_POINT, target)
+			local over_channel_particle = ParticleManager:CreateParticle(
+				"particles/dev/library/base_dust_hit_detail.vpcf", PATTACH_POINT, target)
 			ParticleManager:ReleaseParticleIndex(over_channel_particle)
 
-			over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf", PATTACH_POINT, target)
+			over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf",
+				PATTACH_POINT, target)
 			ParticleManager:ReleaseParticleIndex(over_channel_particle)
 		end
 
@@ -204,8 +230,11 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 		if not special_cast and caster:GetName() == "npc_dota_hero_abaddon" then
 			Timers:CreateTimer(0.4, function()
 				if self.killed then
-					local responses = {"abaddon_abad_deathcoil_03","abaddon_abad_deathcoil_07","abaddon_abad_deathcoil_04","abaddon_abad_deathcoil_05","abaddon_abad_deathcoil_09","abaddon_abad_deathcoil_10"}
-					caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil,nil)
+					local responses = { "abaddon_abad_deathcoil_03", "abaddon_abad_deathcoil_07",
+						"abaddon_abad_deathcoil_04", "abaddon_abad_deathcoil_05", "abaddon_abad_deathcoil_09",
+						"abaddon_abad_deathcoil_10" }
+					caster:EmitCasterSound("npc_dota_hero_abaddon", responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil,
+						nil)
 					self.killed = nil
 				end
 			end)
@@ -215,7 +244,9 @@ end
 
 function imba_abaddon_death_coil:OnOwnerDied()
 	if self:GetCaster():IsRealHero() then
-		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()), DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil,
+			self:GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster()), DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+			self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, unit in pairs(units) do
 			if unit ~= self:GetCaster() then
 				self:OnSpellStart(unit, true)
@@ -226,18 +257,24 @@ end
 
 modifier_imba_mist_coil_passive = modifier_imba_mist_coil_passive or class({})
 function modifier_imba_mist_coil_passive:IsDebuff() return false end
+
 function modifier_imba_mist_coil_passive:IsHidden() return true end
+
 function modifier_imba_mist_coil_passive:IsPurgable() return false end
+
 function modifier_imba_mist_coil_passive:IsPurgeException() return false end
+
 function modifier_imba_mist_coil_passive:IsStunDebuff() return false end
+
 function modifier_imba_mist_coil_passive:RemoveOnDeath() return false end
+
 -------------------------------------------
 function modifier_imba_mist_coil_passive:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_EVENT_ON_DEATH,
-			MODIFIER_EVENT_ON_TAKEDAMAGE,
-		}
+	{
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}
 	return decFuns
 end
 
@@ -268,14 +305,20 @@ end
 
 modifier_imba_mist_coil_mist_ally = modifier_imba_mist_coil_mist_ally or class({})
 function modifier_imba_mist_coil_mist_ally:IsDebuff() return false end
+
 function modifier_imba_mist_coil_mist_ally:IsHidden() return false end
+
 function modifier_imba_mist_coil_mist_ally:IsPurgable() return true end
+
 function modifier_imba_mist_coil_mist_ally:RemoveOnDeath() return true end
 
 ---------------------------------------------
 
 function modifier_imba_mist_coil_mist_ally:OnCreated(keys)
-	if not self:GetAbility() then self:Destroy() return end
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
 
 	self.damage_heal_pct = self:GetAbility():GetSpecialValueFor("damage_heal_pct") / 100
 end
@@ -286,7 +329,7 @@ end
 
 function modifier_imba_mist_coil_mist_ally:OnDestroy(keys)
 	if not self:GetAbility() then return end
-	
+
 	if IsServer() and self:GetParent():IsAlive() then
 		self:GetParent():Heal(self:GetStackCount(), self:GetCaster())
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self:GetStackCount(), nil)
@@ -310,13 +353,13 @@ end
 -----------------------------
 
 -- Hidden Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_aphotic_shield_buff_block"] = LUA_MODIFIER_MOTION_NONE,
 })
 
 imba_abaddon_aphotic_shield = imba_abaddon_aphotic_shield or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_abaddon_aphotic_shield:IsHiddenWhenStolen()	return false end
+function imba_abaddon_aphotic_shield:IsHiddenWhenStolen() return false end
 
 function imba_abaddon_aphotic_shield:OnSpellStart()
 	if IsServer() then
@@ -325,13 +368,22 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 
 		-- Play Sound
 		caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
-		local responses = {"abaddon_abad_aphoticshield_01","abaddon_abad_aphoticshield_02","abaddon_abad_aphoticshield_03","abaddon_abad_aphoticshield_04","abaddon_abad_aphoticshield_05","abaddon_abad_aphoticshield_06","abaddon_abad_aphoticshield_07"}
-		caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 20,"aphotic_shield")
+		local responses = { "abaddon_abad_aphoticshield_01", "abaddon_abad_aphoticshield_02",
+			"abaddon_abad_aphoticshield_03", "abaddon_abad_aphoticshield_04", "abaddon_abad_aphoticshield_05",
+			"abaddon_abad_aphoticshield_06", "abaddon_abad_aphoticshield_07" }
+		caster:EmitCasterSound("npc_dota_hero_abaddon", responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 20, "aphotic_shield")
 
 		-- Check health cost required due to over channel
 		local health_cost = getOverChannelDamageIncrease(caster)
 		if health_cost > 0 then
-			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL})
+			ApplyDamage({
+				victim = caster,
+				attacker = caster,
+				ability = self,
+				damage = health_cost,
+				damage_type = DAMAGE_TYPE_PURE,
+				damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL
+			})
 		end
 
 		-- Strong Dispel
@@ -350,9 +402,9 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 end
 
 modifier_imba_aphotic_shield_buff_block = modifier_imba_aphotic_shield_buff_block or class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return true end,
-	IsDebuff	  			= function(self) return false end
+	IsHidden   = function(self) return false end,
+	IsPurgable = function(self) return true end,
+	IsDebuff   = function(self) return false end
 })
 
 function modifier_imba_aphotic_shield_buff_block:DeclareFunctions()
@@ -383,25 +435,31 @@ function modifier_imba_aphotic_shield_buff_block:OnCreated()
 			self.invulnerability_expired = false
 		end
 
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-		local common_vector = Vector(shield_size,0,shield_size)
+		local particle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		local common_vector = Vector(shield_size, 0, shield_size)
 		ParticleManager:SetParticleControl(particle, 1, common_vector)
 		ParticleManager:SetParticleControl(particle, 2, common_vector)
 		ParticleManager:SetParticleControl(particle, 4, common_vector)
-		ParticleManager:SetParticleControl(particle, 5, Vector(shield_size,0,0))
+		ParticleManager:SetParticleControl(particle, 5, Vector(shield_size, 0, 0))
 
 		-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
-		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin, true)
+		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin,
+			true)
 		self:AddParticle(particle, false, false, -1, false, false)
 
 		-- Extra effect if shield was casted with over channel
 		if caster:HasModifier("modifier_over_channel_handler") then
-			local over_channel_particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin, true)
+			local over_channel_particle = ParticleManager:CreateParticle(
+				"particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc,
+				target_origin, true)
 			self:AddParticle(over_channel_particle, false, false, -1, false, false)
 
-			over_channel_particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin, true)
+			over_channel_particle = ParticleManager:CreateParticle(
+				"particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc,
+				target_origin, true)
 			self:AddParticle(over_channel_particle, false, false, -1, false, false)
 		end
 	end
@@ -409,28 +467,30 @@ end
 
 function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 	if IsServer() then
-		local target 				= self:GetParent()
-		local caster 				= self:GetCaster()
-		local ability 				= self:GetAbility()
-		local ability_level 		= ability:GetLevel()
-		local radius 				= ability:GetVanillaAbilitySpecial("radius")
-		local explode_target_team 	= DOTA_UNIT_TARGET_TEAM_BOTH
-		local explode_target_type 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-		local target_vector			= target:GetAbsOrigin()
+		local target              = self:GetParent()
+		local caster              = self:GetCaster()
+		local ability             = self:GetAbility()
+		local ability_level       = ability:GetLevel()
+		local radius              = ability:GetVanillaAbilitySpecial("radius")
+		local explode_target_team = DOTA_UNIT_TARGET_TEAM_BOTH
+		local explode_target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+		local target_vector       = target:GetAbsOrigin()
 
 		target:EmitSound("Hero_Abaddon.AphoticShield.Destroy")
 
 		-- Explosion particle is shown by default when the particle is to be removed, however that does not work for illusions. Hence this added explosion is to make the particle show when illusions die
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf", PATTACH_ABSORIGIN, caster)
+		local particle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf", PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(particle, 0, target_vector)
 		ParticleManager:ReleaseParticleIndex(particle)
 
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), target_vector, nil, radius, explode_target_team, explode_target_type, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local units            = FindUnitsInRadius(caster:GetTeamNumber(), target_vector, nil, radius,
+			explode_target_team, explode_target_type, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 		-- Deal damage to enemies around
-		local damage = self.shield_init_value
-		local damage_type = DAMAGE_TYPE_MAGICAL
-		local curse_of_avernus 	= caster:FindAbilityByName("imba_abaddon_frostmourne")
+		local damage           = self.shield_init_value
+		local damage_type      = DAMAGE_TYPE_MAGICAL
+		local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_frostmourne")
 
 		local debuff_duration
 		if curse_of_avernus then
@@ -453,12 +513,15 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 
 				if debuff_duration and debuff_duration > 0 then
 					if not caster:PassivesDisabled() and curse_of_avernus then
-						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter", { duration = debuff_duration * (1 - unit:GetStatusResistance()) })
+						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_counter",
+							{ duration = debuff_duration * (1 - unit:GetStatusResistance()) })
 					end
 
 					-- Show particle when hit
-					particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, unit)
-					ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT, "attach_hitloc", unit:GetAbsOrigin(), true)
+					particle = ParticleManager:CreateParticle(
+						"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, unit)
+					ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT, "attach_hitloc",
+						unit:GetAbsOrigin(), true)
 					local hit_size = unit:GetModelRadius() * 0.3
 					ParticleManager:SetParticleControl(particle, 1, Vector(hit_size, hit_size, hit_size))
 					ParticleManager:ReleaseParticleIndex(particle)
@@ -479,23 +542,22 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 					iMoveSpeed = mist_coil_ability:GetVanillaAbilitySpecial("missile_speed"),
 					iVisionRadius = 0,
 					iVisionTeamNumber = caster:GetTeamNumber(),
-					ExtraData = {special_cast = true}
+					ExtraData = { special_cast = true }
 				}
-				ProjectileManager:CreateTrackingProjectile( info )
+				ProjectileManager:CreateTrackingProjectile(info)
 			end
 		end
 	end
 end
 
-
 --Block damage
 function modifier_imba_aphotic_shield_buff_block:GetModifierTotal_ConstantBlock(kv)
 	if IsServer() then
-		local target 					= self:GetParent()
-		local original_shield_amount	= self.shield_remaining
-		local shield_hit_particle 		= "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+		local target                 = self:GetParent()
+		local original_shield_amount = self.shield_remaining
+		local shield_hit_particle    = "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
 		-- Avoid blocking when borrowed time is active						--No need for block when there is no damage
-		if not target:HasModifier("modifier_imba_borrowed_time_buff_hot_caster")  and kv.damage > 0 and bit.band(kv.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
+		if not target:HasModifier("modifier_imba_borrowed_time_buff_hot_caster") and kv.damage > 0 and bit.band(kv.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS then
 			if self.has_talent and not self.invulnerability_expired then
 				-- damage_absorbtion_end is calculated in OnCreated
 				if GameRules:GetGameTime() <= self.damage_absorption_end then
@@ -521,17 +583,15 @@ function modifier_imba_aphotic_shield_buff_block:GetModifierTotal_ConstantBlock(
 				--Emit damage blocking effect
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, kv.damage, nil)
 				return kv.damage
-					--Else, reduce what you can and blow up the shield
+				--Else, reduce what you can and blow up the shield
 			else
 				--Emit damage block effect
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, original_shield_amount, nil)
 				self:Destroy()
 				return original_shield_amount
 			end
-
 		end
 	end
-
 end
 
 function modifier_imba_aphotic_shield_buff_block:ResetAndExtendBy(seconds)
@@ -543,14 +603,14 @@ end
 --     Curse Of Avernus    --
 -----------------------------
 -- Visible Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_curse_of_avernus_debuff_counter"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_curse_of_avernus_debuff_slow"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_curse_of_avernus_buff_haste"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_curse_of_avernus_buff_haste_aura"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_curse_of_avernus_passive"] = LUA_MODIFIER_MOTION_NONE,
 })
 
@@ -575,7 +635,7 @@ end
 function imba_abaddon_frostmourne:OnOwnerSpawned()
 	if not IsServer() then return end
 	self:EndCooldown()
---[[
+	--[[
 	if self:GetCaster():HasAbility("special_bonus_imba_abaddon_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_abaddon_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_abaddon_2") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_abaddon_2", {})
 	end
@@ -607,16 +667,15 @@ function imba_abaddon_frostmourne:OnSpellStart()
 	end
 end
 --]]
-
 modifier_imba_curse_of_avernus_passive = modifier_imba_curse_of_avernus_passive or class({
-	IsHidden				= function(self) return true end,
-	IsPurgable	  			= function(self) return false end,
-	IsDebuff	  			= function(self) return false end,
-	AllowIllusionDuplicate	= function(self) return false end,
---	IsAuraActiveOnDeath		= function(self) return false end,
---	GetModifierAura			= function(self) return "modifier_imba_curse_of_avernus_buff_haste_aura" end,
---	GetAuraSearchType		= function(self) return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end,
---	GetAuraSearchTeam		= function(self) return DOTA_UNIT_TARGET_TEAM_FRIENDLY end,
+	IsHidden               = function(self) return true end,
+	IsPurgable             = function(self) return false end,
+	IsDebuff               = function(self) return false end,
+	AllowIllusionDuplicate = function(self) return false end,
+	--	IsAuraActiveOnDeath		= function(self) return false end,
+	--	GetModifierAura			= function(self) return "modifier_imba_curse_of_avernus_buff_haste_aura" end,
+	--	GetAuraSearchType		= function(self) return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end,
+	--	GetAuraSearchTeam		= function(self) return DOTA_UNIT_TARGET_TEAM_FRIENDLY end,
 })
 
 function modifier_imba_curse_of_avernus_passive:RemoveOnDeath() return false end
@@ -642,7 +701,6 @@ function modifier_imba_curse_of_avernus_passive:IsAura()
 	return false
 end
 --]]
-
 function modifier_imba_curse_of_avernus_passive:GetAuraRadius()
 	return self.caster:FindTalentValue("special_bonus_imba_abaddon_5")
 end
@@ -686,13 +744,15 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 					-- Apply debuff if enemy
 					if self:GetAbility() then
 						local slow_duration = self:GetAbility():GetVanillaAbilitySpecial("slow_duration") -- Not possible for this to be 0 here
-						target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_curse_of_avernus_debuff_counter", { duration = slow_duration * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(self:GetCaster(), self:GetAbility(),
+							"modifier_imba_curse_of_avernus_debuff_counter",
+							{ duration = slow_duration * (1 - target:GetStatusResistance()) })
 					end
 				end
 			end
 		end
 
---[[
+		--[[
 		-- Smiting of Avernus talent
 		if kv.attacker == self:GetCaster() and self.ability:IsCooldownReady() and ( self.ability.curse_of_avernus_target or self.ability:GetAutoCastState() ) then
 			local health_lost = self:GetCaster():GetMaxHealth() * self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_4", "health_cost_pct") / 100
@@ -730,7 +790,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttackFail(kv)
 end
 
 function modifier_imba_curse_of_avernus_passive:OnAttackLanded(kv)
-	if self:GetParent()	== kv.attacker then
+	if self:GetParent() == kv.attacker then
 		self.ability.curse_of_avernus_target = nil
 	end
 end
@@ -772,10 +832,14 @@ function modifier_imba_curse_of_avernus_debuff_counter:OnRefresh(kv)
 	self:IncrementStackCount()
 
 	if self:GetStackCount() >= self:GetAbility():GetVanillaAbilitySpecial("hit_count") then
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_curse_of_avernus_debuff_slow", {duration = self:GetAbility():GetVanillaAbilitySpecial("curse_duration")})
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_curse_of_avernus_debuff_slow",
+			{ duration = self:GetAbility():GetVanillaAbilitySpecial("curse_duration") })
 		self:GetParent():RemoveModifierByName("modifier_imba_curse_of_avernus_debuff_counter")
-		local responses = {"abaddon_abad_frostmourne_01","abaddon_abad_frostmourne_02","abaddon_abad_frostmourne_03","abaddon_abad_frostmourne_04","abaddon_abad_frostmourne_05","abaddon_abad_frostmourne_06","abaddon_abad_frostmourne_06"}
-		self:GetCaster():EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 30,"curse_of_avernus")
+		local responses = { "abaddon_abad_frostmourne_01", "abaddon_abad_frostmourne_02", "abaddon_abad_frostmourne_03",
+			"abaddon_abad_frostmourne_04", "abaddon_abad_frostmourne_05", "abaddon_abad_frostmourne_06",
+			"abaddon_abad_frostmourne_06" }
+		self:GetCaster():EmitCasterSound("npc_dota_hero_abaddon", responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 30,
+			"curse_of_avernus")
 		self:GetCaster():EmitSound("Hero_Abaddon.Curse.Proc")
 	end
 end
@@ -784,7 +848,8 @@ function modifier_imba_curse_of_avernus_debuff_counter:OnStackCountChanged(iStac
 	if not IsServer() then return end
 
 	if not self.pfx then
-		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_curse_counter_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_curse_counter_stack.vpcf",
+			PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 	end
 
 	ParticleManager:SetParticleControl(self.pfx, 1, Vector(0, self:GetStackCount(), 0))
@@ -799,14 +864,20 @@ function modifier_imba_curse_of_avernus_debuff_counter:OnRemoved()
 	end
 end
 
-function modifier_imba_curse_of_avernus_debuff_counter:GetModifierMoveSpeedBonus_Percentage() return self:GetAbility():GetVanillaAbilitySpecial("movement_speed") * (-1) end
+function modifier_imba_curse_of_avernus_debuff_counter:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetAbility()
+		:GetVanillaAbilitySpecial("movement_speed") * (-1)
+end
 
 modifier_imba_curse_of_avernus_debuff_slow = modifier_imba_curse_of_avernus_debuff_slow or class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return true end,
-	IsDebuff	  			= function(self) return true end,
-	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_curse_frostmourne_debuff.vpcf" end,
-	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
+	IsHidden            = function(self) return false end,
+	IsPurgable          = function(self) return true end,
+	IsDebuff            = function(self) return true end,
+	GetEffectName       = function(self)
+		return
+		"particles/units/heroes/hero_abaddon/abaddon_curse_frostmourne_debuff.vpcf"
+	end,
+	GetEffectAttachType = function(self) return PATTACH_ABSORIGIN_FOLLOW end,
 })
 
 function modifier_imba_curse_of_avernus_debuff_slow:DeclareFunctions()
@@ -821,9 +892,11 @@ function modifier_imba_curse_of_avernus_debuff_slow:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_curse_of_avernus_debuff_slow:CheckState() return {
-	[MODIFIER_STATE_SILENCED] = true,
-} end
+function modifier_imba_curse_of_avernus_debuff_slow:CheckState()
+	return {
+		[MODIFIER_STATE_SILENCED] = true,
+	}
+end
 
 function modifier_imba_curse_of_avernus_debuff_slow:OnCreated(kv)
 	if IsServer() then
@@ -839,7 +912,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnCreated(kv)
 		end
 
 		if not current_buff then
-			local buff_duration = self:GetAbility():GetVanillaAbilitySpecial( "slow_duration" ) -- Not possible for this to be 0 here
+			local buff_duration = self:GetAbility():GetVanillaAbilitySpecial("slow_duration") -- Not possible for this to be 0 here
 			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), buff_name, { duration = buff_duration })
 		else
 			current_buff:ForceRefresh()
@@ -861,8 +934,8 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnAttack(kv)
 
 		-- Apply buff to allies who hit the enemy with this debuff
 		if target == self:GetParent() then
-			local caster 	= self:GetCaster()
-			local attacker 	= kv.attacker
+			local caster   = self:GetCaster()
+			local attacker = kv.attacker
 
 			if caster:GetTeamNumber() == attacker:GetTeamNumber() then
 				local ability = self:GetAbility()
@@ -873,14 +946,15 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnAttack(kv)
 					buff_duration = buff_duration + self.hits * self.duration_extend
 				end
 
-				attacker:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_buff_haste", { duration = buff_duration })
+				attacker:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_buff_haste",
+					{ duration = buff_duration })
 			end
 		end
 	end
 end
 
 function modifier_imba_curse_of_avernus_debuff_slow:OnAttackLanded(kv)
-	if self.has_talent and ( kv.attacker == self:GetCaster() ) and ( kv.target == self:GetParent() ) then
+	if self.has_talent and (kv.attacker == self:GetCaster()) and (kv.target == self:GetParent()) then
 		self.hits = self.hits + 1
 	end
 end
@@ -911,7 +985,8 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 
 				local life_steal_particle_name = "particles/generic_gameplay/generic_lifesteal.vpcf"
 				-- Show heal animation on caster
-				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
+				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf",
+					PATTACH_POINT_FOLLOW, caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 				-- Heal caster equal to a percentage of damage taken by unit affected by this debuff
 				caster:Heal(heal_amount, caster)
@@ -920,9 +995,10 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 					local buffed_allies = caster._borrowed_time_buffed_allies
 					-- Aghanim heal allies
 					if buffed_allies and caster:HasScepter() then
-						for k,_ in pairs(buffed_allies) do
+						for k, _ in pairs(buffed_allies) do
 							-- Show heal animation on allies
-							healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, k)
+							healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf",
+								PATTACH_POINT_FOLLOW, k)
 							ParticleManager:ReleaseParticleIndex(healFX)
 							-- Show value healed on allies
 							SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, k, heal_amount, nil)
@@ -935,21 +1011,25 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 	end
 end
 
-function modifier_imba_curse_of_avernus_debuff_slow:GetModifierMoveSpeedBonus_Percentage() return self:GetAbility():GetVanillaAbilitySpecial("curse_slow") * (-1) end
+function modifier_imba_curse_of_avernus_debuff_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetAbility()
+		:GetVanillaAbilitySpecial("curse_slow") * (-1)
+end
 
 modifier_imba_curse_of_avernus_buff_haste = modifier_imba_curse_of_avernus_buff_haste or class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return true end,
-	IsDebuff	  			= function(self) return false end,
-	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf" end,
-	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
+	IsHidden            = function(self) return false end,
+	IsPurgable          = function(self) return true end,
+	IsDebuff            = function(self) return false end,
+	GetEffectName       = function(self) return "particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf" end,
+	GetEffectAttachType = function(self) return PATTACH_ABSORIGIN_FOLLOW end,
 })
 
 function modifier_imba_curse_of_avernus_buff_haste:_UpdateIncreaseValues()
-	self.attack_increase = self:GetAbility():GetVanillaAbilitySpecial( "curse_attack_speed" )
+	self.attack_increase = self:GetAbility():GetVanillaAbilitySpecial("curse_attack_speed")
 
 	if self:GetCaster():HasTalent("special_bonus_imba_abaddon_2") then
-		self.attack_increase = self.attack_increase + self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_2", "value")
+		self.attack_increase = self.attack_increase +
+			self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_2", "value")
 	end
 end
 
@@ -957,7 +1037,7 @@ function modifier_imba_curse_of_avernus_buff_haste:OnCreated()
 	self:_UpdateIncreaseValues()
 end
 
-function modifier_imba_curse_of_avernus_buff_haste:OnRefresh( params )
+function modifier_imba_curse_of_avernus_buff_haste:OnRefresh(params)
 	self:_UpdateIncreaseValues()
 end
 
@@ -977,13 +1057,13 @@ modifier_imba_curse_of_avernus_buff_haste_aura = ShallowCopy(modifier_imba_curse
 --		Over Channel       --
 -----------------------------
 -- Hidden Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_over_channel_handler"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_over_channel_reduction"] = LUA_MODIFIER_MOTION_NONE
 })
 imba_abaddon_over_channel = imba_abaddon_over_channel or class({
-	IsStealable 			= function(self) return false end,
-	IsInnateAbility			= function(self) return true end,
+	IsStealable     = function(self) return false end,
+	IsInnateAbility = function(self) return true end,
 })
 
 function imba_abaddon_over_channel:OnToggle()
@@ -995,11 +1075,11 @@ function imba_abaddon_over_channel:OnToggle()
 end
 
 modifier_over_channel_handler = modifier_over_channel_handler or class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return false end,
-	IsDebuff	  			= function(self) return false end,
-	RemoveOnDeath			= function(self) return true end,
-	AllowIllusionDuplicate	= function(self) return false end -- Allow illusions to carry this particle modifier
+	IsHidden               = function(self) return false end,
+	IsPurgable             = function(self) return false end,
+	IsDebuff               = function(self) return false end,
+	RemoveOnDeath          = function(self) return true end,
+	AllowIllusionDuplicate = function(self) return false end -- Allow illusions to carry this particle modifier
 })
 
 function modifier_over_channel_handler:OnCreated()
@@ -1014,79 +1094,81 @@ function modifier_over_channel_handler:OnCreated()
 
 	-- Weapon particle
 	particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
-	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target_origin, true)
+	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target_origin,
+		true)
 	self:AddParticle(particle, false, false, -1, false, false)
 end
 
 function modifier_over_channel_handler:DeclareFunctions()
-    local funcs = {
-        MODIFIER_EVENT_ON_ABILITY_EXECUTED
-    }
-    return funcs
+	local funcs = {
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED
+	}
+	return funcs
 end
 
-function modifier_over_channel_handler:OnAbilityExecuted( keys )
-    if not IsServer() then return end
-	
-    if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" and keys.ability:GetName() ~= "ability_capture" then
-        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")})
-		
+function modifier_over_channel_handler:OnAbilityExecuted(keys)
+	if not IsServer() then return end
+
+	if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" and keys.ability:GetName() ~= "ability_capture" then
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction",
+			{ duration = self:GetAbility():GetSpecialValueFor("reduction_duration") })
+
 		local parent = self:GetParent()
-		
+
 		Timers:CreateTimer(self:GetAbility():GetSpecialValueFor("reduction_duration"), function()
 			local overchannel_modifier = parent:FindModifierByName("modifier_over_channel_reduction")
 			if overchannel_modifier then
 				overchannel_modifier:DecrementStackCount()
 			end
 		end)
-    end
+	end
 end
 
 modifier_over_channel_reduction = modifier_over_channel_reduction or class({
-    IsHidden                = function(self) return false end,
-    IsPurgable				= function(self) return false end,
-    IsDebuff				= function(self) return true end,
-    RemoveOnDeath			= function(self) return true end
+	IsHidden      = function(self) return false end,
+	IsPurgable    = function(self) return false end,
+	IsDebuff      = function(self) return true end,
+	RemoveOnDeath = function(self) return true end
 })
 
 function modifier_over_channel_reduction:OnCreated()
 	if not IsServer() then return end
-	
+
 	self:SetStackCount(1)
 end
 
 function modifier_over_channel_reduction:OnRefresh()
 	if not IsServer() then return end
 
-    self:IncrementStackCount()
+	self:IncrementStackCount()
 end
 
-function modifier_over_channel_reduction:DeclareFunctions() 
-    return {
+function modifier_over_channel_reduction:DeclareFunctions()
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
-    }
+	}
 end
 
 function modifier_over_channel_reduction:GetModifierAttackSpeedBonus_Constant()
-    return -self:GetStackCount() * self:GetAbility():GetSpecialValueFor("reduction_multiplier")
+	return -self:GetStackCount() * self:GetAbility():GetSpecialValueFor("reduction_multiplier")
 end
 
 function modifier_over_channel_reduction:GetModifierMoveSpeedBonus_Constant()
-    return -self:GetStackCount() * self:GetAbility():GetSpecialValueFor("reduction_multiplier")
+	return -self:GetStackCount() * self:GetAbility():GetSpecialValueFor("reduction_multiplier")
 end
 
 -----------------------------
 --       Borrowed Time     --
 -----------------------------
 -- Visible Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_borrowed_time_buff_hot_caster"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_borrowed_time_buff_hot_ally"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_borrowed_time_buff_mist"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_borrowed_time_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 
@@ -1117,22 +1199,29 @@ function imba_abaddon_borrowed_time:OnSpellStart()
 			buff_duration = self:GetVanillaAbilitySpecial("duration_scepter")
 		end
 		caster:AddNewModifier(caster, self, "modifier_imba_borrowed_time_buff_hot_caster", { duration = buff_duration })
-		local responses = {"abaddon_abad_borrowedtime_02","abaddon_abad_borrowedtime_03","abaddon_abad_borrowedtime_04","abaddon_abad_borrowedtime_05","abaddon_abad_borrowedtime_06","abaddon_abad_borrowedtime_07","abaddon_abad_borrowedtime_08","abaddon_abad_borrowedtime_09","abaddon_abad_borrowedtime_10","abaddon_abad_borrowedtime_11"}
-		if not caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS,nil,nil) then
-			caster:EmitCasterSound("npc_dota_hero_abaddon",{"abaddon_abad_borrowedtime_01"}, 1, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil,nil)
+		local responses = { "abaddon_abad_borrowedtime_02", "abaddon_abad_borrowedtime_03",
+			"abaddon_abad_borrowedtime_04", "abaddon_abad_borrowedtime_05", "abaddon_abad_borrowedtime_06",
+			"abaddon_abad_borrowedtime_07", "abaddon_abad_borrowedtime_08", "abaddon_abad_borrowedtime_09",
+			"abaddon_abad_borrowedtime_10", "abaddon_abad_borrowedtime_11" }
+		if not caster:EmitCasterSound("npc_dota_hero_abaddon", responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil) then
+			caster:EmitCasterSound("npc_dota_hero_abaddon", { "abaddon_abad_borrowedtime_01" }, 1,
+				DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
 		end
 		-- Talent : Strong Purge allies in redirect range on cast
 		if caster:HasTalent("special_bonus_imba_abaddon_7") then
-			local target_team 	= DOTA_UNIT_TARGET_TEAM_FRIENDLY
-			local target_type 	= DOTA_UNIT_TARGET_HERO
+			local target_team = DOTA_UNIT_TARGET_TEAM_FRIENDLY
+			local target_type = DOTA_UNIT_TARGET_HERO
 
-			local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, target_team, target_type, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local allies      = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil,
+				FIND_UNITS_EVERYWHERE, target_team, target_type, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, unit in pairs(allies) do
 				-- Give some tactile feedback that allies have been purged (reusing Mist Coil particles)
-				local over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_detail.vpcf", PATTACH_POINT, unit)
+				local over_channel_particle = ParticleManager:CreateParticle(
+					"particles/dev/library/base_dust_hit_detail.vpcf", PATTACH_POINT, unit)
 				ParticleManager:ReleaseParticleIndex(over_channel_particle)
 
-				over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf", PATTACH_POINT, unit)
+				over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf",
+					PATTACH_POINT, unit)
 				ParticleManager:ReleaseParticleIndex(over_channel_particle)
 				unit:Purge(false, true, false, true, false)
 			end
@@ -1141,10 +1230,10 @@ function imba_abaddon_borrowed_time:OnSpellStart()
 end
 
 modifier_imba_borrowed_time_handler = modifier_imba_borrowed_time_handler or class({
-	IsHidden				= function(self) return true end,
-	IsPurgable	  			= function(self) return false end,
-	IsDebuff	  			= function(self) return false end,
-	AllowIllusionDuplicate	= function(self) return false end,
+	IsHidden               = function(self) return true end,
+	IsPurgable             = function(self) return false end,
+	IsDebuff               = function(self) return false end,
+	AllowIllusionDuplicate = function(self) return false end,
 })
 
 function modifier_imba_borrowed_time_handler:_CheckHealth(damage)
@@ -1185,7 +1274,6 @@ function modifier_imba_borrowed_time_handler:DeclareFunctions()
 end
 
 function modifier_imba_borrowed_time_handler:OnTakeDamage(kv)
-
 	if IsServer() then
 		local target = self:GetParent()
 
@@ -1194,7 +1282,6 @@ function modifier_imba_borrowed_time_handler:OnTakeDamage(kv)
 			self:_CheckHealth(kv.damage)
 		end
 	end
-
 end
 
 function modifier_imba_borrowed_time_handler:OnStateChanged(kv)
@@ -1208,18 +1295,18 @@ function modifier_imba_borrowed_time_handler:OnStateChanged(kv)
 end
 
 modifier_imba_borrowed_time_buff_hot_caster = modifier_imba_borrowed_time_buff_hot_caster or class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return false end,
-	IsDebuff	  			= function(self) return false end,
-	IsAura					= function(self) return true end,
-	IsAuraActiveOnDeath		= function(self) return false end,
-	GetModifierAura			= function(self) return "modifier_imba_borrowed_time_buff_hot_ally" end,
-	GetAuraSearchType		= function(self) return DOTA_UNIT_TARGET_HERO end,
-	GetAuraSearchTeam		= function(self) return DOTA_UNIT_TARGET_TEAM_FRIENDLY end,
-	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf" end,
-	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
-	GetStatusEffectName		= function(self) return "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf" end,
-	StatusEffectPriority	= function(self) return 15 end,
+	IsHidden             = function(self) return false end,
+	IsPurgable           = function(self) return false end,
+	IsDebuff             = function(self) return false end,
+	IsAura               = function(self) return true end,
+	IsAuraActiveOnDeath  = function(self) return false end,
+	GetModifierAura      = function(self) return "modifier_imba_borrowed_time_buff_hot_ally" end,
+	GetAuraSearchType    = function(self) return DOTA_UNIT_TARGET_HERO end,
+	GetAuraSearchTeam    = function(self) return DOTA_UNIT_TARGET_TEAM_FRIENDLY end,
+	GetEffectName        = function(self) return "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf" end,
+	GetEffectAttachType  = function(self) return PATTACH_ABSORIGIN_FOLLOW end,
+	GetStatusEffectName  = function(self) return "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf" end,
+	StatusEffectPriority = function(self) return 15 end,
 })
 
 function modifier_imba_borrowed_time_buff_hot_caster:DeclareFunctions()
@@ -1270,7 +1357,6 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnCreated()
 
 		-- Strong Dispel
 		target:Purge(false, true, false, true, false)
-
 	end
 end
 
@@ -1281,7 +1367,8 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnDestroy()
 		if self.has_talent and self:GetStackCount() > 0 then
 			local target = self:GetParent()
 			if target:IsAlive() then
-				target:AddNewModifier(target, self:GetAbility(), "modifier_imba_borrowed_time_buff_mist", {duration = self.mist_duration})
+				target:AddNewModifier(target, self:GetAbility(), "modifier_imba_borrowed_time_buff_mist",
+					{ duration = self.mist_duration })
 				target:FindModifierByName("modifier_imba_borrowed_time_buff_mist"):SetStackCount(self:GetStackCount())
 			end
 		end
@@ -1301,7 +1388,8 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnTakeDamage(kv)
 				-- print("iteration:", kv.unit.borrowed_time_damage_taken / self:GetAbility():GetVanillaAbilitySpecial("ally_threshold_scepter"))
 				-- print("Damage stored:", kv.unit.borrowed_time_damage_taken)
 				for i = 1, kv.unit.borrowed_time_damage_taken / self:GetAbility():GetVanillaAbilitySpecial("ally_threshold_scepter") do
-					kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken - self:GetAbility():GetVanillaAbilitySpecial("ally_threshold_scepter")
+					kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken -
+						self:GetAbility():GetVanillaAbilitySpecial("ally_threshold_scepter")
 					self:GetCaster():FindAbilityByName("imba_abaddon_death_coil"):OnSpellStart(kv.unit, true)
 				end
 			end
@@ -1314,10 +1402,11 @@ end
 function modifier_imba_borrowed_time_buff_hot_caster:GetModifierIncomingDamage_Percentage(kv)
 	if IsServer() then
 		-- Ability properties
-		local target 	= self:GetParent()
+		local target        = self:GetParent()
 
 		-- Show borrowed time heal particle
-		local heal_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		local heal_particle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 		local target_vector = target:GetAbsOrigin()
 		ParticleManager:SetParticleControl(heal_particle, 0, target_vector)
 		ParticleManager:SetParticleControl(heal_particle, 1, target_vector)
@@ -1328,18 +1417,18 @@ function modifier_imba_borrowed_time_buff_hot_caster:GetModifierIncomingDamage_P
 		if self.has_talent then
 			local current_health = target:GetHealth()
 			local max_health = target:GetMaxHealth()
-			self:SetStackCount( self:GetStackCount() + math.floor(kv.damage / self.ratio) )
+			self:SetStackCount(self:GetStackCount() + math.floor(kv.damage / self.ratio))
 		end
 		target:Heal(kv.damage, target)
-		
+
 		return -9999999
 	end
 end
 
 modifier_imba_borrowed_time_buff_hot_ally = modifier_imba_borrowed_time_buff_hot_ally or class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return false end,
-	IsDebuff	  			= function(self) return false end,
+	IsHidden   = function(self) return false end,
+	IsPurgable = function(self) return false end,
+	IsDebuff   = function(self) return false end,
 })
 
 function modifier_imba_borrowed_time_buff_hot_ally:DeclareFunctions()
@@ -1364,12 +1453,14 @@ function modifier_imba_borrowed_time_buff_hot_ally:OnCreated()
 
 		-- Body steam particle
 		local particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_origin, true)
+		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_origin,
+			true)
 		self:AddParticle(particle, false, false, -1, false, false)
 
 		-- Weapon particle
 		particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target_origin, true)
+		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target_origin,
+			true)
 		self:AddParticle(particle, false, false, -1, false, false)
 	end
 end
@@ -1387,40 +1478,40 @@ end
 function modifier_imba_borrowed_time_buff_hot_ally:GetModifierIncomingDamage_Percentage(kv)
 	if IsServer() then
 		-- Ability properties
-		local caster 		=	self:GetCaster()
-		local target 		= 	self:GetParent()
-		local ability 		=	self:GetAbility()
-		local ability_level	=	ability:GetLevel()
-		local attacker 		=	kv.attacker
-		local redirect_pct	=	(ability:GetLevelSpecialValueFor("redirect", ability_level))
-		local redirect_damage =	kv.damage * (redirect_pct/100)
+		local caster          = self:GetCaster()
+		local target          = self:GetParent()
+		local ability         = self:GetAbility()
+		local ability_level   = ability:GetLevel()
+		local attacker        = kv.attacker
+		local redirect_pct    = (ability:GetLevelSpecialValueFor("redirect", ability_level))
+		local redirect_damage = kv.damage * (redirect_pct / 100)
 
 		--Apply the damage to Abaddon.
 		ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
 
 		--Block the amount of damage required.
 		return -(redirect_pct)
-
 	end
 end
+
 -------------------------------------------
 modifier_imba_borrowed_time_buff_mist = modifier_imba_borrowed_time_buff_mist or class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return true end,
-	IsDebuff	  			= function(self) return false end,
-	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf" end,
-	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
+	IsHidden            = function(self) return false end,
+	IsPurgable          = function(self) return true end,
+	IsDebuff            = function(self) return false end,
+	GetEffectName       = function(self) return "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf" end,
+	GetEffectAttachType = function(self) return PATTACH_ABSORIGIN_FOLLOW end,
 })
 
-function modifier_imba_borrowed_time_buff_mist:OnCreated( params )
+function modifier_imba_borrowed_time_buff_mist:OnCreated(params)
 	self.duration = self:GetDuration()
 end
 
 function modifier_imba_borrowed_time_buff_mist:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
-		}
+	{
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+	}
 	return decFuns
 end
 
@@ -1438,14 +1529,21 @@ end
 -- This is done to reget the behavior of the spell for client purposes
 -------------------------------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_abaddon_1", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_abaddon_2", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_abaddon_3", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_abaddon_4", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_1", "components/abilities/heroes/hero_abaddon.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_2", "components/abilities/heroes/hero_abaddon.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_3", "components/abilities/heroes/hero_abaddon.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_4", "components/abilities/heroes/hero_abaddon.lua",
+	LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_special_bonus_imba_abaddon_5", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_abaddon_6", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_abaddon_7", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_abaddon_8", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_6", "components/abilities/heroes/hero_abaddon.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_7", "components/abilities/heroes/hero_abaddon.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_8", "components/abilities/heroes/hero_abaddon.lua",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_abaddon_1 = modifier_special_bonus_imba_abaddon_1 or class({})
 modifier_special_bonus_imba_abaddon_2 = modifier_special_bonus_imba_abaddon_2 or class({})
@@ -1456,39 +1554,53 @@ modifier_special_bonus_imba_abaddon_6 = modifier_special_bonus_imba_abaddon_6 or
 modifier_special_bonus_imba_abaddon_7 = modifier_special_bonus_imba_abaddon_7 or class({})
 modifier_special_bonus_imba_abaddon_8 = modifier_special_bonus_imba_abaddon_8 or class({})
 
-function modifier_special_bonus_imba_abaddon_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_abaddon_1:IsPurgable() 	return false end
-function modifier_special_bonus_imba_abaddon_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_abaddon_1:IsHidden() return true end
 
-function modifier_special_bonus_imba_abaddon_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_abaddon_2:IsPurgable() 	return false end
-function modifier_special_bonus_imba_abaddon_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_abaddon_1:IsPurgable() return false end
 
-function modifier_special_bonus_imba_abaddon_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_abaddon_3:IsPurgable() 	return false end
-function modifier_special_bonus_imba_abaddon_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_abaddon_1:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_abaddon_4:IsHidden() 		return true end
-function modifier_special_bonus_imba_abaddon_4:IsPurgable() 	return false end
-function modifier_special_bonus_imba_abaddon_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_abaddon_2:IsHidden() return true end
+
+function modifier_special_bonus_imba_abaddon_2:IsPurgable() return false end
+
+function modifier_special_bonus_imba_abaddon_2:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_abaddon_3:IsHidden() return true end
+
+function modifier_special_bonus_imba_abaddon_3:IsPurgable() return false end
+
+function modifier_special_bonus_imba_abaddon_3:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_abaddon_4:IsHidden() return true end
+
+function modifier_special_bonus_imba_abaddon_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_abaddon_4:RemoveOnDeath() return false end
 
 -- function modifier_special_bonus_imba_abaddon_5:IsHidden() 		return true end
 -- function modifier_special_bonus_imba_abaddon_5:IsPurgable() 	return false end
 -- function modifier_special_bonus_imba_abaddon_5:RemoveOnDeath() 	return false end
 
-function modifier_special_bonus_imba_abaddon_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_abaddon_6:IsPurgable() 	return false end
-function modifier_special_bonus_imba_abaddon_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_abaddon_6:IsHidden() return true end
 
-function modifier_special_bonus_imba_abaddon_7:IsHidden() 		return true end
-function modifier_special_bonus_imba_abaddon_7:IsPurgable() 	return false end
-function modifier_special_bonus_imba_abaddon_7:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_abaddon_6:IsPurgable() return false end
 
-function modifier_special_bonus_imba_abaddon_8:IsHidden() 		return true end
-function modifier_special_bonus_imba_abaddon_8:IsPurgable() 	return false end
-function modifier_special_bonus_imba_abaddon_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_abaddon_6:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_abaddon_4:OnCreated( params )
+function modifier_special_bonus_imba_abaddon_7:IsHidden() return true end
+
+function modifier_special_bonus_imba_abaddon_7:IsPurgable() return false end
+
+function modifier_special_bonus_imba_abaddon_7:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_abaddon_8:IsHidden() return true end
+
+function modifier_special_bonus_imba_abaddon_8:IsPurgable() return false end
+
+function modifier_special_bonus_imba_abaddon_8:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_abaddon_4:OnCreated(params)
 	if IsServer() then
 		local curse_of_avernus_ability = self:GetParent():FindAbilityByName("imba_abaddon_frostmourne")
 		if curse_of_avernus_ability then

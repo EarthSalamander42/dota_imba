@@ -20,7 +20,7 @@ end
 -- Thick hide modifier
 modifier_imba_thick_hide = class({})
 
-function modifier_imba_thick_hide:IsHidden()	return true end
+function modifier_imba_thick_hide:IsHidden() return true end
 
 function modifier_imba_thick_hide:DeclareFunctions()
 	return {
@@ -53,8 +53,8 @@ LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "components/abilities/h
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_buff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_hoof_stomp_arena_thinker_buff		= modifier_imba_hoof_stomp_arena_thinker_buff or class({})
-modifier_imba_hoof_stomp_arena_thinker_debuff	= modifier_imba_hoof_stomp_arena_thinker_debuff or class({})
+modifier_imba_hoof_stomp_arena_thinker_buff   = modifier_imba_hoof_stomp_arena_thinker_buff or class({})
+modifier_imba_hoof_stomp_arena_thinker_debuff = modifier_imba_hoof_stomp_arena_thinker_debuff or class({})
 
 function imba_centaur_hoof_stomp:IsHiddenWhenStolen()
 	return false
@@ -67,10 +67,10 @@ end
 function imba_centaur_hoof_stomp:OnSpellStart()
 	-- Play cast sound
 	self:GetCaster():EmitSound("Hero_Centaur.HoofStomp")
-	
+
 	-- Roll for cast response
 	if self:GetCaster():GetName() == "npc_dota_hero_centaur" and RandomInt(1, 100) <= 50 then
-		EmitSoundOn("centaur_cent_hoof_stomp_0"..RandomInt(1, 2), self:GetCaster())
+		EmitSoundOn("centaur_cent_hoof_stomp_0" .. RandomInt(1, 2), self:GetCaster())
 	end
 
 	-- Add stomp particle
@@ -79,39 +79,39 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_stomp_fx, 1, Vector(self:GetSpecialValueFor("radius"), 1, 1))
 	ParticleManager:SetParticleControl(particle_stomp_fx, 2, self:GetCaster():GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_stomp_fx)
-	
+
 	self.enemy_entindex_table = {}
-	
+
 	-- Find all nearby enemies
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)) do
 		self.enemy_entindex_table[enemy:entindex()] = true
-		
+
 		if not enemy:IsMagicImmune() then
 			-- "The stomp first applies the debuff, then the damage."
-			
+
 			-- Stun them
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
-			
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", { duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()) })
+
 			-- Deal damage to nearby non-magic immune enemies
 			ApplyDamage({
-				victim 			= enemy,
-				damage 			= self:GetSpecialValueFor("stomp_damage"),
-				damage_type		= DAMAGE_TYPE_MAGICAL,
-				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				attacker 		= self:GetCaster(),
-				ability 		= self
+				victim       = enemy,
+				damage       = self:GetSpecialValueFor("stomp_damage"),
+				damage_type  = DAMAGE_TYPE_MAGICAL,
+				damage_flags = DOTA_DAMAGE_FLAG_NONE,
+				attacker     = self:GetCaster(),
+				ability      = self
 			})
-			
+
 			-- Check if the damage killed enemy
 			if enemy:IsRealHero() and not enemy:IsAlive() and self:GetCaster():GetName() == "npc_dota_hero_centaur" and RollPercentage(25) then
-				EmitSoundOn("centaur_cent_hoof_stomp_0"..RandomInt(4, 5), self:GetCaster())
+				EmitSoundOn("centaur_cent_hoof_stomp_0" .. RandomInt(4, 5), self:GetCaster())
 			end
 		end
 	end
 
 	-- IMBAfication: Gladiator's Pit
-	local buff_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_hoof_stomp_arena_thinker_buff", {duration = self:GetSpecialValueFor("pit_duration")}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
-	local debuff_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_hoof_stomp_arena_thinker_debuff", {duration = self:GetSpecialValueFor("pit_duration")}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	local buff_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_hoof_stomp_arena_thinker_buff", { duration = self:GetSpecialValueFor("pit_duration") }, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	local debuff_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_hoof_stomp_arena_thinker_debuff", { duration = self:GetSpecialValueFor("pit_duration") }, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 end
 
 -------------------------------------------------
@@ -119,68 +119,82 @@ end
 -------------------------------------------------
 
 function modifier_imba_hoof_stomp_arena_thinker_buff:OnCreated()
-	self.radius	= self:GetAbility():GetSpecialValueFor("radius")
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
 end
 
-function modifier_imba_hoof_stomp_arena_thinker_buff:IsAura()						return true end
-function modifier_imba_hoof_stomp_arena_thinker_buff:IsAuraActiveOnDeath() 			return false end
+function modifier_imba_hoof_stomp_arena_thinker_buff:IsAura() return true end
 
-function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraDuration()				return 0.25 end
-function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraRadius()				return self.radius end
-function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_NONE end
-function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
-function modifier_imba_hoof_stomp_arena_thinker_buff:GetModifierAura()				return "modifier_imba_hoof_stomp_arena_buff" end
-function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraEntityReject(target)	return target ~= self:GetCaster() and not self:GetCaster():HasTalent("special_bonus_imba_centaur_2") end
+function modifier_imba_hoof_stomp_arena_thinker_buff:IsAuraActiveOnDeath() return false end
+
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraDuration() return 0.25 end
+
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraRadius() return self.radius end
+
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
+
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetModifierAura() return "modifier_imba_hoof_stomp_arena_buff" end
+
+function modifier_imba_hoof_stomp_arena_thinker_buff:GetAuraEntityReject(target) return target ~= self:GetCaster() and not self:GetCaster():HasTalent("special_bonus_imba_centaur_2") end
 
 ---------------------------------------------------
 -- MODIFIER_IMBA_HOOF_STOMP_ARENA_THINKER_DEBUFF --
 ---------------------------------------------------
 
 function modifier_imba_hoof_stomp_arena_thinker_debuff:OnCreated(keys)
-	self.radius	= self:GetAbility():GetSpecialValueFor("radius")
-	
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+
 	if not IsServer() then return end
-	
+
 	self.particle_arena_fx = ParticleManager:CreateParticle("particles/hero/centaur/centaur_hoof_stomp_arena.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(self.particle_arena_fx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(self.radius + 45, 1, 1))
 	self:AddParticle(self.particle_arena_fx, false, false, -1, false, false)
-	
-	self.enemy_entindex_table	= keys.enemy_entindex_table
-	
+
+	self.enemy_entindex_table = keys.enemy_entindex_table
+
 	if self:GetAbility().enemy_entindex_table then
 		self.enemy_entindex_table = self:GetAbility().enemy_entindex_table
-		self:GetAbility().enemy_entindex_table	= nil
+		self:GetAbility().enemy_entindex_table = nil
 	end
 end
 
-function modifier_imba_hoof_stomp_arena_thinker_debuff:IsAura()						return true end
-function modifier_imba_hoof_stomp_arena_thinker_debuff:IsAuraActiveOnDeath() 		return false end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:IsAura() return true end
 
-function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraDuration()			return 0.25 end
-function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraRadius()				return self.radius end
-function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
-function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_ENEMY end
-function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
-function modifier_imba_hoof_stomp_arena_thinker_debuff:GetModifierAura()			return "modifier_imba_hoof_stomp_arena_debuff" end
-function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraEntityReject(target)	return self.enemy_entindex_table and not self.enemy_entindex_table[target:entindex()] and target:IsMagicImmune() end
+function modifier_imba_hoof_stomp_arena_thinker_debuff:IsAuraActiveOnDeath() return false end
+
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraDuration() return 0.25 end
+
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraRadius() return self.radius end
+
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
+
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetModifierAura() return "modifier_imba_hoof_stomp_arena_debuff" end
+
+function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraEntityReject(target) return self.enemy_entindex_table and not self.enemy_entindex_table[target:entindex()] and target:IsMagicImmune() end
 
 -- Arena buff
 modifier_imba_hoof_stomp_arena_buff = class({})
 
 function modifier_imba_hoof_stomp_arena_buff:OnCreated()
 	if self:GetAbility() then
-		self.radius				= self:GetAbility():GetSpecialValueFor("radius")
-		self.pit_dmg_reduction	= self:GetAbility():GetSpecialValueFor("pit_dmg_reduction") * (-1)
+		self.radius            = self:GetAbility():GetSpecialValueFor("radius")
+		self.pit_dmg_reduction = self:GetAbility():GetSpecialValueFor("pit_dmg_reduction") * (-1)
 	else
-		self.radius				= 350
-		self.pit_dmg_reduction	= -10
+		self.radius            = 350
+		self.pit_dmg_reduction = -10
 	end
 end
 
 function modifier_imba_hoof_stomp_arena_buff:DeclareFunctions()
-	return {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+	return { MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE }
 end
 
 function modifier_imba_hoof_stomp_arena_buff:GetModifierIncomingDamage_Percentage()
@@ -190,7 +204,7 @@ end
 -- Using this as an interval thinker
 function modifier_imba_hoof_stomp_arena_buff:CheckState()
 	if not IsServer() then return end
-	
+
 	if not self:GetAuraOwner() or (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() > self.radius then
 		self:Destroy()
 	end
@@ -199,19 +213,19 @@ end
 -- Arena debuff (enemies)
 modifier_imba_hoof_stomp_arena_debuff = class({})
 
-function modifier_imba_hoof_stomp_arena_debuff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_hoof_stomp_arena_debuff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_hoof_stomp_arena_debuff:OnCreated()
 	if self:GetAbility() then
-		self.radius				= self:GetAbility():GetSpecialValueFor("radius")
-		self.maximum_distance	= self:GetAbility():GetSpecialValueFor("maximum_distance")
+		self.radius           = self:GetAbility():GetSpecialValueFor("radius")
+		self.maximum_distance = self:GetAbility():GetSpecialValueFor("maximum_distance")
 	else
-		self.radius				= 350
-		self.maximum_distance	= 400
+		self.radius           = 350
+		self.maximum_distance = 400
 	end
-	
-	self.position	= self:GetParent():GetAbsOrigin()
-	
+
+	self.position = self:GetParent():GetAbsOrigin()
+
 	-- Seems like CheckState() interavls aren't fast enough to prevent a sort of "glitchy" effect
 	self:OnIntervalThink()
 	self:StartIntervalThink(FrameTime())
@@ -222,9 +236,9 @@ function modifier_imba_hoof_stomp_arena_debuff:OnIntervalThink()
 		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() > self.radius and (self.position - self:GetParent():GetAbsOrigin()):Length2D() < self.maximum_distance then
 			FindClearSpaceForUnit(self:GetParent(), self:GetAuraOwner():GetAbsOrigin() + ((self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Normalized() * self.radius), false)
 		end
-		
+
 		if (self:GetParent():GetAbsOrigin() - self:GetAuraOwner():GetAbsOrigin()):Length2D() <= self.radius then
-			self.position	= self:GetParent():GetAbsOrigin()
+			self.position = self:GetParent():GetAbsOrigin()
 		end
 	end
 end
@@ -266,13 +280,13 @@ function imba_centaur_double_edge:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local sound_cast = "Hero_Centaur.DoubleEdge"
 		local cast_response
-		local kill_response = "centaur_cent_doub_edge_0"..RandomInt(5, 6)
+		local kill_response = "centaur_cent_doub_edge_0" .. RandomInt(5, 6)
 
 		-- Ability specials
 		-- #4 Talent: Damage increased by 2*strength
-		local damage = ability:GetSpecialValueFor("damage") + (caster:GetStrength() * caster:FindTalentValue("special_bonus_imba_centaur_4") * 0.01)
+		local damage = ability:GetSpecialValueFor("damage") + (caster:GetStrength() * caster:FindTalentValue("special_bonus_imba_centaur_4") / 100)
 		local radius = ability:GetSpecialValueFor("radius")
-		
+
 		-- Cast responses are troublesome for this spell so they get their own section
 		-- Roll for a cast response
 		if RollPercentage(75) then
@@ -292,7 +306,7 @@ function imba_centaur_double_edge:OnSpellStart()
 			end
 
 			-- Build full path
-			local cast_response = cast_response..cast_response_number
+			local cast_response = cast_response .. cast_response_number
 
 			-- Play cast response
 			EmitSoundOn(cast_response, caster)
@@ -331,9 +345,10 @@ function imba_centaur_double_edge:OnSpellStart()
 			false)
 
 		-- Damage each non-magic immune target
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			if not enemy:IsMagicImmune() then
-				local damageTable = {victim = enemy,
+				local damageTable = {
+					victim = enemy,
 					attacker = caster,
 					damage = damage,
 					damage_type = DAMAGE_TYPE_MAGICAL,
@@ -359,7 +374,7 @@ function imba_centaur_double_edge:OnSpellStart()
 		end
 
 		-- Calculate self damage, using Centaur's Strength
-		local self_damage = math.max(damage - (self:GetCaster():GetStrength() * self:GetTalentSpecialValueFor("str_damage_reduction") * 0.01), 0)
+		local self_damage = math.max(damage - (self:GetCaster():GetStrength() * self:GetTalentSpecialValueFor("str_damage_reduction") / 100), 0)
 
 		-- Damage caster
 		ApplyDamage({
@@ -398,7 +413,7 @@ end
 
 function imba_centaur_return:OnSpellStart()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_return_bonus_damage", {duration=self:GetSpecialValueFor("duration")}):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_return_passive"):GetStackCount())
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_return_bonus_damage", { duration = self:GetSpecialValueFor("duration") }):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_return_passive"):GetStackCount())
 		self:GetCaster():FindModifierByName("modifier_imba_return_passive"):SetStackCount(0)
 		self:GetCaster():EmitSound("Hero_Centaur.Retaliate.Cast")
 	end
@@ -519,7 +534,7 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 
 			-- Calculate damage using owner's strength
 			if self:GetParent().GetStrength then
-				damage = damage + (self:GetParent():GetStrength() * self:GetAbility():GetSpecialValueFor("str_pct_as_damage") * 0.01)
+				damage = damage + (self:GetParent():GetStrength() * self:GetAbility():GetSpecialValueFor("str_pct_as_damage") / 100)
 			end
 
 			-- Apply damage on attacker
@@ -531,12 +546,12 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 				damage_flags = DOTA_DAMAGE_FLAG_REFLECTION,
 				ability = ability
 			})
-			
+
 			if self:GetParent() == self:GetCaster() then
-				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_return_damage_block", {duration = self:GetAbility():GetSpecialValueFor("block_duration")})
+				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_return_damage_block", { duration = self:GetAbility():GetSpecialValueFor("block_duration") })
 				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_return_damage_block_buff", {
-					duration		= self:GetAbility():GetSpecialValueFor("block_duration"),
-					damage_block	= self:GetAbility():GetSpecialValueFor("damage_block")
+					duration     = self:GetAbility():GetSpecialValueFor("block_duration"),
+					damage_block = self:GetAbility():GetSpecialValueFor("damage_block")
 				})
 			end
 		end
@@ -560,11 +575,14 @@ function modifier_imba_return_passive:IsPurgable()
 end
 
 -- Damage block modifier
-modifier_imba_return_damage_block		= modifier_imba_return_damage_block or class({})
-modifier_imba_return_damage_block_buff	= modifier_imba_return_damage_block_buff or class({})
+modifier_imba_return_damage_block      = modifier_imba_return_damage_block or class({})
+modifier_imba_return_damage_block_buff = modifier_imba_return_damage_block_buff or class({})
 
 function modifier_imba_return_damage_block:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
 
 	self.damage_block = self:GetAbility():GetSpecialValueFor("damage_block")
 end
@@ -574,21 +592,22 @@ function modifier_imba_return_damage_block:OnRefresh()
 end
 
 function modifier_imba_return_damage_block:DeclareFunctions()
-	return {MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK}
+	return { MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK }
 end
 
 function modifier_imba_return_damage_block:GetModifierPhysical_ConstantBlock()
 	return self:GetStackCount()
 end
 
-function modifier_imba_return_damage_block_buff:IsHidden() 			return true end
-function modifier_imba_return_damage_block_buff:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_return_damage_block_buff:IsHidden() return true end
+
+function modifier_imba_return_damage_block_buff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_return_damage_block_buff:OnCreated(keys)
 	if not IsServer() then return end
 
 	self:SetStackCount(keys.damage_block)
-	
+
 	if self:GetParent():HasModifier("modifier_imba_return_damage_block") then
 		self:GetParent():FindModifierByName("modifier_imba_return_damage_block"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_return_damage_block"):GetStackCount() + self:GetStackCount())
 	end
@@ -596,7 +615,7 @@ end
 
 function modifier_imba_return_damage_block_buff:OnDestroy()
 	if not IsServer() then return end
-	
+
 	if self:GetParent():HasModifier("modifier_imba_return_damage_block") then
 		self:GetParent():FindModifierByName("modifier_imba_return_damage_block"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_return_damage_block"):GetStackCount() - self:GetStackCount())
 	end
@@ -613,7 +632,7 @@ function modifier_imba_return_bonus_damage:GetEffectAttachType()
 end
 
 function modifier_imba_return_bonus_damage:OnCreated()
-	self.bonus_damage	= self:GetAbility():GetSpecialValueFor("bonus_damage")
+	self.bonus_damage = self:GetAbility():GetSpecialValueFor("bonus_damage")
 end
 
 function modifier_imba_return_bonus_damage:DeclareFunctions()
@@ -674,7 +693,7 @@ function imba_centaur_stampede:OnSpellStart()
 			FIND_ANY_ORDER,
 			false)
 
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			enemy.trampled_in_stampede = nil
 		end
 
@@ -690,11 +709,11 @@ function imba_centaur_stampede:OnSpellStart()
 			false)
 
 		-- Give them haste buff
-		for _,ally in pairs (allies) do
-			ally:AddNewModifier(caster, ability, modifier_haste, {duration = duration})
-			
+		for _, ally in pairs(allies) do
+			ally:AddNewModifier(caster, ability, modifier_haste, { duration = duration })
+
 			if self:GetCaster():HasScepter() then
-				ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_centaur_stampede_scepter", {duration = self:GetSpecialValueFor("duration")})
+				ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_centaur_stampede_scepter", { duration = self:GetSpecialValueFor("duration") })
 			end
 		end
 	end
@@ -726,7 +745,7 @@ function modifier_imba_stampede_haste:OnCreated()
 		-- Nether ward interaction
 		if self.caster:IsHero() then
 			-- Generate caster's strength, calculate damage
-			self.trample_damage = self.caster:GetStrength() * (self.strength_damage * 0.01)
+			self.trample_damage = self.caster:GetStrength() * (self.strength_damage / 100)
 		else
 			self.trample_damage = self.nether_ward_damage
 		end
@@ -755,23 +774,25 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 			false)
 
 		-- If enemy wasn't trampled before, trample it now
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			if not enemy:IsMagicImmune() and not enemy.trampled_in_stampede then
 				-- Mark it as trampled
 				enemy.trampled_in_stampede = true
 
 				-- Deal damage
-				local damageTable = {victim = enemy,
+				local damageTable = {
+					victim = enemy,
 					attacker = self.parent,
 					damage = self.trample_damage,
 					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = self.ability}
+					ability = self.ability
+				}
 
 				ApplyDamage(damageTable)
 
 				-- Add stun and slow modifiers to the enemy
-				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_trample_slow, {duration = (self.stun_duration + self.slow_duration) * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", { duration = self.stun_duration * (1 - enemy:GetStatusResistance()) })
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_trample_slow, { duration = (self.stun_duration + self.slow_duration) * (1 - enemy:GetStatusResistance()) })
 
 				-- #8 Talent: Stampede duration increase per trampled enemy
 				if self.caster:HasTalent("special_bonus_imba_centaur_8") and enemy:IsRealHero() then
@@ -790,11 +811,11 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 						false)
 
 					-- Find their Stampede modifier and increase its duration
-					for _,ally in pairs(allies) do
+					for _, ally in pairs(allies) do
 						if ally:HasModifier("modifier_imba_stampede_haste") then
 							local modifier_haste_handler = ally:FindModifierByName("modifier_imba_stampede_haste")
 							modifier_haste_handler:SetDuration(modifier_haste_handler:GetRemainingTime() + bonus_stampede_duration, true)
-							
+
 							if ally:HasModifier("modifier_imba_centaur_stampede_scepter") then
 								ally:FindModifierByName("modifier_imba_centaur_stampede_scepter"):SetDuration(ally:FindModifierByName("modifier_imba_centaur_stampede_scepter"):GetRemainingTime() + bonus_stampede_duration, true)
 							end
@@ -827,7 +848,7 @@ function modifier_imba_stampede_haste:GetModifierStatusResistanceStacking()
 end
 
 function modifier_imba_stampede_haste:CheckState()
-	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	return { [MODIFIER_STATE_NO_UNIT_COLLISION] = true }
 end
 
 function modifier_imba_stampede_haste:GetEffectName()
@@ -854,15 +875,18 @@ end
 -- MODIFIER_IMBA_CENTAUR_STAMPEDE_SCEPTER --
 --------------------------------------------
 
-modifier_imba_centaur_stampede_scepter	= modifier_imba_centaur_stampede_scepter or class({})
+modifier_imba_centaur_stampede_scepter = modifier_imba_centaur_stampede_scepter or class({})
 
 -- Just because Shush wants some sort of visible indicator for when it's an Aghanim's Scepter Stampede...
-function modifier_imba_centaur_stampede_scepter:IsPurgable()	return false end
+function modifier_imba_centaur_stampede_scepter:IsPurgable() return false end
 
 function modifier_imba_centaur_stampede_scepter:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
 
-	self.damage_reduction_scepter	= self:GetAbility():GetSpecialValueFor("damage_reduction_scepter") * (-1)
+	self.damage_reduction_scepter = self:GetAbility():GetSpecialValueFor("damage_reduction_scepter") * (-1)
 end
 
 function modifier_imba_centaur_stampede_scepter:DeclareFunctions()
@@ -878,7 +902,7 @@ function modifier_imba_centaur_stampede_scepter:GetModifierIncomingDamage_Percen
 end
 
 function modifier_imba_centaur_stampede_scepter:CheckState()
-	return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
+	return { [MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true }
 end
 
 -- After-trample slow modifier
@@ -894,7 +918,7 @@ function modifier_imba_stampede_trample_slow:OnCreated()
 end
 
 function modifier_imba_stampede_trample_slow:DeclareFunctions()
-	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+	return { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 end
 
 function modifier_imba_stampede_trample_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -915,48 +939,66 @@ LinkLuaModifier("modifier_special_bonus_imba_centaur_7", "components/abilities/h
 LinkLuaModifier("modifier_special_bonus_imba_centaur_8", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_centaur_9", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_centaur_1	= modifier_special_bonus_imba_centaur_1 or class({})
-modifier_special_bonus_imba_centaur_2	= modifier_special_bonus_imba_centaur_2 or class({})
-modifier_special_bonus_imba_centaur_3	= modifier_special_bonus_imba_centaur_3 or class({})
-modifier_special_bonus_imba_centaur_4	= modifier_special_bonus_imba_centaur_4 or class({})
-modifier_special_bonus_imba_centaur_5	= modifier_special_bonus_imba_centaur_5 or class({})
-modifier_special_bonus_imba_centaur_6	= modifier_special_bonus_imba_centaur_6 or class({})
-modifier_special_bonus_imba_centaur_7	= modifier_special_bonus_imba_centaur_7 or class({})
-modifier_special_bonus_imba_centaur_8	= modifier_special_bonus_imba_centaur_8 or class({})
-modifier_special_bonus_imba_centaur_9	= modifier_special_bonus_imba_centaur_9 or class({})
+modifier_special_bonus_imba_centaur_1 = modifier_special_bonus_imba_centaur_1 or class({})
+modifier_special_bonus_imba_centaur_2 = modifier_special_bonus_imba_centaur_2 or class({})
+modifier_special_bonus_imba_centaur_3 = modifier_special_bonus_imba_centaur_3 or class({})
+modifier_special_bonus_imba_centaur_4 = modifier_special_bonus_imba_centaur_4 or class({})
+modifier_special_bonus_imba_centaur_5 = modifier_special_bonus_imba_centaur_5 or class({})
+modifier_special_bonus_imba_centaur_6 = modifier_special_bonus_imba_centaur_6 or class({})
+modifier_special_bonus_imba_centaur_7 = modifier_special_bonus_imba_centaur_7 or class({})
+modifier_special_bonus_imba_centaur_8 = modifier_special_bonus_imba_centaur_8 or class({})
+modifier_special_bonus_imba_centaur_9 = modifier_special_bonus_imba_centaur_9 or class({})
 
-function modifier_special_bonus_imba_centaur_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_1:IsHidden() return true end
 
-function modifier_special_bonus_imba_centaur_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_1:IsPurgable() return false end
 
-function modifier_special_bonus_imba_centaur_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_3:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_1:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_centaur_4:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_4:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_2:IsHidden() return true end
 
-function modifier_special_bonus_imba_centaur_5:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_5:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_5:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_2:IsPurgable() return false end
 
-function modifier_special_bonus_imba_centaur_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_2:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_centaur_7:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_7:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_7:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_3:IsHidden() return true end
 
-function modifier_special_bonus_imba_centaur_8:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_8:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_3:IsPurgable() return false end
 
-function modifier_special_bonus_imba_centaur_9:IsHidden() 		return true end
-function modifier_special_bonus_imba_centaur_9:IsPurgable()		return false end
-function modifier_special_bonus_imba_centaur_9:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_centaur_3:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_centaur_4:IsHidden() return true end
+
+function modifier_special_bonus_imba_centaur_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_centaur_4:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_centaur_5:IsHidden() return true end
+
+function modifier_special_bonus_imba_centaur_5:IsPurgable() return false end
+
+function modifier_special_bonus_imba_centaur_5:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_centaur_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_centaur_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_centaur_6:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_centaur_7:IsHidden() return true end
+
+function modifier_special_bonus_imba_centaur_7:IsPurgable() return false end
+
+function modifier_special_bonus_imba_centaur_7:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_centaur_8:IsHidden() return true end
+
+function modifier_special_bonus_imba_centaur_8:IsPurgable() return false end
+
+function modifier_special_bonus_imba_centaur_8:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_centaur_9:IsHidden() return true end
+
+function modifier_special_bonus_imba_centaur_9:IsPurgable() return false end
+
+function modifier_special_bonus_imba_centaur_9:RemoveOnDeath() return false end

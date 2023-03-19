@@ -25,10 +25,11 @@
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_lesser_crit == nil then item_imba_lesser_crit = class({}) end
-LinkLuaModifier( "modifier_item_imba_lesser_crit", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )		-- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_lesser_crit", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE)   -- Owner's bonus attributes, stackable
 
 function item_imba_lesser_crit:GetIntrinsicModifierName()
-	return "modifier_item_imba_lesser_crit" end
+	return "modifier_item_imba_lesser_crit"
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Crystalys owner bonus attributes (stackable)
@@ -36,10 +37,13 @@ function item_imba_lesser_crit:GetIntrinsicModifierName()
 
 if modifier_item_imba_lesser_crit == nil then modifier_item_imba_lesser_crit = class({}) end
 
-function modifier_item_imba_lesser_crit:IsHidden()		return true end
-function modifier_item_imba_lesser_crit:IsPurgable()	return false end
-function modifier_item_imba_lesser_crit:RemoveOnDeath()	return false end
-function modifier_item_imba_lesser_crit:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_lesser_crit:IsHidden() return true end
+
+function modifier_item_imba_lesser_crit:IsPurgable() return false end
+
+function modifier_item_imba_lesser_crit:RemoveOnDeath() return false end
+
+function modifier_item_imba_lesser_crit:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_lesser_crit:DeclareFunctions()
 	return {
@@ -66,11 +70,12 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_greater_crit == nil then item_imba_greater_crit = class({}) end
-LinkLuaModifier( "modifier_item_imba_greater_crit", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )		-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_greater_crit_buff", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )	-- Critical damage increase counter
+LinkLuaModifier("modifier_item_imba_greater_crit", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE)        -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_greater_crit_buff", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE)   -- Critical damage increase counter
 
 function item_imba_greater_crit:GetIntrinsicModifierName()
-	return "modifier_item_imba_greater_crit" end
+	return "modifier_item_imba_greater_crit"
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Daedalus owner bonus attributes (stackable)
@@ -78,17 +83,20 @@ function item_imba_greater_crit:GetIntrinsicModifierName()
 
 if modifier_item_imba_greater_crit == nil then modifier_item_imba_greater_crit = class({}) end
 
-function modifier_item_imba_greater_crit:IsHidden()		return true end
-function modifier_item_imba_greater_crit:IsPurgable()	return false end
-function modifier_item_imba_greater_crit:RemoveOnDeath()	return false end
-function modifier_item_imba_greater_crit:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_greater_crit:IsHidden() return true end
+
+function modifier_item_imba_greater_crit:IsPurgable() return false end
+
+function modifier_item_imba_greater_crit:RemoveOnDeath() return false end
+
+function modifier_item_imba_greater_crit:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the damage increase counter when created
 function modifier_item_imba_greater_crit:OnCreated(keys)
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	if not self:GetAbility() or not IsServer() then return end
 
 	if not self:GetParent():HasModifier("modifier_item_imba_greater_crit_buff") then
@@ -106,7 +114,7 @@ function modifier_item_imba_greater_crit:OnDestroy()
 end
 
 function modifier_item_imba_greater_crit:DeclareFunctions()
-	return {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+	return { MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE }
 end
 
 function modifier_item_imba_greater_crit:GetModifierPreAttack_BonusDamage()
@@ -120,17 +128,22 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_greater_crit_buff == nil then modifier_item_imba_greater_crit_buff = class({}) end
-function modifier_item_imba_greater_crit_buff:IsHidden()		return false end
-function modifier_item_imba_greater_crit_buff:IsPurgable()		return false end
-function modifier_item_imba_greater_crit_buff:RemoveOnDeath()	return false end
+function modifier_item_imba_greater_crit_buff:IsHidden() return false end
+
+function modifier_item_imba_greater_crit_buff:IsPurgable() return false end
+
+function modifier_item_imba_greater_crit_buff:RemoveOnDeath() return false end
 
 function modifier_item_imba_greater_crit_buff:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
-	
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
+
 	-- Special values
-	self.crit_multiplier	= self:GetAbility():GetSpecialValueFor("crit_multiplier")
-	self.crit_increase		= self:GetAbility():GetSpecialValueFor("crit_increase")
-	self.crit_chance		= self:GetAbility():GetSpecialValueFor("crit_chance")
+	self.crit_multiplier = self:GetAbility():GetSpecialValueFor("crit_multiplier")
+	self.crit_increase   = self:GetAbility():GetSpecialValueFor("crit_increase")
+	self.crit_chance     = self:GetAbility():GetSpecialValueFor("crit_chance")
 end
 
 function modifier_item_imba_greater_crit_buff:DeclareFunctions()
@@ -142,8 +155,8 @@ end
 
 function modifier_item_imba_greater_crit_buff:GetModifierPreAttack_CriticalStrike(keys)
 	if self:GetAbility() and (keys.target and not keys.target:IsOther() and not keys.target:IsBuilding() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber()) then
-		local multiplicative_chance = (1 - ((1 - (self.crit_chance * 0.01)) ^ #self:GetParent():FindAllModifiersByName("modifier_item_imba_greater_crit"))) * 100
-		
+		local multiplicative_chance = (1 - ((1 - (self.crit_chance / 100)) ^ #self:GetParent():FindAllModifiersByName("modifier_item_imba_greater_crit"))) * 100
+
 		-- RollPseudoRandom only keeps track of whole numbers, so some rounding is required
 		if RollPseudoRandom(math.ceil(multiplicative_chance), self) then
 			self.bCrit = true

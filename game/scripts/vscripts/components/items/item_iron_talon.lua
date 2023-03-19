@@ -3,8 +3,8 @@
 
 LinkLuaModifier("modifier_item_imba_iron_talon", "components/items/item_iron_talon", LUA_MODIFIER_MOTION_NONE)
 
-item_imba_iron_talon					= class({})
-modifier_item_imba_iron_talon			= class({})
+item_imba_iron_talon          = class({})
+modifier_item_imba_iron_talon = class({})
 
 ---------------------
 -- IRON TALON BASE --
@@ -13,7 +13,7 @@ modifier_item_imba_iron_talon			= class({})
 function item_imba_iron_talon:CastFilterResultTarget(hTarget)
 	if not IsServer() then return end
 
-	-- If the target is a different team than the caster AND 
+	-- If the target is a different team than the caster AND
 	-- If the target is a creep or a ward-type unit AND
 	-- If the target is not an ancient OR
 	-- If the target is an ancient and the caster satisfies the max stack criteria for The Hunt IMBAfication THEN
@@ -25,7 +25,7 @@ function item_imba_iron_talon:CastFilterResultTarget(hTarget)
 	-- However, since they all share the same name, it'll work on Techies' Proximity Mines too
 	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		if (hTarget:IsCreep() or (hTarget:IsOther() and (string.find(hTarget:GetName(), "npc_dota_ward_base") or string.find(hTarget:GetName(), "npc_dota_techies_mines")))) and
-		not hTarget:IsRoshan() then
+			not hTarget:IsRoshan() then
 			return UF_SUCCESS
 		elseif hTarget:IsOther() and not (string.find(hTarget:GetName(), "npc_dota_ward_base") or string.find(hTarget:GetName(), "npc_dota_techies_mines")) then
 			return UF_FAIL_CUSTOM
@@ -33,15 +33,15 @@ function item_imba_iron_talon:CastFilterResultTarget(hTarget)
 	end
 
 	-- Otherwise just follow the standard unit filtering and use the standard cast errors
-	local nResult = UnitFilter( hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	
+	local nResult = UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+
 	return nResult
 end
 
 function item_imba_iron_talon:GetCustomCastErrorTarget(hTarget)
 	if not IsServer() then return end
 
-	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then 
+	if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		if hTarget:IsOther() and not (string.find(hTarget:GetName(), "npc_dota_ward_base") or string.find(hTarget:GetName(), "npc_dota_techies_mines")) then
 			return "Ability Can't Target This Ward-Type Unit"
 		end
@@ -86,14 +86,14 @@ function item_imba_iron_talon:OnSpellStart()
 			ParticleManager:ReleaseParticleIndex(talon_particle)
 
 			local damageTable = {
-				victim 			= self:GetCursorTarget(),
-				damage 			= self:GetCursorTarget():GetHealth() * self:GetSpecialValueFor("creep_damage_pct") * 0.01,
-				damage_type		= DAMAGE_TYPE_PURE,
-				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				attacker 		= self:GetCaster(),
-				ability 		= self
+				victim       = self:GetCursorTarget(),
+				damage       = self:GetCursorTarget():GetHealth() * self:GetSpecialValueFor("creep_damage_pct") / 100,
+				damage_type  = DAMAGE_TYPE_PURE,
+				damage_flags = DOTA_DAMAGE_FLAG_NONE,
+				attacker     = self:GetCaster(),
+				ability      = self
 			}
-			
+
 			ApplyDamage(damageTable)
 		elseif self:GetCursorTarget():IsOther() then
 			self:GetCursorTarget():Kill(self, self:GetCaster())
@@ -105,25 +105,28 @@ end
 -- IRON TALON MODIFIER --
 -------------------------
 
-function modifier_item_imba_iron_talon:AllowIllusionDuplicate()	return false end
-function modifier_item_imba_iron_talon:IsPurgable()		return false end
-function modifier_item_imba_iron_talon:RemoveOnDeath()	return false end
-function modifier_item_imba_iron_talon:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_iron_talon:AllowIllusionDuplicate() return false end
+
+function modifier_item_imba_iron_talon:IsPurgable() return false end
+
+function modifier_item_imba_iron_talon:RemoveOnDeath() return false end
+
+function modifier_item_imba_iron_talon:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_iron_talon:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end	
-	
-	-- AbilitySpecials
-	self.damage_bonus			= self:GetAbility():GetSpecialValueFor("damage_bonus")
-	self.damage_bonus_ranged	= self:GetAbility():GetSpecialValueFor("damage_bonus_ranged")
-	self.bonus_armor			= self:GetAbility():GetSpecialValueFor("bonus_armor")
+		if not self:GetAbility() then self:Destroy() end
+	end
 
-	self.hunt_bonus				= self:GetAbility():GetSpecialValueFor("hunt_bonus")
-	self.hunt_bonus_ranged		= self:GetAbility():GetSpecialValueFor("hunt_bonus_ranged")
-	self.hunt_max				= self:GetAbility():GetSpecialValueFor("hunt_max")
-	self.hunt_max_ranged			= self:GetAbility():GetSpecialValueFor("hunt_max_ranged")
+	-- AbilitySpecials
+	self.damage_bonus        = self:GetAbility():GetSpecialValueFor("damage_bonus")
+	self.damage_bonus_ranged = self:GetAbility():GetSpecialValueFor("damage_bonus_ranged")
+	self.bonus_armor         = self:GetAbility():GetSpecialValueFor("bonus_armor")
+
+	self.hunt_bonus          = self:GetAbility():GetSpecialValueFor("hunt_bonus")
+	self.hunt_bonus_ranged   = self:GetAbility():GetSpecialValueFor("hunt_bonus_ranged")
+	self.hunt_max            = self:GetAbility():GetSpecialValueFor("hunt_max")
+	self.hunt_max_ranged     = self:GetAbility():GetSpecialValueFor("hunt_max_ranged")
 
 	if not IsServer() then return end
 

@@ -6,7 +6,7 @@ local LinkedModifiers = {}
 --			SHURIKEN TOSS
 -------------------------------------------
 -- Visible Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_shuriken_toss_debuff_pull"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_shuriken_toss_stunned"] = LUA_MODIFIER_MOTION_NONE,
 })
@@ -40,7 +40,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 	local target = self:GetCursorTarget()
 	local particle_projectile = "particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
 	local sound_cast = "Hero_BountyHunter.Shuriken"
-	local cast_response = "bounty_hunter_bount_ability_shur_0"..RandomInt(2, 3)
+	local cast_response = "bounty_hunter_bount_ability_shur_0" .. RandomInt(2, 3)
 
 	-- Ability specials
 	local projectile_speed = ability:GetSpecialValueFor("projectile_speed")
@@ -56,21 +56,21 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 
 	-- -- #4 Talent: Jinada is applied to the shuriken if ready
 	-- local shuriken_crit = false
-	
+
 	-- if caster:HasTalent("special_bonus_imba_bounty_hunter_4") then
-		-- local jinada_ability_name = "imba_bounty_hunter_jinada"
-		-- local jinada_ability = caster:FindAbilityByName(jinada_ability_name)
+	-- local jinada_ability_name = "imba_bounty_hunter_jinada"
+	-- local jinada_ability = caster:FindAbilityByName(jinada_ability_name)
 
-		-- if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
-			-- -- Jinada goes on cooldown
-			-- jinada_ability:UseResources(false, false, true)
+	-- if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
+	-- -- Jinada goes on cooldown
+	-- jinada_ability:UseResources(false, false, true)
 
-			-- -- Consumes Jinada's buff
-			-- caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
+	-- -- Consumes Jinada's buff
+	-- caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
 
-			-- -- Set the shuriken to be a critical shuriken
-			-- shuriken_crit = true
-		-- end
+	-- -- Set the shuriken to be a critical shuriken
+	-- shuriken_crit = true
+	-- end
 	-- end
 
 	-- Prepare enemy table
@@ -90,47 +90,47 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 		bVisibleToEnemies = true,
 		bReplaceExisting = false,
 		bProvidesVision = false,
-		ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
+		ExtraData = { enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit }
 	}
 
 	ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
 
 	-- -- If caster has scepter, launch another one after a second delay
 	-- if caster:HasScepter() then
-		-- Timers:CreateTimer(scepter_throw_delay, function()
-			-- -- #4 Talent: Jinada is applied to the shuriken if ready
-			-- shuriken_crit = false
-			-- if caster:HasTalent("special_bonus_imba_bounty_hunter_4") then
-				-- local jinada_ability = caster:FindAbilityByName("imba_bounty_hunter_jinada")
+	-- Timers:CreateTimer(scepter_throw_delay, function()
+	-- -- #4 Talent: Jinada is applied to the shuriken if ready
+	-- shuriken_crit = false
+	-- if caster:HasTalent("special_bonus_imba_bounty_hunter_4") then
+	-- local jinada_ability = caster:FindAbilityByName("imba_bounty_hunter_jinada")
 
-				-- if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
-					-- -- Jinada goes on cooldown
-					-- jinada_ability:UseResources(false, false, true)
+	-- if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
+	-- -- Jinada goes on cooldown
+	-- jinada_ability:UseResources(false, false, true)
 
-					-- -- Consumes Jinada's buff
-					-- caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
+	-- -- Consumes Jinada's buff
+	-- caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
 
-					-- -- Set the shuriken to be a critical shuriken
-					-- shuriken_crit = true
-				-- end
-			-- end
-		
-			-- caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+	-- -- Set the shuriken to be a critical shuriken
+	-- shuriken_crit = true
+	-- end
+	-- end
 
-			-- shuriken_projectile = {
-				-- Target = target,
-				-- Source = caster,
-				-- Ability = ability,
-				-- EffectName = particle_projectile,
-				-- iMoveSpeed = projectile_speed,
-				-- bDodgeable = true,
-				-- bVisibleToEnemies = true,
-				-- bReplaceExisting = false,
-				-- bProvidesVision = false,
-				-- ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
-			-- }
-			-- ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
-		-- end)
+	-- caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+
+	-- shuriken_projectile = {
+	-- Target = target,
+	-- Source = caster,
+	-- Ability = ability,
+	-- EffectName = particle_projectile,
+	-- iMoveSpeed = projectile_speed,
+	-- bDodgeable = true,
+	-- bVisibleToEnemies = true,
+	-- bReplaceExisting = false,
+	-- bProvidesVision = false,
+	-- ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
+	-- }
+	-- ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
+	-- end)
 	-- end
 end
 
@@ -176,77 +176,77 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 
 		-- -- Stun target. Duration increased by holding a scepter
 		-- if caster:HasScepter() then
-			-- stun_duration = scepter_stun_duration
+		-- stun_duration = scepter_stun_duration
 		-- end
 
-		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", { duration = stun_duration * (1 - target:GetStatusResistance()) })
 
 		-- -- Check if the Shuriken is an enchanted shuriken from #4 talent
 		-- if shuriken_crit == 1 then
-			-- local jinada_ability_name = "imba_bounty_hunter_jinada"
-			-- local jinada_ability = caster:FindAbilityByName(jinada_ability_name)
+		-- local jinada_ability_name = "imba_bounty_hunter_jinada"
+		-- local jinada_ability = caster:FindAbilityByName(jinada_ability_name)
 
-			-- if jinada_ability and jinada_ability:GetLevel() > 0 then
-				-- -- Get Jinada's critical rate and maim duration
-				-- local crit_damage = jinada_ability:GetSpecialValueFor("crit_damage")
-				-- local bonus_damage = jinada_ability:GetSpecialValueFor("bonus_damage")
-				-- local slow_duration = jinada_ability:GetSpecialValueFor("slow_duration")
+		-- if jinada_ability and jinada_ability:GetLevel() > 0 then
+		-- -- Get Jinada's critical rate and maim duration
+		-- local crit_damage = jinada_ability:GetSpecialValueFor("crit_damage")
+		-- local bonus_damage = jinada_ability:GetSpecialValueFor("bonus_damage")
+		-- local slow_duration = jinada_ability:GetSpecialValueFor("slow_duration")
 
-				-- damage = (damage + bonus_damage) * crit_damage * 0.01
+		-- damage = (damage + bonus_damage) * crit_damage / 100
 
-				-- -- Get a critical overhead alert
-				-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
+		-- -- Get a critical overhead alert
+		-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
 
-				-- -- Apply the slow debuff on the target
-				-- target:AddNewModifier(caster, jinada_ability, "modifier_imba_jinada_debuff_slow", {duration = slow_duration})
-				
-				-- target:EmitSound("Hero_BountyHunter.Jinada")
-			-- end
+		-- -- Apply the slow debuff on the target
+		-- target:AddNewModifier(caster, jinada_ability, "modifier_imba_jinada_debuff_slow", {duration = slow_duration})
+
+		-- target:EmitSound("Hero_BountyHunter.Jinada")
 		-- end
-		
+		-- end
+
 		-- Aghanim's Scepter logic (Patch 7.25)
 		if target:IsAlive() and self:GetCaster():HasScepter() and self:GetCaster():HasAbility("imba_bounty_hunter_jinada") and self:GetCaster():FindAbilityByName("imba_bounty_hunter_jinada"):IsTrained() then
 			local jinada_ability = self:GetCaster():FindAbilityByName("imba_bounty_hunter_jinada")
-		
+
 			damage = damage + jinada_ability:GetSpecialValueFor("bonus_damage")
-			
+
 			self:GetCaster():EmitSound("Hero_BountyHunter.Jinada")
-			
+
 			-- transfer gold from target to caster
 			if target:IsRealHero() and target:GetPlayerID() then
 				local actual_gold_to_steal = math.min(jinada_ability:GetTalentSpecialValueFor("bonus_gold"), PlayerResource:GetUnreliableGold(target:GetPlayerID()))
-				
+
 				if actual_gold_to_steal > 0 then
 					-- Add money particle effect
 					self.money_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinada.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 					ParticleManager:SetParticleControlEnt(self.money_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(self.money_particle)
 				end
-				
+
 				target:ModifyGold(-actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				self:GetCaster():ModifyGold(actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_GOLD, self:GetCaster(), actual_gold_to_steal, nil)
-				
+
 				if self:GetCaster():HasModifier("modifier_imba_jinada_gold_tracker") then
 					self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() + actual_gold_to_steal)
 				end
 			end
 		end
-		
+
 		-- Deal damage
 		ApplyDamage({
-			victim		= target,
-			damage		= damage,
+			victim      = target,
+			damage      = damage,
 			damage_type = DAMAGE_TYPE_MAGICAL,
-			attacker	= caster,
-			ability		= ability
+			attacker    = caster,
+			ability     = ability
 		})
 
 		-- Apply pull modifier
-		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_debuff_pull", {duration = pull_duration * (1 - target:GetStatusResistance())})
-		
+		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_debuff_pull", { duration = pull_duration * (1 - target:GetStatusResistance()) })
 
-		
+
+
 		-- Find new enemy hero to bounce to
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 			target:GetAbsOrigin(),
@@ -261,11 +261,10 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 
 
 		local projectile_fired = false
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			-- Look for proper enemy to bounce to
 			local enemy_found = false
-			for _,enemy_in_table in pairs(enemy_table) do
-
+			for _, enemy_in_table in pairs(enemy_table) do
 				-- Find enemy in the table
 				if enemy == enemy_in_table then
 					enemy_found = true
@@ -275,7 +274,6 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 
 			-- Only commence if the enemy has track and was not found in the table
 			if enemy:HasModifier("modifier_imba_track_debuff_mark") and not enemy_found then
-
 				-- Add enemy to the enemy table
 				table.insert(enemy_table, enemy)
 
@@ -294,7 +292,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 					bVisibleToEnemies = true,
 					bReplaceExisting = false,
 					bProvidesVision = false,
-					ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
+					ExtraData = { enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit }
 				}
 
 				ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
@@ -310,12 +308,11 @@ function imba_bounty_hunter_shuriken_toss:IsHiddenWhenStolen()
 	return false
 end
 
-
 -- Stun modifier
 modifier_imba_shuriken_toss_stunned = modifier_imba_shuriken_toss_stunned or class({})
 
 function modifier_imba_shuriken_toss_stunned:CheckState()
-	return {[MODIFIER_STATE_STUNNED] = true}
+	return { [MODIFIER_STATE_STUNNED] = true }
 end
 
 function modifier_imba_shuriken_toss_stunned:IsStunDebuff()
@@ -333,7 +330,6 @@ end
 function modifier_imba_shuriken_toss_stunned:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
-
 
 -- Pull modifier
 modifier_imba_shuriken_toss_debuff_pull = modifier_imba_shuriken_toss_debuff_pull or class({})
@@ -381,7 +377,7 @@ function modifier_imba_shuriken_toss_debuff_pull:OnIntervalThink()
 		end
 
 		-- Calculate pull power for that tick
-		local velocity = self.minimum_pull_power + (distance/self.pull_increase_distance) * self.pull_power_increase
+		local velocity = self.minimum_pull_power + (distance / self.pull_increase_distance) * self.pull_power_increase
 
 		-- No more than the maximum distance
 		if velocity > self.maximum_pull_power then
@@ -417,17 +413,16 @@ function modifier_imba_shuriken_toss_debuff_pull:IsPurgable()
 	return true
 end
 
-
 -------------------------------------------
 --				JINADA
 -------------------------------------------
 -- Visible Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_jinada_debuff_slow"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_jinada_buff_crit"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_jinada_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_jinada_gold_tracker"] = LUA_MODIFIER_MOTION_NONE
 })
@@ -452,7 +447,7 @@ function imba_bounty_hunter_jinada:CastFilterResultTarget(target)
 		-- And apply if it is an ally, but not Bounty himself
 		if caster:HasTalent("special_bonus_imba_bounty_hunter_3") then
 			if target ~= caster and caster:GetTeamNumber() == target:GetTeamNumber() then
-				local nResult = UnitFilter( target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+				local nResult = UnitFilter(target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 				return nResult
 			end
 		end
@@ -464,7 +459,7 @@ function imba_bounty_hunter_jinada:CastFilterResultTarget(target)
 
 		-- Check if the caster has #7 Talent on a contract target, which removes the need for track
 		if caster:HasTalent("special_bonus_imba_bounty_hunter_7") and target:HasModifier("modifier_imba_headhunter_debuff_handler") then
-			local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+			local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 			return nResult
 		end
 
@@ -473,7 +468,7 @@ function imba_bounty_hunter_jinada:CastFilterResultTarget(target)
 			return UF_FAIL_CUSTOM
 		end
 
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 		return nResult
 	end
 end
@@ -487,7 +482,6 @@ function imba_bounty_hunter_jinada:GetCastRange(location, target)
 
 	-- #7 Talent: Shadow Jaunt can be cast on Headhunter's contract targets from 2500 range
 	if caster:HasTalent("special_bonus_imba_bounty_hunter_7") then
-
 		-- If there is a target, and the target has contract debuff, give huge distance jump!
 		if target and target:HasModifier("modifier_imba_headhunter_debuff_handler") then
 			return caster:FindTalentValue("special_bonus_imba_bounty_hunter_7", "cast_range")
@@ -517,7 +511,7 @@ function imba_bounty_hunter_jinada:OnSpellStart()
 
 			-- Cast on an ally to give him the Jinada crit bonus
 			local duration = caster:FindTalentValue("special_bonus_imba_bounty_hunter_3", "jinada_buff_duration")
-			target:AddNewModifier(caster, ability, "modifier_imba_jinada_buff_crit", {duration = duration})
+			target:AddNewModifier(caster, ability, "modifier_imba_jinada_buff_crit", { duration = duration })
 
 			-- If Bounty is ready to crit, remove his own crit buff
 			if caster:HasModifier("modifier_imba_jinada_buff_crit") then
@@ -572,9 +566,9 @@ end
 
 function modifier_imba_jinada_passive:OnCreated()
 	if not IsServer() then return end
-	
+
 	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_jinada_gold_tracker", {})
-	
+
 	self:StartIntervalThink(0.2)
 end
 
@@ -600,8 +594,6 @@ end
 function modifier_imba_jinada_passive:IsDebuff()
 	return false
 end
-
-
 
 -- Slow debuff modifier
 modifier_imba_jinada_debuff_slow = modifier_imba_jinada_debuff_slow or class({})
@@ -640,7 +632,6 @@ end
 function modifier_imba_jinada_debuff_slow:IsHidden()
 	return false
 end
-
 
 -- Jinada crit modifier
 modifier_imba_jinada_buff_crit = modifier_imba_jinada_buff_crit or class({})
@@ -686,7 +677,7 @@ function modifier_imba_jinada_buff_crit:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		
+
 		-- MODIFIER_EVENT_ON_ATTACK,
 		-- MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
 	}
@@ -712,11 +703,11 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 		if attacker:PassivesDisabled() then
 			return nil
 		end
-		
+
 		-- Only apply on caster attacking enemies
 		if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
 			self.parent:EmitSound("Hero_BountyHunter.Jinada")
-		
+
 			-- Add hit particle effects
 			self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN, self.parent)
 			ParticleManager:SetParticleControl(self.particle_hit_fx, 0, target:GetAbsOrigin())
@@ -734,18 +725,18 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 			-- transfer gold from target to caster
 			if target:IsRealHero() and target:GetPlayerID() then
 				local actual_gold_to_steal = math.min(self:GetAbility():GetTalentSpecialValueFor("bonus_gold"), PlayerResource:GetUnreliableGold(target:GetPlayerID()))
-				
+
 				if actual_gold_to_steal > 0 then
 					-- Add money particle effect
 					self.money_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinada.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 					ParticleManager:SetParticleControlEnt(self.money_particle, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(self.money_particle)
 				end
-				
+
 				target:ModifyGold(-actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				attacker:ModifyGold(actual_gold_to_steal, false, DOTA_ModifyGold_Unspecified)
 				SendOverheadEventMessage(attacker, OVERHEAD_ALERT_GOLD, attacker, actual_gold_to_steal, nil)
-				
+
 				if self:GetCaster():HasModifier("modifier_imba_jinada_gold_tracker") then
 					self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() + actual_gold_to_steal)
 				end
@@ -758,61 +749,61 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 end
 
 -- function modifier_imba_jinada_buff_crit:GetModifierPreAttack_CriticalStrike(keys)
-	-- local attacker = keys.attacker
-	-- local target = keys.target
+-- local attacker = keys.attacker
+-- local target = keys.target
 
-	-- -- If this is an illusion, do nothing
-	-- if not self.parent:IsRealHero() then
-		-- return nil
-	-- end
+-- -- If this is an illusion, do nothing
+-- if not self.parent:IsRealHero() then
+-- return nil
+-- end
 
-	-- -- If caster has break, do nothing
-	-- if attacker:PassivesDisabled() then
-		-- return nil
-	-- end
+-- -- If caster has break, do nothing
+-- if attacker:PassivesDisabled() then
+-- return nil
+-- end
 
-	-- -- If the target is a building, do nothing
-	-- if target:IsBuilding() then
-		-- return nil
-	-- end
+-- -- If the target is a building, do nothing
+-- if target:IsBuilding() then
+-- return nil
+-- end
 
-	-- -- If an attack was already fired (ranged heroes), disable further critical strikes
-	-- if self.crit_attack_fired then
-		-- return nil
-	-- end
+-- -- If an attack was already fired (ranged heroes), disable further critical strikes
+-- if self.crit_attack_fired then
+-- return nil
+-- end
 
-	-- -- Prevent critical attacks on allies
-	-- if self.parent:GetTeamNumber() == target:GetTeamNumber() then
-		-- return nil
-	-- end
+-- -- Prevent critical attacks on allies
+-- if self.parent:GetTeamNumber() == target:GetTeamNumber() then
+-- return nil
+-- end
 
-	-- return self.crit_damage
+-- return self.crit_damage
 -- end
 
 -- function modifier_imba_jinada_buff_crit:OnAttack(keys)
-	-- if IsServer() then
-		-- local attacker = keys.attacker
-		-- local target = keys.target
+-- if IsServer() then
+-- local attacker = keys.attacker
+-- local target = keys.target
 
-		-- -- If this is an illusion, do nothing
-		-- if not attacker:IsRealHero() then
-			-- return nil
-		-- end
+-- -- If this is an illusion, do nothing
+-- if not attacker:IsRealHero() then
+-- return nil
+-- end
 
-		-- -- If target has break, do nothing
-		-- if attacker:PassivesDisabled() then
-			-- return nil
-		-- end
+-- -- If target has break, do nothing
+-- if attacker:PassivesDisabled() then
+-- return nil
+-- end
 
-		-- -- If the target is a building, do nothing
-		-- if target:IsBuilding() then
-			-- return nil
-		-- end
+-- -- If the target is a building, do nothing
+-- if target:IsBuilding() then
+-- return nil
+-- end
 
-		-- if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
-			-- self.crit_attack_fired = true
-		-- end
-	-- end
+-- if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
+-- self.crit_attack_fired = true
+-- end
+-- end
 -- end
 
 function modifier_imba_jinada_buff_crit:IsHidden()
@@ -835,21 +826,23 @@ end
 -- MODIFIER_IMBA_JINADA_GOLD_TRACKER --
 ---------------------------------------
 
-modifier_imba_jinada_gold_tracker	= modifier_imba_jinada_gold_tracker or class({})
+modifier_imba_jinada_gold_tracker = modifier_imba_jinada_gold_tracker or class({})
 
-function modifier_imba_jinada_gold_tracker:IsHidden()		return true end
-function modifier_imba_jinada_gold_tracker:IsPurgable()		return false end
-function modifier_imba_jinada_gold_tracker:RemoveOnDeath()	return false end
+function modifier_imba_jinada_gold_tracker:IsHidden() return true end
+
+function modifier_imba_jinada_gold_tracker:IsPurgable() return false end
+
+function modifier_imba_jinada_gold_tracker:RemoveOnDeath() return false end
 
 -------------------------------------------
 --			SHADOW WALK
 -------------------------------------------
 -- Visible Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_shadow_walk_buff_invis"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_shadow_walk_vision"] = LUA_MODIFIER_MOTION_NONE,
 })
 
@@ -862,6 +855,7 @@ function imba_bounty_hunter_shadow_walk:GetAbilityTextureName()
 end
 
 function imba_bounty_hunter_shadow_walk:IsNetherWardStealable() return false end
+
 function imba_bounty_hunter_shadow_walk:GetCastRange(location, target)
 	local caster = self:GetCaster()
 	local ability = self
@@ -876,7 +870,7 @@ function imba_bounty_hunter_shadow_walk:OnSpellStart()
 		local caster = self:GetCaster()
 		local ability = self
 		local sound_cast = "Hero_BountyHunter.WindWalk"
-		local cast_response = "bounty_hunter_bount_ability_windwalk_0"..RandomInt(1, 8)
+		local cast_response = "bounty_hunter_bount_ability_windwalk_0" .. RandomInt(1, 8)
 		local particle_smoke = "particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
 		local particle_invis_start = "particles/generic_hero_status/status_invisibility_start.vpcf"
 		local modifier_invis = "modifier_imba_shadow_walk_buff_invis"
@@ -906,7 +900,7 @@ function imba_bounty_hunter_shadow_walk:OnSpellStart()
 			local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
 
-			caster:AddNewModifier(caster, ability, modifier_invis, {duration = duration})
+			caster:AddNewModifier(caster, ability, modifier_invis, { duration = duration })
 		end)
 	end
 end
@@ -976,8 +970,10 @@ function modifier_imba_shadow_walk_buff_invis:OnIntervalThink()
 end
 
 function modifier_imba_shadow_walk_buff_invis:CheckState()
-	local state = {[MODIFIER_STATE_INVISIBLE] = true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	local state = {
+		[MODIFIER_STATE_INVISIBLE] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+	}
 	return state
 end
 
@@ -986,18 +982,18 @@ function modifier_imba_shadow_walk_buff_invis:GetPriority()
 end
 
 function modifier_imba_shadow_walk_buff_invis:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_UNIT_MOVED,
-		MODIFIER_PROPERTY_MOVESPEED_MAX}
+		MODIFIER_PROPERTY_MOVESPEED_MAX }
 
 	return decFuncs
 end
 
 function modifier_imba_shadow_walk_buff_invis:GetModifierMoveSpeed_Max()
-	return 550 * (1 + self:GetStackCount() * 0.01)
+	return 550 * (1 + self:GetStackCount() / 100)
 end
 
 function modifier_imba_shadow_walk_buff_invis:OnUnitMoved(keys)
@@ -1043,9 +1039,9 @@ function modifier_imba_shadow_walk_buff_invis:OnAttackLanded(keys)
 
 		-- Only apply on the caster attacking
 		if self.caster == attacker then
-
 			-- Deal bonus damage
-			local damageTable = {victim = target,
+			local damageTable = {
+				victim = target,
 				damage = self.bonus_damage,
 				damage_type = DAMAGE_TYPE_PHYSICAL,
 				attacker = self.caster,
@@ -1100,7 +1096,7 @@ end
 modifier_imba_shadow_walk_vision = modifier_imba_shadow_walk_vision or class({})
 
 function modifier_imba_shadow_walk_vision:CheckState()
-	local state = {[MODIFIER_STATE_INVISIBLE] = false}
+	local state = { [MODIFIER_STATE_INVISIBLE] = false }
 	return state
 end
 
@@ -1120,12 +1116,11 @@ function modifier_imba_shadow_walk_vision:IsDebuff()
 	return true
 end
 
-
 -------------------------------------------
 --				   TRACK
 -------------------------------------------
 -- Visible Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_track_buff_ms"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_track_debuff_mark"] = LUA_MODIFIER_MOTION_NONE,
 })
@@ -1143,7 +1138,7 @@ function imba_bounty_hunter_track:OnSpellStart()
 		local ability = self
 		local target = self:GetCursorTarget()
 		local particle_projectile = "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf"
-		local cast_response = "bounty_hunter_bount_ability_track_0"..RandomInt(2, 3)
+		local cast_response = "bounty_hunter_bount_ability_track_0" .. RandomInt(2, 3)
 		local sound_cast = "Hero_BountyHunter.Target"
 		local modifier_track = "modifier_imba_track_debuff_mark"
 
@@ -1186,7 +1181,7 @@ function imba_bounty_hunter_track:OnSpellStart()
 		end
 
 		-- Add track debuff to target
-		target:AddNewModifier(caster, ability, modifier_track, {duration = duration * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, ability, modifier_track, { duration = duration * (1 - target:GetStatusResistance()) })
 	end
 end
 
@@ -1227,7 +1222,7 @@ function modifier_imba_track_debuff_mark:OnCreated()
 		self.particle_trail_fx = ParticleManager:CreateParticleForTeam(self.particle_trail, PATTACH_ABSORIGIN_FOLLOW, self.parent, self.caster:GetTeamNumber())
 		ParticleManager:SetParticleControl(self.particle_trail_fx, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControlEnt(self.particle_trail_fx, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(self.particle_trail_fx, 8, Vector(1,0,0))
+		ParticleManager:SetParticleControl(self.particle_trail_fx, 8, Vector(1, 0, 0))
 		self:AddParticle(self.particle_trail_fx, false, false, -1, false, false)
 
 		-- #2 Talent: Tracked enemies grant normal vision instead of fogvision for the duration.
@@ -1235,7 +1230,7 @@ function modifier_imba_track_debuff_mark:OnCreated()
 			self.has_talent_2 = true
 			self.talent_2_vision_radius = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_2")
 		end
-		
+
 		self:StartIntervalThink(FrameTime())
 	end
 end
@@ -1246,7 +1241,7 @@ end
 
 function modifier_imba_track_debuff_mark:OnIntervalThink()
 	self:SetStackCount(self.parent:GetGold())
-	
+
 	-- If Bounty has the talent, add extra vision
 	if self.has_talent_2 then
 		AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.talent_2_vision_radius, FrameTime(), false)
@@ -1258,7 +1253,7 @@ function modifier_imba_track_debuff_mark:CheckState()
 		return nil
 	end
 
-	local state = {[MODIFIER_STATE_INVISIBLE] = false}
+	local state = { [MODIFIER_STATE_INVISIBLE] = false }
 	return state
 end
 
@@ -1307,12 +1302,12 @@ function modifier_imba_track_debuff_mark:RemoveOnDeath()
 end
 
 -- function modifier_imba_track_debuff_mark:IsHidden()
-	-- -- #8 Talent - Hidden track
-	-- if self.caster:HasTalent("special_bonus_imba_bounty_hunter_8") then
-		-- return true
-	-- end
+-- -- #8 Talent - Hidden track
+-- if self.caster:HasTalent("special_bonus_imba_bounty_hunter_8") then
+-- return true
+-- end
 
-	-- return false
+-- return false
 -- end
 
 function modifier_imba_track_debuff_mark:DeclareFunctions()
@@ -1352,7 +1347,6 @@ function modifier_imba_track_debuff_mark:OnDeath(keys)
 
 		-- Only apply if the target of the track debuff is the one who just died
 		if target == self.parent then
-
 			-- If the target was an illusion, do nothing
 			if not target:IsRealHero() then
 				self:Destroy()
@@ -1380,7 +1374,7 @@ function modifier_imba_track_debuff_mark:OnDeath(keys)
 				FIND_ANY_ORDER,
 				false)
 
-			for _,ally in pairs(allies) do
+			for _, ally in pairs(allies) do
 				-- Give allies bonus allied gold, except caster
 				if ally ~= self.caster then
 					ally:ModifyGold(self.bonus_gold_allies, true, DOTA_ModifyGold_Unspecified)
@@ -1436,7 +1430,7 @@ function modifier_imba_track_buff_ms:OnCreated()
 end
 
 function modifier_imba_track_buff_ms:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 
 	return decFuncs
 end
@@ -1449,11 +1443,11 @@ end
 --	   	       HEADHUNTER
 -------------------------------------------
 -- Visible Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_headhunter_buff_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
-MergeTables(LinkedModifiers,{
+MergeTables(LinkedModifiers, {
 	["modifier_imba_headhunter_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_headhunter_debuff_handler"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_headhunter_debuff_illu"] = LUA_MODIFIER_MOTION_NONE,
@@ -1494,8 +1488,8 @@ function imba_bounty_hunter_headhunter:OnProjectileHit(target, location)
 	end
 
 	-- Apply contract modifiers
-	caster:AddNewModifier(caster, ability, modifier_contract_buff, {duration = duration})
-	target:AddNewModifier(caster, ability, modifier_contract_debuff, {duration = duration * (1 - target:GetStatusResistance())})
+	caster:AddNewModifier(caster, ability, modifier_contract_buff, { duration = duration })
+	target:AddNewModifier(caster, ability, modifier_contract_debuff, { duration = duration * (1 - target:GetStatusResistance()) })
 
 	-- Show the area of the target
 	AddFOWViewer(caster:GetTeamNumber(), target:GetAbsOrigin(), vision_radius, vision_linger_time, false)
@@ -1567,7 +1561,7 @@ function modifier_imba_headhunter_passive:OnIntervalThink()
 
 			-- Launch projectile on target
 			local contract_projectile
-			contract_projectile =   {
+			contract_projectile = {
 				Target = contract_enemy,
 				Source = self.caster,
 				Ability = self.ability,
@@ -1613,7 +1607,6 @@ function modifier_imba_headhunter_buff_handler:IsHidden()
 	return false
 end
 
-
 -- Contract debuff
 modifier_imba_headhunter_debuff_handler = modifier_imba_headhunter_debuff_handler or class({})
 
@@ -1636,7 +1629,7 @@ function modifier_imba_headhunter_debuff_handler:OnCreated()
 		self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
 		self.contract_gold_mult = self.ability:GetSpecialValueFor("contract_gold_mult")
 		self.projectile_speed = self.ability:GetSpecialValueFor("projectile_speed")
-		
+
 		-- Apply particles visible only to the caster's team
 		self.particle_contract_fx = ParticleManager:CreateParticleForTeam(self.particle_contract, PATTACH_OVERHEAD_FOLLOW, self.parent, self.caster:GetTeamNumber())
 		ParticleManager:SetParticleControl(self.particle_contract_fx, 0, self.parent:GetAbsOrigin())
@@ -1651,12 +1644,12 @@ end
 
 function modifier_imba_headhunter_debuff_handler:OnIntervalThink()
 	if IsServer() then
-		if not self:GetAbility() then 
+		if not self:GetAbility() then
 			self:StartIntervalThink(-1)
 			self:Destroy()
 			return
 		end
-		
+
 		-- Find all heroes in the parent's team
 		local heroes = FindUnitsInRadius(self.parent:GetTeamNumber(),
 			self.parent:GetAbsOrigin(),
@@ -1673,7 +1666,7 @@ function modifier_imba_headhunter_debuff_handler:OnIntervalThink()
 			if self.parent:GetPlayerID() == hero:GetPlayerID() and self.parent:GetUnitName() == hero:GetUnitName() and hero:IsIllusion() then
 				-- Apply the debuff modifiers on those illusions as well, if they don't have it,
 				-- however we apply dummy ones that only show particles
-				hero:AddNewModifier(self.caster, self.ability, self.modifier_dummy, {duration = self:GetRemainingTime()})
+				hero:AddNewModifier(self.caster, self.ability, self.modifier_dummy, { duration = self:GetRemainingTime() })
 			end
 		end
 
@@ -1694,14 +1687,14 @@ function modifier_imba_headhunter_debuff_handler:OnIntervalThink()
 				bVisibleToEnemies = false,
 				bReplaceExisting = false
 			})
-			
+
 			AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.vision_radius, self.contract_vision_linger, false)
 		end
 	end
 end
 
 function modifier_imba_headhunter_debuff_handler:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_HERO_KILLED}
+	local decFuncs = { MODIFIER_EVENT_ON_HERO_KILLED }
 
 	return decFuncs
 end
@@ -1713,7 +1706,6 @@ function modifier_imba_headhunter_debuff_handler:OnHeroKilled(keys)
 		local reincarnate = keys.reincarnate
 
 		if self.parent == target then
-
 			-- If the target is reincarnating, do nothing
 			if reincarnate then
 				return nil
@@ -1721,10 +1713,8 @@ function modifier_imba_headhunter_debuff_handler:OnHeroKilled(keys)
 
 			-- Only apply if Bounty was the killer, OR the target had Track on it
 			if self.caster == attacker or self.parent:HasModifier(self.track_debuff) then
-
 				-- Check if the caster has Track as an ability
 				if self.caster:HasAbility(self.track_ability_name) then
-
 					-- Get ability handle
 					self.track_ability = self.caster:FindAbilityByName("imba_bounty_hunter_track")
 
@@ -1801,6 +1791,7 @@ end
 function modifier_imba_headhunter_debuff_illu:IsHidden()
 	return true
 end
+
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_bounty_hunter", MotionController)
@@ -1818,38 +1809,52 @@ LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_1", "components/abili
 LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_9", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_8", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_bounty_hunter_6	= modifier_special_bonus_imba_bounty_hunter_6 or class({})
-modifier_special_bonus_imba_bounty_hunter_3	= modifier_special_bonus_imba_bounty_hunter_3 or class({})
-modifier_special_bonus_imba_bounty_hunter_2	= modifier_special_bonus_imba_bounty_hunter_2 or class({})
-modifier_special_bonus_imba_bounty_hunter_7	= modifier_special_bonus_imba_bounty_hunter_7 or class({})
-modifier_special_bonus_imba_bounty_hunter_1	= modifier_special_bonus_imba_bounty_hunter_1 or class({})
-modifier_special_bonus_imba_bounty_hunter_9	= modifier_special_bonus_imba_bounty_hunter_9 or class({})
-modifier_special_bonus_imba_bounty_hunter_8	= modifier_special_bonus_imba_bounty_hunter_8 or class({})
+modifier_special_bonus_imba_bounty_hunter_6 = modifier_special_bonus_imba_bounty_hunter_6 or class({})
+modifier_special_bonus_imba_bounty_hunter_3 = modifier_special_bonus_imba_bounty_hunter_3 or class({})
+modifier_special_bonus_imba_bounty_hunter_2 = modifier_special_bonus_imba_bounty_hunter_2 or class({})
+modifier_special_bonus_imba_bounty_hunter_7 = modifier_special_bonus_imba_bounty_hunter_7 or class({})
+modifier_special_bonus_imba_bounty_hunter_1 = modifier_special_bonus_imba_bounty_hunter_1 or class({})
+modifier_special_bonus_imba_bounty_hunter_9 = modifier_special_bonus_imba_bounty_hunter_9 or class({})
+modifier_special_bonus_imba_bounty_hunter_8 = modifier_special_bonus_imba_bounty_hunter_8 or class({})
 
-function modifier_special_bonus_imba_bounty_hunter_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_bounty_hunter_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_bounty_hunter_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_bounty_hunter_6:IsHidden() return true end
 
-function modifier_special_bonus_imba_bounty_hunter_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_bounty_hunter_3:IsPurgable()		return false end
-function modifier_special_bonus_imba_bounty_hunter_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_bounty_hunter_6:IsPurgable() return false end
 
-function modifier_special_bonus_imba_bounty_hunter_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_bounty_hunter_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_bounty_hunter_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_bounty_hunter_6:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_bounty_hunter_7:IsHidden() 		return true end
-function modifier_special_bonus_imba_bounty_hunter_7:IsPurgable()		return false end
-function modifier_special_bonus_imba_bounty_hunter_7:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_bounty_hunter_3:IsHidden() return true end
 
-function modifier_special_bonus_imba_bounty_hunter_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_bounty_hunter_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_bounty_hunter_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_bounty_hunter_3:IsPurgable() return false end
 
-function modifier_special_bonus_imba_bounty_hunter_9:IsHidden() 		return true end
-function modifier_special_bonus_imba_bounty_hunter_9:IsPurgable()		return false end
-function modifier_special_bonus_imba_bounty_hunter_9:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_bounty_hunter_3:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_bounty_hunter_8:IsHidden() 		return true end
-function modifier_special_bonus_imba_bounty_hunter_8:IsPurgable()		return false end
-function modifier_special_bonus_imba_bounty_hunter_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_bounty_hunter_2:IsHidden() return true end
+
+function modifier_special_bonus_imba_bounty_hunter_2:IsPurgable() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_2:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_7:IsHidden() return true end
+
+function modifier_special_bonus_imba_bounty_hunter_7:IsPurgable() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_7:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_1:IsHidden() return true end
+
+function modifier_special_bonus_imba_bounty_hunter_1:IsPurgable() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_1:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_9:IsHidden() return true end
+
+function modifier_special_bonus_imba_bounty_hunter_9:IsPurgable() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_9:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_8:IsHidden() return true end
+
+function modifier_special_bonus_imba_bounty_hunter_8:IsPurgable() return false end
+
+function modifier_special_bonus_imba_bounty_hunter_8:RemoveOnDeath() return false end

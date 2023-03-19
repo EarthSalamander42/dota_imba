@@ -30,16 +30,21 @@ end
 
 if modifier_imba_roshan_ai_diretide == nil then modifier_imba_roshan_ai_diretide = class({}) end
 function modifier_imba_roshan_ai_diretide:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+
 function modifier_imba_roshan_ai_diretide:IsPurgeException() return false end
+
 function modifier_imba_roshan_ai_diretide:IsPurgable() return false end
+
 function modifier_imba_roshan_ai_diretide:IsDebuff() return false end
+
 function modifier_imba_roshan_ai_diretide:IsHidden() return true end
 
 --	GENERAL
 
 function modifier_imba_roshan_ai_diretide:GetPriority()
-	return MODIFIER_PRIORITY_SUPER_ULTRA end
-	
+	return MODIFIER_PRIORITY_SUPER_ULTRA
+end
+
 function modifier_imba_roshan_ai_diretide:GetActivityTranslationModifiers()
 	return "sugarrush"
 end
@@ -56,54 +61,54 @@ function modifier_imba_roshan_ai_diretide:DeclareFunctions()
 end
 
 function modifier_imba_roshan_ai_diretide:CheckState()
-	local state = {}
+	local state                         = {}
 
 	-- Always phased, and hidden health bar
---	state[MODIFIER_STATE_NO_UNIT_COLLISION]	= true	-- Obvious reasons
-	state[MODIFIER_STATE_NO_HEALTH_BAR]		= true	-- Either not needed, or shown in the HUD
+	--	state[MODIFIER_STATE_NO_UNIT_COLLISION]	= true	-- Obvious reasons
+	state[MODIFIER_STATE_NO_HEALTH_BAR] = true -- Either not needed, or shown in the HUD
 	return state
 end
 
 function modifier_imba_roshan_ai_diretide:OnCreated()
 	if IsServer() then
 		-- common keys
-		local ability = self:GetAbility()
-		self.roshan = self:GetParent()	-- Roshans entity for easier handling
-		self.AItarget = nil				-- Targeted hero
+		local ability          = self:GetAbility()
+		self.roshan            = self:GetParent() -- Roshans entity for easier handling
+		self.AItarget          = nil -- Targeted hero
 
 		-- phase 3 keys
-		self.isTransitioning	= false												-- Is Roshan playing the transition animation?
-		self.atStartPoint		= false												-- Has Roshan reached the start point?
-		self.acquisition_range	= ability:GetSpecialValueFor("acquisition_range")	-- Acquisition range for phase 3
-		self.leashPoint			= nil												-- Phase 3 arena mid point (defined in phase 3 thinking function)
-		self.leashDistance		= ability:GetSpecialValueFor("leash_distance")		-- How far is Roshan allowed to walk away from the starting point
-		self.leashHealPcnt		= ability:GetSpecialValueFor("leash_heal_pcnt")		-- Percent of max health Roshan will heal should he get leashed
-		self.isDead				= false												-- Is Roshan 'dead'?
-		self.last_movement		= 0.0
+		self.isTransitioning   = false                                     -- Is Roshan playing the transition animation?
+		self.atStartPoint      = false                                     -- Has Roshan reached the start point?
+		self.acquisition_range = ability:GetSpecialValueFor("acquisition_range") -- Acquisition range for phase 3
+		self.leashPoint        = nil                                       -- Phase 3 arena mid point (defined in phase 3 thinking function)
+		self.leashDistance     = ability:GetSpecialValueFor("leash_distance") -- How far is Roshan allowed to walk away from the starting point
+		self.leashHealPcnt     = ability:GetSpecialValueFor("leash_heal_pcnt") -- Percent of max health Roshan will heal should he get leashed
+		self.isDead            = false                                     -- Is Roshan 'dead'?
+		self.last_movement     = 0.0
 
 		-- Sound delays to sync with animation
-		self.deathRoar		= 1.9
+		self.deathRoar         = 1.9
 
 		-- Animation durations
-		self.animDeath		= 11
-		
+		self.animDeath         = 11
+
 		-- Ability handlers
-		self.forceWave	= self.roshan:FindAbilityByName("roshan_deafening_blast")
---		self.roshlings	= self.roshan:FindAbilityByName("imba_roshan_diretide_summon_roshlings")
-		self.breath		= self.roshan:FindAbilityByName("creature_fire_breath")
-		self.apocalypse	= self.roshan:FindAbilityByName("imba_roshan_diretide_apocalypse")
-		self.fireBall	= self.roshan:FindAbilityByName("imba_roshan_diretide_fireball")
---		self.toss		= self.roshan:FindAbilityByName("roshan_toss")
+		self.forceWave         = self.roshan:FindAbilityByName("roshan_deafening_blast")
+		--		self.roshlings	= self.roshan:FindAbilityByName("imba_roshan_diretide_summon_roshlings")
+		self.breath            = self.roshan:FindAbilityByName("creature_fire_breath")
+		self.apocalypse        = self.roshan:FindAbilityByName("imba_roshan_diretide_apocalypse")
+		self.fireBall          = self.roshan:FindAbilityByName("imba_roshan_diretide_fireball")
+		--		self.toss		= self.roshan:FindAbilityByName("roshan_toss")
 
 		-- Passive effect KVs
-		self.bashChance = ability:GetSpecialValueFor("bash_chance") * 0.01
-		self.bashDamage = ability:GetSpecialValueFor("bash_damage")
-		self.bashDistance = ability:GetSpecialValueFor("bash_distance")
-		self.bashDuration = ability:GetSpecialValueFor("bash_duration")
+		self.bashChance        = ability:GetSpecialValueFor("bash_chance") / 100
+		self.bashDamage        = ability:GetSpecialValueFor("bash_damage")
+		self.bashDistance      = ability:GetSpecialValueFor("bash_distance")
+		self.bashDuration      = ability:GetSpecialValueFor("bash_duration")
 
---		if not self.roshan:HasModifier("modifier_destroy_trees") then
---			self.roshan:AddNewModifier(self.roshan, self.ability, "modifier_destroy_trees", {})
---		end
+		--		if not self.roshan:HasModifier("modifier_destroy_trees") then
+		--			self.roshan:AddNewModifier(self.roshan, self.ability, "modifier_destroy_trees", {})
+		--		end
 
 		-- weird bug where roshan would swap team..
 		if self.roshan:GetTeamNumber() ~= 4 then
@@ -123,7 +128,7 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 	end
 end
 
-function modifier_imba_roshan_ai_diretide:OnUnitMoved(keys)    
+function modifier_imba_roshan_ai_diretide:OnUnitMoved(keys)
 	if IsServer() then
 		local unit = keys.unit
 
@@ -139,18 +144,18 @@ function modifier_imba_roshan_ai_diretide:OnIntervalThink()
 		return
 	else
 		if GameRules:GetGameTime() - self.last_movement >= 3.0 then
---			print("Roshan is sleeping...")
+			--			print("Roshan is sleeping...")
 			self.roshan:Purge(false, true, true, true, false)
 			self.returningToLeash = true
 		else
---			print("Activating brain!")
+			--			print("Activating brain!")
 			self:ThinkPhase3(self.roshan)
 			UpdateRoshanBar(self.roshan)
 		end
 	end
 end
 
-function modifier_imba_roshan_ai_diretide:OnDeath( keys )
+function modifier_imba_roshan_ai_diretide:OnDeath(keys)
 	if keys.unit ~= self.roshan then return end
 	-- Spawn death particle, start the respawn timer, index death point
 	GAME_ROSHAN_KILLS = GAME_ROSHAN_KILLS + 1
@@ -179,7 +184,7 @@ function modifier_imba_roshan_ai_diretide:OnDeath( keys )
 		item:LaunchLoot(false, 300, 0.5, pos)
 
 		if GAME_ROSHAN_KILLS >= 2 then
-			for i = 1, GAME_ROSHAN_KILLS -1 do
+			for i = 1, GAME_ROSHAN_KILLS - 1 do
 				local item = CreateItem("item_imba_cheese", nil, nil)
 				local drop = CreateItemOnPositionSync(pos, item)
 				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
@@ -188,7 +193,7 @@ function modifier_imba_roshan_ai_diretide:OnDeath( keys )
 
 		if GAME_ROSHAN_KILLS >= 3 then
 			if RandomInt(1, 100) > 50 then
-				for i = 1, GAME_ROSHAN_KILLS -2 do
+				for i = 1, GAME_ROSHAN_KILLS - 2 do
 					local item = CreateItem("item_refresher_shard", nil, nil)
 					local drop = CreateItemOnPositionSync(pos, item)
 					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
@@ -205,7 +210,7 @@ function modifier_imba_roshan_ai_diretide:OnDeath( keys )
 			local drop = CreateItemOnPositionSync(pos, item)
 			item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
 
-			for i = 1, GAME_ROSHAN_KILLS -2 do
+			for i = 1, GAME_ROSHAN_KILLS - 2 do
 				local item = CreateItem("item_refresher_shard", nil, nil)
 				local drop = CreateItemOnPositionSync(pos, item)
 				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
@@ -232,18 +237,18 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 	self.roshan:SetHealth(self.roshan:GetMaxHealth())
 
 	self:StartIntervalThink(0.1)
-	UpdateRoshanBar(self.roshan, FrameTime()*2)
+	UpdateRoshanBar(self.roshan, FrameTime() * 2)
 end
 
 --	PHASE III
 function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
-if roshan:IsStunned() or roshan:IsSilenced() or roshan:IsHexed() or roshan:IsChanneling() then return end
-if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
+	if roshan:IsStunned() or roshan:IsSilenced() or roshan:IsHexed() or roshan:IsChanneling() then return end
+	if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 
 	local distanceFromLeash = (roshan:GetAbsOrigin() - self.leashPoint):Length2D()
 	if not self.returningToLeash and distanceFromLeash >= self.leashDistance then
 		self.returningToLeash = true
-		roshan:SetHealth(roshan:GetHealth() + roshan:GetMaxHealth() * (self.leashHealPcnt * 0.01)) -- To bypass shit like AAs ult or Malediction healing reduction
+		roshan:SetHealth(roshan:GetHealth() + roshan:GetMaxHealth() * (self.leashHealPcnt / 100)) -- To bypass shit like AAs ult or Malediction healing reduction
 	elseif self.returningToLeash and distanceFromLeash < 100 then
 		roshan:Interrupt()
 		self.returningToLeash = false
@@ -253,7 +258,7 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 			roshan:AddNewModifier(roshan, nil, "modifier_command_restricted", {})
 		end
 	end
-	
+
 	-- Return to the leashing point if he should
 	if self.returningToLeash then
 		roshan:SetForceAttackTarget(nil)
@@ -263,14 +268,14 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 
 	local ability_count = roshan:GetAbilityCount()
 	for ability_index = 0, ability_count - 1 do
-		local ability = roshan:GetAbilityByIndex( ability_index ) 
+		local ability = roshan:GetAbilityByIndex(ability_index)
 		if ability and ability:IsInAbilityPhase() then
 			if not roshan:HasModifier("modifier_black_king_bar_immune") then
 				roshan:EmitSound("DOTA_Item.BlackKingBar.Activate")
 			else
 				roshan:RemoveModifierByName("modifier_black_king_bar_immune")
 			end
-			roshan:AddNewModifier(roshan, self.ability, "modifier_black_king_bar_immune", {duration=0.2})
+			roshan:AddNewModifier(roshan, self.ability, "modifier_black_king_bar_immune", { duration = 0.2 })
 		end
 	end
 
@@ -278,7 +283,7 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 	if not roshan:GetCurrentActiveAbility() then
 		if self.roshlings and self.roshlings:IsCooldownReady() then
 			local foundRoshling = false
-			
+
 			local units = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
 			for _, unit in ipairs(units) do
 				if unit:GetUnitLabel() == "npc_imba_roshling" then
@@ -293,11 +298,11 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 				roshan:CastAbilityNoTarget(self.roshlings, 1)
 			end
 		end
-		
+
 		-- Cast Force Wave if its available
 		if self.forceWave and self.forceWave:IsCooldownReady() then
 			local radius = 1000
---			local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
+			--			local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
 			local minTargets = 3
 
 			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
@@ -305,11 +310,11 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 				roshan:CastAbilityOnPosition(hero:GetAbsOrigin(), self.forceWave, 1)
 				return
 			end
-		local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-		if #nearbyHeroes >= minTargets then
-			roshan:CastAbilityNoTarget(self.apocalypse, 1)
-			return
-		end
+			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			if #nearbyHeroes >= minTargets then
+				roshan:CastAbilityNoTarget(self.apocalypse, 1)
+				return
+			end
 		end
 
 		-- Cast apocalypse if its available
@@ -325,7 +330,7 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 					inRange = inRange + 1
 				end
 			end
-			
+
 			if inRange >= minTargets then
 				roshan:CastAbilityNoTarget(self.apocalypse, 1)
 				return
@@ -341,27 +346,27 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 				return
 			end
 		end
-		
+
 		-- Cast Fire Ball if its available
 		if self.fireBall and self.fireBall:IsCooldownReady() then
 			local range = self.fireBall:GetSpecialValueFor("range")
 			local minTargets = self.fireBall:GetSpecialValueFor("min_targets")
-			
+
 			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 			if #nearbyHeroes >= minTargets then
 				roshan:CastAbilityNoTarget(self.fireBall, 1)
 				return
 			end
 		end
-		
+
 		-- Cast Toss if its available
 		if self.toss and self.toss:IsCooldownReady() then
 			local maxRange = self.toss:GetSpecialValueFor("tooltip_range")
 			local pickupRadius = self.toss:GetSpecialValueFor("grab_radius")
 			local pickupUnit = nil
 			local throwTarget = nil
-			
-			local units = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, pickupRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false) 
+
+			local units = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, pickupRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
 			for _, unit in ipairs(units) do
 				if unit and unit:IsAlive() and not unit:IsAncient() then
 					pickupUnit = unit
@@ -370,7 +375,7 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 			end
 
 			if pickupUnit then
-				units = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, maxRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_FARTHEST, false) 
+				units = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, maxRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_FARTHEST, false)
 				for _, unit in ipairs(units) do
 					if unit and unit:IsAlive() then
 						throwTarget = unit
@@ -415,24 +420,25 @@ function modifier_imba_roshan_ai_diretide:OnAttackLanded(keys)
 		local roshan = self:GetParent()
 		local target = keys.target
 		local attacker = keys.attacker
-		
+
 		if roshan == target then
 			if attacker:IsIllusion() then attacker:ForceKill(true) end
 		elseif roshan == attacker then
-			
 			-- Emit hit sound
 			target:EmitSound("Roshan.Attack")
 			target:EmitSound("Roshan.Attack.Post")
 
 			-- check bash chance
 			if math.random() <= self.bashChance then
-				local knockback = {	center_x = target.x,
-									center_y = target.y,
-									center_z = target.z,
-									duration = self.bashDuration,
-									knockback_distance = 200,
-									knockback_height = self.bashDistance,
-									knockback_duration = self.bashDuration * 0.67,	}
+				local knockback = {
+					center_x = target.x,
+					center_y = target.y,
+					center_z = target.z,
+					duration = self.bashDuration,
+					knockback_distance = 200,
+					knockback_height = self.bashDistance,
+					knockback_duration = self.bashDuration * 0.67,
+				}
 				target:AddNewModifier(roshan, self:GetAbility(), "modifier_knockback", knockback)
 				target:EmitSound("Roshan.Bash")
 			end
@@ -455,9 +461,13 @@ end
 ---------- Roshans death buff
 if modifier_imba_roshan_death_buff == nil then modifier_imba_roshan_death_buff = class({}) end
 function modifier_imba_roshan_death_buff:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+
 function modifier_imba_roshan_death_buff:IsPurgeException() return false end
+
 function modifier_imba_roshan_death_buff:IsPurgable() return false end
+
 function modifier_imba_roshan_death_buff:IsHidden() return true end
+
 function modifier_imba_roshan_death_buff:IsDebuff() return false end
 
 function modifier_imba_roshan_death_buff:DeclareFunctions()
@@ -500,7 +510,8 @@ end
 ------------------------------------------
 if imba_roshan_diretide_apocalypse == nil then imba_roshan_diretide_apocalypse = class({}) end
 function imba_roshan_diretide_apocalypse:GetCastAnimation()
-	return ACT_DOTA_CAST_ABILITY_1 end
+	return ACT_DOTA_CAST_ABILITY_1
+end
 
 function imba_roshan_diretide_apocalypse:OnSpellStart()
 	local roshan = self:GetCaster()
@@ -509,34 +520,33 @@ function imba_roshan_diretide_apocalypse:OnSpellStart()
 	local delay = self:GetSpecialValueFor("delay")
 	local damage = self:GetSpecialValueFor("damage")
 	local radius = self:GetSpecialValueFor("radius")
-	
+
 	local positions = {}
 	local heroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, maxRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 	for _, hero in ipairs(heroes) do
 		if CalcDistanceBetweenEntityOBB(roshan, hero) >= minRange then
 			local pos = hero:GetAbsOrigin()
 			table.insert(positions, pos)
-			
+
 			EmitSoundOnLocationWithCaster(pos, "Hero_Invoker.SunStrike.Charge", roshan)
 			local particle = ParticleManager:CreateParticle("particles/econ/items/invoker/invoker_apex/invoker_sun_strike_team_immortal1.vpcf", PATTACH_CUSTOMORIGIN, roshan)
 			ParticleManager:SetParticleControl(particle, 0, pos)
 			ParticleManager:ReleaseParticleIndex(particle)
 		end
 	end
-	
+
 	Timers:CreateTimer(delay, function()
-		
 		-- loop through the positions and deal damage to all units caught in the explosions AoE
 		for _, position in ipairs(positions) do
 			local units = FindUnitsInRadius(roshan:GetTeamNumber(), position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-			local damageTable = {victim = nil, attacker = roshan, damage = damage / #units, damage_type = DAMAGE_TYPE_PURE}
+			local damageTable = { victim = nil, attacker = roshan, damage = damage / #units, damage_type = DAMAGE_TYPE_PURE }
 
 			for _, unit in ipairs(units) do
 				damageTable.victim = unit
 				ApplyDamage(damageTable)
 			end
 
-			EmitSoundOnLocationWithCaster(position, "Hero_Invoker.SunStrike.Ignite", roshan) 
+			EmitSoundOnLocationWithCaster(position, "Hero_Invoker.SunStrike.Ignite", roshan)
 			local particle = ParticleManager:CreateParticle("particles/econ/items/invoker/invoker_apex/invoker_sun_strike_immortal1.vpcf", PATTACH_CUSTOMORIGIN, roshan)
 			ParticleManager:SetParticleControl(particle, 0, position)
 			ParticleManager:ReleaseParticleIndex(particle)
@@ -554,19 +564,19 @@ function imba_roshan_diretide_summon_roshlings:OnSpellStart()
 	local summonCount = self:GetSpecialValueFor("summon_count")
 	local summon = "npc_imba_roshling"
 	local summonAbilities = { "imba_roshling_bash", "imba_roshling_aura" }
-	
-	
+
+
 	local deathMod = roshan:FindModifierByName("modifier_imba_roshan_death_buff")
 	if deathMod then
 		summonCount = summonCount + deathMod:GetStackCount() * self:GetSpecialValueFor("extra_per_death")
 	end
-	
+
 	local roshling = nil
 	GridNav:DestroyTreesAroundPoint(roshanPos, 250, false)
 	for i = 1, summonCount do
 		roshling = CreateUnitByName(summon, roshanPos, true, roshan, roshan, roshan:GetTeam())
 		roshling:SetForwardVector(roshan:GetForwardVector())
-		
+
 		for _, abilityName in ipairs(summonAbilities) do
 			local ability = roshling:FindAbilityByName(abilityName)
 			if ability then ability:SetLevel(1) end

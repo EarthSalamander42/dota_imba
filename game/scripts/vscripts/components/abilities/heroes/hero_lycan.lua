@@ -11,270 +11,270 @@
 -- LinkLuaModifier("modifier_imba_summon_wolves_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 -- function imba_lycan_summon_wolves:GetAbilityTextureName()
-   -- return "lycan_summon_wolves"
+-- return "lycan_summon_wolves"
 -- end
 
 -- function imba_lycan_summon_wolves:OnUpgrade()
-    -- if IsServer() then
-    	-- -- Ability properties
-    	-- local caster = self:GetCaster()
-    	-- local ability = self
-    	-- local charges_buff = "modifier_imba_lycan_wolf_charge"	
-    	
-    	-- -- Ability specials
-    	-- local charge_cooldown = ability:GetSpecialValueFor("charge_cooldown")
-    	-- local max_charges = ability:GetTalentSpecialValueFor("max_charges")	
-    	
-    	-- -- Give buff, set stacks to maximum count.
-    	-- if not caster:HasModifier(charges_buff) then
-    		-- caster:AddNewModifier(caster, ability, charges_buff, {})			
-    	-- end	
-    	
-    	-- local charges_buff_handler = caster:FindModifierByName(charges_buff)
-    	-- charges_buff_handler:ForceRefresh()
-    	-- charges_buff_handler:SetStackCount(max_charges)
-    	-- charges_buff_handler:SetDuration(-1, true)
-    	-- charges_buff_handler:StartIntervalThink(charge_cooldown-0.01)
-    -- end
+-- if IsServer() then
+-- -- Ability properties
+-- local caster = self:GetCaster()
+-- local ability = self
+-- local charges_buff = "modifier_imba_lycan_wolf_charge"	
+
+-- -- Ability specials
+-- local charge_cooldown = ability:GetSpecialValueFor("charge_cooldown")
+-- local max_charges = ability:GetTalentSpecialValueFor("max_charges")	
+
+-- -- Give buff, set stacks to maximum count.
+-- if not caster:HasModifier(charges_buff) then
+-- caster:AddNewModifier(caster, ability, charges_buff, {})			
+-- end	
+
+-- local charges_buff_handler = caster:FindModifierByName(charges_buff)
+-- charges_buff_handler:ForceRefresh()
+-- charges_buff_handler:SetStackCount(max_charges)
+-- charges_buff_handler:SetDuration(-1, true)
+-- charges_buff_handler:StartIntervalThink(charge_cooldown-0.01)
+-- end
 -- end
 
 
 -- function imba_lycan_summon_wolves:OnSpellStart()
-	-- -- Ability properties
-	-- local caster = self:GetCaster()
-	-- local caster_level = caster:GetLevel()
-	-- local ability = self		
-	-- local wolf_name = "npc_lycan_wolf"
-	-- local sound_cast = "Hero_Lycan.SummonWolves"
-	-- local response_sound = "lycan_lycan_ability_summon_0"..RandomInt(1,6)	
-	-- local particle_cast = "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
-	-- local particle_spawn = "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
-	-- local player_id = nil
-	-- local death_check = "modifier_imba_lycan_wolf_death_check"	
-	
-	-- -- Nonhero caster handling (e.g. Nether Ward)
-	-- if self:GetCaster().GetPlayerID then
-		-- player_id = caster:GetPlayerID()
-	-- elseif self:GetCaster():GetOwner() and self:GetCaster():GetOwner().GetPlayerID then
-		-- player_id = self:GetCaster():GetOwner():GetPlayerID()
-	-- end
+-- -- Ability properties
+-- local caster = self:GetCaster()
+-- local caster_level = caster:GetLevel()
+-- local ability = self		
+-- local wolf_name = "npc_lycan_wolf"
+-- local sound_cast = "Hero_Lycan.SummonWolves"
+-- local response_sound = "lycan_lycan_ability_summon_0"..RandomInt(1,6)	
+-- local particle_cast = "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
+-- local particle_spawn = "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+-- local player_id = nil
+-- local death_check = "modifier_imba_lycan_wolf_death_check"	
 
-	-- -- Ability specials
-	-- local distance = ability:GetSpecialValueFor("distance")
-	-- local wolves_count = ability:GetTalentSpecialValueFor("wolves_count")
-	-- local HP_bonus_per_lycan_level = ability:GetSpecialValueFor("HP_bonus_per_lycan_level")		
-	-- local wolf_type = ability:GetSpecialValueFor("wolf_type")		
-	
-	-- -- #1 TALENT: wolves upgrade by one level			
-	-- wolf_type = wolf_type + caster:FindTalentValue("special_bonus_imba_lycan_1")
-	
-	-- -- Find and kill any living wolves on the map
-	-- local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
-									-- caster:GetAbsOrigin(),
-									-- nil,
-									-- FIND_UNITS_EVERYWHERE,
-									-- DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									-- DOTA_UNIT_TARGET_BASIC,
-									-- DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-									-- FIND_ANY_ORDER,
-									-- false)
-		
-	
-	-- -- Iterate between all wolf levels to make sure all of them are dead
-	-- for _,creature in pairs(creatures) do -- check each friendly player controlled creep
-		-- for i = 1, 6 do															-- #3 TALENT: Destroys Alpha wolves on resummon
-			-- if creature:GetUnitName() == wolf_name..i or creature:GetUnitName() == "npc_lycan_summoned_wolf_talent" and creature:GetPlayerOwnerID() == player_id then -- If it's your wolf, kill it
-				-- creature.killed_by_resummon = true
-				-- creature:ForceKill(false)				
-			-- end	
-		-- end
-	-- end
-	
-	-- -- Play hero response
-	-- EmitSoundOn(response_sound, caster)
-	
-	-- -- Play cast sound
-	-- EmitSoundOn(sound_cast, caster)	
-	
-	-- -- Add cast particles
-	-- local particle_cast_fx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN, caster)
-	-- ParticleManager:SetParticleControl(particle_cast_fx, 0, caster:GetAbsOrigin())
-	
-	-- -- Reset variables
-	-- local summon_origin = caster:GetAbsOrigin() + distance * caster:GetForwardVector()
-	-- local summon_point = nil	
-	-- local angleLeft = nil
-	-- local angleRight = nil
-	
-	-- -- Define spawn locations 	
-	-- for i = 0, wolves_count-1 do		
-		-- angleLeft = QAngle(0, 30 + 45*(math.floor(i/2)), 0)
-		-- angleRight = QAngle(0, -30 + (-45*(math.floor(i/2))), 0)			
-		
-		-- if (i+1) % 2 == 0 then --to the right			
-			-- summon_point = RotatePosition(caster:GetAbsOrigin(),angleLeft,summon_origin) 			
-		-- else --to the left			
-			-- summon_point = RotatePosition(caster:GetAbsOrigin(),angleRight,summon_origin) 			
-		-- end
-		
-		-- -- Add spawn particles in spawn location
-		-- local particle_spawn_fx = ParticleManager:CreateParticle(particle_spawn, PATTACH_CUSTOMORIGIN, caster)
-		-- ParticleManager:SetParticleControl(particle_spawn_fx, 0, summon_point)
-		
-		-- local wolf_name_summon = wolf_name..wolf_type		
-		
-		-- -- Create wolf and find clear space for it
-		-- local wolf = CreateUnitByName(wolf_name_summon, summon_point, false, caster, caster, caster:GetTeamNumber())		
-		-- FindClearSpaceForUnit(wolf, summon_point, true)
-		 -- if player_id then
-			 -- wolf:SetControllableByPlayer(player_id, true)
-		 -- end
-		
-		-- --Set wolves life depending on lycan's level		
-		-- wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + HP_bonus_per_lycan_level * caster_level )		
+-- -- Nonhero caster handling (e.g. Nether Ward)
+-- if self:GetCaster().GetPlayerID then
+-- player_id = caster:GetPlayerID()
+-- elseif self:GetCaster():GetOwner() and self:GetCaster():GetOwner().GetPlayerID then
+-- player_id = self:GetCaster():GetOwner():GetPlayerID()
+-- end
 
-		-- --Set forward vector
-		-- wolf:SetForwardVector(caster:GetForwardVector())	
+-- -- Ability specials
+-- local distance = ability:GetSpecialValueFor("distance")
+-- local wolves_count = ability:GetTalentSpecialValueFor("wolves_count")
+-- local HP_bonus_per_lycan_level = ability:GetSpecialValueFor("HP_bonus_per_lycan_level")		
+-- local wolf_type = ability:GetSpecialValueFor("wolf_type")		
 
-		-- -- Give wolf death check modifier
-		-- wolf:AddNewModifier(caster, ability, death_check, {})
+-- -- #1 TALENT: wolves upgrade by one level			
+-- wolf_type = wolf_type + caster:FindTalentValue("special_bonus_imba_lycan_1")
 
-		-- -- #2 TALENT: Wolves gain a bonus damage modifier
-		-- if caster:HasTalent("special_bonus_imba_lycan_2") then
-			-- wolf:AddNewModifier(caster, ability, "modifier_imba_summon_wolves_talent", {})
-		-- end
-		
-		-- -- If wolf is Shadow Wolf/Nightclaw (level 5 or 6) paint in grey/black texture
-		-- if wolf_type >= 5 then
-			-- wolf:SetRenderColor(49, 49, 49)			
-		-- end
-	-- end	
+-- -- Find and kill any living wolves on the map
+-- local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
+-- caster:GetAbsOrigin(),
+-- nil,
+-- FIND_UNITS_EVERYWHERE,
+-- DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+-- DOTA_UNIT_TARGET_BASIC,
+-- DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+-- FIND_ANY_ORDER,
+-- false)
 
-	-- -- #3 TALENT: Summons an alpha wolf
-	-- if caster:HasTalent("special_bonus_imba_lycan_3") then
-		-- -- At the head of the pack
-		-- summon_point = summon_origin 					
 
-		-- -- Add spawn particles in spawn location
-		-- local particle_spawn_fx = ParticleManager:CreateParticle(particle_spawn, PATTACH_CUSTOMORIGIN, caster)
-		-- ParticleManager:SetParticleControl(particle_spawn_fx, 0, summon_point)
-		
-		
-		-- -- Create wolf and find clear space for it
-		-- local wolf = CreateUnitByName("npc_lycan_summoned_wolf_talent", summon_point, false, caster, caster, caster:GetTeamNumber())		
-		-- FindClearSpaceForUnit(wolf, summon_point, true)
-		 -- if player_id then
-			 -- wolf:SetControllableByPlayer(player_id, true)
-		 -- end
-		
-		-- --Set wolves life depending on lycan's level		
-		-- wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + HP_bonus_per_lycan_level * caster_level )		
+-- -- Iterate between all wolf levels to make sure all of them are dead
+-- for _,creature in pairs(creatures) do -- check each friendly player controlled creep
+-- for i = 1, 6 do															-- #3 TALENT: Destroys Alpha wolves on resummon
+-- if creature:GetUnitName() == wolf_name..i or creature:GetUnitName() == "npc_lycan_summoned_wolf_talent" and creature:GetPlayerOwnerID() == player_id then -- If it's your wolf, kill it
+-- creature.killed_by_resummon = true
+-- creature:ForceKill(false)				
+-- end	
+-- end
+-- end
 
-		-- --Set forward vector
-		-- wolf:SetForwardVector(caster:GetForwardVector())	
+-- -- Play hero response
+-- EmitSoundOn(response_sound, caster)
 
-		-- -- Give wolf death check modifier
-		-- wolf:AddNewModifier(caster, ability, death_check, {})
+-- -- Play cast sound
+-- EmitSoundOn(sound_cast, caster)	
 
-		-- -- #2 TALENT: Wolves gain a bonus damage modifier
-		-- if caster:HasTalent("special_bonus_imba_lycan_2") then
-			-- wolf:AddNewModifier(caster, ability, "modifier_imba_summon_wolves_talent", {})
-		-- end
-	-- end
+-- -- Add cast particles
+-- local particle_cast_fx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN, caster)
+-- ParticleManager:SetParticleControl(particle_cast_fx, 0, caster:GetAbsOrigin())
+
+-- -- Reset variables
+-- local summon_origin = caster:GetAbsOrigin() + distance * caster:GetForwardVector()
+-- local summon_point = nil	
+-- local angleLeft = nil
+-- local angleRight = nil
+
+-- -- Define spawn locations 	
+-- for i = 0, wolves_count-1 do		
+-- angleLeft = QAngle(0, 30 + 45*(math.floor(i/2)), 0)
+-- angleRight = QAngle(0, -30 + (-45*(math.floor(i/2))), 0)			
+
+-- if (i+1) % 2 == 0 then --to the right			
+-- summon_point = RotatePosition(caster:GetAbsOrigin(),angleLeft,summon_origin) 			
+-- else --to the left			
+-- summon_point = RotatePosition(caster:GetAbsOrigin(),angleRight,summon_origin) 			
+-- end
+
+-- -- Add spawn particles in spawn location
+-- local particle_spawn_fx = ParticleManager:CreateParticle(particle_spawn, PATTACH_CUSTOMORIGIN, caster)
+-- ParticleManager:SetParticleControl(particle_spawn_fx, 0, summon_point)
+
+-- local wolf_name_summon = wolf_name..wolf_type		
+
+-- -- Create wolf and find clear space for it
+-- local wolf = CreateUnitByName(wolf_name_summon, summon_point, false, caster, caster, caster:GetTeamNumber())		
+-- FindClearSpaceForUnit(wolf, summon_point, true)
+-- if player_id then
+-- wolf:SetControllableByPlayer(player_id, true)
+-- end
+
+-- --Set wolves life depending on lycan's level		
+-- wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + HP_bonus_per_lycan_level * caster_level )		
+
+-- --Set forward vector
+-- wolf:SetForwardVector(caster:GetForwardVector())	
+
+-- -- Give wolf death check modifier
+-- wolf:AddNewModifier(caster, ability, death_check, {})
+
+-- -- #2 TALENT: Wolves gain a bonus damage modifier
+-- if caster:HasTalent("special_bonus_imba_lycan_2") then
+-- wolf:AddNewModifier(caster, ability, "modifier_imba_summon_wolves_talent", {})
+-- end
+
+-- -- If wolf is Shadow Wolf/Nightclaw (level 5 or 6) paint in grey/black texture
+-- if wolf_type >= 5 then
+-- wolf:SetRenderColor(49, 49, 49)			
+-- end
+-- end	
+
+-- -- #3 TALENT: Summons an alpha wolf
+-- if caster:HasTalent("special_bonus_imba_lycan_3") then
+-- -- At the head of the pack
+-- summon_point = summon_origin 					
+
+-- -- Add spawn particles in spawn location
+-- local particle_spawn_fx = ParticleManager:CreateParticle(particle_spawn, PATTACH_CUSTOMORIGIN, caster)
+-- ParticleManager:SetParticleControl(particle_spawn_fx, 0, summon_point)
+
+
+-- -- Create wolf and find clear space for it
+-- local wolf = CreateUnitByName("npc_lycan_summoned_wolf_talent", summon_point, false, caster, caster, caster:GetTeamNumber())		
+-- FindClearSpaceForUnit(wolf, summon_point, true)
+-- if player_id then
+-- wolf:SetControllableByPlayer(player_id, true)
+-- end
+
+-- --Set wolves life depending on lycan's level		
+-- wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + HP_bonus_per_lycan_level * caster_level )		
+
+-- --Set forward vector
+-- wolf:SetForwardVector(caster:GetForwardVector())	
+
+-- -- Give wolf death check modifier
+-- wolf:AddNewModifier(caster, ability, death_check, {})
+
+-- -- #2 TALENT: Wolves gain a bonus damage modifier
+-- if caster:HasTalent("special_bonus_imba_lycan_2") then
+-- wolf:AddNewModifier(caster, ability, "modifier_imba_summon_wolves_talent", {})
+-- end
+-- end
 -- end
 
 
 
 -- -- Charge modifier
--- modifier_imba_lycan_wolf_charge = class({}) 
+-- modifier_imba_lycan_wolf_charge = class({})
 
 -- function modifier_imba_lycan_wolf_charge:GetIntrinsicModifierName()
-    -- return "modifier_imba_lycan_wolf_charge"
+-- return "modifier_imba_lycan_wolf_charge"
 -- end
 
 -- function modifier_imba_lycan_wolf_charge:IsDebuff()
-	-- return false	
+-- return false	
 -- end
 
 -- function modifier_imba_lycan_wolf_charge:IsHidden()	
-		-- return false	
+-- return false	
 -- end
 
 -- function modifier_imba_lycan_wolf_charge:IsPurgable()
-	-- return false	
+-- return false	
 -- end
 
 -- function modifier_imba_lycan_wolf_charge:AllowIllusionDuplicate()
-	-- return false
+-- return false
 -- end
 
 -- function modifier_imba_lycan_wolf_charge:RemoveOnDeath()
-	-- --remove if the ability was stolen via Rubick's ulti. 
-	-- --Needed to prevent a bug where the buff would stay on permanently even after losing the ability on death
-	-- if self.ability:IsStolen() then
-		-- return true
-	-- end
-	-- return false
+-- --remove if the ability was stolen via Rubick's ulti.
+-- --Needed to prevent a bug where the buff would stay on permanently even after losing the ability on death
+-- if self.ability:IsStolen() then
+-- return true
+-- end
+-- return false
 -- end
 
 -- function modifier_imba_lycan_wolf_charge:OnCreated()
-    -- if IsServer() then
-    	-- -- Ability properties
-        -- self.caster = self:GetCaster()
-        -- self.ability = self:GetAbility()	    	
-    	
-    	-- -- Ability specials
-        -- self.max_charges = self.ability:GetTalentSpecialValueFor("max_charges")
-        -- self.charge_cooldown = self.ability:GetSpecialValueFor("charge_cooldown")
-        -- self.wolves_count = self.ability:GetTalentSpecialValueFor("wolves_count")                        
-    			
-        -- -- Start thinking
-    	-- self:StartIntervalThink(self.charge_cooldown-0.01)
-    -- end
+-- if IsServer() then
+-- -- Ability properties
+-- self.caster = self:GetCaster()
+-- self.ability = self:GetAbility()	    	
+
+-- -- Ability specials
+-- self.max_charges = self.ability:GetTalentSpecialValueFor("max_charges")
+-- self.charge_cooldown = self.ability:GetSpecialValueFor("charge_cooldown")
+-- self.wolves_count = self.ability:GetTalentSpecialValueFor("wolves_count")
+
+-- -- Start thinking
+-- self:StartIntervalThink(self.charge_cooldown-0.01)
+-- end
 -- end
 
 -- function modifier_imba_lycan_wolf_charge:OnRefresh()
-    -- self:OnCreated()
+-- self:OnCreated()
 -- end
 
 -- function modifier_imba_lycan_wolf_charge:OnIntervalThink()
-	-- if IsServer() then
-		-- -- Ability properties		
-		-- local stacks = self:GetStackCount()				
-		
-		-- -- if we're not at maximum charges yet, refresh it		
-		-- if stacks < self.max_charges then
-		
-			-- -- Increase stack and restart duration
-			-- self:ForceRefresh()							
-			-- self:IncrementStackCount()										
-			
-			-- -- Only start charge cooldown if the new stack doesn't reach the maximum allowed			
-			-- if stacks < self.max_charges-1 then
-				-- self:SetDuration(self.charge_cooldown, true)		
-			-- else			
-				-- -- Disable interval, disable duration
-				-- self:SetDuration(-1, true)		
-				-- self:StartIntervalThink(-1)
-			-- end						
-		-- end				
-		
-		-- -- count wolves, if there are missing wolves, revive one
-		-- local wolves = FindUnitsInRadius(self.caster:GetTeamNumber(),
-    									-- self.caster:GetAbsOrigin(),
-    									-- nil,
-    									-- FIND_UNITS_EVERYWHERE, -- global
-    									-- DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-    									-- DOTA_UNIT_TARGET_BASIC,
-    									-- DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-    									-- FIND_ANY_ORDER,
-    									-- false)
-		
-		-- if #wolves < self.wolves_count and self.caster:IsAlive() then
-			-- ReviveWolves(self.caster, self.ability)
-		-- end
-		
-	-- end
+-- if IsServer() then
+-- -- Ability properties		
+-- local stacks = self:GetStackCount()				
+
+-- -- if we're not at maximum charges yet, refresh it		
+-- if stacks < self.max_charges then
+
+-- -- Increase stack and restart duration
+-- self:ForceRefresh()							
+-- self:IncrementStackCount()										
+
+-- -- Only start charge cooldown if the new stack doesn't reach the maximum allowed			
+-- if stacks < self.max_charges-1 then
+-- self:SetDuration(self.charge_cooldown, true)		
+-- else			
+-- -- Disable interval, disable duration
+-- self:SetDuration(-1, true)		
+-- self:StartIntervalThink(-1)
+-- end						
+-- end				
+
+-- -- count wolves, if there are missing wolves, revive one
+-- local wolves = FindUnitsInRadius(self.caster:GetTeamNumber(),
+-- self.caster:GetAbsOrigin(),
+-- nil,
+-- FIND_UNITS_EVERYWHERE, -- global
+-- DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+-- DOTA_UNIT_TARGET_BASIC,
+-- DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+-- FIND_ANY_ORDER,
+-- false)
+
+-- if #wolves < self.wolves_count and self.caster:IsAlive() then
+-- ReviveWolves(self.caster, self.ability)
+-- end
+
+-- end
 -- end
 
 
@@ -283,128 +283,128 @@
 -- modifier_imba_lycan_wolf_death_check = class({})
 
 -- function modifier_imba_lycan_wolf_death_check:IsDebuff()
-	-- return false	
+-- return false	
 -- end
 
 -- function modifier_imba_lycan_wolf_death_check:IsHidden()
-	-- return true
+-- return true
 -- end
 
 -- function modifier_imba_lycan_wolf_death_check:IsPurgable()
-	-- return false	
+-- return false	
 -- end
 
 -- function modifier_imba_lycan_wolf_death_check:DeclareFunctions()	
-		-- local decFuncs = {MODIFIER_EVENT_ON_DEATH}
-		
-		-- return decFuncs	
+-- local decFuncs = {MODIFIER_EVENT_ON_DEATH}
+
+-- return decFuncs	
 -- end
 
 -- function modifier_imba_lycan_wolf_death_check:OnCreated()
-    -- -- Ability properties               
-    -- self.caster = self:GetCaster()
-    -- self.ability = self:GetAbility()
-    -- self.wolf = self:GetParent()
+-- -- Ability properties
+-- self.caster = self:GetCaster()
+-- self.ability = self:GetAbility()
+-- self.wolf = self:GetParent()
 -- end
 
 -- function modifier_imba_lycan_wolf_death_check:OnDeath( keys )
-    -- if IsServer() then    	
-    	-- local unit = keys.unit
-    		
-    	-- -- Revive only when it was a wolf that just died
-    	-- if unit == self.wolf then
-    		-- -- Only revive wolves that weren't killed due to resummon
-    		-- if not self.wolf.killed_by_resummon then			
-    			-- ReviveWolves(self.caster, self.ability)
-    		-- end
-    	-- end
-    -- end
+-- if IsServer() then    	
+-- local unit = keys.unit
+
+-- -- Revive only when it was a wolf that just died
+-- if unit == self.wolf then
+-- -- Only revive wolves that weren't killed due to resummon
+-- if not self.wolf.killed_by_resummon then			
+-- ReviveWolves(self.caster, self.ability)
+-- end
+-- end
+-- end
 -- end
 
 -- function ReviveWolves (caster, ability)
-	-- if IsServer() then
-		-- local charge_modifier = "modifier_imba_lycan_wolf_charge"				
-		-- local particle_spawn = "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
-		-- local wolf_name = "npc_lycan_wolf"
-		-- local caster_level = caster:GetLevel()
-		-- local death_check = "modifier_imba_lycan_wolf_death_check"
-		-- local player_id = nil
-		
-		-- -- Ability specials				
-		-- local charge_cooldown = ability:GetSpecialValueFor("charge_cooldown")		
-		-- local distance = ability:GetSpecialValueFor("distance")	
-		-- local HP_bonus_per_lycan_level = ability:GetSpecialValueFor("HP_bonus_per_lycan_level")
-		-- local wolf_type = ability:GetSpecialValueFor("wolf_type")				
-	
-		-- -- #1 Talent (wolves upgrade by one level)				
-		-- wolf_type = wolf_type + caster:FindTalentValue("special_bonus_imba_lycan_1")
-		
-		-- if caster:HasModifier(charge_modifier) then -- prevents error if Lycan is dead
-			-- local charge_modifier_handler = caster:FindModifierByName(charge_modifier)
-			-- local charge_stacks = charge_modifier_handler:GetStackCount()		
-			
-			-- -- If more than one charge, reduce a charge.
-			-- if charge_stacks > 0 then
-				-- charge_modifier_handler:DecrementStackCount()
-				
-				-- local modifier_duration = charge_modifier_handler:GetDuration()
-				
-				-- -- start cooldown again on permanent durations
-				-- if modifier_duration == -1 then
-					-- charge_modifier_handler:SetDuration(charge_cooldown, true)
-					-- charge_modifier_handler:StartIntervalThink(charge_cooldown-0.01)
-				-- end		
-				
-				-- -- Spawn a wolf in front of Lycan
-				-- local summon_origin = caster:GetAbsOrigin() + (distance+RandomInt(0, 160)) * caster:GetForwardVector()	
-				
-				-- -- Add spawn particles in spawn location
-				-- local particle_spawn_fx = ParticleManager:CreateParticle(particle_spawn, PATTACH_CUSTOMORIGIN, caster)
-				-- ParticleManager:SetParticleControl(particle_spawn_fx, 0, caster:GetAbsOrigin())
-				
-				-- local wolf_name_summon = wolf_name..wolf_type
-				
-				-- -- Create wolf and find clear space for it
-				 -- local wolf = CreateUnitByName(wolf_name_summon, summon_origin, false, caster, caster, caster:GetTeamNumber())							 
-				 
-				 -- -- Prevent nearby units from getting stuck
-				-- Timers:CreateTimer(FrameTime(), function()
-					-- local units = FindUnitsInRadius(caster:GetTeamNumber(), summon_origin, nil, 64, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-					-- for _,unit in pairs(units) do
-						-- FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
-					-- end
-				-- end)
-				
-				-- -- Set wolves life depending on lycan's level		
-				 -- wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + HP_bonus_per_lycan_level * caster_level )		
-				
-				-- -- Set forward vector
-				 -- wolf:SetForwardVector(caster:GetForwardVector())	
-				
-				-- -- Give wolf death check modifier
-				-- wolf:AddNewModifier(caster, ability, death_check, {})
-				
-				-- -- #2 TALENT: Wolves gain a bonus damage modifier
-				-- if caster:HasTalent("special_bonus_imba_lycan_2") then
-					-- wolf:AddNewModifier(caster, ability, "modifier_imba_summon_wolves_talent", {})
-				-- end
+-- if IsServer() then
+-- local charge_modifier = "modifier_imba_lycan_wolf_charge"				
+-- local particle_spawn = "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+-- local wolf_name = "npc_lycan_wolf"
+-- local caster_level = caster:GetLevel()
+-- local death_check = "modifier_imba_lycan_wolf_death_check"
+-- local player_id = nil
 
-				-- -- If wolf is Shadow Wolf/Nightclaw (level 5 or 6) paint in grey/black texture
-				 -- if wolf_type >= 5 then
-					 -- wolf:SetRenderColor(49, 49, 49)
-				 -- end
-				
-				-- -- Nonhero caster handling (e.g. Nether Ward)
-				-- if self:GetCaster().GetPlayerID then
-					-- player_id = caster:GetPlayerID()
-				-- elseif self:GetCaster():GetOwner() and self:GetCaster():GetOwner().GetPlayerID then
-					-- player_id = self:GetCaster():GetOwner():GetPlayerID()
-				-- end
-	
-				-- wolf:SetControllableByPlayer(player_id, true)
-			-- end		
-		-- end	
-	-- end
+-- -- Ability specials				
+-- local charge_cooldown = ability:GetSpecialValueFor("charge_cooldown")		
+-- local distance = ability:GetSpecialValueFor("distance")	
+-- local HP_bonus_per_lycan_level = ability:GetSpecialValueFor("HP_bonus_per_lycan_level")
+-- local wolf_type = ability:GetSpecialValueFor("wolf_type")				
+
+-- -- #1 Talent (wolves upgrade by one level)				
+-- wolf_type = wolf_type + caster:FindTalentValue("special_bonus_imba_lycan_1")
+
+-- if caster:HasModifier(charge_modifier) then -- prevents error if Lycan is dead
+-- local charge_modifier_handler = caster:FindModifierByName(charge_modifier)
+-- local charge_stacks = charge_modifier_handler:GetStackCount()		
+
+-- -- If more than one charge, reduce a charge.
+-- if charge_stacks > 0 then
+-- charge_modifier_handler:DecrementStackCount()
+
+-- local modifier_duration = charge_modifier_handler:GetDuration()
+
+-- -- start cooldown again on permanent durations
+-- if modifier_duration == -1 then
+-- charge_modifier_handler:SetDuration(charge_cooldown, true)
+-- charge_modifier_handler:StartIntervalThink(charge_cooldown-0.01)
+-- end		
+
+-- -- Spawn a wolf in front of Lycan
+-- local summon_origin = caster:GetAbsOrigin() + (distance+RandomInt(0, 160)) * caster:GetForwardVector()	
+
+-- -- Add spawn particles in spawn location
+-- local particle_spawn_fx = ParticleManager:CreateParticle(particle_spawn, PATTACH_CUSTOMORIGIN, caster)
+-- ParticleManager:SetParticleControl(particle_spawn_fx, 0, caster:GetAbsOrigin())
+
+-- local wolf_name_summon = wolf_name..wolf_type
+
+-- -- Create wolf and find clear space for it
+-- local wolf = CreateUnitByName(wolf_name_summon, summon_origin, false, caster, caster, caster:GetTeamNumber())							
+
+-- -- Prevent nearby units from getting stuck
+-- Timers:CreateTimer(FrameTime(), function()
+-- local units = FindUnitsInRadius(caster:GetTeamNumber(), summon_origin, nil, 64, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+-- for _,unit in pairs(units) do
+-- FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+-- end
+-- end)
+
+-- -- Set wolves life depending on lycan's level		
+-- wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + HP_bonus_per_lycan_level * caster_level )		
+
+-- -- Set forward vector
+-- wolf:SetForwardVector(caster:GetForwardVector())	
+
+-- -- Give wolf death check modifier
+-- wolf:AddNewModifier(caster, ability, death_check, {})
+
+-- -- #2 TALENT: Wolves gain a bonus damage modifier
+-- if caster:HasTalent("special_bonus_imba_lycan_2") then
+-- wolf:AddNewModifier(caster, ability, "modifier_imba_summon_wolves_talent", {})
+-- end
+
+-- -- If wolf is Shadow Wolf/Nightclaw (level 5 or 6) paint in grey/black texture
+-- if wolf_type >= 5 then
+-- wolf:SetRenderColor(49, 49, 49)
+-- end
+
+-- -- Nonhero caster handling (e.g. Nether Ward)
+-- if self:GetCaster().GetPlayerID then
+-- player_id = caster:GetPlayerID()
+-- elseif self:GetCaster():GetOwner() and self:GetCaster():GetOwner().GetPlayerID then
+-- player_id = self:GetCaster():GetOwner():GetPlayerID()
+-- end
+
+-- wolf:SetControllableByPlayer(player_id, true)
+-- end		
+-- end	
+-- end
 -- end
 
 
@@ -417,34 +417,34 @@
 -- function modifier_imba_summon_wolves_talent:IsPurgable() return false end
 
 -- function modifier_imba_summon_wolves_talent:OnCreated()
-	-- if IsServer() then
-		-- local parent		=	self:GetParent()
-		-- local caster 		=	self:GetCaster()
-										-- -- Average base damage
-		-- local bonus_damage 	= 	(caster:GetBaseDamageMin() + caster:GetBaseDamageMax()) / 2 * caster:FindTalentValue("special_bonus_imba_lycan_2") * 0.01
+-- if IsServer() then
+-- local parent		=	self:GetParent()
+-- local caster 		=	self:GetCaster()
+-- -- Average base damage
+-- local bonus_damage 	= 	(caster:GetBaseDamageMin() + caster:GetBaseDamageMax()) / 2 * caster:FindTalentValue("special_bonus_imba_lycan_2") / 100
 
-		-- -- Server-client wormhole entrance
-		-- CustomNetTables:SetTableValue("player_table", "modifier_imba_summon_wolves_talent_bonus_damage"..parent:entindex(), {bonus_damage = bonus_damage})
-	-- end
+-- -- Server-client wormhole entrance
+-- CustomNetTables:SetTableValue("player_table", "modifier_imba_summon_wolves_talent_bonus_damage"..parent:entindex(), {bonus_damage = bonus_damage})
+-- end
 
-	-- -- Server-client wormhole exit
-	-- local parent 	=	self:GetParent()
-	-- if CustomNetTables:GetTableValue("player_table", "modifier_imba_summon_wolves_talent_bonus_damage"..parent:entindex()) then
-		-- if CustomNetTables:GetTableValue("player_table", "modifier_imba_summon_wolves_talent_bonus_damage"..parent:entindex()).bonus_damage then
-			-- self.bonus_damage = CustomNetTables:GetTableValue("player_table", "modifier_imba_summon_wolves_talent_bonus_damage"..parent:entindex()).bonus_damage
-		-- end
-	-- end
+-- -- Server-client wormhole exit
+-- local parent 	=	self:GetParent()
+-- if CustomNetTables:GetTableValue("player_table", "modifier_imba_summon_wolves_talent_bonus_damage"..parent:entindex()) then
+-- if CustomNetTables:GetTableValue("player_table", "modifier_imba_summon_wolves_talent_bonus_damage"..parent:entindex()).bonus_damage then
+-- self.bonus_damage = CustomNetTables:GetTableValue("player_table", "modifier_imba_summon_wolves_talent_bonus_damage"..parent:entindex()).bonus_damage
+-- end
+-- end
 -- end
 
 -- function modifier_imba_summon_wolves_talent:DeclareFunctions()
-	-- local funcs ={
-	-- MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+-- local funcs ={
+-- MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
 -- }
-	-- return funcs
+-- return funcs
 -- end
 
 -- function modifier_imba_summon_wolves_talent:GetModifierPreAttack_BonusDamage()
-	-- return self.bonus_damage
+-- return self.bonus_damage
 -- end
 
 -- Gonna remake this because the above is an absolute mess and has actual errors in-game with wolves being spawned without ownership and permanently lingering
@@ -452,9 +452,9 @@
 LinkLuaModifier("modifier_imba_lycan_summon_wolves_charges", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lycan_summon_wolves_damage_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-imba_lycan_summon_wolves						= imba_lycan_summon_wolves or class({})
-modifier_imba_lycan_summon_wolves_charges		= modifier_imba_lycan_summon_wolves_charges or class({})
-modifier_imba_lycan_summon_wolves_damage_talent	= modifier_imba_lycan_summon_wolves_damage_talent or class({})
+imba_lycan_summon_wolves                        = imba_lycan_summon_wolves or class({})
+modifier_imba_lycan_summon_wolves_charges       = modifier_imba_lycan_summon_wolves_charges or class({})
+modifier_imba_lycan_summon_wolves_damage_talent = modifier_imba_lycan_summon_wolves_damage_talent or class({})
 
 ------------------------------
 -- IMBA_LYCAN_SUMMON_WOLVES --
@@ -472,7 +472,7 @@ end
 
 function imba_lycan_summon_wolves:OnSpellStart()
 	local player_id = nil
-	
+
 	-- Non-hero caster handling (e.g. Nether Ward)
 	if self:GetCaster().GetPlayerID then
 		player_id = self:GetCaster():GetPlayerID()
@@ -481,92 +481,92 @@ function imba_lycan_summon_wolves:OnSpellStart()
 	else
 		return
 	end
-	
-	-- Force kill any owned wolves on the field 
+
+	-- Force kill any owned wolves on the field
 	for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)) do
-		for i = 1, 6 do	-- #3 TALENT: Destroys Alpha wolves on resummon
-			if unit:GetUnitName() == "npc_lycan_wolf"..i or unit:GetUnitName() == "npc_lycan_summoned_wolf_talent" and unit:GetPlayerOwnerID() == player_id then
-				unit:ForceKill(false)				
+		for i = 1, 6 do -- #3 TALENT: Destroys Alpha wolves on resummon
+			if unit:GetUnitName() == "npc_lycan_wolf" .. i or unit:GetUnitName() == "npc_lycan_summoned_wolf_talent" and unit:GetPlayerOwnerID() == player_id then
+				unit:ForceKill(false)
 			end
 		end
 	end
-	
+
 	-- Play hero response
 	if self:GetCaster():GetName() == "npc_dota_hero_lycan" then
-		EmitSoundOn("lycan_lycan_ability_summon_0"..RandomInt(1,6), self:GetCaster())
+		EmitSoundOn("lycan_lycan_ability_summon_0" .. RandomInt(1, 6), self:GetCaster())
 	end
-	
+
 	-- Play cast sound
-	EmitSoundOn("Hero_Lycan.SummonWolves", self:GetCaster())	
-	
+	EmitSoundOn("Hero_Lycan.SummonWolves", self:GetCaster())
+
 	-- Add cast particles
 	local particle_cast_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(particle_cast_fx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_cast_fx)
-	
+
 	local wolves_spawn_particle = nil
-	local wolf					= nil
-	
+	local wolf                  = nil
+
 	-- Define spawn locations 	
-	for i = 0, self:GetTalentSpecialValueFor("wolves_count") - 1 do		
+	for i = 0, self:GetTalentSpecialValueFor("wolves_count") - 1 do
 		-- Create wolf and find clear space for it
 		-- "The wolves are summoned 200 range in front on Lycan, with 120 range distance between the wolves. Lycan is always at the center of the line."
 		wolf = CreateUnitByName(
-			"npc_lycan_wolf"..(self:GetSpecialValueFor("wolf_type") + self:GetCaster():FindTalentValue("special_bonus_imba_lycan_1")), 
-			self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * 200) + (self:GetCaster():GetRightVector() * 120 * (i - ((self:GetTalentSpecialValueFor("wolves_count") - 1) / 2))), 
-			true, 
-			self:GetCaster(), 
-			self:GetCaster(), 
+			"npc_lycan_wolf" .. (self:GetSpecialValueFor("wolf_type") + self:GetCaster():FindTalentValue("special_bonus_imba_lycan_1")),
+			self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * 200) + (self:GetCaster():GetRightVector() * 120 * (i - ((self:GetTalentSpecialValueFor("wolves_count") - 1) / 2))),
+			true,
+			self:GetCaster(),
+			self:GetCaster(),
 			self:GetCaster():GetTeamNumber()
 		)
-		
+
 		-- Add spawn particles in spawn location
 		wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
 		ParticleManager:ReleaseParticleIndex(wolves_spawn_particle)
-		
+
 		if player_id then
 			wolf:SetControllableByPlayer(player_id, true)
 		end
-		
+
 		-- Quick tag to show this was summoned by this ability (in case future updates involve these wolves being summoned by other things)
 		wolf.imba_lycan_summon_wolves = true
-		
+
 		--Set forward vector
 		wolf:SetForwardVector(self:GetCaster():GetForwardVector())
-		
+
 		-- IMBAfication: Alpha's Leadership
 		--Set wolves life depending on lycan's level		
-		wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + self:GetSpecialValueFor("HP_bonus_per_lycan_level") * self:GetCaster():GetLevel())		
+		wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + self:GetSpecialValueFor("HP_bonus_per_lycan_level") * self:GetCaster():GetLevel())
 
 		-- #2 TALENT: Wolves gain a bonus damage modifier
 		if self:GetCaster():HasTalent("special_bonus_imba_lycan_2") then
 			wolf:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_summon_wolves_damage_talent", {})
 		end
-		
+
 		-- If wolf is Shadow Wolf/Nightclaw (level 5 or 6) paint in grey/black texture
 		if self:GetSpecialValueFor("wolf_type") + self:GetCaster():FindTalentValue("special_bonus_imba_lycan_1") >= 5 then
-			wolf:SetRenderColor(49, 49, 49)			
+			wolf:SetRenderColor(49, 49, 49)
 		end
-	end	
+	end
 
 	-- #3 TALENT: Summons an alpha wolf
 	if self:GetCaster():HasTalent("special_bonus_imba_lycan_3") then
 		wolf = CreateUnitByName("npc_lycan_summoned_wolf_talent", self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * 400), true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
-		
+
 		-- Add spawn particles in spawn location
 		wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
 		ParticleManager:ReleaseParticleIndex(wolves_spawn_particle)
-		
-		 if player_id then
-			 wolf:SetControllableByPlayer(player_id, true)
-		 end
-		 
+
+		if player_id then
+			wolf:SetControllableByPlayer(player_id, true)
+		end
+
 		--Set forward vector
 		wolf:SetForwardVector(self:GetCaster():GetForwardVector())
-		
+
 		-- IMBAfication: Alpha's Leadership
 		--Set wolves life depending on lycan's level		
-		wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + self:GetSpecialValueFor("HP_bonus_per_lycan_level") * self:GetCaster():GetLevel())		
+		wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + self:GetSpecialValueFor("HP_bonus_per_lycan_level") * self:GetCaster():GetLevel())
 
 		-- #2 TALENT: Wolves gain a bonus damage modifier
 		if self:GetCaster():HasTalent("special_bonus_imba_lycan_2") then
@@ -579,13 +579,15 @@ end
 -- MODIFIER_IMBA_LYCAN_SUMMON_WOLVES_CHARGES --
 -----------------------------------------------
 
-function modifier_imba_lycan_summon_wolves_charges:DestroyOnExpire()	return false end
-function modifier_imba_lycan_summon_wolves_charges:IsPurgable()			return false end
-function modifier_imba_lycan_summon_wolves_charges:RemoveOnDeath()		return true end
+function modifier_imba_lycan_summon_wolves_charges:DestroyOnExpire() return false end
+
+function modifier_imba_lycan_summon_wolves_charges:IsPurgable() return false end
+
+function modifier_imba_lycan_summon_wolves_charges:RemoveOnDeath() return true end
 
 function modifier_imba_lycan_summon_wolves_charges:OnCreated()
 	if not IsServer() then return end
-	
+
 	if self:GetAbility() then
 		self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("max_charges"))
 	end
@@ -612,15 +614,15 @@ function modifier_imba_lycan_summon_wolves_charges:OnStackCountChanged(stackCoun
 end
 
 function modifier_imba_lycan_summon_wolves_charges:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_DEATH}
+	return { MODIFIER_EVENT_ON_DEATH }
 end
 
 function modifier_imba_lycan_summon_wolves_charges:OnDeath(keys)
 	if keys.unit ~= keys.attacker and keys.unit.imba_lycan_summon_wolves and keys.unit:GetOwner() == self:GetCaster() and self:GetStackCount() > 0 then
 		self:DecrementStackCount()
-		
+
 		local player_id = nil
-		
+
 		-- Non-hero caster handling (e.g. Nether Ward)
 		if self:GetCaster().GetPlayerID then
 			player_id = self:GetCaster():GetPlayerID()
@@ -629,42 +631,42 @@ function modifier_imba_lycan_summon_wolves_charges:OnDeath(keys)
 		else
 			return
 		end
-	
+
 		local wolf = CreateUnitByName(
-			"npc_lycan_wolf"..(self:GetAbility():GetSpecialValueFor("wolf_type") + self:GetCaster():FindTalentValue("special_bonus_imba_lycan_1")), 
-			self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * 200), 
-			true, 
-			self:GetCaster(), 
-			self:GetCaster(), 
+			"npc_lycan_wolf" .. (self:GetAbility():GetSpecialValueFor("wolf_type") + self:GetCaster():FindTalentValue("special_bonus_imba_lycan_1")),
+			self:GetCaster():GetAbsOrigin() + (self:GetCaster():GetForwardVector() * 200),
+			true,
+			self:GetCaster(),
+			self:GetCaster(),
 			self:GetCaster():GetTeamNumber()
 		)
-		
+
 		-- Add spawn particles in spawn location
 		wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
 		ParticleManager:ReleaseParticleIndex(wolves_spawn_particle)
-		
+
 		if player_id then
 			wolf:SetControllableByPlayer(player_id, true)
 		end
-		
+
 		-- Quick tag to show this was summoned by this ability (in case future updates involve these wolves being summoned by other things)
 		wolf.imba_lycan_summon_wolves = true
-		
+
 		--Set forward vector
 		wolf:SetForwardVector(self:GetCaster():GetForwardVector())
-		
+
 		-- IMBAfication: Alpha's Leadership
 		--Set wolves life depending on lycan's level		
-		wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + self:GetAbility():GetSpecialValueFor("HP_bonus_per_lycan_level") * self:GetCaster():GetLevel())		
+		wolf:SetBaseMaxHealth(wolf:GetBaseMaxHealth() + self:GetAbility():GetSpecialValueFor("HP_bonus_per_lycan_level") * self:GetCaster():GetLevel())
 
 		-- #2 TALENT: Wolves gain a bonus damage modifier
 		if self:GetCaster():HasTalent("special_bonus_imba_lycan_2") then
 			wolf:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_summon_wolves_damage_talent", {})
 		end
-		
+
 		-- If wolf is Shadow Wolf/Nightclaw (level 5 or 6) paint in grey/black texture
 		if self:GetAbility():GetSpecialValueFor("wolf_type") + self:GetCaster():FindTalentValue("special_bonus_imba_lycan_1") >= 5 then
-			wolf:SetRenderColor(49, 49, 49)			
+			wolf:SetRenderColor(49, 49, 49)
 		end
 	end
 end
@@ -677,8 +679,8 @@ function modifier_imba_lycan_summon_wolves_damage_talent:IsPurgable() return fal
 
 function modifier_imba_lycan_summon_wolves_damage_talent:OnCreated()
 	if not IsServer() then return end
-	
-	self:SetStackCount(((self:GetCaster():GetBaseDamageMin() + self:GetCaster():GetBaseDamageMax()) / 2) * self:GetCaster():FindTalentValue("special_bonus_imba_lycan_2") * 0.01)
+
+	self:SetStackCount(((self:GetCaster():GetBaseDamageMin() + self:GetCaster():GetBaseDamageMax()) / 2) * self:GetCaster():FindTalentValue("special_bonus_imba_lycan_2") / 100)
 end
 
 function modifier_imba_lycan_summon_wolves_damage_talent:DeclareFunctions()
@@ -699,12 +701,12 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_lycan_howl = class ({})
+imba_lycan_howl = class({})
 LinkLuaModifier("modifier_imba_howl_buff", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_howl_flying_movement_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_howl:GetAbilityTextureName()
-   return "lycan_howl"
+	return "lycan_howl"
 end
 
 function imba_lycan_howl:GetBehavior()
@@ -716,51 +718,51 @@ function imba_lycan_howl:OnSpellStart()
 	local caster = self:GetCaster()
 	local ability = self
 	local sound_cast = "Hero_Lycan.Howl"
-	local response_sound = "lycan_lycan_ability_howl_0" ..RandomInt(1,5)	
+	local response_sound = "lycan_lycan_ability_howl_0" .. RandomInt(1, 5)
 	local particle_lycan_howl = "particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
 	local particle_wolves_howl = "particles/units/heroes/hero_lycan/lycan_howl_cast_wolves.vpcf"
 	local wolf_name = "npc_lycan_wolf"
 	local buff = "modifier_imba_howl_buff"
-	local day = GameRules:IsDaytime()	
-	
+	local day = GameRules:IsDaytime()
+
 	-- Ability specials
-	local duration = ability:GetSpecialValueFor("howl_duration")	
-		
+	local duration = ability:GetSpecialValueFor("howl_duration")
+
 	-- Play global cast sound, only for allies
 	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
-	
+
 	-- Play one of Lycan's howl responses
 	EmitSoundOn(response_sound, caster)
-	
+
 	-- Add Lycan's cast particles
 	local particle_lycan_howl_fx = ParticleManager:CreateParticle(particle_lycan_howl, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 0 , caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 1 , caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 2 , caster:GetAbsOrigin())
-	
+	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 1, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 2, caster:GetAbsOrigin())
+
 	-- Find all wolves	
 	local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
-									caster:GetAbsOrigin(),
-									nil,
-									FIND_UNITS_EVERYWHERE,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-									FIND_ANY_ORDER,
-									false)
-		
-		
-	
-	for _,creature in pairs(creatures) do 
-		for i = 1, 6 do									 -- #3 TALENT: Alpha wolf gesture
-			if creature:GetUnitName() == wolf_name..i or "npc_lycan_summoned_wolf_talent" then 
+		caster:GetAbsOrigin(),
+		nil,
+		FIND_UNITS_EVERYWHERE,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+		FIND_ANY_ORDER,
+		false)
+
+
+
+	for _, creature in pairs(creatures) do
+		for i = 1, 6 do -- #3 TALENT: Alpha wolf gesture
+			if creature:GetUnitName() == wolf_name .. i or "npc_lycan_summoned_wolf_talent" then
 				-- Perform howl cast animation for wolves	
 				if creature:IsIdle() then
-					creature:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)		
+					creature:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
 				else
 					creature:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
-				end				
-				
+				end
+
 				-- Add wolves cast particles
 				local particle_wolves_howl_fx = ParticleManager:CreateParticle(particle_wolves_howl, PATTACH_ABSORIGIN, creature)
 				ParticleManager:SetParticleControl(particle_wolves_howl_fx, 1, creature:GetAbsOrigin())
@@ -768,30 +770,30 @@ function imba_lycan_howl:OnSpellStart()
 
 				-- #4 TALENT: Wolves gain a flying movement modifier
 				if caster:HasTalent("special_bonus_imba_lycan_4") then
-					creature:AddNewModifier(caster, self, "modifier_imba_howl_flying_movement_talent", {duration = caster:FindTalentValue("special_bonus_imba_lycan_4")})
+					creature:AddNewModifier(caster, self, "modifier_imba_howl_flying_movement_talent", { duration = caster:FindTalentValue("special_bonus_imba_lycan_4") })
 				end
-			end	
+			end
 		end
-	end	
+	end
 
 	-- #4 TALENT: Lycan gains a flying movement modifier
-	if caster:HasTalent("special_bonus_imba_lycan_4") then	
-		caster:AddNewModifier(caster, self, "modifier_imba_howl_flying_movement_talent", {duration = caster:FindTalentValue("special_bonus_imba_lycan_4")})
+	if caster:HasTalent("special_bonus_imba_lycan_4") then
+		caster:AddNewModifier(caster, self, "modifier_imba_howl_flying_movement_talent", { duration = caster:FindTalentValue("special_bonus_imba_lycan_4") })
 	end
-	
+
 	-- Find all allies (except lane creeps) and give them the buff
 	local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-									caster:GetAbsOrigin(),
-									nil,
-									FIND_UNITS_EVERYWHERE,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-									FIND_ANY_ORDER,
-									false)
-									
+		caster:GetAbsOrigin(),
+		nil,
+		FIND_UNITS_EVERYWHERE,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+		FIND_ANY_ORDER,
+		false)
+
 	for _, ally in pairs(allies) do
-		ally:AddNewModifier(caster, ability, buff, {duration = duration})	
+		ally:AddNewModifier(caster, ability, buff, { duration = duration })
 	end
 end
 
@@ -813,32 +815,32 @@ function modifier_imba_howl_buff:GetEffectName()
 end
 
 function modifier_imba_howl_buff:OnCreated()
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
-    self.parent = self:GetParent()
-	
+	self.caster       = self:GetCaster()
+	self.ability      = self:GetAbility()
+	self.parent       = self:GetParent()
+
 	--AbilitySpecials
-	self.attack_speed	= self.ability:GetSpecialValueFor("attack_speed")
-	self.armor			= self.ability:GetSpecialValueFor("armor")
-	self.hp_regen		= self.ability:GetSpecialValueFor("hp_regen")
-	
-	self.move_speed		= self.ability:GetSpecialValueFor("move_speed")
+	self.attack_speed = self.ability:GetSpecialValueFor("attack_speed")
+	self.armor        = self.ability:GetSpecialValueFor("armor")
+	self.hp_regen     = self.ability:GetSpecialValueFor("hp_regen")
+
+	self.move_speed   = self.ability:GetSpecialValueFor("move_speed")
 end
 
 function modifier_imba_howl_buff:OnRefresh()
 	self:OnCreated()
 end
 
-function modifier_imba_howl_buff:DeclareFunctions()		
-	local decFuncs = 	{
-						MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-						MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-						MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-						
-						-- IMBAfication: The Wolf Is At Your Door
-						MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-						}		
-	return decFuncs			
+function modifier_imba_howl_buff:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+
+		-- IMBAfication: The Wolf Is At Your Door
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+	}
+	return decFuncs
 end
 
 function modifier_imba_howl_buff:GetModifierAttackSpeedBonus_Constant()
@@ -860,28 +862,31 @@ end
 function modifier_imba_howl_buff:CheckState()
 	if IsServer() then
 		local day = GameRules:IsDaytime()
-		
+
 		if not GameRules:IsDaytime() and self:GetAbility():GetAutoCastState() then
-			local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+			local state = { [MODIFIER_STATE_NO_UNIT_COLLISION] = true }
 			return state
-		end	
+		end
 
 		return nil
-	end	
+	end
 end
 
 --- #4 TALENT: flying movement modifier
 modifier_imba_howl_flying_movement_talent = modifier_imba_howl_flying_movement_talent or class({})
 
 -- Modifier properties
-function modifier_imba_howl_flying_movement_talent:IsDebuff() 		return false end
-function modifier_imba_howl_flying_movement_talent:IsHidden() 		return false end
-function modifier_imba_howl_flying_movement_talent:IsPurgable() 	return false end
-function modifier_imba_howl_flying_movement_talent:IsPurgeException() 	return true end 	-- Dispellable by hard dispells
+function modifier_imba_howl_flying_movement_talent:IsDebuff() return false end
+
+function modifier_imba_howl_flying_movement_talent:IsHidden() return false end
+
+function modifier_imba_howl_flying_movement_talent:IsPurgable() return false end
+
+function modifier_imba_howl_flying_movement_talent:IsPurgeException() return true end  -- Dispellable by hard dispells
 
 function modifier_imba_howl_flying_movement_talent:OnCreated()
 	if IsServer() then
-		self.parent	=	self:GetParent()
+		self.parent = self:GetParent()
 		-- Set to flying movement
 		self.parent:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 	end
@@ -909,60 +914,60 @@ end
 LinkLuaModifier("modifier_imba_lycan_howl_723", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lycan_howl_723_phased", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-imba_lycan_howl_723					= imba_lycan_howl_723 or class({})
-modifier_imba_lycan_howl_723		= modifier_imba_lycan_howl_723 or class({})
-modifier_imba_lycan_howl_723_phased	= modifier_imba_lycan_howl_723_phased or class({})
+imba_lycan_howl_723                 = imba_lycan_howl_723 or class({})
+modifier_imba_lycan_howl_723        = modifier_imba_lycan_howl_723 or class({})
+modifier_imba_lycan_howl_723_phased = modifier_imba_lycan_howl_723_phased or class({})
 
 function imba_lycan_howl_723:OnSpellStart()
 	EmitSoundOnLocationForAllies(self:GetCaster():GetAbsOrigin(), "Hero_Lycan.Howl", self:GetCaster())
-	
+
 	-- Add Lycan's cast particles
 	local particle_lycan_howl_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
-	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 0 , self:GetCaster():GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_lycan_howl_fx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControlEnt(particle_lycan_howl_fx, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_mouth", self:GetCaster():GetAbsOrigin(), true)
 
 	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", {duration = self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance())})
-		
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", { duration = self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance()) })
+
 		-- IMBAfication: Moon Phase
 		if not GameRules:IsDaytime() and self:GetAutoCastState() then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723_phased", {duration = self:GetSpecialValueFor("howl_duration")})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723_phased", { duration = self:GetSpecialValueFor("howl_duration") })
 		end
 	end
 
 	for _, creature in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-									self:GetCaster():GetAbsOrigin(),
-									nil,
-									FIND_UNITS_EVERYWHERE,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-									FIND_ANY_ORDER,
-									false)) do 
-		for i = 1, 6 do									 -- #3 TALENT: Alpha wolf gesture
-			if creature:GetUnitName() == "npc_lycan_wolf"..i or "npc_lycan_summoned_wolf_talent" then 
+		self:GetCaster():GetAbsOrigin(),
+		nil,
+		FIND_UNITS_EVERYWHERE,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+		FIND_ANY_ORDER,
+		false)) do
+		for i = 1, 6 do -- #3 TALENT: Alpha wolf gesture
+			if creature:GetUnitName() == "npc_lycan_wolf" .. i or "npc_lycan_summoned_wolf_talent" then
 				-- Perform howl cast animation for wolves	
 				if creature:IsIdle() then
-					creature:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)		
+					creature:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
 				else
 					creature:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
-				end				
-				
+				end
+
 				-- Add wolves cast particles
 				local particle_wolves_howl_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_howl_cast_wolves.vpcf", PATTACH_ABSORIGIN, creature)
 				ParticleManager:SetParticleControl(particle_wolves_howl_fx, 1, creature:GetAbsOrigin())
-				
+
 				for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), creature:GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", {duration = self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723", { duration = self:GetSpecialValueFor("howl_duration") * (1 - enemy:GetStatusResistance()) })
 				end
-				
+
 				-- IMBAfication: Moon Phase
 				if not GameRules:IsDaytime() and self:GetAutoCastState() then
-					creature:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723_phased", {duration = self:GetSpecialValueFor("howl_duration")})
+					creature:AddNewModifier(self:GetCaster(), self, "modifier_imba_lycan_howl_723_phased", { duration = self:GetSpecialValueFor("howl_duration") })
 				end
 			end
 		end
-	end	
+	end
 end
 
 ----------------------------------
@@ -974,16 +979,16 @@ function modifier_imba_lycan_howl_723:GetEffectName()
 end
 
 function modifier_imba_lycan_howl_723:OnCreated()
-	self.attack_damage_reduction	= self:GetAbility():GetSpecialValueFor("attack_damage_reduction") * (-1)
-	self.armor						= self:GetAbility():GetSpecialValueFor("armor") * (-1)
-	self.move_speed					= self:GetAbility():GetSpecialValueFor("move_speed") * (-1)
+	self.attack_damage_reduction = self:GetAbility():GetSpecialValueFor("attack_damage_reduction") * (-1)
+	self.armor                   = self:GetAbility():GetSpecialValueFor("armor") * (-1)
+	self.move_speed              = self:GetAbility():GetSpecialValueFor("move_speed") * (-1)
 end
 
 function modifier_imba_lycan_howl_723:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		
+
 		-- IMBAfication: The Wolf Is At Your Door
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
 	}
@@ -1006,7 +1011,7 @@ end
 -----------------------------------------
 
 function modifier_imba_lycan_howl_723_phased:CheckState()
-	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	return { [MODIFIER_STATE_NO_UNIT_COLLISION] = true }
 end
 
 ---------------------------------------------------
@@ -1022,49 +1027,49 @@ LinkLuaModifier("modifier_imba_feral_impulse_aura", "components/abilities/heroes
 LinkLuaModifier("modifier_imba_feral_impulse", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_feral_impulse:GetAbilityTextureName()
-   return "lycan_feral_impulse"
+	return "lycan_feral_impulse"
 end
 
-function imba_lycan_feral_impulse:GetIntrinsicModifierName()	
-    return "modifier_imba_feral_impulse_aura"
+function imba_lycan_feral_impulse:GetIntrinsicModifierName()
+	return "modifier_imba_feral_impulse_aura"
 end
 
 -- Feral Impulse aura
 modifier_imba_feral_impulse_aura = class({})
 
 function modifier_imba_feral_impulse_aura:OnCreated()
-    if IsServer() then
-        -- Ability properties
-        self.caster = self:GetCaster()
-        self.ability = self:GetAbility()
-        self.parent = self:GetParent() 
+	if IsServer() then
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
 
-        -- Ability specials        
-        self.base_bonus_damage_perc = self.ability:GetSpecialValueFor("base_bonus_damage_perc")
-        self.damage_inc_per_unit = self.ability:GetSpecialValueFor("damage_inc_per_unit")
-        self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
-        self.hero_inc_multiplier = self.ability:GetSpecialValueFor("hero_inc_multiplier")
+		-- Ability specials
+		self.base_bonus_damage_perc = self.ability:GetSpecialValueFor("base_bonus_damage_perc")
+		self.damage_inc_per_unit = self.ability:GetSpecialValueFor("damage_inc_per_unit")
+		self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
+		self.hero_inc_multiplier = self.ability:GetSpecialValueFor("hero_inc_multiplier")
 
-	    self:StartIntervalThink(0.2)
-    end
+		self:StartIntervalThink(0.2)
+	end
 end
 
 function modifier_imba_feral_impulse_aura:OnIntervalThink()
-	if IsServer() then				
+	if IsServer() then
 		-- Set variable
-		local value_increase = 0		
-		
+		local value_increase = 0
+
 		-- Find all units and heroes around caster (Lycan). Ignore Lycan and illusions.	
 		local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										self.caster:GetAbsOrigin(),
-										nil,
-										self.aura_radius,
-										DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-										DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-										FIND_ANY_ORDER,
-										false)
-		
+			self.caster:GetAbsOrigin(),
+			nil,
+			self.aura_radius,
+			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+			FIND_ANY_ORDER,
+			false)
+
 		-- For every unit, increase the value. If it's a hero, double that value increase.		
 		for _, unit in pairs(units) do
 			if unit ~= self.caster then
@@ -1072,12 +1077,12 @@ function modifier_imba_feral_impulse_aura:OnIntervalThink()
 					value_increase = value_increase + 1 * self.hero_inc_multiplier
 				else
 					value_increase = value_increase + 1
-				end		
-			end	
+				end
+			end
 		end
-		
+
 		-- The stacks define how much increase the effects should receive. 		
-		self:SetStackCount(value_increase)	
+		self:SetStackCount(value_increase)
 	end
 end
 
@@ -1093,7 +1098,7 @@ function modifier_imba_feral_impulse_aura:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_imba_feral_impulse_aura:GetAuraRadius()	
+function modifier_imba_feral_impulse_aura:GetAuraRadius()
 	return self.aura_radius
 end
 
@@ -1114,13 +1119,13 @@ function modifier_imba_feral_impulse_aura:GetModifierAura()
 end
 
 function modifier_imba_feral_impulse_aura:IsAura()
-    if IsServer() then
-    	if self.caster:PassivesDisabled() then
-    		return false
-    	end
-	
-	   return true
-    end
+	if IsServer() then
+		if self.caster:PassivesDisabled() then
+			return false
+		end
+
+		return true
+	end
 end
 
 function modifier_imba_feral_impulse_aura:IsAuraActiveOnDeath()
@@ -1139,26 +1144,26 @@ function modifier_imba_feral_impulse_aura:RemoveOnDeath()
 	return false
 end
 
-function  modifier_imba_feral_impulse_aura:IsPurgable()
+function modifier_imba_feral_impulse_aura:IsPurgable()
 	return false
 end
 
 -- Feral Impulse modifier
 modifier_imba_feral_impulse = class({})
 
-function modifier_imba_feral_impulse:OnCreated()	    
+function modifier_imba_feral_impulse:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 	self.aura_buff = "modifier_imba_feral_impulse_aura"
 
-    -- Ability specials
-    self.base_bonus_damage_perc = self.ability:GetSpecialValueFor("base_bonus_damage_perc")
-    self.damage_inc_per_unit = self.ability:GetSpecialValueFor("damage_inc_per_unit")          
-    self.health_regen = self.ability:GetSpecialValueFor("health_regen")
-    self.regen_inc_per_unit = self.ability:GetSpecialValueFor("regen_inc_per_unit")              
+	-- Ability specials
+	self.base_bonus_damage_perc = self.ability:GetSpecialValueFor("base_bonus_damage_perc")
+	self.damage_inc_per_unit = self.ability:GetSpecialValueFor("damage_inc_per_unit")
+	self.health_regen = self.ability:GetSpecialValueFor("health_regen")
+	self.regen_inc_per_unit = self.ability:GetSpecialValueFor("regen_inc_per_unit")
 
-    -- Get the aura stacks
+	-- Get the aura stacks
 	self.feral_impulse_stacks = self.caster:GetModifierStackCount(self.aura_buff, self.caster)
 
 	-- Start thinking
@@ -1166,30 +1171,28 @@ function modifier_imba_feral_impulse:OnCreated()
 end
 
 function modifier_imba_feral_impulse:OnIntervalThink()
-    -- Update the aura stacks
+	-- Update the aura stacks
 	self.feral_impulse_stacks = self.caster:GetModifierStackCount(self.aura_buff, self.caster)
 end
 
-function modifier_imba_feral_impulse:DeclareFunctions()	
-	local decFuncs = {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-					  MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
-	
-	return decFuncs	
+function modifier_imba_feral_impulse:DeclareFunctions()
+	local decFuncs = { MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT }
+
+	return decFuncs
 end
 
-function modifier_imba_feral_impulse:GetModifierBaseDamageOutgoing_Percentage()	 		
+function modifier_imba_feral_impulse:GetModifierBaseDamageOutgoing_Percentage()
 	-- Calculate damage percents
 	local damage_perc_increase = self.base_bonus_damage_perc + self.damage_inc_per_unit * self.feral_impulse_stacks
-	return damage_perc_increase		
+	return damage_perc_increase
 end
 
-function modifier_imba_feral_impulse:GetModifierConstantHealthRegen()	
+function modifier_imba_feral_impulse:GetModifierConstantHealthRegen()
 	-- Calculate HP regeneration
 	local health_increase = self.health_regen + self.regen_inc_per_unit * self.feral_impulse_stacks
-	return health_increase	
+	return health_increase
 end
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1208,7 +1211,7 @@ LinkLuaModifier("modifier_imba_shapeshift_certain_crit", "components/abilities/h
 LinkLuaModifier("modifier_special_bonus_imba_lycan_7", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_shapeshift:GetAbilityTextureName()
-   return "lycan_shapeshift"
+	return "lycan_shapeshift"
 end
 
 -- Need this if player skills talent while dead
@@ -1231,89 +1234,89 @@ function imba_lycan_shapeshift:OnSpellStart()
 	local caster = self:GetCaster()
 	local ability = self
 	local sound_cast = "Hero_Lycan.Shapeshift.Cast"
-	local response_cast = "lycan_lycan_ability_shapeshift_"	
+	local response_cast = "lycan_lycan_ability_shapeshift_"
 	local particle_cast = "particles/units/heroes/hero_lycan/lycan_shapeshift_cast.vpcf"
 	local transform_buff = "modifier_imba_shapeshift_transform"
 	local transform_stun = "modifier_imba_shapeshift_transform_stun"
 
 	-- Ability specials
 	local transformation_time = ability:GetSpecialValueFor("transformation_time")
-	local duration = ability:GetSpecialValueFor("duration")	
-	
+	local duration = ability:GetSpecialValueFor("duration")
+
 	-- Start transformation gesture
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
-	
+
 	-- Play random sound cast 1-10
-	local random_sound = RandomInt(1,10)
+	local random_sound = RandomInt(1, 10)
 	local correct_sound_num = ""
 	if random_sound < 10 then
-		correct_sound_num = "0"..tostring(random_sound)
+		correct_sound_num = "0" .. tostring(random_sound)
 	else
 		correct_sound_num = random_sound
 	end
-	
-	
+
+
 	--Are we concerned about the identity of the dog releaser?
-	local response_cast = response_cast .. correct_sound_num 	
+	local response_cast = response_cast .. correct_sound_num
 	local who_let_the_dogs_out = 10
-	
+
 	if RollPercentage(who_let_the_dogs_out) then
 		EmitSoundOn("Imba.LycanDogsOut", caster)
 	else
 		EmitSoundOn(response_cast, caster)
 	end
-	
+
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
-	
+
 	-- Add cast particle effects
 	local particle_cast_fx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(particle_cast_fx, 0 , caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_cast_fx, 1 , caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_cast_fx, 2 , caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_cast_fx, 3 , caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_cast_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_cast_fx, 1, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_cast_fx, 2, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_cast_fx, 3, caster:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_cast_fx)
 
 	-- Disable Lycan for the transform duration
-	caster:AddNewModifier(caster, ability, transform_stun, {duration = transformation_time})
-	
+	caster:AddNewModifier(caster, ability, transform_stun, { duration = transformation_time })
+
 	-- Wait the transformation time
 	Timers:CreateTimer(transformation_time, function()
 		-- Give Lycan transform buff
-		caster:AddNewModifier(caster, ability, transform_buff, {duration = duration})
-	end)	
+		caster:AddNewModifier(caster, ability, transform_buff, { duration = duration })
+	end)
 end
 
-function imba_lycan_shapeshift:GetCooldown(level)	
+function imba_lycan_shapeshift:GetCooldown(level)
 	local caster = self:GetCaster()
 	local ability = self
 	local ability_level = ability:GetLevel()
-	local base_cooldown = self.BaseClass.GetCooldown( self, level )			
-	local wolfsbane_modifier = "modifier_imba_wolfsbane_lycan"			
-	
+	local base_cooldown = self.BaseClass.GetCooldown(self, level)
+	local wolfsbane_modifier = "modifier_imba_wolfsbane_lycan"
+
 	-- Get amount of Wolfsbane stacks
 	if caster:HasModifier(wolfsbane_modifier) and not caster:PassivesDisabled() then
 		local stacks = caster:GetModifierStackCount(wolfsbane_modifier, caster)
-		
+
 		-- Cooldown can't get lower than 0
 		local final_cooldown = (base_cooldown - stacks)
-		
+
 		if final_cooldown < 0 then
 			final_cooldown = 0
 		end
-		
+
 		return final_cooldown
-	end	
-	
-	return self.BaseClass.GetCooldown( self, level )			
+	end
+
+	return self.BaseClass.GetCooldown(self, level)
 end
 
 -- Transform modifier (stuns Lycan so he can't do anything but channel his transformation)
 modifier_imba_shapeshift_transform_stun = class({})
 
-function modifier_imba_shapeshift_transform_stun:CheckState()	
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state	
+function modifier_imba_shapeshift_transform_stun:CheckState()
+	local state = { [MODIFIER_STATE_STUNNED] = true }
+	return state
 end
 
 function modifier_imba_shapeshift_transform_stun:IsHidden()
@@ -1323,10 +1326,10 @@ end
 -- Transformation buff (changes model to wolf)
 modifier_imba_shapeshift_transform = class({})
 
-function modifier_imba_shapeshift_transform:DeclareFunctions()	
-		local decFuncs = {MODIFIER_PROPERTY_MODEL_CHANGE}
-		
-		return decFuncs	
+function modifier_imba_shapeshift_transform:DeclareFunctions()
+	local decFuncs = { MODIFIER_PROPERTY_MODEL_CHANGE }
+
+	return decFuncs
 end
 
 function modifier_imba_shapeshift_transform:GetModifierModelChange()
@@ -1334,34 +1337,34 @@ function modifier_imba_shapeshift_transform:GetModifierModelChange()
 end
 
 function modifier_imba_shapeshift_transform:OnCreated()
-    if IsServer() then
-    	self.caster = self:GetCaster()
-    	self.ability = self:GetAbility()
-    	self.aura = "modifier_imba_shapeshift_aura"	 
+	if IsServer() then
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.aura = "modifier_imba_shapeshift_aura"
 
-    	if self.caster and not self.caster:HasModifier(self.aura) then
-    		self.caster:AddNewModifier(self.caster, self.ability, self.aura, {})
-    	end	
-    end
+		if self.caster and not self.caster:HasModifier(self.aura) then
+			self.caster:AddNewModifier(self.caster, self.ability, self.aura, {})
+		end
+	end
 end
 
 function modifier_imba_shapeshift_transform:OnDestroy()
-    if IsServer() then    	
-    	local response_sound = "lycan_lycan_ability_revert_0" ..RandomInt(1,3)
-    	local particle_revert = "particles/units/heroes/hero_lycan/lycan_shapeshift_revert.vpcf"    	
-    	local certain_crit_buff = "modifier_imba_shapeshift_certain_crit"
-    	
-    	-- Play one of the revert responses
-    	EmitSoundOn(response_sound, self.caster)
-    	
-    	local particle_revert_fx = ParticleManager:CreateParticle(particle_revert, PATTACH_ABSORIGIN, self.caster)
-    	ParticleManager:SetParticleControl(particle_revert_fx, 0, self.caster:GetAbsOrigin())
-    	ParticleManager:SetParticleControl(particle_revert_fx, 3, self.caster:GetAbsOrigin())
-    	
-    	if self.caster:HasModifier(self.aura) then
-    		self.caster:RemoveModifierByName(self.aura)
-    	end		
-    end
+	if IsServer() then
+		local response_sound = "lycan_lycan_ability_revert_0" .. RandomInt(1, 3)
+		local particle_revert = "particles/units/heroes/hero_lycan/lycan_shapeshift_revert.vpcf"
+		local certain_crit_buff = "modifier_imba_shapeshift_certain_crit"
+
+		-- Play one of the revert responses
+		EmitSoundOn(response_sound, self.caster)
+
+		local particle_revert_fx = ParticleManager:CreateParticle(particle_revert, PATTACH_ABSORIGIN, self.caster)
+		ParticleManager:SetParticleControl(particle_revert_fx, 0, self.caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_revert_fx, 3, self.caster:GetAbsOrigin())
+
+		if self.caster:HasModifier(self.aura) then
+			self.caster:RemoveModifierByName(self.aura)
+		end
+	end
 end
 
 function modifier_imba_shapeshift_transform:IsHidden()
@@ -1380,9 +1383,9 @@ end
 modifier_imba_shapeshift_aura = class({})
 
 function modifier_imba_shapeshift_aura:OnCreated()
-    if IsServer() then
-        self.caster = self:GetCaster()
-    end
+	if IsServer() then
+		self.caster = self:GetCaster()
+	end
 end
 
 function modifier_imba_shapeshift_aura:AllowIllusionDuplicate()
@@ -1410,7 +1413,7 @@ function modifier_imba_shapeshift_aura:GetModifierAura()
 end
 
 function modifier_imba_shapeshift_aura:IsAura()
-	return true	
+	return true
 end
 
 function modifier_imba_shapeshift_aura:IsPurgable()
@@ -1422,108 +1425,45 @@ function modifier_imba_shapeshift_aura:IsHidden()
 end
 
 function modifier_imba_shapeshift_aura:GetAuraEntityReject(target)
-    if IsServer() then	    	
-    	if target:IsRealHero() then
-    		if target == self.caster then		
-    			return false
-    		end
-    	end
-    	
-    	if target:GetOwnerEntity() then
-    		if target:GetOwnerEntity() == self.caster then
-    			return false
-    		end
-    	end	
-    		
-    	return true
-    end
+	if IsServer() then
+		if target:IsRealHero() then
+			if target == self.caster then
+				return false
+			end
+		end
+
+		if target:GetOwnerEntity() then
+			if target:GetOwnerEntity() == self.caster then
+				return false
+			end
+		end
+
+		return true
+	end
 end
 
 -- Speed/crit modifier
 modifier_imba_shapeshift = class({})
 
-function modifier_imba_shapeshift:OnCreated()	
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
-	self.parent = self:GetParent()    
+function modifier_imba_shapeshift:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
 	self.certain_crit_buff = "modifier_imba_shapeshift_certain_crit"
-    self.transform_buff = "modifier_imba_shapeshift_transform"
+	self.transform_buff = "modifier_imba_shapeshift_transform"
 
-    -- Ability specials
-    self.night_vision_bonus = self.ability:GetSpecialValueFor("night_vision_bonus")
-    self.absolute_speed = self.ability:GetSpecialValueFor("absolute_speed")
-    self.crit_chance = self.ability:GetTalentSpecialValueFor("crit_chance")
-    self.crit_damage = self.ability:GetSpecialValueFor("crit_damage")       
-    self.certain_crit_cooldown = self.ability:GetSpecialValueFor("certain_crit_cooldown")
-		
-    if IsServer() then
+	-- Ability specials
+	self.night_vision_bonus = self.ability:GetSpecialValueFor("night_vision_bonus")
+	self.absolute_speed = self.ability:GetSpecialValueFor("absolute_speed")
+	self.crit_chance = self.ability:GetTalentSpecialValueFor("crit_chance")
+	self.crit_damage = self.ability:GetSpecialValueFor("crit_damage")
+	self.certain_crit_cooldown = self.ability:GetSpecialValueFor("certain_crit_cooldown")
+
+	if IsServer() then
 		if not self.parent:HasModifier(self.certain_crit_buff) then
 			self.parent:AddNewModifier(self.caster, self.ability, self.certain_crit_buff, {})
 		end
-	end	
-end
-
-function modifier_imba_shapeshift:OnDestroy()
-	if IsServer() then		
-		if self.parent:HasModifier(self.certain_crit_buff) then
-			self.parent:RemoveModifierByName(self.certain_crit_buff)
-		end
-	end	
-end
-
-function modifier_imba_shapeshift:GetEffectName()
-	return "particles/units/heroes/hero_lycan/lycan_shapeshift_buff.vpcf"
-end
-
-function modifier_imba_shapeshift:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-
-function modifier_imba_shapeshift:DeclareFunctions()
-		local decFuncs = {MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
-						  MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
-						  MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-						  --MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT  -- #7 TALENT: Bonus movespeed property
-						}		
-		return decFuncs	
-end
-
-function modifier_imba_shapeshift:GetBonusNightVision()	
-	return self.night_vision_bonus
-end
-
-function modifier_imba_shapeshift:GetModifierMoveSpeed_AbsoluteMin()
-	-- #7 TALENT: Increases the movement speed cap of units affected by Shapeshift further
-	if self.caster:HasTalent("special_bonus_imba_lycan_7") then
-		return self.caster:FindTalentValue("special_bonus_imba_lycan_7", "max_movespeed")
-	else  	
-		return self.absolute_speed
-	end
-end
-
-function modifier_imba_shapeshift:GetModifierPreAttack_CriticalStrike()
-	if IsServer() then				
-		-- Check for certain crit modifier, remove and start cooldown timer
-		if self.parent:HasModifier(self.certain_crit_buff) then			
-			self.parent:RemoveModifierByName(self.certain_crit_buff)	
-			
-			-- Renews the target's Certain Crit modifier if Lycan is still in his Shapeshift form.
-			Timers:CreateTimer(self.certain_crit_cooldown, function()
-				if self.caster:HasModifier(self.transform_buff) then
-					self.parent:AddNewModifier(self.caster, self.ability, self.certain_crit_buff, {})
-				end
-			end)
-			
-			return self.crit_damage		
-		end
-		
-		-- Roll a random for critical		
-		if RollPseudoRandom(self.crit_chance, self) then		
-			return self.crit_damage
-		end
-		
-		return nil
 	end
 end
 
@@ -1535,6 +1475,68 @@ function modifier_imba_shapeshift:OnDestroy()
 	end
 end
 
+function modifier_imba_shapeshift:GetEffectName()
+	return "particles/units/heroes/hero_lycan/lycan_shapeshift_buff.vpcf"
+end
+
+function modifier_imba_shapeshift:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_shapeshift:DeclareFunctions()
+	local decFuncs = { MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		--MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT  -- #7 TALENT: Bonus movespeed property
+	}
+	return decFuncs
+end
+
+function modifier_imba_shapeshift:GetBonusNightVision()
+	return self.night_vision_bonus
+end
+
+function modifier_imba_shapeshift:GetModifierMoveSpeed_AbsoluteMin()
+	-- #7 TALENT: Increases the movement speed cap of units affected by Shapeshift further
+	if self.caster:HasTalent("special_bonus_imba_lycan_7") then
+		return self.caster:FindTalentValue("special_bonus_imba_lycan_7", "max_movespeed")
+	else
+		return self.absolute_speed
+	end
+end
+
+function modifier_imba_shapeshift:GetModifierPreAttack_CriticalStrike()
+	if IsServer() then
+		-- Check for certain crit modifier, remove and start cooldown timer
+		if self.parent:HasModifier(self.certain_crit_buff) then
+			self.parent:RemoveModifierByName(self.certain_crit_buff)
+
+			-- Renews the target's Certain Crit modifier if Lycan is still in his Shapeshift form.
+			Timers:CreateTimer(self.certain_crit_cooldown, function()
+				if self.caster:HasModifier(self.transform_buff) then
+					self.parent:AddNewModifier(self.caster, self.ability, self.certain_crit_buff, {})
+				end
+			end)
+
+			return self.crit_damage
+		end
+
+		-- Roll a random for critical		
+		if RollPseudoRandom(self.crit_chance, self) then
+			return self.crit_damage
+		end
+
+		return nil
+	end
+end
+
+function modifier_imba_shapeshift:OnDestroy()
+	if IsServer() then
+		if self.parent:HasModifier(self.certain_crit_buff) then
+			self.parent:RemoveModifierByName(self.certain_crit_buff)
+		end
+	end
+end
 
 -- certain crit buff
 modifier_imba_shapeshift_certain_crit = class({})
@@ -1550,7 +1552,6 @@ end
 function modifier_imba_shapeshift_certain_crit:IsDebuff()
 	return false
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1568,7 +1569,7 @@ LinkLuaModifier("modifier_imba_wolfsbane_lycan_prevent", "components/abilities/h
 LinkLuaModifier("modifier_imba_wolfsbane_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_wolfsbane:GetAbilityTextureName()
-   return "wolfsbane"
+	return "wolfsbane"
 end
 
 function imba_lycan_wolfsbane:IsInnateAbility()
@@ -1581,22 +1582,22 @@ function imba_lycan_wolfsbane:OnUpgrade()
 	local ability = self
 	local aura = "modifier_imba_wolfsbane_aura"
 	local lycan_modifier = "modifier_imba_wolfsbane_lycan"
-	
+
 	if not caster:HasModifier(aura) then
 		caster:AddNewModifier(caster, ability, aura, {})
-	end		
-	
+	end
+
 	if not caster:HasModifier(lycan_modifier) then
 		caster:AddNewModifier(caster, ability, lycan_modifier, {})
-	end	
+	end
 end
 
 -- Wolfsbane's aura
 modifier_imba_wolfsbane_aura = class({})
 
 function modifier_imba_wolfsbane_aura:OnCreated()
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
 end
 
 function modifier_imba_wolfsbane_aura:DestroyOnExpire()
@@ -1631,7 +1632,7 @@ function modifier_imba_wolfsbane_aura:IsAura()
 	if self.caster:PassivesDisabled() then
 		return false
 	end
-	
+
 	return true
 end
 
@@ -1651,75 +1652,74 @@ function modifier_imba_wolfsbane_aura:RemoveOnDeath()
 	return false
 end
 
-function  modifier_imba_wolfsbane_aura:IsPurgable()
+function modifier_imba_wolfsbane_aura:IsPurgable()
 	return false
 end
 
-function modifier_imba_wolfsbane_aura:GetAuraEntityReject(target)	
+function modifier_imba_wolfsbane_aura:GetAuraEntityReject(target)
 	local scepter = self.caster:HasScepter()
-	
+
 	-- Reset variable	
 	local wolf_found
-	
+
 	-- Deny caster, as Lycan has his own modifier
 	if target == self.caster then
 		return true
 	end
-	
+
 	-- Define wolves name
-	local wolf_name = "npc_lycan_wolf"	 
+	local wolf_name = "npc_lycan_wolf"
 	local full_name = ""
-	
+
 	-- Cycle through wolves names to get a match
-	 for i= 1, 6 do
-		full_name = wolf_name..i
+	for i = 1, 6 do
+		full_name = wolf_name .. i
 		if full_name == target:GetUnitName() then
-			 wolf_found = true
-		 end	
-	 end	
-	
+			wolf_found = true
+		end
+	end
+
 	-- Accept aura if this is a wolf
 	if wolf_found then
 		return false --DO NOT REJECT aura from wolves
 	end
-	
+
 	if scepter then -- Scepter affects all units and heroes globally and grants them the aura
 		return false
 	end
-	
+
 	return true
 end
-
 
 -- Wolfsbane modifier (wolves or anyone if Lycan holds a scepter)
 modifier_imba_wolfsbane_wolves = class({})
 
-function modifier_imba_wolfsbane_wolves:OnCreated()	
-        -- Ability properties
-        self.caster = self:GetCaster()
-        self.ability = self:GetAbility()
-        self.wolf = self:GetParent()		
+function modifier_imba_wolfsbane_wolves:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.wolf = self:GetParent()
 
-        -- Ability specials
-        self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
+	-- Ability specials
+	self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
 
-    if IsServer() then
-        -- Start thinking
-        self:StartIntervalThink(0.5)
-	end	
+	if IsServer() then
+		-- Start thinking
+		self:StartIntervalThink(0.5)
+	end
 end
 
 function modifier_imba_wolfsbane_wolves:OnRefresh()
-    self:OnCreated()
+	self:OnCreated()
 end
 
-function modifier_imba_wolfsbane_wolves:OnIntervalThink()				
+function modifier_imba_wolfsbane_wolves:OnIntervalThink()
 	if self.caster:HasModifier("modifier_imba_wolfsbane_lycan") then
 		self:SetStackCount(self.caster:FindModifierByName("modifier_imba_wolfsbane_lycan"):GetStackCount())
 	end
 end
 
-function modifier_imba_wolfsbane_wolves:IsHidden()	
+function modifier_imba_wolfsbane_wolves:IsHidden()
 	return false
 end
 
@@ -1731,19 +1731,19 @@ function modifier_imba_wolfsbane_wolves:RemoveOnDeath()
 	return false
 end
 
-function modifier_imba_wolfsbane_wolves:DeclareFunctions()	
+function modifier_imba_wolfsbane_wolves:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-	}	
+	}
 end
 
-function modifier_imba_wolfsbane_wolves:GetModifierPreAttack_BonusDamage()		
-	local stacks = self:GetStackCount()	
-	
+function modifier_imba_wolfsbane_wolves:GetModifierPreAttack_BonusDamage()
+	local stacks = self:GetStackCount()
+
 	if self:GetParent():PassivesDisabled() then
 		return nil
-	end	
-	
+	end
+
 	return self.damage_bonus * stacks
 end
 
@@ -1751,128 +1751,127 @@ end
 modifier_imba_wolfsbane_lycan = class({})
 
 function modifier_imba_wolfsbane_lycan:OnCreated()
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
-    self.aura = "modifier_imba_wolfsbane_aura"
-    self.prevent_modifier = "modifier_imba_wolfsbane_lycan_prevent"
-    self.sound_howl = "Imba.LycanWolfsbane" 
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.aura = "modifier_imba_wolfsbane_aura"
+	self.prevent_modifier = "modifier_imba_wolfsbane_lycan_prevent"
+	self.sound_howl = "Imba.LycanWolfsbane"
 
-    -- Ability specials
-    self.radius = self.ability:GetSpecialValueFor("radius")
-    self.minimum_allies_required = self.ability:GetSpecialValueFor("minimum_allies_required")
-    self.prevent_modifier_duration = self.ability:GetSpecialValueFor("prevent_modifier_duration")
-    self.scepter_radius = self.ability:GetSpecialValueFor("scepter_radius")
-    self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
+	-- Ability specials
+	self.radius = self.ability:GetSpecialValueFor("radius")
+	self.minimum_allies_required = self.ability:GetSpecialValueFor("minimum_allies_required")
+	self.prevent_modifier_duration = self.ability:GetSpecialValueFor("prevent_modifier_duration")
+	self.scepter_radius = self.ability:GetSpecialValueFor("scepter_radius")
+	self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
 
-    -- Start thinking
-    self:StartIntervalThink(0.5)
+	-- Start thinking
+	self:StartIntervalThink(0.5)
 end
 
-function modifier_imba_wolfsbane_lycan:DeclareFunctions()	
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-					  MODIFIER_EVENT_ON_HERO_KILLED,
-					  MODIFIER_PROPERTY_TOOLTIP
-					}
-	
-	return decFuncs	
+function modifier_imba_wolfsbane_lycan:DeclareFunctions()
+	local decFuncs = { MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_EVENT_ON_HERO_KILLED,
+		MODIFIER_PROPERTY_TOOLTIP
+	}
+
+	return decFuncs
 end
 
-function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
-	if IsServer() then		
-		local killed_hero = keys.target		
+function modifier_imba_wolfsbane_lycan:OnHeroKilled(keys)
+	if IsServer() then
+		local killed_hero = keys.target
 		local scepter = self.caster:HasScepter()
-		
+
 		if self.caster:PassivesDisabled() then
 			return nil
 		end
-		
+
 		if self.caster:GetTeamNumber() ~= killed_hero:GetTeamNumber() then -- an enemy was killed
-			
 			-- Search to see if Lycan is nearby, initialize variables
 			local lycan_nearby = false
 			local should_grants_stacks = false
-			
+
 			local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
-											killed_hero:GetAbsOrigin(),
-											nil,
-											self.radius,
-											DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-											DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-											DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-											FIND_ANY_ORDER,
-											false)
-			
+				killed_hero:GetAbsOrigin(),
+				nil,
+				self.radius,
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+				FIND_ANY_ORDER,
+				false)
+
 			-- Look for Lycan
-			for _, unit in pairs(units) do 
+			for _, unit in pairs(units) do
 				if unit == self.caster then -- Lycan was found
-					lycan_nearby = true					
+					lycan_nearby = true
 				end
 			end
-			
+
 			-- If Lycan is present nearby and at least the minimum allies required are present, give stacks			
-			if #units >= self.minimum_allies_required + 1 and lycan_nearby and self.caster:HasModifier(self.aura) and not self.caster:HasModifier(self.prevent_modifier) then			
+			if #units >= self.minimum_allies_required + 1 and lycan_nearby and self.caster:HasModifier(self.aura) and not self.caster:HasModifier(self.prevent_modifier) then
 				should_grants_stacks = true
 			end
-			
+
 			-- If Lycan has a scepter and did not benefit from the kill, check for nearby allies and give stacks if enough are present
 			if scepter then
-					local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
-    												killed_hero:GetAbsOrigin(),
-    												nil,
-    												self.scepter_radius,
-    												DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-    												DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-    												DOTA_UNIT_TARGET_FLAG_NONE,
-    												FIND_ANY_ORDER,
-    												false)
-													
-				if #units >= self.minimum_allies_required and self.caster:HasModifier(self.aura) and not self.caster:HasModifier(self.prevent_modifier) then			
+				local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
+					killed_hero:GetAbsOrigin(),
+					nil,
+					self.scepter_radius,
+					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					DOTA_UNIT_TARGET_FLAG_NONE,
+					FIND_ANY_ORDER,
+					false)
+
+				if #units >= self.minimum_allies_required and self.caster:HasModifier(self.aura) and not self.caster:HasModifier(self.prevent_modifier) then
 					should_grants_stacks = true
 				end
 			end
-			
+
 			if should_grants_stacks then
 				-- Play howl sound
-				EmitSoundOn(self.sound_howl, self.caster)				
+				EmitSoundOn(self.sound_howl, self.caster)
 				self:IncrementStackCount()
-				self.caster:AddNewModifier(self.caster, self.ability, self.prevent_modifier, {duration = self.prevent_modifier_duration})
+				self.caster:AddNewModifier(self.caster, self.ability, self.prevent_modifier, { duration = self.prevent_modifier_duration })
 
 				-- #8 TALENT: Searches through all of Lycan's unit and gives them a buff modifier
 				if self.caster:HasTalent("special_bonus_imba_lycan_8") then
 					local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
-														 self.caster:GetAbsOrigin(),
-														 nil, 
-														 FIND_UNITS_EVERYWHERE,  		-- Global 
-														 DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
-														 DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, 
-														 DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, 
-														 FIND_ANY_ORDER,
-														 false)
+						self.caster:GetAbsOrigin(),
+						nil,
+						FIND_UNITS_EVERYWHERE, -- Global
+						DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+						DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+						DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+						FIND_ANY_ORDER,
+						false)
 
-					for _,unit in pairs(units) do
+					for _, unit in pairs(units) do
 						-- Give Lycan's units the buff
 						if unit:GetOwnerEntity() == self.caster then
-							unit:AddNewModifier(self.caster, self.ability, "modifier_imba_wolfsbane_talent", {duration = self.caster:FindTalentValue("special_bonus_imba_lycan_8", "duration")})
+							unit:AddNewModifier(self.caster, self.ability, "modifier_imba_wolfsbane_talent", { duration = self.caster:FindTalentValue("special_bonus_imba_lycan_8", "duration") })
 						end
 						-- Give Lycan the buff
-						self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_wolfsbane_talent", {duration = self.caster:FindTalentValue("special_bonus_imba_lycan_8", "duration")})
+						self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_wolfsbane_talent", { duration = self.caster:FindTalentValue("special_bonus_imba_lycan_8", "duration") })
 					end
-				end	
+				end
 			end
-		end		
-	end	
+		end
+	end
 end
 
 function modifier_imba_wolfsbane_lycan:GetModifierPreAttack_BonusDamage()
 	local stacks = self:GetStackCount()
 
-	local damage_bonus = self.damage_bonus 
-	
+	local damage_bonus = self.damage_bonus
+
 	if self.caster:PassivesDisabled() then
 		return nil
 	end
-	
+
 	return damage_bonus * stacks
 end
 
@@ -1912,24 +1911,26 @@ modifier_imba_wolfsbane_talent = modifier_imba_wolfsbane_talent or class({})
 
 -- Modifier properties
 function modifier_imba_wolfsbane_talent:IsHidden() return false end
-function modifier_imba_wolfsbane_talent:IsPurgable()	return false end
+
+function modifier_imba_wolfsbane_talent:IsPurgable() return false end
+
 function modifier_imba_wolfsbane_talent:IsDebuff() return false end
 
 function modifier_imba_wolfsbane_talent:OnCreated()
-	local caster 	=	self:GetCaster()
+	local caster           = self:GetCaster()
 	-- Bonuses values
-	self.movespeed_bonus	=	caster:FindTalentValue("special_bonus_imba_lycan_8", "bonus_movespeed_pct")
-	self.damage_bonus		=	caster:FindTalentValue("special_bonus_imba_lycan_8", "bonus_damage_pct")
-	self.attackspeed_bonus	=	caster:FindTalentValue("special_bonus_imba_lycan_8", "bonus_attackspeed")	
+	self.movespeed_bonus   = caster:FindTalentValue("special_bonus_imba_lycan_8", "bonus_movespeed_pct")
+	self.damage_bonus      = caster:FindTalentValue("special_bonus_imba_lycan_8", "bonus_damage_pct")
+	self.attackspeed_bonus = caster:FindTalentValue("special_bonus_imba_lycan_8", "bonus_attackspeed")
 end
 
 function modifier_imba_wolfsbane_talent:DeclareFunctions()
-	local funcs ={
-	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-	MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-}
-	return funcs 
+	local funcs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
+	return funcs
 end
 
 function modifier_imba_wolfsbane_talent:GetModifierMoveSpeedBonus_Percentage()
@@ -1943,7 +1944,6 @@ end
 function modifier_imba_wolfsbane_talent:GetModifierAttackSpeedBonus_Constant()
 	return self.attackspeed_bonus
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1959,7 +1959,7 @@ LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch", "components/abiliti
 LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch_damage", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_wicked_crunch:GetAbilityTextureName()
-   return "lycan_summon_wolves_critical_strike"
+	return "lycan_summon_wolves_critical_strike"
 end
 
 function imba_summoned_wolf_wicked_crunch:GetIntrinsicModifierName()
@@ -1970,16 +1970,16 @@ end
 modifier_imba_summoned_wolf_wicked_crunch = class({})
 
 function modifier_imba_summoned_wolf_wicked_crunch:OnCreated()
-    if IsServer() then
-        -- Ability properties
-        self.caster = self:GetCaster()
-        self.ability = self:GetAbility()   
-        self.debuff = "modifier_imba_summoned_wolf_wicked_crunch_debuff"
-        self.certain_crit = "modifier_imba_shapeshift_certain_crit"    
+	if IsServer() then
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.debuff = "modifier_imba_summoned_wolf_wicked_crunch_debuff"
+		self.certain_crit = "modifier_imba_shapeshift_certain_crit"
 
-        -- Ability specials 
-		self.duration = self.ability:GetSpecialValueFor("duration")     
-    end
+		-- Ability specials
+		self.duration = self.ability:GetSpecialValueFor("duration")
+	end
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch:GetAttributes()
@@ -1987,85 +1987,86 @@ function modifier_imba_summoned_wolf_wicked_crunch:GetAttributes()
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch:IsDebuff()
-	return false	
+	return false
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch:IsHidden()
-	return true	
+	return true
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch:IsPurgable()
-	return false	
+	return false
 end
 
-function modifier_imba_summoned_wolf_wicked_crunch:DeclareFunctions()	
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-	
-	return decFuncs	
+function modifier_imba_summoned_wolf_wicked_crunch:DeclareFunctions()
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
+
+	return decFuncs
 end
 
-function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded (keys)	
-	if IsServer() then		
-		local target = keys.target		
+function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded(keys)
+	if IsServer() then
+		local target = keys.target
 		local owner = nil
-		
+
 		-- Set wolves' owner
 		if self.caster:GetOwnerEntity() then -- Some weird error, might be because of wolves dying from an attack on them
 			owner = self.caster:GetOwnerEntity() -- Get Lycan, or Rubick if stolen			
-		end		
-		
+		end
+
 		-- If wolves are the attackers, grant modifier or increment stacks if already present.
 		if self.caster == keys.attacker then
 			if keys.attacker:PassivesDisabled() then
 				return nil
 			end
-			
+
 			-- If wolves are attacking a building, do nothing
 			if target:IsBuilding() then
 				return nil
 			end
-			
-			-- Inflict modifier on enemy.
-			target:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.duration * (1 - target:GetStatusResistance())})
-            target:AddNewModifier(self.caster, self.ability, "modifier_imba_summoned_wolf_wicked_crunch_damage", {duration = self.duration * (1 - target:GetStatusResistance())})
 
+			-- Inflict modifier on enemy.
+			target:AddNewModifier(self.caster, self.ability, self.debuff, { duration = self.duration * (1 - target:GetStatusResistance()) })
+			target:AddNewModifier(self.caster, self.ability, "modifier_imba_summoned_wolf_wicked_crunch_damage", { duration = self.duration * (1 - target:GetStatusResistance()) })
 		end
-		
+
 		-- If Lycan attacked, consume all stacks and deal bonus damage if present
-		if owner and owner == keys.attacker and not owner.has_attacked_for_many_wolves_interaction then	
+		if owner and owner == keys.attacker and not owner.has_attacked_for_many_wolves_interaction then
 			if target:HasModifier(self.debuff) then
-				local damage_bonus_per_stack = self.ability:GetSpecialValueFor("damage_bonus_per_stack") 
-        		local max_stacks = self.ability:GetSpecialValueFor("max_stacks")
-				
+				local damage_bonus_per_stack = self.ability:GetSpecialValueFor("damage_bonus_per_stack")
+				local max_stacks = self.ability:GetSpecialValueFor("max_stacks")
+
 				-- Refresh the debuff modifier
-				target:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.ability:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), lycan_attack = true})
+				target:AddNewModifier(self.caster, self.ability, self.debuff, { duration = self.ability:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()), lycan_attack = true })
 
 				-- Consumes damage debuff and deals damage
 				local bonus_damage_modifier = target:FindModifierByName("modifier_imba_summoned_wolf_wicked_crunch_damage")
 				if bonus_damage_modifier then
-					local bonus_damage_stacks	= #bonus_damage_modifier.stacks_table
-					local damage = damage_bonus_per_stack * bonus_damage_stacks	
-					if bonus_damage_stacks	 >= max_stacks then
+					local bonus_damage_stacks = #bonus_damage_modifier.stacks_table
+					local damage = damage_bonus_per_stack * bonus_damage_stacks
+					if bonus_damage_stacks >= max_stacks then
 						SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage, nil)
 					end
 					-- Deal bonus damage
-					local damageTable = {victim = target,
-										attacker = owner,
-										damage = damage,
-										damage_type = DAMAGE_TYPE_PHYSICAL}
+					local damageTable = {
+						victim = target,
+						attacker = owner,
+						damage = damage,
+						damage_type = DAMAGE_TYPE_PHYSICAL
+					}
 
 					ApplyDamage(damageTable)
 
 					-- Consume the debuff
 					bonus_damage_modifier:Destroy()
-				end		
+				end
 			end
-				
+
 			-- Fixes having this activate for each wolf
-			owner.has_attacked_for_many_wolves_interaction = true	
-			Timers:CreateTimer(FrameTime(), function() 
+			owner.has_attacked_for_many_wolves_interaction = true
+			Timers:CreateTimer(FrameTime(), function()
 				owner.has_attacked_for_many_wolves_interaction = false
-			end)	
+			end)
 		end
 	end
 end
@@ -2073,13 +2074,13 @@ end
 -- Crunch debuff
 modifier_imba_summoned_wolf_wicked_crunch_debuff = class({})
 
-function modifier_imba_summoned_wolf_wicked_crunch_debuff:OnCreated(params)	
+function modifier_imba_summoned_wolf_wicked_crunch_debuff:OnCreated(params)
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()		
+		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		self.duration = params.duration										
-		
+		self.duration = params.duration
+
 		if not params.lycan_attack then
 			-- Initialize table
 			self.stacks_table = {}
@@ -2087,18 +2088,17 @@ function modifier_imba_summoned_wolf_wicked_crunch_debuff:OnCreated(params)
 			if not params.lycan_attack then
 				-- Insert stack
 				table.insert(self.stacks_table, GameRules:GetGameTime())
-			end								
+			end
 
 			-- Start thinking
 			self:StartIntervalThink(0.1)
 
 			self.owner = self.caster:GetOwnerEntity()
-			
-			-- #6 Talent (wolves generate two stacks per attack)            
-       		 if self.owner:HasTalent("special_bonus_imba_lycan_6") and not params.lycan_attack then
+
+			-- #6 Talent (wolves generate two stacks per attack)
+			if self.owner:HasTalent("special_bonus_imba_lycan_6") and not params.lycan_attack then
 				table.insert(self.stacks_table, GameRules:GetGameTime())
 			end
-
 		end
 	end
 	-- Ability specials
@@ -2110,39 +2110,37 @@ end
 function modifier_imba_summoned_wolf_wicked_crunch_debuff:OnRefresh(params)
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()		
+		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		self.duration = params.duration										
+		self.duration = params.duration
 		self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")
 		self.owner = self.caster:GetOwnerEntity()
 
 		-- #6 Talent: Double max stacks count
 		if self.owner:HasTalent("special_bonus_imba_lycan_6") then
-			self.max_stacks = self.max_stacks * self.owner:FindTalentValue("special_bonus_imba_lycan_6") * 0.01
+			self.max_stacks = self.max_stacks * self.owner:FindTalentValue("special_bonus_imba_lycan_6") / 100
 		end
 
 		if not params.lycan_attack then
-
 			-- Insert stack
 			table.insert(self.stacks_table, GameRules:GetGameTime())
 			-- Remove old stack if limit has been reached
 			if #self.stacks_table > self.max_stacks then
 				table.remove(self.stacks_table, 1)
-			end								
+			end
 
-			
-			-- #6 Talent (wolves generate two stacks per attack)            
-      	 	if self.owner:HasTalent("special_bonus_imba_lycan_6") then
+
+			-- #6 Talent (wolves generate two stacks per attack)
+			if self.owner:HasTalent("special_bonus_imba_lycan_6") then
 				table.insert(self.stacks_table, GameRules:GetGameTime())
-       	 	end
+			end
 			-- Remove old stack if limit has been reached
 			if #self.stacks_table > self.max_stacks then
 				table.remove(self.stacks_table, 1)
-			end	
-
-		else 
+			end
+		else
 			-- Refresh stacks
-			for i=1, #self.stacks_table do 
+			for i = 1, #self.stacks_table do
 				table.remove(self.stacks_table, i)
 				table.insert(self.stacks_table, GameRules:GetGameTime())
 			end
@@ -2157,29 +2155,28 @@ end
 function modifier_imba_summoned_wolf_wicked_crunch_debuff:OnIntervalThink()
 	if IsServer() then
 		-- Check if there are any stacks left on the table
-        if #self.stacks_table > 0 then
+		if #self.stacks_table > 0 then
+			-- For each stack, check if it is past its expiration time. If it is, remove it from the table
+			for i = 1, #self.stacks_table do
+				if self.stacks_table[i] then
+					if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
+						if self.stacks_table then
+							table.remove(self.stacks_table, i)
+						end
+					end
+				else
+					i = #self.stacks_table
+				end
+			end
 
-            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
-            for i = 1, #self.stacks_table do
-            	if self.stacks_table[i] then
-             	   if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
-                		if self.stacks_table then 
-                   			table.remove(self.stacks_table, i)
-                   		end
-                   	end
-                else
-                	i = #self.stacks_table
-                end
-            end
+			-- If after removing the stacks, the table is empty, remove the modifier.
+			if #self.stacks_table == 0 then
+				self:Destroy()
 
-            -- If after removing the stacks, the table is empty, remove the modifier.
-            if #self.stacks_table == 0 then
-                self:Destroy()
-
-            -- Otherwise, set its stack count
-            else
-                self:SetStackCount(#self.stacks_table)
-            end
+				-- Otherwise, set its stack count
+			else
+				self:SetStackCount(#self.stacks_table)
+			end
 		end
 	end
 end
@@ -2197,7 +2194,7 @@ function modifier_imba_summoned_wolf_wicked_crunch_debuff:GetTexture()
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch_debuff:IsDebuff()
-	return true	
+	return true
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch_debuff:IsHidden()
@@ -2209,13 +2206,13 @@ function modifier_imba_summoned_wolf_wicked_crunch_debuff:IsPurgable()
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-					MODIFIER_PROPERTY_PROVIDES_FOW_POSITION} -- #5 TALENT: FOW position property
-		
-	return decFuncs	
+	local decFuncs = { MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION } -- #5 TALENT: FOW position property
+
+	return decFuncs
 end
 
-function modifier_imba_summoned_wolf_wicked_crunch_debuff:GetModifierAttackSpeedBonus_Constant()	
+function modifier_imba_summoned_wolf_wicked_crunch_debuff:GetModifierAttackSpeedBonus_Constant()
 	return (self.attack_speed_reduction * (-1) * self:GetStackCount())
 end
 
@@ -2239,14 +2236,16 @@ end
 modifier_imba_summoned_wolf_wicked_crunch_damage = modifier_imba_summoned_wolf_wicked_crunch_damage or class({})
 
 -- Modifier properties
-function modifier_imba_summoned_wolf_wicked_crunch_damage:IsDebuff() 	return true end
-function modifier_imba_summoned_wolf_wicked_crunch_damage:IsHidden() 	return false end
-function modifier_imba_summoned_wolf_wicked_crunch_damage:IsPurgable() 	return true end
+function modifier_imba_summoned_wolf_wicked_crunch_damage:IsDebuff() return true end
 
-function modifier_imba_summoned_wolf_wicked_crunch_damage:OnCreated(params)	
+function modifier_imba_summoned_wolf_wicked_crunch_damage:IsHidden() return false end
+
+function modifier_imba_summoned_wolf_wicked_crunch_damage:IsPurgable() return true end
+
+function modifier_imba_summoned_wolf_wicked_crunch_damage:OnCreated(params)
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()		
+		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.duration = params.duration
 
@@ -2257,93 +2256,91 @@ function modifier_imba_summoned_wolf_wicked_crunch_damage:OnCreated(params)
 			if not params.lycan_attack then
 				-- Insert stack
 				table.insert(self.stacks_table, GameRules:GetGameTime())
-			end								
+			end
 
 			-- Start thinking
 			self:StartIntervalThink(0.1)
 
 			self.owner = self.caster:GetOwnerEntity()
-			
-			-- #6 Talent (wolves generate two stacks per attack)            
-       		 if self.owner:HasTalent("special_bonus_imba_lycan_6") and not params.lycan_attack then
-				table.insert(self.stacks_table, GameRules:GetGameTime())
-       	 	end
 
+			-- #6 Talent (wolves generate two stacks per attack)
+			if self.owner:HasTalent("special_bonus_imba_lycan_6") and not params.lycan_attack then
+				table.insert(self.stacks_table, GameRules:GetGameTime())
+			end
 		end
 	end
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch_damage:OnRefresh(params)
-	if IsServer() then	
+	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()		
+		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.attack_speed_reduction = self.ability:GetSpecialValueFor("attack_speed_reduction")
 		self.duration = params.duration
 
 		-- Ability specials												
-		self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")	
+		self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")
 
 		-- #6 Talent: Double max stacks count
 		if self.owner:HasTalent("special_bonus_imba_lycan_6") then
-			self.max_stacks = self.max_stacks * self.owner:FindTalentValue("special_bonus_imba_lycan_6") * 0.01
+			self.max_stacks = self.max_stacks * self.owner:FindTalentValue("special_bonus_imba_lycan_6") / 100
 		end
 
 		-- Insert stack
 		table.insert(self.stacks_table, GameRules:GetGameTime())
 
-       	-- Remove old stack if limit has been reached
+		-- Remove old stack if limit has been reached
 		if #self.stacks_table > self.max_stacks then
 			table.remove(self.stacks_table, 1)
-		end								
+		end
 
 		self.owner = self.caster:GetOwnerEntity()
-			
-		-- #6 Talent (wolves generate two stacks per attack)            
-      	if self.owner:HasTalent("special_bonus_imba_lycan_6") and self:GetStackCount() < self.max_stacks then
-		 	 table.insert(self.stacks_table, GameRules:GetGameTime())
-       	end
-       	-- Remove old stack if limit has been reached
-       	if #self.stacks_table > self.max_stacks then
+
+		-- #6 Talent (wolves generate two stacks per attack)
+		if self.owner:HasTalent("special_bonus_imba_lycan_6") and self:GetStackCount() < self.max_stacks then
+			table.insert(self.stacks_table, GameRules:GetGameTime())
+		end
+		-- Remove old stack if limit has been reached
+		if #self.stacks_table > self.max_stacks then
 			table.remove(self.stacks_table, 1)
-		end	
+		end
 	end
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch_damage:OnIntervalThink()
 	if IsServer() then
 		-- Check if there are any stacks left on the table
-        if #self.stacks_table > 0 then
+		if #self.stacks_table > 0 then
+			-- For each stack, check if it is past its expiration time. If it is, remove it from the table
+			for i = 1, #self.stacks_table do
+				if self.stacks_table[i] then
+					if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
+						if self.stacks_table then
+							table.remove(self.stacks_table, i)
+						end
+					end
+				else
+					i = #self.stacks_table
+				end
+			end
 
-            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
-            for i = 1, #self.stacks_table do
-            	if self.stacks_table[i] then
-             	   if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
-                		if self.stacks_table then 
-                   			table.remove(self.stacks_table, i)
-                   		end
-                   	end
-                else
-                	i = #self.stacks_table
-                end
-            end
+			-- If after removing the stacks, the table is empty, remove the modifier.
+			if #self.stacks_table == 0 then
+				self:Destroy()
 
-            -- If after removing the stacks, the table is empty, remove the modifier.
-            if #self.stacks_table == 0 then
-                self:Destroy()
-
-            -- Otherwise, set its stack count
-            else
-                self:SetStackCount(#self.stacks_table)
-            end
+				-- Otherwise, set its stack count
+			else
+				self:SetStackCount(#self.stacks_table)
+			end
 		end
 	end
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch_damage:DeclareFunctions()
-	local funcs ={
-					MODIFIER_PROPERTY_TOOLTIP 
-				}
+	local funcs = {
+		MODIFIER_PROPERTY_TOOLTIP
+	}
 	return funcs
 end
 
@@ -2367,36 +2364,36 @@ imba_summoned_wolf_hunter_instincts = class({})
 LinkLuaModifier("modifier_imba_summoned_wolf_hunter_instincts", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_hunter_instincts:GetAbilityTextureName()
-   return "hunter_instincts"
+	return "hunter_instincts"
 end
 
 function imba_summoned_wolf_hunter_instincts:GetIntrinsicModifierName()
-    return "modifier_imba_summoned_wolf_hunter_instincts"
+	return "modifier_imba_summoned_wolf_hunter_instincts"
 end
 
 -- Hunter instincts buff
 modifier_imba_summoned_wolf_hunter_instincts = class({})
 
 function modifier_imba_summoned_wolf_hunter_instincts:OnCreated()
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()   
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
 
-    -- Ability specials
-    self.evasion = self.ability:GetSpecialValueFor("evasion")
+	-- Ability specials
+	self.evasion = self.ability:GetSpecialValueFor("evasion")
 end
 
-function modifier_imba_summoned_wolf_hunter_instincts:DeclareFunctions()	
-		local decFuncs = {MODIFIER_PROPERTY_EVASION_CONSTANT}
-		
-		return decFuncs	
+function modifier_imba_summoned_wolf_hunter_instincts:DeclareFunctions()
+	local decFuncs = { MODIFIER_PROPERTY_EVASION_CONSTANT }
+
+	return decFuncs
 end
 
 function modifier_imba_summoned_wolf_hunter_instincts:GetModifierEvasion_Constant()
 	if self.caster:PassivesDisabled() then
 		return nil
-	end	
-	
+	end
+
 	return self.evasion
 end
 
@@ -2405,18 +2402,16 @@ function modifier_imba_summoned_wolf_hunter_instincts:GetAttributes()
 end
 
 function modifier_imba_summoned_wolf_hunter_instincts:IsDebuff()
-	return false	
+	return false
 end
 
 function modifier_imba_summoned_wolf_hunter_instincts:IsHidden()
-	return true	
+	return true
 end
 
 function modifier_imba_summoned_wolf_hunter_instincts:IsPurgable()
-	return false	
+	return false
 end
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -2432,19 +2427,19 @@ LinkLuaModifier("modifier_imba_summoned_wolf_invisibility_fade", "components/abi
 LinkLuaModifier("modifier_imba_summoned_wolf_invisibility", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_invisibility:GetAbilityTextureName()
-   return "lycan_summon_wolves_invisibility"
+	return "lycan_summon_wolves_invisibility"
 end
 
 function imba_summoned_wolf_invisibility:OnUpgrade()
-	 if IsServer() then
-		 local caster = self:GetCaster()
-		 local ability = self	 
-		 local buff = "modifier_imba_summoned_wolf_invisibility_fade"
-		 local fade_time = ability:GetSpecialValueFor("fade_time")
-		 
-		 if not caster:HasModifier(buff) then
-			caster:AddNewModifier(caster, ability, buff, {duration = fade_time})
-		 end
+	if IsServer() then
+		local caster = self:GetCaster()
+		local ability = self
+		local buff = "modifier_imba_summoned_wolf_invisibility_fade"
+		local fade_time = ability:GetSpecialValueFor("fade_time")
+
+		if not caster:HasModifier(buff) then
+			caster:AddNewModifier(caster, ability, buff, { duration = fade_time })
+		end
 	end
 end
 
@@ -2452,40 +2447,40 @@ end
 modifier_imba_summoned_wolf_invisibility_fade = class({})
 
 function modifier_imba_summoned_wolf_invisibility_fade:IsDebuff()
-	return false	
+	return false
 end
 
 function modifier_imba_summoned_wolf_invisibility_fade:IsHidden()
-	return true	
+	return true
 end
 
 function modifier_imba_summoned_wolf_invisibility_fade:IsPurgable()
-	return false	
+	return false
 end
 
 function modifier_imba_summoned_wolf_invisibility_fade:OnCreated()
 	if IsServer() then
 		self.caster = self:GetParent()
 		self.ability = self:GetAbility()
-        self.invis_buff = "modifier_imba_summoned_wolf_invisibility"       
+		self.invis_buff = "modifier_imba_summoned_wolf_invisibility"
 	end
 end
 
 function modifier_imba_summoned_wolf_invisibility_fade:OnDestroy()
-	if IsServer() then		
+	if IsServer() then
 		self.caster:AddNewModifier(self.caster, self.ability, self.invis_buff, {})
 		self.caster:AddNewModifier(self.caster, self.ability, "modifier_invisible", {})
 	end
 end
 
-function modifier_imba_summoned_wolf_invisibility_fade:DeclareFunctions()	
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_FINISHED}
-	
-	return decFuncs	
+function modifier_imba_summoned_wolf_invisibility_fade:DeclareFunctions()
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_FINISHED }
+
+	return decFuncs
 end
 
-function modifier_imba_summoned_wolf_invisibility_fade:OnAttackFinished( keys )
-	if self.caster == keys.attacker then		
+function modifier_imba_summoned_wolf_invisibility_fade:OnAttackFinished(keys)
+	if self.caster == keys.attacker then
 		self:ForceRefresh()
 	end
 end
@@ -2494,38 +2489,38 @@ end
 modifier_imba_summoned_wolf_invisibility = class({})
 
 function modifier_imba_summoned_wolf_invisibility:OnCreated()
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()   
-    self.invis_fade = "modifier_imba_summoned_wolf_invisibility_fade"
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.invis_fade = "modifier_imba_summoned_wolf_invisibility_fade"
 
-    -- Ability specials
-    self.fade_time = self.ability:GetSpecialValueFor("fade_time")
+	-- Ability specials
+	self.fade_time = self.ability:GetSpecialValueFor("fade_time")
 end
 
 function modifier_imba_summoned_wolf_invisibility:IsDebuff()
-	return false	
+	return false
 end
 
 function modifier_imba_summoned_wolf_invisibility:IsHidden()
-	return true	
+	return true
 end
 
 function modifier_imba_summoned_wolf_invisibility:IsPurgable()
-	return false	
+	return false
 end
 
-function modifier_imba_summoned_wolf_invisibility:DeclareFunctions()	
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_FINISHED}
-	
-	return decFuncs	
+function modifier_imba_summoned_wolf_invisibility:DeclareFunctions()
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_FINISHED }
+
+	return decFuncs
 end
 
 function modifier_imba_summoned_wolf_invisibility:OnAttackFinished(keys)
 	if IsServer() then
-		if self.caster == keys.attacker then			
+		if self.caster == keys.attacker then
 			self.caster:RemoveModifierByName("modifier_invisible")
-			self.caster:AddNewModifier(self.caster, self.ability, self.invis_fade, {duration = self.fade_time})
+			self.caster:AddNewModifier(self.caster, self.ability, self.invis_fade, { duration = self.fade_time })
 			self:Destroy()
 		end
 	end
@@ -2538,28 +2533,34 @@ imba_summoned_wolf_pack_leader = imba_summoned_wolf_pack_leader or class({})
 LinkLuaModifier("modifier_imba_talent_wolf_packleader_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_talent_wolf_packleader", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-function imba_summoned_wolf_pack_leader:GetIntrinsicModifierName()	
-    return "modifier_imba_talent_wolf_packleader_aura"
+function imba_summoned_wolf_pack_leader:GetIntrinsicModifierName()
+	return "modifier_imba_talent_wolf_packleader_aura"
 end
 
 modifier_imba_talent_wolf_packleader_aura = modifier_imba_talent_wolf_packleader_aura or class({})
 
 -- Modifier properties
-function modifier_imba_talent_wolf_packleader_aura:IsAura()					return true end
-function modifier_imba_talent_wolf_packleader_aura:IsAuraActiveOnDeath()	return false end
-function modifier_imba_talent_wolf_packleader_aura:IsDebuff() 				return false end
-function modifier_imba_talent_wolf_packleader_aura:IsHidden() 				return true end
-function modifier_imba_talent_wolf_packleader_aura:RemoveOnDeath()			return false end
-function modifier_imba_talent_wolf_packleader_aura:IsPurgable()				return false end
+function modifier_imba_talent_wolf_packleader_aura:IsAura() return true end
+
+function modifier_imba_talent_wolf_packleader_aura:IsAuraActiveOnDeath() return false end
+
+function modifier_imba_talent_wolf_packleader_aura:IsDebuff() return false end
+
+function modifier_imba_talent_wolf_packleader_aura:IsHidden() return true end
+
+function modifier_imba_talent_wolf_packleader_aura:RemoveOnDeath() return false end
+
+function modifier_imba_talent_wolf_packleader_aura:IsPurgable() return false end
 
 function modifier_imba_talent_wolf_packleader_aura:OnCreated()
-	local ability	=	self:GetAbility()
-	self.radius 	=	ability:GetSpecialValueFor("aura_radius")
+	local ability = self:GetAbility()
+	self.radius   = ability:GetSpecialValueFor("aura_radius")
 end
 
 -- Aura properties
-function modifier_imba_talent_wolf_packleader_aura:GetAuraRadius() return
-	self.radius 
+function modifier_imba_talent_wolf_packleader_aura:GetAuraRadius()
+	return
+		self.radius
 end
 
 function modifier_imba_talent_wolf_packleader_aura:GetAuraSearchFlags()
@@ -2581,26 +2582,28 @@ end
 modifier_imba_talent_wolf_packleader = modifier_imba_talent_wolf_packleader or class({})
 
 -- Modifier properties
-function modifier_imba_talent_wolf_packleader:IsDebuff() 	return false end
-function modifier_imba_talent_wolf_packleader:IsHidden() 	return false end
-function modifier_imba_talent_wolf_packleader:IsPurgable()	return false end
+function modifier_imba_talent_wolf_packleader:IsDebuff() return false end
+
+function modifier_imba_talent_wolf_packleader:IsHidden() return false end
+
+function modifier_imba_talent_wolf_packleader:IsPurgable() return false end
 
 function modifier_imba_talent_wolf_packleader:GetTexture()
 	return "alpha_wolf_command_aura"
 end
 
-function modifier_imba_talent_wolf_packleader:OnCreated() 
-	local ability	=	self:GetAbility()
+function modifier_imba_talent_wolf_packleader:OnCreated()
+	local ability = self:GetAbility()
 	if ability then
-		self.bonus_damage_pct	=	ability:GetSpecialValueFor("aura_bonus_damage_pct")
+		self.bonus_damage_pct = ability:GetSpecialValueFor("aura_bonus_damage_pct")
 	end
 end
 
 function modifier_imba_talent_wolf_packleader:DeclareFunctions()
-	local funcs ={
-	MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
-}
-	return funcs 
+	local funcs = {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
+	}
+	return funcs
 end
 
 function modifier_imba_talent_wolf_packleader:GetModifierBaseDamageOutgoing_Percentage()
@@ -2608,26 +2611,30 @@ function modifier_imba_talent_wolf_packleader:GetModifierBaseDamageOutgoing_Perc
 end
 
 -- Talent #7: Shapeshift Move Speed Cap Increase (need this modifier for client-side viewing)
-modifier_special_bonus_imba_lycan_7 = class ({})
+modifier_special_bonus_imba_lycan_7 = class({})
 
-function modifier_special_bonus_imba_lycan_7:IsHidden() 		return true end
-function modifier_special_bonus_imba_lycan_7:IsPurgable()		return false end
-function modifier_special_bonus_imba_lycan_7:RemoveOnDeath()	return false end
+function modifier_special_bonus_imba_lycan_7:IsHidden() return true end
+
+function modifier_special_bonus_imba_lycan_7:IsPurgable() return false end
+
+function modifier_special_bonus_imba_lycan_7:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_lycan_10", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_lycan_10 = modifier_special_bonus_imba_lycan_10 or class({})
 
-function modifier_special_bonus_imba_lycan_10:IsHidden() 		return true end
-function modifier_special_bonus_imba_lycan_10:IsPurgable()		return false end
-function modifier_special_bonus_imba_lycan_10:RemoveOnDeath()	return false end
+function modifier_special_bonus_imba_lycan_10:IsHidden() return true end
+
+function modifier_special_bonus_imba_lycan_10:IsPurgable() return false end
+
+function modifier_special_bonus_imba_lycan_10:RemoveOnDeath() return false end
 
 -- function modifier_special_bonus_imba_lycan_10:OnCreated()
-	-- if not IsServer() then return end
-	
-	-- if self:GetCaster():HasModifier("modifier_imba_lycan_summon_wolves_charges") then
-		-- self:GetCaster():FindModifierByName("modifier_imba_lycan_summon_wolves_charges"):OnStackCountChanged(nil)
-	-- end
+-- if not IsServer() then return end
+
+-- if self:GetCaster():HasModifier("modifier_imba_lycan_summon_wolves_charges") then
+-- self:GetCaster():FindModifierByName("modifier_imba_lycan_summon_wolves_charges"):OnStackCountChanged(nil)
+-- end
 -- end
 
 function imba_lycan_summon_wolves:OnOwnerSpawned()
@@ -2649,33 +2656,45 @@ LinkLuaModifier("modifier_special_bonus_imba_lycan_2", "components/abilities/her
 LinkLuaModifier("modifier_special_bonus_imba_lycan_6", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lycan_9", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lycan_5		= modifier_special_bonus_imba_lycan_5 or class({})
-modifier_special_bonus_imba_lycan_3		= modifier_special_bonus_imba_lycan_3 or class({})
-modifier_special_bonus_imba_lycan_1		= modifier_special_bonus_imba_lycan_1 or class({})
-modifier_special_bonus_imba_lycan_2		= modifier_special_bonus_imba_lycan_2 or class({})
-modifier_special_bonus_imba_lycan_6		= modifier_special_bonus_imba_lycan_6 or class({})
-modifier_special_bonus_imba_lycan_9		= modifier_special_bonus_imba_lycan_9 or class({})
+modifier_special_bonus_imba_lycan_5 = modifier_special_bonus_imba_lycan_5 or class({})
+modifier_special_bonus_imba_lycan_3 = modifier_special_bonus_imba_lycan_3 or class({})
+modifier_special_bonus_imba_lycan_1 = modifier_special_bonus_imba_lycan_1 or class({})
+modifier_special_bonus_imba_lycan_2 = modifier_special_bonus_imba_lycan_2 or class({})
+modifier_special_bonus_imba_lycan_6 = modifier_special_bonus_imba_lycan_6 or class({})
+modifier_special_bonus_imba_lycan_9 = modifier_special_bonus_imba_lycan_9 or class({})
 
-function modifier_special_bonus_imba_lycan_5:IsHidden() 		return true end
-function modifier_special_bonus_imba_lycan_5:IsPurgable()		return false end
-function modifier_special_bonus_imba_lycan_5:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_lycan_5:IsHidden() return true end
 
-function modifier_special_bonus_imba_lycan_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_lycan_3:IsPurgable()		return false end
-function modifier_special_bonus_imba_lycan_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_lycan_5:IsPurgable() return false end
 
-function modifier_special_bonus_imba_lycan_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_lycan_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_lycan_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_lycan_5:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_lycan_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_lycan_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_lycan_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_lycan_3:IsHidden() return true end
 
-function modifier_special_bonus_imba_lycan_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_lycan_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_lycan_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_lycan_3:IsPurgable() return false end
 
-function modifier_special_bonus_imba_lycan_9:IsHidden() 		return true end
-function modifier_special_bonus_imba_lycan_9:IsPurgable()		return false end
-function modifier_special_bonus_imba_lycan_9:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_lycan_3:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_lycan_1:IsHidden() return true end
+
+function modifier_special_bonus_imba_lycan_1:IsPurgable() return false end
+
+function modifier_special_bonus_imba_lycan_1:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_lycan_2:IsHidden() return true end
+
+function modifier_special_bonus_imba_lycan_2:IsPurgable() return false end
+
+function modifier_special_bonus_imba_lycan_2:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_lycan_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_lycan_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_lycan_6:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_lycan_9:IsHidden() return true end
+
+function modifier_special_bonus_imba_lycan_9:IsPurgable() return false end
+
+function modifier_special_bonus_imba_lycan_9:RemoveOnDeath() return false end

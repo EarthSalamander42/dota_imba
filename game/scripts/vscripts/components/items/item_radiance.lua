@@ -26,12 +26,13 @@
 --	Item Definition
 -----------------------------------------------------------------------------------------------------------
 if item_imba_cloak_of_flames == nil then item_imba_cloak_of_flames = class({}) end
-LinkLuaModifier( "modifier_imba_cloak_of_flames_basic", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Item stats
-LinkLuaModifier( "modifier_imba_cloak_of_flames_aura", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura
-LinkLuaModifier( "modifier_imba_cloak_of_flames_burn", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Damage + blind effect
+LinkLuaModifier("modifier_imba_cloak_of_flames_basic", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE)   -- Item stats
+LinkLuaModifier("modifier_imba_cloak_of_flames_aura", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE)    -- Aura
+LinkLuaModifier("modifier_imba_cloak_of_flames_burn", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE)    -- Damage + blind effect
 
 function item_imba_cloak_of_flames:GetIntrinsicModifierName()
-	return "modifier_imba_cloak_of_flames_basic" end
+	return "modifier_imba_cloak_of_flames_basic"
+end
 
 function item_imba_cloak_of_flames:OnSpellStart()
 	if IsServer() then
@@ -49,15 +50,18 @@ end
 if modifier_imba_cloak_of_flames_basic == nil then modifier_imba_cloak_of_flames_basic = class({}) end
 
 function modifier_imba_cloak_of_flames_basic:IsHidden() return true end
+
 function modifier_imba_cloak_of_flames_basic:IsPurgable() return false end
+
 function modifier_imba_cloak_of_flames_basic:RemoveOnDeath() return false end
+
 function modifier_imba_cloak_of_flames_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the owner when created
 function modifier_imba_cloak_of_flames_basic:OnCreated(keys)
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if IsServer() then
 		if not self:GetParent():HasModifier("modifier_imba_cloak_of_flames_aura") then
@@ -79,7 +83,7 @@ function modifier_imba_cloak_of_flames_basic:OnDestroy(keys)
 			self:GetParent():RemoveModifierByName("modifier_imba_cloak_of_flames_aura")
 		end
 	end
-	
+
 	if self.particle ~= nil then
 		ParticleManager:DestroyParticle(self.particle, false)
 		ParticleManager:ReleaseParticleIndex(self.particle)
@@ -92,12 +96,16 @@ end
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_cloak_of_flames_aura == nil then modifier_imba_cloak_of_flames_aura = class({}) end
 function modifier_imba_cloak_of_flames_aura:IsAura() return true end
+
 function modifier_imba_cloak_of_flames_aura:IsHidden() return true end
+
 function modifier_imba_cloak_of_flames_aura:IsDebuff() return false end
+
 function modifier_imba_cloak_of_flames_aura:IsPurgable() return false end
 
 function modifier_imba_cloak_of_flames_aura:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_ENEMY end
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
 
 function modifier_imba_cloak_of_flames_aura:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
@@ -116,7 +124,9 @@ end
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_cloak_of_flames_burn == nil then modifier_imba_cloak_of_flames_burn = class({}) end
 function modifier_imba_cloak_of_flames_burn:IsHidden() return false end
+
 function modifier_imba_cloak_of_flames_burn:IsDebuff() return true end
+
 function modifier_imba_cloak_of_flames_burn:IsPurgable() return false end
 
 function modifier_imba_cloak_of_flames_burn:GetTexture()
@@ -124,10 +134,13 @@ function modifier_imba_cloak_of_flames_burn:GetTexture()
 end
 
 function modifier_imba_cloak_of_flames_burn:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
-	
-	self.base_damage	= self:GetAbility():GetSpecialValueFor("base_damage")
-	self.think_interval	= self:GetAbility():GetSpecialValueFor("think_interval")
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
+
+	self.base_damage = self:GetAbility():GetSpecialValueFor("base_damage")
+	self.think_interval = self:GetAbility():GetSpecialValueFor("think_interval")
 
 	if IsServer() then
 		self:StartIntervalThink(self.think_interval)
@@ -147,13 +160,14 @@ function modifier_imba_cloak_of_flames_burn:OnIntervalThink()
 end
 
 if item_imba_radiance == nil then item_imba_radiance = class({}) end
-LinkLuaModifier( "modifier_imba_radiance_basic", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Item stats
-LinkLuaModifier( "modifier_imba_radiance_aura", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura
-LinkLuaModifier( "modifier_imba_radiance_burn", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Damage + blind effect
-LinkLuaModifier( "modifier_imba_radiance_afterburn", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )		-- Sticky effect after leaving the Radiance AoE
+LinkLuaModifier("modifier_imba_radiance_basic", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE)       -- Item stats
+LinkLuaModifier("modifier_imba_radiance_aura", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE)        -- Aura
+LinkLuaModifier("modifier_imba_radiance_burn", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE)        -- Damage + blind effect
+LinkLuaModifier("modifier_imba_radiance_afterburn", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE)   -- Sticky effect after leaving the Radiance AoE
 
 function item_imba_radiance:GetIntrinsicModifierName()
-	return "modifier_imba_radiance_basic" end
+	return "modifier_imba_radiance_basic"
+end
 
 function item_imba_radiance:OnSpellStart()
 	if IsServer() then
@@ -171,8 +185,11 @@ end
 if modifier_imba_radiance_basic == nil then modifier_imba_radiance_basic = class({}) end
 
 function modifier_imba_radiance_basic:IsHidden() return true end
+
 function modifier_imba_radiance_basic:IsPurgable() return false end
+
 function modifier_imba_radiance_basic:RemoveOnDeath() return false end
+
 function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the owner when created
@@ -180,13 +197,12 @@ function modifier_imba_radiance_basic:OnCreated(keys)
 	self.bonus_damage = self:GetAbility():GetSpecialValueFor("bonus_damage")
 
 	if IsServer() then
-
 		if not self:GetParent():HasModifier("modifier_imba_radiance_aura") then
 			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_radiance_aura", {})
 		end
 
 		if self:GetParent():HasModifier("modifier_imba_radiance_aura") then
-			self.particle	= ParticleManager:CreateParticle("particles/items2_fx/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
+			self.particle = ParticleManager:CreateParticle("particles/items2_fx/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 			self:AddParticle(self.particle, false, false, -1, true, false)
 		end
 	end
@@ -216,12 +232,16 @@ end
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_radiance_aura == nil then modifier_imba_radiance_aura = class({}) end
 function modifier_imba_radiance_aura:IsAura() return true end
+
 function modifier_imba_radiance_aura:IsHidden() return true end
+
 function modifier_imba_radiance_aura:IsDebuff() return false end
+
 function modifier_imba_radiance_aura:IsPurgable() return false end
 
 function modifier_imba_radiance_aura:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_ENEMY end
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
 
 function modifier_imba_radiance_aura:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
@@ -238,14 +258,14 @@ end
 -- Create the glow particle and start thinking
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if IsServer() then
 		-- local particle_name = "particles/items2_fx/radiance_owner.vpcf"
 
 		-- if CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID())) and CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"] then
-			-- particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
+		-- particle_name	= CustomNetTables:GetTableValue("battlepass_item_effects", tostring(self:GetParent():GetPlayerOwnerID()))["radiance"]["effect1"]
 		-- end
 
 		-- self.particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -258,11 +278,11 @@ end
 function modifier_imba_radiance_aura:OnIntervalThink()
 	for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_imba_radiance_basic")) do
 		if not modifier.particle then
-			modifier.particle	= ParticleManager:CreateParticle("particles/items2_fx/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
+			modifier.particle = ParticleManager:CreateParticle("particles/items2_fx/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 			modifier:AddParticle(modifier.particle, false, false, -1, true, false)
 		end
 	end
-		
+
 	self:StartIntervalThink(-1)
 end
 
@@ -271,7 +291,7 @@ function modifier_imba_radiance_aura:OnDestroy()
 	if IsServer() then
 		-- ParticleManager:DestroyParticle(self.particle, false)
 		-- ParticleManager:ReleaseParticleIndex(self.particle)
-		
+
 		for _, modifier in pairs(self:GetParent():FindAllModifiersByName("modifier_imba_radiance_basic")) do
 			if modifier.particle then
 				ParticleManager:DestroyParticle(modifier.particle, false)
@@ -287,11 +307,14 @@ end
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_radiance_burn == nil then modifier_imba_radiance_burn = class({}) end
 function modifier_imba_radiance_burn:IsHidden() return false end
+
 function modifier_imba_radiance_burn:IsDebuff() return true end
+
 function modifier_imba_radiance_burn:IsPurgable() return false end
 
 function modifier_imba_radiance_burn:DeclareFunctions()
-	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, } end
+	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, }
+end
 
 function modifier_imba_radiance_burn:OnCreated()
 	if IsServer() then
@@ -315,7 +338,6 @@ end
 
 function modifier_imba_radiance_burn:OnDestroy()
 	if IsServer() then
-
 		-- Destroy particle
 		ParticleManager:DestroyParticle(self.particle, false)
 		ParticleManager:ReleaseParticleIndex(self.particle)
@@ -337,7 +359,6 @@ end
 
 function modifier_imba_radiance_burn:OnIntervalThink()
 	if IsServer() then
-
 		-- Parameters
 		local ability = self:GetAbility()
 		local caster = self:GetCaster()
@@ -348,8 +369,8 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 		if caster:IsRealHero() then
 			real_hero_nearby = true
 		else
-			local real_hero_finder = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false)
-			for _,hero in pairs(real_hero_finder) do
+			local real_hero_finder = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+			for _, hero in pairs(real_hero_finder) do
 				if hero:FindModifierByName("modifier_imba_radiance_aura") then
 					real_hero_nearby = true
 					break
@@ -359,7 +380,7 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 
 		-- If the real hero is nearby, increase damage and afterburn counter by 1
 		if real_hero_nearby then
-			damage = damage + self.extra_damage * self:GetParent():GetHealth() * 0.01
+			damage = damage + self.extra_damage * self:GetParent():GetHealth() / 100
 			self.afterburner_counter = self.afterburner_counter + 1
 
 			-- If the afterburner counter has reached its target, reset it and add a stack to this modifier
@@ -370,7 +391,7 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 		end
 
 		-- Apply damage
-		ApplyDamage({victim = self:GetParent(), attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		ApplyDamage({ victim = self:GetParent(), attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 	end
 end
 
@@ -385,23 +406,24 @@ end
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_radiance_afterburn == nil then modifier_imba_radiance_afterburn = class({}) end
 function modifier_imba_radiance_afterburn:IsHidden() return false end
+
 function modifier_imba_radiance_afterburn:IsDebuff() return true end
+
 function modifier_imba_radiance_afterburn:IsPurgable() return false end
 
 function modifier_imba_radiance_afterburn:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if IsServer() then
-
 		-- Parameter storage
 		local ability = self:GetAbility()
 		local think_interval = ability:GetSpecialValueFor("think_interval")
 		self.base_damage = ability:GetSpecialValueFor("base_damage")
 		self.extra_damage = ability:GetSpecialValueFor("extra_damage")
 		self.miss_chance = ability:GetSpecialValueFor("miss_chance")
-		
+
 		self.particle = ParticleManager:CreateParticle("particles/items2_fx/radiance.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 		ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle, 1, self:GetCaster():GetAbsOrigin())
@@ -420,10 +442,8 @@ end
 
 function modifier_imba_radiance_afterburn:OnIntervalThink()
 	if IsServer() then
-
 		-- If the parent has the radiance burn modifier, do nothing
 		if not self:GetParent():HasModifier("modifier_imba_radiance_burn") then
-
 			-- If the original item is gone, do nothing and destroy the modifier
 			local ability = self:GetAbility()
 			if not ability then
@@ -437,10 +457,13 @@ function modifier_imba_radiance_afterburn:OnIntervalThink()
 			local damage = self.base_damage
 
 			-- Calculate and deal damage
-			damage = damage + self.extra_damage * self:GetParent():GetHealth() * 0.01
-			ApplyDamage({victim = self:GetParent(), attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			damage = damage + self.extra_damage * self:GetParent():GetHealth() / 100
+			ApplyDamage({ victim = self:GetParent(), attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 			self:SetStackCount(self:GetStackCount() - 1)
-			if self:GetStackCount() <= 0 then self:Destroy() return end
+			if self:GetStackCount() <= 0 then
+				self:Destroy()
+				return
+			end
 
 			local parent_loc = self:GetParent():GetAbsOrigin()
 		end
@@ -448,7 +471,7 @@ function modifier_imba_radiance_afterburn:OnIntervalThink()
 end
 
 function modifier_imba_radiance_afterburn:DeclareFunctions()
-	return {MODIFIER_PROPERTY_MISS_PERCENTAGE}
+	return { MODIFIER_PROPERTY_MISS_PERCENTAGE }
 end
 
 function modifier_imba_radiance_afterburn:GetModifierMiss_Percentage()

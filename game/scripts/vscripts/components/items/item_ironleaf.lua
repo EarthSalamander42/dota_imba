@@ -33,16 +33,20 @@ end
 -- STACKABLE IRONLEAF BOOTS STATS MODIFIER
 modifier_imba_ironleaf_boots = modifier_imba_ironleaf_boots or class({})
 
-function modifier_imba_ironleaf_boots:AllowIllusionDuplicate()	return false end
-function modifier_imba_ironleaf_boots:IsHidden()		return true end
-function modifier_imba_ironleaf_boots:IsPurgable()		return false end
-function modifier_imba_ironleaf_boots:RemoveOnDeath()	return false end
-function modifier_imba_ironleaf_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_ironleaf_boots:AllowIllusionDuplicate() return false end
+
+function modifier_imba_ironleaf_boots:IsHidden() return true end
+
+function modifier_imba_ironleaf_boots:IsPurgable() return false end
+
+function modifier_imba_ironleaf_boots:RemoveOnDeath() return false end
+
+function modifier_imba_ironleaf_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_ironleaf_boots:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -75,11 +79,11 @@ function modifier_imba_ironleaf_boots:OnDestroy()
 end
 
 function modifier_imba_ironleaf_boots:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS }
 
 	return decFuncs
 end
@@ -104,19 +108,21 @@ function modifier_imba_ironleaf_boots:GetModifierMagicalResistanceBonus()
 	return self.base_magic_resistance
 end
 
-
 -- Unique modifier, responsible for Meditate, Iron Body and Leafwalk
 modifier_imba_ironleaf_boots_unique = modifier_imba_ironleaf_boots_unique or class({})
 
 function modifier_imba_ironleaf_boots_unique:IsHidden() return true end
+
 function modifier_imba_ironleaf_boots_unique:IsDebuff() return false end
+
 function modifier_imba_ironleaf_boots_unique:IsPurgable() return false end
+
 function modifier_imba_ironleaf_boots_unique:RemoveOnDeath() return false end
 
 function modifier_imba_ironleaf_boots_unique:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if IsServer() then
 		-- Ability properties
@@ -171,8 +177,8 @@ function modifier_imba_ironleaf_boots_unique:OnIntervalThink()
 
 		-- If the last movement was above the threshold, apply Leafwalk and its magic resistance modifier
 		if GameRules:GetGameTime() - self.last_movement >= self.leafwalk_hold_time then
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_leafwalk, {duration = self.leafwalk_duration})
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_mres, {duration = self.leafwalk_duration})
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_leafwalk, { duration = self.leafwalk_duration })
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_mres, { duration = self.leafwalk_duration })
 		end
 	end
 end
@@ -191,11 +197,11 @@ function modifier_imba_ironleaf_boots_unique:OnDestroy()
 end
 
 function modifier_imba_ironleaf_boots_unique:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+	local decFuncs = { MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_EVENT_ON_UNIT_MOVED,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ABILITY_START,
-		MODIFIER_EVENT_ON_RESPAWN}
+		MODIFIER_EVENT_ON_RESPAWN }
 
 	return decFuncs
 end
@@ -206,7 +212,6 @@ function modifier_imba_ironleaf_boots_unique:OnRespawn(keys)
 
 		-- Only apply if the caster is the one who respawned
 		if self.caster == unit then
-
 			-- Reset the movement timer
 			self.last_movement = GameRules:GetGameTime()
 		end
@@ -219,7 +224,6 @@ function modifier_imba_ironleaf_boots_unique:OnAttackStart(keys)
 
 		-- Only apply if the caster is the attacker
 		if self.caster == attacker then
-
 			-- Attacking resets the movement timer
 			self.last_movement = GameRules:GetGameTime()
 		end
@@ -232,7 +236,6 @@ function modifier_imba_ironleaf_boots_unique:OnAbilityStart(keys)
 
 		-- Only apply if the unit is the caster
 		if self.caster == unit then
-
 			-- Using an ability resets the movement timer
 			self.last_movement = GameRules:GetGameTime()
 		end
@@ -245,7 +248,6 @@ function modifier_imba_ironleaf_boots_unique:OnUnitMoved(keys)
 
 		-- Only apply if the unit is the caster
 		if self.caster == unit then
-
 			-- Mark the last time the caster has moved
 			self.last_movement = GameRules:GetGameTime()
 		end
@@ -259,13 +261,11 @@ function modifier_imba_ironleaf_boots_unique:GetModifierPhysical_ConstantBlock(k
 
 		-- Only apply when the target is the caster
 		if self.caster == target then
-
 			-- Only apply if the caster has the minimum amount of Meditate stacks
 			local modifier_meditate_handler = self.caster:FindModifierByName(self.modifier_meditate)
 			if modifier_meditate_handler then
 				local stacks = modifier_meditate_handler:GetStackCount()
 				if stacks >= self.iron_body_min_stacks_req then
-
 					-- Check if the damage is above threshold
 					if damage >= self.iron_body_thrshold then
 						-- If so, reduce damage by the higher amount
@@ -287,14 +287,17 @@ function modifier_imba_ironleaf_boots_meditate:IsHidden()
 	if self:GetStackCount() == 0 then return true end
 	return false
 end
+
 function modifier_imba_ironleaf_boots_meditate:IsPurgable() return false end
+
 function modifier_imba_ironleaf_boots_meditate:IsDebuff() return false end
+
 function modifier_imba_ironleaf_boots_meditate:RemoveOnDeath() return false end
 
 function modifier_imba_ironleaf_boots_meditate:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -332,16 +335,16 @@ function modifier_imba_ironleaf_boots_meditate:OnIntervalThink()
 end
 
 function modifier_imba_ironleaf_boots_meditate:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT }
 
 	return decFuncs
 end
 
 function modifier_imba_ironleaf_boots_meditate:GetModifierMoveSpeedBonus_Percentage()
 	if self.caster:GetModifierStackCount(self.modifier_unique, self.caster) == 1 then
-		return self.meditate_movespeed_bonus_pct * self:GetStackCount() * self.broken_meditate_efficiency_pct * 0.01
+		return self.meditate_movespeed_bonus_pct * self:GetStackCount() * self.broken_meditate_efficiency_pct / 100
 	end
 
 	return self.meditate_movespeed_bonus_pct * self:GetStackCount()
@@ -349,7 +352,7 @@ end
 
 function modifier_imba_ironleaf_boots_meditate:GetModifierConstantHealthRegen()
 	if self.caster:GetModifierStackCount(self.modifier_unique, self.caster) == 1 then
-		return self.meditate_health_regen * self:GetStackCount() * self.broken_meditate_efficiency_pct * 0.01
+		return self.meditate_health_regen * self:GetStackCount() * self.broken_meditate_efficiency_pct / 100
 	end
 
 	return self.meditate_health_regen * self:GetStackCount()
@@ -362,7 +365,6 @@ function modifier_imba_ironleaf_boots_meditate:OnAttackLanded(keys)
 
 		-- Only apply if the target is the caster
 		if self.caster == target then
-
 			-- Ignore attacks from teammates (WW's ult for instance)
 			if attacker:GetTeamNumber() == self.caster:GetTeamNumber() then
 				return nil
@@ -394,18 +396,19 @@ function modifier_imba_ironleaf_boots_meditate:OnAttackLanded(keys)
 	end
 end
 
-
 -- LEAFWALK INVISIBILITY MODIFIER
 modifier_imba_ironleaf_boots_leafwalk = modifier_imba_ironleaf_boots_leafwalk or class({})
 
 function modifier_imba_ironleaf_boots_leafwalk:IsHidden() return false end
+
 function modifier_imba_ironleaf_boots_leafwalk:IsPurgable() return false end
+
 function modifier_imba_ironleaf_boots_leafwalk:IsDebuff() return false end
 
 function modifier_imba_ironleaf_boots_leafwalk:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if IsServer() then
 		-- Ability properties
@@ -415,9 +418,9 @@ function modifier_imba_ironleaf_boots_leafwalk:OnCreated()
 end
 
 function modifier_imba_ironleaf_boots_leafwalk:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+	local decFuncs = { MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL }
 
 	return decFuncs
 end
@@ -428,7 +431,6 @@ function modifier_imba_ironleaf_boots_leafwalk:OnAbilityExecuted(keys)
 
 		-- Only apply if the caster is the unit
 		if self.caster == unit then
-
 			-- Remove the modifier
 			self:Destroy()
 		end
@@ -441,7 +443,6 @@ function modifier_imba_ironleaf_boots_leafwalk:OnAttack(keys)
 
 		-- Only apply if the caster is the unit
 		if self.caster == attacker then
-
 			-- Remove the modifier
 			self:Destroy()
 		end
@@ -453,25 +454,25 @@ function modifier_imba_ironleaf_boots_leafwalk:GetModifierInvisibilityLevel()
 end
 
 function modifier_imba_ironleaf_boots_leafwalk:CheckState()
-	local state = {[MODIFIER_STATE_INVISIBLE] = true}
+	local state = { [MODIFIER_STATE_INVISIBLE] = true }
 
 	return state
 end
-
-
 
 -- Leafwalk Magic Resistance modifier
 modifier_imba_ironleaf_boots_magic_res = modifier_imba_ironleaf_boots_magic_res or class({})
 
 function modifier_imba_ironleaf_boots_magic_res:IsHidden() return false end
+
 function modifier_imba_ironleaf_boots_magic_res:IsPurgable() return true end
+
 function modifier_imba_ironleaf_boots_magic_res:IsDebuff() return false end
 
 function modifier_imba_ironleaf_boots_magic_res:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -481,7 +482,7 @@ function modifier_imba_ironleaf_boots_magic_res:OnCreated()
 end
 
 function modifier_imba_ironleaf_boots_magic_res:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+	local decFuncs = { MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS }
 
 	return decFuncs
 end

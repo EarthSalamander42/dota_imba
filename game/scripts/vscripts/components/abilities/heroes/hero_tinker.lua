@@ -4,7 +4,6 @@
 		Date:  10.09.2015
 		Updated:  11.04.2017
 	]]
-
 -- #7 Talent - Decreased cast-animations
 --[[
 function modifier_special_bonus_imba_tinker_7:DeclareFunctions()
@@ -29,7 +28,7 @@ LinkLuaModifier("modifier_imba_rearm_shield", "components/abilities/heroes/hero_
 imba_tinker_rearm = class({})
 
 function imba_tinker_rearm:GetAbilityTextureName()
-   return "tinker_rearm"
+	return "tinker_rearm"
 end
 
 function imba_tinker_rearm:IsNetherWardStealable()
@@ -63,7 +62,7 @@ function imba_tinker_rearm:GetChannelTime()
 	return self.BaseClass.GetChannelTime(self)
 end
 
-function imba_tinker_rearm:GetCooldown( nLevel )
+function imba_tinker_rearm:GetCooldown(nLevel)
 	if self:GetCaster():HasTalent("special_bonus_imba_tinker_8") then
 		return self.BaseClass.GetChannelTime(self)
 	end
@@ -84,16 +83,16 @@ function imba_tinker_rearm:OnSpellStart()
 		local caster = self:GetCaster()
 		-- Play a random cast line
 		if caster:GetName() == "npc_dota_hero_tinker" then
-			caster:EmitSound("tinker_tink_ability_rearm_0"..math.random(1,9))
+			caster:EmitSound("tinker_tink_ability_rearm_0" .. math.random(1, 9))
 		end
 
 		if caster:HasTalent("special_bonus_imba_tinker_8") then
-			caster:AddNewModifier(caster, self, "modifier_imba_rearm_animation", { duration = 0.1})
+			caster:AddNewModifier(caster, self, "modifier_imba_rearm_animation", { duration = 0.1 })
 		else
-			caster:AddNewModifier(caster, self, "modifier_imba_rearm_animation", { duration = self:GetChannelTime()})
+			caster:AddNewModifier(caster, self, "modifier_imba_rearm_animation", { duration = self:GetChannelTime() })
 		end
 		if caster:HasTalent("special_bonus_imba_tinker_8") then
-			self:OnChannelFinish( false )
+			self:OnChannelFinish(false)
 		end
 		-- #6 Talent - Shield
 		if caster:HasTalent("special_bonus_imba_tinker_6") then
@@ -102,12 +101,12 @@ function imba_tinker_rearm:OnSpellStart()
 	end
 end
 
-function imba_tinker_rearm:OnChannelFinish( bInterrupted )
+function imba_tinker_rearm:OnChannelFinish(bInterrupted)
 	if IsServer() then
 		local caster = self:GetCaster()
 		if not bInterrupted then
 			-- List of unrefreshable items
-			local forbidden_items = 
+			local forbidden_items =
 			{
 				"item_aeon_disk",
 				"item_imba_aeon_disk",
@@ -151,7 +150,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_the_triumvirate_v2",
 				"item_tome_of_knowledge"
 			}
-			
+
 			-- Get script error when using caster:GetAbilityCount() cause it goes up to 30 for some reason
 			-- for i = 0, caster:GetAbilityCount() do
 			for i = 0, 8 do
@@ -169,7 +168,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				local should_refresh = true
 
 				-- If this item is forbidden, do not refresh it
-				for _,forbidden_item in pairs(forbidden_items) do
+				for _, forbidden_item in pairs(forbidden_items) do
 					if current_item and (current_item:GetName() == forbidden_item or current_item:GetPurchaser() ~= caster) then
 						should_refresh = false
 					end
@@ -177,19 +176,18 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 
 				-- Refresh
 				if current_item and should_refresh then
-					
 					-- Rod of Atos EX exception
 					if current_item:GetName() == "item_imba_rod_of_atos_2" then
 						current_item:SpendCharge()
 					end
-				
+
 					current_item:EndCooldown()
 				end
 			end
-			
+
 			-- Refresh TP slot as well
 			local teleport_scroll = caster:GetItemInSlot(15) -- Used to be 15, and then 16, and now 15 again cause of backpack and neutral slot shifting (currently neutral slot is 16th)
-			
+
 			if teleport_scroll then
 				teleport_scroll:EndCooldown()
 			end
@@ -205,7 +203,7 @@ function modifier_imba_rearm_animation:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local level = self:GetAbility():GetLevel()
-		
+
 		---------------------------------------------------------------------------------------------
 		-- Valve made a shitty animation logic on Rearm, so each channel-time needs proper adjustment
 		---------------------------------------------------------------------------------------------
@@ -302,14 +300,14 @@ function modifier_imba_rearm_overdrive:OnIntervalThink()
 	local parent = self:GetParent()
 	self:IsHidden()
 	if parent:HasScepter() then
-		self:SetStackCount(math.ceil((1 - (parent:GetMana() / parent:GetMaxMana())) * (100/self.aghs_interval_pct)))
+		self:SetStackCount(math.ceil((1 - (parent:GetMana() / parent:GetMaxMana())) * (100 / self.aghs_interval_pct)))
 	else
 		self:SetStackCount(0)
 	end
 end
 
 function modifier_imba_rearm_overdrive:DeclareFunctions()
-	local funcs = 
+	local funcs =
 	{
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
@@ -322,7 +320,7 @@ end
 
 modifier_imba_rearm_shield = class({})
 function modifier_imba_rearm_shield:DeclareFunctions()
-	local decFuncs = 
+	local decFuncs =
 	{
 		MODIFIER_EVENT_ON_TAKEDAMAGE
 	}
@@ -370,10 +368,10 @@ function modifier_imba_rearm_shield:OnIntervalThink()
 	self.current_health = self:GetParent():GetHealth()
 end
 
-function modifier_imba_rearm_shield:OnTakeDamage( params )
+function modifier_imba_rearm_shield:OnTakeDamage(params)
 	if IsServer() then
 		local parent = self:GetParent()
-		
+
 		if parent == params.unit then
 			if params.damage > 0 then
 				if params.damage >= self.shield_hp then
@@ -408,21 +406,21 @@ function imba_tinker_laser:OnSpellStart()
 		end
 
 		if RollPercentage(15) and (caster:GetName() == "npc_dota_hero_tinker") then
-			caster:EmitSound("tinker_tink_ability_laser_0"..math.random(1,4))
+			caster:EmitSound("tinker_tink_ability_laser_0" .. math.random(1, 4))
 		end
 
 		caster:EmitSound("Hero_Tinker.Laser")
 
 		-- initalize tables		
-		self.cast_table = {}		
+		self.cast_table = {}
 
 		-- Create initial laser
 		local start_pos = caster:GetAbsOrigin()
-		local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()		
+		local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
 
 		self:CreateLaser(start_pos, direction)
 
---[[
+		--[[
 		-- Technomancy laser upgrades
 		local technomancy_ability
 		if caster:HasAbility(technomancy_ability_name) then
@@ -493,36 +491,36 @@ function imba_tinker_laser:OnSpellStart()
 end
 
 function imba_tinker_laser:CreateLaser(start_pos, laser_direction)
-	if IsServer() then		
-		local caster = self:GetCaster()		
+	if IsServer() then
+		local caster = self:GetCaster()
 
 		local travel_speed = self:GetSpecialValueFor("travel_speed")
 		local radius = self:GetSpecialValueFor("radius")
-		local distance = self:GetCastRange(caster:GetAbsOrigin(),caster) + GetCastRangeIncrease(caster) 		
+		local distance = self:GetCastRange(caster:GetAbsOrigin(), caster) + GetCastRangeIncrease(caster)
 
 		-- Create the particle index
-		local laser_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, caster)	
+		local laser_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, caster)
 
 		-- Create Laser Projectile
-		local laser_projectile = 
+		local laser_projectile =
 		{
-			Ability				= self,
-			EffectName			= "particles/units/heroes/hero_tinker/tinker_laser.vpcf",
-			Source 				= caster,
-			vSpawnOrigin		= start_pos,
-			fDistance			= distance,
-			fStartRadius		= radius,
-			fEndRadius			= radius,				
-			bHasFrontalCone		= false,
-			bReplaceExisting	= false,
-			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			fExpireTime 		= GameRules:GetGameTime() + 10.0,
-			bDeleteOnHit		= false,
-			vVelocity			= Vector(laser_direction.x,laser_direction.y,0) * travel_speed,
-			bProvidesVision		= false,
-			ExtraData			= {source_loc_x = start_pos.x, source_loc_y = start_pos.y, source_loc_z = start_pos.z, particle_index = laser_pfx, distance = distance}
+			Ability          = self,
+			EffectName       = "particles/units/heroes/hero_tinker/tinker_laser.vpcf",
+			Source           = caster,
+			vSpawnOrigin     = start_pos,
+			fDistance        = distance,
+			fStartRadius     = radius,
+			fEndRadius       = radius,
+			bHasFrontalCone  = false,
+			bReplaceExisting = false,
+			iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			fExpireTime      = GameRules:GetGameTime() + 10.0,
+			bDeleteOnHit     = false,
+			vVelocity        = Vector(laser_direction.x, laser_direction.y, 0) * travel_speed,
+			bProvidesVision  = false,
+			ExtraData        = { source_loc_x = start_pos.x, source_loc_y = start_pos.y, source_loc_z = start_pos.z, particle_index = laser_pfx, distance = distance }
 		}
 
 		ProjectileManager:CreateLinearProjectile(laser_projectile)
@@ -532,12 +530,12 @@ end
 function imba_tinker_laser:OnProjectileThink_ExtraData(location, extradata)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local ability = self		
+		local ability = self
 		local start_pos = Vector(extradata.source_loc_x, extradata.source_loc_y, extradata.source_loc_z)
 		local laser_pfx = extradata.particle_index
 		local distance = extradata.distance
 
-		-- Particle 
+		-- Particle
 		ParticleManager:SetParticleControl(laser_pfx, 0, start_pos)
 		ParticleManager:SetParticleControl(laser_pfx, 1, location)
 		ParticleManager:SetParticleControl(laser_pfx, 3, start_pos)
@@ -552,7 +550,7 @@ function imba_tinker_laser:OnProjectileThink_ExtraData(location, extradata)
 end
 
 function imba_tinker_laser:OnProjectileHit(target, location)
-	if IsServer() then		
+	if IsServer() then
 		if not target then
 			return nil
 		end
@@ -560,26 +558,25 @@ function imba_tinker_laser:OnProjectileHit(target, location)
 		local caster = self:GetCaster()
 
 		target:EmitSound("Hero_Tinker.LaserImpact")
-			
+
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
 		local damage_type = self:GetAbilityDamageType()
 		local secondary_reduction = self:GetSpecialValueFor("secondary_reduction")
-		local blind_duration = self:GetSpecialValueFor("blind_duration")		
-		
+		local blind_duration = self:GetSpecialValueFor("blind_duration")
+
 		-- If the target is hit by the laser once, reduce the damage property
-		if self.cast_table[target] then			
-			ApplyDamage({attacker = caster, victim = target, ability = self, damage = damage * secondary_reduction * 0.01, damage_type = damage_type})
-			target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration })					
+		if self.cast_table[target] then
+			ApplyDamage({ attacker = caster, victim = target, ability = self, damage = damage * secondary_reduction / 100, damage_type = damage_type })
+			target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration })
 		else
 			-- Damage & blind
-			ApplyDamage({attacker = caster, victim = target, ability = self, damage = damage, damage_type = damage_type})
-			target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration * (1 - target:GetStatusResistance())})	
+			ApplyDamage({ attacker = caster, victim = target, ability = self, damage = damage, damage_type = damage_type })
+			target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration * (1 - target:GetStatusResistance()) })
 			self.cast_table[target] = true
 		end
 	end
 end
-	
 
 function imba_tinker_laser:IsNetherWardStealable()
 	return true
@@ -600,7 +597,9 @@ end
 modifier_imba_laser_blind = class({})
 
 function modifier_imba_laser_blind:IsHidden() return false end
+
 function modifier_imba_laser_blind:IsPurgable() return true end
+
 function modifier_imba_laser_blind:IsDebuff() return true end
 
 function modifier_imba_laser_blind:GetModifierMiss_Percentage()
@@ -608,11 +607,11 @@ function modifier_imba_laser_blind:GetModifierMiss_Percentage()
 end
 
 function modifier_imba_laser_blind:DeclareFunctions()
-	local decFuncs = 
-	{	
+	local decFuncs =
+	{
 		MODIFIER_PROPERTY_MISS_PERCENTAGE,
 	}
-	return decFuncs	
+	return decFuncs
 end
 
 function modifier_imba_laser_blind:GetEffectName()
@@ -630,36 +629,36 @@ LinkLuaModifier("modifier_imba_heat_seeking_missile_break", "components/abilitie
 imba_tinker_heat_seeking_missile = class({})
 
 function imba_tinker_heat_seeking_missile:GetAbilityTextureName()
-   return "tinker_heat_seeking_missile"
+	return "tinker_heat_seeking_missile"
 end
 
 function imba_tinker_heat_seeking_missile:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
-		
+
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
 		local missile_count = self:GetTalentSpecialValueFor("base_count")
 		local vision_radius = self:GetSpecialValueFor("vision_radius")
 		local vision_duration = self:GetTalentSpecialValueFor("vision_duration")
 		local speed = self:GetSpecialValueFor("speed")
-		local range = self:GetCastRange(caster_loc,caster) + GetCastRangeIncrease(caster)
+		local range = self:GetCastRange(caster_loc, caster) + GetCastRangeIncrease(caster)
 		local mini_damage = self:GetSpecialValueFor("mini_damage")
 		local mini_vision_duration = self:GetTalentSpecialValueFor("mini_vision_duration")
 		local mini_speed = self:GetSpecialValueFor("mini_speed")
 		local mini_missile_count = self:GetSpecialValueFor("mini_missile_count")
-		
-		if (math.random(1,100) <= 50) and (caster:GetName() == "npc_dota_hero_tinker") then
-			caster:EmitSound("tinker_tink_ability_heatseekingmissile_0"..math.random(1,4))
+
+		if (math.random(1, 100) <= 50) and (caster:GetName() == "npc_dota_hero_tinker") then
+			caster:EmitSound("tinker_tink_ability_heatseekingmissile_0" .. math.random(1, 4))
 		end
-		
+
 		caster:EmitSound("Hero_Tinker.Heat-Seeking_Missile")
-		
+
 		-- Find valid targets
 		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-		
+
 		-- If no valid units are found, dud
 		if #heroes == 0 and #units == 0 then
 			local dud_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf", PATTACH_ABSORIGIN, caster)
@@ -668,23 +667,23 @@ function imba_tinker_heat_seeking_missile:OnSpellStart()
 			caster:EmitSound("Hero_Tinker.Heat-Seeking_Missile_Dud")
 			return nil
 		end
-		
+
 		-- Else, shoot missiles at heroes
 		local hero_missiles = math.min(#heroes, missile_count)
 		for i = 1, hero_missiles do
-			local hero_projectile = 
+			local hero_projectile =
 			{
-				Target 				= heroes[i],
-				Source 				= caster,
-				Ability 			= self,
-				EffectName 			= "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
-				bDodgeable 			= true,
-				bProvidesVision 	= false,
-				iMoveSpeed 			= speed,
-			--	iVisionRadius = vision_radius,
-			--	iVisionTeamNumber = caster:GetTeamNumber(),
-				iSourceAttachment	= caster:ScriptLookupAttachment("attach_attack3"),
-				ExtraData			= {damage = damage, vision_radius = vision_radius, vision_duration = vision_duration, range = range, speed = speed, mini_damage = mini_damage, mini_vision_duration = mini_vision_duration, mini_speed = mini_speed, mini_missile_count = mini_missile_count, cast_origin_x = caster_loc.x, cast_origin_y = caster_loc.y}
+				Target            = heroes[i],
+				Source            = caster,
+				Ability           = self,
+				EffectName        = "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
+				bDodgeable        = true,
+				bProvidesVision   = false,
+				iMoveSpeed        = speed,
+				--	iVisionRadius = vision_radius,
+				--	iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = caster:ScriptLookupAttachment("attach_attack3"),
+				ExtraData         = { damage = damage, vision_radius = vision_radius, vision_duration = vision_duration, range = range, speed = speed, mini_damage = mini_damage, mini_vision_duration = mini_vision_duration, mini_speed = mini_speed, mini_missile_count = mini_missile_count, cast_origin_x = caster_loc.x, cast_origin_y = caster_loc.y }
 			}
 			ProjectileManager:CreateTrackingProjectile(hero_projectile)
 		end
@@ -693,19 +692,19 @@ function imba_tinker_heat_seeking_missile:OnSpellStart()
 		missile_count = missile_count - hero_missiles
 		if #units > 0 then
 			for i = 1, missile_count do
-				local random_projectile = 
+				local random_projectile =
 				{
-					Target				= units[i],
-					Source 				= caster,
-					Ability 			= self,
-					EffectName			= "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
-					bDodgeable 			= true,
-					bProvidesVision 	= false,
-					iMoveSpeed 			= speed,
-				--	iVisionRadius = vision_radius,
-				--	iVisionTeamNumber = caster:GetTeamNumber(),
-					iSourceAttachment 	= caster:ScriptLookupAttachment("attach_attack3"),
-					ExtraData			= {damage = damage, vision_radius = vision_radius, vision_duration = vision_duration, range = range, speed = speed, mini_damage = mini_damage, mini_vision_duration = mini_vision_duration, mini_speed = mini_speed, mini_missile_count = mini_missile_count, cast_origin_x = caster_loc.x, cast_origin_y = caster_loc.y, is_main_missile = 1}
+					Target            = units[i],
+					Source            = caster,
+					Ability           = self,
+					EffectName        = "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
+					bDodgeable        = true,
+					bProvidesVision   = false,
+					iMoveSpeed        = speed,
+					--	iVisionRadius = vision_radius,
+					--	iVisionTeamNumber = caster:GetTeamNumber(),
+					iSourceAttachment = caster:ScriptLookupAttachment("attach_attack3"),
+					ExtraData         = { damage = damage, vision_radius = vision_radius, vision_duration = vision_duration, range = range, speed = speed, mini_damage = mini_damage, mini_vision_duration = mini_vision_duration, mini_speed = mini_speed, mini_missile_count = mini_missile_count, cast_origin_x = caster_loc.x, cast_origin_y = caster_loc.y, is_main_missile = 1 }
 				}
 				ProjectileManager:CreateTrackingProjectile(random_projectile)
 			end
@@ -717,74 +716,73 @@ function imba_tinker_heat_seeking_missile:OnProjectileThink_ExtraData(location, 
 	local caster = self:GetCaster()
 
 	if ExtraData.mini_missile_count and ExtraData.mini_missile_count > 0 then
-	local distance = (location - Vector(ExtraData.cast_origin_x, ExtraData.cast_origin_y, 0)):Length2D()
-	local interval = math.floor(ExtraData.speed)
-	
-	local technomancy
-	if caster:HasAbility("imba_tinker_technomancy") then
-		 technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
-	end
-	if technomancy and technomancy:GetLevel() >= 2 then
-	interval = math.floor(interval * (1 - technomancy:GetSpecialValueFor("interval_reduction")))
-	end
-	
-	-- Spawn once every second, determines whether the missile has travelled for a second by it's distance
-	if (math.mod(math.floor(distance),interval)) < math.floor(interval * FrameTime()) and (math.floor(distance - interval * FrameTime())) > math.floor(interval * FrameTime()) then		
-		
-		-- Find valid targets
-		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-		
-		-- If no valid units are found, dududududu
-		if #heroes == 0 and #units == 0 then
-			local dud_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf", PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControlEnt(dud_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack3", caster_loc, true)
-			ParticleManager:ReleaseParticleIndex(dud_pfx)
-			caster:EmitSound("Hero_Tinker.Heat-Seeking_Missile_Dud")
-			return nil
+		local distance = (location - Vector(ExtraData.cast_origin_x, ExtraData.cast_origin_y, 0)):Length2D()
+		local interval = math.floor(ExtraData.speed)
+
+		local technomancy
+		if caster:HasAbility("imba_tinker_technomancy") then
+			technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
 		end
-		
-		-- Else, shoot missiles at heroes
-		local hero_missiles = math.min(#heroes, ExtraData.mini_missile_count)
-		for i = 1, hero_missiles do
-			local hero_projectile = 
-			{
-				Target 				= heroes[i],
-				--Source 				= caster,
-				vSourceLoc			= location,
-				Ability 			= self,
-				EffectName 			= "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
-				bDodgeable 			= true,
-				bProvidesVision 	= false,
-				bReplaceExisting	= false,
-				iMoveSpeed 			= ExtraData.mini_speed,
-				ExtraData			= {damage = ExtraData.mini_damage, vision_radius = ExtraData.vision_radius, vision_duration = ExtraData.mini_vision_duration, is_mini_missile = 1}
-			}
-			ProjectileManager:CreateTrackingProjectile(hero_projectile)
+		if technomancy and technomancy:GetLevel() >= 2 then
+			interval = math.floor(interval * (1 - technomancy:GetSpecialValueFor("interval_reduction")))
 		end
 
-		-- Shoot the remaining missiles at random units in range
-		local remaining_missiles = ExtraData.mini_missile_count
-		remaining_missiles = remaining_missiles - hero_missiles
-		if #units > 0 then
-			for i = 1,remaining_missiles do
-				local random_projectile = 
+		-- Spawn once every second, determines whether the missile has travelled for a second by it's distance
+		if (math.mod(math.floor(distance), interval)) < math.floor(interval * FrameTime()) and (math.floor(distance - interval * FrameTime())) > math.floor(interval * FrameTime()) then
+			-- Find valid targets
+			local heroes = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+			local units = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+
+			-- If no valid units are found, dududududu
+			if #heroes == 0 and #units == 0 then
+				local dud_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf", PATTACH_ABSORIGIN, caster)
+				ParticleManager:SetParticleControlEnt(dud_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack3", caster_loc, true)
+				ParticleManager:ReleaseParticleIndex(dud_pfx)
+				caster:EmitSound("Hero_Tinker.Heat-Seeking_Missile_Dud")
+				return nil
+			end
+
+			-- Else, shoot missiles at heroes
+			local hero_missiles = math.min(#heroes, ExtraData.mini_missile_count)
+			for i = 1, hero_missiles do
+				local hero_projectile =
 				{
-					Target				= units[i],
+					Target           = heroes[i],
 					--Source 				= caster,
-					vSourceLoc			= location,
-					Ability 			= self,
-					EffectName			= "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
-					bDodgeable 			= true,
-					bProvidesVision 	= false,
-					bReplaceExisting	= false,
-					iMoveSpeed 			= ExtraData.mini_speed,
-					ExtraData			= {damage = ExtraData.mini_damage, vision_radius = ExtraData.vision_radius, vision_duration = ExtraData.mini_vision_duration, is_mini_missile = 1}
+					vSourceLoc       = location,
+					Ability          = self,
+					EffectName       = "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
+					bDodgeable       = true,
+					bProvidesVision  = false,
+					bReplaceExisting = false,
+					iMoveSpeed       = ExtraData.mini_speed,
+					ExtraData        = { damage = ExtraData.mini_damage, vision_radius = ExtraData.vision_radius, vision_duration = ExtraData.mini_vision_duration, is_mini_missile = 1 }
 				}
-				ProjectileManager:CreateTrackingProjectile(random_projectile)
+				ProjectileManager:CreateTrackingProjectile(hero_projectile)
+			end
+
+			-- Shoot the remaining missiles at random units in range
+			local remaining_missiles = ExtraData.mini_missile_count
+			remaining_missiles = remaining_missiles - hero_missiles
+			if #units > 0 then
+				for i = 1, remaining_missiles do
+					local random_projectile =
+					{
+						Target           = units[i],
+						--Source 				= caster,
+						vSourceLoc       = location,
+						Ability          = self,
+						EffectName       = "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
+						bDodgeable       = true,
+						bProvidesVision  = false,
+						bReplaceExisting = false,
+						iMoveSpeed       = ExtraData.mini_speed,
+						ExtraData        = { damage = ExtraData.mini_damage, vision_radius = ExtraData.vision_radius, vision_duration = ExtraData.mini_vision_duration, is_mini_missile = 1 }
+					}
+					ProjectileManager:CreateTrackingProjectile(random_projectile)
+				end
 			end
 		end
-	end
 	end
 end
 
@@ -796,88 +794,85 @@ function imba_tinker_heat_seeking_missile:OnProjectileHit_ExtraData(target, loca
 		if caster:HasAbility("imba_tinker_technomancy") then
 			technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
 		end
-		
+
 		-- Technomancy level 3, mini missiles now apply an explosive warhead, aimed at breaking defences
 		if technomancy and technomancy:GetLevel() >= 3 and ExtraData.is_mini_missile == 1 then
-			
 			-- Particle & Sound
 			local particle_explosion_fx = ParticleManager:CreateParticle("particles/hero/tinker/tinker_mini_missile_explosive_warhead.vpcf", PATTACH_WORLDORIGIN, caster)
 			ParticleManager:SetParticleControl(particle_explosion_fx, 0, target:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle_explosion_fx, 1, location)
 			ParticleManager:SetParticleControl(particle_explosion_fx, 3, target:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
-			
+
 			EmitSoundOn("Hero_Techies.LandMine.Detonate", target)
 
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, technomancy:GetSpecialValueFor("missile_aoe"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,enemy in pairs (enemies) do
+			for _, enemy in pairs(enemies) do
 				-- Find the defence break modifier
 				local modifier_defence_break = enemy:FindModifierByName("modifier_imba_heat_seeking_missile_break")
 				-- If the target already has the debuff, refresh it
 				if modifier_defence_break then
-				modifier_defence_break:ForceRefresh()
+					modifier_defence_break:ForceRefresh()
 				else
-				-- Else, create the debuff and refresh it
-				modifier_defence_break = enemy:AddNewModifier(caster,self,"modifier_imba_heat_seeking_missile_break",{duration = ExtraData.vision_duration * (1 - enemy:GetStatusResistance())})
-				modifier_defence_break:ForceRefresh()
+					-- Else, create the debuff and refresh it
+					modifier_defence_break = enemy:AddNewModifier(caster, self, "modifier_imba_heat_seeking_missile_break", { duration = ExtraData.vision_duration * (1 - enemy:GetStatusResistance()) })
+					modifier_defence_break:ForceRefresh()
 				end
 			end
 		end
-		
+
 		-- Technomancy level 2, apply main explosive damage on each main missile
 		if technomancy and technomancy:GetLevel() >= 2 and ExtraData.is_main_missile == 1 then
-			
 			-- Particle & Sound
 			local particle_explosion_fx = ParticleManager:CreateParticle("particles/hero/tinker/tinker_missile_explosive_warhead.vpcf", PATTACH_WORLDORIGIN, caster)
 			ParticleManager:SetParticleControl(particle_explosion_fx, 0, caster:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle_explosion_fx, 1, location)
 			ParticleManager:SetParticleControl(particle_explosion_fx, 3, caster:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
-			
+
 			EmitSoundOn("Hero_Techies.RemoteMine.Detonate", target)
 
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, technomancy:GetSpecialValueFor("missile_aoe"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,enemy in pairs (enemies) do
-				
+			for _, enemy in pairs(enemies) do
 				-- Get the damage parameters
 				local explosion_damage = technomancy:GetSpecialValueFor("explosion_damage")
 				local explosion_damage_main = technomancy:GetSpecialValueFor("explosion_damage_main")
-				
+
 				-- Get the missile break modifier
 				local modifier_defence_break = enemy:FindModifierByName("modifier_imba_heat_seeking_missile_break")
 				-- If the target is break by a missile, amplify the damage
 				if modifier_defence_break then
-				explosion_damage = explosion_damage * (1+modifier_defence_break:GetStackCount()*technomancy:GetSpecialValueFor("mini_break_extra_dmg")*0.01)
-				explosion_damage_main = explosion_damage_main * (1+modifier_defence_break:GetStackCount()*technomancy:GetSpecialValueFor("mini_break_extra_dmg")*0.01)
+					explosion_damage = explosion_damage * (1 + modifier_defence_break:GetStackCount() * technomancy:GetSpecialValueFor("mini_break_extra_dmg") * 0.01)
+					explosion_damage_main = explosion_damage_main * (1 + modifier_defence_break:GetStackCount() * technomancy:GetSpecialValueFor("mini_break_extra_dmg") * 0.01)
 				end
-				
+
 				-- If it's the main target, apply double damage
 				if enemy == target then
-				ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = explosion_damage_main, damage_type = self:GetAbilityDamageType()})
-				-- Else apply normal damage
+					ApplyDamage({ attacker = caster, victim = enemy, ability = self, damage = explosion_damage_main, damage_type = self:GetAbilityDamageType() })
+					-- Else apply normal damage
 				else
-				ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = explosion_damage, damage_type = self:GetAbilityDamageType()})
+					ApplyDamage({ attacker = caster, victim = enemy, ability = self, damage = explosion_damage, damage_type = self:GetAbilityDamageType() })
 				end
 			end
 		end
-		
+
 		local missile_damage = ExtraData.damage
-		
+
 		-- Get the missile break modifier
 		local modifier_defence_break = target:FindModifierByName("modifier_imba_heat_seeking_missile_break")
 
 		-- If the target is break by a missile, amplify the damage
 		if modifier_defence_break then
-			missile_damage = missile_damage * (1 + modifier_defence_break:GetStackCount()* technomancy:GetSpecialValueFor("mini_break_extra_dmg")* 0.01)
+			missile_damage = missile_damage * (1 + modifier_defence_break:GetStackCount() * technomancy:GetSpecialValueFor("mini_break_extra_dmg") / 100)
 		end
-				
-		ApplyDamage({attacker = caster, victim = target, ability = self, damage = missile_damage, damage_type = self:GetAbilityDamageType()})
+
+		ApplyDamage({ attacker = caster, victim = target, ability = self, damage = missile_damage, damage_type = self:GetAbilityDamageType() })
 		local explosion_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf", PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControlEnt(explosion_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", location, true)
 		ParticleManager:ReleaseParticleIndex(explosion_pfx)
 		target:EmitSound("Hero_Tinker.Heat-Seeking_Missile.Impact")
 	end
-	self:CreateVisibilityNode( location, ExtraData.vision_radius, ExtraData.vision_duration )
+	self:CreateVisibilityNode(location, ExtraData.vision_radius, ExtraData.vision_duration)
 end
 
 function imba_tinker_heat_seeking_missile:IsNetherWardStealable()
@@ -896,7 +891,7 @@ function imba_tinker_heat_seeking_missile:IsHiddenWhenStolen()
 	return false
 end
 
-modifier_imba_heat_seeking_missile_break = class ({})
+modifier_imba_heat_seeking_missile_break = class({})
 
 function modifier_imba_heat_seeking_missile_break:IsHidden()
 	return false
@@ -912,11 +907,11 @@ end
 
 function modifier_imba_heat_seeking_missile_break:OnRefresh()
 	if IsServer() then
-	local ability = self:GetCaster():FindAbilityByName("imba_tinker_heat_seeking_missile")
-	
+		local ability = self:GetCaster():FindAbilityByName("imba_tinker_heat_seeking_missile")
+
 		if ability then
-		self:SetDuration(ability:GetSpecialValueFor("mini_vision_duration"),true)
-		self:IncrementStackCount()
+			self:SetDuration(ability:GetSpecialValueFor("mini_vision_duration"), true)
+			self:IncrementStackCount()
 		end
 	end
 end
@@ -942,7 +937,7 @@ LinkLuaModifier("modifier_imba_march_drone", "components/abilities/heroes/hero_t
 imba_tinker_march_of_the_machines = class({})
 
 function imba_tinker_march_of_the_machines:GetAbilityTextureName()
-   return "tinker_march_of_the_machines"
+	return "tinker_march_of_the_machines"
 end
 
 function imba_tinker_march_of_the_machines:OnSpellStart()
@@ -952,7 +947,7 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 		local caster_loc = caster:GetAbsOrigin()
 		local direction = (target_loc - caster_loc):Normalized()
 		local ability = self
-		
+
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
 		local collision_radius = self:GetSpecialValueFor("collision_radius")
@@ -972,12 +967,12 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 		local drone_duration = self:GetSpecialValueFor("drone_duration")
 		local speed = self:GetSpecialValueFor("speed")
 		local spawn_duration = self:GetSpecialValueFor("spawn_duration")
-		local spawn_line_direction = RotateVector2D(direction,90,true)
-		
+		local spawn_line_direction = RotateVector2D(direction, 90, true)
+
 		-- #4 Talent - Increased speed and range
 		speed = speed * (1 + (caster:FindTalentValue("special_bonus_imba_tinker_3") / 100))
 		travel_distance = travel_distance * (1 + (caster:FindTalentValue("special_bonus_imba_tinker_3") / 100))
-		
+
 		-- Level-Unlocks
 		local unlock_flame = false
 		local unlock_tesla = false
@@ -985,283 +980,284 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 		local unlock_railgun = false
 		local unlock_sticky = false
 		local unlock_drone = false
-		
+
 		if self:GetLevel() >= 1 then unlock_flame = true end
 		if self:GetLevel() >= 5 then unlock_tesla = true end
 		if self:GetLevel() >= 6 then unlock_dismantle = true end
 		if self:GetLevel() >= 7 then unlock_railgun = true end
-		
+
 		-- Technomancy handling
 		if caster:HasAbility("imba_tinker_technomancy") then
 			local technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
 			if technomancy:GetLevel() >= 3 then unlock_sticky = true end
 			if technomancy:GetLevel() >= 6 then unlock_drone = true end
 		end
-		
-		if (math.random(1,100) <= 80) and (caster:GetName() == "npc_dota_hero_tinker") then
-			local sound_random = math.random(1,11)
+
+		if (math.random(1, 100) <= 80) and (caster:GetName() == "npc_dota_hero_tinker") then
+			local sound_random = math.random(1, 11)
 			if sound_random <= 9 then
-				caster:EmitSound("tinker_tink_ability_marchofthemachines_0"..sound_random)
+				caster:EmitSound("tinker_tink_ability_marchofthemachines_0" .. sound_random)
 			else
-				caster:EmitSound("tinker_tink_ability_marchofthemachines_"..sound_random)
+				caster:EmitSound("tinker_tink_ability_marchofthemachines_" .. sound_random)
 			end
 		end
-		
-		
+
+
 		caster:EmitSound("Hero_Tinker.March_of_the_Machines.Cast")
 		caster:EmitSound("Hero_Tinker.March_of_the_Machines")
-		
+
 		local area_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_motm.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControlEnt(area_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster_loc, true)
 		ParticleManager:SetParticleControl(area_pfx, 1, caster_loc)
 		ParticleManager:SetParticleControlForward(area_pfx, 1, direction)
 		ParticleManager:ReleaseParticleIndex(area_pfx)
-		
-		for i=0, spawn_duration * robots_per_sec, 1 do
-			Timers:CreateTimer(i*(1/robots_per_sec), function()
+
+		for i = 0, spawn_duration * robots_per_sec, 1 do
+			Timers:CreateTimer(i * (1 / robots_per_sec), function()
 				local position_ran = (math.random() - 0.5) * travel_distance
 				local projectile
-				local bot_random = math.random(1,100)
+				local bot_random = math.random(1, 100)
 				-- Flaming bot
 				if (bot_random <= touch_chance_pct) and unlock_flame then
 					local index = "projectile_" .. DoUniqueString("projectile")
 					self[index] = {}
 					projectile = {
-					  EffectName = "particles/hero/tinker/tinker_march_flame.vpcf",
-					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-					  fDistance = travel_distance,
-					  fStartRadius = collision_radius,
-					  fEndRadius = collision_radius,
-					  Source = caster,
-					  fExpireTime = GameRules:GetGameTime() + 10.0,
-					  vVelocity = Vector(direction.x,direction.y,0) * speed,
-					  UnitBehavior = PROJECTILES_DESTROY,
-					  bMultipleHits = false,
-					  bIgnoreSource = true,
-					  TreeBehavior = PROJECTILES_NOTHING,
-					  bCutTrees = false,
-					  bTreeFullCollision = false,
-					  WallBehavior = PROJECTILES_NOTHING,
-					  GroundBehavior = PROJECTILES_NOTHING,
-					  fGroundOffset = 80,
-					  nChangeMax = 1,
-					  bRecreateOnChange = false,
-					  bDestroyImmediate = false,
-					  bZCheck = false,
-					  bGroundLock = true,
-					  bProvidesVision = false,
-					  OnThink = function(self) 
-						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration})
-					  end,
-					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
-					  OnUnitHit = function(self, unit) 
-						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration})
-					  end,
+						EffectName = "particles/hero/tinker/tinker_march_flame.vpcf",
+						vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+						fDistance = travel_distance,
+						fStartRadius = collision_radius,
+						fEndRadius = collision_radius,
+						Source = caster,
+						fExpireTime = GameRules:GetGameTime() + 10.0,
+						vVelocity = Vector(direction.x, direction.y, 0) * speed,
+						UnitBehavior = PROJECTILES_DESTROY,
+						bMultipleHits = false,
+						bIgnoreSource = true,
+						TreeBehavior = PROJECTILES_NOTHING,
+						bCutTrees = false,
+						bTreeFullCollision = false,
+						WallBehavior = PROJECTILES_NOTHING,
+						GroundBehavior = PROJECTILES_NOTHING,
+						fGroundOffset = 80,
+						nChangeMax = 1,
+						bRecreateOnChange = false,
+						bDestroyImmediate = false,
+						bZCheck = false,
+						bGroundLock = true,
+						bProvidesVision = false,
+						OnThink = function(self)
+							ability:OnProjectileThink_ExtraData(projectile:GetPosition(), { index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration })
+						end,
+						UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+						OnUnitHit = function(self, unit)
+							ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), { index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration })
+						end,
 					}
-				-- Tesla bot
+					-- Tesla bot
 				elseif ((bot_random <= (2 * touch_chance_pct)) and (bot_random > (touch_chance_pct))) and unlock_tesla then
 					projectile = {
-					  EffectName = "particles/hero/tinker/tinker_march_tesla.vpcf",
-					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-					  fDistance = travel_distance,
-					  fStartRadius = collision_radius,
-					  fEndRadius = collision_radius,
-					  Source = caster,
-					  fExpireTime = GameRules:GetGameTime() + 10.0,
-					  vVelocity = Vector(direction.x,direction.y,0) * speed,
-					  UnitBehavior = PROJECTILES_DESTROY,
-					  bMultipleHits = false,
-					  bIgnoreSource = true,
-					  TreeBehavior = PROJECTILES_NOTHING,
-					  bCutTrees = false,
-					  bTreeFullCollision = false,
-					  WallBehavior = PROJECTILES_NOTHING,
-					  GroundBehavior = PROJECTILES_NOTHING,
-					  fGroundOffset = 80,
-					  nChangeMax = 1,
-					  bRecreateOnChange = false,
-					  bDestroyImmediate = false,
-					  bZCheck = false,
-					  bGroundLock = true,
-					  bProvidesVision = false,
-					  OnThink = function(self) 
-						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration})
-					  end,
-					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
-					  OnUnitHit = function(self, unit) 
-						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration})
-					  end,
+						EffectName = "particles/hero/tinker/tinker_march_tesla.vpcf",
+						vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+						fDistance = travel_distance,
+						fStartRadius = collision_radius,
+						fEndRadius = collision_radius,
+						Source = caster,
+						fExpireTime = GameRules:GetGameTime() + 10.0,
+						vVelocity = Vector(direction.x, direction.y, 0) * speed,
+						UnitBehavior = PROJECTILES_DESTROY,
+						bMultipleHits = false,
+						bIgnoreSource = true,
+						TreeBehavior = PROJECTILES_NOTHING,
+						bCutTrees = false,
+						bTreeFullCollision = false,
+						WallBehavior = PROJECTILES_NOTHING,
+						GroundBehavior = PROJECTILES_NOTHING,
+						fGroundOffset = 80,
+						nChangeMax = 1,
+						bRecreateOnChange = false,
+						bDestroyImmediate = false,
+						bZCheck = false,
+						bGroundLock = true,
+						bProvidesVision = false,
+						OnThink = function(self)
+							ability:OnProjectileThink_ExtraData(projectile:GetPosition(), { damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration })
+						end,
+						UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+						OnUnitHit = function(self, unit)
+							ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), { damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration })
+						end,
 					}
-				-- Drone bot
+					-- Drone bot
 				elseif ((bot_random <= (3 * touch_chance_pct)) and (bot_random > (2 * touch_chance_pct))) and unlock_drone then
 					local index = "projectile_" .. DoUniqueString("projectile")
 					self[index] = {}
 					projectile = {
-					  EffectName = "particles/hero/tinker/tinker_march_drone.vpcf",
-					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-					  fDistance = travel_distance,
-					  fStartRadius = collision_radius,
-					  fEndRadius = collision_radius,
-					  Source = caster,
-					  fExpireTime = GameRules:GetGameTime() + 10.0,
-					  vVelocity = Vector(direction.x,direction.y,0) * speed,
-					  UnitBehavior = PROJECTILES_DESTROY,
-					  bMultipleHits = false,
-					  bIgnoreSource = true,
-					  TreeBehavior = PROJECTILES_NOTHING,
-					  bCutTrees = false,
-					  bTreeFullCollision = false,
-					  WallBehavior = PROJECTILES_NOTHING,
-					  GroundBehavior = PROJECTILES_NOTHING,
-					  fGroundOffset = 80,
-					  nChangeMax = 1,
-					  bRecreateOnChange = false,
-					  bDestroyImmediate = false,
-					  bZCheck = false,
-					  bGroundLock = true,
-					  bProvidesVision = false,
-					  OnThink = function(self) 
-						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration})
-					  end,
-					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
-					  OnUnitHit = function(self, unit) 
-						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration})
-					  end,
+						EffectName = "particles/hero/tinker/tinker_march_drone.vpcf",
+						vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+						fDistance = travel_distance,
+						fStartRadius = collision_radius,
+						fEndRadius = collision_radius,
+						Source = caster,
+						fExpireTime = GameRules:GetGameTime() + 10.0,
+						vVelocity = Vector(direction.x, direction.y, 0) * speed,
+						UnitBehavior = PROJECTILES_DESTROY,
+						bMultipleHits = false,
+						bIgnoreSource = true,
+						TreeBehavior = PROJECTILES_NOTHING,
+						bCutTrees = false,
+						bTreeFullCollision = false,
+						WallBehavior = PROJECTILES_NOTHING,
+						GroundBehavior = PROJECTILES_NOTHING,
+						fGroundOffset = 80,
+						nChangeMax = 1,
+						bRecreateOnChange = false,
+						bDestroyImmediate = false,
+						bZCheck = false,
+						bGroundLock = true,
+						bProvidesVision = false,
+						OnThink = function(self)
+							ability:OnProjectileThink_ExtraData(projectile:GetPosition(), { damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration })
+						end,
+						UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+						OnUnitHit = function(self, unit)
+							ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), { damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration })
+						end,
 					}
-				-- Sticky bot
+					-- Sticky bot
 				elseif ((bot_random <= (4 * touch_chance_pct)) and (bot_random > (3 * touch_chance_pct))) and unlock_sticky then
 					projectile = {
-					  EffectName = "particles/hero/tinker/tinker_march_sticky.vpcf",
-					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-					  fDistance = travel_distance,
-					  fStartRadius = collision_radius,
-					  fEndRadius = collision_radius,
-					  Source = caster,
-					  fExpireTime = GameRules:GetGameTime() + 10.0,
-					  vVelocity = Vector(direction.x,direction.y,0) * speed,
-					  UnitBehavior = PROJECTILES_DESTROY,
-					  bMultipleHits = false,
-					  bIgnoreSource = true,
-					  TreeBehavior = PROJECTILES_NOTHING,
-					  bCutTrees = false,
-					  bTreeFullCollision = false,
-					  WallBehavior = PROJECTILES_NOTHING,
-					  GroundBehavior = PROJECTILES_NOTHING,
-					  fGroundOffset = 80,
-					  nChangeMax = 1,
-					  bRecreateOnChange = false,
-					  bDestroyImmediate = false,
-					  bZCheck = false,
-					  bGroundLock = true,
-					  bProvidesVision = false,
-					  OnThink = function(self) 
-						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration})
-					  end,
-					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
-					  OnUnitHit = function(self, unit) 
-						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration})
-					  end,
+						EffectName = "particles/hero/tinker/tinker_march_sticky.vpcf",
+						vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+						fDistance = travel_distance,
+						fStartRadius = collision_radius,
+						fEndRadius = collision_radius,
+						Source = caster,
+						fExpireTime = GameRules:GetGameTime() + 10.0,
+						vVelocity = Vector(direction.x, direction.y, 0) * speed,
+						UnitBehavior = PROJECTILES_DESTROY,
+						bMultipleHits = false,
+						bIgnoreSource = true,
+						TreeBehavior = PROJECTILES_NOTHING,
+						bCutTrees = false,
+						bTreeFullCollision = false,
+						WallBehavior = PROJECTILES_NOTHING,
+						GroundBehavior = PROJECTILES_NOTHING,
+						fGroundOffset = 80,
+						nChangeMax = 1,
+						bRecreateOnChange = false,
+						bDestroyImmediate = false,
+						bZCheck = false,
+						bGroundLock = true,
+						bProvidesVision = false,
+						OnThink = function(self)
+							ability:OnProjectileThink_ExtraData(projectile:GetPosition(), { damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration })
+						end,
+						UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+						OnUnitHit = function(self, unit)
+							ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), { damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration })
+						end,
 					}
-				-- Dismantle bot
+					-- Dismantle bot
 				elseif ((bot_random <= (5 * touch_chance_pct)) and (bot_random > (4 * touch_chance_pct))) and unlock_dismantle then
 					projectile = {
-					  EffectName = "particles/hero/tinker/tinker_march_dismantle.vpcf",
-					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-					  fDistance = travel_distance,
-					  fStartRadius = collision_radius,
-					  fEndRadius = collision_radius,
-					  Source = caster,
-					  fExpireTime = GameRules:GetGameTime() + 10.0,
-					  vVelocity = Vector(direction.x,direction.y,0) * speed,
-					  UnitBehavior = PROJECTILES_DESTROY,
-					  bMultipleHits = false,
-					  bIgnoreSource = true,
-					  TreeBehavior = PROJECTILES_NOTHING,
-					  bCutTrees = false,
-					  bTreeFullCollision = false,
-					  WallBehavior = PROJECTILES_NOTHING,
-					  GroundBehavior = PROJECTILES_NOTHING,
-					  fGroundOffset = 80,
-					  nChangeMax = 1,
-					  bRecreateOnChange = false,
-					  bDestroyImmediate = false,
-					  bZCheck = false,
-					  bGroundLock = true,
-					  bProvidesVision = false,
-					  OnThink = function(self) 
-						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration})
-					  end,
-					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
-					  OnUnitHit = function(self, unit) 
-						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration})
-					  end,
+						EffectName = "particles/hero/tinker/tinker_march_dismantle.vpcf",
+						vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+						fDistance = travel_distance,
+						fStartRadius = collision_radius,
+						fEndRadius = collision_radius,
+						Source = caster,
+						fExpireTime = GameRules:GetGameTime() + 10.0,
+						vVelocity = Vector(direction.x, direction.y, 0) * speed,
+						UnitBehavior = PROJECTILES_DESTROY,
+						bMultipleHits = false,
+						bIgnoreSource = true,
+						TreeBehavior = PROJECTILES_NOTHING,
+						bCutTrees = false,
+						bTreeFullCollision = false,
+						WallBehavior = PROJECTILES_NOTHING,
+						GroundBehavior = PROJECTILES_NOTHING,
+						fGroundOffset = 80,
+						nChangeMax = 1,
+						bRecreateOnChange = false,
+						bDestroyImmediate = false,
+						bZCheck = false,
+						bGroundLock = true,
+						bProvidesVision = false,
+						OnThink = function(self)
+							ability:OnProjectileThink_ExtraData(projectile:GetPosition(), { damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration })
+						end,
+						UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+						OnUnitHit = function(self, unit)
+							ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), { damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration })
+						end,
 					}
-				-- Railgun bot
+					-- Railgun bot
 				elseif ((bot_random <= (6 * touch_chance_pct)) and (bot_random > (5 * touch_chance_pct))) and unlock_railgun then
 					local index = "projectile_" .. DoUniqueString("projectile")
 					self[index] = {}
 					projectile = {
-					  EffectName = "particles/hero/tinker/tinker_march_railgun.vpcf",
-					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-					  fDistance = travel_distance,
-					  fStartRadius = collision_radius,
-					  fEndRadius = collision_radius,
-					  Source = caster,
-					  fExpireTime = GameRules:GetGameTime() + 10.0,
-					  vVelocity = Vector(direction.x,direction.y,0) * speed,
-					  UnitBehavior = PROJECTILES_DESTROY,
-					  bMultipleHits = false,
-					  bIgnoreSource = true,
-					  TreeBehavior = PROJECTILES_NOTHING,
-					  bCutTrees = false,
-					  bTreeFullCollision = false,
-					  WallBehavior = PROJECTILES_NOTHING,
-					  GroundBehavior = PROJECTILES_NOTHING,
-					  fGroundOffset = 80,
-					  nChangeMax = 1,
-					  bRecreateOnChange = false,
-					  bDestroyImmediate = false,
-					  bZCheck = false,
-					  bGroundLock = true,
-					  bProvidesVision = false,
-					  OnThink = function(self) 
-						ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y})
-					  end,
-					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
-					  OnUnitHit = function(self, unit) 
-						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y})
-					  end,
+						EffectName = "particles/hero/tinker/tinker_march_railgun.vpcf",
+						vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+						fDistance = travel_distance,
+						fStartRadius = collision_radius,
+						fEndRadius = collision_radius,
+						Source = caster,
+						fExpireTime = GameRules:GetGameTime() + 10.0,
+						vVelocity = Vector(direction.x, direction.y, 0) * speed,
+						UnitBehavior = PROJECTILES_DESTROY,
+						bMultipleHits = false,
+						bIgnoreSource = true,
+						TreeBehavior = PROJECTILES_NOTHING,
+						bCutTrees = false,
+						bTreeFullCollision = false,
+						WallBehavior = PROJECTILES_NOTHING,
+						GroundBehavior = PROJECTILES_NOTHING,
+						fGroundOffset = 80,
+						nChangeMax = 1,
+						bRecreateOnChange = false,
+						bDestroyImmediate = false,
+						bZCheck = false,
+						bGroundLock = true,
+						bProvidesVision = false,
+						OnThink = function(self)
+							ability:OnProjectileThink_ExtraData(projectile:GetPosition(), { index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y })
+						end,
+						UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+						OnUnitHit = function(self, unit)
+							ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), { index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y })
+						end,
 					}
 				else
 					projectile = {
-					  EffectName = "particles/units/heroes/hero_tinker/tinker_machine.vpcf",
-					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-					  fDistance = travel_distance,
-					  fStartRadius = collision_radius,
-					  fEndRadius = collision_radius,
-					  Source = caster,
-					  fExpireTime = GameRules:GetGameTime() + 10.0,
-					  vVelocity = Vector(direction.x,direction.y,0) * speed,
-					  UnitBehavior = PROJECTILES_DESTROY,
-					  bMultipleHits = false,
-					  bIgnoreSource = true,
-					  TreeBehavior = PROJECTILES_NOTHING,
-					  bCutTrees = false,
-					  bTreeFullCollision = false,
-					  WallBehavior = PROJECTILES_NOTHING,
-					  GroundBehavior = PROJECTILES_NOTHING,
-					  fGroundOffset = 80,
-					  nChangeMax = 1,
-					  bRecreateOnChange = false,
-					  bDestroyImmediate = false,
-					  bZCheck = false,
-					  bGroundLock = true,
-					  bProvidesVision = false,
-					  OnThink = function(self) end,
-					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
-					  OnUnitHit = function(self, unit) 
-						ability:OnProjectileHit_ExtraData(unit, self:GetPosition(), {damage = damage, explosion_radius = explosion_radius})
-					  end,
+						EffectName = "particles/units/heroes/hero_tinker/tinker_machine.vpcf",
+						vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+						fDistance = travel_distance,
+						fStartRadius = collision_radius,
+						fEndRadius = collision_radius,
+						Source = caster,
+						fExpireTime = GameRules:GetGameTime() + 10.0,
+						vVelocity = Vector(direction.x, direction.y, 0) * speed,
+						UnitBehavior = PROJECTILES_DESTROY,
+						bMultipleHits = false,
+						bIgnoreSource = true,
+						TreeBehavior = PROJECTILES_NOTHING,
+						bCutTrees = false,
+						bTreeFullCollision = false,
+						WallBehavior = PROJECTILES_NOTHING,
+						GroundBehavior = PROJECTILES_NOTHING,
+						fGroundOffset = 80,
+						nChangeMax = 1,
+						bRecreateOnChange = false,
+						bDestroyImmediate = false,
+						bZCheck = false,
+						bGroundLock = true,
+						bProvidesVision = false,
+						OnThink = function(self)
+						end,
+						UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+						OnUnitHit = function(self, unit)
+							ability:OnProjectileHit_ExtraData(unit, self:GetPosition(), { damage = damage, explosion_radius = explosion_radius })
+						end,
 					}
 				end
 				Projectiles:CreateProjectile(projectile)
@@ -1272,38 +1268,38 @@ end
 
 function imba_tinker_march_of_the_machines:OnProjectileHit_ExtraData(target, location, ExtraData)
 	local caster = self:GetCaster()
-	
+
 	if self[ExtraData.index] then
 		self[ExtraData.index] = nil
 	end
-	
+
 	-- Railgun-bot handling
 	if target then
 		if ExtraData.raildamage then
 			if target then
-				ApplyDamage({attacker = caster, victim = target, ability = self, damage = ExtraData.raildamage, damage_type = self:GetAbilityDamageType()})
+				ApplyDamage({ attacker = caster, victim = target, ability = self, damage = ExtraData.raildamage, damage_type = self:GetAbilityDamageType() })
 				return false
 			end
 		else
 			-- Deal damage
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.explosion_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,enemy in ipairs(enemies) do
-				ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+			for _, enemy in ipairs(enemies) do
+				ApplyDamage({ attacker = caster, victim = enemy, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType() })
 				-- Tesla-bot handling
 				if ExtraData.tesla_stun_duration then
-					enemy:AddNewModifier(caster, self, "modifier_imba_march_tesla_stun", {duration = ExtraData.tesla_stun_duration * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(caster, self, "modifier_imba_march_tesla_stun", { duration = ExtraData.tesla_stun_duration * (1 - enemy:GetStatusResistance()) })
 				end
 				-- Sticky-bot handling
 				if ExtraData.sticky_duration then
-					enemy:AddNewModifier(caster, self, "modifier_imba_march_sticky_root", {duration = ExtraData.sticky_duration * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(caster, self, "modifier_imba_march_sticky_root", { duration = ExtraData.sticky_duration * (1 - enemy:GetStatusResistance()) })
 				end
 				-- Dismantle-bot handling
 				if ExtraData.dismantle_duration then
-					enemy:AddNewModifier(caster, self, "modifier_imba_march_dismantle", {duration = ExtraData.dismantle_duration * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(caster, self, "modifier_imba_march_dismantle", { duration = ExtraData.dismantle_duration * (1 - enemy:GetStatusResistance()) })
 				end
 				-- Drone-bot handling
 				if ExtraData.drone_duration then
-					enemy:AddNewModifier(caster, self, "modifier_imba_march_drone", {duration = ExtraData.drone_duration * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(caster, self, "modifier_imba_march_drone", { duration = ExtraData.drone_duration * (1 - enemy:GetStatusResistance()) })
 				end
 			end
 		end
@@ -1314,12 +1310,12 @@ end
 function imba_tinker_march_of_the_machines:OnProjectileThink_ExtraData(location, ExtraData)
 	if IsServer() then
 		local caster = self:GetCaster()
-		
+
 		-- Flame-bot handling
 		if ExtraData.flame_duration then
 			self[ExtraData.index].counter = self[ExtraData.index].counter or 0
 			if self[ExtraData.index].counter == 0 then
-				CreateModifierThinker(caster, self, "modifier_imba_march_flame_aura", {duration = ExtraData.flame_duration, flame_radius = ExtraData.flame_radius}, location, caster:GetTeamNumber(), false)
+				CreateModifierThinker(caster, self, "modifier_imba_march_flame_aura", { duration = ExtraData.flame_duration, flame_radius = ExtraData.flame_radius }, location, caster:GetTeamNumber(), false)
 			end
 			self[ExtraData.index].counter = self[ExtraData.index].counter + 1
 			-- Do this every 10 frames
@@ -1327,43 +1323,43 @@ function imba_tinker_march_of_the_machines:OnProjectileThink_ExtraData(location,
 				self[ExtraData.index].counter = 0
 			end
 		end
-		
+
 		-- Railgun-bot handling
 		if ExtraData.railgun_damage then
 			self[ExtraData.index].counter = self[ExtraData.index].counter or 0
 			if self[ExtraData.index].counter == 0 then
-				projectile = 
+				projectile =
 				{
-					Ability				= self,
-					EffectName			= "particles/units/heroes/hero_zuus/zuus_arc_lightning_head_c.vpcf",
-					vSpawnOrigin		= location,
-					fDistance			= ExtraData.railgun_range,
-					fStartRadius		= ExtraData.railgun_radius,
-					fEndRadius			= ExtraData.railgun_radius,
-					Source				= caster,
-					bHasFrontalCone		= true,
-					bReplaceExisting	= false,
-					iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-					iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-					iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					fExpireTime 		= GameRules:GetGameTime() + 10.0,
-					bDeleteOnHit		= false,
-					vVelocity			= Vector(ExtraData.direction_x,ExtraData.direction_y,0) * 20000,
-					bProvidesVision		= false,
-					ExtraData			= {raildamage = ExtraData.railgun_damage}
+					Ability          = self,
+					EffectName       = "particles/units/heroes/hero_zuus/zuus_arc_lightning_head_c.vpcf",
+					vSpawnOrigin     = location,
+					fDistance        = ExtraData.railgun_range,
+					fStartRadius     = ExtraData.railgun_radius,
+					fEndRadius       = ExtraData.railgun_radius,
+					Source           = caster,
+					bHasFrontalCone  = true,
+					bReplaceExisting = false,
+					iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
+					iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+					iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					fExpireTime      = GameRules:GetGameTime() + 10.0,
+					bDeleteOnHit     = false,
+					vVelocity        = Vector(ExtraData.direction_x, ExtraData.direction_y, 0) * 20000,
+					bProvidesVision  = false,
+					ExtraData        = { raildamage = ExtraData.railgun_damage }
 				}
 				ProjectileManager:CreateLinearProjectile(projectile)
-				
+
 				if self[ExtraData.index].lightningBolt then
 					ParticleManager:ReleaseParticleIndex(self[ExtraData.index].lightningBolt)
 					self[ExtraData.index].lightningBolt = nil
 				end
-				
+
 				self[ExtraData.index].lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster)
-				ParticleManager:SetParticleControl(self[ExtraData.index].lightningBolt,0,GetGroundPosition(location, caster))
-				ParticleManager:SetParticleControl(self[ExtraData.index].lightningBolt,1,GetGroundPosition(location, caster) + (Vector(ExtraData.direction_x,ExtraData.direction_y,0) * ExtraData.railgun_range))
+				ParticleManager:SetParticleControl(self[ExtraData.index].lightningBolt, 0, GetGroundPosition(location, caster))
+				ParticleManager:SetParticleControl(self[ExtraData.index].lightningBolt, 1, GetGroundPosition(location, caster) + (Vector(ExtraData.direction_x, ExtraData.direction_y, 0) * ExtraData.railgun_range))
 			end
-			ParticleManager:SetParticleControl(self[ExtraData.index].lightningBolt,0,GetGroundPosition(location, caster))
+			ParticleManager:SetParticleControl(self[ExtraData.index].lightningBolt, 0, GetGroundPosition(location, caster))
 			self[ExtraData.index].counter = self[ExtraData.index].counter + 1
 			-- Do this every 30 frames
 			if self[ExtraData.index].counter > 29 then
@@ -1394,12 +1390,12 @@ function modifier_imba_march_flame_aura:OnCreated(params)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local parent = self:GetParent()
-		
+
 		self.radius = params.flame_radius
-		
-		local fire_fx = ParticleManager:CreateParticle( "particles/hero/tinker/tinker_march_fire_burn.vpcf", PATTACH_ABSORIGIN, caster)
+
+		local fire_fx = ParticleManager:CreateParticle("particles/hero/tinker/tinker_march_fire_burn.vpcf", PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleAlwaysSimulate(fire_fx)
-		ParticleManager:SetParticleControl( fire_fx, 0, parent:GetAbsOrigin() )
+		ParticleManager:SetParticleControl(fire_fx, 0, parent:GetAbsOrigin())
 		self:AddParticle(fire_fx, false, false, -1, false, false)
 	end
 end
@@ -1445,7 +1441,7 @@ function modifier_imba_march_flame_damage:OnIntervalThink()
 	if IsServer() then
 		local ability = self:GetAbility()
 		local flame_dmg_sec = ability:GetSpecialValueFor("flame_dmg_sec")
-		ApplyDamage({attacker = self:GetCaster(), victim = self:GetParent(), ability = ability, damage = flame_dmg_sec * self.damage_interval, damage_type = ability:GetAbilityDamageType()})
+		ApplyDamage({ attacker = self:GetCaster(), victim = self:GetParent(), ability = ability, damage = flame_dmg_sec * self.damage_interval, damage_type = ability:GetAbilityDamageType() })
 	end
 end
 
@@ -1477,7 +1473,7 @@ end
 function modifier_imba_march_tesla_stun:OnCreated()
 	if IsServer() then
 		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
-		self:AddParticle(stun_fx,false,false,-1,false,false)
+		self:AddParticle(stun_fx, false, false, -1, false, false)
 	end
 end
 
@@ -1530,11 +1526,11 @@ function modifier_imba_march_dismantle:IsDebuff()
 end
 
 function modifier_imba_march_dismantle:DeclareFunctions()
-	local decFuncs = 
+	local decFuncs =
 	{
 		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
 	}
-	return decFuncs	
+	return decFuncs
 end
 
 function modifier_imba_march_dismantle:GetModifierBaseDamageOutgoing_Percentage()
@@ -1554,7 +1550,7 @@ end
 function modifier_imba_march_drone:OnIntervalThink()
 	if IsServer() then
 		local parent = self:GetParent()
-		local direction = Vector(math.random(-1000,1000),math.random(-1000,1000),0):Normalized()
+		local direction = Vector(math.random(-1000, 1000), math.random(-1000, 1000), 0):Normalized()
 		local location = parent:GetAbsOrigin() + (direction * 1000)
 		parent:Stop()
 		parent:MoveToPosition(location)
@@ -1562,11 +1558,11 @@ function modifier_imba_march_drone:OnIntervalThink()
 end
 
 function modifier_imba_march_drone:CheckState()
-	local state = 
+	local state =
 	{
 		[MODIFIER_STATE_COMMAND_RESTRICTED] = true
 	}
-	return state 
+	return state
 end
 
 -------------------------------------------
@@ -1575,7 +1571,7 @@ end
 imba_tinker_technomancy = class({})
 
 function imba_tinker_technomancy:GetAbilityTextureName()
-   return "tinker_tinkermaster"
+	return "tinker_tinkermaster"
 end
 
 function imba_tinker_technomancy:OnUpgrade()

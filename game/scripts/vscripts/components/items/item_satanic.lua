@@ -39,9 +39,9 @@ end
 function item_imba_satanic:OnSpellStart()
 	-- Satanic sound
 	EmitSoundOn("DOTA_Item.Satanic.Activate", self:GetCaster())
-	
+
 	-- Unholy rage!
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_satanic_active", {duration = self:GetSpecialValueFor("unholy_rage_duration")})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_satanic_active", { duration = self:GetSpecialValueFor("unholy_rage_duration") })
 end
 
 ---------------------------
@@ -52,14 +52,17 @@ end
 modifier_imba_satanic = class({})
 
 function modifier_imba_satanic:IsHidden() return true end
+
 function modifier_imba_satanic:IsPurgable() return false end
+
 function modifier_imba_satanic:RemoveOnDeath() return false end
+
 function modifier_imba_satanic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_satanic:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if IsServer() then
 		-- Change to lifesteal projectile, if there's nothing "stronger"
@@ -91,7 +94,7 @@ function modifier_imba_satanic:DeclareFunctions()
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
-		
+
 		MODIFIER_EVENT_ON_DEATH
 	}
 end
@@ -116,11 +119,11 @@ end
 
 function modifier_imba_satanic:OnDeath(keys)
 	-- Assumption is that no keys.inflictor means it's a regular attack
-	if self:GetAbility() and keys.attacker == self:GetParent() and keys.unit:IsRealHero() and keys.attacker ~= keys.unit and not keys.inflictor then	
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_satanic_soul_slaughter_counter", {duration = self:GetAbility():GetSpecialValueFor("soul_slaughter_duration")})
+	if self:GetAbility() and keys.attacker == self:GetParent() and keys.unit:IsRealHero() and keys.attacker ~= keys.unit and not keys.inflictor then
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_satanic_soul_slaughter_counter", { duration = self:GetAbility():GetSpecialValueFor("soul_slaughter_duration") })
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_satanic_soul_slaughter_stack", {
-			duration	= self:GetAbility():GetSpecialValueFor("soul_slaughter_duration"),
-			stacks		= keys.unit:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("soul_slaughter_hp_increase_pct") * 0.01
+			duration = self:GetAbility():GetSpecialValueFor("soul_slaughter_duration"),
+			stacks   = keys.unit:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("soul_slaughter_hp_increase_pct") / 100
 		})
 	end
 end
@@ -140,19 +143,22 @@ end
 -- MODIFIER_IMBA_SATANIC_SOUL_SLAUGHTER_COUNTER --
 --------------------------------------------------
 
-modifier_imba_satanic_soul_slaughter_counter	= modifier_imba_satanic_soul_slaughter_counter or class({})
+modifier_imba_satanic_soul_slaughter_counter = modifier_imba_satanic_soul_slaughter_counter or class({})
 
 function modifier_imba_satanic_soul_slaughter_counter:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
-	
-	self.soul_slaughter_damage_per_stack	= self:GetAbility():GetSpecialValueFor("soul_slaughter_damage_per_stack")
-	self.soul_slaughter_hp_per_stack		= self:GetAbility():GetSpecialValueFor("soul_slaughter_hp_per_stack")
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
+
+	self.soul_slaughter_damage_per_stack = self:GetAbility():GetSpecialValueFor("soul_slaughter_damage_per_stack")
+	self.soul_slaughter_hp_per_stack     = self:GetAbility():GetSpecialValueFor("soul_slaughter_hp_per_stack")
 end
 
 function modifier_imba_satanic_soul_slaughter_counter:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_HEALTH_BONUS	
+		MODIFIER_PROPERTY_HEALTH_BONUS
 	}
 end
 
@@ -168,20 +174,21 @@ end
 -- MODIFIER_IMBA_SATANIC_SOUL_SLAUGHTER_STACK --
 ------------------------------------------------
 
-modifier_imba_satanic_soul_slaughter_stack		= modifier_imba_satanic_soul_slaughter_stack or class({})
+modifier_imba_satanic_soul_slaughter_stack = modifier_imba_satanic_soul_slaughter_stack or class({})
 
-function modifier_imba_satanic_soul_slaughter_stack:IsHidden()		return true end
-function modifier_imba_satanic_soul_slaughter_stack:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_satanic_soul_slaughter_stack:IsHidden() return true end
+
+function modifier_imba_satanic_soul_slaughter_stack:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_satanic_soul_slaughter_stack:OnCreated(keys)
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	if not IsServer() then return end
-	
+
 	self:SetStackCount(keys.stacks)
-	
+
 	if self:GetParent():HasModifier("modifier_imba_satanic_soul_slaughter_counter") then
 		self:GetParent():FindModifierByName("modifier_imba_satanic_soul_slaughter_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_satanic_soul_slaughter_counter"):GetStackCount() + self:GetStackCount())
 	end
@@ -189,7 +196,7 @@ end
 
 function modifier_imba_satanic_soul_slaughter_stack:OnDestroy()
 	if not IsServer() then return end
-	
+
 	if self:GetParent():HasModifier("modifier_imba_satanic_soul_slaughter_counter") then
 		self:GetParent():FindModifierByName("modifier_imba_satanic_soul_slaughter_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_satanic_soul_slaughter_counter"):GetStackCount() - self:GetStackCount())
 	end

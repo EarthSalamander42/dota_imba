@@ -72,7 +72,7 @@ function imba_slardar_guardian_sprint:OnSpellStart()
 		EmitSoundOn(sound_cast, caster)
 
 		-- Apply sprint modifier
-		local sprint = caster:AddNewModifier(caster, ability, sprint_buff, {duration = duration})
+		local sprint = caster:AddNewModifier(caster, ability, sprint_buff, { duration = duration })
 		sprint.cooldown_cdr = self:GetCooldownTime()
 
 		ability:EndCooldown()
@@ -95,6 +95,7 @@ end
 modifier_imba_guardian_sprint_buff = class({})
 
 function modifier_imba_guardian_sprint_buff:IsHidden() return false end
+
 function modifier_imba_guardian_sprint_buff:IsDebuff() return false end
 
 function modifier_imba_guardian_sprint_buff:OnCreated()
@@ -120,25 +121,25 @@ function modifier_imba_guardian_sprint_buff:OnIntervalThink()
 	if IsServer() then
 		-- -- #5 Talent: Rip Current can always be cast without needing a unit
 		-- if self.caster:HasTalent("special_bonus_imba_slardar_5") then
-			-- self.ability:SetActivated(true)
+		-- self.ability:SetActivated(true)
 		-- else
-			-- -- Decide Rip Current activation
-			-- local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-				-- self.caster:GetAbsOrigin(),
-				-- nil,
-				-- self.search_radius,
-				-- DOTA_UNIT_TARGET_TEAM_BOTH,
-				-- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				-- DOTA_UNIT_TARGET_FLAG_NONE,
-				-- FIND_CLOSEST,
-				-- false)
+		-- -- Decide Rip Current activation
+		-- local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+		-- self.caster:GetAbsOrigin(),
+		-- nil,
+		-- self.search_radius,
+		-- DOTA_UNIT_TARGET_TEAM_BOTH,
+		-- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		-- DOTA_UNIT_TARGET_FLAG_NONE,
+		-- FIND_CLOSEST,
+		-- false)
 
-			-- -- Not including self.
-			-- if #allies > 1 then
-				-- self.ability:SetActivated(true)
-			-- else
-				-- self.ability:SetActivated(false)
-			-- end
+		-- -- Not including self.
+		-- if #allies > 1 then
+		-- self.ability:SetActivated(true)
+		-- else
+		-- self.ability:SetActivated(false)
+		-- end
 		-- end
 
 		-- #2 Talent: Sprinting through enemy units slows their attack speed for 0.5 seconds
@@ -154,8 +155,8 @@ function modifier_imba_guardian_sprint_buff:OnIntervalThink()
 				false)
 
 			-- Apply enemies attack speed slow modifier
-			for _,enemy in pairs(enemies) do
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_talent_slow, {duration = 0.3 * (1 - enemy:GetStatusResistance())})
+			for _, enemy in pairs(enemies) do
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_talent_slow, { duration = 0.3 * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 	end
@@ -166,14 +167,14 @@ function modifier_imba_guardian_sprint_buff:GetTexture()
 end
 
 function modifier_imba_guardian_sprint_buff:CheckState()
-	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	local state = { [MODIFIER_STATE_NO_UNIT_COLLISION] = true }
 	return state
 end
 
 function modifier_imba_guardian_sprint_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+	local decFuncs = { MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE }
 
 	return decFuncs
 end
@@ -231,9 +232,9 @@ end
 -- GUARDIAN SPRINT RIVER MODIFIER --
 ------------------------------------
 
-modifier_imba_guardian_sprint_river = class ({})
+modifier_imba_guardian_sprint_river = class({})
 
-function modifier_imba_guardian_sprint_river:IsHidden()	return not (self:GetParent():GetAbsOrigin().z < 160 and (self:GetParent():HasGroundMovementCapability() or self:GetParent():HasModifier("modifier_item_imba_shadow_blade_invis") or self:GetParent():HasModifier("modifier_item_imba_silver_edge_invis")) or self:GetParent():HasModifier("modifier_imba_slithereen_crush_puddle")) end
+function modifier_imba_guardian_sprint_river:IsHidden() return not (self:GetParent():GetAbsOrigin().z < 160 and (self:GetParent():HasGroundMovementCapability() or self:GetParent():HasModifier("modifier_item_imba_shadow_blade_invis") or self:GetParent():HasModifier("modifier_item_imba_silver_edge_invis")) or self:GetParent():HasModifier("modifier_imba_slithereen_crush_puddle")) end
 
 function modifier_imba_guardian_sprint_river:GetEffectName()
 	if not self:IsHidden() then return "particles/units/heroes/hero_slardar/slardar_sprint_river.vpcf" end
@@ -241,13 +242,13 @@ end
 
 function modifier_imba_guardian_sprint_river:OnCreated()
 	if not IsServer() then return end
-	
+
 	self:StartIntervalThink(0.1)
 end
 
 function modifier_imba_guardian_sprint_river:OnIntervalThink()
 	if not IsServer() then return end
-	
+
 	if not self:IsHidden() and not self:GetCaster():HasModifier("modifier_bloodseeker_thirst") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_bloodseeker_thirst", {})
 	elseif self:IsHidden() and self:GetParent():FindModifierByNameAndCaster("modifier_bloodseeker_thirst", self:GetCaster()) then
@@ -256,15 +257,15 @@ function modifier_imba_guardian_sprint_river:OnIntervalThink()
 end
 
 function modifier_imba_guardian_sprint_river:DeclareFunctions()
-	local decFuncs = 
+	local decFuncs =
 	{
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
-		
+
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
 	}
-	
+
 	return decFuncs
 end
 
@@ -330,7 +331,7 @@ function modifier_imba_rip_current_movement:OnIntervalThink()
 end
 
 function modifier_imba_rip_current_movement:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+	local state = { [MODIFIER_STATE_STUNNED] = true }
 
 	return state
 end
@@ -382,17 +383,19 @@ function modifier_imba_rip_current_movement:RipCurrentLand()
 	for _, enemy in pairs(enemies) do
 		if not enemy:IsMagicImmune() then
 			-- Apply damage
-			local damageTable = {victim = enemy,
+			local damageTable = {
+				victim = enemy,
 				attacker = self.caster,
 				damage = damage,
 				damage_type = DAMAGE_TYPE_PHYSICAL,
-				ability = self.ability}
+				ability = self.ability
+			}
 
 			ApplyDamage(damageTable)
 
 			-- Apply stun and slow modifiers
-			enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
-			enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, { duration = self.stun_duration * (1 - enemy:GetStatusResistance()) })
+			enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, { duration = self.slow_duration * (1 - enemy:GetStatusResistance()) })
 		end
 	end
 
@@ -429,10 +432,6 @@ function modifier_imba_rip_current_movement:GetMotionControllerPriority()
 	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
 end
 
-
-
-
-
 function modifier_imba_rip_current_movement:GetEffectName()
 	return "particles/hero/slardar/slardar_foward_propel.vpcf"
 end
@@ -442,8 +441,8 @@ function modifier_imba_rip_current_movement:GetEffectAttachType()
 end
 
 function modifier_imba_rip_current_movement:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS}
+	local decFuncs = { MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS }
 
 	return decFuncs
 end
@@ -480,16 +479,16 @@ function modifier_imba_rip_current_stun:IsStunDebuff()
 end
 
 function modifier_imba_rip_current_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+	local state = { [MODIFIER_STATE_STUNNED] = true }
 	return state
 end
 
 function modifier_imba_rip_current_stun:DeclareFunctions()
-    return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+	return { MODIFIER_PROPERTY_OVERRIDE_ANIMATION }
 end
 
 function modifier_imba_rip_current_stun:GetOverrideAnimation()
-	 return ACT_DOTA_DISABLED
+	return ACT_DOTA_DISABLED
 end
 
 -- Slow propel modifier
@@ -500,7 +499,7 @@ function modifier_imba_rip_current_slow:GetTexture()
 end
 
 function modifier_imba_rip_current_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 
 	return decFuncs
 end
@@ -512,7 +511,6 @@ function modifier_imba_rip_current_slow:GetModifierMoveSpeedBonus_Percentage()
 
 	return ms_slow_pct
 end
-
 
 -- Talent modifier: attack speed slow
 modifier_imba_guardian_sprint_aspd_slow = class({})
@@ -530,7 +528,7 @@ function modifier_imba_guardian_sprint_aspd_slow:IsDebuff()
 end
 
 function modifier_imba_guardian_sprint_aspd_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local decFuncs = { MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
 
 	return decFuncs
 end
@@ -543,7 +541,6 @@ end
 function modifier_imba_guardian_sprint_aspd_slow:GetTexture()
 	return "slardar_sprint"
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -561,7 +558,7 @@ LinkLuaModifier("modifier_imba_slithereen_crush_puddle", "components/abilities/h
 LinkLuaModifier("modifier_imba_slithereen_crush_puddle_aura", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
 function imba_slardar_slithereen_crush:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) * (math.max((100 + self:GetCaster():FindTalentValue("special_bonus_imba_slardar_6", "cdr_mult")) * 0.01, 1))
+	return self.BaseClass.GetCooldown(self, level) * (math.max((100 + self:GetCaster():FindTalentValue("special_bonus_imba_slardar_6", "cdr_mult")) / 100, 1))
 end
 
 function imba_slardar_slithereen_crush:GetAbilityTextureName()
@@ -620,7 +617,7 @@ function SlithereenCrush(self)
 	local royal_break_duration = ability:GetSpecialValueFor("royal_break_duration")
 
 	if caster:HasModifier(modifier_rain) then
-		radius = radius * (1+(radius_inc_rain_pct/100))
+		radius = radius * (1 + (radius_inc_rain_pct / 100))
 	end
 
 	-- Play cast sound
@@ -629,7 +626,7 @@ function SlithereenCrush(self)
 	-- Add crush particles
 	local particle_splash_fx = ParticleManager:CreateParticle(particle_splash, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(particle_splash_fx, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_splash_fx, 1, Vector(1, 1, radius+100))
+	ParticleManager:SetParticleControl(particle_splash_fx, 1, Vector(1, 1, radius + 100))
 
 	-- Add puddle if scepter
 	if self:GetCaster():HasScepter() then
@@ -637,10 +634,10 @@ function SlithereenCrush(self)
 			self:GetCaster(),
 			self,
 			"modifier_imba_slithereen_crush_puddle_aura",
-			{duration = self:GetSpecialValueFor("scepter_puddle_duration")},
+			{ duration = self:GetSpecialValueFor("scepter_puddle_duration") },
 			self:GetCaster():GetOrigin(),
 			self:GetCaster():GetTeamNumber(),
-			false		
+			false
 		)
 	end
 
@@ -663,18 +660,20 @@ function SlithereenCrush(self)
 			ParticleManager:SetParticleControl(particle_hit_fx, 0, enemy:GetAbsOrigin())
 
 			-- Damage nearby enemies
-			local damageTable = {victim = enemy,
+			local damageTable = {
+				victim = enemy,
 				attacker = caster,
 				damage = damage,
 				damage_type = DAMAGE_TYPE_PHYSICAL,
-				ability = ability}
+				ability = ability
+			}
 
 			ApplyDamage(damageTable)
 
 			-- Apply the three debuffs on them
-			enemy:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - enemy:GetStatusResistance())})
-			enemy:AddNewModifier(caster, ability, modifier_slow, {duration = (stun_duration + slow_duration) * (1 - enemy:GetStatusResistance())})
-			enemy:AddNewModifier(caster, ability, modifier_royal_break, {duration = royal_break_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(caster, ability, modifier_stun, { duration = stun_duration * (1 - enemy:GetStatusResistance()) })
+			enemy:AddNewModifier(caster, ability, modifier_slow, { duration = (stun_duration + slow_duration) * (1 - enemy:GetStatusResistance()) })
+			enemy:AddNewModifier(caster, ability, modifier_royal_break, { duration = royal_break_duration * (1 - enemy:GetStatusResistance()) })
 		end
 	end
 end
@@ -699,24 +698,24 @@ function modifier_imba_slithereen_crush_stun:IsStunDebuff()
 end
 
 function modifier_imba_slithereen_crush_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+	local state = { [MODIFIER_STATE_STUNNED] = true }
 	return state
 end
 
 function modifier_imba_slithereen_crush_stun:DeclareFunctions()
-    return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+	return { MODIFIER_PROPERTY_OVERRIDE_ANIMATION }
 end
 
 function modifier_imba_slithereen_crush_stun:GetOverrideAnimation()
-	 return ACT_DOTA_DISABLED
+	return ACT_DOTA_DISABLED
 end
 
 -- Slow modifier
 modifier_imba_slithereen_crush_slow = class({})
 
 function modifier_imba_slithereen_crush_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
 
 	return decFuncs
 end
@@ -766,12 +765,12 @@ function modifier_imba_slithereen_crush_royal_break:OnCreated()
 end
 
 function modifier_imba_slithereen_crush_royal_break:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
 
-function modifier_imba_slithereen_crush_royal_break:OnAttackLanded( keys )
+function modifier_imba_slithereen_crush_royal_break:OnAttackLanded(keys)
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
@@ -795,8 +794,10 @@ function modifier_imba_slithereen_crush_royal_break:OnAttackLanded( keys )
 end
 
 function modifier_imba_slithereen_crush_royal_break:CheckState()
-	local state = {[MODIFIER_STATE_BLOCK_DISABLED] = true,
-		[MODIFIER_STATE_EVADE_DISABLED] = true}
+	local state = {
+		[MODIFIER_STATE_BLOCK_DISABLED] = true,
+		[MODIFIER_STATE_EVADE_DISABLED] = true
+	}
 	return state
 end
 
@@ -812,30 +813,35 @@ function modifier_imba_slithereen_crush_stun:IsPurgable()
 	return true
 end
 
-
 --------------------------------------
 -- SLITHEREEN CRUSH PUDDLE MODIFIER --
 --------------------------------------
 
-modifier_imba_slithereen_crush_puddle_aura = class ({})
+modifier_imba_slithereen_crush_puddle_aura = class({})
 
-function modifier_imba_slithereen_crush_puddle_aura:IsHidden()					return true end
+function modifier_imba_slithereen_crush_puddle_aura:IsHidden() return true end
 
-function modifier_imba_slithereen_crush_puddle_aura:IsAura()					return true end
-function modifier_imba_slithereen_crush_puddle_aura:IsAuraActiveOnDeath() 		return false end
+function modifier_imba_slithereen_crush_puddle_aura:IsAura() return true end
 
-function modifier_imba_slithereen_crush_puddle_aura:GetAuraRadius()				return self.scepter_puddle_radius end
-function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
-function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO end
-function modifier_imba_slithereen_crush_puddle_aura:GetModifierAura()			return "modifier_imba_slithereen_crush_puddle" end
-function modifier_imba_slithereen_crush_puddle_aura:GetAuraEntityReject(hTarget)	return hTarget ~= self:GetCaster() end
+function modifier_imba_slithereen_crush_puddle_aura:IsAuraActiveOnDeath() return false end
+
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraRadius() return self.scepter_puddle_radius end
+
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO end
+
+function modifier_imba_slithereen_crush_puddle_aura:GetModifierAura() return "modifier_imba_slithereen_crush_puddle" end
+
+function modifier_imba_slithereen_crush_puddle_aura:GetAuraEntityReject(hTarget) return hTarget ~= self:GetCaster() end
 
 function modifier_imba_slithereen_crush_puddle_aura:OnCreated()
-	self.scepter_puddle_radius	= self:GetAbility():GetSpecialValueFor("scepter_puddle_radius")
+	self.scepter_puddle_radius = self:GetAbility():GetSpecialValueFor("scepter_puddle_radius")
 
 	if not IsServer() then return end
-	
+
 	local puddle_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_slardar/slardar_water_puddle.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 	ParticleManager:SetParticleControl(puddle_particle, 0, self:GetParent():GetAbsOrigin())
 	ParticleManager:SetParticleControl(puddle_particle, 1, Vector(self.scepter_puddle_radius, 0, 0))
@@ -844,7 +850,7 @@ end
 
 function modifier_imba_slithereen_crush_puddle_aura:OnDestroy()
 	if not IsServer() then return end
-	
+
 	self:GetParent():RemoveSelf()
 end
 
@@ -854,7 +860,7 @@ end
 
 modifier_imba_slithereen_crush_puddle = class({})
 
-function modifier_imba_slithereen_crush_puddle:IsHidden()	return true end
+function modifier_imba_slithereen_crush_puddle:IsHidden() return true end
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -882,7 +888,7 @@ end
 modifier_imba_bash_of_the_deep_attack = class({})
 
 function modifier_imba_bash_of_the_deep_attack:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL}
+	local decFuncs = { MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL }
 
 	return decFuncs
 end
@@ -899,7 +905,7 @@ function modifier_imba_bash_of_the_deep_attack:IsPurgable()
 	return false
 end
 
-function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage_Physical( keys )
+function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage_Physical(keys)
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
@@ -933,7 +939,6 @@ function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage
 
 		-- Check if the caster is the one attacking
 		if caster == attacker then
-
 			-- If passives are disabled, do nothing
 			if caster:PassivesDisabled() then
 				return nil
@@ -944,13 +949,11 @@ function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage
 				-- Check for ALL existing stuns on the victim through "modifier_stunned" (KV stuns)
 				modifiers = target:FindAllModifiersByName("modifier_stunned")
 				if #modifiers > 0 then -- KV stun was found
-					for _,modifier in pairs(modifiers) do
+					for _, modifier in pairs(modifiers) do
 						-- if found and not marked, increase its duration. Stop when one is found.
 						if not modifier.extended_by_deep_bash then
-
 							-- Make sure it's not a passive bash
 							if not modifier:GetAbility():IsPassive() then
-
 								modifier:SetDuration(modifier:GetRemainingTime() + extend_duration, true)
 
 								-- Mark that modifier as modified
@@ -964,13 +967,13 @@ function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage
 								break
 							end
 						end
-				end
+					end
 				end
 
 				-- If no KV modifier was found, cycle through modifiers, find the first one with the stunned state (lua) that is not marked
 				if continue_looking_lua_stuns then
 					modifiers = target:FindAllModifiers()
-					for _,modifier in pairs(modifiers) do
+					for _, modifier in pairs(modifiers) do
 						-- Find if it has any checkstate (lua)
 						if modifier.CheckState then
 							-- Find if the state of the modifier is stunned and it's not marked. Stop when one is found.
@@ -1008,9 +1011,9 @@ function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage
 
 					-- Apply bash stun with duration depending on hero/creep
 					if target:IsHero() or target:IsBuilding() then
-						target:AddNewModifier(caster, ability, modifier_stun, {duration = hero_stun_duration * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(caster, ability, modifier_stun, { duration = hero_stun_duration * (1 - target:GetStatusResistance()) })
 					else
-						target:AddNewModifier(caster, ability, modifier_stun, {duration = (hero_stun_duration * creep_duration_mult) * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(caster, ability, modifier_stun, { duration = (hero_stun_duration * creep_duration_mult) * (1 - target:GetStatusResistance()) })
 					end
 
 					total_bonus_damage = total_bonus_damage + bash_damage
@@ -1041,7 +1044,7 @@ function modifier_imba_bash_of_the_deep_stun:IsStunDebuff()
 end
 
 function modifier_imba_bash_of_the_deep_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+	local state = { [MODIFIER_STATE_STUNNED] = true }
 	return state
 end
 
@@ -1060,8 +1063,8 @@ end
 LinkLuaModifier("imba_slardar_bash_720", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slardar_bash_720", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
-imba_slardar_bash_720			= class({})
-modifier_imba_slardar_bash_720	= class({})
+imba_slardar_bash_720          = class({})
+modifier_imba_slardar_bash_720 = class({})
 
 ---------------------------
 -- IMBA_SLARDAR_BASH_720 --
@@ -1077,15 +1080,15 @@ end
 -- MODIFIER_IMBA_SLARDAR_BASH_720 --
 ------------------------------------
 
-function modifier_imba_slardar_bash_720:IsHidden()	return self:GetStackCount() == 0 end
+function modifier_imba_slardar_bash_720:IsHidden() return self:GetStackCount() == 0 end
 
 function modifier_imba_slardar_bash_720:DeclareFunctions()
-	return {MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL, MODIFIER_PROPERTY_TOOLTIP}
+	return { MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL, MODIFIER_PROPERTY_TOOLTIP }
 end
 
 function modifier_imba_slardar_bash_720:GetModifierProcAttack_BonusDamage_Physical(keys)
 	if not IsServer() then return end
-	
+
 	-- "Does not count attacks done against allies, wards or buildings, nor bashes allies, buildings or wards on the bashing attack."
 	-- IMBAfication: Guard Brutality (lets it work on wards and buildings)
 	-- if not self:GetParent():PassivesDisabled() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not keys.target:IsOther() and not keys.target:IsBuilding() then
@@ -1094,11 +1097,11 @@ function modifier_imba_slardar_bash_720:GetModifierProcAttack_BonusDamage_Physic
 			self:IncrementStackCount()
 		else
 			keys.target:EmitSound("Hero_Slardar.Bash")
-			
-			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance())})
-			
+
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", { duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()) })
+
 			self:SetStackCount(0)
-			
+
 			return self:GetAbility():GetTalentSpecialValueFor("bonus_damage")
 		end
 	end
@@ -1194,36 +1197,36 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 			local cast_response_roll = RandomInt(9, 14)
 
 			if cast_response_roll < 10 then
-				cast_response_string = cast_response_string.."0"
+				cast_response_string = cast_response_string .. "0"
 			end
 
-			local cast_response = cast_response_string..cast_response_roll
+			local cast_response = cast_response_string .. cast_response_roll
 			EmitSoundOn(cast_response, caster)
 		end
 	else -- otherwise just roll a normal repsonse
 		if RollPercentage(15) then
-			local cast_response_table = {1, 4, 5, 6, 7, 8}
-			local cast_response = cast_response_string.."0"..cast_response_table[RandomInt(1, 6)]
+			local cast_response_table = { 1, 4, 5, 6, 7, 8 }
+			local cast_response = cast_response_string .. "0" .. cast_response_table[RandomInt(1, 6)]
 			EmitSoundOn(cast_response, caster)
-	end
+		end
 	end
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
 
 	-- Apply debuff modifier on enemy
-	target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - target:GetStatusResistance())})
+	target:AddNewModifier(caster, ability, modifier_debuff, { duration = duration * (1 - target:GetStatusResistance()) })
 
 	-- Apply particle effects on enemy
 	-- Timers:CreateTimer(0.01, function()
-		-- particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, target)
-		-- ParticleManager:SetParticleControl(particle_haze_fx, 0, target:GetAbsOrigin())
-		-- ParticleManager:SetParticleControl(particle_haze_fx, 1, target:GetAbsOrigin())
-		-- ParticleManager:SetParticleControl(particle_haze_fx, 2, target:GetAbsOrigin())
+	-- particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, target)
+	-- ParticleManager:SetParticleControl(particle_haze_fx, 0, target:GetAbsOrigin())
+	-- ParticleManager:SetParticleControl(particle_haze_fx, 1, target:GetAbsOrigin())
+	-- ParticleManager:SetParticleControl(particle_haze_fx, 2, target:GetAbsOrigin())
 
-		-- ParticleManager:SetParticleControlEnt(particle_haze_fx, 1, target, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		-- ParticleManager:SetParticleControlEnt(particle_haze_fx, 2, target, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		-- corrosive_haze_modifier:AddParticle(particle_haze_fx, false, true, -1, false, true)
+	-- ParticleManager:SetParticleControlEnt(particle_haze_fx, 1, target, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	-- ParticleManager:SetParticleControlEnt(particle_haze_fx, 2, target, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	-- corrosive_haze_modifier:AddParticle(particle_haze_fx, false, true, -1, false, true)
 	-- end)
 
 	-- #7 Talent: Corrosize Haze now applies to all targets
@@ -1241,37 +1244,36 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 			FIND_ANY_ORDER,
 			false)
 		-- Ignore main target
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			if enemy ~= target and not enemy:HasModifier(modifier_debuff) then
-				enemy:AddNewModifier(caster, ability, modifier_secondary_debuff, {duration = duration * (1 - enemy:GetStatusResistance())})
-	
+				enemy:AddNewModifier(caster, ability, modifier_secondary_debuff, { duration = duration * (1 - enemy:GetStatusResistance()) })
+
 				-- Apply particle effects on enemy
 				-- Timers:CreateTimer(0.01, function()
-					particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, enemy)
-					ParticleManager:SetParticleControl(particle_haze_fx, 0, enemy:GetAbsOrigin())
-					ParticleManager:SetParticleControl(particle_haze_fx, 1, enemy:GetAbsOrigin())
-					ParticleManager:SetParticleControl(particle_haze_fx, 2, enemy:GetAbsOrigin())
+				particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, enemy)
+				ParticleManager:SetParticleControl(particle_haze_fx, 0, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(particle_haze_fx, 1, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(particle_haze_fx, 2, enemy:GetAbsOrigin())
 
-					ParticleManager:SetParticleControlEnt(particle_haze_fx, 1, enemy, PATTACH_OVERHEAD_FOLLOW, "attach_overhead", enemy:GetAbsOrigin(), true)
-					ParticleManager:SetParticleControlEnt(particle_haze_fx, 2, enemy, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-					corrosive_haze_modifier:AddParticle(particle_haze_fx, false, true, -1, false, true)
+				ParticleManager:SetParticleControlEnt(particle_haze_fx, 1, enemy, PATTACH_OVERHEAD_FOLLOW, "attach_overhead", enemy:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(particle_haze_fx, 2, enemy, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+				corrosive_haze_modifier:AddParticle(particle_haze_fx, false, true, -1, false, true)
 				-- end)
 			end
 		end
 	end
 end
 
-
 -- Armor reduction debuff
 modifier_imba_corrosive_haze_debuff = class({})
 
 function modifier_imba_corrosive_haze_debuff:OnCreated()
 	if not IsServer() then return end
-	
+
 	if self:GetCaster():HasTalent("special_bonus_imba_slardar_11") and self:GetParent():IsRealHero() then
-		self.caster_buff = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_corrosive_haze_talent_buff", {duration = self:GetDuration()})
+		self.caster_buff = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_corrosive_haze_talent_buff", { duration = self:GetDuration() })
 	end
-	
+
 	self.particle_haze_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(self.particle_haze_fx, 1, self:GetParent(), PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(self.particle_haze_fx, 2, self:GetParent(), PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
@@ -1285,23 +1287,23 @@ function modifier_imba_corrosive_haze_debuff:OnRefresh()
 	if self.caster_buff and not self.caster_buff:IsNull() then
 		self.caster_buff:SetDuration(self:GetDuration(), true)
 	else
-		self.caster_buff = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_corrosive_haze_talent_buff", {duration = self:GetDuration()})
+		self.caster_buff = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_corrosive_haze_talent_buff", { duration = self:GetDuration() })
 	end
 end
 
 function modifier_imba_corrosive_haze_debuff:CheckState()
 	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
-		return {[MODIFIER_STATE_PROVIDES_VISION] = true}
+		return { [MODIFIER_STATE_PROVIDES_VISION] = true }
 	else
 		return {
-			[MODIFIER_STATE_PROVIDES_VISION]	= true,
-			[MODIFIER_STATE_INVISIBLE]			= false
+			[MODIFIER_STATE_PROVIDES_VISION] = true,
+			[MODIFIER_STATE_INVISIBLE]       = false
 		}
 	end
 end
 
 -- function modifier_imba_corrosive_haze_debuff:GetPriority()
-	-- return MODIFIER_PRIORITY_SUPER_ULTRA
+-- return MODIFIER_PRIORITY_SUPER_ULTRA
 -- end
 
 function modifier_imba_corrosive_haze_debuff:DeclareFunctions()
@@ -1313,36 +1315,35 @@ function modifier_imba_corrosive_haze_debuff:DeclareFunctions()
 	}
 end
 
-
 -- Talent 8 Logic
 -- function modifier_imba_corrosive_haze_debuff:OnTakeDamage(keys)
-	-- -- #8 Talent: Corrosive Haze decreases armor on physical instances
-	-- local caster = self:GetCaster()
-	-- local parent = self:GetParent()
-	-- local attacker = keys.attacker
-	-- local victim = keys.unit
-	-- local damage_type = keys.damage_type
+-- -- #8 Talent: Corrosive Haze decreases armor on physical instances
+-- local caster = self:GetCaster()
+-- local parent = self:GetParent()
+-- local attacker = keys.attacker
+-- local victim = keys.unit
+-- local damage_type = keys.damage_type
 
-	-- -- if the caster doesn't have the talent, do nothing
-	-- if not caster:HasTalent("special_bonus_imba_slardar_8") then
-		-- return nil
-	-- end
+-- -- if the caster doesn't have the talent, do nothing
+-- if not caster:HasTalent("special_bonus_imba_slardar_8") then
+-- return nil
+-- end
 
-	-- -- if the damage wasn't physical, do nothing
-	-- if not damage_type == DAMAGE_TYPE_PHYSICAL then
-		-- return nil
-	-- end
+-- -- if the damage wasn't physical, do nothing
+-- if not damage_type == DAMAGE_TYPE_PHYSICAL then
+-- return nil
+-- end
 
-	-- -- Only apply if the victim is in another team of the attacker, and is the one getting hit
-	-- if parent == victim and caster:GetTeamNumber() ~= victim:GetTeamNumber() then
-		-- local max_stacks = caster:FindTalentValue("special_bonus_imba_slardar_8", "max_stacks")
-		-- local stacks = self:GetStackCount()
+-- -- Only apply if the victim is in another team of the attacker, and is the one getting hit
+-- if parent == victim and caster:GetTeamNumber() ~= victim:GetTeamNumber() then
+-- local max_stacks = caster:FindTalentValue("special_bonus_imba_slardar_8", "max_stacks")
+-- local stacks = self:GetStackCount()
 
-		-- -- Give stack, but don't apply over the allowed amount
-		-- if stacks < max_stacks then
-			-- self:IncrementStackCount()
-		-- end
-	-- end
+-- -- Give stack, but don't apply over the allowed amount
+-- if stacks < max_stacks then
+-- self:IncrementStackCount()
+-- end
+-- end
 
 -- end
 
@@ -1375,21 +1376,20 @@ end
 
 -- Talent 8 Logic
 -- function modifier_imba_corrosive_haze_debuff:GetModifierPhysicalArmorBonus()
-	-- local caster = self:GetCaster()
-	-- local ability = self:GetAbility()
-	-- local armor_reduction = ability:GetSpecialValueFor("armor_reduction")
-	-- local stacks = self:GetStackCount()
-	-- local armor_per_stack = caster:FindTalentValue("special_bonus_imba_slardar_8", "armor_per_stack")
+-- local caster = self:GetCaster()
+-- local ability = self:GetAbility()
+-- local armor_reduction = ability:GetSpecialValueFor("armor_reduction")
+-- local stacks = self:GetStackCount()
+-- local armor_per_stack = caster:FindTalentValue("special_bonus_imba_slardar_8", "armor_per_stack")
 
-	-- armor_reduction = armor_reduction + armor_per_stack * stacks
-	-- return armor_reduction * (-1)
+-- armor_reduction = armor_reduction + armor_per_stack * stacks
+-- return armor_reduction * (-1)
 -- end
 
 -- Talent 10 Logic
 function modifier_imba_corrosive_haze_debuff:GetModifierPhysicalArmorBonus()
 	return (self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetStackCount()) * (-1)
 end
-
 
 function modifier_imba_corrosive_haze_debuff:GetModifierIncomingDamage_Percentage()
 	-- Ability properties
@@ -1409,7 +1409,7 @@ function modifier_imba_corrosive_haze_debuff:GetModifierIncomingDamage_Percentag
 	end
 end
 
-function modifier_imba_corrosive_haze_debuff:GetModifierTotalDamageOutgoing_Percentage( keys )
+function modifier_imba_corrosive_haze_debuff:GetModifierTotalDamageOutgoing_Percentage(keys)
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
@@ -1429,11 +1429,11 @@ function modifier_imba_corrosive_haze_debuff:GetModifierTotalDamageOutgoing_Perc
 	-- Only commit if the parent auto attacked, and does not have the slip debuff
 	if attacker == parent and not inflictor and not parent:HasModifier(modifier_slip) then
 		-- Roll for slip
-		local rand = RandomInt(1,100)
+		local rand = RandomInt(1, 100)
 
 		-- Check chance, apply slip modifier and negate damage
 		if rand <= slip_up_chance_pct then
-			parent:AddNewModifier(caster, ability, modifier_slip, {duration = slip_up_duration * (1 - parent:GetStatusResistance())})
+			parent:AddNewModifier(caster, ability, modifier_slip, { duration = slip_up_duration * (1 - parent:GetStatusResistance()) })
 
 			return slip_up_damage_negation
 		end
@@ -1456,7 +1456,7 @@ end
 
 function modifier_imba_corrosive_haze_debuff:IsPurgable()
 	if self:GetCaster():HasTalent("special_bonus_imba_slardar_12") then
-		return false 
+		return false
 	else
 		return true
 	end
@@ -1466,9 +1466,10 @@ end
 modifier_imba_corrosive_haze_debuff_secondary = class({})
 
 function modifier_imba_corrosive_haze_debuff_secondary:CheckState()
-
-	local state = {[MODIFIER_STATE_PROVIDES_VISION] = true,
-		[MODIFIER_STATE_INVISIBLE] = false}
+	local state = {
+		[MODIFIER_STATE_PROVIDES_VISION] = true,
+		[MODIFIER_STATE_INVISIBLE] = false
+	}
 	return state
 end
 
@@ -1477,9 +1478,9 @@ function modifier_imba_corrosive_haze_debuff_secondary:GetPriority()
 end
 
 function modifier_imba_corrosive_haze_debuff_secondary:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	local decFuncs = { MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE }
 
 	return decFuncs
 end
@@ -1490,7 +1491,7 @@ function modifier_imba_corrosive_haze_debuff_secondary:GetModifierPhysicalArmorB
 	local armor_reduction = ability:GetSpecialValueFor("armor_reduction")
 
 	local armor_loss_pct = caster:FindTalentValue("special_bonus_imba_slardar_7", "armor_loss_pct")
-	armor_reduction = armor_reduction * (armor_loss_pct * 0.01)
+	armor_reduction = armor_reduction * (armor_loss_pct / 100)
 
 
 	return armor_reduction * (-1)
@@ -1514,7 +1515,7 @@ function modifier_imba_corrosive_haze_debuff_secondary:GetModifierIncomingDamage
 	end
 end
 
-function modifier_imba_corrosive_haze_debuff_secondary:GetModifierTotalDamageOutgoing_Percentage( keys )
+function modifier_imba_corrosive_haze_debuff_secondary:GetModifierTotalDamageOutgoing_Percentage(keys)
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
@@ -1534,11 +1535,11 @@ function modifier_imba_corrosive_haze_debuff_secondary:GetModifierTotalDamageOut
 	-- Only commit if the parent auto attacked, and does not have the slip debuff
 	if attacker == parent and not inflictor and not parent:HasModifier(modifier_slip) then
 		-- Roll for slip
-		local rand = RandomInt(1,100)
+		local rand = RandomInt(1, 100)
 
 		-- Check chance, apply slip modifier and negate damage
 		if rand <= slip_up_chance_pct then
-			parent:AddNewModifier(caster, ability, modifier_slip, {duration = slip_up_duration * (1 - parent:GetStatusResistance())})
+			parent:AddNewModifier(caster, ability, modifier_slip, { duration = slip_up_duration * (1 - parent:GetStatusResistance()) })
 
 			return slip_up_damage_negation
 		end
@@ -1563,7 +1564,6 @@ function modifier_imba_corrosive_haze_debuff_secondary:IsPurgable()
 	return true
 end
 
-
 -- Slip up debuff
 modifier_imba_corrosive_haze_slip_debuff = class({})
 
@@ -1576,14 +1576,14 @@ function modifier_imba_corrosive_haze_slip_debuff:GetEffectAttachType()
 end
 
 function modifier_imba_corrosive_haze_slip_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 
 	return decFuncs
 end
 
 function modifier_imba_corrosive_haze_slip_debuff:GetModifierMoveSpeedBonus_Percentage()
 	local ability = self:GetAbility()
-	local slip_up_ms_loss_pct = ability:GetSpecialValueFor("slip_up_ms_loss_pct")*(-1)
+	local slip_up_ms_loss_pct = ability:GetSpecialValueFor("slip_up_ms_loss_pct") * (-1)
 
 	return slip_up_ms_loss_pct
 end
@@ -1603,19 +1603,22 @@ end
 -- Armor Transferal Talent Buff
 modifier_imba_corrosive_haze_talent_buff = class({})
 
-function modifier_imba_corrosive_haze_talent_buff:IsHidden()		return false end
-function modifier_imba_corrosive_haze_talent_buff:IsDebuff()		return false end
-function modifier_imba_corrosive_haze_talent_buff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_corrosive_haze_talent_buff:IsHidden() return false end
+
+function modifier_imba_corrosive_haze_talent_buff:IsDebuff() return false end
+
+function modifier_imba_corrosive_haze_talent_buff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_corrosive_haze_talent_buff:IsPurgable()
 	if self:GetCaster():HasTalent("special_bonus_imba_slardar_12") then
-		return false 
+		return false
 	else
 		return true
 	end
 end
 
 function modifier_imba_corrosive_haze_talent_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+	local decFuncs = { MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS }
 
 	return decFuncs
 end
@@ -1648,32 +1651,31 @@ end
 -- Specific exception logic for Morphling (preventing permanent Rain Clouds)
 function imba_slardar_rain_cloud:OnUnStolen()
 	if not IsServer() then return end
-	
+
 	if self.particle_rain_fx then
 		-- Release rain effects
 		ParticleManager:DestroyParticle(self.particle_rain_fx, false)
 		ParticleManager:ReleaseParticleIndex(self.particle_rain_fx)
 	end
-	
+
 	if self.dummy then
 		self.dummy:Destroy()
 		self.dummy = nil
 	end
 end
 
-
 -- Slardar modifier
 modifier_imba_rain_cloud_slardar = class({})
 
 function modifier_imba_rain_cloud_slardar:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ABILITY_LAYOUT,
+	local decFuncs = { MODIFIER_PROPERTY_ABILITY_LAYOUT,
 		MODIFIER_EVENT_ON_DEATH,
-		MODIFIER_EVENT_ON_RESPAWN}
+		MODIFIER_EVENT_ON_RESPAWN }
 
 	return decFuncs
 end
 
-function modifier_imba_rain_cloud_slardar:OnDeath( keys )
+function modifier_imba_rain_cloud_slardar:OnDeath(keys)
 	-- Ability properties
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1688,7 +1690,7 @@ function modifier_imba_rain_cloud_slardar:OnDeath( keys )
 	end
 end
 
-function modifier_imba_rain_cloud_slardar:OnRespawn ( keys )
+function modifier_imba_rain_cloud_slardar:OnRespawn(keys)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
@@ -1705,7 +1707,6 @@ function modifier_imba_rain_cloud_slardar:OnRespawn ( keys )
 			ParticleManager:SetParticleControl(ability.particle_rain_fx, 1, ability.dummy:GetAbsOrigin())
 		end
 	end
-
 end
 
 function modifier_imba_rain_cloud_slardar:OnCreated()
@@ -1765,15 +1766,17 @@ function modifier_imba_rain_cloud_dummy:OnCreated()
 end
 
 function modifier_imba_rain_cloud_dummy:CheckState()
-	local state = {[MODIFIER_STATE_UNSELECTABLE] = true,
+	local state = {
+		[MODIFIER_STATE_UNSELECTABLE] = true,
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
-		[MODIFIER_STATE_INVULNERABLE] = true}
+		[MODIFIER_STATE_INVULNERABLE] = true
+	}
 	return state
 end
 
-function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion( me, dt)
+function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion(me, dt)
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
@@ -1782,7 +1785,7 @@ function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion( me, dt)
 
 		-- Minor script error catching
 		if not ability then return end
-		
+
 		-- Ability specials
 		local velocity_pct = ability:GetSpecialValueFor("velocity_pct")
 		local distance_speed_up_1 = ability:GetSpecialValueFor("distance_speed_up_1")
@@ -1793,10 +1796,10 @@ function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion( me, dt)
 		-- Depression BOOST
 		if caster:HasTalent("special_bonus_imba_slardar_10") then
 			velocity_pct = velocity_pct * caster:FindTalentValue("special_bonus_imba_slardar_10")
-			
+
 			-- Depression spreads...
 			if self:GetCaster():HasAbility("imba_slardar_slithereen_crush")
-			and self:GetCaster():HasAbility("imba_slardar_corrosive_haze") then
+				and self:GetCaster():HasAbility("imba_slardar_corrosive_haze") then
 				local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 					dummy:GetAbsOrigin(),
 					nil,
@@ -1806,15 +1809,15 @@ function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion( me, dt)
 					DOTA_UNIT_TARGET_FLAG_NONE,
 					FIND_ANY_ORDER,
 					false)
-				
+
 				-- Apply enemies attack speed slow modifier
-				for _,enemy in pairs(enemies) do
-					enemy:AddNewModifier(caster, caster:FindAbilityByName("imba_slardar_slithereen_crush"), "modifier_imba_slithereen_crush_slow", {duration = 1 * (1 - enemy:GetStatusResistance())})
-					enemy:AddNewModifier(caster,  caster:FindAbilityByName("imba_slardar_corrosive_haze"), "modifier_imba_corrosive_haze_debuff", {duration = 1 * (1 - enemy:GetStatusResistance())})
+				for _, enemy in pairs(enemies) do
+					enemy:AddNewModifier(caster, caster:FindAbilityByName("imba_slardar_slithereen_crush"), "modifier_imba_slithereen_crush_slow", { duration = 1 * (1 - enemy:GetStatusResistance()) })
+					enemy:AddNewModifier(caster, caster:FindAbilityByName("imba_slardar_corrosive_haze"), "modifier_imba_corrosive_haze_debuff", { duration = 1 * (1 - enemy:GetStatusResistance()) })
 				end
 			end
 		end
-		
+
 		-- If dummy is on the same spot as the caster, do nothing
 		if dummy:GetAbsOrigin() == caster:GetAbsOrigin() then
 			return nil
@@ -1824,7 +1827,7 @@ function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion( me, dt)
 		local distance = (caster:GetAbsOrigin() - dummy:GetAbsOrigin()):Length2D()
 
 		-- Calculate velocity for the tick based on caster's move speed and distance
-		local velocity = caster:GetBaseMoveSpeed() * (velocity_pct/100)
+		local velocity = caster:GetBaseMoveSpeed() * (velocity_pct / 100)
 
 		if distance > distance_speed_up_1 then
 			velocity = velocity * speed_up_1_multiplier
@@ -1917,34 +1920,44 @@ LinkLuaModifier("modifier_special_bonus_imba_slardar_13", "components/abilities/
 LinkLuaModifier("modifier_special_bonus_imba_slardar_11", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_slardar_12", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_slardar_1		= modifier_special_bonus_imba_slardar_1 or class({})
-modifier_special_bonus_imba_slardar_13		= modifier_special_bonus_imba_slardar_13 or class({})
-modifier_special_bonus_imba_slardar_11		= modifier_special_bonus_imba_slardar_11 or class({})
-modifier_special_bonus_imba_slardar_12		= modifier_special_bonus_imba_slardar_12 or class({})
+modifier_special_bonus_imba_slardar_1  = modifier_special_bonus_imba_slardar_1 or class({})
+modifier_special_bonus_imba_slardar_13 = modifier_special_bonus_imba_slardar_13 or class({})
+modifier_special_bonus_imba_slardar_11 = modifier_special_bonus_imba_slardar_11 or class({})
+modifier_special_bonus_imba_slardar_12 = modifier_special_bonus_imba_slardar_12 or class({})
 
-function modifier_special_bonus_imba_slardar_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_slardar_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_slardar_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_slardar_1:IsHidden() return true end
 
-function modifier_special_bonus_imba_slardar_13:IsHidden() 		return true end
-function modifier_special_bonus_imba_slardar_13:IsPurgable()		return false end
-function modifier_special_bonus_imba_slardar_13:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_slardar_1:IsPurgable() return false end
 
-function modifier_special_bonus_imba_slardar_11:IsHidden() 		return true end
-function modifier_special_bonus_imba_slardar_11:IsPurgable()		return false end
-function modifier_special_bonus_imba_slardar_11:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_slardar_1:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_slardar_12:IsHidden() 		return true end
-function modifier_special_bonus_imba_slardar_12:IsPurgable()		return false end
-function modifier_special_bonus_imba_slardar_12:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_slardar_13:IsHidden() return true end
+
+function modifier_special_bonus_imba_slardar_13:IsPurgable() return false end
+
+function modifier_special_bonus_imba_slardar_13:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_slardar_11:IsHidden() return true end
+
+function modifier_special_bonus_imba_slardar_11:IsPurgable() return false end
+
+function modifier_special_bonus_imba_slardar_11:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_slardar_12:IsHidden() return true end
+
+function modifier_special_bonus_imba_slardar_12:IsPurgable() return false end
+
+function modifier_special_bonus_imba_slardar_12:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_slardar_6", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_slardar_6	= class({})
+modifier_special_bonus_imba_slardar_6 = class({})
 
-function modifier_special_bonus_imba_slardar_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_slardar_6:IsPurgable() 	return false end
-function modifier_special_bonus_imba_slardar_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_slardar_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_slardar_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_slardar_6:RemoveOnDeath() return false end
 
 function imba_slardar_slithereen_crush:OnOwnerSpawned()
 	if not IsServer() then return end

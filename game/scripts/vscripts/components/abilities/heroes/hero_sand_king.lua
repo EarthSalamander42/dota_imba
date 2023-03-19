@@ -9,7 +9,7 @@ LinkLuaModifier("modifier_imba_burrowstrike_stun", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_burrowstrike_burrow", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sandking_burrowstrike:GetAbilityTextureName()
-   return "sandking_burrowstrike"
+	return "sandking_burrowstrike"
 end
 
 function imba_sandking_burrowstrike:IsHiddenWhenStolen()
@@ -23,13 +23,13 @@ end
 function imba_sandking_burrowstrike:GetCastRange(location, target)
 	local caster = self:GetCaster()
 	local cast_range = self:GetSpecialValueFor("cast_range")
-	
+
 	if caster:HasScepter() then
 		return self:GetSpecialValueFor("cast_range_scepter")
 	else
-		return cast_range 
+		return cast_range
 	end
-	
+
 	-- #3 Talent: Burrowstrike cast range increase
 	--cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_sand_king_3")
 	--return cast_range
@@ -42,17 +42,17 @@ function imba_sandking_burrowstrike:OnSpellStart()
 	end
 
 	-- Ability properties
-	local caster = self:GetCaster()    
+	local caster = self:GetCaster()
 	local ability = self
 	local target_point = self:GetCursorPosition()
-	local cast_responses = "sandking_skg_ability_burrowstrike_0"..math.random(1, 9)
+	local cast_responses = "sandking_skg_ability_burrowstrike_0" .. math.random(1, 9)
 	local sound_cast = "Ability.SandKing_BurrowStrike"
-	local particle_burrow = "particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"        
-	local modifier_burrow = "modifier_imba_burrowstrike_burrow"    
+	local particle_burrow = "particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
+	local modifier_burrow = "modifier_imba_burrowstrike_burrow"
 
 	-- Ability specials
 	local burrow_speed = ability:GetSpecialValueFor("burrow_speed")
-	local burrow_radius = ability:GetSpecialValueFor("burrow_radius")    
+	local burrow_radius = ability:GetSpecialValueFor("burrow_radius")
 	local burrowstrike_time = ability:GetSpecialValueFor("burrowstrike_time")
 
 	-- #1 Talent: Burrowstrike path radius increase
@@ -76,32 +76,33 @@ function imba_sandking_burrowstrike:OnSpellStart()
 	-- Add particle effect
 	local particle_burrow_fx = ParticleManager:CreateParticle(particle_burrow, PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(particle_burrow_fx, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_burrow_fx, 1, target_point)    
- 
+	ParticleManager:SetParticleControl(particle_burrow_fx, 1, target_point)
+
 	-- Projectile information
-	local burrow_projectile = {Ability = ability,                               
-							   vSpawnOrigin = caster:GetAbsOrigin(),
-							   fDistance = distance,
-							   fStartRadius = burrow_radius,
-							   fEndRadius = burrow_radius,
-							   Source = caster,
-							   bHasFrontalCone = false,
-							   bReplaceExisting = false,
-							   iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,                          
-							   iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,                           
-							   bDeleteOnHit = false,
-							   vVelocity = direction * burrow_speed * Vector(1, 1, 0),
-							   bProvidesVision = false,                                
-							 }
-	 
-	-- Launch projectile                        
-	ProjectileManager:CreateLinearProjectile(burrow_projectile)        
+	local burrow_projectile = {
+		Ability = ability,
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		fDistance = distance,
+		fStartRadius = burrow_radius,
+		fEndRadius = burrow_radius,
+		Source = caster,
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		bDeleteOnHit = false,
+		vVelocity = direction * burrow_speed * Vector(1, 1, 0),
+		bProvidesVision = false,
+	}
+
+	-- Launch projectile
+	ProjectileManager:CreateLinearProjectile(burrow_projectile)
 
 	-- Cache target_point in the ability
 	self.target_point = target_point
 
 	-- Set the caster's location at the end
-	caster:SetAbsOrigin(target_point)    
+	caster:SetAbsOrigin(target_point)
 
 	-- Wait a frame, then resolve positions
 	Timers:CreateTimer(FrameTime(), function()
@@ -109,7 +110,7 @@ function imba_sandking_burrowstrike:OnSpellStart()
 	end)
 
 	-- Add burrowed status modifier
-	caster:AddNewModifier(caster, ability, modifier_burrow, {duration = burrowstrike_time})    
+	caster:AddNewModifier(caster, ability, modifier_burrow, { duration = burrowstrike_time })
 end
 
 function imba_sandking_burrowstrike:OnProjectileHit(target, location)
@@ -126,8 +127,8 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local target_point = self.target_point    
-	local modifier_stun = "modifier_imba_burrowstrike_stun"    
+	local target_point = self.target_point
+	local modifier_stun = "modifier_imba_burrowstrike_stun"
 	local modifier_poison = "modifier_imba_caustic_finale_poison"
 
 	-- Ability specials
@@ -145,7 +146,7 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
 	if caster:HasAbility(caustic_ability_name) then
 		caustic_ability = caster:FindAbilityByName(caustic_ability_name)
 		poison_duration = caustic_ability:GetSpecialValueFor("poison_duration")
-	end    
+	end
 
 	-- If an enemy target has Linken's sphere ready, do nothing
 	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
@@ -170,49 +171,48 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
 	-- Knockback enemies up and towards the target point
 	local knockbackProperties =
 	{
-		 center_x = bump_point.x,
-		 center_y = bump_point.y,
-		 center_z = bump_point.z,
-		 duration = knockup_duration * (1 - target:GetStatusResistance()),
-		 knockback_duration = knockup_duration * (1 - target:GetStatusResistance()),
-		 knockback_distance = push_distance,
-		 knockback_height = knockup_height
+		center_x = bump_point.x,
+		center_y = bump_point.y,
+		center_z = bump_point.z,
+		duration = knockup_duration * (1 - target:GetStatusResistance()),
+		knockback_duration = knockup_duration * (1 - target:GetStatusResistance()),
+		knockback_distance = push_distance,
+		knockback_height = knockup_height
 	}
- 
+
 	target:RemoveModifierByName("modifier_knockback")
 	target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
 
 	-- Stun the target
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration * (1 - target:GetStatusResistance())})
+	target:AddNewModifier(caster, ability, modifier_stun, { duration = stun_duration * (1 - target:GetStatusResistance()) })
 
 	-- Apply Caustic Finale to heroes, unless they already have it
 	if target:IsHero() and not target:IsIllusion() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
-		target:AddNewModifier(caster, caustic_ability, modifier_poison, {duration = poison_duration})
+		target:AddNewModifier(caster, caustic_ability, modifier_poison, { duration = poison_duration })
 	end
 
 	-- Deal damage
-	local damageTable = {victim = target,
-						 attacker = caster, 
-						 damage = damage,
-						 damage_type = DAMAGE_TYPE_MAGICAL,
-						 ability = ability
-						 }
-		
-	ApplyDamage(damageTable)  
+	local damageTable = {
+		victim = target,
+		attacker = caster,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		ability = ability
+	}
+
+	ApplyDamage(damageTable)
 
 	-- Wait until the target lands, then resolve positions
 	Timers:CreateTimer(knockup_duration + FrameTime(), function()
 		ResolveNPCPositions(target_point, 128)
-	end)    
+	end)
 end
-
-
 
 -- Burrowstrike stun modifier
 modifier_imba_burrowstrike_stun = class({})
 
 function modifier_imba_burrowstrike_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+	local state = { [MODIFIER_STATE_STUNNED] = true }
 	return state
 end
 
@@ -225,9 +225,10 @@ function modifier_imba_burrowstrike_stun:GetEffectAttachType()
 end
 
 function modifier_imba_burrowstrike_stun:IsHidden() return false end
-function modifier_imba_burrowstrike_stun:IsPurgeException() return true end
-function modifier_imba_burrowstrike_stun:IsStunDebuff() return true end
 
+function modifier_imba_burrowstrike_stun:IsPurgeException() return true end
+
+function modifier_imba_burrowstrike_stun:IsStunDebuff() return true end
 
 -- Burrowstrike burrow modifier
 modifier_imba_burrowstrike_burrow = class({})
@@ -242,10 +243,12 @@ function modifier_imba_burrowstrike_burrow:OnCreated()
 end
 
 function modifier_imba_burrowstrike_burrow:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true,
-				   [MODIFIER_STATE_OUT_OF_GAME] = true,
-				   [MODIFIER_STATE_INVULNERABLE] = true,
-				   [MODIFIER_STATE_NO_HEALTH_BAR] = true}
+	local state = {
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_OUT_OF_GAME] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true
+	}
 	return state
 end
 
@@ -257,9 +260,10 @@ function modifier_imba_burrowstrike_burrow:OnDestroy()
 end
 
 function modifier_imba_burrowstrike_burrow:IsHidden() return true end
-function modifier_imba_burrowstrike_burrow:IsPurgable() return false end
-function modifier_imba_burrowstrike_burrow:IsDebuff() return false end
 
+function modifier_imba_burrowstrike_burrow:IsPurgable() return false end
+
+function modifier_imba_burrowstrike_burrow:IsDebuff() return false end
 
 -------------------------------
 --        SAND STORM         --
@@ -270,7 +274,7 @@ LinkLuaModifier("modifier_imba_sandstorm_invis", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_sandstorm_aura", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sandking_sand_storm:GetAbilityTextureName()
-   return "sandking_sand_storm"
+	return "sandking_sand_storm"
 end
 
 function imba_sandking_sand_storm:IsHiddenWhenStolen()
@@ -289,14 +293,14 @@ function imba_sandking_sand_storm:OnSpellStart()
 	local sound_loop = "Ability.SandKing_SandStorm.loop"
 	local sound_darude = "Imba.SandKingSandStorm"
 	local particle_sandstorm = "particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
-	local modifier_sandstorm = "modifier_imba_sandstorm"    
+	local modifier_sandstorm = "modifier_imba_sandstorm"
 	local modifier_invis = "modifier_imba_sandstorm_invis"
 
 	-- Ability specials
 	local radius = ability:GetSpecialValueFor("radius")
 
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)   
+	EmitSoundOn(sound_cast, caster)
 
 	-- Roll for Darude Sandstorm meme, if applicable, or use the usual loop sound
 	if USE_MEME_SOUNDS and RollPercentage(MEME_SOUNDS_CHANCE) then
@@ -311,7 +315,7 @@ function imba_sandking_sand_storm:OnSpellStart()
 	-- If there are sandstorm particles from previous casts, remove them
 	if self.particle_sandstorm_fx then
 		ParticleManager:DestroyParticle(self.particle_sandstorm_fx, false)
-		ParticleManager:ReleaseParticleIndex(self.particle_sandstorm_fx)    
+		ParticleManager:ReleaseParticleIndex(self.particle_sandstorm_fx)
 	end
 
 	-- Add sandstorm particles
@@ -320,17 +324,17 @@ function imba_sandking_sand_storm:OnSpellStart()
 	ParticleManager:SetParticleControl(self.particle_sandstorm_fx, 1, Vector(radius, radius, 0))
 
 	-- Get channel time
-	local channel_time = self.BaseClass.GetChannelTime(self)    
+	local channel_time = self.BaseClass.GetChannelTime(self)
 
 	-- Add sandstorm modifiers
 	caster:AddNewModifier(caster, ability, modifier_sandstorm, {})
 	caster:AddNewModifier(caster, ability, modifier_invis, {})
 
 	-- Nether Ward behavior
-	if string.find(caster:GetUnitName(), "npc_imba_pugna_nether_ward") then        
+	if string.find(caster:GetUnitName(), "npc_imba_pugna_nether_ward") then
 		-- Start a timer to check if it has died
 		Timers:CreateTimer(0.5, function()
-			if not caster:IsAlive() then                
+			if not caster:IsAlive() then
 				ability:OnChannelFinish()
 				return nil
 			end
@@ -347,7 +351,7 @@ function imba_sandking_sand_storm:OnChannelFinish()
 	local ability = self
 	local sound_loop = "Ability.SandKing_SandStorm.loop"
 	local sound_darude = "Imba.SandKingSandStorm"
-	local modifier_sandstorm = "modifier_imba_sandstorm"    
+	local modifier_sandstorm = "modifier_imba_sandstorm"
 	local modifier_invis = "modifier_imba_sandstorm_invis"
 
 	-- Ability specials
@@ -358,35 +362,32 @@ function imba_sandking_sand_storm:OnChannelFinish()
 
 	-- Stop sound effects
 	StopSoundOn(sound_loop, caster)
-	StopSoundOn(sound_darude, caster)    
+	StopSoundOn(sound_darude, caster)
 
 	-- Remove modifiers
 	caster:RemoveModifierByName(modifier_sandstorm)
 
-	-- Extend the invisibility by a bit 
+	-- Extend the invisibility by a bit
 	Timers:CreateTimer(invis_extend_time, function()
-
 		-- Only apply if it was not a new cast that interrupted the earlier one
 		if not self.new_cast and self.particle_sandstorm_fx then
 			-- Remove sandstorm particle
 			ParticleManager:DestroyParticle(self.particle_sandstorm_fx, false)
-			ParticleManager:ReleaseParticleIndex(self.particle_sandstorm_fx)    
+			ParticleManager:ReleaseParticleIndex(self.particle_sandstorm_fx)
 			self.particle_sandstorm_fx = nil
 
 			-- Remove invisibility
 			caster:RemoveModifierByName(modifier_invis)
 		end
-	end)    
+	end)
 end
-
-
 
 -- Sandstorm thinker modifier
 modifier_imba_sandstorm = class({})
 
 function modifier_imba_sandstorm:OnCreated()
 	if IsServer() then
-		-- Ability properties    
+		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 
@@ -394,13 +395,13 @@ function modifier_imba_sandstorm:OnCreated()
 		self.damage = self.ability:GetSpecialValueFor("damage")
 		self.radius = self.ability:GetSpecialValueFor("radius")
 		self.pull_speed = self.ability:GetSpecialValueFor("pull_speed")
-		self.pull_prevent_radius = self.ability:GetSpecialValueFor("pull_prevent_radius")    
+		self.pull_prevent_radius = self.ability:GetSpecialValueFor("pull_prevent_radius")
 		self.damage_interval = self.ability:GetSpecialValueFor("damage_interval")
 
 		-- #2 Talent: Sandstorm damage per second increase
 		self.damage = self.damage + self.caster:FindTalentValue("special_bonus_imba_sand_king_2")
 
-		-- Calculate damage per think    
+		-- Calculate damage per think
 		self.damage_per_instance = self.damage * self.damage_interval
 
 		-- Calculate pull per think
@@ -416,8 +417,7 @@ function modifier_imba_sandstorm:OnCreated()
 end
 
 function modifier_imba_sandstorm:OnIntervalThink()
-	if IsServer() then        
-
+	if IsServer() then
 		-- Variable to decide if enemies should be damaged this instance
 		local damage_enemies = false
 
@@ -425,7 +425,7 @@ function modifier_imba_sandstorm:OnIntervalThink()
 		self.time_elapsed = self.time_elapsed + FrameTime()
 
 		-- Check if it's time to damage an enemy
-		if self.time_elapsed >= self.damage_instance_time then                
+		if self.time_elapsed >= self.damage_instance_time then
 			damage_enemies = true
 
 			-- Move to the next damage instance time
@@ -434,27 +434,27 @@ function modifier_imba_sandstorm:OnIntervalThink()
 
 		-- Find all enemies in the radius
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.caster:GetAbsOrigin(),
-										  nil,
-										  self.radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			if damage_enemies then
-
 				-- Deal damage
-				local damageTable = {victim = enemy,
-									 attacker = self.caster, 
-									 damage = self.damage_per_instance,
-									 damage_type = DAMAGE_TYPE_MAGICAL,
-									 ability = self.ability
-									 }
-			
-				ApplyDamage(damageTable)  
+				local damageTable = {
+					victim = enemy,
+					attacker = self.caster,
+					damage = self.damage_per_instance,
+					damage_type = DAMAGE_TYPE_MAGICAL,
+					ability = self.ability
+				}
+
+				ApplyDamage(damageTable)
 			end
 
 			-- If farther than the minimum pull range, pull it
@@ -475,30 +475,32 @@ function modifier_imba_sandstorm:OnIntervalThink()
 end
 
 function modifier_imba_sandstorm:IsHidden() return true end
+
 function modifier_imba_sandstorm:IsPurgable() return false end
+
 function modifier_imba_sandstorm:IsDebuff() return false end
 
 function modifier_imba_sandstorm:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+	local decFuncs = { MODIFIER_PROPERTY_OVERRIDE_ANIMATION }
 
-	return decFuncs    
+	return decFuncs
 end
 
 function modifier_imba_sandstorm:GetOverrideAnimation()
 	return ACT_DOTA_OVERRIDE_ABILITY_2
 end
 
-
-
 -- Sandstorm invisibility modifier
 modifier_imba_sandstorm_invis = class({})
 
 function modifier_imba_sandstorm_invis:IsHidden() return false end
+
 function modifier_imba_sandstorm_invis:IsPurgable() return false end
+
 function modifier_imba_sandstorm_invis:IsDebuff() return false end
 
 function modifier_imba_sandstorm_invis:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
+	local decFuncs = { MODIFIER_PROPERTY_INVISIBILITY_LEVEL }
 
 	return decFuncs
 end
@@ -508,8 +510,10 @@ function modifier_imba_sandstorm_invis:GetModifierInvisibilityLevel()
 end
 
 function modifier_imba_sandstorm_invis:CheckState()
-	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-				   [MODIFIER_STATE_INVISIBLE] = true}
+	local state = {
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_INVISIBLE] = true
+	}
 	return state
 end
 
@@ -517,11 +521,10 @@ function modifier_imba_sandstorm_invis:GetPriority()
 	return MODIFIER_PRIORITY_NORMAL
 end
 
-
 -- Sandstorm aura modifier
 modifier_imba_sandstorm_aura = class({})
 
-function modifier_imba_sandstorm_aura:OnCreated() 
+function modifier_imba_sandstorm_aura:OnCreated()
 	if IsServer() then
 		Timers:CreateTimer(function()
 			self.caster = self:GetCaster()
@@ -530,7 +533,7 @@ function modifier_imba_sandstorm_aura:OnCreated()
 			-- #7 Talent: Sandstorm Aura
 			-- Check if the caster has the talent: stop this timer start interval thinking
 			if self.aura_talent then
-				-- Ability properties    
+				-- Ability properties
 				self.ability = self:GetAbility()
 				self.particle_sandstorm = "particles/hero/sand_king/sandking_sandstorm_aura.vpcf"
 
@@ -541,12 +544,12 @@ function modifier_imba_sandstorm_aura:OnCreated()
 				self.pull_prevent_radius = self.ability:GetSpecialValueFor("pull_prevent_radius")
 				self.damage_interval = self.ability:GetSpecialValueFor("damage_interval")
 
-				-- Aura values    
-				self.damage = self.damage * (1 - self.caster:FindTalentValue("special_bonus_imba_sand_king_7") * 0.01)
-				self.radius = self.radius * (1 - self.caster:FindTalentValue("special_bonus_imba_sand_king_7") * 0.01)
-				self.pull_speed = self.pull_speed * (1 - self.caster:FindTalentValue("special_bonus_imba_sand_king_7") * 0.01)
+				-- Aura values
+				self.damage = self.damage * (1 - self.caster:FindTalentValue("special_bonus_imba_sand_king_7") / 100)
+				self.radius = self.radius * (1 - self.caster:FindTalentValue("special_bonus_imba_sand_king_7") / 100)
+				self.pull_speed = self.pull_speed * (1 - self.caster:FindTalentValue("special_bonus_imba_sand_king_7") / 100)
 
-				-- Calculate damage per think    
+				-- Calculate damage per think
 				self.damage_per_instance = self.damage * self.damage_interval
 
 				-- Calculate pull per think
@@ -565,7 +568,7 @@ function modifier_imba_sandstorm_aura:OnCreated()
 				-- Apply the sandstorm effect
 				self.particle_sandstorm_fx = ParticleManager:CreateParticle(self.particle_sandstorm, PATTACH_ABSORIGIN_FOLLOW, self.caster)
 				ParticleManager:SetParticleControl(self.particle_sandstorm_fx, 0, self.caster:GetAbsOrigin())
-				ParticleManager:SetParticleControl(self.particle_sandstorm_fx, 1, Vector(self.radius, self.radius, 1))                
+				ParticleManager:SetParticleControl(self.particle_sandstorm_fx, 1, Vector(self.radius, self.radius, 1))
 
 				-- Start thinking
 				self:StartIntervalThink(FrameTime())
@@ -573,13 +576,12 @@ function modifier_imba_sandstorm_aura:OnCreated()
 			else
 				-- Repeat and try again
 				return 2
-			end    
+			end
 		end)
-		
 	end
 end
 
-function modifier_imba_sandstorm_aura:IsHidden() 
+function modifier_imba_sandstorm_aura:IsHidden()
 	if self.aura_talent then
 		return false
 	end
@@ -588,11 +590,11 @@ function modifier_imba_sandstorm_aura:IsHidden()
 end
 
 function modifier_imba_sandstorm_aura:IsPurgable() return false end
+
 function modifier_imba_sandstorm_aura:IsDebuff() return false end
 
 function modifier_imba_sandstorm_aura:OnIntervalThink()
 	if IsServer() then
-
 		-- Doesn't work off of your corpse
 		if not self.caster:IsAlive() then return end
 
@@ -606,36 +608,36 @@ function modifier_imba_sandstorm_aura:OnIntervalThink()
 		self.time_elapsed = self.time_elapsed + FrameTime()
 
 		-- Check if it's time to damage an enemy
-			if self.time_elapsed >= self.damage_instance_time then                
-				damage_enemies = true
+		if self.time_elapsed >= self.damage_instance_time then
+			damage_enemies = true
 
-				-- Move to the next damage instance time
-				self.damage_instance_time = self.damage_instance_time + self.damage_interval
-			end
+			-- Move to the next damage instance time
+			self.damage_instance_time = self.damage_instance_time + self.damage_interval
+		end
 
 		-- Find all enemies in the radius
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.caster:GetAbsOrigin(),
-										  nil,
-										  self.radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			if damage_enemies then
-
 				-- Deal damage
-				local damageTable = {victim = enemy,
-									 attacker = self.caster, 
-									 damage = self.damage_per_instance,
-									 damage_type = DAMAGE_TYPE_MAGICAL,
-									 ability = self.ability
-									 }
-			
-				ApplyDamage(damageTable)  
+				local damageTable = {
+					victim = enemy,
+					attacker = self.caster,
+					damage = self.damage_per_instance,
+					damage_type = DAMAGE_TYPE_MAGICAL,
+					ability = self.ability
+				}
+
+				ApplyDamage(damageTable)
 			end
 
 			-- If farther than the minimum pull range, pull it
@@ -657,7 +659,7 @@ function modifier_imba_sandstorm_aura:OnRefresh()
 end
 
 function modifier_imba_sandstorm_aura:DeclareFunctions()
-	local funcs ={
+	local funcs = {
 		MODIFIER_EVENT_ON_DEATH,
 		MODIFIER_EVENT_ON_RESPAWN
 	}
@@ -720,12 +722,14 @@ function modifier_imba_caustic_finale_trigger:OnRefresh()
 end
 
 function modifier_imba_caustic_finale_trigger:IsHidden() return true end
+
 function modifier_imba_caustic_finale_trigger:IsPurgable() return false end
+
 function modifier_imba_caustic_finale_trigger:IsDebuff() return false end
 
 function modifier_imba_caustic_finale_trigger:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_TAKEDAMAGE }
 
 	return decFuncs
 end
@@ -759,7 +763,7 @@ function modifier_imba_caustic_finale_trigger:OnTakeDamage(keys)
 	end
 end
 
-function ApplyCausticFinale(modifier, attacker,  target)
+function ApplyCausticFinale(modifier, attacker, target)
 	-- If the caster is broken, do nothing
 	if modifier.caster:PassivesDisabled() then
 		return nil
@@ -786,9 +790,8 @@ function ApplyCausticFinale(modifier, attacker,  target)
 	end
 
 	-- Apply poison on target
-	target:AddNewModifier(modifier.caster, modifier.ability, modifier.modifier_poison, {duration = modifier.poison_duration})
+	target:AddNewModifier(modifier.caster, modifier.ability, modifier.modifier_poison, { duration = modifier.poison_duration })
 end
-
 
 -- Caustic Finale damage debuff
 modifier_imba_caustic_finale_poison = class({})
@@ -824,7 +827,9 @@ function modifier_imba_caustic_finale_poison:OnCreated()
 end
 
 function modifier_imba_caustic_finale_poison:IsHidden() return false end
+
 function modifier_imba_caustic_finale_poison:IsPurgable() return true end
+
 function modifier_imba_caustic_finale_poison:IsDebuff() return true end
 
 function modifier_imba_caustic_finale_poison:OnDestroy()
@@ -836,22 +841,23 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
 		self.particle_explode_fx = ParticleManager:CreateParticle(self.particle_explode, PATTACH_ABSORIGIN, self.parent)
 		ParticleManager:SetParticleControl(self.particle_explode_fx, 0, self.parent:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(self.particle_explode_fx)
-		
+
 		local slow_modifier = nil
-		 
+
 		-- Find all nearby enemies
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-		self.parent:GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
-		for _,enemy in pairs(enemies) do
+			self.parent:GetAbsOrigin(),
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
+		for _, enemy in pairs(enemies) do
 			-- Deal damage
-			local damageTable = {victim = enemy,
+			local damageTable = {
+				victim = enemy,
 				attacker = self.caster,
 				damage = self.damage,
 				damage_type = DAMAGE_TYPE_MAGICAL,
@@ -869,7 +875,7 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
 			end
 
 			-- Apply slow
-			slow_modifier = enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
+			slow_modifier = enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, { duration = self.slow_duration * (1 - enemy:GetStatusResistance()) })
 		end
 	end
 end
@@ -878,7 +884,10 @@ end
 modifier_imba_caustic_finale_debuff = class({})
 
 function modifier_imba_caustic_finale_debuff:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
 
 	-- Ability properties
 	self.caster = self:GetCaster()
@@ -886,14 +895,16 @@ function modifier_imba_caustic_finale_debuff:OnCreated()
 
 	-- Ability specials
 	self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
-	self.caustic_finale_slow_as	= self:GetAbility():GetSpecialValueFor("caustic_finale_slow_as")
+	self.caustic_finale_slow_as = self:GetAbility():GetSpecialValueFor("caustic_finale_slow_as")
 
 	-- #5 Talent: Caustic Finale slow increase
 	self.ms_slow_pct = self.ms_slow_pct + self.caster:FindTalentValue("special_bonus_imba_sand_king_5")
 end
 
 function modifier_imba_caustic_finale_debuff:IsHidden() return false end
+
 function modifier_imba_caustic_finale_debuff:IsPurgable() return true end
+
 function modifier_imba_caustic_finale_debuff:IsDebuff() return true end
 
 function modifier_imba_caustic_finale_debuff:DeclareFunctions()
@@ -968,20 +979,19 @@ function imba_sandking_epicenter:OnSpellStart()
 	-- Make Sand King perform the animation over and over
 	-- This thing is broken
 	-- Timers:CreateTimer(1.85, function()
-		-- if caster:IsChanneling() then
-			-- caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
-			-- return FrameTime()
-		-- else
-			-- caster:FadeGesture(ACT_DOTA_CAST_ABILITY_4)
-			-- return nil
-		-- end
+	-- if caster:IsChanneling() then
+	-- caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
+	-- return FrameTime()
+	-- else
+	-- caster:FadeGesture(ACT_DOTA_CAST_ABILITY_4)
+	-- return nil
+	-- end
 	-- end)
 
 	-- Nether Ward handling
 	if string.find(caster:GetUnitName(), "npc_imba_pugna_nether_ward") then
 		-- Wait two seconds, then apply it like it had succeeded
 		Timers:CreateTimer(channel_time, function()
-
 			-- Stop the blast particle
 			ParticleManager:DestroyParticle(self.particle_sandblast_fx, false)
 			ParticleManager:ReleaseParticleIndex(self.particle_sandblast_fx)
@@ -997,13 +1007,13 @@ function imba_sandking_epicenter:OnChannelFinish(interrupted)
 	local caster = self:GetCaster()
 	local ability = self
 	local modifier_pulse = "modifier_imba_epicenter_pulse"
-	local failed_response = "sandking_skg_ability_failure_0"..math.random(1,6)
+	local failed_response = "sandking_skg_ability_failure_0" .. math.random(1, 6)
 
 	-- Stop the blast particle
 	ParticleManager:DestroyParticle(self.particle_sandblast_fx, false)
 	ParticleManager:ReleaseParticleIndex(self.particle_sandblast_fx)
 
-	-- If the caster was interrupted, complain and do nothing 
+	-- If the caster was interrupted, complain and do nothing
 	if interrupted then
 		EmitSoundOn(failed_response, caster)
 		return nil
@@ -1014,7 +1024,6 @@ function imba_sandking_epicenter:OnChannelFinish(interrupted)
 	-- Channel is complete! Start pulsing!
 	caster:AddNewModifier(caster, ability, modifier_pulse, {})
 end
-
 
 -- Epicenter modifier
 modifier_imba_epicenter_pulse = class({})
@@ -1049,7 +1058,7 @@ function modifier_imba_epicenter_pulse:OnCreated()
 
 		-- If the caster has scepter, increase pulse count
 		if self.scepter then
-			self.pulse_count = self.pulse_count * (1 + self.scepter_pulses_count_pct * 0.01)
+			self.pulse_count = self.pulse_count * (1 + self.scepter_pulses_count_pct / 100)
 		end
 
 		-- #6 Talent: Additional Epicenter pulses
@@ -1082,19 +1091,19 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
 
 		-- Find all nearby enemies in the damage radius
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-		self.caster:GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
-		for _,enemy in pairs(enemies) do
-
+		for _, enemy in pairs(enemies) do
 			-- Deal damage
-			local damageTable = {victim = enemy,
+			local damageTable = {
+				victim = enemy,
 				attacker = self.caster,
 				damage = self.damage,
 				damage_type = DAMAGE_TYPE_MAGICAL,
@@ -1104,27 +1113,26 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
 			ApplyDamage(damageTable)
 
 			-- Apply Epicenter slow
-			enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration * (1 - enemy:GetStatusResistance())})
-			
+			enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, { duration = self.slow_duration * (1 - enemy:GetStatusResistance()) })
+
 			-- Nah too strong
 			-- if self.caster:HasTalent("special_bonus_imba_sand_king_4") then
-				-- enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = 0.1})
+			-- enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = 0.1})
 			-- end
 		end
 
 		-- Find all nearby enemies in the pull radius
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-		self.caster:GetAbsOrigin(),
-		nil,
-		self.pull_radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			self.pull_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
-		for _,enemy in pairs(enemies) do
-
+		for _, enemy in pairs(enemies) do
 			-- Pull enemy towards Sand King
 			-- Calculate distance and direction between SK and the enemy
 			local distance = (enemy:GetAbsOrigin() - self.caster:GetAbsOrigin()):Length2D()
@@ -1147,7 +1155,7 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
 		-- Increase radius
 		self.radius = self.radius + self.pulse_radius_increase
 
-		-- If the new radius is above the maximum, set as the maximum instead    
+		-- If the new radius is above the maximum, set as the maximum instead
 		if self.radius > self.max_pulse_radius then
 			self.radius = self.max_pulse_radius
 		end
@@ -1161,7 +1169,9 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
 end
 
 function modifier_imba_epicenter_pulse:IsHidden() return true end
+
 function modifier_imba_epicenter_pulse:IsPurgable() return false end
+
 function modifier_imba_epicenter_pulse:IsDebuff() return false end
 
 -- Epicenter Slow modifier
@@ -1178,12 +1188,14 @@ function modifier_imba_epicenter_slow:OnCreated()
 end
 
 function modifier_imba_epicenter_slow:IsHidden() return false end
+
 function modifier_imba_epicenter_slow:IsPurgable() return true end
+
 function modifier_imba_epicenter_slow:IsDebuff() return true end
 
 function modifier_imba_epicenter_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
 
 	return decFuncs
 end
@@ -1204,49 +1216,49 @@ LinkLuaModifier("modifier_imba_sandking_sand_storm_720_thinker", "components/abi
 LinkLuaModifier("modifier_imba_sandking_sand_storm_720_invisible", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sandking_sand_storm_720_thinker_aura", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_sandking_sand_storm_720 						= class ({})
-modifier_imba_sandking_sand_storm_720_thinker 		= class ({})
-modifier_imba_sandking_sand_storm_720_invisible		= class ({})
-modifier_imba_sandking_sand_storm_720_thinker_aura	= class ({})
+imba_sandking_sand_storm_720                       = class({})
+modifier_imba_sandking_sand_storm_720_thinker      = class({})
+modifier_imba_sandking_sand_storm_720_invisible    = class({})
+modifier_imba_sandking_sand_storm_720_thinker_aura = class({})
 
 function imba_sandking_sand_storm_720:OnSpellStart()
-	self.caster	= self:GetCaster()
-	
-	self.damage_tick_rate 	= self:GetSpecialValueFor("damage_tick_rate")
-	self.sand_storm_radius 	= self:GetSpecialValueFor("sand_storm_radius")
-	self.AbilityDuration 	= self:GetSpecialValueFor("AbilityDuration")
-	self.sand_storm_damage 	= self:GetSpecialValueFor("sand_storm_damage")
-	self.fade_delay 		= self:GetSpecialValueFor("fade_delay")
-	
+	self.caster            = self:GetCaster()
+
+	self.damage_tick_rate  = self:GetSpecialValueFor("damage_tick_rate")
+	self.sand_storm_radius = self:GetSpecialValueFor("sand_storm_radius")
+	self.AbilityDuration   = self:GetSpecialValueFor("AbilityDuration")
+	self.sand_storm_damage = self:GetSpecialValueFor("sand_storm_damage")
+	self.fade_delay        = self:GetSpecialValueFor("fade_delay")
+
 	if not IsServer() then return end
-	
+
 	-- Sound
 	self.caster:EmitSound("Ability.SandKing_SandStorm.start")
-	
+
 	-- Remove any existing Sand Storms
 	if self.sand_storm and self.sand_storm ~= nil and not self.sand_storm:IsNull() then
 		self.caster:StopSound("Ability.SandKing_SandStorm.loop")
 		self.sand_storm:Destroy()
 	end
-	
+
 	self.caster:EmitSound("Ability.SandKing_SandStorm.loop")
-	
+
 	-- Roll for Darude Sandstorm meme, if applicable
 	if USE_MEME_SOUNDS and RollPercentage(MEME_SOUNDS_CHANCE) and self.sand_storm == nil then
 		self.caster:EmitSound("Imba.SandKingSandStorm")
 	end
-	
+
 	-- Create the Sand Storm thinker and store it in self.sand_storm
-	self.sand_storm = CreateModifierThinker(self.caster, self, "modifier_imba_sandking_sand_storm_720_thinker", {duration = self.AbilityDuration}, self.caster:GetAbsOrigin(), self.caster:GetTeamNumber(), false)
+	self.sand_storm = CreateModifierThinker(self.caster, self, "modifier_imba_sandking_sand_storm_720_thinker", { duration = self.AbilityDuration }, self.caster:GetAbsOrigin(), self.caster:GetTeamNumber(), false)
 end
 
 function imba_sandking_sand_storm_720:OnOwnerDied()
 	if not IsServer() then return end
-	
+
 	if self.sand_storm and self.sand_storm ~= nil then
 		self.sand_storm:Destroy()
 		self.sand_storm = nil
-		
+
 		self.caster:StopSound("Ability.SandKing_SandStorm.loop")
 		self.caster:StopSound("Imba.SandKingSandStorm")
 	end
@@ -1257,48 +1269,47 @@ end
 ------------------------------------------------
 
 function modifier_imba_sandking_sand_storm_720_thinker:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	self.parent		= self:GetParent()
-	
+	self.ability           = self:GetAbility()
+	self.caster            = self:GetCaster()
+	self.parent            = self:GetParent()
+
 	-- AbilitySpecials
-	self.damage_tick_rate 	= self.ability:GetSpecialValueFor("damage_tick_rate")
-	self.sand_storm_radius 	= self.ability:GetSpecialValueFor("sand_storm_radius") + self.caster:FindTalentValue("special_bonus_imba_sand_king_9")
-	self.AbilityDuration 	= self.ability:GetSpecialValueFor("AbilityDuration")
-	self.sand_storm_damage 	= self.ability:GetSpecialValueFor("sand_storm_damage") + self.caster:FindTalentValue("special_bonus_imba_sand_king_2")
-	self.fade_delay 		= self.ability:GetSpecialValueFor("fade_delay")
-	self.pull_speed			= self.ability:GetSpecialValueFor("pull_speed")
-	
-	self.damage_counter		= 0
-	self.invis_counter		= 0
-	
+	self.damage_tick_rate  = self.ability:GetSpecialValueFor("damage_tick_rate")
+	self.sand_storm_radius = self.ability:GetSpecialValueFor("sand_storm_radius") + self.caster:FindTalentValue("special_bonus_imba_sand_king_9")
+	self.AbilityDuration   = self.ability:GetSpecialValueFor("AbilityDuration")
+	self.sand_storm_damage = self.ability:GetSpecialValueFor("sand_storm_damage") + self.caster:FindTalentValue("special_bonus_imba_sand_king_2")
+	self.fade_delay        = self.ability:GetSpecialValueFor("fade_delay")
+	self.pull_speed        = self.ability:GetSpecialValueFor("pull_speed")
+
+	self.damage_counter    = 0
+	self.invis_counter     = 0
+
 	if not IsServer() then return end
-	
+
 	-- Add sandstorm particle
 	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf", PATTACH_WORLDORIGIN, self.caster)
 	ParticleManager:SetParticleControl(self.particle, 0, self.caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(self.sand_storm_radius, self.sand_storm_radius, 0))
 	self:AddParticle(self.particle, false, false, -1, false, false)
-	
+
 	-- I have no idea what any of these parameters do and I don't know if I'll utilize them at all
 	--self.caster:AddNewModifier(self.caster, self.ability, "modifier_invisible", {duration = self.AbilityDuration, subtle = true, cancelattack = false, fadetime = self.fade_delay})
-	self.caster:AddNewModifier(self.caster, self.ability, "modifier_invisible", {duration = self.AbilityDuration})
+	self.caster:AddNewModifier(self.caster, self.ability, "modifier_invisible", { duration = self.AbilityDuration })
 	self:StartIntervalThink(FrameTime())
 end
 
 function modifier_imba_sandking_sand_storm_720_thinker:OnIntervalThink()
-	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.sand_storm_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
-	local frameTime			= FrameTime()
-	
-	self.damage_counter		= self.damage_counter + frameTime
+	local enemies       = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.sand_storm_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+	local frameTime     = FrameTime()
+
+	self.damage_counter = self.damage_counter + frameTime
 
 	for _, enemy in pairs(enemies) do
-
 		if not IsNearFountain(enemy:GetAbsOrigin(), 1200) then
 			-- Calculate direction / angle to pull enemy to (towards center)
 			local direction = (self.parent:GetAbsOrigin() - enemy:GetAbsOrigin()):Normalized()
-			
+
 			local pull_location = enemy:GetAbsOrigin() + (direction * self.pull_speed * frameTime)
 
 			-- Set the enemy at that location
@@ -1312,37 +1323,36 @@ function modifier_imba_sandking_sand_storm_720_thinker:OnIntervalThink()
 	if self.damage_counter >= self.damage_tick_rate then
 		for _, enemy in pairs(enemies) do
 			local damageTable = {
-				victim 			= enemy,
-				damage 			= self.sand_storm_damage * self.damage_tick_rate,
-				damage_type		= DAMAGE_TYPE_MAGICAL,
-				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				attacker 		= self.caster,
-				ability 		= self.ability
+				victim       = enemy,
+				damage       = self.sand_storm_damage * self.damage_tick_rate,
+				damage_type  = DAMAGE_TYPE_MAGICAL,
+				damage_flags = DOTA_DAMAGE_FLAG_NONE,
+				attacker     = self.caster,
+				ability      = self.ability
 			}
-										
+
 			ApplyDamage(damageTable)
 		end
-		
+
 		self.damage_counter = 0
 	end
-	
+
 	if (self.caster:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length() <= self.sand_storm_radius then
 		if not self.caster:HasModifier("modifier_invisible") then
-		
-			self.invis_counter		= self.invis_counter + FrameTime()
-			
+			self.invis_counter = self.invis_counter + FrameTime()
+
 			if self.invis_counter >= self.fade_delay then
-				self.caster:AddNewModifier(self.caster, self.ability, "modifier_invisible", {duration = self:GetRemainingTime(), cancelattack = false})
-				
-				self.invis_counter	= 0
+				self.caster:AddNewModifier(self.caster, self.ability, "modifier_invisible", { duration = self:GetRemainingTime(), cancelattack = false })
+
+				self.invis_counter = 0
 			end
 		end
 	else
 		self.caster:RemoveModifierByName("modifier_invisible")
-		
+
 		self.caster:StopSound("Ability.SandKing_SandStorm.loop")
 		self.caster:StopSound("Imba.SandKingSandStorm")
-		
+
 		self.ability.sand_storm = nil
 		self:Destroy()
 	end
@@ -1380,33 +1390,40 @@ function modifier_imba_sandking_sand_storm_720_thinker:OnAbilityFullyCast(keys)
 end
 
 -- IMBAfication: It's Coarse and Rough and Irritating
-function modifier_imba_sandking_sand_storm_720_thinker:IsAura() 				return true end
+function modifier_imba_sandking_sand_storm_720_thinker:IsAura() return true end
 
-function modifier_imba_sandking_sand_storm_720_thinker:GetAuraRadius()			return self.sand_storm_radius end
-function modifier_imba_sandking_sand_storm_720_thinker:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
-function modifier_imba_sandking_sand_storm_720_thinker:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
-function modifier_imba_sandking_sand_storm_720_thinker:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
-function modifier_imba_sandking_sand_storm_720_thinker:GetModifierAura()		return "modifier_imba_sandking_sand_storm_720_thinker_aura" end
+function modifier_imba_sandking_sand_storm_720_thinker:GetAuraRadius() return self.sand_storm_radius end
+
+function modifier_imba_sandking_sand_storm_720_thinker:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
+
+function modifier_imba_sandking_sand_storm_720_thinker:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
+
+function modifier_imba_sandking_sand_storm_720_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+
+function modifier_imba_sandking_sand_storm_720_thinker:GetModifierAura() return "modifier_imba_sandking_sand_storm_720_thinker_aura" end
 
 -----------------------------------------------------
 -- SAND STORM THINKER MODIFIER AURA (7.20 VERSION) --
 -----------------------------------------------------
 
 function modifier_imba_sandking_sand_storm_720_thinker_aura:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
 
-	self.ability	= self:GetAbility()
+	self.ability             = self:GetAbility()
 
-	self.coarse_vision_pct		= self.ability:GetSpecialValueFor("coarse_vision_pct")
-	self.coarse_movement_pct	= self.ability:GetSpecialValueFor("coarse_movement_pct")
-	self.coarse_miss_pct 		= self.ability:GetSpecialValueFor("coarse_miss_pct")
+	self.coarse_vision_pct   = self.ability:GetSpecialValueFor("coarse_vision_pct")
+	self.coarse_movement_pct = self.ability:GetSpecialValueFor("coarse_movement_pct")
+	self.coarse_miss_pct     = self.ability:GetSpecialValueFor("coarse_miss_pct")
 end
 
 function modifier_imba_sandking_sand_storm_720_thinker_aura:DeclareFunctions()
 	local decFuncs = {
-	MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE,
-	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-	MODIFIER_PROPERTY_MISS_PERCENTAGE
+		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MISS_PERCENTAGE
 	}
 
 	return decFuncs
@@ -1435,33 +1452,45 @@ LinkLuaModifier("modifier_special_bonus_imba_sand_king_4", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_sand_king_6", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sand_king_8", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_sand_king_1		= modifier_special_bonus_imba_sand_king_1 or class({})
-modifier_special_bonus_imba_sand_king_2		= modifier_special_bonus_imba_sand_king_2 or class({})
-modifier_special_bonus_imba_sand_king_9		= modifier_special_bonus_imba_sand_king_9 or class({})
-modifier_special_bonus_imba_sand_king_4		= modifier_special_bonus_imba_sand_king_4 or class({})
-modifier_special_bonus_imba_sand_king_6		= modifier_special_bonus_imba_sand_king_6 or class({})
-modifier_special_bonus_imba_sand_king_8		= modifier_special_bonus_imba_sand_king_8 or class({})
+modifier_special_bonus_imba_sand_king_1 = modifier_special_bonus_imba_sand_king_1 or class({})
+modifier_special_bonus_imba_sand_king_2 = modifier_special_bonus_imba_sand_king_2 or class({})
+modifier_special_bonus_imba_sand_king_9 = modifier_special_bonus_imba_sand_king_9 or class({})
+modifier_special_bonus_imba_sand_king_4 = modifier_special_bonus_imba_sand_king_4 or class({})
+modifier_special_bonus_imba_sand_king_6 = modifier_special_bonus_imba_sand_king_6 or class({})
+modifier_special_bonus_imba_sand_king_8 = modifier_special_bonus_imba_sand_king_8 or class({})
 
-function modifier_special_bonus_imba_sand_king_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_sand_king_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_sand_king_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_sand_king_1:IsHidden() return true end
 
-function modifier_special_bonus_imba_sand_king_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_sand_king_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_sand_king_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_sand_king_1:IsPurgable() return false end
 
-function modifier_special_bonus_imba_sand_king_9:IsHidden() 		return true end
-function modifier_special_bonus_imba_sand_king_9:IsPurgable()		return false end
-function modifier_special_bonus_imba_sand_king_9:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_sand_king_1:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_sand_king_4:IsHidden() 		return true end
-function modifier_special_bonus_imba_sand_king_4:IsPurgable()		return false end
-function modifier_special_bonus_imba_sand_king_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_sand_king_2:IsHidden() return true end
 
-function modifier_special_bonus_imba_sand_king_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_sand_king_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_sand_king_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_sand_king_2:IsPurgable() return false end
 
-function modifier_special_bonus_imba_sand_king_8:IsHidden() 		return true end
-function modifier_special_bonus_imba_sand_king_8:IsPurgable()		return false end
-function modifier_special_bonus_imba_sand_king_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_sand_king_2:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_sand_king_9:IsHidden() return true end
+
+function modifier_special_bonus_imba_sand_king_9:IsPurgable() return false end
+
+function modifier_special_bonus_imba_sand_king_9:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_sand_king_4:IsHidden() return true end
+
+function modifier_special_bonus_imba_sand_king_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_sand_king_4:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_sand_king_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_sand_king_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_sand_king_6:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_sand_king_8:IsHidden() return true end
+
+function modifier_special_bonus_imba_sand_king_8:IsPurgable() return false end
+
+function modifier_special_bonus_imba_sand_king_8:RemoveOnDeath() return false end

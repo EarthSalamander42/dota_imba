@@ -26,10 +26,11 @@
 
 if item_imba_arcane_boots == nil then item_imba_arcane_boots = class({}) end
 
-LinkLuaModifier( "modifier_item_imba_arcane_boots", "components/items/item_arcane_boots", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_arcane_boots", "components/items/item_arcane_boots", LUA_MODIFIER_MOTION_NONE)   -- Owner's bonus attributes, stackable
 
 function item_imba_arcane_boots:GetIntrinsicModifierName()
-	return "modifier_item_imba_arcane_boots" end
+	return "modifier_item_imba_arcane_boots"
+end
 
 function item_imba_arcane_boots:OnAbilityPhaseStart()
 	if self:GetCaster():IsClone() then
@@ -42,7 +43,7 @@ end
 function item_imba_arcane_boots:OnSpellStart()
 	if IsServer() then
 		-- Parameters
-		local replenish_mana = self:GetSpecialValueFor("base_replenish_mana") + self:GetSpecialValueFor("replenish_mana_pct") * self:GetCaster():GetMaxMana() * 0.01
+		local replenish_mana = self:GetSpecialValueFor("base_replenish_mana") + self:GetSpecialValueFor("replenish_mana_pct") * self:GetCaster():GetMaxMana() / 100
 		local replenish_radius = self:GetSpecialValueFor("replenish_radius")
 
 		-- Play activation sound and particle
@@ -53,10 +54,9 @@ function item_imba_arcane_boots:OnSpellStart()
 		-- Iterate through nearby allies
 		local nearby_allies = FindUnitsInRadius(self:GetCaster():GetTeam(), self:GetCaster():GetAbsOrigin(), nil, replenish_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_ANY_ORDER, false)
 		for _, ally in pairs(nearby_allies) do
-
 			-- Grant the ally mana
 			ally:GiveMana(replenish_mana)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD , ally, replenish_mana, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, ally, replenish_mana, nil)
 
 			-- Play the "hit" particle
 			local arcane_target_pfx = ParticleManager:CreateParticle("particles/items_fx/arcane_boots_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, ally)
@@ -71,10 +71,13 @@ end
 
 if modifier_item_imba_arcane_boots == nil then modifier_item_imba_arcane_boots = class({}) end
 
-function modifier_item_imba_arcane_boots:IsHidden()			return true end
-function modifier_item_imba_arcane_boots:IsPurgable()		return false end
-function modifier_item_imba_arcane_boots:RemoveOnDeath()	return false end
-function modifier_item_imba_arcane_boots:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_arcane_boots:IsHidden() return true end
+
+function modifier_item_imba_arcane_boots:IsPurgable() return false end
+
+function modifier_item_imba_arcane_boots:RemoveOnDeath() return false end
+
+function modifier_item_imba_arcane_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_arcane_boots:DeclareFunctions()

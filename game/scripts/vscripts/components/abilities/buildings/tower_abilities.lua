@@ -16,7 +16,7 @@
 --     Firetoad, 06.09.2015
 --     suthernfriend, 03.02.2018
 
-function HexAura( keys )
+function HexAura(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -43,20 +43,20 @@ function HexAura( keys )
 		local hero_owner = HeroList:GetHero(0)
 
 		-- Hex enemies
-		for _,enemy in pairs(creeps) do
+		for _, enemy in pairs(creeps) do
 			if enemy:IsIllusion() then
 				enemy:ForceKill(true)
 			else
-				enemy:AddNewModifier(hero_owner, ability, "modifier_sheepstick_debuff", {duration = hex_duration})
+				enemy:AddNewModifier(hero_owner, ability, "modifier_sheepstick_debuff", { duration = hex_duration })
 				ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 			end
 		end
 
-		for _,enemy in pairs(heroes) do
+		for _, enemy in pairs(heroes) do
 			if enemy:IsIllusion() then
 				enemy:ForceKill(true)
 			else
-				enemy:AddNewModifier(hero_owner, ability, "modifier_sheepstick_debuff", {duration = hex_duration})
+				enemy:AddNewModifier(hero_owner, ability, "modifier_sheepstick_debuff", { duration = hex_duration })
 				ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 			end
 		end
@@ -66,7 +66,7 @@ function HexAura( keys )
 	end
 end
 
-function ManaFlare( keys )
+function ManaFlare(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -88,13 +88,11 @@ function ManaFlare( keys )
 
 	-- Check if the ability should be cast
 	if #heroes >= 1 then
-
 		-- Play sound
 		caster:EmitSound(sound_burn)
 
 		-- Iterate through enemies
-		for _,enemy in pairs(heroes) do
-
+		for _, enemy in pairs(heroes) do
 			-- Burn mana
 			local mana_to_burn = enemy:GetMaxMana() * burn_pct / 100
 			enemy:ReduceMana(mana_to_burn)
@@ -109,7 +107,7 @@ function ManaFlare( keys )
 	end
 end
 
-function Chronotower( keys )
+function Chronotower(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -133,18 +131,17 @@ function Chronotower( keys )
 
 	-- Check if the ability should be cast
 	if #creeps >= min_creeps or #heroes >= 1 then
-
 		-- Play sound
 		caster:EmitSound(sound_stun)
 
 		-- Stun enemies
-		for _,enemy in pairs(creeps) do
+		for _, enemy in pairs(creeps) do
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_stun, {})
-			enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+			enemy:AddNewModifier(caster, ability, "modifier_stunned", { duration = stun_duration })
 		end
-		for _,enemy in pairs(heroes) do
+		for _, enemy in pairs(heroes) do
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_stun, {})
-			enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+			enemy:AddNewModifier(caster, ability, "modifier_stunned", { duration = stun_duration })
 		end
 
 		-- Put the ability on cooldown
@@ -152,8 +149,7 @@ function Chronotower( keys )
 	end
 end
 
-
-function Reality( keys )
+function Reality(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -173,7 +169,7 @@ function Reality( keys )
 
 	-- Kill any existing illusions
 	local ability_used = false
-	for _,enemy in pairs(heroes) do
+	for _, enemy in pairs(heroes) do
 		if enemy:IsIllusion() then
 			enemy:ForceKill(true)
 			ability_used = true
@@ -182,7 +178,6 @@ function Reality( keys )
 
 	-- If the ability was used, play the sound and put it on cooldown
 	if ability_used then
-
 		-- Play sound
 		caster:EmitSound(sound_reality)
 
@@ -191,7 +186,7 @@ function Reality( keys )
 	end
 end
 
-function Force( keys )
+function Force(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local sound_force = keys.sound_force
@@ -216,30 +211,28 @@ function Force( keys )
 
 	-- Check if the ability should be cast
 	if #creeps >= min_creeps or #heroes >= 1 then
-
 		-- Play sound
 		caster:EmitSound(sound_force)
 
 		-- Knockback enemies
-		for _,enemy in pairs(creeps) do
+		for _, enemy in pairs(creeps) do
 			-- Set up knockback parameters
 			knockback_param =
-				{	should_stun = 1,
-					knockback_duration = force_duration,
-					duration = force_duration,
-					knockback_distance = force_distance,
-					knockback_height = 0,
-					center_x = tower_loc.x,
-					center_y = tower_loc.y,
-					center_z = tower_loc.z
-				}
+			{
+				should_stun = 1,
+				knockback_duration = force_duration,
+				duration = force_duration,
+				knockback_distance = force_distance,
+				knockback_height = 0,
+				center_x = tower_loc.x,
+				center_y = tower_loc.y,
+				center_z = tower_loc.z
+			}
 			enemy:RemoveModifierByName("modifier_knockback")
 			enemy:AddNewModifier(caster, nil, "modifier_knockback", knockback_param)
-
-
 		end
 
-		for _,enemy in pairs(heroes) do
+		for _, enemy in pairs(heroes) do
 			-- Calculate distance from tower
 			local distance = (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
 
@@ -250,22 +243,23 @@ function Force( keys )
 
 			-- Set up knockback parameters
 			knockback_param =
-				{	should_stun = 1,
-					knockback_duration = force_duration,
-					duration = force_duration,
-					knockback_distance = distance-180,
-					knockback_height = 0,
-					center_x = knockback_dummy:GetAbsOrigin().x,
-					center_y = knockback_dummy:GetAbsOrigin().y,
-					center_z = knockback_dummy:GetAbsOrigin().z
-				}
+			{
+				should_stun = 1,
+				knockback_duration = force_duration,
+				duration = force_duration,
+				knockback_distance = distance - 180,
+				knockback_height = 0,
+				center_x = knockback_dummy:GetAbsOrigin().x,
+				center_y = knockback_dummy:GetAbsOrigin().y,
+				center_z = knockback_dummy:GetAbsOrigin().z
+			}
 
 			enemy:RemoveModifierByName("modifier_knockback")
 			enemy:AddNewModifier(caster, nil, "modifier_knockback", knockback_param)
 
 			knockback_dummy:Destroy()
 
-			enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+			enemy:AddNewModifier(caster, ability, "modifier_stunned", { duration = stun_duration })
 		end
 
 		-- Put the ability on cooldown
@@ -273,7 +267,7 @@ function Force( keys )
 	end
 end
 
-function Nature( keys )
+function Nature(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -296,15 +290,14 @@ function Nature( keys )
 
 	-- Check if the ability should be cast
 	if #creeps >= min_creeps or #heroes >= 1 then
-
 		-- Play sound
 		caster:EmitSound(sound_root)
 
 		-- Root enemies
-		for _,enemy in pairs(creeps) do
+		for _, enemy in pairs(creeps) do
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_root, {})
 		end
-		for _,enemy in pairs(heroes) do
+		for _, enemy in pairs(heroes) do
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_root, {})
 		end
 
@@ -313,7 +306,7 @@ function Nature( keys )
 	end
 end
 
-function Mindblast( keys )
+function Mindblast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -334,12 +327,11 @@ function Mindblast( keys )
 
 	-- Check if the ability should be cast
 	if #heroes >= 1 then
-
 		-- Play sound
 		caster:EmitSound(sound_silence)
 
 		-- Silence enemies
-		for _,enemy in pairs(heroes) do
+		for _, enemy in pairs(heroes) do
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_silence, {})
 		end
 
@@ -349,7 +341,7 @@ function Mindblast( keys )
 end
 
 -- Fountain's Grievous Wounds
-function GrievousWounds( keys )
+function GrievousWounds(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
@@ -367,15 +359,14 @@ function GrievousWounds( keys )
 	-- Calculate bonus damage
 	local base_damage = caster:GetAttackDamage()
 	local current_stacks = target:GetModifierStackCount(modifier_debuff, caster)
-	local total_damage = base_damage * ( 1 + current_stacks * damage_increase / 100 )
+	local total_damage = base_damage * (1 + current_stacks * damage_increase / 100)
 
 	-- Apply damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	ApplyDamage({ attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL })
 
 	-- Apply bonus damage modifier
 	AddStacks(ability, caster, target, modifier_debuff, 1, true)
 end
-
 
 -- Tier 1 to 3 tower aura abilities
 -- Author: Shush
@@ -442,10 +433,11 @@ function modifier_imba_tower_protective_instinct:OnIntervalThink()
 	end
 end
 
-function modifier_imba_tower_protective_instinct:IsHidden()	return true end
-function modifier_imba_tower_protective_instinct:IsPurgable() return false end
-function modifier_imba_tower_protective_instinct:IsDebuff() return false end
+function modifier_imba_tower_protective_instinct:IsHidden() return true end
 
+function modifier_imba_tower_protective_instinct:IsPurgable() return false end
+
+function modifier_imba_tower_protective_instinct:IsDebuff() return false end
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -516,9 +508,10 @@ function modifier_imba_tower_machinegun_aura:IsAura()
 end
 
 function modifier_imba_tower_machinegun_aura:IsDebuff() return false end
-function modifier_imba_tower_machinegun_aura:IsHidden() return true end
-function modifier_imba_tower_machinegun_aura:IsPurgable() return false end
 
+function modifier_imba_tower_machinegun_aura:IsHidden() return true end
+
+function modifier_imba_tower_machinegun_aura:IsPurgable() return false end
 
 -- Attack Speed Modifier
 modifier_imba_tower_machinegun_aura_buff = modifier_imba_tower_machinegun_aura_buff or class({})
@@ -543,11 +536,13 @@ function modifier_imba_tower_machinegun_aura_buff:OnRefresh()
 end
 
 function modifier_imba_tower_machinegun_aura_buff:IsHidden() return false end
+
 function modifier_imba_tower_machinegun_aura_buff:IsPurgable() return false end
+
 function modifier_imba_tower_machinegun_aura_buff:IsDebuff() return false end
 
 function modifier_imba_tower_machinegun_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local decFuncs = { MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
 
 	return decFuncs
 end
@@ -558,7 +553,6 @@ function modifier_imba_tower_machinegun_aura_buff:GetModifierAttackSpeedBonus_Co
 	local extra_as = self.bonus_as + self.as_per_protective_instinct * protective_instinct_stacks
 	return extra_as
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -666,12 +660,12 @@ function modifier_imba_tower_thorns_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_thorns_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
 
-function modifier_imba_tower_thorns_aura_buff:OnAttackLanded( keys )
+function modifier_imba_tower_thorns_aura_buff:OnAttackLanded(keys)
 	-- Ability properties
 	if IsServer() then
 		local attacker = keys.attacker
@@ -680,7 +674,6 @@ function modifier_imba_tower_thorns_aura_buff:OnAttackLanded( keys )
 
 		-- Only apply if the parent is the victim and the attacker is on the opposite team
 		if self.parent == target and attacker:GetTeamNumber() ~= self.parent:GetTeamNumber() then
-
 			-- Create return effect
 			local return_pfx = ParticleManager:CreateParticle(self.particle_return, PATTACH_ABSORIGIN, self.parent)
 			ParticleManager:SetParticleControlEnt(return_pfx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
@@ -689,7 +682,7 @@ function modifier_imba_tower_thorns_aura_buff:OnAttackLanded( keys )
 
 			-- Get the hero's main attribute value
 			local main_attribute_value
-			
+
 			if self.parent.GetPrimaryStatValue then
 				main_attribute_value = self.parent:GetPrimaryStatValue()
 			else
@@ -698,7 +691,7 @@ function modifier_imba_tower_thorns_aura_buff:OnAttackLanded( keys )
 
 			-- Calculate damage based on percentage of main stat
 			local return_damage_pct_final = self.return_damage_pct + self.return_damage_per_stack * protective_instinct_stacks
-			local return_damage = main_attribute_value * (return_damage_pct_final * 0.01)
+			local return_damage = main_attribute_value * (return_damage_pct_final / 100)
 
 			-- Increase damage to the minimum if it's not sufficient
 			if self.minimum_damage > return_damage then
@@ -706,17 +699,18 @@ function modifier_imba_tower_thorns_aura_buff:OnAttackLanded( keys )
 			end
 
 			-- Apply damage
-			local damageTable = {victim = attacker,
+			local damageTable = {
+				victim = attacker,
 				attacker = self.parent,
 				damage = return_damage,
 				damage_type = DAMAGE_TYPE_PHYSICAL,
-				ability = self.ability}
+				ability = self.ability
+			}
 
 			ApplyDamage(damageTable)
 		end
 	end
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -809,7 +803,6 @@ function modifier_imba_tower_aegis_aura_buff:OnCreated()
 	-- Ability specials
 	self.bonus_armor = self.ability:GetSpecialValueFor("bonus_armor")
 	self.armor_per_protective = self.ability:GetSpecialValueFor("armor_per_protective")
-
 end
 
 function modifier_imba_tower_aegis_aura_buff:OnRefresh()
@@ -821,7 +814,7 @@ function modifier_imba_tower_aegis_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_aegis_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+	local decFuncs = { MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS }
 
 	return decFuncs
 end
@@ -831,7 +824,6 @@ function modifier_imba_tower_aegis_aura_buff:GetModifierPhysicalArmorBonus()
 
 	return self.bonus_armor + self.armor_per_protective * protective_instinct_stacks
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -938,11 +930,11 @@ function modifier_imba_tower_toughness_aura_buff:OnCreated()
 end
 
 -- function modifier_imba_tower_toughness_aura_buff:OnIntervalThink()
-	-- if IsServer() then
-		-- if not self:GetParent():IsNull() then
-			-- self:GetParent():CalculateStatBonus(true)
-		-- end
-	-- end
+-- if IsServer() then
+-- if not self:GetParent():IsNull() then
+-- self:GetParent():CalculateStatBonus(true)
+-- end
+-- end
 -- end
 
 function modifier_imba_tower_toughness_aura_buff:OnRefresh()
@@ -954,7 +946,7 @@ function modifier_imba_tower_toughness_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_toughness_aura_buff:DeclareFunctions()
-	return {MODIFIER_PROPERTY_HEALTH_BONUS}
+	return { MODIFIER_PROPERTY_HEALTH_BONUS }
 end
 
 function modifier_imba_tower_toughness_aura_buff:GetModifierHealthBonus()
@@ -963,7 +955,6 @@ function modifier_imba_tower_toughness_aura_buff:GetModifierHealthBonus()
 		return self.bonus_health + self.health_per_protective * protective_instinct_stacks
 	end
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1066,7 +1057,7 @@ function modifier_imba_tower_sniper_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_sniper_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
+	local decFuncs = { MODIFIER_PROPERTY_ATTACK_RANGE_BONUS }
 
 	return decFuncs
 end
@@ -1075,7 +1066,6 @@ function modifier_imba_tower_sniper_aura_buff:GetModifierAttackRangeBonus()
 	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
 	return self.bonus_range + self.range_per_protective * protective_instinct_stacks
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1182,12 +1172,12 @@ function modifier_imba_tower_splash_fire_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_splash_fire_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
 
-function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded( keys )
+function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local target = keys.target --victim
 		local attacker = keys.attacker --attacker
@@ -1195,7 +1185,6 @@ function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded( keys )
 
 		-- Only apply if the attacker is the parent of the buff, and the victim is on the opposing team.
 		if self.parent == attacker and self.parent:GetTeamNumber() ~= target:GetTeamNumber() then
-
 			-- Add explosion particle
 			local explosion_pfx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_ABSORIGIN, target)
 			ParticleManager:SetParticleControl(explosion_pfx, 0, target:GetAbsOrigin())
@@ -1204,7 +1193,7 @@ function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded( keys )
 
 			-- Calculate bonus damage
 			local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
-			local splash_damage = damage * ((self.splash_damage_pct + self.bonus_splash_per_protective * protective_instinct_stacks) * 0.01)
+			local splash_damage = damage * ((self.splash_damage_pct + self.bonus_splash_per_protective * protective_instinct_stacks) / 100)
 
 			-- Apply bonus damage on every enemy EXCEPT the main target
 			local enemy_units = FindUnitsInRadius(self.parent:GetTeamNumber(),
@@ -1217,9 +1206,10 @@ function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded( keys )
 				FIND_ANY_ORDER,
 				false)
 
-			for _,enemy in pairs(enemy_units) do
+			for _, enemy in pairs(enemy_units) do
 				if enemy ~= target then
-					local damageTable = {victim = enemy,
+					local damageTable = {
+						victim = enemy,
 						attacker = self.parent,
 						damage = splash_damage,
 						damage_type = DAMAGE_TYPE_PHYSICAL,
@@ -1232,8 +1222,6 @@ function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded( keys )
 		end
 	end
 end
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1341,7 +1329,6 @@ function modifier_imba_tower_replenishment_aura_buff:GetCustomCooldownReductionS
 	return self.cooldown_reduction_pct + self.bonus_cooldown_reduction * protective_instinct_stacks
 end
 
-
 ---------------------------------------------------
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1384,19 +1371,20 @@ function modifier_imba_tower_observatory_vision:IsHidden()
 end
 
 function modifier_imba_tower_observatory_vision:CheckState()
-	local state = {[MODIFIER_STATE_FLYING] = true,
-		[MODIFIER_STATE_ROOTED] = true}
+	local state = {
+		[MODIFIER_STATE_FLYING] = true,
+		[MODIFIER_STATE_ROOTED] = true
+	}
 
 	return state
 end
 
 function modifier_imba_tower_observatory_vision:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_BONUS_DAY_VISION,
-		MODIFIER_PROPERTY_BONUS_NIGHT_VISION}
+	local decFuncs = { MODIFIER_PROPERTY_BONUS_DAY_VISION,
+		MODIFIER_PROPERTY_BONUS_NIGHT_VISION }
 
 	return decFuncs
 end
-
 
 function modifier_imba_tower_observatory_vision:GetBonusDayVision()
 	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
@@ -1411,7 +1399,6 @@ function modifier_imba_tower_observatory_vision:GetBonusNightVision()
 
 	return bonus_vision
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1492,7 +1479,7 @@ end
 -- Attack range Modifier
 modifier_imba_tower_spell_shield_aura_buff = modifier_imba_tower_spell_shield_aura_buff or class({})
 
-function modifier_imba_tower_spell_shield_aura_buff:OnCreated( ... )
+function modifier_imba_tower_spell_shield_aura_buff:OnCreated(...)
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -1515,7 +1502,7 @@ function modifier_imba_tower_spell_shield_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_spell_shield_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+	local decFuncs = { MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS }
 
 	return decFuncs
 end
@@ -1524,7 +1511,6 @@ function modifier_imba_tower_spell_shield_aura_buff:GetModifierMagicalResistance
 	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
 	return self.magic_resistance + self.bonus_mr_per_protective * protective_instinct_stacks
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1633,12 +1619,12 @@ function modifier_imba_tower_mana_burn_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_mana_burn_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
 
-function modifier_imba_tower_mana_burn_aura_buff:OnAttackLanded( keys )
+function modifier_imba_tower_mana_burn_aura_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
@@ -1646,10 +1632,8 @@ function modifier_imba_tower_mana_burn_aura_buff:OnAttackLanded( keys )
 
 		-- Only apply if the parent is the attacker and the victim is on the opposite team
 		if self.parent == attacker and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
-
 			-- Only applies on non spell immune enemies
 			if not target:IsMagicImmune() then
-
 				-- Create mana burn effect
 				local particle_mana_burn_fx = ParticleManager:CreateParticle(self.particle_mana_burn, PATTACH_ABSORIGIN, target)
 				ParticleManager:SetParticleControl(particle_mana_burn_fx, 0, target:GetAbsOrigin())
@@ -1666,30 +1650,29 @@ function modifier_imba_tower_mana_burn_aura_buff:OnAttackLanded( keys )
 
 				-- Illusions burn mana on a much lower value
 				if attacker:IsIllusion() then
-					mana_burn_total = mana_burn_total * (self.illusion_mana_burn_pct * 0.01)
+					mana_burn_total = mana_burn_total * (self.illusion_mana_burn_pct / 100)
 				end
 
 				-- Calculate damage based on taget's current mana
-				local mana_burn_damage = mana_burn_total * (self.mana_burn_damage_pct * 0.01)
+				local mana_burn_damage = mana_burn_total * (self.mana_burn_damage_pct / 100)
 
 				-- Burn target's mana
 				target:ReduceMana(mana_burn_total)
 
 				-- Apply damage
-				local damageTable = {victim = target,
+				local damageTable = {
+					victim = target,
 					attacker = self.parent,
 					damage = mana_burn_damage,
 					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = self.ability}
+					ability = self.ability
+				}
 
 				ApplyDamage(damageTable)
 			end
 		end
 	end
 end
-
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1798,12 +1781,12 @@ function modifier_imba_tower_permabash_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_permabash_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
 
-function modifier_imba_tower_permabash_aura_buff:OnAttackLanded( keys )
+function modifier_imba_tower_permabash_aura_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
@@ -1811,19 +1794,20 @@ function modifier_imba_tower_permabash_aura_buff:OnAttackLanded( keys )
 
 		-- Only apply if the parent is the victim and the attacker is on the opposite team
 		if self.parent == attacker and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
-
 			if RollPseudoRandom(self.bash_chance, self) then
-				target:AddNewModifier(self.caster, self.ability, self.modifier_bash, {duration = self.bash_duration})
+				target:AddNewModifier(self.caster, self.ability, self.modifier_bash, { duration = self.bash_duration })
 
 				-- Calculate damage
 				local bash_damage_total = self.bash_damage + self.bash_damage_per_protective * protective_instinct_stacks
 
 				-- Apply damage
-				local damageTable = {victim = target,
+				local damageTable = {
+					victim = target,
 					attacker = attacker,
 					damage = bash_damage_total,
 					damage_type = DAMAGE_TYPE_PHYSICAL,
-					ability = self.ability}
+					ability = self.ability
+				}
 
 				ApplyDamage(damageTable)
 			end
@@ -1835,7 +1819,7 @@ end
 modifier_imba_tower_permabash_stun = modifier_imba_tower_permabash_stun or class({})
 
 function modifier_imba_tower_permabash_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+	local state = { [MODIFIER_STATE_STUNNED] = true }
 	return state
 end
 
@@ -1848,9 +1832,10 @@ function modifier_imba_tower_permabash_stun:GetEffectAttachType()
 end
 
 function modifier_imba_tower_permabash_stun:IsHidden() return false end
-function modifier_imba_tower_permabash_stun:IsPurgable() return false end
-function modifier_imba_tower_permabash_stun:IsDebuff() return false end
 
+function modifier_imba_tower_permabash_stun:IsPurgable() return false end
+
+function modifier_imba_tower_permabash_stun:IsDebuff() return false end
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1957,7 +1942,7 @@ function modifier_imba_tower_vicious_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_vicious_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
+	local decFuncs = { MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE }
 
 	return decFuncs
 end
@@ -2082,8 +2067,8 @@ function modifier_imba_tower_spellmastery_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_spellmastery_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING}
+	local decFuncs = { MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING }
 
 	return decFuncs
 end
@@ -2098,8 +2083,6 @@ end
 function modifier_imba_tower_spellmastery_aura_buff:GetModifierCastRangeBonusStacking()
 	return self.cast_range_bonus
 end
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -2119,7 +2102,6 @@ end
 
 function imba_tower_plague:GetIntrinsicModifierName()
 	return "modifier_imba_tower_plague_aura"
-
 end
 
 -- Tower Aura
@@ -2210,8 +2192,8 @@ function modifier_imba_tower_plague_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_plague_aura_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
 
 	return decFuncs
 end
@@ -2229,8 +2211,6 @@ function modifier_imba_tower_plague_aura_debuff:GetModifierAttackSpeedBonus_Cons
 	local as_slow_total = self.as_slow + self.additional_slow_per_protective * protective_instinct_stacks
 	return as_slow_total
 end
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -2330,7 +2310,7 @@ function modifier_imba_tower_atrophy_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_atrophy_aura_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE }
 
 	return decFuncs
 end
@@ -2343,7 +2323,6 @@ function modifier_imba_tower_atrophy_aura_debuff:GetModifierBaseDamageOutgoing_P
 		return total_damage_reduction
 	end
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -2449,7 +2428,7 @@ function modifier_imba_tower_regeneration_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_regeneration_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE }
 
 	return decFuncs
 end
@@ -2460,8 +2439,6 @@ function modifier_imba_tower_regeneration_aura_buff:GetModifierHealthRegenPercen
 	local hp_regen_total = self.hp_regen + self.bonus_hp_regen_per_protective * protective_instinct_stacks
 	return hp_regen_total
 end
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -2570,7 +2547,7 @@ function modifier_imba_tower_starlight_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_starlight_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
@@ -2590,12 +2567,11 @@ function modifier_imba_tower_starlight_aura_buff:OnAttackLanded(keys)
 				ParticleManager:ReleaseParticleIndex(particle_beam_fx)
 
 				-- Add blindness modifier
-				target:AddNewModifier(self.caster, self.ability, self.modifier_blind, {duration = self.blind_duration})
+				target:AddNewModifier(self.caster, self.ability, self.modifier_blind, { duration = self.blind_duration })
 			end
 		end
 	end
 end
-
 
 -- Blind debuff
 modifier_imba_tower_starlight_debuff = modifier_imba_tower_starlight_debuff or class({})
@@ -2631,7 +2607,7 @@ function modifier_imba_tower_starlight_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_starlight_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MISS_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_MISS_PERCENTAGE }
 
 	return decFuncs
 end
@@ -2651,8 +2627,6 @@ end
 function modifier_imba_tower_starlight_debuff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -2761,7 +2735,7 @@ function modifier_imba_tower_grievous_wounds_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_grievous_wounds_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
@@ -2774,10 +2748,9 @@ function modifier_imba_tower_grievous_wounds_aura_buff:OnAttackLanded(keys)
 
 		-- Only apply if the parent is the victim and the attacker is on the opposite team
 		if self.parent == attacker and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
-
 			-- Add debuff modifier. Increment stack count and refresh
 			if not target:HasModifier(self.grievous_debuff) then
-				target:AddNewModifier(self.caster, self.ability, self.grievous_debuff, {duration = self.debuff_duration})
+				target:AddNewModifier(self.caster, self.ability, self.grievous_debuff, { duration = self.debuff_duration })
 			end
 
 			local grievous_debuff_handler = target:FindModifierByName(self.grievous_debuff)
@@ -2791,17 +2764,18 @@ function modifier_imba_tower_grievous_wounds_aura_buff:OnAttackLanded(keys)
 			local damage = (self.damage_increase + self.damage_increase_per_hero * protective_instinct_stacks) * grievous_stacks
 
 			-- Apply damage
-			local damageTable = {victim = target,
+			local damageTable = {
+				victim = target,
 				attacker = self.parent,
 				damage = damage,
 				damage_type = DAMAGE_TYPE_PHYSICAL,
-				ability = self.ability}
+				ability = self.ability
+			}
 
 			ApplyDamage(damageTable)
 		end
 	end
 end
-
 
 -- Fury Swipes debuff
 modifier_imba_tower_grievous_wounds_debuff = modifier_imba_tower_grievous_wounds_debuff or class({})
@@ -2825,7 +2799,6 @@ end
 function modifier_imba_tower_grievous_wounds_debuff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -2931,18 +2904,17 @@ function modifier_imba_tower_essence_drain_aura_buff:OnRefresh()
 	self:OnCreated()
 end
 
-
 function modifier_imba_tower_essence_drain_aura_buff:IsHidden()
 	return false
 end
 
 function modifier_imba_tower_essence_drain_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
 
-function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded( keys )
+function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
@@ -2951,7 +2923,6 @@ function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded( keys )
 
 		-- Only apply if the parent is the attacker and the victim is on the opposite team
 		if (self.parent == attacker) and (attacker:GetTeamNumber() ~= target:GetTeamNumber()) and target:IsHero() then
-
 			-- Apply effect
 			local particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, target)
 			ParticleManager:SetParticleControl(particle_drain_fx, 0, target:GetAbsOrigin())
@@ -2965,7 +2936,7 @@ function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded( keys )
 
 			-- Add debuff modifier to the enemy Increment stack count and refresh
 			if not target:HasModifier(self.modifier_debuff) then
-				target:AddNewModifier(self.caster, self.ability, self.modifier_debuff, {duration = total_duration})
+				target:AddNewModifier(self.caster, self.ability, self.modifier_debuff, { duration = total_duration })
 			end
 
 			local drain_debuff_handler = target:FindModifierByName(self.modifier_debuff)
@@ -2976,7 +2947,7 @@ function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded( keys )
 
 			-- Add buff modifier to the attacker.
 			if not self.parent:HasModifier(self.modifier_buff) then
-				self.parent:AddNewModifier(self.caster, self.ability, self.modifier_buff, {duration = total_duration})
+				self.parent:AddNewModifier(self.caster, self.ability, self.modifier_buff, { duration = total_duration })
 			end
 
 			local drain_buff_handler = self.parent:FindModifierByName(self.modifier_buff)
@@ -3020,7 +2991,6 @@ function modifier_imba_tower_essence_drain_debuff:OnIntervalThink()
 	if IsServer() then
 		-- Check if there are any stacks left on the table
 		if #self.stacks_table > 0 then
-
 			-- For each stack, check if it is past its expiration time. If it is, remove it from the table
 			for i = #self.stacks_table, 1, -1 do
 				if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
@@ -3069,9 +3039,9 @@ function modifier_imba_tower_essence_drain_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_essence_drain_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	local decFuncs = { MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS }
 
 	return decFuncs
 end
@@ -3132,7 +3102,6 @@ function modifier_imba_tower_essence_drain_buff:OnIntervalThink()
 	if IsServer() then
 		-- Check if there are any stacks left on the table
 		if #self.stacks_table > 0 then
-
 			-- For each stack, check if it is past its expiration time. If it is, remove it from the table
 			for i = #self.stacks_table, 1, -1 do
 				if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
@@ -3181,9 +3150,9 @@ function modifier_imba_tower_essence_drain_buff:IsDebuff()
 end
 
 function modifier_imba_tower_essence_drain_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	local decFuncs = { MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS }
 
 	return decFuncs
 end
@@ -3229,7 +3198,6 @@ function modifier_imba_tower_essence_drain_buff:GetModifierBonusStats_Strength()
 		return nil
 	end
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -3335,7 +3303,7 @@ function modifier_imba_tower_protection_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_protection_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE }
 
 	return decFuncs
 end
@@ -3346,7 +3314,6 @@ function modifier_imba_tower_protection_aura_buff:GetModifierIncomingDamage_Perc
 	local damage_reduction_total = self.damage_reduction + self.additional_dr_per_protective * protective_instinct_stacks
 	return damage_reduction_total
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -3451,9 +3418,9 @@ function modifier_imba_tower_disease_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_disease_aura_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	local decFuncs = { MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS }
 
 	return decFuncs
 end
@@ -3478,7 +3445,6 @@ function modifier_imba_tower_disease_aura_debuff:GetModifierBonusStats_Strength(
 	local total_stat_reduction = self.stat_reduction + self.additional_sr_per_protective * protective_instinct_stacks
 	return total_stat_reduction
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -3591,7 +3557,7 @@ function modifier_imba_tower_doppleganger_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_doppleganger_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
 
 	return decFuncs
 end
@@ -3610,10 +3576,9 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 
 		-- Only apply if the parent is the victim and the attacker is on the opposite team and is not prevented
 		if self.parent == target and attacker:GetTeamNumber() ~= self.parent:GetTeamNumber() and not self.parent:HasModifier(self.prevention_modifier) then
-
 			-- Calculate cooldown and add a prevention modifier to the parent
 			local cooldown_doppleganger = self.doppleganger_cooldown - self.cd_reduction_per_protective * protective_instinct_stacks
-			self.parent:AddNewModifier(self.caster, self.ability, self.prevention_modifier, {duration = cooldown_doppleganger})
+			self.parent:AddNewModifier(self.caster, self.ability, self.prevention_modifier, { duration = cooldown_doppleganger })
 
 			-- Create effect
 			local particle_doppleganger_fx = ParticleManager:CreateParticle(self.particle_doppleganger, PATTACH_ABSORIGIN, self.parent)
@@ -3627,7 +3592,7 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 			local doppleganger = CreateUnitByName(self.parent:GetUnitName(), summon_origin, true, self.parent, nil, self.parent:GetTeamNumber())
 
 			-- Turn doppleganger into an illusion with the correct properties
-			doppleganger:AddNewModifier(self.caster, self.ability, "modifier_illusion", {duration = self.doppleganger_duration, outgoing_damage = self.outgoing_damage, incoming_damage = self.incoming_damage})
+			doppleganger:AddNewModifier(self.caster, self.ability, "modifier_illusion", { duration = self.doppleganger_duration, outgoing_damage = self.outgoing_damage, incoming_damage = self.incoming_damage })
 			doppleganger:MakeIllusion()
 			doppleganger:SetRespawnsDisabled(true)
 
@@ -3637,13 +3602,13 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 
 			-- Set the doppleganger's level to the parent's
 			local parent_level = self.parent:GetLevel()
-			for i=1, parent_level-1 do
+			for i = 1, parent_level - 1 do
 				doppleganger:HeroLevelUp(false)
 			end
 
 			-- Set the skill points to 0 and learn the skills of the caster
 			doppleganger:SetAbilityPoints(0)
-			for abilitySlot=0,15 do
+			for abilitySlot = 0, 15 do
 				local ability = self.parent:GetAbilityByIndex(abilitySlot)
 				if ability ~= nil then
 					local abilityLevel = ability:GetLevel()
@@ -3654,7 +3619,7 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 			end
 
 			-- Recreate the items of the caster
-			for itemSlot=0,5 do
+			for itemSlot = 0, 5 do
 				local item = self.parent:GetItemInSlot(itemSlot)
 				if item ~= nil then
 					local itemName = item:GetName()
@@ -3667,7 +3632,7 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 			doppleganger:SetForwardVector(self.parent:GetForwardVector())
 
 			-- Roll a chance to swap positions with the doppleganger
-			local swap_change = math.random(1,2)
+			local swap_change = math.random(1, 2)
 			if swap_change == 2 then
 				local parent_loc = self.parent:GetAbsOrigin()
 				local doppleganger_loc = doppleganger:GetAbsOrigin()
@@ -3713,36 +3678,36 @@ end
 
 -- Custom function responsible for stopping the illusion, making it look like it's casting the
 -- same channeling spell as its original. Assigns the corrects gesture depending on the ability.
-function StartChannelingAnimation (parent, doppleganger, ability_name)
+function StartChannelingAnimation(parent, doppleganger, ability_name)
 	local ability_gesture
 
-	local channel_4    = {"imba_bane_fiends_grip", "imba_pudge_dismember",}
-	local cast_4    = {"imba_crystal_maiden_freezing_field", "imba_enigma_black_hole", "imba_sandking_epicenter", "witch_doctor_death_ward",}
-	local cast_1    = {"elder_titan_echo_stomp", "keeper_of_the_light_illuminate", "oracle_fortunes_end",}
-	local cast_3    = {"imba_lion_mana_drain",} -- Should be changed in the next update to "imba_lion_mana_drain"
+	local channel_4 = { "imba_bane_fiends_grip", "imba_pudge_dismember", }
+	local cast_4    = { "imba_crystal_maiden_freezing_field", "imba_enigma_black_hole", "imba_sandking_epicenter", "witch_doctor_death_ward", }
+	local cast_1    = { "elder_titan_echo_stomp", "keeper_of_the_light_illuminate", "oracle_fortunes_end", }
+	local cast_3    = { "imba_lion_mana_drain", } -- Should be changed in the next update to "imba_lion_mana_drain"
 
-	for _,v in ipairs(channel_4) do
+	for _, v in ipairs(channel_4) do
 		if ability_name == v then
 			ability_gesture = ACT_DOTA_CHANNEL_ABILITY_4
 			break
 		end
 	end
 
-	for _,v in ipairs(cast_4) do
+	for _, v in ipairs(cast_4) do
 		if ability_name == v then
 			ability_gesture = ACT_DOTA_CAST_ABILITY_4
 			break
 		end
 	end
 
-	for _,v in ipairs(cast_1) do
+	for _, v in ipairs(cast_1) do
 		if ability_name == v then
 			ability_gesture = ACT_DOTA_CAST_ABILITY_1
 			break
 		end
 	end
 
-	for _,v in ipairs(cast_3) do
+	for _, v in ipairs(cast_3) do
 		if ability_name == v then
 			ability_gesture = ACT_DOTA_CAST_ABILITY_3
 			break
@@ -3770,7 +3735,6 @@ function StartChannelingAnimation (parent, doppleganger, ability_name)
 		return FrameTime()
 	end)
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -3866,20 +3830,20 @@ function modifier_imba_tower_barrier_aura_buff:OnCreated()
 	if not IsServer() or not self:GetAbility() then return end
 
 	-- Ability specials
-	self.base_maxdamage 			= self:GetAbility():GetSpecialValueFor("base_maxdamage")
-	self.maxdamage_per_protective	= self:GetAbility():GetSpecialValueFor("maxdamage_per_protective")
-	self.replenish_duration			= self:GetAbility():GetSpecialValueFor("replenish_duration")
-	
+	self.base_maxdamage           = self:GetAbility():GetSpecialValueFor("base_maxdamage")
+	self.maxdamage_per_protective = self:GetAbility():GetSpecialValueFor("maxdamage_per_protective")
+	self.replenish_duration       = self:GetAbility():GetSpecialValueFor("replenish_duration")
+
 	self:SetStackCount(self.base_maxdamage + self.maxdamage_per_protective * #FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false))
 end
 
 function modifier_imba_tower_barrier_aura_buff:DeclareFunctions()
-	return {MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK}
+	return { MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK }
 end
 
 function modifier_imba_tower_barrier_aura_buff:GetModifierTotal_ConstantBlock(keys)
 	if keys.damage >= self:GetStackCount() then
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_tower_barrier_aura_cooldown", {duration = self.replenish_duration})
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_tower_barrier_aura_cooldown", { duration = self.replenish_duration })
 		self:Destroy()
 		return self:GetStackCount()
 	else
@@ -3914,7 +3878,6 @@ end
 function modifier_imba_tower_barrier_aura_cooldown:IsDebuff()
 	return false
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -4023,7 +3986,7 @@ function modifier_imba_tower_soul_leech_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_soul_leech_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
+	local decFuncs = { MODIFIER_EVENT_ON_TAKEDAMAGE }
 
 	return decFuncs
 end
@@ -4038,7 +4001,6 @@ function modifier_imba_tower_soul_leech_aura_buff:OnTakeDamage(keys)
 
 	-- Only apply if the parent of this buff attacked an enemy
 	if attacker == self.parent and self.parent:GetTeamNumber() ~= target:GetTeamNumber() then
-
 		-- Play appropriate effect depending on damage type
 		if damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE then
 			local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_ABSORIGIN, attacker)
@@ -4057,19 +4019,16 @@ function modifier_imba_tower_soul_leech_aura_buff:OnTakeDamage(keys)
 
 		-- Decrease heal if the target is a creep
 		if target:IsCreep() then
-			soul_leech_total = soul_leech_total * (self.creep_lifesteal_pct * 0.01)
+			soul_leech_total = soul_leech_total * (self.creep_lifesteal_pct / 100)
 		end
 
 		-- Heal caster by damage, only if damage isn't negative (to prevent negative heal)
 		if damage > 0 then
-			local heal_amount = damage * (soul_leech_total * 0.01)
+			local heal_amount = damage * (soul_leech_total / 100)
 			self.parent:Heal(heal_amount, self.parent)
 		end
 	end
 end
-
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -4181,7 +4140,7 @@ function modifier_imba_tower_frost_shroud_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_frost_shroud_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
+	local decFuncs = { MODIFIER_EVENT_ON_TAKEDAMAGE }
 
 	return decFuncs
 end
@@ -4193,10 +4152,8 @@ function modifier_imba_tower_frost_shroud_aura_buff:OnTakeDamage(keys)
 
 		-- Only apply if the parent is the victim and the attacker is on the opposite team
 		if self.parent == target and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
-
 			-- Roll for a proc
 			if RollPseudoRandom(self.frost_shroud_chance, self) then
-
 				-- Apply effect
 				local particle_frost_fx = ParticleManager:CreateParticle(self.particle_frost, PATTACH_ABSORIGIN, target)
 				ParticleManager:SetParticleControl(particle_frost_fx, 0, self.parent:GetAbsOrigin())
@@ -4215,10 +4172,9 @@ function modifier_imba_tower_frost_shroud_aura_buff:OnTakeDamage(keys)
 					false)
 
 				for _, enemy in pairs(enemies) do
-
 					-- Add debuff modifier to the enemy Increment stack count and refresh
 					if not enemy:HasModifier(self.modifier_frost) then
-						enemy:AddNewModifier(self.caster, self.ability, self.modifier_frost, {duration = self.frost_shroud_duration})
+						enemy:AddNewModifier(self.caster, self.ability, self.modifier_frost, { duration = self.frost_shroud_duration })
 					end
 
 					local modifier_frost_handler = enemy:FindModifierByName(self.modifier_frost)
@@ -4229,7 +4185,6 @@ function modifier_imba_tower_frost_shroud_aura_buff:OnTakeDamage(keys)
 		end
 	end
 end
-
 
 -- Frost Shroud debuff (enemy)
 modifier_imba_tower_frost_shroud_debuff = modifier_imba_tower_frost_shroud_debuff or class({})
@@ -4270,10 +4225,8 @@ end
 
 function modifier_imba_tower_frost_shroud_debuff:OnIntervalThink()
 	if IsServer() then
-
 		-- Check if there are any stacks left on the table
 		if #self.stacks_table > 0 then
-
 			-- For each stack, check if it is past its expiration time. If it is, remove it from the table
 			for i = #self.stacks_table, 1, -1 do
 				if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
@@ -4310,8 +4263,8 @@ function modifier_imba_tower_frost_shroud_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_frost_shroud_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
 
 	return decFuncs
 end
@@ -4331,7 +4284,6 @@ function modifier_imba_tower_frost_shroud_debuff:GetModifierAttackSpeedBonus_Con
 	local attackspeed_slow = (self.as_slow + self.slow_per_protective * protective_instinct_stacks) * self:GetStackCount()
 	return attackspeed_slow
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -4380,7 +4332,6 @@ end
 
 function modifier_tower_healing_think:OnIntervalThink()
 	if IsServer() then
-
 		-- If ability is on cooldown, do nothing
 		if not self:GetAbility():IsCooldownReady() then
 			return nil
@@ -4434,9 +4385,9 @@ function modifier_tower_healing_think:OnIntervalThink()
 
 		-- Start bouncing with bounce delay
 		Timers:CreateTimer(self.bounce_delay, function()
-			-- If those are null then the tower most likely died during self.bounce_delay... 
+			-- If those are null then the tower most likely died during self.bounce_delay...
 			if self == nil then return nil end
-			if not self:GetParent() or not self.bounce_radius or not self:GetAbility() then 
+			if not self:GetParent() or not self.bounce_radius or not self:GetAbility() then
 				return nil
 			end
 			-- Still don't know if other heroes need healing, assumes doesn't unless found
@@ -4633,8 +4584,8 @@ end
 
 LinkLuaModifier("modifier_imba_tower_secondary_resistance", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
 
-imba_tower_secondary_resistance				= imba_tower_secondary_resistance or class({})
-modifier_imba_tower_secondary_resistance	= modifier_imba_tower_secondary_resistance or class({})
+imba_tower_secondary_resistance          = imba_tower_secondary_resistance or class({})
+modifier_imba_tower_secondary_resistance = modifier_imba_tower_secondary_resistance or class({})
 
 function imba_tower_secondary_resistance:GetIntrinsicModifierName()
 	return "modifier_imba_tower_secondary_resistance"
@@ -4644,7 +4595,7 @@ end
 -- MODIFIER_IMBA_TOWER_SECONDARY_RESISTANCE --
 ----------------------------------------------
 
-function modifier_imba_tower_secondary_resistance:IsHidden()	return true end
+function modifier_imba_tower_secondary_resistance:IsHidden() return true end
 
 function modifier_imba_tower_secondary_resistance:DeclareFunctions()
 	return {

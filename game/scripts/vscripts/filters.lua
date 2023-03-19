@@ -27,7 +27,7 @@ function GameMode:GoldFilter(keys)
 	end
 
 	-- if keys.reason_const == DOTA_ModifyGold_HeroKill then
-		-- return not IMBA_GOLD_SYSTEM
+	-- return not IMBA_GOLD_SYSTEM
 	-- end
 
 	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return end
@@ -40,7 +40,7 @@ function GameMode:GoldFilter(keys)
 
 		-- Hand of Midas gold bonus (let's make it not affect hero kills)
 		if hero:HasItemInInventory("item_imba_hand_of_midas") and hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.reason_const ~= DOTA_ModifyGold_HeroKill then
-			keys.gold = keys.gold * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") * 0.01))
+			keys.gold = keys.gold * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") / 100))
 		end
 
 		-- Lobby options adjustment
@@ -55,25 +55,25 @@ function GameMode:GoldFilter(keys)
 
 		-- local reliable = false
 		-- if keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
-			-- reliable = true
+		-- reliable = true
 		-- end
 
 		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
-		
+
 		-- Testing gold multiplier based on networth differentials
 		local ally_networth = 0
 		local enemy_networth = 0
-		
+
 		for num = 1, PlayerResource:GetPlayerCountForTeam(player:GetTeam()) do
 			ally_networth = ally_networth + PlayerResource:GetNetWorth(PlayerResource:GetNthPlayerIDOnTeam(player:GetTeam(), num))
 		end
-		
+
 		for num = 1, PlayerResource:GetPlayerCountForTeam(hero:GetOpposingTeamNumber()) do
 			enemy_networth = enemy_networth + PlayerResource:GetNetWorth(PlayerResource:GetNthPlayerIDOnTeam(hero:GetOpposingTeamNumber(), num))
 		end
-		
+
 		local networth_difference = enemy_networth - ally_networth
-		
+
 		-- Let's try linear scaling with max of 2x gold granted at a 125k networth differential (IDK good numbers without more input)
 		if networth_difference > 0 then
 			keys.gold = keys.gold * math.min(1 + (networth_difference / 125000), 2)
@@ -84,7 +84,7 @@ function GameMode:GoldFilter(keys)
 end
 
 -- Experience gain filter function
-function GameMode:ExperienceFilter( keys )
+function GameMode:ExperienceFilter(keys)
 	-- reason_const		1 (DOTA_ModifyXP_CreepKill)
 	-- experience		130
 	-- player_id_const	0
@@ -104,47 +104,47 @@ function GameMode:ExperienceFilter( keys )
 	if custom_xp_bonus ~= nil then
 		keys.experience = keys.experience * (custom_xp_bonus / 100)
 	end
-	
+
 	-- Testing exp multiplier based on networth differentials
 	local player = PlayerResource:GetPlayer(keys.player_id_const)
-	
+
 	if player == nil then return end
-	
+
 	local hero = player:GetAssignedHero()
-	
+
 	if hero == nil then return end
-	
+
 	local ally_level = 0
 	local enemy_level = 0
-	
+
 	for num = 1, PlayerResource:GetPlayerCountForTeam(player:GetTeam()) do
 		ally_level = ally_level + PlayerResource:GetLevel(PlayerResource:GetNthPlayerIDOnTeam(player:GetTeam(), num))
 	end
-	
+
 	for num = 1, PlayerResource:GetPlayerCountForTeam(hero:GetOpposingTeamNumber()) do
 		enemy_level = enemy_level + PlayerResource:GetLevel(PlayerResource:GetNthPlayerIDOnTeam(hero:GetOpposingTeamNumber(), num))
 	end
-	
+
 	local level_difference = enemy_level - ally_level
-	
+
 	-- Let's try linear scaling with max of 2x experience granted at a 60 level differential (IDK good numbers without more input)
 	if level_difference > 0 then
 		keys.experience = keys.experience * math.min(1 + (level_difference / 60), 2)
 	end
 
---	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
---	local player = PlayerResource:GetPlayer(keys.player_id_const)
---	local hero = player:GetAssignedHero()
-	
+	--	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
+	--	local player = PlayerResource:GetPlayer(keys.player_id_const)
+	--	local hero = player:GetAssignedHero()
+
 	-- if MAX_LEVEL and MAX_LEVEL[GetMapName()] and hero:GetLevel() >= MAX_LEVEL[GetMapName()] then
-	
+
 	-- end
 
 	return true
 end
 
 -- Modifier gained filter function
-function GameMode:ModifierFilter( keys )
+function GameMode:ModifierFilter(keys)
 	-- entindex_parent_const	215
 	-- entindex_ability_const	610
 	-- duration					-1
@@ -172,47 +172,47 @@ function GameMode:ModifierFilter( keys )
 		if keys.entindex_ability_const then
 			modifier_ability = EntIndexToHScript(keys.entindex_ability_const)
 		end
-		
+
 		-- This is causing too much grief with having to use SetDuration to just override times due to this filter not respecting refreshes, so I'm just going to nuke this once and for all and work from there...
 		-- if modifier_owner ~= nil then
-			-- modifier_class = modifier_owner:FindModifierByName(modifier_name)
-			-- if modifier_class == nil then return end
+		-- modifier_class = modifier_owner:FindModifierByName(modifier_name)
+		-- if modifier_class == nil then return end
 
-			-- -- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
-			-- local ignore_frantic = false
+		-- -- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
+		-- local ignore_frantic = false
 
-			-- for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
-				-- if modifier == modifier_name then
-					-- ignore_frantic = true
-				-- end
-			-- end
+		-- for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
+		-- if modifier == modifier_name then
+		-- ignore_frantic = true
+		-- end
+		-- end
 
-			-- if keys.entindex_ability_const and modifier_ability.GetAbilityName then
-				-- if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
-					-- local original_duration = keys.duration
-					-- local actual_duration = original_duration
-					-- local status_resistance = modifier_owner:GetStatusResistance()
--- --					print("Old duration:", actual_duration)
+		-- if keys.entindex_ability_const and modifier_ability.GetAbilityName then
+		-- if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
+		-- local original_duration = keys.duration
+		-- local actual_duration = original_duration
+		-- local status_resistance = modifier_owner:GetStatusResistance()
+		-- --					print("Old duration:", actual_duration)
 
-					-- if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
-						-- actual_duration = actual_duration * (1 - status_resistance)
-					-- end
+		-- if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
+		-- actual_duration = actual_duration * (1 - status_resistance)
+		-- end
 
--- --					print("New duration:", actual_duration)
+		-- --					print("New duration:", actual_duration)
 
-					-- keys.duration = actual_duration
-				-- else
-					-- -- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
-					-- if ignore_frantic == true then
-						-- local original_duration = keys.duration
-						-- local actual_duration = original_duration
-						-- local status_resistance = modifier_owner:GetStatusResistance()
+		-- keys.duration = actual_duration
+		-- else
+		-- -- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
+		-- if ignore_frantic == true then
+		-- local original_duration = keys.duration
+		-- local actual_duration = original_duration
+		-- local status_resistance = modifier_owner:GetStatusResistance()
 
-						-- actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
-						-- keys.duration = actual_duration
-					-- end
-				-- end
-			-- end
+		-- actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
+		-- keys.duration = actual_duration
+		-- end
+		-- end
+		-- end
 		-- end
 
 		-- volvo bugfix
@@ -235,64 +235,64 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 
 		-- if modifier_owner:IsRoshan() then
-			-- -- Ignore stuns
-			-- print("Roshan modifier name:", modifier_name)
-			-- if modifier_name == "modifier_stunned" then
-				-- return false
-			-- end
+		-- -- Ignore stuns
+		-- print("Roshan modifier name:", modifier_name)
+		-- if modifier_name == "modifier_stunned" then
+		-- return false
+		-- end
 
-			-- -- Halve the duration of everything else
-			-- if modifier_caster ~= modifier_owner and keys.duration > 0 then
-				-- keys.duration = keys.duration / (100 / 50)
-			-- end
+		-- -- Halve the duration of everything else
+		-- if modifier_caster ~= modifier_owner and keys.duration > 0 then
+		-- keys.duration = keys.duration / (100 / 50)
+		-- end
 
-			-- -- Fury swipes capping
-			-- if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
-				-- modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
-			-- end
+		-- -- Fury swipes capping
+		-- if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
+		-- modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+		-- end
 
-			-- if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
-				-- return false
-			-- end
+		-- if modifier_name == "modifier_doom_bringer_infernal_blade_burn" or modifier_name == "modifier_viper_nethertoxin" or modifier_name == "modifier_pangolier_gyroshell_stunned" or modifier_name == "modifier_pangolier_gyroshell_bounce" then
+		-- return false
+		-- end
 		-- end
 
 		-- -- add particle or sound playing to notify
 		-- if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
-			-- for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
-				-- if modifier_name == modifier then
-					-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
-					-- return false
-				-- end
-			-- end
+		-- for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
+		-- if modifier_name == modifier then
+		-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
+		-- return false
 		-- end
-		
+		-- end
+		-- end
+
 		-- Tried some fancy stuff in the frantic file but you cannot properly override vanilla durations so I will do it here for Legion Commander's Duel
 		-- Because Duel ends if either of the modifiers (on caster and target) ends, we need a way to equalize the durations even if the two units have differing status resistance
 		-- Because Duel first applies a modifier on the target, I will use it to store the proper duration to set it to, and use that for the caster duration
 		if modifier_name == "modifier_legion_commander_duel" and keys.duration > 0 then
 			if modifier_owner:HasModifier("modifier_frantic") and not modifier_ability.frantic_adjusted_duration then
-				modifier_ability.frantic_adjusted_duration = keys.duration / ((100 - modifier_owner:FindModifierByName("modifier_frantic"):GetStackCount()) * 0.01)
+				modifier_ability.frantic_adjusted_duration = keys.duration / ((100 - modifier_owner:FindModifierByName("modifier_frantic"):GetStackCount()) / 100)
 				keys.duration = modifier_ability.frantic_adjusted_duration
 			elseif modifier_ability.frantic_adjusted_duration then
 				keys.duration = modifier_ability.frantic_adjusted_duration
 				modifier_ability.frantic_adjusted_duration = nil
 			end
 		end
-		
+
 		-- Bringing Helm of the Undying back but giving it Wraith King's Reincarnation Wraith mechanics for balance
 		if modifier_name == "modifier_item_helm_of_the_undying_active" then
 			-- "An ally enters Death Delay when their health reaches 1, unless they are affected by Shallow Grave, Battle Trance, Wraith Delay, or have Reincarnation."
-			if modifier_owner:HasModifier("modifier_imba_dazzle_shallow_grave") or 
-			modifier_owner:HasModifier("modifier_imba_dazzle_nothl_protection") or 
-			modifier_owner:HasModifier("modifier_imba_battle_trance_720") or 
-			modifier_owner:HasModifier("modifier_imba_reincarnation_wraith_form") or 
-			modifier_owner:HasModifier("modifier_item_imba_bloodstone_active_720") then
+			if modifier_owner:HasModifier("modifier_imba_dazzle_shallow_grave") or
+				modifier_owner:HasModifier("modifier_imba_dazzle_nothl_protection") or
+				modifier_owner:HasModifier("modifier_imba_battle_trance_720") or
+				modifier_owner:HasModifier("modifier_imba_reincarnation_wraith_form") or
+				modifier_owner:HasModifier("modifier_item_imba_bloodstone_active_720") then
 				return false
 			else
-				modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_helm_of_the_undying_addendum", {duration = keys.duration + FrameTime()})
+				modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_helm_of_the_undying_addendum", { duration = keys.duration + FrameTime() })
 			end
 		end
-		
+
 		-- Deactivate Tusk's Snowball so you don't allow multiple casting while Snowball is active (resulting in permanently lingering particles)
 		if modifier_name == "modifier_tusk_snowball_movement" then
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
@@ -323,7 +323,7 @@ function GameMode:ModifierFilter( keys )
 		if modifier_name == "modifier_bottle_regeneration" then
 			local duration = modifier_ability:GetSpecialValueFor("restore_time")
 
-			modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_bottle_heal", {duration = duration})
+			modifier_owner:AddNewModifier(modifier_owner, modifier_ability, "modifier_item_imba_bottle_heal", { duration = duration })
 
 			return false
 		end
@@ -338,8 +338,7 @@ function GameMode:ModifierFilter( keys )
 end
 
 -- Item added to inventory filter
-function GameMode:ItemAddedFilter( keys )
-
+function GameMode:ItemAddedFilter(keys)
 	-- Typical keys:
 	-- inventory_parent_entindex_const: 852
 	-- item_entindex_const: 1519
@@ -349,15 +348,15 @@ function GameMode:ItemAddedFilter( keys )
 	if unit == nil then return end
 	local item = EntIndexToHScript(keys.item_entindex_const)
 	if item == nil then return end
-	
+
 	-- This is currently done by default and does not use the ENABLE_TPSCROLL_ON_FIRST_SPAWN variable
 	-- if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then
-		-- item:EndCooldown()
+	-- item:EndCooldown()
 
-		-- return ENABLE_TPSCROLL_ON_FIRST_SPAWN
+	-- return ENABLE_TPSCROLL_ON_FIRST_SPAWN
 
-		-- -- return false to remove it
--- --		return false
+	-- -- return false to remove it
+	-- --		return false
 	-- end
 
 	local item_name = nil
@@ -370,13 +369,13 @@ function GameMode:ItemAddedFilter( keys )
 	if item:GetName() then
 		item_name = item:GetName()
 	end
-	
+
 	-- Custom Rune System
 	if string.find(item_name, "item_imba_rune_") and unit:IsRealHero() then
 		ImbaRunes:PickupRune(item_name, unit)
 		return false
 	end
-	
+
 	-- Airdrop Mutation to inform players that an item was picked up
 	if item.airdrop then
 		local overthrow_item_drop =
@@ -404,42 +403,42 @@ function GameMode:ItemAddedFilter( keys )
 					color = rgbToHex(PLAYER_COLORS[unit:GetPlayerID()])
 				end
 
-				Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
-				Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, style = {color = color}, continue = true})
-				Notifications:BottomToAll({text = "#imba_player_aegis_message_snatch", duration = line_duration, continue = true})
+				Notifications:BottomToAll({ hero = unit:GetName(), duration = line_duration })
+				Notifications:BottomToAll({ text = PlayerResource:GetPlayerName(unit:GetPlayerID()) .. " ", duration = line_duration, style = { color = color }, continue = true })
+				Notifications:BottomToAll({ text = "#imba_player_aegis_message_snatch", duration = line_duration, continue = true })
 
 				_G.GAME_ROSHAN_KILLER_TEAM = 0
 			else
-				Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
-				Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, style = {color = color}, continue = true})
-				Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, continue = true})
+				Notifications:BottomToAll({ hero = unit:GetName(), duration = line_duration })
+				Notifications:BottomToAll({ text = PlayerResource:GetPlayerName(unit:GetPlayerID()) .. " ", duration = line_duration, style = { color = color }, continue = true })
+				Notifications:BottomToAll({ text = "#imba_player_aegis_message", duration = line_duration, continue = true })
 			end
 
 			-- I get what you were trying to do but none of this works properly
 			-- -- With no timer, combat events notification is not triggered
 			-- if unit:GetNumItemsInInventory() >= 6 then
-				-- unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+			-- unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
 			-- else
-				-- Timers:CreateTimer(1.0, function()
-					-- if item then
-						-- if item.GetContainer then
-							-- UTIL_Remove(item:GetContainer())
-						-- end
+			-- Timers:CreateTimer(1.0, function()
+			-- if item then
+			-- if item.GetContainer then
+			-- UTIL_Remove(item:GetContainer())
+			-- end
 
-						-- UTIL_Remove(item)
-					-- end
+			-- UTIL_Remove(item)
+			-- end
 
-					-- -- in the rare case where the player would die within 1 second after picked the aegis
-					-- if unit:IsAlive() then
-						-- unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
-					-- end
-				-- end)
+			-- -- in the rare case where the player would die within 1 second after picked the aegis
+			-- if unit:IsAlive() then
+			-- unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
+			-- end
+			-- end)
 			-- end
 
 			-- return true
-				
-			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
-			return false			
+
+			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis", {})
+			return false
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
 			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
@@ -450,7 +449,7 @@ function GameMode:ItemAddedFilter( keys )
 			return false
 		end
 		-- return true
-		
+
 		return false
 	end
 
@@ -468,35 +467,35 @@ function GameMode:ItemAddedFilter( keys )
 			ParticleManager:ReleaseParticleIndex(item.x_pfx)
 			item.x_pfx = nil
 		end
-		if unit:IsRealHero() or ( unit:GetClassname() == "npc_dota_lone_druid_bear" ) then
+		if unit:IsRealHero() or (unit:GetClassname() == "npc_dota_lone_druid_bear") then
 			-- If the rapier has a purchaser (WARNING: if the courier buys it, item:GetPurchaser() is nil), and someone from the opposite team picks it up, then it becomes a free rapier
 			-- Gonna make a pretty bold assumption here; there is the edge case where someone's inventory is full, they buy rapiers from courier which then drop the rapiers, and then someone from the enemy team picks it up; this code would then make THEM the original purchaser
 			-- ...well I'm just trying to make rapiers not disappear first
 			if not item:GetPurchaser() then
 				item:SetPurchaser(unit)
 			end
-			
+
 			-- Cursed Rapiers should not be droppable at all after first drop (due to abuse like Spectre ult)
 			if item:GetName() == "item_imba_rapier_cursed" then
 				item:SetDroppable(false)
-			end			
-			
+			end
+
 			if item:GetPurchaser() and item:GetPurchaser():GetTeamNumber() ~= unit:GetTeamNumber() then
 				item.free = true
 			end
-			
+
 			-- If the rapier is picked up by an enemy after it was dropped, then it is no longer droppable
 			if item.free then
 				item:SetPurchaser(nil)
 				item:SetPurchaseTime(0)
 				item:SetDroppable(false)
 			end
-			
+
 			local rapier_amount = 0
 			local rapier_2_amount = 0
 			local rapier_magic_amount = 0
 			local rapier_magic_2_amount = 0
-			
+
 			for i = DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_9 do
 				local current_item = unit:GetItemInSlot(i)
 				if not current_item then
@@ -511,31 +510,31 @@ function GameMode:ItemAddedFilter( keys )
 					rapier_magic_2_amount = rapier_magic_2_amount + 1
 				end
 			end
-			
+
 			-- This handles combining rapiers or soemthing
-			if 	((item_name == "item_imba_rapier") and (rapier_amount == 2)) or
-			((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or
-			((item_name == "item_imba_rapier_2") and (rapier_magic_2_amount >= 1)) or
-			((item_name == "item_imba_rapier_magic_2") and (rapier_2_amount >= 1)) then
+			if ((item_name == "item_imba_rapier") and (rapier_amount == 2)) or
+				((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or
+				((item_name == "item_imba_rapier_2") and (rapier_magic_2_amount >= 1)) or
+				((item_name == "item_imba_rapier_magic_2") and (rapier_2_amount >= 1)) then
 				return true
 			else
-				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_item_enough_slots")
+				DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_item_enough_slots")
 			end
 		end
-		
+
 		if unit:IsIllusion() or unit:IsTempestDouble() or unit:IsHero() then
 			return true
 		else
 			unit:DropItem(nil, item_name, true)
 		end
-		
+
 		return false
 	end
-	
+
 	----------------------------------------------------------------
 	-- Gem of True Sight Logic (mostly for Soul of Truth merging) --
 	----------------------------------------------------------------
-	
+
 	if item:GetName() == "item_imba_gem" and not unit:IsCourier() then
 		item:SetPurchaser(unit)
 	end
@@ -544,8 +543,7 @@ function GameMode:ItemAddedFilter( keys )
 end
 
 -- Order filter function
-function GameMode:OrderFilter( keys )
-
+function GameMode:OrderFilter(keys)
 	--entindex_ability	 ==> 	0
 	--sequence_number_const	 ==> 	20
 	--queue	 ==> 	0
@@ -565,7 +563,7 @@ function GameMode:OrderFilter( keys )
 		return nil
 	end
 	if unit == nil then return end
-	
+
 	-- Don't let couriers be controlled when multi-selected
 	if keys.units then
 		for k, v in pairs(keys.units) do
@@ -640,14 +638,14 @@ function GameMode:OrderFilter( keys )
 	-- Turbo Courier filters
 	if unit:IsCourier() then
 		-- Timers:CreateTimer(FrameTime(), function()
-			-- if unit and not unit:IsNull() and keys.issuer_player_id_const then
-				-- unit.last_idle_change_time 			= unit:GetLastIdleChangeTime()
-				-- unit.issuer_player_id_const			= keys.issuer_player_id_const
-			-- end
+		-- if unit and not unit:IsNull() and keys.issuer_player_id_const then
+		-- unit.last_idle_change_time 			= unit:GetLastIdleChangeTime()
+		-- unit.issuer_player_id_const			= keys.issuer_player_id_const
+		-- end
 		-- end)
-		
+
 		local ability = EntIndexToHScript(keys["entindex_ability"])
-		
+
 		-- Don't let frozen players mess with courier either
 		if api:GetDonatorStatus(keys.issuer_player_id_const) == 10 or (IMBA_PUNISHED and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(keys.issuer_player_id_const)]) then
 			return false
@@ -672,20 +670,19 @@ function GameMode:OrderFilter( keys )
 				elseif keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM then
 					return true
 				else
-					DisplayError(keys.issuer_player_id_const, "Courier is currently delivering items to "..PlayerResource:GetPlayerName(unit.issuer_player_id_const))
+					DisplayError(keys.issuer_player_id_const, "Courier is currently delivering items to " .. PlayerResource:GetPlayerName(unit.issuer_player_id_const))
 					return false
 				end
 			end
-			
+
 			-- allow buy order!
 			if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM or keys.order_type == DOTA_UNIT_ORDER_DISASSEMBLE_ITEM or keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SET_ITEM_COMBINE_LOCK then
 				return true
 			end
 
 			if (ability and ability.GetName and ability:GetName() ~= "" and not ability:IsItem()) then
---				print("Valid Ability")
+				--				print("Valid Ability")
 				if unit:HasAbility(ability:GetName()) then
-				
 					if (ability:GetName() == "courier_transfer_items" or "courier_take_stash_and_transfer_items") then
 						if not unit.issuer_player_id_const then
 							unit.issuer_player_id_const = keys.issuer_player_id_const
@@ -703,14 +700,14 @@ function GameMode:OrderFilter( keys )
 			end
 
 			-- Prevent the courier from moving if already moving (therefore being used by another player)
---			if unit:IsMoving() then
---				DisplayError(keys.issuer_player_id_const, "#dota_hud_error_courier_in_use")
+			--			if unit:IsMoving() then
+			--				DisplayError(keys.issuer_player_id_const, "#dota_hud_error_courier_in_use")
 
---				return false
---			end
+			--				return false
+			--			end
 		end
 
---		print("Return false 3")
+		--		print("Return false 3")
 		return false
 	end
 
@@ -724,7 +721,7 @@ function GameMode:OrderFilter( keys )
 			-- Trying to add a custom buyback respawn timer penalty modifier
 			-- Doing a rough safeguard using gold so people don't get the modifier when spamming the buyback button a frame before they respawn like an idiot
 			local gold_before_buyback = unit:GetGold() or -1
-			
+
 			Timers:CreateTimer(FrameTime(), function()
 				-- If these checks pass, this assumes that the person actually bought back
 				if unit:IsAlive() and gold_before_buyback >= (unit:GetGold() or 0) then
@@ -738,7 +735,7 @@ function GameMode:OrderFilter( keys )
 	-- Witch Doctor Death Ward handler
 	------------------------------------------------------------------------------------
 	if unit:HasModifier("modifier_imba_death_ward") then
-		if keys.order_type ==  DOTA_UNIT_ORDER_ATTACK_TARGET then
+		if keys.order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
 			local death_ward_mod = unit:FindModifierByName("modifier_imba_death_ward")
 			death_ward_mod.attack_target = EntIndexToHScript(keys.entindex_target)
 			return true
@@ -748,7 +745,7 @@ function GameMode:OrderFilter( keys )
 	end
 
 	if unit:HasModifier("modifier_imba_death_ward_caster") then
-		if keys.order_type ==  DOTA_UNIT_ORDER_ATTACK_TARGET then
+		if keys.order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
 			local modifier = unit:FindModifierByName("modifier_imba_death_ward_caster")
 			modifier.death_ward_mod.attack_target = EntIndexToHScript(keys.entindex_target)
 			return nil
@@ -770,11 +767,11 @@ function GameMode:OrderFilter( keys )
 			end
 		elseif ability:GetAbilityName() == "life_stealer_infest" or ability:GetAbilityName() == "imba_life_stealer_infest" then
 			if target:GetUnitName() == "npc_dota_mutation_golem" then
-				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_infest_bob")
+				DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_infest_bob")
 				return false
 			end
 		elseif ability:GetAbilityName() == "imba_riki_blink_strike" then
-			ability.thinker = unit:AddNewModifier(unit, ability, "modifier_imba_blink_strike_thinker", {target = keys.entindex_target})
+			ability.thinker = unit:AddNewModifier(unit, ability, "modifier_imba_blink_strike_thinker", { target = keys.entindex_target })
 		end
 	end
 
@@ -811,14 +808,13 @@ function GameMode:OrderFilter( keys )
 
 		-- Change "cast on target" target
 		if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
-
 			local target = EntIndexToHScript(keys["entindex_target"])
 			local ability = EntIndexToHScript(keys["entindex_ability"])
 			local caster_loc = unit:GetAbsOrigin()
 			local target_loc = target:GetAbsOrigin()
 			local target_distance = (target_loc - caster_loc):Length2D()
 
-			local nearby_units = FindUnitsInRadius(unit:GetTeamNumber(), caster_loc, nil, math.max(target_distance,(ability:GetCastRange(caster_loc, unit)) + GetCastRangeIncrease(unit)), ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+			local nearby_units = FindUnitsInRadius(unit:GetTeamNumber(), caster_loc, nil, math.max(target_distance, (ability:GetCastRange(caster_loc, unit)) + GetCastRangeIncrease(unit)), ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 			if #nearby_units >= 1 then
 				keys.entindex_target = nearby_units[1]:GetEntityIndex()
 
@@ -842,7 +838,6 @@ function GameMode:OrderFilter( keys )
 
 		if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
 			-- Still needs some checkup
-
 		end
 
 		-- Spin positional orders a random angle
@@ -873,14 +868,14 @@ function GameMode:OrderFilter( keys )
 
 		-- Kunkka Torrent cast-handling
 		if ability ~= nil and ability:GetAbilityName() == "imba_kunkka_torrent" then
-			local range = ability.BaseClass.GetCastRange(ability,ability:GetCursorPosition(),unit) + GetCastRangeIncrease(unit)
+			local range = ability.BaseClass.GetCastRange(ability, ability:GetCursorPosition(), unit) + GetCastRangeIncrease(unit)
 			if unit:HasModifier("modifier_imba_ebb_and_flow_tide_low") or unit:HasModifier("modifier_imba_ebb_and_flow_tsunami") then
 				range = range + ability:GetSpecialValueFor("tide_low_range")
 			end
-			local distance = (unit:GetAbsOrigin() - Vector(keys.position_x,keys.position_y,keys.position_z)):Length2D()
+			local distance = (unit:GetAbsOrigin() - Vector(keys.position_x, keys.position_y, keys.position_z)):Length2D()
 
-			if ( range >= distance) then
-				unit:AddNewModifier(unit, ability, "modifier_imba_torrent_cast", {duration = 0.41} )
+			if (range >= distance) then
+				unit:AddNewModifier(unit, ability, "modifier_imba_torrent_cast", { duration = 0.41 })
 			end
 		end
 
@@ -888,13 +883,13 @@ function GameMode:OrderFilter( keys )
 		if ability ~= nil and ability:GetAbilityName() == "imba_kunkka_tidebringer" then
 			ability.manual_cast = true
 		end
-		
+
 		-- Give Lone Druid's Spirit Bear the Cursed Fountain debuff if applicable (doesn't get picked up by any of the spawn filters)
 		if ability ~= nil and ability:GetAbilityName() == "lone_druid_spirit_bear" and unit:HasModifier("modifier_imba_cursed_fountain") then
 			for _, search_unit in pairs(FindUnitsInRadius(unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)) do
 				if string.find(search_unit:GetUnitName(), "npc_dota_lone_druid_bear") and search_unit.GetOwner and search_unit:GetOwner() == unit then
 					local cursed_fountain_modifier = search_unit:AddNewModifier(unit:FindModifierByName("modifier_imba_cursed_fountain"):GetCaster(), unit:FindModifierByName("modifier_imba_cursed_fountain"):GetAbility(), "modifier_imba_cursed_fountain", {})
-					
+
 					if cursed_fountain_modifier then
 						cursed_fountain_modifier:SetStackCount(unit:FindModifierByName("modifier_imba_cursed_fountain"):GetStackCount())
 					end
@@ -919,46 +914,46 @@ function GameMode:OrderFilter( keys )
 
 		-- Techies' Focused Detonate cast-handling
 		if ability ~= nil and ability:GetAbilityName() == "imba_techies_focused_detonate" then
-			unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})
+			unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", { duration = 0.2 })
 		end
 
 		-- Mirana's Leap talent cast-handling
 		if ability ~= nil and ability:GetAbilityName() == "imba_mirana_leap" and unit:HasTalent("special_bonus_imba_mirana_7") then
-			unit:AddNewModifier(unit, ability, "modifier_imba_leap_talent_cast_angle_handler", {duration = FrameTime()})
+			unit:AddNewModifier(unit, ability, "modifier_imba_leap_talent_cast_angle_handler", { duration = FrameTime() })
 		end
 	end
 
 	-- -- Meepo item handle
 	-- if unit:GetUnitName() == "npc_dota_hero_meepo" then
-		-- local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
-		-- local ability = EntIndexToHScript(keys.entindex_ability)
-		-- if ability then
-			-- for m = 1, #meepo_table do
-				-- if meepo_table[m]:GetTeamNumber() == unit:GetTeamNumber() then
-					-- if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
-						-- if ability:GetName() == "item_imba_black_king_bar" then
-							-- local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
-							-- meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
-						-- elseif ability:GetName() == "item_imba_white_queen_cape" then
-							-- local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
-							-- meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
-						-- end
-					-- elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
-						-- if ability:GetName() == "item_imba_black_queen_cape" then
-							-- local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)
-							-- meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
-						-- end
-					-- end
-				-- end
-			-- end
-		-- end
+	-- local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
+	-- local ability = EntIndexToHScript(keys.entindex_ability)
+	-- if ability then
+	-- for m = 1, #meepo_table do
+	-- if meepo_table[m]:GetTeamNumber() == unit:GetTeamNumber() then
+	-- if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+	-- if ability:GetName() == "item_imba_black_king_bar" then
+	-- local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
+	-- meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
+	-- elseif ability:GetName() == "item_imba_white_queen_cape" then
+	-- local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
+	-- meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
+	-- end
+	-- elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+	-- if ability:GetName() == "item_imba_black_queen_cape" then
+	-- local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)
+	-- meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
+	-- end
+	-- end
+	-- end
+	-- end
+	-- end
 	-- end
 
 	if GetMapName() == Map1v1() then
 		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
 			local target = EntIndexToHScript(keys["entindex_target"])
 			if target:GetUnitName() == "npc_dota_goodguys_healers" or target:GetUnitName() == "npc_dota_badguys_healers" then
-				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_shrine_1v1")
+				DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_shrine_1v1")
 				return false
 			end
 		end
@@ -970,10 +965,10 @@ function GameMode:OrderFilter( keys )
 
 		if BANNED_ITEMS[GetMapName()] then
 			for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
---				print(banned_item)
---				print(self.itemIDs[item])
+				--				print(banned_item)
+				--				print(self.itemIDs[item])
 				if self.itemIDs[item] == banned_item then
-					DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")
+					DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_purchase_1v1")
 					return false
 				end
 			end
@@ -1018,13 +1013,12 @@ function GameMode:OrderFilter( keys )
 	-- Troll Warlord Battle Trance (7.20 Version) Order Restrictions
 	------------------------------------------------------------------------------------
 	-- This only has to be put in here cause of dumb stop/interrupt orders not having a good state to prevent bricking up
-	
+
 	-- Based on very quick tests of vanilla, Troll Warlord can still buy/sell items while under targetted Battle Trance
 	if unit:GetModifierStackCount("modifier_imba_battle_trance_720", unit) == 1 then
 		-- First check if the ability is something Troll Warlord is allowed to cast
 		if keys.order_type >= DOTA_UNIT_ORDER_CAST_POSITION and keys.order_type <= DOTA_UNIT_ORDER_CAST_TOGGLE then
-			
-			local valid_abilities = 
+			local valid_abilities =
 			{
 				"imba_troll_warlord_berserkers_rage",
 				"imba_troll_warlord_whirling_axes_melee",
@@ -1038,10 +1032,10 @@ function GameMode:OrderFilter( keys )
 					end
 				end
 			end
-			
-		-- Next check if it's some other randomly allowed command (might be more but can't be assed to dig THAT deep)
+
+			-- Next check if it's some other randomly allowed command (might be more but can't be assed to dig THAT deep)
 		else
-			local other_valid_orders = 
+			local other_valid_orders =
 			{
 				DOTA_UNIT_ORDER_TRAIN_ABILITY,
 				DOTA_UNIT_ORDER_PURCHASE_ITEM,
@@ -1051,19 +1045,19 @@ function GameMode:OrderFilter( keys )
 				DOTA_UNIT_ORDER_GLYPH,
 				DOTA_UNIT_ORDER_EJECT_ITEM_FROM_STASH
 			}
-			
+
 			for order = 1, #other_valid_orders do
 				if keys.order_type == other_valid_orders[order] then
 					return true
 				end
 			end
 		end
-		
+
 		-- If the above checks failed, then it shouldn't be a valid order
 		DisplayError(unit:GetPlayerID(), "Cannot Act")
 		return false
 	end
-	
+
 	-----------------------------------------------------------
 	-- Gyrocopter Vanilla Flak Cannon Stack Refresh Override --
 	-----------------------------------------------------------
@@ -1077,7 +1071,7 @@ function GameMode:OrderFilter( keys )
 end
 
 -- Damage filter function
-function GameMode:DamageFilter( keys )
+function GameMode:DamageFilter(keys)
 	if IsServer() then
 		--damagetype_const
 		--damage
@@ -1110,7 +1104,7 @@ function GameMode:DamageFilter( keys )
 				-- Get all modifiers, gather how much spellpower the target has from rapiers
 				local modifiers = attacker:FindAllModifiers()
 
-				for _,modifier in pairs(modifiers) do
+				for _, modifier in pairs(modifiers) do
 					-- Increment Cursed Rapier's spellpower
 					if modifier:GetName() == "modifier_imba_rapier_cursed" then
 						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
@@ -1127,7 +1121,7 @@ function GameMode:DamageFilter( keys )
 
 				-- If spellpower was accumulated, reduce the damage
 				if rapier_spellpower > 0 then
-					keys.damage = keys.damage / (1 + rapier_spellpower * 0.01)
+					keys.damage = keys.damage / (1 + rapier_spellpower / 100)
 				end
 			end
 		end
@@ -1140,18 +1134,16 @@ function GameMode:DamageFilter( keys )
 				-- Note that this formula isn't truly accurate in modifying damage as if there were no killstreak stacks
 				-- If a more precise formula is known, use that instead
 				-- Note that stacking this with arcane rapiers basically turns your global damage into absolute garbage
-				keys.damage = keys.damage / ((ksp.damage_increase * ksp:GetStackCount() * 0.01) + 1)
+				keys.damage = keys.damage / ((ksp.damage_increase * ksp:GetStackCount() / 100) + 1)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, victim, keys.damage, nil)
 			end
 		end
 
 		-- Reaper's Scythe kill credit logic
 		if victim:HasModifier("modifier_imba_reapers_scythe") then
-
 			-- Check if this is the killing blow
 			local victim_health = victim:GetHealth()
 			if keys.damage >= victim_health then
-
 				-- Prevent death and trigger Reaper's Scythe's on-kill effects
 				local scythe_modifier = victim:FindModifierByName("modifier_imba_reapers_scythe")
 				local scythe_caster = false
@@ -1168,7 +1160,7 @@ function GameMode:DamageFilter( keys )
 					victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
 
 					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
-					ApplyDamage({attacker = scythe_caster, victim = victim, ability = ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
+					ApplyDamage({ attacker = scythe_caster, victim = victim, ability = ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK })
 				end
 			end
 		end
@@ -1177,7 +1169,6 @@ function GameMode:DamageFilter( keys )
 		if victim:HasModifier("modifier_imba_sacred_arrow_stun") then
 			local modifier_stun_handler = victim:FindModifierByName("modifier_imba_sacred_arrow_stun")
 			if modifier_stun_handler then
-
 				-- Get the modifier's ability and caster
 				local stun_ability = modifier_stun_handler:GetAbility()
 				local caster = modifier_stun_handler:GetCaster()
@@ -1198,7 +1189,6 @@ function GameMode:DamageFilter( keys )
 
 					-- If this attacker haven't attacked the stunned target yet, guarantee a critical
 					if not attacker_found then
-
 						should_crit = true
 
 						-- Add the attacker to the attackers table
@@ -1207,7 +1197,6 @@ function GameMode:DamageFilter( keys )
 
 					-- #2 Talent: Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun
 					if caster:HasTalent("special_bonus_imba_mirana_2") and not should_crit then
-
 						-- Talent specials
 						local allow_crit_time = caster:FindTalentValue("special_bonus_imba_mirana_2")
 
@@ -1224,7 +1213,7 @@ function GameMode:DamageFilter( keys )
 						local on_prow_crit_damage_pct = stun_ability:GetSpecialValueFor("on_prow_crit_damage_pct")
 
 						-- Increase damage and show the critical attack event
-						keys.damage = keys.damage * (1 + (on_prow_crit_damage_pct - 100) * 0.01)
+						keys.damage = keys.damage * (1 + (on_prow_crit_damage_pct - 100) / 100)
 
 						-- Overhead critical event
 						SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)
@@ -1252,7 +1241,7 @@ function GameMode:DamageFilter( keys )
 					if not battle_hunger_ability then return nil end
 
 					-- Attempt to kill the target, crediting it to Axe
-					ApplyDamage({attacker = battle_hunger_caster, victim = victim, ability = battle_hunger_ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
+					ApplyDamage({ attacker = battle_hunger_caster, victim = victim, ability = battle_hunger_ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK })
 				end
 			end
 		end
@@ -1269,13 +1258,13 @@ function GameMode:DamageFilter( keys )
 				victim:RemoveModifierByName("modifier_imba_tidebringer_cleave_hit_target")
 			end
 		end
-		
+
 		-- Another testing trying to remove invinicible 0 hp illusions
 		if attacker:IsIllusion() and attacker:GetHealth() <= 0 then
---			attacker:RemoveSelf()
+			--			attacker:RemoveSelf()
 			keys.damage = 0
 		end
-		
+
 		-- Oracle False Promise Alter logic (most of it will be handled in the ability file)
 		if attacker:HasModifier("modifier_imba_oracle_false_promise_timer_alter") then
 			keys.damage = 0
@@ -1316,16 +1305,16 @@ function GameMode:BountyRuneFilter(keys)
 
 	-- Hand of Midas gold bonus
 	if hero:HasItemInInventory("item_imba_hand_of_midas") and hero:HasModifier("modifier_item_imba_hand_of_midas") then
-		keys.gold_bounty = keys.gold_bounty * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") * 0.01))
+		keys.gold_bounty = keys.gold_bounty * (1 + (GetAbilitySpecial("item_imba_hand_of_midas", "passive_gold_bonus") / 100))
 	end
 
 	-- Okay now we should have the list of allies, so for each instance of BountyRuneFilter that is run, go through and check gold/exp; if Greevil's Greed owner, give an extra amount accordingly	
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
---	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
+	--	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
 
 	-- Base gold and EXP; if the hero does not have Greevil's Greed this is basically the end
 	keys.gold_bounty = keys.gold_bounty * (custom_gold_bonus / 100)
---	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
+	--	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
 
 	-- Testing first bounty runes giving bonus gold
 	if GameRules:GetDOTATime(false, false) < 120 then -- less than 2 min = first bounty rune
@@ -1354,7 +1343,7 @@ function GameMode:BountyRuneFilter(keys)
 
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("set_bounty_rune_gold_text"), function()
 			if IMBA_COMBAT_EVENTS == false then
-				CustomGameEventManager:Send_ServerToAllClients("set_bounty_rune_gold", {gold = keys.gold_bounty})
+				CustomGameEventManager:Send_ServerToAllClients("set_bounty_rune_gold", { gold = keys.gold_bounty })
 			end
 		end, 0.1)
 	else
@@ -1365,7 +1354,7 @@ function GameMode:BountyRuneFilter(keys)
 	return true
 end
 
-function GameMode:HealingFilter( keys )
+function GameMode:HealingFilter(keys)
 	local heal_amplify = 0
 
 	for _, mod in pairs(EntIndexToHScript(keys.entindex_target_const):FindAllModifiers()) do
@@ -1373,11 +1362,11 @@ function GameMode:HealingFilter( keys )
 			heal_amplify = heal_amplify + mod:Custom_AllHealAmplify_Percentage()
 		end
 	end
-	
+
 	if heal_amplify ~= 0 then
-		keys.heal = keys.heal * (1 + (heal_amplify * 0.01))
+		keys.heal = keys.heal * (1 + (heal_amplify / 100))
 	end
-	
+
 	-- Values:
 	--	keys.entindex_target_const (probably want to use EntIndexToHScript(keys.entindex_target_const) to get the unit reference)
 	--	keys.heal
@@ -1387,28 +1376,28 @@ function GameMode:HealingFilter( keys )
 	-- MAKE HEALTH REGEN AMP CODE HERE
 	-- local nHeal = keys["heal"]
 	-- if keys["entindex_healer_const"] == nil then
-		-- return true
+	-- return true
 	-- end
 
 	-- local hHealingHero = EntIndexToHScript( keys["entindex_healer_const"] )
 	-- if nHeal > 0 and hHealingHero ~= nil and hHealingHero:IsRealHero() then
-		-- for _,Zone in pairs( self.Zones ) do
-			-- if Zone:ContainsUnit( hHealingHero ) then
-				-- Zone:AddStat( hHealingHero:GetPlayerID(), ZONE_STAT_HEALING, nHeal )
-				-- return true
-			-- end
-		-- end
+	-- for _,Zone in pairs( self.Zones ) do
+	-- if Zone:ContainsUnit( hHealingHero ) then
+	-- Zone:AddStat( hHealingHero:GetPlayerID(), ZONE_STAT_HEALING, nHeal )
+	-- return true
+	-- end
+	-- end
 	-- end
 
 	return true
 end
 
 function GameMode:RuneSpawnFilter(keys)
-    keys.rune_type = RandomInt(0, 5)
-    
-    if keys.rune_type == 5 then
-        keys.rune_type = keys.rune_type + 1
-    end
-    
-    return true
+	keys.rune_type = RandomInt(0, 5)
+
+	if keys.rune_type == 5 then
+		keys.rune_type = keys.rune_type + 1
+	end
+
+	return true
 end

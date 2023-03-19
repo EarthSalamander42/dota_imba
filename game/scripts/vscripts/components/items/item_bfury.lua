@@ -17,8 +17,7 @@
 
 --[[	Author: Firetoad
 		Date:	08.07.2016	]]
-
-function BattleFury( keys )
+function BattleFury(keys)
 	local caster = keys.caster
 	local target = keys.target_points[1]
 	local ability = keys.ability
@@ -32,14 +31,14 @@ function BattleFury( keys )
 
 	-- Destroy wards in the area
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, chop_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for _,enemy in pairs(enemies) do
+	for _, enemy in pairs(enemies) do
 		if IsWardOrBomb(enemy) then
 			enemy:Kill(ability, caster)
 		end
 	end
 end
 
-function BattleFuryHit( keys )
+function BattleFuryHit(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local damage = keys.damage
@@ -71,11 +70,11 @@ function BattleFuryHit( keys )
 
 	-- If the target is a creep, deal bonus damage
 	if not (target:IsHero() or target:IsBuilding() or target:IsRoshan()) then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage * quelling_bonus * 0.01, damage_type = DAMAGE_TYPE_PHYSICAL})
+		ApplyDamage({ attacker = caster, victim = target, ability = ability, damage = damage * quelling_bonus / 100, damage_type = DAMAGE_TYPE_PHYSICAL })
 	end
 
 	-- Calculate damage to deal
-	damage = damage * cleave_damage * 0.01
+	damage = damage * cleave_damage / 100
 
 	-- Draw particle
 	local cleave_pfx = ParticleManager:CreateParticle(particle_cleave, PATTACH_ABSORIGIN, target)
@@ -85,14 +84,14 @@ function BattleFuryHit( keys )
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, cleave_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
 	-- Deal damage
-	for _,enemy in pairs(enemies) do
+	for _, enemy in pairs(enemies) do
 		if enemy ~= target and not enemy:IsAttackImmune() then
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+			ApplyDamage({ attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE })
 		end
 	end
 end
 
-function BattleFuryStackUp( keys )
+function BattleFuryStackUp(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifier_cleave = keys.modifier_cleave
@@ -101,7 +100,7 @@ function BattleFuryStackUp( keys )
 	AddStacks(ability, caster, caster, modifier_cleave, 1, true)
 end
 
-function BattleFuryStackDown( keys )
+function BattleFuryStackDown(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifier_cleave = keys.modifier_cleave

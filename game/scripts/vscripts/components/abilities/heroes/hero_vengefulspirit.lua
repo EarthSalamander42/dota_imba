@@ -6,9 +6,11 @@ LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_4", "components/abil
 
 modifier_special_bonus_imba_vengefulspirit_4 = modifier_special_bonus_imba_vengefulspirit_4 or class({})
 
-function modifier_special_bonus_imba_vengefulspirit_4:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_4:RemoveOnDeath() 	return false end
-function modifier_special_bonus_imba_vengefulspirit_4:IsAura()			return true	end
+function modifier_special_bonus_imba_vengefulspirit_4:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_4:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_4:IsAura() return true end
 
 function modifier_special_bonus_imba_vengefulspirit_4:GetAuraEntityReject(target)
 	if IsServer() then
@@ -54,14 +56,19 @@ LinkLuaModifier("modifier_imba_rancor_allies", "components/abilities/heroes/hero
 
 imba_vengefulspirit_rancor = class({})
 function imba_vengefulspirit_rancor:IsHiddenWhenStolen() return false end
+
 function imba_vengefulspirit_rancor:IsRefreshable() return false end
+
 function imba_vengefulspirit_rancor:IsStealable() return false end
+
 function imba_vengefulspirit_rancor:IsNetherWardStealable() return false end
+
 function imba_vengefulspirit_rancor:IsInnateAbility() return true end
 
 function imba_vengefulspirit_rancor:GetAbilityTextureName()
 	return "vengeful_rancor"
 end
+
 -------------------------------------------
 
 function imba_vengefulspirit_rancor:GetIntrinsicModifierName()
@@ -71,10 +78,15 @@ end
 -------------------------------------------
 modifier_imba_rancor = class({})
 function modifier_imba_rancor:IsDebuff() return false end
+
 function modifier_imba_rancor:IsHidden() return true end
+
 function modifier_imba_rancor:IsPurgable() return false end
+
 function modifier_imba_rancor:IsPurgeException() return false end
+
 function modifier_imba_rancor:IsStunDebuff() return false end
+
 -------------------------------------------
 
 function modifier_imba_rancor:OnCreated()
@@ -88,7 +100,7 @@ function modifier_imba_rancor:DeclareFunctions()
 	}
 end
 
-function modifier_imba_rancor:OnTakeDamage( params )
+function modifier_imba_rancor:OnTakeDamage(params)
 	if self:GetAbility() and ((self:GetParent() == params.unit) or params.unit:HasModifier("modifier_imba_rancor_allies")) and params.damage > 0 and not self:GetParent():PassivesDisabled() and params.unit:IsRealHero() then
 		-- Check for Rancor Talent for allied damage
 		if params.unit:HasModifier("modifier_imba_rancor_allies") and not (self:GetParent() == params.unit) then
@@ -99,7 +111,7 @@ function modifier_imba_rancor:OnTakeDamage( params )
 			-- Calculates percentage of damage taken relative to max health
 			self.dmg_received_pct = self.dmg_received_pct + ((100 / self:GetParent():GetMaxHealth()) * math.min(params.damage, self:GetParent():GetHealth()))
 		end
-		
+
 		while (self.dmg_received_pct >= self:GetAbility():GetSpecialValueFor("stack_receive_pct")) do
 			if self:GetParent():HasModifier("modifier_imba_rancor_stack") then
 				local modifier = self:GetParent():FindModifierByName("modifier_imba_rancor_stack")
@@ -119,23 +131,35 @@ end
 -------------------------------------------
 modifier_imba_rancor_allies = class({})
 function modifier_imba_rancor_allies:IsDebuff() return false end
+
 function modifier_imba_rancor_allies:IsHidden() return true end
+
 function modifier_imba_rancor_allies:IsPurgable() return false end
+
 function modifier_imba_rancor_allies:IsPurgeException() return false end
+
 function modifier_imba_rancor_allies:IsStunDebuff() return false end
+
 function modifier_imba_rancor_allies:RemoveOnDeath() return false end
+
 -------------------------------------------
 modifier_imba_rancor_stack = class({})
 function modifier_imba_rancor_stack:IsDebuff() return false end
+
 function modifier_imba_rancor_stack:IsHidden() return false end
+
 function modifier_imba_rancor_stack:IsPurgable() return false end
+
 function modifier_imba_rancor_stack:IsPurgeException() return false end
+
 function modifier_imba_rancor_stack:IsStunDebuff() return false end
+
 function modifier_imba_rancor_stack:RemoveOnDeath() return false end
+
 -------------------------------------------
 
 function modifier_imba_rancor_stack:OnCreated()
-	self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
+	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
 
 	if IsServer() then
 		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("stack_duration"))
@@ -173,9 +197,11 @@ function modifier_imba_rancor_stack:GetModifierPreAttack_BonusDamage()
 	end
 end
 
-function modifier_imba_rancor_stack:IsAura()				return true	end
-function modifier_imba_rancor_stack:IsAuraActiveOnDeath()	return true	end
-function modifier_imba_rancor_stack:GetModifierAura()		return "modifier_imba_rancor_ally_aura" end
+function modifier_imba_rancor_stack:IsAura() return true end
+
+function modifier_imba_rancor_stack:IsAuraActiveOnDeath() return true end
+
+function modifier_imba_rancor_stack:GetModifierAura() return "modifier_imba_rancor_ally_aura" end
 
 function modifier_imba_rancor_stack:GetAuraEntityReject(target) if target == self:GetCaster() then return true end end
 
@@ -185,9 +211,11 @@ function modifier_imba_rancor_stack:GetAuraRadius()
 	end
 end
 
-function modifier_imba_rancor_stack:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS end
-function modifier_imba_rancor_stack:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_imba_rancor_stack:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO end
+function modifier_imba_rancor_stack:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS end
+
+function modifier_imba_rancor_stack:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+
+function modifier_imba_rancor_stack:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO end
 
 ------------------------------------
 -- MODIFIER_IMBA_RANCOR_ALLY_AURA --
@@ -198,15 +226,15 @@ LinkLuaModifier("modifier_imba_rancor_ally_aura", "components/abilities/heroes/h
 modifier_imba_rancor_ally_aura = modifier_imba_rancor_ally_aura or class({})
 
 function modifier_imba_rancor_ally_aura:OnCreated()
-	self.spell_power	= self:GetAbility():GetSpecialValueFor("spell_power") * self:GetAbility():GetSpecialValueFor("aura_efficiency") * 0.01
-	self.damage_pct		= self:GetAbility():GetSpecialValueFor("damage_pct") * self:GetAbility():GetSpecialValueFor("aura_efficiency") * 0.01
-	
+	self.spell_power = self:GetAbility():GetSpecialValueFor("spell_power") * self:GetAbility():GetSpecialValueFor("aura_efficiency") / 100
+	self.damage_pct  = self:GetAbility():GetSpecialValueFor("damage_pct") * self:GetAbility():GetSpecialValueFor("aura_efficiency") / 100
+
 	if not IsServer() then return end
-	
-	self.modifier		= self:GetAuraOwner():FindModifierByName("modifier_imba_rancor_stack")
-	
+
+	self.modifier = self:GetAuraOwner():FindModifierByName("modifier_imba_rancor_stack")
+
 	if not self.modifier then self:Destroy() end
-	
+
 	self:StartIntervalThink(0.1)
 end
 
@@ -240,8 +268,11 @@ end
 
 imba_vengefulspirit_magic_missile = class({})
 function imba_vengefulspirit_magic_missile:IsHiddenWhenStolen() return false end
+
 function imba_vengefulspirit_magic_missile:IsRefreshable() return true end
+
 function imba_vengefulspirit_magic_missile:IsStealable() return true end
+
 function imba_vengefulspirit_magic_missile:IsNetherWardStealable() return true end
 
 -------------------------------------------
@@ -254,7 +285,7 @@ function imba_vengefulspirit_magic_missile:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_11")
 end
 
-function imba_vengefulspirit_magic_missile:CastFilterResultTarget( target )
+function imba_vengefulspirit_magic_missile:CastFilterResultTarget(target)
 	if not self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_5") then
 		return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, self:GetCaster():GetTeamNumber())
 	else
@@ -262,8 +293,7 @@ function imba_vengefulspirit_magic_missile:CastFilterResultTarget( target )
 	end
 end
 
-
-function imba_vengefulspirit_magic_missile:OnSpellStart( params , reduce_pct, target_loc, ix )
+function imba_vengefulspirit_magic_missile:OnSpellStart(params, reduce_pct, target_loc, ix)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target
@@ -292,7 +322,7 @@ function imba_vengefulspirit_magic_missile:OnSpellStart( params , reduce_pct, ta
 			self[index] = 0
 			-- Already hit targets
 			self[proj_index] = {}
-			table.insert(self[proj_index],target)
+			table.insert(self[proj_index], target)
 		end
 
 		-- Reduce damage and stun duration if this is a secondary, else emit cast-sound
@@ -302,7 +332,7 @@ function imba_vengefulspirit_magic_missile:OnSpellStart( params , reduce_pct, ta
 			split_reduce_pct = reduce_pct + (reduce_pct * (split_reduce_pct / 100))
 		else
 			caster:EmitSound("Hero_VengefulSpirit.MagicMissile")
-			if (math.random(1,100) <= 5) and (caster:GetName() == "npc_dota_hero_vengefulspirit") then
+			if (math.random(1, 100) <= 5) and (caster:GetName() == "npc_dota_hero_vengefulspirit") then
 				caster:EmitSound("vengefulspirit_vng_cast_05")
 			end
 		end
@@ -310,45 +340,45 @@ function imba_vengefulspirit_magic_missile:OnSpellStart( params , reduce_pct, ta
 		local projectile
 		if params then
 			projectile =
-				{
-					Target 				= target,
-					Source 				= target_loc,
-					Ability 			= self,
-					EffectName 			= "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf",
-					iMoveSpeed			= projectile_speed,
-					bDrawsOnMinimap 	= false,
-					bDodgeable 			= true,
-					bIsAttack 			= false,
-					bVisibleToEnemies 	= true,
-					bReplaceExisting 	= false,
-					flExpireTime 		= GameRules:GetGameTime() + 10,
-					bProvidesVision 	= false,
-					--	iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
-					--	iVisionRadius 		= 400,
-					--	iVisionTeamNumber 	= caster:GetTeamNumber()
-					ExtraData			= {index = index, target_index = target:GetEntityIndex(), damage = damage, stun_duration = stun_duration, split_radius = split_radius, split_reduce_pct = split_reduce_pct, split_amount = split_amount}
-				}
+			{
+				Target            = target,
+				Source            = target_loc,
+				Ability           = self,
+				EffectName        = "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf",
+				iMoveSpeed        = projectile_speed,
+				bDrawsOnMinimap   = false,
+				bDodgeable        = true,
+				bIsAttack         = false,
+				bVisibleToEnemies = true,
+				bReplaceExisting  = false,
+				flExpireTime      = GameRules:GetGameTime() + 10,
+				bProvidesVision   = false,
+				--	iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
+				--	iVisionRadius 		= 400,
+				--	iVisionTeamNumber 	= caster:GetTeamNumber()
+				ExtraData         = { index = index, target_index = target:GetEntityIndex(), damage = damage, stun_duration = stun_duration, split_radius = split_radius, split_reduce_pct = split_reduce_pct, split_amount = split_amount }
+			}
 		else
 			projectile =
-				{
-					Target 				= target,
-					Source 				= caster,
-					Ability 			= self,
-					EffectName 			= "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf",
-					iMoveSpeed			= projectile_speed,
-					vSpawnOrigin 		= caster:GetAbsOrigin(),
-					bDrawsOnMinimap 	= false,
-					bDodgeable 			= true,
-					bIsAttack 			= false,
-					bVisibleToEnemies 	= true,
-					bReplaceExisting 	= false,
-					flExpireTime 		= GameRules:GetGameTime() + 10,
-					bProvidesVision 	= false,
-					iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
-					--	iVisionRadius 		= 400,
-					--	iVisionTeamNumber 	= caster:GetTeamNumber()
-					ExtraData			= {index = index, target_index = target:GetEntityIndex(), damage = damage, stun_duration = stun_duration, split_radius = split_radius, split_reduce_pct = split_reduce_pct, split_amount = split_amount}
-				}
+			{
+				Target            = target,
+				Source            = caster,
+				Ability           = self,
+				EffectName        = "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf",
+				iMoveSpeed        = projectile_speed,
+				vSpawnOrigin      = caster:GetAbsOrigin(),
+				bDrawsOnMinimap   = false,
+				bDodgeable        = true,
+				bIsAttack         = false,
+				bVisibleToEnemies = true,
+				bReplaceExisting  = false,
+				flExpireTime      = GameRules:GetGameTime() + 10,
+				bProvidesVision   = false,
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
+				--	iVisionRadius 		= 400,
+				--	iVisionTeamNumber 	= caster:GetTeamNumber()
+				ExtraData         = { index = index, target_index = target:GetEntityIndex(), damage = damage, stun_duration = stun_duration, split_radius = split_radius, split_reduce_pct = split_reduce_pct, split_amount = split_amount }
+			}
 		end
 		ProjectileManager:CreateTrackingProjectile(projectile)
 	end
@@ -365,9 +395,9 @@ function imba_vengefulspirit_magic_missile:OnProjectileHit_ExtraData(target, loc
 					return nil
 				end
 			end
-			ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+			ApplyDamage({ victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType() })
 			if (not target:IsMagicImmune()) or caster:HasTalent("special_bonus_imba_vengefulspirit_5") then
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration * (1 - target:GetStatusResistance())})
+				target:AddNewModifier(caster, self, "modifier_stunned", { duration = ExtraData.stun_duration * (1 - target:GetStatusResistance()) })
 			end
 		end
 
@@ -375,7 +405,7 @@ function imba_vengefulspirit_magic_missile:OnProjectileHit_ExtraData(target, loc
 
 		local valid_targets = {}
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.split_radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-		for _,enemy in ipairs(enemies) do
+		for _, enemy in ipairs(enemies) do
 			local already_hit = false
 			for _, stored_target in ipairs(self[proj_index]) do
 				if stored_target == enemy then
@@ -388,11 +418,11 @@ function imba_vengefulspirit_magic_missile:OnProjectileHit_ExtraData(target, loc
 			end
 		end
 		local target_missiles = math.min(#valid_targets, ExtraData.split_amount)
-		
+
 		if target then
 			for i = 1, target_missiles do
-				self:OnSpellStart( valid_targets[i] , ExtraData.split_reduce_pct, target, ExtraData.index )
-				table.insert(self[proj_index] , valid_targets[i])
+				self:OnSpellStart(valid_targets[i], ExtraData.split_reduce_pct, target, ExtraData.index)
+				table.insert(self[proj_index], valid_targets[i])
 			end
 		end
 		-- Delete these variables if no more targets are avaible
@@ -409,13 +439,17 @@ end
 
 imba_vengefulspirit_wave_of_terror = class({})
 function imba_vengefulspirit_wave_of_terror:IsHiddenWhenStolen() return false end
+
 function imba_vengefulspirit_wave_of_terror:IsRefreshable() return true end
+
 function imba_vengefulspirit_wave_of_terror:IsStealable() return true end
+
 function imba_vengefulspirit_wave_of_terror:IsNetherWardStealable() return true end
 
 function imba_vengefulspirit_wave_of_terror:GetAbilityTextureName()
 	return "vengefulspirit_wave_of_terror"
 end
+
 -------------------------------------------
 LinkLuaModifier("modifier_imba_wave_of_terror", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
@@ -424,12 +458,12 @@ function imba_vengefulspirit_wave_of_terror:GetCooldown(level)
 end
 
 function imba_vengefulspirit_wave_of_terror:OnSpellStart()
-	if IsServer() then	
+	if IsServer() then
 		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
 		end
-	
+
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
@@ -439,15 +473,15 @@ function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 		local speed = self:GetSpecialValueFor("wave_speed")
 		local wave_width = self:GetSpecialValueFor("wave_width")
 		local duration = self:GetSpecialValueFor("duration")
-		local primary_distance = self:GetCastRange(caster_loc,caster) + GetCastRangeIncrease(caster)
+		local primary_distance = self:GetCastRange(caster_loc, caster) + GetCastRangeIncrease(caster)
 		local vision_aoe = self:GetSpecialValueFor("vision_aoe")
 		local vision_duration = self:GetSpecialValueFor("vision_duration")
 
-		local dummy = CreateModifierThinker(self:GetCaster(), self,	nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(),	false)
+		local dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 		dummy:EmitSound("Hero_VengefulSpirit.WaveOfTerror")
 
 		if caster:GetName() == "npc_dota_hero_vengefulspirit" then
-			caster:EmitSound("vengefulspirit_vng_ability_0"..math.random(1,9))
+			caster:EmitSound("vengefulspirit_vng_ability_0" .. math.random(1, 9))
 		end
 
 		-- Distances
@@ -455,27 +489,27 @@ function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 		local velocity = direction * speed
 
 		local projectile =
-			{
-				Ability				= self,
-				EffectName			= "particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf",
-				vSpawnOrigin		= caster_loc,
-				fDistance			= primary_distance,
-				fStartRadius		= wave_width,
-				fEndRadius			= wave_width,
-				Source				= caster,
-				bHasFrontalCone		= false,
-				bReplaceExisting	= false,
-				iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-				iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-				iUnitTargetType		= self:GetAbilityTargetType(),
-				fExpireTime 		= GameRules:GetGameTime() + 10.0,
-				bDeleteOnHit		= false,
-				vVelocity			= Vector(velocity.x,velocity.y,0),
-				bProvidesVision		= true,
-				iVisionRadius 		= vision_aoe,
-				iVisionTeamNumber 	= caster:GetTeamNumber(),
-				ExtraData			= {damage = damage, duration = duration, dummy_entindex = dummy:entindex()}
-			}
+		{
+			Ability           = self,
+			EffectName        = "particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf",
+			vSpawnOrigin      = caster_loc,
+			fDistance         = primary_distance,
+			fStartRadius      = wave_width,
+			fEndRadius        = wave_width,
+			Source            = caster,
+			bHasFrontalCone   = false,
+			bReplaceExisting  = false,
+			iUnitTargetTeam   = self:GetAbilityTargetTeam(),
+			iUnitTargetFlags  = self:GetAbilityTargetFlags(),
+			iUnitTargetType   = self:GetAbilityTargetType(),
+			fExpireTime       = GameRules:GetGameTime() + 10.0,
+			bDeleteOnHit      = false,
+			vVelocity         = Vector(velocity.x, velocity.y, 0),
+			bProvidesVision   = true,
+			iVisionRadius     = vision_aoe,
+			iVisionTeamNumber = caster:GetTeamNumber(),
+			ExtraData         = { damage = damage, duration = duration, dummy_entindex = dummy:entindex() }
+		}
 		ProjectileManager:CreateLinearProjectile(projectile)
 
 		-- Vision geometry
@@ -484,15 +518,15 @@ function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 
 		-- -- Provide vision along the projectile's path
 		-- Timers:CreateTimer(0, function()
-			-- local current_vision_location = caster_loc + direction * current_distance
+		-- local current_vision_location = caster_loc + direction * current_distance
 
-			-- self:CreateVisibilityNode(current_vision_location, vision_aoe, vision_duration)
-			-- dummy:SetAbsOrigin(current_vision_location)
+		-- self:CreateVisibilityNode(current_vision_location, vision_aoe, vision_duration)
+		-- dummy:SetAbsOrigin(current_vision_location)
 
-			-- current_distance = current_distance + vision_aoe / 2
-			-- if current_distance < primary_distance then
-				-- return tick_rate
-			-- end
+		-- current_distance = current_distance + vision_aoe / 2
+		-- if current_distance < primary_distance then
+		-- return tick_rate
+		-- end
 		-- end)
 	end
 end
@@ -507,11 +541,11 @@ end
 function imba_vengefulspirit_wave_of_terror:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if target then
 		local caster = self:GetCaster()
-		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
-		target:AddNewModifier(caster, self, "modifier_imba_wave_of_terror", {duration = ExtraData.duration * (1 - target:GetStatusResistance())})
+		ApplyDamage({ victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType() })
+		target:AddNewModifier(caster, self, "modifier_imba_wave_of_terror", { duration = ExtraData.duration * (1 - target:GetStatusResistance()) })
 	else
 		-- self:CreateVisibilityNode(location, self:GetSpecialValueFor("vision_aoe"), self:GetSpecialValueFor("vision_duration"))
-		
+
 		if ExtraData.dummy_entindex then
 			EntIndexToHScript(ExtraData.dummy_entindex):ForceKill(false)
 		end
@@ -522,17 +556,25 @@ end
 -------------------------------------------
 modifier_imba_wave_of_terror = class({})
 function modifier_imba_wave_of_terror:IsDebuff() return true end
+
 function modifier_imba_wave_of_terror:IsHidden() return false end
+
 function modifier_imba_wave_of_terror:IsPurgable() return true end
+
 function modifier_imba_wave_of_terror:IsStunDebuff() return false end
+
 function modifier_imba_wave_of_terror:RemoveOnDeath() return true end
+
 -------------------------------------------
 
-function modifier_imba_wave_of_terror:OnCreated( params )
+function modifier_imba_wave_of_terror:OnCreated(params)
 	local ability = self:GetAbility()
-	
-	if not ability then self:Destroy() return end
-	
+
+	if not ability then
+		self:Destroy()
+		return
+	end
+
 	self.armor_reduction = ability:GetTalentSpecialValueFor("armor_reduction") * (-1)
 	self.atk_reduction_pct = ability:GetSpecialValueFor("atk_reduction_pct") * (-1)
 end
@@ -570,13 +612,17 @@ LinkLuaModifier("modifier_imba_command_aura_negative_aura", "components/abilitie
 
 imba_vengefulspirit_command_aura = class({})
 function imba_vengefulspirit_command_aura:IsHiddenWhenStolen() return false end
+
 function imba_vengefulspirit_command_aura:IsRefreshable() return false end
+
 function imba_vengefulspirit_command_aura:IsStealable() return false end
+
 function imba_vengefulspirit_command_aura:IsNetherWardStealable() return false end
 
 function imba_vengefulspirit_command_aura:GetAbilityTextureName()
 	return "vengefulspirit_command_aura"
 end
+
 -------------------------------------------
 
 function imba_vengefulspirit_command_aura:GetIntrinsicModifierName()
@@ -585,35 +631,35 @@ end
 
 function imba_vengefulspirit_command_aura:OnOwnerDied()
 	if self:IsTrained() and not self:GetCaster():IsIllusion() and not self:GetCaster():PassivesDisabled() then
-		local num_illusions_on_death	= self:GetSpecialValueFor("num_illusions_on_death")
-		local bounty_base				= self:GetCaster():GetIllusionBounty()
-		
+		local num_illusions_on_death = self:GetSpecialValueFor("num_illusions_on_death")
+		local bounty_base            = self:GetCaster():GetIllusionBounty()
+
 		if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
-			num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
+			num_illusions_on_death = self:GetSpecialValueFor("num_illusions_on_death_upgrade")
 		end
-		
+
 		if self:GetCaster():HasScepter() then
-			bounty_base					= 0
+			bounty_base = 0
 		end
-		
-		local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), 
-		{
-			outgoing_damage 			= 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
-			incoming_damage				= self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
-			bounty_base					= bounty_base,
-			bounty_growth				= nil,
-			outgoing_damage_structure	= nil,
-			outgoing_damage_roshan		= nil,
-			duration					= nil
-		}
-		, num_illusions_on_death, self:GetCaster():GetHullRadius(), true, true)
-	
+
+		local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(),
+			{
+				outgoing_damage           = 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
+				incoming_damage           = self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
+				bounty_base               = bounty_base,
+				bounty_growth             = nil,
+				outgoing_damage_structure = nil,
+				outgoing_damage_roshan    = nil,
+				duration                  = nil
+			}
+			, num_illusions_on_death, self:GetCaster():GetHullRadius(), true, true)
+
 		for _, illusion in pairs(super_illusions) do
 			illusion:SetHealth(illusion:GetMaxHealth())
 			illusion:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
 			-- "The illusion spawns 108 range away from Vengeful Spirit's death location. It appears either north, east, south or west from that spot."
 			FindClearSpaceForUnit(illusion, self:GetCaster():GetAbsOrigin() + Vector(RandomInt(0, 1), RandomInt(0, 1), 0) * 108, true)
-			
+
 			PlayerResource:NewSelection(self:GetCaster():GetPlayerID(), super_illusions)
 		end
 	end
@@ -623,25 +669,31 @@ end
 -------------------------------------------
 modifier_imba_command_aura_positive = class({})
 function modifier_imba_command_aura_positive:IsDebuff() return false end
+
 function modifier_imba_command_aura_positive:IsHidden() return false end
+
 function modifier_imba_command_aura_positive:IsPurgable() return false end
+
 function modifier_imba_command_aura_positive:IsPurgeException() return false end
+
 function modifier_imba_command_aura_positive:IsStunDebuff() return false end
+
 function modifier_imba_command_aura_positive:RemoveOnDeath() return false end
+
 -------------------------------------------
 
 function modifier_imba_command_aura_positive:OnCreated()
-	self.spell_power		= self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")
-	self.bonus_damage_pct	= self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
+	self.spell_power      = self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")
+	self.bonus_damage_pct = self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
 end
 
 function modifier_imba_command_aura_positive:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-			MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE
-		}
+	{
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE
+	}
 	return decFuncs
 end
 
@@ -672,19 +724,26 @@ end
 -------------------------------------------
 modifier_imba_command_aura_positive_aura = class({})
 function modifier_imba_command_aura_positive_aura:IsAura() return true end
+
 function modifier_imba_command_aura_positive_aura:IsDebuff() return false end
+
 function modifier_imba_command_aura_positive_aura:IsHidden() return true end
+
 function modifier_imba_command_aura_positive_aura:IsPurgable() return false end
+
 function modifier_imba_command_aura_positive_aura:IsPurgeException() return false end
+
 function modifier_imba_command_aura_positive_aura:IsStunDebuff() return false end
+
 function modifier_imba_command_aura_positive_aura:RemoveOnDeath() return false end
+
 -------------------------------------------
 
 function modifier_imba_command_aura_positive_aura:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_DEATH,
-		}
+	{
+		MODIFIER_EVENT_ON_DEATH,
+	}
 	return decFuncs
 end
 
@@ -731,25 +790,31 @@ end
 -------------------------------------------
 modifier_imba_command_aura_negative = class({})
 function modifier_imba_command_aura_negative:IsDebuff() return true end
+
 function modifier_imba_command_aura_negative:IsHidden() return false end
+
 function modifier_imba_command_aura_negative:IsPurgable() return false end
+
 function modifier_imba_command_aura_negative:IsPurgeException() return false end
+
 function modifier_imba_command_aura_negative:IsStunDebuff() return false end
+
 function modifier_imba_command_aura_negative:RemoveOnDeath() return false end
+
 -------------------------------------------
 
 function modifier_imba_command_aura_negative:OnCreated()
-	self.spell_power		= (self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")) * (-1)
-	self.bonus_damage_pct	= (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
+	self.spell_power      = (self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")) * (-1)
+	self.bonus_damage_pct = (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
 end
 
 function modifier_imba_command_aura_negative:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-			MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE
-		}
+	{
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE
+	}
 	return decFuncs
 end
 
@@ -776,27 +841,34 @@ end
 -------------------------------------------
 modifier_imba_command_aura_negative_aura = class({})
 function modifier_imba_command_aura_negative_aura:IsAura() return true end
+
 function modifier_imba_command_aura_negative_aura:IsDebuff() return true end
+
 function modifier_imba_command_aura_negative_aura:IsHidden() return true end
+
 function modifier_imba_command_aura_negative_aura:IsPurgable() return false end
+
 function modifier_imba_command_aura_negative_aura:IsPurgeException() return false end
+
 function modifier_imba_command_aura_negative_aura:IsStunDebuff() return false end
+
 function modifier_imba_command_aura_negative_aura:RemoveOnDeath() return false end
+
 -------------------------------------------
 
 function modifier_imba_command_aura_negative_aura:OnCreated()
-	self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
+	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
 end
 
 function modifier_imba_command_aura_negative_aura:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_EVENT_ON_RESPAWN
-		}
+	{
+		MODIFIER_EVENT_ON_RESPAWN
+	}
 	return decFuns
 end
 
-function modifier_imba_command_aura_negative_aura:OnRespawn( params )
+function modifier_imba_command_aura_negative_aura:OnRespawn(params)
 	if IsServer() then
 		if (self:GetCaster() == params.unit) then
 			self:Destroy()
@@ -831,14 +903,14 @@ LinkLuaModifier("modifier_imba_vengefulspirit_command_aura_effect_723", "compone
 LinkLuaModifier("modifier_imba_vengefulspirit_command_negative_aura_723", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vengefulspirit_command_negative_aura_effect_723", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-imba_vengefulspirit_command_aura_723							= imba_vengefulspirit_command_aura_723 or class({})
-modifier_imba_vengefulspirit_command_aura_723					= modifier_imba_vengefulspirit_command_aura_723 or class({})
-modifier_imba_vengefulspirit_command_aura_effect_723			= modifier_imba_vengefulspirit_command_aura_effect_723 or class({})
-modifier_imba_vengefulspirit_command_negative_aura_723			= modifier_imba_vengefulspirit_command_negative_aura_723 or class({})
-modifier_imba_vengefulspirit_command_negative_aura_effect_723	= modifier_imba_vengefulspirit_command_negative_aura_effect_723 or class({})
+imba_vengefulspirit_command_aura_723                          = imba_vengefulspirit_command_aura_723 or class({})
+modifier_imba_vengefulspirit_command_aura_723                 = modifier_imba_vengefulspirit_command_aura_723 or class({})
+modifier_imba_vengefulspirit_command_aura_effect_723          = modifier_imba_vengefulspirit_command_aura_effect_723 or class({})
+modifier_imba_vengefulspirit_command_negative_aura_723        = modifier_imba_vengefulspirit_command_negative_aura_723 or class({})
+modifier_imba_vengefulspirit_command_negative_aura_effect_723 = modifier_imba_vengefulspirit_command_negative_aura_effect_723 or class({})
 
 ------------------------------------------
--- IMBA_VENGEFULSPIRIT_COMMAND_AURA_723 -- 
+-- IMBA_VENGEFULSPIRIT_COMMAND_AURA_723 --
 ------------------------------------------
 
 function imba_vengefulspirit_command_aura_723:GetIntrinsicModifierName()
@@ -846,39 +918,39 @@ function imba_vengefulspirit_command_aura_723:GetIntrinsicModifierName()
 end
 
 -- function imba_vengefulspirit_command_aura_723:OnOwnerDied()
-	-- if self:IsTrained() and not self:GetCaster():IsIllusion() and not self:GetCaster():PassivesDisabled() then
-		-- local num_illusions_on_death	= self:GetSpecialValueFor("num_illusions_on_death")
-		-- local bounty_base				= self:GetCaster():GetIllusionBounty()
-		
-		-- if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
-			-- num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
-		-- end
-		
-		-- if self:GetCaster():HasScepter() then
-			-- bounty_base					= 0
-		-- end
-		
-		-- local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), 
-		-- {
-			-- outgoing_damage 			= 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
-			-- incoming_damage				= self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
-			-- bounty_base					= bounty_base,
-			-- bounty_growth				= nil,
-			-- outgoing_damage_structure	= nil,
-			-- outgoing_damage_roshan		= nil,
-			-- duration					= nil
-		-- }
-		-- , num_illusions_on_death, self:GetCaster():GetHullRadius(), true, true)
-	
-		-- for _, illusion in pairs(super_illusions) do
-			-- illusion:SetHealth(illusion:GetMaxHealth())
-			-- illusion:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
-			-- -- "The illusion spawns 108 range away from Vengeful Spirit's death location. It appears either north, east, south or west from that spot."
-			-- FindClearSpaceForUnit(illusion, self:GetCaster():GetAbsOrigin() + Vector(RandomInt(0, 1), RandomInt(0, 1), 0) * 108, true)
-			
-			-- PlayerResource:NewSelection(self:GetCaster():GetPlayerID(), super_illusions)
-		-- end
-	-- end
+-- if self:IsTrained() and not self:GetCaster():IsIllusion() and not self:GetCaster():PassivesDisabled() then
+-- local num_illusions_on_death	= self:GetSpecialValueFor("num_illusions_on_death")
+-- local bounty_base				= self:GetCaster():GetIllusionBounty()
+
+-- if self:GetCaster():GetLevel() >= self:GetSpecialValueFor("illusion_upgrade_level") then
+-- num_illusions_on_death		= self:GetSpecialValueFor("num_illusions_on_death_upgrade")
+-- end
+
+-- if self:GetCaster():HasScepter() then
+-- bounty_base					= 0
+-- end
+
+-- local super_illusions = CreateIllusions(self:GetCaster(), self:GetCaster(),
+-- {
+-- outgoing_damage 			= 100 - self:GetSpecialValueFor("illusion_damage_out_pct"),
+-- incoming_damage				= self:GetSpecialValueFor("illusion_damage_in_pct") - 100,
+-- bounty_base					= bounty_base,
+-- bounty_growth				= nil,
+-- outgoing_damage_structure	= nil,
+-- outgoing_damage_roshan		= nil,
+-- duration					= nil
+-- }
+-- , num_illusions_on_death, self:GetCaster():GetHullRadius(), true, true)
+
+-- for _, illusion in pairs(super_illusions) do
+-- illusion:SetHealth(illusion:GetMaxHealth())
+-- illusion:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
+-- -- "The illusion spawns 108 range away from Vengeful Spirit's death location. It appears either north, east, south or west from that spot."
+-- FindClearSpaceForUnit(illusion, self:GetCaster():GetAbsOrigin() + Vector(RandomInt(0, 1), RandomInt(0, 1), 0) * 108, true)
+
+-- PlayerResource:NewSelection(self:GetCaster():GetPlayerID(), super_illusions)
+-- end
+-- end
 -- end
 
 ---------------------------------------------------
@@ -894,7 +966,7 @@ end
 function modifier_imba_vengefulspirit_command_aura_723:OnDeath(keys)
 	if keys.unit == self:GetParent() and keys.unit:IsRealHero() then
 		keys.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_vengefulspirit_command_negative_aura_723", {})
-		
+
 		self:GetCaster():SetContextThink(DoUniqueString(self:GetName()), function()
 			for _, unit in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
 				-- Lots of checks to attempt to extract the Vengeful Spirit strong illusion
@@ -909,13 +981,13 @@ function modifier_imba_vengefulspirit_command_aura_723:OnDeath(keys)
 					end
 				end
 			end
-			
+
 			return nil
 		end, FrameTime())
 	end
 end
 
-function modifier_imba_vengefulspirit_command_aura_723:IsHidden()					return true end
+function modifier_imba_vengefulspirit_command_aura_723:IsHidden() return true end
 
 -- function modifier_imba_vengefulspirit_command_aura_723:IsAura()						return true end
 -- function modifier_imba_vengefulspirit_command_aura_723:IsAuraActiveOnDeath() 		return false end
@@ -938,16 +1010,16 @@ function modifier_imba_vengefulspirit_command_aura_effect_723:OnCreated()
 	self.initialized = false
 
 	self:StartIntervalThink(FrameTime())
-	
+
 	if not IsServer() then return end
-	
+
 	if self:GetParent().GetPrimaryAttribute then
 		self:SetStackCount(self:GetParent():GetPrimaryAttribute() or 0)
 	end
 end
 
 function modifier_imba_vengefulspirit_command_aura_effect_723:OnIntervalThink()
-	if not self.initialized then 
+	if not self.initialized then
 		self.hero_primary_attribute = self:GetStackCount()
 		self:SetStackCount(0)
 		self.initialized = true
@@ -957,7 +1029,7 @@ function modifier_imba_vengefulspirit_command_aura_effect_723:OnIntervalThink()
 			self:StartIntervalThink(-1)
 		end
 	end
-	
+
 	if IsServer() and self:GetParent().CalculateStatBonus then
 		self:GetParent():CalculateStatBonus(true)
 	end
@@ -969,7 +1041,7 @@ function modifier_imba_vengefulspirit_command_aura_effect_723:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-		
+
 		MODIFIER_PROPERTY_TOOLTIP
 	}
 end
@@ -1022,16 +1094,21 @@ function modifier_imba_vengefulspirit_command_negative_aura_723:OnRespawn(keys)
 	end
 end
 
-function modifier_imba_vengefulspirit_command_negative_aura_723:IsHidden()						return true end
+function modifier_imba_vengefulspirit_command_negative_aura_723:IsHidden() return true end
 
-function modifier_imba_vengefulspirit_command_negative_aura_723:IsAura()						return true end
-function modifier_imba_vengefulspirit_command_negative_aura_723:IsAuraActiveOnDeath() 			return false end
+function modifier_imba_vengefulspirit_command_negative_aura_723:IsAura() return true end
 
-function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraRadius()					return self:GetAbility():GetSpecialValueFor("aura_radius") end
-function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
-function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchTeam()				return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchType()				return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
-function modifier_imba_vengefulspirit_command_negative_aura_723:GetModifierAura()				return "modifier_imba_vengefulspirit_command_negative_aura_effect_723" end
+function modifier_imba_vengefulspirit_command_negative_aura_723:IsAuraActiveOnDeath() return false end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_radius") end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+
+function modifier_imba_vengefulspirit_command_negative_aura_723:GetModifierAura() return "modifier_imba_vengefulspirit_command_negative_aura_effect_723" end
 
 -------------------------------------------------------------------
 -- MODIFIER_IMBA_VENGEFULSPIRIT_COMMAND_NEGATIVE_AURA_EFFECT_723 --
@@ -1041,22 +1118,22 @@ function modifier_imba_vengefulspirit_command_negative_aura_723:GetModifierAura(
 -- On serverside, set the stack count to the attribute number (strength = 0, agility = 1, intellect = 2)
 -- By the time a frame passes, hypothetically speaking the client side should be able to read the proper stack count, which will then store the value in a variable before setting the stack count back to nothing since vanilla doesn't have a stack number
 function modifier_imba_vengefulspirit_command_negative_aura_effect_723:OnCreated()
-	self.bonus_attributes	= self:GetAbility():GetTalentSpecialValueFor("bonus_attributes") * (-1)
-	self.bonus_attack_range	= self:GetAbility():GetSpecialValueFor("bonus_attack_range") * (-1)
+	self.bonus_attributes = self:GetAbility():GetTalentSpecialValueFor("bonus_attributes") * (-1)
+	self.bonus_attack_range = self:GetAbility():GetSpecialValueFor("bonus_attack_range") * (-1)
 
 	self.initialized = false
 
 	self:StartIntervalThink(FrameTime())
-	
+
 	if not IsServer() then return end
-	
+
 	if self:GetParent().GetPrimaryAttribute then
 		self:SetStackCount(self:GetParent():GetPrimaryAttribute() or 0)
 	end
 end
 
 function modifier_imba_vengefulspirit_command_negative_aura_effect_723:OnIntervalThink()
-	if not self.initialized then 
+	if not self.initialized then
 		self.hero_primary_attribute = self:GetStackCount()
 		self:SetStackCount(0)
 		self.initialized = true
@@ -1066,12 +1143,11 @@ function modifier_imba_vengefulspirit_command_negative_aura_effect_723:OnInterva
 			self:StartIntervalThink(-1)
 		end
 	end
-	
+
 	if IsServer() and self:GetParent().CalculateStatBonus then
 		self:GetParent():CalculateStatBonus(true)
 	end
 end
-
 
 function modifier_imba_vengefulspirit_command_negative_aura_effect_723:DeclareFunctions()
 	return {
@@ -1079,7 +1155,7 @@ function modifier_imba_vengefulspirit_command_negative_aura_effect_723:DeclareFu
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-		
+
 		MODIFIER_PROPERTY_TOOLTIP
 	}
 end
@@ -1122,20 +1198,24 @@ LinkLuaModifier("modifier_imba_nether_swap", "components/abilities/heroes/hero_v
 
 imba_vengefulspirit_nether_swap = class({})
 function imba_vengefulspirit_nether_swap:IsHiddenWhenStolen() return false end
+
 function imba_vengefulspirit_nether_swap:IsRefreshable() return true end
+
 function imba_vengefulspirit_nether_swap:IsStealable() return true end
+
 function imba_vengefulspirit_nether_swap:IsNetherWardStealable() return false end
 
 function imba_vengefulspirit_nether_swap:GetAbilityTextureName()
 	return "vengefulspirit_nether_swap"
 end
+
 -------------------------------------------
 
 function imba_vengefulspirit_nether_swap:GetIntrinsicModifierName()
 	return "modifier_generic_charges"
 end
 
-function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
+function imba_vengefulspirit_nether_swap:CastFilterResultTarget(target)
 	-- local casterID = caster:GetPlayerOwnerID()
 	-- local targetID = target:GetPlayerOwnerID()
 
@@ -1146,16 +1226,16 @@ function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 	if target ~= nil and (not target:IsHero()) and (not self:GetCaster():HasScepter()) then
 		return UF_FAIL_CREEP
 	end
-	
-	return UnitFilter( target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, self:GetCaster():GetTeamNumber())
+
+	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, self:GetCaster():GetTeamNumber())
 end
 
 -- function imba_vengefulspirit_nether_swap:GetBehavior()
-	-- if not self:GetCaster():HasScepter() then
-		-- return self.BaseClass.GetBehavior(self)
-	-- else
-		-- return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AOE
-	-- end
+-- if not self:GetCaster():HasScepter() then
+-- return self.BaseClass.GetBehavior(self)
+-- else
+-- return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AOE
+-- end
 -- end
 
 function imba_vengefulspirit_nether_swap:GetAOERadius()
@@ -1164,7 +1244,7 @@ function imba_vengefulspirit_nether_swap:GetAOERadius()
 	end
 end
 
-function imba_vengefulspirit_nether_swap:GetCooldown( nLevel )
+function imba_vengefulspirit_nether_swap:GetCooldown(nLevel)
 	-- if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("cooldown_scepter") end
 	-- return self.BaseClass.GetCooldown( self, nLevel )
 	if IsServer() then
@@ -1175,24 +1255,24 @@ end
 function imba_vengefulspirit_nether_swap:CastTalentMeteor(target)
 	local caster = self:GetCaster()
 	projectile =
-		{
-			Target 				= target,
-			Source 				= caster,
-			Ability 			= self,
-			EffectName 			= "particles/hero/vengefulspirit/rancor_magic_missile.vpcf",
-			iMoveSpeed			= 1250,
-			vSpawnOrigin 		= caster:GetAbsOrigin(),
-			bDrawsOnMinimap 	= false,
-			bDodgeable 			= true,
-			bIsAttack 			= false,
-			bVisibleToEnemies 	= true,
-			bReplaceExisting 	= false,
-			flExpireTime 		= GameRules:GetGameTime() + 10,
-			bProvidesVision 	= false,
+	{
+		Target            = target,
+		Source            = caster,
+		Ability           = self,
+		EffectName        = "particles/hero/vengefulspirit/rancor_magic_missile.vpcf",
+		iMoveSpeed        = 1250,
+		vSpawnOrigin      = caster:GetAbsOrigin(),
+		bDrawsOnMinimap   = false,
+		bDodgeable        = true,
+		bIsAttack         = false,
+		bVisibleToEnemies = true,
+		bReplaceExisting  = false,
+		flExpireTime      = GameRules:GetGameTime() + 10,
+		bProvidesVision   = false,
 		--	iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
 		--	iVisionRadius 		= 400,
 		--	iVisionTeamNumber 	= caster:GetTeamNumber()
-		}
+	}
 	ProjectileManager:CreateTrackingProjectile(projectile)
 end
 
@@ -1215,7 +1295,7 @@ function imba_vengefulspirit_nether_swap:OnSpellStart()
 
 		-- Ministun the target if it's an enemy
 		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-			target:AddNewModifier(caster, self, "modifier_stunned", {duration = 0.1})
+			target:AddNewModifier(caster, self, "modifier_stunned", { duration = 0.1 })
 		end
 
 		-- Play sounds
@@ -1254,25 +1334,25 @@ function imba_vengefulspirit_nether_swap:OnSpellStart()
 
 		-- Swap positions
 		-- Timers:CreateTimer(FrameTime(), function()
-			FindClearSpaceForUnit(caster, target_loc, true)
-			FindClearSpaceForUnit(target, caster_loc, true)
+		FindClearSpaceForUnit(caster, target_loc, true)
+		FindClearSpaceForUnit(target, caster_loc, true)
 
-			-- #6 Talent - cast weak meteors
-			if caster:HasTalent("special_bonus_imba_vengefulspirit_6") then
-				local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-				for _, enemy in pairs(enemies) do
-					self:CastTalentMeteor(enemy)
-				end
-				if #enemies >= 1 then
-					caster:EmitSound("Hero_VengefulSpirit.MagicMissile")
-				end
+		-- #6 Talent - cast weak meteors
+		if caster:HasTalent("special_bonus_imba_vengefulspirit_6") then
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _, enemy in pairs(enemies) do
+				self:CastTalentMeteor(enemy)
 			end
+			if #enemies >= 1 then
+				caster:EmitSound("Hero_VengefulSpirit.MagicMissile")
+			end
+		end
 		-- end)
 
 		if self:GetCaster():HasScepter() then
 			for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target_loc, nil, self:GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 				-- Vanilla modifier
-				enemy:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_wave_of_terror_fear", {duration = self:GetSpecialValueFor("scepter_duration") * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_vengefulspirit_wave_of_terror_fear", { duration = self:GetSpecialValueFor("scepter_duration") * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 
@@ -1283,7 +1363,7 @@ function imba_vengefulspirit_nether_swap:OnSpellStart()
 		local ability_handle = caster:FindAbilityByName("imba_vengefulspirit_swap_back")
 		-- Swap positions
 		Timers:CreateTimer(swapback_delay, function()
-			caster:AddNewModifier(caster, self, "modifier_imba_nether_swap", {duration = swapback_duration})
+			caster:AddNewModifier(caster, self, "modifier_imba_nether_swap", { duration = swapback_duration })
 			ability_handle.position = caster_loc
 		end)
 	end
@@ -1311,9 +1391,9 @@ function imba_vengefulspirit_nether_swap:OnProjectileHit(target, location)
 	if target then
 		local damage = caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "damage")
 		local stun_duration = caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "stun_duration")
-		ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
+		ApplyDamage({ victim = target, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType() })
 		if not target:IsMagicImmune() then
-			target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(caster, self, "modifier_stunned", { duration = stun_duration * (1 - target:GetStatusResistance()) })
 		end
 	end
 
@@ -1322,55 +1402,61 @@ end
 
 -- Mechanic moved from Nether Swap Aghanim's to Vengeance Aura Standard
 -- function imba_vengefulspirit_nether_swap:OnOwnerDied()
-	-- local caster = self:GetCaster()
-	-- if self:GetLevel() > 0 and caster:HasScepter() and( not caster:IsIllusion() ) then
-		-- local super_illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeam())
-		-- super_illusion:AddNewModifier(caster, self, "modifier_illusion", {outgoing_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_dmg_scepter")), incoming_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_amp_scepter"))})
-		-- super_illusion:AddNewModifier(caster, self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
-		-- super_illusion:SetRespawnsDisabled(true)
-		-- super_illusion:MakeIllusion()
+-- local caster = self:GetCaster()
+-- if self:GetLevel() > 0 and caster:HasScepter() and( not caster:IsIllusion() ) then
+-- local super_illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeam())
+-- super_illusion:AddNewModifier(caster, self, "modifier_illusion", {outgoing_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_dmg_scepter")), incoming_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_amp_scepter"))})
+-- super_illusion:AddNewModifier(caster, self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
+-- super_illusion:SetRespawnsDisabled(true)
+-- super_illusion:MakeIllusion()
 
-		-- super_illusion:SetControllableByPlayer(caster:GetPlayerID(), true)
-		-- super_illusion:SetPlayerID(caster:GetPlayerID())
+-- super_illusion:SetControllableByPlayer(caster:GetPlayerID(), true)
+-- super_illusion:SetPlayerID(caster:GetPlayerID())
 
-		-- local parent_level = caster:GetLevel()
-		-- for i=1, parent_level-1 do
-			-- super_illusion:HeroLevelUp(false)
-		-- end
+-- local parent_level = caster:GetLevel()
+-- for i=1, parent_level-1 do
+-- super_illusion:HeroLevelUp(false)
+-- end
 
-		-- -- Set the skill points to 0 and learn the skills of the caster
-		-- super_illusion:SetAbilityPoints(0)
-		-- for abilitySlot=0,15 do
-			-- local ability = caster:GetAbilityByIndex(abilitySlot)
-			-- if ability ~= nil then
-				-- local abilityLevel = ability:GetLevel()
-				-- local abilityName = ability:GetAbilityName()
-				-- local illusionAbility = super_illusion:FindAbilityByName(abilityName)
-				-- if illusionAbility then
-					-- illusionAbility:SetLevel(abilityLevel)
-				-- end
-			-- end
-		-- end
+-- -- Set the skill points to 0 and learn the skills of the caster
+-- super_illusion:SetAbilityPoints(0)
+-- for abilitySlot=0,15 do
+-- local ability = caster:GetAbilityByIndex(abilitySlot)
+-- if ability ~= nil then
+-- local abilityLevel = ability:GetLevel()
+-- local abilityName = ability:GetAbilityName()
+-- local illusionAbility = super_illusion:FindAbilityByName(abilityName)
+-- if illusionAbility then
+-- illusionAbility:SetLevel(abilityLevel)
+-- end
+-- end
+-- end
 
-		-- -- Recreate the items of the caster
-		-- for itemSlot=0,5 do
-			-- local item = caster:GetItemInSlot(itemSlot)
-			-- if item ~= nil then
-				-- local itemName = item:GetName()
-				-- local newItem = CreateItem(itemName, super_illusion, super_illusion)
-				-- super_illusion:AddItem(newItem)
-			-- end
-		-- end
-	-- end
+-- -- Recreate the items of the caster
+-- for itemSlot=0,5 do
+-- local item = caster:GetItemInSlot(itemSlot)
+-- if item ~= nil then
+-- local itemName = item:GetName()
+-- local newItem = CreateItem(itemName, super_illusion, super_illusion)
+-- super_illusion:AddItem(newItem)
+-- end
+-- end
+-- end
 -- end
 -------------------------------------------
 modifier_imba_nether_swap = class({})
 function modifier_imba_nether_swap:IsDebuff() return false end
+
 function modifier_imba_nether_swap:IsHidden() return true end
+
 function modifier_imba_nether_swap:IsPurgable() return false end
+
 function modifier_imba_nether_swap:IsPurgeException() return false end
+
 function modifier_imba_nether_swap:IsStunDebuff() return false end
+
 function modifier_imba_nether_swap:RemoveOnDeath() return false end
+
 -------------------------------------------
 
 function modifier_imba_nether_swap:OnCreated()
@@ -1398,13 +1484,17 @@ LinkLuaModifier("modifier_imba_swap_back", "components/abilities/heroes/hero_ven
 
 imba_vengefulspirit_swap_back = class({})
 function imba_vengefulspirit_swap_back:IsHiddenWhenStolen() return false end
+
 function imba_vengefulspirit_swap_back:IsRefreshable() return true end
+
 function imba_vengefulspirit_swap_back:IsStealable() return true end
+
 function imba_vengefulspirit_swap_back:IsNetherWardStealable() return false end
 
 function imba_vengefulspirit_swap_back:GetAbilityTextureName()
 	return "vengeful_swap_back"
 end
+
 -------------------------------------------
 function imba_vengefulspirit_swap_back:GetAssociatedPrimaryAbilities()
 	return "imba_vengefulspirit_nether_swap"
@@ -1454,11 +1544,17 @@ end
 -------------------------------------------
 modifier_imba_swap_back = class({})
 function modifier_imba_swap_back:IsDebuff() return false end
+
 function modifier_imba_swap_back:IsHidden() return true end
+
 function modifier_imba_swap_back:IsPurgable() return false end
+
 function modifier_imba_swap_back:IsPurgeException() return false end
+
 function modifier_imba_swap_back:IsStunDebuff() return false end
+
 function modifier_imba_swap_back:RemoveOnDeath() return false end
+
 -------------------------------------------
 
 function modifier_imba_swap_back:OnCreated()
@@ -1474,16 +1570,20 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_1", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_2", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_vengefulspirit_1	= modifier_special_bonus_imba_vengefulspirit_1 or class({})
-modifier_special_bonus_imba_vengefulspirit_2	= modifier_special_bonus_imba_vengefulspirit_2 or class({})
+modifier_special_bonus_imba_vengefulspirit_1 = modifier_special_bonus_imba_vengefulspirit_1 or class({})
+modifier_special_bonus_imba_vengefulspirit_2 = modifier_special_bonus_imba_vengefulspirit_2 or class({})
 
-function modifier_special_bonus_imba_vengefulspirit_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_vengefulspirit_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_1:IsHidden() return true end
 
-function modifier_special_bonus_imba_vengefulspirit_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_vengefulspirit_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_1:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_1:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_2:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_2:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_2:RemoveOnDeath() return false end
 
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_3", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
@@ -1495,39 +1595,53 @@ LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_11", "components/abi
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_command_aura_attributes", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_vengefulspirit_3 = class({})
-function modifier_special_bonus_imba_vengefulspirit_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_3:IsPurgable() 		return false end
-function modifier_special_bonus_imba_vengefulspirit_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_3:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_3:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_3:RemoveOnDeath() return false end
 
 modifier_special_bonus_imba_vengefulspirit_5 = class({})
-function modifier_special_bonus_imba_vengefulspirit_5:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_5:IsPurgable() 		return false end
-function modifier_special_bonus_imba_vengefulspirit_5:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_5:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_5:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_5:RemoveOnDeath() return false end
 
 modifier_special_bonus_imba_vengefulspirit_8 = class({})
-function modifier_special_bonus_imba_vengefulspirit_8:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_8:IsPurgable() 		return false end
-function modifier_special_bonus_imba_vengefulspirit_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_8:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_8:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_8:RemoveOnDeath() return false end
 
 modifier_special_bonus_imba_vengefulspirit_9 = class({})
-function modifier_special_bonus_imba_vengefulspirit_9:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_9:IsPurgable() 		return false end
-function modifier_special_bonus_imba_vengefulspirit_9:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_9:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_9:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_9:RemoveOnDeath() return false end
 
 modifier_special_bonus_imba_vengefulspirit_10 = class({})
-function modifier_special_bonus_imba_vengefulspirit_10:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_10:IsPurgable() 	return false end
-function modifier_special_bonus_imba_vengefulspirit_10:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_10:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_10:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_10:RemoveOnDeath() return false end
 
 modifier_special_bonus_imba_vengefulspirit_11 = class({})
-function modifier_special_bonus_imba_vengefulspirit_11:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_11:IsPurgable() 	return false end
-function modifier_special_bonus_imba_vengefulspirit_11:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_11:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_11:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_11:RemoveOnDeath() return false end
 
 modifier_special_bonus_imba_vengefulspirit_command_aura_attributes = class({})
-function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsHidden() 		return true end
-function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsPurgable() 	return false end
-function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsHidden() return true end
+
+function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsPurgable() return false end
+
+function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:RemoveOnDeath() return false end
 
 function imba_vengefulspirit_magic_missile:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_5") then
@@ -1543,7 +1657,7 @@ function imba_vengefulspirit_wave_of_terror:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_9"), "modifier_special_bonus_imba_vengefulspirit_9", {})
 	end
-	
+
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_10"), "modifier_special_bonus_imba_vengefulspirit_10", {})
 	end
@@ -1553,7 +1667,7 @@ function imba_vengefulspirit_command_aura:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_3"), "modifier_special_bonus_imba_vengefulspirit_3", {})
 	end
-	
+
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_8") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_8"), "modifier_special_bonus_imba_vengefulspirit_8", {})
 	end

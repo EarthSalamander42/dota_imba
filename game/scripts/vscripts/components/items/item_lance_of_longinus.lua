@@ -58,16 +58,16 @@ end
 
 function item_imba_lance_of_longinus:OnSpellStart()
 	if not IsServer() then return end
-	
+
 	local ability = self
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
-	
+
 	local duration = ability:GetSpecialValueFor("duration")
-	
+
 	if caster:GetTeamNumber() == target:GetTeamNumber() then
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
-		target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_ally", {duration = duration})
+		target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_ally", { duration = duration })
 	else
 		-- If the target possesses a ready Linken's Sphere, do nothing
 		if target:TriggerSpellAbsorb(ability) then
@@ -75,21 +75,21 @@ function item_imba_lance_of_longinus:OnSpellStart()
 		end
 
 		if caster:IsRangedAttacker() then
-			target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_enemy_ranged", {duration = duration})
-			caster:AddNewModifier(target, ability, "modifier_item_imba_lance_of_longinus_force_self_ranged", {duration = duration})
+			target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_enemy_ranged", { duration = duration })
+			caster:AddNewModifier(target, ability, "modifier_item_imba_lance_of_longinus_force_self_ranged", { duration = duration })
 		else
-			target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_enemy_melee", {duration = duration})
-			caster:AddNewModifier(target, ability, "modifier_item_imba_lance_of_longinus_force_self_melee", {duration = duration})
+			target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_enemy_melee", { duration = duration })
+			caster:AddNewModifier(target, ability, "modifier_item_imba_lance_of_longinus_force_self_melee", { duration = duration })
 		end
-	
+
 		-- Attempting to fix Lotus Orb crashes with the purchase time check
 		if self:GetPurchaseTime() ~= -1 then
-			local god_piercing_modifier = caster:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_ally", {duration = self:GetSpecialValueFor("god_piercing_duration")})
-			
+			local god_piercing_modifier = caster:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_ally", { duration = self:GetSpecialValueFor("god_piercing_duration") })
+
 			if god_piercing_modifier then
 				god_piercing_modifier.enemy = target
 
-				target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_enemy", {duration = self:GetSpecialValueFor("god_piercing_duration")})
+				target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_enemy", { duration = self:GetSpecialValueFor("god_piercing_duration") })
 
 				local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lone_druid/lone_druid_spiritlink_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 				ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
@@ -97,18 +97,19 @@ function item_imba_lance_of_longinus:OnSpellStart()
 				ParticleManager:ReleaseParticleIndex(particle)
 			end
 		end
-		
-		local buff = caster:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_attack_speed", {duration = ability:GetSpecialValueFor("range_duration")})
-		
+
+		local buff = caster:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_attack_speed", { duration = ability:GetSpecialValueFor("range_duration") })
+
 		buff.target = target
 		buff:SetStackCount(ability:GetSpecialValueFor("max_attacks"))
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", caster)
-		
+
 		local startAttack = {
 			UnitIndex = caster:entindex(),
 			OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-			TargetIndex = target:entindex(),}
+			TargetIndex = target:entindex(),
+		}
 		ExecuteOrderFromTable(startAttack)
 	end
 end
@@ -119,29 +120,32 @@ end
 
 modifier_item_imba_lance_of_longinus = modifier_item_imba_lance_of_longinus or class({})
 
-function modifier_item_imba_lance_of_longinus:IsHidden()		return true end
-function modifier_item_imba_lance_of_longinus:IsPurgable()		return false end
-function modifier_item_imba_lance_of_longinus:RemoveOnDeath()	return false end
-function modifier_item_imba_lance_of_longinus:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_lance_of_longinus:IsHidden() return true end
+
+function modifier_item_imba_lance_of_longinus:IsPurgable() return false end
+
+function modifier_item_imba_lance_of_longinus:RemoveOnDeath() return false end
+
+function modifier_item_imba_lance_of_longinus:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_lance_of_longinus:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
-	
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
+
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:OnDestroy()
-    if not IsServer() then return end
-    
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
+	if not IsServer() then return end
+
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:DeclareFunctions()
@@ -150,10 +154,10 @@ function modifier_item_imba_lance_of_longinus:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		
+
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_MANA_BONUS,
-		
+
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
 	}
 end
@@ -211,19 +215,24 @@ end
 modifier_item_imba_lance_of_longinus_force_ally = modifier_item_imba_lance_of_longinus_force_ally or class({})
 
 function modifier_item_imba_lance_of_longinus_force_ally:IsDebuff() return false end
+
 function modifier_item_imba_lance_of_longinus_force_ally:IsHidden() return true end
+
 function modifier_item_imba_lance_of_longinus_force_ally:IsPurgable() return false end
+
 function modifier_item_imba_lance_of_longinus_force_ally:IsStunDebuff() return false end
-function modifier_item_imba_lance_of_longinus_force_ally:IsMotionController()  return true end
-function modifier_item_imba_lance_of_longinus_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_lance_of_longinus_force_ally:IsMotionController() return true end
+
+function modifier_item_imba_lance_of_longinus_force_ally:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
-	
+
 	-- This doesn't seem like a proper way to do things but w/e MouJiao's legacy code
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
@@ -234,11 +243,11 @@ function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
-	self.distance = self:GetAbility():GetSpecialValueFor("push_length") / ( self:GetDuration() / FrameTime())
+	self.distance = self:GetAbility():GetSpecialValueFor("push_length") / (self:GetDuration() / FrameTime())
 	self.attacked_target = {}
-	
-	self.god_piercing_radius	= self:GetAbility():GetSpecialValueFor("god_piercing_radius")
-	self.average_attack_damage	= self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) * self:GetAbility():GetSpecialValueFor("god_piercing_pure_pct") * 0.01
+
+	self.god_piercing_radius = self:GetAbility():GetSpecialValueFor("god_piercing_radius")
+	self.average_attack_damage = self:GetParent():GetAverageTrueAttackDamage(self:GetParent()) * self:GetAbility():GetSpecialValueFor("god_piercing_pure_pct") / 100
 end
 
 function modifier_item_imba_lance_of_longinus_force_ally:OnDestroy()
@@ -265,19 +274,19 @@ function modifier_item_imba_lance_of_longinus_force_ally:OnIntervalThink()
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
 		false)
-	for _,enemy in pairs(enemies) do
+	for _, enemy in pairs(enemies) do
 		if not self.attacked_target[enemy:entindex()] then
 			attacker:PerformAttack(enemy, true, true, true, true, true, false, true)
 			self.attacked_target[enemy:entindex()] = enemy:entindex()
-			
+
 			if enemy:IsRealHero() then
-				local god_piercing_modifier = attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_lance_of_longinus_god_piercing_ally", {duration = self:GetAbility():GetSpecialValueFor("god_piercing_duration")})
-				
+				local god_piercing_modifier = attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_lance_of_longinus_god_piercing_ally", { duration = self:GetAbility():GetSpecialValueFor("god_piercing_duration") })
+
 				if god_piercing_modifier then
 					god_piercing_modifier.enemy = enemy
-					
-					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_lance_of_longinus_god_piercing_enemy", {duration = self:GetAbility():GetSpecialValueFor("god_piercing_duration")})
-					
+
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_lance_of_longinus_god_piercing_enemy", { duration = self:GetAbility():GetSpecialValueFor("god_piercing_duration") })
+
 					local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lone_druid/lone_druid_spiritlink_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 					ParticleManager:SetParticleControl(particle, 0, attacker:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle, 1, enemy:GetAbsOrigin())
@@ -293,25 +302,25 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_ally:HorizontalMotion(unit, time)
 	if not IsServer() then return end
-	
+
 	-- Mars' Arena of Blood exception
 	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
 		self:Destroy()
 		return
 	end
-	
+
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance
-	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	local next_pos = GetGroundPosition(pos + pos_p, unit)
 	unit:SetAbsOrigin(next_pos)
 end
 
 function modifier_item_imba_lance_of_longinus_force_ally:CheckState()
 	local state =
-		{
-			[MODIFIER_STATE_INVULNERABLE] = true,
-		}
+	{
+		[MODIFIER_STATE_INVULNERABLE] = true,
+	}
 	return state
 end
 
@@ -319,7 +328,7 @@ function modifier_item_imba_lance_of_longinus_force_ally:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PURE
 	}
-	
+
 	return decFuncs
 end
 
@@ -331,17 +340,22 @@ modifier_item_imba_lance_of_longinus_force_enemy_ranged = modifier_item_imba_lan
 modifier_item_imba_lance_of_longinus_force_self_ranged = modifier_item_imba_lance_of_longinus_force_self_ranged or class({})
 
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsDebuff() return true end
+
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsHidden() return true end
+
 -- function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsStunDebuff() return false end
-function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsMotionController()  return true end
-function modifier_item_imba_lance_of_longinus_force_enemy_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
-function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IgnoreTenacity()  return true end
+
+function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IsMotionController() return true end
+
+function modifier_item_imba_lance_of_longinus_force_enemy_ranged:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_lance_of_longinus_force_enemy_ranged:IgnoreTenacity() return true end
 
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
 
@@ -349,7 +363,7 @@ function modifier_item_imba_lance_of_longinus_force_enemy_ranged:OnCreated()
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
-	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_ranged") / ( self:GetDuration() / FrameTime())
+	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_ranged") / (self:GetDuration() / FrameTime())
 end
 
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:OnDestroy()
@@ -371,32 +385,37 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_enemy_ranged:HorizontalMotion(unit, time)
 	if not IsServer() then return end
-	
+
 	-- Mars' Arena of Blood exception
 	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
 		self:Destroy()
 		return
 	end
-	
+
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance
-	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	local next_pos = GetGroundPosition(pos + pos_p, unit)
 	unit:SetAbsOrigin(next_pos)
 end
 
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsDebuff() return false end
+
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsHidden() return true end
+
 -- function modifier_item_imba_lance_of_longinus_force_self_ranged:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IsStunDebuff() return false end
+
 function modifier_item_imba_lance_of_longinus_force_self_ranged:IgnoreTenacity() return true end
-function modifier_item_imba_lance_of_longinus_force_self_ranged:IsMotionController()  return true end
-function modifier_item_imba_lance_of_longinus_force_self_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_lance_of_longinus_force_self_ranged:IsMotionController() return true end
+
+function modifier_item_imba_lance_of_longinus_force_self_ranged:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_lance_of_longinus_force_self_ranged:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
 
@@ -404,7 +423,7 @@ function modifier_item_imba_lance_of_longinus_force_self_ranged:OnCreated()
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
-	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_ranged") / ( self:GetDuration() / FrameTime())
+	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_ranged") / (self:GetDuration() / FrameTime())
 end
 
 function modifier_item_imba_lance_of_longinus_force_self_ranged:OnDestroy()
@@ -426,17 +445,17 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_self_ranged:HorizontalMotion(unit, time)
 	if not IsServer() then return end
-	
+
 	-- Mars' Arena of Blood exception
 	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
 		self:Destroy()
 		return
 	end
-	
+
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance
-	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	local next_pos = GetGroundPosition(pos + pos_p, unit)
 	unit:SetAbsOrigin(next_pos)
 end
 
@@ -444,17 +463,22 @@ modifier_item_imba_lance_of_longinus_force_enemy_melee = modifier_item_imba_lanc
 modifier_item_imba_lance_of_longinus_force_self_melee = modifier_item_imba_lance_of_longinus_force_self_melee or class({})
 
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsDebuff() return true end
+
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsHidden() return true end
+
 -- function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsStunDebuff() return false end
-function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsMotionController()  return true end
-function modifier_item_imba_lance_of_longinus_force_enemy_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
-function modifier_item_imba_lance_of_longinus_force_enemy_melee:IgnoreTenacity()  return true end
+
+function modifier_item_imba_lance_of_longinus_force_enemy_melee:IsMotionController() return true end
+
+function modifier_item_imba_lance_of_longinus_force_enemy_melee:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_lance_of_longinus_force_enemy_melee:IgnoreTenacity() return true end
 
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
 
@@ -462,7 +486,7 @@ function modifier_item_imba_lance_of_longinus_force_enemy_melee:OnCreated()
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized()
-	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_melee") / ( self:GetDuration() / FrameTime())
+	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_melee") / (self:GetDuration() / FrameTime())
 end
 
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:OnDestroy()
@@ -484,32 +508,37 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_enemy_melee:HorizontalMotion(unit, time)
 	if not IsServer() then return end
-	
+
 	-- Mars' Arena of Blood exception
 	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
 		self:Destroy()
 		return
 	end
-	
+
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance
-	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	local next_pos = GetGroundPosition(pos + pos_p, unit)
 	unit:SetAbsOrigin(next_pos)
 end
 
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsDebuff() return false end
+
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsHidden() return true end
+
 -- function modifier_item_imba_lance_of_longinus_force_self_melee:IsPurgable() return false end
 function modifier_item_imba_lance_of_longinus_force_self_melee:IsStunDebuff() return false end
+
 function modifier_item_imba_lance_of_longinus_force_self_melee:IgnoreTenacity() return true end
-function modifier_item_imba_lance_of_longinus_force_self_melee:IsMotionController()  return true end
-function modifier_item_imba_lance_of_longinus_force_self_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_lance_of_longinus_force_self_melee:IsMotionController() return true end
+
+function modifier_item_imba_lance_of_longinus_force_self_melee:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_lance_of_longinus_force_self_melee:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
 
@@ -517,7 +546,7 @@ function modifier_item_imba_lance_of_longinus_force_self_melee:OnCreated()
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized()
-	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_melee") / ( self:GetDuration() / FrameTime())
+	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_melee") / (self:GetDuration() / FrameTime())
 end
 
 function modifier_item_imba_lance_of_longinus_force_self_melee:OnDestroy()
@@ -539,32 +568,36 @@ end
 
 function modifier_item_imba_lance_of_longinus_force_self_melee:HorizontalMotion(unit, time)
 	if not IsServer() then return end
-	
+
 	-- Mars' Arena of Blood exception
 	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
 		self:Destroy()
 		return
 	end
-	
+
 	local pos = unit:GetAbsOrigin()
 	GridNav:DestroyTreesAroundPoint(pos, 80, false)
 	local pos_p = self.angle * self.distance
-	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	local next_pos = GetGroundPosition(pos + pos_p, unit)
 	unit:SetAbsOrigin(next_pos)
 end
 
 modifier_item_imba_lance_of_longinus_attack_speed = modifier_item_imba_lance_of_longinus_attack_speed or class({})
 
 function modifier_item_imba_lance_of_longinus_attack_speed:IsDebuff() return false end
+
 function modifier_item_imba_lance_of_longinus_attack_speed:IsHidden() return false end
+
 function modifier_item_imba_lance_of_longinus_attack_speed:IsPurgable() return true end
+
 function modifier_item_imba_lance_of_longinus_attack_speed:IsStunDebuff() return false end
+
 function modifier_item_imba_lance_of_longinus_attack_speed:IgnoreTenacity() return true end
 
 function modifier_item_imba_lance_of_longinus_attack_speed:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
 	self.as = 0
@@ -586,10 +619,10 @@ function modifier_item_imba_lance_of_longinus_attack_speed:OnIntervalThink()
 end
 
 function modifier_item_imba_lance_of_longinus_attack_speed:DeclareFunctions()
-	local decFuncs =   {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	local decFuncs = { MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ORDER,
-		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS }
 	return decFuncs
 end
 
@@ -603,7 +636,7 @@ function modifier_item_imba_lance_of_longinus_attack_speed:GetModifierAttackRang
 	return self.ar
 end
 
-function modifier_item_imba_lance_of_longinus_attack_speed:OnAttack( keys )
+function modifier_item_imba_lance_of_longinus_attack_speed:OnAttack(keys)
 	if not IsServer() then return end
 	if keys.target == self.target and keys.attacker == self:GetParent() then
 		if self:GetStackCount() > 1 then
@@ -614,13 +647,13 @@ function modifier_item_imba_lance_of_longinus_attack_speed:OnAttack( keys )
 	end
 end
 
-function modifier_item_imba_lance_of_longinus_attack_speed:OnOrder( keys )
+function modifier_item_imba_lance_of_longinus_attack_speed:OnOrder(keys)
 	if not IsServer() then return end
 	if keys.target == self.target and keys.unit == self:GetParent() and keys.order_type == 4 then
 		if self:GetParent():IsRangedAttacker() then
 			self.ar = 999999
 		end
-		
+
 		self.as = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
 	end
 end
@@ -629,22 +662,25 @@ end
 -- GOD PIERCING ALLY MODIFIER --
 --------------------------------
 
-modifier_item_imba_lance_of_longinus_god_piercing_ally = class ({})
+modifier_item_imba_lance_of_longinus_god_piercing_ally = class({})
 
-function modifier_item_imba_lance_of_longinus_god_piercing_ally:IsPurgable()		return false end
-function modifier_item_imba_lance_of_longinus_god_piercing_ally:IgnoreTenacity() 	return true end
-function modifier_item_imba_lance_of_longinus_god_piercing_ally:RemoveOnDeath() 	return false end
-function modifier_item_imba_lance_of_longinus_god_piercing_ally:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_lance_of_longinus_god_piercing_ally:IsPurgable() return false end
+
+function modifier_item_imba_lance_of_longinus_god_piercing_ally:IgnoreTenacity() return true end
+
+function modifier_item_imba_lance_of_longinus_god_piercing_ally:RemoveOnDeath() return false end
+
+function modifier_item_imba_lance_of_longinus_god_piercing_ally:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:OnCreated(params)
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	if not IsServer() then return end
-	
+
 	self.total_gained_health = 0
-	
+
 	self:StartIntervalThink(1)
 end
 
@@ -663,7 +699,7 @@ end
 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:OnHealReceived(keys)
 	if not IsServer() then return end
-	
+
 	-- No longer able to apply multiple times on the same unit due to crash issues
 	if keys.unit == self.enemy and not keys.unit:HasModifier("modifier_item_imba_lance_of_longinus_god_piercing_ally") then
 		self:GetParent():Heal(keys.gain, self:GetAbility())
@@ -677,10 +713,14 @@ end
 ---------------------------------
 
 -- All this logic should be handled in ally modifier so this is just for visuals
-modifier_item_imba_lance_of_longinus_god_piercing_enemy = class ({})
+modifier_item_imba_lance_of_longinus_god_piercing_enemy = class({})
 
-function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IsHidden()			return true end
-function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IsPurgable()		return false end
-function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IgnoreTenacity() 	return true end
-function modifier_item_imba_lance_of_longinus_god_piercing_enemy:RemoveOnDeath() 	return false end
-function modifier_item_imba_lance_of_longinus_god_piercing_enemy:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IsHidden() return true end
+
+function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IsPurgable() return false end
+
+function modifier_item_imba_lance_of_longinus_god_piercing_enemy:IgnoreTenacity() return true end
+
+function modifier_item_imba_lance_of_longinus_god_piercing_enemy:RemoveOnDeath() return false end
+
+function modifier_item_imba_lance_of_longinus_god_piercing_enemy:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end

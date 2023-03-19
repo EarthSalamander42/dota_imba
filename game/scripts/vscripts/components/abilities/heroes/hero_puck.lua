@@ -12,22 +12,22 @@ LinkLuaModifier("modifier_imba_puck_dream_coil", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_puck_dream_coil_thinker", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_puck_dream_coil_visionary", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 
-imba_puck_illusory_orb					= class({})
-modifier_imba_puck_illusory_orb			= class({})
-	
-imba_puck_waning_rift					= class({})
-modifier_imba_puck_waning_rift			= class({})
+imba_puck_illusory_orb                  = class({})
+modifier_imba_puck_illusory_orb         = class({})
 
-imba_puck_phase_shift					= class({})
-modifier_imba_puck_phase_shift			= class({})
-modifier_imba_puck_phase_shift_handler	= class({})
+imba_puck_waning_rift                   = class({})
+modifier_imba_puck_waning_rift          = class({})
 
-imba_puck_ethereal_jaunt				= class({})
+imba_puck_phase_shift                   = class({})
+modifier_imba_puck_phase_shift          = class({})
+modifier_imba_puck_phase_shift_handler  = class({})
 
-imba_puck_dream_coil					= class({})
-modifier_imba_puck_dream_coil			= class({})
-modifier_imba_puck_dream_coil_thinker	= class({})
-modifier_imba_puck_dream_coil_visionary	= class({})
+imba_puck_ethereal_jaunt                = class({})
+
+imba_puck_dream_coil                    = class({})
+modifier_imba_puck_dream_coil           = class({})
+modifier_imba_puck_dream_coil_thinker   = class({})
+modifier_imba_puck_dream_coil_visionary = class({})
 
 ------------------
 -- ILLUSORY ORB --
@@ -41,8 +41,8 @@ function imba_puck_illusory_orb:OnUpgrade()
 	local jaunt_ability = self:GetCaster():FindAbilityByName("imba_puck_ethereal_jaunt")
 
 	if jaunt_ability and not self.jaunt_ability then
-		self.jaunt_ability	= jaunt_ability
-		
+		self.jaunt_ability = jaunt_ability
+
 		if not jaunt_ability:IsTrained() then
 			self.jaunt_ability:SetLevel(1)
 		end
@@ -54,8 +54,8 @@ function imba_puck_illusory_orb:OnSpellStart()
 	local jaunt_ability = self:GetCaster():FindAbilityByName("imba_puck_ethereal_jaunt")
 
 	if jaunt_ability and not self.jaunt_ability then
-		self.jaunt_ability	= jaunt_ability
-		
+		self.jaunt_ability = jaunt_ability
+
 		if not jaunt_ability:IsTrained() then
 			self.jaunt_ability:SetLevel(1)
 		end
@@ -67,10 +67,10 @@ function imba_puck_illusory_orb:OnSpellStart()
 	end
 
 	self.talent_cast_range_increases = 0
-	
+
 	for ability = 0, 23 do
 		local found_ability = self:GetCaster():GetAbilityByIndex(ability)
-	
+
 		if found_ability and string.find(found_ability:GetName(), "cast_range") and self:GetCaster():HasTalent(found_ability:GetName()) then
 			self.talent_cast_range_increases = self.talent_cast_range_increases + self:GetCaster():FindTalentValue(found_ability:GetName())
 		end
@@ -86,22 +86,22 @@ function imba_puck_illusory_orb:OnSpellStart()
 	self:FireOrb(self:GetCaster():GetAbsOrigin() - self:GetCursorPosition())
 	-- Main Orb
 	self:FireOrb(self:GetCursorPosition() - self:GetCaster():GetAbsOrigin())
-	
+
 	if self.jaunt_ability then
 		self.jaunt_ability:SetActivated(true)
 	end
-	
+
 	-- IMBAfication: Eternal Jaunt
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_illusory_orb", {duration = ((self:GetSpecialValueFor("max_distance") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) + GetCastRangeIncrease(self:GetCaster()) + self.talent_cast_range_increases) / (self:GetSpecialValueFor("orb_speed") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1))})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_illusory_orb", { duration = ((self:GetSpecialValueFor("max_distance") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) + GetCastRangeIncrease(self:GetCaster()) + self.talent_cast_range_increases) / (self:GetSpecialValueFor("orb_speed") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) })
 end
 
 function imba_puck_illusory_orb:OnProjectileThink_ExtraData(location, data)
 	if not IsServer() then return end
-	
+
 	if data.orb_thinker then
 		EntIndexToHScript(data.orb_thinker):SetAbsOrigin(location)
 	end
-	
+
 	-- "The orb leaves behind a trail of flying vision, with a radius of 450. The vision lingers for 5 seconds."
 	-- IDK why the specialvalue is 3.34 but I guess vanilla doesn't use it, also vanilla vision circles are more segmented it seems...
 	self:CreateVisibilityNode(location, self:GetSpecialValueFor("orb_vision"), 5)
@@ -116,58 +116,52 @@ function imba_puck_illusory_orb:FireOrb(position)
 		{},
 		self:GetCaster():GetOrigin(),
 		self:GetCaster():GetTeamNumber(),
-		false		
+		false
 	)
-	
+
 	orb_thinker:EmitSound("Hero_Puck.Illusory_Orb")
 
 	-- Create linear projectile
 	local projectile_info = {
-		Source				= self:GetCaster(),
-		Ability				= self,
-		vSpawnOrigin		= self:GetCaster():GetOrigin(),
-		
-	    bDeleteOnHit 		= false,
-	    
-	    iUnitTargetTeam	 	= DOTA_UNIT_TARGET_TEAM_ENEMY,
-	    iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-	    
-	    EffectName 			= "particles/units/heroes/hero_puck/puck_illusory_orb.vpcf",
-	    fDistance 			= (self:GetSpecialValueFor("max_distance") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) + GetCastRangeIncrease(self:GetCaster()) + self.talent_cast_range_increases,
-	    fStartRadius 		= self:GetSpecialValueFor("radius"),
-	    fEndRadius 			= self:GetSpecialValueFor("radius"),
-		vVelocity 			= position:Normalized() * self:GetSpecialValueFor("orb_speed") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1),
-	
-		bReplaceExisting 	= false,
-		
-		bProvidesVision 	= true,
-		iVisionRadius 		= self:GetSpecialValueFor("orb_vision"),
-		iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
-		
-		ExtraData = {
-			orb_thinker		= orb_thinker:entindex(),
+		Source            = self:GetCaster(),
+		Ability           = self,
+		vSpawnOrigin      = self:GetCaster():GetOrigin(),
+		bDeleteOnHit      = false,
+		iUnitTargetTeam   = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetType   = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		EffectName        = "particles/units/heroes/hero_puck/puck_illusory_orb.vpcf",
+		fDistance         = (self:GetSpecialValueFor("max_distance") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) + GetCastRangeIncrease(self:GetCaster()) + self.talent_cast_range_increases,
+		fStartRadius      = self:GetSpecialValueFor("radius"),
+		fEndRadius        = self:GetSpecialValueFor("radius"),
+		vVelocity         = position:Normalized() * self:GetSpecialValueFor("orb_speed") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1),
+		bReplaceExisting  = false,
+		bProvidesVision   = true,
+		iVisionRadius     = self:GetSpecialValueFor("orb_vision"),
+		iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
+		ExtraData         = {
+			orb_thinker = orb_thinker:entindex(),
 		}
 	}
-	
+
 	local projectile = ProjectileManager:CreateLinearProjectile(projectile_info)
-	
+
 	-- Shove the thinker's entity index into orb table (would probably be marginally nicer to shove the projectile id but it seems messy trying to get that into ExtraData
 	table.insert(self.orbs, orb_thinker:entindex())
 end
 
 function imba_puck_illusory_orb:OnProjectileHit_ExtraData(target, location, data)
 	if not IsServer() then return end
-	
+
 	if target then
 		target:EmitSound("Hero_Puck.IIllusory_Orb_Damage")
-		
+
 		local damageTable = {
-			victim 			= target,
-			damage 			= self:GetAbilityDamage(),
-			damage_type		= self:GetAbilityDamageType(),
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self
+			victim       = target,
+			damage       = self:GetAbilityDamage(),
+			damage_type  = self:GetAbilityDamageType(),
+			damage_flags = DOTA_DAMAGE_FLAG_NONE,
+			attacker     = self:GetCaster(),
+			ability      = self
 		}
 
 		ApplyDamage(damageTable)
@@ -188,7 +182,7 @@ end
 -- ILLUSORY ORB MODIFIER --
 ---------------------------
 
-function modifier_imba_puck_illusory_orb:IsHidden()	return true end
+function modifier_imba_puck_illusory_orb:IsHidden() return true end
 
 function modifier_imba_puck_illusory_orb:OnRefresh()
 	if not IsServer() then return end
@@ -224,34 +218,34 @@ function imba_puck_waning_rift:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Puck.Waning_Rift")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_puck" then
-		self:GetCaster():EmitSound("puck_puck_ability_rift_0"..RandomInt(1, 3))
+		self:GetCaster():EmitSound("puck_puck_ability_rift_0" .. RandomInt(1, 3))
 	end
-	
+
 	local rift_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_waning_rift.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(rift_particle, 1, Vector(self:GetTalentSpecialValueFor("radius"), 0, 0))
 	ParticleManager:ReleaseParticleIndex(rift_particle)
-	
+
 	if not self:GetCaster():IsRooted() then
 		FindClearSpaceForUnit(self:GetCaster(), self:GetCursorPosition(), true)
 	end
-	
+
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetTalentSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
+
 	for _, enemy in pairs(enemies) do
 		-- "Waning Rift first applies the damage, then the debuff."
-	
+
 		local damageTable = {
-			victim 			= enemy,
-			damage 			= self:GetTalentSpecialValueFor("damage"),
-			damage_type		= self:GetAbilityDamageType(),
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self
+			victim       = enemy,
+			damage       = self:GetTalentSpecialValueFor("damage"),
+			damage_type  = self:GetAbilityDamageType(),
+			damage_flags = DOTA_DAMAGE_FLAG_NONE,
+			attacker     = self:GetCaster(),
+			ability      = self
 		}
 
 		ApplyDamage(damageTable)
-		
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_waning_rift", {duration = self:GetSpecialValueFor("silence_duration") * (1 - enemy:GetStatusResistance())})
+
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_waning_rift", { duration = self:GetSpecialValueFor("silence_duration") * (1 - enemy:GetStatusResistance()) })
 	end
 end
 
@@ -272,15 +266,15 @@ function modifier_imba_puck_waning_rift:GetEffectAttachType()
 end
 
 function modifier_imba_puck_waning_rift:OnCreated()
-	self.glitter_vision_reduction	= self:GetAbility():GetSpecialValueFor("glitter_vision_reduction")
-	
+	self.glitter_vision_reduction = self:GetAbility():GetSpecialValueFor("glitter_vision_reduction")
+
 	if not IsServer() then return end
-	
+
 	self:SetStackCount(self:GetAbility():GetSpecialValueFor("trickster_null_instances"))
 end
 
 function modifier_imba_puck_waning_rift:CheckState()
-	return {[MODIFIER_STATE_SILENCED] = true}
+	return { [MODIFIER_STATE_SILENCED] = true }
 end
 
 -- IMBAfication: Pocket Glitter
@@ -290,7 +284,7 @@ function modifier_imba_puck_waning_rift:DeclareFunctions()
 		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 	}
-	
+
 	return decFuncs
 end
 
@@ -300,7 +294,7 @@ end
 
 function modifier_imba_puck_waning_rift:GetModifierTotalDamageOutgoing_Percentage(keys)
 	if not IsServer() then return end
-	
+
 	if self:GetStackCount() > 0 then
 		self:DecrementStackCount()
 		return -100
@@ -322,28 +316,28 @@ end
 function imba_puck_phase_shift:ProcsMagicStick() return false end
 
 -- function imba_puck_phase_shift:GetAbilityTargetFlags()
-	-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
-		-- return DOTA_UNIT_TARGET_FLAG_NONE
-	-- else
-		-- return DOTA_UNIT_TARGET_FLAG_INVULNERABLE -- Doesn't seem like this works
-	-- end
+-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
+-- return DOTA_UNIT_TARGET_FLAG_NONE
+-- else
+-- return DOTA_UNIT_TARGET_FLAG_INVULNERABLE -- Doesn't seem like this works
+-- end
 -- end
 
 
 -- function imba_puck_phase_shift:GetAbilityTargetTeam()
-	-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
-		-- return DOTA_UNIT_TARGET_TEAM_NONE
-	-- else
-		-- return DOTA_UNIT_TARGET_TEAM_FRIENDLY
-	-- end
+-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
+-- return DOTA_UNIT_TARGET_TEAM_NONE
+-- else
+-- return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+-- end
 -- end
 
 -- function imba_puck_phase_shift:GetAbilityTargetType()
-	-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
-		-- return DOTA_UNIT_TARGET_NONE
-	-- else
-		-- return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	-- end
+-- if self:GetCaster():GetModifierStackCount("modifier_imba_puck_phase_shift_handler", self:GetCaster()) == 0 then
+-- return DOTA_UNIT_TARGET_NONE
+-- else
+-- return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+-- end
 -- end
 
 
@@ -371,28 +365,28 @@ function imba_puck_phase_shift:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Puck.Phase_Shift")
 
 	if self:GetCaster():GetName() == "npc_dota_hero_puck" then
-		self:GetCaster():EmitSound("puck_puck_ability_phase_0"..RandomInt(1, 7))
+		self:GetCaster():EmitSound("puck_puck_ability_phase_0" .. RandomInt(1, 7))
 	end
-	
+
 	if self:GetAutoCastState() then
 		-- IMBAfication: Sinusoid
 		if self:GetCursorPosition() and not self:GetCursorTarget() then
 			FindClearSpaceForUnit(self:GetCaster(), self:GetCursorPosition(), true)
-		elseif self:GetCursorTarget() then	
+		elseif self:GetCursorTarget() then
 			if self:GetCursorTarget() ~= self:GetCaster() then
-				self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_phase_shift", {duration = self:GetSpecialValueFor("duration") + FrameTime()})
+				self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_phase_shift", { duration = self:GetSpecialValueFor("duration") + FrameTime() })
 			end
-			
+
 			-- Kinda hacky way to allow Puck to self-cast channel (cause I don't think there's any existing ability that actually lets you do that normally)
 			self:GetCaster():SetCursorCastTarget(nil)
 			self:GetCaster():SetCursorPosition(self:GetCaster():GetAbsOrigin())
 			self:OnSpellStart()
 		end
 	end
-	
+
 	-- "The buff lingers for one server tick once the channeling ends or is interrupted, which allows using items while still invulnerable and hidden."
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_phase_shift", {duration = self:GetSpecialValueFor("duration") + FrameTime()})
-	
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_phase_shift", { duration = self:GetSpecialValueFor("duration") + FrameTime() })
+
 	if self:GetCaster():HasTalent("special_bonus_imba_puck_phase_shift_attacks") then
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetAbsOrigin(), nil, self:GetCaster():Script_GetAttackRange() + 200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)) do
 			if enemy:GetName() ~= "npc_dota_unit_undying_zombie" then
@@ -406,7 +400,7 @@ function imba_puck_phase_shift:OnChannelFinish(interrupted)
 	self:GetCaster():StopSound("Hero_Puck.Phase_Shift")
 
 	local phase_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_puck_phase_shift", self:GetCaster())
-	
+
 	-- "The buff lingers for one server tick once the channeling ends or is interrupted, which allows using items while still invulnerable and hidden."
 	if phase_modifier then
 		phase_modifier:StartIntervalThink(FrameTime())
@@ -419,11 +413,11 @@ end
 
 -- Yeah this doesn't work so just gotta call it manually I guess
 -- function modifier_imba_puck_phase_shift:GetEffectName()
-	-- return "particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+-- return "particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
 -- end
 
 -- function modifier_imba_puck_phase_shift:GetEffectAttachType()
-	-- return PATTACH_WORLDORIGIN
+-- return PATTACH_WORLDORIGIN
 -- end
 
 
@@ -434,16 +428,16 @@ end
 
 function modifier_imba_puck_phase_shift:OnCreated()
 	if not IsServer() then return end
-	
+
 	ProjectileManager:ProjectileDodge(self:GetParent())
-	
+
 	local phase_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_phase_shift.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 	-- This doesn't seem to match the vanilla particle affect properly...the standard is more diffused, but "particles/units/heroes/hero_puck/puck_phase_shift.vpcf" leaves a focused dot which kinda overlaps with the space
 	ParticleManager:SetParticleControl(phase_particle, 0, self:GetParent():GetAbsOrigin())
 	self:AddParticle(phase_particle, false, false, -1, false, false)
-	
+
 	self:GetParent():AddNoDraw()
-	
+
 	if self:GetParent() ~= self:GetCaster() then
 		self:StartIntervalThink(FrameTime())
 	end
@@ -470,15 +464,15 @@ end
 function modifier_imba_puck_phase_shift:CheckState()
 	local state =
 	{
-		[MODIFIER_STATE_INVULNERABLE] 	= true,
-		[MODIFIER_STATE_OUT_OF_GAME]	= true,
-		[MODIFIER_STATE_UNSELECTABLE]	= true
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_OUT_OF_GAME]  = true,
+		[MODIFIER_STATE_UNSELECTABLE] = true
 	}
-	
+
 	if self:GetParent() ~= self:GetCaster() then
-		state[MODIFIER_STATE_STUNNED]	= true
+		state[MODIFIER_STATE_STUNNED] = true
 	end
-	
+
 	return state
 end
 
@@ -486,17 +480,17 @@ end
 -- PHASE SHIFT HANDLER MODIFIER --
 ----------------------------------
 
-function modifier_imba_puck_phase_shift_handler:IsHidden()	return true end
+function modifier_imba_puck_phase_shift_handler:IsHidden() return true end
 
 function modifier_imba_puck_phase_shift_handler:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
-	
+	local decFuncs = { MODIFIER_EVENT_ON_ORDER }
+
 	return decFuncs
 end
 
 function modifier_imba_puck_phase_shift_handler:OnOrder(keys)
 	if not IsServer() or keys.unit ~= self:GetParent() or keys.order_type ~= DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO or keys.ability ~= self:GetAbility() then return end
-	
+
 	-- Due to logic order, this is actually reversed
 	if self:GetAbility():GetAutoCastState() then
 		self:SetStackCount(0)
@@ -504,7 +498,6 @@ function modifier_imba_puck_phase_shift_handler:OnOrder(keys)
 		self:SetStackCount(1)
 	end
 end
-
 
 --------------------
 -- ETHEREAL JAUNT --
@@ -522,7 +515,7 @@ function imba_puck_ethereal_jaunt:GetManaCost(level)
 	if not self:GetCaster():GetModifierStackCount("modifier_imba_puck_illusory_orb", self:GetCaster()) or self:GetCaster():GetModifierStackCount("modifier_imba_puck_illusory_orb", self:GetCaster()) <= 0 then
 		return 0
 	else
-		return self:GetCaster():GetMaxMana() * self:GetSpecialValueFor("eternal_max_mana_pct") * 0.01
+		return self:GetCaster():GetMaxMana() * self:GetSpecialValueFor("eternal_max_mana_pct") / 100
 	end
 end
 
@@ -533,24 +526,24 @@ function imba_puck_ethereal_jaunt:OnUpgrade()
 	local orb_ability = self:GetCaster():FindAbilityByName(self:GetAssociatedPrimaryAbilities())
 
 	if orb_ability then
-		self.orb_ability	= orb_ability
+		self.orb_ability = orb_ability
 	end
 end
 
 function imba_puck_ethereal_jaunt:OnSpellStart()
 	if self.orb_ability and self.orb_ability.orbs and #self.orb_ability.orbs >= 1 then
 		self:GetCaster():EmitSound("Hero_Puck.EtherealJaunt")
-	
+
 		local jaunt_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_illusory_orb_blink_out.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 		ParticleManager:ReleaseParticleIndex(jaunt_particle)
-	
+
 		FindClearSpaceForUnit(self:GetCaster(), EntIndexToHScript(self.orb_ability.orbs[#self.orb_ability.orbs]):GetAbsOrigin(), true)
 		ProjectileManager:ProjectileDodge(self:GetCaster())
-		
+
 		if self:GetCaster():GetName() == "npc_dota_hero_puck" and (not self:GetCaster():GetModifierStackCount("modifier_imba_puck_illusory_orb", self:GetCaster()) or self:GetCaster():GetModifierStackCount("modifier_imba_puck_illusory_orb", self:GetCaster()) <= 0) then
-			self:GetCaster():EmitSound("puck_puck_ability_orb_0"..RandomInt(1, 3))
+			self:GetCaster():EmitSound("puck_puck_ability_orb_0" .. RandomInt(1, 3))
 		end
-		
+
 		-- IMBAfication: Eternal Jaunt
 		if self:GetCaster():FindModifierByNameAndCaster("modifier_imba_puck_illusory_orb", self:GetCaster()) then
 			self:GetCaster():FindModifierByNameAndCaster("modifier_imba_puck_illusory_orb", self:GetCaster()):IncrementStackCount()
@@ -569,74 +562,74 @@ end
 -- The variable fed into the method is if the ability is recast via the Midsummer's Nightmare IMBAfication
 function imba_puck_dream_coil:OnSpellStart(refreshDuration)
 	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_Puck.Dream_Coil", self:GetCaster())
-	
+
 	if not refreshDuration then
 		if self:GetCaster():GetName() == "npc_dota_hero_puck" then
-			self:GetCaster():EmitSound("puck_puck_ability_dreamcoil_0"..RandomInt(1, 2))
+			self:GetCaster():EmitSound("puck_puck_ability_dreamcoil_0" .. RandomInt(1, 2))
 		end
 	end
-	
+
 	-- "When upgraded [with Aghanim's scepter], latches on spell immune enemies without stunning them . . ."
-	local target_flag		= DOTA_UNIT_TARGET_FLAG_NONE
-	local latch_duration	= self:GetSpecialValueFor("coil_duration")
-	
+	local target_flag    = DOTA_UNIT_TARGET_FLAG_NONE
+	local latch_duration = self:GetSpecialValueFor("coil_duration")
+
 	if self:GetCaster():HasScepter() then
-		target_flag		= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
-		latch_duration	= self:GetSpecialValueFor("coil_duration_scepter")
+		target_flag    = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+		latch_duration = self:GetSpecialValueFor("coil_duration_scepter")
 	end
-	
+
 	-- IMBAfication: Midsummer's Nightmare
 	if refreshDuration then
 		latch_duration = refreshDuration
 	end
-	
+
 	-- Create thinker for...I guess just the particle effects?
 	local coil_thinker = CreateModifierThinker(
 		self:GetCaster(),
 		self,
 		"modifier_imba_puck_dream_coil_thinker",
-		{duration = latch_duration},
+		{ duration = latch_duration },
 		self:GetCursorPosition(),
 		self:GetCaster():GetTeamNumber(),
 		false
 	)
-	
+
 	local target_type = DOTA_UNIT_TARGET_HERO
-	
+
 	if self:GetCaster():HasTalent("special_bonus_imba_puck_dream_coil_targets") then
 		target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 	end
-	
+
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("coil_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, target_type, target_flag, FIND_ANY_ORDER, false)
 
 	for _, enemy in pairs(enemies) do
 		ApplyDamage({
-			victim 			= enemy,
-			damage 			= self:GetSpecialValueFor("coil_initial_damage"),
-			damage_type		= self:GetAbilityDamageType(),
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self
+			victim       = enemy,
+			damage       = self:GetSpecialValueFor("coil_initial_damage"),
+			damage_type  = self:GetAbilityDamageType(),
+			damage_flags = DOTA_DAMAGE_FLAG_NONE,
+			attacker     = self:GetCaster(),
+			ability      = self
 		})
-		
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance())})
-	
-		local coil_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_dream_coil", 
-		{
-			duration		= latch_duration,
-			coil_thinker	= coil_thinker:entindex()
-		})
-		
-		if not refreshDuration then			
+
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_stunned", { duration = self:GetSpecialValueFor("stun_duration") * (1 - enemy:GetStatusResistance()) })
+
+		local coil_modifier = enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_puck_dream_coil",
+			{
+				duration     = latch_duration,
+				coil_thinker = coil_thinker:entindex()
+			})
+
+		if not refreshDuration then
 			coil_modifier:SetDuration(latch_duration * (1 - enemy:GetStatusResistance()), true)
 		end
-		
+
 		-- IMBAfication: Visionary
 		for index = 0, 23 do
 			local ability = enemy:GetAbilityByIndex(index)
-			
+
 			if ability and ability:GetAbilityType() == ABILITY_TYPE_ULTIMATE then
-				self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_imba_puck_dream_coil_visionary", {duration	= latch_duration})
+				self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_imba_puck_dream_coil_visionary", { duration = latch_duration })
 			end
 		end
 	end
@@ -644,10 +637,10 @@ end
 
 function imba_puck_dream_coil:OnProjectileHit_ExtraData(target, location, data)
 	if not IsServer() then return end
-	
+
 	if target then
 		EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), "Hero_Puck.ProjectileImpact", self:GetCaster())
-	
+
 		self:GetCaster():PerformAttack(target, false, true, true, false, false, false, false)
 	end
 end
@@ -656,33 +649,34 @@ end
 -- DREAM COIL MODIFIER --
 -------------------------
 
-function modifier_imba_puck_dream_coil:IsPurgable()		return not self:GetCaster():HasScepter() end
-function modifier_imba_puck_dream_coil:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_puck_dream_coil:IsPurgable() return not self:GetCaster():HasScepter() end
+
+function modifier_imba_puck_dream_coil:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_puck_dream_coil:OnCreated(params)
-	self.coil_break_radius			= self:GetAbility():GetSpecialValueFor("coil_break_radius")
-	self.coil_stun_duration			= self:GetAbility():GetSpecialValueFor("coil_stun_duration")
-	self.coil_break_damage			= self:GetAbility():GetSpecialValueFor("coil_break_damage")
-	self.coil_break_damage_scepter	= self:GetAbility():GetSpecialValueFor("coil_break_damage_scepter")
-	self.coil_stun_duration_scepter	= self:GetAbility():GetSpecialValueFor("coil_stun_duration_scepter")
+	self.coil_break_radius          = self:GetAbility():GetSpecialValueFor("coil_break_radius")
+	self.coil_stun_duration         = self:GetAbility():GetSpecialValueFor("coil_stun_duration")
+	self.coil_break_damage          = self:GetAbility():GetSpecialValueFor("coil_break_damage")
+	self.coil_break_damage_scepter  = self:GetAbility():GetSpecialValueFor("coil_break_damage_scepter")
+	self.coil_stun_duration_scepter = self:GetAbility():GetSpecialValueFor("coil_stun_duration_scepter")
 
-	self.rapid_fire_interval		= self:GetAbility():GetSpecialValueFor("rapid_fire_interval")
-	self.rapid_fire_max_distance	= self:GetAbility():GetSpecialValueFor("rapid_fire_max_distance")
+	self.rapid_fire_interval        = self:GetAbility():GetSpecialValueFor("rapid_fire_interval")
+	self.rapid_fire_max_distance    = self:GetAbility():GetSpecialValueFor("rapid_fire_max_distance")
 
 	if not IsServer() then return end
-	
-	self.ability_damage_type		= self:GetAbility():GetAbilityDamageType()
-	self.coil_thinker				= EntIndexToHScript(params.coil_thinker)
-	self.coil_thinker_location		= self.coil_thinker:GetAbsOrigin()
 
-	local coil_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_dreamcoil_tether.vpcf", PATTACH_ABSORIGIN, self.coil_thinker, self:GetCaster())
+	self.ability_damage_type   = self:GetAbility():GetAbilityDamageType()
+	self.coil_thinker          = EntIndexToHScript(params.coil_thinker)
+	self.coil_thinker_location = self.coil_thinker:GetAbsOrigin()
+
+	local coil_particle        = ParticleManager:CreateParticle("particles/units/heroes/hero_puck/puck_dreamcoil_tether.vpcf", PATTACH_ABSORIGIN, self.coil_thinker, self:GetCaster())
 	ParticleManager:SetParticleControlEnt(coil_particle, 0, self.coil_thinker, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self.coil_thinker_location, true)
 	ParticleManager:SetParticleControlEnt(coil_particle, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	self:AddParticle(coil_particle, false, false, -1, false, false)
-	
-	self.interval 	= 0.1
-	self.counter	= 0
-	
+
+	self.interval = 0.1
+	self.counter  = 0
+
 	self:StartIntervalThink(self.interval)
 end
 
@@ -690,76 +684,76 @@ end
 -- I guess conveniently this could also be used for Rapid Fire checking
 function modifier_imba_puck_dream_coil:OnIntervalThink()
 	if not IsServer() then return end
-	
+
 	self.counter = self.counter + self.interval
-	
+
 	if self:GetCaster():IsAlive() and self.counter >= self.rapid_fire_interval and self:GetAbility() then
 		self.counter = 0
-		
-		local direction	= (self:GetParent():GetAbsOrigin() - self.coil_thinker_location):Normalized()
-		
+
+		local direction = (self:GetParent():GetAbsOrigin() - self.coil_thinker_location):Normalized()
+
 		if (self:GetCaster():GetAbsOrigin() - self.coil_thinker_location):Length2D() <= self.rapid_fire_max_distance then
 			EmitSoundOnLocationWithCaster(self.coil_thinker_location, "Hero_Puck.Attack", self:GetCaster())
-			
+
 			local projectile =
 			{
-				Target 				= self:GetParent(),
-				Source 				= self.coil_thinker,
-				Ability 			= self:GetAbility(),
-				EffectName 			= self:GetCaster():GetRangedProjectileName() or "particles/units/heroes/hero_puck/puck_base_attack.vpcf",
-				iMoveSpeed			= self:GetCaster():GetProjectileSpeed() or 900,
+				Target            = self:GetParent(),
+				Source            = self.coil_thinker,
+				Ability           = self:GetAbility(),
+				EffectName        = self:GetCaster():GetRangedProjectileName() or "particles/units/heroes/hero_puck/puck_base_attack.vpcf",
+				iMoveSpeed        = self:GetCaster():GetProjectileSpeed() or 900,
 				-- vSourceLoc 			= self.coil_thinker_location,
-				bDrawsOnMinimap 	= false,
-				bDodgeable 			= true,
-				bIsAttack 			= true, -- Does this even do anything
-				bVisibleToEnemies 	= true,
-				bReplaceExisting 	= false,
-				flExpireTime 		= GameRules:GetGameTime() + 10.0,
-				bProvidesVision 	= false,
+				bDrawsOnMinimap   = false,
+				bDodgeable        = true,
+				bIsAttack         = true, -- Does this even do anything
+				bVisibleToEnemies = true,
+				bReplaceExisting  = false,
+				flExpireTime      = GameRules:GetGameTime() + 10.0,
+				bProvidesVision   = false,
 			}
-			
+
 			ProjectileManager:CreateTrackingProjectile(projectile)
 		end
 	end
-	
+
 	if (self:GetParent():GetAbsOrigin() - self.coil_thinker_location):Length2D() >= self.coil_break_radius then
 		self:GetParent():EmitSound("Hero_Puck.Dream_Coil_Snap")
-		
-		-- Check for scepter 
-		local stun_duration	= self.coil_stun_duration
-		local break_damage	= self.coil_break_damage
-		
+
+		-- Check for scepter
+		local stun_duration = self.coil_stun_duration
+		local break_damage = self.coil_break_damage
+
 		if self:GetCaster():HasScepter() then
-			stun_duration	= self.coil_stun_duration_scepter
-			break_damage	= self.coil_break_damage_scepter
+			stun_duration = self.coil_stun_duration_scepter
+			break_damage = self.coil_break_damage_scepter
 		end
 
 		local damageTable = {
-			victim 			= self:GetParent(),
-			damage 			= break_damage,
-			damage_type		= self.ability_damage_type,
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self:GetCaster(),
-			ability 		= self:GetAbility()
+			victim       = self:GetParent(),
+			damage       = break_damage,
+			damage_type  = self.ability_damage_type,
+			damage_flags = DOTA_DAMAGE_FLAG_NONE,
+			attacker     = self:GetCaster(),
+			ability      = self:GetAbility()
 		}
 
 		ApplyDamage(damageTable)
-		
+
 		-- IMBAfication: Midsummer's Nightmare
 		if self:GetAbility() then
 			self:GetCaster():SetCursorPosition(self:GetParent():GetAbsOrigin())
 			self:GetAbility():OnSpellStart(self:GetRemainingTime() + (stun_duration * (1 - self:GetParent():GetStatusResistance())))
 		end
-		
+
 		-- Putting the break stun modifier after the IMBAfication because it was getting overwritten by the basic lower duration stun
-		local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = stun_duration * (1 - self:GetParent():GetStatusResistance())})
-		
+		local stun_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", { duration = stun_duration * (1 - self:GetParent():GetStatusResistance()) })
+
 		self:Destroy()
 	end
 end
 
 function modifier_imba_puck_dream_coil:CheckState()
-	return {[MODIFIER_STATE_TETHERED] = true}
+	return { [MODIFIER_STATE_TETHERED] = true }
 end
 
 ---------------------------------
@@ -788,12 +782,13 @@ end
 -- DREAM COIL VISIONARY MODIFIER --
 -----------------------------------
 
-function modifier_imba_puck_dream_coil_visionary:IsDebuff()			return false end
-function modifier_imba_puck_dream_coil_visionary:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_puck_dream_coil_visionary:IsDebuff() return false end
+
+function modifier_imba_puck_dream_coil_visionary:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_puck_dream_coil_visionary:OnCreated()
 	if not IsServer() then return end
-	
+
 	self:SetStackCount(math.ceil(self:GetAbility():GetCooldownTimeRemaining()))
 	self:StartIntervalThink(0.1)
 end
@@ -807,7 +802,6 @@ function modifier_imba_puck_dream_coil_visionary:OnIntervalThink()
 	end
 end
 
-
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
@@ -816,35 +810,45 @@ LinkLuaModifier("modifier_special_bonus_imba_puck_phase_shift_attacks", "compone
 LinkLuaModifier("modifier_special_bonus_imba_puck_illusory_orb_speed", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_puck_dream_coil_targets", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_puck_phase_shift_attacks	= modifier_special_bonus_imba_puck_phase_shift_attacks or class({})
-modifier_special_bonus_imba_puck_illusory_orb_speed		= modifier_special_bonus_imba_puck_illusory_orb_speed or class({})
-modifier_special_bonus_imba_puck_dream_coil_targets		= modifier_special_bonus_imba_puck_dream_coil_targets or class({})
+modifier_special_bonus_imba_puck_phase_shift_attacks = modifier_special_bonus_imba_puck_phase_shift_attacks or class({})
+modifier_special_bonus_imba_puck_illusory_orb_speed  = modifier_special_bonus_imba_puck_illusory_orb_speed or class({})
+modifier_special_bonus_imba_puck_dream_coil_targets  = modifier_special_bonus_imba_puck_dream_coil_targets or class({})
 
-function modifier_special_bonus_imba_puck_phase_shift_attacks:IsHidden() 		return true end
-function modifier_special_bonus_imba_puck_phase_shift_attacks:IsPurgable()		return false end
-function modifier_special_bonus_imba_puck_phase_shift_attacks:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_puck_phase_shift_attacks:IsHidden() return true end
 
-function modifier_special_bonus_imba_puck_illusory_orb_speed:IsHidden() 		return true end
-function modifier_special_bonus_imba_puck_illusory_orb_speed:IsPurgable()		return false end
-function modifier_special_bonus_imba_puck_illusory_orb_speed:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_puck_phase_shift_attacks:IsPurgable() return false end
 
-function modifier_special_bonus_imba_puck_dream_coil_targets:IsHidden() 		return true end
-function modifier_special_bonus_imba_puck_dream_coil_targets:IsPurgable()		return false end
-function modifier_special_bonus_imba_puck_dream_coil_targets:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_puck_phase_shift_attacks:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_puck_illusory_orb_speed:IsHidden() return true end
+
+function modifier_special_bonus_imba_puck_illusory_orb_speed:IsPurgable() return false end
+
+function modifier_special_bonus_imba_puck_illusory_orb_speed:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_puck_dream_coil_targets:IsHidden() return true end
+
+function modifier_special_bonus_imba_puck_dream_coil_targets:IsPurgable() return false end
+
+function modifier_special_bonus_imba_puck_dream_coil_targets:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_range", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_puck_waning_rift_cooldown	= class({})
-modifier_special_bonus_imba_puck_waning_rift_range		= modifier_special_bonus_imba_puck_waning_rift_range or class({})
+modifier_special_bonus_imba_puck_waning_rift_cooldown = class({})
+modifier_special_bonus_imba_puck_waning_rift_range    = modifier_special_bonus_imba_puck_waning_rift_range or class({})
 
-function modifier_special_bonus_imba_puck_waning_rift_cooldown:IsHidden() 		return true end
-function modifier_special_bonus_imba_puck_waning_rift_cooldown:IsPurgable() 	return false end
-function modifier_special_bonus_imba_puck_waning_rift_cooldown:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_puck_waning_rift_cooldown:IsHidden() return true end
 
-function modifier_special_bonus_imba_puck_waning_rift_range:IsHidden() 			return true end
-function modifier_special_bonus_imba_puck_waning_rift_range:IsPurgable() 		return false end
-function modifier_special_bonus_imba_puck_waning_rift_range:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_puck_waning_rift_cooldown:IsPurgable() return false end
+
+function modifier_special_bonus_imba_puck_waning_rift_cooldown:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_puck_waning_rift_range:IsHidden() return true end
+
+function modifier_special_bonus_imba_puck_waning_rift_range:IsPurgable() return false end
+
+function modifier_special_bonus_imba_puck_waning_rift_range:RemoveOnDeath() return false end
 
 function imba_puck_waning_rift:OnOwnerSpawned()
 	if not IsServer() then return end
@@ -852,7 +856,7 @@ function imba_puck_waning_rift:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_puck_waning_rift_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_puck_waning_rift_cooldown"), "modifier_special_bonus_imba_puck_waning_rift_cooldown", {})
 	end
-	
+
 	if self:GetCaster():HasTalent("special_bonus_imba_puck_waning_rift_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_puck_waning_rift_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_puck_waning_rift_range"), "modifier_special_bonus_imba_puck_waning_rift_range", {})
 	end

@@ -1,7 +1,7 @@
 -- Editors:
 --     MouJiaoZi, 01.08.2017
 
-function imba_phoenix_check_for_canceled( caster )
+function imba_phoenix_check_for_canceled(caster)
 	if caster:IsStunned() or caster:IsHexed() or caster:IsNightmared() or caster:HasModifier("modifier_naga_siren_song_of_the_siren") or caster:HasModifier("modifier_eul_cyclone") or caster:IsFrozen() or caster:IsOutOfGame() then
 		return true
 	else
@@ -19,16 +19,20 @@ LinkLuaModifier("modifier_imba_phoenix_icarus_dive_slow_debuff", "components/abi
 
 imba_phoenix_icarus_dive = imba_phoenix_icarus_dive or class({})
 
-function imba_phoenix_icarus_dive:IsHiddenWhenStolen() 		return false end
-function imba_phoenix_icarus_dive:IsRefreshable() 			return true  end
-function imba_phoenix_icarus_dive:IsStealable() 			return true  end
-function imba_phoenix_icarus_dive:IsNetherWardStealable() 	return false end
+function imba_phoenix_icarus_dive:IsHiddenWhenStolen() return false end
+
+function imba_phoenix_icarus_dive:IsRefreshable() return true end
+
+function imba_phoenix_icarus_dive:IsStealable() return true end
+
+function imba_phoenix_icarus_dive:IsNetherWardStealable() return false end
+
 function imba_phoenix_icarus_dive:GetAssociatedSecondaryAbilities() return "imba_phoenix_icarus_dive_stop" end
 
-function imba_phoenix_icarus_dive:GetAbilityTextureName()   return "phoenix_icarus_dive" end
+function imba_phoenix_icarus_dive:GetAbilityTextureName() return "phoenix_icarus_dive" end
 
 function imba_phoenix_icarus_dive:GetCastPoint()
-	local caster= self:GetCaster()
+	local caster = self:GetCaster()
 	if caster:HasTalent("special_bonus_imba_phoenix_1") then
 		return 0
 	else
@@ -46,7 +50,7 @@ function imba_phoenix_icarus_dive:OnAbilityPhaseStart()
 	end
 	local caster = self:GetCaster()
 	caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
-	caster:AddNewModifier(caster, self, "modifier_imba_phoenix_icarus_dive_ignore_turn_ray", {} ) -- Add the ignore turn buff to cast dive when sun ray
+	caster:AddNewModifier(caster, self, "modifier_imba_phoenix_icarus_dive_ignore_turn_ray", {}) -- Add the ignore turn buff to cast dive when sun ray
 	return true
 end
 
@@ -54,23 +58,23 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 	if not IsServer() then
 		return
 	end
-	
+
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
 	end
-	
-	local caster		= self:GetCaster()
-	local ability		= self
-	local target_point  = self:GetCursorPosition()
-	local caster_point  = caster:GetAbsOrigin()
+
+	local caster       = self:GetCaster()
+	local ability      = self
+	local target_point = self:GetCursorPosition()
+	local caster_point = caster:GetAbsOrigin()
 
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
 
-	local hpCost		= self:GetSpecialValueFor("hp_cost_perc")
-	local dashLength	= self:GetSpecialValueFor("dash_length")
-	local dashWidth		= self:GetSpecialValueFor("dash_width")
-	local dashDuration	= self:GetSpecialValueFor("dash_duration")
+	local hpCost        = self:GetSpecialValueFor("hp_cost_perc")
+	local dashLength    = self:GetSpecialValueFor("dash_length")
+	local dashWidth     = self:GetSpecialValueFor("dash_width")
+	local dashDuration  = self:GetSpecialValueFor("dash_duration")
 	local effect_radius = self:GetSpecialValueFor("hit_radius")
 
 	if caster:HasTalent("special_bonus_imba_phoenix_1") then
@@ -78,39 +82,39 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 		dashDuration = dashDuration / 2
 	end
 
-	local dummy_modifier	= "modifier_imba_phoenix_icarus_dive_dash_dummy" -- This is used to determain if dive can countinue
+	local dummy_modifier = "modifier_imba_phoenix_icarus_dive_dash_dummy" -- This is used to determain if dive can countinue
 	caster:AddNewModifier(caster, self, dummy_modifier, { duration = dashDuration })
 
 	local _direction = (target_point - caster:GetAbsOrigin()):Normalized()
 	caster:SetForwardVector(_direction)
 
-	local casterOrigin	= caster:GetAbsOrigin()
-	local casterAngles	= caster:GetAngles()
-	local forwardDir	= caster:GetForwardVector()
-	local rightDir		= caster:GetRightVector()
+	local casterOrigin  = caster:GetAbsOrigin()
+	local casterAngles  = caster:GetAngles()
+	local forwardDir    = caster:GetForwardVector()
+	local rightDir      = caster:GetRightVector()
 
 	--caster:SetAngles( casterAngles.x, yaw, casterAngles.z )
 
-	local ellipseCenter	= casterOrigin + forwardDir * ( dashLength / 2 )
+	local ellipseCenter = casterOrigin + forwardDir * (dashLength / 2)
 
-	local startTime = GameRules:GetGameTime()
+	local startTime     = GameRules:GetGameTime()
 
-	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf", PATTACH_WORLDORIGIN, nil )
+	local pfx           = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf", PATTACH_WORLDORIGIN, nil)
 
-	caster:SetContextThink( DoUniqueString("updateIcarusDive"), function ( )
-		ParticleManager:SetParticleControl(pfx, 0, caster:GetAbsOrigin() + caster:GetRightVector() * 32 )
+	caster:SetContextThink(DoUniqueString("updateIcarusDive"), function()
+		ParticleManager:SetParticleControl(pfx, 0, caster:GetAbsOrigin() + caster:GetRightVector() * 32)
 
 		local elapsedTime = GameRules:GetGameTime() - startTime
 		local progress = elapsedTime / dashDuration
 		self.progress = progress
 
 		-- Check the Debuff that can interrupt spell
-		if imba_phoenix_check_for_canceled( caster ) then
+		if imba_phoenix_check_for_canceled(caster) then
 			caster:RemoveModifierByName("modifier_imba_phoenix_icarus_dive_dash_dummy")
 		end
 
 		-- check for interrupted
-		if not caster:HasModifier( dummy_modifier ) then
+		if not caster:HasModifier(dummy_modifier) then
 			ParticleManager:DestroyParticle(pfx, false)
 			ParticleManager:ReleaseParticleIndex(pfx)
 			return nil
@@ -118,15 +122,15 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 
 		-- Calculate potision
 		local theta = -2 * math.pi * progress
-		local x =  math.sin( theta ) * dashWidth * 0.5
-		local y = -math.cos( theta ) * dashLength * 0.5
+		local x = math.sin(theta) * dashWidth * 0.5
+		local y = -math.cos(theta) * dashLength * 0.5
 
 		local pos = ellipseCenter + rightDir * x + forwardDir * y
 		local yaw = casterAngles.y + 90 + progress * -360
 
-		pos = GetGroundPosition( pos, caster )
-		caster:SetAbsOrigin( pos )
-		caster:SetAngles( casterAngles.x, yaw, casterAngles.z )
+		pos = GetGroundPosition(pos, caster)
+		caster:SetAbsOrigin(pos)
+		caster:SetAngles(casterAngles.x, yaw, casterAngles.z)
 
 		-- Cut Trees
 		GridNav:DestroyTreesAroundPoint(pos, 80, false)
@@ -143,16 +147,16 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 			false
 		)
 
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			if enemy ~= caster then
 				if enemy:GetTeamNumber() ~= caster:GetTeamNumber() then
-					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self:GetSpecialValueFor("burn_duration") * (1 - enemy:GetStatusResistance())} )
+					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_icarus_dive_slow_debuff", { duration = self:GetSpecialValueFor("burn_duration") * (1 - enemy:GetStatusResistance()) })
 				else
-					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_burning_wings_ally_buff", {duration = 0.2})
+					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_burning_wings_ally_buff", { duration = 0.2 })
 				end
 				if caster:HasTalent("special_bonus_imba_phoenix_2") and caster:GetTeamNumber() ~= enemy:GetTeamNumber() then
-					local item = CreateItem( "item_imba_dummy", caster, caster)
-					item:ApplyDataDrivenModifier( caster, enemy, "modifier_stunned", {duration = caster:FindTalentValue("special_bonus_imba_phoenix_2","stun_duration")} )
+					local item = CreateItem("item_imba_dummy", caster, caster)
+					item:ApplyDataDrivenModifier(caster, enemy, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_phoenix_2", "stun_duration") })
 					UTIL_Remove(item)
 				end
 			end
@@ -160,7 +164,7 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 		enemies = {}
 
 		return 0.03
-	end, 0 )
+	end, 0)
 
 	-- Spend HP cost
 	self.healthCost = caster:GetHealth() * hpCost / 100
@@ -177,9 +181,9 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 	end
 
 	-- Swap sub ability
-	local sub_ability_name	= "imba_phoenix_icarus_dive_stop"
-	local main_ability_name	= ability:GetAbilityName()
-	caster:SwapAbilities( main_ability_name, sub_ability_name, false, true )
+	local sub_ability_name = "imba_phoenix_icarus_dive_stop"
+	local main_ability_name = ability:GetAbilityName()
+	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
 end
 
 function imba_phoenix_icarus_dive:OnUpgrade()
@@ -198,20 +202,25 @@ end
 
 modifier_imba_phoenix_icarus_dive_dash_dummy = modifier_imba_phoenix_icarus_dive_dash_dummy or class({})
 
-function modifier_imba_phoenix_icarus_dive_dash_dummy:IsDebuff()			return false end
-function modifier_imba_phoenix_icarus_dive_dash_dummy:IsHidden() 			return true  end
-function modifier_imba_phoenix_icarus_dive_dash_dummy:IsPurgable() 			return false end
-function modifier_imba_phoenix_icarus_dive_dash_dummy:IsPurgeException() 	return false end
-function modifier_imba_phoenix_icarus_dive_dash_dummy:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_icarus_dive_dash_dummy:RemoveOnDeath() 		return true  end
+function modifier_imba_phoenix_icarus_dive_dash_dummy:IsDebuff() return false end
+
+function modifier_imba_phoenix_icarus_dive_dash_dummy:IsHidden() return true end
+
+function modifier_imba_phoenix_icarus_dive_dash_dummy:IsPurgable() return false end
+
+function modifier_imba_phoenix_icarus_dive_dash_dummy:IsPurgeException() return false end
+
+function modifier_imba_phoenix_icarus_dive_dash_dummy:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_icarus_dive_dash_dummy:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_icarus_dive_dash_dummy:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_supernova_radiance_streak_light.vpcf" end
 
 function modifier_imba_phoenix_icarus_dive_dash_dummy:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_PROPERTY_IGNORE_CAST_ANGLE,
-		}
+	{
+		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE,
+	}
 	return decFuns
 end
 
@@ -267,24 +276,24 @@ function modifier_imba_phoenix_icarus_dive_dash_dummy:OnDestroy()
 		false)
 	for _, unit in pairs(units) do -- It's an ally, heal
 		if unit:GetTeamNumber() == caster:GetTeamNumber() and unit ~= caster then
-			local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
+			local heal_amp = 1 + (caster:GetSpellAmplification(false) / 100)
 			stop_dmg_heal = stop_dmg_heal * heal_amp
 			unit:Heal(stop_dmg_heal, caster)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, unit, stop_dmg_heal, nil)
-	elseif unit:GetTeamNumber() ~= caster:GetTeamNumber() and unit ~= caster then -- It's  an enemy, dmg
-		local damageTable = {
-			victim = unit,
-			attacker = caster,
-			damage = stop_dmg_heal,
-			damage_type = DAMAGE_TYPE_MAGICAL,
-			ability = self:GetAbility(),
-		}
-	ApplyDamage(damageTable)
-	end
+		elseif unit:GetTeamNumber() ~= caster:GetTeamNumber() and unit ~= caster then -- It's  an enemy, dmg
+			local damageTable = {
+				victim = unit,
+				attacker = caster,
+				damage = stop_dmg_heal,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				ability = self:GetAbility(),
+			}
+			ApplyDamage(damageTable)
+		end
 	end
 
 	-- IMBA: when finish cast, deal dmg and heal to near by units, number is equal to the hp cost
-	caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_icarus_dive_extend_burn", { duration = ability:GetSpecialValueFor("extend_burn_duration") } ) -- IMBA: Extend the burn effect after cast finish
+	caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_icarus_dive_extend_burn", { duration = ability:GetSpecialValueFor("extend_burn_duration") }) -- IMBA: Extend the burn effect after cast finish
 
 	local sun_ray = caster:FindAbilityByName("imba_phoenix_sun_ray")
 	if sun_ray then
@@ -292,9 +301,9 @@ function modifier_imba_phoenix_icarus_dive_dash_dummy:OnDestroy()
 	end
 
 	-- Switch the dive abilities
-	local sub_ability_name	= "imba_phoenix_icarus_dive"
-	local main_ability_name	= "imba_phoenix_icarus_dive_stop"
-	caster:SwapAbilities( main_ability_name, sub_ability_name, false, true )
+	local sub_ability_name = "imba_phoenix_icarus_dive"
+	local main_ability_name = "imba_phoenix_icarus_dive_stop"
+	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
 	caster:RemoveModifierByName("modifier_imba_phoenix_icarus_dive_ignore_turn_ray")
 
 	-- Audio-visual effects
@@ -303,28 +312,32 @@ function modifier_imba_phoenix_icarus_dive_dash_dummy:OnDestroy()
 	caster:RemoveGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
 
 	-- Anti-stuck
-	caster:SetContextThink( DoUniqueString("waitToFindClearSpace"), function ( )
+	caster:SetContextThink(DoUniqueString("waitToFindClearSpace"), function()
 		if not caster:HasModifier("modifier_naga_siren_song_of_the_siren") then
 			FindClearSpaceForUnit(caster, point, false)
 			return nil
 		end
 		return 0.1
-	end, 0 )
-
+	end, 0)
 end
 
 modifier_imba_phoenix_icarus_dive_ignore_turn_ray = modifier_imba_phoenix_icarus_dive_ignore_turn_ray or class({})
 
-function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsDebuff()			return false end
-function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsHidden() 			return true  end
-function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsPurgable() 			return false end
-function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsPurgeException() 	return false end
-function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:RemoveOnDeath() 		return true  end
+function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsDebuff() return false end
+
+function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsHidden() return true end
+
+function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsPurgable() return false end
+
+function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsPurgeException() return false end
+
+function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:RemoveOnDeath() return true end
 
 modifier_imba_phoenix_icarus_dive_slow_debuff = modifier_imba_phoenix_icarus_dive_slow_debuff or class({})
 
-function modifier_imba_phoenix_icarus_dive_slow_debuff:IsDebuff()			return true  end
+function modifier_imba_phoenix_icarus_dive_slow_debuff:IsDebuff() return true end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:IsHidden()
 	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
@@ -350,18 +363,19 @@ function modifier_imba_phoenix_icarus_dive_slow_debuff:IsPurgeException()
 	end
 end
 
-function modifier_imba_phoenix_icarus_dive_slow_debuff:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_icarus_dive_slow_debuff:RemoveOnDeath() 		return true  end
+function modifier_imba_phoenix_icarus_dive_slow_debuff:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_icarus_dive_slow_debuff:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:OnCreated()
-	self.slow_movement_speed_pct	= self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") * (-1)
+	self.slow_movement_speed_pct = self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") * (-1)
 end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 	return decFuns
 end
 
@@ -369,36 +383,36 @@ function modifier_imba_phoenix_icarus_dive_slow_debuff:GetTexture()
 	return "phoenix_icarus_dive"
 end
 
-function modifier_imba_phoenix_icarus_dive_slow_debuff:GetEffectName()	return "particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf" end
+function modifier_imba_phoenix_icarus_dive_slow_debuff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf" end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
-function modifier_imba_phoenix_icarus_dive_slow_debuff:GetModifierMoveSpeedBonus_Percentage()	return self.slow_movement_speed_pct end
+
+function modifier_imba_phoenix_icarus_dive_slow_debuff:GetModifierMoveSpeedBonus_Percentage() return self.slow_movement_speed_pct end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:OnCreated()
-	self.burn_tick_interval	= self:GetAbility():GetSpecialValueFor("burn_tick_interval")
-	self.damage_per_second	= self:GetAbility():GetSpecialValueFor("damage_per_second")
+	self.burn_tick_interval = self:GetAbility():GetSpecialValueFor("burn_tick_interval")
+	self.damage_per_second = self:GetAbility():GetSpecialValueFor("damage_per_second")
 
 	if not IsServer() then
 		return
 	end
-	
-	self:StartIntervalThink( self.burn_tick_interval )
-end
 
+	self:StartIntervalThink(self.burn_tick_interval)
+end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:OnIntervalThink()
 	if not IsServer() then
 		return
 	end
-	
+
 	if not self:GetParent():IsAlive() then
 		return
 	end
-	
+
 	local damageTable = {
 		victim = self:GetParent(),
 		attacker = self:GetCaster(),
-		damage = self.damage_per_second * ( self.burn_tick_interval / 1.0 ),
+		damage = self.damage_per_second * (self.burn_tick_interval / 1.0),
 		damage_type = DAMAGE_TYPE_MAGICAL,
 		ability = self:GetAbility(),
 	}
@@ -407,28 +421,34 @@ end
 
 modifier_imba_phoenix_icarus_dive_extend_burn = modifier_imba_phoenix_icarus_dive_extend_burn or class({})
 
-function modifier_imba_phoenix_icarus_dive_extend_burn:IsDebuff()			return false end
-function modifier_imba_phoenix_icarus_dive_extend_burn:IsHidden() 			return false  end
-function modifier_imba_phoenix_icarus_dive_extend_burn:IsPurgable() 		return false end
-function modifier_imba_phoenix_icarus_dive_extend_burn:IsPurgeException() 	return false end
-function modifier_imba_phoenix_icarus_dive_extend_burn:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_icarus_dive_extend_burn:RemoveOnDeath() 		return true  end
+function modifier_imba_phoenix_icarus_dive_extend_burn:IsDebuff() return false end
+
+function modifier_imba_phoenix_icarus_dive_extend_burn:IsHidden() return false end
+
+function modifier_imba_phoenix_icarus_dive_extend_burn:IsPurgable() return false end
+
+function modifier_imba_phoenix_icarus_dive_extend_burn:IsPurgeException() return false end
+
+function modifier_imba_phoenix_icarus_dive_extend_burn:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_icarus_dive_extend_burn:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_icarus_dive_extend_burn:GetTexture() return "phoenix_icarus_dive" end
+
 function modifier_imba_phoenix_icarus_dive_extend_burn:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_supernova_radiance_streak_light.vpcf" end
 
 function modifier_imba_phoenix_icarus_dive_extend_burn:OnCreated()
-	self.hit_radius		= self:GetAbility():GetSpecialValueFor("hit_radius")
-	self.burn_duration	= self:GetAbility():GetSpecialValueFor("burn_duration")
+	self.hit_radius    = self:GetAbility():GetSpecialValueFor("hit_radius")
+	self.burn_duration = self:GetAbility():GetSpecialValueFor("burn_duration")
 
 	if not IsServer() then
 		return
 	end
 	local ability = self:GetAbility()
 	local caster = self:GetCaster()
-	ability.extPfx = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf",PATTACH_POINT_FOLLOW,caster)
-	ParticleManager:SetParticleControlEnt(ability.extPfx,0,caster,PATTACH_POINT_FOLLOW,"attach_hitloc",caster:GetAbsOrigin(),true)
-	ParticleManager:SetParticleControlEnt(ability.extPfx,1,caster,PATTACH_POINT_FOLLOW,"attach_hitloc",caster:GetAbsOrigin(),true)
+	ability.extPfx = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf", PATTACH_POINT_FOLLOW, caster)
+	ParticleManager:SetParticleControlEnt(ability.extPfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(ability.extPfx, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 	self:StartIntervalThink(0.1)
 end
 
@@ -447,8 +467,8 @@ function modifier_imba_phoenix_icarus_dive_extend_burn:OnIntervalThink()
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
 		false)
-	for _,enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self.burn_duration * (1 - enemy:GetStatusResistance())} )
+	for _, enemy in pairs(enemies) do
+		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_icarus_dive_slow_debuff", { duration = self.burn_duration * (1 - enemy:GetStatusResistance()) })
 	end
 end
 
@@ -467,12 +487,18 @@ end
 
 imba_phoenix_icarus_dive_stop = imba_phoenix_icarus_dive_stop or class({})
 
-function imba_phoenix_icarus_dive_stop:IsHiddenWhenStolen() 	return true end
-function imba_phoenix_icarus_dive_stop:IsRefreshable() 			return true  end
-function imba_phoenix_icarus_dive_stop:IsStealable() 			return false end
-function imba_phoenix_icarus_dive_stop:IsNetherWardStealable() 	return false end
-function imba_phoenix_icarus_dive_stop:GetAssociatedPrimaryAbilities()  return "imba_phoenix_icarus_dive" end
+function imba_phoenix_icarus_dive_stop:IsHiddenWhenStolen() return true end
+
+function imba_phoenix_icarus_dive_stop:IsRefreshable() return true end
+
+function imba_phoenix_icarus_dive_stop:IsStealable() return false end
+
+function imba_phoenix_icarus_dive_stop:IsNetherWardStealable() return false end
+
+function imba_phoenix_icarus_dive_stop:GetAssociatedPrimaryAbilities() return "imba_phoenix_icarus_dive" end
+
 function imba_phoenix_icarus_dive_stop:ProcsMagicStick() return false end
+
 function imba_phoenix_icarus_dive_stop:GetAbilityTextureName()
 	return "phoenix_icarus_dive_stop"
 end
@@ -508,10 +534,14 @@ LinkLuaModifier("modifier_imba_phoenix_fire_spirits_count", "components/abilitie
 
 imba_phoenix_fire_spirits = imba_phoenix_fire_spirits or class({})
 
-function imba_phoenix_fire_spirits:IsHiddenWhenStolen() 	return false end
-function imba_phoenix_fire_spirits:IsRefreshable() 			return true  end
-function imba_phoenix_fire_spirits:IsStealable() 			return true  end
-function imba_phoenix_fire_spirits:IsNetherWardStealable() 	return false end
+function imba_phoenix_fire_spirits:IsHiddenWhenStolen() return false end
+
+function imba_phoenix_fire_spirits:IsRefreshable() return true end
+
+function imba_phoenix_fire_spirits:IsStealable() return true end
+
+function imba_phoenix_fire_spirits:IsNetherWardStealable() return false end
+
 function imba_phoenix_fire_spirits:GetAssociatedSecondaryAbilities() return "imba_phoenix_launch_fire_spirit" end
 
 function imba_phoenix_fire_spirits:GetAbilityTextureName() return "phoenix_fire_spirits" end
@@ -521,15 +551,15 @@ function imba_phoenix_fire_spirits:OnSpellStart()
 		return
 	end
 
-	local caster	= self:GetCaster()
+	local caster = self:GetCaster()
 	caster:StartGesture(ACT_DOTA_CAST_ABILITY_2)
 	EmitSoundOn("Hero_Phoenix.FireSpirits.Cast", caster)
 
 	caster.ability_spirits = self
 
-	local hpCost		= self:GetTalentSpecialValueFor("hp_cost_perc")
-	local numSpirits	= self:GetTalentSpecialValueFor("spirit_count")
-	local AfterCastHealth = caster:GetHealth()-(caster:GetHealth() * hpCost / 100)
+	local hpCost           = self:GetTalentSpecialValueFor("hp_cost_perc")
+	local numSpirits       = self:GetTalentSpecialValueFor("spirit_count")
+	local AfterCastHealth  = caster:GetHealth() - (caster:GetHealth() * hpCost / 100)
 
 	if caster:HasModifier("modifier_imba_phoenix_burning_wings_buff") then
 		caster:Heal((caster:GetHealth() * hpCost / 100), caster)
@@ -544,29 +574,29 @@ function imba_phoenix_fire_spirits:OnSpellStart()
 
 	-- Create particle FX
 	local particleName = "particles/units/heroes/hero_phoenix/phoenix_fire_spirits.vpcf"
-	local pfx = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
-	ParticleManager:SetParticleControl( pfx, 1, Vector( numSpirits, 0, 0 ) )
-	for i=1, numSpirits do
-		ParticleManager:SetParticleControl( pfx, 8+i, Vector( 1, 0, 0 ) )
+	local pfx = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(pfx, 1, Vector(numSpirits, 0, 0))
+	for i = 1, numSpirits do
+		ParticleManager:SetParticleControl(pfx, 8 + i, Vector(1, 0, 0))
 	end
 
-	caster.fire_spirits_numSpirits	= numSpirits
-	caster.fire_spirits_pfx			= pfx
+	caster.fire_spirits_numSpirits = numSpirits
+	caster.fire_spirits_pfx        = pfx
 
 	-- Set the stack count
-	local iDuration = self:GetSpecialValueFor("spirit_duration")
+	local iDuration                = self:GetSpecialValueFor("spirit_duration")
 	if self:GetCaster():HasTalent("special_bonus_imba_phoenix_7") then
-		iDuration = iDuration * self:GetCaster():FindTalentValue("special_bonus_imba_phoenix_7","duration_pct") / 100
+		iDuration = iDuration * self:GetCaster():FindTalentValue("special_bonus_imba_phoenix_7", "duration_pct") / 100
 	end
-	caster:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_count", { duration =  iDuration})
+	caster:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_count", { duration = iDuration })
 	if not caster:HasTalent("special_bonus_imba_phoenix_7") then
-		caster:SetModifierStackCount( "modifier_imba_phoenix_fire_spirits_count", caster, numSpirits )
+		caster:SetModifierStackCount("modifier_imba_phoenix_fire_spirits_count", caster, numSpirits)
 	end
 
 	-- Swap sub ability
-	local sub_ability_name	= "imba_phoenix_launch_fire_spirit"
-	local main_ability_name	= self:GetAbilityName()
-	caster:SwapAbilities( main_ability_name, sub_ability_name, false, true )
+	local sub_ability_name = "imba_phoenix_launch_fire_spirit"
+	local main_ability_name = self:GetAbilityName()
+	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
 end
 
 function imba_phoenix_fire_spirits:GetCastAnimation()
@@ -597,12 +627,17 @@ end
 
 modifier_imba_phoenix_fire_spirits_count = modifier_imba_phoenix_fire_spirits_count or class({})
 
-function modifier_imba_phoenix_fire_spirits_count:IsDebuff()			return false end
-function modifier_imba_phoenix_fire_spirits_count:IsHidden() 			return false end
-function modifier_imba_phoenix_fire_spirits_count:IsPurgable() 			return false end
-function modifier_imba_phoenix_fire_spirits_count:IsPurgeException() 	return false end
-function modifier_imba_phoenix_fire_spirits_count:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_fire_spirits_count:RemoveOnDeath() 		return true  end
+function modifier_imba_phoenix_fire_spirits_count:IsDebuff() return false end
+
+function modifier_imba_phoenix_fire_spirits_count:IsHidden() return false end
+
+function modifier_imba_phoenix_fire_spirits_count:IsPurgable() return false end
+
+function modifier_imba_phoenix_fire_spirits_count:IsPurgeException() return false end
+
+function modifier_imba_phoenix_fire_spirits_count:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_fire_spirits_count:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_fire_spirits_count:GetTexture()
 	return "phoenix_fire_spirits"
@@ -631,7 +666,7 @@ function modifier_imba_phoenix_fire_spirits_count:OnIntervalThink()
 		FIND_ANY_ORDER,
 		false)
 	for _, enemy in pairs(enemies) do
-		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_fire_spirits_debuff", { duration = ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()) } )
+		enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_fire_spirits_debuff", { duration = ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()) })
 	end
 end
 
@@ -642,13 +677,13 @@ function modifier_imba_phoenix_fire_spirits_count:OnDestroy()
 	local caster = self:GetCaster()
 	local pfx = caster.fire_spirits_pfx
 	if pfx then
-		ParticleManager:DestroyParticle( pfx, false )
-		ParticleManager:ReleaseParticleIndex( pfx )
+		ParticleManager:DestroyParticle(pfx, false)
+		ParticleManager:ReleaseParticleIndex(pfx)
 	end
-	local main_ability_name	= "imba_phoenix_fire_spirits"
-	local sub_ability_name	= "imba_phoenix_launch_fire_spirit"
+	local main_ability_name = "imba_phoenix_fire_spirits"
+	local sub_ability_name = "imba_phoenix_launch_fire_spirit"
 	if caster then
-		caster:SwapAbilities( main_ability_name, sub_ability_name, true, false )
+		caster:SwapAbilities(main_ability_name, sub_ability_name, true, false)
 	end
 end
 
@@ -661,22 +696,27 @@ LinkLuaModifier("modifier_imba_phoenix_fire_spirits_buff", "components/abilities
 
 imba_phoenix_launch_fire_spirit = imba_phoenix_launch_fire_spirit or class({})
 
-function imba_phoenix_launch_fire_spirit:IsHiddenWhenStolen() 		return true end
-function imba_phoenix_launch_fire_spirit:IsRefreshable() 			return true  end
-function imba_phoenix_launch_fire_spirit:IsStealable() 				return false end
-function imba_phoenix_launch_fire_spirit:IsNetherWardStealable() 	return false end
+function imba_phoenix_launch_fire_spirit:IsHiddenWhenStolen() return true end
+
+function imba_phoenix_launch_fire_spirit:IsRefreshable() return true end
+
+function imba_phoenix_launch_fire_spirit:IsStealable() return false end
+
+function imba_phoenix_launch_fire_spirit:IsNetherWardStealable() return false end
+
 function imba_phoenix_launch_fire_spirit:GetAssociatedPrimaryAbilities() return "imba_phoenix_fire_spirits" end
+
 function imba_phoenix_launch_fire_spirit:ProcsMagicStick() return false end
 
-function imba_phoenix_launch_fire_spirit:GetAbilityTextureName()   return "phoenix_launch_fire_spirit" end
+function imba_phoenix_launch_fire_spirit:GetAbilityTextureName() return "phoenix_launch_fire_spirit" end
 
-function imba_phoenix_launch_fire_spirit:GetAOERadius()  return self:GetSpecialValueFor("radius") end
+function imba_phoenix_launch_fire_spirit:GetAOERadius() return self:GetSpecialValueFor("radius") end
 
 function imba_phoenix_launch_fire_spirit:GetManaCost()
 	if not self:GetCaster():HasTalent("special_bonus_imba_phoenix_7") then
 		return 0
 	else
-		return self:GetCaster():FindTalentValue("special_bonus_imba_phoenix_7","mana_cost")
+		return self:GetCaster():FindTalentValue("special_bonus_imba_phoenix_7", "mana_cost")
 	end
 end
 
@@ -684,12 +724,12 @@ function imba_phoenix_launch_fire_spirit:OnSpellStart()
 	if not IsServer() then
 		return
 	end
-	local caster		= self:GetCaster()
-	local point 		= self:GetCursorPosition()
-	point.z = point.z + 70
-	local ability		= self
-	local modifierName	= "modifier_imba_phoenix_fire_spirits_count"
-	local iModifier 	= caster:FindModifierByName(modifierName)
+	local caster       = self:GetCaster()
+	local point        = self:GetCursorPosition()
+	point.z            = point.z + 70
+	local ability      = self
+	local modifierName = "modifier_imba_phoenix_fire_spirits_count"
+	local iModifier    = caster:FindModifierByName(modifierName)
 
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 	EmitSoundOn("Hero_Phoenix.FireSpirits.Launch", caster)
@@ -706,39 +746,39 @@ function imba_phoenix_launch_fire_spirit:OnSpellStart()
 
 		-- Update the particle FX
 		local pfx = caster.fire_spirits_pfx
-		ParticleManager:SetParticleControl( pfx, 1, Vector( currentStack, 0, 0 ) )
-		for i=1, caster.fire_spirits_numSpirits do
+		ParticleManager:SetParticleControl(pfx, 1, Vector(currentStack, 0, 0))
+		for i = 1, caster.fire_spirits_numSpirits do
 			local radius = 0
 			if i <= currentStack then
 				radius = 1
 			end
-			ParticleManager:SetParticleControl( pfx, 8+i, Vector( radius, 0, 0 ) )
+			ParticleManager:SetParticleControl(pfx, 8 + i, Vector(radius, 0, 0))
 		end
 	end
 
 	-- Projectile
 	local direction = (point - caster:GetAbsOrigin()):Normalized()
-	local DummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", {duration = 0.1})
+	local DummyUnit = CreateUnitByName("npc_dummy_unit", point, false, caster, caster:GetOwner(), caster:GetTeamNumber())
+	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", { duration = 0.1 })
 	local cast_target = DummyUnit
 
 	local info =
-		{
-			Target = cast_target,
-			Source = caster,
-			Ability = ability,
-			EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
-			iMoveSpeed = self:GetSpecialValueFor("spirit_speed"),
-			vSourceLoc = direction,							-- Optional (HOW)
-			bDrawsOnMinimap = false,						-- Optional
-			bDodgeable = false,								-- Optional
-			bIsAttack = false,								-- Optional
-			bVisibleToEnemies = true,						-- Optional
-			bReplaceExisting = false,						-- Optional
-			flExpireTime = GameRules:GetGameTime() + 10,	-- Optional but recommended
-			bProvidesVision = false,						-- Optional
-			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-		}
+	{
+		Target = cast_target,
+		Source = caster,
+		Ability = ability,
+		EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
+		iMoveSpeed = self:GetSpecialValueFor("spirit_speed"),
+		vSourceLoc = direction,                 -- Optional (HOW)
+		bDrawsOnMinimap = false,                -- Optional
+		bDodgeable = false,                     -- Optional
+		bIsAttack = false,                      -- Optional
+		bVisibleToEnemies = true,               -- Optional
+		bReplaceExisting = false,               -- Optional
+		flExpireTime = GameRules:GetGameTime() + 10, -- Optional but recommended
+		bProvidesVision = false,                -- Optional
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+	}
 	ProjectileManager:CreateTrackingProjectile(info)
 
 	-- Remove the stack modifier if all the spirits has been launched.
@@ -747,7 +787,7 @@ function imba_phoenix_launch_fire_spirit:OnSpellStart()
 	end
 end
 
-function imba_phoenix_launch_fire_spirit:OnProjectileThink( vLocation )
+function imba_phoenix_launch_fire_spirit:OnProjectileThink(vLocation)
 	if not IsServer() then
 		return
 	end
@@ -764,14 +804,14 @@ function imba_phoenix_launch_fire_spirit:OnProjectileThink( vLocation )
 		false)
 	for _, enemy in pairs(enemies) do
 		if enemy:GetTeamNumber() ~= caster:GetTeamNumber() then
-			enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_fire_spirits_debuff", { duration = ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()) } )
+			enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_fire_spirits_debuff", { duration = ability:GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()) })
 		else
-			enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_burning_wings_ally_buff", {duration = 0.2})
+			enemy:AddNewModifier(caster, ability, "modifier_imba_phoenix_burning_wings_ally_buff", { duration = 0.2 })
 		end
 	end
 end
 
-function imba_phoenix_launch_fire_spirit:OnProjectileHit( hTarget, vLocation)
+function imba_phoenix_launch_fire_spirit:OnProjectileHit(hTarget, vLocation)
 	if not IsServer() then
 		return
 	end
@@ -782,8 +822,8 @@ function imba_phoenix_launch_fire_spirit:OnProjectileHit( hTarget, vLocation)
 		location = hTarget:GetAbsOrigin()
 	end
 	-- Particles and sound
-	local DummyUnit = CreateUnitByName("npc_dummy_unit",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", {duration = 0.1})
+	local DummyUnit = CreateUnitByName("npc_dummy_unit", location, false, caster, caster:GetOwner(), caster:GetTeamNumber())
+	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", { duration = 0.1 })
 	local pfx_explosion = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(pfx_explosion, 0, location)
 	ParticleManager:ReleaseParticleIndex(pfx_explosion)
@@ -803,12 +843,12 @@ function imba_phoenix_launch_fire_spirit:OnProjectileHit( hTarget, vLocation)
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
 		false)
-	for _,unit in pairs(units) do
+	for _, unit in pairs(units) do
 		if unit ~= caster then
 			if unit:GetTeamNumber() ~= caster:GetTeamNumber() then
-				unit:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_debuff", {duration = self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance())} )
+				unit:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_debuff", { duration = self:GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance()) })
 			else
-				unit:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_buff", {duration = self:GetSpecialValueFor("duration")} )
+				unit:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_buff", { duration = self:GetSpecialValueFor("duration") })
 			end
 		end
 	end
@@ -839,21 +879,25 @@ function imba_phoenix_launch_fire_spirit:OnUpgrade()
 	end
 end
 
-
 modifier_imba_phoenix_fire_spirits_debuff = modifier_imba_phoenix_fire_spirits_debuff or class({})
 
-function modifier_imba_phoenix_fire_spirits_debuff:IsDebuff()			return true  end
-function modifier_imba_phoenix_fire_spirits_debuff:IsHidden() 			return false end
-function modifier_imba_phoenix_fire_spirits_debuff:IsPurgable() 		return true  end
-function modifier_imba_phoenix_fire_spirits_debuff:IsPurgeException() 	return true  end
-function modifier_imba_phoenix_fire_spirits_debuff:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_fire_spirits_debuff:RemoveOnDeath() 		return true  end
+function modifier_imba_phoenix_fire_spirits_debuff:IsDebuff() return true end
+
+function modifier_imba_phoenix_fire_spirits_debuff:IsHidden() return false end
+
+function modifier_imba_phoenix_fire_spirits_debuff:IsPurgable() return true end
+
+function modifier_imba_phoenix_fire_spirits_debuff:IsPurgeException() return true end
+
+function modifier_imba_phoenix_fire_spirits_debuff:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_fire_spirits_debuff:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_fire_spirits_debuff:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-		}
+	{
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 	return decFuns
 end
 
@@ -862,7 +906,7 @@ function modifier_imba_phoenix_fire_spirits_debuff:GetTexture()
 end
 
 function modifier_imba_phoenix_fire_spirits_debuff:OnCreated()
-	self.attackspeed_slow	= self:GetAbility():GetSpecialValueFor("attackspeed_slow") * (-1)
+	self.attackspeed_slow = self:GetAbility():GetSpecialValueFor("attackspeed_slow") * (-1)
 
 	if not IsServer() then
 		return
@@ -871,11 +915,11 @@ function modifier_imba_phoenix_fire_spirits_debuff:OnCreated()
 	if self:GetStackCount() <= 1 then
 		self:SetStackCount(1)
 	end
-	
-	self.tick_interval		= self:GetAbility():GetSpecialValueFor("tick_interval")
-	self.damage_per_second	= self:GetAbility():GetSpecialValueFor("damage_per_second")
-	
-	self:StartIntervalThink( self.tick_interval )
+
+	self.tick_interval     = self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.damage_per_second = self:GetAbility():GetSpecialValueFor("damage_per_second")
+
+	self:StartIntervalThink(self.tick_interval)
 end
 
 function modifier_imba_phoenix_fire_spirits_debuff:OnRefresh()
@@ -887,7 +931,7 @@ function modifier_imba_phoenix_fire_spirits_debuff:OnRefresh()
 	if self:GetStackCount() <= 1 then
 		self:SetStackCount(1)
 	end
-	if caster:HasTalent("special_bonus_imba_phoenix_3") and self:GetStackCount() < caster:FindTalentValue("special_bonus_imba_phoenix_3","max_stacks") then
+	if caster:HasTalent("special_bonus_imba_phoenix_3") and self:GetStackCount() < caster:FindTalentValue("special_bonus_imba_phoenix_3", "max_stacks") then
 		self:IncrementStackCount()
 	end
 end
@@ -896,15 +940,15 @@ function modifier_imba_phoenix_fire_spirits_debuff:OnIntervalThink()
 	if not IsServer() then
 		return
 	end
-	
+
 	if not self:GetParent():IsAlive() then
 		return
 	end
-	
+
 	local damageTable = {
 		victim = self:GetParent(),
 		attacker = self:GetCaster(),
-		damage = (self.damage_per_second * ( self.tick_interval / 1.0 )) * self:GetStackCount(),
+		damage = (self.damage_per_second * (self.tick_interval / 1.0)) * self:GetStackCount(),
 		damage_type = DAMAGE_TYPE_MAGICAL,
 		ability = self:GetAbility(),
 	}
@@ -912,7 +956,9 @@ function modifier_imba_phoenix_fire_spirits_debuff:OnIntervalThink()
 end
 
 function modifier_imba_phoenix_fire_spirits_debuff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf" end
+
 function modifier_imba_phoenix_fire_spirits_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
+
 function modifier_imba_phoenix_fire_spirits_debuff:GetModifierAttackSpeedBonus_Constant()
 	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
 		return 0
@@ -923,19 +969,24 @@ end
 
 modifier_imba_phoenix_fire_spirits_buff = modifier_imba_phoenix_fire_spirits_buff or class({})
 
-function modifier_imba_phoenix_fire_spirits_buff:IsDebuff()			return false end
+function modifier_imba_phoenix_fire_spirits_buff:IsDebuff() return false end
 
-function modifier_imba_phoenix_fire_spirits_buff:IsHidden() 			return false end
-function modifier_imba_phoenix_fire_spirits_buff:IsPurgable() 			return true  end
-function modifier_imba_phoenix_fire_spirits_buff:IsPurgeException() 	return true  end
-function modifier_imba_phoenix_fire_spirits_buff:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_fire_spirits_buff:RemoveOnDeath() 		return true  end
+function modifier_imba_phoenix_fire_spirits_buff:IsHidden() return false end
+
+function modifier_imba_phoenix_fire_spirits_buff:IsPurgable() return true end
+
+function modifier_imba_phoenix_fire_spirits_buff:IsPurgeException() return true end
+
+function modifier_imba_phoenix_fire_spirits_buff:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_fire_spirits_buff:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_fire_spirits_buff:GetTexture()
 	return "phoenix_fire_spirits"
 end
 
 function modifier_imba_phoenix_fire_spirits_buff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf" end
+
 function modifier_imba_phoenix_fire_spirits_buff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
 
 function modifier_imba_phoenix_fire_spirits_buff:OnCreated()
@@ -947,7 +998,7 @@ function modifier_imba_phoenix_fire_spirits_buff:OnCreated()
 		self:SetStackCount(1)
 	end
 	local tick = ability:GetSpecialValueFor("tick_interval")
-	self:StartIntervalThink( tick )
+	self:StartIntervalThink(tick)
 end
 
 function modifier_imba_phoenix_fire_spirits_buff:OnRefresh()
@@ -959,7 +1010,7 @@ function modifier_imba_phoenix_fire_spirits_buff:OnRefresh()
 	if self:GetStackCount() <= 1 then
 		self:SetStackCount(1)
 	end
-	if caster:HasTalent("special_bonus_imba_phoenix_3") and self:GetStackCount() < caster:FindTalentValue("special_bonus_imba_phoenix_3","max_stacks") then
+	if caster:HasTalent("special_bonus_imba_phoenix_3") and self:GetStackCount() < caster:FindTalentValue("special_bonus_imba_phoenix_3", "max_stacks") then
 		self:IncrementStackCount()
 	end
 end
@@ -974,13 +1025,12 @@ function modifier_imba_phoenix_fire_spirits_buff:OnIntervalThink()
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	local tick = ability:GetSpecialValueFor("tick_interval")
-	local dmg = ability:GetSpecialValueFor("damage_per_second") * ( tick / 1.0 )
-	local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
+	local dmg = ability:GetSpecialValueFor("damage_per_second") * (tick / 1.0)
+	local heal_amp = 1 + (caster:GetSpellAmplification(false) / 100)
 	dmg = dmg * heal_amp
 	self:GetParent():Heal(dmg * self:GetStackCount(), caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), dmg * self:GetStackCount(), nil)
 end
-
 
 -------------------------------------------
 --			  Sun Ray
@@ -988,13 +1038,17 @@ end
 
 imba_phoenix_sun_ray = imba_phoenix_sun_ray or class({})
 
-function imba_phoenix_sun_ray:IsHiddenWhenStolen() 		return false end
-function imba_phoenix_sun_ray:IsRefreshable() 			return true  end
-function imba_phoenix_sun_ray:IsStealable() 			return true  end
-function imba_phoenix_sun_ray:IsNetherWardStealable() 	return true  end
-function imba_phoenix_sun_ray:GetAssociatedSecondaryAbilities()  return "imba_phoenix_sun_ray_toggle_move" end
+function imba_phoenix_sun_ray:IsHiddenWhenStolen() return false end
 
-function imba_phoenix_sun_ray:GetAbilityTextureName()   return "phoenix_sun_ray" end
+function imba_phoenix_sun_ray:IsRefreshable() return true end
+
+function imba_phoenix_sun_ray:IsStealable() return true end
+
+function imba_phoenix_sun_ray:IsNetherWardStealable() return true end
+
+function imba_phoenix_sun_ray:GetAssociatedSecondaryAbilities() return "imba_phoenix_sun_ray_toggle_move" end
+
+function imba_phoenix_sun_ray:GetAbilityTextureName() return "phoenix_sun_ray" end
 
 LinkLuaModifier("modifier_imba_phoenix_sun_ray_caster_dummy", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phoenix_sun_ray_dummy_unit_thinker", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
@@ -1011,11 +1065,11 @@ end
 
 -- SPAGHET
 function imba_phoenix_sun_ray:OnUnStolen()
-	if self:GetCaster():HasAbility("imba_phoenix_sun_ray_stop") then		
+	if self:GetCaster():HasAbility("imba_phoenix_sun_ray_stop") then
 		if not self:GetCaster():FindAbilityByName("imba_phoenix_sun_ray_stop"):IsHidden() then
 			self:GetCaster():SwapAbilities(self:GetName(), "imba_phoenix_sun_ray_stop", true, false)
 		end
-		
+
 		self:GetCaster():RemoveAbility("imba_phoenix_sun_ray_stop")
 		self:GetCaster():RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
 	end
@@ -1027,14 +1081,14 @@ function imba_phoenix_sun_ray:OnSpellStart()
 		self:GetCaster():AddAbility("imba_phoenix_sun_ray_stop"):SetHidden(true)
 		self:GetCaster():FindAbilityByName("imba_phoenix_sun_ray_stop"):SetLevel(1)
 	end
-	
+
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
-	end	
+	end
 
-	local caster	= self:GetCaster()
-	local ability	= self
+	local caster = self:GetCaster()
+	local ability = self
 
 	local ray_stop = caster:FindAbilityByName("imba_phoenix_sun_ray_stop")
 	local toggle_move = caster:FindAbilityByName("imba_phoenix_sun_ray_toggle_move")
@@ -1043,17 +1097,17 @@ function imba_phoenix_sun_ray:OnSpellStart()
 		return
 	end
 
-	local pathLength					= self:GetSpecialValueFor("beam_range")
-	local max_duration 					= self:GetSpecialValueFor("duration")
-	local forwardMoveSpeed				= self:GetSpecialValueFor("move_speed")
-	local turnRateInitial				= self:GetSpecialValueFor("turn_rate_initial")
-	local turnRate						= self:GetSpecialValueFor("turn_rate")
-	local initialTurnDuration			= self:GetSpecialValueFor("initial_turn_max_duration")
-	local vision_radius					= self:GetSpecialValueFor("radius") / 2
-	local numVision						= math.ceil( pathLength / vision_radius )
-	local modifierCasterName			= "modifier_imba_phoenix_sun_ray_caster_dummy"
+	local pathLength          = self:GetSpecialValueFor("beam_range")
+	local max_duration        = self:GetSpecialValueFor("duration")
+	local forwardMoveSpeed    = self:GetSpecialValueFor("move_speed")
+	local turnRateInitial     = self:GetSpecialValueFor("turn_rate_initial")
+	local turnRate            = self:GetSpecialValueFor("turn_rate")
+	local initialTurnDuration = self:GetSpecialValueFor("initial_turn_max_duration")
+	local vision_radius       = self:GetSpecialValueFor("radius") / 2
+	local numVision           = math.ceil(pathLength / vision_radius)
+	local modifierCasterName  = "modifier_imba_phoenix_sun_ray_caster_dummy"
 
-	local casterOrigin	= caster:GetAbsOrigin()
+	local casterOrigin        = caster:GetAbsOrigin()
 
 	caster:AddNewModifier(caster, ability, modifierCasterName, { duration = max_duration })
 
@@ -1062,11 +1116,11 @@ function imba_phoenix_sun_ray:OnSpellStart()
 
 	-- Create particle FX
 	local particleName = "particles/units/heroes/hero_phoenix/phoenix_sunray.vpcf"
-	local pfx = ParticleManager:CreateParticle( particleName, PATTACH_WORLDORIGIN, nil )
-	local attach_point = caster:ScriptLookupAttachment( "attach_head" )
+	local pfx = ParticleManager:CreateParticle(particleName, PATTACH_WORLDORIGIN, nil)
+	local attach_point = caster:ScriptLookupAttachment("attach_head")
 	-- Attach a loop sound to the endcap
 	local endcapSoundName = "Hero_Phoenix.SunRay.Beam"
-	StartSoundEvent( endcapSoundName, endcap )
+	StartSoundEvent(endcapSoundName, endcap)
 	StartSoundEvent("Hero_Phoenix.SunRay.Cast", caster)
 
 	--
@@ -1078,128 +1132,126 @@ function imba_phoenix_sun_ray:OnSpellStart()
 	--
 	--  And, initial turn buff ends when the delta yaw gets 0 or 0.75 seconds elapsed.
 	--
-	turnRateInitial	= turnRateInitial	/ (1/30) * 0.03
-	turnRate		= turnRate			/ (1/30) * 0.03
+	turnRateInitial     = turnRateInitial / (1 / 30) * 0.03
+	turnRate            = turnRate / (1 / 30) * 0.03
 
 	-- Update
-	local deltaTime = 0.03
+	local deltaTime     = 0.03
 
-	local lastAngles = caster:GetAngles()
+	local lastAngles    = caster:GetAngles()
 	local isInitialTurn = true
-	local elapsedTime = 0.0
+	local elapsedTime   = 0.0
 
-	caster:SetContextThink( DoUniqueString( "updateSunRay" ), function ( )
+	caster:SetContextThink(DoUniqueString("updateSunRay"), function()
 		-- Mars' Arena of Blood exception
 		if self:GetCaster():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetCaster():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetCaster():GetAbsOrigin() - self:GetCaster():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetCaster():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetCaster():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
 			self:GetCaster():RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
 		end
 
-			ParticleManager:SetParticleControl(pfx, 0, caster:GetAttachmentOrigin(attach_point))
-			-- Check the Debuff that can interrupt spell
-			if (imba_phoenix_check_for_canceled( caster ) and ((not self:GetCaster():HasScepter()) or (self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_caster_dummy")))) or caster:IsSilenced() or caster:HasModifier("modifier_legion_commander_duel") or caster:HasModifier("modifier_lone_druid_savage_roar") then
-				caster:RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
+		ParticleManager:SetParticleControl(pfx, 0, caster:GetAttachmentOrigin(attach_point))
+		-- Check the Debuff that can interrupt spell
+		if (imba_phoenix_check_for_canceled(caster) and ((not self:GetCaster():HasScepter()) or (self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_caster_dummy")))) or caster:IsSilenced() or caster:HasModifier("modifier_legion_commander_duel") or caster:HasModifier("modifier_lone_druid_savage_roar") then
+			caster:RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
+		end
+
+		-- OnInterrupted :
+		--  Destroy FXs and the thinkers.
+		if not caster:HasModifier(modifierCasterName) then
+			ParticleManager:DestroyParticle(pfx, false)
+			StopSoundEvent(endcapSoundName, endcap)
+			caster:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+			return nil
+		end
+
+		-- Cut Trees
+		local pos = caster:GetAbsOrigin()
+		GridNav:DestroyTreesAroundPoint(pos, 128, false)
+
+		-- 距离是32
+		-- "MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE" is seems to be broken.
+		-- So here we fix the yaw angle manually in order to clamp the turn speed.
+		--
+		-- If the hero has "modifier_ignore_turn_rate_limit_datadriven" modifier,
+		-- we shouldn't change yaw from here.
+		--
+		-- Calculate the turn speed limit.
+		local deltaYawMax
+
+		if isInitialTurn then
+			deltaYawMax = turnRateInitial * deltaTime
+		else
+			deltaYawMax = turnRate * deltaTime
+		end
+
+		-- Calculate the delta yaw
+		local currentAngles = caster:GetAngles()
+		local deltaYaw      = RotationDelta(lastAngles, currentAngles).y
+		local deltaYawAbs   = math.abs(deltaYaw)
+
+		if deltaYawAbs > deltaYawMax and not caster:HasModifier("modifier_imba_phoenix_icarus_dive_ignore_turn_ray") and not caster:HasTalent("special_bonus_imba_phoenix_8") then
+			-- Clamp delta yaw
+			local yawSign = (deltaYaw < 0) and -1 or 1
+			local yaw = lastAngles.y + deltaYawMax * yawSign
+
+			currentAngles.y = yaw -- Never forget!
+
+			-- Update the yaw
+			caster:SetAngles(currentAngles.x, currentAngles.y, currentAngles.z)
+		end
+
+		lastAngles = currentAngles
+
+		-- Update the turning state.
+		elapsedTime = elapsedTime + deltaTime
+
+		if isInitialTurn then
+			if deltaYawAbs == 0 then
+				isInitialTurn = false
 			end
-
-			-- OnInterrupted :
-			--  Destroy FXs and the thinkers.
-			if not caster:HasModifier( modifierCasterName ) then
-				ParticleManager:DestroyParticle( pfx, false )
-				StopSoundEvent( endcapSoundName, endcap )
-				caster:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
-				return nil
+			if elapsedTime >= initialTurnDuration then
+				isInitialTurn = false
 			end
+		end
 
-			-- Cut Trees
-			local pos = caster:GetAbsOrigin()
-			GridNav:DestroyTreesAroundPoint(pos, 128, false)
+		-- Current position & direction
+		local casterOrigin = caster:GetAbsOrigin()
+		local casterForward = caster:GetForwardVector()
 
-			-- 距离是32
-			-- "MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE" is seems to be broken.
-			-- So here we fix the yaw angle manually in order to clamp the turn speed.
-			--
-			-- If the hero has "modifier_ignore_turn_rate_limit_datadriven" modifier,
-			-- we shouldn't change yaw from here.
-			--
-			-- Calculate the turn speed limit.
-			local deltaYawMax
+		-- Move forward
+		if caster.sun_ray_is_moving and not GameRules:IsGamePaused() then
+			casterOrigin = casterOrigin + casterForward * forwardMoveSpeed * deltaTime
+			casterOrigin = GetGroundPosition(casterOrigin, caster)
+			caster:SetAbsOrigin(casterOrigin)
+		end
 
-			if isInitialTurn then
-				deltaYawMax = turnRateInitial * deltaTime
-			else
-				deltaYawMax = turnRate * deltaTime
-			end
+		-- Update thinker positions
+		local endcapPos = casterOrigin + casterForward * pathLength
+		endcapPos = GetGroundPosition(endcapPos, nil)
+		endcapPos.z = endcapPos.z + 92
 
-			-- Calculate the delta yaw
-			local currentAngles	= caster:GetAngles()
-			local deltaYaw		= RotationDelta( lastAngles, currentAngles ).y
-			local deltaYawAbs	= math.abs( deltaYaw )
+		-- Update particle FX
+		ParticleManager:SetParticleControl(pfx, 1, endcapPos)
 
-			if deltaYawAbs > deltaYawMax and not caster:HasModifier( "modifier_imba_phoenix_icarus_dive_ignore_turn_ray" ) and not caster:HasTalent("special_bonus_imba_phoenix_8")then
-				-- Clamp delta yaw
-				local yawSign = (deltaYaw < 0) and -1 or 1
-				local yaw = lastAngles.y + deltaYawMax * yawSign
+		-- Dmg and heal
+		local units = FindUnitsInLine(caster:GetTeamNumber(),
+			caster:GetAbsOrigin() + caster:GetForwardVector() * 32,
+			endcapPos,
+			nil,
+			ability:GetSpecialValueFor("radius"),
+			DOTA_UNIT_TARGET_TEAM_BOTH,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE)
+		for _, unit in pairs(units) do
+			unit:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_dummy_buff", { duration = ability:GetSpecialValueFor("tick_interval") })
+		end
 
-				currentAngles.y = yaw	-- Never forget!
+		-- Give vision
+		for i = 1, numVision do
+			AddFOWViewer(caster:GetTeamNumber(), (casterOrigin + casterForward * (vision_radius * 2 * (i - 1))), vision_radius, deltaTime, false)
+		end
 
-				-- Update the yaw
-				caster:SetAngles( currentAngles.x, currentAngles.y, currentAngles.z )
-			end
-
-			lastAngles = currentAngles
-
-			-- Update the turning state.
-			elapsedTime = elapsedTime + deltaTime
-
-			if isInitialTurn then
-				if deltaYawAbs == 0 then
-					isInitialTurn = false
-				end
-				if elapsedTime >= initialTurnDuration then
-					isInitialTurn = false
-				end
-			end
-
-			-- Current position & direction
-			local casterOrigin	= caster:GetAbsOrigin()
-			local casterForward	= caster:GetForwardVector()
-
-			-- Move forward
-			if caster.sun_ray_is_moving and not GameRules:IsGamePaused() then
-				casterOrigin = casterOrigin + casterForward * forwardMoveSpeed * deltaTime
-				casterOrigin = GetGroundPosition( casterOrigin, caster )
-				caster:SetAbsOrigin( casterOrigin )
-			end
-
-			-- Update thinker positions
-			local endcapPos = casterOrigin + casterForward * pathLength
-			endcapPos = GetGroundPosition( endcapPos, nil )
-			endcapPos.z = endcapPos.z + 92
-
-			-- Update particle FX
-			ParticleManager:SetParticleControl( pfx, 1, endcapPos )
-
-			-- Dmg and heal
-			local units = FindUnitsInLine(caster:GetTeamNumber(),
-				caster:GetAbsOrigin() + caster:GetForwardVector() * 32 ,
-				endcapPos,
-				nil,
-				ability:GetSpecialValueFor("radius"),
-				DOTA_UNIT_TARGET_TEAM_BOTH,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_NONE)
-			for _,unit in pairs(units) do
-				unit:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_dummy_buff", { duration = ability:GetSpecialValueFor("tick_interval") } )
-			end
-
-			-- Give vision
-			for i=1, numVision do
-				AddFOWViewer(caster:GetTeamNumber(), ( casterOrigin + casterForward * ( vision_radius * 2 * (i-1) ) ), vision_radius, deltaTime, false)
-			end
-
-			return deltaTime
-
-	end, 0.0 )
-
+		return deltaTime
+	end, 0.0)
 end
 
 function imba_phoenix_sun_ray:OnUpgrade()
@@ -1207,7 +1259,7 @@ function imba_phoenix_sun_ray:OnUpgrade()
 		return
 	end
 	local caster = self:GetCaster()
-	
+
 	caster.sun_ray_is_moving = false
 
 	-- The ability to level up
@@ -1221,28 +1273,34 @@ function imba_phoenix_sun_ray:OnUpgrade()
 		toggle_move:SetLevel(1)
 		toggle_move:SetActivated(false)
 	end
-
 end
 
 modifier_imba_phoenix_sun_ray_caster_dummy = modifier_imba_phoenix_sun_ray_caster_dummy or class({})
 
-function modifier_imba_phoenix_sun_ray_caster_dummy:IsDebuff()			return false end
-function modifier_imba_phoenix_sun_ray_caster_dummy:IsHidden() 			return true  end
-function modifier_imba_phoenix_sun_ray_caster_dummy:IsPurgable() 		return false end
-function modifier_imba_phoenix_sun_ray_caster_dummy:IsPurgeException() 	return false end
-function modifier_imba_phoenix_sun_ray_caster_dummy:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_sun_ray_caster_dummy:RemoveOnDeath() 	return true  end
+function modifier_imba_phoenix_sun_ray_caster_dummy:IsDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_caster_dummy:IsHidden() return true end
+
+function modifier_imba_phoenix_sun_ray_caster_dummy:IsPurgable() return false end
+
+function modifier_imba_phoenix_sun_ray_caster_dummy:IsPurgeException() return false end
+
+function modifier_imba_phoenix_sun_ray_caster_dummy:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_caster_dummy:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:DeclareFunctions()
 	local funcs = { MODIFIER_PROPERTY_MOVESPEED_LIMIT,
 		MODIFIER_PROPERTY_MOVESPEED_MAX,
-		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE}
+		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE }
 	return funcs
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:CheckState()
-	return{ [MODIFIER_STATE_DISARMED] = true,
-		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,}
+	return {
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
+	}
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierMoveSpeed_Limit()
@@ -1282,13 +1340,13 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:OnCreated()
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_3)
 	StartSoundEvent("Hero_Phoenix.SunRay.Loop", caster)
 	local particleName = "particles/units/heroes/hero_phoenix/phoenix_sunray_flare.vpcf"
-	self.pfx_sunray_flare = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
-	ParticleManager:SetParticleControlEnt( self.pfx_sunray_flare, 9, caster, PATTACH_POINT_FOLLOW, "attach_mouth", caster:GetAbsOrigin(), true )
+	self.pfx_sunray_flare = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControlEnt(self.pfx_sunray_flare, 9, caster, PATTACH_POINT_FOLLOW, "attach_mouth", caster:GetAbsOrigin(), true)
 
 	-- Swap sub ability
-	local main_ability_name	= "imba_phoenix_sun_ray"
-	local sub_ability_name	= "imba_phoenix_sun_ray_stop"
-	caster:SwapAbilities( main_ability_name, sub_ability_name, false, true )
+	local main_ability_name = "imba_phoenix_sun_ray"
+	local sub_ability_name = "imba_phoenix_sun_ray_stop"
+	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
 	caster.sun_ray_is_moving = false
 	local toggle_move = caster:FindAbilityByName("imba_phoenix_sun_ray_toggle_move")
 	if toggle_move and not self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
@@ -1312,14 +1370,14 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:OnDestroy()
 	if caster:HasTalent("special_bonus_imba_phoenix_4") then
 		local endcapPos = caster:GetAbsOrigin() + caster:GetForwardVector() * ability:GetSpecialValueFor("beam_range")
 		local units = FindUnitsInLine(caster:GetTeamNumber(),
-			caster:GetAbsOrigin() + caster:GetForwardVector() * 32 ,
+			caster:GetAbsOrigin() + caster:GetForwardVector() * 32,
 			endcapPos,
 			nil,
 			ability:GetSpecialValueFor("radius"),
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NONE)
-		for _,unit in pairs(units) do
+		for _, unit in pairs(units) do
 			if unit ~= caster then
 				unit:Purge(false, true, false, true, true)
 			end
@@ -1327,7 +1385,7 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:OnDestroy()
 	end
 	caster:RemoveGesture(ACT_DOTA_OVERRIDE_ABILITY_3)
 	StartSoundEvent("Hero_Phoenix.SunRay.Stop", caster)
-	StopSoundEvent( "Hero_Phoenix.SunRay.Loop", caster)
+	StopSoundEvent("Hero_Phoenix.SunRay.Loop", caster)
 	if self.pfx_sunray_flare then
 		ParticleManager:DestroyParticle(self.pfx_sunray_flare, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx_sunray_flare)
@@ -1338,28 +1396,32 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:OnDestroy()
 	if toggle_move then
 		toggle_move:SetActivated(false)
 	end
-	local main_ability_name	= "imba_phoenix_sun_ray_stop"
-	local sub_ability_name	= "imba_phoenix_sun_ray"
-	caster:SwapAbilities( main_ability_name, sub_ability_name, false, true )
-	caster:SetContextThink( DoUniqueString("waitToFindClearSpace"), function ( )
+	local main_ability_name = "imba_phoenix_sun_ray_stop"
+	local sub_ability_name = "imba_phoenix_sun_ray"
+	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
+	caster:SetContextThink(DoUniqueString("waitToFindClearSpace"), function()
+		if not caster:HasModifier("modifier_naga_siren_song_of_the_siren") then
+			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), false)
+			return nil
+		end
 
-			if not caster:HasModifier("modifier_naga_siren_song_of_the_siren") then
-				FindClearSpaceForUnit(caster, caster:GetAbsOrigin() , false)
-				return nil
-			end
-
-			return 0.1
-	end, 0 )
+		return 0.1
+	end, 0)
 end
 
 modifier_imba_phoenix_sun_ray_dummy_unit_thinker = modifier_imba_phoenix_sun_ray_dummy_unit_thinker or class({})
 
-function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsDebuff()				return false end
-function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsHidden() 				return true end
-function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsPurgable() 				return false end
-function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsPurgeException() 		return false end
-function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:RemoveOnDeath() 			return true end
+function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsHidden() return true end
+
+function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsPurgable() return false end
+
+function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsPurgeException() return false end
+
+function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:OnCreated()
 	if not IsServer() then
@@ -1377,21 +1439,26 @@ end
 
 modifier_imba_phoenix_sun_ray_dummy_buff = modifier_imba_phoenix_sun_ray_dummy_buff or class({})
 
-function modifier_imba_phoenix_sun_ray_dummy_buff:IsDebuff()				return false end
-function modifier_imba_phoenix_sun_ray_dummy_buff:IsHidden() 				return true end
-function modifier_imba_phoenix_sun_ray_dummy_buff:IsPurgable() 				return false end
-function modifier_imba_phoenix_sun_ray_dummy_buff:IsPurgeException() 		return false end
-function modifier_imba_phoenix_sun_ray_dummy_buff:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_sun_ray_dummy_buff:RemoveOnDeath() 			return true end
+function modifier_imba_phoenix_sun_ray_dummy_buff:IsDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_dummy_buff:IsHidden() return true end
+
+function modifier_imba_phoenix_sun_ray_dummy_buff:IsPurgable() return false end
+
+function modifier_imba_phoenix_sun_ray_dummy_buff:IsPurgeException() return false end
+
+function modifier_imba_phoenix_sun_ray_dummy_buff:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_dummy_buff:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_sun_ray_dummy_buff:OnCreated()
-	self.tick_interval	= self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.tick_interval = self:GetAbility():GetSpecialValueFor("tick_interval")
 
 	if not IsServer() then
 		return
 	end
-	
-	self:StartIntervalThink( self.tick_interval )
+
+	self:StartIntervalThink(self.tick_interval)
 end
 
 function modifier_imba_phoenix_sun_ray_dummy_buff:OnIntervalThink()
@@ -1403,30 +1470,36 @@ function modifier_imba_phoenix_sun_ray_dummy_buff:OnIntervalThink()
 	local caster = self:GetCaster()
 	local target = self:GetParent()
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_debuff", { duration = self.tick_interval * 1.9 * (1 - target:GetStatusResistance()) } )
+		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_debuff", { duration = self.tick_interval * 1.9 * (1 - target:GetStatusResistance()) })
 	else
-		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_buff", { duration = self.tick_interval * 1.9 } )
+		target:AddNewModifier(caster, ability, "modifier_imba_phoenix_sun_ray_buff", { duration = self.tick_interval * 1.9 })
 	end
 end
 
 modifier_imba_phoenix_sun_ray_debuff = modifier_imba_phoenix_sun_ray_debuff or class({})
 
-function modifier_imba_phoenix_sun_ray_debuff:IsDebuff()				return false end
-function modifier_imba_phoenix_sun_ray_debuff:IsHidden() 				return true end
-function modifier_imba_phoenix_sun_ray_debuff:IsPurgable() 				return false end
-function modifier_imba_phoenix_sun_ray_debuff:IsPurgeException() 		return false end
-function modifier_imba_phoenix_sun_ray_debuff:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_sun_ray_debuff:RemoveOnDeath() 			return true end
-function modifier_imba_phoenix_sun_ray_debuff:IgnoreTenacity() 			return true end
+function modifier_imba_phoenix_sun_ray_debuff:IsDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_debuff:IsHidden() return true end
+
+function modifier_imba_phoenix_sun_ray_debuff:IsPurgable() return false end
+
+function modifier_imba_phoenix_sun_ray_debuff:IsPurgeException() return false end
+
+function modifier_imba_phoenix_sun_ray_debuff:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_debuff:RemoveOnDeath() return true end
+
+function modifier_imba_phoenix_sun_ray_debuff:IgnoreTenacity() return true end
 
 function modifier_imba_phoenix_sun_ray_debuff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_sunray_debuff.vpcf" end
 
 function modifier_imba_phoenix_sun_ray_debuff:OnCreated()
-	self.tick_interval	= self:GetAbility():GetSpecialValueFor("tick_interval")
-	self.duration		= self:GetAbility():GetSpecialValueFor("duration")
-	self.base_damage	= self:GetAbility():GetSpecialValueFor("base_damage")
-	self.hp_perc_damage	= self:GetAbility():GetSpecialValueFor("hp_perc_damage")
-	self.base_damage	= self:GetAbility():GetSpecialValueFor("base_damage")
+	self.tick_interval  = self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.duration       = self:GetAbility():GetSpecialValueFor("duration")
+	self.base_damage    = self:GetAbility():GetSpecialValueFor("base_damage")
+	self.hp_perc_damage = self:GetAbility():GetSpecialValueFor("hp_perc_damage")
+	self.base_damage    = self:GetAbility():GetSpecialValueFor("base_damage")
 
 	if not IsServer() then
 		return
@@ -1435,7 +1508,7 @@ function modifier_imba_phoenix_sun_ray_debuff:OnCreated()
 		self:SetStackCount(1)
 	end
 	local ability = self:GetAbility()
-	self:StartIntervalThink( self.tick_interval )
+	self:StartIntervalThink(self.tick_interval)
 end
 
 function modifier_imba_phoenix_sun_ray_debuff:OnRefresh()
@@ -1479,10 +1552,10 @@ function modifier_imba_phoenix_sun_ray_debuff:OnIntervalThink()
 	}
 	ApplyDamage(damageTable)
 
-	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_sunray_debuff.vpcf", PATTACH_ABSORIGIN, taker )
-	ParticleManager:SetParticleControlEnt( pfx, 1, taker, PATTACH_POINT_FOLLOW, "attach_hitloc", taker:GetAbsOrigin(), true )
-	ParticleManager:DestroyParticle( pfx, false )
-	ParticleManager:ReleaseParticleIndex( pfx )
+	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_sunray_debuff.vpcf", PATTACH_ABSORIGIN, taker)
+	ParticleManager:SetParticleControlEnt(pfx, 1, taker, PATTACH_POINT_FOLLOW, "attach_hitloc", taker:GetAbsOrigin(), true)
+	ParticleManager:DestroyParticle(pfx, false)
+	ParticleManager:ReleaseParticleIndex(pfx)
 
 	-- IMBA: effected by Sun Ray's enemy's other phoenix debuff duration won't decrease
 	local dive_debuff = taker:FindModifierByNameAndCaster("modifier_imba_phoenix_icarus_dive_slow_debuff", caster)
@@ -1493,33 +1566,37 @@ function modifier_imba_phoenix_sun_ray_debuff:OnIntervalThink()
 	if bird_debuff then
 		bird_debuff:SetDuration(bird_debuff:GetDuration(), true)
 	end
-
 end
-
 
 modifier_imba_phoenix_sun_ray_buff = modifier_imba_phoenix_sun_ray_buff or class({})
 
-function modifier_imba_phoenix_sun_ray_buff:IsDebuff()				return false end
-function modifier_imba_phoenix_sun_ray_buff:IsHidden() 				return true end
-function modifier_imba_phoenix_sun_ray_buff:IsPurgable() 				return false end
-function modifier_imba_phoenix_sun_ray_buff:IsPurgeException() 		return false end
-function modifier_imba_phoenix_sun_ray_buff:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_sun_ray_buff:RemoveOnDeath() 			return true end
-function modifier_imba_phoenix_sun_ray_buff:IgnoreTenacity() 			return true end
+function modifier_imba_phoenix_sun_ray_buff:IsDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_buff:IsHidden() return true end
+
+function modifier_imba_phoenix_sun_ray_buff:IsPurgable() return false end
+
+function modifier_imba_phoenix_sun_ray_buff:IsPurgeException() return false end
+
+function modifier_imba_phoenix_sun_ray_buff:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_sun_ray_buff:RemoveOnDeath() return true end
+
+function modifier_imba_phoenix_sun_ray_buff:IgnoreTenacity() return true end
 
 function modifier_imba_phoenix_sun_ray_buff:GetEffectName() return "particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf" end
 
 function modifier_imba_phoenix_sun_ray_buff:OnCreated()
-	self.tick_interval	= self:GetAbility():GetSpecialValueFor("tick_interval")
-	self.duration		= self:GetAbility():GetSpecialValueFor("duration")
-	self.base_heal		= self:GetAbility():GetSpecialValueFor("base_heal")
-	self.hp_perc_heal	= self:GetAbility():GetSpecialValueFor("hp_perc_heal")
-	self.explode_min_time	= self:GetAbility():GetSpecialValueFor("explode_min_time")
-	self.explode_dmg	= self:GetAbility():GetSpecialValueFor("explode_dmg")
-	self.explode_radius	= self:GetAbility():GetSpecialValueFor("explode_radius")
-	self.hp_cost_perc_per_second	= self:GetAbility():GetSpecialValueFor("hp_cost_perc_per_second")
-	
-	
+	self.tick_interval           = self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.duration                = self:GetAbility():GetSpecialValueFor("duration")
+	self.base_heal               = self:GetAbility():GetSpecialValueFor("base_heal")
+	self.hp_perc_heal            = self:GetAbility():GetSpecialValueFor("hp_perc_heal")
+	self.explode_min_time        = self:GetAbility():GetSpecialValueFor("explode_min_time")
+	self.explode_dmg             = self:GetAbility():GetSpecialValueFor("explode_dmg")
+	self.explode_radius          = self:GetAbility():GetSpecialValueFor("explode_radius")
+	self.hp_cost_perc_per_second = self:GetAbility():GetSpecialValueFor("hp_cost_perc_per_second")
+
+
 	if not IsServer() then
 		return
 	end
@@ -1527,7 +1604,7 @@ function modifier_imba_phoenix_sun_ray_buff:OnCreated()
 		self:SetStackCount(1)
 	end
 	local ability = self:GetAbility()
-	self:StartIntervalThink( self.tick_interval )
+	self:StartIntervalThink(self.tick_interval)
 end
 
 function modifier_imba_phoenix_sun_ray_buff:OnRefresh()
@@ -1561,23 +1638,23 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 	local taker_health = taker:GetMaxHealth()
 
 	local total_heal = base_heal + taker_health * pct_base_heal
-	total_heal = total_heal * (1 + (caster:GetSpellAmplification(false) * 0.01))
+	total_heal = total_heal * (1 + (caster:GetSpellAmplification(false) / 100))
 	if taker ~= self:GetCaster() then
-		taker:Heal( total_heal , self:GetCaster())
+		taker:Heal(total_heal, self:GetCaster())
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, taker, total_heal, nil)
 
-		local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf", PATTACH_ABSORIGIN, taker )
-		ParticleManager:SetParticleControlEnt( pfx, 1, taker, PATTACH_POINT_FOLLOW, "attach_hitloc", taker:GetAbsOrigin(), true )
-		ParticleManager:ReleaseParticleIndex( pfx )
+		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf", PATTACH_ABSORIGIN, taker)
+		ParticleManager:SetParticleControlEnt(pfx, 1, taker, PATTACH_POINT_FOLLOW, "attach_hitloc", taker:GetAbsOrigin(), true)
+		ParticleManager:ReleaseParticleIndex(pfx)
 
 		local explode_stack = self.explode_min_time / self.tick_interval
 		local current_stack = self:GetStackCount()
 		if current_stack > explode_stack and taker:IsRealHero() then
 			local pfx_explode = ParticleManager:CreateParticle("particles/hero/phoenix/phoenix_sun_ray_explode.vpcf", PATTACH_POINT_FOLLOW, taker)
-			ParticleManager:SetParticleControlEnt(pfx_explode, 0, taker,PATTACH_POINT_FOLLOW, "attach_hitloc", taker:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(pfx_explode, 0, taker, PATTACH_POINT_FOLLOW, "attach_hitloc", taker:GetAbsOrigin(), true)
 			--ParticleManager:DestroyParticle(pfx_explode, false)
 			ParticleManager:ReleaseParticleIndex(pfx_explode)
-			local damage_this_tick = self.explode_dmg / ( 1 / self.tick_interval )
+			local damage_this_tick = self.explode_dmg / (1 / self.tick_interval)
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 				taker:GetAbsOrigin(),
 				nil,
@@ -1610,7 +1687,7 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 			if (caster:GetHealth() - heal_cost_this_time) <= 1 then
 				caster:SetHealth(1)
 			else
-				caster:SetHealth( caster:GetHealth() - heal_cost_this_time )
+				caster:SetHealth(caster:GetHealth() - heal_cost_this_time)
 			end
 		end
 	end
@@ -1622,14 +1699,19 @@ end
 
 imba_phoenix_sun_ray_stop = imba_phoenix_sun_ray_stop or class({})
 
-function imba_phoenix_sun_ray_stop:IsHiddenWhenStolen() 	return true end
-function imba_phoenix_sun_ray_stop:IsRefreshable() 			return true end
-function imba_phoenix_sun_ray_stop:IsStealable() 			return false end
-function imba_phoenix_sun_ray_stop:IsNetherWardStealable() 	return false end
+function imba_phoenix_sun_ray_stop:IsHiddenWhenStolen() return true end
+
+function imba_phoenix_sun_ray_stop:IsRefreshable() return true end
+
+function imba_phoenix_sun_ray_stop:IsStealable() return false end
+
+function imba_phoenix_sun_ray_stop:IsNetherWardStealable() return false end
+
 function imba_phoenix_sun_ray_stop:ProcsMagicStick() return false end
+
 -- function imba_phoenix_sun_ray_stop:GetAssociatedPrimaryAbilities() return "imba_phoenix_sun_ray" end
 
-function imba_phoenix_sun_ray_stop:GetAbilityTextureName()   return "phoenix_sun_ray_stop" end
+function imba_phoenix_sun_ray_stop:GetAbilityTextureName() return "phoenix_sun_ray_stop" end
 
 function imba_phoenix_sun_ray_stop:OnSpellStart()
 	if not IsServer() then
@@ -1637,9 +1719,7 @@ function imba_phoenix_sun_ray_stop:OnSpellStart()
 	end
 	local caster = self:GetCaster()
 	caster:RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
-
 end
-
 
 -------------------------------------------
 --			  Sun Ray Move
@@ -1647,14 +1727,19 @@ end
 
 imba_phoenix_sun_ray_toggle_move = imba_phoenix_sun_ray_toggle_move or class({})
 
-function imba_phoenix_sun_ray_toggle_move:IsHiddenWhenStolen() 		return false end
-function imba_phoenix_sun_ray_toggle_move:IsRefreshable() 			return true end
-function imba_phoenix_sun_ray_toggle_move:IsStealable() 			return false end
-function imba_phoenix_sun_ray_toggle_move:IsNetherWardStealable() 	return false end
+function imba_phoenix_sun_ray_toggle_move:IsHiddenWhenStolen() return false end
+
+function imba_phoenix_sun_ray_toggle_move:IsRefreshable() return true end
+
+function imba_phoenix_sun_ray_toggle_move:IsStealable() return false end
+
+function imba_phoenix_sun_ray_toggle_move:IsNetherWardStealable() return false end
+
 function imba_phoenix_sun_ray_toggle_move:ProcsMagicStick() return false end
+
 -- function imba_phoenix_sun_ray_toggle_move:GetAssociatedPrimaryAbilities() return "imba_phoenix_sun_ray" end
 
-function imba_phoenix_sun_ray_toggle_move:GetAbilityTextureName()   return "phoenix_sun_ray_toggle_move" end
+function imba_phoenix_sun_ray_toggle_move:GetAbilityTextureName() return "phoenix_sun_ray_toggle_move" end
 
 function imba_phoenix_sun_ray_toggle_move:OnSpellStart()
 	if not IsServer() then
@@ -1667,8 +1752,6 @@ function imba_phoenix_sun_ray_toggle_move:OnSpellStart()
 		caster.sun_ray_is_moving = true
 	end
 end
-
-
 
 -------------------------------------------
 --			  Super Nova
@@ -1687,10 +1770,13 @@ LinkLuaModifier("modifier_imba_phoenix_supernova_force_day", "components/abiliti
 
 imba_phoenix_supernova = imba_phoenix_supernova or class({})
 
-function imba_phoenix_supernova:IsHiddenWhenStolen() 	return false end
-function imba_phoenix_supernova:IsRefreshable() 			return true end
-function imba_phoenix_supernova:IsStealable() 			return true end
-function imba_phoenix_supernova:IsNetherWardStealable() 	return false end
+function imba_phoenix_supernova:IsHiddenWhenStolen() return false end
+
+function imba_phoenix_supernova:IsRefreshable() return true end
+
+function imba_phoenix_supernova:IsStealable() return true end
+
+function imba_phoenix_supernova:IsNetherWardStealable() return false end
 
 function imba_phoenix_supernova:OnAbilityPhaseStart()
 	if not IsServer() then
@@ -1700,9 +1786,9 @@ function imba_phoenix_supernova:OnAbilityPhaseStart()
 	return true
 end
 
-function imba_phoenix_supernova:GetCastRange() 	return self:GetSpecialValueFor("cast_range") end
+function imba_phoenix_supernova:GetCastRange() return self:GetSpecialValueFor("cast_range") end
 
-function imba_phoenix_supernova:GetAbilityTextureName()   return "phoenix_supernova" end
+function imba_phoenix_supernova:GetAbilityTextureName() return "phoenix_supernova" end
 
 function imba_phoenix_supernova:GetIntrinsicModifierName()
 	return "modifier_imba_phoenix_supernova_scepter_passive"
@@ -1712,45 +1798,45 @@ function imba_phoenix_supernova:OnSpellStart()
 	if not IsServer() then
 		return
 	end
-	
+
 	-- Can't get forced daytime to work
 	-- if not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_force_day") and not GameRules:IsDaytime() then
-		-- -- if not self.day_start then
-			-- -- Establish some variables to mess with the day/night cycle
-			-- self.day_start			= 0.25
-			-- -- "Each day in Dota 2 is 10 minutes long, divided evenly between daytime and nighttime."
-			-- self.minutes_per_day	= 10
-			-- self.seconds_per_minute	= 60
-			
-			-- -- Calculate how many total seconds are in one day or one night
-			-- self.seconds_per_cycle	= (self.minutes_per_day / 2) * self.seconds_per_minute
-		-- -- end
+	-- -- if not self.day_start then
+	-- -- Establish some variables to mess with the day/night cycle
+	-- self.day_start			= 0.25
+	-- -- "Each day in Dota 2 is 10 minutes long, divided evenly between daytime and nighttime."
+	-- self.minutes_per_day	= 10
+	-- self.seconds_per_minute	= 60
 
-		-- self.current_time_of_day	= GameRules:GetTimeOfDay()
+	-- -- Calculate how many total seconds are in one day or one night
+	-- self.seconds_per_cycle	= (self.minutes_per_day / 2) * self.seconds_per_minute
+	-- -- end
 
-		-- self.daytime_seconds = (GameRules:GetTimeOfDay() - self.day_start) * self.minutes_per_day * self.seconds_per_minute
+	-- self.current_time_of_day	= GameRules:GetTimeOfDay()
 
-		-- if self.daytime_seconds < 0 then
-			-- self.daytime_seconds = self.daytime_seconds + (self.minutes_per_day * self.seconds_per_minute)
-		-- end
-		
-		-- -- Calculate the number of seconds until daytime (need to account for when Supernova is cast when there is less than "duration" seconds of nighttime remaining)
-		-- self.time_till_day			= (self.seconds_per_cycle - self.daytime_seconds) % self.seconds_per_cycle
+	-- self.daytime_seconds = (GameRules:GetTimeOfDay() - self.day_start) * self.minutes_per_day * self.seconds_per_minute
 
-		-- -- Convert daytime back to dota format
-		-- self.dota_daytime = ((self.daytime_seconds + 50) / self.seconds_per_minute / self.minutes_per_day) + self.day_start
-		
-		-- GameRules:SetTimeOfDay(self.dota_daytime)
-		
-		-- GameRules:GetGameModeEntity():SetDaynightCycleDisabled(true)
-
-		-- local force_day_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_supernova_force_day", 
-		-- {
-			-- duration 			= math.min(self:GetSpecialValueFor("duration"), self.time_till_day),
-			-- current_time_of_day	= self.current_time_of_day
-		-- })
+	-- if self.daytime_seconds < 0 then
+	-- self.daytime_seconds = self.daytime_seconds + (self.minutes_per_day * self.seconds_per_minute)
 	-- end
-	
+
+	-- -- Calculate the number of seconds until daytime (need to account for when Supernova is cast when there is less than "duration" seconds of nighttime remaining)
+	-- self.time_till_day			= (self.seconds_per_cycle - self.daytime_seconds) % self.seconds_per_cycle
+
+	-- -- Convert daytime back to dota format
+	-- self.dota_daytime = ((self.daytime_seconds + 50) / self.seconds_per_minute / self.minutes_per_day) + self.day_start
+
+	-- GameRules:SetTimeOfDay(self.dota_daytime)
+
+	-- GameRules:GetGameModeEntity():SetDaynightCycleDisabled(true)
+
+	-- local force_day_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_supernova_force_day",
+	-- {
+	-- duration 			= math.min(self:GetSpecialValueFor("duration"), self.time_till_day),
+	-- current_time_of_day	= self.current_time_of_day
+	-- })
+	-- end
+
 	local caster = self:GetCaster()
 	local ability = self
 	local location = caster:GetAbsOrigin()
@@ -1764,18 +1850,18 @@ function imba_phoenix_supernova:OnSpellStart()
 		caster:RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
 	end
 
-	caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_caster_dummy", {duration = egg_duration })
+	caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_caster_dummy", { duration = egg_duration })
 	caster:AddNoDraw()
 
 	local egg = CreateUnitByName("npc_dota_phoenix_sun", ground_location, false, caster, caster:GetOwner(), caster:GetTeamNumber())
-	egg:AddNewModifier(caster, ability, "modifier_kill", {duration = egg_duration })
-	egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + 0.3 })
+	egg:AddNewModifier(caster, ability, "modifier_kill", { duration = egg_duration })
+	egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", { duration = egg_duration + 0.3 })
 
 	egg.max_attack = max_attack
 	egg.current_attack = 0
 
 	local egg_playback_rate = 6 / egg_duration
-	egg:StartGestureWithPlaybackRate(ACT_DOTA_IDLE , egg_playback_rate)
+	egg:StartGestureWithPlaybackRate(ACT_DOTA_IDLE, egg_playback_rate)
 
 	caster.egg = egg
 	caster.HasDoubleEgg = false
@@ -1786,23 +1872,23 @@ function imba_phoenix_supernova:OnSpellStart()
 	else
 		local ally = caster.ally
 		if not caster:HasTalent("special_bonus_imba_phoenix_6") then
-			ally:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_caster_dummy", {duration = egg_duration})
+			ally:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_caster_dummy", { duration = egg_duration })
 			ally:AddNoDraw()
 			ally:SetAbsOrigin(caster:GetAbsOrigin())
 		else
 			-- Talent: Double Super Nova
-			ally:AddNewModifier(ally, ability, "modifier_imba_phoenix_supernova_caster_dummy", {duration = egg_duration})
+			ally:AddNewModifier(ally, ability, "modifier_imba_phoenix_supernova_caster_dummy", { duration = egg_duration })
 			ally:AddNoDraw()
 			local _direction = (ally:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
 			caster:SetForwardVector(_direction)
 			local loaction = caster:GetForwardVector() * 192 + caster:GetAbsOrigin()
 			local egg2 = CreateUnitByName("npc_dota_phoenix_sun", loaction, false, ally, ally:GetOwner(), ally:GetTeamNumber())
 
-			egg2:AddNewModifier(ally, ability, "modifier_kill", {duration = egg_duration })
-			egg2:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_double", { } )
-			egg2:AddNewModifier(ally, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + 0.3 })
+			egg2:AddNewModifier(ally, ability, "modifier_kill", { duration = egg_duration })
+			egg2:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_double", {})
+			egg2:AddNewModifier(ally, ability, "modifier_imba_phoenix_supernova_egg_thinker", { duration = egg_duration + 0.3 })
 
-			max_attack = max_attack * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)
+			max_attack = max_attack * ((100 - caster:FindTalentValue("special_bonus_imba_phoenix_6", "attack_reduce_pct")) / 100)
 
 			egg.max_attack = max_attack
 			egg.current_attack = 0
@@ -1811,70 +1897,74 @@ function imba_phoenix_supernova:OnSpellStart()
 			egg2.current_attack = 0
 
 			local info =
-				{
-					Target = egg2,
-					Source = ally,
-					Ability = ability,
-					EffectName = "particles/hero/phoenix/phoenix_super_nova_double_egg_projectile.vpcf",
-					iMoveSpeed = 1400,
-					bDrawsOnMinimap = false,						  -- Optional
-					bDodgeable = false,								-- Optional
-					bIsAttack = false,								-- Optional
-					bVisibleToEnemies = true,						 -- Optional
-					bReplaceExisting = false,						 -- Optional
-					flExpireTime = GameRules:GetGameTime() + 10,	  -- Optional but recommended
-					bProvidesVision = false,						   -- Optional
-					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-				}
+			{
+				Target = egg2,
+				Source = ally,
+				Ability = ability,
+				EffectName = "particles/hero/phoenix/phoenix_super_nova_double_egg_projectile.vpcf",
+				iMoveSpeed = 1400,
+				bDrawsOnMinimap = false,          -- Optional
+				bDodgeable = false,               -- Optional
+				bIsAttack = false,                -- Optional
+				bVisibleToEnemies = true,         -- Optional
+				bReplaceExisting = false,         -- Optional
+				flExpireTime = GameRules:GetGameTime() + 10, -- Optional but recommended
+				bProvidesVision = false,          -- Optional
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+			}
 			ProjectileManager:CreateTrackingProjectile(info)
 
 			caster.HasDoubleEgg = true
 			ally:SetAbsOrigin(egg2:GetAbsOrigin())
 			local egg_playback_rate = 6 / egg_duration
-			egg2:StartGestureWithPlaybackRate(ACT_DOTA_IDLE , egg_playback_rate)
+			egg2:StartGestureWithPlaybackRate(ACT_DOTA_IDLE, egg_playback_rate)
 		end
 	end
-
-
 end
 
 modifier_imba_phoenix_supernova_caster_dummy = modifier_imba_phoenix_supernova_caster_dummy or class({})
 
-function modifier_imba_phoenix_supernova_caster_dummy:IsDebuff()				return false end
-function modifier_imba_phoenix_supernova_caster_dummy:IsHidden() 				return false end
-function modifier_imba_phoenix_supernova_caster_dummy:IsPurgable() 				return false end
-function modifier_imba_phoenix_supernova_caster_dummy:IsPurgeException() 		return false end
-function modifier_imba_phoenix_supernova_caster_dummy:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_supernova_caster_dummy:RemoveOnDeath() 			return true end
-function modifier_imba_phoenix_supernova_caster_dummy:IgnoreTenacity() 			return true end
+function modifier_imba_phoenix_supernova_caster_dummy:IsDebuff() return false end
+
+function modifier_imba_phoenix_supernova_caster_dummy:IsHidden() return false end
+
+function modifier_imba_phoenix_supernova_caster_dummy:IsPurgable() return false end
+
+function modifier_imba_phoenix_supernova_caster_dummy:IsPurgeException() return false end
+
+function modifier_imba_phoenix_supernova_caster_dummy:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_supernova_caster_dummy:RemoveOnDeath() return true end
+
+function modifier_imba_phoenix_supernova_caster_dummy:IgnoreTenacity() return true end
 
 function modifier_imba_phoenix_supernova_caster_dummy:GetTexture() return "phoenix_supernova" end
 
 function modifier_imba_phoenix_supernova_caster_dummy:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-			MODIFIER_EVENT_ON_DEATH,
-		}
+	{
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_EVENT_ON_DEATH,
+	}
 	return decFuns
 end
 
 function modifier_imba_phoenix_supernova_caster_dummy:CheckState()
 	local state =
-		{
-			[MODIFIER_STATE_INVULNERABLE] = true,
-			[MODIFIER_STATE_DISARMED] = true,
-			[MODIFIER_STATE_ROOTED] = true,
-			[MODIFIER_STATE_MUTED] = true,
-			-- [MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_MAGIC_IMMUNE] = true,
-			[MODIFIER_STATE_OUT_OF_GAME] = true,
-		}
-	
+	{
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_ROOTED] = true,
+		[MODIFIER_STATE_MUTED] = true,
+		-- [MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+		[MODIFIER_STATE_OUT_OF_GAME] = true,
+	}
+
 	if self:GetCaster() ~= self:GetParent() then
 		state[MODIFIER_STATE_STUNNED] = true
 	end
-		
+
 	return state
 end
 
@@ -1892,24 +1982,24 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnCreated()
 	local caster = self:GetCaster()
 	-- local abi = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit")
 	-- if abi then
-		-- if self:GetParent() == self:GetCaster() and abi:IsTrained() then
-			-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_phoenix_supernova_bird_thinker", {duration = self:GetDuration()})
-		-- end
+	-- if self:GetParent() == self:GetCaster() and abi:IsTrained() then
+	-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_phoenix_supernova_bird_thinker", {duration = self:GetDuration()})
 	-- end
-	
+	-- end
+
 	local innate = caster:FindAbilityByName("imba_phoenix_burning_wings")
 	if innate then
 		if innate:GetToggleState() then
 			innate:ToggleAbility()
 		end
 	end
-	
+
 	self.abilities = {}
-	
+
 	if self:GetCaster() == self:GetParent() then
 		for slot = 0, 10 do
 			local ability = self:GetParent():GetAbilityByIndex(slot)
-			
+
 			if ability and ability:IsActivated() and (not self:GetParent():HasScepter() or (self:GetParent():HasScepter() and ability:GetName() ~= "imba_phoenix_sun_ray")) then
 				ability:SetActivated(false)
 				table.insert(self.abilities, ability)
@@ -1918,7 +2008,7 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnCreated()
 	end
 end
 
-function modifier_imba_phoenix_supernova_caster_dummy:OnDeath( keys )
+function modifier_imba_phoenix_supernova_caster_dummy:OnDeath(keys)
 	if not IsServer() then
 		return
 	end
@@ -1935,7 +2025,7 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnDeath( keys )
 			DOTA_UNIT_TARGET_ALL,
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_ANY_ORDER,
-			false )
+			false)
 		for _, egg in pairs(eggs) do
 			if egg:GetUnitName() == "npc_dota_phoenix_sun" and egg:GetTeamNumber() == self:GetParent():GetTeamNumber() and egg:GetOwner() == self:GetParent():GetOwner() then
 				egg:Kill(self:GetAbility(), keys.attacker)
@@ -1951,7 +2041,7 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnDestroy()
 	if self:GetCaster():GetUnitName() == "npc_imba_hero_phoenix" or self:GetCaster():GetUnitName() == "npc_dota_hero_phoenix" then
 		self:GetCaster():StartGesture(ACT_DOTA_INTRO)
 	end
-	
+
 	if self:GetCaster() == self:GetParent() then
 		for _, ability in pairs(self.abilities) do
 			ability:SetActivated(true)
@@ -1961,12 +2051,17 @@ end
 
 modifier_imba_phoenix_supernova_bird_thinker = modifier_imba_phoenix_supernova_bird_thinker or class({})
 
-function modifier_imba_phoenix_supernova_bird_thinker:IsDebuff()			return false end
-function modifier_imba_phoenix_supernova_bird_thinker:IsHidden() 			return false end
-function modifier_imba_phoenix_supernova_bird_thinker:IsPurgable() 			return false end
-function modifier_imba_phoenix_supernova_bird_thinker:IsPurgeException() 	return false end
-function modifier_imba_phoenix_supernova_bird_thinker:IsStunDebuff() 		return false end
-function modifier_imba_phoenix_supernova_bird_thinker:RemoveOnDeath() 		return true  end
+function modifier_imba_phoenix_supernova_bird_thinker:IsDebuff() return false end
+
+function modifier_imba_phoenix_supernova_bird_thinker:IsHidden() return false end
+
+function modifier_imba_phoenix_supernova_bird_thinker:IsPurgable() return false end
+
+function modifier_imba_phoenix_supernova_bird_thinker:IsPurgeException() return false end
+
+function modifier_imba_phoenix_supernova_bird_thinker:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_supernova_bird_thinker:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_supernova_bird_thinker:GetTexture()
 	return "phoenix_fire_spirits"
@@ -1982,7 +2077,6 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnCreated()
 	local numSpirits = self:GetAbility():GetSpecialValueFor("bird_num")
 	-- Set the stack count
 	self:SetStackCount(numSpirits)
-
 end
 
 function modifier_imba_phoenix_supernova_bird_thinker:OnIntervalThink()
@@ -2004,7 +2098,7 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnIntervalThink()
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
-		false )
+		false)
 	local distance = ability:GetSpecialValueFor("aura_radius") + 1
 	local target
 	local target_num = 0
@@ -2021,24 +2115,24 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnIntervalThink()
 		return
 	end
 
-	local attach_point = egg:ScriptLookupAttachment( "attach_hitloc" )
+	local attach_point = egg:ScriptLookupAttachment("attach_hitloc")
 	local info =
-		{
-			Target = target,
-			Source = caster,
-			Ability = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"),
-			EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
-			iMoveSpeed = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("spirit_speed"),
-			vSourceLoc= egg:GetAttachmentOrigin(attach_point),				-- Optional (HOW)
-			bDrawsOnMinimap = false,						  -- Optional
-			bDodgeable = true,								-- Optional
-			bIsAttack = false,								-- Optional
-			bVisibleToEnemies = true,						 -- Optional
-			bReplaceExisting = false,						 -- Optional
-			flExpireTime = GameRules:GetGameTime() + 10,	  -- Optional but recommended
-			bProvidesVision = false,						   -- Optional
-			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-		}
+	{
+		Target = target,
+		Source = caster,
+		Ability = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"),
+		EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
+		iMoveSpeed = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("spirit_speed"),
+		vSourceLoc = egg:GetAttachmentOrigin(attach_point), -- Optional (HOW)
+		bDrawsOnMinimap = false,                      -- Optional
+		bDodgeable = true,                            -- Optional
+		bIsAttack = false,                            -- Optional
+		bVisibleToEnemies = true,                     -- Optional
+		bReplaceExisting = false,                     -- Optional
+		flExpireTime = GameRules:GetGameTime() + 10,  -- Optional but recommended
+		bProvidesVision = false,                      -- Optional
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+	}
 	projectile = ProjectileManager:CreateTrackingProjectile(info)
 	EmitSoundOn("Hero_Phoenix.FireSpirits.Launch", caster)
 
@@ -2047,10 +2141,9 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnIntervalThink()
 		self:Destroy()
 		return
 	end
-
 end
 
-function modifier_imba_phoenix_supernova_bird_thinker:OnProjectileHit( hTarget, vLocation)
+function modifier_imba_phoenix_supernova_bird_thinker:OnProjectileHit(hTarget, vLocation)
 	if not IsServer() then
 		return
 	end
@@ -2061,8 +2154,8 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnProjectileHit( hTarget, 
 		location = hTarget:GetAbsOrigin()
 	end
 	-- Particles and sound
-	local DummyUnit = CreateUnitByName("npc_dummy_unit",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", {duration = 0.1})
+	local DummyUnit = CreateUnitByName("npc_dummy_unit", location, false, caster, caster:GetOwner(), caster:GetTeamNumber())
+	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", { duration = 0.1 })
 	local pfx_explosion = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(pfx_explosion, 0, location)
 	ParticleManager:ReleaseParticleIndex(pfx_explosion)
@@ -2082,12 +2175,12 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnProjectileHit( hTarget, 
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
 		false)
-	for _,unit in pairs(units) do
+	for _, unit in pairs(units) do
 		if unit ~= caster then
 			if unit:GetTeamNumber() ~= caster:GetTeamNumber() then
-				unit:AddNewModifier(caster, caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"), "modifier_imba_phoenix_fire_spirits_debuff", {duration = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance())} )
+				unit:AddNewModifier(caster, caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"), "modifier_imba_phoenix_fire_spirits_debuff", { duration = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("duration") * (1 - unit:GetStatusResistance()) })
 			else
-				unit:AddNewModifier(caster, caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"), "modifier_imba_phoenix_fire_spirits_buff", {duration = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("duration")} )
+				unit:AddNewModifier(caster, caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"), "modifier_imba_phoenix_fire_spirits_buff", { duration = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("duration") })
 			end
 		end
 	end
@@ -2099,18 +2192,21 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnDestroy()
 		return
 	end
 	local caster = self:GetCaster()
-
 end
-
 
 modifier_imba_phoenix_supernova_egg_double = modifier_imba_phoenix_supernova_egg_double or class({})
 
-function modifier_imba_phoenix_supernova_egg_double:IsDebuff()					return false end
-function modifier_imba_phoenix_supernova_egg_double:IsHidden() 				return false end
-function modifier_imba_phoenix_supernova_egg_double:IsPurgable() 				return false end
-function modifier_imba_phoenix_supernova_egg_double:IsPurgeException() 		return false end
-function modifier_imba_phoenix_supernova_egg_double:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_supernova_egg_double:RemoveOnDeath() 			return true end
+function modifier_imba_phoenix_supernova_egg_double:IsDebuff() return false end
+
+function modifier_imba_phoenix_supernova_egg_double:IsHidden() return false end
+
+function modifier_imba_phoenix_supernova_egg_double:IsPurgable() return false end
+
+function modifier_imba_phoenix_supernova_egg_double:IsPurgeException() return false end
+
+function modifier_imba_phoenix_supernova_egg_double:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_supernova_egg_double:RemoveOnDeath() return true end
 
 function modifier_imba_phoenix_supernova_egg_double:GetTexture() return "phoenix_supernova" end
 
@@ -2120,30 +2216,41 @@ function modifier_imba_phoenix_supernova_egg_double:OnCreated()
 	end
 	local egg = self:GetParent()
 	local ability = self:GetAbility()
-	local pfx = ParticleManager:CreateParticle( "particles/hero/phoenix/phoenix_super_nova_double_egg.vpcf", PATTACH_POINT_FOLLOW, egg )
-	ParticleManager:SetParticleControlEnt( pfx, 3, egg, PATTACH_POINT_FOLLOW, "attach_hitloc", egg:GetAbsOrigin(), true )
+	local pfx = ParticleManager:CreateParticle("particles/hero/phoenix/phoenix_super_nova_double_egg.vpcf", PATTACH_POINT_FOLLOW, egg)
+	ParticleManager:SetParticleControlEnt(pfx, 3, egg, PATTACH_POINT_FOLLOW, "attach_hitloc", egg:GetAbsOrigin(), true)
 	Timers:CreateTimer({
 		endTime = ability:GetSpecialValueFor("duration"),
 		callback = function()
-			ParticleManager:ReleaseParticleIndex( pfx )
+			ParticleManager:ReleaseParticleIndex(pfx)
 		end
 	})
 end
 
 modifier_imba_phoenix_supernova_egg_thinker = modifier_imba_phoenix_supernova_egg_thinker or class({})
 
-function modifier_imba_phoenix_supernova_egg_thinker:IsDebuff()					return false end
-function modifier_imba_phoenix_supernova_egg_thinker:IsHidden() 				return false end
-function modifier_imba_phoenix_supernova_egg_thinker:IsPurgable() 				return false end
-function modifier_imba_phoenix_supernova_egg_thinker:IsPurgeException() 		return false end
-function modifier_imba_phoenix_supernova_egg_thinker:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_supernova_egg_thinker:RemoveOnDeath() 			return true end
-function modifier_imba_phoenix_supernova_egg_thinker:IgnoreTenacity() 			return true end
-function modifier_imba_phoenix_supernova_egg_thinker:IsAura() 					return true end
-function modifier_imba_phoenix_supernova_egg_thinker:GetAuraSearchTeam() 		return DOTA_UNIT_TARGET_TEAM_ENEMY end
-function modifier_imba_phoenix_supernova_egg_thinker:GetAuraSearchType() 		return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
-function modifier_imba_phoenix_supernova_egg_thinker:GetAuraRadius() 			return self:GetAbility():GetSpecialValueFor("aura_radius") end
-function modifier_imba_phoenix_supernova_egg_thinker:GetModifierAura()			return "modifier_imba_phoenix_supernova_dmg" end
+function modifier_imba_phoenix_supernova_egg_thinker:IsDebuff() return false end
+
+function modifier_imba_phoenix_supernova_egg_thinker:IsHidden() return false end
+
+function modifier_imba_phoenix_supernova_egg_thinker:IsPurgable() return false end
+
+function modifier_imba_phoenix_supernova_egg_thinker:IsPurgeException() return false end
+
+function modifier_imba_phoenix_supernova_egg_thinker:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_supernova_egg_thinker:RemoveOnDeath() return true end
+
+function modifier_imba_phoenix_supernova_egg_thinker:IgnoreTenacity() return true end
+
+function modifier_imba_phoenix_supernova_egg_thinker:IsAura() return true end
+
+function modifier_imba_phoenix_supernova_egg_thinker:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
+
+function modifier_imba_phoenix_supernova_egg_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+
+function modifier_imba_phoenix_supernova_egg_thinker:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_radius") end
+
+function modifier_imba_phoenix_supernova_egg_thinker:GetModifierAura() return "modifier_imba_phoenix_supernova_dmg" end
 
 function modifier_imba_phoenix_supernova_egg_thinker:GetTexture() return "phoenix_supernova" end
 
@@ -2160,36 +2267,36 @@ function modifier_imba_phoenix_supernova_egg_thinker:GetModifierIncomingDamage_P
 end
 
 function modifier_imba_phoenix_supernova_egg_thinker:OnCreated()
-	self.aura_radius	= self:GetAbility():GetSpecialValueFor("aura_radius")
-	self.damage_per_sec	= self:GetAbility():GetSpecialValueFor("damage_per_sec")
-	
+	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
+	self.damage_per_sec = self:GetAbility():GetSpecialValueFor("damage_per_sec")
+
 	if not IsServer() then
 		return
 	end
 	local egg = self:GetParent()
 	local caster = self:GetCaster()
-	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf", PATTACH_ABSORIGIN_FOLLOW, egg )
-	ParticleManager:SetParticleControlEnt( pfx, 1, egg, PATTACH_POINT_FOLLOW, "attach_hitloc", egg:GetAbsOrigin(), true )
-	ParticleManager:ReleaseParticleIndex( pfx )
-	StartSoundEvent( "Hero_Phoenix.SuperNova.Begin", egg)
-	StartSoundEvent( "Hero_Phoenix.SuperNova.Cast", egg)
+	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf", PATTACH_ABSORIGIN_FOLLOW, egg)
+	ParticleManager:SetParticleControlEnt(pfx, 1, egg, PATTACH_POINT_FOLLOW, "attach_hitloc", egg:GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(pfx)
+	StartSoundEvent("Hero_Phoenix.SuperNova.Begin", egg)
+	StartSoundEvent("Hero_Phoenix.SuperNova.Cast", egg)
 
 	self:ResetUnit(caster)
-	caster:SetMana( caster:GetMaxMana() )
-	
+	caster:SetMana(caster:GetMaxMana())
+
 	Timers:CreateTimer(FrameTime() * 2, function()
 		if caster.ally then
 			self:ResetUnit(caster.ally)
-			caster.ally:SetMana( caster.ally:GetMaxMana() )
+			caster.ally:SetMana(caster.ally:GetMaxMana())
 		end
 	end)
 
 	local ability = self:GetAbility()
-	GridNav:DestroyTreesAroundPoint(egg:GetAbsOrigin(), ability:GetSpecialValueFor("cast_range") , false)
-	
+	GridNav:DestroyTreesAroundPoint(egg:GetAbsOrigin(), ability:GetSpecialValueFor("cast_range"), false)
+
 	-- IMBAfication: Artificial Sun
 	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.aura_radius, 1, false)
-	
+
 	self:StartIntervalThink(1.0)
 end
 
@@ -2203,10 +2310,10 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
 	if not egg:IsAlive() or egg:HasModifier("modifier_imba_phoenix_supernova_egg_double") then
 		return
 	end
-	
+
 	-- IMBAfication: Artificial Sun
 	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.aura_radius, math.min(1, self:GetRemainingTime()), false)
-	
+
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 		egg:GetAbsOrigin(),
 		nil,
@@ -2215,7 +2322,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
-		false )
+		false)
 	for _, enemy in pairs(enemies) do
 		local damageTable = {
 			victim = enemy,
@@ -2228,7 +2335,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
 	end
 end
 
-function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
+function modifier_imba_phoenix_supernova_egg_thinker:OnDeath(keys)
 	if not IsServer() then
 		return
 	end
@@ -2254,22 +2361,22 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 	egg:AddNoDraw()
 
 	StopSoundEvent("Hero_Phoenix.SuperNova.Begin", egg)
-	StopSoundEvent( "Hero_Phoenix.SuperNova.Cast", egg)
+	StopSoundEvent("Hero_Phoenix.SuperNova.Cast", egg)
 	if egg == killer then
 		-- Phoenix reborns
-		StartSoundEvent( "Hero_Phoenix.SuperNova.Explode", egg)
+		StartSoundEvent("Hero_Phoenix.SuperNova.Explode", egg)
 		local pfxName = "particles/units/heroes/hero_phoenix/phoenix_supernova_reborn.vpcf"
-		local pfx = ParticleManager:CreateParticle( pfxName, PATTACH_ABSORIGIN_FOLLOW, caster )
-		ParticleManager:SetParticleControl( pfx, 0, egg:GetAbsOrigin() )
-		ParticleManager:SetParticleControl( pfx, 1, Vector(1.5,1.5,1.5) )
-		ParticleManager:SetParticleControl( pfx, 3, egg:GetAbsOrigin() )
+		local pfx = ParticleManager:CreateParticle(pfxName, PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControl(pfx, 0, egg:GetAbsOrigin())
+		ParticleManager:SetParticleControl(pfx, 1, Vector(1.5, 1.5, 1.5))
+		ParticleManager:SetParticleControl(pfx, 3, egg:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(pfx)
 		-- self:ResetUnit(caster)
-		caster:SetHealth( caster:GetMaxHealth() )
+		caster:SetHealth(caster:GetMaxHealth())
 		-- caster:SetMana( caster:GetMaxMana() )
 		if caster.ally and not caster.HasDoubleEgg and caster.ally:IsAlive() then
 			-- self:ResetUnit(caster.ally)
-			caster.ally:SetHealth( caster.ally:GetMaxHealth() )
+			caster.ally:SetHealth(caster.ally:GetMaxHealth())
 			-- caster.ally:SetMana( caster.ally:GetMaxMana() )
 		end
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -2280,23 +2387,23 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 			FIND_ANY_ORDER,
-			false )
+			false)
 		for _, enemy in pairs(enemies) do
-			local item = CreateItem( "item_imba_dummy", caster, caster)
-			item:ApplyDataDrivenModifier( caster, enemy, "modifier_stunned", {duration = ability:GetSpecialValueFor("stun_duration")} )
+			local item = CreateItem("item_imba_dummy", caster, caster)
+			item:ApplyDataDrivenModifier(caster, enemy, "modifier_stunned", { duration = ability:GetSpecialValueFor("stun_duration") })
 			UTIL_Remove(item)
 		end
 	else
 		-- Phoenix killed
-		StartSoundEventFromPosition( "Hero_Phoenix.SuperNova.Death", egg:GetAbsOrigin())
+		StartSoundEventFromPosition("Hero_Phoenix.SuperNova.Death", egg:GetAbsOrigin())
 		if not caster:HasTalent("special_bonus_imba_phoenix_5") then
-			if caster:IsAlive() then  caster:Kill(ability, killer) end
+			if caster:IsAlive() then caster:Kill(ability, killer) end
 			if caster.ally and not caster.HasDoubleEgg and caster.ally:IsAlive() then
 				caster.ally:Kill(ability, killer)
 			end
 		elseif caster:IsAlive() then
 			-- self:ResetUnit(caster)
-			caster:SetHealth( caster:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
+			caster:SetHealth(caster:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_phoenix_5", "reborn_pct") / 100)
 			-- caster:SetMana( caster:GetMaxMana() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100)
 			local egg_buff = caster:FindModifierByNameAndCaster("modifier_imba_phoenix_supernova_caster_dummy", caster)
 			if egg_buff then
@@ -2304,7 +2411,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 			end
 			if caster.ally and caster.ally:IsAlive() then
 				-- self:ResetUnit(caster.ally)
-				caster.ally:SetHealth( caster.ally:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
+				caster.ally:SetHealth(caster.ally:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_phoenix_5", "reborn_pct") / 100)
 				-- caster.ally:SetMana( caster.ally:GetMaxMana() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
 				local egg_buff2 = caster.ally:FindModifierByNameAndCaster("modifier_imba_phoenix_supernova_caster_dummy", caster)
 				if egg_buff2 then
@@ -2313,11 +2420,11 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 			end
 		end
 		local pfxName = "particles/units/heroes/hero_phoenix/phoenix_supernova_death.vpcf"
-		local pfx = ParticleManager:CreateParticle( pfxName, PATTACH_WORLDORIGIN, nil )
-		local attach_point = caster:ScriptLookupAttachment( "attach_hitloc" )
-		ParticleManager:SetParticleControl( pfx, 0, caster:GetAttachmentOrigin(attach_point) )
-		ParticleManager:SetParticleControl( pfx, 1, caster:GetAttachmentOrigin(attach_point) )
-		ParticleManager:SetParticleControl( pfx, 3, caster:GetAttachmentOrigin(attach_point) )
+		local pfx = ParticleManager:CreateParticle(pfxName, PATTACH_WORLDORIGIN, nil)
+		local attach_point = caster:ScriptLookupAttachment("attach_hitloc")
+		ParticleManager:SetParticleControl(pfx, 0, caster:GetAttachmentOrigin(attach_point))
+		ParticleManager:SetParticleControl(pfx, 1, caster:GetAttachmentOrigin(attach_point))
+		ParticleManager:SetParticleControl(pfx, 3, caster:GetAttachmentOrigin(attach_point))
 		ParticleManager:ReleaseParticleIndex(pfx)
 	end
 	caster.ally = nil
@@ -2329,8 +2436,8 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 	self.bIsFirstAttacked = nil
 end
 
-function modifier_imba_phoenix_supernova_egg_thinker:ResetUnit( unit )
-	for i=0,10 do
+function modifier_imba_phoenix_supernova_egg_thinker:ResetUnit(unit)
+	for i = 0, 10 do
 		local abi = unit:GetAbilityByIndex(i)
 		if abi then
 			if abi:GetAbilityType() ~= 1 and not abi:IsItem() then
@@ -2338,10 +2445,10 @@ function modifier_imba_phoenix_supernova_egg_thinker:ResetUnit( unit )
 			end
 		end
 	end
-	unit:Purge( true, true, true, true, true )
+	unit:Purge(true, true, true, true, true)
 end
 
-function modifier_imba_phoenix_supernova_egg_thinker:OnAttacked( keys )
+function modifier_imba_phoenix_supernova_egg_thinker:OnAttacked(keys)
 	if not IsServer() then
 		return
 	end
@@ -2360,26 +2467,28 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnAttacked( keys )
 
 	if attacker:IsRealHero() or attacker:IsClone() or attacker:IsTempestDouble() then
 		egg.current_attack = egg.current_attack + 1
---	else
---		egg.current_attack = egg.current_attack + 0.25
+		--	else
+		--		egg.current_attack = egg.current_attack + 0.25
 	end
 	if egg.current_attack >= egg.max_attack then
 		egg:Kill(ability, attacker)
 	else
-		egg:SetHealth( (egg:GetMaxHealth() * ((egg.max_attack-egg.current_attack)/egg.max_attack)) )
+		egg:SetHealth((egg:GetMaxHealth() * ((egg.max_attack - egg.current_attack) / egg.max_attack)))
 	end
 	local pfxName = "particles/units/heroes/hero_phoenix/phoenix_supernova_hit.vpcf"
-	local pfx = ParticleManager:CreateParticle( pfxName, PATTACH_POINT_FOLLOW, egg )
-	local attach_point = egg:ScriptLookupAttachment( "attach_hitloc" )
-	ParticleManager:SetParticleControlEnt( pfx, 0, egg, PATTACH_POINT_FOLLOW, "attach_hitloc", egg:GetAttachmentOrigin(attach_point), true )
-	ParticleManager:SetParticleControlEnt( pfx, 1, egg, PATTACH_POINT_FOLLOW, "attach_hitloc", egg:GetAttachmentOrigin(attach_point), true )
+	local pfx = ParticleManager:CreateParticle(pfxName, PATTACH_POINT_FOLLOW, egg)
+	local attach_point = egg:ScriptLookupAttachment("attach_hitloc")
+	ParticleManager:SetParticleControlEnt(pfx, 0, egg, PATTACH_POINT_FOLLOW, "attach_hitloc", egg:GetAttachmentOrigin(attach_point), true)
+	ParticleManager:SetParticleControlEnt(pfx, 1, egg, PATTACH_POINT_FOLLOW, "attach_hitloc", egg:GetAttachmentOrigin(attach_point), true)
 	--ParticleManager:ReleaseParticleIndex(pfx)
 end
 
 modifier_imba_phoenix_supernova_dmg = modifier_imba_phoenix_supernova_dmg or class({})
 
 function modifier_imba_phoenix_supernova_dmg:IsHidden() return false end
+
 function modifier_imba_phoenix_supernova_dmg:IsDebuff() return true end
+
 function modifier_imba_phoenix_supernova_dmg:IsPurgable() return false end
 
 function modifier_imba_phoenix_supernova_dmg:GetHeroEffectName() return "particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf" end
@@ -2387,7 +2496,7 @@ function modifier_imba_phoenix_supernova_dmg:GetHeroEffectName() return "particl
 function modifier_imba_phoenix_supernova_dmg:GetEffectAttachType() return PATTACH_WORLDORIGIN end
 
 function modifier_imba_phoenix_supernova_dmg:OnCreated()
-	self.extreme_burning_spell_amp	= self:GetAbility():GetSpecialValueFor("extreme_burning_spell_amp") * (-1)
+	self.extreme_burning_spell_amp = self:GetAbility():GetSpecialValueFor("extreme_burning_spell_amp") * (-1)
 
 	if not IsServer() then
 		return
@@ -2396,8 +2505,7 @@ function modifier_imba_phoenix_supernova_dmg:OnCreated()
 	local caster = self:GetCaster()
 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_supernova_radiance_streak_light.vpcf", PATTACH_POINT_FOLLOW, target)
 	-- The fucking particle I can't do
-	ParticleManager:SetParticleControlEnt( self.pfx, 8, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true )
-
+	ParticleManager:SetParticleControlEnt(self.pfx, 8, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 end
 
 function modifier_imba_phoenix_supernova_dmg:OnDestroy()
@@ -2417,36 +2525,36 @@ end
 
 -- Kit is overloaded so I'm removing this for now
 -- function modifier_imba_phoenix_supernova_dmg:GetModifierMiss_Percentage()
-	-- if not IsServer() then
-		-- return
-	-- end
-	-- local enemy = self:GetParent()
-	-- local caster = self:GetCaster()
-	-- local ability = self:GetAbility()
-	-- -- Get the miss pct
-	-- local egg = caster.egg
-	-- if egg then
-		-- local miss_pct = ability:GetSpecialValueFor("miss_pct_base") + ability:GetSpecialValueFor("miss_pct_perHit") * egg.current_attack
-		-- local miss_radius = self:GetAbility():GetSpecialValueFor("cast_range")
-		-- local miss_angle = self:GetAbility():GetSpecialValueFor("miss_angle")
-		-- local caster_location = caster:GetAbsOrigin()
-		-- local enemy_location = enemy:GetAbsOrigin()
-		-- local distance = CalcDistanceBetweenEntityOBB(caster, enemy)
-		-- if distance <= miss_radius then
-			-- local enemy_to_caster_direction = (caster_location - enemy_location):Normalized()
-			-- local enemy_forward_vector =  enemy:GetForwardVector()
-			-- local view_angle = math.abs(RotationDelta(VectorToAngles(enemy_to_caster_direction), VectorToAngles(enemy_forward_vector)).y)
-			-- if view_angle <= ( miss_angle / 2 ) and enemy:CanEntityBeSeenByMyTeam(caster) then
-				-- return miss_pct
-			-- else
-				-- return 0
-			-- end
-		-- else
-			-- return 0
-		-- end
-	-- else
-		-- return 0
-	-- end
+-- if not IsServer() then
+-- return
+-- end
+-- local enemy = self:GetParent()
+-- local caster = self:GetCaster()
+-- local ability = self:GetAbility()
+-- -- Get the miss pct
+-- local egg = caster.egg
+-- if egg then
+-- local miss_pct = ability:GetSpecialValueFor("miss_pct_base") + ability:GetSpecialValueFor("miss_pct_perHit") * egg.current_attack
+-- local miss_radius = self:GetAbility():GetSpecialValueFor("cast_range")
+-- local miss_angle = self:GetAbility():GetSpecialValueFor("miss_angle")
+-- local caster_location = caster:GetAbsOrigin()
+-- local enemy_location = enemy:GetAbsOrigin()
+-- local distance = CalcDistanceBetweenEntityOBB(caster, enemy)
+-- if distance <= miss_radius then
+-- local enemy_to_caster_direction = (caster_location - enemy_location):Normalized()
+-- local enemy_forward_vector =  enemy:GetForwardVector()
+-- local view_angle = math.abs(RotationDelta(VectorToAngles(enemy_to_caster_direction), VectorToAngles(enemy_forward_vector)).y)
+-- if view_angle <= ( miss_angle / 2 ) and enemy:CanEntityBeSeenByMyTeam(caster) then
+-- return miss_pct
+-- else
+-- return 0
+-- end
+-- else
+-- return 0
+-- end
+-- else
+-- return 0
+-- end
 -- end
 
 function modifier_imba_phoenix_supernova_dmg:GetModifierSpellAmplify_Percentage()
@@ -2455,7 +2563,8 @@ end
 
 modifier_imba_phoenix_supernova_scepter_passive = modifier_imba_phoenix_supernova_scepter_passive or class({})
 
-function modifier_imba_phoenix_supernova_scepter_passive:IsDebuff()					return false end
+function modifier_imba_phoenix_supernova_scepter_passive:IsDebuff() return false end
+
 function modifier_imba_phoenix_supernova_scepter_passive:IsHidden()
 	if self:GetCaster():HasScepter() and not self:GetCaster():HasModifier("modifier_imba_phoenix_supernova_scepter_passive_cooldown") then
 		return false
@@ -2463,9 +2572,13 @@ function modifier_imba_phoenix_supernova_scepter_passive:IsHidden()
 		return true
 	end
 end
-function modifier_imba_phoenix_supernova_scepter_passive:IsPurgable() 				return false end
-function modifier_imba_phoenix_supernova_scepter_passive:IsPurgeException() 		return false end
-function modifier_imba_phoenix_supernova_scepter_passive:IsStunDebuff() 			return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive:IsPurgable() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive:IsPurgeException() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive:IsStunDebuff() return false end
+
 function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath()
 	if self:GetCaster():IsRealHero() then
 		return false
@@ -2473,8 +2586,10 @@ function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath()
 		return true
 	end
 end
-function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath() 			return false end
-function modifier_imba_phoenix_supernova_scepter_passive:AllowIllusionDuplicate() 	return true end
+
+function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive:AllowIllusionDuplicate() return true end
 
 function modifier_imba_phoenix_supernova_scepter_passive:DeclareFunctions()
 	return {
@@ -2494,8 +2609,8 @@ function modifier_imba_phoenix_supernova_scepter_passive:GetMinHealth()
 	end
 end
 
-function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
-	if not  IsServer() then
+function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage(keys)
+	if not IsServer() then
 		return
 	end
 	if keys.unit ~= self:GetCaster() then
@@ -2515,11 +2630,11 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
-		local cooldown_modifier = caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = scepter_cooldown})
+		local cooldown_modifier = caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_scepter_passive_cooldown", { duration = scepter_cooldown })
 		local egg_duration = ability:GetSpecialValueFor("duration")
 		local extend_duration = ability:GetSpecialValueFor("scepter_additional_duration")
 
-		if cooldown_modifier ~= nil then 
+		if cooldown_modifier ~= nil then
 			cooldown_modifier:SetStackCount(scepter_cooldown + egg_duration + extend_duration)
 		end
 
@@ -2527,18 +2642,18 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 
 		local max_attack = ability:GetSpecialValueFor("max_hero_attacks")
 
-		caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_caster_dummy", {duration = egg_duration + extend_duration })
+		caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_caster_dummy", { duration = egg_duration + extend_duration })
 		caster:AddNoDraw()
 
-		local egg = CreateUnitByName("npc_dota_phoenix_sun",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-		egg:AddNewModifier(caster, ability, "modifier_kill", {duration = egg_duration + extend_duration })
-		egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + extend_duration + 0.3})
+		local egg = CreateUnitByName("npc_dota_phoenix_sun", location, false, caster, caster:GetOwner(), caster:GetTeamNumber())
+		egg:AddNewModifier(caster, ability, "modifier_kill", { duration = egg_duration + extend_duration })
+		egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", { duration = egg_duration + extend_duration + 0.3 })
 
 		egg.max_attack = max_attack
 		egg.current_attack = 0
 
 		local egg_playback_rate = 6 / (egg_duration + extend_duration)
-		egg:StartGestureWithPlaybackRate(ACT_DOTA_IDLE , egg_playback_rate)
+		egg:StartGestureWithPlaybackRate(ACT_DOTA_IDLE, egg_playback_rate)
 
 		caster.egg = egg
 
@@ -2546,10 +2661,10 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 		caster:SetHealth(caster:GetMaxHealth())
 
 		-- Add cooldown to scepter icon
-		for i = 0, 5 do 
+		for i = 0, 5 do
 			local aghs = caster:GetItemInSlot(i)
 			if aghs ~= nil then
-				if aghs:GetName() == 'item_ultimate_scepter' then 
+				if aghs:GetName() == 'item_ultimate_scepter' then
 					aghs:StartCooldown(scepter_cooldown + egg_duration + extend_duration)
 				end
 			end
@@ -2559,21 +2674,28 @@ end
 
 modifier_imba_phoenix_supernova_scepter_passive_cooldown = modifier_imba_phoenix_supernova_scepter_passive_cooldown or class({})
 
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsDebuff()				return true end
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsHidden() 				return false end
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPurgable() 				return false end
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPurgeException() 		return false end
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:RemoveOnDeath() 			return false end
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:AllowIllusionDuplicate() 	return false end
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnCreated() 
-	if IsServer() then 
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsDebuff() return true end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsHidden() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPurgable() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsPurgeException() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:RemoveOnDeath() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:AllowIllusionDuplicate() return false end
+
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnCreated()
+	if IsServer() then
 		self:StartIntervalThink(1)
 	end
 end
 
-function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnIntervalThink() 
-	if IsServer() then 
+function modifier_imba_phoenix_supernova_scepter_passive_cooldown:OnIntervalThink()
+	if IsServer() then
 		self:SetStackCount(self:GetStackCount() - 1)
 	end
 end
@@ -2584,22 +2706,24 @@ end
 
 modifier_imba_phoenix_supernova_force_day = class({})
 
-function modifier_imba_phoenix_supernova_force_day:IsHidden()		return true end
-function modifier_imba_phoenix_supernova_force_day:IsPurgable()		return false end
-function modifier_imba_phoenix_supernova_force_day:RemoveOnDeath()	return false end
+function modifier_imba_phoenix_supernova_force_day:IsHidden() return true end
+
+function modifier_imba_phoenix_supernova_force_day:IsPurgable() return false end
+
+function modifier_imba_phoenix_supernova_force_day:RemoveOnDeath() return false end
 
 function modifier_imba_phoenix_supernova_force_day:OnCreated(params)
 	if not IsServer() then return end
-	
-	self.duration				= params.duration
-	self.current_time_of_day	= params.current_time_of_day
+
+	self.duration            = params.duration
+	self.current_time_of_day = params.current_time_of_day
 end
 
 function modifier_imba_phoenix_supernova_force_day:OnDestroy()
 	if not IsServer() then return end
-	
+
 	GameRules:SetTimeOfDay(self.current_time_of_day + self.duration)
-	
+
 	GameRules:GetGameModeEntity():SetDaynightCycleDisabled(false)
 end
 
@@ -2612,13 +2736,17 @@ LinkLuaModifier("modifier_imba_phoenix_burning_wings_ally_buff", "components/abi
 
 imba_phoenix_burning_wings = imba_phoenix_burning_wings or class({})
 
-function imba_phoenix_burning_wings:IsHiddenWhenStolen() 		return false end
-function imba_phoenix_burning_wings:IsRefreshable() 			return true end
-function imba_phoenix_burning_wings:IsStealable() 				return false end
-function imba_phoenix_burning_wings:IsNetherWardStealable() 	return false end
-function imba_phoenix_burning_wings:IsInnateAbility()			return true end
+function imba_phoenix_burning_wings:IsHiddenWhenStolen() return false end
 
-function imba_phoenix_burning_wings:GetAbilityTextureName()   	return "phoenix_burningwings" end
+function imba_phoenix_burning_wings:IsRefreshable() return true end
+
+function imba_phoenix_burning_wings:IsStealable() return false end
+
+function imba_phoenix_burning_wings:IsNetherWardStealable() return false end
+
+function imba_phoenix_burning_wings:IsInnateAbility() return true end
+
+function imba_phoenix_burning_wings:GetAbilityTextureName() return "phoenix_burningwings" end
 
 function imba_phoenix_burning_wings:OnToggle()
 	if not IsServer() then
@@ -2626,7 +2754,7 @@ function imba_phoenix_burning_wings:OnToggle()
 	end
 
 	if self:GetToggleState() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_burning_wings_buff", {} )
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_phoenix_burning_wings_buff", {})
 	else
 		self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_phoenix_burning_wings_buff", self:GetCaster())
 		if self:GetCaster():HasScepter() then
@@ -2639,19 +2767,25 @@ end
 
 modifier_imba_phoenix_burning_wings_buff = modifier_imba_phoenix_burning_wings_buff or class({})
 
-function modifier_imba_phoenix_burning_wings_buff:IsDebuff()				return false end
-function modifier_imba_phoenix_burning_wings_buff:IsHidden() 				return false end
-function modifier_imba_phoenix_burning_wings_buff:IsPurgable() 				return false end
-function modifier_imba_phoenix_burning_wings_buff:IsPurgeException() 		return false end
-function modifier_imba_phoenix_burning_wings_buff:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_burning_wings_buff:RemoveOnDeath() 			return false end
-function modifier_imba_phoenix_burning_wings_buff:AllowIllusionDuplicate() 	return false end
+function modifier_imba_phoenix_burning_wings_buff:IsDebuff() return false end
 
-function modifier_imba_phoenix_burning_wings_buff:DeclareFunctions()		return {MODIFIER_EVENT_ON_TAKEDAMAGE} end
+function modifier_imba_phoenix_burning_wings_buff:IsHidden() return false end
 
-function modifier_imba_phoenix_burning_wings_buff:GetEffectName()			return "particles/hero/phoenix/phoenix_burning_wings.vpcf" end
+function modifier_imba_phoenix_burning_wings_buff:IsPurgable() return false end
 
-function modifier_imba_phoenix_burning_wings_buff:GetTexture()				return "phoenix_burningwings" end
+function modifier_imba_phoenix_burning_wings_buff:IsPurgeException() return false end
+
+function modifier_imba_phoenix_burning_wings_buff:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_burning_wings_buff:RemoveOnDeath() return false end
+
+function modifier_imba_phoenix_burning_wings_buff:AllowIllusionDuplicate() return false end
+
+function modifier_imba_phoenix_burning_wings_buff:DeclareFunctions() return { MODIFIER_EVENT_ON_TAKEDAMAGE } end
+
+function modifier_imba_phoenix_burning_wings_buff:GetEffectName() return "particles/hero/phoenix/phoenix_burning_wings.vpcf" end
+
+function modifier_imba_phoenix_burning_wings_buff:GetTexture() return "phoenix_burningwings" end
 
 function modifier_imba_phoenix_burning_wings_buff:OnCreated()
 	if not IsServer() then
@@ -2668,12 +2802,12 @@ function modifier_imba_phoenix_burning_wings_buff:OnCreated()
 		bird:SetHealth(AfterCastHealth)
 	end
 	local particleName = "particles/hero/phoenix/phoenix_burning_wings_2.vpcf"
-	self.pfx = { }
+	self.pfx = {}
 	for i = 1, 5 do
 		self.pfx[i] = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, bird)
-		ParticleManager:SetParticleControlEnt(self.pfx[i], 0, bird,PATTACH_POINT_FOLLOW, "attach_attack1", bird:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.pfx[i], 1, bird,PATTACH_POINT_FOLLOW, "attach_attack2", bird:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.pfx[i], 4, bird,PATTACH_POINT_FOLLOW, "attach_neck", bird:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.pfx[i], 0, bird, PATTACH_POINT_FOLLOW, "attach_attack1", bird:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.pfx[i], 1, bird, PATTACH_POINT_FOLLOW, "attach_attack2", bird:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.pfx[i], 4, bird, PATTACH_POINT_FOLLOW, "attach_neck", bird:GetAbsOrigin(), true)
 	end
 	self:StartIntervalThink(ability:GetSpecialValueFor("tick_rate"))
 end
@@ -2684,7 +2818,7 @@ function modifier_imba_phoenix_burning_wings_buff:OnIntervalThink()
 	end
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
-	local hpCost = (ability:GetSpecialValueFor("hp_cost_per_sec") / 100 ) * ability:GetSpecialValueFor("tick_rate")
+	local hpCost = (ability:GetSpecialValueFor("hp_cost_per_sec") / 100) * ability:GetSpecialValueFor("tick_rate")
 	local healthCost = caster:GetMaxHealth() * hpCost
 	local AfterCastHealth = caster:GetHealth() - healthCost
 	if AfterCastHealth <= 1 then
@@ -2694,7 +2828,7 @@ function modifier_imba_phoenix_burning_wings_buff:OnIntervalThink()
 	end
 end
 
-function modifier_imba_phoenix_burning_wings_buff:OnTakeDamage( keys )
+function modifier_imba_phoenix_burning_wings_buff:OnTakeDamage(keys)
 	if not IsServer() then
 		return
 	end
@@ -2707,7 +2841,7 @@ function modifier_imba_phoenix_burning_wings_buff:OnTakeDamage( keys )
 	local ability3 = caster:FindAbilityByName("imba_phoenix_fire_spirits")
 	local ability4 = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit")
 	local ability5 = caster:FindAbilityByName("imba_phoenix_sun_ray")
-	local abi_table = {ability1,ability2,ability3,ability4,ability5}
+	local abi_table = { ability1, ability2, ability3, ability4, ability5 }
 	for _, abi in pairs(abi_table) do
 		if keys.inflictor == abi then
 			local damage = keys.damage
@@ -2728,15 +2862,19 @@ function modifier_imba_phoenix_burning_wings_buff:OnDestroy()
 	end
 end
 
-
 modifier_imba_phoenix_burning_wings_ally_buff = modifier_imba_phoenix_burning_wings_ally_buff or class({})
 
-function modifier_imba_phoenix_burning_wings_ally_buff:IsDebuff()				return false end
-function modifier_imba_phoenix_burning_wings_ally_buff:IsHidden() 				return true end
-function modifier_imba_phoenix_burning_wings_ally_buff:IsPurgable() 			return false end
-function modifier_imba_phoenix_burning_wings_ally_buff:IsPurgeException() 		return false end
-function modifier_imba_phoenix_burning_wings_ally_buff:IsStunDebuff() 			return false end
-function modifier_imba_phoenix_burning_wings_ally_buff:RemoveOnDeath() 			return false end
+function modifier_imba_phoenix_burning_wings_ally_buff:IsDebuff() return false end
+
+function modifier_imba_phoenix_burning_wings_ally_buff:IsHidden() return true end
+
+function modifier_imba_phoenix_burning_wings_ally_buff:IsPurgable() return false end
+
+function modifier_imba_phoenix_burning_wings_ally_buff:IsPurgeException() return false end
+
+function modifier_imba_phoenix_burning_wings_ally_buff:IsStunDebuff() return false end
+
+function modifier_imba_phoenix_burning_wings_ally_buff:RemoveOnDeath() return false end
 
 function modifier_imba_phoenix_burning_wings_ally_buff:OnDestroy()
 	if not IsServer() then
@@ -2748,7 +2886,7 @@ function modifier_imba_phoenix_burning_wings_ally_buff:OnDestroy()
 	if not buff or not ability or caster == self:GetParent() then
 		return
 	end
-	local num_heal = ability:GetSpecialValueFor("hit_ally_heal") + ability:GetSpecialValueFor("hit_ally_heal") * ( caster:GetSpellAmplification(false) / 100 )
+	local num_heal = ability:GetSpecialValueFor("hit_ally_heal") + ability:GetSpecialValueFor("hit_ally_heal") * (caster:GetSpellAmplification(false) / 100)
 	caster:Heal(num_heal, caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, num_heal, nil)
 end
@@ -2765,38 +2903,52 @@ LinkLuaModifier("modifier_special_bonus_imba_phoenix_6", "components/abilities/h
 LinkLuaModifier("modifier_special_bonus_imba_phoenix_3", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_phoenix_8", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_phoenix_2		= modifier_special_bonus_imba_phoenix_2 or class({})
-modifier_special_bonus_imba_phoenix_7		= modifier_special_bonus_imba_phoenix_7 or class({})
-modifier_special_bonus_imba_phoenix_4		= modifier_special_bonus_imba_phoenix_4 or class({})
-modifier_special_bonus_imba_phoenix_5		= modifier_special_bonus_imba_phoenix_5 or class({})
-modifier_special_bonus_imba_phoenix_6		= modifier_special_bonus_imba_phoenix_6 or class({})
-modifier_special_bonus_imba_phoenix_3		= modifier_special_bonus_imba_phoenix_3 or class({})
-modifier_special_bonus_imba_phoenix_8		= modifier_special_bonus_imba_phoenix_8 or class({})
+modifier_special_bonus_imba_phoenix_2 = modifier_special_bonus_imba_phoenix_2 or class({})
+modifier_special_bonus_imba_phoenix_7 = modifier_special_bonus_imba_phoenix_7 or class({})
+modifier_special_bonus_imba_phoenix_4 = modifier_special_bonus_imba_phoenix_4 or class({})
+modifier_special_bonus_imba_phoenix_5 = modifier_special_bonus_imba_phoenix_5 or class({})
+modifier_special_bonus_imba_phoenix_6 = modifier_special_bonus_imba_phoenix_6 or class({})
+modifier_special_bonus_imba_phoenix_3 = modifier_special_bonus_imba_phoenix_3 or class({})
+modifier_special_bonus_imba_phoenix_8 = modifier_special_bonus_imba_phoenix_8 or class({})
 
-function modifier_special_bonus_imba_phoenix_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_phoenix_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_phoenix_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_phoenix_2:IsHidden() return true end
 
-function modifier_special_bonus_imba_phoenix_7:IsHidden() 		return true end
-function modifier_special_bonus_imba_phoenix_7:IsPurgable()		return false end
-function modifier_special_bonus_imba_phoenix_7:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_phoenix_2:IsPurgable() return false end
 
-function modifier_special_bonus_imba_phoenix_4:IsHidden() 		return true end
-function modifier_special_bonus_imba_phoenix_4:IsPurgable()		return false end
-function modifier_special_bonus_imba_phoenix_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_phoenix_2:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_phoenix_5:IsHidden() 		return true end
-function modifier_special_bonus_imba_phoenix_5:IsPurgable()		return false end
-function modifier_special_bonus_imba_phoenix_5:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_phoenix_7:IsHidden() return true end
 
-function modifier_special_bonus_imba_phoenix_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_phoenix_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_phoenix_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_phoenix_7:IsPurgable() return false end
 
-function modifier_special_bonus_imba_phoenix_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_phoenix_3:IsPurgable()		return false end
-function modifier_special_bonus_imba_phoenix_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_phoenix_7:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_phoenix_8:IsHidden() 		return true end
-function modifier_special_bonus_imba_phoenix_8:IsPurgable()		return false end
-function modifier_special_bonus_imba_phoenix_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_phoenix_4:IsHidden() return true end
+
+function modifier_special_bonus_imba_phoenix_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_phoenix_4:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_phoenix_5:IsHidden() return true end
+
+function modifier_special_bonus_imba_phoenix_5:IsPurgable() return false end
+
+function modifier_special_bonus_imba_phoenix_5:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_phoenix_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_phoenix_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_phoenix_6:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_phoenix_3:IsHidden() return true end
+
+function modifier_special_bonus_imba_phoenix_3:IsPurgable() return false end
+
+function modifier_special_bonus_imba_phoenix_3:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_phoenix_8:IsHidden() return true end
+
+function modifier_special_bonus_imba_phoenix_8:IsPurgable() return false end
+
+function modifier_special_bonus_imba_phoenix_8:RemoveOnDeath() return false end

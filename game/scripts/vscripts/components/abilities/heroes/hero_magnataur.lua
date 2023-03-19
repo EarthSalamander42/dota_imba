@@ -6,12 +6,12 @@
 local function IsNearEnemyClass(unit, radius, class)
 	local class_units = Entities:FindAllByClassnameWithin(class, unit:GetAbsOrigin(), radius)
 
-	for _,found_unit in pairs(class_units) do
+	for _, found_unit in pairs(class_units) do
 		if found_unit:GetTeam() ~= unit:GetTeam() then
 			return true
 		end
 	end
-	
+
 	return false
 end
 
@@ -33,7 +33,6 @@ end
 function modifier_imba_polarize_debuff:GetTexture()
 	return "magnus_polarize"
 end
-
 
 function modifier_imba_polarize_debuff:OnCreated()
 	if IsServer() then
@@ -58,13 +57,13 @@ function modifier_imba_polarize_debuff:OnIntervalThink()
 		if self.caster:HasTalent("special_bonus_imba_magnataur_7") then
 			local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 
-			for _,enemy in pairs (enemies) do
+			for _, enemy in pairs(enemies) do
 				if enemy ~= self.parent then
 					local direction = (enemy:GetAbsOrigin() - self.parent:GetAbsOrigin()):Normalized()
-					local new_point = self.parent:GetAbsOrigin() + direction * self.parent:GetIdealSpeed() * self.caster:FindTalentValue("special_bonus_imba_magnataur_7","pull_strength") * 0.01
+					local new_point = self.parent:GetAbsOrigin() + direction * self.parent:GetIdealSpeed() * self.caster:FindTalentValue("special_bonus_imba_magnataur_7", "pull_strength") / 100
 
 					-- Play the particle
-					self.parent:AddNewModifier(self.caster,nil,"modifier_imba_polarize_debuff_pull",{duration = 0.15 * (1 - self.parent:GetStatusResistance())})
+					self.parent:AddNewModifier(self.caster, nil, "modifier_imba_polarize_debuff_pull", { duration = 0.15 * (1 - self.parent:GetStatusResistance()) })
 
 					self.parent:SetAbsOrigin(new_point)
 					-- Find a clear space to stand on
@@ -76,7 +75,6 @@ function modifier_imba_polarize_debuff:OnIntervalThink()
 		end
 	end
 end
-
 
 function modifier_imba_polarize_debuff:GetEffectName()
 	return "particles/econ/items/magnataur/seismic_berserker/seismic_berserker_weapon_horn_b.vpcf"
@@ -101,7 +99,7 @@ function modifier_imba_polarize_debuff_stack:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
-function modifier_imba_polarize_debuff_stack:OnCreated( params )
+function modifier_imba_polarize_debuff_stack:OnCreated(params)
 	if IsServer() then
 		local parent = self:GetParent()
 		local caster = self:GetCaster()
@@ -111,7 +109,7 @@ function modifier_imba_polarize_debuff_stack:OnCreated( params )
 			modifier:IncrementStackCount()
 			local max_duration = params.duration
 			local modifier_counter = parent:FindAllModifiersByName("modifier_imba_polarize_debuff_stack")
-			for _,modi in ipairs(modifier_counter) do
+			for _, modi in ipairs(modifier_counter) do
 				local current_duration = modi:GetDuration()
 				if current_duration > max_duration then
 					max_duration = current_duration
@@ -119,13 +117,13 @@ function modifier_imba_polarize_debuff_stack:OnCreated( params )
 			end
 			modifier:SetDuration(max_duration, true)
 		else
-			parent:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff", {duration = params.duration * (1 - parent:GetStatusResistance())})
+			parent:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff", { duration = params.duration * (1 - parent:GetStatusResistance()) })
 			parent:FindModifierByName("modifier_imba_polarize_debuff"):SetStackCount(1)
 		end
 	end
 end
 
-function modifier_imba_polarize_debuff_stack:OnDestroy( )
+function modifier_imba_polarize_debuff_stack:OnDestroy()
 	if IsServer() then
 		local parent = self:GetParent()
 		if parent:HasModifier("modifier_imba_polarize_debuff") then
@@ -136,7 +134,7 @@ end
 
 LinkLuaModifier("modifier_imba_polarize_debuff_pull", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_polarize_debuff_pull = class ({})
+modifier_imba_polarize_debuff_pull = class({})
 
 function modifier_imba_polarize_debuff_pull:IsDebuff()
 	return true
@@ -157,7 +155,6 @@ end
 function modifier_imba_polarize_debuff_pull:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
-
 
 -------------------------------------------
 --				MAGNETIZE
@@ -221,7 +218,7 @@ function modifier_imba_magnetize_debuff_stack:OnCreated()
 			local modifier = parent:FindModifierByName("modifier_imba_magnetize_debuff")
 			modifier:IncrementStackCount()
 			local modifier_counter = parent:FindAllModifiersByName("modifier_imba_magnetize_debuff_stack")
-			for _,modi in ipairs(modifier_counter) do
+			for _, modi in ipairs(modifier_counter) do
 				local current_duration = modi:GetDuration()
 				if current_duration < duration then
 					duration = current_duration
@@ -229,7 +226,7 @@ function modifier_imba_magnetize_debuff_stack:OnCreated()
 			end
 			modifier:SetDuration(duration, true)
 		else
-			parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_magnetize_debuff", {duration = duration * (1 - parent:GetStatusResistance())})
+			parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_magnetize_debuff", { duration = duration * (1 - parent:GetStatusResistance()) })
 			parent:FindModifierByName("modifier_imba_magnetize_debuff"):SetStackCount(1)
 		end
 		self:StartIntervalThink(self.max_duration)
@@ -244,13 +241,12 @@ function modifier_imba_magnetize_debuff_stack:OnIntervalThink()
 		-- Find 1 enemy to launch the shockwave
 		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), parent:GetAbsOrigin(), nil, self.distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 
-		for _,enemy in pairs (enemies) do
+		for _, enemy in pairs(enemies) do
 			local direction
 
 			-- If there are more than 1 enemies and the target is the parent, search for a new target
 			if enemy == parent and #enemies > 1 then
 			else
-
 				-- If there are no nearby enemies, launch the shockwave in a random direction :D
 				if #enemies <= 1 then
 					direction = (parent:GetAbsOrigin() - (parent:GetAbsOrigin() + RandomVector(64))):Normalized()
@@ -259,37 +255,37 @@ function modifier_imba_magnetize_debuff_stack:OnIntervalThink()
 					else
 						-- Else, launch the shockwave towards the nearest enemy
 						direction = (enemy:GetAbsOrigin() - parent:GetAbsOrigin()):Normalized()
-						
+
 						-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 						if enemy:GetAbsOrigin() == parent:GetAbsOrigin() then
 							direction = direction + RandomVector(1)
-						end	
+						end
 					end
 				end
 				-- If there are more than 1 enemies and the target is the parent, do nothing
 				if enemy == parent and #enemies > 1 then
 				else
-					parent:AddNewModifier(self:GetCaster(),self:GetAbility(),"modifier_imba_magnetize_debuff_immune",{duration = 0.1})
+					parent:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_magnetize_debuff_immune", { duration = 0.1 })
 					-- Launch projectile
 					local projectile =
-						{
-							Ability				= self:GetAbility(),
-							EffectName			= "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
-							vSpawnOrigin		= parent:GetAbsOrigin(),
-							fDistance			= self.distance,
-							fStartRadius		= self.radius,
-							fEndRadius			= self.radius,
-							Source				= self:GetCaster(),
-							bHasFrontalCone		= false,
-							bReplaceExisting	= false,
-							iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-							iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-							fExpireTime 		= GameRules:GetGameTime() + 5.0,
-							bDeleteOnHit		= false,
-							vVelocity			= Vector(direction.x,direction.y,0) * self.speed,
-							bProvidesVision		= false,
-							ExtraData			= {damage = self.damage, distance = self.distance, polarize_duration = self.polarize_duration, magnetize_duration = self.magnetize_duration, speed = self.speed, radius = self.radius, magnetize_shockwave = 1, talent = 0}
-						}
+					{
+						Ability          = self:GetAbility(),
+						EffectName       = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
+						vSpawnOrigin     = parent:GetAbsOrigin(),
+						fDistance        = self.distance,
+						fStartRadius     = self.radius,
+						fEndRadius       = self.radius,
+						Source           = self:GetCaster(),
+						bHasFrontalCone  = false,
+						bReplaceExisting = false,
+						iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
+						iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+						fExpireTime      = GameRules:GetGameTime() + 5.0,
+						bDeleteOnHit     = false,
+						vVelocity        = Vector(direction.x, direction.y, 0) * self.speed,
+						bProvidesVision  = false,
+						ExtraData        = { damage = self.damage, distance = self.distance, polarize_duration = self.polarize_duration, magnetize_duration = self.magnetize_duration, speed = self.speed, radius = self.radius, magnetize_shockwave = 1, talent = 0 }
+					}
 					ProjectileManager:CreateLinearProjectile(projectile)
 					-- Break the loop after launching the shockwave
 					break
@@ -390,8 +386,8 @@ function imba_magnataur_shockwave:OnSpellStart()
 		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
-		end	
-	
+		end
+
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
@@ -402,21 +398,21 @@ function imba_magnataur_shockwave:OnSpellStart()
 		local spread_angle = self:GetSpecialValueFor("spread_angle")
 		local secondary_amount = self:GetSpecialValueFor("secondary_amount")
 		local secondary_occurance = self:GetSpecialValueFor("secondary_occurance")
-		local distance = self:GetCastRange(caster_loc,caster) + GetCastRangeIncrease(caster)
+		local distance = self:GetCastRange(caster_loc, caster) + GetCastRangeIncrease(caster)
 		local polarize_duration = self:GetTalentSpecialValueFor("polarize_duration")
 		local magnetize_duration = self:GetTalentSpecialValueFor("magnetize_duration")
-		
+
 		local speed = self:GetSpecialValueFor("speed")
-		
+
 		if caster:HasScepter() then
 			speed = self:GetSpecialValueFor("scepter_speed")
 		end
-		
+
 		local radius = self:GetSpecialValueFor("radius")
 		local direction = (target_loc - caster_loc):Normalized()
 
 		-- Creating a unique list of hit-Targets, delete it after 15 secs
-		local index = "hit_targets_" .. tostring(GameRules:GetDOTATime(true,true))
+		local index = "hit_targets_" .. tostring(GameRules:GetDOTATime(true, true))
 		self[index] = {}
 		self[index .. "_counter"] = secondary_occurance
 		Timers:CreateTimer(15, function()
@@ -426,37 +422,37 @@ function imba_magnataur_shockwave:OnSpellStart()
 
 		-- Play cast sound on dummy, which tracks the shockwave
 		caster:EmitSound("Hero_Magnataur.ShockWave.Particle")
-		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
-			"magnataur_magn_shockwave_01",
-			"magnataur_magn_shockwave_02"}, 75, DOTA_CAST_SOUND_FLAG_NONE, nil, nil ) then
-			if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
-				"magnataur_magn_shockwave_04",
-				"magnataur_magn_shockwave_05"}, 50, DOTA_CAST_SOUND_FLAG_NONE, nil, nil) then
-				caster:EmitCasterSound("npc_dota_hero_magnataur",{
-					"magnataur_magn_shockwave_03"}, 15, DOTA_CAST_SOUND_FLAG_NONE, nil, nil)
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur", {
+				"magnataur_magn_shockwave_01",
+				"magnataur_magn_shockwave_02" }, 75, DOTA_CAST_SOUND_FLAG_NONE, nil, nil) then
+			if not caster:EmitCasterSound("npc_dota_hero_magnataur", {
+					"magnataur_magn_shockwave_04",
+					"magnataur_magn_shockwave_05" }, 50, DOTA_CAST_SOUND_FLAG_NONE, nil, nil) then
+				caster:EmitCasterSound("npc_dota_hero_magnataur", {
+					"magnataur_magn_shockwave_03" }, 15, DOTA_CAST_SOUND_FLAG_NONE, nil, nil)
 			end
 		end
 
 		-- Launch projectile
 		local projectile =
-			{
-				Ability				= self,
-				EffectName			= "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
-				vSpawnOrigin		= caster_loc,
-				fDistance			= distance,
-				fStartRadius		= radius,
-				fEndRadius			= radius,
-				Source				= caster,
-				bHasFrontalCone		= false,
-				bReplaceExisting	= false,
-				iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				fExpireTime 		= GameRules:GetGameTime() + 5.0,
-				bDeleteOnHit		= false,
-				vVelocity			= Vector(direction.x,direction.y,0) * speed,
-				bProvidesVision		= false,
-				ExtraData			= {index = index, damage = damage, secondary_damage = secondary_damage, spread_angle = spread_angle, secondary_amount = secondary_amount, distance = distance, polarize_duration = polarize_duration, magnetize_duration = magnetize_duration, speed = speed, direction_x = direction.x, direction_y = direction.y, radius = radius, magnetize_shockwave = 0, talent = 1, caster_loc_x = caster_loc.x, caster_loc_y = caster_loc.y, main_shockwave = true}
-			}
+		{
+			Ability          = self,
+			EffectName       = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
+			vSpawnOrigin     = caster_loc,
+			fDistance        = distance,
+			fStartRadius     = radius,
+			fEndRadius       = radius,
+			Source           = caster,
+			bHasFrontalCone  = false,
+			bReplaceExisting = false,
+			iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			fExpireTime      = GameRules:GetGameTime() + 5.0,
+			bDeleteOnHit     = false,
+			vVelocity        = Vector(direction.x, direction.y, 0) * speed,
+			bProvidesVision  = false,
+			ExtraData        = { index = index, damage = damage, secondary_damage = secondary_damage, spread_angle = spread_angle, secondary_amount = secondary_amount, distance = distance, polarize_duration = polarize_duration, magnetize_duration = magnetize_duration, speed = speed, direction_x = direction.x, direction_y = direction.y, radius = radius, magnetize_shockwave = 0, talent = 1, caster_loc_x = caster_loc.x, caster_loc_y = caster_loc.y, main_shockwave = true }
+		}
 		ProjectileManager:CreateLinearProjectile(projectile)
 	end
 end
@@ -464,42 +460,42 @@ end
 function imba_magnataur_shockwave:OnProjectileThink_ExtraData(location, ExtraData)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local distance = (location - Vector(ExtraData.caster_loc_x,ExtraData.caster_loc_y,0)):Length2D()
+		local distance = (location - Vector(ExtraData.caster_loc_x, ExtraData.caster_loc_y, 0)):Length2D()
 		-- #1 Talent: Shockwave now spawns secondary shockwaves halfway through
-		if caster:HasTalent("special_bonus_imba_magnataur_1") and ExtraData.talent == 1 and distance > (ExtraData.distance/2 - ExtraData.speed * FrameTime()) and distance < ExtraData.distance/2 then
+		if caster:HasTalent("special_bonus_imba_magnataur_1") and ExtraData.talent == 1 and distance > (ExtraData.distance / 2 - ExtraData.speed * FrameTime()) and distance < ExtraData.distance / 2 then
 			local start_angle
 			local interval_angle = 0
-			local direction = Vector(ExtraData.direction_x,ExtraData.direction_y,0)
+			local direction = Vector(ExtraData.direction_x, ExtraData.direction_y, 0)
 			if ExtraData.secondary_amount == 1 then
 				start_angle = 0
 			else
 				start_angle = ExtraData.spread_angle * (-1)
-				interval_angle = (ExtraData.spread_angle * 2 / ExtraData.secondary_amount )
+				interval_angle = (ExtraData.spread_angle * 2 / ExtraData.secondary_amount)
 			end
 			for i = 1, ExtraData.secondary_amount, 1 do
 				local angle = start_angle + i * interval_angle + 45
-				local new_direction = RotateVector2D(direction,angle,true)
+				local new_direction = RotateVector2D(direction, angle, true)
 				local velocity = new_direction * ExtraData.speed
 				-- Launch projectile
 				local projectile =
-					{
-						Ability				= self,
-						EffectName			= "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
-						vSpawnOrigin		= location, -- if it is too static change this to target:GetAbsOrigin()
-						fDistance			= ExtraData.distance/2,
-						fStartRadius		= ExtraData.radius,
-						fEndRadius			= ExtraData.radius,
-						Source				= caster,
-						bHasFrontalCone		= false,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-						fExpireTime 		= GameRules:GetGameTime() + 5.0,
-						bDeleteOnHit		= false,
-						vVelocity			= Vector(velocity.x,velocity.y,0),
-						bProvidesVision		= false,
-						ExtraData			= {index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.secondary_damage, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration,  magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0}
-					}
+				{
+					Ability          = self,
+					EffectName       = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
+					vSpawnOrigin     = location, -- if it is too static change this to target:GetAbsOrigin()
+					fDistance        = ExtraData.distance / 2,
+					fStartRadius     = ExtraData.radius,
+					fEndRadius       = ExtraData.radius,
+					Source           = caster,
+					bHasFrontalCone  = false,
+					bReplaceExisting = false,
+					iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
+					iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					fExpireTime      = GameRules:GetGameTime() + 5.0,
+					bDeleteOnHit     = false,
+					vVelocity        = Vector(velocity.x, velocity.y, 0),
+					bProvidesVision  = false,
+					ExtraData        = { index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.secondary_damage, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration, magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0 }
+				}
 				ProjectileManager:CreateLinearProjectile(projectile)
 			end
 			-- Emit Hit-sound
@@ -512,37 +508,33 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 	if target then
 		local caster = self:GetCaster()
 
-		target:AddNewModifier(caster, self, "modifier_imba_shockwave_pull", {duration = self:GetSpecialValueFor("pull_duration") * (1 - target:GetStatusResistance()), x = location.x, y = location.y})
-		
+		target:AddNewModifier(caster, self, "modifier_imba_shockwave_pull", { duration = self:GetSpecialValueFor("pull_duration") * (1 - target:GetStatusResistance()), x = location.x, y = location.y })
+
 		if caster:HasScepter() then
-			target:AddNewModifier(caster, self, "modifier_imba_shockwave_slow", {duration = self:GetSpecialValueFor("basic_slow_duration") * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(caster, self, "modifier_imba_shockwave_slow", { duration = self:GetSpecialValueFor("basic_slow_duration") * (1 - target:GetStatusResistance()) })
 		else
-			target:AddNewModifier(caster, self, "modifier_imba_shockwave_slow", {duration = self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(caster, self, "modifier_imba_shockwave_slow", { duration = self:GetSpecialValueFor("slow_duration") * (1 - target:GetStatusResistance()) })
 		end
 
 		-- #7 Talent: If the shockwave is generated from ubercharge, just damage and apply the modifier.
 		if ExtraData.ubercharge == 1 then
 			-- Apply secondary damage
-			ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = DAMAGE_TYPE_MAGICAL})
-			target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", {duration = ExtraData.polarize_duration * (1 - target:GetStatusResistance())})
+			ApplyDamage({ victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = DAMAGE_TYPE_MAGICAL })
+			target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", { duration = ExtraData.polarize_duration * (1 - target:GetStatusResistance()) })
 		else
-
 			-- Determines if this is a Shockwave spawned from Magnetize
 			if ExtraData.magnetize_shockwave == 1 then
-
 				-- If the target is the one releasing magnetize, do nothing
 				if target:HasModifier("modifier_imba_magnetize_debuff_immune") then
 				else
 					-- Apply damage
-					ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+					ApplyDamage({ victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType() })
 					-- Apply Polarize only
-					target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", {duration = ExtraData.polarize_duration * (1 - target:GetStatusResistance())})
+					target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", { duration = ExtraData.polarize_duration * (1 - target:GetStatusResistance()) })
 				end
-
 			else
-
 				local was_hit = false
-				for _,hit_target in pairs(self[ExtraData.index]) do
+				for _, hit_target in pairs(self[ExtraData.index]) do
 					if hit_target == target then
 						was_hit = true
 					end
@@ -550,23 +542,23 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 
 				if was_hit and not ExtraData.scepter_shockwave then
 					-- Apply secondary damage
-					ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.secondary_damage, damage_type = self:GetAbilityDamageType()})
-					
+					ApplyDamage({ victim = target, attacker = caster, ability = self, damage = ExtraData.secondary_damage, damage_type = self:GetAbilityDamageType() })
+
 					-- Don't let Resonate origin targets apply Magnetize on themselves
 					if ExtraData.target_entindex ~= target:entindex() then
-						target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", {duration = ExtraData.polarize_duration * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", { duration = ExtraData.polarize_duration * (1 - target:GetStatusResistance()) })
 					end
 					-- Get if the target already has Magnetize debuff
 					local modifier_magnetize = target:FindModifierByName("modifier_imba_magnetize_debuff")
 					local magnetize_debuff = nil
 					-- If the debuff is present, apply the don't apply the Magnetize debuff
 					if modifier_magnetize then
-						magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
+						magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", { duration = modifier_magnetize:GetRemainingTime() })
 					else
-						magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = ExtraData.magnetize_duration * (1 - target:GetStatusResistance())})
+						magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", { duration = ExtraData.magnetize_duration * (1 - target:GetStatusResistance()) })
 					end
 					if magnetize_debuff then
-						magnetize_debuff.damage = ExtraData.damage/4
+						magnetize_debuff.damage = ExtraData.damage / 4
 						magnetize_debuff.distance = ExtraData.distance
 						magnetize_debuff.polarize_duration = ExtraData.polarize_duration
 						magnetize_debuff.magnetize_duration = ExtraData.magnetize_duration
@@ -575,15 +567,14 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 					end
 					-- #5 Talent: Shockwave roots the target for 1 second, 0.5 seconds for secondary Shockwaves
 					if caster:HasTalent("special_bonus_imba_magnataur_5") then
-						target:AddNewModifier(caster, self, "modifier_imba_shockwave_root", {duration = caster:FindTalentValue("special_bonus_imba_magnataur_5","secondary_duration") * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(caster, self, "modifier_imba_shockwave_root", { duration = caster:FindTalentValue("special_bonus_imba_magnataur_5", "secondary_duration") * (1 - target:GetStatusResistance()) })
 					end
 				else
-				
 					if ExtraData.scepter_shockwave and target:IsCreep() then
-						ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage / 2, damage_type = self:GetAbilityDamageType()})
+						ApplyDamage({ victim = target, attacker = caster, ability = self, damage = ExtraData.damage / 2, damage_type = self:GetAbilityDamageType() })
 					else
 						-- Apply full damage
-						ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+						ApplyDamage({ victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType() })
 					end
 
 					-- Add it into the unique hittable
@@ -591,59 +582,58 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 
 					-- Split the Shockwave if target has been Polarized and is a hero
 					if (self[ExtraData.index .. "_counter"] > 0) and target:HasModifier("modifier_imba_polarize_debuff") and target:IsRealHero() then
-
 						-- Reduce the amount of occurances
 						self[ExtraData.index .. "_counter"] = self[ExtraData.index .. "_counter"] - 1
 
 						local start_angle
 						local interval_angle = 0
-						local direction = Vector(ExtraData.direction_x,ExtraData.direction_y,0)
+						local direction = Vector(ExtraData.direction_x, ExtraData.direction_y, 0)
 						if ExtraData.secondary_amount == 1 then
 							start_angle = 0
 						else
 							start_angle = ExtraData.spread_angle * (-1)
-							interval_angle = (ExtraData.spread_angle * 2 / ExtraData.secondary_amount )
+							interval_angle = (ExtraData.spread_angle * 2 / ExtraData.secondary_amount)
 						end
 						for i = 1, ExtraData.secondary_amount, 1 do
 							local angle = start_angle + i * interval_angle + 45
-							local new_direction = RotateVector2D(direction,angle,true)
+							local new_direction = RotateVector2D(direction, angle, true)
 							local velocity = new_direction * ExtraData.speed
 							-- Launch projectile
 							local projectile =
-								{
-									Ability				= self,
-									EffectName			= "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
-									vSpawnOrigin		= location, -- if it is too static change this to target:GetAbsOrigin()
-									fDistance			= ExtraData.distance/2,
-									fStartRadius		= ExtraData.radius,
-									fEndRadius			= ExtraData.radius,
-									Source				= caster,
-									bHasFrontalCone		= false,
-									bReplaceExisting	= false,
-									iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-									iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									fExpireTime 		= GameRules:GetGameTime() + 5.0,
-									bDeleteOnHit		= false,
-									vVelocity			= Vector(velocity.x,velocity.y,0),
-									bProvidesVision		= false,
-									ExtraData			= {index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.secondary_damage, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration,  magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0, target_entindex = target:entindex()}
-								}
+							{
+								Ability          = self,
+								EffectName       = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
+								vSpawnOrigin     = location, -- if it is too static change this to target:GetAbsOrigin()
+								fDistance        = ExtraData.distance / 2,
+								fStartRadius     = ExtraData.radius,
+								fEndRadius       = ExtraData.radius,
+								Source           = caster,
+								bHasFrontalCone  = false,
+								bReplaceExisting = false,
+								iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
+								iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+								fExpireTime      = GameRules:GetGameTime() + 5.0,
+								bDeleteOnHit     = false,
+								vVelocity        = Vector(velocity.x, velocity.y, 0),
+								bProvidesVision  = false,
+								ExtraData        = { index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.secondary_damage, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration, magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0, target_entindex = target:entindex() }
+							}
 							ProjectileManager:CreateLinearProjectile(projectile)
 						end
 					end
 					-- Apply Polarize & Magnetize
-					target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", {duration = ExtraData.polarize_duration * (1 - target:GetStatusResistance())})
+					target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", { duration = ExtraData.polarize_duration * (1 - target:GetStatusResistance()) })
 					-- Get if the target already has Magnetize debuff
 					local modifier_magnetize = target:FindModifierByName("modifier_imba_magnetize_debuff_stack")
 					local magnetize_debuff
 					-- If the debuff is present, apply the don't apply the Magnetize debuff
 					if modifier_magnetize then
-						magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
+						magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", { duration = modifier_magnetize:GetRemainingTime() })
 					else
-						magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = ExtraData.magnetize_duration * (1 - target:GetStatusResistance())})
+						magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", { duration = ExtraData.magnetize_duration * (1 - target:GetStatusResistance()) })
 					end
 					if magnetize_debuff then
-						magnetize_debuff.damage = ExtraData.damage/4
+						magnetize_debuff.damage = ExtraData.damage / 4
 						magnetize_debuff.distance = ExtraData.distance
 						magnetize_debuff.polarize_duration = ExtraData.polarize_duration
 						magnetize_debuff.magnetize_duration = ExtraData.magnetize_duration
@@ -652,34 +642,34 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 					end
 					-- #5 Talent: Shockwave roots the target for 1 second, 0.5 seconds for secondary Shockwaves
 					if caster:HasTalent("special_bonus_imba_magnataur_5") then
-						target:AddNewModifier(caster, self, "modifier_imba_shockwave_root", {duration = caster:FindTalentValue("special_bonus_imba_magnataur_5") * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(caster, self, "modifier_imba_shockwave_root", { duration = caster:FindTalentValue("special_bonus_imba_magnataur_5") * (1 - target:GetStatusResistance()) })
 					end
 				end
 			end
 			-- Emit Hit-sound
 			target:EmitSound("Hero_Magnataur.ShockWave.Target")
-		end	
+		end
 	elseif self:GetCaster():HasScepter() and ExtraData.main_shockwave then
 		local projectile =
 		{
-			Ability				= self,
-			EffectName			= "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
-			vSpawnOrigin		= location,
-			fDistance			= ExtraData.distance,
-			fStartRadius		= ExtraData.radius,
-			fEndRadius			= ExtraData.radius,
-			Source				= self:GetCaster(),
-			bHasFrontalCone		= false,
-			bReplaceExisting	= false,
-			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			fExpireTime 		= GameRules:GetGameTime() + 5.0,
-			bDeleteOnHit		= false,
-			vVelocity			= Vector(ExtraData.direction_x * (-1), ExtraData.direction_y * (-1), 0) * ExtraData.speed,
-			bProvidesVision		= false,
-			ExtraData			= {index = ExtraData.index, damage = self:GetSpecialValueFor("damage"), secondary_damage = self:GetSpecialValueFor("secondary_damage"), spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration, magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = ExtraData.direction_x * (-1), direction_y = ExtraData.direction_y * (-1), radius = ExtraData.radius, magnetize_shockwave = ExtraData.magnetize_shockwave, talent = 0, caster_loc_x = location.x, caster_loc_y = location.y, scepter_shockwave = true}
+			Ability          = self,
+			EffectName       = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
+			vSpawnOrigin     = location,
+			fDistance        = ExtraData.distance,
+			fStartRadius     = ExtraData.radius,
+			fEndRadius       = ExtraData.radius,
+			Source           = self:GetCaster(),
+			bHasFrontalCone  = false,
+			bReplaceExisting = false,
+			iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			fExpireTime      = GameRules:GetGameTime() + 5.0,
+			bDeleteOnHit     = false,
+			vVelocity        = Vector(ExtraData.direction_x * (-1), ExtraData.direction_y * (-1), 0) * ExtraData.speed,
+			bProvidesVision  = false,
+			ExtraData        = { index = ExtraData.index, damage = self:GetSpecialValueFor("damage"), secondary_damage = self:GetSpecialValueFor("secondary_damage"), spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration, magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = ExtraData.direction_x * (-1), direction_y = ExtraData.direction_y * (-1), radius = ExtraData.radius, magnetize_shockwave = ExtraData.magnetize_shockwave, talent = 0, caster_loc_x = location.x, caster_loc_y = location.y, scepter_shockwave = true }
 		}
-		
+
 		ProjectileManager:CreateLinearProjectile(projectile)
 	end
 end
@@ -687,11 +677,13 @@ end
 modifier_imba_shockwave_root = class({})
 
 function modifier_imba_shockwave_root:IsHidden() return false end
+
 function modifier_imba_shockwave_root:IsPurgable() return true end
+
 function modifier_imba_shockwave_root:IsDebuff() return true end
 
 function modifier_imba_shockwave_root:CheckState()
-	local state = {[MODIFIER_STATE_ROOTED] = true}
+	local state = { [MODIFIER_STATE_ROOTED] = true }
 	return state
 end
 
@@ -708,48 +700,48 @@ end
 -----------------------------
 
 modifier_imba_shockwave_pull = class({})
-		
+
 function modifier_imba_shockwave_pull:OnCreated(params)
 	if not IsServer() then return end
-	
-	self.ability				= self:GetAbility()
-	self.parent					= self:GetParent()
-	
+
+	self.ability       = self:GetAbility()
+	self.parent        = self:GetParent()
+
 	-- AbilitySpecials
-	self.pull_duration		= self.ability:GetSpecialValueFor("pull_duration")
-	self.pull_distance		= self.ability:GetSpecialValueFor("pull_distance")
-	
+	self.pull_duration = self.ability:GetSpecialValueFor("pull_duration")
+	self.pull_distance = self.ability:GetSpecialValueFor("pull_distance")
+
 	-- Calculate speed at which modifier owner will be pulled towards
-	self.pull_speed				= self.pull_distance / self.pull_duration
-	
+	self.pull_speed    = self.pull_distance / self.pull_duration
+
 	-- Get the center of the shockwave to know which direction to get pulled towards
-	self.position	= GetGroundPosition(Vector(params.x, params.y, 0), nil)
+	self.position      = GetGroundPosition(Vector(params.x, params.y, 0), nil)
 
 	self.parent:StartGesture(ACT_DOTA_FLAIL)
-	
-	if self:ApplyHorizontalMotionController() == false then 
+
+	if self:ApplyHorizontalMotionController() == false then
 		self:Destroy()
 		return
 	end
 end
 
-function modifier_imba_shockwave_pull:UpdateHorizontalMotion( me, dt )
+function modifier_imba_shockwave_pull:UpdateHorizontalMotion(me, dt)
 	if not IsServer() then return end
 
 	local distance = (self.position - me:GetOrigin()):Normalized()
-	
-	me:SetOrigin( me:GetOrigin() + distance * self.pull_speed * dt )
+
+	me:SetOrigin(me:GetOrigin() + distance * self.pull_speed * dt)
 end
 
 function modifier_imba_shockwave_pull:OnDestroy()
 	if not IsServer() then return end
 
 	-- Destroy trees around landing zone
-	GridNav:DestroyTreesAroundPoint( self.parent:GetOrigin(), self.parent:GetHullRadius(), true )
-	
+	GridNav:DestroyTreesAroundPoint(self.parent:GetOrigin(), self.parent:GetHullRadius(), true)
+
 	self.parent:FadeGesture(ACT_DOTA_FLAIL)
-	
-	self.parent:RemoveHorizontalMotionController( self )
+
+	self.parent:RemoveHorizontalMotionController(self)
 end
 
 -----------------------------
@@ -763,7 +755,7 @@ function modifier_imba_shockwave_slow:GetEffectName()
 end
 
 function modifier_imba_shockwave_slow:OnCreated()
-	self.movement_slow	= self:GetAbility():GetSpecialValueFor("movement_slow") * (-1)
+	self.movement_slow = self:GetAbility():GetSpecialValueFor("movement_slow") * (-1)
 end
 
 function modifier_imba_shockwave_slow:DeclareFunctions()
@@ -771,7 +763,7 @@ function modifier_imba_shockwave_slow:DeclareFunctions()
 	{
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
 	}
-	
+
 	return decFuncs
 end
 
@@ -812,7 +804,7 @@ function imba_magnataur_empower:OnSpellStart()
 			Timers:CreateTimer(FrameTime(), function()
 				local shockwave_ability = caster:FindAbilityByName("imba_magnataur_shockwave")
 				if shockwave_ability then
-					target:AddNewModifier(caster, shockwave_ability, "modifier_imba_ubercharged", { duration = caster:FindTalentValue("special_bonus_imba_magnataur_8")})
+					target:AddNewModifier(caster, shockwave_ability, "modifier_imba_ubercharged", { duration = caster:FindTalentValue("special_bonus_imba_magnataur_8") })
 				end
 			end)
 		end
@@ -821,17 +813,17 @@ function imba_magnataur_empower:OnSpellStart()
 		local empower_duration = self:GetSpecialValueFor("empower_duration")
 		local supercharge_duration = self:GetSpecialValueFor("supercharge_duration")
 		if target:HasModifier("modifier_imba_empower") then
-			target:AddNewModifier(caster, self, "modifier_imba_supercharged", { duration = supercharge_duration})
+			target:AddNewModifier(caster, self, "modifier_imba_supercharged", { duration = supercharge_duration })
 		end
-		target:AddNewModifier(caster, self, "modifier_imba_empower", { duration = empower_duration})
+		target:AddNewModifier(caster, self, "modifier_imba_empower", { duration = empower_duration })
 
-		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
-			"magnataur_magn_empower_01",
-			"magnataur_magn_empower_03",
-			"magnataur_magn_empower_04",
-			"magnataur_magn_empower_05"}, 25, DOTA_CAST_SOUND_FLAG_NONE, 10, "empower") then
-			caster:EmitCasterSound("npc_dota_hero_magnataur",{
-				"magnataur_magn_empower_02"}, 15, DOTA_CAST_SOUND_FLAG_NONE, 10, "empower")
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur", {
+				"magnataur_magn_empower_01",
+				"magnataur_magn_empower_03",
+				"magnataur_magn_empower_04",
+				"magnataur_magn_empower_05" }, 25, DOTA_CAST_SOUND_FLAG_NONE, 10, "empower") then
+			caster:EmitCasterSound("npc_dota_hero_magnataur", {
+				"magnataur_magn_empower_02" }, 15, DOTA_CAST_SOUND_FLAG_NONE, 10, "empower")
 		end
 	end
 end
@@ -865,7 +857,7 @@ function modifier_imba_empower_aura:GetAuraEntityReject(target)
 		if parent:HasScepter() then
 			if not self.particle then
 				self.particle = ParticleManager:CreateParticle("particles/auras/aura_empower.vpcf", PATTACH_POINT_FOLLOW, parent)
-				self:AddParticle(self.particle,false,false,-1,false,false)
+				self:AddParticle(self.particle, false, false, -1, false, false)
 			end
 			if target:IsRealHero() then
 				return false
@@ -881,7 +873,7 @@ function modifier_imba_empower_aura:GetAuraEntityReject(target)
 		-- -- Always on caster
 		if target == parent then
 			-- if not parent:HasModifier("modifier_imba_empower_polarizer") then
-				-- parent:AddNewModifier(parent,ability,"modifier_imba_empower_polarizer",{})
+			-- parent:AddNewModifier(parent,ability,"modifier_imba_empower_polarizer",{})
 			-- end
 			return false
 		end
@@ -940,17 +932,17 @@ end
 
 function modifier_imba_empower:GetModifierBaseDamageOutgoing_Percentage()
 	-- if self:GetCaster():IsRealHero() then
-		return self.bonus_damage_pct
+	return self.bonus_damage_pct
 	-- end
 end
 
-function modifier_imba_empower:OnAttackLanded( params )
+function modifier_imba_empower:OnAttackLanded(params)
 	local ability = self:GetAbility()
-	
+
 	if IsServer() then
 		local parent = self:GetParent()
 		local caster = self:GetCaster()
-		if params.attacker == parent and ( not parent:IsIllusion() ) and params.attacker:GetTeamNumber() ~= params.target:GetTeamNumber() then
+		if params.attacker == parent and (not parent:IsIllusion()) and params.attacker:GetTeamNumber() ~= params.target:GetTeamNumber() then
 			local cleave_particle = "particles/units/heroes/hero_magnataur/magnataur_empower_cleave_effect.vpcf"
 			local splash_particle = "particles/hero/magnataur/magnataur_empower_splash.vpcf"
 			if parent:HasModifier("modifier_imba_supercharged") then
@@ -974,9 +966,9 @@ function modifier_imba_empower:OnAttackLanded( params )
 				local enemies = FindUnitsInRadius(params.attacker:GetTeamNumber(), params.target:GetAbsOrigin(), nil, splash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
 				-- Deal damage
-				for _,enemy in pairs(enemies) do
+				for _, enemy in pairs(enemies) do
 					if enemy ~= params.target and not enemy:IsAttackImmune() then
-						ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * self.cleave_damage_ranged), damage_type = DAMAGE_TYPE_PHYSICAL})
+						ApplyDamage({ attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * self.cleave_damage_ranged), damage_type = DAMAGE_TYPE_PHYSICAL })
 					end
 				end
 
@@ -1015,9 +1007,9 @@ function modifier_imba_empower:OnAttackLanded( params )
 						local enemies = FindUnitsInRadius(params.attacker:GetTeamNumber(), params.target:GetAbsOrigin(), nil, cleave_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
 
 						-- Deal damage
-						for _,enemy in pairs(enemies) do
+						for _, enemy in pairs(enemies) do
 							if enemy ~= params.target then
-								ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * self.cleave_damage_pct), damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
+								ApplyDamage({ attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * self.cleave_damage_pct), damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION })
 							end
 						end
 
@@ -1027,7 +1019,7 @@ function modifier_imba_empower:OnAttackLanded( params )
 						ParticleManager:ReleaseParticleIndex(cleave_splash_pfx)
 					end
 				else
-					DoCleaveAttack( params.attacker, params.target, ability, (params.damage * self.cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle )
+					DoCleaveAttack(params.attacker, params.target, ability, (params.damage * self.cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle)
 				end
 			end
 		end
@@ -1046,26 +1038,26 @@ function modifier_imba_empower:IsHidden()
 	return false
 end
 
-function modifier_imba_empower:OnCreated( params )
-	self.bonus_damage_pct		= self:GetAbility():GetSpecialValueFor("bonus_damage_pct")
-	
-	self.cleave_damage_pct		= self:GetAbility():GetSpecialValueFor("cleave_damage_pct") * 0.01
-	self.cleave_damage_ranged	= self:GetAbility():GetSpecialValueFor("cleave_damage_ranged") * 0.01
-	self.splash_radius			= self:GetAbility():GetSpecialValueFor("splash_radius")
+function modifier_imba_empower:OnCreated(params)
+	self.bonus_damage_pct      = self:GetAbility():GetSpecialValueFor("bonus_damage_pct")
 
-	self.cleave_radius_start	= self:GetAbility():GetSpecialValueFor("cleave_radius_start")
-	self.cleave_radius_end		= self:GetAbility():GetSpecialValueFor("cleave_radius_end")
-	self.cleave_distance		= self:GetAbility():GetSpecialValueFor("cleave_distance")
-	
-	self.super_cleave_start		= self:GetAbility():GetSpecialValueFor("super_cleave_start")
-	self.super_cleave_end		= self:GetAbility():GetSpecialValueFor("super_cleave_end")
-	self.super_cleave_distance	= self:GetAbility():GetSpecialValueFor("super_cleave_distance")
-	
-	self.super_splash_radius	= self:GetAbility():GetSpecialValueFor("super_splash_radius")
-	
+	self.cleave_damage_pct     = self:GetAbility():GetSpecialValueFor("cleave_damage_pct") / 100
+	self.cleave_damage_ranged  = self:GetAbility():GetSpecialValueFor("cleave_damage_ranged") / 100
+	self.splash_radius         = self:GetAbility():GetSpecialValueFor("splash_radius")
+
+	self.cleave_radius_start   = self:GetAbility():GetSpecialValueFor("cleave_radius_start")
+	self.cleave_radius_end     = self:GetAbility():GetSpecialValueFor("cleave_radius_end")
+	self.cleave_distance       = self:GetAbility():GetSpecialValueFor("cleave_distance")
+
+	self.super_cleave_start    = self:GetAbility():GetSpecialValueFor("super_cleave_start")
+	self.super_cleave_end      = self:GetAbility():GetSpecialValueFor("super_cleave_end")
+	self.super_cleave_distance = self:GetAbility():GetSpecialValueFor("super_cleave_distance")
+
+	self.super_splash_radius   = self:GetAbility():GetSpecialValueFor("super_splash_radius")
+
 	if self:GetParent() == self:GetCaster() then
-		self.cleave_damage_pct		= self.cleave_damage_pct * self:GetAbility():GetSpecialValueFor("self_multiplier")
-		self.cleave_damage_ranged	= self.cleave_damage_ranged * self:GetAbility():GetSpecialValueFor("self_multiplier")
+		self.cleave_damage_pct    = self.cleave_damage_pct * self:GetAbility():GetSpecialValueFor("self_multiplier")
+		self.cleave_damage_ranged = self.cleave_damage_ranged * self:GetAbility():GetSpecialValueFor("self_multiplier")
 	end
 
 	if IsServer() then
@@ -1089,7 +1081,7 @@ function modifier_imba_empower:OnCreated( params )
 	end
 end
 
-function modifier_imba_empower:OnRefresh( params )
+function modifier_imba_empower:OnRefresh(params)
 	if IsServer() then
 		local parent = self:GetParent()
 		local caster = self:GetCaster()
@@ -1102,7 +1094,7 @@ function modifier_imba_empower:OnRefresh( params )
 	end
 end
 
-function modifier_imba_empower:OnDestroy( )
+function modifier_imba_empower:OnDestroy()
 	if IsServer() then
 		if self:GetCaster() ~= self:GetParent() then
 			if self:GetDuration() == 0.5 then
@@ -1117,13 +1109,13 @@ function modifier_imba_empower:OnDestroy( )
 					parent:RemoveModifierByName("modifier_imba_empower_linger")
 				end
 				self.was_refreshed = true
-				parent:AddNewModifier(self:GetCaster(), ability, "modifier_imba_empower", { duration = linger_duration, was_refreshed = true})
+				parent:AddNewModifier(self:GetCaster(), ability, "modifier_imba_empower", { duration = linger_duration, was_refreshed = true })
 			end
 		end
 	end
 end
 
-function modifier_imba_empower:OnIntervalThink( )
+function modifier_imba_empower:OnIntervalThink()
 	if IsServer() then
 		-- Check if target now receives this buff via aura. Aura = 0.5 sec duration
 		-- Reminder: GetDuration = maximum duration, not remaining time
@@ -1133,7 +1125,7 @@ function modifier_imba_empower:OnIntervalThink( )
 
 		if self:GetDuration() == 0.5 then
 			if not parent:HasModifier("modifier_imba_empower_linger") then
-				parent:AddNewModifier(caster, ability, "modifier_imba_empower_linger", { duration = self.remaining_duration})
+				parent:AddNewModifier(caster, ability, "modifier_imba_empower_linger", { duration = self.remaining_duration })
 			end
 		else
 			self.remaining_duration = self.remaining_duration - self.interval
@@ -1141,10 +1133,10 @@ function modifier_imba_empower:OnIntervalThink( )
 		if not (parent:HasModifier("modifier_imba_empower_particle") or parent:HasModifier("modifier_imba_supercharged")) then
 			parent:AddNewModifier(caster, ability, "modifier_imba_empower_particle", {})
 		end
-		
+
 		-- Gonna remove this for now cause the Empower kit is pretty overloaded right now
 		-- if not parent:HasModifier("modifier_imba_empower_polarizer") then
-			-- parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_empower_polarizer", {})
+		-- parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_empower_polarizer", {})
 		-- end
 	end
 end
@@ -1155,7 +1147,7 @@ function modifier_imba_empower_particle:IsHidden()
 	return true
 end
 
-function modifier_imba_empower_particle:OnCreated( )
+function modifier_imba_empower_particle:OnCreated()
 	local parent = self:GetParent()
 	if parent:HasModifier("modifier_imba_supercharged") or not parent:HasModifier("modifier_imba_empower") then
 		self:Destroy()
@@ -1163,12 +1155,12 @@ function modifier_imba_empower_particle:OnCreated( )
 	end
 	if not self.particle then
 		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnataur_empower.vpcf", PATTACH_POINT_FOLLOW, parent)
-		self:AddParticle(self.particle,false,false,-1,false,false)
+		self:AddParticle(self.particle, false, false, -1, false, false)
 		self:StartIntervalThink(0.2)
 	end
 end
 
-function modifier_imba_empower_particle:OnIntervalThink( )
+function modifier_imba_empower_particle:OnIntervalThink()
 	self:OnCreated()
 end
 
@@ -1220,10 +1212,10 @@ function modifier_imba_empower_polarizer:OnCreated()
 		local empower_search = FindUnitsInRadius(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.search_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		local refresh_interval = self.ability:GetSpecialValueFor("refresh_interval")
 
-		for _,enemy in pairs (empower_search) do
+		for _, enemy in pairs(empower_search) do
 			local polarize_debuff = enemy:FindModifierByName("modifier_imba_polarize_debuff")
 			if (not (polarize_debuff and polarize_debuff:GetDuration() > self.ability:GetSpecialValueFor("polarize_duration"))) then
-				enemy:AddNewModifier(self.caster, nil, "modifier_imba_polarize_debuff", {duration = self.ability:GetSpecialValueFor("polarize_duration") * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(self.caster, nil, "modifier_imba_polarize_debuff", { duration = self.ability:GetSpecialValueFor("polarize_duration") * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 
@@ -1241,10 +1233,10 @@ function modifier_imba_empower_polarizer:OnIntervalThink()
 		local empower_search = FindUnitsInRadius(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.search_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		local refresh_interval = self.ability:GetSpecialValueFor("refresh_interval")
 
-		for _,enemy in pairs (empower_search) do
+		for _, enemy in pairs(empower_search) do
 			local polarize_debuff = enemy:FindModifierByName("modifier_imba_polarize_debuff")
 			if (not (polarize_debuff and polarize_debuff:GetDuration() > self.ability:GetSpecialValueFor("polarize_duration"))) then
-				enemy:AddNewModifier(self.caster, nil, "modifier_imba_polarize_debuff", {duration = self.ability:GetSpecialValueFor("polarize_duration") * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(self.caster, nil, "modifier_imba_polarize_debuff", { duration = self.ability:GetSpecialValueFor("polarize_duration") * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 	end
@@ -1252,10 +1244,10 @@ end
 
 modifier_imba_supercharged = modifier_imba_supercharged or class({})
 
-function modifier_imba_supercharged:OnCreated( params )
+function modifier_imba_supercharged:OnCreated(params)
 	if IsServer() then
 		local particle = ParticleManager:CreateParticle("particles/hero/magnataur/magnataur_empower_red.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
-		self:AddParticle(particle,false,false,-1,false,false)
+		self:AddParticle(particle, false, false, -1, false, false)
 	end
 end
 
@@ -1311,21 +1303,20 @@ end
 -- #3 Talent: Supercharge grants the target's 30% main attribute as bonus damage
 function modifier_imba_supercharged:GetModifierBaseAttack_BonusDamage()
 	if self:GetCaster():HasTalent("special_bonus_imba_magnataur_3") and self:GetParent().GetPrimaryStatValue and self:GetParent():GetPrimaryStatValue() then
-		return self:GetParent():GetPrimaryStatValue() * self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_3") * 0.01
+		return self:GetParent():GetPrimaryStatValue() * self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_3") / 100
 	end
 end
-
 
 modifier_imba_ubercharged = modifier_imba_ubercharged or class({})
 
 function modifier_imba_ubercharged:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_ATTACK_LANDED}
+	return { MODIFIER_EVENT_ON_ATTACK_LANDED }
 end
 
 function modifier_imba_ubercharged:OnCreated()
 	if IsServer() then
 		if not self:GetParent():HasModifier("modifier_imba_ubercharged_indicator") then
-			local modifier_indicator = self:GetParent():AddNewModifier(self:GetCaster(),self:GetAbility(),"modifier_imba_ubercharged_indicator",{})
+			local modifier_indicator = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ubercharged_indicator", {})
 			if modifier_indicator then
 				modifier_indicator:SetStackCount(1)
 			end
@@ -1341,7 +1332,6 @@ function modifier_imba_ubercharged:OnAttackLanded(params)
 
 		local ubercharge_indicator = parent:FindModifierByName("modifier_imba_ubercharged_indicator")
 		if parent == params.attacker and ubercharge_indicator:GetStackCount() >= 1 and params.attacker:GetTeamNumber() ~= params.target:GetTeamNumber() then
-
 			-- Declaring the table to a different function
 			self:CreateShockwave(parent, params.target, caster, ability)
 
@@ -1355,32 +1345,32 @@ function modifier_imba_ubercharged:CreateShockwave(parent, target, caster, abili
 		-- Parameters
 		self.parent_loc = parent:GetAbsOrigin()
 		self.direction = (target:GetAbsOrigin() - self.parent_loc):Normalized()
-		self.damage = ability:GetSpecialValueFor("damage")/2
+		self.damage = ability:GetSpecialValueFor("damage") / 2
 		self.radius = ability:GetSpecialValueFor("radius")
-		self.distance = ability:GetCastRange(self.parent_loc,caster) + GetCastRangeIncrease(caster)
+		self.distance = ability:GetCastRange(self.parent_loc, caster) + GetCastRangeIncrease(caster)
 		self.speed = ability:GetSpecialValueFor("speed")
 		self.polarize_duration = ability:GetSpecialValueFor("polarize_duration")
 
 		-- Launch projectile
 		local shockwave_projectile =
-			{
-				Ability				= ability,
-				EffectName			= "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
-				vSpawnOrigin		= self.parent_loc,
-				fDistance			= self.distance,
-				fStartRadius		= self.radius,
-				fEndRadius			= self.radius,
-				Source				= caster,
-				bHasFrontalCone		= false,
-				bReplaceExisting	= false,
-				iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				fExpireTime 		= GameRules:GetGameTime() + 5.0,
-				bDeleteOnHit		= false,
-				vVelocity			= Vector(self.direction.x,self.direction.y,0) * self.speed,
-				bProvidesVision		= false,
-				ExtraData			= {damage = self.damage, distance = self.distance, polarize_duration = self.polarize_duration, speed = self.speed, radius = self.radius, ubercharge = 1}
-			}
+		{
+			Ability          = ability,
+			EffectName       = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
+			vSpawnOrigin     = self.parent_loc,
+			fDistance        = self.distance,
+			fStartRadius     = self.radius,
+			fEndRadius       = self.radius,
+			Source           = caster,
+			bHasFrontalCone  = false,
+			bReplaceExisting = false,
+			iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			fExpireTime      = GameRules:GetGameTime() + 5.0,
+			bDeleteOnHit     = false,
+			vVelocity        = Vector(self.direction.x, self.direction.y, 0) * self.speed,
+			bProvidesVision  = false,
+			ExtraData        = { damage = self.damage, distance = self.distance, polarize_duration = self.polarize_duration, speed = self.speed, radius = self.radius, ubercharge = 1 }
+		}
 		ProjectileManager:CreateLinearProjectile(shockwave_projectile)
 
 		-- Play cast sound
@@ -1456,12 +1446,12 @@ function modifier_imba_ubercharged_indicator:OnIntervalThink()
 		-- Stack up for ubercharge to refresh itself
 		if self:GetStackCount() < 1 then
 			if self.stacking_up < 1 then
-				self:SetDuration(caster:FindTalentValue("special_bonus_imba_magnataur_8","refresh_interval"),true)
+				self:SetDuration(caster:FindTalentValue("special_bonus_imba_magnataur_8", "refresh_interval"), true)
 			end
 			self.stacking_up = self.stacking_up + 1
 		end
 		if self.stacking_up >= 10 and self:GetStackCount() < 1 then
-			self:SetDuration(-1,true)
+			self:SetDuration(-1, true)
 			self.stacking_up = 0
 			self:SetStackCount(1)
 		end
@@ -1552,21 +1542,21 @@ function imba_magnataur_skewer:OnSpellStart()
 		-- Play the cast sound
 		caster:EmitSound("Hero_Magnataur.Skewer.Cast")
 
-		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
-			"magnataur_magn_skewer_01",
-			"magnataur_magn_skewer_02",
-			"magnataur_magn_skewer_03",
-			"magnataur_magn_skewer_07",
-			"magnataur_magn_skewer_09",
-			"magnataur_magn_skewer_12",
-			"magnataur_magn_skewer_13",
-			"magnataur_magn_skewer_14"}, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 3, "Skewer") then
-			caster:EmitCasterSound("npc_dota_hero_magnataur",{
-				"magnataur_magn_lasthit_09"}, 20, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 3, "Skewer")
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur", {
+				"magnataur_magn_skewer_01",
+				"magnataur_magn_skewer_02",
+				"magnataur_magn_skewer_03",
+				"magnataur_magn_skewer_07",
+				"magnataur_magn_skewer_09",
+				"magnataur_magn_skewer_12",
+				"magnataur_magn_skewer_13",
+				"magnataur_magn_skewer_14" }, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 3, "Skewer") then
+			caster:EmitCasterSound("npc_dota_hero_magnataur", {
+				"magnataur_magn_lasthit_09" }, 20, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 3, "Skewer")
 		end
 
 		-- Add Motion-Controller-Modifier
-		caster:AddNewModifier(caster, self, "modifier_imba_skewer_motion_controller", {distance = distance, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z, cooldown = current_cooldown, cast_sound = cast_sound})
+		caster:AddNewModifier(caster, self, "modifier_imba_skewer_motion_controller", { distance = distance, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z, cooldown = current_cooldown, cast_sound = cast_sound })
 
 		-- #4 Talent: Skewer creates a mini Reverse Polarity on casting, playing the Reverse Polarity particle
 		if caster:HasTalent("special_bonus_imba_magnataur_4") then
@@ -1606,7 +1596,7 @@ end
 
 modifier_imba_skewer_motion_controller = modifier_imba_skewer_motion_controller or class({})
 
-function modifier_imba_skewer_motion_controller:OnCreated( params )
+function modifier_imba_skewer_motion_controller:OnCreated(params)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
@@ -1642,7 +1632,7 @@ function modifier_imba_skewer_motion_controller:OnCreated( params )
 
 			local enemies = FindUnitsInRadius(caster:GetTeam(), pulled_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
 
-			for _,enemy in ipairs(enemies) do
+			for _, enemy in ipairs(enemies) do
 				-- Play the drag particle
 				local pull_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnataur_reverse_polarity_pull.vpcf", PATTACH_CUSTOMORIGIN, caster)
 				ParticleManager:SetParticleControl(pull_pfx, 0, enemy:GetAbsOrigin())
@@ -1653,7 +1643,7 @@ function modifier_imba_skewer_motion_controller:OnCreated( params )
 				enemy:StopCustomMotionControllers()
 				enemy:SetAbsOrigin(pulled_loc)
 				FindClearSpaceForUnit(enemy, pulled_loc, true)
-				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = 0.1 * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", { duration = 0.1 * (1 - enemy:GetStatusResistance()) })
 				enemy:EmitSound("Hero_Magnataur.ReversePolarity.Stun")
 			end
 		end
@@ -1708,56 +1698,56 @@ end
 
 function modifier_imba_skewer_motion_controller:CheckState()
 	local state =
-		{
-			[MODIFIER_STATE_STUNNED] = true
-		}
+	{
+		[MODIFIER_STATE_STUNNED] = true
+	}
 	return state
 end
 
-function modifier_imba_skewer_motion_controller:HorizontalMotion( unit, time )
+function modifier_imba_skewer_motion_controller:HorizontalMotion(unit, time)
 	if IsServer() then
 		-- Mars' Arena of Blood exception
 		if self:GetParent():HasModifier("modifier_mars_arena_of_blood_leash") and self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner() and (self:GetParent():GetAbsOrigin() - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAuraOwner():GetAbsOrigin()):Length2D() >= self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("radius") - self:GetParent():FindModifierByName("modifier_mars_arena_of_blood_leash"):GetAbility():GetSpecialValueFor("width") then
 			self:Destroy()
 			return
 		end
-	
+
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
 		local ability = self:GetAbility()
 
 		GridNav:DestroyTreesAroundPoint(caster_loc, self.tree_radius, false)
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, self.skewer_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-		for _,enemy in ipairs(enemies) do
+		for _, enemy in ipairs(enemies) do
 			if not enemy:HasModifier("modifier_imba_skewer_motion_controller_target") then
 				local set_point = caster:GetAbsOrigin() + self.direction * self.horned_distance
 				enemy:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, enemy).z))
-				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_motion_controller_target", {direction_x = self.direction.x, direction_y = self.direction.y, direction_z = self.direction.z, speed = self.speed})
+				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_motion_controller_target", { direction_x = self.direction.x, direction_y = self.direction.y, direction_z = self.direction.z, speed = self.speed })
 			end
 		end
 
 		-- Move the caster while the distance traveled is less than the original distance upon cast
 		if (self.traveled < self.distance) and caster:IsAlive() and not ability.begged_for_pardon then
-			local set_point =  caster:GetAbsOrigin() + self.direction * self.speed
+			local set_point = caster:GetAbsOrigin() + self.direction * self.speed
 			caster:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, caster).z))
 			-- Calculate the new travel distance
 			self.traveled = self.traveled + self.speed
 
 			-- if the next 3 frames are the end, start final animation
 			if ((self.traveled + (3 * self.speed)) > self.distance) and not self.final then
-				caster:FadeGesture( ACT_DOTA_CAST_ABILITY_3 )
+				caster:FadeGesture(ACT_DOTA_CAST_ABILITY_3)
 				caster:StartGesture(ACT_DOTA_MAGNUS_SKEWER_END)
 				self.final = true
 			end
 		else
 			-- Remove the motion controller once the distance has been traveled
 			if not self.final then
-				caster:FadeGesture( ACT_DOTA_CAST_ABILITY_3 )
-				caster:StartGesture( ACT_DOTA_MAGNUS_SKEWER_END )
+				caster:FadeGesture(ACT_DOTA_CAST_ABILITY_3)
+				caster:StartGesture(ACT_DOTA_MAGNUS_SKEWER_END)
 			end
 
-			local responses = {"magnataur_magn_skewer_04","magnataur_magn_skewer_05","magnataur_magn_skewer_06","magnataur_magn_skewer_08","magnataur_magn_skewer_10","magnataur_magn_skewer_11"}
-			caster:EmitCasterSound("npc_dota_hero_magnataur",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 2, "Skewer")
+			local responses = { "magnataur_magn_skewer_04", "magnataur_magn_skewer_05", "magnataur_magn_skewer_06", "magnataur_magn_skewer_08", "magnataur_magn_skewer_10", "magnataur_magn_skewer_11" }
+			caster:EmitCasterSound("npc_dota_hero_magnataur", responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 2, "Skewer")
 
 			self:EndSkewer()
 		end
@@ -1780,7 +1770,7 @@ function modifier_imba_skewer_motion_controller:EndSkewer()
 		local polarize_counter = 0
 
 		-- Check if polarized targets shall be entangled
-		for _,enemy in ipairs(piked_enemies) do
+		for _, enemy in ipairs(piked_enemies) do
 			if enemy:HasModifier("modifier_imba_polarize_debuff") then
 				polarize_counter = polarize_counter + 1
 				if polarize_counter == 2 then
@@ -1789,58 +1779,58 @@ function modifier_imba_skewer_motion_controller:EndSkewer()
 			end
 		end
 
-		for _,enemy in ipairs(piked_enemies) do
+		for _, enemy in ipairs(piked_enemies) do
 			local damage = self.damage
 			if ability.begged_for_pardon then
 				damage = damage + self.pardon_extra_dmg
 			end
-			local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_skewer_motion_controller_target",caster)
+			local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_skewer_motion_controller_target", caster)
 			if modifier then
 				if ability.begged_for_pardon and not enemy:HasModifier("modifier_imba_polarize_debuff") then
 					local knockup_duration = 0.5 + (math.random() * 0.3)
 					local angle = (math.random() - 0.5) * 100
 					local knockback =
-						{
-							should_stun = 1,
-							knockback_duration = knockup_duration * (1 - enemy:GetStatusResistance()),
-							duration = knockup_duration * (1 - enemy:GetStatusResistance()),
-							knockback_distance = self.pardon_min_range + knockup_duration * 100,
-							knockback_height = 125 + (knockup_duration * 50),
-							center_x = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).x ,
-							center_y = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).y,
-							center_z = caster_loc.z
-						}
+					{
+						should_stun = 1,
+						knockback_duration = knockup_duration * (1 - enemy:GetStatusResistance()),
+						duration = knockup_duration * (1 - enemy:GetStatusResistance()),
+						knockback_distance = self.pardon_min_range + knockup_duration * 100,
+						knockback_height = 125 + (knockup_duration * 50),
+						center_x = (caster_loc - (RotateVector2D(self.direction, angle, true)) * 1000).x,
+						center_y = (caster_loc - (RotateVector2D(self.direction, angle, true)) * 1000).y,
+						center_z = caster_loc.z
+					}
 					enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
 					Timers:CreateTimer(knockup_duration, function()
-						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+						ApplyDamage({ victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 					end)
 				else
 					local knockup_duration = 0
 					if ability.begged_for_pardon then
 						knockup_duration = 0.5
 						local knockback =
-							{
-								should_stun = 1,
-								knockback_duration = knockup_duration * (1 - enemy:GetStatusResistance()),
-								duration = knockup_duration * (1 - enemy:GetStatusResistance()),
-								knockback_distance = self.pardon_min_range + knockup_duration * 100,
-								knockback_height = 125 + (knockup_duration * 50),
-								center_x = caster_loc.x,
-								center_y = caster_loc.y,
-								center_z = caster_loc.z
-							}
+						{
+							should_stun = 1,
+							knockback_duration = knockup_duration * (1 - enemy:GetStatusResistance()),
+							duration = knockup_duration * (1 - enemy:GetStatusResistance()),
+							knockback_distance = self.pardon_min_range + knockup_duration * 100,
+							knockback_height = 125 + (knockup_duration * 50),
+							center_x = caster_loc.x,
+							center_y = caster_loc.y,
+							center_z = caster_loc.z
+						}
 						enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
 					end
 					Timers:CreateTimer(knockup_duration, function()
-						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+						ApplyDamage({ victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 						if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
-							enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur * (1 - enemy:GetStatusResistance())})
+							enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", { duration = self.entangle_dur * (1 - enemy:GetStatusResistance()) })
 						else
 							FindClearSpaceForUnit(enemy, enemy:GetAbsOrigin(), true)
 						end
 					end)
 				end
-				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", {duration = self.slow_duration * (1 - enemy:GetStatusResistance()), pardoned = self.begged_for_pardon})
+				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", { duration = self.slow_duration * (1 - enemy:GetStatusResistance()), pardoned = self.begged_for_pardon })
 			end
 		end
 		ability.begged_for_pardon = nil
@@ -1855,7 +1845,7 @@ end
 
 modifier_imba_skewer_motion_controller_target = modifier_imba_skewer_motion_controller_target or class({})
 
-function modifier_imba_skewer_motion_controller_target:OnCreated( params )
+function modifier_imba_skewer_motion_controller_target:OnCreated(params)
 	if IsServer() then
 		self.direction = Vector(params.direction_x, params.direction_y, params.direction_z)
 		self.speed = params.speed
@@ -1902,13 +1892,13 @@ end
 
 function modifier_imba_skewer_motion_controller_target:CheckState()
 	local state =
-		{
-			[MODIFIER_STATE_STUNNED] = true
-		}
+	{
+		[MODIFIER_STATE_STUNNED] = true
+	}
 	return state
 end
 
-function modifier_imba_skewer_motion_controller_target:HorizontalMotion( unit, time )
+function modifier_imba_skewer_motion_controller_target:HorizontalMotion(unit, time)
 	if IsServer() then
 		local caster = self:GetCaster()
 
@@ -1929,9 +1919,9 @@ end
 
 function modifier_imba_skewer_motion_controller_target:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		}
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+	}
 	return decFuncs
 end
 
@@ -1939,10 +1929,10 @@ modifier_imba_skewer_slow = modifier_imba_skewer_slow or class({})
 
 function modifier_imba_skewer_slow:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	}
 	return decFuncs
 end
 
@@ -1964,7 +1954,7 @@ function modifier_imba_skewer_slow:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_imba_skewer_slow:OnCreated( params )
+function modifier_imba_skewer_slow:OnCreated(params)
 	self.pardoned = params.pardoned
 end
 
@@ -1972,9 +1962,9 @@ modifier_imba_skewer_entangle = modifier_imba_skewer_entangle or class({})
 
 function modifier_imba_skewer_entangle:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_LIMIT
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_LIMIT
+	}
 	return decFuncs
 end
 
@@ -1984,9 +1974,9 @@ end
 
 function modifier_imba_skewer_entangle:CheckState()
 	local state =
-		{
-			[MODIFIER_STATE_NO_UNIT_COLLISION] = true
-		}
+	{
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+	}
 	return state
 end
 
@@ -2073,24 +2063,24 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 
 		-- Play cast sound
 		caster:EmitSound("Hero_Magnataur.ReversePolarity.Cast")
-		local responses = {"magnataur_magn_polarity_01","magnataur_magn_polarity_02","magnataur_magn_polarity_03","magnataur_magn_polarity_04","magnataur_magn_polarity_05","magnataur_magn_polarity_06","magnataur_magn_polarity_07","magnataur_magn_polarity_08","magnataur_magn_polarity_09","magnataur_magn_polarity_10"}
-		caster:EmitCasterSound("npc_dota_hero_magnataur",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
+		local responses = { "magnataur_magn_polarity_01", "magnataur_magn_polarity_02", "magnataur_magn_polarity_03", "magnataur_magn_polarity_04", "magnataur_magn_polarity_05", "magnataur_magn_polarity_06", "magnataur_magn_polarity_07", "magnataur_magn_polarity_08", "magnataur_magn_polarity_09", "magnataur_magn_polarity_10" }
+		caster:EmitCasterSound("npc_dota_hero_magnataur", responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
 
 		local creeps = FindUnitsInRadius(caster:GetTeam(), caster_loc, nil, radius, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		for _,creep in ipairs(creeps) do
+		for _, creep in ipairs(creeps) do
 			creep:SetAbsOrigin(final_loc)
 			FindClearSpaceForUnit(creep, final_loc, true)
-			creep:AddNewModifier(caster, self, "modifier_stunned", {duration = creep_stun_duration * (1 - creep:GetStatusResistance())})
-			ApplyDamage({victim = creep, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
+			creep:AddNewModifier(caster, self, "modifier_stunned", { duration = creep_stun_duration * (1 - creep:GetStatusResistance()) })
+			ApplyDamage({ victim = creep, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType() })
 			creep:EmitSound("Hero_Magnataur.ReversePolarity.Stun")
 		end
 
 		-- Finding all heroes on the map
 		local enemies = FindUnitsInRadius(caster:GetTeam(), caster_loc, nil, FIND_UNITS_EVERYWHERE, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-		for _,enemy in ipairs(enemies) do
+		for _, enemy in ipairs(enemies) do
 			local particle_loc = final_loc
 			local enemy_pos = enemy:GetAbsOrigin()
-			local current_distance = ( caster_loc - enemy_pos ):Length2D()
+			local current_distance = (caster_loc - enemy_pos):Length2D()
 			local pull_distance = radius
 			local point_direction = (final_loc - enemy_pos):Normalized()
 			local pull_pfx
@@ -2103,7 +2093,7 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 
 				-- #2 Talent: All Polarized enemy pulled towards Magnus that did not end up in the stun area are slowed
 				if caster:HasTalent("special_bonus_imba_magnataur_2") and pull_distance > radius then
-					enemy:AddNewModifier(caster, self, "modifier_imba_reverse_polarity_slow", {duration = caster:FindTalentValue("special_bonus_imba_magnataur_2") * (1 - enemy:GetStatusResistance())})
+					enemy:AddNewModifier(caster, self, "modifier_imba_reverse_polarity_slow", { duration = caster:FindTalentValue("special_bonus_imba_magnataur_2") * (1 - enemy:GetStatusResistance()) })
 				end
 			else
 				pull_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnataur_reverse_polarity_pull.vpcf", PATTACH_CUSTOMORIGIN, caster)
@@ -2117,39 +2107,39 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 				enemy:StopCustomMotionControllers()
 				enemy:SetAbsOrigin(final_loc)
 				FindClearSpaceForUnit(enemy, final_loc, true)
-				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = hero_stun_duration * (1 - enemy:GetStatusResistance())})
-				enemy:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", {duration = polarize_duration * (1 - enemy:GetStatusResistance())})
-				ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
+				enemy:AddNewModifier(caster, self, "modifier_stunned", { duration = hero_stun_duration * (1 - enemy:GetStatusResistance()) })
+				enemy:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", { duration = polarize_duration * (1 - enemy:GetStatusResistance()) })
+				ApplyDamage({ victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType() })
 				enemy:EmitSound("Hero_Magnataur.ReversePolarity.Stun")
 			elseif pull_distance > radius then
 				pull_distance = pull_distance - radius
 				local knockbackProperties =
-					{
-						center_x = caster:GetAbsOrigin()[1]+1,
-						center_y = caster:GetAbsOrigin()[2]+1,
-						center_z = caster:GetAbsOrigin()[3],
-						duration = FrameTime()*2,
-						knockback_duration = FrameTime()*2,
-						knockback_distance = -pull_distance,
-						knockback_height = 0,
-						should_stun = 0
-					}
+				{
+					center_x = caster:GetAbsOrigin()[1] + 1,
+					center_y = caster:GetAbsOrigin()[2] + 1,
+					center_z = caster:GetAbsOrigin()[3],
+					duration = FrameTime() * 2,
+					knockback_duration = FrameTime() * 2,
+					knockback_distance = -pull_distance,
+					knockback_height = 0,
+					should_stun = 0
+				}
 				-- Apply knockback on enemies hit
 				enemy:AddNewModifier(caster, self, "modifier_knockback", knockbackProperties)
 				particle_loc = enemy_pos + ((final_loc - enemy_pos):Normalized() * pull_distance)
 			else
 				pull_distance = global_pull
 				local knockbackProperties =
-					{
-						center_x = caster:GetAbsOrigin()[1]+1,
-						center_y = caster:GetAbsOrigin()[2]+1,
-						center_z = caster:GetAbsOrigin()[3],
-						duration = FrameTime()*2,
-						knockback_duration = FrameTime()*2,
-						knockback_distance = -pull_distance,
-						knockback_height = 0,
-						should_stun = 0
-					}
+				{
+					center_x = caster:GetAbsOrigin()[1] + 1,
+					center_y = caster:GetAbsOrigin()[2] + 1,
+					center_z = caster:GetAbsOrigin()[3],
+					duration = FrameTime() * 2,
+					knockback_duration = FrameTime() * 2,
+					knockback_distance = -pull_distance,
+					knockback_height = 0,
+					should_stun = 0
+				}
 				-- Apply knockback on enemies hit
 				enemy:AddNewModifier(caster, self, "modifier_knockback", knockbackProperties)
 				particle_loc = enemy_pos + ((final_loc - enemy_pos):Normalized() * pull_distance)
@@ -2172,22 +2162,22 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 	end
 end
 
-function imba_magnataur_reverse_polarity:GetCastRange( location , target)
-	return self.BaseClass.GetCastRange(self,location,target)
+function imba_magnataur_reverse_polarity:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target)
 end
 
 modifier_imba_reverse_polarity_slow = modifier_imba_reverse_polarity_slow or class({})
 
 function modifier_imba_reverse_polarity_slow:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 	return decFuncs
 end
 
-function modifier_imba_reverse_polarity_slow:GetModifierMoveSpeedBonus_Percentage( )
-	return self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_2","polarize_slow") * (-1)
+function modifier_imba_reverse_polarity_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_2", "polarize_slow") * (-1)
 end
 
 function modifier_imba_reverse_polarity_slow:IsHidden()
@@ -2214,38 +2204,52 @@ LinkLuaModifier("modifier_special_bonus_imba_magnataur_6", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_magnataur_8", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_magnataur_9", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_magnataur_1		= modifier_special_bonus_imba_magnataur_1 or class({})
-modifier_special_bonus_imba_magnataur_2		= modifier_special_bonus_imba_magnataur_2 or class({})
-modifier_special_bonus_imba_magnataur_3		= modifier_special_bonus_imba_magnataur_3 or class({})
-modifier_special_bonus_imba_magnataur_4		= modifier_special_bonus_imba_magnataur_4 or class({})
-modifier_special_bonus_imba_magnataur_6		= modifier_special_bonus_imba_magnataur_6 or class({})
-modifier_special_bonus_imba_magnataur_8		= modifier_special_bonus_imba_magnataur_8 or class({})
-modifier_special_bonus_imba_magnataur_9		= modifier_special_bonus_imba_magnataur_9 or class({})
+modifier_special_bonus_imba_magnataur_1 = modifier_special_bonus_imba_magnataur_1 or class({})
+modifier_special_bonus_imba_magnataur_2 = modifier_special_bonus_imba_magnataur_2 or class({})
+modifier_special_bonus_imba_magnataur_3 = modifier_special_bonus_imba_magnataur_3 or class({})
+modifier_special_bonus_imba_magnataur_4 = modifier_special_bonus_imba_magnataur_4 or class({})
+modifier_special_bonus_imba_magnataur_6 = modifier_special_bonus_imba_magnataur_6 or class({})
+modifier_special_bonus_imba_magnataur_8 = modifier_special_bonus_imba_magnataur_8 or class({})
+modifier_special_bonus_imba_magnataur_9 = modifier_special_bonus_imba_magnataur_9 or class({})
 
-function modifier_special_bonus_imba_magnataur_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_magnataur_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_magnataur_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_magnataur_1:IsHidden() return true end
 
-function modifier_special_bonus_imba_magnataur_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_magnataur_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_magnataur_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_magnataur_1:IsPurgable() return false end
 
-function modifier_special_bonus_imba_magnataur_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_magnataur_3:IsPurgable()		return false end
-function modifier_special_bonus_imba_magnataur_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_magnataur_1:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_magnataur_4:IsHidden() 		return true end
-function modifier_special_bonus_imba_magnataur_4:IsPurgable()		return false end
-function modifier_special_bonus_imba_magnataur_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_magnataur_2:IsHidden() return true end
 
-function modifier_special_bonus_imba_magnataur_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_magnataur_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_magnataur_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_magnataur_2:IsPurgable() return false end
 
-function modifier_special_bonus_imba_magnataur_8:IsHidden() 		return true end
-function modifier_special_bonus_imba_magnataur_8:IsPurgable()		return false end
-function modifier_special_bonus_imba_magnataur_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_magnataur_2:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_magnataur_9:IsHidden() 		return true end
-function modifier_special_bonus_imba_magnataur_9:IsPurgable()		return false end
-function modifier_special_bonus_imba_magnataur_9:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_magnataur_3:IsHidden() return true end
+
+function modifier_special_bonus_imba_magnataur_3:IsPurgable() return false end
+
+function modifier_special_bonus_imba_magnataur_3:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_magnataur_4:IsHidden() return true end
+
+function modifier_special_bonus_imba_magnataur_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_magnataur_4:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_magnataur_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_magnataur_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_magnataur_6:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_magnataur_8:IsHidden() return true end
+
+function modifier_special_bonus_imba_magnataur_8:IsPurgable() return false end
+
+function modifier_special_bonus_imba_magnataur_8:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_magnataur_9:IsHidden() return true end
+
+function modifier_special_bonus_imba_magnataur_9:IsPurgable() return false end
+
+function modifier_special_bonus_imba_magnataur_9:RemoveOnDeath() return false end

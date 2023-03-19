@@ -97,7 +97,8 @@ function imba_nyx_assassin_impale:OnSpellStart()
 	local direction = (target_point - caster:GetAbsOrigin()):Normalized()
 
 	-- Projectile information
-	local spikes_projectile = { Ability = ability,
+	local spikes_projectile = {
+		Ability = ability,
 		EffectName = particle_projectile,
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		fDistance = length,
@@ -138,7 +139,7 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 	local modifier_stun = "modifier_imba_impale_stun"
 	local modifier_suffering = "modifier_imba_impale_suffering"
 	local slow_after_stun = false --talent stuff
-	local main_spike = 0 -- boolean is converted to integer automatically during ExtraData receival for some reason
+	local main_spike = 0       -- boolean is converted to integer automatically during ExtraData receival for some reason
 	local impale_repeater = false
 	local repeat_duration = 0
 
@@ -194,16 +195,16 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 	ParticleManager:ReleaseParticleIndex(particle_impact_fx)
 
 	-- Stun target
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = duration * (1 - target:GetStatusResistance()), slow_after_stun = slow_after_stun})
+	target:AddNewModifier(caster, ability, modifier_stun, { duration = duration * (1 - target:GetStatusResistance()), slow_after_stun = slow_after_stun })
 
 	-- Hurl target in the air
 	local knockbackProperties =
-		{
-			duration = air_time * (1 - target:GetStatusResistance()),
-			knockback_duration = air_time * (1 - target:GetStatusResistance()),
-			knockback_distance = 0,
-			knockback_height = air_height
-		}
+	{
+		duration = air_time * (1 - target:GetStatusResistance()),
+		knockback_duration = air_time * (1 - target:GetStatusResistance()),
+		knockback_distance = 0,
+		knockback_height = air_height
+	}
 
 	target:RemoveModifierByName("modifier_knockback")
 	target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
@@ -218,52 +219,51 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 
 	-- Wait for it to land
 	Timers:CreateTimer(air_time, function()
+		-- Play land sound
+		EmitSoundOn(sound_land, target)
 
-			-- Play land sound
-			EmitSoundOn(sound_land, target)
+		-- Get the target's Suffering modifier
+		local total_dmg = 0
+		local modifier_suffering_handler = target:FindAllModifiersByName("modifier_imba_impale_suffering_damage_counter")
+		local suffering_damage = 0
 
-			-- Get the target's Suffering modifier
-			local total_dmg = 0
-			local modifier_suffering_handler = target:FindAllModifiersByName("modifier_imba_impale_suffering_damage_counter")
-			local suffering_damage = 0
-
-			if main_spike == 1 and modifier_suffering_handler then
-
-				-- Calculate Suffering damage
-				for _,damage in pairs(modifier_suffering_handler) do
-					suffering_damage = suffering_damage + damage:GetStackCount()
-				end
-
-				suffering_damage = suffering_damage * damage_repeat_pct * 0.01
-
-				-- Deal Suffering damage
-				local damageTable = {victim = target,
-					attacker = caster,
-					damage = suffering_damage,
-					damage_type = DAMAGE_TYPE_PURE,
-					damgae_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-					ability = ability,
-				}
-
-				local dmg1 = ApplyDamage(damageTable)
-				total_dmg = total_dmg + dmg1
+		if main_spike == 1 and modifier_suffering_handler then
+			-- Calculate Suffering damage
+			for _, damage in pairs(modifier_suffering_handler) do
+				suffering_damage = suffering_damage + damage:GetStackCount()
 			end
 
-			-- Deal base damage
-			damageTable = {victim = target,
+			suffering_damage = suffering_damage * damage_repeat_pct / 100
+
+			-- Deal Suffering damage
+			local damageTable = {
+				victim = target,
 				attacker = caster,
-				damage = damage,
-				damage_type = DAMAGE_TYPE_MAGICAL,
-				ability = ability
+				damage = suffering_damage,
+				damage_type = DAMAGE_TYPE_PURE,
+				damgae_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+				ability = ability,
 			}
 
-			local dmg2 = ApplyDamage(damageTable)
-			total_dmg = total_dmg + dmg2
-			-- Create alert
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, total_dmg, nil)
+			local dmg1 = ApplyDamage(damageTable)
+			total_dmg = total_dmg + dmg1
+		end
+
+		-- Deal base damage
+		damageTable = {
+			victim = target,
+			attacker = caster,
+			damage = damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			ability = ability
+		}
+
+		local dmg2 = ApplyDamage(damageTable)
+		total_dmg = total_dmg + dmg2
+		-- Create alert
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, total_dmg, nil)
 	end)
 end
-
 
 -- Relive Suffering aura modifier
 modifier_imba_impale_suffering_aura = class({})
@@ -297,10 +297,12 @@ function modifier_imba_impale_suffering_aura:IsAuraActiveOnDeath()
 end
 
 function modifier_imba_impale_suffering_aura:IsDebuff() return true end
-function modifier_imba_impale_suffering_aura:IsHidden() return true end
-function modifier_imba_impale_suffering_aura:RemoveOnDeath() return false end
-function modifier_imba_impale_suffering_aura:IsPurgable() return false end
 
+function modifier_imba_impale_suffering_aura:IsHidden() return true end
+
+function modifier_imba_impale_suffering_aura:RemoveOnDeath() return false end
+
+function modifier_imba_impale_suffering_aura:IsPurgable() return false end
 
 -- Relive Suffering damage counter
 modifier_imba_impale_suffering = class({})
@@ -318,7 +320,7 @@ function modifier_imba_impale_suffering:OnCreated()
 end
 
 function modifier_imba_impale_suffering:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
+	local decFuncs = { MODIFIER_EVENT_ON_TAKEDAMAGE }
 
 	return decFuncs
 end
@@ -331,32 +333,37 @@ function modifier_imba_impale_suffering:OnTakeDamage(keys)
 		-- Only apply if the unit taking damage is the parent of the modifier
 		if self.parent == unit and self.parent:IsAlive() then
 			if damage > 0 then
-				local buff = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_impale_suffering_damage_counter", {duration = self.damage_duration})
-				buff:SetStackCount(math.floor(damage+0.5))
+				local buff = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_impale_suffering_damage_counter", { duration = self.damage_duration })
+				buff:SetStackCount(math.floor(damage + 0.5))
 			end
 		end
 	end
 end
 
 function modifier_imba_impale_suffering:IsHidden() return true end
+
 function modifier_imba_impale_suffering:IsPurgable() return false end
+
 function modifier_imba_impale_suffering:IsDebuff() return true end
+
 function modifier_imba_impale_suffering:RemoveOnDeath() return true end
 
 modifier_imba_impale_suffering_damage_counter = modifier_imba_impale_suffering_damage_counter or class({})
 
 function modifier_imba_impale_suffering_damage_counter:IsHidden() return true end
+
 function modifier_imba_impale_suffering_damage_counter:IsPurgable() return false end
+
 function modifier_imba_impale_suffering_damage_counter:IsDebuff() return true end
+
 function modifier_imba_impale_suffering_damage_counter:RemoveOnDeath() return true end
+
 function modifier_imba_impale_suffering_damage_counter:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-
 
 -- Impale stun modifier
 modifier_imba_impale_stun = class({})
 
-function modifier_imba_impale_stun:OnCreated( kv )
+function modifier_imba_impale_stun:OnCreated(kv)
 	self.parent = self:GetParent()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -372,12 +379,12 @@ end
 
 function modifier_imba_impale_stun:OnDestroy()
 	if self.slow_after_stun and not self:GetParent():IsMagicImmune() then
-		self.parent:AddNewModifier(self.caster, self.ability, self.slow_modifier, { duration = self.slow_duration * (1 - self.parent:GetStatusResistance())})
+		self.parent:AddNewModifier(self.caster, self.ability, self.slow_modifier, { duration = self.slow_duration * (1 - self.parent:GetStatusResistance()) })
 	end
 end
 
 function modifier_imba_impale_stun:DeclareFunctions()
-	local funcs =   {
+	local funcs = {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 	}
 	return funcs
@@ -388,7 +395,7 @@ function modifier_imba_impale_stun:GetOverrideAnimation()
 end
 
 function modifier_imba_impale_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+	local state = { [MODIFIER_STATE_STUNNED] = true }
 	return state
 end
 
@@ -401,15 +408,15 @@ function modifier_imba_impale_stun:GetEffectAttachType()
 end
 
 function modifier_imba_impale_stun:IsHidden() return false end
-function modifier_imba_impale_stun:IsPurgeException() return true end
-function modifier_imba_impale_stun:IsStunDebuff() return true end
 
+function modifier_imba_impale_stun:IsPurgeException() return true end
+
+function modifier_imba_impale_stun:IsStunDebuff() return true end
 
 -- Impale afterstun slow modifier (talent)
 modifier_imba_impale_talent_slow = modifier_imba_impale_talent_slow or class({})
 
 function modifier_imba_impale_talent_slow:OnCreated()
-
 	self.max_distance = 200 -- to detect blink movement so as to not apply the slow
 	self.caster = self:GetCaster()
 	self.target = self:GetParent()
@@ -422,13 +429,13 @@ function modifier_imba_impale_talent_slow:OnCreated()
 end
 
 function modifier_imba_impale_talent_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_UNIT_MOVED,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+	local decFuncs = { MODIFIER_EVENT_ON_UNIT_MOVED,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 
 	return decFuncs
 end
 
-function modifier_imba_impale_talent_slow:OnUnitMoved()    -- THIS IS SERVERSIDE ONLY
+function modifier_imba_impale_talent_slow:OnUnitMoved() -- THIS IS SERVERSIDE ONLY
 	self.current_position = self.target:GetAbsOrigin()
 	self.distance_moved = self.distance_moved + (self.last_position - self.current_position):Length2D()
 	self.last_position = self.current_position
@@ -451,14 +458,15 @@ function modifier_imba_impale_talent_slow:GetModifierMoveSpeedBonus_Percentage()
 end
 
 function modifier_imba_impale_talent_slow:IsHidden() return false end
-function modifier_imba_impale_talent_slow:IsDebuff() return true end
-function modifier_imba_impale_talent_slow:IsPurgable() return true end
 
+function modifier_imba_impale_talent_slow:IsDebuff() return true end
+
+function modifier_imba_impale_talent_slow:IsPurgable() return true end
 
 -- Impale thinker modifier (talent)
 modifier_imba_impale_talent_thinker = modifier_imba_impale_talent_thinker or class({})
 
-function modifier_imba_impale_talent_thinker:OnCreated( kv )
+function modifier_imba_impale_talent_thinker:OnCreated(kv)
 	-- Properties
 	self.ability = self:GetAbility()
 	self.caster = self:GetCaster()
@@ -481,29 +489,29 @@ function modifier_imba_impale_talent_thinker:OnCreated( kv )
 end
 
 function modifier_imba_impale_talent_thinker:OnIntervalThink()
-	if RollPercentage(self.spike_chance)  then
+	if RollPercentage(self.spike_chance) then
 		-- Shameless copy-paste of Freezing Field code
-		local castDistance = RandomInt( self.spike_spawn_min_range, self.spike_spawn_max_range )
-		local angle = RandomInt( 0, 90 )
-		local dy = castDistance * math.sin( angle )
-		local dx = castDistance * math.cos( angle )
-		local quadrant = RandomInt( 1, 4 ) -- no guarantees on where this will hit
+		local castDistance = RandomInt(self.spike_spawn_min_range, self.spike_spawn_max_range)
+		local angle = RandomInt(0, 90)
+		local dy = castDistance * math.sin(angle)
+		local dx = castDistance * math.cos(angle)
+		local quadrant = RandomInt(1, 4) -- no guarantees on where this will hit
 		local attackPoint
 
-		if quadrant == 1 then          -- NW
-			attackPoint = Vector( self.location.x - dx, self.location.y + dy, self.location.z )
-		elseif quadrant == 2 then      -- NE
-			attackPoint = Vector( self.location.x + dx, self.location.y + dy, self.location.z )
-		elseif quadrant == 3 then      -- SE
-			attackPoint = Vector( self.location.x + dx, self.location.y - dy, self.location.z )
-		else                                -- SW
-			attackPoint = Vector( self.location.x - dx, self.location.y - dy, self.location.z )
+		if quadrant == 1 then -- NW
+			attackPoint = Vector(self.location.x - dx, self.location.y + dy, self.location.z)
+		elseif quadrant == 2 then -- NE
+			attackPoint = Vector(self.location.x + dx, self.location.y + dy, self.location.z)
+		elseif quadrant == 3 then -- SE
+			attackPoint = Vector(self.location.x + dx, self.location.y - dy, self.location.z)
+		else                -- SW
+			attackPoint = Vector(self.location.x - dx, self.location.y - dy, self.location.z)
 		end
 
 		local direction = (attackPoint - self.location):Normalized()
 
 		-- Play cast sound
-		self.parent:EmitSoundParams(self.sound_cast,1,0.01,0)
+		self.parent:EmitSoundParams(self.sound_cast, 1, 0.01, 0)
 
 		-- Projectile information
 		local spikes_projectile = {
@@ -528,6 +536,7 @@ function modifier_imba_impale_talent_thinker:OnIntervalThink()
 		ProjectileManager:CreateLinearProjectile(spikes_projectile)
 	end
 end
+
 -------------------------------------------------
 --                MANA BURN                    --
 -------------------------------------------------
@@ -594,7 +603,7 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 
 	-- If target doesn't have a parasite yet, plant a new one in it
 	if not target:HasModifier(modifier_parasite) then
-		target:AddNewModifier(caster, ability, modifier_parasite, {duration = parasite_duration * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, ability, modifier_parasite, { duration = parasite_duration * (1 - target:GetStatusResistance()) })
 	end
 
 	-- Get target's intelligence
@@ -624,10 +633,11 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 	end
 
 	-- Calculate damage
-	local damage = actual_mana_burned * mana_burn_damage_pct * 0.01
+	local damage = actual_mana_burned * mana_burn_damage_pct / 100
 
 	-- Apply damage
-	damageTable =     {victim = target,
+	damageTable = {
+		victim = target,
 		attacker = caster,
 		damage = damage,
 		damage_type = DAMAGE_TYPE_MAGICAL,
@@ -641,8 +651,8 @@ end
 modifier_imba_mana_burn_parasite = class({})
 
 function modifier_imba_mana_burn_parasite:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_HERO_KILLED,
-	MODIFIER_EVENT_ON_TAKEDAMAGE}
+	local decFuncs = { MODIFIER_EVENT_ON_HERO_KILLED,
+		MODIFIER_EVENT_ON_TAKEDAMAGE }
 
 	return decFuncs
 end
@@ -675,9 +685,9 @@ function modifier_imba_mana_burn_parasite:OnCreated()
 
 		-- Get target's current mana, set the threshold
 		self.starting_target_mana = self.parent:GetMana()
-		self.charge_threshold = self.starting_target_mana * self.parasite_charge_threshold_pct * 0.01
+		self.charge_threshold = self.starting_target_mana * self.parasite_charge_threshold_pct / 100
 		self.last_known_target_mana = self.starting_target_mana
-		
+
 		-- Start charging/count mana
 		self.parasite_charged_mana = 0
 
@@ -705,7 +715,6 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 		if target_current_mana >= self.parasite_mana_leech then
 			self.parent:ReduceMana(self.parasite_mana_leech)
 			mana_leeched = self.parasite_mana_leech
-
 		else -- Get the mana that the target has
 			self.parent:ReduceMana(target_current_mana)
 			mana_leeched = target_current_mana
@@ -726,9 +735,8 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 
 		-- Check if the threshold has been reached
 		if self.parasite_charged_mana >= self.charge_threshold then
-
 			-- Give the target the charged parasite modifier and the appropriate variables
-			local modifier_charged_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_charged, {duration = self.explosion_delay * (1 - self.parent:GetStatusResistance())})
+			local modifier_charged_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_charged, { duration = self.explosion_delay * (1 - self.parent:GetStatusResistance()) })
 			if modifier_charged_handler then
 				modifier_charged_handler.starting_target_mana = self.starting_target_mana
 				modifier_charged_handler.parasite_charged_mana = self.parasite_charged_mana
@@ -740,7 +748,7 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 	end
 end
 
-function modifier_imba_mana_burn_parasite:OnHeroKilled( keys )
+function modifier_imba_mana_burn_parasite:OnHeroKilled(keys)
 	if not self.scarab_retrieve or not IsServer() or keys.target ~= self.parent then
 		return nil
 	end
@@ -760,32 +768,32 @@ function modifier_imba_mana_burn_parasite:OnTakeDamage(keys)
 
 		-- Only apply if the unit taking damage is the parent of the modifier
 		if self.parent == unit and damage > 0 then
-			
 			local mana_burned = damage * (self.scarring_burn_pct / 100) -- 8%/10%/12%/14%
-			
+
 			if mana_burned > self.parent:GetMana() then
 				mana_burned = self.parent:GetMana()
 			end
-			
+
 			self.parent:ReduceMana(mana_burned)
-			
+
 			self.parasite_charged_mana = self.parasite_charged_mana + mana_burned
-			
+
 			self:SetStackCount(self.parasite_charged_mana)
 		end
 	end
 end
 
 function modifier_imba_mana_burn_parasite:IsHidden() return false end
-function modifier_imba_mana_burn_parasite:IsPurgable() return true end
-function modifier_imba_mana_burn_parasite:IsDebuff() return true end
 
+function modifier_imba_mana_burn_parasite:IsPurgable() return true end
+
+function modifier_imba_mana_burn_parasite:IsDebuff() return true end
 
 -- Mind Bug parasite charge (active) modifier
 modifier_imba_mana_burn_parasite_charged = class({})
 
 function modifier_imba_mana_burn_parasite_charged:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_HERO_KILLED}
+	local decFuncs = { MODIFIER_EVENT_ON_HERO_KILLED }
 
 	return decFuncs
 end
@@ -840,7 +848,7 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		-- Add explosion effect
 		self.particle_explosion_fx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_CUSTOMORIGIN, self.parent)
 		ParticleManager:SetParticleControlEnt(self.particle_explosion_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(self.particle_explosion_fx, 1, Vector(1,0,0))
+		ParticleManager:SetParticleControl(self.particle_explosion_fx, 1, Vector(1, 0, 0))
 		ParticleManager:ReleaseParticleIndex(self.particle_explosion_fx)
 
 		-- If the target now has more mana than what he had when parasite was planted, do nothing
@@ -849,10 +857,11 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		--end
 
 		-- Deal damage according to mana lost
-		--local damage = (self.starting_target_mana - target_current_mana) * self.parasite_mana_as_damage_pct * 0.01
-		local damage = self.parasite_charged_mana * self.parasite_mana_as_damage_pct * 0.01
+		--local damage = (self.starting_target_mana - target_current_mana) * self.parasite_mana_as_damage_pct / 100
+		local damage = self.parasite_charged_mana * self.parasite_mana_as_damage_pct / 100
 
-		damageTable = {victim = self.parent,
+		damageTable = {
+			victim = self.parent,
 			attacker = self.caster,
 			damage = damage,
 			damage_type = DAMAGE_TYPE_MAGICAL,
@@ -863,7 +872,7 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 	end
 end
 
-function modifier_imba_mana_burn_parasite_charged:OnHeroKilled( keys )
+function modifier_imba_mana_burn_parasite_charged:OnHeroKilled(keys)
 	if not self.scarab_retrieve or not IsServer() or keys.target ~= self.parent then
 		return nil
 	end
@@ -878,14 +887,15 @@ function modifier_imba_mana_burn_parasite_charged:OnHeroKilled( keys )
 end
 
 function modifier_imba_mana_burn_parasite_charged:IsHidden() return false end
-function modifier_imba_mana_burn_parasite_charged:IsPurgable() return true end
-function modifier_imba_mana_burn_parasite_charged:IsDebuff() return true end
 
+function modifier_imba_mana_burn_parasite_charged:IsPurgable() return true end
+
+function modifier_imba_mana_burn_parasite_charged:IsDebuff() return true end
 
 -- Talent : Scarab modifier that jumps into enemies and Mana Burns them
 modifier_imba_mana_burn_talent_parasite = modifier_imba_mana_burn_talent_parasite or class({})
 
-function modifier_imba_mana_burn_talent_parasite:OnCreated( kv )
+function modifier_imba_mana_burn_talent_parasite:OnCreated(kv)
 	if not IsServer() then
 		return nil
 	end
@@ -934,8 +944,11 @@ function modifier_imba_mana_burn_talent_parasite:OnIntervalThink()
 end
 
 function modifier_imba_mana_burn_talent_parasite:IsHidden() return false end
+
 function modifier_imba_mana_burn_talent_parasite:IsPurgable() return true end
+
 function modifier_imba_mana_burn_talent_parasite:IsDebuff() return false end
+
 -------------------------------------------------
 --              SPIKED CARAPACE                --
 -------------------------------------------------
@@ -952,7 +965,7 @@ function imba_nyx_assassin_spiked_carapace:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local cast_response = {"nyx_assassin_nyx_spikedcarapace_03", "nyx_assassin_nyx_spikedcarapace_05"}
+	local cast_response = { "nyx_assassin_nyx_spikedcarapace_03", "nyx_assassin_nyx_spikedcarapace_05" }
 	local sound_cast = "Hero_NyxAssassin.SpikedCarapace"
 	local modifier_spikes = "modifier_imba_spiked_carapace"
 
@@ -962,14 +975,14 @@ function imba_nyx_assassin_spiked_carapace:OnSpellStart()
 
 	-- Roll for cast response
 	if RollPercentage(25) then
-		EmitSoundOn(cast_response[math.random(1,2)], caster)
+		EmitSoundOn(cast_response[math.random(1, 2)], caster)
 	end
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
 
 	-- Add spikes modifier
-	caster:AddNewModifier(caster, ability, modifier_spikes, {duration = reflect_duration})
+	caster:AddNewModifier(caster, ability, modifier_spikes, { duration = reflect_duration })
 end
 
 -- Spiked carapace modifier (owner)
@@ -1007,7 +1020,7 @@ function modifier_imba_spiked_carapace:OnCreated()
 
 		-- Increased reflection damage talent
 		self.damage_reflection_pct = self.ability:GetSpecialValueFor("damage_reflection_pct")
-		
+
 		if self.caster:HasTalent("special_bonus_imba_nyx_assassin_10") then
 			self.damage_reflection_pct = self.damage_reflection_pct + self.caster:FindTalentValue("special_bonus_imba_nyx_assassin_10")
 		end
@@ -1037,9 +1050,9 @@ function modifier_imba_spiked_carapace:OnCreated()
 				FIND_ANY_ORDER,
 				false)
 
-			for _,enemy in pairs(enemies) do
+			for _, enemy in pairs(enemies) do
 				-- Stun each enemy
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, { duration = self.stun_duration * (1 - enemy:GetStatusResistance()) })
 
 				-- Grant 30 Vendetta stacks
 				if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
@@ -1049,11 +1062,9 @@ function modifier_imba_spiked_carapace:OnCreated()
 
 					-- Only stores damage from heroes (including illusions)
 					if enemy:IsHero() then
-
 						-- Get modifier handler
 						local modifier_vendetta_handler = self.caster:FindModifierByName(self.modifier_vendetta)
 						if modifier_vendetta_handler then
-
 							-- Set Vendetta stacks
 							modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + self.burrowed_vendetta_stacks)
 						end
@@ -1065,14 +1076,16 @@ function modifier_imba_spiked_carapace:OnCreated()
 end
 
 function modifier_imba_spiked_carapace:IsHidden() return false end
+
 function modifier_imba_spiked_carapace:IsPurgable() return false end
+
 function modifier_imba_spiked_carapace:IsDebuff() return false end
 
 function modifier_imba_spiked_carapace:DeclareFunctions()
 	return {
 		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		-- MODIFIER_EVENT_ON_TAKEDAMAGE,
-		
+
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE
@@ -1080,102 +1093,102 @@ function modifier_imba_spiked_carapace:DeclareFunctions()
 end
 
 -- function modifier_imba_spiked_carapace:GetModifierIncomingDamage_Percentage( kv )
-	-- return -100
+-- return -100
 -- end
 
 -- function modifier_imba_spiked_carapace:OnTakeDamage(keys)
-	-- if IsServer() then
-		-- local attacker = keys.attacker
-		-- local unit = keys.unit
-		-- local original_damage = keys.original_damage
-		-- local damage_flags = keys.damage_flags
-		
-		-- -- Only apply on attacks against the caster
-		-- if unit == self.caster then
+-- if IsServer() then
+-- local attacker = keys.attacker
+-- local unit = keys.unit
+-- local original_damage = keys.original_damage
+-- local damage_flags = keys.damage_flags
 
-			-- -- If it was a no reflection damage, do nothing
-			-- if bit.band(damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
-				-- return nil
-			-- end
+-- -- Only apply on attacks against the caster
+-- if unit == self.caster then
 
-			-- -- If this has a HP loss flag, do nothing
-			-- if bit.band(damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS then
-				-- return nil
-			-- end
+-- -- If it was a no reflection damage, do nothing
+-- if bit.band(damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
+-- return nil
+-- end
 
-			-- -- If the unit is a building, do nothing
-			-- if attacker:IsBuilding() then
-				-- return nil
-			-- end
-			
-			-- -- If the unit dealing damage is on the same team, do nothing (ex. Bloodseeker's Bloodrage)
-			-- if attacker:GetTeam() == unit:GetTeam() then
-				-- return nil
-			-- end
-			
-			-- -- If the attacking unit has Nyx's Carapace as well, do nothing
-			-- if attacker:HasModifier("modifier_imba_spiked_carapace") then
-				-- return nil
-			-- end
+-- -- If this has a HP loss flag, do nothing
+-- if bit.band(damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS then
+-- return nil
+-- end
 
-			-- -- Calculate damage to reflect
-			-- local damage = original_damage * self.damage_reflection_pct * 0.01
+-- -- If the unit is a building, do nothing
+-- if attacker:IsBuilding() then
+-- return nil
+-- end
 
-			-- -- Only apply if the caster has Vendetta as ability
-			-- if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
+-- -- If the unit dealing damage is on the same team, do nothing (ex. Bloodseeker's Bloodrage)
+-- if attacker:GetTeam() == unit:GetTeam() then
+-- return nil
+-- end
 
-				-- -- Convert damage to vendetta charges
-				-- if not self.caster:HasModifier(self.modifier_vendetta) then
-					-- self.caster:AddNewModifier(self.caster, self.vendetta_ability, self.modifier_vendetta, {})
-				-- end
+-- -- If the attacking unit has Nyx's Carapace as well, do nothing
+-- if attacker:HasModifier("modifier_imba_spiked_carapace") then
+-- return nil
+-- end
 
-				-- -- Only stores damage from heroes (including illusions)
-				-- if attacker:IsHero() then
-					-- -- Get modifier handler
-					-- local modifier_vendetta_handler = self.caster:FindModifierByName(self.modifier_vendetta)
-					-- if modifier_vendetta_handler then
-						-- -- Calculate stacks
-						-- local stacks = damage * self.damage_to_vendetta_pct * 0.01
+-- -- Calculate damage to reflect
+-- local damage = original_damage * self.damage_reflection_pct / 100
 
-						-- -- Set Vendetta stacks
-						-- modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + stacks)
-					-- end
-				-- end
-			-- end
+-- -- Only apply if the caster has Vendetta as ability
+-- if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
 
-			-- -- If the attacker is magic immune or invulnerable, do nothing
-			-- if attacker:IsMagicImmune() or attacker:IsInvulnerable() then
-				-- return nil
-			-- end
+-- -- Convert damage to vendetta charges
+-- if not self.caster:HasModifier(self.modifier_vendetta) then
+-- self.caster:AddNewModifier(self.caster, self.vendetta_ability, self.modifier_vendetta, {})
+-- end
 
-			-- -- By default, if we don't have the "reflect all instances" talent, reflect only 1 instance per source
-			-- -- still stuns the target, even if we skip dealing damage to it
-			-- local skip_damage = false
-			-- if not self.reflect_all_damage and self.enemiesHit[attacker:entindex()] then
-				-- skip_damage = true
-			-- end
+-- -- Only stores damage from heroes (including illusions)
+-- if attacker:IsHero() then
+-- -- Get modifier handler
+-- local modifier_vendetta_handler = self.caster:FindModifierByName(self.modifier_vendetta)
+-- if modifier_vendetta_handler then
+-- -- Calculate stacks
+-- local stacks = damage * self.damage_to_vendetta_pct / 100
 
-			-- if not skip_damage then
-				-- -- if the table is nil, we're reflecting everything and housekeeping isn't needed
-				-- if self.enemiesHit ~= nil then
-					-- self.enemiesHit[attacker:entindex()] = true
-				-- end
+-- -- Set Vendetta stacks
+-- modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + stacks)
+-- end
+-- end
+-- end
 
-				-- local damageTable = {victim = attacker,
-					-- attacker = self.caster,
-					-- damage = damage,
-					-- damage_type = keys.damage_type,
-					-- damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
-					-- ability = self.ability
-				-- }
+-- -- If the attacker is magic immune or invulnerable, do nothing
+-- if attacker:IsMagicImmune() or attacker:IsInvulnerable() then
+-- return nil
+-- end
 
-				-- ApplyDamage(damageTable)
-			-- end
+-- -- By default, if we don't have the "reflect all instances" talent, reflect only 1 instance per source
+-- -- still stuns the target, even if we skip dealing damage to it
+-- local skip_damage = false
+-- if not self.reflect_all_damage and self.enemiesHit[attacker:entindex()] then
+-- skip_damage = true
+-- end
 
-			-- -- Stun it
-			-- attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - attacker:GetStatusResistance()), true)
-		-- end
-	-- end
+-- if not skip_damage then
+-- -- if the table is nil, we're reflecting everything and housekeeping isn't needed
+-- if self.enemiesHit ~= nil then
+-- self.enemiesHit[attacker:entindex()] = true
+-- end
+
+-- local damageTable = {victim = attacker,
+-- attacker = self.caster,
+-- damage = damage,
+-- damage_type = keys.damage_type,
+-- damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
+-- ability = self.ability
+-- }
+
+-- ApplyDamage(damageTable)
+-- end
+
+-- -- Stun it
+-- attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - attacker:GetStatusResistance()), true)
+-- end
+-- end
 -- end
 
 
@@ -1194,10 +1207,9 @@ end
 -- Since the pure function seems to run last when compared to the physical and magical ones above (but before the GetModifierIncomingDamage_Percentage), I guess it makes sense to put the actual logic here? Seems kinda hacky...
 function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePure(keys)
 	if keys.attacker and keys.damage and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then
-		
 		if not keys.attacker:IsBuilding() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			-- Calculate damage to reflect
-			local damage = keys.original_damage * self.damage_reflection_pct * 0.01
+			local damage = keys.original_damage * self.damage_reflection_pct / 100
 
 			-- Only apply if the caster has Vendetta as ability
 			if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
@@ -1210,10 +1222,10 @@ function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePure(keys)
 				if keys.attacker:IsHero() then
 					-- Get modifier handler
 					local modifier_vendetta_handler = self:GetCaster():FindModifierByName(self.modifier_vendetta)
-					
+
 					if modifier_vendetta_handler then
 						-- Set Vendetta stacks
-						modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + (damage * self.damage_to_vendetta_pct * 0.01))
+						modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + (damage * self.damage_to_vendetta_pct / 100))
 					end
 				end
 			end
@@ -1223,7 +1235,7 @@ function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePure(keys)
 				-- By default, if we don't have the "reflect all instances" talent, reflect only 1 instance per source
 				-- still stuns the target, even if we skip dealing damage to it
 				local skip_damage = false
-				
+
 				if not self.reflect_all_damage and self.enemiesHit[keys.attacker:entindex()] then
 					skip_damage = true
 				end
@@ -1235,20 +1247,20 @@ function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePure(keys)
 					end
 
 					ApplyDamage({
-						victim			= keys.attacker,
-						attacker		= self:GetCaster(),
-						damage			= damage,
-						damage_type		= keys.damage_type,
-						damage_flags 	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
-						ability			= self.ability
+						victim       = keys.attacker,
+						attacker     = self:GetCaster(),
+						damage       = damage,
+						damage_type  = keys.damage_type,
+						damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
+						ability      = self.ability
 					})
 				end
 
 				-- Stun it
-				keys.attacker:AddNewModifier(self:GetCaster(), self.ability, self.modifier_stun, {duration = self.stun_duration * (1 - keys.attacker:GetStatusResistance())})
+				keys.attacker:AddNewModifier(self:GetCaster(), self.ability, self.modifier_stun, { duration = self.stun_duration * (1 - keys.attacker:GetStatusResistance()) })
 			end
 		end
-	
+
 		return 1
 	end
 end
@@ -1267,16 +1279,18 @@ function modifier_imba_spiked_carapace_stun:OnCreated()
 		self.particle_spike_hit_fx = ParticleManager:CreateParticle(self:GetCaster().spiked_carapace_debuff_pfx, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
 		ParticleManager:SetParticleControl(self.particle_spike_hit_fx, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControlEnt(self.particle_spike_hit_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(self.particle_spike_hit_fx, 2, Vector(1,0,0))
+		ParticleManager:SetParticleControl(self.particle_spike_hit_fx, 2, Vector(1, 0, 0))
 	end
 end
 
 function modifier_imba_spiked_carapace_stun:IsHidden() return false end
+
 function modifier_imba_spiked_carapace_stun:IsPurgeException() return true end
+
 function modifier_imba_spiked_carapace_stun:IsStunDebuff() return true end
 
 function modifier_imba_spiked_carapace_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
+	local state = { [MODIFIER_STATE_STUNNED] = true }
 	return state
 end
 
@@ -1287,9 +1301,6 @@ end
 function modifier_imba_spiked_carapace_stun:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
-
-
-
 
 -------------------------------------------------
 --                  VENDETTA                   --
@@ -1302,6 +1313,7 @@ LinkLuaModifier("modifier_imba_vendetta_charge", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_vendetta_break", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_vendetta:IsNetherWardStealable() return false end
+
 function imba_nyx_assassin_vendetta:IsHiddenWhenStolen()
 	return false
 end
@@ -1311,7 +1323,7 @@ function imba_nyx_assassin_vendetta:OnSpellStart()
 	local caster = self:GetCaster()
 	local ability = self
 	local burrow_ability = caster:FindAbilityByName("nyx_assassin_unburrow")
-	local cast_response = {"nyx_assassin_nyx_vendetta_01", "nyx_assassin_nyx_vendetta_02", "nyx_assassin_nyx_vendetta_03", "nyx_assassin_nyx_vendetta_09"}
+	local cast_response = { "nyx_assassin_nyx_vendetta_01", "nyx_assassin_nyx_vendetta_02", "nyx_assassin_nyx_vendetta_03", "nyx_assassin_nyx_vendetta_09" }
 	local sound_cast = "Hero_NyxAssassin.Vendetta"
 	local modifier_vendetta = "modifier_imba_vendetta"
 	local modifier_burrowed = "modifier_nyx_assassin_burrow"
@@ -1320,7 +1332,7 @@ function imba_nyx_assassin_vendetta:OnSpellStart()
 	local duration = ability:GetSpecialValueFor("duration")
 
 	-- Play cast response
-	EmitSoundOn(cast_response[math.random(1,4)], caster)
+	EmitSoundOn(cast_response[math.random(1, 4)], caster)
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -1331,9 +1343,8 @@ function imba_nyx_assassin_vendetta:OnSpellStart()
 	end
 
 	-- Apply Vendetta modifier
-	caster:AddNewModifier(caster, ability, modifier_vendetta, {duration = duration})
+	caster:AddNewModifier(caster, ability, modifier_vendetta, { duration = duration })
 end
-
 
 -- Vendetta modifier
 modifier_imba_vendetta = class({})
@@ -1347,10 +1358,10 @@ function modifier_imba_vendetta:OnCreated()
 	self.particle_vendetta_attack = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta.vpcf"
 	self.carapace_ability = "imba_nyx_assassin_spiked_carapace"
 	self.modifier_charge = "modifier_imba_vendetta_charge"
-	
+
 	-- Ability specials
 	-- Why the heck is self.ability throwing errors here
-	
+
 	if self.ability and not self.ability:IsNull() then
 		self.movement_speed_pct = self.ability:GetSpecialValueFor("movement_speed_pct")
 		self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
@@ -1378,34 +1389,40 @@ function modifier_imba_vendetta:OnCreated()
 	ParticleManager:SetParticleControl(self.particle_vendetta_start_fx, 0, self.caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_vendetta_start_fx, 1, self.caster:GetAbsOrigin())
 	self:AddParticle(self.particle_vendetta_start_fx, false, false, -1, false, false)
-	
-	self.damage_type	= self:GetAbility():GetAbilityDamageType()
+
+	self.damage_type = self:GetAbility():GetAbilityDamageType()
 end
 
 function modifier_imba_vendetta:IsHidden() return false end
+
 function modifier_imba_vendetta:IsPurgable() return false end
+
 function modifier_imba_vendetta:IsDebuff() return false end
 
 function modifier_imba_vendetta:CheckState()
 	local state
 
 	if self:GetCaster():HasTalent("special_bonus_imba_nyx_assassin_11") then
-		state = {[MODIFIER_STATE_INVISIBLE] = true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
+		state = {
+			[MODIFIER_STATE_INVISIBLE] = true,
+			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+			[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
+		}
 	else
-		state = {[MODIFIER_STATE_INVISIBLE] = true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+		state = {
+			[MODIFIER_STATE_INVISIBLE] = true,
+			[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+		}
 	end
-	
+
 	return state
 end
 
 function modifier_imba_vendetta:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-		MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL }
 
 	return decFuncs
 end
@@ -1420,7 +1437,6 @@ function modifier_imba_vendetta:OnAbilityExecuted(keys)
 
 	-- Only apply when the one casting abilities is the caster
 	if caster == self.caster then
-
 		-- If ability was Spiked Carapace, do nothing
 		if ability:GetName() == self.carapace_ability then
 			return nil
@@ -1442,7 +1458,6 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 
 		-- Only apply if the attacker is the caster
 		if attacker == self.caster then
-
 			-- If the target is not a unit or a hero, just remove invisibility
 			if not target:IsHero() and not target:IsCreep() then
 				self:Destroy()
@@ -1454,8 +1469,8 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 
 			-- Add attack particle effect
 			self.particle_vendetta_attack_fx = ParticleManager:CreateParticle(self.particle_vendetta_attack, PATTACH_CUSTOMORIGIN, self.caster)
-			ParticleManager:SetParticleControl(self.particle_vendetta_attack_fx, 0, self.caster:GetAbsOrigin() )
-			ParticleManager:SetParticleControl(self.particle_vendetta_attack_fx, 1, target:GetAbsOrigin() )
+			ParticleManager:SetParticleControl(self.particle_vendetta_attack_fx, 0, self.caster:GetAbsOrigin())
+			ParticleManager:SetParticleControl(self.particle_vendetta_attack_fx, 1, target:GetAbsOrigin())
 
 			-- Get stacks of E for Vendetta, if present
 			local stacks = 0
@@ -1476,7 +1491,8 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 			end
 
 			-- Deal damage
-			local damageTable = {victim = target,
+			local damageTable = {
+				victim = target,
 				attacker = self.caster,
 				damage = damage,
 				damage_type = self.damage_type,
@@ -1493,9 +1509,9 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 					modifier_charged_handler:Destroy()
 				end
 			end
-			
+
 			-- Add the break debuff
-			target:AddNewModifier(self.caster, self.ability, "modifier_imba_vendetta_break", {duration = self.break_duration * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(self.caster, self.ability, "modifier_imba_vendetta_break", { duration = self.break_duration * (1 - target:GetStatusResistance()) })
 
 			-- Remove modifier
 			self:Destroy()
@@ -1514,7 +1530,7 @@ function modifier_imba_vendetta_charge:OnCreated()
 
 		-- Ability specials
 		self.maximum_vendetta_stacks = self.ability:GetSpecialValueFor("maximum_vendetta_stacks")
-		
+
 		if self.caster:HasTalent("special_bonus_imba_nyx_assassin_12") then
 			self.maximum_vendetta_stacks = self.maximum_vendetta_stacks + self.caster:FindTalentValue("special_bonus_imba_nyx_assassin_12")
 		end
@@ -1526,7 +1542,9 @@ function modifier_imba_vendetta_charge:GetTexture()
 end
 
 function modifier_imba_vendetta_charge:IsHidden() return false end
+
 function modifier_imba_vendetta_charge:IsPurgable() return false end
+
 function modifier_imba_vendetta_charge:IsDebuff() return false end
 
 function modifier_imba_vendetta_charge:OnStackCountChanged()
@@ -1544,10 +1562,10 @@ end
 -- VENDETTA BREAK MODIFIER --
 -----------------------------
 
-modifier_imba_vendetta_break	= class({})
+modifier_imba_vendetta_break = class({})
 
 function modifier_imba_vendetta_break:CheckState()
-	return {[MODIFIER_STATE_PASSIVES_DISABLED] = true}
+	return { [MODIFIER_STATE_PASSIVES_DISABLED] = true }
 end
 
 -----------------------------------------------------------------
@@ -1560,9 +1578,13 @@ LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_5", "components/abilit
 modifier_special_bonus_imba_nyx_assassin_5 = class({})
 
 function modifier_special_bonus_imba_nyx_assassin_5:IsHidden() return true end
+
 function modifier_special_bonus_imba_nyx_assassin_5:IsPurgable() return false end
+
 function modifier_special_bonus_imba_nyx_assassin_5:IsDebuff() return false end
+
 function modifier_special_bonus_imba_nyx_assassin_5:AllowIllusionDuplicate() return false end
+
 function modifier_special_bonus_imba_nyx_assassin_5:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_nyx_assassin_5:_CheckHealth(damage)
@@ -1584,7 +1606,7 @@ function modifier_special_bonus_imba_nyx_assassin_5:OnCreated()
 			self:Destroy()
 		else
 			self.ability = self.target:FindAbilityByName("imba_nyx_assassin_spiked_carapace")
-			self.hp_threshold_pct = self.target:FindTalentValue("special_bonus_imba_nyx_assassin_5")  / 100
+			self.hp_threshold_pct = self.target:FindTalentValue("special_bonus_imba_nyx_assassin_5") / 100
 			self:_CheckHealth()
 		end
 	end
@@ -1620,38 +1642,52 @@ LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_4", "components/abilit
 LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_12", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_11", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_nyx_assassin_6	= modifier_special_bonus_imba_nyx_assassin_6 or class({})
-modifier_special_bonus_imba_nyx_assassin_2	= modifier_special_bonus_imba_nyx_assassin_2 or class({})
-modifier_special_bonus_imba_nyx_assassin_3	= modifier_special_bonus_imba_nyx_assassin_3 or class({})
-modifier_special_bonus_imba_nyx_assassin_13	= modifier_special_bonus_imba_nyx_assassin_13 or class({})
-modifier_special_bonus_imba_nyx_assassin_4	= modifier_special_bonus_imba_nyx_assassin_4 or class({})
-modifier_special_bonus_imba_nyx_assassin_12	= modifier_special_bonus_imba_nyx_assassin_12 or class({})
-modifier_special_bonus_imba_nyx_assassin_11	= modifier_special_bonus_imba_nyx_assassin_11 or class({})
+modifier_special_bonus_imba_nyx_assassin_6 = modifier_special_bonus_imba_nyx_assassin_6 or class({})
+modifier_special_bonus_imba_nyx_assassin_2 = modifier_special_bonus_imba_nyx_assassin_2 or class({})
+modifier_special_bonus_imba_nyx_assassin_3 = modifier_special_bonus_imba_nyx_assassin_3 or class({})
+modifier_special_bonus_imba_nyx_assassin_13 = modifier_special_bonus_imba_nyx_assassin_13 or class({})
+modifier_special_bonus_imba_nyx_assassin_4 = modifier_special_bonus_imba_nyx_assassin_4 or class({})
+modifier_special_bonus_imba_nyx_assassin_12 = modifier_special_bonus_imba_nyx_assassin_12 or class({})
+modifier_special_bonus_imba_nyx_assassin_11 = modifier_special_bonus_imba_nyx_assassin_11 or class({})
 
-function modifier_special_bonus_imba_nyx_assassin_6:IsHidden() 			return true end
-function modifier_special_bonus_imba_nyx_assassin_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_nyx_assassin_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nyx_assassin_6:IsHidden() return true end
 
-function modifier_special_bonus_imba_nyx_assassin_2:IsHidden() 			return true end
-function modifier_special_bonus_imba_nyx_assassin_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_nyx_assassin_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nyx_assassin_6:IsPurgable() return false end
 
-function modifier_special_bonus_imba_nyx_assassin_3:IsHidden() 			return true end
-function modifier_special_bonus_imba_nyx_assassin_3:IsPurgable()		return false end
-function modifier_special_bonus_imba_nyx_assassin_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nyx_assassin_6:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_nyx_assassin_13:IsHidden() 		return true end
-function modifier_special_bonus_imba_nyx_assassin_13:IsPurgable()		return false end
-function modifier_special_bonus_imba_nyx_assassin_13:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nyx_assassin_2:IsHidden() return true end
 
-function modifier_special_bonus_imba_nyx_assassin_4:IsHidden() 			return true end
-function modifier_special_bonus_imba_nyx_assassin_4:IsPurgable()		return false end
-function modifier_special_bonus_imba_nyx_assassin_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nyx_assassin_2:IsPurgable() return false end
 
-function modifier_special_bonus_imba_nyx_assassin_12:IsHidden() 		return true end
-function modifier_special_bonus_imba_nyx_assassin_12:IsPurgable()		return false end
-function modifier_special_bonus_imba_nyx_assassin_12:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nyx_assassin_2:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_nyx_assassin_11:IsHidden() 		return true end
-function modifier_special_bonus_imba_nyx_assassin_11:IsPurgable()		return false end
-function modifier_special_bonus_imba_nyx_assassin_11:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nyx_assassin_3:IsHidden() return true end
+
+function modifier_special_bonus_imba_nyx_assassin_3:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_3:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_13:IsHidden() return true end
+
+function modifier_special_bonus_imba_nyx_assassin_13:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_13:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_4:IsHidden() return true end
+
+function modifier_special_bonus_imba_nyx_assassin_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_4:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_12:IsHidden() return true end
+
+function modifier_special_bonus_imba_nyx_assassin_12:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_12:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_11:IsHidden() return true end
+
+function modifier_special_bonus_imba_nyx_assassin_11:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nyx_assassin_11:RemoveOnDeath() return false end

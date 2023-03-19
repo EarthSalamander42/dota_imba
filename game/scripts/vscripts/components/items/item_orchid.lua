@@ -24,15 +24,16 @@
 -----------------------------------------------------------------------------------------------------------
 
 item_imba_orchid = item_imba_orchid or class({})
-LinkLuaModifier( "modifier_item_imba_orchid", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_orchid_debuff", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
+LinkLuaModifier("modifier_item_imba_orchid", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_orchid_debuff", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE)   -- Active debuff
 
 function item_imba_orchid:GetAbilityTextureName()
 	return "imba_orchid"
 end
 
 function item_imba_orchid:GetIntrinsicModifierName()
-	return "modifier_item_imba_orchid" end
+	return "modifier_item_imba_orchid"
+end
 
 function item_imba_orchid:OnSpellStart()
 	local target = self:GetCursorTarget()
@@ -53,7 +54,7 @@ function item_imba_orchid:OnSpellStart()
 	target:EmitSound("DOTA_Item.Orchid.Activate")
 
 	-- Apply the Orchid debuff
-	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_orchid_debuff", {duration = self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance())})
+	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_orchid_debuff", { duration = self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance()) })
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -62,10 +63,13 @@ end
 
 modifier_item_imba_orchid = modifier_item_imba_orchid or class({})
 
-function modifier_item_imba_orchid:IsHidden()		return true end
-function modifier_item_imba_orchid:IsPurgable()		return false end
-function modifier_item_imba_orchid:RemoveOnDeath()	return false end
-function modifier_item_imba_orchid:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_orchid:IsHidden() return true end
+
+function modifier_item_imba_orchid:IsPurgable() return false end
+
+function modifier_item_imba_orchid:RemoveOnDeath() return false end
+
+function modifier_item_imba_orchid:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_orchid:OnDestroy()
 	self:CheckUnique(false)
@@ -73,8 +77,8 @@ end
 
 function modifier_item_imba_orchid:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
@@ -100,19 +104,23 @@ function modifier_item_imba_orchid:DeclareFunctions()
 end
 
 function modifier_item_imba_orchid:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect end
+	return self.bonus_intellect
+end
 
 function modifier_item_imba_orchid:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_attack_speed end
+	return self.bonus_attack_speed
+end
 
 function modifier_item_imba_orchid:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage end
+	return self.bonus_damage
+end
 
 function modifier_item_imba_orchid:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen end
+	return self.bonus_mana_regen
+end
 
 function modifier_item_imba_orchid:GetModifierSpellAmplify_Percentage()
-	return self:CheckUniqueValue(self.spell_power,{"modifier_item_imba_bloodthorn"})
+	return self:CheckUniqueValue(self.spell_power, { "modifier_item_imba_bloodthorn" })
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -121,7 +129,9 @@ end
 
 modifier_item_imba_orchid_debuff = modifier_item_imba_orchid_debuff or class({})
 function modifier_item_imba_orchid_debuff:IsHidden() return false end
+
 function modifier_item_imba_orchid_debuff:IsDebuff() return true end
+
 function modifier_item_imba_orchid_debuff:IsPurgable() return true end
 
 -- Modifier particle
@@ -136,8 +146,8 @@ end
 -- Reset damage storage tracking, track debuff parameters to prevent errors if the item is unequipped
 function modifier_item_imba_orchid_debuff:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if IsServer() then
 		local owner = self:GetParent()
@@ -176,7 +186,6 @@ end
 -- When the debuff ends, deal damage
 function modifier_item_imba_orchid_debuff:OnDestroy()
 	if IsServer() then
-
 		-- Parameters
 		local owner = self:GetParent()
 		local ability = self:GetAbility()
@@ -184,10 +193,9 @@ function modifier_item_imba_orchid_debuff:OnDestroy()
 
 		-- If damage was taken, play the effect and damage the owner
 		if owner.orchid_damage_storage > 0 then
-
 			-- Calculate and deal damage
-			local damage = owner.orchid_damage_storage * self.damage_factor * 0.01
-			ApplyDamage({attacker = caster, victim = owner, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			local damage = owner.orchid_damage_storage * self.damage_factor / 100
+			ApplyDamage({ attacker = caster, victim = owner, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 
 			-- Fire damage particle
 			local orchid_end_pfx = ParticleManager:CreateParticle("particles/items2_fx/orchid_pop.vpcf", PATTACH_OVERHEAD_FOLLOW, owner)
@@ -206,20 +214,20 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 item_imba_bloodthorn = item_imba_bloodthorn or class({})
-LinkLuaModifier( "modifier_item_imba_bloodthorn", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_bloodthorn_attacker_crit", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Active attackers' crit buff
-LinkLuaModifier( "modifier_item_imba_bloodthorn_debuff", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
+LinkLuaModifier("modifier_item_imba_bloodthorn", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE)                 -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_bloodthorn_attacker_crit", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE)   -- Active attackers' crit buff
+LinkLuaModifier("modifier_item_imba_bloodthorn_debuff", "components/items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE)          -- Active debuff
 
 function item_imba_bloodthorn:GetAbilityTextureName()
 	return "imba_bloodthorn"
 end
 
 function item_imba_bloodthorn:GetIntrinsicModifierName()
-	return "modifier_item_imba_bloodthorn" end
+	return "modifier_item_imba_bloodthorn"
+end
 
 function item_imba_bloodthorn:OnSpellStart()
 	if IsServer() then
-
 		-- Parameters
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
@@ -241,7 +249,7 @@ function item_imba_bloodthorn:OnSpellStart()
 		target:EmitSound("DOTA_Item.Orchid.Activate")
 
 		-- Apply the Orchid debuff
-		target:AddNewModifier(caster, self, "modifier_item_imba_bloodthorn_debuff", {duration = silence_duration * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, self, "modifier_item_imba_bloodthorn_debuff", { duration = silence_duration * (1 - target:GetStatusResistance()) })
 	end
 end
 
@@ -251,16 +259,19 @@ end
 
 modifier_item_imba_bloodthorn = modifier_item_imba_bloodthorn or class({})
 
-function modifier_item_imba_bloodthorn:IsHidden()		return true end
-function modifier_item_imba_bloodthorn:IsPurgable()		return false end
-function modifier_item_imba_bloodthorn:RemoveOnDeath()	return false end
-function modifier_item_imba_bloodthorn:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_bloodthorn:IsHidden() return true end
+
+function modifier_item_imba_bloodthorn:IsPurgable() return false end
+
+function modifier_item_imba_bloodthorn:RemoveOnDeath() return false end
+
+function modifier_item_imba_bloodthorn:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier when created
 function modifier_item_imba_bloodthorn:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
@@ -288,38 +299,43 @@ function modifier_item_imba_bloodthorn:DeclareFunctions()
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		
+
 		-- MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
 	}
 end
 
 function modifier_item_imba_bloodthorn:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect end
+	return self.bonus_intellect
+end
 
 function modifier_item_imba_bloodthorn:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_attack_speed end
+	return self.bonus_attack_speed
+end
 
 function modifier_item_imba_bloodthorn:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage end
+	return self.bonus_damage
+end
 
 function modifier_item_imba_bloodthorn:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen end
+	return self.bonus_mana_regen
+end
 
 function modifier_item_imba_bloodthorn:GetModifierSpellAmplify_Percentage()
-	return self:CheckUniqueValue(self.spell_power,nil) end
+	return self:CheckUniqueValue(self.spell_power, nil)
+end
 
 -- -- Roll for the crit chance
 -- function modifier_item_imba_bloodthorn:GetModifierPreAttack_CriticalStrike(keys)
-	-- if self:GetAbility() then
-		-- local owner = self:GetParent()
+-- if self:GetAbility() then
+-- local owner = self:GetParent()
 
-		-- -- If this unit is the attacker, roll for a crit
-		-- if owner == keys.attacker then
-			-- if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("crit_chance"), self) then
-				-- return self:GetAbility():GetSpecialValueFor("crit_damage")
-			-- end
-		-- end
-	-- end
+-- -- If this unit is the attacker, roll for a crit
+-- if owner == keys.attacker then
+-- if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("crit_chance"), self) then
+-- return self:GetAbility():GetSpecialValueFor("crit_damage")
+-- end
+-- end
+-- end
 -- end
 
 -----------------------------------------------------------------------------------------------------------
@@ -327,7 +343,9 @@ function modifier_item_imba_bloodthorn:GetModifierSpellAmplify_Percentage()
 -----------------------------------------------------------------------------------------------------------
 modifier_item_imba_bloodthorn_debuff = modifier_item_imba_bloodthorn_debuff or class({})
 function modifier_item_imba_bloodthorn_debuff:IsHidden() return false end
+
 function modifier_item_imba_bloodthorn_debuff:IsDebuff() return true end
+
 function modifier_item_imba_bloodthorn_debuff:IsPurgable() return true end
 
 -- Modifier particle
@@ -342,8 +360,8 @@ end
 -- Reset damage storage tracking, track debuff parameters to prevent errors if the item is unequipped
 function modifier_item_imba_bloodthorn_debuff:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if IsServer() then
 		local owner = self:GetParent()
@@ -358,7 +376,7 @@ end
 -- Declare modifier states
 function modifier_item_imba_bloodthorn_debuff:CheckState()
 	return {
-		[MODIFIER_STATE_SILENCED]		= true,
+		[MODIFIER_STATE_SILENCED]       = true,
 		[MODIFIER_STATE_EVADE_DISABLED] = true
 	}
 end
@@ -379,7 +397,7 @@ function modifier_item_imba_bloodthorn_debuff:OnAttackStart(keys)
 		-- If this unit is the target, grant the attacker a crit buff
 		if owner == keys.target then
 			local attacker = keys.attacker
-			attacker:AddNewModifier(owner, self:GetAbility(), "modifier_item_imba_bloodthorn_attacker_crit", {duration = 1.0, target_crit_multiplier = self.target_crit_multiplier})
+			attacker:AddNewModifier(owner, self:GetAbility(), "modifier_item_imba_bloodthorn_attacker_crit", { duration = 1.0, target_crit_multiplier = self.target_crit_multiplier })
 		end
 	end
 end
@@ -400,7 +418,6 @@ end
 -- When the debuff ends, deal damage
 function modifier_item_imba_bloodthorn_debuff:OnDestroy()
 	if IsServer() then
-
 		-- Parameters
 		local owner = self:GetParent()
 		local ability = self:GetAbility()
@@ -409,10 +426,9 @@ function modifier_item_imba_bloodthorn_debuff:OnDestroy()
 
 		-- If damage was taken, play the effect and damage the owner
 		if owner.orchid_damage_storage > 0 then
-
 			-- Calculate and deal damage
-			local damage = owner.orchid_damage_storage * damage_factor * 0.01
-			ApplyDamage({attacker = caster, victim = owner, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			local damage = owner.orchid_damage_storage * damage_factor / 100
+			ApplyDamage({ attacker = caster, victim = owner, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 
 			-- Fire damage particle
 			local orchid_end_pfx = ParticleManager:CreateParticle("particles/items2_fx/orchid_pop.vpcf", PATTACH_OVERHEAD_FOLLOW, owner)
@@ -431,15 +447,17 @@ end
 -----------------------------------------------------------------------------------------------------------
 modifier_item_imba_bloodthorn_attacker_crit = modifier_item_imba_bloodthorn_attacker_crit or class({})
 function modifier_item_imba_bloodthorn_attacker_crit:IsHidden() return true end
+
 function modifier_item_imba_bloodthorn_attacker_crit:IsDebuff() return false end
+
 function modifier_item_imba_bloodthorn_attacker_crit:IsPurgable() return false end
 
 -- Track parameters to prevent errors if the item is unequipped
 function modifier_item_imba_bloodthorn_attacker_crit:OnCreated(keys)
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	if IsServer() then
 		self.target_crit_multiplier = keys.target_crit_multiplier
 	end
@@ -463,14 +481,13 @@ end
 -- Remove the crit modifier when the attack is concluded
 function modifier_item_imba_bloodthorn_attacker_crit:OnAttackLanded(keys)
 	if IsServer() then
-
 		-- If this unit is the attacker, remove its crit modifier
 		if self:GetParent() == keys.attacker then
 			self:GetParent():RemoveModifierByName("modifier_item_imba_bloodthorn_attacker_crit")
 
 			-- Increase the crit damage count
 			local debuff_modifier = keys.target:FindModifierByName("modifier_item_imba_bloodthorn_debuff")
-			
+
 			if debuff_modifier then
 				debuff_modifier.target_crit_multiplier = debuff_modifier.target_crit_multiplier + self:GetAbility():GetSpecialValueFor("crit_mult_increase")
 			end

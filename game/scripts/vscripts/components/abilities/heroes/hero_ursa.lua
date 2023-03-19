@@ -24,16 +24,16 @@ end
 function imba_ursa_earthshock:OnSpellStart()
 	if not self:GetCaster():HasModifier("modifier_imba_earthshock_movement") then
 		self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_1)
-		
+
 		local direction_vector = self:GetCaster():GetForwardVector() * self:GetSpecialValueFor("hop_distance")
 
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_earthshock_movement", {
-			duration		= self:GetSpecialValueFor("hop_duration"),
-			distance		= self:GetSpecialValueFor("hop_distance"),
-			direction_x		= direction_vector.x,
-			direction_y 	= direction_vector.y,
-			diretion_z 		= direction_vector.z,
-			height			= self:GetSpecialValueFor("hop_height")
+			duration    = self:GetSpecialValueFor("hop_duration"),
+			distance    = self:GetSpecialValueFor("hop_distance"),
+			direction_x = direction_vector.x,
+			direction_y = direction_vector.y,
+			diretion_z  = direction_vector.z,
+			height      = self:GetSpecialValueFor("hop_height")
 		})
 	end
 end
@@ -85,7 +85,7 @@ function imba_ursa_earthshock:ApplyEarthShock()
 		-- Add appropriate particles
 		local earthshock_particle_fx = ParticleManager:CreateParticle(earthshock_particle, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(earthshock_particle_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(earthshock_particle_fx, 1, Vector(1,1,1))
+		ParticleManager:SetParticleControl(earthshock_particle_fx, 1, Vector(1, 1, 1))
 		ParticleManager:ReleaseParticleIndex(earthshock_particle_fx)
 
 		-- Find all enemies in Aoe
@@ -100,8 +100,7 @@ function imba_ursa_earthshock:ApplyEarthShock()
 			false)
 
 		-- Calculate distance from edge of Earthshock's radius.
-		for _,enemy in pairs(enemies) do
-
+		for _, enemy in pairs(enemies) do
 			if not enemy:IsMagicImmune() then
 				local distance = (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
 				local edge_distance = radius - distance
@@ -110,37 +109,36 @@ function imba_ursa_earthshock:ApplyEarthShock()
 
 				-- If enemy is closer than 190 units, set bonuses, otherwise calculate damage scaling with distance.
 				if distance <= bonus_effects_radius then
-					damage = base_damage * (1 + (bonus_damage_pct * 0.01))
+					damage = base_damage * (1 + (bonus_damage_pct / 100))
 					earthshock_debuff_slow_pct = slow_pct + bonus_slow_pct
 				else
-					local scale_increase_for_distance =  math.floor(edge_distance / values_increase_distance) --how much it should scale
-					local pct_increase_for_distance =  values_increase_pct * scale_increase_for_distance -- how many percents the scale should go up
-					damage = base_damage * (1 + pct_increase_for_distance) -- final damage
-					earthshock_debuff_slow_pct = slow_pct * (1+ pct_increase_for_distance) -- final slow value
+					local scale_increase_for_distance = math.floor(edge_distance / values_increase_distance) --how much it should scale
+					local pct_increase_for_distance = values_increase_pct * scale_increase_for_distance -- how many percents the scale should go up
+					damage = base_damage * (1 + pct_increase_for_distance)                     -- final damage
+					earthshock_debuff_slow_pct = slow_pct * (1 + pct_increase_for_distance)    -- final slow value
 				end
 
 				-- Apply damage
-				local damageTable = {victim = enemy,
+				local damageTable = {
+					victim = enemy,
 					attacker = caster,
 					damage = damage,
 					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = ability}
+					ability = ability
+				}
 
 				ApplyDamage(damageTable)
 
 				-- Apply debuff to non-magic immune enemies
-				enemy:AddNewModifier(caster, ability, earthshock_debuff, {duration = duration * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(caster, ability, earthshock_debuff, { duration = duration * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 
 		-- Apply trembling steps buff to Ursa AND trembling_steps prevent buff (to stop him from immediately casting trembling steps
-		caster:AddNewModifier(caster, ability, trembling_steps_buff, {duration = trembling_steps_duration})
-		caster:AddNewModifier(caster, ability, trembling_steps_prevent, {duration = trembling_steps_cooldown})
+		caster:AddNewModifier(caster, ability, trembling_steps_buff, { duration = trembling_steps_duration })
+		caster:AddNewModifier(caster, ability, trembling_steps_prevent, { duration = trembling_steps_cooldown })
 	end
 end
-
-
-
 
 -- Earthshock slow debuff
 modifier_imba_earthshock_slow = class({})
@@ -166,55 +164,55 @@ function modifier_imba_earthshock_slow:OnCreated()
 	if self.distance <= self.bonus_effects_radius then
 		self.earthshock_debuff_slow_pct = self.slow_pct + self.bonus_slow_pct
 	else
-		self.scale_increase_for_distance =  math.floor(self.edge_distance / self.values_increase_distance) --how much it should scale
-		self.pct_increase_for_distance =  self.values_increase_pct * self.scale_increase_for_distance -- how many percents the scale should go up
-		self.earthshock_debuff_slow_pct = self.slow_pct * (1 + self.pct_increase_for_distance) -- final slow value
+		self.scale_increase_for_distance = math.floor(self.edge_distance / self.values_increase_distance) --how much it should scale
+		self.pct_increase_for_distance = self.values_increase_pct * self.scale_increase_for_distance -- how many percents the scale should go up
+		self.earthshock_debuff_slow_pct = self.slow_pct * (1 + self.pct_increase_for_distance)       -- final slow value
 	end
 end
-
 
 ----------------------------------
 -- EARTHSHOCK MOVEMENT MODIFIER --
 ----------------------------------
 
-modifier_imba_earthshock_movement	= modifier_imba_earthshock_movement or class({})
+modifier_imba_earthshock_movement = modifier_imba_earthshock_movement or class({})
 
 -- Gonna copy-paste my generic motion controller code here cause there's too many changes that need to be made (and I can't copy the class itself for some reason)
 
-function modifier_imba_earthshock_movement:IsHidden()		return true end
-function modifier_imba_earthshock_movement:IsPurgable()		return false end
+function modifier_imba_earthshock_movement:IsHidden() return true end
+
+function modifier_imba_earthshock_movement:IsPurgable() return false end
 
 function modifier_imba_earthshock_movement:OnCreated(params)
 	if not IsServer() then return end
-	
-	self.distance			= params.distance
-	self.direction			= Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
-	self.duration			= params.duration
-	self.height				= params.height
 
-	self.velocity		= self.direction * self.distance / self.duration
-	
-	self.vertical_velocity		= 4 * self.height / self.duration
-	self.vertical_acceleration	= -(8 * self.height) / (self.duration * self.duration)
-	
+	self.distance              = params.distance
+	self.direction             = Vector(params.direction_x, params.direction_y, params.direction_z):Normalized()
+	self.duration              = params.duration
+	self.height                = params.height
+
+	self.velocity              = self.direction * self.distance / self.duration
+
+	self.vertical_velocity     = 4 * self.height / self.duration
+	self.vertical_acceleration = -(8 * self.height) / (self.duration * self.duration)
+
 	-- Do NOT continue with motion controllers if rooted; trying to be finnicky with this will cause crashes
 	if self:GetParent():IsRooted() then return end
-	
-	if self:ApplyVerticalMotionController() == false then 
+
+	if self:ApplyVerticalMotionController() == false then
 		self:Destroy()
 	end
-	
-	if self:ApplyHorizontalMotionController() == false then 
+
+	if self:ApplyHorizontalMotionController() == false then
 		self:Destroy()
 	end
 end
 
 function modifier_imba_earthshock_movement:OnDestroy()
 	if not IsServer() then return end
-	
+
 	self:GetParent():RemoveHorizontalMotionController(self)
 	self:GetParent():RemoveVerticalMotionController(self)
-	
+
 	if self:GetAbility() and self:GetAbility().ApplyEarthShock and self:GetRemainingTime() <= 0 then
 		self:GetAbility():ApplyEarthShock()
 	end
@@ -222,7 +220,7 @@ end
 
 function modifier_imba_earthshock_movement:UpdateHorizontalMotion(me, dt)
 	if not IsServer() then return end
-	
+
 	me:SetAbsOrigin(me:GetAbsOrigin() + self.velocity * dt)
 end
 
@@ -233,7 +231,7 @@ end
 
 function modifier_imba_earthshock_movement:UpdateVerticalMotion(me, dt)
 	if not IsServer() then return end
-	
+
 	me:SetAbsOrigin(me:GetAbsOrigin() + Vector(0, 0, self.vertical_velocity) * dt)
 
 	self.vertical_velocity = self.vertical_velocity + (self.vertical_acceleration * dt)
@@ -243,8 +241,6 @@ end
 function modifier_imba_earthshock_movement:OnVerticalMotionInterrupted()
 	self:Destroy()
 end
-
-
 
 function modifier_imba_earthshock_slow:GetEffectName()
 	return "particles/units/heroes/hero_ursa/ursa_earthshock_modifier.vpcf"
@@ -267,7 +263,7 @@ function modifier_imba_earthshock_slow:IsPurgable()
 end
 
 function modifier_imba_earthshock_slow:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 
 	return decFuncs
 end
@@ -276,7 +272,6 @@ function modifier_imba_earthshock_slow:GetModifierMoveSpeedBonus_Percentage()
 	local enemy = self:GetParent()
 	return self.earthshock_debuff_slow_pct * (-1)
 end
-
 
 -- Trembling Steps buff
 modifier_imba_trembling_steps_buff = class({})
@@ -325,20 +320,18 @@ function modifier_imba_trembling_steps_buff:OnCreated()
 end
 
 function modifier_imba_trembling_steps_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_UNIT_MOVED}
+	local decFuncs = { MODIFIER_EVENT_ON_UNIT_MOVED }
 
 	return decFuncs
 end
 
-
 function modifier_imba_trembling_steps_buff:OnUnitMoved()
 	if IsServer() then
-
 		-- Mark last position to find real movements
 		if self.caster.last_position == nil then
 			self.caster.last_position = self.caster:GetAbsOrigin()
 		else
-			if self.caster:GetAbsOrigin() - self.caster.last_position == Vector(0,0,0) then
+			if self.caster:GetAbsOrigin() - self.caster.last_position == Vector(0, 0, 0) then
 				return nil
 			else
 				self.caster.last_position = self.caster:GetAbsOrigin()
@@ -351,7 +344,7 @@ function modifier_imba_trembling_steps_buff:OnUnitMoved()
 		end
 
 		-- Apply prevent modifier
-		self.caster:AddNewModifier(self.caster, self.ability, self.trembling_steps_prevent, {duration = self.trembling_steps_cooldown})
+		self.caster:AddNewModifier(self.caster, self.ability, self.trembling_steps_prevent, { duration = self.trembling_steps_cooldown })
 
 		-- Play cast sound
 		EmitSoundOn(self.sound_step, self.caster)
@@ -359,7 +352,7 @@ function modifier_imba_trembling_steps_buff:OnUnitMoved()
 		-- Add particles
 		local particle_step_fx = ParticleManager:CreateParticle(self.particle_step, PATTACH_ABSORIGIN, self.caster)
 		ParticleManager:SetParticleControl(particle_step_fx, 0, self.caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_step_fx, 1, Vector(1,1,1))
+		ParticleManager:SetParticleControl(particle_step_fx, 1, Vector(1, 1, 1))
 		ParticleManager:ReleaseParticleIndex(particle_step_fx)
 
 		-- Find all units in AoE
@@ -374,20 +367,22 @@ function modifier_imba_trembling_steps_buff:OnUnitMoved()
 			false)
 
 
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			-- Damage units
 			if not enemy:IsMagicImmune() then
-				local damageTable = {victim = enemy,
+				local damageTable = {
+					victim = enemy,
 					attacker = self.caster,
 					damage = self.trembling_steps_damage,
 					damage_type = DAMAGE_TYPE_PHYSICAL,
-					ability = self.ability}
+					ability = self.ability
+				}
 
 				ApplyDamage(damageTable)
 			end
 
 			-- Apply trembling steps debuff to units
-			enemy:AddNewModifier(self.caster, self.ability, self.trembling_steps_debuff, {duration = self.trembling_steps_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(self.caster, self.ability, self.trembling_steps_debuff, { duration = self.trembling_steps_duration * (1 - enemy:GetStatusResistance()) })
 		end
 	end
 end
@@ -403,7 +398,6 @@ end
 function modifier_imba_trembling_steps_buff:IsPurgable()
 	return false
 end
-
 
 -- Trembling Steps prevention modifier
 modifier_imba_trembling_steps_prevent = class({})
@@ -444,7 +438,7 @@ function modifier_imba_trembling_steps_debuff:IsPurgable()
 end
 
 function modifier_imba_trembling_steps_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 
 	return decFuncs
 end
@@ -455,10 +449,6 @@ function modifier_imba_trembling_steps_debuff:GetModifierMoveSpeedBonus_Percenta
 
 	return trembling_steps_slow_pct * (-1)
 end
-
-
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -509,7 +499,7 @@ function imba_ursa_overpower:OnSpellStart()
 		-- Ability properties
 		local caster = self:GetCaster()
 		local ability = self
-		local aspd_buff =  "modifier_imba_overpower_buff"
+		local aspd_buff = "modifier_imba_overpower_buff"
 		local sound_cast = "Hero_Ursa.Overpower"
 
 		-- Ability specials
@@ -528,7 +518,7 @@ function imba_ursa_overpower:OnSpellStart()
 		end
 
 		-- Apply attack speed buff to caster, add stacks
-		caster:AddNewModifier(caster, ability, aspd_buff, {duration = aspd_duration})
+		caster:AddNewModifier(caster, ability, aspd_buff, { duration = aspd_duration })
 		caster:SetModifierStackCount(aspd_buff, caster, attacks_num)
 
 		-- Disarm enemies!
@@ -578,14 +568,13 @@ function imba_ursa_overpower:DisarmEnemies(caster, ability)
 			false)
 
 		-- Apply Disarm for the duration
-		for _,enemy in pairs(enemies) do
+		for _, enemy in pairs(enemies) do
 			if not enemy:IsMagicImmune() then
-				enemy:AddNewModifier(caster, ability, disarm_debuff, {duration = disarm_duration * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(caster, ability, disarm_debuff, { duration = disarm_duration * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 	end
 end
-
 
 -- Overpower attack speed buff
 modifier_imba_overpower_buff = class({})
@@ -637,8 +626,8 @@ function modifier_imba_overpower_buff:StatusEffectPriority()
 end
 
 function modifier_imba_overpower_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_EVENT_ON_ATTACK}
+	local decFuncs = { MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK }
 	return decFuncs
 end
 
@@ -649,7 +638,7 @@ function modifier_imba_overpower_buff:GetModifierAttackSpeedBonus_Constant()
 	return attack_speed_bonus
 end
 
-function modifier_imba_overpower_buff:OnAttack( keys )
+function modifier_imba_overpower_buff:OnAttack(keys)
 	local caster = self:GetCaster()
 
 	-- If Ursa has #8 Talent, he doesn't consume stacks
@@ -695,15 +684,16 @@ function modifier_imba_overpower_disarm:CheckState()
 	-- #6 Talent: Overpower also roots targets in addition to disarming them.
 	local state
 	if self:GetCaster():HasTalent("special_bonus_imba_ursa_6") then
-		state = {[MODIFIER_STATE_DISARMED] = true,
-			[MODIFIER_STATE_ROOTED] = true}
+		state = {
+			[MODIFIER_STATE_DISARMED] = true,
+			[MODIFIER_STATE_ROOTED] = true
+		}
 	else
-		state = {[MODIFIER_STATE_DISARMED] = true}
+		state = { [MODIFIER_STATE_DISARMED] = true }
 	end
 
 	return state
 end
-
 
 -- #8 Talent: Overpower becomes a passive, allowing Ursa to proc Overpower as he attacks
 
@@ -712,6 +702,7 @@ LinkLuaModifier("modifier_special_bonus_imba_ursa_8", "components/abilities/hero
 modifier_special_bonus_imba_ursa_8 = modifier_special_bonus_imba_ursa_8 or class({})
 
 function modifier_special_bonus_imba_ursa_8:IsHidden() return true end
+
 function modifier_special_bonus_imba_ursa_8:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_ursa_8:OnCreated()
@@ -724,12 +715,14 @@ function modifier_special_bonus_imba_ursa_8:OnCreated()
 	end
 end
 
-
 modifier_imba_overpower_talent_fangs = modifier_imba_overpower_talent_fangs or class({})
 
 function modifier_imba_overpower_talent_fangs:IsHidden() return false end
+
 function modifier_imba_overpower_talent_fangs:IsPurgable() return false end
+
 function modifier_imba_overpower_talent_fangs:IsDebuff() return false end
+
 function modifier_imba_overpower_talent_fangs:RemoveOnDeath() return false end
 
 function modifier_imba_overpower_talent_fangs:OnCreated()
@@ -746,7 +739,7 @@ function modifier_imba_overpower_talent_fangs:OnCreated()
 end
 
 function modifier_imba_overpower_talent_fangs:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_START}
+	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_START }
 
 	return decFuncs
 end
@@ -757,7 +750,6 @@ function modifier_imba_overpower_talent_fangs:OnAttackStart(keys)
 
 		-- Only apply when Ursa is the one attacking
 		if attacker == self.caster then
-
 			-- If the ability is on cooldown, do nothing
 			if not self.ability:IsCooldownReady() then
 				return nil
@@ -769,7 +761,7 @@ function modifier_imba_overpower_talent_fangs:OnAttackStart(keys)
 			end
 
 			-- Apply Overpower to Ursa for the duration
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_overpower, {duration = self.duration})
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_overpower, { duration = self.duration })
 
 			-- Play sound
 			EmitSoundOn(self.sound_cast, self.caster)
@@ -782,7 +774,6 @@ function modifier_imba_overpower_talent_fangs:OnAttackStart(keys)
 		end
 	end
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -804,7 +795,6 @@ end
 function imba_ursa_fury_swipes:GetIntrinsicModifierName()
 	return "modifier_imba_fury_swipes"
 end
-
 
 -- Fury swipes debuff
 modifier_imba_fury_swipes_debuff = class({})
@@ -862,7 +852,7 @@ function modifier_imba_fury_swipes:DeclareFunctions()
 	}
 end
 
-function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( keys )
+function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical(keys)
 	-- Ability properties
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -898,16 +888,16 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 			if target:IsRoshan() then
 				stack_duration = roshan_stack_duration
 			end
-			
+
 			-- "Does not work against buildings, wards and allied units when attacking them."
 			-- If the target is a building, do nothing
 			if target:IsBuilding() or target:IsOther() or target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 				return nil
 			end
-			
+
 			-- Add debuff/increment stacks if already exists
-			local fury_swipes_debuff_handler = target:AddNewModifier(caster, ability, fury_swipes_debuff, {duration = stack_duration * (1 - target:GetStatusResistance())})
-			
+			local fury_swipes_debuff_handler = target:AddNewModifier(caster, ability, fury_swipes_debuff, { duration = stack_duration * (1 - target:GetStatusResistance()) })
+
 			if fury_swipes_debuff_handler then
 				fury_swipes_debuff_handler:IncrementStackCount()
 			end
@@ -928,12 +918,12 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 
 			-- -- Check for Enrage's multiplier
 			-- if caster:HasModifier(enrage_buff) then
-				-- damage = damage * enrage_swipes_multiplier
+			-- damage = damage * enrage_swipes_multiplier
 			-- end
 
 			-- Check for Deep Strike modifier, modify damage, apply particle and play sound if present
 			if fury_swipes_stacks % deep_stack_attacks == 0 then --divides with no remainder
-				damage = damage * (deep_stack_multiplier * 0.01)
+				damage = damage * (deep_stack_multiplier / 100)
 
 				-- #5 Talent: If the target has more than the threshold, Devastating Blow deals a bonus of the target's maximum health.
 				if caster:HasTalent("special_bonus_imba_ursa_5") then
@@ -948,7 +938,7 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 						local maximum_health = target:GetMaxHealth()
 
 						-- Add damage according to maximum health
-						damage = damage + maximum_health * maximum_health_dmg * 0.01
+						damage = damage + maximum_health * maximum_health_dmg / 100
 					end
 				end
 
@@ -967,7 +957,7 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( k
 
 					-- If the target doesn't have the armor debuff yet, add it to it
 					if not target:HasModifier("modifier_imba_fury_swipes_talent_ripper") then
-						target:AddNewModifier(caster, ability, "modifier_imba_fury_swipes_talent_ripper", {duration = talent_duration * (1 - target:GetStatusResistance())})
+						target:AddNewModifier(caster, ability, "modifier_imba_fury_swipes_talent_ripper", { duration = talent_duration * (1 - target:GetStatusResistance()) })
 					end
 
 					-- Find handle, increase stacks
@@ -988,11 +978,13 @@ end
 modifier_imba_fury_swipes_talent_ripper = modifier_imba_fury_swipes_talent_ripper or class({})
 
 function modifier_imba_fury_swipes_talent_ripper:IsHidden() return false end
+
 function modifier_imba_fury_swipes_talent_ripper:IsPurgable() return true end
+
 function modifier_imba_fury_swipes_talent_ripper:IsDebuff() return true end
 
 function modifier_imba_fury_swipes_talent_ripper:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+	local decFuncs = { MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS }
 
 	return decFuncs
 end
@@ -1000,7 +992,6 @@ end
 function modifier_imba_fury_swipes_talent_ripper:GetModifierPhysicalArmorBonus()
 	return self:GetStackCount() * (-1)
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1068,14 +1059,13 @@ function imba_ursa_enrage:OnSpellStart()
 	EmitSoundOn(sound_cast, caster)
 
 	-- Apply enrage buff
-	caster:AddNewModifier(caster, ability, enrage_buff, {duration = duration})
+	caster:AddNewModifier(caster, ability, enrage_buff, { duration = duration })
 
 	-- #7 Talent: Enrage adds a portion of your current health as damage
 	if caster:HasTalent("special_bonus_imba_ursa_7") then
-		caster:AddNewModifier(caster, ability, enrage_talent_buff, {duration = duration})
+		caster:AddNewModifier(caster, ability, enrage_talent_buff, { duration = duration })
 	end
 end
-
 
 -- Enrage active buff
 modifier_imba_enrage_buff = class({})
@@ -1110,7 +1100,7 @@ function modifier_imba_enrage_buff:OnCreated()
 	local reduce_cd_interval = ability:GetSpecialValueFor("reduce_cd_interval")
 
 	if IsServer() then
-		caster:SetRenderColor(255,0,0)
+		caster:SetRenderColor(255, 0, 0)
 	end
 
 	self:StartIntervalThink(reduce_cd_interval)
@@ -1120,7 +1110,7 @@ function modifier_imba_enrage_buff:OnDestroy()
 	local caster = self:GetCaster()
 
 	if IsServer() then
-		caster:SetRenderColor(255,255,255)
+		caster:SetRenderColor(255, 255, 255)
 	end
 end
 
@@ -1181,7 +1171,9 @@ end
 modifier_imba_enrage_talent_buff = modifier_imba_enrage_talent_buff or class({})
 
 function modifier_imba_enrage_talent_buff:IsHidden() return true end
+
 function modifier_imba_enrage_talent_buff:IsPurgable() return false end
+
 function modifier_imba_enrage_talent_buff:IsDebuff() return false end
 
 function modifier_imba_enrage_talent_buff:OnCreated()
@@ -1204,7 +1196,7 @@ function modifier_imba_enrage_talent_buff:OnIntervalThink()
 		local current_health = self.caster:GetHealth()
 
 		-- Calculate damage according to current health
-		local damage_bonus = self.health_to_damage_pct * current_health * 0.01
+		local damage_bonus = self.health_to_damage_pct * current_health / 100
 
 		-- Set as stacks on this modifier
 		self:SetStackCount(damage_bonus)
@@ -1212,7 +1204,7 @@ function modifier_imba_enrage_talent_buff:OnIntervalThink()
 end
 
 function modifier_imba_enrage_talent_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+	local decFuncs = { MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE }
 
 	return decFuncs
 end
@@ -1221,7 +1213,6 @@ function modifier_imba_enrage_talent_buff:GetModifierPreAttack_BonusDamage(keys)
 	return self:GetStackCount()
 end
 
-
 -- #1 Talent: When taking the talent, get the modifier
 
 LinkLuaModifier("modifier_special_bonus_imba_ursa_1", "components/abilities/heroes/hero_ursa.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1229,6 +1220,7 @@ LinkLuaModifier("modifier_special_bonus_imba_ursa_1", "components/abilities/hero
 modifier_special_bonus_imba_ursa_1 = modifier_special_bonus_imba_ursa_1 or class({})
 
 function modifier_special_bonus_imba_ursa_1:IsHidden() return true end
+
 function modifier_special_bonus_imba_ursa_1:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_ursa_1:OnCreated()
@@ -1268,7 +1260,7 @@ function modifier_imba_talent_enrage_damage:OnIntervalThink()
 end
 
 function modifier_imba_talent_enrage_damage:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
+	local decFuncs = { MODIFIER_EVENT_ON_TAKEDAMAGE }
 	return decFuncs
 end
 
@@ -1298,7 +1290,7 @@ function modifier_imba_talent_enrage_damage:IsDebuff()
 	return false
 end
 
-function modifier_imba_talent_enrage_damage:OnTakeDamage( keys )
+function modifier_imba_talent_enrage_damage:OnTakeDamage(keys)
 	if IsServer() then
 		local target = keys.unit
 		local damage_taken = keys.damage
@@ -1342,7 +1334,7 @@ function modifier_imba_talent_enrage_damage:OnTakeDamage( keys )
 				-- Tick the timer
 				self:StartIntervalThink(0.25)
 			else
-				self.caster:AddNewModifier(self.caster, self.ability, self.prevent_modifier, {duration = self.enrage_cooldown})
+				self.caster:AddNewModifier(self.caster, self.ability, self.prevent_modifier, { duration = self.enrage_cooldown })
 				self.ability:OnSpellStart()
 
 				-- Reset stack count
@@ -1355,7 +1347,6 @@ function modifier_imba_talent_enrage_damage:OnTakeDamage( keys )
 	end
 end
 
-
 modifier_imba_talent_enrage_prevent = class({})
 
 function modifier_imba_talent_enrage_prevent:IsHidden()
@@ -1365,11 +1356,6 @@ end
 function modifier_imba_talent_enrage_prevent:IsPurgable()
 	return false
 end
-
-
-
-
-
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1403,7 +1389,7 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 		if ability.territorial_aura_modifier.ForceKill then
 			ability.territorial_aura_modifier:ForceKill(false)
 		end
-		
+
 		if ability.territorial_aura_modifier.RemoveSelf then
 			ability.territorial_aura_modifier:RemoveSelf()
 		end
@@ -1474,7 +1460,7 @@ end
 
 -- Only apply to enemies and Ursa if applicable
 -- -- #3 Talent: Territorial Hunter grants Tenacity to Ursa in its AoE, and has its cooldown refreshed if Ursa kills an enemy hero in it
-function modifier_terrorital_hunter_aura:GetAuraEntityReject(hTarget)	return hTarget:GetTeamNumber() == self:GetParent():GetTeamNumber() and not hTarget:HasTalent("special_bonus_imba_ursa_3") end
+function modifier_terrorital_hunter_aura:GetAuraEntityReject(hTarget) return hTarget:GetTeamNumber() == self:GetParent():GetTeamNumber() and not hTarget:HasTalent("special_bonus_imba_ursa_3") end
 
 function modifier_terrorital_hunter_aura:GetEffectName()
 	return "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
@@ -1485,11 +1471,11 @@ function modifier_terrorital_hunter_aura:GetEffectAttachType()
 end
 
 function modifier_terrorital_hunter_aura:CheckState()
-	return {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
+	return { [MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true }
 end
 
 function modifier_terrorital_hunter_aura:DeclareFunctions()
-	return {MODIFIER_PROPERTY_VISUAL_Z_DELTA}
+	return { MODIFIER_PROPERTY_VISUAL_Z_DELTA }
 end
 
 function modifier_terrorital_hunter_aura:GetVisualZDelta()
@@ -1520,7 +1506,7 @@ function modifier_terrorital_hunter_fogvision:OnCreated()
 		if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			self:StartIntervalThink(FrameTime())
 		else
-			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_terrorital_hunter_talent_tenacity" , {})
+			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_terrorital_hunter_talent_tenacity", {})
 		end
 	end
 end
@@ -1550,17 +1536,17 @@ end
 
 -- -- Invis particle handling
 -- function modifier_terrorital_hunter_fogvision:OnStateChanged()
-	-- if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
-		-- if self:GetParent():IsInvisible() and not self.applied_particle then
-			-- self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-			-- ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
-			-- self.applied_particle = true
-		-- elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
-			-- ParticleManager:DestroyParticle(self.invis_particle_fx, false)
-			-- ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
-			-- self.applied_particle = false
-		-- end
-	-- end
+-- if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+-- if self:GetParent():IsInvisible() and not self.applied_particle then
+-- self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+-- ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+-- self.applied_particle = true
+-- elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
+-- ParticleManager:DestroyParticle(self.invis_particle_fx, false)
+-- ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
+-- self.applied_particle = false
+-- end
+-- end
 -- end
 
 function modifier_terrorital_hunter_fogvision:OnHeroKilled(keys)
@@ -1570,7 +1556,6 @@ function modifier_terrorital_hunter_fogvision:OnHeroKilled(keys)
 
 		-- Only apply if the attacker is Ursa and it killed the parent of this modifier
 		if attacker == self:GetCaster() and target == self:GetParent() and self:GetCaster():HasTalent("special_bonus_imba_ursa_3") then
-
 			-- Refresh the Territorial Hunter ability's cooldown
 			self:GetAbility():EndCooldown()
 		end
@@ -1581,7 +1566,9 @@ end
 modifier_terrorital_hunter_talent_tenacity = modifier_terrorital_hunter_talent_tenacity or class({})
 
 function modifier_terrorital_hunter_talent_tenacity:IsHidden() return false end
+
 function modifier_terrorital_hunter_talent_tenacity:IsPurgable() return false end
+
 function modifier_terrorital_hunter_talent_tenacity:IsDebuff() return false end
 
 function modifier_terrorital_hunter_talent_tenacity:DeclareFunctions()
@@ -1608,39 +1595,51 @@ LinkLuaModifier("modifier_special_bonus_imba_ursa_5", "components/abilities/hero
 LinkLuaModifier("modifier_special_bonus_imba_ursa_6", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ursa_7", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_ursa_2	= modifier_special_bonus_imba_ursa_2 or class({})
-modifier_special_bonus_imba_ursa_4	= modifier_special_bonus_imba_ursa_4 or class({})
-modifier_special_bonus_imba_ursa_5	= modifier_special_bonus_imba_ursa_5 or class({})
-modifier_special_bonus_imba_ursa_6	= modifier_special_bonus_imba_ursa_6 or class({})
-modifier_special_bonus_imba_ursa_7	= modifier_special_bonus_imba_ursa_7 or class({})
+modifier_special_bonus_imba_ursa_2 = modifier_special_bonus_imba_ursa_2 or class({})
+modifier_special_bonus_imba_ursa_4 = modifier_special_bonus_imba_ursa_4 or class({})
+modifier_special_bonus_imba_ursa_5 = modifier_special_bonus_imba_ursa_5 or class({})
+modifier_special_bonus_imba_ursa_6 = modifier_special_bonus_imba_ursa_6 or class({})
+modifier_special_bonus_imba_ursa_7 = modifier_special_bonus_imba_ursa_7 or class({})
 
-function modifier_special_bonus_imba_ursa_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_ursa_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_ursa_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_ursa_2:IsHidden() return true end
 
-function modifier_special_bonus_imba_ursa_4:IsHidden() 		return true end
-function modifier_special_bonus_imba_ursa_4:IsPurgable()		return false end
-function modifier_special_bonus_imba_ursa_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_ursa_2:IsPurgable() return false end
 
-function modifier_special_bonus_imba_ursa_5:IsHidden() 		return true end
-function modifier_special_bonus_imba_ursa_5:IsPurgable()		return false end
-function modifier_special_bonus_imba_ursa_5:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_ursa_2:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_ursa_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_ursa_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_ursa_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_ursa_4:IsHidden() return true end
 
-function modifier_special_bonus_imba_ursa_7:IsHidden() 		return true end
-function modifier_special_bonus_imba_ursa_7:IsPurgable()		return false end
-function modifier_special_bonus_imba_ursa_7:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_ursa_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_ursa_4:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_ursa_5:IsHidden() return true end
+
+function modifier_special_bonus_imba_ursa_5:IsPurgable() return false end
+
+function modifier_special_bonus_imba_ursa_5:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_ursa_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_ursa_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_ursa_6:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_ursa_7:IsHidden() return true end
+
+function modifier_special_bonus_imba_ursa_7:IsPurgable() return false end
+
+function modifier_special_bonus_imba_ursa_7:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_ursa_3", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_ursa_3	= class({})
+modifier_special_bonus_imba_ursa_3 = class({})
 
-function modifier_special_bonus_imba_ursa_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_ursa_3:IsPurgable() 	return false end
-function modifier_special_bonus_imba_ursa_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_ursa_3:IsHidden() return true end
+
+function modifier_special_bonus_imba_ursa_3:IsPurgable() return false end
+
+function modifier_special_bonus_imba_ursa_3:RemoveOnDeath() return false end
 
 function imba_ursa_territorial_hunter:OnOwnerSpawned()
 	if not IsServer() then return end

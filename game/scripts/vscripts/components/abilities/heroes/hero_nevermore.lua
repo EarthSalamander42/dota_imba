@@ -4,7 +4,6 @@
 -- utils
 -- Returns true if a hero has red hair
 local function IsGinger(unit)
-
 	local ginger_hero_names = {
 		"npc_dota_hero_enchantress",
 		"npc_dota_hero_lina",
@@ -12,12 +11,12 @@ local function IsGinger(unit)
 	}
 
 	local unit_name = unit:GetName()
-	for _,name in pairs(ginger_hero_names) do
+	for _, name in pairs(ginger_hero_names) do
 		if name == unit_name then
 			return true
 		end
 	end
-	
+
 	return false
 end
 
@@ -31,7 +30,7 @@ LinkLuaModifier("modifier_imba_shadow_raze_pool", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_shadowraze_debuff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_shadowraze_close:GetAbilityTextureName()
-   return "nevermore_shadowraze1"
+	return "nevermore_shadowraze1"
 end
 
 function imba_nevermore_shadowraze_close:IsHiddenWhenStolen()
@@ -66,7 +65,6 @@ function imba_nevermore_shadowraze_close:GetCooldown(level)
 	return cooldown
 end
 
-
 function imba_nevermore_shadowraze_close:OnUpgrade()
 	local caster = self:GetCaster()
 	UpgradeShadowRazes(caster, self)
@@ -86,7 +84,7 @@ function imba_nevermore_shadowraze_close:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local cast_response = {"nevermore_nev_ability_shadow_07", "nevermore_nev_ability_shadow_18", "nevermore_nev_ability_shadow_21"}
+	local cast_response = { "nevermore_nev_ability_shadow_07", "nevermore_nev_ability_shadow_18", "nevermore_nev_ability_shadow_21" }
 	local sound_raze = "Hero_Nevermore.Shadowraze"
 	local modifier_harvest = "modifier_imba_reqiuem_harvest"
 
@@ -109,9 +107,7 @@ function imba_nevermore_shadowraze_close:OnSpellStart()
 	if caster:HasModifier(modifier_harvest) and not raze_hit_hero then
 		caster:RemoveModifierByName(modifier_harvest)
 	end
-
 end
-
 
 ------------------------------------
 --     SHADOW RAZE (MEDIUM)       --
@@ -119,7 +115,7 @@ end
 imba_nevermore_shadowraze_medium = imba_nevermore_shadowraze_medium or class({})
 
 function imba_nevermore_shadowraze_medium:GetAbilityTextureName()
-   return "nevermore_shadowraze2"
+	return "nevermore_shadowraze2"
 end
 
 function imba_nevermore_shadowraze_medium:IsHiddenWhenStolen()
@@ -131,7 +127,7 @@ function imba_nevermore_shadowraze_medium:GetManaCost(level)
 	local manacost = self.BaseClass.GetManaCost(self, level)
 
 	-- Talent: Shadowraze mana cost reduction (REMOVED)
-   -- manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
+	-- manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
 
 	return manacost
 end
@@ -149,7 +145,7 @@ function imba_nevermore_shadowraze_medium:GetCooldown(level)
 	local cooldown = self.BaseClass.GetCooldown(self, level)
 
 	-- Talent: Shadowraze cooldown reduction (REMOVED)
-  --  cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
+	--  cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
 
 	return cooldown
 end
@@ -173,7 +169,7 @@ function imba_nevermore_shadowraze_medium:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local cast_response = {"nevermore_nev_ability_shadow_08", "nevermore_nev_ability_shadow_20", "nevermore_nev_ability_shadow_22"}
+	local cast_response = { "nevermore_nev_ability_shadow_08", "nevermore_nev_ability_shadow_20", "nevermore_nev_ability_shadow_22" }
 	local sound_raze = "Hero_Nevermore.Shadowraze"
 	local modifier_combo = "modifier_shadow_raze_combo"
 	local modifier_harvest = "modifier_imba_reqiuem_harvest"
@@ -233,7 +229,7 @@ end
 imba_nevermore_shadowraze_far = imba_nevermore_shadowraze_far or class({})
 
 function imba_nevermore_shadowraze_far:GetAbilityTextureName()
-   return "nevermore_shadowraze3"
+	return "nevermore_shadowraze3"
 end
 
 function imba_nevermore_shadowraze_far:IsHiddenWhenStolen()
@@ -260,10 +256,10 @@ function imba_nevermore_shadowraze_far:GetCooldown(level)
 	end
 
 	-- Otherwise, return normal cooldown
-	local cooldown = self.BaseClass.GetCooldown(self,level)
+	local cooldown = self.BaseClass.GetCooldown(self, level)
 
 	--Talent: Shadowraze cooldown reduction (REMOVED)
-   -- cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
+	-- cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
 
 	return cooldown
 end
@@ -287,7 +283,7 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local cast_response = {"nevermore_nev_ability_shadow_11", "nevermore_nev_ability_shadow_19", "nevermore_nev_ability_shadow_23"}
+	local cast_response = { "nevermore_nev_ability_shadow_11", "nevermore_nev_ability_shadow_19", "nevermore_nev_ability_shadow_23" }
 	local sound_raze = "Hero_Nevermore.Shadowraze"
 	local modifier_combo = "modifier_shadow_raze_combo"
 	local modifier_harvest = "modifier_imba_reqiuem_harvest"
@@ -325,11 +321,10 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 
 	--if level_of_ability >= 5 then
 	if level_of_ability >= 2 then
-
 		-- Create a second raze with its values
 		-- local level_5_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_5_raze_distance		
 		-- lvl_5_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_5_raze_point, level_5_raze_radius)
-		
+
 		local level_5_raze_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * main_raze_distance) + (caster:GetRightVector() * main_raze_radius) - (caster:GetRightVector() * (main_raze_radius * (self:GetLevel() - 2)))
 		lvl_5_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_5_raze_point, main_raze_radius)
 	end
@@ -340,12 +335,11 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 
 	--if level_of_ability >= 6 then
 	if level_of_ability >= 3 then
-	
 		-- Create a third raze with its values, behind the caster
 		-- local back_direction = (main_raze_point - caster:GetAbsOrigin()):Normalized()
 		-- local level_6_raze_point = caster:GetAbsOrigin() + back_direction * level_6_raze_distance	
 		-- lvl_6_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_6_raze_point, level_6_raze_radius)
-		
+
 		local level_6_raze_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * main_raze_distance) + (caster:GetRightVector() * main_raze_radius * 2) - (caster:GetRightVector() * (main_raze_radius * (self:GetLevel() - 3)))
 		lvl_6_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_6_raze_point, main_raze_radius)
 	end
@@ -356,11 +350,10 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 
 	--if level_of_ability == 7 then
 	if level_of_ability == 4 then
-	
 		-- Create the last raze at the far end
 		-- local level_7_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_7_raze_distance
 		-- local lvl_7_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_7_raze_point, level_7_raze_radius)
-		
+
 		local level_7_raze_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * main_raze_distance) + (caster:GetRightVector() * main_raze_radius * 3)
 		local lvl_7_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_7_raze_point, main_raze_radius)
 	end
@@ -369,15 +362,13 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 	if caster:HasModifier(modifier_harvest) and not raze_hit_hero and not lvl_5_raze_hit_hero and not lvl_6_raze_hit_hero and not lvl_7_raze_hit_hero then
 		caster:RemoveModifierByName(modifier_harvest)
 	end
-
 end
-
 
 -------------------------
 -- Shadowraze Handlers --
 -------------------------
 
---Return a boolean if the caster has the Soul Harvest modifier: True if the raze hit an enemy hero, false otherwise. 
+--Return a boolean if the caster has the Soul Harvest modifier: True if the raze hit an enemy hero, false otherwise.
 --Return nil if the caster doesn't have the modifier.
 function CastShadowRazeOnPoint(caster, ability, point, radius)
 	-- Ability properties
@@ -390,8 +381,8 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 	local shadow_combo_duration = ability:GetSpecialValueFor("shadow_combo_duration")
 
 	--Ability attributes
-	local pool_duration = caster:FindTalentValue("special_bonus_imba_nevermore_1","duration")
-	local pool_radius = caster:FindTalentValue("special_bonus_imba_nevermore_1","radius")
+	local pool_duration = caster:FindTalentValue("special_bonus_imba_nevermore_1", "duration")
+	local pool_radius = caster:FindTalentValue("special_bonus_imba_nevermore_1", "radius")
 
 	-- Add particle effects. CP0 is location, CP1 is radius
 	local particle_raze_fx = ParticleManager:CreateParticle(particle_raze, PATTACH_WORLDORIGIN, nil)
@@ -401,24 +392,22 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 
 	-- Find enemy units in radius
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									  point,
-									  nil,
-									  radius,
-									  DOTA_UNIT_TARGET_TEAM_ENEMY,
-									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									  DOTA_UNIT_TARGET_FLAG_NONE,
-									  FIND_ANY_ORDER,
-									  false)
+		point,
+		nil,
+		radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 
-	for _,enemy in pairs(enemies) do
+	for _, enemy in pairs(enemies) do
 		if not enemy:IsMagicImmune() then
-
 			-- Check if the table exists
 			if ability.enemies_hit then
-
 				-- Check if that enemy was already marked in the table, otherwise, mark it
 				local enemy_marked = false
-				for _,enemy_hit in pairs(ability.enemies_hit) do
+				for _, enemy_hit in pairs(ability.enemies_hit) do
 					if enemy == enemy_hit then
 						enemy_marked = true
 					end
@@ -437,36 +426,34 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 						if modifier_handler then
 							local new_duration = modifier_handler.duration
 							enemy:RemoveModifierByName(requiem_debuff)
-							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration * (1 - enemy:GetStatusResistance())})
+							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, { duration = new_duration * (1 - enemy:GetStatusResistance()) })
 						end
 					end
-
 				end
-
 			else --If there was no table, just damage enemy
 				ApplyShadowRazeDamage(caster, ability, enemy)
 				--#6 Talent: Shadowraze refresh Requiem of Souls' debuff
-					if caster:HasTalent("special_bonus_imba_nevermore_6") and enemy:HasModifier("modifier_imba_reqiuem_debuff") then
-						local modifier_handler = enemy:FindModifierByName(requiem_debuff)
-						if modifier_handler then
-							local new_duration = modifier_handler.duration
-							enemy:RemoveModifierByName(requiem_debuff)
-							enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration * (1 - enemy:GetStatusResistance())})
-						end
+				if caster:HasTalent("special_bonus_imba_nevermore_6") and enemy:HasModifier("modifier_imba_reqiuem_debuff") then
+					local modifier_handler = enemy:FindModifierByName(requiem_debuff)
+					if modifier_handler then
+						local new_duration = modifier_handler.duration
+						enemy:RemoveModifierByName(requiem_debuff)
+						enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, { duration = new_duration * (1 - enemy:GetStatusResistance()) })
 					end
+				end
 			end
 		end
 	end
 
 	--#1 Talent: apply a damaging pool on the area hit by the shadowraze
 	if caster:HasTalent("special_bonus_imba_nevermore_1") then
-		CreateModifierThinker(caster, ability, pool_modifier, {duration = pool_duration, radius = pool_radius}, point, caster:GetTeamNumber(), false)
+		CreateModifierThinker(caster, ability, pool_modifier, { duration = pool_duration, radius = pool_radius }, point, caster:GetTeamNumber(), false)
 	end
 
 	if #enemies > 0 then
 		-- Apply a shadow combo modifier to caster if it doesn't have it. Regardless, add a stack and refresh
 		if not caster:HasModifier(modifier_combo) and not caster:HasModifier(modifier_prevention) then
-			caster:AddNewModifier(caster, ability, modifier_combo, {duration = shadow_combo_duration})
+			caster:AddNewModifier(caster, ability, modifier_combo, { duration = shadow_combo_duration })
 		end
 
 		local modifier_combo_handler = caster:FindModifierByName(modifier_combo)
@@ -474,11 +461,11 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 			modifier_combo_handler:IncrementStackCount()
 			modifier_combo_handler:ForceRefresh()
 		end
-	
+
 		-- Check if the raze has hit an enemy hero for Soul Frenzy
 		if caster:HasModifier(modifier_harvest) then
-			for _,enemy in pairs(enemies) do
-				if enemy:IsRealHero() then	
+			for _, enemy in pairs(enemies) do
+				if enemy:IsRealHero() then
 					return true
 				end
 			end
@@ -501,22 +488,22 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 	local soul_projectile_speed = ability:GetSpecialValueFor("soul_projectile_speed")
 	local stack_bonus_damage = ability:GetSpecialValueFor("stack_bonus_damage")
 	local duration = ability:GetSpecialValueFor("duration")
-	
+
 	-- Add stacking Shadowraze damage
 	local debuff_boost = 0
-		
+
 	if enemy:HasModifier(modifier_debuff) then
-		debuff_boost	= stack_bonus_damage * enemy:FindModifierByName(modifier_debuff):GetStackCount()
-		damage 			= damage + debuff_boost
+		debuff_boost = stack_bonus_damage * enemy:FindModifierByName(modifier_debuff):GetStackCount()
+		damage       = damage + debuff_boost
 	end
-	
-	-- If the caster has Necromastery souls, increase the damage of Shadowraze and steal a soul    
+
+	-- If the caster has Necromastery souls, increase the damage of Shadowraze and steal a soul
 	if caster:HasModifier(modifier_souls) then
 		local stacks = caster:GetModifierStackCount(modifier_souls, caster)
 
 		-- Talent: Necromastery soul grant additional damage (REMOVED)
-	   -- damage_per_soul = damage_per_soul + caster:FindTalentValue("special_bonus_imba_nevermore_8")
-	   
+		-- damage_per_soul = damage_per_soul + caster:FindTalentValue("special_bonus_imba_nevermore_8")
+
 		-- Adjust damage
 		damage = damage + (stacks * damage_per_soul) + debuff_boost
 
@@ -527,15 +514,16 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 
 		-- If caster is not broken, launch a soul projectile to the caster
 		if not caster:PassivesDisabled() then
-			local soul_projectile = {Target = caster,
-									 Source = enemy,
-									 Ability = ability,
-									 EffectName = particle_soul,
-									 bDodgeable = false,
-									 bProvidesVision = false,
-									 iMoveSpeed = soul_projectile_speed,
-									 iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-									 }
+			local soul_projectile = {
+				Target = caster,
+				Source = enemy,
+				Ability = ability,
+				EffectName = particle_soul,
+				bDodgeable = false,
+				bProvidesVision = false,
+				iMoveSpeed = soul_projectile_speed,
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+			}
 
 
 			ProjectileManager:CreateTrackingProjectile(soul_projectile)
@@ -551,20 +539,21 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 	end
 
 	-- Deal damage
-	local damageTable = {victim = enemy,
-						damage = damage,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						attacker = caster,
-						ability = ability
-						}
+	local damageTable = {
+		victim = enemy,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		attacker = caster,
+		ability = ability
+	}
 
-	local actualy_damage = ApplyDamage(damageTable)    
-	
+	local actualy_damage = ApplyDamage(damageTable)
+
 	-- Apply a debuff stack that causes shadowrazes to do more damage
 	if not enemy:HasModifier(modifier_debuff) then
-		enemy:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - enemy:GetStatusResistance())})
+		enemy:AddNewModifier(caster, ability, modifier_debuff, { duration = duration * (1 - enemy:GetStatusResistance()) })
 	end
-	
+
 	local modifier_debuff_counter = enemy:FindModifierByName(modifier_debuff)
 	if modifier_debuff_counter then
 		modifier_debuff_counter:IncrementStackCount()
@@ -610,8 +599,6 @@ function UpgradeShadowRazes(caster, ability)
 	end
 end
 
-
-
 -- Shadow Combo modifier
 modifier_shadow_raze_combo = modifier_shadow_raze_combo or class({})
 
@@ -633,6 +620,7 @@ function modifier_shadow_raze_combo:OnCreated()
 end
 
 function modifier_shadow_raze_combo:IsHidden() return false end
+
 function modifier_shadow_raze_combo:IsPurgable() return false end
 
 function modifier_shadow_raze_combo:OnStackCountChanged()
@@ -664,19 +652,19 @@ function modifier_shadow_raze_combo:OnStackCountChanged()
 		end)
 
 		-- Give the caster the prevention modifier
-		self.caster:AddNewModifier(self.caster, self.ability, self.modifier_prevention, {duration = self.combo_prevention_duration})
+		self.caster:AddNewModifier(self.caster, self.ability, self.modifier_prevention, { duration = self.combo_prevention_duration })
 		self:Destroy()
 	end
 end
-
 
 -- Shadow Combo prevention modifier
 modifier_shadow_raze_prevention = modifier_shadow_raze_prevention or class({})
 
 function modifier_shadow_raze_prevention:IsHidden() return false end
-function modifier_shadow_raze_prevention:IsPurgable() return false end
-function modifier_shadow_raze_prevention:IsDebuff() return true end
 
+function modifier_shadow_raze_prevention:IsPurgable() return false end
+
+function modifier_shadow_raze_prevention:IsDebuff() return true end
 
 -- Shadow pool modifier (copied from Lina, please feel free to improve it as needed)
 modifier_imba_shadow_raze_pool = modifier_imba_shadow_raze_pool or class({})
@@ -697,7 +685,7 @@ function modifier_imba_shadow_raze_pool:OnCreated(kv)
 
 		-- Play shadow pool particle effect, assign to modifier
 		local particle_pool = ParticleManager:CreateParticle(self.particle_effect, PATTACH_WORLDORIGIN, nil)
-		ParticleManager:SetParticleControl(particle_pool, 2, (self.parent:GetAbsOrigin()+ Vector(0,0,10)))
+		ParticleManager:SetParticleControl(particle_pool, 2, (self.parent:GetAbsOrigin() + Vector(0, 0, 10)))
 
 		self:AddParticle(particle_pool, false, false, -1, false, false)
 
@@ -714,23 +702,23 @@ function modifier_imba_shadow_raze_pool:OnIntervalThink()
 	if IsServer() then
 		-- Find enemies in AoE
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.parent:GetAbsOrigin(),
-										  nil,
-										  self.radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
+			self.parent:GetAbsOrigin(),
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
 		-- Deal damage per tick to each enemy
-		for _,enemy in pairs(enemies) do
-			damage_table = ({victim = enemy,
-						 attacker = self.caster,
-						 ability = self.ability,
-						 -- damage = ((enemy:GetMaxHealth() / 100) * self.percent_damage_per_tick) + self.flat_damage_per_tick, -- WTF is this broken garbage no
-						 damage = self.flat_damage_per_tick,
-						 damage_type = DAMAGE_TYPE_MAGICAL})
+		for _, enemy in pairs(enemies) do
+			damage_table = ({ victim = enemy,
+				attacker = self.caster,
+				ability = self.ability,
+				-- damage = ((enemy:GetMaxHealth() / 100) * self.percent_damage_per_tick) + self.flat_damage_per_tick, -- WTF is this broken garbage no
+				damage = self.flat_damage_per_tick,
+				damage_type = DAMAGE_TYPE_MAGICAL })
 
 			ApplyDamage(damage_table)
 		end
@@ -738,7 +726,7 @@ function modifier_imba_shadow_raze_pool:OnIntervalThink()
 end
 
 -- Modifier to track increasing raze damage
-modifier_imba_shadowraze_debuff = class ({})
+modifier_imba_shadowraze_debuff = class({})
 
 function modifier_imba_shadowraze_debuff:IsDebuff() return true end
 
@@ -751,11 +739,13 @@ LinkLuaModifier("modifier_imba_necromastery_talent_extra_cap", "components/abili
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_2", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 -- Required to change behaviour on client-side
-modifier_special_bonus_imba_nevermore_2 = class ({})
+modifier_special_bonus_imba_nevermore_2 = class({})
 
-function modifier_special_bonus_imba_nevermore_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_2:IsPurgable() 		return false end
-function modifier_special_bonus_imba_nevermore_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_2:IsHidden() return true end
+
+function modifier_special_bonus_imba_nevermore_2:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nevermore_2:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_nevermore_2:OnCreated()
 	if not IsServer() then return end
@@ -775,7 +765,7 @@ end
 ---
 
 function imba_nevermore_necromastery:GetAbilityTextureName()
-   return "nevermore_necromastery"
+	return "nevermore_necromastery"
 end
 
 function imba_nevermore_necromastery:GetIntrinsicModifierName()
@@ -817,12 +807,10 @@ function imba_nevermore_necromastery:GetManaCost(level)
 end
 
 function imba_nevermore_necromastery:GetCooldown(level)
-	
 	local cooldown = self:GetCaster():FindTalentValue("special_bonus_imba_nevermore_2", "cooldown")
 
 	return cooldown
 end
-
 
 function imba_nevermore_necromastery:OnSpellStart()
 	-- Ability properties
@@ -838,7 +826,6 @@ function imba_nevermore_necromastery:OnSpellStart()
 	local heal_per_soul = caster:FindTalentValue("special_bonus_imba_nevermore_2", "heal_per_soul")
 
 	if IsServer() then
-
 		--calculate the number of souls to consume
 		local max_health = caster:GetMaxHealth()
 		local current_health = caster:GetHealth()
@@ -852,9 +839,9 @@ function imba_nevermore_necromastery:OnSpellStart()
 
 		necromastery_heal_one = ParticleManager:CreateParticle(particle_one, PATTACH_WORLDORIGIN, nil)
 		necromastery_heal_two = ParticleManager:CreateParticle(particle_two, PATTACH_WORLDORIGIN, nil)
-		ParticleManager:SetParticleControl(necromastery_heal_one, 0, (caster:GetAbsOrigin() + Vector (0,0,-290)))
+		ParticleManager:SetParticleControl(necromastery_heal_one, 0, (caster:GetAbsOrigin() + Vector(0, 0, -290)))
 		ParticleManager:SetParticleControl(necromastery_heal_two, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(necromastery_heal_two, 1, (caster:GetAbsOrigin() + (caster:GetForwardVector():Normalized() * caster:GetBaseMoveSpeed()) + Vector (0,0,30)))
+		ParticleManager:SetParticleControl(necromastery_heal_two, 1, (caster:GetAbsOrigin() + (caster:GetForwardVector():Normalized() * caster:GetBaseMoveSpeed()) + Vector(0, 0, 30)))
 		ParticleManager:ReleaseParticleIndex(necromastery_heal_one)
 		ParticleManager:ReleaseParticleIndex(necromastery_heal_two)
 
@@ -880,12 +867,8 @@ function imba_nevermore_necromastery:OnSpellStart()
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, souls_needed * heal_per_soul, nil)
 			caster:SetModifierStackCount(souls_modifier, caster, soul_stacks - souls_needed)
 		end
-
 	end
-
 end
-
-
 
 -- Necromastery souls modifier
 modifier_imba_necromastery_souls = modifier_imba_necromastery_souls or class({})
@@ -915,23 +898,22 @@ function modifier_imba_necromastery_souls:OnCreated()
 	self.souls_lost_on_death_pct = self.ability:GetSpecialValueFor("souls_lost_on_death_pct")
 
 	if IsServer() then
-
 		-- If Necromastery is stolen, find the owner and get the stack count. Nothing can proc Necromastery when stolen
 		if self.ability:IsStolen() then
 			-- Find the owner
 			local enemy_heroes = FindUnitsInRadius(self.caster:GetTeamNumber(),
-												   self.caster:GetAbsOrigin(),
-												   nil,
-												   5000,
-												   DOTA_UNIT_TARGET_TEAM_ENEMY,
-												   DOTA_UNIT_TARGET_HERO,
-												   DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-												   FIND_CLOSEST,
-												   false)
+				self.caster:GetAbsOrigin(),
+				nil,
+				5000,
+				DOTA_UNIT_TARGET_TEAM_ENEMY,
+				DOTA_UNIT_TARGET_HERO,
+				DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+				FIND_CLOSEST,
+				false)
 
 			-- Cycle between heroes to see who has the modifier
 			local modifier_souls = "modifier_imba_necromastery_souls"
-			for _,enemy_hero in pairs(enemy_heroes) do
+			for _, enemy_hero in pairs(enemy_heroes) do
 				if enemy_hero:HasModifier(modifier_souls) then
 					local modifier_souls_handler = enemy_hero:FindModifierByName(modifier_souls)
 					if modifier_souls_handler then
@@ -948,7 +930,7 @@ function modifier_imba_necromastery_souls:OnCreated()
 
 
 		-- Decide how many temporary souls we can have at once
-		self.max_souls_inc_temp = self.base_max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
+		self.max_souls_inc_temp = self.base_max_souls * (1 + (self.max_temporary_souls_pct / 100))
 
 		-- If a table is not yet declared, assign it now
 		if not self.soul_table then
@@ -966,7 +948,6 @@ end
 
 function modifier_imba_necromastery_souls:OnIntervalThink()
 	if IsServer() then
-
 		--Scepter: Maximum Necromastery soul increase
 		if self.caster:HasScepter() then
 			--self.already_accounted = true -- necessary or else there would be an infinite increase to the cap
@@ -975,12 +956,12 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
 			self.max_souls = self.base_max_souls
 		end
 
-	   -- print(self.max_souls)
-	  --  print(self.total_max_souls)
-		
-		-- Check if the souls cap is correct and reset it in case it's wrong 
+		-- print(self.max_souls)
+		--  print(self.total_max_souls)
+
+		-- Check if the souls cap is correct and reset it in case it's wrong
 		--(happens with a bug that reset the extra max souls cap from talent #3 on death and when dropping/selling aghanim scepter)
-		
+
 		if self.caster:HasTalent("special_bonus_imba_nevermore_3") and self.ability.hero_killed then
 			if self.total_max_souls ~= self.max_souls + self.ability.hero_killed then
 				self.total_max_souls = self.max_souls + self.ability.hero_killed
@@ -992,7 +973,7 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
 		--print(self.total_max_souls)
 
 		-- Recalculate temporary souls
-		self.max_souls_inc_temp = self.total_max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
+		self.max_souls_inc_temp = self.total_max_souls * (1 + (self.max_temporary_souls_pct / 100))
 
 		-- Check if we have less souls than how many are registered in the table.
 		local stacks = self:GetStackCount()
@@ -1011,7 +992,6 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
 
 		-- Check if there are temporary souls
 		if #self.soul_table > self.total_max_souls then
-
 			-- Check each temporary soul's duration, to decide if he can go free
 			for i = #self.soul_table, (self.total_max_souls + 1), -1 do
 				if self.soul_table[i] + self.temporary_soul_duration < GameRules:GetGameTime() then
@@ -1039,7 +1019,6 @@ function modifier_imba_necromastery_souls:OnStackCountChanged(old_stack_count)
 
 		-- New soul coming in
 		if stacks > old_stack_count then
-
 			-- If no new souls (even temporary ones) can come in, reduce the stack count to the maximum possible
 			if stacks > self.max_souls_inc_temp then
 				self:SetStackCount(self.max_souls_inc_temp)
@@ -1073,7 +1052,7 @@ function modifier_imba_necromastery_souls:GetModifierPreAttack_BonusDamage()
 	local stacks = self:GetStackCount()
 
 	-- Talent: Necromastery soul grant additional damage (REMOVED)
-   -- local damage_per_soul = self.damage_per_soul + self.caster:FindTalentValue("special_bonus_imba_nevermore_8")
+	-- local damage_per_soul = self.damage_per_soul + self.caster:FindTalentValue("special_bonus_imba_nevermore_8")
 
 	return self.damage_per_soul * stacks
 end
@@ -1090,7 +1069,6 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 
 		-- Only apply if the attacker is the caster
 		if self.caster == attacker then
-
 			-- If the caster is broken, do nothing
 			if self.caster:PassivesDisabled() then
 				return nil
@@ -1102,7 +1080,6 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 					local particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
 
 					if self.caster:IsRealHero() then
-
 						local damage = keys.damage
 						local stacks = self:GetStackCount()
 						local lifesteal_per_soul = self.caster:FindTalentValue("special_bonus_imba_nevermore_4")
@@ -1111,7 +1088,7 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 						local lifesteal = lifesteal_per_soul * stacks
 
 						-- Heal the caster for a percentage of damage dealt
-						local heal_amount = damage * lifesteal * 0.01
+						local heal_amount = damage * lifesteal / 100
 						self.caster:Heal(heal_amount, self.caster)
 
 						-- Add lifesteal effect
@@ -1135,15 +1112,16 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 
 			-- If caster is not broken and is visible, launch a hero soul to the caster
 			if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then
-				local soul_projectile = {Target = self.caster,
-										 Source = target,
-										 Ability = self.ability,
-										 EffectName = self.particle_soul_hero,
-										 bDodgeable = false,
-										 bProvidesVision = false,
-										 iMoveSpeed = self.soul_projectile_speed,
-										 iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-										 }
+				local soul_projectile = {
+					Target = self.caster,
+					Source = target,
+					Ability = self.ability,
+					EffectName = self.particle_soul_hero,
+					bDodgeable = false,
+					bProvidesVision = false,
+					iMoveSpeed = self.soul_projectile_speed,
+					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+				}
 
 
 				ProjectileManager:CreateTrackingProjectile(soul_projectile)
@@ -1169,7 +1147,6 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
 
 		-- Only apply if the caster is the attacker (and NOT the victim)
 		if self.caster == attacker and self.caster ~= target then
-
 			-- If the target was an illusion, do nothing
 			if target:IsIllusion() then
 				return nil
@@ -1210,30 +1187,31 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
 			if not self.caster:PassivesDisabled() and not self.caster:IsImbaInvisible() then
 				if soul_count == self.hero_kill_soul_count then
 					-- Launch a hero soul to the caster
-					local soul_projectile = {Target = self.caster,
-											 Source = target,
-											 Ability = self.ability,
-											 EffectName = self.particle_soul_hero,
-											 bDodgeable = false,
-											 bProvidesVision = false,
-											 iMoveSpeed = self.soul_projectile_speed,
-											 iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-											 }
+					local soul_projectile = {
+						Target = self.caster,
+						Source = target,
+						Ability = self.ability,
+						EffectName = self.particle_soul_hero,
+						bDodgeable = false,
+						bProvidesVision = false,
+						iMoveSpeed = self.soul_projectile_speed,
+						iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+					}
 
 
 					ProjectileManager:CreateTrackingProjectile(soul_projectile)
-
 				else
 					-- Launch a creep soul to the caster
-					local soul_projectile = {Target = self.caster,
-											 Source = target,
-											 Ability = self.ability,
-											 EffectName = self.particle_soul_creep,
-											 bDodgeable = false,
-											 bProvidesVision = false,
-											 iMoveSpeed = self.soul_projectile_speed,
-											 iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-											 }
+					local soul_projectile = {
+						Target = self.caster,
+						Source = target,
+						Ability = self.ability,
+						EffectName = self.particle_soul_creep,
+						bDodgeable = false,
+						bProvidesVision = false,
+						iMoveSpeed = self.soul_projectile_speed,
+						iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+					}
 
 
 					ProjectileManager:CreateTrackingProjectile(soul_projectile)
@@ -1245,7 +1223,7 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
 		-- If the caster was the one who died, he loses half his stacks (unless he has #7 Talent)
 		if self.caster == target and not target:IsIllusion() and (not self.caster.IsReincarnating or (self.caster.IsReincarnating and not self.caster:IsReincarnating())) then
 			local stacks = self:GetStackCount()
-			local stacks_lost = math.floor(stacks * (self.souls_lost_on_death_pct * 0.01))
+			local stacks_lost = math.floor(stacks * (self.souls_lost_on_death_pct / 100))
 
 			-- #7 Talent: Necromastery souls are not lost on death
 			if not self.caster:HasTalent("special_bonus_imba_nevermore_7") then
@@ -1266,9 +1244,13 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
 end
 
 function modifier_imba_necromastery_souls:RemoveOnDeath() return false end
+
 function modifier_imba_necromastery_souls:IsHidden() return false end
+
 function modifier_imba_necromastery_souls:IsPurgable() return false end
+
 function modifier_imba_necromastery_souls:IsDebuff() return false end
+
 function modifier_imba_necromastery_souls:AllowIllusionDuplicate() return true end
 
 function AddNecromasterySouls(caster, soul_count)
@@ -1302,7 +1284,6 @@ function RemoveNecromasterySouls(caster, soul_count)
 	end
 end
 
-
 ------------------------------------
 --   PRESENCE OF THE DARK LORD    --
 ------------------------------------
@@ -1311,7 +1292,7 @@ LinkLuaModifier("modifier_imba_dark_lord_aura", "components/abilities/heroes/her
 LinkLuaModifier("modifier_imba_dark_lord_debuff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_dark_lord:GetAbilityTextureName()
-   return "nevermore_dark_lord"
+	return "nevermore_dark_lord"
 end
 
 function imba_nevermore_dark_lord:GetIntrinsicModifierName()
@@ -1320,7 +1301,7 @@ end
 
 function imba_nevermore_dark_lord:OnUpgrade()
 	local caster = self:GetCaster()
-	local upgrade_response = "nevermore_nev_ability_presence_0"..math.random(1,3)
+	local upgrade_response = "nevermore_nev_ability_presence_0" .. math.random(1, 3)
 
 	EmitSoundOn(upgrade_response, caster)
 end
@@ -1359,29 +1340,29 @@ function modifier_imba_dark_lord_aura:OnIntervalThink()
 
 			-- Find real enemy heroes nearby
 			local enemy_heroes = FindUnitsInRadius(self.caster:GetTeamNumber(),
-												   self.caster:GetAbsOrigin(),
-												   nil,
-												   self.aura_radius,
-												   DOTA_UNIT_TARGET_TEAM_ENEMY,
-												   DOTA_UNIT_TARGET_HERO,
-												   DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-												   FIND_ANY_ORDER,
-												   false)
+				self.caster:GetAbsOrigin(),
+				nil,
+				self.aura_radius,
+				DOTA_UNIT_TARGET_TEAM_ENEMY,
+				DOTA_UNIT_TARGET_HERO,
+				DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+				FIND_ANY_ORDER,
+				false)
 
 			-- Each enemy hero sends a soul. Illusions only fake it instead
-			for _,enemy_hero in pairs(enemy_heroes) do
-
+			for _, enemy_hero in pairs(enemy_heroes) do
 				-- Send a soul if Nevermore is visible
 				if not self.caster:IsImbaInvisible() then
-					local soul_projectile = {Target = self.caster,
-										 Source = enemy_hero,
-										 Ability = self.ability,
-										 EffectName = self.particle_soul_hero,
-										 bDodgeable = false,
-										 bProvidesVision = false,
-										 iMoveSpeed = soul_projectile_speed,
-										 iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-										 }
+					local soul_projectile = {
+						Target = self.caster,
+						Source = enemy_hero,
+						Ability = self.ability,
+						EffectName = self.particle_soul_hero,
+						bDodgeable = false,
+						bProvidesVision = false,
+						iMoveSpeed = soul_projectile_speed,
+						iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+					}
 
 
 					ProjectileManager:CreateTrackingProjectile(soul_projectile)
@@ -1397,7 +1378,9 @@ function modifier_imba_dark_lord_aura:OnIntervalThink()
 end
 
 function modifier_imba_dark_lord_aura:IsHidden() return true end
+
 function modifier_imba_dark_lord_aura:IsPurgable() return false end
+
 function modifier_imba_dark_lord_aura:IsDebuff() return false end
 
 function modifier_imba_dark_lord_aura:OnRefresh()
@@ -1409,7 +1392,6 @@ function modifier_imba_dark_lord_aura:AllowIllusionDuplicate()
 end
 
 function modifier_imba_dark_lord_aura:GetAuraEntityReject(target)
-
 	-- If the target cannot see the caster, the aura wouldn't affect it
 	if not target:CanEntityBeSeenByMyTeam(self.caster) then
 		return true -- reject it
@@ -1447,7 +1429,6 @@ function modifier_imba_dark_lord_aura:IsAura()
 	return true
 end
 
-
 -- Presence of the Dark Lord armor reduction debuff modifier
 modifier_imba_dark_lord_debuff = modifier_imba_dark_lord_debuff or class({})
 
@@ -1480,7 +1461,6 @@ function modifier_imba_dark_lord_debuff:OnIntervalThink()
 		-- If there is at least one stack, check if the duration was reached
 		if stacks > 0 then
 			if self.last_stack + self.raze_reduction_duration < GameRules:GetGameTime() then
-
 				-- If the duration was reached, remove all stacks
 				self:SetStackCount(0)
 			end
@@ -1501,13 +1481,14 @@ function modifier_imba_dark_lord_debuff:OnStackCountChanged()
 	end
 end
 
-
 function modifier_imba_dark_lord_debuff:IsHidden() return false end
+
 function modifier_imba_dark_lord_debuff:IsPurgable() return false end
+
 function modifier_imba_dark_lord_debuff:IsDebuff() return true end
 
 function modifier_imba_dark_lord_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+	local decFuncs = { MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS }
 
 	return decFuncs
 end
@@ -1524,8 +1505,6 @@ function modifier_imba_dark_lord_debuff:GetModifierPhysicalArmorBonus()
 	return total_armor_reduction * (-1)
 end
 
-
-
 ------------------------------------
 --       REQUIEM OF SOULS         --
 ------------------------------------
@@ -1535,7 +1514,7 @@ LinkLuaModifier("modifier_imba_reqiuem_debuff", "components/abilities/heroes/her
 LinkLuaModifier("modifier_imba_reqiuem_harvest", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_requiem:GetAbilityTextureName()
-   return "nevermore_requiem"
+	return "nevermore_requiem"
 end
 
 function imba_nevermore_requiem:IsHiddenWhenStolen()
@@ -1548,10 +1527,10 @@ end
 
 function imba_nevermore_requiem:OnAbilityPhaseStart()
 	if USE_MEME_SOUNDS and RollPercentage(MEME_SOUNDS_CHANCE) and self:GetCaster():HasModifier("modifier_imba_necromastery_souls") and self:GetCaster():FindModifierByName("modifier_imba_necromastery_souls"):GetStackCount() >= self:GetCaster():FindModifierByName("modifier_imba_necromastery_souls").base_max_souls then
-        self.sound = "Imba.NevermoreJohnCena"
-    else
-        self.sound = "Hero_Nevermore.RequiemOfSoulsCast"
-    end
+		self.sound = "Imba.NevermoreJohnCena"
+	else
+		self.sound = "Hero_Nevermore.RequiemOfSoulsCast"
+	end
 
 	-- Play sound
 	if self:GetCaster():IsImbaInvisible() then
@@ -1559,7 +1538,7 @@ function imba_nevermore_requiem:OnAbilityPhaseStart()
 	else
 		self:GetCaster():EmitSound(self.sound)
 	end
-	
+
 	self.wings_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_wings.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 
 	-- Start cast animation
@@ -1577,20 +1556,20 @@ function imba_nevermore_requiem:OnAbilityPhaseInterrupted()
 
 	-- Remove phased movement from caster
 	self:GetCaster():RemoveModifierByName("modifier_imba_reqiuem_phase_buff")
-	
+
 	self:GetCaster():StopSound(self.sound)
-	
+
 	if self.wings_particle then
 		ParticleManager:DestroyParticle(self.wings_particle, true)
 		ParticleManager:ReleaseParticleIndex(self.wings_particle)
 	end
 end
 
-function imba_nevermore_requiem:OnSpellStart(death_cast)	
+function imba_nevermore_requiem:OnSpellStart(death_cast)
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local cast_response = {"nevermore_nev_ability_requiem_01", "nevermore_nev_ability_requiem_02", "nevermore_nev_ability_requiem_03", "nevermore_nev_ability_requiem_04", "nevermore_nev_ability_requiem_05", "nevermore_nev_ability_requiem_06", "nevermore_nev_ability_requiem_07", "nevermore_nev_ability_requiem_08", "nevermore_nev_ability_requiem_11", "nevermore_nev_ability_requiem_12", "nevermore_nev_ability_requiem_13", "nevermore_nev_ability_requiem_14"}
+	local cast_response = { "nevermore_nev_ability_requiem_01", "nevermore_nev_ability_requiem_02", "nevermore_nev_ability_requiem_03", "nevermore_nev_ability_requiem_04", "nevermore_nev_ability_requiem_05", "nevermore_nev_ability_requiem_06", "nevermore_nev_ability_requiem_07", "nevermore_nev_ability_requiem_08", "nevermore_nev_ability_requiem_11", "nevermore_nev_ability_requiem_12", "nevermore_nev_ability_requiem_13", "nevermore_nev_ability_requiem_14" }
 	local sound_cast = "Hero_Nevermore.RequiemOfSouls"
 	local particle_caster_souls = "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_a.vpcf"
 	local particle_caster_ground = "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls.vpcf"
@@ -1639,7 +1618,7 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
 		if modifier_souls_handler then
 			stacks = modifier_souls_handler:GetStackCount()
 			necro_ability = modifier_souls_handler:GetAbility()
-		max_souls = modifier_souls_handler.total_max_souls
+			max_souls = modifier_souls_handler.total_max_souls
 		end
 	end
 
@@ -1663,7 +1642,6 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
 
 		-- Determine the amount of lines to create
 		line_count = math.floor(stacks / souls_per_line)
-
 	else
 		-- Determine the amount of lines to create
 		line_count = math.floor(stacks / souls_per_line)
@@ -1676,7 +1654,7 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
 	end
 
 	-- Add the Soul Harvest modifier to the caster
-	caster:AddNewModifier(caster, ability, modifier_harvest, {duration = harvest_base_cd})
+	caster:AddNewModifier(caster, ability, modifier_harvest, { duration = harvest_base_cd })
 
 	-- Calculate the first line location, in front of the caster
 	local line_position = caster:GetAbsOrigin() + caster:GetForwardVector() * travel_distance
@@ -1725,7 +1703,7 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 	end
 
 	-- Apply the debuff on enemies hit
-	target:AddNewModifier(caster, ability, modifier_debuff, {duration = slow_duration * (1 - target:GetStatusResistance())})
+	target:AddNewModifier(caster, ability, modifier_debuff, { duration = slow_duration * (1 - target:GetStatusResistance()) })
 	-- If the caster still has the Soul Harvest buff, increase it
 	if caster:HasModifier(modifier_harvest) and target:IsRealHero() then
 		local modifier_harvest_handler = caster:FindModifierByName(modifier_harvest)
@@ -1736,18 +1714,19 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 
 	-- If this line is a scepter line, reduce the damage
 	if scepter_line then
-		damage = damage * (scepter_line_damage_pct * 0.01)
+		damage = damage * (scepter_line_damage_pct / 100)
 	end
-	
+
 	target:EmitSound("Hero_Nevermore.RequiemOfSouls.Damage")
-	
+
 	-- Damage the target
-	local damageTable = {victim = target,
-						damage = damage,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						attacker = caster,
-						ability = ability
-						}
+	local damageTable = {
+		victim = target,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		attacker = caster,
+		ability = ability
+	}
 
 	local damage_dealt = ApplyDamage(damageTable)
 
@@ -1755,17 +1734,16 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 	if scepter_line then
 		caster:Heal(damage_dealt, caster)
 	end
-	
+
 	-- F.E.A.R.	
 	if not death_cast then
 		if not target:HasModifier("modifier_nevermore_requiem_fear") then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", { duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance()) })
 		else
 			target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
 		end
 	end
 end
-
 
 function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 	-- Ability properties
@@ -1786,23 +1764,24 @@ function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 	local velocity = (line_end_position - caster:GetAbsOrigin()):Normalized() * lines_travel_speed
 
 	-- Launch the line
-	projectile_info = {Ability = ability,
-					   EffectName = particle_lines,
-					   vSpawnOrigin = caster:GetAbsOrigin(),
-					   fDistance = travel_distance,
-					   fStartRadius = lines_starting_width,
-					   fEndRadius = lines_end_width,
-					   Source = caster,
-					   bHasFrontalCone = false,
-					   bReplaceExisting = false,
-					   iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-					   iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
-					   iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					   bDeleteOnHit = false,
-					   vVelocity = velocity,
-					   bProvidesVision = false,
-					   ExtraData = {scepter_line = false, death_cast = death_cast}
-					   }
+	projectile_info = {
+		Ability = ability,
+		EffectName = particle_lines,
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		fDistance = travel_distance,
+		fStartRadius = lines_starting_width,
+		fEndRadius = lines_end_width,
+		Source = caster,
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		bDeleteOnHit = false,
+		vVelocity = velocity,
+		bProvidesVision = false,
+		ExtraData = { scepter_line = false, death_cast = death_cast }
+	}
 
 	-- Create the projectile
 	ProjectileManager:CreateLinearProjectile(projectile_info)
@@ -1822,23 +1801,24 @@ function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 			local velocity = (caster:GetAbsOrigin() - line_end_position):Normalized() * lines_travel_speed
 
 			-- Launch the line
-			projectile_info = {Ability = ability,
-							   EffectName = particle_lines,
-							   vSpawnOrigin = line_end_position,
-							   fDistance = travel_distance,
-							   fStartRadius = lines_end_width,
-							   fEndRadius = lines_starting_width,
-							   Source = caster,
-							   bHasFrontalCone = false,
-							   bReplaceExisting = false,
-							   iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-							   iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
-							   iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-							   bDeleteOnHit = false,
-							   vVelocity = velocity,
-							   bProvidesVision = false,
-							   ExtraData = {scepter_line = true}
-							   }
+			projectile_info = {
+				Ability = ability,
+				EffectName = particle_lines,
+				vSpawnOrigin = line_end_position,
+				fDistance = travel_distance,
+				fStartRadius = lines_end_width,
+				fEndRadius = lines_starting_width,
+				Source = caster,
+				bHasFrontalCone = false,
+				bReplaceExisting = false,
+				iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+				iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+				iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				bDeleteOnHit = false,
+				vVelocity = velocity,
+				bProvidesVision = false,
+				ExtraData = { scepter_line = true }
+			}
 
 			-- Create the projectile
 			ProjectileManager:CreateLinearProjectile(projectile_info)
@@ -1853,20 +1833,19 @@ function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 	end
 end
 
-
 -- Requiem of Souls caster phased modifier
 modifier_imba_reqiuem_phase_buff = modifier_imba_reqiuem_phase_buff or class({})
 
 function modifier_imba_reqiuem_phase_buff:CheckState()
-	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	local state = { [MODIFIER_STATE_NO_UNIT_COLLISION] = true }
 	return state
 end
 
 function modifier_imba_reqiuem_phase_buff:IsHidden() return true end
+
 function modifier_imba_reqiuem_phase_buff:IsPurgable() return false end
+
 function modifier_imba_reqiuem_phase_buff:IsDebuff() return false end
-
-
 
 -- Requiem of Souls slow debuff
 modifier_imba_reqiuem_debuff = modifier_imba_reqiuem_debuff or class({})
@@ -1895,7 +1874,9 @@ function modifier_imba_reqiuem_debuff:OnCreated()
 end
 
 function modifier_imba_reqiuem_debuff:IsHidden() return false end
+
 function modifier_imba_reqiuem_debuff:IsPurgable() return true end
+
 function modifier_imba_reqiuem_debuff:IsDebuff() return true end
 
 function modifier_imba_reqiuem_debuff:DeclareFunctions()
@@ -1912,7 +1893,6 @@ end
 function modifier_imba_reqiuem_debuff:GetModifierMoveSpeedBonus_Percentage()
 	return self.ms_slow_pct
 end
-
 
 -- Requiem of Souls Soul Harvest modifier
 modifier_imba_reqiuem_harvest = modifier_imba_reqiuem_harvest or class({})
@@ -1941,7 +1921,9 @@ function modifier_imba_reqiuem_harvest:OnCreated()
 end
 
 function modifier_imba_reqiuem_harvest:IsHidden() return false end
+
 function modifier_imba_reqiuem_harvest:IsPurgable() return false end
+
 function modifier_imba_reqiuem_harvest:IsDebuff() return false end
 
 ---------------------
@@ -1957,43 +1939,59 @@ LinkLuaModifier("modifier_special_bonus_imba_nevermore_6", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_7", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_8", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_nevermore_1	= modifier_special_bonus_imba_nevermore_1 or class({})
-modifier_special_bonus_imba_nevermore_2	= modifier_special_bonus_imba_nevermore_2 or class({})
-modifier_special_bonus_imba_nevermore_3	= modifier_special_bonus_imba_nevermore_3 or class({})
-modifier_special_bonus_imba_nevermore_4	= modifier_special_bonus_imba_nevermore_4 or class({})
-modifier_special_bonus_imba_nevermore_5	= modifier_special_bonus_imba_nevermore_5 or class({})
-modifier_special_bonus_imba_nevermore_6	= modifier_special_bonus_imba_nevermore_6 or class({})
-modifier_special_bonus_imba_nevermore_7	= modifier_special_bonus_imba_nevermore_7 or class({})
-modifier_special_bonus_imba_nevermore_8	= modifier_special_bonus_imba_nevermore_8 or class({})
+modifier_special_bonus_imba_nevermore_1 = modifier_special_bonus_imba_nevermore_1 or class({})
+modifier_special_bonus_imba_nevermore_2 = modifier_special_bonus_imba_nevermore_2 or class({})
+modifier_special_bonus_imba_nevermore_3 = modifier_special_bonus_imba_nevermore_3 or class({})
+modifier_special_bonus_imba_nevermore_4 = modifier_special_bonus_imba_nevermore_4 or class({})
+modifier_special_bonus_imba_nevermore_5 = modifier_special_bonus_imba_nevermore_5 or class({})
+modifier_special_bonus_imba_nevermore_6 = modifier_special_bonus_imba_nevermore_6 or class({})
+modifier_special_bonus_imba_nevermore_7 = modifier_special_bonus_imba_nevermore_7 or class({})
+modifier_special_bonus_imba_nevermore_8 = modifier_special_bonus_imba_nevermore_8 or class({})
 
-function modifier_special_bonus_imba_nevermore_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_nevermore_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_1:IsHidden() return true end
 
-function modifier_special_bonus_imba_nevermore_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_2:IsPurgable()		return false end
-function modifier_special_bonus_imba_nevermore_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_1:IsPurgable() return false end
 
-function modifier_special_bonus_imba_nevermore_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_3:IsPurgable()		return false end
-function modifier_special_bonus_imba_nevermore_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_1:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_nevermore_4:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_4:IsPurgable()		return false end
-function modifier_special_bonus_imba_nevermore_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_2:IsHidden() return true end
 
-function modifier_special_bonus_imba_nevermore_5:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_5:IsPurgable()		return false end
-function modifier_special_bonus_imba_nevermore_5:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_2:IsPurgable() return false end
 
-function modifier_special_bonus_imba_nevermore_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_nevermore_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_2:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_nevermore_7:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_7:IsPurgable()		return false end
-function modifier_special_bonus_imba_nevermore_7:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_3:IsHidden() return true end
 
-function modifier_special_bonus_imba_nevermore_8:IsHidden() 		return true end
-function modifier_special_bonus_imba_nevermore_8:IsPurgable()		return false end
-function modifier_special_bonus_imba_nevermore_8:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_nevermore_3:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nevermore_3:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nevermore_4:IsHidden() return true end
+
+function modifier_special_bonus_imba_nevermore_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nevermore_4:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nevermore_5:IsHidden() return true end
+
+function modifier_special_bonus_imba_nevermore_5:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nevermore_5:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nevermore_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_nevermore_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nevermore_6:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nevermore_7:IsHidden() return true end
+
+function modifier_special_bonus_imba_nevermore_7:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nevermore_7:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_nevermore_8:IsHidden() return true end
+
+function modifier_special_bonus_imba_nevermore_8:IsPurgable() return false end
+
+function modifier_special_bonus_imba_nevermore_8:RemoveOnDeath() return false end
