@@ -226,7 +226,7 @@
 #BattlepassInfoContainer,
 #DonatorInfoContainer,
 #LeaderboardInfoContainer,
-#SettingsInfoContainer, {
+#SettingsInfoContainer {
 	width: 100%;
 	height: 520px;
 	flow-children: down;

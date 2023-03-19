@@ -179,15 +179,7 @@
 			</Panel>
 		</snippet>
 
-		<snippet name="SupportItems">
-			<Panel class="SupportItemsLegend KillMatrixLegend StatRowHeight StatSectionTitle">
-				<Label id="KillMatrixTitle" text="#dota_page_post_game_support_items" />
-				<Panel class="GoldIcon" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_support_gold_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()"/>
-				<Panel class="CampsStackedIcon" onmouseover="UIShowTextTooltipStyled( #dota_page_match_details_legend_camps_stacked_tooltip, ShortTextTooltip )" onmouseout="UIHideTextTooltip()"/>
-			</Panel>
-
-			<Panel class="SupportItemsTeamContainer" id="SupportItemsRows"/>
-		</snippet>
+		
 	</snippets>
 
 	<DOTAPostGame>

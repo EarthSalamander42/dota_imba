@@ -584,7 +584,7 @@
 #loading-content-text,
 .loading-content-text-patreon,
 #loading-content-text-promote,
-#loading-content-text-vote, {
+#loading-content-text-vote {
 	margin-bottom: 5px;
 	font-size: 20px;
 	color: #cccccc;

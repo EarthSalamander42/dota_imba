@@ -190,7 +190,7 @@
 	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
 }
 
-#TeamScore,
+#TeamScore
 {
 	color: #eee;
 	horizontal-align: center;
@@ -595,7 +595,7 @@ align: center top;
 
 .local_player_teammate #BtnShareUnit,
 .local_player_teammate #BtnShareHero,
-.local_player_teammate #BtnDisableHelp,
+.local_player_teammate #BtnDisableHelp
 {
 	visibility: visible;
 }

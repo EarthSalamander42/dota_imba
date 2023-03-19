@@ -2275,7 +2275,7 @@ DOTAAbilityImage.AbilityMaxLevel.AbilityIsUltimate
 
 .GraphsVisible.GraphPlayerItems #PlayerItemsGraphContainer,
 .GraphPlayerNetWorth #DetailsPlayerNetWorthGraphCanvas,
-.GraphPlayerLevel #DetailsPlayerLevelGraphCanvas,
+.GraphPlayerLevel #DetailsPlayerLevelGraphCanvas
 {
 	opacity: 1;
 }
@@ -4219,7 +4219,7 @@ DOTAPostGameOverviewHero.Expanded #HeroBackground
 .GameMode1v1.LeftExpanded #DurationContainer,
 .GameMode1v1.RightExpanded #DurationContainer,
 .GameMode1v1.LeftExpanded #VictoryBanner,
-.GameMode1v1.LeftExpanded #TeamNameContainer,
+.GameMode1v1.LeftExpanded #TeamNameContainer
 {
 	opacity:1;
 }
@@ -8345,7 +8345,7 @@ DOTAPostGameOverviewHeroContainer #RankTierContainer
 	transition-duration: 0.34s, .5s;
 }
 
-.PersonalGraphsVisible #PinnedStats,
+.PersonalGraphsVisible #PinnedStats
 {
 	transform: translateX(0px);
 	opacity: 1;

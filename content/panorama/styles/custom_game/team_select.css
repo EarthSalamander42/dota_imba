@@ -245,7 +245,7 @@
 #StartGameCountdownTimer.countdown_inactive #TimerBg,
 #StartGameCountdownTimer.countdown_inactive #TimerRing,
 #StartGameCountdownTimer.countdown_inactive #TimerLabelAutoStart,
-#StartGameCountdownTimer.countdown_inactive #TimerLabelGameStart,
+#StartGameCountdownTimer.countdown_inactive #TimerLabelGameStart
 {
 	opacity: 0;
 }
