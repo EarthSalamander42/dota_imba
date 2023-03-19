@@ -16,6 +16,34 @@ local split = function(inputstr, sep)
 	return t
 end
 
+function CustomTooltips:GetIMBAValue(value)
+	print("GetIMBAValue", value, type(value))
+	if value then
+		if type(value) == "string" then
+			value = tonumber(value)
+		end
+
+		if type(value) == "number" then
+			return value + (value * IMBAFIED_VALUE_BONUS / 100)
+		end
+
+		if type(value) == "table" and value["value"] and type(value["value"]) == "string" then
+			value["value"] = split(value["value"], " ")
+	
+			for k, v in pairs(value["value"]) do
+				if v then
+					value["value"][k] = tonumber(v) * (100 + IMBAFIED_VALUE_BONUS) / 100
+				end
+			end
+
+			print("GetIMBAValue", value, type(value))
+			value["value"] = table.concat(value["value"], " ")
+		end
+	end
+
+	return value or 0
+end
+
 function CustomTooltips:GetTooltipsInfo(keys)
 --	print(keys)
 
@@ -44,7 +72,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	end
 
 	local ability_values = {}
-	local specials = GetAbilitySpecials(ability_name)
+	local specials = GetAbilitySpecials(ability_name, true)
 	local imba_specials = GetAbilitySpecials("imba_"..ability_name)
 	local specials_issued = {}
 
@@ -90,17 +118,21 @@ function CustomTooltips:GetTooltipsInfo(keys)
 			if hRealCooldown[i] then
 --				print(hRealCooldown[i], hero:GetCooldownReduction())
 				hRealCooldown[i] = hRealCooldown[i] * (hero:GetCooldownReduction() * 100) / 100
+				hRealCooldown[i] = CustomTooltips:GetIMBAValue(hRealCooldown[i])
 			end
 		end
 
---[[
 		for i = 1, #hRealManaCost do
+			--[[
 			if hRealManaCost[i] then
 	--			print(hRealManaCost[i], hero:GetCooldownReduction())
 				hRealManaCost[i] = hRealManaCost[i] * (hero:GetCooldownReduction() * 100) / 100
 			end
+			--]]
+			if hRealManaCost[i] then
+				hRealManaCost[i] = CustomTooltips:GetIMBAValue(hRealManaCost[i])
+			end
 		end
---]]
 	end
 
 	local cast_range = 0
@@ -150,8 +182,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		end
 	end
 
---	print("Send server tooltips info:", imba_specials)
-	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", {
+	local values = {
 		sAbilityName = keys.sAbilityName,
 		iCooldown = hRealCooldown,
 		iManaCost = hRealManaCost,
@@ -163,7 +194,16 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		iDamageType = GetAbilityKV(ability_name, "AbilityUnitDamageType"),
 		iMaxLevel = max_level,
 		iAbility = keys["iAbility"],
-	})
+	}
+
+	print(values)
+	if values["iBonusCastRange"] then
+		values["iBonusCastRange"] = CustomTooltips:GetIMBAValue(values["iBonusCastRange"])
+	end
+	print(values)
+
+--	print("Send server tooltips info:", imba_specials)
+	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", values)
 end
 
 function CustomTooltips:RemoveTooltipsInfo(keys)

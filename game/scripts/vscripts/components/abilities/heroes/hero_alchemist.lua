@@ -46,7 +46,7 @@ end
 
 function imba_alchemist_acid_spray:GetAOERadius()
 	local caster = self:GetCaster()
-	local radius = self:GetVanillaAbilitySpecial("radius")
+	local radius = self:GetImbafiedAbilitySpecial("radius")
 
 	return radius
 end
@@ -62,7 +62,7 @@ function imba_alchemist_acid_spray:OnSpellStart()
 		EmitSoundOn(cast_responses[math.random(1, #cast_responses)], caster)
 	end
 
-	local thinker = CreateModifierThinker(caster, self, "modifier_imba_acid_spray_thinker", {duration = self:GetVanillaAbilitySpecial("duration")}, point, team_id, false)
+	local thinker = CreateModifierThinker(caster, self, "modifier_imba_acid_spray_thinker", {duration = self:GetImbafiedAbilitySpecial("duration")}, point, team_id, false)
 end
 
 modifier_imba_acid_spray_thinker = modifier_imba_acid_spray_thinker or class({})
@@ -86,9 +86,9 @@ function modifier_imba_acid_spray_thinker:OnCreated(keys)
 
 		self.thinker:EmitSound("Hero_Alchemist.AcidSpray")
 
-		self.radius			= self.ability:GetVanillaAbilitySpecial("radius")
-		self.tick_rate		= self.ability:GetVanillaAbilitySpecial("tick_rate")
-		self.damage			= self.ability:GetVanillaAbilitySpecial("damage")
+		self.radius			= self.ability:GetImbafiedAbilitySpecial("radius")
+		self.tick_rate		= self.ability:GetImbafiedAbilitySpecial("tick_rate")
+		self.damage			= self.ability:GetImbafiedAbilitySpecial("damage")
 		self.stack_damage	= self.ability:GetSpecialValueFor("stack_damage")
 		self.ability_damage_type	= self.ability:GetAbilityDamageType()
 
@@ -207,9 +207,9 @@ function modifier_imba_acid_spray_handler:OnCreated()
 		self.modifier = unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_acid_spray_debuff_dot", {})
 		
 		if self:GetAbility() then
-			self.modifier.damage		= ability:GetVanillaAbilitySpecial("damage")
+			self.modifier.damage		= ability:GetImbafiedAbilitySpecial("damage")
 			self.modifier.stack_damage	= ability:GetSpecialValueFor("stack_damage")
-			self.tick_rate				= ability:GetVanillaAbilitySpecial("tick_rate")
+			self.tick_rate				= ability:GetImbafiedAbilitySpecial("tick_rate")
 			
 		else
 			self.modifier.damage		= 25
@@ -301,10 +301,10 @@ end
 
 function modifier_imba_acid_spray_debuff_dot:OnCreated()
 	if self:GetAbility() then
-		self.armor_reduction		= self:GetAbility():GetVanillaAbilitySpecial("armor_reduction")
-		self.stack_armor_reduction	= self:GetAbility():GetVanillaAbilitySpecial("stack_armor_reduction")
+		self.armor_reduction		= self:GetAbility():GetImbafiedAbilitySpecial("armor_reduction")
+		self.stack_armor_reduction	= self:GetAbility():GetImbafiedAbilitySpecial("stack_armor_reduction")
 		self.max_stacks				= self:GetAbility():GetSpecialValueFor("max_stacks")
-		self.tick_rate				= self:GetAbility():GetVanillaAbilitySpecial("tick_rate")
+		self.tick_rate				= self:GetAbility():GetImbafiedAbilitySpecial("tick_rate")
 	else
 		self.armor_reduction		= 5
 		self.stack_armor_reduction	= 1
@@ -476,7 +476,7 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 	self:GetCaster():StartGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
 	self.brew_start = GameRules:GetGameTime()
 	self.brew_time = self.vanilla_ability:GetSpecialValueFor("brew_time")
-	local extra_brew_time = self:GetVanillaAbilitySpecial("brew_explosion")
+	local extra_brew_time = self:GetImbafiedAbilitySpecial("brew_explosion")
 	local duration = extra_brew_time
 	self.stun = self.vanilla_ability:GetSpecialValueFor("max_stun")
 	self.damage = self.vanilla_ability:GetSpecialValueFor("max_damage")
@@ -498,7 +498,7 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_unstable_concoction_handler", {duration = duration,})
 	CustomNetTables:SetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID()), { brew_start = GameRules:GetGameTime(), radius_increase = self.radius_increase,})
-	self.radius = self:GetVanillaAbilitySpecial("radius")
+	self.radius = self:GetImbafiedAbilitySpecial("radius")
 
 	-- Play the sound, which will be stopped when the sub ability fires
 	self:GetCaster():EmitSound("Hero_Alchemist.UnstableConcoction.Fuse")
@@ -708,7 +708,7 @@ function imba_alchemist_unstable_concoction:GetAOERadius()
 		brew_start = net_table.brew_start or 0
 		radius_increase = net_table.radius_increase or 0
 	end
-	local radius = self:GetVanillaAbilitySpecial("radius") + (GameRules:GetGameTime() - brew_start) * radius_increase
+	local radius = self:GetImbafiedAbilitySpecial("radius") + (GameRules:GetGameTime() - brew_start) * radius_increase
 	return radius
 end
 
@@ -902,7 +902,7 @@ end
 function imba_alchemist_goblins_greed:OnUpgrade()
 	local caster = self:GetCaster()
 	local modifier = caster:FindModifierByName(self:GetIntrinsicModifierName())
-	local base_gold = self:GetVanillaAbilitySpecial("bonus_gold")
+	local base_gold = self:GetImbafiedAbilitySpecial("bonus_gold")
 	local base_gold_1 = self:GetLevelSpecialValueFor("bonus_gold", self:GetLevel() - 2)
 	local stacks = modifier:GetStackCount()
 	if self:GetLevel() == 1 then
@@ -1093,8 +1093,8 @@ function modifier_imba_goblins_greed_passive:OnDeath(keys)
 		ParticleManager:SetParticleControl(particle2, 2, Vector(lifetime, digits, 0))
 		ParticleManager:SetParticleControl(particle2, 3, color)
 
-		local stack_bonus = ability:GetVanillaAbilitySpecial("bonus_bonus_gold")
-		local duration = ability:GetVanillaAbilitySpecial("duration")
+		local stack_bonus = ability:GetImbafiedAbilitySpecial("bonus_bonus_gold")
+		local duration = ability:GetImbafiedAbilitySpecial("duration")
 		self:SetStackCount(stacks + stack_bonus)
 
 		Timers:CreateTimer(duration, function()
@@ -1263,7 +1263,7 @@ end
 function modifier_imba_chemical_rage_handler:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
 	
-	self.transformation_time	= self:GetAbility():GetVanillaAbilitySpecial("transformation_time")
+	self.transformation_time	= self:GetAbility():GetImbafiedAbilitySpecial("transformation_time")
 
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1284,7 +1284,7 @@ function modifier_imba_chemical_rage_handler:OnDestroy()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
-		local buff_duration = ability:GetVanillaAbilitySpecial("duration")
+		local buff_duration = ability:GetImbafiedAbilitySpecial("duration")
 		if caster:HasModifier("modifier_imba_chemical_rage_buff_haste") then
 			caster:RemoveModifierByName("modifier_imba_chemical_rage_buff_haste")
 		end
@@ -1312,9 +1312,9 @@ function modifier_imba_chemical_rage_buff_haste:OnCreated()
 	if not self:GetAbility() then self:Destroy() return end
 
 	self.bonus_mana_regen	= self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
-	self.bonus_health_regen	= self:GetAbility():GetVanillaAbilitySpecial("bonus_health_regen")
-	self.bonus_movespeed	= self:GetAbility():GetVanillaAbilitySpecial("bonus_movespeed")
-	self.base_attack_time	= self:GetAbility():GetVanillaAbilitySpecial("base_attack_time")
+	self.bonus_health_regen	= self:GetAbility():GetImbafiedAbilitySpecial("bonus_health_regen")
+	self.bonus_movespeed	= self:GetAbility():GetImbafiedAbilitySpecial("bonus_movespeed")
+	self.base_attack_time	= self:GetAbility():GetImbafiedAbilitySpecial("base_attack_time")
 
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1326,7 +1326,7 @@ function modifier_imba_chemical_rage_buff_haste:OnCreated()
 		self.ability			= 	caster:FindAbilityByName("imba_alchemist_acid_spray")
 		
 		if self.ability then
-			self.radius			=	self.ability:GetVanillaAbilitySpecial("radius")
+			self.radius			=	self.ability:GetImbafiedAbilitySpecial("radius")
 		else
 			self.radius			=	0
 		end
@@ -1449,9 +1449,9 @@ function modifier_imba_chemical_rage_aura:OnCreated()
 		self.modifier = unit:FindModifierByName("modifier_imba_acid_spray_debuff_dot")
 
 		if self.ability and self.modifier then
-			self.modifier.damage = self.ability:GetVanillaAbilitySpecial("damage")
+			self.modifier.damage = self.ability:GetImbafiedAbilitySpecial("damage")
 			self.modifier.stack_damage = self.ability:GetSpecialValueFor("stack_damage")
-			local tick_rate = self.ability:GetVanillaAbilitySpecial("tick_rate")
+			local tick_rate = self.ability:GetImbafiedAbilitySpecial("tick_rate")
 			self:StartIntervalThink(tick_rate)
 		end
 	end
@@ -1570,13 +1570,13 @@ end
 
 -- function modifier_imba_chemical_rage_scepter_handler:GetModifierPreAttack_BonusDamage()
 	-- if self:GetCaster():HasScepter() then
-		-- return self:GetAbility():GetVanillaAbilitySpecial("scepter_bonus_damage") * self:GetStackCount()
+		-- return self:GetAbility():GetImbafiedAbilitySpecial("scepter_bonus_damage") * self:GetStackCount()
 	-- end
 -- end
 
 -- function modifier_imba_chemical_rage_scepter_handler:GetModifierSpellAmplify_Percentage()
 	-- if self:GetCaster():HasScepter() then
-		-- return self:GetAbility():GetVanillaAbilitySpecial("scepter_spell_amp") * self:GetStackCount()
+		-- return self:GetAbility():GetImbafiedAbilitySpecial("scepter_spell_amp") * self:GetStackCount()
 	-- end
 -- end
 

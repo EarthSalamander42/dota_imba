@@ -290,7 +290,19 @@ function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
 	return GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
 end
 
-function GetAbilitySpecials(name)
+function CDOTABaseAbility:GetImbafiedAbilitySpecial(key)
+	-- print("GetVanillaAbilitySpecial:", GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0)
+	local vanilla_value = GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
+
+	if vanilla_value then
+		print("GetImbafiedAbilitySpecial:", vanilla_value, vanilla_value + (vanilla_value * IMBAFIED_VALUE_BONUS / 100))
+		return vanilla_value + (vanilla_value * IMBAFIED_VALUE_BONUS / 100)
+	end
+
+	return 0
+end
+
+function GetAbilitySpecials(name, bImbafied)
 	local t = KeyValues.All[name]
 	local ability_specials = {}
 
@@ -301,7 +313,12 @@ function GetAbilitySpecials(name)
 			for k, v in pairs(AbilitySpecials) do
 				for i, j in pairs(v) do
 					if i ~= "var_type" and i ~= "LinkedSpecialBonus" and i ~= "RequiresScepter" and i ~= "CalculateSpellDamageTooltip" then
-						ability_specials[tonumber(k)] = {i, j}
+						if bImbafied then
+							ability_specials[tonumber(k)] = {i, CustomTooltips:GetIMBAValue(j)}
+						else
+							ability_specials[tonumber(k)] = {i, j}
+						end
+
 						break
 					end
 				end
@@ -319,7 +336,12 @@ function GetAbilitySpecials(name)
 								-- table.insert(ability_specials, {value_name, value})
 							-- end
 						-- else
-							table.insert(ability_specials, {value_name, value})
+							if bImbafied then
+								print("GetIMBAValue:", value_name, value)
+								table.insert(ability_specials, {value_name, CustomTooltips:GetIMBAValue(value)})
+							else
+								table.insert(ability_specials, {value_name, value})
+							end
 						-- end
 
 						-- break

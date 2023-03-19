@@ -566,3 +566,4 @@ end
 -- if IsInToolsMode() then SAME_HERO_SELECTION = true end
 
 PARTIES_ALLOWED = false
+IMBAFIED_VALUE_BONUS = 50 -- % bonus value for IMBAfied abilities
