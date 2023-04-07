@@ -367,7 +367,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" />
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" /> -->
 
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.xml" />
+		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />

@@ -4,10 +4,11 @@ var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist');
 var picked_heroes = [];
 var children_count = 0;
 
-//	$.Msg(herolist.customlist)
+	// $.Msg(herolist.hotdisabledlist)
 //	$.Msg(GridCategories)
 
 function InitHeroSelection()  {
+	// $.Msg("InitHeroSelection()")
 	var pick_screen_title = FindDotaHudElement('HeroSelectionText');
 	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 	if (gamemode) gamemode = gamemode["1"];
@@ -44,10 +45,11 @@ function InitHeroSelection()  {
 					HeroListContainer.GetChild(j).RemoveClass("AllHeroChallenge");
 
 				if (hero_panel) {
-					if (IsHeroDisabled("npc_dota_hero_" + hero_panel.heroname)) {
+					if (IsHeroDisabled("npc_dota_hero_" + hero_panel.heroname) == true) {
 						hero_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
 						hero_panel.GetParent().GetParent().AddClass("Banned");
 						hero_panel.GetParent().GetParent().AddClass("Unavailable");
+						// $.Msg("Add Unavailable class to " + hero_panel.heroname);
 						hero_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
 						hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
 					}
@@ -75,9 +77,12 @@ function InitHeroSelection()  {
 function IsHeroDisabled(sHeroName) {
 	if (herolist && herolist.hotdisabledlist && typeof(herolist.hotdisabledlist) == "object") {
 		for (var i in herolist.hotdisabledlist) {
+			// $.Msg(herolist.hotdisabledlist[i] + " " + sHeroName);
 			if (herolist.hotdisabledlist[i] && herolist.hotdisabledlist[i] == sHeroName)
 				return true;
 		}
+	} else {
+		// $.Msg("herolist.hotdisabledlist is not an object! " + typeof(herolist.hotdisabledlist));
 	}
 
 	return false;
