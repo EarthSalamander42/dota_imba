@@ -19,14 +19,14 @@ function api:GetUrl(endpoint)
 	local url = baseUrl
 
 	if endpoint == "statistics/ranking/xp" or endpoint == "statistics/ranking/winrate" then
-		url = url..endUrlWebsite
+		url = url .. endUrlWebsite
 	else
-		url = url..endUrlFrostrose
+		url = url .. endUrlFrostrose
 	end
 
-	print("URL:", url..endpoint)
+	print("URL:", url .. endpoint)
 
-	return url..endpoint
+	return url .. endpoint
 end
 
 function api:IsDonator(player_id)
@@ -48,7 +48,7 @@ end
 
 function api:GetDonatorStatus(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
---		native_print("api:GetDonatorStatus: Player ID not valid!")
+		--		native_print("api:GetDonatorStatus: Player ID not valid!")
 		return 0
 	end
 
@@ -69,7 +69,7 @@ end
 
 function api:GetPlayerIngameTag(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
---		native_print("api:GetPlayerIngameTag: Player ID not valid!")
+		--		native_print("api:GetPlayerIngameTag: Player ID not valid!")
 		return nil
 	end
 
@@ -90,7 +90,7 @@ end
 
 function api:SetPlayerIngameTag(player_id, tag)
 	if not PlayerResource:IsValidPlayerID(player_id) then
---		native_print("api:GetPlayerIngameTag: Player ID not valid!")
+		--		native_print("api:GetPlayerIngameTag: Player ID not valid!")
 		return nil
 	end
 
@@ -219,7 +219,7 @@ function api:GetPlayerCosmetics(player_id, cosmetic_type)
 	local cosmetic_id = self.players[steamid][cosmetic_variable]
 
 	if cosmetic_id == nil then
-		native_print("api:GetPlayerCosmetics: Unable to get "..cosmetic_variable.." player table!")
+		native_print("api:GetPlayerCosmetics: Unable to get " .. cosmetic_variable .. " player table!")
 		return false
 	end
 
@@ -350,7 +350,7 @@ function api:GetPlayerWinrate(player_id)
 	end
 
 	if self.players[steamid] ~= nil then
-		return self.players[steamid]["winrate_"..string.gsub(GetMapName(), "imba_", "")]
+		return self.players[steamid]["winrate_" .. string.gsub(GetMapName(), "imba_", "")]
 	else
 		native_print("api:GetPlayerWinrate: api players steamid not valid!")
 		return false
@@ -425,7 +425,7 @@ end
 
 function api:GetPhantomAssassinArcanaKills(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
---		native_print("api:GetPhantomAssassinArcanaKills: Player ID not valid!")
+		--		native_print("api:GetPhantomAssassinArcanaKills: Player ID not valid!")
 		return false
 	end
 
@@ -433,14 +433,14 @@ function api:GetPhantomAssassinArcanaKills(player_id)
 
 	-- if the game isnt registered yet, we have no way to know player xp
 	if self.players == nil then
---		native_print("api:GetPhantomAssassinArcanaKills() self.players == nil")
+		--		native_print("api:GetPhantomAssassinArcanaKills() self.players == nil")
 		return false
 	end
 
 	if self.players[steamid] ~= nil then
 		return self.players[steamid]["pa_arcana_kills"]
 	else
---		native_print("api:GetPhantomAssassinArcanaKills: api players steamid not valid!")
+		--		native_print("api:GetPhantomAssassinArcanaKills: api players steamid not valid!")
 		return false
 	end
 end
@@ -469,7 +469,7 @@ end
 
 function api:GetArmory(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
---		native_print("api:GetArmory: Player ID not valid!")
+		--		native_print("api:GetArmory: Player ID not valid!")
 		return {}
 	end
 
@@ -483,7 +483,7 @@ function api:GetArmory(player_id)
 	if self.players[steamid] ~= nil then
 		return self.players[steamid].armory
 	else
---		native_print("api:GetArmory: api players steamid not valid!")
+		--		native_print("api:GetArmory: api players steamid not valid!")
 		return {}
 	end
 end
@@ -514,7 +514,7 @@ function api:CheatDetector()
 		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
 			if not IsInToolsMode() and log then
 				log.info("Cheats have been enabled, game don't count.")
-				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+				CustomNetTables:SetTableValue("game_options", "game_count", { value = 0 })
 				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
 				return true
 			end
@@ -576,16 +576,15 @@ function api:Message(message, _type)
 		data = tostring(message)
 	end
 
-	local status, err = xpcall(function ()
---[[
+	local status, err = xpcall(function()
+		--[[
 		api:Request("game-event", nil, nil, "POST", {
 			type = _type,
 			game_id = api.game_id or 0,
 			message = data
 		})
 --]]
-	end , function(err)
-
+	end, function(err)
 		if err == nil then
 			err = "Unknown Error"
 		end
@@ -637,7 +636,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 	end
 
 	print(header_key)
-	CustomNetTables:SetTableValue("game_options", "server_key", {header_key})
+	CustomNetTables:SetTableValue("game_options", "server_key", { header_key })
 
 	request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", header_key)
 	request:SetHTTPRequestHeaderValue("X-Dota-Game-Type", CUSTOM_GAME_TYPE)
@@ -713,7 +712,7 @@ function api:RegisterGame(callback)
 		end
 	end, function()
 		-- fail-safe if http request can't reach backend
---		GameRules:SetCustomGameSetupRemainingTime(20.0)
+		--		GameRules:SetCustomGameSetupRemainingTime(20.0)
 	end, "POST", {
 		map = GetMapName(),
 		match_id = self:GetMatchID(),
@@ -722,8 +721,8 @@ function api:RegisterGame(callback)
 	})
 
 	-- call in BP scripts after battlepass_player is set to show mmr medal in loading screen
---	print("ALL PLAYERS LOADED IN!")
---	CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
+	--	print("ALL PLAYERS LOADED IN!")
+	--	CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 end
 
 function api:CompleteGame(successCallback)
@@ -778,7 +777,7 @@ function api:CompleteGame(successCallback)
 			if CUSTOM_GAME_TYPE == "PLS" then
 				for index, score in pairs(Rounds.player_score[id]) do
 					table.insert(leaderboard, index, score)
---					table.insert(leaderboard, tonumber(index), score)
+					--					table.insert(leaderboard, tonumber(index), score)
 				end
 			end
 
@@ -787,12 +786,12 @@ function api:CompleteGame(successCallback)
 				kills_done_to_hero[i] = PlayerResource:GetKillsDoneToHero(id, i)
 			end
 
---			if IsInToolsMode() and id == 0 then
---				print("CompleteGame: Items:", items)
---				print("CompleteGame: Items Bought:", items_bought)
---				print("CompleteGame: Support Items Bought:", PlayerResource:GetSupportItemsBought(id, items_bought))
---				print("CompleteGame: Abilities Level Up Order:", PlayerResource:GetAbilitiesLevelUpOrder(id))
---			end
+			--			if IsInToolsMode() and id == 0 then
+			--				print("CompleteGame: Items:", items)
+			--				print("CompleteGame: Items Bought:", items_bought)
+			--				print("CompleteGame: Support Items Bought:", PlayerResource:GetSupportItemsBought(id, items_bought))
+			--				print("CompleteGame: Abilities Level Up Order:", PlayerResource:GetAbilitiesLevelUpOrder(id))
+			--			end
 
 			local increment_pa_arcana_kills = false
 
@@ -800,7 +799,7 @@ function api:CompleteGame(successCallback)
 				increment_pa_arcana_kills = true
 			end
 
---			print("Player Leaderboard:", leaderboard)
+			--			print("Player Leaderboard:", leaderboard)
 
 			local player = {
 				id = id,
@@ -855,7 +854,7 @@ function api:CompleteGame(successCallback)
 		end
 	end
 
---	print(rosh_lvl, rosh_hp, rosh_max_hp)
+	--	print(rosh_lvl, rosh_hp, rosh_max_hp)
 
 	local payload = {
 		winner = winnerTeam,
@@ -874,35 +873,25 @@ function api:CompleteGame(successCallback)
 	}
 
 	self:Request("game-complete", function(data)
-		print("Game complete successful!")
-		if successCallback ~= nil then
-			successCallback(data, payload)
-		end
-	end,
+			print("Game complete successful!")
+			if successCallback ~= nil then
+				successCallback(data, payload)
+			end
+		end,
 
-	function(data)
-		print("Error on game complete!")
-		print(data)
-		if successCallback ~= nil then
-			successCallback(data, payload)
-		end
-	end, "POST", payload)
-end
-
-function api:DiretideHallOfFame(successCallback, failCallback)
-	self:Request("diretide-score", function(data)
-		if successCallback ~= nil then
-			successCallback(data)
-		end
-	end, failCallback, "POST", {
-		map = GetMapName(),
-	})
+		function(data)
+			print("Error on game complete!")
+			print(data)
+			if successCallback ~= nil then
+				successCallback(data, payload)
+			end
+		end, "POST", payload)
 end
 
 function api:SetCustomGamemode(iValue)
 	if iValue and type(iValue) == "number" then
 		GameRules:SetCustomGameDifficulty(iValue)
-		CustomNetTables:SetTableValue("game_options", "gamemode", {tostring(iValue)})
+		CustomNetTables:SetTableValue("game_options", "gamemode", { tostring(iValue) })
 	else
 		print("ERROR: Value should be a number, not string.")
 		api:SetCustomGamemode(tonumber(iValue))
@@ -978,11 +967,11 @@ function api:SetCompanion(data)
 	}
 
 	api:Request("modify-companion", function(data)
-		Battlepass:DonatorCompanion(player_id, unit_name, true)
-	end,
-	function(data)
-		CustomGameEventManager:Send_ServerToPlayer(player, "change_companion_failure", {})
-	end, "POST", payload)
+			Battlepass:DonatorCompanion(player_id, unit_name, true)
+		end,
+		function(data)
+			CustomGameEventManager:Send_ServerToPlayer(player, "change_companion_failure", {})
+		end, "POST", payload)
 end
 
 function api:GetParties(iPlayerID)
@@ -1000,7 +989,7 @@ end
 
 function api:GenerateGameModeLeaderboard()
 	local round_count = Rounds:GetRoundCount()
---	print("Amount of rounds:", round_count)
+	--	print("Amount of rounds:", round_count)
 
 	self:GetGameModeLeaderboard(1, round_count)
 end
@@ -1010,16 +999,16 @@ function api:GetGameModeLeaderboard(iRound, iMaxRound)
 		self.pls_ranking = {}
 	end
 
-	print("Iterate round "..iRound.."...")
+	print("Iterate round " .. iRound .. "...")
 
 	self:Request("pls_ranking", function(data)
 		self.pls_ranking[iRound] = data.players
 
 		-- if IsInToolsMode() then
-			-- print("GameMode Leaderboard for round "..iRound..":", data.players)
+		-- print("GameMode Leaderboard for round "..iRound..":", data.players)
 		-- end
 
-		print("Leaderboard round "..iRound..": success!")
+		print("Leaderboard round " .. iRound .. ": success!")
 		iRound = iRound + 1
 
 		if iRound < iMaxRound + 1 then
@@ -1028,7 +1017,7 @@ function api:GetGameModeLeaderboard(iRound, iMaxRound)
 			CustomNetTables:SetTableValue("game_options", "GameMode_leaderboard", self.pls_ranking)
 		end
 	end, function()
-		print("Leaderboard round "..iRound..": failure!!!")
+		print("Leaderboard round " .. iRound .. ": failure!!!")
 		iRound = iRound + 1
 
 		if iRound < iMaxRound + 1 then

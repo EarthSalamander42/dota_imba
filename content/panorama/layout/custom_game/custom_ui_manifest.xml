@@ -185,121 +185,7 @@
 		DeBuffBar.style.marginBottom = "40.5%";
 		DeBuffBar.style.marginRight = "29.5%";
 		DeBuffBar.style.flowChildren = "right";
-*/
-		var BattlePassHeroUpsell = PreGame.FindChildTraverse("BattlePassHeroUpsell");
 
-		// Enable Hero bio + Disable not-working Dota Plus feature
-		if (BattlePassHeroUpsell) {
-			BattlePassHeroUpsell.style.visibility = "collapse";
-
-			var FriendsAndFoes = PreGame.FindChildTraverse("FriendsAndFoes");
-
-			if (FriendsAndFoes) {
-				PreGame.FindChildTraverse("FriendsAndFoes").style.height = "205px";
-				PreGame.FindChildTraverse("FriendsAndFoes").style.padding = "0px 0px";
-			}
-
-			var BattlePassHeroData = PreGame.FindChildTraverse("BattlePassHeroData");
-			
-			if (BattlePassHeroData)
-				BattlePassHeroData.style.visibility = "collapse";
-		}
-
-		// Override Versus Screen with IMBA info (Credits: EarthSalamander)
-/*
-		function OverrideVersusScreen() {
-			if (PreGame.FindChildTraverse("VersusScreen2")) {
-				var versus_screen = PreGame.FindChildTraverse("VersusScreen2");
-				var radiant_team_panel = versus_screen.FindChildTraverse("RadiantScene")
-				var dire_team_panel = versus_screen.FindChildTraverse("DireScene")
-				var radiant_hero_name = radiant_team_panel.FindChildTraverse("FeaturedHeroName")
-				var dire_hero_name = dire_team_panel.FindChildTraverse("FeaturedHeroName")
-				var radiant_player = undefined;
-				var dire_player = undefined;
-
-				if (Game.GameStateIsBefore(3) || radiant_hero_name == undefined) {
-					$.Schedule(0.25, OverrideVersusScreen)
-					return;
-				}
-
-				for (var i = 0; i < 24; i++) {
-					if (Game.GetPlayerInfo(i)) {
-//						$.Msg(Game.GetPlayerInfo(i).player_selected_hero + " / " + radiant_hero_name.text)
-						if ($.Localize(Game.GetPlayerInfo(i).player_selected_hero).toUpperCase() == radiant_hero_name.text)
-							radiant_player = Game.GetPlayerInfo(i);
-						if ($.Localize(Game.GetPlayerInfo(i).player_selected_hero).toUpperCase() == dire_hero_name.text)
-							dire_player = Game.GetPlayerInfo(i);
-						if (radiant_player && dire_player)
-							break;
-					}
-				}
-
-//				$.Msg(radiant_player)
-//				$.Msg(dire_player)
-
-				if (radiant_player) {
-					var radiant_ply_table = CustomNetTables.GetTableValue("battlepass_player", radiant_player.player_id);
-
-//					$.Msg(radiant_ply_table)
-
-					if (radiant_ply_table != undefined) {
-						radiant_team_panel.FindChildTraverse("FeaturedHeroPlayerBPLevel").style.visibility = "visible";
-						radiant_team_panel.FindChildTraverse("BPLevel").style.visibility = "visible";
-						radiant_team_panel.FindChildTraverse("BPLevel").style.marginTop = "25px";
-						radiant_team_panel.FindChildTraverse("LevelNumber").text = radiant_ply_table.Lvl;
-
-						if (radiant_ply_table.Lvl > 100) {
-							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
-							radiant_team_panel.FindChildTraverse("LevelNumber").style.textShadow = "0px 0px 6px ultraDarkColor";
-							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/max_shield_icon_psd.vtex")';
-						} else if (radiant_ply_table.Lvl > 75) {
-							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff3d1";
-							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/gold_shield_icon_psd.vtex")';
-						} else if (radiant_ply_table.Lvl > 50) {
-							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
-							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/silver_shield_icon_psd.vtex")';
-						} else if (radiant_ply_table.Lvl > 25) {
-							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
-							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
-						} else if (radiant_ply_table.Lvl > 0) {
-							radiant_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
-							radiant_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
-						}
-					}					
-				}
-
-				if (dire_player != undefined) {
-					var dire_ply_table = CustomNetTables.GetTableValue("battlepass_player", dire_player.player_id);
-
-//					$.Msg(dire_ply_table)
-
-					if (dire_ply_table) {
-						dire_team_panel.FindChildTraverse("FeaturedHeroPlayerBPLevel").style.visibility = "visible";
-						dire_team_panel.FindChildTraverse("BPLevel").style.visibility = "visible";
-						dire_team_panel.FindChildTraverse("BPLevel").style.marginTop = "25px";
-						dire_team_panel.FindChildTraverse("LevelNumber").text = dire_ply_table.Lvl;
-
-						if (dire_ply_table.Lvl > 100) {
-							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
-							dire_team_panel.FindChildTraverse("LevelNumber").style.textShadow = "0px 0px 6px ultraDarkColor";
-							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/max_shield_icon_psd.vtex")';
-						} else if (dire_ply_table.Lvl > 75) {
-							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff3d1";
-							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/gold_shield_icon_psd.vtex")';
-						} else if (dire_ply_table.Lvl > 50) {
-							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#ffffff";
-							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/silver_shield_icon_psd.vtex")';
-						} else if (dire_ply_table.Lvl > 25) {
-							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
-							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
-						} else if (dire_ply_table.Lvl > 0) {
-							dire_team_panel.FindChildTraverse("LevelNumber").style.color = "#fff";
-							dire_team_panel.FindChildTraverse("ShieldBackground").style.backgroundImage = 'url("s2r://panorama/images/compendium/international2019/basic_shield_icon_psd.vtex")';
-						}
-					}
-				}
-			}
-		}
 */
 
 		function PlayHeroTaunt() {
@@ -365,9 +251,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events_vanilla.xml" />
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" />
-		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" /> -->
 
-		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/frostrose_battlepass/battlepass.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
@@ -375,10 +259,6 @@
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" /> -->
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_plus_stats.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/icefrog_donators_popup.xml" />
-
-		<!-- Enable only during diretide -->
-	 	<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" /> -->
-		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/roshan_health_bar.xml" />  -->
 
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.xml" />

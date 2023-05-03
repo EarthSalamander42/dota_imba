@@ -1,4 +1,4 @@
--- Positive Mutations 
+-- Positive Mutations
 POSITIVE_MUTATION_LIST = {}
 POSITIVE_MUTATION_LIST[1] = "killstreak_power"
 POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
@@ -55,7 +55,6 @@ TERRAIN_MUTATION_LIST[4] = "tug_of_war"
 -- NEGATIVE_MUTATION_LIST["the_walking_dead"] = false
 
 -- TERRAIN_MUTATION_LIST["river_fag"] = false
--- TERRAIN_MUTATION_LIST["diretide"] = false
 -- TERRAIN_MUTATION_LIST["void_path"] = false
 -- TERRAIN_MUTATION_LIST["reality_rift"] = false
 -- TERRAIN_MUTATION_LIST["blizzard"] = false

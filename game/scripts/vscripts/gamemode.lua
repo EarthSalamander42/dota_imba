@@ -35,7 +35,6 @@ require('components/courier/init')
 if GetMapName() == "imba_demo" or IsInToolsMode() then
 	require("components/demo/init")
 end
--- require("components/diretide/diretide")
 require('components/gold')
 require('components/hero_selection/init')
 require('components/mutation/init')

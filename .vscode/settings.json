@@ -172,7 +172,10 @@
 		"EmitGlobalSound",
 		"OVERHEAD_ALERT_MANA_ADD",
 		"DOTA_ModifyXP_CreepKill",
-		"EmitSoundOnLocationForAllies"
+		"EmitSoundOnLocationForAllies",
+		"DOTA_ModifyGold_AbandonedRedistribute",
+		"DOTA_ModifyGold_GameTick",
+		"GetTeamHeroKills"
 	],
 	"Lua.hint.await": true,
 	"Lua.semantic.annotation": false,

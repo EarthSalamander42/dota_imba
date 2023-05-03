@@ -159,10 +159,6 @@
 "mutation_river_fag"							"River Fag"
 "mutation_river_fag_Description"				"makes the river impassable without forced movement for heroes."
 
-"mutation_diretide"								"Diretide"
-"mutation_diretide_Description"					"Roshan roams around finding targets, killing the enemy if no candies is given (Candies are dropped from lane/neutral creeps, 30% chance)."
-"mutation_diretide_author"						"76561198015161808"
-
 "mutation_void_path"							"Void Path"
 "mutation_void_path_Description"				""
 

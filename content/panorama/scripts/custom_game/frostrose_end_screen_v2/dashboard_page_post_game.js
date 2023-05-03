@@ -137,85 +137,6 @@ function SetDonatorRow(panel, playerId, player_table) {
 	}
 }
 
-function CreateBattlepassRewardPanel(level, levelup_count) {
-	var battlepass = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
-
-	if (battlepass != undefined && battlepass[level] != undefined) {
-		var battlepass_reward = battlepass[level][1];
-		var battlepass_rarity = battlepass[level][2];
-//		$.Msg("Earned a reward:")
-//		$.Msg(level)
-//		$.Msg(battlepass_reward)
-//		$.Msg(battlepass_rarity)
-
-		var rp = $.CreatePanel("Panel", $("#RewardContainer"), "es-player-reward-container" + level);
-		rp.AddClass("es-player-reward-container");
-		rp.AddClass("es-player-reward");
-
-		var rewards = {
-			desc: $.CreatePanel("Label", rp, "es-player-reward-description" + level),
-			name: $.CreatePanel("Label", rp, "es-player-reward-name" + level),
-			rarity: $.CreatePanel("Label", rp, "es-player-reward-rarity" + level),
-			image: $.CreatePanel("Panel", rp, "es-player-reward-image" + level),
-			button: $.CreatePanel("Button", rp, "es-player-reward-button" + level),
-		};
-
-		rewards.desc.AddClass("es-player-reward-description")
-		rewards.name.AddClass("es-player-reward-name")
-		rewards.rarity.AddClass("es-player-reward-rarity")
-		rewards.image.AddClass("es-player-reward-image")
-		rewards.button.AddClass("es-player-reward-button")
-		rewards.button.SetPanelEvent("onactivate", function() {
-			rp.style.visibility = "collapse"
-		});
-
-		var button_label = $.CreatePanel("Label", rewards.button, "es-player-reward-button_label" + level)
-		button_label.AddClass("es-player-reward-button_label");
-		button_label.text = "Accept";
-
-		if (Game.IsInToolsMode()) {
-			rp.RemoveClass("level-common");
-			rp.RemoveClass("level-uncommon");
-			rp.RemoveClass("level-rare");
-			rp.RemoveClass("level-mythical");
-			rp.RemoveClass("level-legendary");
-			rp.RemoveClass("level-immortal");
-			rp.RemoveClass("level-arcana");
-			rp.RemoveClass("level-ancient");
-			rewards.rarity.RemoveClass("common");
-			rewards.rarity.RemoveClass("uncommon");
-			rewards.rarity.RemoveClass("rare");
-			rewards.rarity.RemoveClass("mythical");
-			rewards.rarity.RemoveClass("legendary");
-			rewards.rarity.RemoveClass("immortal");
-			rewards.rarity.RemoveClass("arcana");
-			rewards.rarity.RemoveClass("ancient");
-		}
-
-		rp.style.visibility = 'visible';
-		rewards.desc.text = $.Localize("#battlepass_reward_description") + " " + level;
-		rewards.name.text = $.Localize("#battlepass_" + battlepass_reward);
-		rewards.rarity.AddClass(battlepass_rarity);
-		rewards.rarity.text = battlepass_rarity;
-		rewards.image.style.backgroundImage = 'url("file://{resources}/images/custom_game/battlepass/' + battlepass_reward + '.png")';
-		rewards.image.style.backgroundSize = 'cover';
-
-		rp.AddClass('level-' + battlepass_rarity);
-
-		var sound_name = {};
-		sound_name["common"] = "Loot_Drop_Sfx";
-		sound_name["uncommon"] = "Loot_Drop_Stinger_Uncommon";
-		sound_name["rare"] = "Loot_Drop_Stinger_Rare";
-		sound_name["mythical"] = "Loot_Drop_Stinger_Mythical";
-		sound_name["legendary"] = "Loot_Drop_Stinger_Legendary";
-		sound_name["immortal"] = "Loot_Drop_Stinger_Immortal";
-		sound_name["arcana"] = "Loot_Drop_Stinger_Arcana";
-		sound_name["ancient"] = "Loot_Drop_Stinger_Ancient";
-
-		Game.EmitSound(sound_name[battlepass_rarity])
-	}
-}
-
 function EndScoreboard(args) {
 	$.Msg(args);
 	// Whenever data is available, hide loading panel and show actual end screen panel
@@ -502,17 +423,6 @@ function EndScoreboard(args) {
 
 						if (levelup_count >= 1) {
 							panel_progress_bar.GetParent().AddClass("level-up");						
-						}
-
-						if (player_info.player_id == Players.GetLocalPlayer()) {
-							for (var i = 1; i <= levelup_count; i++) {
-								var level = player_table.Lvl + i;
-								// Comment me please
-//								if (Game.IsInToolsMode())
-//									var level = 0 + i;
-
-								CreateBattlepassRewardPanel(level, i);
-							}
 						}
 					}
 				} else if (xpDiff < 0) {

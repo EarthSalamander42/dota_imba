@@ -1,7 +1,7 @@
 ListenToGameEvent('game_rules_state_change', function()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		api:DetectParties()
-		CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
+		CustomNetTables:SetTableValue("game_options", "game_count", { value = 1 })
 
 		api:RegisterGame(function(data)
 			print("Register game...")
@@ -19,9 +19,9 @@ ListenToGameEvent('game_rules_state_change', function()
 
 			if CUSTOM_GAME_TYPE == "IMBA" then
 				-- GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("anti_stacks_fucker"), function()
-					-- TeamOrdering:OnPlayersLoaded()
+				-- TeamOrdering:OnPlayersLoaded()
 
-					-- return nil
+				-- return nil
 				-- end, 3.0)
 			elseif CUSTOM_GAME_TYPE == "PLS" then
 				api:GenerateGameModeLeaderboard()
@@ -39,20 +39,6 @@ ListenToGameEvent('game_rules_state_change', function()
 			CustomNetTables:SetTableValue("game_options", "parties", api.parties)
 		end
 
-		if CUSTOM_GAME_TYPE == "IMBA" then
-			if api:GetCustomGamemode() == 4 then
-				api:DiretideHallOfFame(
-					function(data)
-						CustomNetTables:SetTableValue("battlepass", "leaderboard_diretide", {data = data})
-					end,
-
-					function(data)
-						print("FAIL:", data)
-					end
-				)
-			end
-		end
-
 		Timers:CreateTimer(function()
 			api:CheatDetector()
 
@@ -66,12 +52,6 @@ ListenToGameEvent('game_rules_state_change', function()
 end, nil)
 
 function api:OnGameEnd()
-	if CUSTOM_GAME_TYPE == "IMBA" then
-		if api:GetCustomGamemode() == 4 then
-			CustomGameEventManager:Send_ServerToAllClients("diretide_hall_of_fame", {})
-		end
-	end
-
 	api:CompleteGame(function(data, payload)
 		-- print(data)
 		-- print(payload)
@@ -98,9 +78,9 @@ ListenToGameEvent('dota_item_purchased', function(event)
 		PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
 	end
 
---	if not PlayerResource.ItemTimer then PlayerResource.ItemTimer = {} end
+	--	if not PlayerResource.ItemTimer then PlayerResource.ItemTimer = {} end
 
---	PlayerResource.ItemTimer = Timers:CreateTimer(10.0, CheckIfItemSold(event))
+	--	PlayerResource.ItemTimer = Timers:CreateTimer(10.0, CheckIfItemSold(event))
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("check_item_sold"), function()
 		if hero and not hero:IsNull() and IsValidEntity(hero) and hero:HasItemInInventory(event.itemname) then
 			PlayerResource:StoreItemBought(event.PlayerID, event.itemname)
