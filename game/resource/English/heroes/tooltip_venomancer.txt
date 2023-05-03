@@ -33,7 +33,7 @@
 
 // Venomancer's Plague Wards
 "DOTA_Tooltip_ability_imba_venomancer_plague_ward"                      "Plague Wards"
-"DOTA_Tooltip_ability_imba_venomancer_plague_ward_Description"          "Summons <font color='#FF7800'>%plague_count%</font> plague wards to attack enemy units and structures. The ward is immune to magic.\n<font color='#FF7800'>Scourge Ward:</font> Also summons a Scourge Ward, which has increased stats.\n<font color='#FF7800'>Unruly Growth:</font> Scourge Ward is invulnerable as long its attached Plague Wards are not destroyed.\n<font color='#E03E2E'>This ability is not affected by Frantic's cooldown reduction.</font>"
+"DOTA_Tooltip_ability_imba_venomancer_plague_ward_Description"          "Summons <font color='#FF7800'>%plague_count%</font> plague wards to attack enemy units and structures. The ward is immune to magic.\n<font color='#FF7800'>Scourge Ward:</font> Also summons a Scourge Ward, which has increased stats.\n<font color='#FF7800'>Unruly Growth:</font> Scourge Ward is invulnerable as long its attached Plague Wards are not destroyed."
 "DOTA_Tooltip_ability_imba_venomancer_plague_ward_Lore"                "A mixture of his old herbalist talents and newfound toxic mastery creates a living embodiment of plague."
 "DOTA_Tooltip_ability_imba_venomancer_plague_ward_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_venomancer_plague_ward_scourge_hp"          "SCOURGE WARD HEALTH:"

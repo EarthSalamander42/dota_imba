@@ -371,7 +371,7 @@
 
 "DOTA_Tooltip_ability_doom_bringer_devour_Description"				"Consumes an enemy or neutral creep, acquiring any special abilities that it possessed.\nIf auto-cast is turned off, Doom will not acquire the consumed creep's abilities."
 
-"DOTA_Tooltip_ability_legion_commander_duel_Description"				"Legion Commander and the target enemy hero are forced to attack each other for a short duration.  Neither hero can use items or abilities.  If either hero dies during the duration, the hero winning the Duel gains permanent bonus damage.\n<font color='#00FF00'>Duel is not affected by Frantic's status resistance.</font>"
+"DOTA_Tooltip_ability_legion_commander_duel_Description"				"Legion Commander and the target enemy hero are forced to attack each other for a short duration.  Neither hero can use items or abilities.  If either hero dies during the duration, the hero winning the Duel gains permanent bonus damage."
 
 "DOTA_Tooltip_ability_item_helm_of_the_undying_Description"		"<h1>Passive: Death Delay</h1> Survive for an extra %duration% seconds after receiving a killing blow.\n<font color='#FF0000'>For every %health_damage_pct_threshold%%% of the item holder's max health as damage they receive during Death Delay, its duration is reduced by %duration_reduction_per_threshold% second. Includes the damage instance that dealt the initial killing blow.</font>"
 

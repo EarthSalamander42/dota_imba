@@ -173,48 +173,6 @@ function GameMode:ModifierFilter(keys)
 			modifier_ability = EntIndexToHScript(keys.entindex_ability_const)
 		end
 
-		-- This is causing too much grief with having to use SetDuration to just override times due to this filter not respecting refreshes, so I'm just going to nuke this once and for all and work from there...
-		-- if modifier_owner ~= nil then
-		-- modifier_class = modifier_owner:FindModifierByName(modifier_name)
-		-- if modifier_class == nil then return end
-
-		-- -- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
-		-- local ignore_frantic = false
-
-		-- for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
-		-- if modifier == modifier_name then
-		-- ignore_frantic = true
-		-- end
-		-- end
-
-		-- if keys.entindex_ability_const and modifier_ability.GetAbilityName then
-		-- if ignore_frantic == false and string.find(modifier_ability:GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
-		-- local original_duration = keys.duration
-		-- local actual_duration = original_duration
-		-- local status_resistance = modifier_owner:GetStatusResistance()
-		-- --					print("Old duration:", actual_duration)
-
-		-- if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
-		-- actual_duration = actual_duration * (1 - status_resistance)
-		-- end
-
-		-- --					print("New duration:", actual_duration)
-
-		-- keys.duration = actual_duration
-		-- else
-		-- -- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
-		-- if ignore_frantic == true then
-		-- local original_duration = keys.duration
-		-- local actual_duration = original_duration
-		-- local status_resistance = modifier_owner:GetStatusResistance()
-
-		-- actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
-		-- keys.duration = actual_duration
-		-- end
-		-- end
-		-- end
-		-- end
-
 		-- volvo bugfix
 		if modifier_name == "modifier_datadriven" then
 			return false
@@ -265,19 +223,6 @@ function GameMode:ModifierFilter(keys)
 		-- end
 		-- end
 		-- end
-
-		-- Tried some fancy stuff in the frantic file but you cannot properly override vanilla durations so I will do it here for Legion Commander's Duel
-		-- Because Duel ends if either of the modifiers (on caster and target) ends, we need a way to equalize the durations even if the two units have differing status resistance
-		-- Because Duel first applies a modifier on the target, I will use it to store the proper duration to set it to, and use that for the caster duration
-		if modifier_name == "modifier_legion_commander_duel" and keys.duration > 0 then
-			if modifier_owner:HasModifier("modifier_frantic") and not modifier_ability.frantic_adjusted_duration then
-				modifier_ability.frantic_adjusted_duration = keys.duration / ((100 - modifier_owner:FindModifierByName("modifier_frantic"):GetStackCount()) / 100)
-				keys.duration = modifier_ability.frantic_adjusted_duration
-			elseif modifier_ability.frantic_adjusted_duration then
-				keys.duration = modifier_ability.frantic_adjusted_duration
-				modifier_ability.frantic_adjusted_duration = nil
-			end
-		end
 
 		-- Bringing Helm of the Undying back but giving it Wraith King's Reincarnation Wraith mechanics for balance
 		if modifier_name == "modifier_item_helm_of_the_undying_active" then

@@ -1010,7 +1010,7 @@
 "DOTA_Tooltip_modifier_imba_martyrs_mark_Description"                  "Increased chances of getting struck by subsequent Martyr Strikes."
 
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723"									"Tricks of the Trade"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Description"						"Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed.\n<font color='#E03E2E'>This ability is not affected by Frantic's cooldown reduction.</font>"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Description"						"Riki phases out of the world while striking randomy enemy units from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on %martyr_aspd_pct%%% of the caster's attack speed."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_scepter_description"				"Increases duration, attacks, cast range and allows you to target an allied hero, hiding inside them for the duration."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Lore"							"The Stealth Assassin is not afraid to fight dirty, and specializes in attacking his opponents from behind."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_723_Note0"							"Moving while phased out will cancel the ability."

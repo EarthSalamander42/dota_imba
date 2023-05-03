@@ -247,13 +247,6 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 							alchemy_bounty = current_bounty
 						end
 
-						-- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
-						if api:GetCustomGamemode() > 1 then
-							local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
-							-- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
-							alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
-						end
-
 						hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
 						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
 

@@ -6,7 +6,7 @@ ListenToGameEvent('npc_spawned', function(keys)
 			npc.first_spawn_mutation = true
 
 			if IMBA_MUTATION["terrain"] == "speed_freaks" then
-				npc:AddNewModifier(npc, nil, "modifier_mutation_speed_freaks", {projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED})
+				npc:AddNewModifier(npc, nil, "modifier_mutation_speed_freaks", { projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED })
 			end
 		end
 
@@ -18,7 +18,7 @@ ListenToGameEvent('npc_spawned', function(keys)
 	if hero:GetUnitName() == FORCE_PICKED_HERO then return end
 
 	if hero.first_spawn_mutation == true then
---		print("Mutation: On Hero Respawned")
+		--		print("Mutation: On Hero Respawned")
 
 		if IMBA_MUTATION["positive"] == "teammate_resurrection" then
 			if hero.tombstone_fx then
@@ -43,15 +43,13 @@ ListenToGameEvent('npc_spawned', function(keys)
 				Mutation:ARDMReplacehero(hero)
 				return
 			else
---				print("hero is reincarnating, don't change hero!")
+				--				print("hero is reincarnating, don't change hero!")
 				return
 			end
 		end
 	else
---		print("Mutation: On Hero First Spawn")
+		--		print("Mutation: On Hero First Spawn")
 		hero.first_spawn_mutation = true
-
-		hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_FRANTIC_VALUE)
 
 		if IMBA_MUTATION["positive"] == "killstreak_power" then
 			hero:AddNewModifier(hero, nil, "modifier_mutation_kill_streak_power", {})
@@ -94,7 +92,7 @@ ListenToGameEvent('npc_spawned', function(keys)
 		end
 
 		if IMBA_MUTATION["terrain"] == "speed_freaks" then
-			hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = _G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED})
+			hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", { projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = _G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED })
 		elseif IMBA_MUTATION["terrain"] == "river_flows" then
 			hero:AddNewModifier(hero, nil, "modifier_mutation_river_flows", {})
 		elseif IMBA_MUTATION["terrain"] == "hyper_blink" then
@@ -110,20 +108,20 @@ ListenToGameEvent('player_connect_full', function(keys)
 
 	-- Reinitialize the player's pick screen panorama, if necessary
 	Timers:CreateTimer(function()
---		print(PlayerResource:GetSelectedHeroEntity(playerID))
+		--		print(PlayerResource:GetSelectedHeroEntity(playerID))
 
 		if PlayerResource:GetSelectedHeroEntity(playerID) then
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "send_mutations", IMBA_MUTATION)
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "update_mutations", {})
 		else
---			print("Not fully reconnected yet:", playerID)
+			--			print("Not fully reconnected yet:", playerID)
 			return 0.1
 		end
 	end)
 end, nil)
 
 ListenToGameEvent('entity_killed', function(keys)
---	print("Mutation: On Hero Dead")
+	--	print("Mutation: On Hero Dead")
 
 	-- The Unit that was killed
 	local killed_unit = EntIndexToHScript(keys.entindex_killed)
@@ -133,7 +131,7 @@ ListenToGameEvent('entity_killed', function(keys)
 		if IMBA_MUTATION["terrain"] == "tug_of_war" then
 			if killed_unit:GetUnitName() == "npc_dota_mutation_golem" then
 				IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT = IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT + 1
-				CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT})
+				CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], { IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT })
 				CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 			end
 		end
@@ -153,7 +151,7 @@ ListenToGameEvent('entity_killed', function(keys)
 	if IMBA_MUTATION["positive"] == "teammate_resurrection" then
 		if hero:IsReincarnating() then
 			print("Hero is reincarnating!")
-			hero.reincarnation = true 
+			hero.reincarnation = true
 		else
 			local newItem = CreateItem("item_tombstone", hero, hero)
 			newItem:SetPurchaseTime(0)
@@ -164,12 +162,15 @@ ListenToGameEvent('entity_killed', function(keys)
 			tombstone:SetAngles(0, RandomFloat(0, 360), 0)
 			FindClearSpaceForUnit(tombstone, hero:GetAbsOrigin(), true)
 
-			hero.tombstone_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/holdout_borrowed_time_"..hero:GetTeamNumber()..".vpcf", PATTACH_ABSORIGIN_FOLLOW, tombstone)
+			hero.tombstone_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/holdout_borrowed_time_" .. hero:GetTeamNumber() .. ".vpcf", PATTACH_ABSORIGIN_FOLLOW, tombstone)
 		end
 	end
 
 	if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
-		if hero:IsReincarnating() then print("hero is reincarnating, don't count down respawn count!") return end
+		if hero:IsReincarnating() then
+			print("hero is reincarnating, don't count down respawn count!")
+			return
+		end
 		IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] = IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] - 1
 
 		if IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] < 0 then
@@ -177,7 +178,7 @@ ListenToGameEvent('entity_killed', function(keys)
 		end
 
 		if IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] == 0 then
---			print("hero respawn disabled!")
+			--			print("hero respawn disabled!")
 			hero:SetRespawnsDisabled(true)
 			hero:SetTimeUntilRespawn(-1)
 
@@ -186,7 +187,7 @@ ListenToGameEvent('entity_killed', function(keys)
 				for _, alive_hero in pairs(HeroList:GetAllHeroes()) do
 					if hero:GetTeamNumber() == alive_hero:GetTeamNumber() then
 						if alive_hero:IsAlive() then
---							print("A hero is still alive!")
+							--							print("A hero is still alive!")
 							end_game = false
 							break
 						end
@@ -206,20 +207,20 @@ ListenToGameEvent('entity_killed', function(keys)
 			end)
 		end
 
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {IMBA_MUTATION_ARDM_RESPAWN_SCORE[2], IMBA_MUTATION_ARDM_RESPAWN_SCORE[3]})
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], { IMBA_MUTATION_ARDM_RESPAWN_SCORE[2], IMBA_MUTATION_ARDM_RESPAWN_SCORE[3] })
 		CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 	end
 
---	if IMBA_MUTATION["negative"] == "death_gold_drop" then
---		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
---		local random_int = RandomInt(30, 60)
---		local newItem = CreateItem("item_bag_of_gold", nil, nil)
---		newItem:SetPurchaseTime(0)
---		newItem:SetCurrentCharges(random_int * game_time)
+	--	if IMBA_MUTATION["negative"] == "death_gold_drop" then
+	--		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
+	--		local random_int = RandomInt(30, 60)
+	--		local newItem = CreateItem("item_bag_of_gold", nil, nil)
+	--		newItem:SetPurchaseTime(0)
+	--		newItem:SetCurrentCharges(random_int * game_time)
 
---		local drop = CreateItemOnPositionSync(hero:GetAbsOrigin(), newItem)
---		local dropTarget = hero:GetAbsOrigin() + RandomVector(RandomFloat( 50, 150 ))
---		newItem:LaunchLoot(true, 300, 0.75, dropTarget)
---		EmitSoundOn("Dungeon.TreasureItemDrop", hero)
---	end
+	--		local drop = CreateItemOnPositionSync(hero:GetAbsOrigin(), newItem)
+	--		local dropTarget = hero:GetAbsOrigin() + RandomVector(RandomFloat( 50, 150 ))
+	--		newItem:LaunchLoot(true, 300, 0.75, dropTarget)
+	--		EmitSoundOn("Dungeon.TreasureItemDrop", hero)
+	--	end
 end, nil)

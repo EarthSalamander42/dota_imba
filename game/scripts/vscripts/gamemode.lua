@@ -6,8 +6,8 @@ end
 require('addon_init')
 
 require('components/api/init')
-if IsInToolsMode() then -- might lag a bit and backend to get errors not working yet
---	require('internal/eventtest')
+if IsInToolsMode() then       -- might lag a bit and backend to get errors not working yet
+	--	require('internal/eventtest')
 	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 end
 
@@ -31,20 +31,17 @@ require('internal/events')
 -- add components below the api
 VANILLA_ABILITIES_BASECLASS = require('components/abilities/vanilla_baseclass')
 -- require('components/abandon')
--- require('components/battlepass/init')
--- require('components/chat_wheel/init')
 require('components/courier/init')
 if GetMapName() == "imba_demo" or IsInToolsMode() then
 	require("components/demo/init")
 end
-require("components/frantic/init")
 -- require("components/diretide/diretide")
 require('components/gold')
 require('components/hero_selection/init')
 require('components/mutation/init')
 require('components/neutral_creeps/init')
 require('components/respawn_timer') -- Respawn time system override
-require('components/runes') -- Rune system override
+require('components/runes')         -- Rune system override
 require('components/settings/settings')
 -- require('components/new_team_selection')
 require('components/tooltips/init')
@@ -60,7 +57,7 @@ require('libraries/astar')
 
 -- Use this function as much as possible over the regular Precache (this is Async Precache)
 function GameMode:PostLoadPrecache()
-	
+
 end
 
 function GameMode:OnFirstPlayerLoaded()
@@ -142,7 +139,7 @@ function GameMode:SetupFountains()
 end
 
 function GameMode:SetupShrines()
---	LinkLuaModifier("modifier_imba_shrine_passive_aura", "components/modifiers/modifier_imba_shrine_passive.lua", LUA_MODIFIER_MOTION_NONE)
+	--	LinkLuaModifier("modifier_imba_shrine_passive_aura", "components/modifiers/modifier_imba_shrine_passive.lua", LUA_MODIFIER_MOTION_NONE)
 
 	-- replace 3 base fillers with shrines
 	local good_fillers = {
@@ -164,7 +161,7 @@ function GameMode:SetupShrines()
 			filler:RemoveSelf()
 			local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
 			shrine:SetAbsOrigin(abs)
---			shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
+			--			shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
 		end
 	end
 
@@ -175,7 +172,7 @@ function GameMode:SetupShrines()
 			filler:RemoveSelf()
 			local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
 			shrine:SetAbsOrigin(abs)
---			shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
+			--			shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
 		end
 	end
 
@@ -188,17 +185,17 @@ function GameMode:SetupShrines()
 		Vector(3200, -840, 240),
 	}
 
-	for _, pos in pairs(good_shrine_position) do 
+	for _, pos in pairs(good_shrine_position) do
 		local shrine = CreateUnitByName("npc_dota_goodguys_healers", pos, true, nil, nil, 2)
 		shrine:SetAbsOrigin(pos)
---		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
+		--		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
 
 		-- Removing the backdoor protection ability makes the Sancturary ability hidden for some reason -_-
 		-- -- Don't give jungle shrines backdoor protection
 		-- if shrine:HasAbility("backdoor_protection_in_base") then
-			-- shrine:RemoveAbility("backdoor_protection_in_base")
+		-- shrine:RemoveAbility("backdoor_protection_in_base")
 		-- end
-		
+
 		local find_trees = GridNav:GetAllTreesAroundPoint(pos, 100, true)
 
 		for _, tree in pairs(find_trees) do
@@ -210,17 +207,17 @@ function GameMode:SetupShrines()
 		AddFOWViewer(3, pos, 300, 1.0, false)
 	end
 
-	for _, pos in pairs(bad_shrine_position) do 
+	for _, pos in pairs(bad_shrine_position) do
 		local shrine = CreateUnitByName("npc_dota_badguys_healers", pos, true, nil, nil, 3)
 		shrine:SetAbsOrigin(pos)
---		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
+		--		shrine:AddNewModifier(shrine, shrine:FindAbilityByName("filler_ability"), "modifier_imba_shrine_passive_aura", {})
 
 		-- Removing the backdoor protection ability makes the Sancturary ability hidden for some reason -_-
 		-- -- Don't give jungle shrines backdoor protection
 		-- if shrine:HasAbility("backdoor_protection_in_base") then
-			-- shrine:RemoveAbility("backdoor_protection_in_base")
+		-- shrine:RemoveAbility("backdoor_protection_in_base")
 		-- end
-		
+
 		local find_trees = GridNav:GetAllTreesAroundPoint(pos, 100, true)
 
 		for _, tree in pairs(find_trees) do
@@ -288,10 +285,10 @@ function GameMode:SetupContributors()
 
 			local pedestal = CreateUnitByName(pedestal_name, abs, true, nil, nil, team)
 			pedestal:AddNewModifier(pedestal, nil, "modifier_contributor_statue", {})
---			if not string.find(filler:GetName(), "6") or not string.find(filler:GetName(), "7") then
-				pedestal:SetAbsOrigin(abs + Vector(0, 0, 45))
-				filler.pedestal = pedestal
---			end
+			--			if not string.find(filler:GetName(), "6") or not string.find(filler:GetName(), "7") then
+			pedestal:SetAbsOrigin(abs + Vector(0, 0, 45))
+			filler.pedestal = pedestal
+			--			end
 		end
 	end
 end
@@ -353,7 +350,6 @@ function GameMode:SetupContributors()
 	end
 end
 --]]
-
 function GameMode:SetupFrostivus()
 	if Entities:FindByName(nil, "radiant_greevil") then
 		local greevil = CreateUnitByName("npc_imba_greevil_radiant", Entities:FindByName(nil, "radiant_greevil"):GetAbsOrigin(), true, nil, nil, 2)
@@ -364,7 +360,7 @@ function GameMode:SetupFrostivus()
 	end
 end
 
--- new system, double votes for donators 
+-- new system, double votes for donators
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- If no one voted, default to IMBA 10v10 gamemode
@@ -380,7 +376,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				local gamemode = vote[1]
 				local vote_count = vote[2]
 				if not voteCounts[vote[1]] then voteCounts[vote[1]] = 0 end
---				print(pid, vote[1], vote[2])
+				--				print(pid, vote[1], vote[2])
 				voteCounts[vote[1]] = voteCounts[vote[1]] + vote[2]
 			end
 
@@ -388,7 +384,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			local highest_vote = 0
 			local highest_key = ""
 			for k, v in pairs(voteCounts) do
---				print(k, v)
+				--				print(k, v)
 				if v > highest_vote then
 					highest_key = k
 					highest_vote = v
@@ -406,7 +402,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 			-- Resolve a tie by selecting a random value from those with the highest votes
 			if table.getn(tieTable) > 1 then
---				print("Vote System: TIE!")
+				--				print("Vote System: TIE!")
 				highest_key = tieTable[math.random(table.getn(tieTable))]
 			end
 
@@ -415,7 +411,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				api:SetCustomGamemode(highest_key)
 			end
 
---			print(category .. ": " .. highest_key)
+			--			print(category .. ": " .. highest_key)
 		end
 	end
 end, nil)
@@ -432,7 +428,7 @@ donator_list[9] = 3 -- Gaben Donator
 function GameMode:OnSettingVote(keys)
 	local pid = keys.PlayerID
 
---	print(keys)
+	--	print(keys)
 
 	if not GameMode.VoteTable then GameMode.VoteTable = {} end
 	if not GameMode.VoteTable[keys.category] then GameMode.VoteTable[keys.category] = {} end
@@ -449,11 +445,11 @@ function GameMode:OnSettingVote(keys)
 		end
 	end
 
---	Say(nil, keys.category, false)
---	Say(nil, tostring(keys.vote), false)
+	--	Say(nil, keys.category, false)
+	--	Say(nil, tostring(keys.vote), false)
 
 	-- TODO: Finish votes show up
-	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
+	CustomGameEventManager:Send_ServerToAllClients("send_votes", { category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category] })
 end
 
 -- Custom game-modes as per api:GetCustomGamemode():
@@ -465,11 +461,11 @@ end
 
 function GameMode:SetSameHeroSelection(bEnabled)
 	GameRules:SetSameHeroSelectionEnabled(bEnabled)
-	CustomNetTables:SetTableValue("game_options", "same_hero_pick", {value = bEnabled})
+	CustomNetTables:SetTableValue("game_options", "same_hero_pick", { value = bEnabled })
 end
 
 function GameMode:PreventBannedHeroToBeRandomed(keys)
---	print(keys)
+	--	print(keys)
 	local hero_name = PlayerResource:GetSelectedHeroName(keys.iPlayerID)
 
 	if hero_name and api:IsHeroDisabled(hero_name) or keys.bIMBA == 1 then
@@ -503,7 +499,7 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 			end
 		end
 
---		print(hero_table)
+		--		print(hero_table)
 
 		local new_hero = hero_table[RandomInt(1, #hero_table)]
 
@@ -546,7 +542,7 @@ function GameMode:OnPartyVote(keys)
 	end
 
 	if votes_count >= PlayerResource:GetPlayerCount() or IsInToolsMode() and PARTIES_ALLOWED == false then
-		CustomGameEventManager:Send_ServerToAllClients("setup_loading_screen", {value = "visible"})
+		CustomGameEventManager:Send_ServerToAllClients("setup_loading_screen", { value = "visible" })
 		PARTIES_ALLOWED = true
 	end
 

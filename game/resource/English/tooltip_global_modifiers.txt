@@ -55,9 +55,6 @@
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff"				"Shadow Dance"
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"	"Regenerate health and mana slightly faster when not in vision of the enemy."
 
-"DOTA_Tooltip_modifier_frantic"									"Frantic"
-"DOTA_Tooltip_modifier_frantic_Description"						"%dMODIFIER_PROPERTY_MANACOST_PERCENTAGE%%% Cooldown Reduction, Mana Cost, Status Resistance and Respawn Time reduction. Cooldown reduction and mana cost reduction does not stack with items, but does stack with talents."
-
 "DOTA_Tooltip_modifier_mutation_danger_zone"					"Call Down"
 "DOTA_Tooltip_modifier_mutation_danger_zone_Description"		"Rockets periodically fall onto the battlefield. Watch out!"
 

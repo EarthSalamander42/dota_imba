@@ -15,7 +15,7 @@ local function CalculateReaperScytheRespawnReduction(killer, hero, respawn_time)
 			if killer:HasAbility("imba_necrolyte_reapers_scythe") then
 				local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
 				-- Sometimes the killer is not actually Necrophos due to the respawn modifier lingering on a target, which makes reaper_scythe nil and causes massive problems
-	--			print("Killed by Reaper Scythe!", reaper_scythe, respawn_time + reaper_scythe)
+				--			print("Killed by Reaper Scythe!", reaper_scythe, respawn_time + reaper_scythe)
 				if not reaper_scythe then
 					reaper_scythe = 0
 				end
@@ -68,7 +68,7 @@ ListenToGameEvent('entity_killed', function(keys)
 	-- undying reincarnation talent fix
 	if hero:HasModifier("modifier_special_bonus_reincarnation") then
 		if not hero.undying_respawn_timer or hero.undying_respawn_timer == 0 then
---			print(hero:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
+			--			print(hero:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
 			hero:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
 			hero.undying_respawn_timer = 200
 			return
@@ -91,21 +91,21 @@ ListenToGameEvent('entity_killed', function(keys)
 			respawn_time = math.min(RESPAWN_TIME_VANILLA[hero:GetLevel()] / 100 * IMBA_RESPAWN_TIME_PCT, IMBA_MAX_RESPAWN_TIME)
 		end
 
---		print("Respawn time:", respawn_time)
+		--		print("Respawn time:", respawn_time)
 
 		-- Increase respawn timer if dead by Reaper's Scythe
---		print("Reaper Scythe respawn time increase:", CalculateReaperScytheRespawnReduction(killer, hero, respawn_time))
+		--		print("Reaper Scythe respawn time increase:", CalculateReaperScytheRespawnReduction(killer, hero, respawn_time))
 		respawn_time = respawn_time + CalculateReaperScytheRespawnReduction(killer, hero, respawn_time)
 
 		-- Fetch decreased respawn timer due to Bloodstone charges
---		print("Bloodstone charges respawn time decrease:", CalculateBloodstoneRespawnReduction(hero, respawn_time))
+		--		print("Bloodstone charges respawn time decrease:", CalculateBloodstoneRespawnReduction(hero, respawn_time))
 		respawn_time = math.max(respawn_time - CalculateBloodstoneRespawnReduction(hero, respawn_time), 1)
 
 		-- Adjust respawn time for Wraith King's Reincarnation Passive Respawn Reduction
---		print("Wraith King respawn time decrease:", CalculateSkeletonKingRespawnReduction(hero, respawn_time))
+		--		print("Wraith King respawn time decrease:", CalculateSkeletonKingRespawnReduction(hero, respawn_time))
 		respawn_time = math.max(respawn_time - CalculateSkeletonKingRespawnReduction(hero, respawn_time), 1)
 
---		print("Respawn time:", respawn_time)
+		--		print("Respawn time:", respawn_time)
 
 		-- this fail-safe is probably not necessary, but i don't wanna hear about that high respawn time bug anymore. Ever.
 		if respawn_time == nil or not respawn_time then
@@ -116,25 +116,15 @@ ListenToGameEvent('entity_killed', function(keys)
 
 			return
 		else
---			print("Set time until respawn for unit " .. tostring(hero:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
-
---[[
-			if hero:HasModifier("modifier_frantic") and (respawn_time * IMBA_FRANTIC_RESPAWN_REDUCTION_PCT / 100) > 1 then
-				local respawn_time_reduction = respawn_time * IMBA_FRANTIC_RESPAWN_REDUCTION_PCT / 100
---				print("Respawn time reduction:", respawn_time_reduction)
-
-				respawn_time = respawn_time - respawn_time_reduction
---				print("Respawn time (frantic):", respawn_time)
-			end
---]]
+			--			print("Set time until respawn for unit " .. tostring(hero:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
 
 			if hero:HasModifier("modifier_buyback_penalty") and BUYBACK_RESPAWN_PENALTY then
 				respawn_time = respawn_time + BUYBACK_RESPAWN_PENALTY
-				
+
 				hero:RemoveModifierByName("modifier_buyback_penalty")
 			end
 
---			print("Respawn time:", respawn_time)
+			--			print("Respawn time:", respawn_time)
 
 			hero:SetTimeUntilRespawn(respawn_time)
 

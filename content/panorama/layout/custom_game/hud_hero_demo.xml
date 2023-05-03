@@ -205,11 +205,6 @@
 							</ToggleButton>
 						</Panel>
 						<Panel class="Row">
-							<ToggleButton class="DemoButton" onactivate="FireCustomGameEvent_Str( FranticButtonPressed )">
-								<Label text="#Frantic_Button"/>
-							</ToggleButton>
-						</Panel>
-						<Panel class="Row">
 							<Button class="DemoButton" onactivate="FireCustomGameEvent_Str( LevelUpButtonPressed )">
 								<Label text="#LevelUp_Button"/>
 							</Button>

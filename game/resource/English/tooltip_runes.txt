@@ -83,10 +83,10 @@
 "DOTA_Tooltip_modifier_imba_frost_rune_slow_Description"			"Attack and movespeed slowed by 100/20%%."
 
 "DOTA_Tooltip_modifier_imba_arcane_rune"							"Archmage Soul"
-"DOTA_Tooltip_modifier_imba_arcane_rune_Description"				"Reduces cooldowns by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% and manacosts by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% (does not stack with frantic).<br>Increases spell amp by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%% and cast speed by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_arcane_rune_Description"				"Reduces cooldowns by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% and manacosts by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%%.<br>Increases spell amp by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%% and cast speed by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%%%."
 
 "DOTA_Tooltip_modifier_imba_arcane_rune_aura"						"Archmage Soul"
-"DOTA_Tooltip_modifier_imba_arcane_rune_aura_Description"			"Reduces cooldowns by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% and manacosts by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% (does not stack with frantic).<br>Increases spell amp by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%% and cast speed by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_arcane_rune_aura_Description"			"Reduces cooldowns by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% and manacosts by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%%.<br>Increases spell amp by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%% and cast speed by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%%%."
 
 "DOTA_Tooltip_modifier_imba_regen_rune"								"Boundless Energy"
 "DOTA_Tooltip_modifier_imba_regen_rune_Description"					"Regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% max HP + %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% HP and %dMODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE%%% max mana + %dMODIFIER_PROPERTY_MANA_REGEN_CONSTANT% mana per second. Effect is lost upon losing all instances."
