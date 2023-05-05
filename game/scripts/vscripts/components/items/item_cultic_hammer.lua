@@ -31,24 +31,26 @@ function item_imba_cultic_hammer:GetAOERadius()
 end
 
 function item_imba_cultic_hammer:OnSpellStart()
-	self:GetParent():EmitSound("Imba.Curseblade")
+	local caster = self:GetCaster()
 
-	self.aoe_particle_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate_ring.vpcf", PATTACH_POINT, self:GetCaster())
+	caster:EmitSound("Imba.Curseblade")
+
+	self.aoe_particle_1 = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate_ring.vpcf", PATTACH_POINT, caster)
 	ParticleManager:SetParticleControl(self.aoe_particle_1, 0, self:GetCursorPosition())
 	ParticleManager:SetParticleControl(self.aoe_particle_1, 1, Vector(self:GetSpecialValueFor("wretched_radius"), 0, 0))
 	
-	self.aoe_particle_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate_dmg_dark_core.vpcf", PATTACH_POINT, self:GetCaster())
+	self.aoe_particle_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate_dmg_dark_core.vpcf", PATTACH_POINT, caster)
 	ParticleManager:SetParticleControl(self.aoe_particle_2, 0, self:GetCursorPosition())
 	ParticleManager:SetParticleControl(self.aoe_particle_2, 1, Vector(self:GetSpecialValueFor("wretched_radius") * 0.5, 0, 0))
 	
-	self.aoe_particle_3 = ParticleManager:CreateParticle("particles/item/cultic_hammer/cultic_hammer_channel_hammers.vpcf", PATTACH_POINT, self:GetCaster())
+	self.aoe_particle_3 = ParticleManager:CreateParticle("particles/item/cultic_hammer/cultic_hammer_channel_hammers.vpcf", PATTACH_POINT, caster)
 	ParticleManager:SetParticleControl(self.aoe_particle_3, 0, self:GetCursorPosition())
 	ParticleManager:SetParticleControl(self.aoe_particle_3, 1, Vector(self:GetSpecialValueFor("wretched_radius"), 0, 0))
 	
-	self:GetCaster():StartGesture(ACT_DOTA_GENERIC_CHANNEL_1)
+	caster:StartGesture(ACT_DOTA_GENERIC_CHANNEL_1)
 	
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("wretched_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_cultic_pull", {
+	for _, enemy in pairs(FindUnitsInRadius(caster:GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("wretched_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		enemy:AddNewModifier(caster, self, "modifier_item_imba_cultic_pull", {
 			duration	= self:GetChannelTime(),
 			pos_x		= self:GetCursorPosition().x,
 			pos_y		= self:GetCursorPosition().y,
@@ -58,7 +60,9 @@ function item_imba_cultic_hammer:OnSpellStart()
 end
 
 function item_imba_cultic_hammer:OnChannelFinish(bInterrupted)
-	self:GetParent():StopSound("Imba.Curseblade")
+	local caster = self:GetCaster()
+	
+	caster:StopSound("Imba.Curseblade")
 
 	ParticleManager:DestroyParticle(self.aoe_particle_1, true)
 	ParticleManager:ReleaseParticleIndex(self.aoe_particle_1)
@@ -69,30 +73,30 @@ function item_imba_cultic_hammer:OnChannelFinish(bInterrupted)
 	ParticleManager:DestroyParticle(self.aoe_particle_3, true)
 	ParticleManager:ReleaseParticleIndex(self.aoe_particle_3)
 	
-	self:GetCaster():FadeGesture(ACT_DOTA_GENERIC_CHANNEL_1)
+	caster:FadeGesture(ACT_DOTA_GENERIC_CHANNEL_1)
 	
-	for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
-		if enemy:FindModifierByNameAndCaster("modifier_item_imba_cultic_pull", self:GetCaster()) then
-			enemy:RemoveModifierByNameAndCaster("modifier_item_imba_cultic_pull", self:GetCaster())
+	for _, enemy in pairs(FindUnitsInRadius(caster:GetTeamNumber(), self:GetCursorPosition(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)) do
+		if enemy:FindModifierByNameAndCaster("modifier_item_imba_cultic_pull", caster) then
+			enemy:RemoveModifierByNameAndCaster("modifier_item_imba_cultic_pull", caster)
 		end
 	end
 	
 	if not bInterrupted then
-		EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "DOTA_Imba_Item.Cultic_Hammer.Slam", self:GetCaster())
+		EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "DOTA_Imba_Item.Cultic_Hammer.Slam", caster)
 		
-		self.aoe_particle_impact = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/planeshift/void_spirit_planeshift_impact.vpcf", PATTACH_POINT, self:GetCaster())
+		self.aoe_particle_impact = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/planeshift/void_spirit_planeshift_impact.vpcf", PATTACH_POINT, caster)
 		ParticleManager:SetParticleControl(self.aoe_particle_impact, 0, self:GetCursorPosition())
 		ParticleManager:SetParticleControl(self.aoe_particle_impact, 1, Vector(self:GetSpecialValueFor("wretched_radius"), 0, 0))
 		ParticleManager:ReleaseParticleIndex(self.aoe_particle_impact)
 
-		self.aoe_particle_impact_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate_dmg.vpcf", PATTACH_POINT, self:GetCaster())
+		self.aoe_particle_impact_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_void_spirit/dissimilate/void_spirit_dissimilate_dmg.vpcf", PATTACH_POINT, caster)
 		ParticleManager:SetParticleControl(self.aoe_particle_impact_2, 0, self:GetCursorPosition())
 		ParticleManager:SetParticleControl(self.aoe_particle_impact_2, 1, Vector(self:GetSpecialValueFor("wretched_radius") * 0.5, 0, 0))
 		ParticleManager:ReleaseParticleIndex(self.aoe_particle_impact_2)
 		
-		local health_loss = nil
+		local health_loss
 		
-		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("wretched_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
+		for _, enemy in pairs(FindUnitsInRadius(caster:GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("wretched_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 			health_loss = enemy:GetHealth() * self:GetSpecialValueFor("wretched_hp_damage_pct") * 0.01
 		
 			enemy:SetHealth(math.max(enemy:GetHealth() - health_loss, 1))
@@ -104,13 +108,13 @@ function item_imba_cultic_hammer:OnChannelFinish(bInterrupted)
 				damage 			= self:GetSpecialValueFor("wretched_base_damage"),
 				damage_type		= DAMAGE_TYPE_PURE,
 				damage_flags 	= DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-				attacker 		= self:GetCaster(),
+				attacker 		= caster,
 				ability 		= self
 			})
 			
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_cultic_status_resistance", {duration = self:GetSpecialValueFor("wretched_status_duration")})
+			enemy:AddNewModifier(caster, self, "modifier_item_imba_cultic_status_resistance", {duration = self:GetSpecialValueFor("wretched_status_duration")})
 			
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_cultic_root", {duration = self:GetSpecialValueFor("wretched_root_duration") * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(caster, self, "modifier_item_imba_cultic_root", {duration = self:GetSpecialValueFor("wretched_root_duration") * (1 - enemy:GetStatusResistance())})
 		end
 		
 		GridNav:DestroyTreesAroundPoint(self:GetCursorPosition(), self:GetSpecialValueFor("wretched_radius"), true)
@@ -188,7 +192,15 @@ function modifier_item_imba_cultic_hammer_aura:OnCreated()
 end
 
 function modifier_item_imba_cultic_hammer_aura:OnIntervalThink()
-	if not self:GetCaster():IsIllusion() then
+	local parent = self:GetParent()
+	local caster = self:GetCaster()
+	local ability = self:GetAbility()
+
+	if parent:IsNull() or caster:IsNull() then
+		return
+	end
+
+	if not caster:IsIllusion() then
 		self.soul_drain_health_actual	=	self.soul_drain_health
 		self.soul_drain_mana_actual		= 	self.soul_drain_mana
 	else
@@ -197,22 +209,24 @@ function modifier_item_imba_cultic_hammer_aura:OnIntervalThink()
 	end
 
 	ApplyDamage({
-		victim 			= self:GetParent(),
+		victim 			= parent,
 		damage 			= self.soul_drain_health_actual,
 		damage_type		= DAMAGE_TYPE_PURE,
 		damage_flags 	= DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-		attacker 		= self:GetCaster(),
-		ability 		= self:GetAbility()
+		attacker 		= caster,
+		ability 		= ability
 	})
 	
 	self.heal_particle = ParticleManager:CreateParticle("particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(self.heal_particle)
 	
-	self:GetCaster():Heal(self.soul_drain_health_actual, self:GetAbility())
-	
-	if self:GetParent().GetMaxMana and self:GetParent():GetMaxMana() > 0 then
-		self:GetParent():ReduceMana(self.soul_drain_mana_actual)
-		self:GetCaster():GiveMana(self.soul_drain_mana_actual)
+	caster:Heal(self.soul_drain_health_actual, ability)
+
+	if not parent:IsNull() and parent.GetMaxMana and parent:GetMaxMana() > 0 then
+		if parent:IsAlive() then
+			parent:ReduceMana(self.soul_drain_mana_actual, ability)
+		end
+		caster:GiveMana(self.soul_drain_mana_actual)
 	end
 end
 
@@ -281,7 +295,9 @@ function modifier_item_imba_cultic_status_resistance:OnCreated()
 end
 
 function modifier_item_imba_cultic_status_resistance:DeclareFunctions()
-	return {MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING}
+	return {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
 end
 
 function modifier_item_imba_cultic_status_resistance:GetModifierStatusResistanceStacking()
@@ -297,5 +313,7 @@ function modifier_item_imba_cultic_root:GetEffectName()
 end
 
 function modifier_item_imba_cultic_root:CheckState()
-	return {[MODIFIER_STATE_ROOTED] = true}
+	return {
+		[MODIFIER_STATE_ROOTED] = true
+	}
 end

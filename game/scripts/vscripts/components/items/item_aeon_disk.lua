@@ -90,7 +90,6 @@ function modifier_imba_aeon_disk_basic:DeclareFunctions()
 	return {	
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_MANA_BONUS,
-		
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 	}
 end
@@ -118,7 +117,7 @@ function modifier_imba_aeon_disk_basic:GetModifierIncomingDamage_Percentage(kv)
 			
 			self:GetParent():SetHealth(math.min(self:GetParent():GetHealth(), self:GetParent():GetMaxHealth() * health_threshold_pct))
 			
-			self:GetAbility():UseResources(false, false, true)
+			self:GetAbility():UseResources(false, false, false, true)
 			
 			return -100
 		end

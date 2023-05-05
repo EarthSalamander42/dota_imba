@@ -97,7 +97,7 @@ function ManaFlare( keys )
 
 			-- Burn mana
 			local mana_to_burn = enemy:GetMaxMana() * burn_pct / 100
-			enemy:ReduceMana(mana_to_burn)
+			enemy:ReduceMana(mana_to_burn, ability)
 
 			-- Play mana burn particle
 			local mana_burn_pfx = ParticleManager:CreateParticle(particle_burn, PATTACH_ABSORIGIN, enemy)
@@ -547,9 +547,9 @@ function modifier_imba_tower_machinegun_aura_buff:IsPurgable() return false end
 function modifier_imba_tower_machinegun_aura_buff:IsDebuff() return false end
 
 function modifier_imba_tower_machinegun_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_tower_machinegun_aura_buff:GetModifierAttackSpeedBonus_Constant()
@@ -666,9 +666,9 @@ function modifier_imba_tower_thorns_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_thorns_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_thorns_aura_buff:OnAttackLanded( keys )
@@ -821,9 +821,9 @@ function modifier_imba_tower_aegis_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_aegis_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_tower_aegis_aura_buff:GetModifierPhysicalArmorBonus()
@@ -954,7 +954,9 @@ function modifier_imba_tower_toughness_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_toughness_aura_buff:DeclareFunctions()
-	return {MODIFIER_PROPERTY_HEALTH_BONUS}
+	return {
+		MODIFIER_PROPERTY_HEALTH_BONUS
+	}
 end
 
 function modifier_imba_tower_toughness_aura_buff:GetModifierHealthBonus()
@@ -1066,9 +1068,9 @@ function modifier_imba_tower_sniper_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_sniper_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
 end
 
 function modifier_imba_tower_sniper_aura_buff:GetModifierAttackRangeBonus()
@@ -1182,9 +1184,9 @@ function modifier_imba_tower_splash_fire_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_splash_fire_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded( keys )
@@ -1384,19 +1386,18 @@ function modifier_imba_tower_observatory_vision:IsHidden()
 end
 
 function modifier_imba_tower_observatory_vision:CheckState()
-	local state = {[MODIFIER_STATE_FLYING] = true,
-		[MODIFIER_STATE_ROOTED] = true}
-
-	return state
+	return {
+		[MODIFIER_STATE_FLYING] = true,
+		[MODIFIER_STATE_ROOTED] = true
+	}
 end
 
 function modifier_imba_tower_observatory_vision:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_BONUS_DAY_VISION,
-		MODIFIER_PROPERTY_BONUS_NIGHT_VISION}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_BONUS_DAY_VISION,
+		MODIFIER_PROPERTY_BONUS_NIGHT_VISION
+	}
 end
-
 
 function modifier_imba_tower_observatory_vision:GetBonusDayVision()
 	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
@@ -1515,9 +1516,9 @@ function modifier_imba_tower_spell_shield_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_spell_shield_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+	}
 end
 
 function modifier_imba_tower_spell_shield_aura_buff:GetModifierMagicalResistanceBonus()
@@ -1613,7 +1614,7 @@ function modifier_imba_tower_mana_burn_aura_buff:OnCreated()
 	self.ability = self:GetAbility()
 	if not self.ability then
 		self:Destroy()
-		return nil
+		return
 	end
 	self.particle_mana_burn = "particles/generic_gameplay/generic_manaburn.vpcf"
 
@@ -1633,9 +1634,9 @@ function modifier_imba_tower_mana_burn_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_mana_burn_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_mana_burn_aura_buff:OnAttackLanded( keys )
@@ -1673,14 +1674,16 @@ function modifier_imba_tower_mana_burn_aura_buff:OnAttackLanded( keys )
 				local mana_burn_damage = mana_burn_total * (self.mana_burn_damage_pct * 0.01)
 
 				-- Burn target's mana
-				target:ReduceMana(mana_burn_total)
+				target:ReduceMana(mana_burn_total, self.ability)
 
 				-- Apply damage
-				local damageTable = {victim = target,
+				local damageTable = {
+					victim = target,
 					attacker = self.parent,
 					damage = mana_burn_damage,
 					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = self.ability}
+					ability = self.ability
+				}
 
 				ApplyDamage(damageTable)
 			end
@@ -1798,9 +1801,9 @@ function modifier_imba_tower_permabash_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_permabash_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_permabash_aura_buff:OnAttackLanded( keys )
@@ -1835,8 +1838,9 @@ end
 modifier_imba_tower_permabash_stun = modifier_imba_tower_permabash_stun or class({})
 
 function modifier_imba_tower_permabash_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state
+	return {
+		[MODIFIER_STATE_STUNNED] = true
+	}
 end
 
 function modifier_imba_tower_permabash_stun:GetEffectName()
@@ -1957,9 +1961,9 @@ function modifier_imba_tower_vicious_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_vicious_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
+	}
 end
 
 function modifier_imba_tower_vicious_aura_buff:GetModifierPreAttack_CriticalStrike()
@@ -2082,10 +2086,10 @@ function modifier_imba_tower_spellmastery_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_spellmastery_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING
+	}
 end
 
 function modifier_imba_tower_spellmastery_aura_buff:GetModifierSpellAmplify_Percentage()
@@ -2210,10 +2214,10 @@ function modifier_imba_tower_plague_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_plague_aura_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_tower_plague_aura_debuff:GetModifierMoveSpeedBonus_Percentage()
@@ -2330,9 +2334,9 @@ function modifier_imba_tower_atrophy_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_atrophy_aura_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
+	}
 end
 
 function modifier_imba_tower_atrophy_aura_debuff:GetModifierBaseDamageOutgoing_Percentage()
@@ -2449,9 +2453,9 @@ function modifier_imba_tower_regeneration_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_regeneration_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE
+	}
 end
 
 function modifier_imba_tower_regeneration_aura_buff:GetModifierHealthRegenPercentage()
@@ -2570,9 +2574,9 @@ function modifier_imba_tower_starlight_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_starlight_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_starlight_aura_buff:OnAttackLanded(keys)
@@ -2631,9 +2635,9 @@ function modifier_imba_tower_starlight_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_starlight_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MISS_PERCENTAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MISS_PERCENTAGE
+	}
 end
 
 function modifier_imba_tower_starlight_debuff:GetModifierMiss_Percentage()
@@ -2761,9 +2765,9 @@ function modifier_imba_tower_grievous_wounds_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_grievous_wounds_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_grievous_wounds_aura_buff:OnAttackLanded(keys)
@@ -2937,9 +2941,9 @@ function modifier_imba_tower_essence_drain_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_essence_drain_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded( keys )
@@ -3069,11 +3073,11 @@ function modifier_imba_tower_essence_drain_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_essence_drain_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
-
-	return decFuncs
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
+	}
 end
 
 function modifier_imba_tower_essence_drain_debuff:GetModifierBonusStats_Agility()
@@ -3181,11 +3185,11 @@ function modifier_imba_tower_essence_drain_buff:IsDebuff()
 end
 
 function modifier_imba_tower_essence_drain_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
-
-	return decFuncs
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
+	}
 end
 
 function modifier_imba_tower_essence_drain_buff:GetModifierBonusStats_Agility()
@@ -3335,9 +3339,9 @@ function modifier_imba_tower_protection_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_protection_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+	}
 end
 
 function modifier_imba_tower_protection_aura_buff:GetModifierIncomingDamage_Percentage()
@@ -3451,11 +3455,11 @@ function modifier_imba_tower_disease_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_disease_aura_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
-
-	return decFuncs
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
+	}
 end
 
 function modifier_imba_tower_disease_aura_debuff:GetModifierBonusStats_Agility()
@@ -3591,9 +3595,9 @@ function modifier_imba_tower_doppleganger_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_doppleganger_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
@@ -3874,7 +3878,9 @@ function modifier_imba_tower_barrier_aura_buff:OnCreated()
 end
 
 function modifier_imba_tower_barrier_aura_buff:DeclareFunctions()
-	return {MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK}
+	return {
+		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
+	}
 end
 
 function modifier_imba_tower_barrier_aura_buff:GetModifierTotal_ConstantBlock(keys)
@@ -4023,9 +4029,9 @@ function modifier_imba_tower_soul_leech_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_soul_leech_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_tower_soul_leech_aura_buff:OnTakeDamage(keys)
@@ -4181,9 +4187,9 @@ function modifier_imba_tower_frost_shroud_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_frost_shroud_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_tower_frost_shroud_aura_buff:OnTakeDamage(keys)
@@ -4310,10 +4316,10 @@ function modifier_imba_tower_frost_shroud_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_frost_shroud_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_tower_frost_shroud_debuff:GetModifierMoveSpeedBonus_Percentage()
@@ -4605,11 +4611,9 @@ function modifier_imba_tower_tenacity_aura_buff:OnCreated()
 end
 
 function modifier_imba_tower_tenacity_aura_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_imba_tower_tenacity_aura_buff:OnRefresh()

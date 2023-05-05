@@ -1204,10 +1204,26 @@ end
 -- credits to yahnich for every functions below
 ----------------------------------------------------------------------------------
 
-function CDOTA_BaseNPC:IsFakeHero()
-	if self:IsIllusion() or (self:HasModifier("modifier_monkey_king_fur_army_soldier") or self:HasModifier("modifier_monkey_king_fur_army_soldier_hidden")) or self:IsTempestDouble() or self:IsClone() then
+function CDOTA_BaseNPC:IsMonkeyKingClone()
+	local monkey_king_soldier_modifiers = {
+		"modifier_monkey_king_fur_army_soldier_hidden",
+		"modifier_monkey_king_fur_army_soldier",
+		"modifier_monkey_king_fur_army_thinker",
+		"modifier_monkey_king_fur_army_soldier_inactive",
+		"modifier_monkey_king_fur_army_soldier_in_position",
+	}
+
+	for _, v in pairs(monkey_king_soldier_modifiers) do
+	  if self:HasModifier(v) then
 		return true
-	else return false end
+	  end
+	end
+
+	return false
+end
+
+function CDOTA_BaseNPC:IsFakeHero()
+	return self:IsIllusion() or self:IsMonkeyKingClone() or self:IsTempestDouble() or self:IsClone()
 end
 
 function CDOTA_BaseNPC:IsRealHero()
@@ -1396,11 +1412,7 @@ function CDOTA_BaseNPC:Custom_IsUnderForcedMovement()
 end
 
 function CDOTA_BaseNPC:HasShard()
-	if self:HasModifier("modifier_item_aghanims_shard") then
-		return true
-	end
-
-	return false
+	return self:HasModifier("modifier_item_aghanims_shard")
 end
 
 function CDOTA_BaseNPC:IsCustomHero()
@@ -1426,4 +1438,76 @@ CDOTA_BaseNPC.AddNewModifier = function(self, hCaster, hAbility, pszScriptName, 
 	local response = original_AddNewModifier(self, hCaster, hAbility, pszScriptName, hModifierTable)
 
 	return response
+end
+
+if not CDOTA_BaseNPC.GetAttackRange then
+	function CDOTA_BaseNPC:GetAttackRange()
+		return self:Script_GetAttackRange()
+	end
+end
+
+if not CDOTA_BaseNPC.ReduceMana then
+	function CDOTA_BaseNPC:ReduceMana(amount, mana_burning_ability)
+		return self:Script_ReduceMana(amount, mana_burning_ability)
+	end
+end
+
+if not CDOTA_BaseNPC.GetMagicalArmorValue then
+	function CDOTA_BaseNPC:GetMagicalArmorValue()
+		local experimental_formula = false
+		local inflictor = nil
+		return self:Script_GetMagicalArmorValue(experimental_formula, inflictor)
+	end
+end
+
+-- Checks if the unit (hero or unit with inventory) has an empty space in inventory
+function CDOTA_BaseNPC:Custom_HasAnyAvailableInventorySpace()
+	-- If it's a hero, just use the known function
+	if self:IsHero() then
+		return self:HasAnyAvailableInventorySpace()
+	else
+		-- Otherwise, we need to check if there's at least one empty space (for creep heroes)
+		for i=DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_9 do
+			local item = self:GetItemInSlot(i)
+
+			-- If there is not item in a slot, then we have a free space
+			if not item then
+				return true
+			end
+		end
+
+		-- If we got here, then we don't have a free space
+		return false
+	end
+end
+
+function CDOTA_BaseNPC:IMBA_GetHeroStartingGold()
+	PlayerResource:SetGold(self:GetPlayerID(), 0, false)
+
+	-- could use dynamic vanilla starting gold, but then some bugs raises like re-random feature giving double starting gold and xp if a backend banned hero is picked
+	local hero_gold = HERO_INITIAL_GOLD
+	local custom_gold_bonus = CUSTOM_GOLD_BONUS[GetMapName()] or 100
+
+	if custom_gold_bonus > 100 then
+		hero_gold = hero_gold * custom_gold_bonus / 100
+	end
+
+
+	return hero_gold
+end
+
+function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
+	PlayerResource:SetCameraTarget(self:GetPlayerID(), hTarget)
+	if iDuration == nil then iDuration = FrameTime() end
+	if iDuration ~= -1 then
+		Timers:CreateTimer(iDuration, function()
+			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			Timers:CreateTimer(FrameTime(), function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+			Timers:CreateTimer(FrameTime() * 3, function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+		end)
+	end
 end

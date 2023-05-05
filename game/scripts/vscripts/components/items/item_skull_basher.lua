@@ -45,7 +45,6 @@ function modifier_imba_skull_basher:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL
@@ -91,7 +90,7 @@ function modifier_imba_skull_basher:OnAttackLanded(keys)
 	if self:GetAbility() and keys.attacker == self:GetParent() and self.bash_proc then
 		self.bash_proc = false
 		-- Make the ability go into cooldown
-		self:GetAbility():UseResources(false, false, true)
+		self:GetAbility():UseResources(false, false, false, true)
 		
 		-- If the attacker is one of the forbidden heroes, do not proc the bash
 		if IMBA_DISABLED_SKULL_BASHER == nil or not IMBA_DISABLED_SKULL_BASHER[keys.attacker:GetUnitName()] then
@@ -129,7 +128,9 @@ function modifier_imba_skull_basher_bash:IsPurgeException() return true end
 function modifier_imba_skull_basher_bash:IsStunDebuff() return true end
 
 function modifier_imba_skull_basher_bash:CheckState()
-	return {[MODIFIER_STATE_STUNNED] = true}
+	return {
+		[MODIFIER_STATE_STUNNED] = true
+	}
 end
 
 function modifier_imba_skull_basher_bash:GetEffectName()
@@ -141,7 +142,9 @@ function modifier_imba_skull_basher_bash:GetEffectAttachType()
 end
 
 function modifier_imba_skull_basher_bash:DeclareFunctions()
-	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+	return {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+	}
 end
 
 function modifier_imba_skull_basher_bash:GetOverrideAnimation()
@@ -166,7 +169,9 @@ function modifier_imba_skull_basher_skull_break:IsPurgable() return true end
 function modifier_imba_skull_basher_skull_break:IsDebuff() return true end
 
 function modifier_imba_skull_basher_skull_break:CheckState()
-	return {[MODIFIER_STATE_PASSIVES_DISABLED] = true}
+	return {
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true
+	}
 end
 
 function modifier_imba_skull_basher_skull_break:OnCreated()

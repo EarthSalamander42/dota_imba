@@ -36,10 +36,10 @@ function modifier_imba_gauntlets:OnCreated()
 end
 
 function modifier_imba_gauntlets:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					  MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
+	}
 end
 
 function modifier_imba_gauntlets:GetModifierBonusStats_Strength()
@@ -51,9 +51,9 @@ function modifier_imba_gauntlets:GetModifierPhysical_ConstantBlock()
 	if self.ability:IsCooldownReady() then
 
 		-- Start cooldown and block
-		self.ability:UseResources(false, false, true)
+		self.ability:UseResources(false, false, false, true)
 		return self.damage_block
 	end
 
-	return nil
+	return
 end

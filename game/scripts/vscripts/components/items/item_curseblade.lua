@@ -35,83 +35,81 @@ function item_imba_curseblade:GetAbilityTextureName()
 end
 
 function item_imba_curseblade:OnSpellStart()
-	if IsServer() then
-		-- Ability properties
-		local caster = self:GetCaster()
-		local ability = self
-		local target = self:GetCursorTarget()
-		local sound_cast = "Imba.Curseblade"
-		local particle_curse = "particles/item/curseblade/imba_curseblade_curse.vpcf"
-		local datadrive_baseclass = "modifier_datadriven"
-		local debuff = "modifier_item_imba_curseblade_debuff"
+	-- Ability properties
+	local caster = self:GetCaster()
+	local ability = self
+	local target = self:GetCursorTarget()
+	local sound_cast = "Imba.Curseblade"
+	local particle_curse = "particles/item/curseblade/imba_curseblade_curse.vpcf"
+	local datadrive_baseclass = "modifier_datadriven"
+	local debuff = "modifier_item_imba_curseblade_debuff"
 
-		-- Ability specials
-		local duration = self:GetSpecialValueFor("duration")
+	-- Ability specials
+	local duration = self:GetSpecialValueFor("duration")
 
-		-- Play sound cast
-		EmitSoundOn(sound_cast, caster)
+	-- Play sound cast
+	EmitSoundOn(sound_cast, caster)
 
-		-- Check for Linken's Sphere
-		if target:GetTeam() ~= caster:GetTeam() then
-			if target:TriggerSpellAbsorb(self) then
-				return nil
+	-- Check for Linken's Sphere
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(self) then
+			return
+		end
+	end
+
+	-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+	if target:IsMagicImmune() then
+		return
+	end
+
+	-- Add the curse debuff to the target
+	target:AddNewModifier(caster, ability, debuff, {duration = duration * (1 - target:GetStatusResistance())})
+
+	-- Find all modifiers on caster
+	local modifiers = caster:FindAllModifiers()
+	for _, modifier in pairs(modifiers) do
+		local modifier_found = false
+		local modifier_name = modifier:GetName()
+
+		-- Check via IsDebuff function (also try not to transfer motion controllers)
+		if modifier.IsDebuff and modifier.IsPurgable and modifier.ApplyHorizontalMotionController == nil and modifier.ApplyVerticalMotionController == nil then
+			if modifier:IsDebuff() and modifier:IsPurgable() then
+				modifier_found = true
 			end
 		end
 
-		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
-		if target:IsMagicImmune() then
-			return nil
+		-- Check via vanilla modifiers list
+		if IsVanillaDebuff(modifier_name) then
+			modifier_found = true
 		end
 
-		-- Add the curse debuff to the target
-		target:AddNewModifier(caster, ability, debuff, {duration = duration * (1 - target:GetStatusResistance())})
+		-- If the modifier was not found yet, search it in the debuff list
+		if not modifier_found then
 
-		-- Find all modifiers on caster
-		local modifiers = caster:FindAllModifiers()
-		for _,modifier in pairs(modifiers) do
-			local modifier_found = false
-			local modifier_name = modifier:GetName()
-
-			-- Check via IsDebuff function (also try not to transfer motion controllers)
-			if modifier.IsDebuff and modifier.IsPurgable and modifier.ApplyHorizontalMotionController == nil and modifier.ApplyVerticalMotionController == nil then
-				if modifier:IsDebuff() and modifier:IsPurgable() then
+			-- Compare debuff to try and find it in the KV debuff list
+			for _, modifier_name_in_list in pairs(DISPELLABLE_DEBUFF_LIST) do
+				if modifier_name == modifier_name_in_list then
 					modifier_found = true
 				end
 			end
+		end
 
-			-- Check via vanilla modifiers list
-			if IsVanillaDebuff(modifier_name) then
-				modifier_found = true
-			end
+		-- If the modifier was found, remove it on the caster and transfer it to the enemy
+		if modifier_found then
+			local modifier_duration = modifier:GetDuration()
+			caster:RemoveModifierByName(modifier_name)
 
-			-- If the modifier was not found yet, search it in the debuff list
-			if not modifier_found then
+			--print("Transferring modifier '"..modifier_name.."' via Curseblade.")
 
-				-- Compare debuff to try and find it in the KV debuff list
-				for _,modifier_name_in_list in pairs(DISPELLABLE_DEBUFF_LIST) do
-					if modifier_name == modifier_name_in_list then
-						modifier_found = true
-					end
-				end
-			end
+			-- Find if it is a lua based ability or datadriven and assign the correct function
+			local modifier_ability = modifier:GetAbility()
+			local modifier_class = modifier:GetClass()
 
-			-- If the modifier was found, remove it on the caster and transfer it to the enemy
-			if modifier_found then
-				local modifier_duration = modifier:GetDuration()
-				caster:RemoveModifierByName(modifier_name)
-
-				print("Transferring modifier '"..modifier_name.."' via Curseblade.")
-
-				-- Find if it is a lua based ability or datadriven and assign the correct function
-				local modifier_ability = modifier:GetAbility()
-				local modifier_class = modifier:GetClass()
-
-				if modifier_ability ~= nil then
-					if modifier_class == datadrive_baseclass then
-						modifier_ability:ApplyDataDrivenModifier(caster, target, modifier_name, {duration = modifier_duration})
-					else
-						target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
-					end
+			if modifier_ability ~= nil then
+				if modifier_class == datadrive_baseclass then
+					modifier_ability:ApplyDataDrivenModifier(caster, target, modifier_name, {duration = modifier_duration})
+				else
+					target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
 				end
 			end
 		end
@@ -234,7 +232,7 @@ function modifier_item_imba_curseblade:OnCreated()
 
 		if not self.ability then
 			self:Destroy()
-			return nil
+			return
 		end
 
 		-- Ability specials
@@ -316,9 +314,9 @@ function modifier_item_imba_curseblade_debuff:OnCreated()
 end
 
 function modifier_item_imba_curseblade_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_item_imba_curseblade_debuff:GetModifierMoveSpeedBonus_Percentage()
@@ -346,18 +344,20 @@ function modifier_item_imba_curseblade_debuff:OnIntervalThink()
 		local manadrain = self.manadrain_per_second * self.tick_rate
 
 		-- Apply damage to enemy, heal caster
-		local damageTable = {victim = self.parent,
+		local damageTable = {
+			victim = self.parent,
 			attacker = self.caster,
 			damage = lifedrain,
 			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-			damage_type = DAMAGE_TYPE_MAGICAL}
+			damage_type = DAMAGE_TYPE_MAGICAL
+		}
 
 		ApplyDamage(damageTable)
 
 		self.caster:Heal(lifedrain, self.caster)
 
 		-- Reduce enemy's mana, replenish caster's.
-		self.parent:ReduceMana(manadrain)
+		self.parent:ReduceMana(manadrain, self.ability)
 		self.caster:GiveMana(manadrain)
 	end
 end

@@ -19,10 +19,11 @@ function item_imba_witchblade:GetIntrinsicModifierName()
 end
 
 function item_imba_witchblade:GetCooldown(level)
+	local base_cd = self.BaseClass.GetCooldown(self, level)
 	if self.bypass then
-		return self.BaseClass.GetCooldown(self, level) * self:GetSpecialValueFor("bypass_cd_mult")
+		return base_cd * self:GetSpecialValueFor("bypass_cd_mult")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return base_cd
 	end
 end
 
@@ -42,20 +43,19 @@ function item_imba_witchblade:OnSpellStart()
 	-- Inhibiting Combustion
 	self.combust_mana_loss						= self:GetSpecialValueFor("combust_mana_loss")
 	self.severance_chance						= self:GetSpecialValueFor("severance_chance")
-	
-	if not IsServer() then return end
 
-	local target			= self:GetCursorTarget()
+	local target = self:GetCursorTarget()
+	local caster = self:GetCaster()
 	
 	-- If the target has Linken sphere, trigger it and do nothing else
-	if target:GetTeam() ~= self:GetCaster():GetTeam() then
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(self) then
-			return nil
+			return
 		end
 	end
 	
 	-- Play the cast sounds
-	self:GetCaster():EmitSound("DOTA_Item.DiffusalBlade.Activate")
+	caster:EmitSound("DOTA_Item.DiffusalBlade.Activate")
 	target:EmitSound("DOTA_Item.DiffusalBlade.Target")
 	
 	-- Play hit particle
@@ -70,16 +70,17 @@ function item_imba_witchblade:OnSpellStart()
 	target:Purge(true, false, false, false, false)
 
 	-- Find the amount of modifiers it has after it has been purged. Give it a frame to lose modifiers
+	local ability = self
 	Timers:CreateTimer(FrameTime(), function()
 		local modifiers_lost = initial_modifiers - target:GetModifierCount()
 
 		if modifiers_lost > 0 then
 			-- Burn mana and deal damage according to modifiers lost on the purge
-			local mana_burn = modifiers_lost * self.combust_mana_loss
+			local mana_burn = modifiers_lost * ability.combust_mana_loss
 
 			-- Burn the target's mana
 			local target_mana = target:GetMana()
-			target:ReduceMana(mana_burn)
+			target:ReduceMana(mana_burn, ability)
 
 			-- Calculate damage according to burnt mana
 			local damage
@@ -90,11 +91,12 @@ function item_imba_witchblade:OnSpellStart()
 			end
 
 			-- Damage the target
-			local damageTable = {victim = target,
-				attacker = self:GetCaster(),
+			local damageTable = {
+				victim = target,
+				attacker = caster,
 				damage = damage,
 				damage_type = DAMAGE_TYPE_MAGICAL,
-				ability = self,
+				ability = ability,
 				damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
 			}
 
@@ -108,18 +110,18 @@ function item_imba_witchblade:OnSpellStart()
 	end)
 	
 	-- Add the slow modifier
-	target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration * (1 - target:GetStatusResistance())})
+	target:AddNewModifier(caster, self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration * (1 - target:GetStatusResistance())})
 	
 	-- If the target is not a hero (or a creep hero), root it
 	if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-		target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance())})
 	end
-	
+
 	-- IMBAfication: Internal Bypass
 	if target:IsMagicImmune() or target:IsBuilding() then
 		self:EndCooldown()
 		self.bypass = true
-		self:UseResources(false, false, true)
+		self:UseResources(false, false, false, true)
 		self.bypass = false
 	end
 end
@@ -176,7 +178,9 @@ function modifier_item_imba_witchblade_slow:OnIntervalThink()
 end
 
 function modifier_item_imba_witchblade_slow:DeclareFunctions()
-	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_item_imba_witchblade_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -187,7 +191,7 @@ end
 -- WITCHBLADE ROOT MODIFIER --
 ------------------------------
 
-function modifier_item_imba_witchblade_root:CheckState(keys)
+function modifier_item_imba_witchblade_root:CheckState()
 	return {
 		[MODIFIER_STATE_ROOTED] = true
 	}
@@ -206,7 +210,6 @@ function modifier_item_imba_witchblade:DeclareFunctions()
     return {
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		
 		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
     }
@@ -226,9 +229,11 @@ end
 
 function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physical(keys)
 	if not IsServer() then return end
+	
+	local ability = self:GetAbility()
 
 	-- Only apply if the attacker is the caster / non-ally team / target has mana / target is not spell immune / only applies to one item
-	if self:GetAbility() and keys.attacker == self:GetCaster() and keys.attacker:GetTeam() ~= keys.target:GetTeam() and keys.target:GetMaxMana() > 0 and not keys.target:IsMagicImmune() and self:GetCaster():FindAllModifiersByName(self:GetName())[1] == self then
+	if ability and keys.attacker == self:GetCaster() and keys.attacker:GetTeam() ~= keys.target:GetTeam() and keys.target:GetMaxMana() > 0 and not keys.target:IsMagicImmune() and self:GetCaster():FindAllModifiersByName(self:GetName())[1] == self then
 
 		-- Apply mana burn particle effect
 		local particle = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_manaburn_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
@@ -239,12 +244,12 @@ function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physica
 		
 		if keys.attacker:IsIllusion() then
 			if keys.attacker:IsRangedAttacker() then
-				mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn_illusion_ranged")
+				mana_burn = ability:GetSpecialValueFor("feedback_mana_burn_illusion_ranged")
 			elseif not keys.attacker:IsRangedAttacker() then
-				mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn_illusion_melee")
+				mana_burn = ability:GetSpecialValueFor("feedback_mana_burn_illusion_melee")
 			end
 		else
-			mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn")
+			mana_burn = ability:GetSpecialValueFor("feedback_mana_burn")
 		end
 		
 		-- Anti Mage Compromise?...
@@ -256,14 +261,14 @@ function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physica
 		local target_mana = keys.target:GetMana()
 
 		-- Burn mana
-		keys.target:ReduceMana(mana_burn)
+		keys.target:ReduceMana(mana_burn, ability)
 
 		-- Damage target depending on amount of mana actually burnt
 		local damage
 		if target_mana >= mana_burn then
-			damage = mana_burn * self:GetAbility():GetSpecialValueFor("damage_per_burn")
+			damage = mana_burn * ability:GetSpecialValueFor("damage_per_burn")
 		else
-			damage = target_mana * self:GetAbility():GetSpecialValueFor("damage_per_burn")
+			damage = target_mana * ability:GetSpecialValueFor("damage_per_burn")
 		end
 
 		return damage
@@ -272,14 +277,16 @@ end
 
 function modifier_item_imba_witchblade:OnTakeDamage(keys)
 	if not IsServer() then return end
-	
+
 	local target = keys.unit
+	local attacker = keys.attacker
+	local ability = self:GetAbility()
 
 	-- Only apply if the attacker is the caster / non-ally team / target has mana / target is not spell immune / only applies for one item
-	if self:GetAbility() and keys.attacker == self:GetCaster() and keys.attacker:GetTeam() ~= target:GetTeam() and target:GetMaxMana() > 0 and not target:IsMagicImmune() and self:GetCaster():FindAllModifiersByName(self:GetName())[1] == self and keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and keys.damage > 0 then
+	if ability and attacker == self:GetCaster() and attacker:GetTeam() ~= target:GetTeam() and target:GetMaxMana() > 0 and not target:IsMagicImmune() and self:GetCaster():FindAllModifiersByName(self:GetName())[1] == self and keys.damage_category == DOTA_DAMAGE_CATEGORY_ATTACK and keys.damage > 0 then
 		-- Copying part of OnSpellStart code
 		-- Roll for a chance to dispel a buff
-		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("severance_chance"), self) then
+		if RollPseudoRandom(ability:GetSpecialValueFor("severance_chance"), self) then
 			target:EmitSound("DOTA_Item.DiffusalBlade.Target")
 	
 			-- Play hit particle
@@ -299,11 +306,11 @@ function modifier_item_imba_witchblade:OnTakeDamage(keys)
 
 				if modifiers_lost > 0 then
 					-- Burn mana and deal damage according to modifiers lost on the purge
-					local mana_burn = modifiers_lost * self:GetAbility():GetSpecialValueFor("combust_mana_loss")
+					local mana_burn = modifiers_lost * ability:GetSpecialValueFor("combust_mana_loss")
 
 					-- Burn the target's mana
 					local target_mana = target:GetMana()
-					target:ReduceMana(mana_burn)
+					target:ReduceMana(mana_burn, ability)
 
 					-- Calculate damage according to burnt mana
 					local damage
@@ -314,11 +321,12 @@ function modifier_item_imba_witchblade:OnTakeDamage(keys)
 					end
 
 					-- Damage the target
-					local damageTable = {victim = target,
-						attacker = self:GetCaster(),
+					local damageTable = {
+						victim = target,
+						attacker = attacker,
 						damage = damage,
 						damage_type = DAMAGE_TYPE_MAGICAL,
-						ability = self,
+						ability = ability,
 						damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
 					}
 

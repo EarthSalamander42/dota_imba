@@ -52,9 +52,7 @@ function modifier_generic_orb_effect_lua:DeclareFunctions()
 		MODIFIER_PROPERTY_PROCATTACK_FEEDBACK,
 		MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-		
 		MODIFIER_EVENT_ON_ORDER,
-
 		MODIFIER_PROPERTY_PROJECTILE_NAME,
 	}
 end
@@ -110,7 +108,7 @@ function modifier_generic_orb_effect_lua:OnAttack( params )
 	-- register attack if being cast and fully castable
 	if (self.cast and self.ability:IsFullyCastable() and not self:GetParent():IsSilenced() and UnitFilter(params.target, self.ability:GetAbilityTargetTeam(), self.ability:GetAbilityTargetType(), self.ability:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber()) == UF_SUCCESS) or self.bPrimed then	
 		-- use mana and cd
-		self.ability:UseResources( true, false, true )
+		self.ability:UseResources(true, false, false, true)
 
 		-- record the attack
 		self.records[params.record] = true

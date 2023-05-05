@@ -36,10 +36,10 @@ function modifier_imba_mantle:OnCreated()
 end
 
 function modifier_imba_mantle:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					  MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL
+	}
 end
 
 function modifier_imba_mantle:GetModifierBonusStats_Intellect()
@@ -57,7 +57,7 @@ function modifier_imba_mantle:GetModifierProcAttack_BonusDamage_Magical(keys)
 			if self.ability:IsCooldownReady() then
 
 				-- Start cooldown and block
-				self.ability:UseResources(false, false, true)
+				self.ability:UseResources(false, false, false, true)
 
 				-- Show overhead alert for magical damage
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, self.magical_damage, nil)
@@ -65,7 +65,7 @@ function modifier_imba_mantle:GetModifierProcAttack_BonusDamage_Magical(keys)
 				return self.magical_damage
 			end
 
-			return nil
+			return
 		end
 	end
 end

@@ -1367,7 +1367,21 @@ function Custom_ArrayRemove(t, fnKeep)
 end
 
 function Custom_bIsStrongIllusion(unit)
-	return unit and (unit:HasModifier("modifier_chaos_knight_phantasm_illusion") or unit:HasModifier("modifier_imba_chaos_knight_phantasm_illusion") or unit:HasModifier("modifier_vengefulspirit_hybrid_special"))
+	if not unit or unit:IsNull() then
+		return
+	end
+	local strong_illus = {
+		"modifier_chaos_knight_phantasm_illusion",
+		"modifier_imba_chaos_knight_phantasm_illusion",
+		"modifier_vengefulspirit_hybrid_special",
+		"modifier_chaos_knight_phantasm_illusion_shard",
+	}
+	for _, v in pairs(strong_illus) do
+		if unit:HasModifier(v) then
+			return true
+		end
+	end
+	return false
 end
 
 -- Checks if the entity is any kind of tree (either regular or temporary)
@@ -1397,27 +1411,6 @@ function CEntityInstance:Custom_IsTempTree()
 	return false
 end
 
--- Checks if the unit (hero or unit with inventory) has an empty space in inventory
-function CDOTA_BaseNPC:Custom_HasAnyAvailableInventorySpace()
-	-- If it's a hero, just use the known function
-	if self:IsHero() then
-		return self:HasAnyAvailableInventorySpace()
-	else
-		-- Otherwise, we need to check if there's at least one empty space (for creep heroes)
-		for i=DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_9 do
-			local item = self:GetItemInSlot(i)
-
-			-- If there is not item in a slot, then we have a free space
-			if not item then
-				return true
-			end
-		end
-
-		-- If we got here, then we don't have a free space
-		return false
-	end
-end
-
 -- Gets all Ethereal abilities
 function GetEtherealAbilities()
 	local abilities = {
@@ -1427,35 +1420,4 @@ function GetEtherealAbilities()
 	}
 
 	return abilities
-end
-
-function CDOTA_BaseNPC:IMBA_GetHeroStartingGold()
-	PlayerResource:SetGold(self:GetPlayerID(), 0, false)
-
-	-- could use dynamic vanilla starting gold, but then some bugs raises like re-random feature giving double starting gold and xp if a backend banned hero is picked
-	local hero_gold = HERO_INITIAL_GOLD
-	local custom_gold_bonus = CUSTOM_GOLD_BONUS[GetMapName()] or 100
-
-	if custom_gold_bonus > 100 then
-		hero_gold = hero_gold * custom_gold_bonus / 100
-	end
-
-
-	return hero_gold
-end
-
-function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
-	PlayerResource:SetCameraTarget(self:GetPlayerID(), hTarget)
-	if iDuration == nil then iDuration = FrameTime() end
-	if iDuration ~= -1 then
-		Timers:CreateTimer(iDuration, function()
-			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			Timers:CreateTimer(FrameTime(), function() --fail-safe
-				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			end)
-			Timers:CreateTimer(FrameTime() * 3, function() --fail-safe
-				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
-			end)
-		end)
-	end
 end
