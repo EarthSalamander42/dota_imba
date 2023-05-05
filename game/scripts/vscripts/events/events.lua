@@ -832,12 +832,12 @@ function GameMode:OnPlayerChat(keys)
 				end
 			end
 			
-			Say(PlayerResource:GetPlayer(keys.playerid), "There are currently "..#Entities:FindAllInSphere(Vector(0, 0, 0), 25000).." entities residing on the map. From these entities, it is estimated that...", true)
-			Say(PlayerResource:GetPlayer(keys.playerid), hero_count.." of them are heroes, "..creep_count.." of them are creeps, "..thinker_count.." of them are thinkers, and "..wearable_count.." of them are wearables.", true)
+			GameRules:SendCustomMessage("There are currently "..tostring(#Entities:FindAllInSphere(Vector(0, 0, 0), 25000)).." entities residing on the map. From these entities, it is estimated that...", 0, 0)
+			GameRules:SendCustomMessage(tostring(hero_count).." of them are heroes, "..tostring(creep_count).." of them are creeps, "..tostring(thinker_count).." of them are thinkers, and "..tostring(wearable_count).." of them are wearables.", 0, 0)
 		end
 		
 		if str == "-memory" then
-			Say(PlayerResource:GetPlayer(keys.playerid), "Current LUA Memory Usage: "..comma_value(collectgarbage("count")*1024).." KB", true)
+			GameRules:SendCustomMessage("Current LUA Memory Usage: "..comma_value(collectgarbage('count')*1024).." KB", 0, 0)
 			-- print(package.loaded) -- This lags everything to absolute death
 		end
 		
@@ -851,7 +851,7 @@ function GameMode:OnPlayerChat(keys)
 				end
 			end		
 		
-			Say(PlayerResource:GetPlayer(keys.playerid), "There are a total of "..modifier_count.." modifiers present.", true)
+			GameRules:SendCustomMessage("There are a total of "..tostring(modifier_count).." modifiers present.", 0, 0)
 		end
 
 		if str == "-killillusions" then
