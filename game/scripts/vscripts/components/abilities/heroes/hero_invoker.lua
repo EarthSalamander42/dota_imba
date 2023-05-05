@@ -1740,27 +1740,24 @@ end
 		function modifier_imba_invoker_ghost_walk:IsDebuff() 		return false end
 		function modifier_imba_invoker_ghost_walk:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_ghost_walk.vpcf" end
 		function modifier_imba_invoker_ghost_walk:DeclareFunctions()
-			local funcs = {
+			return {
 				MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 				MODIFIER_EVENT_ON_ATTACK,
 				MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 				MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
-				MODIFIER_PROPERTY_MOVESPEED_MAX
+				MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
 			}
-			
-			return funcs
 		end
 
-		function modifier_imba_invoker_ghost_walk:GetModifierMoveSpeed_Max()
-			return self.max_movement_speed
+		function modifier_imba_invoker_ghost_walk:GetModifierIgnoreMovespeedLimit()
+			return 1
 		end
 
 		function modifier_imba_invoker_ghost_walk:CheckState()
-			local state = {
+			return {
 				[MODIFIER_STATE_INVISIBLE] 			= true,
 				[MODIFIER_STATE_NO_UNIT_COLLISION] 	= true,
 			}
-			return state
 		end
 
 		function modifier_imba_invoker_ghost_walk:GetPriority()

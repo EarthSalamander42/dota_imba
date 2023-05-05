@@ -1324,7 +1324,6 @@ end
 
 function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
 		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
@@ -1333,12 +1332,6 @@ function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
 		-- #8 TALENT: Void cleaves from attacks in chrono
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-end
-
-
-function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_Max()
-	if self:GetStackCount() == 1 or self:GetStackCount() == 4 then
-		return self:GetAbility():GetSpecialValueFor("movement_speed") end
 end
 
 -- #3 TALENT: Void gains infinite movement speed in Chrono

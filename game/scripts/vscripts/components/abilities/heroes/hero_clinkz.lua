@@ -1087,22 +1087,20 @@ function modifier_imba_skeleton_walk_invis:GetPriority()
 end
 
 function modifier_imba_skeleton_walk_invis:DeclareFunctions()
-	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-					  MODIFIER_PROPERTY_MOVESPEED_MAX,
-					  MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
-					  MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-					  MODIFIER_EVENT_ON_ATTACK}
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+		MODIFIER_EVENT_ON_ATTACK
+	}
 end
 
-function modifier_imba_skeleton_walk_invis:GetModifierMoveSpeed_Max()
---	if self:GetStackCount() > 0 then
---		return 700
---	end
-
-	-- Really, still not working?
+function modifier_imba_skeleton_walk_invis:GetModifierIgnoreMovespeedLimit()
 	if self:GetParent():HasScepter() then
-		return 5000
+		return 1
 	end
+	return 0
 end
 
 function modifier_imba_skeleton_walk_invis:GetModifierInvisibilityLevel()

@@ -53,18 +53,11 @@ function modifier_mutation_river_flows_boost:GetEffectName()
 end
 
 function modifier_mutation_river_flows_boost:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX
-		
 	}
-	return funcs
 end
 
 function modifier_mutation_river_flows_boost:GetModifierMoveSpeed_Absolute()
 	return _G.IMBA_MUTATION_RIVER_FLOWS_MOVESPEED or 1000
-end
-
-function modifier_mutation_river_flows_boost:GetModifierMoveSpeed_Max()
-	return math.huge
 end

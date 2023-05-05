@@ -25,25 +25,14 @@ function modifier_courier_hack:OnCreated()
 end
 
 function modifier_courier_hack:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
---		MODIFIER_EVENT_ON_MODEL_CHANGED,
+		--MODIFIER_EVENT_ON_MODEL_CHANGED,
 	}
-
-	return funcs
 end
 
 function modifier_courier_hack:GetModifierMoveSpeed_Absolute()
     if self:GetParent():HasFlyMovementCapability() then
-		return self:GetAbility():GetSpecialValueFor("flying_movespeed")
-	else
-		return self:GetAbility():GetSpecialValueFor("ground_movespeed")
-	end
-end
-
-function modifier_courier_hack:GetModifierMoveSpeed_Max()
-	if self:GetParent():HasFlyMovementCapability() then
 		return self:GetAbility():GetSpecialValueFor("flying_movespeed")
 	else
 		return self:GetAbility():GetSpecialValueFor("ground_movespeed")

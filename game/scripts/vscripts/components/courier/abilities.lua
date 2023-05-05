@@ -29,23 +29,18 @@ function modifier_courier_turbo:OnCreated()
 end
 --]]
 function modifier_courier_turbo:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_FLYING] = true,
 		[MODIFIER_STATE_INVULNERABLE] = true,
 	}
-
-	return state
 end
 
 function modifier_courier_turbo:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
 		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
 --		MODIFIER_EVENT_ON_MODEL_CHANGED,
 	}
-
-	return funcs
 end
 
 function modifier_courier_turbo:GetVisualZDelta()
@@ -135,9 +130,6 @@ function modifier_courier_turbo:GetModifierMoveSpeed_Absolute()
 	return self:GetAbility():GetSpecialValueFor("movespeed")
 end
 
-function modifier_courier_turbo:GetModifierMoveSpeed_Max()
-	return self:GetAbility():GetSpecialValueFor("movespeed")
-end
 --[[
 function modifier_courier_turbo:OnModelChanged()
 	Timers:CreateTimer(1.0, function()
