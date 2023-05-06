@@ -56,46 +56,39 @@ else
 	POST_GAME_TIME = 600.0 -- How long should we let people look at the scoreboard before closing the server automatically?
 end
 
-CAMERA_DISTANCE_OVERRIDE = -1
+CAMERA_DISTANCE_OVERRIDE                     = -1
 
-UNIVERSAL_SHOP_MODE = true -- Should the main shop contain Secret Shop items as well as regular items
+UNIVERSAL_SHOP_MODE                          = true -- Should the main shop contain Secret Shop items as well as regular items
 -- if IsInToolsMode() then
 -- UNIVERSAL_SHOP_MODE = true
 -- end
-USE_STANDARD_HERO_GOLD_BOUNTY = false
+USE_STANDARD_HERO_GOLD_BOUNTY                = false
 
-MINIMAP_ICON_SIZE = 1       -- What icon size should we use for our heroes?
-MINIMAP_CREEP_ICON_SIZE = 1 -- What icon size should we use for creeps?
-MINIMAP_RUNE_ICON_SIZE = 1  -- What icon size should we use for runes?
+MINIMAP_ICON_SIZE                            = 1 -- What icon size should we use for our heroes?
+MINIMAP_CREEP_ICON_SIZE                      = 1 -- What icon size should we use for creeps?
+MINIMAP_RUNE_ICON_SIZE                       = 1 -- What icon size should we use for runes?
 
 -- TODO: Set back to true and fix it
-CUSTOM_BUYBACK_COST_ENABLED = false      -- Should we use a custom buyback cost setting?
-CUSTOM_BUYBACK_COOLDOWN_ENABLED = true   -- Should we use a custom buyback time?
-BUYBACK_ENABLED = true                   -- Should we allow people to buyback when they die?
+CUSTOM_BUYBACK_COST_ENABLED                  = false -- Should we use a custom buyback cost setting?
+CUSTOM_BUYBACK_COOLDOWN_ENABLED              = true  -- Should we use a custom buyback time?
+BUYBACK_ENABLED                              = true  -- Should we allow people to buyback when they die?
 
-USE_NONSTANDARD_HERO_GOLD_BOUNTY = false -- Should heroes follow their own gold bounty rules instead of the default DOTA ones?
-USE_NONSTANDARD_HERO_XP_BOUNTY = true    -- Should heroes follow their own XP bounty rules instead of the default DOTA ones?
+USE_NONSTANDARD_HERO_GOLD_BOUNTY             = false -- Should heroes follow their own gold bounty rules instead of the default DOTA ones?
+USE_NONSTANDARD_HERO_XP_BOUNTY               = true  -- Should heroes follow their own XP bounty rules instead of the default DOTA ones?
 -- Currently setting USE_NONSTANDARD_HERO_XP_BOUNTY to true due to map multipliers making the vanilla values give way too insane level boosts
 
-ENABLE_TOWER_BACKDOOR_PROTECTION = true         -- Should we enable backdoor protection for our towers?
-REMOVE_ILLUSIONS_ON_DEATH = false               -- Should we remove all illusions if the main hero dies?
-DISABLE_GOLD_SOUNDS = false                     -- Should we disable the gold sound when players get gold?
+ENABLE_TOWER_BACKDOOR_PROTECTION             = true                        -- Should we enable backdoor protection for our towers?
+REMOVE_ILLUSIONS_ON_DEATH                    = false                       -- Should we remove all illusions if the main hero dies?
+DISABLE_GOLD_SOUNDS                          = false                       -- Should we disable the gold sound when players get gold?
 
-ENABLE_FIRST_BLOOD = true                       -- Should we enable first blood for the first kill in this game?
-HIDE_KILL_BANNERS = false                       -- Should we hide the kill banners that show when a player is killed?
-LOSE_GOLD_ON_DEATH = true                       -- Should we have players lose the normal amount of dota gold on death?
-ENABLE_TPSCROLL_ON_FIRST_SPAWN = true           -- Should heroes spawn with a TP Scroll?
-FORCE_PICKED_HERO = "npc_dota_hero_dummy_dummy" -- What hero should we force all players to spawn as? (e.g. "npc_dota_hero_axe").  Use nil to allow players to pick their own hero.
+ENABLE_FIRST_BLOOD                           = true                        -- Should we enable first blood for the first kill in this game?
+HIDE_KILL_BANNERS                            = false                       -- Should we hide the kill banners that show when a player is killed?
+LOSE_GOLD_ON_DEATH                           = true                        -- Should we have players lose the normal amount of dota gold on death?
+ENABLE_TPSCROLL_ON_FIRST_SPAWN               = true                        -- Should heroes spawn with a TP Scroll?
+FORCE_PICKED_HERO                            = "npc_dota_hero_dummy_dummy" -- What hero should we force all players to spawn as? (e.g. "npc_dota_hero_axe").  Use nil to allow players to pick their own hero.
 
-MAXIMUM_ATTACK_SPEED = 1000                     -- What should we use for the maximum attack speed?
-MINIMUM_ATTACK_SPEED = 0                        -- What should we use for the minimum attack speed?
-
-b_USE_MULTIPLE_COURIERS = true                  -- Should we allow a courier for each player?
-
--- in case we stop using vanilla couriers, keep using them for overthrow
-if IsOverthrowMap() then
-	b_USE_MULTIPLE_COURIERS = true
-end
+MAXIMUM_ATTACK_SPEED                         = 1000                        -- What should we use for the maximum attack speed?
+MINIMUM_ATTACK_SPEED                         = 0                           -- What should we use for the minimum attack speed?
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: gameplay globals
@@ -185,25 +178,6 @@ elseif GetMapName() == "imba_demo" then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
 	PRE_GAME_TIME                                = 10.0
 	AP_BAN_TIME                                  = 0.0
-elseif IsOverthrowMap() then
-	PRE_GAME_TIME = 10.0
-	AP_BAN_TIME = 0.0
-
-	for team = 2, 13 do
-		if team ~= 4 and team ~= 5 then
-			print("Set team " .. team .. " player  count to 1")
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_CUSTOM_1, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_CUSTOM_2, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_CUSTOM_3, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_CUSTOM_4, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_CUSTOM_5, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_CUSTOM_6, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_CUSTOM_7, 1)
-			GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_CUSTOM_8, 1)
-		end
-	end
 end
 
 -------------------------------------------------------------------------------------------------
@@ -227,7 +201,6 @@ CUSTOM_GOLD_BONUS["dota"] = global_gold
 CUSTOM_GOLD_BONUS["imba_5v5"] = global_gold
 CUSTOM_GOLD_BONUS[Map10v10()] = global_gold
 CUSTOM_GOLD_BONUS[MapTournament()] = global_gold
-CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
 CUSTOM_GOLD_BONUS["imba_demo"] = global_gold
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
@@ -238,7 +211,6 @@ CUSTOM_XP_BONUS["dota"] = global_xp
 CUSTOM_XP_BONUS["imba_5v5"] = global_xp
 CUSTOM_XP_BONUS[Map10v10()] = global_xp
 CUSTOM_XP_BONUS[MapTournament()] = global_xp
-CUSTOM_XP_BONUS[MapOverthrow()] = global_xp
 CUSTOM_XP_BONUS["imba_demo"] = global_xp
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
@@ -250,7 +222,6 @@ HERO_STARTING_LEVEL["dota"] = global_starting_level
 HERO_STARTING_LEVEL["imba_5v5"] = global_starting_level
 HERO_STARTING_LEVEL[Map10v10()] = global_starting_level
 HERO_STARTING_LEVEL[MapTournament()] = global_starting_level
-HERO_STARTING_LEVEL[MapOverthrow()] = global_starting_level
 HERO_STARTING_LEVEL["imba_demo"] = 1
 
 local global_max_level = 30 -- Currently custom level boolean is set to off because this is the same as vanilla
@@ -260,7 +231,6 @@ MAX_LEVEL["dota"] = global_max_level
 MAX_LEVEL["imba_5v5"] = global_max_level
 MAX_LEVEL[Map10v10()] = global_max_level
 MAX_LEVEL[MapTournament()] = global_max_level
-MAX_LEVEL[MapOverthrow()] = global_max_level
 MAX_LEVEL["imba_demo"] = global_max_level
 
 -- vanilla, keep it as a static value for reasons
@@ -274,7 +244,6 @@ GOLD_TICK_TIME["dota"] = global_gold_tick_time
 GOLD_TICK_TIME["imba_5v5"] = global_gold_tick_time
 GOLD_TICK_TIME[Map10v10()] = global_10v10_gold_tick_time
 GOLD_TICK_TIME[MapTournament()] = global_gold_tick_time
-GOLD_TICK_TIME[MapOverthrow()] = global_gold_tick_time
 GOLD_TICK_TIME["imba_demo"] = global_gold_tick_time
 
 BANNED_ITEMS = {}

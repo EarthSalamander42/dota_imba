@@ -119,8 +119,6 @@
 "new_hero"						"New!"
 "disabled_hero"					"Disabled"
 "disabled_hero_10v10"			"10v10 Disabled"
-"disabled_hero_mutation"		"Mutation Disabled"
-"disabled_hero_overthrow"		"Overthrow Disabled"
 "picked_hero"					"Picked"
 "imba_hero"						"Imba"
 "vanilla_hero"					"Lazy"
@@ -141,16 +139,6 @@
 
 //	"DOTA_GoodGuys"   								"Teal Tiger"
 //	"DOTA_BadGuys"    								"Yellow Monkey"
-"Overthrow_Team_2"								"Teal Tiger"
-"Overthrow_Team_3"								"Yellow Monkey"
-"Overthrow_Team_6"    							"Pink Dragon"
-"Overthrow_Team_7"    							"Orange Dog"
-"Overthrow_Team_8"    							"Blue Rooster"
-"Overthrow_Team_9"    							"Green Ram"
-"Overthrow_Team_10"    							"Brown Rat"
-"Overthrow_Team_11"    							"Cyan Boar"
-"Overthrow_Team_12"    							"Olive Snake"
-"Overthrow_Team_13"    							"Purple Horse"
 
 // GG Panel
 "gg_panel"										"GG Panel"

@@ -44,9 +44,6 @@ require('components/runes')         -- Rune system override
 require('components/settings/settings')
 -- require('components/new_team_selection')
 require('components/tooltips/init')
-if IsOverthrowMap() then
-	require("components/overthrow/init")
-end
 
 require('events/events')
 require('filters')
@@ -60,13 +57,15 @@ function GameMode:PostLoadPrecache()
 end
 
 function GameMode:OnFirstPlayerLoaded()
-	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() and GetMapName() ~= "imba_demo" then
-		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
-		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
+	local roshan_spawner = Entities:FindByClassname(nil, "npc_dota_roshan_spawner")
+
+	if roshan_spawner then
+		_G.ROSHAN_SPAWN_LOC = roshan_spawner:GetAbsOrigin()
+		roshan_spawner:RemoveSelf()
 
 		if GetMapName() ~= Map1v1() then
 			ROSHAN_ENT = CreateUnitByName("npc_dota_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-			ROSHAN_ENT:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai", {})
+			ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_imba_roshan_ai", {})
 		end
 	end
 end

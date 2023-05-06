@@ -175,7 +175,9 @@
 		"EmitSoundOnLocationForAllies",
 		"DOTA_ModifyGold_AbandonedRedistribute",
 		"DOTA_ModifyGold_GameTick",
-		"GetTeamHeroKills"
+		"GetTeamHeroKills",
+		"DOTA_TEAM_NEUTRALS",
+		"CreateItemOnPositionForLaunch"
 	],
 	"Lua.hint.await": true,
 	"Lua.semantic.annotation": false,

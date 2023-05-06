@@ -52,25 +52,8 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			-- todo: move this into an overthrow component file
-			if IsOverthrowMap() then
-				GoodCamera = Entities:FindByName(nil, "@overboss")
-				BadCamera = Entities:FindByName(nil, "@overboss")
-
-				local xp_granters = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), nil, 200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-				for _, granter in pairs(xp_granters) do
-					if string.find(granter:GetUnitName(), "npc_dota_xp_granter") then
-						granter:RemoveSelf()
-						break
-					end
-				end
-
-				GameRules:GetGameModeEntity():SetLoseGoldOnDeath(false)
-			else
-				GoodCamera = Entities:FindByName(nil, "good_healer_6")
-				BadCamera = Entities:FindByName(nil, "bad_healer_6")
-			end
+			GoodCamera = Entities:FindByName(nil, "good_healer_6")
+			BadCamera = Entities:FindByName(nil, "bad_healer_6")
 
 			HeroSelection:Init()
 
@@ -128,14 +111,9 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- shows -1 for some reason by default
 		GameRules:GetGameModeEntity():SetCustomDireScore(0)
 
-		if GetMapName() == MapOverthrow() then
-			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
-			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
-		else
-			-- self:SetupContributors()
-			self:SetupFrostivus()
-			self:SetupShrines()
-		end
+		-- self:SetupContributors()
+		self:SetupFrostivus()
+		self:SetupShrines()
 
 		-- Create a timer to avoid lag spike entering game
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()

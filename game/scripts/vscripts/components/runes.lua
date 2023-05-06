@@ -33,27 +33,21 @@ LinkLuaModifier("modifier_imba_invisibility_rune_handler", "components/modifiers
 LinkLuaModifier("modifier_imba_illusion_rune", "components/modifiers/runes/modifier_imba_illusion_rune", LUA_MODIFIER_MOTION_NONE)
 
 function ImbaRunes:Init()
-	bounty_rune_spawners = {}
-	bounty_rune_locations = {}
-	powerup_rune_spawners = {}
-	powerup_rune_locations = {}
+	ImbaRunes.bounty_rune_spawners = {}
+	ImbaRunes.bounty_rune_locations = {}
+	ImbaRunes.powerup_rune_spawners = Entities:FindAllByClassname("dota_item_rune_spawner_powerup")
+	ImbaRunes.powerup_rune_locations = {}
 
-	bounty_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner_bounty")
+	ImbaRunes.bounty_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner_bounty")
 
-	if GetMapName() == MapOverthrow() then
-		powerup_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner")
-	else
-		powerup_rune_spawners = Entities:FindAllByClassname("dota_item_rune_spawner_powerup")
+	for i = 1, #ImbaRunes.powerup_rune_spawners do
+		ImbaRunes.powerup_rune_locations[i] = ImbaRunes.powerup_rune_spawners[i]:GetAbsOrigin()
+		ImbaRunes.powerup_rune_spawners[i]:RemoveSelf()
 	end
 
-	for i = 1, #powerup_rune_spawners do
-		powerup_rune_locations[i] = powerup_rune_spawners[i]:GetAbsOrigin()
-		powerup_rune_spawners[i]:RemoveSelf()
-	end
-
-	for i = 1, #bounty_rune_spawners do
-		bounty_rune_locations[i] = bounty_rune_spawners[i]:GetAbsOrigin()
-		bounty_rune_spawners[i]:RemoveSelf()
+	for i = 1, #ImbaRunes.bounty_rune_spawners do
+		ImbaRunes.bounty_rune_locations[i] = ImbaRunes.bounty_rune_spawners[i]:GetAbsOrigin()
+		ImbaRunes.bounty_rune_spawners[i]:RemoveSelf()
 	end
 end
 
@@ -83,9 +77,9 @@ function ImbaRunes:Spawn()
 		Timers:CreateTimer(function()
 			ImbaRunes:RemoveRunes(1)
 
-			for k, v in pairs(powerup_rune_locations) do
+			for k, v in pairs(ImbaRunes.powerup_rune_locations) do
 				local random_int = RandomInt(1, #powerup_rune_types)
-				local rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
+				local rune = CreateItemOnPositionForLaunch(ImbaRunes.powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
 				ImbaRunes:RegisterRune(rune, 1)
 				if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
 					if powerup_super_rune_colors[random_int] then
@@ -108,9 +102,9 @@ function ImbaRunes:Spawn()
 	Timers:CreateTimer(function()
 		ImbaRunes:RemoveRunes(2)
 
-		for k, v in pairs(bounty_rune_locations) do
+		for k, v in pairs(ImbaRunes.bounty_rune_locations) do
 			local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-			local rune = CreateItemOnPositionForLaunch(bounty_rune_locations[k], bounty_rune)
+			local rune = CreateItemOnPositionForLaunch(ImbaRunes.bounty_rune_locations[k], bounty_rune)
 			ImbaRunes:RegisterRune(rune, 2)
 			ImbaRunes:SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
 		end

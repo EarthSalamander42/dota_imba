@@ -47,13 +47,6 @@
 			})
 		})
 
-		GameUI.CustomUIConfig().multiteam_top_scoreboard =
-		{
-			reorder_team_scores: true,
-			LeftInjectXMLFile: "file://{resources}/layout/custom_game/overthrow_scoreboard_left.xml",
-			TeamOverlayXMLFile: "file://{resources}/layout/custom_game/overthrow_scoreboard_team_overlay.xml"
-		};
-
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_names = {}
 
@@ -173,29 +166,6 @@
 
 		OverrideDotaNeutralItemsShop();
 
-/*
-		//Buff Bar
-		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
-		BuffBar.style.width = "30%";
-		BuffBar.style.marginLeft = "40.5%";
-
-		//DeBuff Bar
-		var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
-		DeBuffBar.style.width = "30%";
-		DeBuffBar.style.marginBottom = "40.5%";
-		DeBuffBar.style.marginRight = "29.5%";
-		DeBuffBar.style.flowChildren = "right";
-
-*/
-
-		function PlayHeroTaunt() {
-			GameEvents.SendCustomGameEventToServer("play_hero_taunt", {
-				ID : Players.GetLocalPlayer(),
-			});
-		}
-
-		GameUI.SetupVanillaKeyBinding("HeroTaunt", PlayHeroTaunt);
-
 		function SetupGameInfoPanel() {
 			if (Parent.FindChildTraverse("GameInfoPanel")) {
 				Parent.FindChildTraverse("GameInfoPanel").style.visibility = "visible";
@@ -254,7 +224,6 @@
 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/manifold_paradox.xml" /> -->
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" /> -->
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_plus_stats.xml" /> -->

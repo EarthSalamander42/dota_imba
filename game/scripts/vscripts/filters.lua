@@ -315,18 +315,6 @@ function GameMode:ItemAddedFilter(keys)
 		return false
 	end
 
-	-- Airdrop Mutation to inform players that an item was picked up
-	if item.airdrop then
-		local overthrow_item_drop =
-		{
-			hero_id = unit:GetClassname(),
-			dropped_item = item:GetName()
-		}
-		CustomGameEventManager:Send_ServerToAllClients("overthrow_item_drop", overthrow_item_drop)
-		EmitGlobalSound("powerup_04")
-		item.airdrop = nil
-	end
-
 	-------------------------------------------------------------------------------------------------
 	-- Aegis of the Immortal pickup logic
 	-------------------------------------------------------------------------------------------------
