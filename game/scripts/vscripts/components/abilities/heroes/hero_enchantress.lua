@@ -935,7 +935,7 @@ function modifier_imba_enchantress_impetus:OnAttack( keys )
 	if keys.attacker == self.caster then
 		if not self.caster:IsIllusion() and self.ability:IsFullyCastable() and not self.caster:IsSilenced() and not keys.target:IsBuilding() and not keys.target:IsOther() and (self.ability:GetAutoCastState() or self.impetus_orb) then
 			table.insert(self.attack_queue, true)
-			self.ability:UseResources(true, false, false)
+			self.ability:UseResources(true, false, false, false)
 			self.caster:EmitSound(self.impetus_start)
 			self.impetus_orb = false
 		else

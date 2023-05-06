@@ -63,7 +63,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 
 		-- if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
 			-- -- Jinada goes on cooldown
-			-- jinada_ability:UseResources(false, false, true)
+			-- jinada_ability:UseResources(false, false, false, true)
 
 			-- -- Consumes Jinada's buff
 			-- caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
@@ -105,7 +105,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 
 				-- if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
 					-- -- Jinada goes on cooldown
-					-- jinada_ability:UseResources(false, false, true)
+					-- jinada_ability:UseResources(false, false, false, true)
 
 					-- -- Consumes Jinada's buff
 					-- caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
@@ -544,7 +544,7 @@ function imba_bounty_hunter_jinada:ShadowJaunt(caster, ability, target)
 	caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized())
 
 	-- Start skill cooldown.
-	ability:UseResources(false, false, true)
+	ability:UseResources(false, false, false, true)
 
 	-- Wait for one second. If crit buff is still not used, remove it.
 	Timers:CreateTimer(1, function()
@@ -728,7 +728,7 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 
 			-- Start the skill's cooldown if it's ready (might not be because of active)
 			if self.ability:IsCooldownReady() then
-				self.ability:UseResources(false, false, true)
+				self.ability:UseResources(false, false, false, true)
 			end
 
 			-- transfer gold from target to caster

@@ -72,7 +72,7 @@ function base_ability_dual_breath:OnSpellStart()
 		
 		-- Don't let Jakiro use all three breaths in quick succession
 		if self:GetCaster():HasAbility("imba_jakiro_dual_breath") then
-			self:GetCaster():FindAbilityByName("imba_jakiro_dual_breath"):UseResources(false, false, true)
+			self:GetCaster():FindAbilityByName("imba_jakiro_dual_breath"):UseResources(false, false, false, true)
 		end
 	end
 end
@@ -587,11 +587,11 @@ function imba_jakiro_dual_breath:OnSpellStart()
 	
 	-- Don't let Jakiro use all three breaths in quick succession
 	if self:GetCaster():HasAbility("imba_jakiro_fire_breath") then
-		self:GetCaster():FindAbilityByName("imba_jakiro_fire_breath"):UseResources(false, false, true)
+		self:GetCaster():FindAbilityByName("imba_jakiro_fire_breath"):UseResources(false, false, false, true)
 	end
 	
 	if self:GetCaster():HasAbility("imba_jakiro_ice_breath") then
-		self:GetCaster():FindAbilityByName("imba_jakiro_ice_breath"):UseResources(false, false, true)
+		self:GetCaster():FindAbilityByName("imba_jakiro_ice_breath"):UseResources(false, false, false, true)
 	end
 end
 
@@ -1124,7 +1124,7 @@ function modifier_imba_liquid_fire_caster:OnAttack(keys)
 			end
 
 			-- Start cooldown
-			ability:UseResources(false, false, true)
+			ability:UseResources(false, false, false, true)
 		end
 	end
 end

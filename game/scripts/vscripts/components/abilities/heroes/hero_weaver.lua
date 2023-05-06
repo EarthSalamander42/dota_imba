@@ -549,12 +549,24 @@ function modifier_imba_weaver_geminate_attack:DeclareFunctions()
 end
 
 function modifier_imba_weaver_geminate_attack:OnAttack(keys)
-	if keys.attacker == self:GetParent() and self:GetAbility():IsFullyCastable() and not self:GetParent():IsIllusion() and not self:GetParent():PassivesDisabled() and not keys.no_attack_cooldown and keys.target:GetUnitName() ~= "npc_dota_observer_wards" and keys.target:GetUnitName() ~= "npc_dota_sentry_wards" then
-		for geminate_attacks = 1, self:GetAbility():GetTalentSpecialValueFor("tooltip_attack") do
-			self:GetParent():AddNewModifier(keys.target, self:GetAbility(), "modifier_imba_weaver_geminate_attack_delay", {delay = self:GetAbility():GetSpecialValueFor("delay") * geminate_attacks})
+	if not IsServer() then return end
+
+	local ability = self:GetAbility()
+	local parent = self:GetParent()
+	local target = keys.target
+
+	if not target or target:IsNull() then
+		return
+	end
+	if target.GetUnitName == nil or not target:IsBaseNPC() then
+		return
+	end
+	if keys.attacker == parent and ability:IsFullyCastable() and not parent:IsIllusion() and not parent:PassivesDisabled() and not keys.no_attack_cooldown and target:GetUnitName() ~= "npc_dota_observer_wards" and target:GetUnitName() ~= "npc_dota_sentry_wards" then
+		for geminate_attacks = 1, ability:GetTalentSpecialValueFor("tooltip_attack") do
+			parent:AddNewModifier(target, ability, "modifier_imba_weaver_geminate_attack_delay", {delay = ability:GetSpecialValueFor("delay") * geminate_attacks})
 		end
 		
-		self:GetAbility():UseResources(true, true, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 

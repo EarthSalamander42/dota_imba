@@ -1219,7 +1219,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 		BuffInfo.reincarnation_death = true
 
 		-- Use the Reincarnation's ability cooldown
-		BuffInfo.ability:UseResources(false, false, true)
+		BuffInfo.ability:UseResources(false, false, false, true)
 
 		-- Play reincarnate sound
 		if BuffInfo.caster == unit then

@@ -1572,7 +1572,7 @@ function modifier_special_bonus_imba_nyx_assassin_5:_CheckHealth(damage)
 		if current_hp <= self.hp_threshold_pct then
 			-- Cast spell, but only use up the cooldown, not mana
 			self.ability:OnSpellStart()
-			self.ability:UseResources(false, false, true)
+			self.ability:UseResources(false, false, false, true)
 		end
 	end
 end

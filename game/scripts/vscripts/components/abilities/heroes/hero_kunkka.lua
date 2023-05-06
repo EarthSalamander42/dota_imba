@@ -1096,7 +1096,7 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 
 				if not ((self.tide_index == 6) or (self.tide_index == 1)) then
 					local cooldown = ability:GetCooldown(ability:GetLevel()-1)
-					ability:UseResources(false, false, true)
+					ability:UseResources(false, false, false, true)
 					Timers:CreateTimer( cooldown, function()
 							if not parent:HasModifier("modifier_imba_tidebringer_sword_particle") then
 								parent:AddNewModifier(parent, ability, "modifier_imba_tidebringer_sword_particle", {})

@@ -596,7 +596,7 @@ end
 	
 	-- -- Don't waste it if caster has Shallow Grave or Cheese Death Prevention
 	-- if keys.unit == self.caster and self.caster:GetHealth() <= 1 and not self.caster:IsIllusion() and (self.ability:GetAutoCastState() and self.ability:IsCooldownReady()) and not self.caster:PassivesDisabled() and not self.caster:HasModifier("modifier_imba_dazzle_shallow_grave") and not self.caster:HasModifier("modifier_imba_dazzle_nothl_protection_aura_talent") and not self.caster:HasModifier("modifier_imba_cheese_death_prevention") and not self.caster:HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
-		-- self.ability:UseResources(false, false, true)
+		-- self.ability:UseResources(false, false, false, true)
 	
 		-- self.caster:EmitSound("Hero_Dazzle.Shallow_Grave")
 		-- self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_huskar_berserkers_blood_crimson_priest", {duration = self.crimson_priest_duration})

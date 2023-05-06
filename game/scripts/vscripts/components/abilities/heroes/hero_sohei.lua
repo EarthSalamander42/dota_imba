@@ -903,7 +903,7 @@ if IsServer() then
 
 			-- start momentum cooldown if not used during flurry
 			if not self:GetParent():HasModifier( "modifier_sohei_flurry_self" ) then
-				spell:UseResources( true, true, true )
+				spell:UseResources(false, false, false, true)
 			end
 		end
 	end
@@ -1355,7 +1355,7 @@ if IsServer() then
 
 				if spellMomentum then
 					spellMomentum:EndCooldown()
-					spellMomentum:UseResources( true, true, true )
+					spellMomentum:UseResources(false, false, false, true)
 				end
 			end
 

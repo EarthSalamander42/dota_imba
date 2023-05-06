@@ -842,7 +842,7 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
 			end
 
 			-- Start the cooldown of the ability
-			self.ability:UseResources(false, false, true)
+			self.ability:UseResources(false, false, false, true)
 			
 			
 		end

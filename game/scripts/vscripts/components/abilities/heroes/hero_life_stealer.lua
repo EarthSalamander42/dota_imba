@@ -1027,7 +1027,7 @@ function modifier_imba_life_stealer_infest:OnDestroy()
 	end
 	
 	if self:GetAbility():GetName() == "imba_life_stealer_infest_723" then
-		self:GetAbility():UseResources(false, false, true) 
+		self:GetAbility():UseResources(false, false, false, true) 
 	end
 end
 

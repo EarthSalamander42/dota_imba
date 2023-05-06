@@ -1343,7 +1343,7 @@ function modifier_imba_take_aim_range:OnAttack(keys)
 
 			-- If the attacker fired an Aimed Shot, go on cooldown
 			if self:GetStackCount() == 0 and self.ability:IsCooldownReady() then
-				self.ability:UseResources(false, false, true)
+				self.ability:UseResources(false, false, false, true)
 			end
 		end
 	end

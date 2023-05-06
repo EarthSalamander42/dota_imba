@@ -778,7 +778,7 @@ function modifier_imba_overpower_talent_fangs:OnAttackStart(keys)
 			self.ability:DisarmEnemies(self.caster, self.ability)
 
 			-- Trigger the cooldown of the ability
-			self.ability:UseResources(false, false, true)
+			self.ability:UseResources(false, false, false, true)
 		end
 	end
 end

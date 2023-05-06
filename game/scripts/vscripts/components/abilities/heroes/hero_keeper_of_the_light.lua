@@ -1038,7 +1038,7 @@ function modifier_imba_keeper_of_the_light_spotlights:OnAttackLanded(keys)
 
 	if keys.attacker == self.parent and not self.parent:PassivesDisabled() and self.ability:IsCooldownReady() then
 		self:Spotlight(keys.target:GetAbsOrigin(), self.passive_radius, self.attack_duration)
-		self.ability:UseResources(false, false, true)
+		self.ability:UseResources(false, false, false, true)
 	end
 end
 
@@ -1047,7 +1047,7 @@ function modifier_imba_keeper_of_the_light_spotlights:OnTakeDamage(keys)
 
 	if keys.unit == self.parent and not self.parent:PassivesDisabled() and self.ability:IsCooldownReady() then
 		self:Spotlight(keys.attacker:GetAbsOrigin(), self.passive_radius, self.damaged_duration)
-		self.ability:UseResources(false, false, true)
+		self.ability:UseResources(false, false, false, true)
 	end
 end
 

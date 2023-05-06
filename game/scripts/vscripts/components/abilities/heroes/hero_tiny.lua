@@ -351,7 +351,7 @@ function modifier_imba_tiny_tree:OnRemoved()
 		local ability_slot4 = caster:FindAbilityByName("imba_tiny_tree_grab")
 		caster:SwapAbilities(ability_slot3:GetAbilityName(), ability_slot4:GetAbilityName(), false, true)
 		-- Trigger cd when last stack is used up
-		self:GetAbility():UseResources(false, false, true)
+		self:GetAbility():UseResources(false, false, false, true)
 		if caster:HasTalent("special_bonus_imba_tiny_4") then
 			local ability = self:GetAbility()
 			local cooldown_reduction = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")

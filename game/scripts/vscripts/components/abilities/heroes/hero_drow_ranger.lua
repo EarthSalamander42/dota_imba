@@ -167,7 +167,7 @@ function modifier_imba_frost_arrows_thinker:OnAttack(keys)
 			EmitSoundOn(self.sound_cast, self.caster)
 
 			-- Spend mana
-			self.ability:UseResources(true, false, false)
+			self.ability:UseResources(true, false, false, false)
 		end
 	end
 end
@@ -2136,7 +2136,7 @@ function modifier_imba_drow_ranger_marksmanship_723:OnAttackLanded(keys)
 				if enemy ~= keys.target then 
 					if splinter_counter < self:GetAbility():GetSpecialValueFor("split_count_scepter") then
 						if self.frost_arrow_modifier and self.frost_arrow_modifier:GetAbility() and (self.frost_arrow_modifier.cast or self.frost_arrow_modifier:GetAbility():GetAutoCastState()) and self.frost_arrow_modifier:GetAbility():IsFullyCastable() then 
-							self.frost_arrow_modifier:GetAbility():UseResources(true, false, false)
+							self.frost_arrow_modifier:GetAbility():UseResources(true, false, false, false)
 							
 							self.bFrost = true
 							self.splinter_projectile_name = "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"

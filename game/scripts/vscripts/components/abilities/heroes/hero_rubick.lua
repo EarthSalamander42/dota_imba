@@ -266,7 +266,7 @@ function modifier_imba_telekinesis:EndTransition()
 			parent:EmitSound("Hero_Rubick.Telekinesis.Target.Stun")
 		end
 		
-		ability:UseResources(true, false, true)
+		ability:UseResources(true, false, false, true)
 		
 		-- Special considerations for ally telekinesis		
 		if self.is_ally then
