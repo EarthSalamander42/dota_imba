@@ -820,49 +820,49 @@ function imba_rattletrap_rocket_flare:GetAOERadius()
 end
 
 function imba_rattletrap_rocket_flare:OnSpellStart()
+	local caster = self:GetCaster()
+	local target_loc = self:GetCursorPosition()
+
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
-	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
-		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	if target_loc == caster:GetAbsOrigin() then
+		caster:SetCursorPosition(target_loc + caster:GetForwardVector())
 	end
 
 	-- This temporarily deletes the rocket model from Clockwerk
-	if self:GetCaster():GetName() == "npc_dota_hero_rattletrap" then	
-		self:GetCaster():EmitSound("rattletrap_ratt_ability_flare_0"..RandomInt(1, 7))
+	if caster:GetName() == "npc_dota_hero_rattletrap" then	
+		caster:EmitSound("rattletrap_ratt_ability_flare_0"..RandomInt(1, 7))
 	
-		if self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_MISC ) then
-			self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_MISC ):AddEffects(EF_NODRAW)
+		if caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_MISC ) then
+			caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_MISC ):AddEffects(EF_NODRAW)
 		end
 	end
 	
 	-- Standard logic
 	if not self:GetAutoCastState() then
-		-- Why is this a tracking projectile...
-		local rocket_target = CreateModifierThinker(self:GetCaster(), self, nil, {
-				duration		= FrameTime() -- Don't really need these things to be existing at all except to be a target for the rocket to go towards -_-
-			},
-			self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
-		
+		-- Dummy that needs to be a target for the rocket to go towards
+		local rocket_target = CreateUnitByName("npc_dummy_unit", self:GetCursorPosition(), false, caster, caster, caster:GetTeamNumber())
+
 		-- This "dummy" literally only exists to attach the rocket travel sound to
-		local rocket_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {},	self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+		local rocket_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 		
-		if self:GetCaster():HasTalent("special_bonus_imba_rattletrap_rocket_flare_truesight") then
-			rocket_dummy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_gem_of_true_sight", {})
+		if caster:HasTalent("special_bonus_imba_rattletrap_rocket_flare_truesight") then
+			rocket_dummy:AddNewModifier(caster, self, "modifier_item_imba_gem_of_true_sight", {})
 		end
 		
 		-- Need to look at how to shoot the rocket from the correct place + make the rocet "disappear" from Clockwerk for the duration
-		local rocket_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(rocket_particle, 0, self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_rocket")))
+		local rocket_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(rocket_particle, 0, caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_rocket")))
 		ParticleManager:SetParticleControl(rocket_particle, 1, self:GetCursorPosition())
 		ParticleManager:SetParticleControl(rocket_particle, 2, Vector(self:GetTalentSpecialValueFor("speed"), 0, 0))
 		
 		local rocket =
 			{
 				Target 				= rocket_target,
-				Source 				= self:GetCaster(),
+				Source 				= caster,
 				Ability 			= self,
 				--EffectName 			= "particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", // IDK why this works as a projectile but you have to use it like a particle anyways and split everything up ugh
 				iMoveSpeed			= self:GetTalentSpecialValueFor("speed"),
-				vSourceLoc 			= self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_rocket")),
+				vSourceLoc 			= caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_rocket")),
 				bDrawsOnMinimap 	= true,
 				bDodgeable 			= true,
 				bIsAttack 			= false,
@@ -871,55 +871,58 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 				flExpireTime 		= GameRules:GetGameTime() + 20,
 				bProvidesVision 	= true,
 				iVisionRadius 		= self:GetSpecialValueFor("vision_radius"),
-				iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
+				iVisionTeamNumber 	= caster:GetTeamNumber(),
 
-				ExtraData = {rocket_dummy = rocket_dummy:entindex(), rocket_particle = rocket_particle, x = self:GetCaster():GetAbsOrigin().x, y = self:GetCaster():GetAbsOrigin().y, z = self:GetCaster():GetAbsOrigin().z}
+				ExtraData = {
+					rocket_dummy = rocket_dummy:entindex(),
+					rocket_particle = rocket_particle,
+					x = caster:GetAbsOrigin().x,
+					y = caster:GetAbsOrigin().y,
+					z = caster:GetAbsOrigin().z
+				}
 			}
 		
-		self:GetCaster():EmitSound("Hero_Rattletrap.Rocket_Flare.Fire")		
+		caster:EmitSound("Hero_Rattletrap.Rocket_Flare.Fire")		
 		-- Arbitrary band-aid fix for lingering sounds when cast too close to caster
-		if (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Length2D() > 200 then
+		if (self:GetCursorPosition() - caster:GetAbsOrigin()):Length2D() > 200 then
 			rocket_dummy:EmitSound("Hero_Rattletrap.Rocket_Flare.Travel")
 		end		
 		
 		ProjectileManager:CreateTrackingProjectile(rocket)
-		
-		-- Just in case this thing isn't destroying itself
-		rocket_target:RemoveSelf()
+
+		rocket_target:AddNewModifier(caster, self, "modifier_kill", {duration = FrameTime()})
 	else
 		-- IMBAfication: Carpet Fire
 		for instance = 0, self:GetSpecialValueFor("carpet_fire_rockets") - 1 do
 			local cursor_position = self:GetCursorPosition()
+			local ability = self
 			
 			-- Copy pasting the above code with minor visions for stuff like location and damage
-			Timers:CreateTimer(self:GetSpecialValueFor("carpet_fire_delay") * instance, function()
+			Timers:CreateTimer(ability:GetSpecialValueFor("carpet_fire_delay") * instance, function()
 				-- You never know if things are going to go around deleting themselves before they fire...
-				if self then
-					local random_position = cursor_position + RandomVector(RandomInt(0, self:GetSpecialValueFor("radius") * self:GetSpecialValueFor("carpet_fire_spread")))
-				
-					-- Why is this a tracking projectile...
-					local rocket_target = CreateModifierThinker(self:GetCaster(), self, nil, {
-							duration		= FrameTime() -- Don't really need these things to be existing at all except to be a target for the rocket to go towards -_-
-						},
-						random_position, self:GetCaster():GetTeamNumber(), false)
-					
+				if ability then
+					local random_position = cursor_position + RandomVector(RandomInt(0, ability:GetSpecialValueFor("radius") * ability:GetSpecialValueFor("carpet_fire_spread")))
+
+					-- Dummy that needs to be a target for the rocket to go towards
+					local rocket_target = CreateUnitByName("npc_dummy_unit", random_position, false, caster, caster, caster:GetTeamNumber())
+
 					-- This "dummy" literally only exists to attach the rocket travel sound to
-					local rocket_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {},	self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+					local rocket_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 					
 					-- Need to look at how to shoot the rocket from the correct place + make the rocet "disappear" from Clockwerk for the duration
-					local rocket_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", PATTACH_CUSTOMORIGIN, nil)
-					ParticleManager:SetParticleControl(rocket_particle, 0, self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_rocket")))
+					local rocket_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", PATTACH_CUSTOMORIGIN, caster)
+					ParticleManager:SetParticleControl(rocket_particle, 0, caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_rocket")))
 					ParticleManager:SetParticleControl(rocket_particle, 1, random_position)
-					ParticleManager:SetParticleControl(rocket_particle, 2, Vector(self:GetTalentSpecialValueFor("speed"), 0, 0))
+					ParticleManager:SetParticleControl(rocket_particle, 2, Vector(ability:GetTalentSpecialValueFor("speed"), 0, 0))
 					
 					local rocket =
 						{
 							Target 				= rocket_target,
-							Source 				= self:GetCaster(),
-							Ability 			= self,
+							Source 				= caster,
+							Ability 			= ability,
 							--EffectName 			= "particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", // IDK why this works as a projectile but you have to use it like a particle anyways and split everything up ugh
-							iMoveSpeed			= self:GetTalentSpecialValueFor("speed"),
-							vSourceLoc 			= self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_rocket")),
+							iMoveSpeed			= ability:GetTalentSpecialValueFor("speed"),
+							vSourceLoc 			= caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_rocket")),
 							bDrawsOnMinimap 	= true,
 							bDodgeable 			= true,
 							bIsAttack 			= false,
@@ -927,19 +930,25 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 							bReplaceExisting 	= false,
 							flExpireTime 		= GameRules:GetGameTime() + 20,
 							bProvidesVision 	= true,
-							iVisionRadius 		= self:GetSpecialValueFor("vision_radius"),
-							iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
+							iVisionRadius 		= ability:GetSpecialValueFor("vision_radius"),
+							iVisionTeamNumber 	= caster:GetTeamNumber(),
 
-							ExtraData = {rocket_dummy = rocket_dummy:entindex(), rocket_particle = rocket_particle, x = self:GetCaster():GetAbsOrigin().x, y = self:GetCaster():GetAbsOrigin().y, z = self:GetCaster():GetAbsOrigin().z, carpet_fire = true}
+							ExtraData = {
+								rocket_dummy = rocket_dummy:entindex(),
+								rocket_particle = rocket_particle,
+								x = caster:GetAbsOrigin().x,
+								y = caster:GetAbsOrigin().y,
+								z = caster:GetAbsOrigin().z,
+								carpet_fire = true
+							}
 						}
 					
-					self:GetCaster():EmitSound("Hero_Rattletrap.Rocket_Flare.Fire")
+					caster:EmitSound("Hero_Rattletrap.Rocket_Flare.Fire")
 					rocket_dummy:EmitSound("Hero_Rattletrap.Rocket_Flare.Travel")
 					
 					ProjectileManager:CreateTrackingProjectile(rocket)
 					
-					-- Just in case this thing isn't destroying itself
-					rocket_target:RemoveSelf()
+					rocket_target:AddNewModifier(caster, ability, "modifier_kill", {duration = FrameTime()})
 				end
 			end)
 		end

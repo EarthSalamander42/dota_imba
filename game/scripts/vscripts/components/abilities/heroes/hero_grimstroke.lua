@@ -157,12 +157,13 @@ function imba_grimstroke_dark_artistry:OnSpellStart()
 end
 
 function imba_grimstroke_dark_artistry:Stroke(start_location, end_position, bPrimary, bMain)
+	local caster = self:GetCaster()
 	if start_location == end_position then
-		end_position = end_position + self:GetCaster():GetForwardVector()
+		end_position = end_position + caster:GetForwardVector()
 	end
 	
-	-- Create a modifier thinker to attach the sound to, as well as keep track of accumulating damage within one stroke
-	local stroke_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	-- Create a dummy unit to attach the sound to, as well as keep track of accumulating damage within one stroke
+	local stroke_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	stroke_dummy:EmitSound("Hero_Grimstroke.DarkArtistry.Projectile")
 	stroke_dummy.hit_units = 0
 	

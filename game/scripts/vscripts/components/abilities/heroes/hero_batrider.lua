@@ -238,16 +238,17 @@ function imba_batrider_flamebreak:GetCooldown(level)
 end
 
 function imba_batrider_flamebreak:OnSpellStart()
+	local caster = self:GetCaster()
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
-	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
-		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	if self:GetCursorPosition() == caster:GetAbsOrigin() then
+		caster:SetCursorPosition(self:GetCursorPosition() + caster:GetForwardVector())
 	end
 
-	local flamebreak_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	local flamebreak_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	flamebreak_dummy:EmitSound("Hero_Batrider.Flamebreak")
 
-	local flamebreak_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_flamebreak.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
-	ParticleManager:SetParticleControl(flamebreak_particle, 0, self:GetCaster():GetAbsOrigin() + Vector(0, 0, 128)) -- Arbitrary verticality increase
+	local flamebreak_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_flamebreak.vpcf", PATTACH_WORLDORIGIN, caster)
+	ParticleManager:SetParticleControl(flamebreak_particle, 0, caster:GetAbsOrigin() + Vector(0, 0, 128)) -- Arbitrary verticality increase
 	ParticleManager:SetParticleControl(flamebreak_particle, 1, Vector(self:GetSpecialValueFor("speed")))
 	ParticleManager:SetParticleControl(flamebreak_particle, 5, self:GetCursorPosition())
 
@@ -259,7 +260,7 @@ function imba_batrider_flamebreak:OnSpellStart()
 			fDistance			= nil,
 			fStartRadius		= 0,
 			fEndRadius			= 0,
-			Source				= self:GetCaster(),
+			Source				= caster,
 			bHasFrontalCone		= false,
 			bReplaceExisting	= false,
 			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_NONE,
@@ -271,16 +272,15 @@ function imba_batrider_flamebreak:OnSpellStart()
 			bProvidesVision		= true,
 			-- "The projectile has 175 radius flying vision. This vision does not last."
 			iVisionRadius 		= 175,
-			iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
-			
-			ExtraData			= nil
+			iVisionTeamNumber 	= caster:GetTeamNumber(),
+			ExtraData           = nil
 		}
 	end
 	
-	self.projectile_table.vSpawnOrigin	= self:GetCaster():GetAbsOrigin()
-	self.projectile_table.fDistance		= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Length2D()
+	self.projectile_table.vSpawnOrigin	= caster:GetAbsOrigin()
+	self.projectile_table.fDistance		= (self:GetCursorPosition() - caster:GetAbsOrigin()):Length2D()
 	self.projectile_table.fExpireTime 	= GameRules:GetGameTime() + 10.0
-	self.projectile_table.vVelocity		= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0)
+	self.projectile_table.vVelocity		= (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0)
 	self.projectile_table.ExtraData		= 
 	{
 		flamebreak_dummy_entindex	= flamebreak_dummy:entindex(),

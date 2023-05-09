@@ -443,7 +443,7 @@ function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 		local vision_aoe = self:GetSpecialValueFor("vision_aoe")
 		local vision_duration = self:GetSpecialValueFor("vision_duration")
 
-		local dummy = CreateModifierThinker(self:GetCaster(), self,	nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(),	false)
+		local dummy = CreateUnitByName("npc_dummy_unit", caster_loc, false, caster, caster, caster:GetTeamNumber())
 		dummy:EmitSound("Hero_VengefulSpirit.WaveOfTerror")
 
 		if caster:GetName() == "npc_dota_hero_vengefulspirit" then

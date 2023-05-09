@@ -2548,7 +2548,7 @@ end
 				end
 
 				-- Create a dummy unit that will follow the path of the tornado, providing flying vision and sound.
-				local tornado_dummy_unit =  CreateModifierThinker(caster, self, nil, {},caster_location, caster:GetTeamNumber(), false)
+				local tornado_dummy_unit = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeamNumber())
 				-- Play tornado sound 
 				tornado_dummy_unit:EmitSound("Hero_Invoker.Tornado")
 
@@ -3476,7 +3476,7 @@ end
 				-- Play Chaos Meteor Sounds
 				self.caster:EmitSound("Hero_Invoker.ChaosMeteor.Cast")
 				
-				self.meteor_dummy = CreateModifierThinker(self.caster, self.ability, nil, {}, self.target_point, self.caster:GetTeamNumber(), false)
+				self.meteor_dummy = CreateUnitByName("npc_dummy_unit", self.target_point, false, self.caster, self.caster, self.caster:GetTeamNumber())
 				self.meteor_dummy:EmitSound("Hero_Invoker.ChaosMeteor.Loop")
 
 				-- Create start_point of the meteor 1000z up in the air! Meteors velocity is same while falling through the air as it is rolling on the ground.

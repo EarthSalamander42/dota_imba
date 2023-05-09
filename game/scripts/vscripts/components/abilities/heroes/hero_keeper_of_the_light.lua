@@ -145,12 +145,10 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnCreated()
 	self:AddParticle(self.weapon_particle, false, false, -1, false, false)
 	
 	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate", "imba_keeper_of_the_light_illuminate_end", false, true)
-	
-	-- I can't restore the standard spirit form models so I'll have to use some abstractions...
-	local horse_thinker = 	CreateModifierThinker(self.caster, self.ability, nil, {duration = self.max_channel_time}, self.caster_location, self.caster:GetTeamNumber(), false)
-	
-	-- CreateUnitByName("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam())
-	
+
+	local horse_thinker = CreateUnitByName("npc_dummy_unit", self.caster_location, false, self.caster, self.caster, self.caster:GetTeamNumber())
+	horse_thinker:AddNewModifier(self.caster, self.ability, "modifier_kill", {duration = self.max_channel_time})
+
 	self.spirit = horse_thinker
 	-- Set the unit/horse facing in the direction of where the wave will shoot
 	horse_thinker:SetForwardVector(self.direction)

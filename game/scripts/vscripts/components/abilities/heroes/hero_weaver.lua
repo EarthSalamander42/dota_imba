@@ -35,9 +35,11 @@ modifier_imba_weaver_time_lapse				= class({})
 ---------------
 
 function imba_weaver_the_swarm:OnSpellStart()
+	local caster = self:GetCaster()
+
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
-	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
-		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	if self:GetCursorPosition() == caster:GetAbsOrigin() then
+		caster:SetCursorPosition(self:GetCursorPosition() + caster:GetForwardVector())
 	end
 	
 	-- Rationale for how this is programmed:
@@ -48,10 +50,10 @@ function imba_weaver_the_swarm:OnSpellStart()
 		-- I cannot create a linear projectile and feed its own ID into ExtraData, just based on how the functions work
 		-- Therefore, I'm going to make some modifier thinkers on these travelling beetles and attach the projectileIDs to those, which then delete themselves in an OnCreated function for the enemy
 	
-	self:GetCaster():EmitSound("Hero_Weaver.Swarm.Cast")
+	caster:EmitSound("Hero_Weaver.Swarm.Cast")
 	
-	if self:GetCaster():GetName() == "npc_dota_hero_weaver" and RollPercentage(75) then
-		self:GetCaster():EmitSound("weaver_weav_ability_swarm_0"..RandomInt(1, 6))
+	if caster:GetName() == "npc_dota_hero_weaver" and RollPercentage(75) then
+		caster:EmitSound("weaver_weav_ability_swarm_0"..RandomInt(1, 6))
 	end
 	
 	local start_pos			= nil
@@ -60,13 +62,10 @@ function imba_weaver_the_swarm:OnSpellStart()
 	local projectileID		= nil
 	
 	for beetles = 1, self:GetSpecialValueFor("count") do
-		start_pos = self:GetCaster():GetAbsOrigin() + RandomVector(RandomInt(0, self:GetSpecialValueFor("spawn_radius")))
+		start_pos = caster:GetAbsOrigin() + RandomVector(RandomInt(0, self:GetSpecialValueFor("spawn_radius")))
 		
-		beetle_dummy = CreateModifierThinker(self:GetCaster(), self, nil, 
-		{
-			
-		}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
-		
+		beetle_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+
 		-- Let's not kill eardrums
 		if beetles == 1 then
 			beetle_dummy:EmitSound("Hero_Weaver.Swarm.Projectile")	
@@ -79,10 +78,10 @@ function imba_weaver_the_swarm:OnSpellStart()
 			vSpawnOrigin		= start_pos,
 			-- "The Swarm moves forward at a speed of 600, taking 5 seconds to reach max distance."
 			-- Gonna add the 5 second as an AbilitySpecial which isn't a thing in vanilla
-			fDistance			= (self:GetSpecialValueFor("speed") * self:GetSpecialValueFor("travel_time")) + self:GetCaster():GetCastRangeBonus(),
+			fDistance			= (self:GetSpecialValueFor("speed") * self:GetSpecialValueFor("travel_time")) + caster:GetCastRangeBonus(),
 			fStartRadius		= self:GetSpecialValueFor("radius"),
 			fEndRadius			= self:GetSpecialValueFor("radius"),
-			Source				= self:GetCaster(),
+			Source				= caster,
 			bHasFrontalCone		= false,
 			bReplaceExisting	= false,
 			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -90,11 +89,11 @@ function imba_weaver_the_swarm:OnSpellStart()
 			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			fExpireTime 		= GameRules:GetGameTime() + 10.0,
 			bDeleteOnHit		= false,
-			vVelocity			= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
+			vVelocity			= (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
 			bProvidesVision		= true,
 			-- "The beetles provide flying vision while traveling forwards and while attached to a unit."
 			iVisionRadius 		= 321,
-			iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
+			iVisionTeamNumber 	= caster:GetTeamNumber(),
 			
 			ExtraData			= 
 			{
