@@ -640,7 +640,7 @@ function modifier_imba_lycan_summon_wolves_charges:OnDeath(keys)
 		)
 		
 		-- Add spawn particles in spawn location
-		wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
+		local wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
 		ParticleManager:ReleaseParticleIndex(wolves_spawn_particle)
 		
 		if player_id then
@@ -1526,15 +1526,6 @@ function modifier_imba_shapeshift:GetModifierPreAttack_CriticalStrike()
 		return nil
 	end
 end
-
-function modifier_imba_shapeshift:OnDestroy()
-	if IsServer() then
-		if self.parent:HasModifier(self.certain_crit_buff) then
-			self.parent:RemoveModifierByName(self.certain_crit_buff)
-		end
-	end
-end
-
 
 -- certain crit buff
 modifier_imba_shapeshift_certain_crit = class({})

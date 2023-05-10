@@ -6,7 +6,7 @@ LinkLuaModifier("modifier_imba_enigma_generic_pull","components/abilities/heroes
 function CalculatePullLength(caster, target, length)
 	if not IsServer() then return end
 	local son = caster:FindAbilityByName("imba_enigma_demonic_conversion")
-	iLenght = length
+	local iLenght = length
 	if son then
 		local debuff = target:FindModifierByName("modifier_imba_enigma_eidolon_attack_counter")
 		if debuff then
@@ -66,7 +66,7 @@ function SearchForEngimaThinker(caster, victim, length, talent)
 
 	if Black_Hole.thinker and not Black_Hole.thinker:IsNull() then hThinker = Black_Hole.thinker end -- black hole
 
-	iLenght = CalculatePullLength(caster, victim, length)
+	local iLenght = CalculatePullLength(caster, victim, length)
 	victim:AddNewModifier(caster, nil, "modifier_imba_enigma_generic_pull", {duration = 1.0 * (1 - victim:GetStatusResistance()), target = hThinker:entindex(), length = iLenght})
 end
 

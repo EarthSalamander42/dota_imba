@@ -493,9 +493,9 @@ function modifier_imba_elder_dragon_charge:IsMotionController() return true end
 function modifier_imba_elder_dragon_charge:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_imba_elder_dragon_charge:CheckState()
-	state = {[MODIFIER_STATE_STUNNED] = true}
-
-	return state
+	return {
+		[MODIFIER_STATE_STUNNED] = true
+	}
 end
 
 function modifier_imba_elder_dragon_charge:OnCreated(keys)

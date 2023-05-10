@@ -729,9 +729,9 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 					self.shallowDamageInstances = self.shallowDamageInstances + 1
 					self.isActive = true
 
-					parent:AddNewModifier(caster, nil , "modifier_imba_dazzle_nothl_protection_particle", { duration = nothl_duration})
-					
 					local nothl_duration = ability:GetSpecialValueFor("nothl_protection_duration")
+					parent:AddNewModifier(caster, nil , "modifier_imba_dazzle_nothl_protection_particle", { duration = nothl_duration})
+
 					Timers:CreateTimer(nothl_duration, function()
 						if self:IsNull() then return end
 					
@@ -967,7 +967,7 @@ if modifier_imba_dazzle_post_shallow_grave_buff == nil then modifier_imba_dazzle
 function modifier_imba_dazzle_post_shallow_grave_buff:IsPurgable() return true end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsHidden() return false end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsDebuff() return false end
-function modifier_imba_dazzle_post_shallow_grave_buff:DeclareFunctions()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_dazzle_post_shallow_grave_buff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_dazzle_post_shallow_grave_buff:GetTexture()
 	return "dazzle_shallow_grave" end
@@ -1255,7 +1255,7 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 				end
 			end
 
-			self:WaveHit(target, isAlly, poisonTouched)
+			self:WaveHit(target, isAlly, nil)
 			if target ~= caster then
 				self:WaveHit(caster, true)
 			end

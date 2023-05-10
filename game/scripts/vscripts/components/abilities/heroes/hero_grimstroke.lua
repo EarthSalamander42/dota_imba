@@ -1142,7 +1142,7 @@ end
 ---------------------------
 
 function imba_grimstroke_ink_gods_incarnation:OnHeroLevelUp()
-	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 6), 3))
+	self:SetLevel(math.min(math.floor(self:GetCaster():GetLevel() / 6), 3))
 end
 
 function imba_grimstroke_ink_gods_incarnation:OnSpellStart()
@@ -1491,7 +1491,7 @@ function imba_grimstroke_soul_chain_vanilla_enhancer:GetIntrinsicModifierName()
 end
 
 function imba_grimstroke_soul_chain_vanilla_enhancer:OnHeroLevelUp()
-	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 6), 3))
+	self:SetLevel(math.min(math.floor(self:GetCaster():GetLevel() / 6), 3))
 end
 
 ----------------------------------------

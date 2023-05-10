@@ -256,7 +256,7 @@ end
 function modifier_imba_life_stealer_rage_insanity_active:OnRefresh(params)
 	if not IsServer() then return end
 
-	sekf:OnCreated(params)
+	self:OnCreated(params)
 end
 
 function modifier_imba_life_stealer_rage_insanity_active:OnIntervalThink()
@@ -623,11 +623,11 @@ function modifier_imba_life_stealer_open_wounds:GetStatusEffectName()
 end
 
 function modifier_imba_life_stealer_open_wounds:OnCreated()
-	self.heal_percent	= self:GetAbility():GetTalentSpecialValueFor("heal_percent")
+	self.heal_percent = self:GetAbility():GetTalentSpecialValueFor("heal_percent")
 
 	if not IsServer() then return end
 
-	local impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, self:GetCaster())
+	local impact_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:ReleaseParticleIndex(impact_particle)
 
 	self.slow_steps = {}

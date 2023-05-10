@@ -1062,7 +1062,7 @@ end
 
 -- Self leveling function (since this is technically a completely separate ability)
 function imba_chen_test_of_faith:OnHeroLevelUp()
-	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 3), 4))
+	self:SetLevel(math.min(math.floor(self:GetCaster():GetLevel() / 3), 4))
 end
 
 function imba_chen_test_of_faith:OnSpellStart()

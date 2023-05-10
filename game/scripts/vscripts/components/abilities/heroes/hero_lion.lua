@@ -954,8 +954,8 @@ function modifier_imba_manadrain_debuff:OnIntervalThink()
 				mana_overcharge = self.caster:AddNewModifier(self.caster,self.ability,"modifier_imba_manadrain_manaovercharge",{duration = self.caster:FindTalentValue("special_bonus_imba_lion_3","duration")})
 			end
 			if mana_overcharge then
-			mana_overcharge_stacks = mana_overcharge:GetStackCount()
-			mana_overcharge:SetStackCount(mana_overcharge_stacks + mana_over_drain)
+				local mana_overcharge_stacks = mana_overcharge:GetStackCount()
+				mana_overcharge:SetStackCount(mana_overcharge_stacks + mana_over_drain)
 			end
 		end
 	end
@@ -1136,8 +1136,7 @@ function imba_lion_finger_of_death:OnSpellStart()
 	-- #3 Talent: Assign Mana Overcharge damage
 	local mana_overcharge = caster:FindModifierByName("modifier_imba_manadrain_manaovercharge")
 	if mana_overcharge then
-		mana_overcharge_stacks = mana_overcharge:GetStackCount()
-		damage = damage + mana_overcharge_stacks
+		damage = damage + mana_overcharge:GetStackCount()
 		caster:RemoveModifierByName("modifier_imba_manadrain_manaovercharge")
 	end
 	
@@ -1157,15 +1156,17 @@ function imba_lion_finger_of_death:OnSpellStart()
 		-- Index a table for enemies to be marked
 		local finger_scepter_enemies = {}
 
-		enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									target:GetAbsOrigin(),
-									nil,
-									enemies_frog_radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-									FIND_ANY_ORDER,
-									false)
+		local enemies = FindUnitsInRadius(
+			caster:GetTeamNumber(),
+			target:GetAbsOrigin(),
+			nil,
+			enemies_frog_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+			FIND_ANY_ORDER,
+			false
+		)
 
 		for _, enemy in pairs(enemies) do            
 			if not enemy:IsMagicImmune() and not enemy:HasModifier(modifier_hex) then
@@ -1361,10 +1362,6 @@ end
 
 function modifier_imba_finger_of_death_hex:GetModifierModelChange()
 	return "models/props_gameplay/frog.vmdl"
-end
-
-function modifier_imba_finger_of_death_hex:GetModifierMoveSpeed_Absolute()
-	return self:GetAbility():GetSpecialValueFor("hex_move_speed")
 end
 
 function modifier_imba_finger_of_death_hex:GetModifierMoveSpeed_Absolute()

@@ -370,7 +370,7 @@ function modifier_imba_juggernaut_blade_fury_succ:OnIntervalThink()
 		-- return nil
 	-- end
 		
-	self:HorizontalMotion(self.target, self.succ_tick)
+	self:HorizontalMotion()
 end
 
 function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
@@ -443,9 +443,18 @@ function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:OnTakeDamage
 		
 		-- Calculates damage
 		parent_health = self.parent:GetHealth()
-		if keys.damage > parent_health and target == self.parent then
+		if damage > parent_health and target == self.parent then
 			-- Deals damage, crediting to the caster
-			ApplyDamage({attacker = self.caster, victim = self.parent, ability = self:GetAbility(), damage = target_health + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
+			ApplyDamage(
+				{
+					attacker = self.caster,
+					victim = self.parent,
+					ability = self:GetAbility(),
+					damage = parent_health + 10,
+					damage_type = DAMAGE_TYPE_PURE,
+					damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK
+				}
+			)
 		end
 	end
 end
@@ -1499,31 +1508,32 @@ function modifier_imba_juggernaut_blade_dance_jade_blossom:GetTexture()
 function modifier_imba_juggernaut_blade_dance_jade_blossom:OnCreated()
 	if IsServer() then
 		self.duration = self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_8","duration")
-		self:NewStack(self.duration)
+		self:NewStack()
 	end
 end
 function modifier_imba_juggernaut_blade_dance_jade_blossom:OnRefresh()
 	if IsServer() then
-		self:NewStack(self.duration)
+		self:NewStack()
 		self:SetDuration(self.duration,true)
 	end
 end
 function modifier_imba_juggernaut_blade_dance_jade_blossom:NewStack()
 	if IsServer() then
 		self:IncrementStackCount()
+		local mod = self
 		Timers:CreateTimer(self.duration, function()
-		self:ExpiredStack()
+			if mod and not mod:IsNull() then
+				mod:ExpiredStack()
+			end
 		end)
 	end
 end
 function modifier_imba_juggernaut_blade_dance_jade_blossom:ExpiredStack()
-	if IsServer() then
-		if (not self:IsNull()) then
-			if self:GetStackCount() > 0 then
-				self:DecrementStackCount()
-			else
-				self:Destroy()
-			end
+	if not self:IsNull() then
+		if self:GetStackCount() > 0 then
+			self:DecrementStackCount()
+		else
+			self:Destroy()
 		end
 	end
 end
@@ -1564,6 +1574,11 @@ end
 
 function imba_juggernaut_omni_slash:OnOwnerSpawned()
 	self:OnOwnerDied()
+	local caster = self:GetCaster()
+	-- Modifier related to the talent
+	if caster:HasTalent("special_bonus_imba_juggernaut_7") and not caster:HasModifier("modifier_special_bonus_imba_juggernaut_7") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_juggernaut_7"), "modifier_special_bonus_imba_juggernaut_7", {})
+	end
 end
 
 function imba_juggernaut_omni_slash:OnUpgrade()
@@ -2222,12 +2237,6 @@ modifier_special_bonus_imba_juggernaut_7 = class({})
 function modifier_special_bonus_imba_juggernaut_7:IsHidden() 		return true end
 function modifier_special_bonus_imba_juggernaut_7:IsPurgable() 		return false end
 function modifier_special_bonus_imba_juggernaut_7:RemoveOnDeath() 	return false end
-
-function imba_juggernaut_omni_slash:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_juggernaut_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_juggernaut_7") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_juggernaut_7"), "modifier_special_bonus_imba_juggernaut_7", {})
-	end
-end
 
 -- Arcana animation handler
 modifier_juggernaut_arcana = modifier_juggernaut_arcana or class ({})

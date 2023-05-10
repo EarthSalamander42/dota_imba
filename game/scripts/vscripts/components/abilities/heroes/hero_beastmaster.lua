@@ -265,7 +265,7 @@ function imba_beastmaster_summon_boar:OnSpellStart()
 
 		for i = 1, boar_count do
 			-- Create boar
-			boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
+			local boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
 			boar:AddNewModifier(caster, self, "modifier_imba_beastmaster_boar", {})
 			boar:AddNewModifier(caster, self, "modifier_kill", {duration = boar_duration})
 

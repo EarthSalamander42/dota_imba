@@ -1231,9 +1231,10 @@ function modifier_imba_kinetic_field_barrier:OnCreated()
 		if not target:HasModifier("modifier_imba_kinetic_field_knockback") or not target:HasModifier("modifier_imba_kinetic_field_pull") then
 			ApplyDamage(damageTable)
 		end
-		-- reduce ability cooldown everytime a player touch the barrier
-		if not kinetic_recharge and target:IsRealHero() then
-			local kinetic_recharge = true
+		-- reduce ability cooldown everytime a hero touches the barrier
+		caster.kinetic_recharge = caster.kinetic_recharge or false
+		if not caster.kinetic_recharge and target:IsRealHero() then
+			caster.kinetic_recharge = true
 			local cd_remaining = ability:GetCooldownTimeRemaining()
 			-- Clear cooldown, set it again if cooldown was higher than reduction
 			ability:EndCooldown()
@@ -1242,7 +1243,7 @@ function modifier_imba_kinetic_field_barrier:OnCreated()
 			end
 			-- wait for 0.2 seconds before allowing cd reduction to trigger again
 			Timers:CreateTimer(0.2, function()
-				kinetic_recharge = false
+				caster.kinetic_recharge = false
 			end)
 		end
 	end
@@ -1308,7 +1309,7 @@ function modifier_imba_kinetic_field_knockback:OnIntervalThink()
 		return nil
 	end
 	-- Horizontal motion
-	self:HorizontalMotion(self.parent, self.frametime)	
+	self:HorizontalMotion()	
 end
 
 function modifier_imba_kinetic_field_knockback:HorizontalMotion()
@@ -1365,7 +1366,7 @@ function modifier_imba_kinetic_field_pull:OnIntervalThink()
 		return nil
 	end
 	-- Horizontal motion
-	self:HorizontalMotion(self.parent, self.frametime)	
+	self:HorizontalMotion()	
 end
 
 function modifier_imba_kinetic_field_pull:HorizontalMotion()

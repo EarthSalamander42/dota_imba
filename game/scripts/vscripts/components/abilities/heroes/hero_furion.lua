@@ -8,7 +8,7 @@ LinkLuaModifier("modifier_imba_furion_wrath_of_nature_spawn", "components/abilit
 LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_stack", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_counter", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
 
-imba_furion_wrath_of_nature						= imba_furion_wrath_of_nature_spawn or class({})
+imba_furion_wrath_of_nature						= imba_furion_wrath_of_nature or class({})
 modifier_imba_furion_wrath_of_nature			= modifier_imba_furion_wrath_of_nature or class({})
 modifier_imba_furion_wrath_of_nature_aura		= modifier_imba_furion_wrath_of_nature_aura or class({})
 modifier_imba_furion_wrath_of_nature_thinker	= modifier_imba_furion_wrath_of_nature_thinker or class({})

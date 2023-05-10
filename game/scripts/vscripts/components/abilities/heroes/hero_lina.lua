@@ -500,14 +500,18 @@ function modifier_imba_lsa_talent_magma:OnIntervalThink()
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_ANY_ORDER,
 			false)
-
-		-- Deal damage per tick to each enemy
-		for _,enemy in pairs(enemies) do
-			damage_table = ({victim = enemy,
+		local damage_table = (
+			{
 				attacker = self.caster,
 				ability = self.ability,
 				damage = self.damage,
-				damage_type = DAMAGE_TYPE_MAGICAL})
+				damage_type = DAMAGE_TYPE_MAGICAL
+			}
+		)
+
+		-- Deal damage per tick to each enemy
+		for _, enemy in pairs(enemies) do
+			damage_table.victim = enemy
 
 			ApplyDamage(damage_table)
 		end
@@ -868,7 +872,7 @@ function modifier_special_bonus_imba_lina_3:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_lina_3:OnCreated()
 	if IsServer() then
-		fiery_soul = self:GetParent():FindAbilityByName("imba_lina_fiery_soul")
+		local fiery_soul = self:GetParent():FindAbilityByName("imba_lina_fiery_soul")
 		if fiery_soul:GetLevel() > 0 then
 			local fiery_soul_modifier = self:GetParent():FindModifierByName("modifier_imba_fiery_soul_counter")
 			if fiery_soul_modifier then

@@ -176,7 +176,7 @@ function base_modifier_dual_breath_caster:OnIntervalThink()
 	end
 
 	-- Horizontal motion
-	self:HorizontalMotion(self.caster, self.frametime)
+	self:HorizontalMotion()
 end
 
 function base_modifier_dual_breath_caster:_DualBreathApplyModifierToEnemies( enemies )

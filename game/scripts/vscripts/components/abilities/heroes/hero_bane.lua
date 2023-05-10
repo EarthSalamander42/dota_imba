@@ -909,7 +909,7 @@ function modifier_imba_nightmare_dot:OnIntervalThink()
 			self:GetParent():SetHealth(CurHP - nightmare_damage)
 		end
 		-- Emit Nightmare affected sound effect
-		EmitSoundOn("Hero_Bane.Nightmare.Loop", target)
+		parent:EmitSound("Hero_Bane.Nightmare.Loop")
 	end
 end
 
@@ -938,8 +938,9 @@ function modifier_imba_nightmare_dot:OnDestroy()
 		if parent:HasModifier("modifier_imba_nightmare_invul") then
 			parent:RemoveModifierByName("modifier_imba_nightmare_invul")
 		end
+		parent:StopSound("Hero_Bane.Nightmare.Loop")
 		-- Emit Nightmare end sound effect
-		EmitSoundOn("Hero_Bane.Nightmare.End", self:GetParent())
+		parent:EmitSound("Hero_Bane.Nightmare.End")
 	end
 end
 

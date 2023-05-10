@@ -90,7 +90,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 		bVisibleToEnemies = true,
 		bReplaceExisting = false,
 		bProvidesVision = false,
-		ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
+		ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = false}
 	}
 
 	ProjectileManager:CreateTrackingProjectile(shuriken_projectile)

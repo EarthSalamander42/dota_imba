@@ -886,9 +886,8 @@ end
 
 			self:GetCaster():StartGesture(ACT_DOTA_CAST_SUN_STRIKE)
 
-			local bCataclysm = self:GetCursorTarget() == self:GetCaster()
-
-			if bCataclysm and self:GetCaster():HasScepter() then
+			local bCataclysm
+			if self:GetCursorTarget() == self:GetCaster() and self:GetCaster():HasScepter() then
 				bCataclysm = 1
 				self:StartCooldown(self:GetSpecialValueFor("cataclysm_cooldown") * self:GetCaster():GetCooldownReduction())
 			else
@@ -1706,8 +1705,7 @@ end
 				local wex_level 					= caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
 				local self_slow 					= ability:GetLevelSpecialValueFor("self_slow", wex_level)
 				local enemy_slow 					= ability:GetLevelSpecialValueFor("enemy_slow", quas_level)
-				local aura_think_interval 			= ability:GetSpecialValueFor("aura_update_interval")		
-				local increase_max_movement_speed 	= ability:GetSpecialValueFor("increase_max_movement_speed")		
+				local aura_think_interval 			= ability:GetSpecialValueFor("aura_update_interval")	
 				
 				caster:StartGesture(ACT_DOTA_CAST_GHOST_WALK)
 				
@@ -1718,7 +1716,6 @@ end
 				caster:AddNewModifier(caster, self, "modifier_imba_invoker_ghost_walk", {	duration 			= ghost_walk_duration, 
 																							self_slow 			= self_slow, 
 																							enemy_slow 			= enemy_slow,
-																							max_movement_speed 	= max_movement_speed,
 																							aura_fade_time 		= aura_fade_time,
 																							aura_think_interval = aura_think_interval,
 																							area_of_effect 		= area_of_effect,
@@ -1777,7 +1774,6 @@ end
 				self.enemy_slow 			= kv.enemy_slow
 				self.self_slow 				= kv.self_slow
 				self.ghost_walk_fade_time 	= kv.invis_fade_time
-				self.max_movement_speed 	= kv.max_movement_speed
 
 				-- self:StartIntervalThink(kv.aura_think_interval)
 			else
@@ -3811,8 +3807,7 @@ end
 					iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 					ExtraData = {
 						deafening_blast_damage 				= deafening_blast_damage, 
-						deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
-						deafening_blast_knockback_distance  = deafening_blast_knockback_distance,
+						deafening_blast_knockback_duration 	= deafening_blast_knockback_duration,
 						deafening_blast_disarm_duration 	= deafening_blast_disarm_duration,
 						disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
 						knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
@@ -3874,8 +3869,7 @@ end
 						iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 						ExtraData = {
 							deafening_blast_damage 				= deafening_blast_damage, 
-							deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
-							deafening_blast_knockback_distance  = deafening_blast_knockback_distance,
+							deafening_blast_knockback_duration 	= deafening_blast_knockback_duration,
 							deafening_blast_disarm_duration 	= deafening_blast_disarm_duration,
 							disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
 							knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
@@ -3979,8 +3973,7 @@ end
 					iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 					ExtraData = {
 						deafening_blast_damage 				= self.deafening_blast_damage, 
-						deafening_blast_knockback_duration 	= self.deafening_blast_knockback_duration, 
-						deafening_blast_knockback_distance  = self.deafening_blast_knockback_distance,
+						deafening_blast_knockback_duration 	= self.deafening_blast_knockback_duration,
 						deafening_blast_disarm_duration 	= self.deafening_blast_disarm_duration,
 						disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
 						knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path

@@ -390,7 +390,7 @@ function modifier_imba_frost_arrows_slow:OnRemoved()
 	--Talent #4: Update the stack count on Drow accordingly when the parent lose the debuff (including when dying), remove the buff if no more stacks are left
 	if IsServer() then
 		local target_stacks = self:GetStackCount()
-		stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
+		local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
 		if stack_count <= target_stacks then
 			self.caster:RemoveModifierByName(self.caster_modifier)
 		else

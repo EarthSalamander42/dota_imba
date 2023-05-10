@@ -173,7 +173,7 @@ function imba_luna_moon_glaive:OnProjectileHit_ExtraData(hTarget, vLocation, Ext
 			ability 		= self
 		}
 
-		damage_dealt = ApplyDamage(damageTable)
+		ApplyDamage(damageTable)
 		
 		if not self.target_tracker then
 			self.target_tracker = {}

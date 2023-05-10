@@ -485,6 +485,7 @@ function modifier_imba_antimage_blink_charges:OnCreated()
 			-- Illusions find their owner and its charges
 			local playerid = self.caster:GetPlayerID()
 			local player = PlayerResource:GetPlayer(playerid)
+			-- Check if player is disconnected (player is nil when dced)
 			if player then
 				local real_hero = player:GetAssignedHero()
 				if real_hero and real_hero:HasModifier(self.modifier_charge) then

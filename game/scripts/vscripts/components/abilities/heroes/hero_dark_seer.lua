@@ -212,7 +212,7 @@ function modifier_imba_dark_seer_vacuum:OnCreated(params)
 	end
 end
 
-function modifier_imba_dark_seer_vacuum:OnRefresh()
+function modifier_imba_dark_seer_vacuum:OnRefresh(params)
 	self:OnCreated(params)
 end
 
@@ -442,7 +442,7 @@ function modifier_imba_dark_seer_wormhole:OnCreated(params)
 	end
 end
 
-function modifier_imba_dark_seer_wormhole:OnRefresh()
+function modifier_imba_dark_seer_wormhole:OnRefresh(params)
 	self:OnCreated(params)
 end
 

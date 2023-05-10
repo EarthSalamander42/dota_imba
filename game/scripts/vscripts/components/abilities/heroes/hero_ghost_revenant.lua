@@ -164,7 +164,6 @@ function ghost_revenant_blackjack:OnProjectileHit(target, target_loc)
 		local damage_type = self:GetAbilityDamageType()
 		local stun_duration = self:GetSpecialValueFor("stun_duration")
 		local damage = self:GetSpecialValueFor("damage")
-		if target then location = target:GetAbsOrigin() end
 
 		target:EmitSound("Item_Desolator.Target")
 		target:AddNewModifier(caster, self, "modifier_ghost_revenant_blackjack_debuff", {duration = stun_duration * (1 - target:GetStatusResistance())})
@@ -205,7 +204,6 @@ end
 function modifier_ghost_revenant_blackjack_debuff:IsHidden() return false end
 function modifier_ghost_revenant_blackjack_debuff:IsDebuff() return true end
 function modifier_ghost_revenant_blackjack_debuff:IsPurgable() return true end
-function modifier_ghost_revenant_blackjack_debuff:IsPurgable() return false end
 function modifier_ghost_revenant_blackjack_debuff:IsStunDebuff() return true end
 function modifier_ghost_revenant_blackjack_debuff:GetEffectName() return "particles/generic_gameplay/generic_stunned.vpcf" end
 function modifier_ghost_revenant_blackjack_debuff:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end

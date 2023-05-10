@@ -341,7 +341,7 @@ LinkLuaModifier("modifier_imba_shockwave_slow", "components/abilities/heroes/her
 
 imba_magnataur_shockwave = imba_magnataur_shockwave or class({})
 
-function imba_magnataur_shockwave:GetCastRange()
+function imba_magnataur_shockwave:GetCastRange(location, target)
 	if not self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("cast_range")
 	else
@@ -927,10 +927,6 @@ end
 
 modifier_imba_empower = modifier_imba_empower or class({})
 
-function modifier_imba_empower:OnRefresh()
-	self:OnCreated()
-end
-
 function modifier_imba_empower:DeclareFunctions()
 	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
@@ -1047,33 +1043,35 @@ function modifier_imba_empower:IsHidden()
 end
 
 function modifier_imba_empower:OnCreated( params )
-	self.bonus_damage_pct		= self:GetAbility():GetSpecialValueFor("bonus_damage_pct")
-	
-	self.cleave_damage_pct		= self:GetAbility():GetSpecialValueFor("cleave_damage_pct") * 0.01
-	self.cleave_damage_ranged	= self:GetAbility():GetSpecialValueFor("cleave_damage_ranged") * 0.01
-	self.splash_radius			= self:GetAbility():GetSpecialValueFor("splash_radius")
+	local ability = self:GetAbility()
+	local parent = self:GetParent()
+	local caster = self:GetCaster()
 
-	self.cleave_radius_start	= self:GetAbility():GetSpecialValueFor("cleave_radius_start")
-	self.cleave_radius_end		= self:GetAbility():GetSpecialValueFor("cleave_radius_end")
-	self.cleave_distance		= self:GetAbility():GetSpecialValueFor("cleave_distance")
+	if ability and not ability:IsNull() then
+		self.bonus_damage_pct		= ability:GetSpecialValueFor("bonus_damage_pct")
+		
+		self.cleave_damage_pct		= ability:GetSpecialValueFor("cleave_damage_pct") * 0.01
+		self.cleave_damage_ranged	= ability:GetSpecialValueFor("cleave_damage_ranged") * 0.01
+		self.splash_radius			= ability:GetSpecialValueFor("splash_radius")
+
+		self.cleave_radius_start	= ability:GetSpecialValueFor("cleave_radius_start")
+		self.cleave_radius_end		= ability:GetSpecialValueFor("cleave_radius_end")
+		self.cleave_distance		= ability:GetSpecialValueFor("cleave_distance")
+		
+		self.super_cleave_start		= ability:GetSpecialValueFor("super_cleave_start")
+		self.super_cleave_end		= ability:GetSpecialValueFor("super_cleave_end")
+		self.super_cleave_distance	= ability:GetSpecialValueFor("super_cleave_distance")
+		
+		self.super_splash_radius	= ability:GetSpecialValueFor("super_splash_radius")
 	
-	self.super_cleave_start		= self:GetAbility():GetSpecialValueFor("super_cleave_start")
-	self.super_cleave_end		= self:GetAbility():GetSpecialValueFor("super_cleave_end")
-	self.super_cleave_distance	= self:GetAbility():GetSpecialValueFor("super_cleave_distance")
-	
-	self.super_splash_radius	= self:GetAbility():GetSpecialValueFor("super_splash_radius")
-	
-	if self:GetParent() == self:GetCaster() then
-		self.cleave_damage_pct		= self.cleave_damage_pct * self:GetAbility():GetSpecialValueFor("self_multiplier")
-		self.cleave_damage_ranged	= self.cleave_damage_ranged * self:GetAbility():GetSpecialValueFor("self_multiplier")
+		if parent == caster then
+			self.cleave_damage_pct		= self.cleave_damage_pct * ability:GetSpecialValueFor("self_multiplier")
+			self.cleave_damage_ranged	= self.cleave_damage_ranged * ability:GetSpecialValueFor("self_multiplier")
+		end
 	end
-
 	if IsServer() then
-		local parent = self:GetParent()
-		local ability = self:GetAbility()
-		local caster = self:GetCaster()
-		parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_empower_particle", {})
-		-- parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_empower_polarizer", {})
+		parent:AddNewModifier(caster, ability, "modifier_imba_empower_particle", {})
+		-- parent:AddNewModifier(caster, ability, "modifier_imba_empower_polarizer", {})
 		if caster ~= parent then
 			self.interval = 0.1
 			if params.isProvidedByAura then
@@ -1090,15 +1088,41 @@ function modifier_imba_empower:OnCreated( params )
 end
 
 function modifier_imba_empower:OnRefresh( params )
+	local ability = self:GetAbility()
+	local parent = self:GetParent()
+	local caster = self:GetCaster()
+
+	if ability and not ability:IsNull() then
+		self.bonus_damage_pct		= ability:GetSpecialValueFor("bonus_damage_pct")
+		
+		self.cleave_damage_pct		= ability:GetSpecialValueFor("cleave_damage_pct") * 0.01
+		self.cleave_damage_ranged	= ability:GetSpecialValueFor("cleave_damage_ranged") * 0.01
+		self.splash_radius			= ability:GetSpecialValueFor("splash_radius")
+
+		self.cleave_radius_start	= ability:GetSpecialValueFor("cleave_radius_start")
+		self.cleave_radius_end		= ability:GetSpecialValueFor("cleave_radius_end")
+		self.cleave_distance		= ability:GetSpecialValueFor("cleave_distance")
+		
+		self.super_cleave_start		= ability:GetSpecialValueFor("super_cleave_start")
+		self.super_cleave_end		= ability:GetSpecialValueFor("super_cleave_end")
+		self.super_cleave_distance	= ability:GetSpecialValueFor("super_cleave_distance")
+		
+		self.super_splash_radius	= ability:GetSpecialValueFor("super_splash_radius")
+	
+		if parent == caster then
+			self.cleave_damage_pct		= self.cleave_damage_pct * ability:GetSpecialValueFor("self_multiplier")
+			self.cleave_damage_ranged	= self.cleave_damage_ranged * ability:GetSpecialValueFor("self_multiplier")
+		end
+	end
 	if IsServer() then
-		local parent = self:GetParent()
-		local caster = self:GetCaster()
-		parent:AddNewModifier(caster, self:GetAbility(), "modifier_imba_empower_particle", {})
+		parent:AddNewModifier(caster, ability, "modifier_imba_empower_particle", {})
 		if caster ~= parent then
 			self.remaining_duration = params.duration
 			parent:RemoveModifierByName("modifier_imba_empower_linger")
 		end
-		parent:EmitSound("Hero_Magnataur.Empower.Target")
+		if params.was_refreshed then
+			parent:EmitSound("Hero_Magnataur.Empower.Target")
+		end
 	end
 end
 
@@ -1478,10 +1502,6 @@ LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "components/abi
 LinkLuaModifier("modifier_imba_skewer_slow", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_entangle", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
-function imba_magnataur_skewer:GetAbilityTextureName()
-	return "magnataur_skewer"
-end
-
 function imba_magnataur_skewer:OnAbilityPhaseStart()
 	local caster = self:GetCaster()
 	if self.begged_for_pardon then return false end
@@ -1566,7 +1586,7 @@ function imba_magnataur_skewer:OnSpellStart()
 		end
 
 		-- Add Motion-Controller-Modifier
-		caster:AddNewModifier(caster, self, "modifier_imba_skewer_motion_controller", {distance = distance, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z, cooldown = current_cooldown, cast_sound = cast_sound})
+		caster:AddNewModifier(caster, self, "modifier_imba_skewer_motion_controller", {distance = distance, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z, cooldown = current_cooldown})
 
 		-- #4 Talent: Skewer creates a mini Reverse Polarity on casting, playing the Reverse Polarity particle
 		if caster:HasTalent("special_bonus_imba_magnataur_4") then
@@ -1625,7 +1645,6 @@ function modifier_imba_skewer_motion_controller:OnCreated( params )
 		self.pardon_extra_dmg = ability:GetSpecialValueFor("pardon_extra_dmg")
 		self.entangle_dur = ability:GetSpecialValueFor("entangle_dur")
 		self.distance = params.distance
-		self.cast_sound = params.cast_sound
 		self.direction = Vector(params.direction_x, params.direction_y, params.direction_z)
 		self.traveled = 0
 		self.final = false

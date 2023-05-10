@@ -866,7 +866,10 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 					-- Add a chronocharge if a hero was bashed
 					if target:IsRealHero() then
-						self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + 1)
+						local chronochargeModifier = parent:FindModifierByName("modifier_imba_faceless_void_chronocharges")
+						if chronochargeModifier then
+							chronochargeModifier:SetStackCount(chronochargeModifier:GetStackCount() + 1)
+						end
 					end
 
 					-- Iterate through all victims abilities
@@ -936,7 +939,10 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 							-- Add a chronocharge if a hero was bashed
 							if enemy:IsRealHero() then
-								AddStacksLua(ability, parent, parent, "modifier_imba_faceless_void_chronocharges", 1, false)
+								local chronochargeModifier = parent:FindModifierByName("modifier_imba_faceless_void_chronocharges")
+								if chronochargeModifier then
+									chronochargeModifier:SetStackCount(chronochargeModifier:GetStackCount() + 1)
+								end
 							end
 
 							-- Iterate through all victims abilities

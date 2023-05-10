@@ -625,7 +625,7 @@ end
 
 -- Self leveling function (since this is technically a completely separate ability)
 function imba_huskar_inner_vitality:OnHeroLevelUp()
-	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 3), 4))
+	self:SetLevel(math.min(math.floor(self:GetCaster():GetLevel() / 3), 4))
 end
 
 function imba_huskar_inner_vitality:OnSpellStart()
@@ -977,11 +977,11 @@ end
 
 function modifier_imba_huskar_life_break_charge:OnCreated()
 	if IsServer() then
-		if BATTLEPASS_HUSKAR and Battlepass:GetRewardUnlocked(self:GetParent():GetPlayerID()) >= BATTLEPASS_HUSKAR["huskar_immortal"] then
-			self:SetStackCount(1)
-			self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
---			ParticleManager:SetParticleControl(self.pfx, 0, self:GetCaster():GetAbsOrigin())
-		end
+		-- if BATTLEPASS_HUSKAR and Battlepass:GetRewardUnlocked(self:GetParent():GetPlayerID()) >= BATTLEPASS_HUSKAR["huskar_immortal"] then
+		-- 	self:SetStackCount(1)
+		-- 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
+		-- 	--ParticleManager:SetParticleControl(self.pfx, 0, self:GetCaster():GetAbsOrigin())
+		-- end
 	end
 end
 

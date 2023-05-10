@@ -542,7 +542,7 @@ function FrostNova(caster, ability, target, cold_front)
 						-- Apply explosion particle
 						local particle_nova_fx = ParticleManager:CreateParticle(particle_nova, PATTACH_WORLDORIGIN, nil)
 						ParticleManager:SetParticleControl(particle_nova_fx, 0, location)
-						ParticleManager:SetParticleControl(particle_nova_fx, 1, Vector(damage_radius, damage_radius, damage_radius))
+						ParticleManager:SetParticleControl(particle_nova_fx, 1, Vector(radius, radius, radius))
 						ParticleManager:SetParticleControl(particle_nova_fx, 2, location)
 						ParticleManager:ReleaseParticleIndex(particle_nova_fx)
 

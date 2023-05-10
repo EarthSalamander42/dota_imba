@@ -1027,13 +1027,16 @@ function modifier_imba_rupture_charges:OnCreated()
 		else
 			-- Illusions find their owner and its charges
 			local playerid = self.caster:GetPlayerID()
-			local real_hero = playerid:GetAssignedHero()
-
-			if hero:HasModifier(self.modifier_charge) then
-				self.modifier_charge_handler = hero:FindModifierByName(self.modifier_charge)
-				if self.modifier_charge_handler then
-					self:SetStackCount(self.modifier_charge_handler:GetStackCount())
-					self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)
+			local player = PlayerResource:GetPlayer(playerid)
+			-- Check if player is disconnected (player is nil when dced)
+			if player then
+				local real_hero = player:GetAssignedHero()
+				if real_hero and real_hero:HasModifier(self.modifier_charge) then
+					self.modifier_charge_handler = real_hero:FindModifierByName(self.modifier_charge)
+					if self.modifier_charge_handler then
+						self:SetStackCount(self.modifier_charge_handler:GetStackCount())
+						self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)
+					end
 				end
 			end
 		end
