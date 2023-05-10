@@ -1378,7 +1378,7 @@ function modifier_imba_mars_arena_of_blood:IsPurgable()
 end
 
 function modifier_imba_mars_arena_of_blood:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE + MODIFIER_ATTRIBUTE_INVULNERABLE 
+	return MODIFIER_ATTRIBUTE_MULTIPLE + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE 
 end
 
 --------------------------------------------------------------------------------

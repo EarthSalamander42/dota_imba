@@ -219,7 +219,7 @@ ListenToGameEvent('entity_killed', function(keys)
 
 --		local drop = CreateItemOnPositionSync(hero:GetAbsOrigin(), newItem)
 --		local dropTarget = hero:GetAbsOrigin() + RandomVector(RandomFloat( 50, 150 ))
---		newItem:LaunchLoot(true, 300, 0.75, dropTarget, nil)
+--		newItem:LaunchLoot(true, 300, 0.75, dropTarget)
 --		EmitSoundOn("Dungeon.TreasureItemDrop", hero)
 --	end
 end, nil)

@@ -1370,18 +1370,18 @@ function Custom_bIsStrongIllusion(unit)
 	if not unit or unit:IsNull() then
 		return
 	end
-	local strong_illus = {
+	local strong_illu_modifiers = {
 		"modifier_chaos_knight_phantasm_illusion",
 		"modifier_imba_chaos_knight_phantasm_illusion",
 		"modifier_vengefulspirit_hybrid_special",
 		"modifier_chaos_knight_phantasm_illusion_shard",
 	}
-	for _, v in pairs(strong_illus) do
+	for _, v in pairs(strong_illu_modifiers) do
 		if unit:HasModifier(v) then
 			return true
 		end
 	end
-	return false
+	return unit:IsStrongIllusion()
 end
 
 -- Checks if the entity is any kind of tree (either regular or temporary)
