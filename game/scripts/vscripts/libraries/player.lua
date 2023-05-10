@@ -191,7 +191,7 @@ function CDOTA_BaseNPC:DropItem(hItem, sNewItemName, bLaunchLoot)
 	end
 
 	if bLaunchLoot then
-		hItem:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
+		hItem:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector, nil)
 	end
 end
 

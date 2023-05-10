@@ -31,8 +31,7 @@ function item_the_caustic_finale:OnOwnerDied(params)
 		return nil
 	end
 	hOwner:DropItemAtPositionImmediate(self, hOwner:GetAbsOrigin())
-	-- This is supposed to have the item as base, not hOwner
-	-- hOwner:LaunchLoot(false, 250, 0.5, hOwner:GetAbsOrigin() + RandomVector(RandomInt(50, 200)))
+	--self:LaunchLoot(false, 250, 0.5, hOwner:GetAbsOrigin() + RandomVector(RandomInt(50, 200)), nil)
 end
 
 modifier_item_the_caustic_finale = class({})

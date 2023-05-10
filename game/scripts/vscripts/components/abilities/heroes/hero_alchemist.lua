@@ -281,7 +281,7 @@ function modifier_imba_acid_spray_handler:OnDeath(params)
 
 					local drop = CreateItemOnPositionSync( parent:GetAbsOrigin(), newItem )
 					local dropTarget = parent:GetAbsOrigin() + RandomVector( RandomFloat( 50, 150 ) )
-					newItem:LaunchLoot( true, 300, 0.75, dropTarget )
+					newItem:LaunchLoot( true, 300, 0.75, dropTarget, nil )
 					EmitSoundOn( "Dungeon.TreasureItemDrop", parent )
 				end
 			end
