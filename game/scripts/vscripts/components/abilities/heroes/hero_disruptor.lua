@@ -487,14 +487,14 @@ function imba_disruptor_glimpse:OnSpellStart()
 		-- Check for Linken's Sphere
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(ability) then
-				return nil
+				return
 			end
 		end			
 
 		-- if target is an illusion, kill instantly and do nothing else.
 		if target:IsIllusion() and not Custom_bIsStrongIllusion(target) then
 			target:Kill(self, self:GetCaster())
-			return nil
+			return
 		end
 
 		-- Roll cast response

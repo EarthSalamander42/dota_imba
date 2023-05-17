@@ -624,29 +624,32 @@ end
 
 function modifier_imba_rattletrap_cog_push:OnDestroy()
 	if not IsServer() then return end
+
+	local parent = self:GetParent()
+	local ability = self:GetAbility()
 	
-	self:GetParent():RemoveHorizontalMotionController( self )
+	parent:RemoveHorizontalMotionController( self )
 	
 	-- "Applies the damage first, and then the mana loss."
 	local damageTable = {
-		victim 			= self:GetParent(),
+		victim 			= parent,
 		damage 			= self.damage,
 		damage_type		= DAMAGE_TYPE_MAGICAL,
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 		attacker 		= self:GetCaster(),
-		ability 		= self:GetAbility()
+		ability 		= ability
 	}
-	
+
 	if not damageTable.attacker then
 		damageTable.attacker = self.owner
 	end
-	
+
 	ApplyDamage(damageTable)
-	
-	self:GetParent():ReduceMana(self.mana_burn)
-	
+
+	parent:ReduceMana(self.mana_burn, ability)
+
 	-- "At the end of the knock back, trees within a 100 radius of the unit are destroyed."
-	GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), 100, true )
+	GridNav:DestroyTreesAroundPoint(parent:GetAbsOrigin(), 100, true )
 end
 
 function modifier_imba_rattletrap_cog_push:CheckState()

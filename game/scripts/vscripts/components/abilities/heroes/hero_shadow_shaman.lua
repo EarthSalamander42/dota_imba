@@ -253,9 +253,10 @@ function imba_shadow_shaman_voodoo:OnSpellStart()
 	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		if not target:TriggerSpellAbsorb(self) then
 			-- "Hex instantly destroys illusions."
-			if target:IsIllusion() and not Custom_bIsStrongIllusion(self.parent) then
-				target:Kill(target, self:GetCaster())
-			else	
+			if target:IsIllusion() and not Custom_bIsStrongIllusion(target) then
+				target:Kill(self, self:GetCaster())
+				return
+			else
 				if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
 					self:GetCaster():EmitSound("shadowshaman_shad_ability_voodoo_0"..RandomInt(1, 4))
 				end

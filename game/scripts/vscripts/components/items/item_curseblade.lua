@@ -176,7 +176,7 @@ function modifier_imba_souldrain:OnIntervalThink()
 		local valid_enemies = 0
 		for _,enemy in pairs(enemies) do
 			if enemy:HasModifier("modifier_imba_souldrain_damage") then
-				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION, ability = item})
+				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION, ability = item})
 
 				-- Apply aura damage and heal
 				caster:Heal(actual_damage, caster)

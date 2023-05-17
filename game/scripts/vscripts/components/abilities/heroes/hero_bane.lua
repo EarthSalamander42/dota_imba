@@ -1206,7 +1206,7 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 
 				-- Spawn daemon
 				local demon	=	CreateUnitByName("npc_imba_fiends_grip_demon", caster:GetAbsOrigin() + RandomVector(100), true, caster, caster, caster:GetTeam() )
-				demon:AddNewModifier(caster, nil, "modifier_imba_fiends_grip_demon", {} )
+				demon:AddNewModifier(caster, ability, "modifier_imba_fiends_grip_demon", {} )
 				demon:SetRenderColor(75,0,130)
 				-- Apply link particle
 				parent.grip_link_particle_table[#parent.grip_link_particle_table+1] = ParticleManager:CreateParticle(drain_particle, PATTACH_ABSORIGIN, demon)			-- Create a seperate link particle for each demon
@@ -1216,26 +1216,26 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 			end
 
 			-- Multiply bonus damage by how many demons there are
-			self.total_demon_damage	=	demon_damage * #parent.grip_link_particle_table
-			self.total_demon_mana_drain= 	demon_mana_drain * #parent.grip_link_particle_table
+			self.total_demon_damage	= demon_damage * #parent.grip_link_particle_table
+			self.total_demon_mana_drain = demon_mana_drain * #parent.grip_link_particle_table
 		else
 			self.total_demon_damage,self.total_demon_mana_drain = 0,0
 		end
 
 		-- Drain mana
 		local mana_drained = math.min(parent:GetMaxMana() * (fiends_grip_mana_damage + self.total_demon_mana_drain) * 0.01, parent:GetMana())
-		parent:ReduceMana( (parent:GetMaxMana() * (fiends_grip_mana_damage + self.total_demon_mana_drain) * 0.01) * baby_multiplier )
+		parent:ReduceMana(mana_drained * baby_multiplier, ability)
 		caster:GiveMana(mana_drained)
 
 		-- Deal damage
 		local damage = {
-			victim      = self:GetParent(),
-			attacker    = self:GetCaster(),
+			victim      = parent,
+			attacker    = caster,
 			damage      = (fiends_grip_damage + self.total_demon_damage) * baby_multiplier,
 			damage_type = DAMAGE_TYPE_MAGICAL,
-			ability     = self:GetAbility()
+			ability     = ability
 		}
-		if not self:GetParent():IsMagicImmune() then
+		if not parent:IsMagicImmune() then
 			ApplyDamage(damage)
 		end
 	end
@@ -1533,13 +1533,15 @@ function modifier_imba_bane_fiends_grip_723:OnIntervalThink()
 	-- "Applies the damage first on each tick, and then the mana loss."
 	ApplyDamage(self.damage_table)
 
-	self.mana_drained = math.min(self:GetParent():GetMaxMana() * self.mana_drain_per_tick * 0.01, self:GetParent():GetMana())
-	self:GetParent():ReduceMana(self.mana_drained)
+	local parent = self:GetParent()
+	self.mana_drained = math.min(parent:GetMaxMana() * self.mana_drain_per_tick * 0.01, parent:GetMana())
+	parent:ReduceMana(self.mana_drained, self:GetAbility())
 	self:GetCaster():GiveMana(self.mana_drained)
 	
 	-- IMBAfication: Neverending Suffering
-	if self:GetParent():HasModifier("modifier_imba_bane_enfeeble_723_effect") then
-		self:GetParent():FindModifierByName("modifier_imba_bane_enfeeble_723_effect"):SetDuration(self:GetParent():FindModifierByName("modifier_imba_bane_enfeeble_723_effect"):GetRemainingTime() + self.fiend_grip_tick_interval, true)
+	if parent:HasModifier("modifier_imba_bane_enfeeble_723_effect") then
+		local mod = parent:FindModifierByName("modifier_imba_bane_enfeeble_723_effect")
+		mod:SetDuration(mod:GetRemainingTime() + self.fiend_grip_tick_interval, true)
 	end
 end
 

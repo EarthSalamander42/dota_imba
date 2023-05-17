@@ -63,13 +63,13 @@ function item_imba_dagon:OnSpellStart()
 	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(self) then
-			return nil
+			return
 		end
 	end
 
 	-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
 	if target:IsMagicImmune() then
-		return nil
+		return
 	end
 
 	-- Parameters
@@ -93,6 +93,7 @@ function item_imba_dagon:OnSpellStart()
 	-- Kill the target instantly if it is an illusion
 	if target:IsIllusion() and not Custom_bIsStrongIllusion(target) then
 		target:Kill(self, caster)
+		return
 	end
 	
 	-- Dagonize the main target

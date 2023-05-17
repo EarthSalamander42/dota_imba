@@ -61,13 +61,13 @@ function item_imba_sheepstick:OnSpellStart()
 		local modified_duration = hex_duration
 
 		if target:IsMagicImmune() then
-			return nil
+			return
 		end
 
 		-- If the target possesses a ready Linken's Sphere, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(self) then
-				return nil
+				return
 			end
 		end
 
@@ -76,7 +76,7 @@ function item_imba_sheepstick:OnSpellStart()
 
 		-- Kill the target instantly if it is an illusion
 		if target:IsIllusion() and not Custom_bIsStrongIllusion(target) then
-			target:ForceKill(true)
+			target:Kill(self, caster)
 			return
 		end
 
@@ -90,8 +90,8 @@ function item_imba_sheepstick:OnSpellStart()
 
 			for _,enemy in pairs(nearby_enemies) do
 				-- Kill the target instantly if it is an illusion
-				if enemy:IsIllusion() and (not enemy.Custom_IsStrongIllusion or (enemy.Custom_IsStrongIllusion and not enemy:Custom_IsStrongIllusion())) then
-					enemy:ForceKill(true)
+				if enemy:IsIllusion() and not Custom_bIsStrongIllusion(enemy) then
+					enemy:Kill(self, caster)
 				else
 					enemy:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration * (1 - enemy:GetStatusResistance())})
 				end

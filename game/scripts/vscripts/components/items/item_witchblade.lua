@@ -261,17 +261,11 @@ function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physica
 		local target_mana = keys.target:GetMana()
 
 		-- Burn mana
-		keys.target:ReduceMana(mana_burn, ability)
+		local actual_mana_burn = math.min(target_mana, mana_burn)
+		keys.target:ReduceMana(actual_mana_burn, ability)
 
 		-- Damage target depending on amount of mana actually burnt
-		local damage
-		if target_mana >= mana_burn then
-			damage = mana_burn * ability:GetSpecialValueFor("damage_per_burn")
-		else
-			damage = target_mana * ability:GetSpecialValueFor("damage_per_burn")
-		end
-
-		return damage
+		return actual_mana_burn * ability:GetSpecialValueFor("damage_per_burn")
 	end
 end
 
@@ -310,15 +304,11 @@ function modifier_item_imba_witchblade:OnTakeDamage(keys)
 
 					-- Burn the target's mana
 					local target_mana = target:GetMana()
-					target:ReduceMana(mana_burn, ability)
+					local actual_mana_burn = math.min(target_mana, mana_burn)
+					target:ReduceMana(actual_mana_burn, ability)
 
 					-- Calculate damage according to burnt mana
-					local damage
-					if target_mana >= mana_burn then
-						damage = mana_burn
-					else
-						damage = target_mana
-					end
+					local damage = actual_mana_burn
 
 					-- Damage the target
 					local damageTable = {

@@ -2279,11 +2279,11 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 end
 
 function modifier_imba_lich_sinister_gaze:OnIntervalThink()
-	if not self:GetCaster() or not self:GetAbility() or not self:GetAbility():IsChanneling() then
+	if self.caster:IsNull() or self.ability:IsNull() or not self.ability:IsChanneling() then
 		self:Destroy()
 	else
-		if self.parent.ReduceMana then
-			self.parent:ReduceMana(self.mana_per_interval)
+		if not self.parent:IsNull() and self.parent.ReduceMana then
+			self.parent:ReduceMana(self.mana_per_interval, self.ability)
 		end
 		
 		if self.caster.GiveMana then

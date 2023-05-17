@@ -359,41 +359,57 @@ function modifier_imba_voodoo_restoration:OnDestroy()
 end
 
 function modifier_imba_voodoo_restoration:OnIntervalThink()
-	if not self:GetAbility() or self:GetAbility():IsNull() then self:Destroy() return end
-
 	local hAbility = self:GetAbility()
-	if not self:GetCaster():IsAlive() then return end
+	if not hAbility or hAbility:IsNull() then
+		self:Destroy()
+		return
+	end
+	local hCaster = self:GetCaster()
+	if not hCaster or hCaster:IsNull() or not hCaster:IsAlive() then
+		return
+	end
+
 	-- Counter for purge effect
 	self.cleanse_counter = self.cleanse_counter or 0
 
 	self.cleanse_counter = self.cleanse_counter + self.interval
 	if self.cleanse_counter >= self.cleanse_interval then
 		self.cleanse_counter = 0
-		local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self.radius, hAbility:GetAbilityTargetTeam(), hAbility:GetAbilityTargetType(), hAbility:GetAbilityTargetFlags(), 0, false)
-		for _,hAlly in pairs(allies) do
+		local allies = FindUnitsInRadius(
+			hCaster:GetTeamNumber(),
+			hCaster:GetAbsOrigin(),
+			nil,
+			self.radius,
+			hAbility:GetAbilityTargetTeam(),
+			hAbility:GetAbilityTargetType(),
+			hAbility:GetAbilityTargetFlags(),
+			FIND_ANY_ORDER,
+			false
+		)
+		for _, hAlly in pairs(allies) do
 			local bRemoveStuns		= false
 			local bRemoveExceptions = false
 
 			-- #3 TALENT: Voodo restoration now purges stuns/exceptions
-			if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_3") then
+			if hCaster:HasTalent("special_bonus_imba_witch_doctor_3") then
 				bRemoveStuns      = true
 				bRemoveExceptions = true
 			end
 
 			hAlly:Purge(false, true, false, bRemoveStuns, bRemoveExceptions)
-			local cleanse_pfc = ParticleManager:CreateParticle("particles/hero/witch_doctor/voodoo_cleanse.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+			local cleanse_pfc = ParticleManager:CreateParticle("particles/hero/witch_doctor/voodoo_cleanse.vpcf", PATTACH_POINT_FOLLOW, hCaster)
 			ParticleManager:SetParticleControlEnt(cleanse_pfc, 0, hAlly, PATTACH_POINT_FOLLOW, "attach_hitloc", hAlly:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(cleanse_pfc)
-			if hAlly == self:GetCaster() then
-				EmitSoundOn("Imba.WitchDoctorDispel", self:GetCaster())
+			if hAlly == hCaster then
+				hCaster:EmitSound("Imba.WitchDoctorDispel")
 			end
 		end
 	end
 
 	-- #6 TALENT: Voodo restoration doesn't cost mana to maintain.
-	if not self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_6") then
-		if self:GetCaster():GetMana() >= hAbility:GetManaCost(-1) then
-			self:GetCaster():ReduceMana(self.manacost)
+	if not hCaster:HasTalent("special_bonus_imba_witch_doctor_6") then
+		if hCaster:GetMana() >= hAbility:GetManaCost(-1) then
+			hCaster:SpendMana(self.manacost, hAbility)
 		else
 			hAbility:ToggleAbility()
 		end

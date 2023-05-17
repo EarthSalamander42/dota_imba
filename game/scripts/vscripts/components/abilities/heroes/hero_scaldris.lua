@@ -143,7 +143,7 @@ function imba_scaldris_antipode:ScepterSwap(ability1, ability2)
 	
 	-- -- Autocast addendum; spend some mana for a chance to immediately refresh the non-ultimate ability that was swapped in
 	-- if not caster:FindAbilityByName(active_ability):IsCooldownReady() and caster:FindAbilityByName(active_ability):GetAbilityType() ~= ABILITY_TYPE_ULTIMATE and self:GetAutoCastState() and caster:GetMana() >= refresh_mana_cost and refresh_mana_cost >= 1 then
-		-- caster:ReduceMana(refresh_mana_cost)
+		-- caster:ReduceMana(refresh_mana_cost, nil)
 		
 		-- if RollPercentage(self:GetSpecialValueFor("scepter_refresh_chance")) then
 			-- caster:FindAbilityByName(active_ability):EndCooldown()

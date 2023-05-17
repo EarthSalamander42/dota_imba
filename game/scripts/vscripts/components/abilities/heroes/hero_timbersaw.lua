@@ -1830,7 +1830,7 @@ function modifier_imba_timbersaw_chakram_thinker:OnIntervalThink()
 	if self.interval == self.damage_interval or (self.interval ~= self.damage_interval and self.counter >= self.damage_interval) then
 		-- Issue: This doesn't account for mana-reduction values when checking if there's enough mana for Chakram to be sustained
 		if self:GetCaster():GetMana() >= self.mana_per_second and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self.break_distance then
-			self:GetCaster():ReduceMana(self.mana_per_second)			
+			self:GetCaster():SpendMana(self.mana_per_second, self:GetAbility())
 
 			for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 				-- if not self.counter then

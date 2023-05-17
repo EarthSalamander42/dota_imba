@@ -101,7 +101,7 @@ function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
 		if self:GetParent():GetMana() >= self.mana_per_attack and self:GetAbility() then
 		
 			if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
-				-- self:GetCaster():ReduceMana(self.mana_per_attack)
+				-- self:GetCaster():ReduceMana(self.mana_per_attack, self:GetAbility())
 
 				self:GetParent():FadeGesture(ACT_DOTA_ATTACK)
 				-- Arbitrary divisor

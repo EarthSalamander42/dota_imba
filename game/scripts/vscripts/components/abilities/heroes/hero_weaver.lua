@@ -275,9 +275,12 @@ end
 
 -- "Beetles attack in 1.25/1.1/0.95/0.8 second intervals, starting immediately when latching on a unit, resulting in up to 13/15/17/21 attacks."
 function modifier_imba_weaver_the_swarm_debuff:OnCreated(params)
-	if self:GetAbility() then
-		self.armor_reduction	= self:GetAbility():GetTalentSpecialValueFor("armor_reduction")
-		self.mana_burn_pct		= self:GetAbility():GetTalentSpecialValueFor("mana_burn_pct")
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
+
+	if self.ability then
+		self.armor_reduction	= self.ability:GetTalentSpecialValueFor("armor_reduction")
+		self.mana_burn_pct		= self.ability:GetTalentSpecialValueFor("mana_burn_pct")
 	else
 		self.armor_reduction	= 1
 		self.mana_burn_pct		= 50
@@ -291,12 +294,12 @@ function modifier_imba_weaver_the_swarm_debuff:OnCreated(params)
 	self.beetle			= EntIndexToHScript(params.beetle_entindex)
 	
 	self.damage_table	= {
-		victim 			= self:GetParent(),
+		victim 			= self.parent,
 		damage 			= self.damage,
 		damage_type		= self.damage_type,
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 		attacker 		= self:GetCaster(),
-		ability 		= self:GetAbility()
+		ability 		= self.ability
 	}
 	
 	self:OnIntervalThink()
@@ -309,7 +312,7 @@ function modifier_imba_weaver_the_swarm_debuff:OnIntervalThink()
 	ApplyDamage(self.damage_table)
 	
 	-- IMBAfication: M. Eater
-	self:GetParent():ReduceMana(self.damage * self.mana_burn_pct * 0.01)
+	self.parent:ReduceMana(self.damage * self.mana_burn_pct * 0.01, self.ability)
 end
 
 function modifier_imba_weaver_the_swarm_debuff:OnDestroy()
@@ -337,7 +340,7 @@ function modifier_imba_weaver_the_swarm_debuff:OnAttackLanded(keys)
 		
 		-- ApplyDamage(self.damage_table)
 		
-		-- self:GetParent():ReduceMana(self.damage * self.mana_burn_pct * 0.01)
+		-- self.parent:ReduceMana(self.damage * self.mana_burn_pct * 0.01, self.ability)
 	end
 end
 

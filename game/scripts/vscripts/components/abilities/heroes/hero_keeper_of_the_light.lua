@@ -680,8 +680,6 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 	-- self.mana_leak_pct		= self:GetSpecialValueFor("mana_leak_pct")
 	-- self.stun_duration		= self:GetSpecialValueFor("stun_duration")
 	
-	if not IsServer() then return end
-	
 	if self.target:GetTeam() == self.caster:GetTeam() then
 		-- Emit cast sound
 		self.caster:EmitSound("Hero_KeeperOfTheLight.ChakraMagic.Target")
@@ -759,7 +757,7 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 		if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_flow_inhibition") then
 			local inhibition_multiplier = self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_flow_inhibition")
 		
-			self.target:ReduceMana(self.mana_restore * inhibition_multiplier)
+			self.target:ReduceMana(self.mana_restore * inhibition_multiplier, self)
 			
 			-- Apparently the vanilla skill only shows the mana number if it's a hero?...
 			if self.target:IsHero() then
@@ -827,7 +825,7 @@ function modifier_imba_keeper_of_the_light_mana_leak:OnIntervalThink()
 	local max_mana			= self.parent:GetMaxMana()
 	
 	if distance > 0 and distance <= 300 then
-		self.parent:ReduceMana((distance * 0.01) * (max_mana * self.mana_leak_pct * 0.01))
+		self.parent:ReduceMana((distance * 0.01) * (max_mana * self.mana_leak_pct * 0.01), self.ability)
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 		ParticleManager:ReleaseParticleIndex(particle)
 	end

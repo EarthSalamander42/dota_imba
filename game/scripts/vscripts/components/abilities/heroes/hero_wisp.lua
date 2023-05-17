@@ -2023,7 +2023,7 @@ end
 
 function modifier_imba_wisp_overcharge_721:OnIntervalThink()
 	self.parent:ModifyHealth(self.caster:GetHealth() * (1 - (self.talent_drain_pct * 0.01 * self.talent_drain_interval)), self.ability, false, 0)
-	self.parent:ReduceMana(self.caster:GetMana() * self.talent_drain_pct * 0.01 * self.talent_drain_interval)
+	self.parent:ReduceMana(self.caster:GetMana() * self.talent_drain_pct * 0.01 * self.talent_drain_interval, self.ability)
 end
 
 function modifier_imba_wisp_overcharge_721:OnRefresh()

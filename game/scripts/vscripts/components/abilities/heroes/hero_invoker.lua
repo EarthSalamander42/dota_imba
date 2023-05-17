@@ -3015,13 +3015,14 @@ end
 			end
 			
 			-- Burn an amount of mana dependent on WEX.
-			enemy:ReduceMana(enemy_mana_to_burn)
+			enemy:ReduceMana(enemy_mana_to_burn, ability)
 			-- Apply damage based on amount burned * damage_per_mana_pct modifier.
-			ApplyDamage({	
-				victim = enemy, 
-				attacker = caster, 
-				damage = enemy_mana_to_burn * (damage_per_mana_pct / 100), 
-				damage_type = DAMAGE_TYPE_PURE
+			ApplyDamage({
+				victim = enemy,
+				attacker = caster,
+				damage = enemy_mana_to_burn * (damage_per_mana_pct / 100),
+				damage_type = DAMAGE_TYPE_PURE,
+				ability = ability
 			})
 			
 			-- Restore some of the burnt mana to Invoker if the affected unit is a real hero.

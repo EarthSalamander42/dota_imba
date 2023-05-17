@@ -494,11 +494,11 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
 		target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - target:GetStatusResistance())})
 	end
 
-	local modifier_debuff_handler = target:FindModifierByName(modifier_debuff)                                 
+	local modifier_debuff_handler = target:FindModifierByName(modifier_debuff)
 	if modifier_debuff_handler then                
 		for i = 1, stack_count do
 			-- Remove mana from the target for each stack
-			target:ReduceMana(mana_per_int)
+			target:ReduceMana(mana_per_int, ability)
 
 			-- Increment the stack count
 			modifier_debuff_handler:IncrementStackCount()
@@ -1759,15 +1759,17 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(particle_area_fx)
 
 	-- Find all enemies in radius
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									  target_point,
-									  nil,
-									  radius,
-									  DOTA_UNIT_TARGET_TEAM_ENEMY,
-									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									  DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-									  FIND_ANY_ORDER,
-									  false)
+	local enemies = FindUnitsInRadius(
+		caster:GetTeamNumber(),
+		target_point,
+		nil,
+		radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		FIND_ANY_ORDER,
+		false
+	)
 
 	for _,enemy in pairs(enemies) do
 		-- #7 Talent: Sanity Eclipse pierces spell immunity
@@ -1788,11 +1790,11 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 						mana_burn = max_mana * (caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_6","mana_burn") * 0.01) 
 					end
 				end
-				enemy:ReduceMana(mana_burn)
+				enemy:ReduceMana(mana_burn, ability)
 			end
 
-			-- If the enemy is an illusion, KILL IT!!!!!!!!!!!!!!!!!!
-			if enemy:IsIllusion() and (not enemy.Custom_IsStrongIllusion or not enemy:Custom_IsStrongIllusion()) then
+			-- If the enemy is an illusion (and not strong illusion), KILL IT!!!!!!!!!!!!!!!!!!
+			if enemy:IsIllusion() and not Custom_bIsStrongIllusion(enemy) then
 				enemy:Kill(ability, caster)
 			else
 				-- Calculate difference in intelligence for heroes, otherwise there are regarded as 0 int

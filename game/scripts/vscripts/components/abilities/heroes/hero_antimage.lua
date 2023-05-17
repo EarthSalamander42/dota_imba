@@ -329,6 +329,7 @@ function imba_antimage_blink:OnSpellStart()
 	local caster = self:GetCaster()
 	local caster_position = caster:GetAbsOrigin()
 	local target_point = self:GetCursorPosition()
+	local ability = self
 	local modifier_spell_immunity = "modifier_imba_antimage_blink_spell_immunity"
 
 	local distance = target_point - caster_position
@@ -401,22 +402,22 @@ function imba_antimage_blink:OnSpellStart()
 		caster:EmitSound("Hero_Antimage.Blink_in")
 
 		-- Manaburn-Nova
-		if self.percent_mana_burn ~= 0 then
+		if ability.percent_mana_burn ~= 0 then
 
 			-- Make a damage particle
 			local mananova_pfx = ParticleManager:CreateParticle("particles/hero/antimage/blink_manaburn_basher_ti_5.vpcf", PATTACH_POINT, caster)
 			ParticleManager:SetParticleControl(mananova_pfx, 0, caster:GetAbsOrigin() )
-			ParticleManager:SetParticleControl(mananova_pfx, 1, Vector((self.radius * 2),1,1))
+			ParticleManager:SetParticleControl(mananova_pfx, 1, Vector((ability.radius * 2),1,1))
 			ParticleManager:ReleaseParticleIndex(mananova_pfx)
 
-			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, ability.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, enemy in pairs(nearby_enemies) do
 				-- Calculate this enemy's damage contribution
-				local mana_burn = enemy:GetMana() * (self.percent_mana_burn * 0.01)
+				local mana_burn = enemy:GetMana() * (ability.percent_mana_burn * 0.01)
 
 				-- Only continue if target has mana
 				if mana_burn > 0 then
-					local this_enemy_damage = mana_burn * (self.percent_damage * 0.01)
+					local this_enemy_damage = mana_burn * (ability.percent_damage * 0.01)
 
 					-- The damage cannot go over the limit
 					if this_enemy_damage > mana_burn_limit then
@@ -434,10 +435,10 @@ function imba_antimage_blink:OnSpellStart()
 						damage = this_enemy_damage,
 						damage_type = DAMAGE_TYPE_MAGICAL,
 						attacker = caster,
-						ability = self
+						ability = ability
 					}
 					ApplyDamage(damageTable)
-					enemy:ReduceMana(mana_burn, self)
+					enemy:ReduceMana(mana_burn, ability)
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, enemy, mana_burn, nil)
 				end
 			end
@@ -941,7 +942,7 @@ function imba_antimage_mana_void:OnSpellStart()
 		-- Damage all enemies in the area for the total damage tally
 		for _,enemy in pairs(nearby_enemies) do
 			if caster:HasScepter() and enemy:IsHero() then
-				enemy:AddNewModifier(caster, self, "modifier_imba_mana_void_scepter", {})
+				enemy:AddNewModifier(caster, ability, "modifier_imba_mana_void_scepter", {})
 
 				Timers:CreateTimer(mana_void_ministun, function()
 					if enemy:IsAlive() then
