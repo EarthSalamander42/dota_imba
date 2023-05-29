@@ -112,7 +112,7 @@ function item_imba_hellblade:TransferAllDebuffs(caster, target)
 				local modifier_class = modifier:GetClass()
 				
 				if modifier_ability ~= nil then
-					if modifier_class == datadrive_baseclass then
+					if modifier_class == "modifier_datadriven" then
 						modifier_ability:ApplyDataDrivenModifier(caster, target, modifier_name, {duration = modifier_duration})
 					else
 						target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
