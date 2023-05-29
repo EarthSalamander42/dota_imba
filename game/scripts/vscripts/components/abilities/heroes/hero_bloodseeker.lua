@@ -240,7 +240,6 @@ end
 
 -- Needed for the CD reduction talent
 function imba_bloodseeker_blood_bath:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_bloodseeker_9") and self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_9"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_bloodseeker_9", {})
 	end
@@ -1183,16 +1182,12 @@ function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:IsPurgable()
 function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:RemoveOnDeath() 	return false end
 
 function imba_bloodseeker_rupture:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_rupture_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_rupture_cast_range"), "modifier_special_bonus_imba_bloodseeker_rupture_cast_range", {})
 	end
 end
 
 function imba_bloodseeker_bloodrage:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_7") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_7"), "modifier_special_bonus_imba_bloodseeker_7", {})
 	end

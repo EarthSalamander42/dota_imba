@@ -1740,8 +1740,6 @@ function modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance:I
 function modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance:RemoveOnDeath() 	return false end
 
 function imba_warlock_rain_of_chaos:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_warlock_chaotic_offering_magic_resistance") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_warlock_chaotic_offering_magic_resistance"), "modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", {})
 	end

@@ -158,7 +158,6 @@ function modifier_special_bonus_imba_crystal_maiden_3:IsPurgable() 		return fals
 function modifier_special_bonus_imba_crystal_maiden_3:RemoveOnDeath() 	return false end
 
 function imba_crystal_maiden_crystal_nova:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_crystal_maiden_3") and self:GetCaster():FindAbilityByName("special_bonus_imba_crystal_maiden_3"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_crystal_maiden_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_crystal_maiden_3", {})
 	end
@@ -1272,8 +1271,6 @@ function modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_red
 function modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction:RemoveOnDeath() 	return false end
 
 function imba_crystal_maiden_brilliance_aura:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction"), "modifier_special_bonus_imba_crystal_maiden_brilliance_aura_manacost_reduction", {})
 	end

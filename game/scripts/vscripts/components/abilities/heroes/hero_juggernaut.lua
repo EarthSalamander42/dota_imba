@@ -2374,8 +2374,6 @@ function modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed:IsPurg
 function modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed:RemoveOnDeath() 	return false end
 
 function imba_juggernaut_blade_fury:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_juggernaut_blade_fury_movement_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_juggernaut_blade_fury_movement_speed"), "modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed", {})
 	end

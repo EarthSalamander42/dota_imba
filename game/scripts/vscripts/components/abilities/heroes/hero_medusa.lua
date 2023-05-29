@@ -720,6 +720,12 @@ function imba_medusa_mana_shield:OnOwnerSpawned()
 	if self.toggle_state then
 		self:ToggleAbility()
 	end
+
+	local caster = self:GetCaster()
+
+	if caster:HasTalent("special_bonus_imba_medusa_bonus_mana") and not caster:HasModifier("modifier_special_bonus_imba_medusa_bonus_mana") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_medusa_bonus_mana"), "modifier_special_bonus_imba_medusa_bonus_mana", {})
+	end
 end
 
 function imba_medusa_mana_shield:OnOwnerDied()
@@ -1323,12 +1329,3 @@ end
 function modifier_special_bonus_imba_medusa_bonus_mana:GetModifierManaBonus()
 	return self.bonus_mana
 end
-
-function imba_medusa_mana_shield:OnOwnerSpawned()
-	if not IsServer() then return end
-
-	if self:GetCaster():HasTalent("special_bonus_imba_medusa_bonus_mana") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_medusa_bonus_mana") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_medusa_bonus_mana"), "modifier_special_bonus_imba_medusa_bonus_mana", {})
-	end
-end
-

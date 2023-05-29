@@ -1385,16 +1385,12 @@ function modifier_special_bonus_imba_oracle_fates_edict_cooldown:IsPurgable() 	r
 function modifier_special_bonus_imba_oracle_fates_edict_cooldown:RemoveOnDeath() 	return false end
 
 function imba_oracle_fates_edict:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_oracle_fates_edict_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_oracle_fates_edict_cooldown"), "modifier_special_bonus_imba_oracle_fates_edict_cooldown", {})
 	end
 end
 
 function imba_oracle_purifying_flames:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_oracle_purifying_flames_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_oracle_purifying_flames_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_oracle_purifying_flames_cooldown"), "modifier_special_bonus_imba_oracle_purifying_flames_cooldown", {})
 	end

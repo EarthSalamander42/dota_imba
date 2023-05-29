@@ -1648,14 +1648,14 @@ function modifier_special_bonus_imba_shadow_demon_disruption_charges:RemoveOnDea
 
 
 function imba_shadow_demon_shadow_poison:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_demon_shadow_poison_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_damage") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_damage"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_damage", {})
-	end
-end
+	local caster = self:GetCaster()
 
-function imba_shadow_demon_shadow_poison:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_demon_shadow_poison_cd") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_cd") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_cd"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_cd", {})
+	if caster:HasTalent("special_bonus_imba_shadow_demon_shadow_poison_damage") and not caster:HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_damage") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_damage"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_damage", {})
+	end
+
+	if caster:HasTalent("special_bonus_imba_shadow_demon_shadow_poison_cd") and not caster:HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_cd") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_cd"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_cd", {})
 	end
 end
 

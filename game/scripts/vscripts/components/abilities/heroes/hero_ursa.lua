@@ -1643,8 +1643,6 @@ function modifier_special_bonus_imba_ursa_3:IsPurgable() 	return false end
 function modifier_special_bonus_imba_ursa_3:RemoveOnDeath() 	return false end
 
 function imba_ursa_territorial_hunter:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_ursa_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ursa_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ursa_3"), "modifier_special_bonus_imba_ursa_3", {})
 	end

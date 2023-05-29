@@ -980,8 +980,6 @@ end
 -- end
 
 function imba_slark_shadow_dance:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_passive_regen") and self:GetAutoCastState() and not self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_dark_reef_handler") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_shadow_dance_dark_reef_handler", {})
 	end

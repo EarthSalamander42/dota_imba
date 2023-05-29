@@ -483,8 +483,6 @@ function imba_night_stalker_crippling_fear:GetCooldown(level)
 end
 
 function imba_night_stalker_crippling_fear:OnOwnerSpawned()
-	if not IsServer() then return end
-	
 	if self:GetCaster():HasAbility("special_bonus_imba_night_stalker_8") and self:GetCaster():FindAbilityByName("special_bonus_imba_night_stalker_8"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_night_stalker_8") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_night_stalker_8", {})
 	end
@@ -1504,16 +1502,12 @@ function modifier_special_bonus_imba_night_stalker_10:IsPurgable() 		return fals
 function modifier_special_bonus_imba_night_stalker_10:RemoveOnDeath() 	return false end
 
 function imba_night_stalker_hunter_in_the_night:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_night_stalker_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_night_stalker_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_night_stalker_9"), "modifier_special_bonus_imba_night_stalker_9", {})
 	end
 end
 
 function imba_night_stalker_darkness:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_night_stalker_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_night_stalker_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_night_stalker_10"), "modifier_special_bonus_imba_night_stalker_10", {})
 	end

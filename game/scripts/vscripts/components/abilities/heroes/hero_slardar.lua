@@ -1947,8 +1947,6 @@ function modifier_special_bonus_imba_slardar_6:IsPurgable() 	return false end
 function modifier_special_bonus_imba_slardar_6:RemoveOnDeath() 	return false end
 
 function imba_slardar_slithereen_crush:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_slardar_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_slardar_6") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_slardar_6"), "modifier_special_bonus_imba_slardar_6", {})
 	end

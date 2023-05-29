@@ -457,8 +457,6 @@ function modifier_special_bonus_imba_arc_warden_spark_wraith_damage:IsPurgable()
 function modifier_special_bonus_imba_arc_warden_spark_wraith_damage:RemoveOnDeath() 	return false end
 
 function imba_arc_warden_spark_wraith:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_arc_warden_spark_wraith_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_arc_warden_spark_wraith_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_arc_warden_spark_wraith_cooldown"), "modifier_special_bonus_imba_arc_warden_spark_wraith_cooldown", {})
 	end

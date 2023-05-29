@@ -176,7 +176,6 @@ function modifier_special_bonus_sohei_fob_radius:RemoveOnDeath() 	return false e
 
 -- Should close out talent behavior change problems
 function sohei_flurry_of_blows:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_sohei_fob_radius") and self:GetCaster():FindAbilityByName("special_bonus_sohei_fob_radius"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_sohei_fob_radius") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_sohei_fob_radius", {})
 	end
@@ -647,8 +646,6 @@ function modifier_special_bonus_imba_sohei_wholeness_allycast:OnCreated()
 end
 
 function sohei_wholeness_of_body:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_sohei_wholeness_allycast") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sohei_wholeness_allycast") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sohei_wholeness_allycast"), "modifier_special_bonus_imba_sohei_wholeness_allycast", {})
 	end

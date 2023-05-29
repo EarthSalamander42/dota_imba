@@ -846,8 +846,6 @@ function modifier_special_bonus_imba_luna_lucent_beam_cooldown:IsPurgable() 	ret
 function modifier_special_bonus_imba_luna_lucent_beam_cooldown:RemoveOnDeath() 	return false end
 
 function imba_luna_lucent_beam:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_luna_lucent_beam_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_luna_lucent_beam_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_luna_lucent_beam_cooldown"), "modifier_special_bonus_imba_luna_lucent_beam_cooldown", {})
 	end

@@ -1213,7 +1213,6 @@ end
 
 -- Need this if player skills talent while dead
 function imba_lycan_shapeshift:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_lycan_7") and self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_7"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lycan_7") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lycan_7", {})
 	end
@@ -2622,8 +2621,6 @@ function modifier_special_bonus_imba_lycan_10:RemoveOnDeath()	return false end
 -- end
 
 function imba_lycan_summon_wolves:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_lycan_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lycan_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_10"), "modifier_special_bonus_imba_lycan_10", {})
 	end

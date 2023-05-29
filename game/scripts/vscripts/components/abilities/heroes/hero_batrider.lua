@@ -951,8 +951,6 @@ function modifier_special_bonus_unique_imba_batrider_flamebreak_cooldown:IsPurga
 function modifier_special_bonus_unique_imba_batrider_flamebreak_cooldown:RemoveOnDeath() 	return false end
 
 function imba_batrider_flamebreak:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_unique_imba_batrider_flamebreak_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_unique_imba_batrider_flamebreak_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_unique_imba_batrider_flamebreak_cooldown"), "modifier_special_bonus_unique_imba_batrider_flamebreak_cooldown", {})
 	end

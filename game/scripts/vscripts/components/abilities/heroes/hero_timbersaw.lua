@@ -2150,8 +2150,6 @@ function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsPurgable()	 
 function modifier_special_bonus_imba_timbersaw_timber_chain_range:RemoveOnDeath() 	return false end
 
 function imba_timbersaw_timber_chain:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_timbersaw_timber_chain_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_timbersaw_timber_chain_range"), "modifier_special_bonus_imba_timbersaw_timber_chain_range", {})
 	end

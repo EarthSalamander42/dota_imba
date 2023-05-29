@@ -573,7 +573,6 @@ function imba_abaddon_frostmourne:GetBehavior()
 end
 
 function imba_abaddon_frostmourne:OnOwnerSpawned()
-	if not IsServer() then return end
 	self:EndCooldown()
 --[[
 	if self:GetCaster():HasAbility("special_bonus_imba_abaddon_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_abaddon_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_abaddon_2") then

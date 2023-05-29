@@ -378,7 +378,6 @@ function imba_dragon_knight_elder_dragon_charge:OnUpgrade()
 end
 
 function imba_dragon_knight_elder_dragon_charge:OnOwnerSpawned()
-	if not IsServer() then return end
 	if not self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
 		self:SetActivated(false)
 	end

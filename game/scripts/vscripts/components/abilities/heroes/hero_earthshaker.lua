@@ -1043,8 +1043,6 @@ function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:GetModif
 end
 
 function earthshaker_enchant_totem_lua:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_unique_earthshaker") and not self:GetCaster():HasModifier("modifier_special_bonus_unique_earthshaker") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_unique_earthshaker"), "modifier_special_bonus_unique_earthshaker", {})
 	end

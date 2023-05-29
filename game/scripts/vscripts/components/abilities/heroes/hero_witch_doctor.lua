@@ -1065,8 +1065,6 @@ function modifier_special_bonus_imba_witch_doctor_maledict_radius:IsPurgable() 	
 function modifier_special_bonus_imba_witch_doctor_maledict_radius:RemoveOnDeath() 	return false end
 
 function imba_witch_doctor_maledict:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_witch_doctor_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_witch_doctor_9"), "modifier_special_bonus_imba_witch_doctor_9", {})
 	end

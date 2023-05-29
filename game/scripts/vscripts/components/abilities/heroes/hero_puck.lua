@@ -840,8 +840,6 @@ function modifier_special_bonus_imba_puck_waning_rift_range:IsPurgable() 		retur
 function modifier_special_bonus_imba_puck_waning_rift_range:RemoveOnDeath() 	return false end
 
 function imba_puck_waning_rift:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_puck_waning_rift_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_puck_waning_rift_cooldown"), "modifier_special_bonus_imba_puck_waning_rift_cooldown", {})
 	end

@@ -352,8 +352,6 @@ function modifier_special_bonus_imba_furion_wrath_of_nature_boost:IsPurgable() 	
 function modifier_special_bonus_imba_furion_wrath_of_nature_boost:RemoveOnDeath() 	return false end
 
 function imba_furion_wrath_of_nature:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_furion_wrath_of_nature_boost") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_furion_wrath_of_nature_boost"), "modifier_special_bonus_imba_furion_wrath_of_nature_boost", {})
 	end

@@ -1164,17 +1164,13 @@ function modifier_special_bonus_imba_shadow_shaman_wards_movement:IsPurgable() 	
 function modifier_special_bonus_imba_shadow_shaman_wards_movement:RemoveOnDeath() 	return false end
 
 function imba_shadow_shaman_voodoo:OnOwnerSpawned()
-	if not IsServer() then return end
+	local caster = self:GetCaster()
 
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_hex_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_shaman_hex_cooldown"), "modifier_special_bonus_imba_shadow_shaman_hex_cooldown", {})
+	if caster:HasTalent("special_bonus_imba_shadow_shaman_hex_cooldown") and not caster:HasModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_shaman_hex_cooldown"), "modifier_special_bonus_imba_shadow_shaman_hex_cooldown", {})
 	end
-end
 
-function imba_shadow_shaman_voodoo:OnOwnerSpawned()
-	if not IsServer() then return end
-
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_shaman_wards_movement"), "modifier_special_bonus_imba_shadow_shaman_wards_movement", {})
+	if caster:HasTalent("special_bonus_imba_shadow_shaman_wards_movement") and not caster:HasModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_shaman_wards_movement"), "modifier_special_bonus_imba_shadow_shaman_wards_movement", {})
 	end
 end

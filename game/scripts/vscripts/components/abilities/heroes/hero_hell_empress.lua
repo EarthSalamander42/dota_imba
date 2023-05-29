@@ -529,8 +529,6 @@ function modifier_special_bonus_imba_empress_royal_wrath_cooldown:IsPurgable() 	
 function modifier_special_bonus_imba_empress_royal_wrath_cooldown:RemoveOnDeath() 	return false end
 
 function imba_empress_royal_wrath:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_empress_royal_wrath_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_empress_royal_wrath_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_empress_royal_wrath_cooldown"), "modifier_special_bonus_imba_empress_royal_wrath_cooldown", {})
 	end

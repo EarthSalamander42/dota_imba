@@ -898,16 +898,12 @@ function modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe:IsPurgable(
 function modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe:RemoveOnDeath() 	return false end
 
 function imba_queenofpain_shadow_strike:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_queen_of_pain_shadow_strike_aoe") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_queen_of_pain_shadow_strike_aoe"), "modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe", {})
 	end
 end
 
 function imba_queenofpain_delightful_torment:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_queenofpain_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_queenofpain_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_queenofpain_4"), "modifier_special_bonus_imba_queenofpain_4", {})
 	end

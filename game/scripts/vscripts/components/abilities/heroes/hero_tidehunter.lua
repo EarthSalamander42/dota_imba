@@ -1118,24 +1118,18 @@ function modifier_special_bonus_imba_tidehunter_gush_armor:IsPurgable()		return 
 function modifier_special_bonus_imba_tidehunter_gush_armor:RemoveOnDeath() 	return false end
 
 function imba_tidehunter_gush:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_gush_armor") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tidehunter_gush_armor") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tidehunter_gush_armor"), "modifier_special_bonus_imba_tidehunter_gush_armor", {})
 	end
 end
 
 function imba_tidehunter_kraken_shell:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_greater_hardening") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tidehunter_greater_hardening") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tidehunter_greater_hardening"), "modifier_special_bonus_imba_tidehunter_greater_hardening", {})
 	end
 end
 
 function imba_tidehunter_anchor_smash:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_tidehunter_anchor_smash_damage_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_tidehunter_anchor_smash_damage_reduction"), "modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction", {})
 	end

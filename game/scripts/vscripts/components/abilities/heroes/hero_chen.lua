@@ -1258,32 +1258,24 @@ function modifier_special_bonus_imba_chen_remnants_of_penitence:IsPurgable() 	re
 function modifier_special_bonus_imba_chen_remnants_of_penitence:RemoveOnDeath() 	return false end
 
 function imba_chen_penitence:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_remnants_of_penitence") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_remnants_of_penitence") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_remnants_of_penitence"), "modifier_special_bonus_imba_chen_remnants_of_penitence", {})
 	end
 end
 
 function imba_chen_divine_favor:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_divine_favor_cd_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_divine_favor_cd_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_divine_favor_cd_reduction"), "modifier_special_bonus_imba_chen_divine_favor_cd_reduction", {})
 	end
 end
 
 function imba_chen_test_of_faith:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_test_of_faith_cd_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_test_of_faith_cd_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_test_of_faith_cd_reduction"), "modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", {})
 	end
 end
 
 function imba_chen_hand_of_god:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_hand_of_god_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_hand_of_god_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_hand_of_god_cooldown"), "modifier_special_bonus_imba_chen_hand_of_god_cooldown", {})
 	end

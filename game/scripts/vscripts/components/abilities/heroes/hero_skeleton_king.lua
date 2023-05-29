@@ -1196,7 +1196,6 @@ end
 
 -- Should fully close out talent behavior change problems
 function imba_wraith_king_reincarnation:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_skeleton_king_5") and self:GetCaster():FindAbilityByName("special_bonus_imba_skeleton_king_5"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skeleton_king_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_skeleton_king_5", {})
 	end
@@ -1697,7 +1696,6 @@ end
 
 -- Should fully close out talent behavior change problems
 function imba_wraith_king_kingdom_come:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_skeleton_king_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_skeleton_king_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skeleton_king_2") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_skeleton_king_2", {})
 	end

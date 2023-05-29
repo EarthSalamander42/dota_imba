@@ -1154,24 +1154,18 @@ function modifier_special_bonus_imba_sven_10:IsPurgable() 		return false end
 function modifier_special_bonus_imba_sven_10:RemoveOnDeath() 	return false end
 
 function imba_sven_storm_bolt:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_sven_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_5"), "modifier_special_bonus_imba_sven_5", {})
 	end
 end
 
 function imba_sven_great_cleave:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_sven_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_6") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_6"), "modifier_special_bonus_imba_sven_6", {})
 	end
 end
 
 function imba_sven_gods_strength:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_sven_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_4"), "modifier_special_bonus_imba_sven_4", {})
 	end

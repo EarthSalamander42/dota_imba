@@ -1268,8 +1268,6 @@ function modifier_special_bonus_imba_spirit_breaker_bonus_health:GetModifierHeal
 end
 
 function imba_spirit_breaker_charge_of_darkness:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_charge_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_charge_speed"), "modifier_special_bonus_imba_spirit_breaker_charge_speed", {})
 	end
@@ -1280,8 +1278,6 @@ function imba_spirit_breaker_charge_of_darkness:OnOwnerSpawned()
 end
 
 function imba_spirit_breaker_bulldoze:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_bulldoze_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_bulldoze_cooldown"), "modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown", {})
 	end

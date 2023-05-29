@@ -194,7 +194,6 @@ function imba_enigma_malefice:OnUpgrade()
 end
 
 function imba_enigma_malefice:OnOwnerSpawned()
-	if not IsServer() then return end
 	-- Two ways to ensure talents get added properly I guess
 	if self:GetCaster():HasAbility("special_bonus_imba_enigma_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_2") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_2", {})
@@ -598,7 +597,6 @@ function imba_enigma_black_hole:IsStealable() 				return true end
 function imba_enigma_black_hole:IsNetherWardStealable() 	return true end
 
 function imba_enigma_black_hole:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_enigma_1") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_1"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_1") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_1", {})
 	end
