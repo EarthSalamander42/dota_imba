@@ -500,9 +500,9 @@ end
 			local quas_orbs 		= caster:FindAllModifiersByName("modifier_imba_invoker_quas")
 			local wex_orbs 			= caster:FindAllModifiersByName("modifier_imba_invoker_wex")
 			local exort_orbs 		= caster:FindAllModifiersByName("modifier_imba_invoker_exort")
-			local num_quas_orbs 	= table.getn(quas_orbs)
-			local num_wex_orbs 		= table.getn(wex_orbs)
-			local num_exort_orbs 	= table.getn(exort_orbs)
+			local num_quas_orbs 	= #quas_orbs
+			local num_wex_orbs 		= #wex_orbs
+			local num_exort_orbs 	= #exort_orbs
 			
 			-- TODO: Check for other functions that let you spam this sound
 			caster:EmitSound("Hero_Invoker.Invoke")
@@ -1084,10 +1084,10 @@ end
 			damage_table.attacker 		= caster
 			damage_table.ability 		= ability
 			damage_table.damage_type 	= ability:GetAbilityDamageType() 
-			damage_table.damage 		= damage / table.getn(enemies_hit)
+			damage_table.damage 		= damage / #enemies_hit
 			
 			-- Deal damage to each enemy hero
-			for _,hero in pairs(enemies_hit) do
+			for _, hero in pairs(enemies_hit) do
 				damage_table.victim = hero
 				ApplyDamage(damage_table)
 			end
@@ -1348,7 +1348,7 @@ end
 
 				AddFOWViewer(self:GetCaster():GetTeamNumber(), self.target_point, self.vision_distance, self.vision_duration, false)
 
-				local sun_strike_beam = nil
+				local sun_strike_beam
 
 				if self.target_point then
 					sun_strike_beam = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self:GetCaster(), self:GetCaster():GetTeamNumber())
@@ -1388,7 +1388,7 @@ end
 							EmitSoundOnLocationWithCaster(self.cataclysm_point, "Hero_Invoker.SunStrike.Charge", self:GetCaster())
 							AddFOWViewer(self:GetCaster():GetTeamNumber(), self.cataclysm_point, self.vision_distance, self.vision_duration, false)
 							
-							sun_strike_beam = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_CUSTOMORIGIN, nil)
+							local sun_strike_beam = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_CUSTOMORIGIN, nil)
 							ParticleManager:SetParticleControl(sun_strike_beam, 0, self.cataclysm_point)
 							ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(self.area_of_effect, 0, 0))
 							self:AddParticle(sun_strike_beam, false, false, -1, false, false)
@@ -2374,7 +2374,7 @@ end
 				if attacker == self.parent and target:IsHero() or target:IsIllusion() then
 					if attacker:GetMana() >= self.melt_strike_mana_cost then
 						if target:HasModifier("modifier_imba_forged_spirit_melting_strike") then
-							debuff_count = target:GetModifierStackCount("modifier_imba_forged_spirit_melting_strike", self.caster)
+							local debuff_count = target:GetModifierStackCount("modifier_imba_forged_spirit_melting_strike", self.caster)
 							if debuff_count > self.max_armor_removed then
 								debuff_count = self.max_armor_removed
 							end

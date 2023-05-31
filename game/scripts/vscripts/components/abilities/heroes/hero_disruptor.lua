@@ -889,9 +889,9 @@ MergeTables(LinkedModifiers,{
 
 imba_disruptor_kinetic_field = imba_disruptor_kinetic_field or class({})
 
-function imba_disruptor_kinetic_field:GetAOERadius()	
-		local radius = self:GetSpecialValueFor("field_radius")	
-		return radius	
+function imba_disruptor_kinetic_field:GetAOERadius()
+	local radius = self:GetSpecialValueFor("field_radius")
+	return radius
 end
 
 function imba_disruptor_kinetic_field:GetAbilityTextureName()
@@ -994,16 +994,18 @@ function modifier_imba_kinetic_field:OnDestroy()
 end
 
 function modifier_imba_kinetic_field:OnIntervalThink()
-	local enemies_in_field = FindUnitsInRadius(self.caster:GetTeamNumber(),
-									self.target_point,
-									nil,
-									self.field_radius + 200,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
-	for _,enemy in pairs(enemies_in_field) do
+	local enemies_in_field = FindUnitsInRadius(
+		self.caster:GetTeamNumber(),
+		self.target_point,
+		nil,
+		self.field_radius + 200,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false
+	)
+	for _, enemy in pairs(enemies_in_field) do
 		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_position", {duration = self:GetRemainingTime(), target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 	end
 	
@@ -1011,16 +1013,18 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 	if self.caster:HasTalent("special_bonus_imba_disruptor_5") then
 	
 		-- Scan and indicator for all enemies in the field, preventing Glimpse from generate the original storm
-		local enemies_inside_field = FindUnitsInRadius(self.caster:GetTeamNumber(),
-									self.target_point,
-									nil,
-									self.field_radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
-		for _,enemy_in_field in pairs(enemies_inside_field) do
+		local enemies_inside_field = FindUnitsInRadius(
+			self.caster:GetTeamNumber(),
+			self.target_point,
+			nil,
+			self.field_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false
+		)
+		for _, enemy_in_field in pairs(enemies_inside_field) do
 		
 			enemy_in_field:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_inside_field", {duration = 0.01})
 			
@@ -1028,13 +1032,13 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 			if enemy_in_field:HasModifier("modifier_glimpse_talent_indicator") then
 			
 				-- Get Glimpse's ability specials
-				glimpse_ability = self.caster:FindAbilityByName("imba_disruptor_glimpse")
+				local glimpse_ability = self.caster:FindAbilityByName("imba_disruptor_glimpse")
 				self.storm_radius = glimpse_ability:GetSpecialValueFor("storm_radius")		
 				self.storm_duration = glimpse_ability:GetSpecialValueFor("storm_duration")
 				self.modifier_storm = "modifier_imba_glimpse_storm_aura"
 				
 				-- Get the enemy's vector where the storm is generated.
-				enemy_origin = enemy_in_field:GetAbsOrigin()
+				local enemy_origin = enemy_in_field:GetAbsOrigin()
 				
 				-- Simple methemethecs
 				self.distance = (enemy_origin - self.target_point):Length2D()
@@ -1403,9 +1407,9 @@ MergeTables(LinkedModifiers,{
 
 imba_disruptor_static_storm = imba_disruptor_static_storm or class ({})
 
-function imba_disruptor_static_storm:GetAOERadius()	
-		local radius = self:GetSpecialValueFor("radius")	
-		return radius	
+function imba_disruptor_static_storm:GetAOERadius()
+	local radius = self:GetSpecialValueFor("radius")
+	return radius
 end
 
 function imba_disruptor_static_storm:OnSpellStart()
@@ -1647,13 +1651,16 @@ function modifier_imba_static_storm_debuff:IsPurgable()	return false end
 -- end
 
 function modifier_imba_static_storm_debuff:CheckState()	
+	local state = {
+		[MODIFIER_STATE_SILENCED] = true
+	}
 	if self.scepter then
-		state = { [MODIFIER_STATE_SILENCED] = true,
-				  [MODIFIER_STATE_MUTED] = true,}
-	else
-		state = { [MODIFIER_STATE_SILENCED] = true}	
+		state = {
+			[MODIFIER_STATE_SILENCED] = true,
+			[MODIFIER_STATE_MUTED] = true,
+		}
 	end
-	return state	
+	return state
 end
 
 ---------------------------------------------------
@@ -1721,17 +1728,17 @@ end
 function modifier_imba_static_storm_talent:OnDestroy()
 	if not IsServer() then return end
 	if self.stack_count == nil then
-		return nil
+		return
 	end	
 	if self.stack_count > 0 then
 		self.duration = self.caster:FindTalentValue("special_bonus_imba_disruptor_6","interval") * self.stack_count
-		modifier_talent_stun = self.parent:AddNewModifier(self.caster,self.ability,"modifier_imba_static_storm_talent_ministun",{duration = self.duration * (1 - self.parent:GetStatusResistance())})
+		local modifier_talent_stun = self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_static_storm_talent_ministun", {duration = self.duration * (1 - self.parent:GetStatusResistance())})
 	
 		if modifier_talent_stun then
-		modifier_talent_stun:SetStackCount(self.stack_count)
+			modifier_talent_stun:SetStackCount(self.stack_count)
 		end
 	else
-		return nil
+		return
 	end
 end
 

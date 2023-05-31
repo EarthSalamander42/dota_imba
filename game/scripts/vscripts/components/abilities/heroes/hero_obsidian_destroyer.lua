@@ -902,7 +902,7 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 
 		-- If the caster has Essence Aura, roll for a proc
 		if caster:HasModifier(modifier_essence) then
-			modifier_essence_handler = caster:FindModifierByName(modifier_essence)
+			local modifier_essence_handler = caster:FindModifierByName(modifier_essence)
 			if modifier_essence_handler then
 				modifier_essence_handler:ProcEssenceAura()
 			end

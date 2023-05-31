@@ -1158,7 +1158,7 @@ function imba_timbersaw_chakram_2:OnProjectileHitHandle(target, location, projec
 			self.projectiles[projectileHandle].launching_enemies = {}
 		end
 		
-		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[enemy] then
+		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[target] then
 			target:EmitSound("Hero_Shredder.Chakram.Target")
 		
 			-- "A passing Chakram first applies the passing damage, then the debuff."
@@ -1435,7 +1435,7 @@ function imba_timbersaw_chakram:OnProjectileHitHandle(target, location, projecti
 			self.projectiles[projectileHandle].launching_enemies = {}
 		end
 		
-		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[enemy] then
+		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[target] then
 			target:EmitSound("Hero_Shredder.Chakram.Target")
 		
 			-- "A passing Chakram first applies the passing damage, then the debuff."

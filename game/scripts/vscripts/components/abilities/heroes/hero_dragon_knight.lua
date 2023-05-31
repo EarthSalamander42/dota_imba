@@ -737,7 +737,6 @@ modifier_imba_elder_dragon_form_debuff = class({})
 
 function modifier_imba_elder_dragon_form_debuff:IsHidden() return false end
 function modifier_imba_elder_dragon_form_debuff:IsDebuff() return true end
-function modifier_imba_elder_dragon_form_debuff:IsHidden() return false end
 function modifier_imba_elder_dragon_form_debuff:IsPurgable() return false end
 
 function modifier_imba_elder_dragon_form_debuff:DeclareFunctions()

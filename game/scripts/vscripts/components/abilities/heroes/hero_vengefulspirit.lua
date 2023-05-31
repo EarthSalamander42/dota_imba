@@ -287,7 +287,7 @@ function imba_vengefulspirit_magic_missile:OnSpellStart( params , reduce_pct, ta
 			index = ix
 		else
 			index = DoUniqueString("projectile")
-			proj_index = "projectile_" .. index
+			local proj_index = "projectile_" .. index
 			-- Finished traveling counter
 			self[index] = 0
 			-- Already hit targets
@@ -1174,7 +1174,7 @@ end
 
 function imba_vengefulspirit_nether_swap:CastTalentMeteor(target)
 	local caster = self:GetCaster()
-	projectile =
+	local projectile =
 		{
 			Target 				= target,
 			Source 				= caster,

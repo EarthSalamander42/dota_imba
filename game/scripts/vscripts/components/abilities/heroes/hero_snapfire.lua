@@ -1218,7 +1218,7 @@ end
 --------------------------------------------------------------------------------
 -- Interval Effects
 function modifier_imba_snapfire_mortimer_kisses:OnIntervalThink()
-	self:CreateBlob(kv)
+	self:CreateBlob()
 end
 
 function modifier_imba_snapfire_mortimer_kisses:CreateBlob(kv)

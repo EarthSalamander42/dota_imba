@@ -389,8 +389,9 @@ function imba_zuus_lightning_bolt:OnSpellStart()
 		local target 		= self:GetCursorTarget()
 		local target_point 	= self:GetCursorPosition()
 
+		local reduced_magic_resistance
 		if caster:HasAbility("imba_zuus_static_field") then
-			local reduced_magic_resistance = caster:FindAbilityByName("imba_zuus_static_field"):GetSpecialValueFor("reduced_magic_resistance")
+			reduced_magic_resistance = caster:FindAbilityByName("imba_zuus_static_field"):GetSpecialValueFor("reduced_magic_resistance")
 			if self:GetCaster():HasTalent("special_bonus_imba_zuus_3") then 
 				reduced_magic_resistance = reduced_magic_resistance + caster:FindTalentValue("special_bonus_imba_zuus_3", "reduced_magic_resistance")
 			end
@@ -477,9 +478,8 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 				FIND_CLOSEST, 
 				false
 			)
-			
-			local closest = radius
-			for i,unit in ipairs(nearby_enemy_units) do
+
+			for _, unit in ipairs(nearby_enemy_units) do
 				if not unit:IsMagicImmune() or pierce_spellimmunity then 
 					-- First unit is the closest
 					target = unit
@@ -1048,7 +1048,7 @@ end
 ----------------------------------------------
 --				Nimbus Teleport				--
 ----------------------------------------------
-LinkLuaModifier("modifier_imba_ball_lightning", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_ball_lightning", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_zuus_nimbus_z", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_zuus_nimbus_zap = class({})
@@ -1082,15 +1082,16 @@ end
 function imba_zuus_nimbus_zap:OnSpellStart() 
 	if IsServer() then
 		local target_point 	= self:GetCursorPosition()
-		
+		local target = self:GetCursorTarget()
+
 		local caster_loc 	= GetGroundPosition(self:GetCaster():GetAbsOrigin(), self:GetCaster())
-		local target_loc	= nil
+		local target_loc
 		local distance 		= math.huge
-		
-		if target ~= nil then
+
+		if target then
 			target_point = target:GetAbsOrigin()
-		end		
-			
+		end
+
 		local nimbus_ability 	= self:GetCaster():FindAbilityByName("imba_zuus_cloud")
 		self.nimbus = nimbus_ability.zuus_nimbus_unit
 
@@ -1135,7 +1136,7 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 		self:GetCaster():EmitSound("Hero_StormSpirit.BallLightning")
 		self:GetCaster():EmitSound("Hero_StormSpirit.BallLightning.Loop")
 		
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_ball_lightning", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_ball_lightning", {})
 		self.nimbus_z = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_nimbus_z", {})
 
 		-- print("nimbus location", target_loc, caster_loc, max_height, add_height)
@@ -1171,7 +1172,7 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 		self.projectileID = ProjectileManager:CreateLinearProjectile(projectile)
 
 		-- Add Motion-Controller Modifier
-		--self.zap_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_ball_lightning", {})
+		--self.zap_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_ball_lightning", {})
 		-- StartAnimation(self:GetCaster(), {duration=10.0, activity=ACT_DOTA_OVERRIDE_ABILITY_4, rate=1.0})		
 	end
 end
@@ -1180,7 +1181,7 @@ function imba_zuus_nimbus_zap:OnProjectileThink_ExtraData(location, ExtraData)
 	-- Move the caster as long as he has not reached the distance he wants to go to, and he still has enough mana
 	-- When cloud is killed before we get to it...
 	if self.nimbus_z:IsNull() then 
-		self:GetCaster():RemoveModifierByName("modifier_imba_ball_lightning")
+		self:GetCaster():RemoveModifierByName("modifier_imba_zuus_ball_lightning")
 		ResolveNPCPositions(self:GetCaster():GetAbsOrigin(), 128)
 		return
 	end
@@ -1212,7 +1213,7 @@ function imba_zuus_nimbus_zap:OnProjectileThink_ExtraData(location, ExtraData)
 		
 		-- Get rid of stuff
 		self:GetCaster():StopSound("Hero_StormSpirit.BallLightning.Loop")
-		self:GetCaster():RemoveModifierByName("modifier_imba_ball_lightning")
+		self:GetCaster():RemoveModifierByName("modifier_imba_zuus_ball_lightning")
 		ProjectileManager:DestroyLinearProjectile(self.projectileID)
 	end
 end
@@ -1236,21 +1237,21 @@ end
 ----------------------------------------------------------
 --				Nimbus teleport modifier  				--
 ----------------------------------------------------------
-modifier_imba_ball_lightning = modifier_imba_ball_lightning or class({})
-function modifier_imba_ball_lightning:IsDebuff() 	return false end
-function modifier_imba_ball_lightning:IsHidden() 	return false end
-function modifier_imba_ball_lightning:IsPurgable() return false end
+modifier_imba_zuus_ball_lightning = modifier_imba_zuus_ball_lightning or class({})
+function modifier_imba_zuus_ball_lightning:IsDebuff() 	return false end
+function modifier_imba_zuus_ball_lightning:IsHidden() 	return false end
+function modifier_imba_zuus_ball_lightning:IsPurgable() return false end
 
-function modifier_imba_ball_lightning:GetEffectName()
+function modifier_imba_zuus_ball_lightning:GetEffectName()
 	return "particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
 end
 
-function modifier_imba_ball_lightning:GetEffectAttachType()
+function modifier_imba_zuus_ball_lightning:GetEffectAttachType()
 	-- Yep, this is a thing.
 	return PATTACH_ROOTBONE_FOLLOW
 end
 
-function modifier_imba_ball_lightning:DeclareFunctions()
+function modifier_imba_zuus_ball_lightning:DeclareFunctions()
 	local funcs	=	{
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
@@ -1259,19 +1260,19 @@ function modifier_imba_ball_lightning:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_ball_lightning:GetAbsoluteNoDamagePhysical()
+function modifier_imba_zuus_ball_lightning:GetAbsoluteNoDamagePhysical()
 	return 1
 end
 
-function modifier_imba_ball_lightning:GetAbsoluteNoDamageMagical()
+function modifier_imba_zuus_ball_lightning:GetAbsoluteNoDamageMagical()
 	return 1
 end
 
-function modifier_imba_ball_lightning:GetAbsoluteNoDamagePure()
+function modifier_imba_zuus_ball_lightning:GetAbsoluteNoDamagePure()
 	return 1
 end
 
-function modifier_imba_ball_lightning:OnRemoved()
+function modifier_imba_zuus_ball_lightning:OnRemoved()
 	if IsServer() then
 		self:GetCaster():AddNewModifier(nil, nil, "modifier_imba_zuus_on_nimbus", {})
 	end
@@ -1454,7 +1455,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 		
 		if thundergods_focus_stacks >= self:GetSpecialValueFor("stacks_to_awaken") then
 			ScreenShake(caster:GetAbsOrigin(), 50, 1, 1.0, 1000, 0, true)
-			caster:AddNewModifier(caster, self, "modifier_imba_zuus_thundergods_awakening", {duration = min(thundergods_focus_stacks * 3, 42)})
+			caster:AddNewModifier(caster, self, "modifier_imba_zuus_thundergods_awakening", {duration = math.min(thundergods_focus_stacks * 3, 42)})
 		end
 	end
 end

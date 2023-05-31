@@ -798,7 +798,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 			knockback_modifier:Destroy()
 		end
 		
-		knockback_properties = {
+		local knockback_properties = {
 			 center_x 			= parent_loc.x,
 			 center_y 			= parent_loc.y,
 			 center_z 			= parent_loc.z,
@@ -825,7 +825,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 		ability 		= self
 	}
 
-	damage_dealt = ApplyDamage(damageTable)
+	ApplyDamage(damageTable)
 	
 	-- IMBAfication: Power Forward
 	parent:AddNewModifier(parent, self, "modifier_imba_spirit_breaker_greater_bash_speed", {duration = self:GetSpecialValueFor("movespeed_duration")})
@@ -1082,7 +1082,7 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 		ability 		= self
 	}
 		
-	damage_dealt = ApplyDamage(damageTable)
+	ApplyDamage(damageTable)
 
 	-- if self:GetCaster():HasScepter() then
 		-- for _, enemy in pairs(enemies) do
@@ -1100,7 +1100,7 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 					-- ability 		= self
 				-- }
 				
-				-- damage_dealt = ApplyDamage(damageTable)
+				-- ApplyDamage(damageTable)
 			-- end
 		-- end
 	-- end

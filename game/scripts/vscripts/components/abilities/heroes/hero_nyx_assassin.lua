@@ -237,7 +237,8 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 				suffering_damage = suffering_damage * damage_repeat_pct * 0.01
 
 				-- Deal Suffering damage
-				local damageTable = {victim = target,
+				local damageTable = {
+					victim = target,
 					attacker = caster,
 					damage = suffering_damage,
 					damage_type = DAMAGE_TYPE_PURE,
@@ -250,7 +251,8 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 			end
 
 			-- Deal base damage
-			damageTable = {victim = target,
+			local damageTable = {
+				victim = target,
 				attacker = caster,
 				damage = damage,
 				damage_type = DAMAGE_TYPE_MAGICAL,
@@ -620,7 +622,7 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 	local damage = actual_mana_burned * mana_burn_damage_pct * 0.01
 
 	-- Apply damage
-	damageTable = {
+	local damageTable = {
 		victim = target,
 		attacker = caster,
 		damage = damage,
@@ -817,7 +819,7 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		end
 
 		-- Get target's current mana
-		local target_current_mana = self.parent:GetMana()
+		--local target_current_mana = self.parent:GetMana()
 
 		-- Play explosion sound
 		EmitSoundOn(self.sound_explosion, self.parent)
@@ -837,7 +839,8 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		--local damage = (self.starting_target_mana - target_current_mana) * self.parasite_mana_as_damage_pct * 0.01
 		local damage = self.parasite_charged_mana * self.parasite_mana_as_damage_pct * 0.01
 
-		damageTable = {victim = self.parent,
+		local damageTable = {
+			victim = self.parent,
 			attacker = self.caster,
 			damage = damage,
 			damage_type = DAMAGE_TYPE_MAGICAL,
@@ -979,9 +982,9 @@ function modifier_imba_spiked_carapace:OnCreated()
 		self.modifier_burrowed = "modifier_nyx_assassin_burrow"
 
 		-- Yes, i know. If you find another way to send a particle name clientside for the status effect i'll take it.
-		if Battlepass and BATTLEPASS_NYX_ASSASSIN and Battlepass:GetRewardUnlocked(self.caster:GetPlayerID()) >= BATTLEPASS_NYX_ASSASSIN["nyx_assassin_immortal"] then
-			self:SetStackCount(1)
-		end
+		--if Battlepass and BATTLEPASS_NYX_ASSASSIN and Battlepass:GetRewardUnlocked(self.caster:GetPlayerID()) >= BATTLEPASS_NYX_ASSASSIN["nyx_assassin_immortal"] then
+			--self:SetStackCount(1)
+		--end
 
 		-- Ability specials
 		self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")

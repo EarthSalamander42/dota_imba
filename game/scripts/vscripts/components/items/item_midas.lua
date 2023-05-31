@@ -21,10 +21,6 @@
 item_imba_hand_of_midas = class({})
 LinkLuaModifier("modifier_item_imba_hand_of_midas", "components/items/item_midas", LUA_MODIFIER_MOTION_NONE)
 
-function item_imba_hand_of_midas:GetAbilityTextureName()
-	return "imba_hand_of_midas"
-end
-
 function item_imba_hand_of_midas:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -154,7 +150,7 @@ end
 
 modifier_item_imba_hand_of_midas = class({})
 
-function modifier_item_imba_hand_of_midas:IsHidden()			return true end
+function modifier_item_imba_hand_of_midas:IsHidden()		return true end
 function modifier_item_imba_hand_of_midas:IsPurgable()		return false end
 function modifier_item_imba_hand_of_midas:RemoveOnDeath()	return false end
 function modifier_item_imba_hand_of_midas:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
@@ -172,9 +168,3 @@ function modifier_item_imba_hand_of_midas:GetModifierAttackSpeedBonus_Constant()
 
 	return bonus_attack_speed
 end
-
-function modifier_item_imba_hand_of_midas:IsHidden()
-	return true
-end
-
-function modifier_item_imba_hand_of_midas:RemoveOnDeath()	return false end

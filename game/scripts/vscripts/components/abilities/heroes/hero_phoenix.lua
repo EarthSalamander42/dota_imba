@@ -353,16 +353,10 @@ end
 function modifier_imba_phoenix_icarus_dive_slow_debuff:IsStunDebuff() 		return false end
 function modifier_imba_phoenix_icarus_dive_slow_debuff:RemoveOnDeath() 		return true  end
 
-function modifier_imba_phoenix_icarus_dive_slow_debuff:OnCreated()
-	self.slow_movement_speed_pct	= self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") * (-1)
-end
-
 function modifier_imba_phoenix_icarus_dive_slow_debuff:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:GetTexture()
@@ -377,6 +371,7 @@ function modifier_imba_phoenix_icarus_dive_slow_debuff:GetModifierMoveSpeedBonus
 function modifier_imba_phoenix_icarus_dive_slow_debuff:OnCreated()
 	self.burn_tick_interval	= self:GetAbility():GetSpecialValueFor("burn_tick_interval")
 	self.damage_per_second	= self:GetAbility():GetSpecialValueFor("damage_per_second")
+	self.slow_movement_speed_pct = self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") * (-1)
 
 	if not IsServer() then
 		return
@@ -398,7 +393,7 @@ function modifier_imba_phoenix_icarus_dive_slow_debuff:OnIntervalThink()
 	local damageTable = {
 		victim = self:GetParent(),
 		attacker = self:GetCaster(),
-		damage = self.damage_per_second * ( self.burn_tick_interval / 1.0 ),
+		damage = self.damage_per_second * self.burn_tick_interval,
 		damage_type = DAMAGE_TYPE_MAGICAL,
 		ability = self:GetAbility(),
 	}
@@ -783,7 +778,7 @@ function imba_phoenix_launch_fire_spirit:OnProjectileHit( hTarget, vLocation)
 	end
 	-- Particles and sound
 	local DummyUnit = CreateUnitByName("npc_dummy_unit",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", {duration = 0.1})
+	DummyUnit:AddNewModifier(caster, self, "modifier_kill", {duration = 0.1})
 	local pfx_explosion = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(pfx_explosion, 0, location)
 	ParticleManager:ReleaseParticleIndex(pfx_explosion)
@@ -1062,11 +1057,11 @@ function imba_phoenix_sun_ray:OnSpellStart()
 
 	-- Create particle FX
 	local particleName = "particles/units/heroes/hero_phoenix/phoenix_sunray.vpcf"
-	local pfx = ParticleManager:CreateParticle( particleName, PATTACH_WORLDORIGIN, nil )
+	local pfx = ParticleManager:CreateParticle( particleName, PATTACH_WORLDORIGIN, caster )
 	local attach_point = caster:ScriptLookupAttachment( "attach_head" )
 	-- Attach a loop sound to the endcap
 	local endcapSoundName = "Hero_Phoenix.SunRay.Beam"
-	StartSoundEvent( endcapSoundName, endcap )
+	StartSoundEvent( endcapSoundName, caster )
 	StartSoundEvent("Hero_Phoenix.SunRay.Cast", caster)
 
 	--
@@ -1104,9 +1099,9 @@ function imba_phoenix_sun_ray:OnSpellStart()
 			--  Destroy FXs and the thinkers.
 			if not caster:HasModifier( modifierCasterName ) then
 				ParticleManager:DestroyParticle( pfx, false )
-				StopSoundEvent( endcapSoundName, endcap )
+				StopSoundEvent( endcapSoundName, caster )
 				caster:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
-				return nil
+				return
 			end
 
 			-- Cut Trees
@@ -2021,24 +2016,24 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnIntervalThink()
 	end
 
 	local attach_point = egg:ScriptLookupAttachment( "attach_hitloc" )
-	local info =
-		{
-			Target = target,
-			Source = caster,
-			Ability = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"),
-			EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
-			iMoveSpeed = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("spirit_speed"),
-			vSourceLoc= egg:GetAttachmentOrigin(attach_point),				-- Optional (HOW)
-			bDrawsOnMinimap = false,						  -- Optional
-			bDodgeable = true,								-- Optional
-			bIsAttack = false,								-- Optional
-			bVisibleToEnemies = true,						 -- Optional
-			bReplaceExisting = false,						 -- Optional
-			flExpireTime = GameRules:GetGameTime() + 10,	  -- Optional but recommended
-			bProvidesVision = false,						   -- Optional
-			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-		}
-	projectile = ProjectileManager:CreateTrackingProjectile(info)
+	local info = {
+		Target = target,
+		Source = caster,
+		Ability = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"),
+		EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
+		iMoveSpeed = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("spirit_speed"),
+		vSourceLoc = egg:GetAttachmentOrigin(attach_point),				-- Optional (HOW)
+		bDrawsOnMinimap = false,						  -- Optional
+		bDodgeable = true,								-- Optional
+		bIsAttack = false,								-- Optional
+		bVisibleToEnemies = true,						 -- Optional
+		bReplaceExisting = false,						 -- Optional
+		flExpireTime = GameRules:GetGameTime() + 10,	  -- Optional but recommended
+		bProvidesVision = false,						   -- Optional
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+	}
+	
+	ProjectileManager:CreateTrackingProjectile(info)
 	EmitSoundOn("Hero_Phoenix.FireSpirits.Launch", caster)
 
 	self:DecrementStackCount()
@@ -2061,7 +2056,7 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnProjectileHit( hTarget, 
 	end
 	-- Particles and sound
 	local DummyUnit = CreateUnitByName("npc_dummy_unit",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", {duration = 0.1})
+	DummyUnit:AddNewModifier(caster, self:GetAbility(), "modifier_kill", {duration = 0.1})
 	local pfx_explosion = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(pfx_explosion, 0, location)
 	ParticleManager:ReleaseParticleIndex(pfx_explosion)
@@ -2472,7 +2467,6 @@ function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath()
 		return true
 	end
 end
-function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive:AllowIllusionDuplicate() 	return true end
 
 function modifier_imba_phoenix_supernova_scepter_passive:DeclareFunctions()

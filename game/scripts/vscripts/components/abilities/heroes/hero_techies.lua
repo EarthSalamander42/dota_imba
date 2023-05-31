@@ -106,7 +106,7 @@ function imba_techies_land_mines:GetManaCost(level)
 	local mana_increase_per_stack = self:GetSpecialValueFor("mana_increase_per_stack")
 
 	-- Find stack count
-	stacks = caster:GetModifierStackCount(modifier_charges, caster)
+	local stacks = caster:GetModifierStackCount(modifier_charges, caster)
 
 	local mana_cost = initial_mana_cost + mana_increase_per_stack * stacks
 	return mana_cost

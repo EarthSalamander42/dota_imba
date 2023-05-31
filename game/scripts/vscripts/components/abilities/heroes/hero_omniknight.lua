@@ -809,12 +809,13 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
 			target:AddNewModifier(self.caster, self.ability, self.modifier_nodmg, {duration = 0.1})
 
 			-- Damage the target with pure light powa
-			local damageTable = {victim = target,
-								 attacker = self.caster, 
-								 damage = damage,
-								 damage_type = DAMAGE_TYPE_PURE,
-								 ability = ability
-								}
+			local damageTable = {
+				victim = target,
+				attacker = self.caster, 
+				damage = damage,
+				damage_type = DAMAGE_TYPE_PURE,
+				ability = self.ability
+			}
 			
 			ApplyDamage(damageTable)  
 			
@@ -1102,14 +1103,15 @@ function modifier_imba_guardian_angel_shield:OnTakeDamage(keys)
 				-- Deal excess damage to the target
 				local excess_damage = damage - self.shield_health
 
-				local damageTable = {victim = self.parent,
-									 attacker = attacker, 
-									 damage = damage,
-									 damage_type = DAMAGE_TYPE_PURE,
-									 ability = ability
-									}
-		
-				ApplyDamage(damageTable)                  
+				local damageTable = {
+					victim = self.parent,
+					attacker = attacker,
+					damage = damage,
+					damage_type = DAMAGE_TYPE_PURE,
+					ability = self.ability
+				}
+
+				ApplyDamage(damageTable)
 
 			else
 				-- Shield is not broken. Reduce the shield health

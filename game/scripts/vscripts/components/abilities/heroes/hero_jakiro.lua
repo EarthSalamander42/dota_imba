@@ -824,16 +824,14 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		end)
 
 		-- Create ice path blob
-		particle_name = "particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
-		local pfx_ice_path_blob = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
+		local pfx_ice_path_blob = ParticleManager:CreateParticle( "particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf", PATTACH_WORLDORIGIN, caster )
 		ParticleManager:SetParticleControl( pfx_ice_path_blob, 0, start_pos )
 		ParticleManager:SetParticleControl( pfx_ice_path_blob, 1, end_pos )
 		ParticleManager:SetParticleControl( pfx_ice_path_blob, 2, Vector(path_duration, 0, 0) ) --Shorter duration as it needs to melt
 		self:AddParticle(pfx_ice_path_blob, false, false, -1, false, false)
 		
 		-- Create ice path icicles
-		particle_name = "particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
-		local pfx_icicles = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
+		local pfx_icicles = ParticleManager:CreateParticle( "particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf", PATTACH_WORLDORIGIN, caster )
 		ParticleManager:SetParticleControl( pfx_icicles, 0, start_pos )
 		ParticleManager:SetParticleControl( pfx_icicles, 1, end_pos )
 		ParticleManager:SetParticleControl( pfx_icicles, 2, Vector( path_total_duration, 0, 0 ) )
@@ -854,8 +852,7 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 
 		-- Create ice path flash and apply affect after delay
 		Timers:CreateTimer(path_delay, function()
-			particle_name = "particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
-			local pfx_ice_path_explode = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
+			local pfx_ice_path_explode = ParticleManager:CreateParticle( "particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf", PATTACH_WORLDORIGIN, caster )
 			ParticleManager:SetParticleControl( pfx_ice_path_explode, 0, start_pos )
 			ParticleManager:SetParticleControl( pfx_ice_path_explode, 1, end_pos )
 			ParticleManager:ReleaseParticleIndex( pfx_ice_path_explode )

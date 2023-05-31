@@ -1112,10 +1112,10 @@ function modifier_imba_mars_bulwark:GetModifierPhysical_ConstantBlock( params )
 	-- calculate damage reduction
 	if angle_diff < self.angle_front then
 		reduction = self.reduction_front
-		self:PlayEffects( true, attacker_vector )
+		self:PlayEffects( true )
 	elseif angle_diff < self.angle_side then
 		reduction = self.reduction_side
-		self:PlayEffects( false, attacker_vector )
+		self:PlayEffects( false )
 	end
 
 	local damage_blocked = reduction * params.damage / 100
@@ -1294,7 +1294,6 @@ Shoud be revised:
 ]]
 --------------------------------------------------------------------------------
 imba_mars_arena_of_blood = imba_mars_arena_of_blood or class({})
-LinkLuaModifier( "modifier_imba_mars_arena_of_blood", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_blocker", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_thinker", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_mars_arena_of_blood_wall_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE )
@@ -1354,175 +1353,6 @@ function imba_mars_arena_of_blood:OnProjectileHitHandle( target, location, id )
 
 	local attacker = EntIndexToHScript( data.entindex_source_const )
 	attacker:PerformAttack( target, true, true, true, true, false, false, true )
-end
-
---------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood = class({})
-
---------------------------------------------------------------------------------
--- Classifications
-function modifier_imba_mars_arena_of_blood:IsHidden()
-	return false
-end
-
-function modifier_imba_mars_arena_of_blood:IsDebuff()
-	return false
-end
-
-function modifier_imba_mars_arena_of_blood:IsStunDebuff()
-	return false
-end
-
-function modifier_imba_mars_arena_of_blood:IsPurgable()
-	return true
-end
-
-function modifier_imba_mars_arena_of_blood:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE 
-end
-
---------------------------------------------------------------------------------
--- Initializations
-function modifier_imba_mars_arena_of_blood:OnCreated( kv )
-	if IsServer() then
-		-- Start interval
-		self:StartIntervalThink( self.interval )
-		self:OnIntervalThink()
-	end
-end
-
-function modifier_imba_mars_arena_of_blood:OnRefresh( kv )
-	
-end
-
-function modifier_imba_mars_arena_of_blood:OnRemoved()
-end
-
-function modifier_imba_mars_arena_of_blood:OnDestroy()
-end
-
---------------------------------------------------------------------------------
--- Modifier Effects
-function modifier_imba_mars_arena_of_blood:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
-		MODIFIER_EVENT_ON_ATTACKED,
-	}
-
-	return funcs
-end
-
---------------------------------------------------------------------------------
--- Status Effects
-function modifier_imba_mars_arena_of_blood:CheckState()
-	local state = {
-		[MODIFIER_STATE_INVULNERABLE] = true,
-	}
-
-	return state
-end
-
---------------------------------------------------------------------------------
--- Interval Effects
-function modifier_imba_mars_arena_of_blood:OnIntervalThink()
-end
-
---------------------------------------------------------------------------------
--- Motion Effects
-function modifier_imba_mars_arena_of_blood:UpdateHorizontalMotion( me, dt )
-end
-
-function modifier_imba_mars_arena_of_blood:OnHorizontalMotionInterrupted()
-end
-
---------------------------------------------------------------------------------
--- Aura Effects
-function modifier_imba_mars_arena_of_blood:IsAura()
-	return true
-end
-
-function modifier_imba_mars_arena_of_blood:GetModifierAura()
-	return "modifier_imba_mars_arena_of_blood_effect"
-end
-
-function modifier_imba_mars_arena_of_blood:GetAuraRadius()
-	return self.radius
-end
-
-function modifier_imba_mars_arena_of_blood:GetAuraDuration()
-	return self.radius
-end
-
-function modifier_imba_mars_arena_of_blood:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
-end
-
-function modifier_imba_mars_arena_of_blood:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-end
-
-function modifier_imba_mars_arena_of_blood:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
-end
-
-function modifier_imba_mars_arena_of_blood:GetAuraEntityReject( hEntity )
-	if IsServer() then
-		
-	end
-
-	return false
-end
-
---------------------------------------------------------------------------------
--- Graphics & Animations
-function modifier_imba_mars_arena_of_blood:GetEffectName()
-	return "particles/units/heroes/hero_heroname/heroname_ability.vpcf"
-end
-
-function modifier_imba_mars_arena_of_blood:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-
-function modifier_imba_mars_arena_of_blood:GetStatusEffectName()
-	return "status/effect/here.vpcf"
-end
-
-function modifier_imba_mars_arena_of_blood:PlayEffects()
-	-- Get Resources
-	local particle_cast = "particles/units/heroes/hero_heroname/heroname_ability.vpcf"
-	local sound_cast = "string"
-
-	-- Get Data
-
-	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_NAME, hOwner )
-	ParticleManager:SetParticleControl( effect_cast, iControlPoint, vControlVector )
-	ParticleManager:SetParticleControlEnt(
-		effect_cast,
-		iControlPoint,
-		hTarget,
-		PATTACH_NAME,
-		"attach_name",
-		vOrigin, -- unknown
-		bool -- unknown, true
-	)
-	ParticleManager:SetParticleControlForward( effect_cast, iControlPoint, vForward )
-	SetParticleControlOrientation( effect_cast, iControlPoint, vForward, vRight, vUp )
-	ParticleManager:ReleaseParticleIndex( effect_cast )
-
-	-- buff particle
-	self:AddParticle(
-		effect_cast,
-		false, -- bDestroyImmediately
-		false, -- bStatusEffect
-		-1, -- iPriority
-		false, -- bHeroEffect
-		false -- bOverheadEffect
-	)
-
-	-- Create Sound
-	EmitSoundOnLocationWithCaster( vTargetPosition, sound_location, self:GetCaster() )
-	EmitSoundOn( sound_target, target )
 end
 
 --------------------------------------------------------------------------------

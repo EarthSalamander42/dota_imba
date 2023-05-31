@@ -730,13 +730,13 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 					self.isActive = true
 
 					local nothl_duration = ability:GetSpecialValueFor("nothl_protection_duration")
-					parent:AddNewModifier(caster, nil , "modifier_imba_dazzle_nothl_protection_particle", { duration = nothl_duration})
+					parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_nothl_protection_particle", { duration = nothl_duration})
 
 					Timers:CreateTimer(nothl_duration, function()
 						if self:IsNull() then return end
 					
 						-- Checking if alive for cases of death that don't care for Nothl Protection
-						if self:GetParent():IsAlive() and self.shallowDamage > 0 and self:GetParent():HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
+						if parent:IsAlive() and self.shallowDamage > 0 and parent:HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
 							if self.shallowDamageInstances > 0 then
 								local modifier = parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_post_shallow_grave_buff", {duration = ability:GetSpecialValueFor("post_grave_duration")})
 								modifier:SetStackCount(self.shallowDamageInstances)

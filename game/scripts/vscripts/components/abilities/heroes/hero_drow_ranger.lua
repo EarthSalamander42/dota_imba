@@ -58,8 +58,6 @@ end
 -- Frost arrows thinker modifier
 modifier_imba_frost_arrows_thinker = class({})
 
-
-
 function modifier_imba_frost_arrows_thinker:DeclareFunctions()
 	return {
 		MODIFIER_EVENT_ON_ATTACK_START,
@@ -1828,7 +1826,7 @@ function modifier_imba_markmanship_aura:GetAuraEntityReject(target)
 	if target:IsHero() and not target:IsIllusion() then
 		return false
 	end
-	return true
+	return not self:GetAbility() or not self:GetAbility():IsTrained()
 end
 
 function modifier_imba_markmanship_aura:GetAuraRadius()
@@ -1875,10 +1873,6 @@ end
 
 function modifier_imba_markmanship_aura:IsPurgable()
 	return false
-end
-
-function modifier_imba_markmanship_aura:GetAuraEntityReject(target)
-	return not self:GetAbility() or not self:GetAbility():IsTrained()
 end
 
 -- Markmanship talent aura modifier for allies

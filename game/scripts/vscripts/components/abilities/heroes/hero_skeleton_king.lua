@@ -195,7 +195,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 	target:AddNewModifier(caster, ability, modifier_debuff, {duration = debuff_duration * (1 - target:GetStatusResistance())})
 
 	-- #7 Talent: Wraithfire Blast now summons Wraiths on all targets hit
-	if caster:HasTalent("special_bonus_imba_skeleton_king_7") and not bTalent then
+	if caster:HasTalent("special_bonus_imba_skeleton_king_7") and not extra_data.bTalent then
 		local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
 		local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
 		local summon_point = caster:GetAbsOrigin() + direction * distance - 100

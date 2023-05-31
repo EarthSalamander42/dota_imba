@@ -250,7 +250,7 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 	self.counter = self.counter + 1
 
 	-- Slow handling
-	if math.mod(self.counter,2) == 0 then
+	if self.counter % 2 == 0 then
 		if self.slow > self.slow_decrease then
 			self.slow = self.slow - self.slow_decrease
 		else
@@ -263,7 +263,7 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 		local parent = self:GetParent()
 		local ability = self:GetAbility()
 		-- Damage handling
-		if math.mod(self.counter,self.damage_interval) == 0 then
+		if self.counter % self.damage_interval == 0 then
 			ApplyDamage({victim = parent, attacker = self:GetCaster(), ability = ability, damage = self.damage_per_interval, damage_type = ability:GetAbilityDamageType()})
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, parent, self.damage_per_interval, nil)
 
@@ -686,7 +686,7 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 			damage = damage / projectiles
 		end
 
-		projectile =
+		local projectile =
 			{
 				Ability				= self,
 				EffectName			= "particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf",
@@ -712,10 +712,10 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 		-- Talent #2 extra (invisible) projectiles
 		if projectiles > 1 then
 			projectile.EffectName = ""
-			projectiles = projectiles -1
+			projectiles = projectiles - 1
 			Timers:CreateTimer(0.06, function()
 				ProjectileManager:CreateLinearProjectile(projectile)
-				projectiles = projectiles -1
+				projectiles = projectiles - 1
 				if projectiles > 0 then
 					return 0.06
 				end

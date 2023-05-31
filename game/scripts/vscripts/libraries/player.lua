@@ -1394,7 +1394,7 @@ function CDOTA_BaseNPC:Custom_IsUnderForcedMovement()
 		["modifier_imba_spirit_breaker_charge_of_darkness_clothesline"]	= true,
 		["modifier_imba_spirit_breaker_charge_of_darkness_taxi"]		= true,
 		["modifier_storm_spirit_ball_lightning"]				= true,
-		["modifier_imba_ball_lightning"]						= true,
+		["modifier_imba_storm_spirit_ball_lightning"]						= true,
 		["modifier_shredder_timber_chain"]						= true,
 		["modifier_imba_timbersaw_timber_chain"]				= true	
 	}

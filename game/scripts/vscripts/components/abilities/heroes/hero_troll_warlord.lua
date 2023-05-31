@@ -857,7 +857,7 @@ function modifier_imba_battle_trance:OnCreated()
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
 	self.bonus_as = ability:GetTalentSpecialValueFor("bonus_as")
-	self.bonus_bat = min(ability:GetTalentSpecialValueFor("bonus_bat"), parent:GetBaseAttackTime())
+	self.bonus_bat = math.min(ability:GetTalentSpecialValueFor("bonus_bat"), parent:GetBaseAttackTime())
 	if parent:IsRealHero() and IsServer() then
 		EmitSoundOnClient("Hero_TrollWarlord.BattleTrance.Cast.Team", parent:GetPlayerOwner())
 		if self.sound == "Imba.TrollAK47" then
@@ -922,7 +922,7 @@ function modifier_imba_battle_trance_720:OnCreated()
 	self.movement_speed	= self.ability:GetSpecialValueFor("movement_speed")
 	self.range			= self.ability:GetSpecialValueFor("range")
 	
-	self.bonus_bat 		= min(self.ability:GetTalentSpecialValueFor("bonus_bat"), self.parent:GetBaseAttackTime())
+	self.bonus_bat 		= math.min(self.ability:GetTalentSpecialValueFor("bonus_bat"), self.parent:GetBaseAttackTime())
 
 	if not IsServer() then return end
 	
@@ -1142,7 +1142,7 @@ modifier_special_bonus_imba_troll_warlord_1		= modifier_special_bonus_imba_troll
 modifier_special_bonus_imba_troll_warlord_2		= modifier_special_bonus_imba_troll_warlord_2 or class({})
 modifier_special_bonus_imba_troll_warlord_4		= modifier_special_bonus_imba_troll_warlord_4 or class({})
 modifier_special_bonus_imba_troll_warlord_5		= modifier_special_bonus_imba_troll_warlord_5 or class({})
-modifier_special_bonus_imba_troll_warlord_8		= modifier_special_bonus_imba_troll_warlord_5 or class({})
+modifier_special_bonus_imba_troll_warlord_8		= modifier_special_bonus_imba_troll_warlord_8 or class({})
 modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade	= modifier_special_bonus_imba_troll_warlord_battle_trance_upgrade or class({})
 
 function modifier_special_bonus_imba_troll_warlord_1:IsHidden() 		return true end

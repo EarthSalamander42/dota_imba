@@ -611,7 +611,7 @@ function imba_wisp_tether_break:OnSpellStart()
 	-- Let's manually add Tether for Morphling so they can use the skill properly (super bootleg)
 	if not self:GetCaster():HasAbility("imba_wisp_tether") then
 		local stolenAbility = self:GetCaster():AddAbility("imba_wisp_tether")
-		stolenAbility:SetLevel(min((self:GetCaster():GetLevel() / 2) - 1, 4))
+		stolenAbility:SetLevel(math.min((self:GetCaster():GetLevel() / 2) - 1, 4))
 		self:GetCaster():SwapAbilities("imba_wisp_tether_break", "imba_wisp_tether", false, true)
 	end
 
@@ -996,7 +996,7 @@ function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, ex
 		damage_table.damage			= explosion_damage
 
 		-- Deal damage to each enemy hero
-		for _,enemy in pairs(nearby_enemy_units) do
+		for _, enemy in pairs(nearby_enemy_units) do
 			if enemy ~= nil then
 				damage_table.victim = enemy
 
@@ -1005,7 +1005,7 @@ function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, ex
 		end
 
 		-- Let's just have another one here for Rubick to "properly" destroy Spirit particles
-		if spirit_pfx_silence ~= nil then
+		if spirit.spirit_pfx_silence ~= nil then
 			ParticleManager:DestroyParticle(spirit.spirit_pfx_silence, true)
 			ParticleManager:ReleaseParticleIndex(spirit.spirit_pfx_silence)
 		end
@@ -1279,7 +1279,7 @@ function imba_wisp_spirits_toggle:OnSpellStart()
 		-- Let's manually add Spirits for Morphling so they can use the skill properly (super bootleg)
 		if not self:GetCaster():HasAbility("imba_wisp_spirits") then
 			local stolenAbility = self:GetCaster():AddAbility("imba_wisp_spirits")
-			stolenAbility:SetLevel(min((self:GetCaster():GetLevel() / 2) - 1, 4))
+			stolenAbility:SetLevel(math.min((self:GetCaster():GetLevel() / 2) - 1, 4))
 			self:GetCaster():SwapAbilities("imba_wisp_spirits_toggle", "imba_wisp_spirits", false, true)
 		end
 	
@@ -1311,10 +1311,6 @@ imba_wisp_swap_spirits = class({})
 
 function imba_wisp_swap_spirits:IsInnateAbility() return true end
 function imba_wisp_swap_spirits:IsStealable() return false end
-
-function imba_wisp_swap_spirits:GetIntrinsicModifierName()
-	return "modifier_imba_wisp_swap_spirits_silence"
-end
 
 function imba_wisp_swap_spirits:GetIntrinsicModifierName()
 	return "modifier_imba_wisp_swap_spirits_silence"

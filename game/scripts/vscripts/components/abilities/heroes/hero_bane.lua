@@ -642,33 +642,34 @@ function imba_bane_brain_sap_723:CastFilterResultTarget(target)
 end
 
 function imba_bane_brain_sap_723:OnSpellStart()
+	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 
 	if not target:TriggerSpellAbsorb(self) then
-		self:GetCaster():EmitSound("Hero_Bane.BrainSap")
+		caster:EmitSound("Hero_Bane.BrainSap")
 		target:EmitSound("Hero_Bane.BrainSap.Target")
 		
-		if self:GetCaster():GetName() == "npc_dota_hero_bane" and RollPercentage(75) then
-			self:GetCaster():EmitSound("bane_bane_ability_brainsap_"..string.format("%02d",RandomInt(1,6)))
+		if caster:GetName() == "npc_dota_hero_bane" and RollPercentage(75) then
+			caster:EmitSound("bane_bane_ability_brainsap_"..string.format("%02d",RandomInt(1,6)))
 		end
 		
-		local sap_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_sap.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-		ParticleManager:SetParticleControlEnt(sap_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+		local sap_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_sap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControlEnt(sap_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(sap_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(sap_particle)
 		
 		local damage_heal	= ApplyDamage({
 			victim      = target,
-			attacker    = self:GetCaster(),
+			attacker    = caster,
 			damage      = self:GetTalentSpecialValueFor("brain_sap_damage"),
 			damage_type = self:GetAbilityDamageType(),
 			ability     = self
 		})
 		
-		self:GetCaster():Heal(damage_heal, self:GetCaster())
+		caster:Heal(damage_heal, self)
 		
 		-- IMBAfication: Addlebrain
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_brain_sap_mana", {duration = self:GetSpecialValueFor("addlebrain_duration") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = self:GetSpecialValueFor("addlebrain_duration") * (1 - target:GetStatusResistance())})
 	end
 end
 

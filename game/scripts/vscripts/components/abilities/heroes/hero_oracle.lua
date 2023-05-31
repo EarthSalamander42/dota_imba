@@ -936,7 +936,7 @@ end
 
 -- "If the target is invulnerable as False Promise expires, the delayed heal and damage wait for it to become vulnerable again."
 -- Since Ball Lightning is coded...differently, this exception needs to be included as well
-function modifier_imba_oracle_false_promise_timer:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_ball_lightning") end
+function modifier_imba_oracle_false_promise_timer:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_storm_spirit_ball_lightning") end
 -- I have no idea how this priority function works
 function modifier_imba_oracle_false_promise_timer:GetPriority()	return MODIFIER_PRIORITY_ULTRA end
 function modifier_imba_oracle_false_promise_timer:IsPurgable()	return false end
@@ -1270,7 +1270,7 @@ end
 -- MODIFIER_IMBA_ORACLE_FALSE_PROMISE_TIMER_ALTER_TARGETS --
 ------------------------------------------------------------
 
-function modifier_imba_oracle_false_promise_timer_alter_targets:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_ball_lightning") end
+function modifier_imba_oracle_false_promise_timer_alter_targets:DestroyOnExpire()	return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_storm_spirit_ball_lightning") end
 function modifier_imba_oracle_false_promise_timer_alter_targets:GetAttributes()		return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_imba_oracle_false_promise_timer_alter_targets:IsHidden()			return self:GetStackCount() <= 0 end
 function modifier_imba_oracle_false_promise_timer_alter_targets:IsPurgable()		return false end

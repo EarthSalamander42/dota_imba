@@ -708,12 +708,6 @@ function modifier_earthshaker_enchant_totem_lua_leap:UpdateVerticalMotion( me, d
 	-- self:GetParent():SetOrigin( GetGroundPosition(self:GetParent():GetOrigin(), nil) + Vector(0, 0, z_axis) )
 end
 
-function modifier_earthshaker_enchant_totem_lua_leap:OnVerticalMotionInterrupted()
-	-- if IsServer() then
-		-- self:Destroy()
-	-- end
-end
-
 function modifier_earthshaker_enchant_totem_lua_leap:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,

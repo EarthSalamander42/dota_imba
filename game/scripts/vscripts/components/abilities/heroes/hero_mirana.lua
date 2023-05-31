@@ -1170,11 +1170,6 @@ function modifier_imba_leap_talent_cast_angle_handler:GetModifierDisableTurning(
 	return 1
 end
 
-function modifier_imba_leap_talent_cast_angle_handler:IsHidden()
-	return false
-end
-
-
 -------------------------------
 --     MOONLIGHT SHADOW      --
 -------------------------------

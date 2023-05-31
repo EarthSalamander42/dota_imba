@@ -554,7 +554,13 @@ function imba_warlock_upheaval:OnSpellStart()
 			local ability_demon = demon:FindAbilityByName("imba_warlock_upheaval")
 			ability_demon:SetLevel(self:GetLevel())
 			ability_demon:SetActivated(true)
-			ExecuteOrderFromTable({ UnitIndex = demon:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = demon:GetAbsOrigin(), AbilityIndex = ability_demon:GetEntityIndex(), Queue = queue})
+			ExecuteOrderFromTable({
+				UnitIndex = demon:GetEntityIndex(),
+				OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
+				Position = demon:GetAbsOrigin(),
+				AbilityIndex = ability_demon:GetEntityIndex(),
+				Queue = false
+			})
 
 			-- Start the demon's idle activity
 			demon:StartGesture(ACT_DOTA_IDLE)
@@ -564,6 +570,7 @@ end
 
 function imba_warlock_upheaval:OnChannelFinish()
 	local caster = self:GetCaster()
+	local ability = self
 	local sound_loop = "Hero_Warlock.Upheaval"
 	local sound_end = "Hero_Warlock.Upheaval.Stop"
 

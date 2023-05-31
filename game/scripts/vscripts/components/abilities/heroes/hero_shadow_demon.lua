@@ -673,7 +673,7 @@ function modifier_imba_soul_catcher_debuff:OnDeath(keys)
 				local new_direction
 
 				for i = 1, self.unleashed_projectile_count do
-					angle = QAngle(0, (i-1) * (rotation_per_projectile), 0)                    
+					local angle = QAngle(0, (i-1) * (rotation_per_projectile), 0)
 					new_direction = RotatePosition(origin_point, angle, direction)
 					shadow_poison_ability_handle:FireShadowPoisonProjectile(origin_point, new_direction, true)
 				end
@@ -1008,15 +1008,17 @@ function modifier_shadow_poison_debuff:OnDestroy()
 	if not self.parent:IsIllusion() and self.parent:IsAlive() then 
 
 		-- Play impact sound
-		EmitSoundOn(self.impact_sound, self.caster)         
-			   
+		EmitSoundOn(self.impact_sound, self.caster)
+
 		-- Calculate damage and deal it
-		damage = self:CalculateShadowPoisonDamage()
-		local damageTable = {victim = self.parent,
-							attacker = self.caster,
-							damage = damage,
-							damage_type = DAMAGE_TYPE_MAGICAL,                        
-							ability = self.ability}
+		local damage = self:CalculateShadowPoisonDamage()
+		local damageTable = {
+			victim = self.parent,
+			attacker = self.caster,
+			damage = damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			ability = self.ability
+		}
 
 		ApplyDamage(damageTable)
 

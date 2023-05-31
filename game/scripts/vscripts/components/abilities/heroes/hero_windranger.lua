@@ -145,7 +145,7 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 		local trees = GridNav:GetAllTreesAroundPoint(target:GetAbsOrigin(), self:GetSpecialValueFor("shackle_distance"), false)
 		
 		for _, tree in pairs(trees) do
-			if not ignore_list[enemy] and math.abs(AngleDiff(target_angle, VectorToAngles(tree:GetAbsOrigin() - target:GetAbsOrigin()).y)) <= self:GetSpecialValueFor("shackle_angle") then
+			if math.abs(AngleDiff(target_angle, VectorToAngles(tree:GetAbsOrigin() - target:GetAbsOrigin()).y)) <= self:GetSpecialValueFor("shackle_angle") then
 				shackleTarget = tree
 				
 				if target.AddNewModifier then

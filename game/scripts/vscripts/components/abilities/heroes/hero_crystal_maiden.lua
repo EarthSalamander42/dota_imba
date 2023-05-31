@@ -1009,18 +1009,26 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 		-- Loop through units in the shard's AoE
 		local units = FindUnitsInRadius(self.caster:GetTeam(), attackPoint, nil, self.explosion_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 
-		for _,v in pairs( units ) do
-			ApplyDamage({victim =  v, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
+		for _, v in pairs( units ) do
+			if not v:IsNull() then
+				ApplyDamage({
+					victim =  v,
+					attacker = self.caster,
+					damage = self.damage,
+					damage_type = DAMAGE_TYPE_MAGICAL,
+					ability = self
+				})
+			end
 		end
 
 		-- Fire effect
-		local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster, caster)
+		local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, self.caster, self.caster)
 		ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
 		ParticleManager:SetParticleControl(fxIndex, 1, attackPoint)
 		ParticleManager:ReleaseParticleIndex(fxIndex)
 
 		-- Fire sound at the center position
-		EmitSoundOnLocationWithCaster(attackPoint, "hero_Crystal.freezingField.explosion", self:GetCaster())
+		EmitSoundOnLocationWithCaster(attackPoint, "hero_Crystal.freezingField.explosion", self.caster)
 	end
 
 end

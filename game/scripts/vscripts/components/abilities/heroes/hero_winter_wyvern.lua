@@ -114,7 +114,7 @@ end
 modifier_imba_winter_wyvern_arctic_burn = class({})
 function modifier_imba_winter_wyvern_arctic_burn:IsHidden() return true end
 function modifier_imba_winter_wyvern_arctic_burn:DeclareFunctions() 
-	decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
@@ -122,8 +122,6 @@ function modifier_imba_winter_wyvern_arctic_burn:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		-- MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_arctic_burn:OnAttackLanded(keys)
@@ -177,11 +175,9 @@ end
 modifier_imba_winter_wyvern_arctic_burn_slow = class({})
 function modifier_imba_winter_wyvern_arctic_burn_slow:IsHidden() return true end
 function modifier_imba_winter_wyvern_arctic_burn_slow:DeclareFunctions() 
-	decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_arctic_burn_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -473,12 +469,10 @@ modifier_imba_winter_wyvern_splinter_blast_slow = class({})
 function modifier_imba_winter_wyvern_splinter_blast_slow:IsHidden() return false end
 function modifier_imba_winter_wyvern_splinter_blast_slow:IsDebuff() return true end
 function modifier_imba_winter_wyvern_splinter_blast_slow:DeclareFunctions() 
-	decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_splinter_blast_slow:OnCreated(keys)
@@ -570,11 +564,9 @@ function modifier_imba_winter_wyvern_cold_embrace:IsHidden() return true end
 function modifier_imba_winter_wyvern_cold_embrace:IsPurgable() return false end
 function modifier_imba_winter_wyvern_cold_embrace:IsDebuff() return false end
 function modifier_imba_winter_wyvern_cold_embrace:DeclareFunctions() 
-	decFuncs = {
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys) 
@@ -681,11 +673,9 @@ end
 modifier_imba_winter_wyvern_cold_embrace_resistance = class({})
 function modifier_imba_winter_wyvern_cold_embrace_resistance:IsHidden() return true end
 function modifier_imba_winter_wyvern_cold_embrace_resistance:DeclareFunctions() 
-	decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_cold_embrace_resistance:GetModifierMagicalResistanceBonus()

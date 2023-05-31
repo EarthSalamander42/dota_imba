@@ -984,8 +984,14 @@ function imba_gyrocopter_gatling_guns:GetIntrinsicModifierName()
 end
 
 function imba_gyrocopter_gatling_guns:OnOwnerSpawned()
-	if self:GetCaster():HasModifier("modifier_imba_gyrocopter_gatling_guns_handler") then
-		self:GetCaster():FindModifierByName("modifier_imba_gyrocopter_gatling_guns_handler"):StartIntervalThink(1)
+	local caster = self:GetCaster()
+
+	if caster:HasModifier("modifier_imba_gyrocopter_gatling_guns_handler") then
+		caster:FindModifierByName("modifier_imba_gyrocopter_gatling_guns_handler"):StartIntervalThink(1)
+	end
+
+	if caster:HasTalent("special_bonus_imba_gyrocopter_gatling_guns_activate") and not caster:HasModifier("modifier_special_bonus_imba_gyrocopter_gatling_guns_activate") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_gyrocopter_gatling_guns_activate"), "modifier_special_bonus_imba_gyrocopter_gatling_guns_activate", {})
 	end
 end
 
@@ -1467,12 +1473,6 @@ end
 function imba_gyrocopter_homing_missile:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_gyrocopter_homing_missile_charges") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_gyrocopter_homing_missile_charges") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_gyrocopter_homing_missile_charges"), "modifier_special_bonus_imba_gyrocopter_homing_missile_charges", {})
-	end
-end
-
-function imba_gyrocopter_gatling_guns:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_gyrocopter_gatling_guns_activate") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_gyrocopter_gatling_guns_activate") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_gyrocopter_gatling_guns_activate"), "modifier_special_bonus_imba_gyrocopter_gatling_guns_activate", {})
 	end
 end
 

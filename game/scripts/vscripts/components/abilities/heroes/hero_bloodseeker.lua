@@ -570,9 +570,9 @@ function modifier_imba_thirst_passive:OnTakeDamage(params)
 			local duration = self:GetAbility():GetTalentSpecialValueFor("atk_buff_duration")
 			local attackList = self:GetCaster():FindAllModifiersByName("modifier_imba_thirst_haste")
 			local confirmTheKill = false
-			for _,modifier in pairs(attackList) do
+			for _, modifier in pairs(attackList) do
 				if modifier.sourceUnit == params.unit then
-					attackerCount = 1
+					local attackerCount = 1
 					if params.attacker == self:GetCaster() then attackerCount = 2 end
 					confirmTheKill = true
 					if modifier:GetStackCount() <= attackerCount then
@@ -587,7 +587,7 @@ function modifier_imba_thirst_passive:OnTakeDamage(params)
 				
 				if modifier then
 					modifier.sourceUnit = params.unit
-					attackerCount = 1
+					local attackerCount = 1
 					if params.attacker == self:GetCaster() then attackerCount = 2 end
 					if modifier:GetStackCount() <= attackerCount then
 						modifier:SetStackCount(attackerCount)

@@ -808,7 +808,7 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnIntervalThink()
 		end
 
 		-- Creates the post-ability sound effect
-		EmitSoundOnLocationWithCaster(random_vector, "Ability.Torrent", caster)
+		EmitSoundOnLocationWithCaster(random_vector, "Ability.Torrent", self.caster)
 
 		-- Draws the particle
 		local particle = "particles/hero/kunkka/torrent_splash.vpcf"

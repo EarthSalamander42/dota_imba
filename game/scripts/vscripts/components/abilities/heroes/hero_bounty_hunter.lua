@@ -531,13 +531,13 @@ function imba_bounty_hunter_jinada:ShadowJaunt(caster, ability, target)
 	-- If target has Linken's sphere, do nothing
 	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return nil
+			return
 		end
 	end
 
 	-- Teleport caster near the target
 	local blink_direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
-	target_pos = target:GetAbsOrigin() + blink_direction * (-50)
+	local target_pos = target:GetAbsOrigin() + blink_direction * (-50)
 	FindClearSpaceForUnit(caster, target_pos, false)
 
 	-- Set caster's forward vector toward the enemy

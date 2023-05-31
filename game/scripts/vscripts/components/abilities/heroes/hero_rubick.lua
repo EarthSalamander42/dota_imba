@@ -1203,8 +1203,6 @@ imba_rubick_spellsteal.is_stealing_spell = false
 
 -- fixes spell stolen not removed and unable to cast spell steal if dying before projectile hits rubick
 function imba_rubick_spellsteal:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	self:ForgetSpell()
 	self.is_stealing_spell = false
 end
@@ -1248,7 +1246,7 @@ function imba_rubick_spellsteal:OnSpellStart()
 		bReplaceExisting = false,                         -- Optional
 	}
 
-	projectile = ProjectileManager:CreateTrackingProjectile(info)
+	ProjectileManager:CreateTrackingProjectile(info)
 
 	-- Play effects
 	local sound_cast = "Hero_Rubick.SpellSteal.Cast"
@@ -1307,7 +1305,7 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 
 	-- loop thru poop thru talent table
 	for i=1,8 do 
-		talent = hHero:FindAbilityByName("special_bonus_imba_"..hero_name.."_"..i)
+		local talent = hHero:FindAbilityByName("special_bonus_imba_"..hero_name.."_"..i)
 		if talent and talent:IsTrained() then
 			for k,v in pairs(talent:GetAbilityKeyValues()) do
 				if k == "LinkedAbility" then 
@@ -1569,29 +1567,6 @@ function imba_rubick_spellsteal:ForgetSpell()
 		self.CurrentSecondarySpell = nil
 		self.CurrentSpellOwner = nil
 	end
-end
-
---------------------------------------------------------------------------------
--- Ability Considerations
---------------------------------------------------------------------------------
-function imba_rubick_spellsteal:AbilityConsiderations()
-	-- Scepter
-	local bScepter = caster:HasScepter()
-
-	-- Linken & Lotus
-	local bBlocked = target:TriggerSpellAbsorb( self )
-
-	-- Break
-	local bBroken = caster:PassivesDisabled()
-
-	-- Advanced Status
-	local bInvulnerable = target:IsInvulnerable()
-	local bInvisible = target:IsInvisible()
-	local bHexed = target:IsHexed()
-	local bMagicImmune = target:IsMagicImmune()
-
-	-- Illusion Copy
-	local bIllusion = target:IsIllusion()
 end
 
 -------------------------------------------
@@ -1895,16 +1870,12 @@ function modifier_special_bonus_imba_rubick_remnants_of_null_field_negative:GetM
 end
 
 function imba_rubick_fade_bolt:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_rubick_fade_bolt_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_rubick_fade_bolt_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_rubick_fade_bolt_cooldown"), "modifier_special_bonus_imba_rubick_fade_bolt_cooldown", {})
 	end
 end
 
 function imba_rubick_arcane_supremacy:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_rubick_remnants_of_null_field") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_rubick_remnants_of_null_field"), "modifier_special_bonus_imba_rubick_remnants_of_null_field", {})
 	end

@@ -844,7 +844,7 @@ function vardor_graceful_jump:CastFilterResultLocation(location)
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local cast_range = self:GetCastRange(location, target)
+	local cast_range = self:GetCastRange(location, nil)
 
 	-- Ability specials
 	local yari_search_radius = ability:GetSpecialValueFor("yari_search_radius")
@@ -1197,8 +1197,6 @@ modifier_vardor_mental_thrusts_debuff = modifier_vardor_mental_thrusts_debuff or
 
 function modifier_vardor_mental_thrusts_debuff:IsHidden() return false end
 function modifier_vardor_mental_thrusts_debuff:IsPurgable() return true end
-function modifier_vardor_mental_thrusts_debuff:IsHidden() return false end
-
 function modifier_vardor_mental_thrusts_debuff:GetTexture()
 	return "vardor/vardor_mental_thrusts"
 end
@@ -1482,6 +1480,8 @@ function modifier_special_bonus_vardor_bonus_yari:OnCreated()
 end
 
 function modifier_special_bonus_vardor_bonus_yari:OnIntervalThink()
+	local caster = self:GetCaster()
+	local charges_modifier_name = "modifier_vardor_piercing_shot_charges"
 	if caster:HasModifier(charges_modifier_name) then
 		local modifier = caster:FindModifierByName(charges_modifier_name)
 		if modifier then

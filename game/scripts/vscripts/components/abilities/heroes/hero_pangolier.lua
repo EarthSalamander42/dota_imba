@@ -166,6 +166,11 @@ end
 
 --pangolier is stunned during the dash
 function modifier_imba_swashbuckle_dash:CheckState()
+	local state = {
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
+	}
 	--Talent #2: Pangolier is invulnerable while dashing
 	if self:GetCaster():HasTalent("special_bonus_imba_pangolier_2") then
 		state = {
@@ -173,12 +178,6 @@ function modifier_imba_swashbuckle_dash:CheckState()
 			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 			[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
 			[MODIFIER_STATE_INVULNERABLE] = true
-		}
-	else
-		state = {
-			[MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-			[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
 		}
 	end
 
@@ -554,7 +553,6 @@ function imba_pangolier_shield_crash:IsNetherWardStealable() return false end
 
 -- Should close out problems with Pangolier not getting the specific talent if skilled while dead
 function imba_pangolier_shield_crash:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_pangolier_3") and self:GetCaster():FindAbilityByName("special_bonus_imba_pangolier_3"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_pangolier_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_pangolier_3", {})
 	end
@@ -900,16 +898,17 @@ function modifier_imba_shield_crash_jump:OnDestroy()
 		false
 	)
 
+	local damage_table = {
+		attacker = self:GetCaster(),
+		ability = self:GetAbility(),
+		damage = self.damage,
+		damage_type = DAMAGE_TYPE_MAGICAL
+	}
+
 	-- Deal damage to each enemy
 	for _,enemy in pairs(enemies) do
-		if not enemy:IsMagicImmune() then
-			damage_table = ({
-				victim = enemy,
-				attacker = self:GetCaster(),
-				ability = self:GetAbility(),
-				damage = self.damage,
-				damage_type = DAMAGE_TYPE_MAGICAL
-			})
+		if not enemy:IsNull() and not enemy:IsMagicImmune() then
+			damage_table.victim = enemy
 
 			ApplyDamage(damage_table)
 		end
@@ -1292,9 +1291,9 @@ function modifier_imba_shield_crash_block_miss:RemoveOnDeath() return true end
 function modifier_imba_shield_crash_block_miss:StatusEffectPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_shield_crash_block_miss:CheckState()
-	state = {[MODIFIER_STATE_CANNOT_MISS] = false}
-
-	return state
+	return {
+		[MODIFIER_STATE_CANNOT_MISS] = false
+	}
 end
 
 ------------------------------------
@@ -2275,20 +2274,16 @@ function modifier_imba_pangolier_lucky_shot_disarm:OnCreated()
 end
 
 function modifier_imba_pangolier_lucky_shot_disarm:CheckState()
-	state = {
-			[MODIFIER_STATE_DISARMED] = true
-			}
-
-	return state
+	return {
+		[MODIFIER_STATE_DISARMED] = true
+	}
 end
 
 function modifier_imba_pangolier_lucky_shot_disarm:DeclareFunctions()
-	local funcs =	{
-					MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
-					}
-
-	return funcs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_pangolier_lucky_shot_disarm:GetModifierMoveSpeedBonus_Percentage()
@@ -2322,11 +2317,9 @@ function modifier_imba_pangolier_lucky_shot_silence:OnCreated()
 end
 
 function modifier_imba_pangolier_lucky_shot_silence:CheckState()
-	state = {
-			[MODIFIER_STATE_SILENCED] = true
-			}
-
-	return state
+	return {
+		[MODIFIER_STATE_SILENCED] = true
+	}
 end
 
 function modifier_imba_pangolier_lucky_shot_silence:DeclareFunctions()

@@ -247,8 +247,8 @@ end
 function modifier_imba_acid_spray_handler:OnDeath(params)
 	if IsServer() then
 		-- Ability properties
-		caster 	= 	self:GetCaster()
-		parent	=	self:GetParent()
+		local caster 	= 	self:GetCaster()
+		local parent	=	self:GetParent()
 
 		if (params.unit == parent) then
 
@@ -586,7 +586,7 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 							location = acid_spray_modifier.center
 						end
 
-						particle_acid_blast_fx = ParticleManager:CreateParticle(particle_acid_blast, PATTACH_WORLDORIGIN, caster)
+						local particle_acid_blast_fx = ParticleManager:CreateParticle(particle_acid_blast, PATTACH_WORLDORIGIN, caster)
 						ParticleManager:SetParticleControl(particle_acid_blast_fx, 0, location)
 						ParticleManager:SetParticleControl(particle_acid_blast_fx, 1, location)
 						ParticleManager:SetParticleControl(particle_acid_blast_fx, 2, Vector(acid_spray_radius, 0, 0))

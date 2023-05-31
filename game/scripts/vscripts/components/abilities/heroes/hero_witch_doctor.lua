@@ -567,15 +567,17 @@ function modifier_imba_maledict:OnDestroy()
 		self:StartIntervalThink(-1)
 	end
 
+	local parent = self:GetParent()
+
 	-- Activate the damage in the case that it has not activated the required amount of times.
 	if self.soundcount then
 		if self.soundcount < self:GetAbility():GetSpecialValueFor("duration") / self.tick_time_sec then
 			self:DealHPBurstDamage(self:GetParent())
-			EmitSoundOn("Hero_WitchDoctor.Maledict_Tick", hTarget)
+			EmitSoundOn("Hero_WitchDoctor.Maledict_Tick", parent)
 		end
 	end
 
-	StopSoundEvent("Hero_WitchDoctor.Maledict_Loop", self:GetParent())
+	StopSoundEvent("Hero_WitchDoctor.Maledict_Loop", parent)
 	ParticleManager:DestroyParticle(self.burstParticle, false)
 	ParticleManager:ReleaseParticleIndex(self.burstParticle)
 end
