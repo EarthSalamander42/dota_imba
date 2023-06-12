@@ -1232,7 +1232,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 	
 				-- Apply particle effects on enemy
 				-- Timers:CreateTimer(0.01, function()
-					particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, enemy)
+					local particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, enemy)
 					ParticleManager:SetParticleControl(particle_haze_fx, 0, enemy:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle_haze_fx, 1, enemy:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle_haze_fx, 2, enemy:GetAbsOrigin())

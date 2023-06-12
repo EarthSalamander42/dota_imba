@@ -238,7 +238,7 @@ function modifier_imba_smoke_screen_invi_indicator:OnIntervalThink()
 		self.counter = self.counter +1
 	end
 	if self.counter >= self.fade_delay then
-		self.caster:AddNewModifier(caster, self:GetAbility(), "modifier_imba_smoke_screen_invi",{})
+		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_smoke_screen_invi", {})
 	end
 end
 

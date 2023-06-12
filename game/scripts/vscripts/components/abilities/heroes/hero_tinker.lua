@@ -1332,8 +1332,7 @@ function imba_tinker_march_of_the_machines:OnProjectileThink_ExtraData(location,
 		if ExtraData.railgun_damage then
 			self[ExtraData.index].counter = self[ExtraData.index].counter or 0
 			if self[ExtraData.index].counter == 0 then
-				projectile = 
-				{
+				local projectile = {
 					Ability				= self,
 					EffectName			= "particles/units/heroes/hero_zuus/zuus_arc_lightning_head_c.vpcf",
 					vSpawnOrigin		= location,

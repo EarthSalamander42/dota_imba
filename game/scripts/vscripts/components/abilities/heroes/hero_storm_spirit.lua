@@ -212,10 +212,9 @@ end
 
 
 function modifier_imba_static_remnant:DeclareFunctions()
-	funcs = {
+	return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 	}
-	return funcs
 end
 
 function modifier_imba_static_remnant:GetOverrideAnimation()

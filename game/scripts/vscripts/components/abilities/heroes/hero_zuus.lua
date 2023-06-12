@@ -1281,17 +1281,16 @@ end
 
 modifier_imba_zuus_nimbus_z = class({})
 function modifier_imba_zuus_nimbus_z:CheckState()
-	state = {
+	return {
 		[MODIFIER_STATE_ROOTED] = true
 	}
-
-	return state
 end
 
 function modifier_imba_zuus_nimbus_z:DeclareFunctions()
-	local funcs = {MODIFIER_PROPERTY_VISUAL_Z_DELTA,
-	MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING }
-	return funcs
+	return {
+		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING
+	}
 end
 
 function modifier_imba_zuus_nimbus_z:GetVisualZDelta()
@@ -1500,12 +1499,10 @@ function modifier_imba_zuus_thundergods_focus:GetTexture()
 end
 
 function modifier_imba_zuus_thundergods_focus:DeclareFunctions()
-	decFuncs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_zuus_thundergods_focus:GetModifierMoveSpeedBonus_Constant()
@@ -1549,13 +1546,11 @@ function modifier_imba_zuus_thundergods_awakening:GetTexture()
 end
 
 function modifier_imba_zuus_thundergods_awakening:DeclareFunctions() 
-	decFuncs = {
+	return {
 		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
 		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_zuus_thundergods_awakening:GetModifierPercentageCasttime()

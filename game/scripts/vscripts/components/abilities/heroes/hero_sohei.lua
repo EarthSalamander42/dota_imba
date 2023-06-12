@@ -227,14 +227,6 @@ end
 
 --------------------------------------------------------------------------------
 
-function sohei_flurry_of_blows:OnAbilityPhaseInterrupted()
-	if IsServer() then
-		self:GetCaster():StopSound( "Hero_EmberSpirit.FireRemnant.Stop" )
-	end
-end
-
---------------------------------------------------------------------------------
-
 if IsServer() then
 	function sohei_flurry_of_blows:OnSpellStart()
 		local caster = self:GetCaster()

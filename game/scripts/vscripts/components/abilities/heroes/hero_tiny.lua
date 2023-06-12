@@ -41,7 +41,14 @@ function modifier_imba_tiny_death_handler:OnDeath(params)
 	ParticleManager:SetParticleControlForward(death_pfx, 0, self:GetParent():GetForwardVector())
 end
 
+----------------------------------------------
+--     Tree Model and Animation modifier	--
+----------------------------------------------
+
 modifier_imba_tiny_tree_animation = modifier_imba_tiny_tree_animation or class({})
+
+function modifier_imba_tiny_tree_animation:IsHidden() return true end
+function modifier_imba_tiny_tree_animation:IsPurgable() return false end
 
 function modifier_imba_tiny_tree_animation:OnCreated()
 	if IsServer() then
@@ -49,7 +56,7 @@ function modifier_imba_tiny_tree_animation:OnCreated()
 		local grow = caster:FindAbilityByName("imba_tiny_grow")
 		local grow_lvl = grow:GetLevel()
 
-		-- If we allrdy have a tree... destroy it and create new. 
+		-- If we already have a tree... destroy it and create new. 
 		if caster.tree ~= nil then
 			caster.tree:AddEffects(EF_NODRAW)
 			UTIL_Remove(caster.tree)
@@ -59,7 +66,7 @@ function modifier_imba_tiny_tree_animation:OnCreated()
 		-- Create the tree model
 		self.tree = SpawnEntityFromTableSynchronous("prop_dynamic", {model = caster.tree_model})
 		-- Bind it to caster bone 
-		self.tree:FollowEntity(self:GetCaster(), true)
+		self.tree:FollowEntity(caster, true)
 		-- Find the Coordinates for model position on left hand
 		local origin = caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_attack2"))
 		-- Forward Vector!
@@ -144,79 +151,6 @@ function imba_tiny_tree_grab:OnSpellStart()
 	end
 end
 
-----------------------------------------------
---     Tree Model and Animation modifier	--
-----------------------------------------------
-
-modifier_imba_tiny_tree_animation = class({})
-
-function modifier_imba_tiny_tree_animation:IsHidden() return true end
-function modifier_imba_tiny_tree_animation:IsPurgable() return false end
-
-function modifier_imba_tiny_tree_animation:OnCreated()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local grow = caster:FindAbilityByName("imba_tiny_grow")
-		local grow_lvl = grow:GetLevel()
-
-		-- If we allrdy have a tree... destroy it and create new. 
-		if caster.tree ~= nil then
-			caster.tree:AddEffects(EF_NODRAW)
-			UTIL_Remove(caster.tree)
-			caster.tree = nil
-		end
-
-		-- Create the tree model
-		self.tree = SpawnEntityFromTableSynchronous("prop_dynamic", {model = caster.tree_model})
-		-- Bind it to caster bone 
-		self.tree:FollowEntity(self:GetCaster(), true)
-		-- Find the Coordinates for model position on left hand
-		local origin = caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_attack2"))
-		-- Forward Vector!
-		local fv = caster:GetForwardVector()
-		
-		-- Apply diffrent positions of the tree depending on growth model...
-		if grow_lvl == 3 then
-			--Adjust poition to match grow lvl 3
-			local pos = origin + (fv * 50)
-			self.tree:SetAbsOrigin(Vector(pos.x + 10, pos.y, (origin.z + 25)))
-		elseif grow_lvl == 2 then
-			-- Adjust poition to match grow lvl 2
-			local pos = origin + (fv * 35)
-			self.tree:SetAbsOrigin(Vector(pos.x, pos.y, (origin.z + 25)))
-		elseif grow_lvl == 1 then
-			-- Adjust poition to match grow lvl 1
-			local pos = origin + (fv * 35) 
-			self.tree:SetAbsOrigin(Vector(pos.x, pos.y + 20, (origin.z + 25)))
-		elseif grow_lvl == 0 then
-			-- Adjust poition to match original no grow model
-			local pos = origin - (fv * 25) 
-			self.tree:SetAbsOrigin(Vector(pos.x - 20, pos.y - 30 , origin.z))
-			self.tree:SetAngles(60, 60, -60)
-		end
-
-		-- Save model to caster
-		caster.tree = self.tree
-
-		if caster.tree_ambient_effect ~= "" then
-			local tree_pfx = ParticleManager:CreateParticle(caster.tree_ambient_effect, PATTACH_ABSORIGIN_FOLLOW, self.tree)
-			ParticleManager:ReleaseParticleIndex(tree_pfx)
-		end
-
-		-- Change animation now that we have a huge ass tree in our hand.
-		StartAnimation(caster, { duration = -1, activity = ACT_DOTA_ATTACK_EVENT , rate = 2, translate = "tree" })
-	end
-end
-
-function modifier_imba_tiny_tree_animation:OnRemoved()
-	if IsServer() then
-		local caster = self:GetCaster()
-		-- stop tree animation
-		EndAnimation(caster)
-		caster.tree:AddEffects(EF_NODRAW)
-	end
-end
-
 ---------------------------------------
 --        Tree Grabb modifier        --
 ---------------------------------------
@@ -227,19 +161,12 @@ function modifier_imba_tiny_tree:IsHidden() return false end
 function modifier_imba_tiny_tree:IsBuff() return true end
 function modifier_imba_tiny_tree:IsPurgable() return false end
 function modifier_imba_tiny_tree:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS, 
-	}
-	return funcs
-end
-
-function modifier_imba_tiny_tree:DeclareFunctions()
-	local funcs = {
+	return {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
 	}
-	return funcs
 end
 
 function modifier_imba_tiny_tree:GetAttackSound()

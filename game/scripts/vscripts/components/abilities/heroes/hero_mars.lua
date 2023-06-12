@@ -175,7 +175,7 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 				-- knockback if not having spear stun
 				if not v:HasModifier( "modifier_imba_mars_spear_debuff" ) then
 					v:AddNewModifier(
-						caster, -- player source
+						self:GetCaster(),
 						self, -- ability source
 						"modifier_generic_knockback_lua", -- modifier name
 						{

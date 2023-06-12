@@ -1897,10 +1897,6 @@ function modifier_imba_focused_detonate:GetModifierDisableTurning()
 	return 1
 end
 
-function modifier_imba_focused_detonate:IsHidden()
-	return false
-end
-
 -- Do a stop order after finish casting to prevent turning to the destination point
 function modifier_imba_focused_detonate:OnDestroy()
 	if IsServer() then

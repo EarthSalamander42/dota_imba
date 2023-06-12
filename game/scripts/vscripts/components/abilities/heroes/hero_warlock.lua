@@ -1109,7 +1109,7 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 
 		-- #8 Talent: Chaotic Golems are now Spell Immune
 		if self:GetCaster():HasTalent("special_bonus_imba_warlock_8") then
-			ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
+			local ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
 			ability_spell_immunity:SetLevel(1)
 		end
 
