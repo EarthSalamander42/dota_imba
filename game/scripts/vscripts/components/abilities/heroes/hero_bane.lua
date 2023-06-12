@@ -483,7 +483,7 @@ function imba_bane_brain_sap:OnSpellStart()
 
 		local enfeeble_bonus_damage	= enfeeble_stack_to_damage * enfeeble_charges
 		-- Deal damage
-		damage_table = {
+		local damage_table = {
 			victim      = target,
 			attacker    = caster,
 			damage      = sapdamage + enfeeble_bonus_damage,
@@ -492,8 +492,9 @@ function imba_bane_brain_sap:OnSpellStart()
 		}
 
 		ApplyDamage(damage_table)
+
 		-- Heal caster
-		caster:Heal(sapdamage, caster)
+		caster:Heal(sapdamage, self)
 
 		-- Apply brain sap debuff
 		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = sapduration * (1 - target:GetStatusResistance())})

@@ -118,7 +118,7 @@ function modifier_imba_arcane_curse_debuff:OnIntervalThink()
 				-- #1 Talent: Silencer heals from Arcane Curse damage
 				if self.talent_learned then
 					local heal_amount = actual_Damage * self.caster:FindTalentValue("special_bonus_imba_silencer_1") * 0.01
-					self.caster:Heal(heal_amount, self.caster)
+					self.caster:Heal(heal_amount, self:GetAbility())
 
 					-- Show heal particles on the caster
 					local particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"

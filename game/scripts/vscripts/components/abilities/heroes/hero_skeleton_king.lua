@@ -287,12 +287,13 @@ function modifier_imba_wraithfire_blast_debuff:OnIntervalThink()
 		-- Calculate damage
 		local damage = self.damage_per_second * self.damage_interval
 
-		local damageTable = {victim = self.parent,
-							 attacker = self.caster, 
-							 damage = damage,
-							 damage_type = DAMAGE_TYPE_MAGICAL,
-							 ability = self.ability
-							 }
+		local damageTable = {
+			victim = self.parent,
+			attacker = self.caster, 
+			damage = damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			ability = self.ability
+		}
 		
 		ApplyDamage(damageTable)
 	end
@@ -342,7 +343,7 @@ function modifier_imba_wraithfire_blast_debuff:OnAttackLanded(keys)
 		local heal_amount = damage * self.attacker_lifesteal_pct * 0.01
 
 		-- Heal the attacker
-		attacker:Heal(heal_amount, self.caster)
+		attacker:Heal(heal_amount, self.ability)
 	end
 end
 
@@ -590,7 +591,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 					heal_amount = heal_amount * self.self_bonus
 				end
 				
-				self.parent:Heal(heal_amount, self.caster)
+				self.parent:Heal(heal_amount, self.ability)
 			-- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
 			else
 				if not self.delay_particle_time or (GameRules:GetGameTime() - self.delay_particle_time > 1) then
@@ -614,20 +615,22 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 					heal_amount = heal_amount * self.self_bonus
 				end
 				
-				self.parent:Heal(heal_amount, self.caster)
+				self.parent:Heal(heal_amount, self.ability)
 			end
 
 			-- After a small delay, find both illusions and the real aura bearer
 			Timers:CreateTimer(self.heal_delay, function()
-				local casters = FindUnitsInRadius(self.parent:GetTeamNumber(),
-												  self.parent:GetAbsOrigin(),
-												  nil,
-												  self.radius,
-												  DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-												  DOTA_UNIT_TARGET_HERO,
-												  DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-												  FIND_ANY_ORDER,
-												  false)
+				local casters = FindUnitsInRadius(
+					self.parent:GetTeamNumber(),
+					self.parent:GetAbsOrigin(),
+					nil,
+					self.radius,
+					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+					DOTA_UNIT_TARGET_HERO,
+					DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+					FIND_ANY_ORDER,
+					false
+				)
 
 				for _,caster in pairs(casters) do
 					-- Ignore everyone that are not the same name as the caster
@@ -642,7 +645,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 							-- Heal the aura bearer, if it's a real hero
 							if caster:IsRealHero() then
 								local caster_heal = heal_amount * self.caster_heal * 0.01
-								caster:Heal(caster_heal, caster)
+								caster:Heal(caster_heal, self.ability)
 							end
 						end
 					end
@@ -676,15 +679,17 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 				if not self.caster:IsAlive() then
 					return nil
 				end
-				local casters = FindUnitsInRadius(self.parent:GetTeamNumber(),
-												  self.parent:GetAbsOrigin(),
-												  nil,
-												  self.radius,
-												  DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-												  DOTA_UNIT_TARGET_HERO,
-												  DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-												  FIND_ANY_ORDER,
-												  false)
+				local casters = FindUnitsInRadius(
+					self.parent:GetTeamNumber(),
+					self.parent:GetAbsOrigin(),
+					nil,
+					self.radius,
+					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+					DOTA_UNIT_TARGET_HERO,
+					DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+					FIND_ANY_ORDER,
+					false
+				)
 
 				for _,caster in pairs(casters) do
 
@@ -700,7 +705,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 							-- Heal the aura bearer, if it's a real hero
 							if caster:IsRealHero() then
 								local caster_heal = heal_amount * self.caster:FindTalentValue("special_bonus_imba_skeleton_king_1") * 0.01
-								caster:Heal(caster_heal, caster)
+								caster:Heal(caster_heal, self.ability)
 							end
 						end
 					end

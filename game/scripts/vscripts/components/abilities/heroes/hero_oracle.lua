@@ -644,7 +644,7 @@ function imba_oracle_purifying_flames:OnSpellStart()
 			ability 		= self
 		})
 	else
-		self.target:Heal(self:GetSpecialValueFor("damage"), self:GetCaster())
+		self.target:Heal(self:GetSpecialValueFor("damage"), self)
 		
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.target, self:GetSpecialValueFor("damage"), nil)
 	end
@@ -678,7 +678,7 @@ function modifier_imba_oracle_purifying_flames:OnCreated()
 end
 
 function modifier_imba_oracle_purifying_flames:OnIntervalThink()
-	self:GetParent():Heal(self.heal_per_second, self:GetCaster())
+	self:GetParent():Heal(self.heal_per_second, self:GetAbility())
 	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_second, nil)
 end
@@ -1021,7 +1021,7 @@ function modifier_imba_oracle_false_promise_timer:OnDestroy()
 		self.end_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:ReleaseParticleIndex(self.end_particle)
 		
-		self:GetParent():Heal(self.heal_counter - self.damage_counter, self:GetCaster())
+		self:GetParent():Heal(self.heal_counter - self.damage_counter, self:GetAbility())
 		
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_counter - self.damage_counter, nil)
 	else

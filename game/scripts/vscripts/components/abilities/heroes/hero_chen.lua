@@ -1091,7 +1091,7 @@ function imba_chen_test_of_faith:OnSpellStart()
 			heal_value	= heal_value + (PlayerResource:GetAssists(target:GetPlayerID()) * self:GetSpecialValueFor("faithful_assist_mult"))
 		end
 	
-		target:Heal(heal_value, self:GetCaster())
+		target:Heal(heal_value, self)
 		
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal_value, nil)
 	else
@@ -1177,7 +1177,7 @@ function imba_chen_hand_of_god:OnSpellStart()
 			end
 			
 			-- Heal happens after the IMBAfication logic here
-			ally:Heal(self:GetTalentSpecialValueFor("heal_amount"), self:GetCaster())
+			ally:Heal(self:GetTalentSpecialValueFor("heal_amount"), self)
 		end
 	end
 end

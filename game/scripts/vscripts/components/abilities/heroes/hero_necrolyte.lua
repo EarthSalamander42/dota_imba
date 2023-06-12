@@ -297,16 +297,16 @@ function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation,
 
 		-- Base Heal
 		if extraData.base_heal then
-			target:Heal(extraData.base_heal, caster)
+			target:Heal(extraData.base_heal, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, extraData.base_heal, nil)
-			return nil
+			return
 		end
 
 		local caster_loc = caster:GetAbsOrigin()
 
 		if not extraData.radius then
 			local heal = target:GetMaxHealth() * (extraData.sec_heal_pct / 100)
-			target:Heal(heal, caster)
+			target:Heal(heal, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 		end
 		--Essence dilation

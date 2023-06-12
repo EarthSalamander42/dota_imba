@@ -590,9 +590,9 @@ function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys)
 					end
 					
 					-- Heal to max
-					--parent:Heal(parent:GetMaxHealth(), parent);
+					--parent:Heal(parent:GetMaxHealth(), self:GetAbility());
 					
-					parent:Heal(self.damage_treshold, parent);
+					parent:Heal(self.damage_treshold, self:GetAbility());
 					
 					-- Escape particle
 					local curse_blast = ParticleManager:CreateParticle("particles/units/heroes/hero_winter_wyvern/wyvern_winters_curse_blast.vpcf", PATTACH_ABSORIGIN, parent);

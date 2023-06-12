@@ -811,11 +811,11 @@ function modifier_imba_sonic_wave:OnTakeDamage( params )
 
 				-- If the target is a real hero, heal for the full value
 				if params.unit:IsRealHero() then
-					parent:Heal(params.damage * lifesteal_amount * 0.01, parent)
+					parent:Heal(params.damage * lifesteal_amount * 0.01, ability)
 
 					-- else, heal for half of it
 				else
-					parent:Heal(params.damage * lifesteal_amount * 0.005, parent)
+					parent:Heal(params.damage * lifesteal_amount * 0.005, ability)
 				end
 			end
 		end

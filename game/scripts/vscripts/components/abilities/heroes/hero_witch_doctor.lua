@@ -88,7 +88,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 				end
 			else
 				local heal = ExtraData.hero_damage
-				hTarget:Heal(heal, self:GetCaster())
+				hTarget:Heal(heal, self)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, hTarget, heal, nil)
 			end
 		else
@@ -100,7 +100,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 				end
 			else
 				local heal = ExtraData.creep_damage
-				hTarget:Heal(heal, self:GetCaster())
+				hTarget:Heal(heal, self)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, hTarget, heal, nil)
 			end
 		end
@@ -473,7 +473,7 @@ function modifier_imba_voodoo_restoration_heal:OnIntervalThink()
 	local heal_amp = 1 + (self:GetCaster():GetSpellAmplification(false) * self.heal_spell_amp_pct * 0.01)
 	local heal = (self.heal + (self:GetCaster():GetIntellect() * self.int_to_heal * 0.01)) * heal_amp * self.interval
 
-	hParent:Heal(heal, self:GetCaster())
+	hParent:Heal(heal, self:GetAbility())
 	SendOverheadEventMessage(hParent, OVERHEAD_ALERT_HEAL, hParent, heal, hParent)
 end
 

@@ -398,7 +398,7 @@ function modifier_imba_life_stealer_feast:GetModifierProcAttack_BonusDamage_Phys
 			end
 		end
 		
-		self:GetParent():Heal(heal_amount, self:GetCaster())
+		self:GetParent():Heal(heal_amount, self:GetAbility())
 		
 		if self:GetAbility() and self:GetAbility():GetName() == "imba_life_stealer_feast" then
 			return heal_amount
@@ -833,7 +833,7 @@ function imba_life_stealer_infest:OnSpellStart()
 	end
 	
 	if self:GetName() == "imba_life_stealer_infest_723" and (not target:IsHero() or (target:IsHero() and target:GetTeamNumber() == self:GetCaster():GetTeamNumber())) and not target:IsBuilding() and not target:IsOther() and not target:IsRoshan() then
-		target:Heal(self:GetSpecialValueFor("bonus_health"), self:GetCaster())
+		target:Heal(self:GetSpecialValueFor("bonus_health"), self)
 		
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCaster(), self:GetSpecialValueFor("bonus_health"), nil)
 	end
@@ -1164,7 +1164,7 @@ function modifier_imba_life_stealer_infest_effect:OnStackCountChanged(stackCount
 
 		-- Lifestealer wins.
 		if self:GetStackCount() >= self.chestburster_success_stacks then
-			self:GetCaster():Heal(self:GetParent():GetHealth(), self:GetCaster())
+			self:GetCaster():Heal(self:GetParent():GetHealth(), self:GetAbility())
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetCaster(), self:GetParent():GetHealth(), nil)
 			
 			self:GetParent():Kill(self, self:GetCaster())
@@ -1453,7 +1453,7 @@ function imba_life_stealer_consume:OnSpellStart()
 			if infest_effect_modifier_parent and infest_effect_modifier_parent:IsCreep() and not infest_effect_modifier_parent:IsRoshan() and (infest_effect_modifier_parent:GetTeamNumber() ~= caster:GetTeamNumber() or infest_effect_modifier_parent:FindModifierByNameAndCaster("modifier_imba_life_stealer_control", caster) or infest_effect_modifier_parent:FindModifierByNameAndCaster("modifier_imba_life_stealer_control", caster:GetOwner())) then
 				
 				if infest_modifier:GetAbility():GetName() == "imba_life_stealer_infest" then
-					caster:Heal(infest_effect_modifier_parent:GetHealth(), caster)
+					caster:Heal(infest_effect_modifier_parent:GetHealth(), self)
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, infest_effect_modifier_parent:GetHealth(), nil)
 				end
 				
@@ -1766,7 +1766,7 @@ end
 
 function modifier_imba_life_stealer_assimilate_effect:OnHealthGained(keys)
 	if keys.unit == self:GetCaster() and self.assimilate_modifier and self.assimilate_modifier:GetParent() and self.assimilate_modifier:GetParent():IsAlive() then
-		self.assimilate_modifier:GetParent():Heal(keys.gain, self:GetParent())
+		self.assimilate_modifier:GetParent():Heal(keys.gain, self:GetAbility())
 	end
 end
 

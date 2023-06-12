@@ -556,7 +556,7 @@ function modifier_imba_soul_catcher_buff:OnCreated(params)
 
 	-- We'll let a frame for the game to include max health increase before healing
 	Timers:CreateTimer(FrameTime(), function()        
-		self.parent:Heal(self.allied_heal, self.caster)
+		self.parent:Heal(self.allied_heal, self.ability)
 	end)
 end
 
@@ -697,7 +697,7 @@ function modifier_imba_soul_catcher_debuff:OnDestroy()
 
 		-- Heal the target by the percentage of stolen health
 		local health_restore = self.health_stolen * self.health_returned_pct * 0.01
-		self.parent:Heal(health_restore, self.caster)
+		self.parent:Heal(health_restore, self.ability)
 	end
 end
 

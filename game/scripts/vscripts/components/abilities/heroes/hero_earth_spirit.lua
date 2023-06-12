@@ -1439,7 +1439,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 			
 			if self.caster:HasTalent("special_bonus_imba_earth_spirit_3") then
 				local heal = self.caster:FindTalentValue("special_bonus_imba_earth_spirit_3") * mark:GetStackCount()
-				self.caster:Heal(heal, self.caster)
+				self.caster:Heal(heal, self.ability)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, heal, nil)
 			end
 		end

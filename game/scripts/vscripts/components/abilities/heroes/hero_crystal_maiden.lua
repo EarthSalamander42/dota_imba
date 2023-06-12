@@ -643,7 +643,7 @@ end
 
 function modifier_imba_crystal_maiden_frostbite_ally:OnIntervalThink()
 	--Heal/Give Mana, then show values overhead
-	self:GetParent():Heal(self.heal_per_tick, self:GetCaster())
+	self:GetParent():Heal(self.heal_per_tick, self:GetAbility())
 	self:GetParent():GiveMana(self.mana_per_tick)
 	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_tick, nil)

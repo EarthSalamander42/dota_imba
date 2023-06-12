@@ -339,7 +339,7 @@ function modifier_imba_keeper_of_the_light_illuminate:OnIntervalThink()
 				end
 			--...and heal allies
 			elseif GameRules:IsDaytime() and self.caster:HasScepter() then
-				target:Heal(damage, self.caster)
+				target:Heal(damage, self.ability)
 				
 				-- Apparently the vanilla skill only shows the heal number if it's a hero?...
 				if target:IsHero() then

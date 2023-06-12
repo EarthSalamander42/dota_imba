@@ -180,7 +180,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData( hTarget, vLocation, 
 			local heal = (self:GetVanillaAbilitySpecial("heal_amount") + self.overchannel_damage_increase) -- * heal_amp
 
 			-- heal allies or self and apply mist
-			target:Heal(heal, caster)
+			target:Heal(heal, self)
 			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_ally", {duration = mist_duration})
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 
@@ -288,7 +288,7 @@ function modifier_imba_mist_coil_mist_ally:OnDestroy(keys)
 	if not self:GetAbility() then return end
 	
 	if IsServer() and self:GetParent():IsAlive() then
-		self:GetParent():Heal(self:GetStackCount(), self:GetCaster())
+		self:GetParent():Heal(self:GetStackCount(), self:GetAbility())
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self:GetStackCount(), nil)
 	end
 end
@@ -896,6 +896,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 			-- Unit having this debuff must be the one taking damage
 			if target == kv.unit then
 				local caster = self:GetCaster()
+				local ability = self:GetAbility()
 				local damage = kv.damage
 				local target_health_left = target:GetHealth()
 
@@ -913,7 +914,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 				-- Heal caster equal to a percentage of damage taken by unit affected by this debuff
-				caster:Heal(heal_amount, caster)
+				caster:Heal(heal_amount, ability)
 
 				if caster:HasModifier("modifier_imba_borrowed_time_buff_hot_caster") then
 					local buffed_allies = caster._borrowed_time_buffed_allies
@@ -925,7 +926,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 							ParticleManager:ReleaseParticleIndex(healFX)
 							-- Show value healed on allies
 							SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, k, heal_amount, nil)
-							k:Heal(heal_amount, caster)
+							k:Heal(heal_amount, ability)
 						end
 					end
 				end
@@ -1329,7 +1330,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:GetModifierIncomingDamage_P
 			local max_health = target:GetMaxHealth()
 			self:SetStackCount( self:GetStackCount() + math.floor(kv.damage / self.ratio) )
 		end
-		target:Heal(kv.damage, target)
+		target:Heal(kv.damage, self:GetAbility())
 		
 		return -9999999
 	end

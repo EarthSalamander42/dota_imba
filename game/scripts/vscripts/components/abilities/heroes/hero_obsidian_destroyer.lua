@@ -1403,7 +1403,7 @@ function modifier_imba_essence_aura_buff:ProcEssenceAura()
 				-- #5 Talent: Essence Aura now heals when proccing
 				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_5") then
 					local heal_amount = self.caster:GetIntellect()
-					self.parent:Heal(heal_amount, self.caster)
+					self.parent:Heal(heal_amount, self.ability)
 				end
 				-- #8 Talent: Essence Aura can go beyond maximum mana temporarily (caster only)
 				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_8") and self.caster == self.parent then

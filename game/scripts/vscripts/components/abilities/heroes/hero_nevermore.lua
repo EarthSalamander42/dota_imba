@@ -1117,7 +1117,7 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 
 						-- Heal the caster for a percentage of damage dealt
 						local heal_amount = damage * lifesteal * 0.01
-						self.caster:Heal(heal_amount, self.caster)
+						self.caster:Heal(heal_amount, self.ability)
 
 						-- Add lifesteal effect
 						local particle_lifesteal_fx = ParticleManager:CreateParticle(particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, self.caster)
@@ -1747,24 +1747,25 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 	target:EmitSound("Hero_Nevermore.RequiemOfSouls.Damage")
 	
 	-- Damage the target
-	local damageTable = {victim = target,
-						damage = damage,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						attacker = caster,
-						ability = ability
-						}
+	local damageTable = {
+		victim = target,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		attacker = caster,
+		ability = ability
+	}
 
 	local damage_dealt = ApplyDamage(damageTable)
 
 	-- If this line is a scepter line, heal the caster for the actual damage dealt
 	if scepter_line then
-		caster:Heal(damage_dealt, caster)
+		caster:Heal(damage_dealt, ability)
 	end
 	
 	-- F.E.A.R.	
 	if not death_cast then
 		if not target:HasModifier("modifier_nevermore_requiem_fear") then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(caster, ability, "modifier_nevermore_requiem_fear", {duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance())})
 		else
 			target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
 		end

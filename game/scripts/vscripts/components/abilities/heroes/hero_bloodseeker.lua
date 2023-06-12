@@ -144,14 +144,14 @@ function modifier_imba_bloodrage_buff_stats:OnDeath(params)
 			local heal = params.unit:GetMaxHealth() * self.health_bonus_pct / 100
 			
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, params.attacker, heal, nil)
-			params.attacker:Heal(heal, self:GetCaster())
+			params.attacker:Heal(heal, self:GetAbility())
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(healFX)
 		elseif params.unit:IsRealHero() and (self:GetParent():GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= self.health_bonus_aoe then
 			local heal = params.unit:GetMaxHealth() * (self.health_bonus_pct / 100) * (self.health_bonus_share_percent * 0.01)
 			
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL , self:GetParent(), heal, nil)
-			self:GetParent():Heal(heal, self:GetCaster())
+			self:GetParent():Heal(heal, self:GetAbility())
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end
@@ -430,7 +430,7 @@ function modifier_imba_blood_bath_buff_stats:OnTakeDamage(params)
 		local bonusHP = params.damage * self.overheal
 		self:SetStackCount(self:GetStackCount() + bonusHP)
 		self:GetParent():CalculateStatBonus(true)
-		self:GetParent():Heal(bonusHP, self:GetParent())
+		self:GetParent():Heal(bonusHP, self:GetAbility())
 	end
 end
 
@@ -890,7 +890,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 
 		ApplyDamage(damage_table)
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then
-			caster:Heal(damage, caster)
+			caster:Heal(damage, self)
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end
@@ -943,7 +943,7 @@ if IsServer() then
 			if move_damage > 0 then
 				ApplyDamage({victim = self.parent, attacker = self.caster, damage = move_damage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NONE, ability = self.ability})
 				if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-					self.caster:Heal(move_damage, self.caster)
+					self.caster:Heal(move_damage, self.ability)
 					local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 					ParticleManager:ReleaseParticleIndex(healFX)
 				end
@@ -963,7 +963,7 @@ if IsServer() then
 		if params.unit == self.parent then
 			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-				self.caster:Heal(self.castdamage, self.caster)
+				self.caster:Heal(self.castdamage, self.ability)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
@@ -974,7 +974,7 @@ if IsServer() then
 		if params.attacker == self.parent then
 			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.attackdamage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-				self.caster:Heal(self.castdamage, self.caster)
+				self.caster:Heal(self.castdamage, self.ability)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end

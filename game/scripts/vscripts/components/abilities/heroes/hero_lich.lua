@@ -2109,7 +2109,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 	    SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.caster, mana_gained, nil)
 
 		if self.target:GetTeam() == self.caster:GetTeam() then
-			self.caster:Heal(health_gained, self.caster)
+			self.caster:Heal(health_gained, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, health_gained, nil)
 		end
 
@@ -2127,7 +2127,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 					
 					-- Sure takes a while to add that max health through the modifier...
 					-- Timers:CreateTimer(0.5, function()
-						self.caster:Heal(consumption_health, self.caster)
+						self.caster:Heal(consumption_health, self)
 						SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, consumption_health, nil)
 					-- end)
 				

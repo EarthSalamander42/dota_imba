@@ -1969,7 +1969,7 @@ function modifier_imba_tormented_soul_form:OnTakeDamage(keys)
 		ParticleManager:ReleaseParticleIndex(particle_totalsteal_fx)
 
 		-- Heal the caster 
-		self.caster:Heal(replenish, self.caster)
+		self.caster:Heal(replenish, self.ability)
 
 		-- Give mana to the caster
 		self.caster:GiveMana(replenish)

@@ -125,33 +125,37 @@ function Purification(caster, ability, target)
 	local damage = heal
 
 	-- Heal target
-	target:Heal(heal, caster)    
+	target:Heal(heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 
 	-- Find enemies around it
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									  target:GetAbsOrigin(),
-									  nil,
-									  radius,
-									  DOTA_UNIT_TARGET_TEAM_ENEMY,
-									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									  DOTA_UNIT_TARGET_FLAG_NONE,
-									  FIND_ANY_ORDER,
-									  false)
+	local enemies = FindUnitsInRadius(
+		caster:GetTeamNumber(),
+		target:GetAbsOrigin(),
+		nil,
+		radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false
+	)
+
+	local damageTable = {
+		attacker = caster,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_PURE,
+		damage_flags = DOTA_DAMAGE_FLAG_NONE,
+		ability = ability
+	}
 
 	
 	for _,enemy in pairs(enemies) do
 		-- If they're not magic immune, damage them
 		if not enemy:IsMagicImmune() then
-			local damageTable = {victim = enemy,
-								 attacker = caster, 
-								 damage = damage,
-								 damage_type = DAMAGE_TYPE_PURE,
-								 damage_flags = DOTA_DAMAGE_FLAG_NONE,
-								 ability = ability
-								}
+			damageTable.victim = enemy
 		
-			ApplyDamage(damageTable)  
+			ApplyDamage(damageTable)
 
 			-- Add hit particle
 			local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN_FOLLOW, enemy)
@@ -811,29 +815,31 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
 			-- Damage the target with pure light powa
 			local damageTable = {
 				victim = target,
-				attacker = self.caster, 
+				attacker = self.caster,
 				damage = damage,
 				damage_type = DAMAGE_TYPE_PURE,
 				ability = self.ability
 			}
 			
-			ApplyDamage(damageTable)  
+			ApplyDamage(damageTable)
 			
 			-- Find all nearby allies
-			local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-											 self.caster:GetAbsOrigin(),
-											 nil,
-											 self.radius,
-											 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-											 DOTA_UNIT_TARGET_HERO,
-											 DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-											 FIND_ANY_ORDER,
-											 false)
+			local allies = FindUnitsInRadius(
+				self.caster:GetTeamNumber(),
+				self.caster:GetAbsOrigin(),
+				nil,
+				self.radius,
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO,
+				DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+				FIND_ANY_ORDER,
+				false
+			)
 
 			-- Heal them (and the caster)
 			local heal = damage * self.damage_as_heal_pct * 0.01
 			for _,ally in pairs(allies) do
-				ally:Heal(heal, self.caster)
+				ally:Heal(heal, self.ability)
 				
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, heal, nil)
 
@@ -844,8 +850,6 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
 
 			-- Start the cooldown of the ability
 			self.ability:UseResources(false, false, false, true)
-			
-			
 		end
 	end
 end

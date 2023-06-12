@@ -437,10 +437,11 @@ function modifier_imba_shadow_word:OnIntervalThink()
 		local spell_power = self.caster:GetSpellAmplification(false)
 		local heal = self.tick_value * (1 + spell_power * 0.01)
 
-		self.parent:Heal(heal, self.caster)
+		self.parent:Heal(heal, self.ability)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.parent, heal, nil)
 	else
-		local damageTable = {victim = self.parent,
+		local damageTable = {
+			victim = self.parent,
 			attacker = self.caster,
 			damage = self.tick_value,
 			damage_type = DAMAGE_TYPE_MAGICAL,
