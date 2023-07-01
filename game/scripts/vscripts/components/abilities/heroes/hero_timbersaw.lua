@@ -167,6 +167,7 @@ function modifier_imba_timbersaw_whirling_death_debuff:OnCreated(params)
 	if not IsServer() or not self:GetParent().GetPrimaryStatValue then return end
 	
 	self.efficacy	= params.efficacy
+	self.parent_attribute = self:GetParent():GetPrimaryAttribute()
 	
 	if not params.stat_loss_pct then
 		self.primary_stat_loss	= self:GetParent():GetPrimaryStatValue() * self:GetAbility():GetTalentSpecialValueFor("stat_loss_pct") * 0.01 * (-1) * self.efficacy
@@ -177,7 +178,7 @@ function modifier_imba_timbersaw_whirling_death_debuff:OnCreated(params)
 	-- IMBAfication: Blood to Oil
 	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_whirling_death_oil", {
 		duration	= params.blood_oil_duration,
-		attribute	= self:GetParent():GetPrimaryAttribute(),
+		attribute	= self.parent_attribute,
 		stat_gain	= self.primary_stat_loss * params.blood_oil_convert_pct * 0.01 * (-1)
 	})
 	
@@ -206,15 +207,27 @@ end
 
 if IsServer() then
 	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Strength()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_STRENGTH then return self.primary_stat_loss end
+		if self.parent_attribute == DOTA_ATTRIBUTE_STRENGTH then
+			return self.primary_stat_loss
+		elseif self.parent_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.primary_stat_loss / 2
+		end
 	end
 
 	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Agility()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_AGILITY then return self.primary_stat_loss end
+		if self.parent_attribute == DOTA_ATTRIBUTE_AGILITY then
+			return self.primary_stat_loss
+		elseif self.parent_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.primary_stat_loss / 2
+		end
 	end
 
 	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Intellect()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_INTELLECT then return self.primary_stat_loss end
+		if self.parent_attribute == DOTA_ATTRIBUTE_INTELLECT then
+			return self.primary_stat_loss
+		elseif self.parent_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.primary_stat_loss / 2
+		end
 	end
 end
 
@@ -250,15 +263,27 @@ end
 
 if IsServer() then
 	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Strength()
-		if self.attribute == DOTA_ATTRIBUTE_STRENGTH then return self.stat_gain end
+		if self.attribute == DOTA_ATTRIBUTE_STRENGTH then
+			return self.stat_gain
+		elseif self.attribute == DOTA_ATTRIBUTE_ALL then
+			return self.stat_gain / 2
+		end
 	end
 
 	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Agility()
-		if self.attribute == DOTA_ATTRIBUTE_AGILITY then return self.stat_gain end
+		if self.attribute == DOTA_ATTRIBUTE_AGILITY then
+			return self.stat_gain
+		elseif self.attribute == DOTA_ATTRIBUTE_ALL then
+			return self.stat_gain / 2
+		end
 	end
 
 	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Intellect()
-		if self.attribute == DOTA_ATTRIBUTE_INTELLECT then return self.stat_gain end
+		if self.attribute == DOTA_ATTRIBUTE_INTELLECT then
+			return self.stat_gain
+		elseif self.attribute == DOTA_ATTRIBUTE_ALL then
+			return self.stat_gain / 2
+		end
 	end
 end
 

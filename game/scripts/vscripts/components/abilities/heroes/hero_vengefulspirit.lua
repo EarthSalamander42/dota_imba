@@ -975,22 +975,32 @@ function modifier_imba_vengefulspirit_command_aura_effect_723:DeclareFunctions()
 end
 
 function modifier_imba_vengefulspirit_command_aura_effect_723:GetModifierBonusStats_Strength()
-	if self:GetAbility() and self.hero_primary_attribute == DOTA_ATTRIBUTE_STRENGTH then
-		return self:GetAbility():GetSpecialValueFor("bonus_attributes") + self:GetAbility():FindTalentValue("special_bonus_unique_vengeful_spirit_2")
+	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_STRENGTH or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL) then
+		local bonus = self:GetAbility():GetSpecialValueFor("bonus_attributes") + self:GetAbility():FindTalentValue("special_bonus_unique_vengeful_spirit_2")
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return bonus / 3
+		end
+		return bonus
 	end
 end
 
 function modifier_imba_vengefulspirit_command_aura_effect_723:GetModifierBonusStats_Agility()
-	print(self.hero_primary_attribute, DOTA_ATTRIBUTE_AGILITY)
-	if self:GetAbility() and self.hero_primary_attribute == DOTA_ATTRIBUTE_AGILITY then
-		print(self:GetAbility():GetSpecialValueFor("bonus_attributes"), self:GetAbility():FindTalentValue("special_bonus_unique_vengeful_spirit_2"))
-		return self:GetAbility():GetSpecialValueFor("bonus_attributes") + self:GetAbility():FindTalentValue("special_bonus_unique_vengeful_spirit_2")
+	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_AGILITY or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL) then
+		local bonus = self:GetAbility():GetSpecialValueFor("bonus_attributes") + self:GetAbility():FindTalentValue("special_bonus_unique_vengeful_spirit_2")
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return bonus / 3
+		end
+		return bonus
 	end
 end
 
 function modifier_imba_vengefulspirit_command_aura_effect_723:GetModifierBonusStats_Intellect()
-	if self:GetAbility() and self.hero_primary_attribute == DOTA_ATTRIBUTE_INTELLECT then
-		return self:GetAbility():GetSpecialValueFor("bonus_attributes") + self:GetAbility():FindTalentValue("special_bonus_unique_vengeful_spirit_2")
+	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_INTELLECT or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL) then
+		local bonus = self:GetAbility():GetSpecialValueFor("bonus_attributes") + self:GetAbility():FindTalentValue("special_bonus_unique_vengeful_spirit_2")
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return bonus / 3
+		end
+		return bonus
 	end
 end
 
@@ -1085,19 +1095,28 @@ function modifier_imba_vengefulspirit_command_negative_aura_effect_723:DeclareFu
 end
 
 function modifier_imba_vengefulspirit_command_negative_aura_effect_723:GetModifierBonusStats_Strength()
-	if self.hero_primary_attribute == DOTA_ATTRIBUTE_STRENGTH then
+	if self.hero_primary_attribute == DOTA_ATTRIBUTE_STRENGTH or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.bonus_attributes / 3
+		end
 		return self.bonus_attributes
 	end
 end
 
 function modifier_imba_vengefulspirit_command_negative_aura_effect_723:GetModifierBonusStats_Agility()
-	if self.hero_primary_attribute == DOTA_ATTRIBUTE_AGILITY then
+	if self.hero_primary_attribute == DOTA_ATTRIBUTE_AGILITY or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.bonus_attributes / 3
+		end
 		return self.bonus_attributes
 	end
 end
 
 function modifier_imba_vengefulspirit_command_negative_aura_effect_723:GetModifierBonusStats_Intellect()
-	if self.hero_primary_attribute == DOTA_ATTRIBUTE_INTELLECT then
+	if self.hero_primary_attribute == DOTA_ATTRIBUTE_INTELLECT or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.bonus_attributes / 3
+		end
 		return self.bonus_attributes
 	end
 end

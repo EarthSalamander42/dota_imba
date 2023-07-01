@@ -408,20 +408,32 @@ function modifier_imba_luna_lunar_blessing_aura:DeclareFunctions()
 end
 
 function modifier_imba_luna_lunar_blessing_aura:GetModifierBonusStats_Strength()
-	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_STRENGTH or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) and not self:GetCaster():PassivesDisabled() then
-		return self:GetAbility():GetSpecialValueFor("primary_attribute")
+	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_STRENGTH or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) and not self:GetCaster():PassivesDisabled() then
+		local bonus = self:GetAbility():GetSpecialValueFor("primary_attribute")
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return bonus / 3
+		end
+		return bonus
 	end
 end
 
 function modifier_imba_luna_lunar_blessing_aura:GetModifierBonusStats_Agility()
-	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_AGILITY or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) and not self:GetCaster():PassivesDisabled() then
-		return self:GetAbility():GetSpecialValueFor("primary_attribute")
+	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_AGILITY or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) and not self:GetCaster():PassivesDisabled() then
+		local bonus = self:GetAbility():GetSpecialValueFor("primary_attribute")
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return bonus / 3
+		end
+		return bonus
 	end
 end
 
 function modifier_imba_luna_lunar_blessing_aura:GetModifierBonusStats_Intellect()
-	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_INTELLECT or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) and not self:GetCaster():PassivesDisabled() then
-		return self:GetAbility():GetSpecialValueFor("primary_attribute")
+	if self:GetAbility() and (self.hero_primary_attribute == DOTA_ATTRIBUTE_INTELLECT or self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL or (self:GetAbility().full_moon and GameRules:GetDOTATime(true, true) - self:GetAbility().full_moon <= self:GetAbility():GetSpecialValueFor("full_moon_duration"))) and not self:GetCaster():PassivesDisabled() then
+		local bonus = self:GetAbility():GetSpecialValueFor("primary_attribute")
+		if self.hero_primary_attribute == DOTA_ATTRIBUTE_ALL then
+			return bonus / 3
+		end
+		return bonus
 	end
 end
 

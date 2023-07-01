@@ -50,14 +50,19 @@ function modifier_imba_double_damage_rune:OnCreated(keys)
 		local primary_attribute = self:GetParent():GetPrimaryAttribute()
 
 		-- Strength
-		if primary_attribute == 0 then
+		if primary_attribute == DOTA_ATTRIBUTE_STRENGTH then
 			self.strength_bonus = self:GetParent():GetBaseStrength() * self.bonus_main_attribute_multiplier
 		-- Agility
-		elseif primary_attribute == 1 then
+		elseif primary_attribute == DOTA_ATTRIBUTE_AGILITY then
 			self.agility_bonus = self:GetParent():GetBaseAgility() * self.bonus_main_attribute_multiplier
 		-- Intelligence
-		else
+		elseif primary_attribute == DOTA_ATTRIBUTE_INTELLECT then
 			self.intellect_bonus = self:GetParent():GetBaseIntellect() * self.bonus_main_attribute_multiplier
+		elseif primary_attribute == DOTA_ATTRIBUTE_ALL then
+		-- Universal
+			self.strength_bonus = self:GetParent():GetBaseStrength() * self.bonus_main_attribute_multiplier / 3
+			self.agility_bonus = self:GetParent():GetBaseAgility() * self.bonus_main_attribute_multiplier / 3
+			self.intellect_bonus = self:GetParent():GetBaseIntellect() * self.bonus_main_attribute_multiplier / 3
 		end
 	end
 end
@@ -126,14 +131,19 @@ function modifier_imba_rune_doubledamage_aura:OnCreated()
 		local primary_attribute = self:GetParent():GetPrimaryAttribute()
 
 		-- Strength
-		if primary_attribute == 0 then
+		if primary_attribute == DOTA_ATTRIBUTE_STRENGTH then
 			self.strength_bonus = self:GetParent():GetBaseStrength() * self.bonus_main_attribute_multiplier
 		-- Agility
-		elseif primary_attribute == 1 then
+		elseif primary_attribute == DOTA_ATTRIBUTE_AGILITY then
 			self.agility_bonus = self:GetParent():GetBaseAgility() * self.bonus_main_attribute_multiplier
 		-- Intelligence
-		else
+		elseif primary_attribute == DOTA_ATTRIBUTE_INTELLECT then
 			self.intellect_bonus = self:GetParent():GetBaseIntellect() * self.bonus_main_attribute_multiplier
+		elseif primary_attribute == DOTA_ATTRIBUTE_ALL then
+		-- Universal	
+			self.strength_bonus = self:GetParent():GetBaseStrength() * self.bonus_main_attribute_multiplier / 3
+			self.agility_bonus = self:GetParent():GetBaseAgility() * self.bonus_main_attribute_multiplier / 3
+			self.intellect_bonus = self:GetParent():GetBaseIntellect() * self.bonus_main_attribute_multiplier / 3
 		end
 	end
 end
