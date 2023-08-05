@@ -392,7 +392,7 @@ function imba_slark_pounce:OnSpellStart()
 			self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").direction = self:GetCaster():GetForwardVector()
 		end
 
-		self:UseResources(false, false, true)
+		self:UseResources(false, false, false, true)
 	end
 end
 
@@ -454,12 +454,12 @@ function modifier_imba_slark_pounce:OnRemoved()
 
 	if self:GetAbility() then
 		if not self:GetCaster():HasScepter() then
-			self:GetAbility():UseResources(false, false, true)
+			self:GetAbility():UseResources(false, false, false, true)
 		else
 			if self:GetCaster():GetModifierStackCount("modifier_imba_slark_pounce_charge_counter", self:GetCaster()) == 0 then
 				self:GetAbility():StartCooldown(self:GetCaster():FindModifierByName("modifier_imba_slark_pounce_charge_counter"):GetRemainingTime())
 			else
-				self:GetAbility():UseResources(false, false, true)
+				self:GetAbility():UseResources(false, false, false, true)
 			end
 		end
 	end
@@ -1054,11 +1054,11 @@ function modifier_imba_slark_shadow_dance_passive_regen:OnCreated()
 	-- self.bPassiveActive is redundant here cause I'm using stackcounts in order to control modifier visibility on client-side, but I'll leave it for reference
 	self.bPassiveActive  = true -- Is the regen/move speed modifier currently active?
 	self.bVisible        = false -- Is the parent visible to any of the enemy teams? (I say enemy teams because of potential stuff like Overthrow or Underhollow)
-	self.counter         = 0 -- Counts up until a certain threshold to switch self.bPassiveActive on/off
+	self.counter         = 0  -- Counts up until a certain threshold to switch self.bPassiveActive on/off
 	self.interval        = 0.1 -- How often the check is done
 
 	self.bHitByNeutral   = false -- Has the hero been damaged by a neutral recently?
-	self.neutral_counter = 0 -- Counts up until a certain threshold to switch self.bHitByNeutral off
+	self.neutral_counter = 0  -- Counts up until a certain threshold to switch self.bHitByNeutral off
 
 	self:StartIntervalThink(self.interval)
 end

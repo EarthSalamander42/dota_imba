@@ -114,8 +114,8 @@ function imba_ursa_earthshock:ApplyEarthShock()
 				else
 					local scale_increase_for_distance = math.floor(edge_distance / values_increase_distance) --how much it should scale
 					local pct_increase_for_distance = values_increase_pct * scale_increase_for_distance -- how many percents the scale should go up
-					damage = base_damage * (1 + pct_increase_for_distance)                     -- final damage
-					earthshock_debuff_slow_pct = slow_pct * (1 + pct_increase_for_distance)    -- final slow value
+					damage = base_damage * (1 + pct_increase_for_distance)                    -- final damage
+					earthshock_debuff_slow_pct = slow_pct * (1 + pct_increase_for_distance)   -- final slow value
 				end
 
 				-- Apply damage
@@ -166,7 +166,7 @@ function modifier_imba_earthshock_slow:OnCreated()
 	else
 		self.scale_increase_for_distance = math.floor(self.edge_distance / self.values_increase_distance) --how much it should scale
 		self.pct_increase_for_distance = self.values_increase_pct * self.scale_increase_for_distance -- how many percents the scale should go up
-		self.earthshock_debuff_slow_pct = self.slow_pct * (1 + self.pct_increase_for_distance)       -- final slow value
+		self.earthshock_debuff_slow_pct = self.slow_pct * (1 + self.pct_increase_for_distance)      -- final slow value
 	end
 end
 
@@ -770,7 +770,7 @@ function modifier_imba_overpower_talent_fangs:OnAttackStart(keys)
 			self.ability:DisarmEnemies(self.caster, self.ability)
 
 			-- Trigger the cooldown of the ability
-			self.ability:UseResources(false, false, true)
+			self.ability:UseResources(false, false, false, true)
 		end
 	end
 end

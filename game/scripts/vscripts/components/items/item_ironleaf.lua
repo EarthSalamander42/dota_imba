@@ -388,7 +388,7 @@ function modifier_imba_ironleaf_boots_meditate:OnAttackLanded(keys)
 			end
 
 			-- Boots go into cooldown
-			self.ability:UseResources(false, false, true)
+			self.ability:UseResources(false, false, false, true)
 
 			-- Restart the interval thinker
 			self:StartIntervalThink(self.meditate_interval)

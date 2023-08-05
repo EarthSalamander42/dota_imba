@@ -16,7 +16,7 @@
 #base heroes/ember_spirit/hero.txt
 #base heroes/enchantress/hero.txt
 #base heroes/furion/hero.txt
-#base heroes/grimstroke/hero.txt
+// #base heroes/grimstroke/hero.txt
 #base heroes/gyrocopter/hero.txt
 #base heroes/hoodwink/hero.txt
 #base heroes/huskar/hero.txt

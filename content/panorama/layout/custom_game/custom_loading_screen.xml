@@ -9,7 +9,7 @@
 	</scripts>
 
 	<Panel class="addon-root">
-		<Panel class="vote-container-main">
+		<!-- <Panel class="vote-container-main">
 			<Panel id="vote-content" class="vote-content">
 				<Label class="vote-content-title" text="Choose a Mode"/>
 
@@ -73,7 +73,7 @@
 					</Panel>
 				</Panel>
 			</Panel>
-		</Panel>
+		</Panel> -->
 
 		<Panel class="container-main">
 			<Panel class="header">
@@ -89,7 +89,7 @@
 						<DOTAProfileCard id="ProfileCard" class="FixedSize"/>
 					</Panel>
 
-					<Panel id="vote-container" class="vote-container">
+					<!-- <Panel id="vote-container" class="vote-container">
 						<Panel class="vote-header-container">
 							<Label class="vote-title" text="GAMEMODE"/>
 							<Panel class="vote-info"/>
@@ -100,9 +100,9 @@
 						<Label id="VoteGameModeText2" class="vote-label" text="#vote_gamemode_2" />
 
 						<Label id="VoteGameModeText3" class="vote-label" text="#vote_gamemode_3" />
-<!--
+
 						<Label id="VoteGameModeText4" class="vote-label" text="#vote_gamemode_4" />
--->
+
 						<Label id="VoteGameModeText5" class="vote-label" text="#vote_gamemode_5" />
 
 						<Label id="VoteGameModeCheck" class="vote-label vote-check" text="You have not voted yet." />
@@ -110,7 +110,7 @@
 						<Button id="MainVoteButton" class="vote-button" onactivate="ToggleVoteContainer(true);">
 							<Label class="vote-button-label" text="Change Vote" />
 						</Button>
-					</Panel>
+					</Panel> -->
 				</Panel>
 
 				<Panel class="description-container">
@@ -136,8 +136,6 @@
 					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(1)" text="Custom Games" />
 					<Label class="bottom-radio-separator" text="/" />
 					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(2)" text="Transifex" />
-					<Label class="bottom-radio-separator" text="/" />
-					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(3)" text="#loading_screen_patreon" />
 				</Panel>
 
 				<Label id="BottomLabel" class="bottom-label" text="#loading_screen_custom_games_1"/>
@@ -222,15 +220,6 @@
 					<Panel class="bottom-transifex-container">
 						<Button class="vote-button" onactivate="ExternalBrowserGoToURL('https://www.transifex.com/frostrose-studio/dota-imba/')">
 							<Label class="vote-button-label" text="#loading_screen_promote_button" />
-						</Button>
-					</Panel>
-
-					<Panel class="bottom-patreon-container">
-						<!-- Filled Dynamically -->
-						<Panel class="bottom-patreon-sub"/>
-
-						<Button class="loading-link-patreon" onactivate="ExternalBrowserGoToURL('https://www.patreon.com/bePatron?u=2533325')">
-							<Label class="vote-button-label" />
 						</Button>
 					</Panel>
 				</Panel>

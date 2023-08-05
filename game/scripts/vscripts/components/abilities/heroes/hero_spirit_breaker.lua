@@ -329,7 +329,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:OnDestroy()
 	-- Gonna call these first cause they're arguably more important and don't want to brick the hero if code fails
 	if self:GetAbility() then
 		self:GetAbility():SetActivated(true)
-		self:GetAbility():UseResources(false, false, true)
+		self:GetAbility():UseResources(false, false, false, true)
 	end
 
 	self:GetParent():StopSound("Hero_Spirit_Breaker.ChargeOfDarkness.FP")
@@ -872,7 +872,7 @@ function modifier_imba_spirit_breaker_greater_bash:OnAttackLanded(keys)
 	if self:GetAbility() and self:GetAbility():IsTrained() and self:GetAbility():IsCooldownReady() and keys.attacker == self:GetParent() and not keys.attacker:PassivesDisabled() and not keys.target:IsOther() and not keys.target:IsBuilding() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and not self:GetParent():IsIllusion() then
 		if RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance_pct"), self) then
 			self:GetAbility():Bash(keys.target, keys.attacker)
-			self:GetAbility():UseResources(false, false, true)
+			self:GetAbility():UseResources(false, false, false, true)
 		end
 	end
 end

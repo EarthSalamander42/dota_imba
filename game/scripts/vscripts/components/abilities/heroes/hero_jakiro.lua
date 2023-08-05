@@ -34,61 +34,60 @@ end
 
 -- function base_ability_dual_breath:OnUpgrade()
 
-	-- if IsServer() then
-		-- local caster = self:GetCaster()
-		-- -- Do not switch dual breath abilities if it is a stolen spell
-		-- if self:IsStolen() then
-			-- return nil
-		-- end
+-- if IsServer() then
+-- local caster = self:GetCaster()
+-- -- Do not switch dual breath abilities if it is a stolen spell
+-- if self:IsStolen() then
+-- return nil
+-- end
 
-		-- local ability_other_breath_name = self.ability_other_breath_name
+-- local ability_other_breath_name = self.ability_other_breath_name
 
-		-- if not ability_other_breath_name then
-			-- return nil
-		-- end
+-- if not ability_other_breath_name then
+-- return nil
+-- end
 
-		-- -- Prevent dead lock updating each other
-		-- local ability_level = self:GetLevel()
-		-- if not caster.breath_level or caster.breath_level ~= ability_level then
-			-- caster.breath_level = ability_level
-			-- SetAbilityLevelIfPresent(caster, ability_other_breath_name, ability_level)
-		-- end
-	-- end
+-- -- Prevent dead lock updating each other
+-- local ability_level = self:GetLevel()
+-- if not caster.breath_level or caster.breath_level ~= ability_level then
+-- caster.breath_level = ability_level
+-- SetAbilityLevelIfPresent(caster, ability_other_breath_name, ability_level)
+-- end
+-- end
 
 -- end
 
 function base_ability_dual_breath:OnSpellStart()
-
 	if IsServer() then
 		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
 		end
-	
+
 		local caster = self:GetCaster()
 
 		caster:EmitSound("Hero_Jakiro.DualBreath")
 		caster:AddNewModifier(caster, self, self.modifier_caster_name, {})
-		
+
 		-- Don't let Jakiro use all three breaths in quick succession
 		if self:GetCaster():HasAbility("imba_jakiro_dual_breath") then
-			self:GetCaster():FindAbilityByName("imba_jakiro_dual_breath"):UseResources(false, false, true)
+			self:GetCaster():FindAbilityByName("imba_jakiro_dual_breath"):UseResources(false, false, false, true)
 		end
 	end
 end
 
 -- Base dual breath modifier to be placed on caster. This modifier makes the hero fly forward while applying damage in an AOE
 local base_modifier_dual_breath_caster = class({
-	IsHidden 						= function(self) return true end,
-	IsPurgable 						= function(self) return false end,
-	IsDebuff 						= function(self) return false end,
-	IsMotionController				= function(self) return true end,
-	GetMotionControllerPriority		= function(self) return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end,
-	AllowIllusionDuplicate			= function(self) return false end,
-	GetOverrideAnimation 			= function(self) return ACT_DOTA_FLAIL end,
+	IsHidden                        = function(self) return true end,
+	IsPurgable                      = function(self) return false end,
+	IsDebuff                        = function(self) return false end,
+	IsMotionController              = function(self) return true end,
+	GetMotionControllerPriority     = function(self) return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end,
+	AllowIllusionDuplicate          = function(self) return false end,
+	GetOverrideAnimation            = function(self) return ACT_DOTA_FLAIL end,
 	GetActivityTranslationModifiers = function(self) return "forcestaff_friendly" end,
-	GetOverrideAnimationRate 		= function(self) return 0.5 end,
-	GetModifierDisableTurning 		= function(self) return 1 end -- Disable turning during flying animation
+	GetOverrideAnimationRate        = function(self) return 0.5 end,
+	GetModifierDisableTurning       = function(self) return 1 end -- Disable turning during flying animation
 })
 
 function base_modifier_dual_breath_caster:DeclareFunctions()
@@ -102,10 +101,8 @@ function base_modifier_dual_breath_caster:DeclareFunctions()
 	return funcs
 end
 
-function base_modifier_dual_breath_caster:OnCreated( kv )
-
+function base_modifier_dual_breath_caster:OnCreated(kv)
 	if IsServer() then
-
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local caster_pos = caster:GetAbsOrigin()
@@ -126,8 +123,8 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 		self.ability_target_flags = ability:GetAbilityTargetFlags()
 
 		local caster_pos = caster:GetAbsOrigin()
-		local breath_direction = ( target - caster_pos ):Normalized()
-		local breath_distance = ( target - caster_pos ):Length2D()
+		local breath_direction = (target - caster_pos):Normalized()
+		local breath_distance = (target - caster_pos):Length2D()
 		if breath_distance > range then
 			breath_distance = range
 		end
@@ -140,7 +137,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 		self.breath_distance = breath_distance
 
 		-- Tick rate is 30 per sec
-		self.breath_speed = breath_speed * 1/30
+		self.breath_speed = breath_speed * 1 / 30
 		self.breath_traveled = 0
 		self.affected_unit_list = {}
 
@@ -150,16 +147,16 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 			-- Delay before destroying particle
 			Timers:CreateTimer(0.4, function()
 				ParticleManager:DestroyParticle(destroy_existing_breath_particle, false)
-				ParticleManager:ReleaseParticleIndex( destroy_existing_breath_particle )
+				ParticleManager:ReleaseParticleIndex(destroy_existing_breath_particle)
 			end)
 		end
 
 		-- Create breath particle
 		local breath_pfx = ParticleManager:CreateParticle(particle_breath, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(breath_pfx, 0, caster_pos )
+		ParticleManager:SetParticleControl(breath_pfx, 0, caster_pos)
 		ParticleManager:SetParticleControl(breath_pfx, 1, breath_direction * breath_speed)
-		ParticleManager:SetParticleControl(breath_pfx, 3, Vector(0,0,0) )
-		ParticleManager:SetParticleControl(breath_pfx, 9, caster_pos )
+		ParticleManager:SetParticleControl(breath_pfx, 3, Vector(0, 0, 0))
+		ParticleManager:SetParticleControl(breath_pfx, 9, caster_pos)
 
 		self.existing_breath_particle = breath_pfx
 
@@ -179,7 +176,7 @@ function base_modifier_dual_breath_caster:OnIntervalThink()
 	self:HorizontalMotion(self.caster, self.frametime)
 end
 
-function base_modifier_dual_breath_caster:_DualBreathApplyModifierToEnemies( enemies )
+function base_modifier_dual_breath_caster:_DualBreathApplyModifierToEnemies(enemies)
 	local caster = self.caster
 	local ability = self.ability
 
@@ -187,17 +184,16 @@ function base_modifier_dual_breath_caster:_DualBreathApplyModifierToEnemies( ene
 	local debuff_duration = self.debuff_duration
 	local modifier_debuff_name = self.modifier_debuff_name
 
-	for _,enemy in pairs(enemies) do
+	for _, enemy in pairs(enemies) do
 		--Apply Debuff only once per unit
 		if not affected_unit_list[enemy] then
 			affected_unit_list[enemy] = true
-			enemy:AddNewModifier(caster, ability, modifier_debuff_name, { duration = debuff_duration * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(caster, ability, modifier_debuff_name, { duration = debuff_duration * (1 - enemy:GetStatusResistance()) })
 		end
 	end
 end
 
 function base_modifier_dual_breath_caster:_DualBreathAOEApplyModifier()
-
 	local caster = self.caster
 	local ability = self.ability
 
@@ -211,26 +207,24 @@ function base_modifier_dual_breath_caster:_DualBreathAOEApplyModifier()
 
 	-- Apply Breath modifier on enemies around jakiro
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, path_radius, ability_target_team, ability_target_type, ability_target_flags, FIND_ANY_ORDER, false)
-	self:_DualBreathApplyModifierToEnemies( enemies )
+	self:_DualBreathApplyModifierToEnemies(enemies)
 
 	-- Destroy trees
 	GridNav:DestroyTreesAroundPoint(caster_pos, path_radius, false)
 
 	-- Needs to minus the path_radius otherwise FindUnitsInLine will search the extra distance
 	local spill_distance = (self.spill_distance - path_radius)
-	local target_vector = caster_pos + ( self.breath_direction * spill_distance )
+	local target_vector = caster_pos + (self.breath_direction * spill_distance)
 
 	-- Apply Breath modifier on enemies infront of jakiro
-	enemies = FindUnitsInLine(caster:GetTeamNumber(), caster_pos, target_vector, nil, path_radius*2, ability_target_team, ability_target_type, ability_target_flags)
-	self:_DualBreathApplyModifierToEnemies( enemies )
+	enemies = FindUnitsInLine(caster:GetTeamNumber(), caster_pos, target_vector, nil, path_radius * 2, ability_target_team, ability_target_type, ability_target_flags)
+	self:_DualBreathApplyModifierToEnemies(enemies)
 
 	-- Destroy trees
 	GridNav:DestroyTreesAroundPoint(target_vector, path_radius, false)
 end
 
-
 function base_modifier_dual_breath_caster:HorizontalMotion()
-
 	if IsServer() then
 		local caster = self.caster
 		local ability = self.ability
@@ -238,7 +232,7 @@ function base_modifier_dual_breath_caster:HorizontalMotion()
 		local breath_traveled = self.breath_traveled
 
 		self:_DualBreathAOEApplyModifier()
-		
+
 		-- Let Jakiro still complete the Dual Breath if disabled
 		-- if breath_traveled < self.breath_distance and not caster:IsStunned() and not caster:IsSilenced() and not caster:IsHexed() and not caster:IsNightmared() then
 		if breath_traveled < self.breath_distance then
@@ -274,7 +268,7 @@ function base_modifier_dual_breath_caster:OnDestroy()
 			-- Delay before destroying particle
 			Timers:CreateTimer(0.4, function()
 				ParticleManager:DestroyParticle(destroy_existing_breath_particle, false)
-				ParticleManager:ReleaseParticleIndex( destroy_existing_breath_particle )
+				ParticleManager:ReleaseParticleIndex(destroy_existing_breath_particle)
 			end)
 		end
 
@@ -284,9 +278,9 @@ end
 
 -- Base DOT (Damage Over Time) debuff class
 local base_modifier_dot_debuff = class({
-	IsHidden		= function(self) return false end,
-	IsPurgable	  	= function(self) return true end,
-	IsDebuff	  	= function(self) return true end
+	IsHidden   = function(self) return false end,
+	IsPurgable = function(self) return true end,
+	IsDebuff   = function(self) return true end
 })
 
 -- _UpdateDebuffLevelValues is called in OnCreated and OnRefreshed to handle ability values that changes with level or talents
@@ -294,11 +288,11 @@ function base_modifier_dot_debuff:_UpdateDebuffLevelValues()
 	if IsServer() then
 		local ability = self.ability
 		local damage = ability:GetSpecialValueFor("damage")
-		
+
 		if ability:GetName() == "imba_jakiro_macropyre" and self:GetCaster():HasScepter() then
 			damage = ability:GetSpecialValueFor("damage_scepter")
 		end
-		
+
 		self.tick_damage = damage * self.damage_interval
 	end
 
@@ -309,13 +303,12 @@ function base_modifier_dot_debuff:_UpdateDebuffLevelValues()
 end
 
 function base_modifier_dot_debuff:OnCreated()
+	self.caster   = self:GetCaster()
+	self.parent   = self:GetParent()
 
-	self.caster 			= self:GetCaster()
-	self.parent 			= self:GetParent()
+	local ability = self:GetAbility()
 
-	local ability 			= self:GetAbility()
-
-	self.ability 			= ability
+	self.ability  = ability
 
 	-- _SubClassOnCreated is to implemented by inherit class to perform attaching ability value in OnCreated
 	if self._SubClassOnCreated then
@@ -323,10 +316,10 @@ function base_modifier_dot_debuff:OnCreated()
 	end
 
 	if IsServer() then
-		local damage_interval 	= ability:GetSpecialValueFor("damage_interval")
+		local damage_interval = ability:GetSpecialValueFor("damage_interval")
 
-		self.ability_dmg_type 	= ability:GetAbilityDamageType()
-		self.damage_interval	= damage_interval
+		self.ability_dmg_type = ability:GetAbilityDamageType()
+		self.damage_interval  = damage_interval
 	end
 
 	self:_UpdateDebuffLevelValues()
@@ -335,7 +328,7 @@ function base_modifier_dot_debuff:OnCreated()
 		-- Apply damage immediately
 		self:OnIntervalThink()
 		-- Run interval applying of damage
-		
+
 		if ability:GetName() == "imba_jakiro_macropyre" then
 			self:StartIntervalThink(self.damage_interval)
 		else
@@ -362,11 +355,11 @@ function base_modifier_dot_debuff:OnIntervalThink()
 				local ability_level = ability_ice_path:GetLevel() - 1
 				-- #7 Talent: Ice Path Antipode Effect Increase
 				local dmg_amp = ability_ice_path:GetLevelSpecialValueFor("dmg_amp", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_7")
-				final_tick_damage = final_tick_damage * ( 1 + dmg_amp/100 )
+				final_tick_damage = final_tick_damage * (1 + dmg_amp / 100)
 			end
 		end
 
-		ApplyDamage({attacker = caster, victim = victim, ability = self.ability, damage = final_tick_damage, damage_type = self.ability_dmg_type })
+		ApplyDamage({ attacker = caster, victim = victim, ability = self.ability, damage = final_tick_damage, damage_type = self.ability_dmg_type })
 	end
 end
 
@@ -374,7 +367,7 @@ end
 --		Fire Breath        --
 -----------------------------
 -- Extend base_ability_dual_breath
-imba_jakiro_fire_breath = ShallowCopy( base_ability_dual_breath )
+imba_jakiro_fire_breath = ShallowCopy(base_ability_dual_breath)
 imba_jakiro_fire_breath.ability_other_breath_name = "imba_jakiro_ice_breath"
 imba_jakiro_fire_breath.modifier_caster_name = "modifier_imba_fire_breath_caster"
 LinkLuaModifier("modifier_imba_fire_breath_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
@@ -386,7 +379,7 @@ end
 
 -- Fire breath debuff (applied to enemies to deal damage)
 -- Extend base_modifier_dot_debuff
-modifier_imba_fire_breath_debuff = ShallowCopy( base_modifier_dot_debuff )
+modifier_imba_fire_breath_debuff = ShallowCopy(base_modifier_dot_debuff)
 
 -- Override _UpdateDebuffLevelValues due to talent
 function modifier_imba_fire_breath_debuff:_UpdateDebuffLevelValues()
@@ -403,7 +396,7 @@ end
 function modifier_imba_fire_breath_debuff:_SubClassOnCreated()
 	self.move_slow = -(self.ability:GetSpecialValueFor("move_slow"))
 
-	local particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf", PATTACH_POINT_FOLLOW, self:GetParent() )
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 	self:AddParticle(particle, false, false, -1, false, false)
 end
 
@@ -419,7 +412,7 @@ function modifier_imba_fire_breath_debuff:GetModifierMoveSpeedBonus_Percentage()
 
 -- Dual breath modifier applied to caster
 -- Extend base_modifier_dual_breath_caster
-modifier_imba_fire_breath_caster = ShallowCopy( base_modifier_dual_breath_caster )
+modifier_imba_fire_breath_caster = ShallowCopy(base_modifier_dual_breath_caster)
 modifier_imba_fire_breath_caster.modifier_debuff_name = "modifier_imba_fire_breath_debuff"
 modifier_imba_fire_breath_caster.ability_other_breath_name = "imba_jakiro_ice_breath"
 modifier_imba_fire_breath_caster.particle_breath = "particles/hero/jakiro/jakiro_fire_breath.vpcf"
@@ -428,7 +421,7 @@ modifier_imba_fire_breath_caster.particle_breath = "particles/hero/jakiro/jakiro
 --		Ice Breath         --
 -----------------------------
 -- Extend base_ability_dual_breath
-imba_jakiro_ice_breath = ShallowCopy( base_ability_dual_breath )
+imba_jakiro_ice_breath = ShallowCopy(base_ability_dual_breath)
 imba_jakiro_ice_breath.ability_other_breath_name = "imba_jakiro_fire_breath"
 imba_jakiro_ice_breath.modifier_caster_name = "modifier_imba_ice_breath_caster"
 LinkLuaModifier("modifier_imba_ice_breath_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
@@ -440,10 +433,10 @@ end
 
 -- Ice breath debuff (applied to enemies to deal damage)
 -- Extend base_modifier_dot_debuff
-modifier_imba_ice_breath_debuff = ShallowCopy( base_modifier_dot_debuff )
+modifier_imba_ice_breath_debuff = ShallowCopy(base_modifier_dot_debuff)
 
 function modifier_imba_ice_breath_debuff:_SubClassOnCreated()
-	local particle = ParticleManager:CreateParticle( "particles/generic_gameplay/generic_slowed_cold.vpcf", PATTACH_POINT_FOLLOW, self:GetParent() )
+	local particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_slowed_cold.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 	self:AddParticle(particle, false, false, -1, false, false)
 end
 
@@ -453,7 +446,7 @@ function modifier_imba_ice_breath_debuff:_UpdateSubClassLevelValues()
 	local talent_slow = self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
 	-- slow_increase is positive
 	-- attack_slow is a constant, not a percentage
-	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow")) * (1+(talent_slow/100))
+	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow")) * (1 + (talent_slow / 100))
 	self.move_slow = -(ability:GetSpecialValueFor("move_slow")) - talent_slow
 end
 
@@ -465,6 +458,7 @@ function modifier_imba_ice_breath_debuff:DeclareFunctions()
 end
 
 function modifier_imba_ice_breath_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
+
 function modifier_imba_ice_breath_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow end
 
 -- Dual breath modifier applied to caster
@@ -484,11 +478,11 @@ LinkLuaModifier("modifier_imba_jakiro_dual_breath_burn", "components/abilities/h
 LinkLuaModifier("modifier_imba_jakiro_dual_breath_self_root", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_jakiro_dual_breath_self_disable_turning", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
-imba_jakiro_dual_breath					= imba_jakiro_dual_breath or class({})
-modifier_imba_jakiro_dual_breath_slow	= modifier_imba_jakiro_dual_breath_slow or class({})
-modifier_imba_jakiro_dual_breath_burn	= modifier_imba_jakiro_dual_breath_burn or class({})
-modifier_imba_jakiro_dual_breath_self_root				= modifier_imba_jakiro_dual_breath_self_root or class({})
-modifier_imba_jakiro_dual_breath_self_disable_turning	= modifier_imba_jakiro_dual_breath_self_disable_turning or class({})
+imba_jakiro_dual_breath                               = imba_jakiro_dual_breath or class({})
+modifier_imba_jakiro_dual_breath_slow                 = modifier_imba_jakiro_dual_breath_slow or class({})
+modifier_imba_jakiro_dual_breath_burn                 = modifier_imba_jakiro_dual_breath_burn or class({})
+modifier_imba_jakiro_dual_breath_self_root            = modifier_imba_jakiro_dual_breath_self_root or class({})
+modifier_imba_jakiro_dual_breath_self_disable_turning = modifier_imba_jakiro_dual_breath_self_disable_turning or class({})
 
 function imba_jakiro_dual_breath:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_1")
@@ -498,7 +492,7 @@ function imba_jakiro_dual_breath:OnUpgrade()
 	if self:GetCaster():HasAbility("imba_jakiro_fire_breath") then
 		self:GetCaster():FindAbilityByName("imba_jakiro_fire_breath"):SetLevel(self:GetLevel())
 	end
-	
+
 	if self:GetCaster():HasAbility("imba_jakiro_ice_breath") then
 		self:GetCaster():FindAbilityByName("imba_jakiro_ice_breath"):SetLevel(self:GetLevel())
 	end
@@ -509,100 +503,100 @@ function imba_jakiro_dual_breath:OnSpellStart()
 	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
 	end
-	
+
 	local caster_position = self:GetCaster():GetAbsOrigin()
 	local cursor_position = self:GetCursorPosition()
-	
+
 	self:GetCaster():EmitSound("Hero_Jakiro.DualBreath.Cast")
-	
+
 	-- local ice_breath_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_jakiro/jakiro_taunt_icemelt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	-- ParticleManager:SetParticleControlEnt(ice_breath_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	-- ParticleManager:ReleaseParticleIndex(ice_breath_particle)
-	
+
 	ProjectileManager:CreateLinearProjectile({
-		EffectName	= "particles/units/heroes/hero_jakiro/jakiro_dual_breath_ice.vpcf",
-		Ability		= self,
-		Source		= self:GetCaster(),
-		vSpawnOrigin	= self:GetCaster():GetAbsOrigin(),
-		vVelocity	= ((cursor_position - caster_position) * Vector(1, 1, 0)):Normalized() * self:GetTalentSpecialValueFor("speed"),
-		vAcceleration	= nil, --hmm...
-		fMaxSpeed	= nil, -- What's the default on this thing?
-		fDistance	= self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
-		fStartRadius	= self:GetSpecialValueFor("start_radius"),
-		fEndRadius		= self:GetSpecialValueFor("end_radius"),
-		fExpireTime		= nil,
-		iUnitTargetTeam	= DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-		bIgnoreSource		= true,
-		bHasFrontalCone		= false,
-		bDrawsOnMinimap		= false,
-		bVisibleToEnemies	= true,
-		bProvidesVision		= false,
-		iVisionRadius		= nil,
-		iVisionTeamNumber	= nil,
-		ExtraData			= {projectile_type = "ice"}
+		EffectName        = "particles/units/heroes/hero_jakiro/jakiro_dual_breath_ice.vpcf",
+		Ability           = self,
+		Source            = self:GetCaster(),
+		vSpawnOrigin      = self:GetCaster():GetAbsOrigin(),
+		vVelocity         = ((cursor_position - caster_position) * Vector(1, 1, 0)):Normalized() * self:GetTalentSpecialValueFor("speed"),
+		vAcceleration     = nil, --hmm...
+		fMaxSpeed         = nil, -- What's the default on this thing?
+		fDistance         = self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
+		fStartRadius      = self:GetSpecialValueFor("start_radius"),
+		fEndRadius        = self:GetSpecialValueFor("end_radius"),
+		fExpireTime       = nil,
+		iUnitTargetTeam   = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags  = DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType   = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+		bIgnoreSource     = true,
+		bHasFrontalCone   = false,
+		bDrawsOnMinimap   = false,
+		bVisibleToEnemies = true,
+		bProvidesVision   = false,
+		iVisionRadius     = nil,
+		iVisionTeamNumber = nil,
+		ExtraData         = { projectile_type = "ice" }
 	})
-	
+
 	-- self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_self_root", {duration = self:GetSpecialValueFor("fire_delay") + 0.1})
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_self_disable_turning", {duration = 0.1})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_self_disable_turning", { duration = 0.1 })
 
 	self:GetCaster():SetContextThink(DoUniqueString("dual_breath"), function()
 		self:GetCaster():EmitSound("Hero_Jakiro.DualBreath.Cast")
-		
+
 		local fire_breath_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_jakiro/jakiro_taunt_icemelt_fire.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControlEnt(fire_breath_particle, 0, self:GetCaster(), PATTACH_POINT, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlForward(fire_breath_particle, 0, (cursor_position - caster_position):Normalized())
 		ParticleManager:ReleaseParticleIndex(fire_breath_particle)
-	
+
 		ProjectileManager:CreateLinearProjectile({
-			EffectName	= "particles/units/heroes/hero_jakiro/jakiro_dual_breath_fire.vpcf",
-			Ability		= self,
-			Source		= self:GetCaster(),
-			vSpawnOrigin	= caster_position,
-			vVelocity	= ((cursor_position - caster_position) * Vector(1, 1, 0)):Normalized() * self:GetTalentSpecialValueFor("speed_fire"),
-			vAcceleration	= nil, --hmm...
-			fMaxSpeed	= nil, -- What's the default on this thing?
-			fDistance	= self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
-			fStartRadius	= self:GetSpecialValueFor("start_radius"),
-			fEndRadius		= self:GetSpecialValueFor("end_radius"),
-			fExpireTime		= nil,
-			iUnitTargetTeam	= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-			bIgnoreSource		= true,
-			bHasFrontalCone		= false,
-			bDrawsOnMinimap		= false,
-			bVisibleToEnemies	= true,
-			bProvidesVision		= false,
-			iVisionRadius		= nil,
-			iVisionTeamNumber	= nil,
-			ExtraData			= {projectile_type = "fire"}
+			EffectName        = "particles/units/heroes/hero_jakiro/jakiro_dual_breath_fire.vpcf",
+			Ability           = self,
+			Source            = self:GetCaster(),
+			vSpawnOrigin      = caster_position,
+			vVelocity         = ((cursor_position - caster_position) * Vector(1, 1, 0)):Normalized() * self:GetTalentSpecialValueFor("speed_fire"),
+			vAcceleration     = nil, --hmm...
+			fMaxSpeed         = nil, -- What's the default on this thing?
+			fDistance         = self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
+			fStartRadius      = self:GetSpecialValueFor("start_radius"),
+			fEndRadius        = self:GetSpecialValueFor("end_radius"),
+			fExpireTime       = nil,
+			iUnitTargetTeam   = DOTA_UNIT_TARGET_TEAM_ENEMY,
+			iUnitTargetFlags  = DOTA_UNIT_TARGET_FLAG_NONE,
+			iUnitTargetType   = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+			bIgnoreSource     = true,
+			bHasFrontalCone   = false,
+			bDrawsOnMinimap   = false,
+			bVisibleToEnemies = true,
+			bProvidesVision   = false,
+			iVisionRadius     = nil,
+			iVisionTeamNumber = nil,
+			ExtraData         = { projectile_type = "fire" }
 		})
-		
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_self_disable_turning", {duration = 0.1})
-		
+
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_self_disable_turning", { duration = 0.1 })
+
 		return nil
 	end, self:GetSpecialValueFor("fire_delay"))
-	
+
 	-- Don't let Jakiro use all three breaths in quick succession
 	if self:GetCaster():HasAbility("imba_jakiro_fire_breath") then
-		self:GetCaster():FindAbilityByName("imba_jakiro_fire_breath"):UseResources(false, false, true)
+		self:GetCaster():FindAbilityByName("imba_jakiro_fire_breath"):UseResources(false, false, false, true)
 	end
-	
+
 	if self:GetCaster():HasAbility("imba_jakiro_ice_breath") then
-		self:GetCaster():FindAbilityByName("imba_jakiro_ice_breath"):UseResources(false, false, true)
+		self:GetCaster():FindAbilityByName("imba_jakiro_ice_breath"):UseResources(false, false, false, true)
 	end
 end
 
 function imba_jakiro_dual_breath:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if target then
 		if ExtraData.projectile_type == "ice" then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_slow", {duration = self:GetDuration()})
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_slow", { duration = self:GetDuration() })
 		elseif ExtraData.projectile_type == "fire" then
 			target:EmitSound("Hero_Jakiro.DualBreath.Burn")
-		
-			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_burn", {duration = self:GetDuration()})
+
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_jakiro_dual_breath_burn", { duration = self:GetDuration() })
 		end
 	end
 end
@@ -614,19 +608,22 @@ end
 function modifier_imba_jakiro_dual_breath_slow:IgnoreTenacity() return true end
 
 function modifier_imba_jakiro_dual_breath_slow:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
 
 	if not IsServer() then return end
-	
-	self.frost_damage					= self:GetAbility():GetSpecialValueFor("frost_damage")
-	self.slow_movement_speed_pct		= self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") - self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
-	self.slow_attack_speed_pct			= self:GetAbility():GetSpecialValueFor("slow_attack_speed_pct") - self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
-	
-	self.interval						= 0.5
-	self.damage_per_interval			= self.frost_damage * self.interval
-	
-	self.damage_type					= self:GetAbility():GetAbilityDamageType()
-	
+
+	self.frost_damage            = self:GetAbility():GetSpecialValueFor("frost_damage")
+	self.slow_movement_speed_pct = self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") - self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
+	self.slow_attack_speed_pct   = self:GetAbility():GetSpecialValueFor("slow_attack_speed_pct") - self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
+
+	self.interval                = 0.5
+	self.damage_per_interval     = self.frost_damage * self.interval
+
+	self.damage_type             = self:GetAbility():GetAbilityDamageType()
+
 	self:OnIntervalThink()
 	self:StartIntervalThink(self.interval)
 end
@@ -639,16 +636,16 @@ function modifier_imba_jakiro_dual_breath_slow:OnIntervalThink()
 	end
 
 	ApplyDamage({
-		victim 			= self:GetParent(),
-		damage 			= self.damage_per_interval,
-		damage_type		= self.damage_type,
-		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		attacker 		= self:GetCaster(),
-		ability 		= self:GetAbility()
+		victim       = self:GetParent(),
+		damage       = self.damage_per_interval,
+		damage_type  = self.damage_type,
+		damage_flags = DOTA_DAMAGE_FLAG_NONE,
+		attacker     = self:GetCaster(),
+		ability      = self:GetAbility()
 	})
-	
+
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage_per_interval, nil)
-	
+
 	self:SetStackCount(self.slow_movement_speed_pct * (1 - self:GetParent():GetStatusResistance()))
 end
 
@@ -678,18 +675,21 @@ function modifier_imba_jakiro_dual_breath_burn:GetEffectName()
 end
 
 function modifier_imba_jakiro_dual_breath_burn:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
 
 	if not IsServer() then return end
-	
-	self.burn_damage					= self:GetAbility():GetSpecialValueFor("burn_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
-	self.slow_movement_speed_pct_fire	= self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct_fire")
-	
-	self.interval						= 0.5
-	self.damage_per_interval			= self.burn_damage * self.interval
-	
-	self.damage_type					= self:GetAbility():GetAbilityDamageType()
-	
+
+	self.burn_damage                  = self:GetAbility():GetSpecialValueFor("burn_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
+	self.slow_movement_speed_pct_fire = self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct_fire")
+
+	self.interval                     = 0.5
+	self.damage_per_interval          = self.burn_damage * self.interval
+
+	self.damage_type                  = self:GetAbility():GetAbilityDamageType()
+
 	self:OnIntervalThink()
 	self:StartIntervalThink(self.interval)
 end
@@ -700,18 +700,18 @@ function modifier_imba_jakiro_dual_breath_burn:OnIntervalThink()
 		self:Destroy()
 		return nil
 	end
-	
+
 	ApplyDamage({
-		victim 			= self:GetParent(),
-		damage 			= self.damage_per_interval,
-		damage_type		= self.damage_type,
-		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-		attacker 		= self:GetCaster(),
-		ability 		= self:GetAbility()
+		victim       = self:GetParent(),
+		damage       = self.damage_per_interval,
+		damage_type  = self.damage_type,
+		damage_flags = DOTA_DAMAGE_FLAG_NONE,
+		attacker     = self:GetCaster(),
+		ability      = self:GetAbility()
 	})
-	
+
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage_per_interval, nil)
-	
+
 	self:SetStackCount(self.slow_movement_speed_pct_fire * (1 - self:GetParent():GetStatusResistance()))
 end
 
@@ -731,21 +731,25 @@ end
 
 -- Okay apparently this ability somehow stops Jakiro's movement, but doesn't actually root or manipulate move speed...so wtf is it doing
 
-function modifier_imba_jakiro_dual_breath_self_root:IsDebuff()		return true end
-function modifier_imba_jakiro_dual_breath_self_root:IsHidden()		return true end
-function modifier_imba_jakiro_dual_breath_self_root:IsPurgable()	return false end
+function modifier_imba_jakiro_dual_breath_self_root:IsDebuff() return true end
+
+function modifier_imba_jakiro_dual_breath_self_root:IsHidden() return true end
+
+function modifier_imba_jakiro_dual_breath_self_root:IsPurgable() return false end
 
 function modifier_imba_jakiro_dual_breath_self_root:CheckState()
-	if IsServer() then return {[MODIFIER_STATE_ROOTED] = true} end
+	if IsServer() then return { [MODIFIER_STATE_ROOTED] = true } end
 end
 
 -----------------------------------------------------------
 -- MODIFIER_IMBA_JAKIRO_DUAL_BREATH_SELF_DISABLE_TURNING --
 -----------------------------------------------------------
 
-function modifier_imba_jakiro_dual_breath_self_disable_turning:IsDebuff()		return true end
-function modifier_imba_jakiro_dual_breath_self_disable_turning:IsHidden()		return true end
-function modifier_imba_jakiro_dual_breath_self_disable_turning:IsPurgable()		return false end
+function modifier_imba_jakiro_dual_breath_self_disable_turning:IsDebuff() return true end
+
+function modifier_imba_jakiro_dual_breath_self_disable_turning:IsHidden() return true end
+
+function modifier_imba_jakiro_dual_breath_self_disable_turning:IsPurgable() return false end
 
 function modifier_imba_jakiro_dual_breath_self_disable_turning:DeclareFunctions()
 	return {
@@ -776,46 +780,46 @@ function imba_jakiro_ice_path:OnSpellStart()
 		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
 		end
-	
+
 		local caster = self:GetCaster()
 		-- Create thinker to apply modifiers to enemies on path
-		CreateModifierThinker( caster, self, "modifier_imba_ice_path_thinker", {duration = self:GetSpecialValueFor("path_delay") + self:GetTalentSpecialValueFor("path_duration")}, caster:GetAbsOrigin(), caster:GetTeamNumber(), false )
+		CreateModifierThinker(caster, self, "modifier_imba_ice_path_thinker", { duration = self:GetSpecialValueFor("path_delay") + self:GetTalentSpecialValueFor("path_duration") }, caster:GetAbsOrigin(), caster:GetTeamNumber(), false)
 	end
 end
 
-modifier_imba_ice_path_thinker = class({})
-modifier_imba_ice_path_thinker.modifier_freeze 	= "modifier_imba_ice_path_freeze_debuff"
-modifier_imba_ice_path_thinker.modifier_slow 	= "modifier_imba_ice_path_slow_debuff"
-function modifier_imba_ice_path_thinker:OnCreated( kv )
+modifier_imba_ice_path_thinker                 = class({})
+modifier_imba_ice_path_thinker.modifier_freeze = "modifier_imba_ice_path_freeze_debuff"
+modifier_imba_ice_path_thinker.modifier_slow   = "modifier_imba_ice_path_slow_debuff"
+function modifier_imba_ice_path_thinker:OnCreated(kv)
 	if IsServer() then
-		local caster				= self:GetCaster()
-		local ability				= self:GetAbility()
-		local ability_level 		= ability:GetLevel() - 1
-		local path_length 			= ability:GetLevelSpecialValueFor("range", ability_level) + GetCastRangeIncrease(caster)
+		local caster              = self:GetCaster()
+		local ability             = self:GetAbility()
+		local ability_level       = ability:GetLevel() - 1
+		local path_length         = ability:GetLevelSpecialValueFor("range", ability_level) + GetCastRangeIncrease(caster)
 
-		local path_delay 			= ability:GetSpecialValueFor("path_delay")
-		local path_radius 			= ability:GetSpecialValueFor("path_radius")
+		local path_delay          = ability:GetSpecialValueFor("path_delay")
+		local path_radius         = ability:GetSpecialValueFor("path_radius")
 
 		-- #3 Talent: Ice Path Duration Increase
-		local path_duration 		= ability:GetLevelSpecialValueFor("path_duration", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_3")
+		local path_duration       = ability:GetLevelSpecialValueFor("path_duration", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_3")
 		-- #5 Talent: Ice Path Stun Duration Increase
-		local stun_duration 		= ability:GetLevelSpecialValueFor("stun_duration", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_5")
+		local stun_duration       = ability:GetLevelSpecialValueFor("stun_duration", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_5")
 
-		local start_pos 			= caster:GetAbsOrigin()
-		local direction				= (caster:GetCursorPosition() - start_pos):Normalized()
-		local end_pos 				= start_pos + direction * path_length
-		local path_total_duration	= path_delay + path_duration
+		local start_pos           = caster:GetAbsOrigin()
+		local direction           = (caster:GetCursorPosition() - start_pos):Normalized()
+		local end_pos             = start_pos + direction * path_length
+		local path_total_duration = path_delay + path_duration
 
-		self.ice_path_end_time 		= GameRules:GetGameTime() + path_total_duration
+		self.ice_path_end_time    = GameRules:GetGameTime() + path_total_duration
 		-- Prevent enemy from getting frozen again
-		self.frozen_enemy_set 		= {}
-		self.ability_target_team 	= ability:GetAbilityTargetTeam()
-		self.ability_target_type 	= ability:GetAbilityTargetType()
-		self.ability_target_flags 	= ability:GetAbilityTargetFlags()
-		self.path_radius			= path_radius
-		self.stun_duration 			= stun_duration
-		self.start_pos 				= start_pos
-		self.end_pos 				= end_pos
+		self.frozen_enemy_set     = {}
+		self.ability_target_team  = ability:GetAbilityTargetTeam()
+		self.ability_target_type  = ability:GetAbilityTargetType()
+		self.ability_target_flags = ability:GetAbilityTargetFlags()
+		self.path_radius          = path_radius
+		self.stun_duration        = stun_duration
+		self.start_pos            = start_pos
+		self.end_pos              = end_pos
 
 		caster:EmitSound("Hero_Jakiro.IcePath")
 
@@ -825,27 +829,27 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 
 		-- Create ice path blob
 		particle_name = "particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
-		local pfx_ice_path_blob = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
-		ParticleManager:SetParticleControl( pfx_ice_path_blob, 0, start_pos )
-		ParticleManager:SetParticleControl( pfx_ice_path_blob, 1, end_pos )
-		ParticleManager:SetParticleControl( pfx_ice_path_blob, 2, Vector(path_duration, 0, 0) ) --Shorter duration as it needs to melt
+		local pfx_ice_path_blob = ParticleManager:CreateParticle(particle_name, PATTACH_WORLDORIGIN, caster)
+		ParticleManager:SetParticleControl(pfx_ice_path_blob, 0, start_pos)
+		ParticleManager:SetParticleControl(pfx_ice_path_blob, 1, end_pos)
+		ParticleManager:SetParticleControl(pfx_ice_path_blob, 2, Vector(path_duration, 0, 0)) --Shorter duration as it needs to melt
 		self:AddParticle(pfx_ice_path_blob, false, false, -1, false, false)
-		
+
 		-- Create ice path icicles
 		particle_name = "particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
-		local pfx_icicles = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
-		ParticleManager:SetParticleControl( pfx_icicles, 0, start_pos )
-		ParticleManager:SetParticleControl( pfx_icicles, 1, end_pos )
-		ParticleManager:SetParticleControl( pfx_icicles, 2, Vector( path_total_duration, 0, 0 ) )
-		ParticleManager:SetParticleControl( pfx_icicles, 9, start_pos )
+		local pfx_icicles = ParticleManager:CreateParticle(particle_name, PATTACH_WORLDORIGIN, caster)
+		ParticleManager:SetParticleControl(pfx_icicles, 0, start_pos)
+		ParticleManager:SetParticleControl(pfx_icicles, 1, end_pos)
+		ParticleManager:SetParticleControl(pfx_icicles, 2, Vector(path_total_duration, 0, 0))
+		ParticleManager:SetParticleControl(pfx_icicles, 9, start_pos)
 		self:AddParticle(pfx_icicles, false, false, -1, false, false)
 
 		local tick_rate = 0.1
 
 		---- Ice path vision nodes ----
 		-- How far apart are the viewpoints. I believe half of the radius is good enough coverage without too many points
-		local viewpoint_distance = path_radius/2
-		local viewpoint_amount = (start_pos - end_pos):Length2D()/viewpoint_distance
+		local viewpoint_distance = path_radius / 2
+		local viewpoint_amount = (start_pos - end_pos):Length2D() / viewpoint_distance
 		local viewpoint_view = path_radius + 5 -- extra so we can see the units the Ice Path stuns on entry
 		-- To create too many or too few, that is the question. Let's go with too many
 		viewpoint_amount = math.ceil(viewpoint_amount)
@@ -855,21 +859,21 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		-- Create ice path flash and apply affect after delay
 		Timers:CreateTimer(path_delay, function()
 			particle_name = "particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
-			local pfx_ice_path_explode = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
-			ParticleManager:SetParticleControl( pfx_ice_path_explode, 0, start_pos )
-			ParticleManager:SetParticleControl( pfx_ice_path_explode, 1, end_pos )
-			ParticleManager:ReleaseParticleIndex( pfx_ice_path_explode )
-			
+			local pfx_ice_path_explode = ParticleManager:CreateParticle(particle_name, PATTACH_WORLDORIGIN, caster)
+			ParticleManager:SetParticleControl(pfx_ice_path_explode, 0, start_pos)
+			ParticleManager:SetParticleControl(pfx_ice_path_explode, 1, end_pos)
+			ParticleManager:ReleaseParticleIndex(pfx_ice_path_explode)
+
 			-- Create flying vision nodes
 			local current_point = start_pos
-			for i=1,viewpoint_amount do
+			for i = 1, viewpoint_amount do
 				AddFOWViewer(caster:GetTeamNumber(), current_point, viewpoint_view, path_duration, false)
 				current_point = current_point + direction_vector * viewpoint_distance
 			end
 			-- Apply effect immediately after delay
 			self:OnIntervalThink()
 			-- Run applying effects on interval
-			self:StartIntervalThink( tick_rate )
+			self:StartIntervalThink(tick_rate)
 		end)
 	end
 end
@@ -879,37 +883,37 @@ function modifier_imba_ice_path_thinker:OnIntervalThink()
 	local ice_path_end_time = self.ice_path_end_time
 
 	-- if current_game_time >= ice_path_end_time then
-		-- -- Remove dummy thinker if ice path has ended
-		-- UTIL_Remove( self:GetParent() )
+	-- -- Remove dummy thinker if ice path has ended
+	-- UTIL_Remove( self:GetParent() )
 	-- else
 
-	local stun_duration 	= self.stun_duration
-	local frozen_enemy_set 	= self.frozen_enemy_set
-	local caster 			= self:GetCaster()
-	local ability			= self:GetAbility()
-	local modifier_freeze 	= self.modifier_freeze
+	local stun_duration     = self.stun_duration
+	local frozen_enemy_set  = self.frozen_enemy_set
+	local caster            = self:GetCaster()
+	local ability           = self:GetAbility()
+	local modifier_freeze   = self.modifier_freeze
 
 	-- local time_diff = ice_path_end_time - current_game_time
 
 	-- -- Stun duration does not last longer than the time left for ice path (follows original ice path)
 	-- local stun_duration_left
 	-- if time_diff > stun_duration then
-		-- stun_duration_left = stun_duration
+	-- stun_duration_left = stun_duration
 	-- else
-		-- stun_duration_left = time_diff
+	-- stun_duration_left = time_diff
 	-- end
 
-	local enemies = FindUnitsInLine(caster:GetTeamNumber(), self.start_pos, self.end_pos, nil, self.path_radius, self.ability_target_team, self.ability_target_type, self.ability_target_flags)
+	local enemies           = FindUnitsInLine(caster:GetTeamNumber(), self.start_pos, self.end_pos, nil, self.path_radius, self.ability_target_team, self.ability_target_type, self.ability_target_flags)
 
 	for _, enemy in pairs(enemies) do
 		if not frozen_enemy_set[enemy] then
 			-- Freeze enemy if they touch ice path the first time
 			frozen_enemy_set[enemy] = true
-			enemy:AddNewModifier(caster, ability, modifier_freeze, { duration = self:GetRemainingTime() * (1 - enemy:GetStatusResistance())})
+			enemy:AddNewModifier(caster, ability, modifier_freeze, { duration = self:GetRemainingTime() * (1 - enemy:GetStatusResistance()) })
 		else
 			if not enemy:FindModifierByNameAndCaster(modifier_freeze, caster) then
 				-- Slow enemy after the freeze expires
-				enemy:AddNewModifier(caster, ability, self.modifier_slow, { duration = 1.0 * (1 - enemy:GetStatusResistance())})
+				enemy:AddNewModifier(caster, ability, self.modifier_slow, { duration = 1.0 * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 	end
@@ -917,9 +921,9 @@ end
 
 -- Ice path freeze debuff (applies stun to enemies and used as indicator for base_modifier_dot_debuff to deal more damage)
 modifier_imba_ice_path_freeze_debuff = class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return true end,
-	IsDebuff	  			= function(self) return true end,
+	IsHidden   = function(self) return false end,
+	IsPurgable = function(self) return true end,
+	IsDebuff   = function(self) return true end,
 })
 
 function modifier_imba_ice_path_freeze_debuff:OnCreated()
@@ -927,14 +931,14 @@ function modifier_imba_ice_path_freeze_debuff:OnCreated()
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
 
-		ApplyDamage({attacker = self:GetCaster(), victim = parent, ability = ability, damage = ability:GetSpecialValueFor("damage"), damage_type = ability:GetAbilityDamageType()})
+		ApplyDamage({ attacker = self:GetCaster(), victim = parent, ability = ability, damage = ability:GetSpecialValueFor("damage"), damage_type = ability:GetAbilityDamageType() })
 
 		local parent_origin = parent:GetAbsOrigin()
 
-		local particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent )
-		ParticleManager:SetParticleControl( particle, 0, parent_origin)
-		ParticleManager:SetParticleControl( particle, 1, parent_origin)
-		ParticleManager:SetParticleControl( particle, 2, Vector(self:GetDuration(), 0, 0))
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+		ParticleManager:SetParticleControl(particle, 0, parent_origin)
+		ParticleManager:SetParticleControl(particle, 1, parent_origin)
+		ParticleManager:SetParticleControl(particle, 2, Vector(self:GetDuration(), 0, 0))
 		self:AddParticle(particle, false, false, -1, false, false)
 	end
 end
@@ -958,9 +962,9 @@ end
 
 -- Ice path slow debuff (applies slow to enemies)
 modifier_imba_ice_path_slow_debuff = class({
-	IsHidden				= function(self) return false end,
-	IsPurgable	  			= function(self) return true end,
-	IsDebuff	  			= function(self) return true end
+	IsHidden   = function(self) return false end,
+	IsPurgable = function(self) return true end,
+	IsDebuff   = function(self) return true end
 })
 
 function modifier_imba_ice_path_slow_debuff:OnCreated()
@@ -968,7 +972,7 @@ function modifier_imba_ice_path_slow_debuff:OnCreated()
 	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow"))
 	self.move_slow = -(ability:GetSpecialValueFor("move_slow"))
 
-	local particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:AddParticle(particle, false, false, -1, false, false)
 end
 
@@ -980,6 +984,7 @@ function modifier_imba_ice_path_slow_debuff:DeclareFunctions()
 end
 
 function modifier_imba_ice_path_slow_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
+
 function modifier_imba_ice_path_slow_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow end
 
 -----------------------------
@@ -998,6 +1003,7 @@ function imba_jakiro_liquid_fire:GetAbilityTextureName()
 end
 
 function imba_jakiro_liquid_fire:IsNetherWardStealable() return false end
+
 function imba_jakiro_liquid_fire:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -1044,11 +1050,11 @@ function imba_jakiro_liquid_fire:OnSpellStart()
 end
 
 modifier_imba_liquid_fire_caster = class({
-	IsHidden				= function(self) return true end,
-	IsPurgable	  			= function(self) return false end,
-	IsDebuff	  			= function(self) return false end,
-	RemoveOnDeath 			= function(self) return false end,
-	AllowIllusionDuplicate	= function(self) return false end
+	IsHidden               = function(self) return true end,
+	IsPurgable             = function(self) return false end,
+	IsDebuff               = function(self) return false end,
+	RemoveOnDeath          = function(self) return false end,
+	AllowIllusionDuplicate = function(self) return false end
 })
 
 function modifier_imba_liquid_fire_caster:DeclareFunctions()
@@ -1064,7 +1070,6 @@ function modifier_imba_liquid_fire_caster:DeclareFunctions()
 end
 
 function modifier_imba_liquid_fire_caster:OnCreated()
-
 	self.parent = self:GetParent()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -1088,7 +1093,6 @@ function modifier_imba_liquid_fire_caster:OnAttackStart(keys)
 
 		if caster == attacker then
 			if not ability:IsHidden() and not target:IsMagicImmune() and ability:GetAutoCastState() and ability:IsCooldownReady() then
-
 				-- Special animation for jakiro
 				if caster:GetUnitName() == "npc_dota_hero_jakiro" then
 					caster:AddNewModifier(caster, self.ability, "modifier_imba_liquid_fire_animate", {})
@@ -1112,7 +1116,6 @@ function modifier_imba_liquid_fire_caster:OnAttack(keys)
 		local ability = self.ability
 
 		if caster == attacker and (self:_IsLiquidFireProjectile() or ability.cast_liquid_fire) then
-
 			-- Remove manual cast indicator
 			ability.cast_liquid_fire = false
 
@@ -1124,16 +1127,13 @@ function modifier_imba_liquid_fire_caster:OnAttack(keys)
 			end
 
 			-- Start cooldown
-			ability:UseResources(false, false, true)
+			ability:UseResources(false, false, false, true)
 		end
 	end
 end
 
-function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire( keys )
-
-
+function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire(keys)
 	if IsServer() then
-
 		local caster = self.caster
 		local attacker = keys.attacker
 		local target = keys.target
@@ -1160,25 +1160,25 @@ function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire( keys )
 			target:EmitSound("Hero_Jakiro.LiquidFire")
 
 			-- Play explosion particle
-			local fire_pfx = ParticleManager:CreateParticle( particle_liquid_fire, PATTACH_ABSORIGIN, target )
-			ParticleManager:SetParticleControl( fire_pfx, 0, target:GetAbsOrigin() )
-			ParticleManager:SetParticleControl( fire_pfx, 1, Vector(radius * 2,0,0) )
-			ParticleManager:ReleaseParticleIndex( fire_pfx )
+			local fire_pfx = ParticleManager:CreateParticle(particle_liquid_fire, PATTACH_ABSORIGIN, target)
+			ParticleManager:SetParticleControl(fire_pfx, 0, target:GetAbsOrigin())
+			ParticleManager:SetParticleControl(fire_pfx, 1, Vector(radius * 2, 0, 0))
+			ParticleManager:ReleaseParticleIndex(fire_pfx)
 
 			-- Apply liquid fire modifier to enemies in the area
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,enemy in pairs(enemies) do
-				enemy:AddNewModifier(caster, ability, modifier_liquid_fire_debuff, { duration = duration * (1 - enemy:GetStatusResistance())})
+			for _, enemy in pairs(enemies) do
+				enemy:AddNewModifier(caster, ability, modifier_liquid_fire_debuff, { duration = duration * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 	end
 end
 
-function modifier_imba_liquid_fire_caster:OnAttackLanded( keys )
+function modifier_imba_liquid_fire_caster:OnAttackLanded(keys)
 	self:_ApplyAOELiquidFire(keys)
 end
 
-function modifier_imba_liquid_fire_caster:OnAttackFail( keys )
+function modifier_imba_liquid_fire_caster:OnAttackFail(keys)
 	self:_ApplyAOELiquidFire(keys)
 end
 
@@ -1193,11 +1193,11 @@ end
 
 -- Modifier to play animation for jakiro's other head
 modifier_imba_liquid_fire_animate = class({
-	IsHidden					    = function(self) return true end,
-	IsPurgable						= function(self) return false end,
-	IsDebuff						= function(self) return false end,
-	RemoveOnDeath					= function(self) return true end,
-	GetActivityTranslationModifiers	= function(self) return "liquid_fire" end
+	IsHidden                        = function(self) return true end,
+	IsPurgable                      = function(self) return false end,
+	IsDebuff                        = function(self) return false end,
+	RemoveOnDeath                   = function(self) return true end,
+	GetActivityTranslationModifiers = function(self) return "liquid_fire" end
 })
 
 function modifier_imba_liquid_fire_animate:DeclareFunctions()
@@ -1221,7 +1221,7 @@ end
 
 -- Liquid Fire Debuff (deal damage and slow to enemies)
 -- Extend base_modifier_dot_debuff
-modifier_imba_liquid_fire_debuff = ShallowCopy( base_modifier_dot_debuff )
+modifier_imba_liquid_fire_debuff = ShallowCopy(base_modifier_dot_debuff)
 
 function modifier_imba_liquid_fire_debuff:_UpdateSubClassLevelValues()
 	local ability = self.ability
@@ -1240,8 +1240,11 @@ function modifier_imba_liquid_fire_debuff:DeclareFunctions()
 end
 
 function modifier_imba_liquid_fire_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow * (-1) end
+
 function modifier_imba_liquid_fire_debuff:GetModifierTurnRate_Percentage() return self.turn_slow * (-1) end
+
 function modifier_imba_liquid_fire_debuff:GetEffectName() return "particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf" end
+
 function modifier_imba_liquid_fire_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
 
 -----------------------------
@@ -1264,31 +1267,29 @@ function imba_jakiro_macropyre:GetAbilityDamageType()
 	end
 end
 
-
-
 function imba_jakiro_macropyre:OnSpellStart()
 	if IsServer() then
 		-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
 		if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
 			self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
 		end
-	
+
 		local caster = self:GetCaster()
-		CreateModifierThinker( caster, self, "modifier_imba_macropyre_thinker", {}, caster:GetAbsOrigin(), caster:GetTeamNumber(), false )
+		CreateModifierThinker(caster, self, "modifier_imba_macropyre_thinker", {}, caster:GetAbsOrigin(), caster:GetTeamNumber(), false)
 	end
 end
 
 modifier_imba_macropyre_thinker = class({})
-function modifier_imba_macropyre_thinker:OnCreated( kv )
+function modifier_imba_macropyre_thinker:OnCreated(kv)
 	if IsServer() then
-		local caster 				= self:GetCaster()
-		local ability 				= self:GetAbility()
-		local target 				= ability:GetCursorPosition()
-		local ability_level 		= ability:GetLevel() - 1
-		local scepter 				= caster:HasScepter()
+		local caster        = self:GetCaster()
+		local ability       = self:GetAbility()
+		local target        = ability:GetCursorPosition()
+		local ability_level = ability:GetLevel() - 1
+		local scepter       = caster:HasScepter()
 
-		local path_radius 			= ability:GetLevelSpecialValueFor("path_radius", ability_level)
-		local trail_amount 			= ability:GetLevelSpecialValueFor("trail_amount", ability_level)
+		local path_radius   = ability:GetLevelSpecialValueFor("path_radius", ability_level)
+		local trail_amount  = ability:GetLevelSpecialValueFor("trail_amount", ability_level)
 		local path_duration
 		local path_length
 		-- Draw the fire particles (blue fire if the owner has Aghanim's Scepter)
@@ -1300,35 +1301,35 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 		-- If the owner has a scepter, add cast sound, increase duration and length
 		if scepter then
 			caster:EmitSound("Hero_Jakiro.IcePath.Cast")
-			path_duration 			= ability:GetLevelSpecialValueFor("duration_scepter", ability_level)
-			path_length 			= ability:GetLevelSpecialValueFor("range_scepter", ability_level)
-			particle_name			= "particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
+			path_duration = ability:GetLevelSpecialValueFor("duration_scepter", ability_level)
+			path_length   = ability:GetLevelSpecialValueFor("range_scepter", ability_level)
+			particle_name = "particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
 		else
-			path_duration 			= ability:GetLevelSpecialValueFor("duration", ability_level)
-			path_length 			= ability:GetLevelSpecialValueFor("range", ability_level)
-			particle_name			= "particles/hero/jakiro/jakiro_macropyre.vpcf"
+			path_duration = ability:GetLevelSpecialValueFor("duration", ability_level)
+			path_length   = ability:GetLevelSpecialValueFor("range", ability_level)
+			particle_name = "particles/hero/jakiro/jakiro_macropyre.vpcf"
 		end
 
 		-- Add extra path length due to items
-		path_length 				= path_length + GetCastRangeIncrease(caster)
+		path_length               = path_length + GetCastRangeIncrease(caster)
 
 		-- Initialize effect geometry
-		local direction 			= (target - caster:GetAbsOrigin()):Normalized()
-		local half_trail_amount 	= ( trail_amount - 1 ) / 2
-		local start_pos 			= caster:GetAbsOrigin() + direction * path_radius
-		local trail_start 			= ( -1 ) * half_trail_amount
-		local trail_end 			= half_trail_amount
-		local trail_angle 			= ability:GetLevelSpecialValueFor("trail_angle", ability_level)
-		local sound_fire_loop		= "hero_jakiro.macropyre.scepter"
-		self.ability_target_team 	= ability:GetAbilityTargetTeam()
-		self.ability_target_type 	= ability:GetAbilityTargetType()
-		self.ability_target_flags 	= ability:GetAbilityTargetFlags()
-		self.debuff_duration 		= ability:GetSpecialValueFor("stickyness")
-		self.macropyre_end_time 	= GameRules:GetGameTime() + path_duration
-		self.path_radius			= path_radius
-		self.sound_fire_loop		= sound_fire_loop
+		local direction           = (target - caster:GetAbsOrigin()):Normalized()
+		local half_trail_amount   = (trail_amount - 1) / 2
+		local start_pos           = caster:GetAbsOrigin() + direction * path_radius
+		local trail_start         = (-1) * half_trail_amount
+		local trail_end           = half_trail_amount
+		local trail_angle         = ability:GetLevelSpecialValueFor("trail_angle", ability_level)
+		local sound_fire_loop     = "hero_jakiro.macropyre.scepter"
+		self.ability_target_team  = ability:GetAbilityTargetTeam()
+		self.ability_target_type  = ability:GetAbilityTargetType()
+		self.ability_target_flags = ability:GetAbilityTargetFlags()
+		self.debuff_duration      = ability:GetSpecialValueFor("stickyness")
+		self.macropyre_end_time   = GameRules:GetGameTime() + path_duration
+		self.path_radius          = path_radius
+		self.sound_fire_loop      = sound_fire_loop
 
-		self.start_pos = start_pos
+		self.start_pos            = start_pos
 
 		-- Destroys trees around the target area
 		GridNav:DestroyTreesAroundPoint(start_pos, path_radius, false)
@@ -1342,23 +1343,22 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 		self.thinker_pos_list = {}
 
 		for trail = trail_start, trail_end do
-
-			local macropyre_pfx = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster)
+			local macropyre_pfx = ParticleManager:CreateParticle(particle_name, PATTACH_WORLDORIGIN, caster)
 
 			-- Calculate each trail's end position
 			local end_pos = RotatePosition(start_pos, QAngle(0, trail * trail_angle, 0), common_vector)
 
 			ParticleManager:SetParticleAlwaysSimulate(macropyre_pfx)
-			ParticleManager:SetParticleControl( macropyre_pfx, 0, start_pos )
-			ParticleManager:SetParticleControl( macropyre_pfx, 1, end_pos )
-			ParticleManager:SetParticleControl( macropyre_pfx, 2, Vector( path_duration, 0, 0 ) )
-			ParticleManager:SetParticleControl( macropyre_pfx, 3, start_pos )
+			ParticleManager:SetParticleControl(macropyre_pfx, 0, start_pos)
+			ParticleManager:SetParticleControl(macropyre_pfx, 1, end_pos)
+			ParticleManager:SetParticleControl(macropyre_pfx, 2, Vector(path_duration, 0, 0))
+			ParticleManager:SetParticleControl(macropyre_pfx, 3, start_pos)
 			self:AddParticle(macropyre_pfx, false, false, -1, false, false)
 
 			-- Create thinkers along the trail
-			for i = 0, math.floor( path_length / path_radius ) do
+			for i = 0, math.floor(path_length / path_radius) do
 				-- Calculate thinker position
-				local thinker_pos = start_pos + i * path_radius * ( end_pos - start_pos ):Normalized()
+				local thinker_pos = start_pos + i * path_radius * (end_pos - start_pos):Normalized()
 				table.insert(self.thinker_pos_list, thinker_pos)
 			end
 		end
@@ -1366,36 +1366,34 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 		-- Apply modifiers when thinker is created
 		self:OnIntervalThink()
 		-- Run applying modifiers on interval
-		self:StartIntervalThink( 0.5 )
+		self:StartIntervalThink(0.5)
 	end
 end
 
 function modifier_imba_macropyre_thinker:OnIntervalThink()
-
 	if IsServer() then
-
 		if GameRules:GetGameTime() > self.macropyre_end_time then
 			--Stop sound before destroy parent
 			self:GetParent():StopSound(self.sound_fire_loop)
-			UTIL_Remove( self:GetParent() )
+			UTIL_Remove(self:GetParent())
 		else
-			local caster 				= self:GetCaster()
-			local ability 				= self:GetAbility()
-			local unique_enemy_list 	= {}
-			local unique_enemy_set 		= {}
-			local thinker_pos_list 		= self.thinker_pos_list
-			local path_radius 			= self.path_radius
-			local ability_target_team	= self.ability_target_team
-			local ability_target_type	= self.ability_target_type
-			local ability_target_flags	= self.ability_target_flags
-			local debuff_duration		= self.debuff_duration
+			local caster               = self:GetCaster()
+			local ability              = self:GetAbility()
+			local unique_enemy_list    = {}
+			local unique_enemy_set     = {}
+			local thinker_pos_list     = self.thinker_pos_list
+			local path_radius          = self.path_radius
+			local ability_target_team  = self.ability_target_team
+			local ability_target_type  = self.ability_target_type
+			local ability_target_flags = self.ability_target_flags
+			local debuff_duration      = self.debuff_duration
 
 			if caster:HasTalent("special_bonus_imba_jakiro_9") then
-				ability_target_flags = ability_target_flags + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES 
+				ability_target_flags = ability_target_flags + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
 			end
-			
+
 			--Increase Modifier Duration
-			local modifier_list 		= {
+			local modifier_list = {
 				"modifier_imba_liquid_fire_debuff",
 				"modifier_imba_fire_breath_debuff",
 				"modifier_imba_ice_breath_debuff"
@@ -1417,12 +1415,11 @@ function modifier_imba_macropyre_thinker:OnIntervalThink()
 			end
 
 			for _, enemy in pairs(unique_enemy_list) do
-
 				-- Applies debuff to enemies found
-				enemy:AddNewModifier(caster, ability, "modifier_imba_macropyre_debuff", { duration = debuff_duration } )
+				enemy:AddNewModifier(caster, ability, "modifier_imba_macropyre_debuff", { duration = debuff_duration })
 
 				-- Increase duration for some modifiers
-				for _,modifier_name in pairs(modifier_list) do
+				for _, modifier_name in pairs(modifier_list) do
 					local other_modifier = enemy:FindModifierByNameAndCaster(modifier_name, caster)
 					if other_modifier then
 						other_modifier:SetDuration(other_modifier:GetRemainingTime() + 0.25, true)
@@ -1435,10 +1432,10 @@ end
 
 -- Macropyre Debuff (deal damage and slow to enemies)
 -- Extend base_modifier_dot_debuff
-modifier_imba_macropyre_debuff = ShallowCopy( base_modifier_dot_debuff )
+modifier_imba_macropyre_debuff = ShallowCopy(base_modifier_dot_debuff)
 
 function modifier_imba_macropyre_debuff:_SubClassOnCreated()
-	local particle = ParticleManager:CreateParticle( "particles/world_environmental_fx/fire_camp_01_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+	local particle = ParticleManager:CreateParticle("particles/world_environmental_fx/fire_camp_01_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:AddParticle(particle, false, false, -1, false, false)
 end
 
@@ -1446,7 +1443,6 @@ function modifier_imba_macropyre_debuff:_UpdateSubClassLevelValues()
 	local caster = self.caster
 	-- #8 Talent: Macropyre Cause Progressive Slow
 	if caster:HasTalent("special_bonus_imba_jakiro_8") then
-
 		-- normal macropyre duration = 10s
 		-- scepter macropyre duration = 30s
 		-- tick rate = 0.5s
@@ -1483,7 +1479,6 @@ end
 
 function modifier_imba_macropyre_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
 
-
 ---------------------
 -- TALENT HANDLERS --
 ---------------------
@@ -1494,39 +1489,51 @@ LinkLuaModifier("modifier_special_bonus_imba_jakiro_3", "components/abilities/he
 LinkLuaModifier("modifier_special_bonus_imba_jakiro_6", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_jakiro_9", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_jakiro_1	= modifier_special_bonus_imba_jakiro_1 or class({})
-modifier_special_bonus_imba_jakiro_7	= modifier_special_bonus_imba_jakiro_7 or class({})
-modifier_special_bonus_imba_jakiro_3	= modifier_special_bonus_imba_jakiro_3 or class({})
-modifier_special_bonus_imba_jakiro_6	= modifier_special_bonus_imba_jakiro_6 or class({})
-modifier_special_bonus_imba_jakiro_9	= modifier_special_bonus_imba_jakiro_9 or class({})
+modifier_special_bonus_imba_jakiro_1 = modifier_special_bonus_imba_jakiro_1 or class({})
+modifier_special_bonus_imba_jakiro_7 = modifier_special_bonus_imba_jakiro_7 or class({})
+modifier_special_bonus_imba_jakiro_3 = modifier_special_bonus_imba_jakiro_3 or class({})
+modifier_special_bonus_imba_jakiro_6 = modifier_special_bonus_imba_jakiro_6 or class({})
+modifier_special_bonus_imba_jakiro_9 = modifier_special_bonus_imba_jakiro_9 or class({})
 
-function modifier_special_bonus_imba_jakiro_1:IsHidden() 		return true end
-function modifier_special_bonus_imba_jakiro_1:IsPurgable()		return false end
-function modifier_special_bonus_imba_jakiro_1:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_jakiro_1:IsHidden() return true end
 
-function modifier_special_bonus_imba_jakiro_7:IsHidden() 		return true end
-function modifier_special_bonus_imba_jakiro_7:IsPurgable()		return false end
-function modifier_special_bonus_imba_jakiro_7:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_jakiro_1:IsPurgable() return false end
 
-function modifier_special_bonus_imba_jakiro_3:IsHidden() 		return true end
-function modifier_special_bonus_imba_jakiro_3:IsPurgable()		return false end
-function modifier_special_bonus_imba_jakiro_3:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_jakiro_1:RemoveOnDeath() return false end
 
-function modifier_special_bonus_imba_jakiro_6:IsHidden() 		return true end
-function modifier_special_bonus_imba_jakiro_6:IsPurgable()		return false end
-function modifier_special_bonus_imba_jakiro_6:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_jakiro_7:IsHidden() return true end
 
-function modifier_special_bonus_imba_jakiro_9:IsHidden() 		return true end
-function modifier_special_bonus_imba_jakiro_9:IsPurgable()		return false end
-function modifier_special_bonus_imba_jakiro_9:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_jakiro_7:IsPurgable() return false end
+
+function modifier_special_bonus_imba_jakiro_7:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_jakiro_3:IsHidden() return true end
+
+function modifier_special_bonus_imba_jakiro_3:IsPurgable() return false end
+
+function modifier_special_bonus_imba_jakiro_3:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_jakiro_6:IsHidden() return true end
+
+function modifier_special_bonus_imba_jakiro_6:IsPurgable() return false end
+
+function modifier_special_bonus_imba_jakiro_6:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_jakiro_9:IsHidden() return true end
+
+function modifier_special_bonus_imba_jakiro_9:IsPurgable() return false end
+
+function modifier_special_bonus_imba_jakiro_9:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_jakiro_2", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_jakiro_2		= modifier_special_bonus_imba_jakiro_2 or class({})
+modifier_special_bonus_imba_jakiro_2 = modifier_special_bonus_imba_jakiro_2 or class({})
 
-function modifier_special_bonus_imba_jakiro_2:IsHidden() 		return true end
-function modifier_special_bonus_imba_jakiro_2:IsPurgable() 		return false end
-function modifier_special_bonus_imba_jakiro_2:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_jakiro_2:IsHidden() return true end
+
+function modifier_special_bonus_imba_jakiro_2:IsPurgable() return false end
+
+function modifier_special_bonus_imba_jakiro_2:RemoveOnDeath() return false end
 
 function base_ability_dual_breath:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_jakiro_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_jakiro_2") then

@@ -330,15 +330,12 @@ function OnVotesReceived(data)
 
 	var vote_count = [];
 
-	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
-
 	// Reset tooltips
 	for (var i = 1; i <= 5; i++) {
 		vote_count[i] = 0;
 		if ($("#VoteGameModeText" + i))
 			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i);
 	}
-
 
 	// Check number of votes for each gamemodes
 	for (var id in data.table){
@@ -487,35 +484,6 @@ function HidePickScreenDuringGame() {
 
 	if (bottom_button_container && bottom_button_container[0] && bottom_button_container[0].GetChild(0))
 		bottom_button_container[0].GetChild(0).checked = true;
-
-	var bottom_patreon_container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-patreon-sub");
-
-	if (bottom_patreon_container && bottom_patreon_container[0]) {
-		var companion_list = [
-			"npc_donator_companion_chocobo",
-			"npc_donator_companion_mega_greevil",
-			"npc_donator_companion_butch",
-			"npc_donator_companion_hollow_jack",
-			"npc_donator_companion_tory",
-			"npc_donator_companion_frog",
-		];
-
-		for (var i in companion_list) {
-			var companion = $.CreatePanel("Panel", bottom_patreon_container[0], "");
-			companion.AddClass("DonatorReward");
-			companion.style.width = 100 / companion_list.length + "%";
-
-			var companionpreview = $.CreatePanel("Button", companion, "");
-			companionpreview.style.width = "100%";
-			companionpreview.style.height = "100%";
-
-			var companion_scene = $.CreatePanelWithProperties('DOTAScenePanel', companionpreview, "", {
-				class: `companion_scene`,
-				particleonly: "false",
-				unit: companion_list[i],
-			});
-		}
-	}
 
 	HoverableLoadingScreen();
 	fetch();

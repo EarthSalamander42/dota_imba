@@ -42,9 +42,12 @@ end
 
 modifier_imba_echo_sabre = modifier_imba_echo_sabre or class({})
 
-function modifier_imba_echo_sabre:IsPurgable()		return false end
-function modifier_imba_echo_sabre:RemoveOnDeath()	return false end
-function modifier_imba_echo_sabre:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_echo_sabre:IsPurgable() return false end
+
+function modifier_imba_echo_sabre:RemoveOnDeath() return false end
+
+function modifier_imba_echo_sabre:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_echo_sabre:IsHidden() return true end
 
 function modifier_imba_echo_sabre:OnCreated()
@@ -73,18 +76,18 @@ end
 function modifier_imba_echo_sabre:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
-	
+
 	if keys.attacker == parent and item and not parent:IsIllusion() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self and not self:GetParent():HasItemInInventory("item_imba_reverb_rapier") then
-		if not parent:IsRangedAttacker() then 
+		if not parent:IsRangedAttacker() then
 			if item:IsCooldownReady() and not keys.no_attack_cooldown then
-				item:UseResources(false,false,true)
+				item:UseResources(false, false, false, true)
 				parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
 				if not keys.target:IsBuilding() and not keys.target:IsOther() then
-					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", { duration = self.slow_duration })
 				end
 			end
 		end
-		
+
 		if parent:HasModifier("modifier_imba_echo_rapier_haste") and (not parent:HasAbility("imba_slark_essence_shift") or parent:FindAbilityByName("imba_slark_essence_shift"):GetCooldownTime() < parent:FindAbilityByName("imba_slark_essence_shift"):GetEffectiveCooldown(parent:FindAbilityByName("imba_slark_essence_shift"):GetLevel())) then
 			local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
 			mod:DecrementStackCount()
@@ -105,14 +108,20 @@ end
 -------------------------------------------
 modifier_imba_echo_sabre_passive = modifier_imba_echo_sabre_passive or class({})
 
-function modifier_imba_echo_sabre_passive:IsHidden()		return true end
-function modifier_imba_echo_sabre_passive:IsPurgable()		return false end
-function modifier_imba_echo_sabre_passive:RemoveOnDeath()	return false end
-function modifier_imba_echo_sabre_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_echo_sabre_passive:IsHidden() return true end
+
+function modifier_imba_echo_sabre_passive:IsPurgable() return false end
+
+function modifier_imba_echo_sabre_passive:RemoveOnDeath() return false end
+
+function modifier_imba_echo_sabre_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_echo_sabre_passive:OnCreated()
 	if IsServer() then
-		if not self:GetAbility() then self:Destroy() return end
+		if not self:GetAbility() then
+			self:Destroy()
+			return
+		end
 
 		self.echo_modifier = self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_echo_sabre", {})
 	end
@@ -185,10 +194,13 @@ end
 -------------------------------------------
 modifier_imba_reverb_rapier_passive = modifier_imba_reverb_rapier_passive or class({})
 
-function modifier_imba_reverb_rapier_passive:IsHidden()		return true end
-function modifier_imba_reverb_rapier_passive:IsPurgable()		return false end
-function modifier_imba_reverb_rapier_passive:RemoveOnDeath()	return false end
-function modifier_imba_reverb_rapier_passive:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_reverb_rapier_passive:IsHidden() return true end
+
+function modifier_imba_reverb_rapier_passive:IsPurgable() return false end
+
+function modifier_imba_reverb_rapier_passive:RemoveOnDeath() return false end
+
+function modifier_imba_reverb_rapier_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_reverb_rapier_passive:DeclareFunctions()
 	return {
@@ -241,18 +253,18 @@ end
 function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
-	
+
 	if keys.attacker == parent and item and not parent:IsIllusion() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self then
-		if not parent:IsRangedAttacker() then 
+		if not parent:IsRangedAttacker() then
 			if item:IsCooldownReady() and not keys.no_attack_cooldown then
-				item:UseResources(false,false,true)
+				item:UseResources(false, false, false, true)
 				parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
 				if not keys.target:IsBuilding() and not keys.target:IsOther() then
-					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", { duration = self.slow_duration })
 				end
 			end
 		end
-			
+
 		if parent:HasModifier("modifier_imba_echo_rapier_haste") and (not parent:HasAbility("imba_slark_essence_shift") or parent:FindAbilityByName("imba_slark_essence_shift"):GetCooldownTime() < parent:FindAbilityByName("imba_slark_essence_shift"):GetEffectiveCooldown(parent:FindAbilityByName("imba_slark_essence_shift"):GetLevel())) then
 			local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
 			mod:DecrementStackCount()
@@ -273,11 +285,17 @@ end
 -------------------------------------------
 modifier_imba_echo_rapier_haste = modifier_imba_echo_rapier_haste or class({})
 function modifier_imba_echo_rapier_haste:IsDebuff() return false end
+
 function modifier_imba_echo_rapier_haste:IsHidden() return true end
+
 function modifier_imba_echo_rapier_haste:IsPurgable() return false end
+
 function modifier_imba_echo_rapier_haste:IsPurgeException() return false end
+
 function modifier_imba_echo_rapier_haste:IsStunDebuff() return false end
+
 function modifier_imba_echo_rapier_haste:RemoveOnDeath() return true end
+
 -------------------------------------------
 function modifier_imba_echo_rapier_haste:OnCreated()
 	if IsServer() then
@@ -313,20 +331,26 @@ end
 
 function modifier_imba_echo_rapier_haste:OnAttack(keys)
 	if self.parent == keys.attacker and not keys.target:IsBuilding() and not keys.target:IsOther() then
-		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration * (1 - keys.target:GetStatusResistance())})
+		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", { duration = self.slow_duration * (1 - keys.target:GetStatusResistance()) })
 	end
 end
 
 function modifier_imba_echo_rapier_haste:GetModifierAttackSpeedBonus_Constant()
 	return self.attack_speed_buff
 end
+
 -------------------------------------------
 modifier_imba_echo_rapier_debuff_slow = modifier_imba_echo_rapier_debuff_slow or class({})
 function modifier_imba_echo_rapier_debuff_slow:IsDebuff() return true end
+
 function modifier_imba_echo_rapier_debuff_slow:IsHidden() return false end
+
 function modifier_imba_echo_rapier_debuff_slow:IsPurgable() return true end
+
 function modifier_imba_echo_rapier_debuff_slow:IsStunDebuff() return false end
+
 function modifier_imba_echo_rapier_debuff_slow:RemoveOnDeath() return true end
+
 -------------------------------------------
 
 function modifier_imba_echo_rapier_debuff_slow:DeclareFunctions()
@@ -340,7 +364,7 @@ function modifier_imba_echo_rapier_debuff_slow:OnCreated()
 	if IsServer() then
 		if not self:GetAbility() then self:Destroy() end
 	end
-	
+
 	local item = self:GetAbility()
 	if item then
 		self.movement_slow = item:GetSpecialValueFor("movement_slow") * (-1)

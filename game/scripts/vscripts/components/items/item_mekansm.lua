@@ -26,10 +26,10 @@
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_mekansm == nil then item_imba_mekansm = class({}) end
-LinkLuaModifier("modifier_item_imba_mekansm", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)                -- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_mekansm_aura_emitter", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)   -- Aura emitter
-LinkLuaModifier("modifier_item_imba_mekansm_aura", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)           -- Aura buff
-LinkLuaModifier("modifier_item_imba_mekansm_heal", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)           -- Heal buff
+LinkLuaModifier("modifier_item_imba_mekansm", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)              -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_mekansm_aura_emitter", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE) -- Aura emitter
+LinkLuaModifier("modifier_item_imba_mekansm_aura", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)         -- Aura buff
+LinkLuaModifier("modifier_item_imba_mekansm_heal", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)         -- Heal buff
 
 function item_imba_mekansm:GetIntrinsicModifierName()
 	return "modifier_item_imba_mekansm"
@@ -263,10 +263,10 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_guardian_greaves == nil then item_imba_guardian_greaves = class({}) end
-LinkLuaModifier("modifier_item_imba_guardian_greaves", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)                -- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_guardian_greaves_aura_emitter", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)   -- Aura emitter
-LinkLuaModifier("modifier_item_imba_guardian_greaves_aura", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)           -- Aura buff
-LinkLuaModifier("modifier_item_imba_guardian_greaves_heal", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)           -- Heal buff
+LinkLuaModifier("modifier_item_imba_guardian_greaves", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)              -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_guardian_greaves_aura_emitter", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE) -- Aura emitter
+LinkLuaModifier("modifier_item_imba_guardian_greaves_aura", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)         -- Aura buff
+LinkLuaModifier("modifier_item_imba_guardian_greaves_heal", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE)         -- Heal buff
 
 function item_imba_guardian_greaves:GetIntrinsicModifierName()
 	return "modifier_item_imba_guardian_greaves"
@@ -605,13 +605,13 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 				for i = 0, 5 do
 					local item = hero:GetItemInSlot(i)
 					if item and item:GetAbilityName() == "item_imba_guardian_greaves" then
-						item:UseResources(true, false, true)
+						item:UseResources(true, false, false, true)
 						break
 					end
 				end
 			end
 		else
-			ability:UseResources(true, false, true)
+			ability:UseResources(true, false, false, true)
 		end
 	end
 end

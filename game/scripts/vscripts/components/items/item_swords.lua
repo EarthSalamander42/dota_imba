@@ -27,8 +27,8 @@
 local active_sword_sound = "DOTA_Item.IronTalon.Activate"
 
 if item_imba_sange == nil then item_imba_sange = class({}) end
-LinkLuaModifier( "modifier_item_imba_sange", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_sange_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Maim debuff
+LinkLuaModifier("modifier_item_imba_sange", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_sange_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Maim debuff
 
 function item_imba_sange:GetIntrinsicModifierName()
 	return "modifier_item_imba_sange"
@@ -36,7 +36,7 @@ end
 
 function item_imba_sange:OnSpellStart()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sange_active", {duration=self:GetSpecialValueFor("active_duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sange_active", { duration = self:GetSpecialValueFor("active_duration") })
 		self:GetCaster():EmitSound(active_sword_sound)
 	end
 end
@@ -47,10 +47,13 @@ end
 
 if modifier_item_imba_sange == nil then modifier_item_imba_sange = class({}) end
 
-function modifier_item_imba_sange:IsHidden()		return true end
-function modifier_item_imba_sange:IsPurgable()		return false end
-function modifier_item_imba_sange:RemoveOnDeath()	return false end
-function modifier_item_imba_sange:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_sange:IsHidden() return true end
+
+function modifier_item_imba_sange:IsPurgable() return false end
+
+function modifier_item_imba_sange:RemoveOnDeath() return false end
+
+function modifier_item_imba_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange:DeclareFunctions()
@@ -81,7 +84,9 @@ end
 
 if modifier_item_imba_sange_active == nil then modifier_item_imba_sange_active = class({}) end
 function modifier_item_imba_sange_active:IsHidden() return false end
+
 function modifier_item_imba_sange_active:IsDebuff() return false end
+
 function modifier_item_imba_sange_active:IsPurgable() return true end
 
 -- Modifier particle
@@ -112,9 +117,9 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_heavens_halberd == nil then item_imba_heavens_halberd = class({}) end
-LinkLuaModifier("modifier_item_imba_heavens_halberd", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)					-- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_heavens_halberd_ally_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)	-- Passive disarm cooldown counter
-LinkLuaModifier("modifier_item_imba_heavens_halberd_active_disarm", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)	-- Active disarm debuff
+LinkLuaModifier("modifier_item_imba_heavens_halberd", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)               -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_heavens_halberd_ally_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)     -- Passive disarm cooldown counter
+LinkLuaModifier("modifier_item_imba_heavens_halberd_active_disarm", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE) -- Active disarm debuff
 
 function item_imba_heavens_halberd:GetIntrinsicModifierName()
 	return "modifier_item_imba_heavens_halberd"
@@ -122,7 +127,6 @@ end
 
 function item_imba_heavens_halberd:OnSpellStart(keys)
 	if IsServer() and not self:GetCursorTarget():TriggerSpellAbsorb(self) then
-
 		-- Parameters
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
@@ -135,10 +139,10 @@ function item_imba_heavens_halberd:OnSpellStart(keys)
 
 		-- Disarm the target
 		if target:GetTeamNumber() == caster:GetTeamNumber() then
-			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_ally_buff", {duration = self:GetSpecialValueFor("buff_duration")})
+			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_ally_buff", { duration = self:GetSpecialValueFor("buff_duration") })
 			self:GetCaster():EmitSound(active_sword_sound)
 		else
-			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_active_disarm", {duration = duration * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_active_disarm", { duration = duration * (1 - target:GetStatusResistance()) })
 			target:EmitSound("DOTA_Item.HeavensHalberd.Activate")
 		end
 	end
@@ -150,11 +154,13 @@ end
 
 if modifier_item_imba_heavens_halberd == nil then modifier_item_imba_heavens_halberd = class({}) end
 
-function modifier_item_imba_heavens_halberd:IsHidden()		return true end
-function modifier_item_imba_heavens_halberd:IsPurgable()		return false end
-function modifier_item_imba_heavens_halberd:RemoveOnDeath()	return false end
-function modifier_item_imba_heavens_halberd:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_heavens_halberd:IsHidden() return true end
 
+function modifier_item_imba_heavens_halberd:IsPurgable() return false end
+
+function modifier_item_imba_heavens_halberd:RemoveOnDeath() return false end
+
+function modifier_item_imba_heavens_halberd:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_heavens_halberd:DeclareFunctions()
@@ -193,7 +199,9 @@ end
 
 if modifier_item_imba_heavens_halberd_ally_buff == nil then modifier_item_imba_heavens_halberd_ally_buff = class({}) end
 function modifier_item_imba_heavens_halberd_ally_buff:IsHidden() return false end
+
 function modifier_item_imba_heavens_halberd_ally_buff:IsDebuff() return false end
+
 function modifier_item_imba_heavens_halberd_ally_buff:IsPurgable() return true end
 
 function modifier_item_imba_heavens_halberd_ally_buff:GetEffectName()
@@ -223,7 +231,9 @@ end
 
 if modifier_item_imba_heavens_halberd_active_disarm == nil then modifier_item_imba_heavens_halberd_active_disarm = class({}) end
 function modifier_item_imba_heavens_halberd_active_disarm:IsHidden() return false end
+
 function modifier_item_imba_heavens_halberd_active_disarm:IsDebuff() return true end
+
 function modifier_item_imba_heavens_halberd_active_disarm:IsPurgable() return false end
 
 -- Modifier particle
@@ -248,8 +258,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_yasha == nil then item_imba_yasha = class({}) end
-LinkLuaModifier( "modifier_item_imba_yasha", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_yasha_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
+LinkLuaModifier("modifier_item_imba_yasha", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_yasha_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Stacking attack speed
 
 function item_imba_yasha:GetIntrinsicModifierName()
 	return "modifier_item_imba_yasha"
@@ -257,7 +267,7 @@ end
 
 function item_imba_yasha:OnSpellStart()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_yasha_active", {duration=self:GetSpecialValueFor("active_duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_yasha_active", { duration = self:GetSpecialValueFor("active_duration") })
 		self:GetCaster():EmitSound(active_sword_sound)
 	end
 end
@@ -268,10 +278,13 @@ end
 
 if modifier_item_imba_yasha == nil then modifier_item_imba_yasha = class({}) end
 
-function modifier_item_imba_yasha:IsHidden()		return true end
-function modifier_item_imba_yasha:IsPurgable()		return false end
-function modifier_item_imba_yasha:RemoveOnDeath()	return false end
-function modifier_item_imba_yasha:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_yasha:IsHidden() return true end
+
+function modifier_item_imba_yasha:IsPurgable() return false end
+
+function modifier_item_imba_yasha:RemoveOnDeath() return false end
+
+function modifier_item_imba_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_yasha:DeclareFunctions()
@@ -300,8 +313,8 @@ function modifier_item_imba_yasha:GetModifierBonusStats_Agility()
 end
 
 -- function modifier_item_imba_yasha:GetModifierEvasion_Constant()
-	-- if not self:GetAbility() then return end
-	-- return self:GetAbility():GetSpecialValueFor("bonus_evasion")
+-- if not self:GetAbility() then return end
+-- return self:GetAbility():GetSpecialValueFor("bonus_evasion")
 -- end
 
 -----------------------------------------------------------------------------------------------------------
@@ -310,7 +323,9 @@ end
 
 if modifier_item_imba_yasha_active == nil then modifier_item_imba_yasha_active = class({}) end
 function modifier_item_imba_yasha_active:IsHidden() return false end
+
 function modifier_item_imba_yasha_active:IsDebuff() return false end
+
 function modifier_item_imba_yasha_active:IsPurgable() return true end
 
 -- Modifier particle
@@ -339,8 +354,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_kaya == nil then item_imba_kaya = class({}) end
-LinkLuaModifier( "modifier_item_imba_kaya", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_kaya", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Owner's bonus attributes, stackable
 
 function item_imba_kaya:GetIntrinsicModifierName()
 	return "modifier_item_imba_kaya"
@@ -348,7 +363,7 @@ end
 
 function item_imba_kaya:OnSpellStart()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_kaya_active", {duration=self:GetSpecialValueFor("active_duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_kaya_active", { duration = self:GetSpecialValueFor("active_duration") })
 		self:GetCaster():EmitSound("DOTA_Item.Pipe.Activate")
 	end
 end
@@ -359,32 +374,38 @@ end
 
 if modifier_item_imba_kaya == nil then modifier_item_imba_kaya = class({}) end
 
-function modifier_item_imba_kaya:IsHidden()		return true end
-function modifier_item_imba_kaya:IsPurgable()		return false end
-function modifier_item_imba_kaya:RemoveOnDeath()	return false end
-function modifier_item_imba_kaya:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_kaya:IsHidden() return true end
+
+function modifier_item_imba_kaya:IsPurgable() return false end
+
+function modifier_item_imba_kaya:RemoveOnDeath() return false end
+
+function modifier_item_imba_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_kaya:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
 
-	self.spell_amp	= self:GetAbility():GetSpecialValueFor("spell_amp")
-	self.bonus_cdr	= self:GetAbility():GetSpecialValueFor("bonus_cdr")
-	self.bonus_int	= self:GetAbility():GetSpecialValueFor("bonus_int")
+	self.spell_amp = self:GetAbility():GetSpecialValueFor("spell_amp")
+	self.bonus_cdr = self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	self.bonus_int = self:GetAbility():GetSpecialValueFor("bonus_int")
 
-    if not IsServer() then return end
+	if not IsServer() then return end
 
-    -- Use Secondary Charges system to make CDR not stack with multiple Kayas
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
+	-- Use Secondary Charges system to make CDR not stack with multiple Kayas
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 function modifier_item_imba_kaya:OnDestroy()
-    if not IsServer() then return end
-    
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
+	if not IsServer() then return end
+
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 -- Declare modifier events/properties
@@ -420,21 +441,24 @@ end
 --   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_kaya:GetModifierPercentageCooldown()
 	if self:GetAbility() and
-    self:GetAbility():GetSecondaryCharges() == 1 and 
-	not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and 
-	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and 
-	not self:GetParent():HasModifier("modifier_item_imba_kaya_and_sange") and 
-	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
-	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
-        return self.bonus_cdr
-    end
+		self:GetAbility():GetSecondaryCharges() == 1 and
+		not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and
+		not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
+		not self:GetParent():HasModifier("modifier_item_imba_kaya_and_sange") and
+		not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and
+		not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+		return self.bonus_cdr
+	end
 end
 
 modifier_item_imba_kaya_active = modifier_item_imba_kaya_active or class({})
 
 function modifier_item_imba_kaya_active:IsDebuff() return false end
+
 function modifier_item_imba_kaya_active:IsHidden() return false end
+
 function modifier_item_imba_kaya_active:IsPurgable() return false end
+
 function modifier_item_imba_kaya_active:IsPurgeException() return false end
 
 function modifier_item_imba_kaya_active:GetEffectName()
@@ -455,8 +479,8 @@ end
 
 function modifier_item_imba_kaya_active:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	self.bonus_cdr_active = self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
 end
@@ -488,8 +512,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_sange_yasha == nil then item_imba_sange_yasha = class({}) end
-LinkLuaModifier("modifier_item_imba_sange_yasha", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)				-- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_sange_yasha_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)			-- Maim debuff
+LinkLuaModifier("modifier_item_imba_sange_yasha", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)        -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_sange_yasha_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE) -- Maim debuff
 
 function item_imba_sange_yasha:GetIntrinsicModifierName()
 	return "modifier_item_imba_sange_yasha"
@@ -497,7 +521,7 @@ end
 
 function item_imba_sange_yasha:OnSpellStart()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sange_yasha_active", {duration=self:GetSpecialValueFor("active_duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sange_yasha_active", { duration = self:GetSpecialValueFor("active_duration") })
 		self:GetCaster():EmitSound(active_sword_sound)
 	end
 end
@@ -508,10 +532,13 @@ end
 
 if modifier_item_imba_sange_yasha == nil then modifier_item_imba_sange_yasha = class({}) end
 
-function modifier_item_imba_sange_yasha:IsHidden()		return true end
-function modifier_item_imba_sange_yasha:IsPurgable()		return false end
-function modifier_item_imba_sange_yasha:RemoveOnDeath()	return false end
-function modifier_item_imba_sange_yasha:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_sange_yasha:IsHidden() return true end
+
+function modifier_item_imba_sange_yasha:IsPurgable() return false end
+
+function modifier_item_imba_sange_yasha:RemoveOnDeath() return false end
+
+function modifier_item_imba_sange_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_yasha:DeclareFunctions()
@@ -559,8 +586,8 @@ function modifier_item_imba_sange_yasha:GetModifierStatusResistanceStacking()
 end
 
 -- function modifier_item_imba_sange_yasha:GetModifierEvasion_Constant()
-	-- if not self:GetAbility() then return end
-	-- return self:GetAbility():GetSpecialValueFor("bonus_evasion")
+-- if not self:GetAbility() then return end
+-- return self:GetAbility():GetSpecialValueFor("bonus_evasion")
 -- end
 
 -----------------------------------------------------------------------------------------------------------
@@ -569,7 +596,9 @@ end
 
 if modifier_item_imba_sange_yasha_active == nil then modifier_item_imba_sange_yasha_active = class({}) end
 function modifier_item_imba_sange_yasha_active:IsHidden() return false end
+
 function modifier_item_imba_sange_yasha_active:IsDebuff() return false end
+
 function modifier_item_imba_sange_yasha_active:IsPurgable() return true end
 
 -- Modifier particle
@@ -606,8 +635,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_kaya_and_sange == nil then item_imba_kaya_and_sange = class({}) end
-LinkLuaModifier( "modifier_item_imba_kaya_and_sange", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_kaya_and_sange_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Maim/amp debuff
+LinkLuaModifier("modifier_item_imba_kaya_and_sange", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_kaya_and_sange_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Maim/amp debuff
 
 function item_imba_kaya_and_sange:GetIntrinsicModifierName()
 	return "modifier_item_imba_kaya_and_sange"
@@ -615,7 +644,7 @@ end
 
 function item_imba_kaya_and_sange:OnSpellStart()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_kaya_and_sange_active", {duration=self:GetSpecialValueFor("active_duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_kaya_and_sange_active", { duration = self:GetSpecialValueFor("active_duration") })
 		self:GetCaster():EmitSound(active_sword_sound)
 	end
 end
@@ -626,37 +655,40 @@ end
 
 if modifier_item_imba_kaya_and_sange == nil then modifier_item_imba_kaya_and_sange = class({}) end
 
-function modifier_item_imba_kaya_and_sange:IsHidden()		return true end
-function modifier_item_imba_kaya_and_sange:IsPurgable()		return false end
-function modifier_item_imba_kaya_and_sange:RemoveOnDeath()	return false end
-function modifier_item_imba_kaya_and_sange:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_kaya_and_sange:IsHidden() return true end
+
+function modifier_item_imba_kaya_and_sange:IsPurgable() return false end
+
+function modifier_item_imba_kaya_and_sange:RemoveOnDeath() return false end
+
+function modifier_item_imba_kaya_and_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_kaya_and_sange:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
-	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
-	self.bonus_cdr					= self:GetAbility():GetSpecialValueFor("bonus_cdr")
-	self.bonus_intellect			= self:GetAbility():GetSpecialValueFor("bonus_intellect")
-	self.bonus_damage				= self:GetAbility():GetSpecialValueFor("bonus_damage")
-	self.bonus_strength				= self:GetAbility():GetSpecialValueFor("bonus_strength")
-	self.bonus_status_resistance	= self:GetAbility():GetSpecialValueFor("bonus_status_resistance")
-	
-    if not IsServer() then return end
+	self.spell_amp               = self:GetAbility():GetSpecialValueFor("spell_amp")
+	self.bonus_cdr               = self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	self.bonus_intellect         = self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	self.bonus_damage            = self:GetAbility():GetSpecialValueFor("bonus_damage")
+	self.bonus_strength          = self:GetAbility():GetSpecialValueFor("bonus_strength")
+	self.bonus_status_resistance = self:GetAbility():GetSpecialValueFor("bonus_status_resistance")
 
-    -- Use Secondary Charges system to make CDR not stack with multiples
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
+	if not IsServer() then return end
+
+	-- Use Secondary Charges system to make CDR not stack with multiples
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 function modifier_item_imba_kaya_and_sange:OnDestroy()
-    if not IsServer() then return end
-    
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
+	if not IsServer() then return end
+
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 -- Declare modifier events/properties
@@ -705,13 +737,13 @@ end
 --   - Arcane Nexus
 --   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_kaya_and_sange:GetModifierPercentageCooldown()
-    if self:GetAbility():GetSecondaryCharges() == 1 and 
-	not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and 
-	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
-	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
-	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
-        return self.bonus_cdr
-    end
+	if self:GetAbility():GetSecondaryCharges() == 1 and
+		not self:GetParent():HasModifier("modifier_item_imba_yasha_and_kaya") and
+		not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
+		not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and
+		not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+		return self.bonus_cdr
+	end
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -720,7 +752,9 @@ end
 
 if modifier_item_imba_kaya_and_sange_active == nil then modifier_item_imba_kaya_and_sange_active = class({}) end
 function modifier_item_imba_kaya_and_sange_active:IsHidden() return false end
+
 function modifier_item_imba_kaya_and_sange_active:IsDebuff() return false end
+
 function modifier_item_imba_kaya_and_sange_active:IsPurgable() return true end
 
 -- Modifier particle
@@ -759,8 +793,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_yasha_and_kaya == nil then item_imba_yasha_and_kaya = class({}) end
-LinkLuaModifier( "modifier_item_imba_yasha_and_kaya", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_yasha_and_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Amp debuff
+LinkLuaModifier("modifier_item_imba_yasha_and_kaya", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_yasha_and_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Amp debuff
 
 function item_imba_yasha_and_kaya:GetIntrinsicModifierName()
 	return "modifier_item_imba_yasha_and_kaya"
@@ -768,7 +802,7 @@ end
 
 function item_imba_yasha_and_kaya:OnSpellStart()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_yasha_and_kaya_active", {duration=self:GetSpecialValueFor("active_duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_yasha_and_kaya_active", { duration = self:GetSpecialValueFor("active_duration") })
 		self:GetCaster():EmitSound(active_sword_sound)
 	end
 end
@@ -779,37 +813,40 @@ end
 
 if modifier_item_imba_yasha_and_kaya == nil then modifier_item_imba_yasha_and_kaya = class({}) end
 
-function modifier_item_imba_yasha_and_kaya:IsHidden()		return true end
-function modifier_item_imba_yasha_and_kaya:IsPurgable()		return false end
-function modifier_item_imba_yasha_and_kaya:RemoveOnDeath()	return false end
-function modifier_item_imba_yasha_and_kaya:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_yasha_and_kaya:IsHidden() return true end
+
+function modifier_item_imba_yasha_and_kaya:IsPurgable() return false end
+
+function modifier_item_imba_yasha_and_kaya:RemoveOnDeath() return false end
+
+function modifier_item_imba_yasha_and_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_yasha_and_kaya:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
-	self.spell_amp					= self:GetAbility():GetSpecialValueFor("spell_amp")
-	self.bonus_cdr					= self:GetAbility():GetSpecialValueFor("bonus_cdr")
-	self.bonus_intellect			= self:GetAbility():GetSpecialValueFor("bonus_intellect")
-	self.bonus_agility				= self:GetAbility():GetSpecialValueFor("bonus_agility")
-	self.bonus_attack_speed			= self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
-	self.bonus_ms					= self:GetAbility():GetSpecialValueFor("bonus_ms")
-	
-    if not IsServer() then return end
+	self.spell_amp          = self:GetAbility():GetSpecialValueFor("spell_amp")
+	self.bonus_cdr          = self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	self.bonus_intellect    = self:GetAbility():GetSpecialValueFor("bonus_intellect")
+	self.bonus_agility      = self:GetAbility():GetSpecialValueFor("bonus_agility")
+	self.bonus_attack_speed = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	self.bonus_ms           = self:GetAbility():GetSpecialValueFor("bonus_ms")
 
-    -- Use Secondary Charges system to make CDR not stack with multiples
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
+	if not IsServer() then return end
+
+	-- Use Secondary Charges system to make CDR not stack with multiples
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:OnDestroy()
-    if not IsServer() then return end
-    
-    for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
-        mod:GetAbility():SetSecondaryCharges(_)
-    end
+	if not IsServer() then return end
+
+	for _, mod in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		mod:GetAbility():SetSecondaryCharges(_)
+	end
 end
 
 -- Declare modifier events/properties
@@ -865,12 +902,12 @@ end
 --   - Trident (currently vanilla and thus does not have the IMBAfications to add mana cost and cooldown, so it'll be ignored for now)
 function modifier_item_imba_yasha_and_kaya:GetModifierPercentageCooldown()
 	if self:GetAbility() and
-    self:GetAbility():GetSecondaryCharges() == 1 and
-	not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
-	not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and 
-	not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
-        return self:GetAbility():GetSpecialValueFor("bonus_cdr")
-    end
+		self:GetAbility():GetSecondaryCharges() == 1 and
+		not self:GetParent():HasModifier("modifier_item_imba_bloodstone_720") and
+		not self:GetParent():HasModifier("modifier_item_imba_the_triumvirate_v2") and
+		not self:GetParent():HasModifier("modifier_item_imba_arcane_nexus_passive") then
+		return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+	end
 end
 
 function modifier_item_imba_yasha_and_kaya:GetModifierSpellAmplify_PercentageUnique()
@@ -885,7 +922,9 @@ end
 
 if modifier_item_imba_yasha_and_kaya_active == nil then modifier_item_imba_yasha_and_kaya_active = class({}) end
 function modifier_item_imba_yasha_and_kaya_active:IsHidden() return false end
+
 function modifier_item_imba_yasha_and_kaya_active:IsDebuff() return false end
+
 function modifier_item_imba_yasha_and_kaya_active:IsPurgable() return true end
 
 -- Modifier particle
@@ -898,10 +937,13 @@ function modifier_item_imba_yasha_and_kaya_active:GetEffectAttachType()
 end
 
 function modifier_item_imba_yasha_and_kaya_active:OnCreated()
-	if not self:GetAbility() then self:Destroy() return end
-	
-	self.bonus_cdr_active		= self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
-	self.bonus_evasion_active	= self:GetAbility():GetSpecialValueFor("bonus_evasion_active")
+	if not self:GetAbility() then
+		self:Destroy()
+		return
+	end
+
+	self.bonus_cdr_active     = self:GetAbility():GetSpecialValueFor("bonus_cdr_active")
+	self.bonus_evasion_active = self:GetAbility():GetSpecialValueFor("bonus_evasion_active")
 end
 
 -- Declare modifier events/properties
@@ -930,18 +972,19 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_triumvirate == nil then item_imba_triumvirate = class({}) end
-LinkLuaModifier( "modifier_item_imba_triumvirate", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )					-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_triumvirate_stacks_debuff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )	-- Maim/amp debuff
-LinkLuaModifier( "modifier_item_imba_triumvirate_proc_debuff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Disarm/silence debuff
-LinkLuaModifier( "modifier_item_imba_triumvirate_stacks_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
-LinkLuaModifier( "modifier_item_imba_triumvirate_proc_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Move speed proc
+LinkLuaModifier("modifier_item_imba_triumvirate", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)                 -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_triumvirate_stacks_debuff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Maim/amp debuff
+LinkLuaModifier("modifier_item_imba_triumvirate_proc_debuff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)     -- Disarm/silence debuff
+LinkLuaModifier("modifier_item_imba_triumvirate_stacks_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)     -- Stacking attack speed
+LinkLuaModifier("modifier_item_imba_triumvirate_proc_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)       -- Move speed proc
 
 function item_imba_triumvirate:GetAbilityTextureName()
 	return "imba_sange_and_kaya_and_yasha"
 end
 
 function item_imba_triumvirate:GetIntrinsicModifierName()
-	return "modifier_item_imba_triumvirate" end
+	return "modifier_item_imba_triumvirate"
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Triumvirate passive modifier (stackable)
@@ -949,10 +992,13 @@ function item_imba_triumvirate:GetIntrinsicModifierName()
 
 if modifier_item_imba_triumvirate == nil then modifier_item_imba_triumvirate = class({}) end
 
-function modifier_item_imba_triumvirate:IsHidden()		return true end
-function modifier_item_imba_triumvirate:IsPurgable()		return false end
-function modifier_item_imba_triumvirate:RemoveOnDeath()	return false end
-function modifier_item_imba_triumvirate:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_triumvirate:IsHidden() return true end
+
+function modifier_item_imba_triumvirate:IsPurgable() return false end
+
+function modifier_item_imba_triumvirate:RemoveOnDeath() return false end
+
+function modifier_item_imba_triumvirate:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate:DeclareFunctions()
@@ -969,7 +1015,8 @@ end
 
 function modifier_item_imba_triumvirate:GetModifierPreAttack_BonusDamage()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
 
 function modifier_item_imba_triumvirate:GetModifierPercentageCooldown()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
@@ -977,33 +1024,39 @@ end
 
 function modifier_item_imba_triumvirate:GetModifierAttackSpeedBonus_Constant()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
+	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+end
 
 function modifier_item_imba_triumvirate:GetModifierMoveSpeedBonus_Percentage_Unique()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
+	return self:GetAbility():GetSpecialValueFor("bonus_ms")
+end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Strength()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_str") end
+	return self:GetAbility():GetSpecialValueFor("bonus_str")
+end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Agility()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_agi") end
+	return self:GetAbility():GetSpecialValueFor("bonus_agi")
+end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Intellect()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_int") end
+	return self:GetAbility():GetSpecialValueFor("bonus_int")
+end
 
 -- On attack landed, roll for proc and apply stacks
-function modifier_item_imba_triumvirate:OnAttackLanded( keys )
+function modifier_item_imba_triumvirate:OnAttackLanded(keys)
 	if IsServer() then
 		local owner = self:GetParent()
 		local target = keys.target
 
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
-			return end
+			return
+		end
 
 		-- All conditions met, perform a Triumvirate attack
 		TriumAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_triumvirate_stacks_debuff", "modifier_item_imba_triumvirate_stacks_buff", "modifier_item_imba_triumvirate_proc_debuff", "modifier_item_imba_triumvirate_proc_buff")
@@ -1016,7 +1069,9 @@ end
 
 if modifier_item_imba_triumvirate_stacks_debuff == nil then modifier_item_imba_triumvirate_stacks_debuff = class({}) end
 function modifier_item_imba_triumvirate_stacks_debuff:IsHidden() return false end
+
 function modifier_item_imba_triumvirate_stacks_debuff:IsDebuff() return true end
+
 function modifier_item_imba_triumvirate_stacks_debuff:IsPurgable() return true end
 
 -- Modifier particle
@@ -1031,8 +1086,8 @@ end
 -- Modifier property storage
 function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	self.ability = self:GetAbility()
 
@@ -1077,15 +1132,18 @@ end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMagicalResistanceBonus()
 	if not self.amp_stack then return nil end
-	return self.amp_stack * self:GetStackCount() end
+	return self.amp_stack * self:GetStackCount()
+end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierAttackSpeedBonus_Constant()
 	if not self.maim_stack then return nil end
-	return self.maim_stack * self:GetStackCount() end
+	return self.maim_stack * self:GetStackCount()
+end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMoveSpeedBonus_Percentage()
 	if not self.maim_stack then return nil end
-	return self.maim_stack * self:GetStackCount() end
+	return self.maim_stack * self:GetStackCount()
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Triumvirate silence/disarm debuff
@@ -1093,7 +1151,9 @@ function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMoveSpeedBonus_
 
 if modifier_item_imba_triumvirate_proc_debuff == nil then modifier_item_imba_triumvirate_proc_debuff = class({}) end
 function modifier_item_imba_triumvirate_proc_debuff:IsHidden() return true end
+
 function modifier_item_imba_triumvirate_proc_debuff:IsDebuff() return true end
+
 function modifier_item_imba_triumvirate_proc_debuff:IsPurgable() return true end
 
 -- Modifier particle
@@ -1120,7 +1180,9 @@ end
 
 if modifier_item_imba_triumvirate_stacks_buff == nil then modifier_item_imba_triumvirate_stacks_buff = class({}) end
 function modifier_item_imba_triumvirate_stacks_buff:IsHidden() return false end
+
 function modifier_item_imba_triumvirate_stacks_buff:IsDebuff() return false end
+
 function modifier_item_imba_triumvirate_stacks_buff:IsPurgable() return true end
 
 -- Modifier particle
@@ -1135,8 +1197,8 @@ end
 -- Modifier property storage
 function modifier_item_imba_triumvirate_stacks_buff:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	self.as_stack = self:GetAbility():GetSpecialValueFor("as_stack")
 
@@ -1169,7 +1231,8 @@ function modifier_item_imba_triumvirate_stacks_buff:DeclareFunctions()
 end
 
 function modifier_item_imba_triumvirate_stacks_buff:GetModifierAttackSpeedBonus_Constant()
-	return self.as_stack * self:GetStackCount() end
+	return self.as_stack * self:GetStackCount()
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Triumvirate move speed proc
@@ -1177,7 +1240,9 @@ function modifier_item_imba_triumvirate_stacks_buff:GetModifierAttackSpeedBonus_
 
 if modifier_item_imba_triumvirate_proc_buff == nil then modifier_item_imba_triumvirate_proc_buff = class({}) end
 function modifier_item_imba_triumvirate_proc_buff:IsHidden() return true end
+
 function modifier_item_imba_triumvirate_proc_buff:IsDebuff() return false end
+
 function modifier_item_imba_triumvirate_proc_buff:IsPurgable() return true end
 
 -- Modifier particle
@@ -1192,9 +1257,9 @@ end
 -- Modifier property storage
 function modifier_item_imba_triumvirate_proc_buff:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	self.proc_ms = self:GetAbility():GetSpecialValueFor("proc_ms")
 
 	-- Remove lower-tier modifiers
@@ -1220,25 +1285,26 @@ function modifier_item_imba_triumvirate_proc_buff:DeclareFunctions()
 end
 
 function modifier_item_imba_triumvirate_proc_buff:GetModifierMoveSpeedBonus_Percentage()
-	return self.proc_ms end
-
+	return self.proc_ms
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Auxiliary attack functions
 -----------------------------------------------------------------------------------------------------------
 
 function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
-
 	-- If this is an illusion, do nothing
 	if attacker:IsIllusion() then
-		return end
+		return
+	end
 
 	-- If the target is not valid, do nothing either
 	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
-		return end
+		return
+	end
 
 	-- Stack the maim up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_stacks, { duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance()) })
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1246,18 +1312,16 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
-
 		-- Proc! Apply the disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(attacker, ability, modifier_proc, { duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance()) })
 		target:EmitSound("Imba.SangeProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 
 function YashaAttack(attacker, ability, modifier_stacks, modifier_proc)
-
 	-- Stack the attack speed buff up
-	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_stacks, { duration = ability:GetSpecialValueFor("stack_duration") })
 	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
 		attacker:EmitSound("Imba.YashaStack")
@@ -1265,30 +1329,31 @@ function YashaAttack(attacker, ability, modifier_stacks, modifier_proc)
 
 	-- If this is an illusion, do nothing else
 	if attacker:IsIllusion() then
-		return end
+		return
+	end
 
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
-
 		-- Proc! Apply the move speed modifier and put the ability on cooldown
-		attacker:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_self")})
+		attacker:AddNewModifier(attacker, ability, modifier_proc, { duration = ability:GetSpecialValueFor("proc_duration_self") })
 		attacker:EmitSound("Imba.YashaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 
 function kayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
-
 	-- If this is an illusion, do nothing
 	if attacker:IsIllusion() then
-		return end
+		return
+	end
 
 	-- If the target is not valid, do nothing either
 	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
-		return end
+		return
+	end
 
 	-- Stack the magic amp up
-	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_stacks, { duration = ability:GetSpecialValueFor("stack_duration") })
 	if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
 		target:EmitSound("Imba.kayaStack")
@@ -1296,18 +1361,16 @@ function kayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
-
 		-- Proc! Apply the silence modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(attacker, ability, modifier_proc, { duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance()) })
 		target:EmitSound("Imba.kayaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 
 function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modifier_self_stacks, modifier_enemy_proc, modifier_self_proc)
-
 	-- Stack the attack speed buff up
-	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, { duration = ability:GetSpecialValueFor("stack_duration") })
 	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
 		attacker:EmitSound("Imba.YashaStack")
@@ -1315,27 +1378,28 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 
 	-- If this is an illusion, do nothing else
 	if attacker:IsIllusion() then
-		return end
+		return
+	end
 
 	-- If the target is not valid, do nothing else
 	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
-		return end
+		return
+	end
 
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
-
 		-- Proc! Apply the move speed modifier
-		attacker:AddNewModifier(attacker, ability, modifier_self_proc, {duration = ability:GetSpecialValueFor("proc_duration_self")})
+		attacker:AddNewModifier(attacker, ability, modifier_self_proc, { duration = ability:GetSpecialValueFor("proc_duration_self") })
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, { duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance()) })
 		target:EmitSound("Imba.SangeProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 
 	-- Stack the maim up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, { duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance()) })
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1343,17 +1407,18 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 end
 
 function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
-
 	-- If this is an illusion, do nothing
 	if attacker:IsIllusion() then
-		return end
+		return
+	end
 
 	-- If the target is not valid, do nothing either
 	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
-		return end
+		return
+	end
 
 	-- Stack the maim/amp up
-	local modifier_debuff = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
+	local modifier_debuff = target:AddNewModifier(attacker, ability, modifier_stacks, { duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance()) })
 	if modifier_debuff and modifier_debuff:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_debuff:SetStackCount(modifier_debuff:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
@@ -1362,19 +1427,17 @@ function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_pr
 
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
-
 		-- Proc! Apply the disarm/silence modifier
-		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(attacker, ability, modifier_proc, { duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance()) })
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.kayaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 
 function kayaYashaAttack(attacker, target, ability, modifier_enemy_stacks, modifier_self_stacks, modifier_enemy_proc, modifier_self_proc)
-
 	-- Stack the attack speed buff up
-	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, { duration = ability:GetSpecialValueFor("stack_duration") })
 	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
 		attacker:EmitSound("Imba.YashaStack")
@@ -1382,27 +1445,28 @@ function kayaYashaAttack(attacker, target, ability, modifier_enemy_stacks, modif
 
 	-- If this is an illusion, do nothing else
 	if attacker:IsIllusion() then
-		return end
+		return
+	end
 
 	-- If the target is not valid, do nothing else
 	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
-		return end
+		return
+	end
 
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
-
 		-- Proc! Apply the move speed modifier
-		attacker:AddNewModifier(attacker, ability, modifier_self_proc, {duration = ability:GetSpecialValueFor("proc_duration_self")})
+		attacker:AddNewModifier(attacker, ability, modifier_self_proc, { duration = ability:GetSpecialValueFor("proc_duration_self") })
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the silence modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, { duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance()) })
 		target:EmitSound("Imba.kayaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 
 	-- Stack the magic amp up
-	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
+	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, { duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance()) })
 	if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
 		target:EmitSound("Imba.kayaStack")
@@ -1410,9 +1474,8 @@ function kayaYashaAttack(attacker, target, ability, modifier_enemy_stacks, modif
 end
 
 function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_self_stacks, modifier_enemy_proc, modifier_self_proc)
-
 	-- Stack the attack speed buff up
-	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, { duration = ability:GetSpecialValueFor("stack_duration") })
 	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
 		attacker:EmitSound("Imba.YashaStack")
@@ -1420,28 +1483,29 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 
 	-- If this is an illusion, do nothing
 	if attacker:IsIllusion() then
-		return end
+		return
+	end
 
 	-- If the target is not valid, do nothing else
 	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
-		return end
+		return
+	end
 
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
-
 		-- Proc! Apply the move speed modifier
-		attacker:AddNewModifier(attacker, ability, modifier_self_proc, {duration = ability:GetSpecialValueFor("proc_duration_self")})
+		attacker:AddNewModifier(attacker, ability, modifier_self_proc, { duration = ability:GetSpecialValueFor("proc_duration_self") })
 		attacker:EmitSound("Imba.YashaProc")
 
 		-- Apply the silence/disarm modifier and put the ability on cooldown
-		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(attacker, ability, modifier_enemy_proc, { duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance()) })
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.kayaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 
 	-- Stack the maim/amp up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance())})
+	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, { duration = ability:GetSpecialValueFor("stack_duration") * (1 - target:GetStatusResistance()) })
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")

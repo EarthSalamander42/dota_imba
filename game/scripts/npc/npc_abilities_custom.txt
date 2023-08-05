@@ -28,7 +28,7 @@
 #base heroes/enchantress/abilities.txt
 #base heroes/faceless_void/abilities.txt
 #base heroes/furion/abilities.txt
-#base heroes/grimstroke/abilities.txt
+// #base heroes/grimstroke/abilities.txt
 #base heroes/gyrocopter/abilities.txt
 #base heroes/hoodwink/abilities.txt
 #base heroes/huskar/abilities.txt

@@ -268,14 +268,14 @@ end
 function modifier_item_imba_valiance_counter:OnRemoved()
 	if not IsServer() or not self:GetAbility() then return end
 
-	self:GetAbility():UseResources(false, false, true)
+	self:GetAbility():UseResources(false, false, false, true)
 end
 
 function modifier_item_imba_valiance_counter:OnDestroy()
 	if not IsServer() then return end
 
 	if self:GetAbility() then
-		self:GetAbility():UseResources(false, false, true)
+		self:GetAbility():UseResources(false, false, false, true)
 	end
 end
 

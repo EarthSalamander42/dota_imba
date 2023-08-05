@@ -55,8 +55,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			GoodCamera = Entities:FindByName(nil, "good_healer_6")
 			BadCamera = Entities:FindByName(nil, "bad_healer_6")
 
-			HeroSelection:Init()
-
 			return nil
 		end, 2.0)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
@@ -725,24 +723,19 @@ function GameMode:OnPlayerChat(keys)
 						caster.companion = nil
 					end
 
-					if IMBA_PICK_SCREEN == true then
-						PrecacheUnitByNameAsync("npc_dota_hero_" .. text, function()
-							HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_" .. text, true)
-						end)
-					else
-						local old_hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerID())
-						PrecacheUnitByNameAsync("npc_dota_hero_" .. text, function()
-							PlayerResource:ReplaceHeroWith(caster:GetPlayerID(), "npc_dota_hero_" .. text, 0, 0)
+					local old_hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerID())
 
-							GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-								if old_hero then
-									UTIL_Remove(old_hero)
-								end
+					PrecacheUnitByNameAsync("npc_dota_hero_" .. text, function()
+						PlayerResource:ReplaceHeroWith(caster:GetPlayerID(), "npc_dota_hero_" .. text, 0, 0)
 
-								return nil
-							end, FrameTime())
-						end)
-					end
+						GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+							if old_hero then
+								UTIL_Remove(old_hero)
+							end
+
+							return nil
+						end, FrameTime())
+					end)
 				end
 			end
 

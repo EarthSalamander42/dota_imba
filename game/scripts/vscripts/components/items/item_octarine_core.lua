@@ -24,7 +24,7 @@
 --	Item Definition
 -----------------------------------------------------------------------------------------------------------
 if item_imba_octarine_core == nil then item_imba_octarine_core = class({}) end
-LinkLuaModifier("modifier_imba_octarine_core_basic", "components/items/item_octarine_core.lua", LUA_MODIFIER_MOTION_NONE)   -- Item stats
+LinkLuaModifier("modifier_imba_octarine_core_basic", "components/items/item_octarine_core.lua", LUA_MODIFIER_MOTION_NONE) -- Item stats
 
 function item_imba_octarine_core:GetAbilityTextureName()
 	return "imba_octarine_core"
@@ -167,7 +167,7 @@ end
 
 function modifier_imba_octarine_core_basic:OnSpentMana(keys)
 	if self:GetAbility() and keys.unit == self:GetParent() and keys.unit:FindAllModifiersByName(self:GetName())[1] == self and self:GetStackCount() == 2 and self:GetAbility():IsCooldownReady() and keys.cost > 0 then -- [ 1 = disabled | 2 = enabled ]
-		self:GetAbility():UseResources(false, false, true)
+		self:GetAbility():UseResources(false, false, false, true)
 
 		-- Blast geometry
 		local blast_duration = 0.75 * 0.75

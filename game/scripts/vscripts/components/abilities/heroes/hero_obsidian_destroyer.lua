@@ -165,7 +165,7 @@ function modifier_imba_arcane_orb_thinker:OnAttack(keys)
 			EmitSoundOn(self.sound_cast, self.caster)
 
 			-- Spend mana
-			self.ability:UseResources(true, false, false)
+			self.ability:UseResources(true, false, false, false)
 
 			-- If the caster has the Essence Aura buff, roll for a proc
 			if self.caster:HasModifier(self.modifier_essence) then
@@ -900,7 +900,7 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 			end
 		end
 
-		self:UseResources(false, false, true)
+		self:UseResources(false, false, false, true)
 	else
 		-- MOVE ACTIVE PRISON
 		-- Ability properties
@@ -1170,7 +1170,7 @@ end
 function modifier_imba_astral_imprisonment_buff:OnDestroy()
 	if IsServer() then
 		-- Spend the cooldown of the ability
-		self.ability:UseResources(false, false, true)
+		self.ability:UseResources(false, false, false, true)
 	end
 end
 

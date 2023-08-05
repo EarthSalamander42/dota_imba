@@ -31,7 +31,7 @@ local function ConsumeCheese(parent, item)
 			end
 		end
 	else -- starting the cooldown manually is required for the auto-use
-		item:UseResources(false, false, true)
+		item:UseResources(false, false, false, true)
 	end
 end
 
@@ -52,8 +52,11 @@ end
 modifier_item_imba_cheese_death_prevention = modifier_item_imba_cheese_death_prevention or class({})
 
 function modifier_item_imba_cheese_death_prevention:IsHidden() return true end
+
 function modifier_item_imba_cheese_death_prevention:IsPurgable() return false end
+
 function modifier_item_imba_cheese_death_prevention:IsPurgeException() return false end
+
 function modifier_item_imba_cheese_death_prevention:RemoveOnDeath() return false end
 
 function modifier_item_imba_cheese_death_prevention:DeclareFunctions()

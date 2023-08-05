@@ -17,17 +17,20 @@ modifier_imba_gauntlets = modifier_imba_gauntlets or class({})
 --------------------------------------------
 
 function modifier_imba_gauntlets:IsHidden() return true end
+
 function modifier_imba_gauntlets:IsDebuff() return false end
+
 function modifier_imba_gauntlets:IsPurgable() return false end
+
 function modifier_imba_gauntlets:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_gauntlets:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	-- Ability properties
-	self.caster = self:GetCaster() 
+	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
@@ -36,8 +39,8 @@ function modifier_imba_gauntlets:OnCreated()
 end
 
 function modifier_imba_gauntlets:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					  MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK}
+	local decFuncs = { MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK }
 
 	return decFuncs
 end
@@ -49,9 +52,8 @@ end
 function modifier_imba_gauntlets:GetModifierPhysical_ConstantBlock()
 	-- Only block physical damage when not in cooldown
 	if self.ability:IsCooldownReady() then
-
 		-- Start cooldown and block
-		self.ability:UseResources(false, false, true)
+		self.ability:UseResources(false, false, false, true)
 		return self.damage_block
 	end
 

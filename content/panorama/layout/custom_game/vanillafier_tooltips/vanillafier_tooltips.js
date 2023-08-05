@@ -25,6 +25,7 @@ var AbilityName;
 var AbilityLevel;
 var CurrentAbilityManaCost;
 var CurrentAbilityCooldown;
+var CurrentAbilityHealthCost;
 var AbilityCastType;
 var AbilityTargetType;
 var AbilityDamageType;
@@ -48,6 +49,7 @@ function InitMainPanelCSS(bFirst) {
 	AbilityLevel = DotaHud.FindChildTraverse("AbilityLevel");
 	CurrentAbilityManaCost = DotaHud.FindChildTraverse("CurrentAbilityManaCost");
 	CurrentAbilityCooldown = DotaHud.FindChildTraverse("CurrentAbilityCooldown");
+	CurrentAbilityHealthCost = DotaHud.FindChildTraverse("CurrentAbilityHealthCost");
 	AbilityCastType = DotaHud.FindChildTraverse("AbilityCastType");
 	AbilityTargetType = DotaHud.FindChildTraverse("AbilityTargetType"); // Not setup yet!
 	AbilityDamageType = DotaHud.FindChildTraverse("AbilityDamageType");
@@ -58,6 +60,7 @@ function InitMainPanelCSS(bFirst) {
 	AbilityExtraAttributes = DotaHud.FindChildTraverse("AbilityExtraAttributes");
 	AbilityCooldown = DotaHud.FindChildTraverse("AbilityCooldown");
 	AbilityManaCost = DotaHud.FindChildTraverse("AbilityManaCost");
+	AbilityHealthCost = DotaHud.FindChildTraverse("AbilityHealthCost");
 	AbilityLore = DotaHud.FindChildTraverse("AbilityLore");
 	AbilityUpgradeLevel = DotaHud.FindChildTraverse("AbilityUpgradeLevel");
 
@@ -215,7 +218,10 @@ function SetAbilityTooltips(keys) {
 		ability_level = Abilities.GetLevel(ability);
 	}
 
-	$.Msg(keys);
+	if (Game.IsInToolsMode()) {
+		$.Msg("SetAbilityTooltips");
+		$.Msg(keys);
+	}
 
 	if (ability && ability_level != 0 && ability_level != -1) {
 		ability_mana_cost = keys.iManaCost[ability_level];
@@ -289,6 +295,10 @@ function SetAbilityTooltips(keys) {
 		else
 			CurrentAbilityCooldown.style.visibility = "collapse";
 	}
+
+	// todo: implement health cost
+	CurrentAbilityHealthCost.style.visibility = "collapse";
+	AbilityHealthCost.style.visibility = "collapse";
 
 	AbilityCastType.SetDialogVariable("casttype", $.Localize("#DOTA_ToolTip_Ability_" + Array_BehaviorTooltips[GetAbilityType(keys.iBehavior)]));
 

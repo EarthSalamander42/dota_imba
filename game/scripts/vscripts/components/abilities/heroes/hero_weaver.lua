@@ -550,7 +550,7 @@ function modifier_imba_weaver_geminate_attack:OnAttack(keys)
 			self:GetParent():AddNewModifier(keys.target, self:GetAbility(), "modifier_imba_weaver_geminate_attack_delay", { delay = self:GetAbility():GetSpecialValueFor("delay") * geminate_attacks })
 		end
 
-		self:GetAbility():UseResources(true, true, true)
+		self:GetAbility():UseResources(true, false, true, true)
 	end
 end
 

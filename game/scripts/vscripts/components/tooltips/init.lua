@@ -8,8 +8,8 @@ end
 
 local split = function(inputstr, sep)
 	if sep == nil then sep = "%s" end
-	local t={} ; i=1
-	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+	local t = {}; i = 1
+	for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
 		t[i] = str
 		i = i + 1
 	end
@@ -29,7 +29,7 @@ function CustomTooltips:GetIMBAValue(value)
 
 		if type(value) == "table" and value["value"] and type(value["value"]) == "string" then
 			value["value"] = split(value["value"], " ")
-	
+
 			for k, v in pairs(value["value"]) do
 				if v then
 					value["value"][k] = tonumber(v) * (100 + IMBAFIED_VALUE_BONUS) / 100
@@ -45,19 +45,19 @@ function CustomTooltips:GetIMBAValue(value)
 end
 
 function CustomTooltips:GetTooltipsInfo(keys)
---	print(keys)
+	--	print(keys)
 
 	if not keys.PlayerID or keys.PlayerID == -1 then
 		print("ERROR: Invalid Player ID:", keys.PlayerID)
 		return
 	end
---[[
+	--[[
 	if PlayerResource:GetPlayer(keys.PlayerID):GetTeam() == 1 then
 		print("Custom Tooltips: Block Spectators.")
 		return
 	end
 --]]
---	print(keys)
+	--	print(keys)
 	local ability_name = GetVanillaAbilityName(keys.sAbilityName)
 	if not ability_name then
 		print("ERROR: Vanilla ability name not found.", keys.sAbilityName)
@@ -73,7 +73,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 
 	local ability_values = {}
 	local specials = GetAbilitySpecials(ability_name, true)
-	local imba_specials = GetAbilitySpecials("imba_"..ability_name)
+	local imba_specials = GetAbilitySpecials("imba_" .. ability_name)
 	local specials_issued = {}
 
 	for k, v in pairs(imba_specials) do
@@ -88,7 +88,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	for k, value in pairs(specials) do
 		-- prevent adding doublons, prioritize imba values
 		if value and value[1] and not specials_issued[value[1]] then
---			print("From now on, ignore", v[1])
+			--			print("From now on, ignore", v[1])
 			specials_issued[value[1]] = true
 
 			if hero and hero:FindAbilityByName(keys.sAbilityName) then
@@ -116,7 +116,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	if hero then
 		for i = 1, #hRealCooldown do
 			if hRealCooldown[i] then
---				print(hRealCooldown[i], hero:GetCooldownReduction())
+				--				print(hRealCooldown[i], hero:GetCooldownReduction())
 				hRealCooldown[i] = hRealCooldown[i] * (hero:GetCooldownReduction() * 100) / 100
 				hRealCooldown[i] = CustomTooltips:GetIMBAValue(hRealCooldown[i])
 			end
@@ -165,7 +165,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 			cast_range = lua_cast_range or 0
 		end
 
-	--	print("Cast Range:", cast_range)
+		--	print("Cast Range:", cast_range)
 		if cast_range ~= 0 then
 			if not CustomTooltips.particles[keys.PlayerID] then
 				CustomTooltips.particles[keys.PlayerID] = {}
@@ -196,13 +196,12 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		iAbility = keys["iAbility"],
 	}
 
-	print(values)
 	if values["iBonusCastRange"] then
 		values["iBonusCastRange"] = CustomTooltips:GetIMBAValue(values["iBonusCastRange"])
 	end
-	print(values)
 
---	print("Send server tooltips info:", imba_specials)
+	-- print(values)
+	--	print("Send server tooltips info:", imba_specials)
 	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", values)
 end
 

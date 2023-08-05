@@ -175,14 +175,14 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 	local damage_type = keys.damage_type
 	local damage_flags = keys.damage_flags
 
-	if keys.unit == self:GetParent() and not keys.attacker:IsBuilding() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then
-		if not keys.unit:IsOther() then
-			EmitSoundOnClient("DOTA_Item.BladeMail.Damage", keys.attacker:GetPlayerOwner())
+	if target == self:GetParent() and not attacker:IsBuilding() and attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() and bit.band(damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) ~= DOTA_DAMAGE_FLAG_HPLOSS and bit.band(damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) ~= DOTA_DAMAGE_FLAG_REFLECTION then
+		if not target:IsOther() then
+			EmitSoundOnClient("DOTA_Item.BladeMail.Damage", attacker:GetPlayerOwner())
 
 			local damageTable = {
-				victim       = keys.attacker,
-				damage       = keys.original_damage,
-				damage_type  = keys.damage_type,
+				victim       = attacker,
+				damage       = original_damage,
+				damage_type  = damage_type,
 				damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 				attacker     = self:GetParent(),
 				ability      = self:GetAbility()
@@ -192,17 +192,17 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 
 			-- IMBAfication: Lacerate
 			if reflectDamage * self.lacerate_pct / 100 >= 1 then
-				local lacerate_modifier = keys.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", { duration = self.lacerate_duration * (1 - keys.attacker:GetStatusResistance()) })
+				local lacerate_modifier = attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", { duration = self.lacerate_duration * (1 - attacker:GetStatusResistance()) })
 
 				if lacerate_modifier then
 					-- Don't want to brick units into negative max health, so set an upper limit
-					lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct / 100), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
+					lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct / 100), lacerate_modifier:GetStackCount() + attacker:GetMaxHealth() - 1))
 
-					if keys.attacker.CalculateStatBonus then
-						keys.attacker:CalculateStatBonus(true)
+					if attacker.CalculateStatBonus then
+						attacker:CalculateStatBonus(true)
 					end
 
-					if keys.attacker:GetMaxHealth() <= 0 then
+					if attacker:GetMaxHealth() <= 0 then
 						lacerate_modifier:Destroy()
 					end
 				end
@@ -210,13 +210,13 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 		end
 
 		-- IMBAfication: Justice
-		if ((self:GetAbility() and self:GetAbility():GetLevel() >= 2) or self.level >= 2) and keys.attacker:GetPlayerOwner() and keys.attacker:GetPlayerOwner():GetAssignedHero() and keys.attacker ~= keys.attacker:GetPlayerOwner():GetAssignedHero() then
-			EmitSoundOnClient("DOTA_Item.BladeMail.Damage", keys.attacker:GetPlayerOwner())
+		if ((self:GetAbility() and self:GetAbility():GetLevel() >= 2) or self.level >= 2) and attacker:GetPlayerOwner() and attacker:GetPlayerOwner():GetAssignedHero() and attacker ~= attacker:GetPlayerOwner():GetAssignedHero() then
+			EmitSoundOnClient("DOTA_Item.BladeMail.Damage", attacker:GetPlayerOwner())
 
 			local damageTable = {
-				victim       = keys.attacker:GetPlayerOwner():GetAssignedHero(),
-				damage       = keys.original_damage * self.justice_pct / 100,
-				damage_type  = keys.damage_type,
+				victim       = attacker:GetPlayerOwner():GetAssignedHero(),
+				damage       = original_damage * self.justice_pct / 100,
+				damage_type  = damage_type,
 				damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 				attacker     = self:GetParent(),
 				ability      = self:GetAbility()
@@ -226,17 +226,17 @@ function modifier_item_imba_blade_mail_active:OnTakeDamage(keys)
 
 			-- IMBAfication: Lacerate
 			if reflectDamage * self.lacerate_pct / 100 >= 1 then
-				local lacerate_modifier = keys.attacker:GetPlayerOwner():GetAssignedHero():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", { duration = self.lacerate_duration * (1 - keys.attacker:GetStatusResistance()) })
+				local lacerate_modifier = attacker:GetPlayerOwner():GetAssignedHero():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_blade_mail_lacerate", { duration = self.lacerate_duration * (1 - attacker:GetStatusResistance()) })
 
 				if lacerate_modifier then
 					-- Don't want to brick units into negative max health, so set an upper limit
-					lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct / 100), lacerate_modifier:GetStackCount() + keys.attacker:GetMaxHealth() - 1))
+					lacerate_modifier:SetStackCount(math.min(lacerate_modifier:GetStackCount() + (reflectDamage * self.lacerate_pct / 100), lacerate_modifier:GetStackCount() + attacker:GetMaxHealth() - 1))
 
-					if keys.attacker:GetPlayerOwner():GetAssignedHero().CalculateStatBonus then
-						keys.attacker:GetPlayerOwner():GetAssignedHero():CalculateStatBonus(true)
+					if attacker:GetPlayerOwner():GetAssignedHero().CalculateStatBonus then
+						attacker:GetPlayerOwner():GetAssignedHero():CalculateStatBonus(true)
 					end
 
-					if keys.attacker:GetPlayerOwner():GetAssignedHero():GetMaxHealth() <= 0 then
+					if attacker:GetPlayerOwner():GetAssignedHero():GetMaxHealth() <= 0 then
 						lacerate_modifier:Destroy()
 					end
 				end

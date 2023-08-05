@@ -282,7 +282,7 @@ function modifier_imba_telekinesis:EndTransition()
 			parent:EmitSound("Hero_Rubick.Telekinesis.Target.Stun")
 		end
 
-		ability:UseResources(true, false, true)
+		ability:UseResources(true, false, false, true)
 
 		-- Special considerations for ally telekinesis		
 		if self.is_ally then
@@ -1317,9 +1317,9 @@ function imba_rubick_spellsteal:OnProjectileHit(target, location)
 
 	-- Add modifier
 	target:AddNewModifier(
-		self:GetCaster(),                                      -- player source
-		self,                                                  -- ability source
-		"modifier_imba_rubick_spellsteal",                     -- modifier name
+		self:GetCaster(),                                        -- player source
+		self,                                                    -- ability source
+		"modifier_imba_rubick_spellsteal",                       -- modifier name
 		{ spell_amp = self.spell_target:GetSpellAmplification(false) } -- kv
 	)
 

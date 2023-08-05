@@ -166,7 +166,7 @@ function modifier_imba_shotgun_passive:OnAttack(params)
 						bProvidesVision = false,
 						bFlyingVision = false,
 						--ControlPoints = {[0]=hero_pos+Vector(0,0,90),[1]=end_loc,[2]=Vector(self.projectile_speed,0,0),[3]=end_loc,[4]=vColor,[5]=hero:GetHeroColorSecondary()},
-						ControlPoints = { [0] = hero_pos + Vector(0, 0, 90),[1] = end_loc,[15] = Vector(128, 24, 24),[16] = Vector(255, 0, 0) },
+						ControlPoints = { [0] = hero_pos + Vector(0, 0, 90), [1] = end_loc, [15] = Vector(128, 24, 24), [16] = Vector(255, 0, 0) },
 						UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= hero:GetTeamNumber() end,
 						OnUnitHit = function(self, unit)
 							if last_target == nil then
@@ -198,7 +198,7 @@ function modifier_imba_shotgun_passive:OnAttack(params)
 			local bullet_pfx = ParticleManager:CreateParticle("particles/item/starfury/shotgun_bulletcase_charlie.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 			ParticleManager:SetParticleControl(bullet_pfx, 0, hero:GetAttachmentOrigin(DOTA_PROJECTILE_ATTACHMENT_ATTACK_1))
 			ParticleManager:SetParticleControl(bullet_pfx, 4, vColor)
-			self.item:UseResources(false, false, true)
+			self.item:UseResources(false, false, false, true)
 			StartSoundEventFromPosition("Imba.Shotgun", hero:GetAbsOrigin())
 		end
 	end
@@ -317,7 +317,7 @@ function modifier_imba_starfury_passive:OnAttackLanded(params)
 					TrackingProjectiles:Projectile(projectile)
 					if not bFound then
 						bFound = true
-						self.item:UseResources(false, false, true)
+						self.item:UseResources(false, false, false, true)
 					end
 				end
 			end
