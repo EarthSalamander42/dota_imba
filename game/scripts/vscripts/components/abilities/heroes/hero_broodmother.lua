@@ -279,7 +279,7 @@ function imba_broodmother_spin_web:OnUpgrade()
 	if self:GetLevel() == 1 then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_generic_charges", {})
 	else
-		charges_modifier = self:GetCaster():FindModifierByName("modifier_generic_charges")
+		local charges_modifier = self:GetCaster():FindModifierByName("modifier_generic_charges")
 
 		if charges_modifier then
 			charges_modifier:OnRefresh({ bonus_charges = self:GetLevelSpecialValueFor("max_charges", 1) })

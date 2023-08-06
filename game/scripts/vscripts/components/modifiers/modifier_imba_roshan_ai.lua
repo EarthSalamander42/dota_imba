@@ -59,7 +59,7 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 	local item = CreateItem("item_aegis", nil, nil)
 	local pos = self:GetParent():GetAbsOrigin()
 	local drop = CreateItemOnPositionSync(pos, item)
-	item:LaunchLoot(false, 300, 0.5, pos)
+	item:LaunchLoot(false, 300, 0.5, pos, nil)
 
 	if GAME_ROSHAN_KILLS >= 2 then
 		for i = 1, GAME_ROSHAN_KILLS -1 do
@@ -68,7 +68,7 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 			local new_pos = pos + RandomVector(RandomInt(100, 150))
 			
 			if GridNav:IsTraversable(new_pos) then
-				item:LaunchLoot(false, 300, 0.5, new_pos)
+				item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 			else
 				self:GetParent():DropItemAtPositionImmediate(item, new_pos)
 			end
@@ -83,7 +83,7 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 				local new_pos = pos + RandomVector(RandomInt(100, 150))
 				
 				if GridNav:IsTraversable(new_pos) then
-					item:LaunchLoot(false, 300, 0.5, new_pos)
+					item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 				else
 					self:GetParent():DropItemAtPositionImmediate(item, new_pos)
 				end
@@ -93,7 +93,7 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 				local new_pos = pos + RandomVector(RandomInt(100, 150))
 				
 				if GridNav:IsTraversable(new_pos) then
-					item:LaunchLoot(false, 300, 0.5, new_pos)
+					item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 				else
 					self:GetParent():DropItemAtPositionImmediate(item, new_pos)
 				end
@@ -105,7 +105,7 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 				local new_pos = pos + RandomVector(RandomInt(100, 150))
 				
 				if GridNav:IsTraversable(new_pos) then
-					item:LaunchLoot(false, 300, 0.5, new_pos)
+					item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 				else
 					self:GetParent():DropItemAtPositionImmediate(item, new_pos)
 				end
@@ -116,7 +116,7 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 			local new_pos = pos + RandomVector(RandomInt(100, 150))
 			
 			if GridNav:IsTraversable(new_pos) then
-				item:LaunchLoot(false, 300, 0.5, new_pos)
+				item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 			else
 				self:GetParent():DropItemAtPositionImmediate(item, new_pos)
 			end

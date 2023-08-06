@@ -3,21 +3,30 @@
 
 LinkLuaModifier("modifier_imba_chen_penitence", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_chen_penitence_buff", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chen_penitence_remnants", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_penitence_remnants", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_chen_divine_favor", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_chen_divine_favor_aura", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chen_divine_favor_aura_buff", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_divine_favor_aura_buff", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_chen_holy_persuasion", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chen_holy_persuasion_tracker", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chen_holy_persuasion_counter", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chen_holy_persuasion_teleport", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chen_holy_persuasion_immortalized", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chen_holy_persuasion_immortalized_tracker", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chen_holy_persuasion_immortalized_counter", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_holy_persuasion_tracker", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_holy_persuasion_counter", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_holy_persuasion_teleport", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_holy_persuasion_immortalized", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_holy_persuasion_immortalized_tracker", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_holy_persuasion_immortalized_counter", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_chen_hand_of_god_overheal", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chen_hand_of_god_overheal", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_chen_penitence                                     = class({})
 modifier_imba_chen_penitence                            = class({})
@@ -87,13 +96,16 @@ function imba_chen_penitence:OnProjectileHit_ExtraData(hTarget, vLocation, kv)
 
 	hTarget:EmitSound("Hero_Chen.PenitenceImpact")
 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_penitence.vpcf", PATTACH_ABSORIGIN_FOLLOW, hTarget)
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_penitence.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, hTarget)
 	ParticleManager:ReleaseParticleIndex(particle)
 
-	hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence", { duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()) })
+	hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence",
+		{ duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()) })
 
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_remnants_of_penitence") then
-		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence_remnants", { duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()) })
+		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_penitence_remnants",
+			{ duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()) })
 	end
 end
 
@@ -131,7 +143,8 @@ function modifier_imba_chen_penitence:OnAttackStart(keys)
 	if not IsServer() then return end
 
 	if keys.target == self:GetParent() and keys.attacker:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-		keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_chen_penitence_buff", { duration = self.buff_duration or 2 })
+		keys.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_chen_penitence_buff",
+			{ duration = self.buff_duration or 2 })
 	end
 end
 
@@ -189,7 +202,8 @@ function imba_chen_divine_favor:GetBehavior()
 end
 
 function imba_chen_divine_favor:GetCooldown(iLevel)
-	return self.BaseClass.GetCooldown(self, iLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_chen_divine_favor_cd_reduction")
+	return self.BaseClass.GetCooldown(self, iLevel) -
+	self:GetCaster():FindTalentValue("special_bonus_imba_chen_divine_favor_cd_reduction")
 end
 
 function imba_chen_divine_favor:OnSpellStart()
@@ -220,10 +234,12 @@ function imba_chen_divine_favor:OnSpellStart()
 
 	self:GetCaster():EmitSound("Hero_Chen.DivineFavor.Cast")
 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_divine_favor.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_divine_favor.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, self:GetCursorTarget())
 	ParticleManager:ReleaseParticleIndex(particle)
 
-	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_divine_favor", { duration = self:GetSpecialValueFor("duration") })
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_divine_favor",
+		{ duration = self:GetSpecialValueFor("duration") })
 end
 
 ---------------------------
@@ -247,7 +263,6 @@ function modifier_imba_chen_divine_favor:DeclareFunctions()
 		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE, -- IMBAfication: Pure Devotion
 
 		MODIFIER_PROPERTY_TOOLTIP
@@ -294,7 +309,8 @@ function modifier_imba_chen_divine_favor_aura:IsAuraActiveOnDeath() return false
 
 function modifier_imba_chen_divine_favor_aura:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_radius") end
 
-function modifier_imba_chen_divine_favor_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+function modifier_imba_chen_divine_favor_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE +
+	DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
 
 function modifier_imba_chen_divine_favor_aura:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 
@@ -302,7 +318,8 @@ function modifier_imba_chen_divine_favor_aura:GetAuraSearchType() return DOTA_UN
 
 function modifier_imba_chen_divine_favor_aura:GetModifierAura() return "modifier_imba_chen_divine_favor_aura_buff" end
 
-function modifier_imba_chen_divine_favor_aura:GetAuraEntityReject(hTarget) return self:GetCaster():PassivesDisabled() or (not hTarget.GetPlayerID and not hTarget:GetOwnerEntity()) or hTarget:HasModifier("modifier_imba_chen_divine_favor") end
+function modifier_imba_chen_divine_favor_aura:GetAuraEntityReject(hTarget) return self:GetCaster():PassivesDisabled() or
+	(not hTarget.GetPlayerID and not hTarget:GetOwnerEntity()) or hTarget:HasModifier("modifier_imba_chen_divine_favor") end
 
 -------------------------------------
 -- DIVINE FAVOR AURA BUFF MODIFIER --
@@ -324,7 +341,6 @@ function modifier_imba_chen_divine_favor_aura_buff:DeclareFunctions()
 		-- MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE, -- IMBAfication: Pure Devotion
 
 		MODIFIER_PROPERTY_TOOLTIP
@@ -431,8 +447,10 @@ function imba_chen_holy_persuasion:OnSpellStart()
 	local target = self:GetCursorTarget()
 
 	-- Emit glowing staff particle
-	local weapon_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_cast.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
-	ParticleManager:SetParticleControlEnt(weapon_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
+	local weapon_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_cast.vpcf",
+		PATTACH_POINT_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(weapon_particle, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1",
+		self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(weapon_particle)
 
 	-- Enemy logic
@@ -448,7 +466,8 @@ function imba_chen_holy_persuasion:OnSpellStart()
 		if string.find(target:GetUnitName(), "guys_") then
 			local lane_creep_name = target:GetUnitName()
 
-			local new_lane_creep = CreateUnitByName(target:GetUnitName(), target:GetAbsOrigin(), false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+			local new_lane_creep = CreateUnitByName(target:GetUnitName(), target:GetAbsOrigin(), false, self:GetCaster(),
+				self:GetCaster(), self:GetCaster():GetTeamNumber())
 			-- Copy the relevant stats over to the creep
 			new_lane_creep:SetBaseMaxHealth(target:GetMaxHealth())
 			new_lane_creep:SetHealth(target:GetHealth())
@@ -462,7 +481,8 @@ function imba_chen_holy_persuasion:OnSpellStart()
 		end
 
 		-- Particle effects
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_holy_persuasion_a.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_holy_persuasion_a.vpcf",
+			PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle)
 
@@ -487,12 +507,14 @@ function imba_chen_holy_persuasion:OnSpellStart()
 		if not self:GetAutoCastState() then
 			-- Add the persuasion modifiers (assign the creep as a variable to the caster's own tracking modifier to handle deaths/max count)
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion", {})
-			local persuasion_tracker_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_tracker", {})
+			local persuasion_tracker_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self,
+				"modifier_imba_chen_holy_persuasion_tracker", {})
 			persuasion_tracker_modifier.creep = target
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_counter", {})
 
 			-- Get the total number of persuaded creeps (and ancient persuaded ancient creeps) Chen currently has
-			local persuaded_creeps_modifiers     = self:GetCaster():FindAllModifiersByName("modifier_imba_chen_holy_persuasion_tracker")
+			local persuaded_creeps_modifiers     = self:GetCaster():FindAllModifiersByName(
+			"modifier_imba_chen_holy_persuasion_tracker")
 			local persuaded_creeps_count         = #persuaded_creeps_modifiers
 			local persuaded_ancient_creeps_count = 0
 			-- Keep a reference to the first ancient creep in case it needs to be force killed for over-capacity
@@ -524,7 +546,8 @@ function imba_chen_holy_persuasion:OnSpellStart()
 			end
 
 			-- Call these again to check if count has changed after Ancient check
-			persuaded_creeps_modifiers = self:GetCaster():FindAllModifiersByName("modifier_imba_chen_holy_persuasion_tracker")
+			persuaded_creeps_modifiers = self:GetCaster():FindAllModifiersByName(
+			"modifier_imba_chen_holy_persuasion_tracker")
 			persuaded_creeps_count     = #persuaded_creeps_modifiers
 
 			-- If the total amount of persuaded creeps exceeds the max limit, force kill the oldest one and remove it from the table
@@ -564,12 +587,15 @@ function imba_chen_holy_persuasion:OnSpellStart()
 
 			-- Add the immortalized modifiers (assign the creep as a variable to the caster's own tracking modifier to handle deaths/max count)
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_immortalized", {})
-			local immortalized_tracker_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_immortalized_tracker", {})
+			local immortalized_tracker_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self,
+				"modifier_imba_chen_holy_persuasion_immortalized_tracker", {})
 			immortalized_tracker_modifier.creep = target
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_immortalized_counter", {})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self,
+				"modifier_imba_chen_holy_persuasion_immortalized_counter", {})
 
 			-- Get the total number of immortalized creeps (and ancient immortalized ancient creeps) Chen currently has
-			local immortalized_creeps_modifiers     = self:GetCaster():FindAllModifiersByName("modifier_imba_chen_holy_persuasion_immortalized_tracker")
+			local immortalized_creeps_modifiers     = self:GetCaster():FindAllModifiersByName(
+			"modifier_imba_chen_holy_persuasion_immortalized_tracker")
 			local immortalized_creeps_count         = #immortalized_creeps_modifiers
 			local immortalized_ancient_creeps_count = 0
 			-- Keep a reference to the first ancient creep in case it needs to be force killed for over-capacity
@@ -601,7 +627,8 @@ function imba_chen_holy_persuasion:OnSpellStart()
 			end
 
 			-- Call these again to check if count has changed after Ancient check
-			immortalized_creeps_modifiers = self:GetCaster():FindAllModifiersByName("modifier_imba_chen_holy_persuasion_immortalized_tracker")
+			immortalized_creeps_modifiers = self:GetCaster():FindAllModifiersByName(
+			"modifier_imba_chen_holy_persuasion_immortalized_tracker")
 			immortalized_creeps_count     = #immortalized_creeps_modifiers
 
 			-- If the total amount of immortalized creeps exceeds the max limit, force kill the oldest one and remove it from the table
@@ -619,10 +646,12 @@ function imba_chen_holy_persuasion:OnSpellStart()
 		local target_gold_max                = target:GetMaximumGoldBounty()
 
 		local commonwealth_xp                = target_xp * self:GetSpecialValueFor("commonwealth_pct") / 100
-		local commonwealth_gold              = RandomInt(target_gold_min, target_gold_max) * self:GetSpecialValueFor("commonwealth_pct") / 100
+		local commonwealth_gold              = RandomInt(target_gold_min, target_gold_max) *
+		self:GetSpecialValueFor("commonwealth_pct") / 100
 
 		local commonwealth_xp_self           = commonwealth_xp * self:GetSpecialValueFor("commonwealth_caster_pct") / 100
-		local commonwealth_gold_self         = commonwealth_gold * self:GetSpecialValueFor("commonwealth_caster_pct") / 100
+		local commonwealth_gold_self         = commonwealth_gold * self:GetSpecialValueFor("commonwealth_caster_pct") /
+		100
 
 		local commonwealth_xp_others_total   = commonwealth_xp - commonwealth_xp_self
 		local commonwealth_gold_others_total = commonwealth_gold - commonwealth_gold_self
@@ -647,7 +676,8 @@ function imba_chen_holy_persuasion:OnSpellStart()
 
 		for ally = 1, ally_num do
 			-- This seems like kinda disgusting chaining of functions
-			local hero = PlayerResource:GetPlayer(PlayerResource:GetNthPlayerIDOnTeam(self:GetCaster():GetTeamNumber(), ally)):GetAssignedHero()
+			local hero = PlayerResource:GetPlayer(PlayerResource:GetNthPlayerIDOnTeam(self:GetCaster():GetTeamNumber(),
+				ally)):GetAssignedHero()
 
 			if hero ~= self:GetCaster() then
 				hero:AddExperience(commonwealth_xp_others, DOTA_ModifyXP_CreepKill, true, true)
@@ -660,16 +690,21 @@ function imba_chen_holy_persuasion:OnSpellStart()
 	else -- Same-team logic
 		-- Self target
 		if target == self:GetCaster() then
-			local owned_units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
+			local owned_units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil,
+				FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD +
+				DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
 
 			for _, owned_unit in pairs(owned_units) do
 				if owned_unit ~= self:GetCaster() and not owned_unit:IsIllusion() and (owned_unit:GetOwnerEntity() == self:GetCaster() or (owned_unit.GetPlayerID and self:GetCaster().GetPlayerID and owned_unit:GetPlayerID() == self:GetCaster():GetPlayerID())) and not owned_unit:HasModifier("modifier_imba_chen_holy_persuasion_teleport") then -- that last conditional technically isn't vanilla but it makes more sense to not add the modifier if it exists already
-					owned_unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_teleport", { duration = self:GetSpecialValueFor("teleport_delay") })
+					owned_unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_teleport",
+						{ duration = self:GetSpecialValueFor("teleport_delay") })
 				end
 			end
 			-- Ally target
 		else
-			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_teleport", { duration = self:GetSpecialValueFor("teleport_delay") })
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_holy_persuasion_teleport",
+				{ duration = self:GetSpecialValueFor("teleport_delay") })
 		end
 	end
 end
@@ -728,7 +763,8 @@ function modifier_imba_chen_holy_persuasion:OnDeath(keys)
 	if not IsServer() then return end
 
 	if keys.unit == self:GetParent() then
-		local persuaded_creeps_modifiers = self:GetCaster():FindAllModifiersByName("modifier_imba_chen_holy_persuasion_tracker")
+		local persuaded_creeps_modifiers = self:GetCaster():FindAllModifiersByName(
+		"modifier_imba_chen_holy_persuasion_tracker")
 
 		for _, modifier in pairs(persuaded_creeps_modifiers) do
 			if modifier.creep == self:GetParent() then
@@ -756,7 +792,8 @@ function modifier_imba_chen_holy_persuasion_tracker:OnDestroy()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasModifier("modifier_imba_chen_holy_persuasion_counter") then
-		self:GetCaster():FindModifierByNameAndCaster("modifier_imba_chen_holy_persuasion_counter", self:GetCaster()):SetStackCount(#self:GetCaster():FindAllModifiersByName(self:GetName()))
+		self:GetCaster():FindModifierByNameAndCaster("modifier_imba_chen_holy_persuasion_counter", self:GetCaster())
+			:SetStackCount(#self:GetCaster():FindAllModifiersByName(self:GetName()))
 	end
 end
 
@@ -822,12 +859,14 @@ function modifier_imba_chen_holy_persuasion_teleport:OnDestroy()
 
 			EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_Chen.TeleportOut", self:GetCaster())
 
-			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_flash.vpcf", PATTACH_POINT, self:GetParent())
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_flash.vpcf",
+				PATTACH_POINT, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(particle)
 
 			-- Teleport the parent to the caster's position + the teleport vector
 			--self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + self:GetAbility().teleport_vector)
-			FindClearSpaceForUnit(self:GetParent(), self:GetCaster():GetAbsOrigin() + self:GetAbility().teleport_vector, false)
+			FindClearSpaceForUnit(self:GetParent(), self:GetCaster():GetAbsOrigin() + self:GetAbility().teleport_vector,
+				false)
 
 			EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_Chen.TeleportIn", self:GetCaster())
 
@@ -835,7 +874,8 @@ function modifier_imba_chen_holy_persuasion_teleport:OnDestroy()
 
 			Timers:CreateTimer(FrameTime(), function()
 				if parent then
-					local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_flash.vpcf", PATTACH_POINT, parent)
+					local particle = ParticleManager:CreateParticle(
+					"particles/units/heroes/hero_chen/chen_teleport_flash.vpcf", PATTACH_POINT, parent)
 					ParticleManager:ReleaseParticleIndex(particle)
 				end
 			end)
@@ -844,7 +884,8 @@ function modifier_imba_chen_holy_persuasion_teleport:OnDestroy()
 			self:GetParent():Stop()
 
 			-- Rotate the teleport vector 90 degrees counterclockwise to use for the next unit that gets ported
-			self:GetAbility().teleport_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, 90, 0), self:GetAbility().teleport_vector)
+			self:GetAbility().teleport_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, 90, 0),
+				self:GetAbility().teleport_vector)
 		end
 	end
 end
@@ -888,7 +929,8 @@ function modifier_imba_chen_holy_persuasion_immortalized:OnCreated()
 	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetAbility() and self:GetParent():IsAlive() and self:GetCaster():IsAlive() then
 		-- If the initial immortalize vector for the ability hasn't been set yet, do so now (starts North-East)
 		if not self:GetAbility().immortalize_vector then
-			self:GetAbility().immortalize_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, 45, 0), Vector(self.distance * 2, 0, 0))
+			self:GetAbility().immortalize_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, 45, 0),
+				Vector(self.distance * 2, 0, 0))
 		end
 
 		-- Use the saved immortalize vector for this modifier/creep instance
@@ -898,7 +940,8 @@ function modifier_imba_chen_holy_persuasion_immortalized:OnCreated()
 		self:GetParent():MoveToNPC(self:GetCaster())
 
 		-- Rotate the immortalize vector 90 degrees clockwise to use for the next unit that gets ported
-		self:GetAbility().immortalize_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, -90, 0), self:GetAbility().immortalize_vector)
+		self:GetAbility().immortalize_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, -90, 0),
+			self:GetAbility().immortalize_vector)
 
 		-- self:GetParent():SetForwardVector(self.immortalize_vector)
 		-- self:GetParent():Stop()
@@ -996,7 +1039,8 @@ function modifier_imba_chen_holy_persuasion_immortalized:OnOrder(keys)
 
 		Timers:CreateTimer(FrameTime(), function()
 			self:GetParent():Interrupt()
-			self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
+			self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector,
+				nil))
 		end)
 		-- self:GetParent():MoveToPosition(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
 	end
@@ -1007,7 +1051,8 @@ function modifier_imba_chen_holy_persuasion_immortalized:OnDeath(keys)
 	if not IsServer() then return end
 
 	if keys.unit == self:GetParent() or keys.unit == self:GetCaster() then
-		local immortalized_creeps_modifiers = self:GetCaster():FindAllModifiersByName("modifier_imba_chen_holy_persuasion_immortalized_tracker")
+		local immortalized_creeps_modifiers = self:GetCaster():FindAllModifiersByName(
+		"modifier_imba_chen_holy_persuasion_immortalized_tracker")
 
 		for _, modifier in pairs(immortalized_creeps_modifiers) do
 			if modifier.creep == self:GetParent() then
@@ -1038,7 +1083,8 @@ function modifier_imba_chen_holy_persuasion_immortalized_tracker:OnDestroy()
 	if not IsServer() then return end
 
 	if self:GetCaster():HasModifier("modifier_imba_chen_holy_persuasion_immortalized_counter") then
-		self:GetCaster():FindModifierByNameAndCaster("modifier_imba_chen_holy_persuasion_immortalized_counter", self:GetCaster()):SetStackCount(#self:GetCaster():FindAllModifiersByName(self:GetName()))
+		self:GetCaster():FindModifierByNameAndCaster("modifier_imba_chen_holy_persuasion_immortalized_counter",
+			self:GetCaster()):SetStackCount(#self:GetCaster():FindAllModifiersByName(self:GetName()))
 	end
 end
 
@@ -1063,7 +1109,8 @@ end
 function modifier_imba_chen_holy_persuasion_immortalized_counter:OnCreated()
 	if not IsServer() then return end
 
-	self:SetStackCount(#self:GetCaster():FindAllModifiersByName("modifier_imba_chen_holy_persuasion_immortalized_tracker"))
+	self:SetStackCount(#self:GetCaster():FindAllModifiersByName(
+	"modifier_imba_chen_holy_persuasion_immortalized_tracker"))
 end
 
 function modifier_imba_chen_holy_persuasion_immortalized_counter:OnRefresh()
@@ -1077,12 +1124,13 @@ end
 -------------------
 
 function imba_chen_test_of_faith:GetCooldown(iLevel)
-	return self.BaseClass.GetCooldown(self, iLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_chen_test_of_faith_cd_reduction")
+	return self.BaseClass.GetCooldown(self, iLevel) -
+	self:GetCaster():FindTalentValue("special_bonus_imba_chen_test_of_faith_cd_reduction")
 end
 
 -- Self leveling function (since this is technically a completely separate ability)
 function imba_chen_test_of_faith:OnHeroLevelUp()
-	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 3), 4))
+	self:SetLevel(math.min(math.floor(self:GetCaster():GetLevel() / 3), 4))
 end
 
 function imba_chen_test_of_faith:OnSpellStart()
@@ -1094,7 +1142,8 @@ function imba_chen_test_of_faith:OnSpellStart()
 
 	target:EmitSound("Hero_Chen.Test_of_Faith")
 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_test_of_faith.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_test_of_faith.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:ReleaseParticleIndex(particle)
 
 	if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
@@ -1107,10 +1156,11 @@ function imba_chen_test_of_faith:OnSpellStart()
 
 		-- IMBAfication: For the Faithful
 		if target.GetPlayerID and target:GetPlayerID() then
-			heal_value = heal_value + (PlayerResource:GetAssists(target:GetPlayerID()) * self:GetSpecialValueFor("faithful_assist_mult"))
+			heal_value = heal_value +
+			(PlayerResource:GetAssists(target:GetPlayerID()) * self:GetSpecialValueFor("faithful_assist_mult"))
 		end
 
-		target:Heal(heal_value, self:GetCaster())
+		target:Heal(heal_value, self)
 
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal_value, nil)
 	else
@@ -1122,7 +1172,8 @@ function imba_chen_test_of_faith:OnSpellStart()
 			local caster_assists = PlayerResource:GetAssists(self:GetCaster():GetPlayerID())
 			local target_assists = PlayerResource:GetAssists(target:GetPlayerID())
 
-			damage_max           = damage_max + math.max((caster_assists - target_assists) * self:GetSpecialValueFor("unfaithful_assist_mult"), 0)
+			damage_max           = damage_max +
+			math.max((caster_assists - target_assists) * self:GetSpecialValueFor("unfaithful_assist_mult"), 0)
 		end
 
 		local damage_value = RandomInt(damage_min, damage_max)
@@ -1147,13 +1198,17 @@ end
 -----------------
 
 function imba_chen_hand_of_god:GetCooldown(iLevel)
-	return self.BaseClass.GetCooldown(self, iLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_chen_hand_of_god_cooldown")
+	return self.BaseClass.GetCooldown(self, iLevel) -
+	self:GetCaster():FindTalentValue("special_bonus_imba_chen_hand_of_god_cooldown")
 end
 
 function imba_chen_hand_of_god:OnSpellStart()
 	if not IsServer() then return end
 
-	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
+	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil,
+		FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+		FIND_ANY_ORDER, false)
 
 	local voiceline = nil
 
@@ -1175,27 +1230,34 @@ function imba_chen_hand_of_god:OnSpellStart()
 			end
 
 			--This has CP60 and 61 for colours...HMM...
-			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_hand_of_god.vpcf", PATTACH_ABSORIGIN_FOLLOW, ally)
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_hand_of_god.vpcf",
+				PATTACH_ABSORIGIN_FOLLOW, ally)
 			ParticleManager:ReleaseParticleIndex(particle)
 
 			if self:GetCaster():HasTalent("special_bonus_imba_chen_divine_favor_hand_of_god") and self:GetCaster():HasAbility("imba_chen_divine_favor") and self:GetCaster():FindAbilityByName("imba_chen_divine_favor"):IsTrained() then
-				ally:AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_chen_divine_favor"), "modifier_imba_chen_divine_favor", { duration = self:GetCaster():FindAbilityByName("imba_chen_divine_favor"):GetSpecialValueFor("duration") })
+				ally:AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_chen_divine_favor"),
+					"modifier_imba_chen_divine_favor",
+					{ duration = self:GetCaster():FindAbilityByName("imba_chen_divine_favor"):GetSpecialValueFor(
+					"duration") })
 			end
 
 			-- IMBAfication: Overheal
-			local overheal_amount = self:GetTalentSpecialValueFor("heal_amount") - (ally:GetMaxHealth() - ally:GetHealth())
+			local overheal_amount = self:GetTalentSpecialValueFor("heal_amount") -
+			(ally:GetMaxHealth() - ally:GetHealth())
 
 			if overheal_amount > 0 then
-				ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_hand_of_god_overheal", { overheal_amount = overheal_amount })
+				ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_chen_hand_of_god_overheal",
+					{ overheal_amount = overheal_amount })
 			end
 
 			-- Only shows numbers for heroes
 			if ally:IsHero() then
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, self:GetTalentSpecialValueFor("heal_amount"), nil)
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, self:GetTalentSpecialValueFor("heal_amount"),
+					nil)
 			end
 
 			-- Heal happens after the IMBAfication logic here
-			ally:Heal(self:GetTalentSpecialValueFor("heal_amount"), self:GetCaster())
+			ally:Heal(self:GetTalentSpecialValueFor("heal_amount"), self)
 		end
 	end
 end
@@ -1250,15 +1312,21 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_chen_divine_favor_cd_reduction", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_chen_hand_of_god_cooldown", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_chen_remnants_of_penitence", "components/abilities/heroes/hero_chen", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_chen_divine_favor_cd_reduction", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_chen_hand_of_god_cooldown", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_chen_remnants_of_penitence", "components/abilities/heroes/hero_chen",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_chen_divine_favor_cd_reduction  = class({})
 modifier_special_bonus_imba_chen_test_of_faith_cd_reduction = class({})
-modifier_special_bonus_imba_chen_hand_of_god_cooldown       = modifier_special_bonus_imba_chen_hand_of_god_cooldown or class({})
-modifier_special_bonus_imba_chen_remnants_of_penitence      = modifier_special_bonus_imba_chen_remnants_of_penitence or class({})
+modifier_special_bonus_imba_chen_hand_of_god_cooldown       = modifier_special_bonus_imba_chen_hand_of_god_cooldown or
+class({})
+modifier_special_bonus_imba_chen_remnants_of_penitence      = modifier_special_bonus_imba_chen_remnants_of_penitence or
+class({})
 
 function modifier_special_bonus_imba_chen_divine_favor_cd_reduction:IsHidden() return true end
 
@@ -1285,33 +1353,33 @@ function modifier_special_bonus_imba_chen_remnants_of_penitence:IsPurgable() ret
 function modifier_special_bonus_imba_chen_remnants_of_penitence:RemoveOnDeath() return false end
 
 function imba_chen_penitence:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_remnants_of_penitence") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_remnants_of_penitence") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_remnants_of_penitence"), "modifier_special_bonus_imba_chen_remnants_of_penitence", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_chen_remnants_of_penitence"),
+			"modifier_special_bonus_imba_chen_remnants_of_penitence", {})
 	end
 end
 
 function imba_chen_divine_favor:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_divine_favor_cd_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_divine_favor_cd_reduction") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_divine_favor_cd_reduction"), "modifier_special_bonus_imba_chen_divine_favor_cd_reduction", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_chen_divine_favor_cd_reduction"),
+			"modifier_special_bonus_imba_chen_divine_favor_cd_reduction", {})
 	end
 end
 
 function imba_chen_test_of_faith:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_test_of_faith_cd_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_test_of_faith_cd_reduction") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_test_of_faith_cd_reduction"), "modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_chen_test_of_faith_cd_reduction"),
+			"modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", {})
 	end
 end
 
 function imba_chen_hand_of_god:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_hand_of_god_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_hand_of_god_cooldown") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_hand_of_god_cooldown"), "modifier_special_bonus_imba_chen_hand_of_god_cooldown", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_chen_hand_of_god_cooldown"),
+			"modifier_special_bonus_imba_chen_hand_of_god_cooldown", {})
 	end
 end

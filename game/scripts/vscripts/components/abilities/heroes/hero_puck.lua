@@ -108,36 +108,35 @@ function imba_puck_illusory_orb:OnProjectileThink_ExtraData(location, data)
 end
 
 function imba_puck_illusory_orb:FireOrb(position)
-	-- Create thinker for position and sound handling
-	local orb_thinker = CreateModifierThinker(
-		self:GetCaster(),
-		self,
-		nil, -- Maybe add one later
-		{},
-		self:GetCaster():GetOrigin(),
-		self:GetCaster():GetTeamNumber(),
-		false
-	)
+	local caster = self:GetCaster()
+	-- Create dummy for position and sound handling
+	local orb_thinker = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 
 	orb_thinker:EmitSound("Hero_Puck.Illusory_Orb")
 
 	-- Create linear projectile
 	local projectile_info = {
-		Source            = self:GetCaster(),
+		Source            = caster,
 		Ability           = self,
-		vSpawnOrigin      = self:GetCaster():GetOrigin(),
+		vSpawnOrigin      = caster:GetAbsOrigin(),
+
 		bDeleteOnHit      = false,
+
 		iUnitTargetTeam   = DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetType   = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+
 		EffectName        = "particles/units/heroes/hero_puck/puck_illusory_orb.vpcf",
-		fDistance         = (self:GetSpecialValueFor("max_distance") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) + GetCastRangeIncrease(self:GetCaster()) + self.talent_cast_range_increases,
+		fDistance         = (self:GetSpecialValueFor("max_distance") * math.max(caster:FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1)) + GetCastRangeIncrease(caster) + self.talent_cast_range_increases,
 		fStartRadius      = self:GetSpecialValueFor("radius"),
 		fEndRadius        = self:GetSpecialValueFor("radius"),
-		vVelocity         = position:Normalized() * self:GetSpecialValueFor("orb_speed") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1),
+		vVelocity         = position:Normalized() * self:GetSpecialValueFor("orb_speed") * math.max(caster:FindTalentValue("special_bonus_imba_puck_illusory_orb_speed"), 1),
+
 		bReplaceExisting  = false,
+
 		bProvidesVision   = true,
 		iVisionRadius     = self:GetSpecialValueFor("orb_vision"),
-		iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
+		iVisionTeamNumber = caster:GetTeamNumber(),
+
 		ExtraData         = {
 			orb_thinker = orb_thinker:entindex(),
 		}
@@ -851,8 +850,6 @@ function modifier_special_bonus_imba_puck_waning_rift_range:IsPurgable() return 
 function modifier_special_bonus_imba_puck_waning_rift_range:RemoveOnDeath() return false end
 
 function imba_puck_waning_rift:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_puck_waning_rift_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_puck_waning_rift_cooldown"), "modifier_special_bonus_imba_puck_waning_rift_cooldown", {})
 	end

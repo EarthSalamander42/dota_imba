@@ -59,40 +59,47 @@ function imba_windranger_shackleshot:OnUpgrade()
 end
 
 function imba_windranger_shackleshot:OnSpellStart()
+	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 
-	self:GetCaster():EmitSound("Hero_Windrunner.ShackleshotCast")
+	caster:EmitSound("Hero_Windrunner.ShackleshotCast")
 
 	-- IMBAfication: Natural Slinger
 	-- Rough check to assume a tree was targeted, since CutDown doesn't work with "artificial" trees
 	if target:GetName() == "" then
-		local temp_thinker = CreateModifierThinker(self:GetCaster(), self, nil, { duration = 0.1 }, target:GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+		local temp_thinker = CreateUnitByName("npc_dummy_unit", target:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 
 		ProjectileManager:CreateTrackingProjectile({
 			Target     = temp_thinker,
-			Source     = self:GetCaster(),
+			Source     = caster,
 			Ability    = self,
+
 			EffectName = "particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf",
 			iMoveSpeed = self:GetSpecialValueFor("arrow_speed"),
 			bDodgeable = true,
+
 			ExtraData  = {
-				location_x = self:GetCaster():GetAbsOrigin().x,
-				location_y = self:GetCaster():GetAbsOrigin().y,
-				location_z = self:GetCaster():GetAbsOrigin().z,
+				location_x = caster:GetAbsOrigin().x,
+				location_y = caster:GetAbsOrigin().y,
+				location_z = caster:GetAbsOrigin().z,
 			}
 		})
+
+		temp_thinker:AddNewModifier(caster, self, "modifier_kill", { duration = 0.1 })
 	else
 		ProjectileManager:CreateTrackingProjectile({
 			Target     = target,
-			Source     = self:GetCaster(),
+			Source     = caster,
 			Ability    = self,
+
 			EffectName = "particles/units/heroes/hero_windrunner/windrunner_shackleshot.vpcf",
 			iMoveSpeed = self:GetSpecialValueFor("arrow_speed"),
 			bDodgeable = true,
+
 			ExtraData  = {
-				location_x = self:GetCaster():GetAbsOrigin().x,
-				location_y = self:GetCaster():GetAbsOrigin().y,
-				location_z = self:GetCaster():GetAbsOrigin().z,
+				location_x = caster:GetAbsOrigin().x,
+				location_y = caster:GetAbsOrigin().y,
+				location_z = caster:GetAbsOrigin().z,
 			}
 		})
 	end
@@ -138,7 +145,7 @@ function imba_windranger_shackleshot:SearchForShackleTarget(target, target_angle
 		local trees = GridNav:GetAllTreesAroundPoint(target:GetAbsOrigin(), self:GetSpecialValueFor("shackle_distance"), false)
 
 		for _, tree in pairs(trees) do
-			if not ignore_list[enemy] and math.abs(AngleDiff(target_angle, VectorToAngles(tree:GetAbsOrigin() - target:GetAbsOrigin()).y)) <= self:GetSpecialValueFor("shackle_angle") then
+			if math.abs(AngleDiff(target_angle, VectorToAngles(tree:GetAbsOrigin() - target:GetAbsOrigin()).y)) <= self:GetSpecialValueFor("shackle_angle") then
 				shackleTarget = tree
 
 				if target.AddNewModifier then
@@ -329,8 +336,9 @@ function imba_windranger_powershot:OnChannelFinish(bInterrupted)
 end
 
 function imba_windranger_powershot:FirePowershot(channel_pct, overstretch_bonus)
-	-- This "dummy" literally only exists to attach the gush travel sound to
-	local powershot_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	local caster = self:GetCaster()
+	-- This "dummy" literally only exists to attach the powershot travel sound to
+	local powershot_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	powershot_dummy:EmitSound("Ability.Powershot")
 	-- Keep track of how many units the Powershot will hit to calculate damage reductions
 	powershot_dummy.units_hit = 0
@@ -343,7 +351,7 @@ function imba_windranger_powershot:FirePowershot(channel_pct, overstretch_bonus)
 		powershot_dummy:EmitSound("Hero_Windranger.Powershot_Godshot")
 	end
 
-	self:GetCaster():StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
+	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_2)
 
 	-- IMBAfication: Overstretched
 	if not overstretch_bonus then
@@ -351,20 +359,24 @@ function imba_windranger_powershot:FirePowershot(channel_pct, overstretch_bonus)
 	end
 
 	ProjectileManager:CreateLinearProjectile({
-		Source = self:GetCaster(),
+		Source = caster,
 		Ability = self,
-		vSpawnOrigin = self:GetCaster():GetAbsOrigin(),
+		vSpawnOrigin = caster:GetAbsOrigin(),
+
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+
 		EffectName = powershot_particle,
-		fDistance = self:GetSpecialValueFor("arrow_range") + overstretch_bonus + self:GetCaster():GetCastRangeBonus(),
+		fDistance = self:GetSpecialValueFor("arrow_range") + overstretch_bonus + caster:GetCastRangeBonus(),
 		fStartRadius = self:GetSpecialValueFor("arrow_width"),
 		fEndRadius = self:GetSpecialValueFor("arrow_width"),
-		vVelocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("arrow_speed") * Vector(1, 1, 0),
+		vVelocity = (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("arrow_speed") * Vector(1, 1, 0),
+
 		bProvidesVision = true,
 		iVisionRadius = self:GetSpecialValueFor("vision_radius"),
-		iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
+		iVisionTeamNumber = caster:GetTeamNumber(),
+
 		ExtraData = {
 			dummy_index = powershot_dummy:entindex(),
 			channel_pct = channel_pct * 100

@@ -1,24 +1,37 @@
 -- Creator:
 --	   AltiV, August 13th, 2019
 
-LinkLuaModifier("modifier_imba_ancient_apparition_cold_feet", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_apparition_cold_feet_freeze", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_cold_feet", "components/abilities/heroes/hero_ancient_apparition",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_cold_feet_freeze",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex_thinker", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex_thinker",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_vortex", "components/abilities/heroes/hero_ancient_apparition",
+	LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_apparition_chilling_touch_slow", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_chilling_touch_slow",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_ancient_apparition_imbued_ice", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_apparition_imbued_ice_slow", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_imbued_ice", "components/abilities/heroes/hero_ancient_apparition",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_imbued_ice_slow", "components/abilities/heroes/hero_ancient_apparition",
+	LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_ancient_apparition_anti_abrasion_thinker", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_anti_abrasion_thinker",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_thinker", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_global_cooling", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_cold_hearted", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_thinker",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast", "components/abilities/heroes/hero_ancient_apparition",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_global_cooling",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_cold_hearted",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
 imba_ancient_apparition_cold_feet                         = class(VANILLA_ABILITIES_BASECLASS)
 modifier_imba_ancient_apparition_cold_feet                = class({})
@@ -72,7 +85,10 @@ function imba_ancient_apparition_cold_feet:OnSpellStart()
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_cold_feet", {})
 		end
 	else
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_cold_feet_aoe"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil,
+			self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_cold_feet_aoe"),
+			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER, false)
 
 		for _, enemy in pairs(enemies) do
 			if not enemy:HasModifier("imba_ancient_apparition_cold_feet") then
@@ -115,11 +131,15 @@ function modifier_imba_ancient_apparition_cold_feet:OnCreated()
 	self:GetParent():EmitSound("Hero_Ancient_Apparition.ColdFeetCast")
 
 	-- This marks the original location on the ground
-	local cold_feet_marker_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_marker.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+	local cold_feet_marker_particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_marker.vpcf", PATTACH_ABSORIGIN,
+		self:GetParent())
 	self:AddParticle(cold_feet_marker_particle, false, false, -1, false, false)
 
 	-- This marks the debuff over the target's head
-	local cold_feet_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	local cold_feet_particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf", PATTACH_OVERHEAD_FOLLOW,
+		self:GetParent())
 	self:AddParticle(cold_feet_particle, false, false, -1, false, false)
 
 	self:OnIntervalThink()
@@ -140,7 +160,9 @@ function modifier_imba_ancient_apparition_cold_feet:OnIntervalThink()
 				self.ticks = self.ticks + 1
 				self.counter = 0
 			else
-				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet_freeze", { duration = self.stun_duration * (1 - self:GetParent():GetStatusResistance()) })
+				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(),
+					"modifier_imba_ancient_apparition_cold_feet_freeze",
+					{ duration = self.stun_duration * (1 - self:GetParent():GetStatusResistance()) })
 
 				self:Destroy()
 			end
@@ -160,7 +182,8 @@ end
 function modifier_imba_ancient_apparition_cold_feet:OnOrder(keys)
 	if keys.unit:GetTeamNumber() == self:GetParent():GetTeamNumber() and keys.target == self:GetParent() and keys.unit ~= self:GetParent() and not keys.unit:IsMagicImmune() then
 		if not keys.unit:HasModifier("imba_ancient_apparition_cold_feet") then
-			keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet", {})
+			keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet",
+				{})
 		end
 	end
 end
@@ -214,7 +237,8 @@ end
 function modifier_imba_ancient_apparition_cold_feet_freeze:OnOrder(keys)
 	if keys.unit:GetTeamNumber() == self:GetParent():GetTeamNumber() and keys.target == self:GetParent() and keys.unit ~= self:GetParent() and not keys.unit:IsMagicImmune() then
 		if not keys.unit:HasModifier("imba_ancient_apparition_cold_feet") then
-			keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_cold_feet_freeze", { duration = self:GetRemainingTime() })
+			keys.unit:AddNewModifier(self:GetCaster(), self:GetAbility(),
+				"modifier_imba_ancient_apparition_cold_feet_freeze", { duration = self:GetRemainingTime() })
 		end
 	end
 end
@@ -267,7 +291,10 @@ function imba_ancient_apparition_ice_vortex:OnSpellStart()
 		end
 	end
 
-	local vortex_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_ancient_apparition_ice_vortex_thinker", { duration = self:GetVanillaAbilitySpecial("vortex_duration") }, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+	local vortex_thinker = CreateModifierThinker(self:GetCaster(), self,
+		"modifier_imba_ancient_apparition_ice_vortex_thinker",
+		{ duration = self:GetVanillaAbilitySpecial("vortex_duration") }, self:GetCursorPosition(),
+		self:GetCaster():GetTeamNumber(), false)
 end
 
 ---------------------------------
@@ -284,12 +311,14 @@ function modifier_imba_ancient_apparition_ice_vortex_thinker:OnCreated()
 	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceVortex")
 	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceVortex.lp")
 
-	local vortex_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_ice_vortex.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	local vortex_particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_ancient_apparition/ancient_ice_vortex.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 	ParticleManager:SetParticleControl(vortex_particle, 0, self:GetParent():GetAbsOrigin())
 	ParticleManager:SetParticleControl(vortex_particle, 5, Vector(self.radius, 0, 0))
 	self:AddParticle(vortex_particle, false, false, -1, false, false)
 
-	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_aoe, self.vortex_duration, false)
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_aoe, self
+	.vortex_duration, false)
 end
 
 function modifier_imba_ancient_apparition_ice_vortex_thinker:OnDestroy()
@@ -311,9 +340,11 @@ function modifier_imba_ancient_apparition_ice_vortex_thinker:GetAuraSearchFlags(
 
 function modifier_imba_ancient_apparition_ice_vortex_thinker:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_BOTH end
 
-function modifier_imba_ancient_apparition_ice_vortex_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_ancient_apparition_ice_vortex_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO +
+	DOTA_UNIT_TARGET_BASIC end
 
-function modifier_imba_ancient_apparition_ice_vortex_thinker:GetModifierAura() return "modifier_imba_ancient_apparition_ice_vortex" end
+function modifier_imba_ancient_apparition_ice_vortex_thinker:GetModifierAura() return
+	"modifier_imba_ancient_apparition_ice_vortex" end
 
 -------------------------
 -- ICE VORTEX MODIFIER --
@@ -326,8 +357,10 @@ end
 function modifier_imba_ancient_apparition_ice_vortex:OnCreated()
 	if self:GetAbility() then
 		self.radius             = self:GetAbility():GetVanillaAbilitySpecial("radius")
-		self.movement_speed_pct = self:GetAbility():GetVanillaAbilitySpecial("movement_speed_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_vortex_boost")
-		self.spell_resist_pct   = self:GetAbility():GetVanillaAbilitySpecial("spell_resist_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_vortex_boost")
+		self.movement_speed_pct = self:GetAbility():GetVanillaAbilitySpecial("movement_speed_pct") +
+		self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_vortex_boost")
+		self.spell_resist_pct   = self:GetAbility():GetVanillaAbilitySpecial("spell_resist_pct") +
+		self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_vortex_boost")
 	else
 		self.radius             = 0
 		self.movement_speed_pct = 0
@@ -383,7 +416,8 @@ function imba_ancient_apparition_chilling_touch:GetProjectileName()
 end
 
 function imba_ancient_apparition_chilling_touch:GetCastRange()
-	return self:GetCaster():Script_GetAttackRange() + self:GetVanillaAbilitySpecial("attack_range_bonus") + self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_chilling_touch_range")
+	return self:GetCaster():Script_GetAttackRange() + self:GetVanillaAbilitySpecial("attack_range_bonus") +
+	self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_chilling_touch_range")
 end
 
 --[[
@@ -405,12 +439,15 @@ function imba_ancient_apparition_chilling_touch:OnOrbImpact(keys)
 
 	keys.target:EmitSound("Hero_Ancient_Apparition.ChillingTouch.Target")
 
-	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_chilling_touch_slow", { duration = self:GetVanillaAbilitySpecial("duration") * (1 - keys.target:GetStatusResistance()) })
+	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_chilling_touch_slow",
+		{ duration = self:GetVanillaAbilitySpecial("duration") * (1 - keys.target:GetStatusResistance()) })
 
 	-- IMBAfication: Packed Ice
-	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_stunned", { duration = self:GetSpecialValueFor("packed_ice_duration") * (1 - keys.target:GetStatusResistance()) })
+	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_stunned",
+		{ duration = self:GetSpecialValueFor("packed_ice_duration") * (1 - keys.target:GetStatusResistance()) })
 
-	local damage = self:GetVanillaAbilitySpecial("damage") + self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_chilling_touch_damage")
+	local damage = self:GetVanillaAbilitySpecial("damage") +
+	self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_chilling_touch_damage")
 
 	ApplyDamage({
 		victim       = keys.target,
@@ -441,7 +478,8 @@ end
 function modifier_imba_ancient_apparition_chilling_touch_slow:CheckState()
 	if not IsServer() then return end
 
-	return { [MODIFIER_STATE_FROZEN] = self:GetElapsedTime() <= self.packed_ice_duration * (1 - self:GetParent():GetStatusResistance()) }
+	return {
+		[MODIFIER_STATE_FROZEN] = self:GetElapsedTime() <= self.packed_ice_duration * (1 - self:GetParent():GetStatusResistance()) }
 end
 
 function modifier_imba_ancient_apparition_chilling_touch_slow:DeclareFunctions()
@@ -469,19 +507,25 @@ function imba_ancient_apparition_imbued_ice:OnSpellStart()
 
 	self:GetCaster():EmitSound("Hero_Ancient_Apparition.Imbued_Ice_Cast")
 
-	local imbued_ice_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+	local imbued_ice_particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch.vpcf", PATTACH_WORLDORIGIN,
+		self:GetCaster())
 	ParticleManager:SetParticleControl(imbued_ice_particle, 0, position)
-	ParticleManager:SetParticleControl(imbued_ice_particle, 1, Vector(self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius"), 0))
+	ParticleManager:SetParticleControl(imbued_ice_particle, 1,
+		Vector(self:GetSpecialValueFor("radius"), self:GetSpecialValueFor("radius"), 0))
 	ParticleManager:ReleaseParticleIndex(imbued_ice_particle)
 
 	-- "The buff is always placed on Ancient Apparition, even when he is outside the targeted area."
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_imbued_ice", { duration = self:GetSpecialValueFor("buff_duration") })
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_imbued_ice",
+		{ duration = self:GetSpecialValueFor("buff_duration") })
 
-	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), position, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), position, nil, self:GetSpecialValueFor("radius"),
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 
 	for _, ally in pairs(allies) do
 		if ally ~= self:GetCaster() then
-			ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_imbued_ice", { duration = self:GetSpecialValueFor("buff_duration") })
+			ally:AddNewModifier(self:GetCaster(), self, "modifier_imba_ancient_apparition_imbued_ice",
+				{ duration = self:GetSpecialValueFor("buff_duration") })
 		end
 	end
 end
@@ -508,8 +552,11 @@ function modifier_imba_ancient_apparition_imbued_ice:OnCreated()
 		ability      = self:GetAbility()
 	}
 
-	local imbued_ice_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	ParticleManager:SetParticleControlEnt(imbued_ice_particle, 0, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
+	local imbued_ice_particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch_buff.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(imbued_ice_particle, 0, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW,
+		"attach_attack1", self:GetParent():GetAbsOrigin(), true)
 	self:AddParticle(imbued_ice_particle, false, false, -1, false, false)
 
 	self:SetStackCount(self.number_of_attacks)
@@ -536,7 +583,9 @@ function modifier_imba_ancient_apparition_imbued_ice:OnAttackLanded(keys)
 		ApplyDamage(self.damage_table)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, keys.target, self.damage_per_attack, nil)
 
-		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_ancient_apparition_imbued_ice_slow", { duration = self.move_speed_duration * (1 - keys.target:GetStatusResistance()) })
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(),
+			"modifier_imba_ancient_apparition_imbued_ice_slow",
+			{ duration = self.move_speed_duration * (1 - keys.target:GetStatusResistance()) })
 
 		if self:GetStackCount() <= 0 then
 			self:Destroy()
@@ -588,7 +637,10 @@ end
 function imba_ancient_apparition_anti_abrasion:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Ancient_Apparition.IceVortexCast")
 
-	local vortex_thinker = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_ancient_apparition_anti_abrasion_thinker", { duration = self:GetSpecialValueFor("vortex_duration") }, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+	local vortex_thinker = CreateModifierThinker(self:GetCaster(), self,
+		"modifier_imba_ancient_apparition_anti_abrasion_thinker",
+		{ duration = self:GetSpecialValueFor("vortex_duration") }, self:GetCursorPosition(),
+		self:GetCaster():GetTeamNumber(), false)
 end
 
 ----------------------------
@@ -605,12 +657,14 @@ function modifier_imba_ancient_apparition_anti_abrasion_thinker:OnCreated()
 	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceVortex")
 	self:GetParent():EmitSound("Hero_Ancient_Apparition.IceVortex.lp")
 
-	local vortex_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	local vortex_particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_ancient_apparition/ancient_anti_abrasion.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 	ParticleManager:SetParticleControl(vortex_particle, 0, self:GetParent():GetAbsOrigin())
 	ParticleManager:SetParticleControl(vortex_particle, 5, Vector(self.radius, 0, 0))
 	self:AddParticle(vortex_particle, false, false, -1, false, false)
 
-	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_aoe, self.vortex_duration, false)
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_aoe, self
+	.vortex_duration, false)
 end
 
 function modifier_imba_ancient_apparition_anti_abrasion_thinker:OnDestroy()
@@ -632,7 +686,8 @@ function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchFla
 
 function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
 
-function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO +
+	DOTA_UNIT_TARGET_BASIC end
 
 function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetModifierAura() return "modifier_ice_slide" end
 
@@ -642,7 +697,8 @@ function modifier_imba_ancient_apparition_anti_abrasion_thinker:GetAuraDuration(
 -- ICE BLAST --
 ---------------
 
-function imba_ancient_apparition_ice_blast:GetAssociatedSecondaryAbilities() return "imba_ancient_apparition_ice_blast_release" end
+function imba_ancient_apparition_ice_blast:GetAssociatedSecondaryAbilities() return
+	"imba_ancient_apparition_ice_blast_release" end
 
 function imba_ancient_apparition_ice_blast:OnUpgrade()
 	if not self.release_ability then
@@ -662,10 +718,13 @@ function imba_ancient_apparition_ice_blast:OnSpellStart()
 
 	EmitSoundOnClient("Hero_Ancient_Apparition.IceBlast.Tracker", self:GetCaster():GetPlayerOwner())
 
-	local velocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetVanillaAbilitySpecial("speed")
+	local velocity = (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() *
+	self:GetVanillaAbilitySpecial("speed")
 
 	-- Use a dummy to attach logic to
-	self.ice_blast_dummy = CreateModifierThinker(self:GetCaster(), self, "modifier_imba_ancient_apparition_ice_blast_thinker", { x = velocity.x, y = velocity.y }, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	self.ice_blast_dummy = CreateModifierThinker(self:GetCaster(), self,
+		"modifier_imba_ancient_apparition_ice_blast_thinker", { x = velocity.x, y = velocity.y },
+		self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 
 	local linear_projectile = {
 		Ability           = self,
@@ -720,7 +779,8 @@ end
 
 function imba_ancient_apparition_ice_blast:OnProjectileHit_ExtraData(target, location, data)
 	if not target and data.ice_blast_dummy then
-		local ice_blast_thinker_modifier = EntIndexToHScript(data.ice_blast_dummy):FindModifierByNameAndCaster("modifier_imba_ancient_apparition_ice_blast_thinker", self:GetCaster())
+		local ice_blast_thinker_modifier = EntIndexToHScript(data.ice_blast_dummy):FindModifierByNameAndCaster(
+		"modifier_imba_ancient_apparition_ice_blast_thinker", self:GetCaster())
 
 		if ice_blast_thinker_modifier then
 			ice_blast_thinker_modifier:Destroy()
@@ -737,7 +797,9 @@ function modifier_imba_ancient_apparition_ice_blast_thinker:IsPurgable() return 
 function modifier_imba_ancient_apparition_ice_blast_thinker:OnCreated(params)
 	if not IsServer() then return end
 
-	local ice_blast_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetTeamNumber())
+	local ice_blast_particle = ParticleManager:CreateParticleForTeam(
+	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+		self:GetParent(), self:GetCaster():GetTeamNumber())
 	ParticleManager:SetParticleControl(ice_blast_particle, 1, Vector(params.x, params.y, 0))
 	self:AddParticle(ice_blast_particle, false, false, -1, false, false)
 end
@@ -826,7 +888,9 @@ function modifier_imba_ancient_apparition_ice_blast:OnTakeDamageKillCredit(keys)
 		end
 
 		if not self:GetParent():IsAlive() then
-			local ice_blast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			local ice_blast_particle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf",
+				PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(ice_blast_particle)
 		end
 	end
@@ -845,7 +909,8 @@ function modifier_imba_ancient_apparition_ice_blast_global_cooling:GetStatusEffe
 end
 
 function modifier_imba_ancient_apparition_ice_blast_global_cooling:OnCreated()
-	self.global_cooling_move_speed_reduction = self:GetAbility():GetSpecialValueFor("global_cooling_move_speed_reduction")
+	self.global_cooling_move_speed_reduction = self:GetAbility():GetSpecialValueFor(
+	"global_cooling_move_speed_reduction")
 end
 
 function modifier_imba_ancient_apparition_ice_blast_global_cooling:DeclareFunctions()
@@ -892,7 +957,8 @@ end
 
 function imba_ancient_apparition_ice_blast_release:IsStealable() return false end
 
-function imba_ancient_apparition_ice_blast_release:GetAssociatedPrimaryAbilities() return "imba_ancient_apparition_ice_blast" end
+function imba_ancient_apparition_ice_blast_release:GetAssociatedPrimaryAbilities() return
+	"imba_ancient_apparition_ice_blast" end
 
 function imba_ancient_apparition_ice_blast_release:ProcsMagicStick() return false end
 
@@ -910,25 +976,34 @@ function imba_ancient_apparition_ice_blast_release:OnSpellStart()
 			local velocity = vector:Normalized() * math.max(vector:Length2D() / 2, 750)
 
 			-- "The explosion radius starts at 275 and increases by 50 for every second the tracer has traveled, capped at 1000 radius."
-			local final_radius = math.min(self.ice_blast_ability:GetVanillaAbilitySpecial("radius_min") + ((vector:Length2D() / self.ice_blast_ability:GetVanillaAbilitySpecial("speed")) * self.ice_blast_ability:GetVanillaAbilitySpecial("radius_grow")), self.ice_blast_ability:GetVanillaAbilitySpecial("radius_max"))
+			local final_radius = math.min(
+			self.ice_blast_ability:GetVanillaAbilitySpecial("radius_min") +
+			((vector:Length2D() / self.ice_blast_ability:GetVanillaAbilitySpecial("speed")) * self.ice_blast_ability:GetVanillaAbilitySpecial("radius_grow")),
+				self.ice_blast_ability:GetVanillaAbilitySpecial("radius_max"))
 
 			--EmitSoundOnClient("Hero_Ancient_Apparition.IceBlastRelease.Cast.Self", self:GetCaster():GetPlayerOwner())
 			self:GetCaster():EmitSound("Hero_Ancient_Apparition.IceBlastRelease.Cast")
 
-			local ice_blast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
+			local ice_blast_particle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf", PATTACH_WORLDORIGIN,
+				self:GetCaster())
 			ParticleManager:SetParticleControl(ice_blast_particle, 0, self:GetCaster():GetAbsOrigin())
 			-- CP1: Direction Vector
 			ParticleManager:SetParticleControl(ice_blast_particle, 1, velocity)
 			-- CP5: Duration
-			ParticleManager:SetParticleControl(ice_blast_particle, 5, Vector(math.min(vector:Length2D() / velocity:Length2D(), 2), 0, 0))
+			ParticleManager:SetParticleControl(ice_blast_particle, 5,
+				Vector(math.min(vector:Length2D() / velocity:Length2D(), 2), 0, 0))
 			ParticleManager:ReleaseParticleIndex(ice_blast_particle)
 
-			local marker_particle = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_marker.vpcf", PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber())
+			local marker_particle = ParticleManager:CreateParticleForTeam(
+			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_marker.vpcf",
+				PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber())
 			ParticleManager:SetParticleControl(marker_particle, 0, self.ice_blast_ability.ice_blast_dummy:GetAbsOrigin())
 			ParticleManager:SetParticleControl(marker_particle, 1, Vector(final_radius, 1, 1))
 
 			-- "The tracer has 500 flying vision around itself. Upon release, provides 650 flying vision of the impact site for 4 seconds."
-			AddFOWViewer(self:GetCaster():GetTeamNumber(), self.ice_blast_ability.ice_blast_dummy:GetAbsOrigin(), 650, 4, false)
+			AddFOWViewer(self:GetCaster():GetTeamNumber(), self.ice_blast_ability.ice_blast_dummy:GetAbsOrigin(), 650, 4,
+				false)
 
 			local linear_projectile = {
 				Ability           = self,
@@ -972,10 +1047,14 @@ end
 function imba_ancient_apparition_ice_blast_release:OnProjectileThink_ExtraData(location, data)
 	-- "The ice blast has 500 flying vision, lasting 3 seconds."
 	if self.ice_blast_ability then
-		AddFOWViewer(self:GetCaster():GetTeamNumber(), location, self.ice_blast_ability:GetVanillaAbilitySpecial("target_sight_radius"), 3, false)
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), location,
+			self.ice_blast_ability:GetVanillaAbilitySpecial("target_sight_radius"), 3, false)
 
 		-- "The debuff can also be placed on spell immune or invulnerable, but not on hidden units."
-		local enemies  = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, self.ice_blast_ability:GetVanillaAbilitySpecial("path_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		local enemies  = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil,
+			self.ice_blast_ability:GetVanillaAbilitySpecial("path_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
 		local duration = self.ice_blast_ability:GetVanillaAbilitySpecial("frostbite_duration")
 
@@ -989,16 +1068,21 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileThink_ExtraData(l
 					{
 						duration        = duration * (1 - enemy:GetStatusResistance()),
 						dot_damage      = self.ice_blast_ability:GetVanillaAbilitySpecial("dot_damage"),
-						kill_pct        = self.ice_blast_ability:GetSpecialValueFor("kill_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_blast_kill_threshold"),
+						kill_pct        = self.ice_blast_ability:GetSpecialValueFor("kill_pct") +
+						self:GetCaster():FindTalentValue(
+						"special_bonus_imba_ancient_apparition_ice_blast_kill_threshold"),
 						caster_entindex = self:GetCaster():entindex()
 					}
 				)
 			else
-				enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast",
+				enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability,
+					"modifier_imba_ancient_apparition_ice_blast",
 					{
 						duration   = duration * (1 - enemy:GetStatusResistance()),
 						dot_damage = self.ice_blast_ability:GetVanillaAbilitySpecial("dot_damage"),
-						kill_pct   = self.ice_blast_ability:GetSpecialValueFor("kill_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_blast_kill_threshold")
+						kill_pct   = self.ice_blast_ability:GetSpecialValueFor("kill_pct") +
+						self:GetCaster():FindTalentValue(
+						"special_bonus_imba_ancient_apparition_ice_blast_kill_threshold")
 					}
 				)
 			end
@@ -1016,9 +1100,12 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(tar
 		end
 
 		-- "The debuff can also be placed on spell immune or invulnerable, but not on hidden units."
-		local enemies              = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, data.final_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		local enemies              = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), location, nil, data
+		.final_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		local vanilla_ability_name = string.gsub(self.ice_blast_ability:GetAbilityName(), "imba_", "")
-		local damage               = GetAbilityKV(vanilla_ability_name, "AbilityDamage", self.ice_blast_ability:GetLevel())
+		local damage               = GetAbilityKV(vanilla_ability_name, "AbilityDamage",
+			self.ice_blast_ability:GetLevel())
 
 		local damageTable          = {
 			victim       = nil,
@@ -1047,7 +1134,8 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(tar
 					}
 				)
 			else
-				enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast",
+				enemy:AddNewModifier(self:GetCaster(), self.ice_blast_ability,
+					"modifier_imba_ancient_apparition_ice_blast",
 					{
 						duration   = duration * (1 - enemy:GetStatusResistance()),
 						dot_damage = self.ice_blast_ability:GetVanillaAbilitySpecial("dot_damage"),
@@ -1063,7 +1151,9 @@ function imba_ancient_apparition_ice_blast_release:OnProjectileHit_ExtraData(tar
 			end
 
 			-- IMBAfication: Cold-Hearted
-			self:GetCaster():AddNewModifier(self:GetCaster(), self.ice_blast_ability, "modifier_imba_ancient_apparition_ice_blast_cold_hearted", { duration = duration, regen = enemy:GetHealthRegen() })
+			self:GetCaster():AddNewModifier(self:GetCaster(), self.ice_blast_ability,
+				"modifier_imba_ancient_apparition_ice_blast_cold_hearted",
+				{ duration = duration, regen = enemy:GetHealthRegen() })
 		end
 
 		-- -- IMBAfication: Global Cooling
@@ -1086,18 +1176,26 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_range", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe", "components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_range",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe",
+	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_ancient_apparition_chilling_touch_range     = modifier_special_bonus_imba_ancient_apparition_chilling_touch_range or class({})
+modifier_special_bonus_imba_ancient_apparition_chilling_touch_range     =
+modifier_special_bonus_imba_ancient_apparition_chilling_touch_range or class({})
 modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown      = class({})
 modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage    = class({})
 modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost         = class({})
-modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold = modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold or class({})
+modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold =
+modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold or class({})
 modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe            = class({})
 
 function modifier_special_bonus_imba_ancient_apparition_chilling_touch_range:IsHidden() return true end
@@ -1177,33 +1275,37 @@ function modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe:IsPurgable
 function modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe:RemoveOnDeath() return false end
 
 function imba_ancient_apparition_cold_feet:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_cold_feet_aoe") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_cold_feet_aoe"), "modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_cold_feet_aoe"),
+			"modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe", {})
 	end
 end
 
 function imba_ancient_apparition_ice_vortex:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_ice_vortex_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_ice_vortex_cooldown"), "modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_ice_vortex_cooldown"),
+			"modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown", {})
 	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_ice_vortex_boost") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_ice_vortex_boost"), "modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_ice_vortex_boost"),
+			"modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost", {})
 	end
 end
 
 function imba_ancient_apparition_chilling_touch:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_chilling_touch_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_range") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_chilling_touch_range"), "modifier_special_bonus_imba_ancient_apparition_chilling_touch_range", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_chilling_touch_range"),
+			"modifier_special_bonus_imba_ancient_apparition_chilling_touch_range", {})
 	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_ancient_apparition_chilling_touch_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_chilling_touch_damage"), "modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_ancient_apparition_chilling_touch_damage"),
+			"modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage", {})
 	end
 end

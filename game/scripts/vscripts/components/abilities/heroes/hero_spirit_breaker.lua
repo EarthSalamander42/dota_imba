@@ -808,7 +808,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 			knockback_modifier:Destroy()
 		end
 
-		knockback_properties = {
+		local knockback_properties = {
 			center_x           = parent_loc.x,
 			center_y           = parent_loc.y,
 			center_z           = parent_loc.z,
@@ -835,7 +835,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 		ability      = self
 	}
 
-	damage_dealt = ApplyDamage(damageTable)
+	ApplyDamage(damageTable)
 
 	-- IMBAfication: Power Forward
 	parent:AddNewModifier(parent, self, "modifier_imba_spirit_breaker_greater_bash_speed", { duration = self:GetSpecialValueFor("movespeed_duration") })
@@ -1091,13 +1091,27 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 		ability      = self
 	}
 
-	damage_dealt = ApplyDamage(damageTable)
+	ApplyDamage(damageTable)
 
 	-- if self:GetCaster():HasScepter() then
 	-- for _, enemy in pairs(enemies) do
 	-- if enemy ~= target then
 	-- if greater_bash_ability and greater_bash_ability:IsTrained() then
 	-- greater_bash_ability:Bash(enemy, self:GetCaster())
+	-- end
+
+	-- local damageTable = {
+	-- victim 			= target,
+	-- damage 			= self:GetSpecialValueFor("damage"),
+	-- damage_type		= self:GetAbilityDamageType(),
+	-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+	-- attacker 		= self:GetCaster(),
+	-- ability 		= self
+	-- }
+
+	-- ApplyDamage(damageTable)
+	-- end
+	-- end
 	-- end
 
 	-- local damageTable = {
@@ -1291,8 +1305,6 @@ function modifier_special_bonus_imba_spirit_breaker_bonus_health:GetModifierHeal
 end
 
 function imba_spirit_breaker_charge_of_darkness:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_charge_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_charge_speed"), "modifier_special_bonus_imba_spirit_breaker_charge_speed", {})
 	end
@@ -1303,8 +1315,6 @@ function imba_spirit_breaker_charge_of_darkness:OnOwnerSpawned()
 end
 
 function imba_spirit_breaker_bulldoze:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_bulldoze_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_bulldoze_cooldown"), "modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown", {})
 	end

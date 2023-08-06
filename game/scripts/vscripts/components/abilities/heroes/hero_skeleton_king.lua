@@ -200,7 +200,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 	target:AddNewModifier(caster, ability, modifier_debuff, { duration = debuff_duration * (1 - target:GetStatusResistance()) })
 
 	-- #7 Talent: Wraithfire Blast now summons Wraiths on all targets hit
-	if caster:HasTalent("special_bonus_imba_skeleton_king_7") and not bTalent then
+	if caster:HasTalent("special_bonus_imba_skeleton_king_7") and not extra_data.bTalent then
 		local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
 		local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
 		local summon_point = caster:GetAbsOrigin() + direction * distance - 100
@@ -295,12 +295,12 @@ function modifier_imba_wraithfire_blast_debuff:OnIntervalThink()
 
 		local damageTable = {
 			victim = self.parent,
-			attacker = self.caster,
+			attacker = self.caster, 
 			damage = damage,
 			damage_type = DAMAGE_TYPE_MAGICAL,
 			ability = self.ability
 		}
-
+		
 		ApplyDamage(damageTable)
 	end
 end
@@ -348,7 +348,7 @@ function modifier_imba_wraithfire_blast_debuff:OnAttackLanded(keys)
 		local heal_amount = damage * self.attacker_lifesteal_pct / 100
 
 		-- Heal the attacker
-		attacker:Heal(heal_amount, self.caster)
+		attacker:Heal(heal_amount, self.ability)
 	end
 end
 
@@ -602,9 +602,9 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 				if self.parent == self.caster then
 					heal_amount = heal_amount * self.self_bonus
 				end
-
-				self.parent:Heal(heal_amount, self.caster)
-				-- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
+				
+				self.parent:Heal(heal_amount, self.ability)
+			-- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
 			else
 				if not self.delay_particle_time or (GameRules:GetGameTime() - self.delay_particle_time > 1) then
 					local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker, self.caster)
@@ -626,13 +626,14 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 				if self.parent == self.caster then
 					heal_amount = heal_amount * self.self_bonus
 				end
-
-				self.parent:Heal(heal_amount, self.caster)
+				
+				self.parent:Heal(heal_amount, self.ability)
 			end
 
 			-- After a small delay, find both illusions and the real aura bearer
 			Timers:CreateTimer(self.heal_delay, function()
-				local casters = FindUnitsInRadius(self.parent:GetTeamNumber(),
+				local casters = FindUnitsInRadius(
+					self.parent:GetTeamNumber(),
 					self.parent:GetAbsOrigin(),
 					nil,
 					self.radius,
@@ -640,7 +641,8 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 					DOTA_UNIT_TARGET_HERO,
 					DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
 					FIND_ANY_ORDER,
-					false)
+					false
+				)
 
 				for _, caster in pairs(casters) do
 					-- Ignore everyone that are not the same name as the caster
@@ -654,8 +656,8 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
 							-- Heal the aura bearer, if it's a real hero
 							if caster:IsRealHero() then
-								local caster_heal = heal_amount * self.caster_heal / 100
-								caster:Heal(caster_heal, caster)
+								local caster_heal = heal_amount * self.caster_heal * 0.01
+								caster:Heal(caster_heal, self.ability)
 							end
 						end
 					end
@@ -689,7 +691,8 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 				if not self.caster:IsAlive() then
 					return nil
 				end
-				local casters = FindUnitsInRadius(self.parent:GetTeamNumber(),
+				local casters = FindUnitsInRadius(
+					self.parent:GetTeamNumber(),
 					self.parent:GetAbsOrigin(),
 					nil,
 					self.radius,
@@ -697,7 +700,10 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 					DOTA_UNIT_TARGET_HERO,
 					DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
 					FIND_ANY_ORDER,
-					false)
+					false
+				)
+
+				for _,caster in pairs(casters) do
 
 				for _, caster in pairs(casters) do
 					-- Ignore everyone that are not the same name as the caster
@@ -1206,7 +1212,6 @@ end
 
 -- Should fully close out talent behavior change problems
 function imba_wraith_king_reincarnation:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_skeleton_king_5") and self:GetCaster():FindAbilityByName("special_bonus_imba_skeleton_king_5"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skeleton_king_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_skeleton_king_5", {})
 	end
@@ -1709,7 +1714,6 @@ end
 
 -- Should fully close out talent behavior change problems
 function imba_wraith_king_kingdom_come:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_skeleton_king_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_skeleton_king_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skeleton_king_2") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_skeleton_king_2", {})
 	end

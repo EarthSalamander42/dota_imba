@@ -105,7 +105,7 @@ function imba_techies_land_mines:GetManaCost(level)
 	local mana_increase_per_stack = self:GetSpecialValueFor("mana_increase_per_stack")
 
 	-- Find stack count
-	stacks = caster:GetModifierStackCount(modifier_charges, caster)
+	local stacks = caster:GetModifierStackCount(modifier_charges, caster)
 
 	local mana_cost = initial_mana_cost + mana_increase_per_stack * stacks
 	return mana_cost
@@ -1895,10 +1895,6 @@ end
 
 function modifier_imba_focused_detonate:GetModifierDisableTurning()
 	return 1
-end
-
-function modifier_imba_focused_detonate:IsHidden()
-	return false
 end
 
 -- Do a stop order after finish casting to prevent turning to the destination point

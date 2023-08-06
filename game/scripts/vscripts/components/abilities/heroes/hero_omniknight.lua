@@ -124,11 +124,12 @@ function Purification(caster, ability, target)
 	local damage = heal
 
 	-- Heal target
-	target:Heal(heal, caster)
+	target:Heal(heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 
 	-- Find enemies around it
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+	local enemies = FindUnitsInRadius(
+		caster:GetTeamNumber(),
 		target:GetAbsOrigin(),
 		nil,
 		radius,
@@ -136,20 +137,22 @@ function Purification(caster, ability, target)
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
-		false)
+		false
+	)
+
+	local damageTable = {
+		attacker = caster,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_PURE,
+		damage_flags = DOTA_DAMAGE_FLAG_NONE,
+		ability = ability
+	}
 
 
 	for _, enemy in pairs(enemies) do
 		-- If they're not magic immune, damage them
 		if not enemy:IsMagicImmune() then
-			local damageTable = {
-				victim = enemy,
-				attacker = caster,
-				damage = damage,
-				damage_type = DAMAGE_TYPE_PURE,
-				damage_flags = DOTA_DAMAGE_FLAG_NONE,
-				ability = ability
-			}
+			damageTable.victim = enemy
 
 			ApplyDamage(damageTable)
 
@@ -810,13 +813,14 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
 				attacker = self.caster,
 				damage = damage,
 				damage_type = DAMAGE_TYPE_PURE,
-				ability = ability
+				ability = self.ability
 			}
 
 			ApplyDamage(damageTable)
 
 			-- Find all nearby allies
-			local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+			local allies = FindUnitsInRadius(
+				self.caster:GetTeamNumber(),
 				self.caster:GetAbsOrigin(),
 				nil,
 				self.radius,
@@ -824,12 +828,13 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
 				DOTA_UNIT_TARGET_HERO,
 				DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
 				FIND_ANY_ORDER,
-				false)
+				false
+			)
 
 			-- Heal them (and the caster)
-			local heal = damage * self.damage_as_heal_pct / 100
+			local heal = damage * self.damage_as_heal_pct * 0.01
 			for _, ally in pairs(allies) do
-				ally:Heal(heal, self.caster)
+				ally:Heal(heal, self.ability)
 
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, heal, nil)
 
@@ -1106,8 +1111,10 @@ function modifier_imba_guardian_angel_shield:OnTakeDamage(keys)
 					attacker = attacker,
 					damage = damage,
 					damage_type = DAMAGE_TYPE_PURE,
-					ability = ability
+					ability = self.ability
 				}
+
+				ApplyDamage(damageTable)
 
 				ApplyDamage(damageTable)
 			else

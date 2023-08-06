@@ -7,9 +7,12 @@
 -- Untouchable --
 -----------------
 
-LinkLuaModifier("modifier_imba_enchantress_untouchable", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enchantress_untouchable_slow", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enchantress_untouchable_peace_on_earth", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_untouchable", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_untouchable_slow", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_untouchable_peace_on_earth",
+	"components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_enchantress_untouchable = class({})
 
@@ -24,14 +27,21 @@ end
 function imba_enchantress_untouchable:OnSpellStart()
 	local caster                  = self:GetCaster()
 	local peace_on_earth_duration = self:GetSpecialValueFor("peace_on_earth_duration")
-	local responses               = { "enchantress_ench_cast_02", "enchantress_ench_move_18", "enchantress_ench_move_19", "enchantress_ench_move_20", "enchantress_ench_laugh_06", "enchantress_ench_rare_01" }
+	local responses               = { "enchantress_ench_cast_02", "enchantress_ench_move_18", "enchantress_ench_move_19",
+		"enchantress_ench_move_20", "enchantress_ench_laugh_06", "enchantress_ench_rare_01" }
 
 	local enemies
 
 	if caster:HasScepter() then
-		enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE,
+			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE +
+			DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 	else
-		enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE,
+			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE +
+			DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 	end
 
 	for _, enemy in pairs(enemies) do
@@ -41,14 +51,17 @@ function imba_enchantress_untouchable:OnSpellStart()
 			-- end
 
 			if self:GetCaster():HasTalent("special_bonus_imba_enchantress_5") then
-				enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", { duration = peace_on_earth_duration })
+				enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth",
+					{ duration = peace_on_earth_duration })
 			else
-				enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", { duration = peace_on_earth_duration * (1 - enemy:GetStatusResistance()) })
+				enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth",
+					{ duration = peace_on_earth_duration * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 	end
 
-	caster:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", { duration = peace_on_earth_duration })
+	caster:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth",
+		{ duration = peace_on_earth_duration })
 
 	-- TODO: Add a good global / client sound effect for this
 	EmitGlobalSound(responses[RandomInt(1, #responses)])
@@ -99,7 +112,8 @@ function modifier_imba_enchantress_untouchable:OnHeroKilled(keys)
 	if not IsServer() then return end
 
 	if self.caster == self.parent and self.caster == keys.target and not self.caster:PassivesDisabled() and not self.caster:IsIllusion() and self.caster ~= keys.attacker and not keys.attacker:IsBuilding() then
-		keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_untouchable_slow", {}):SetStackCount(self.regret_stacks)
+		keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_untouchable_slow", {})
+			:SetStackCount(self.regret_stacks)
 	end
 end
 
@@ -115,7 +129,8 @@ function modifier_imba_enchantress_untouchable_slow:OnCreated()
 	self.parent                     = self:GetParent()
 
 	-- AbilitySpecials
-	self.slow_attack_speed          = self.ability:GetSpecialValueFor("slow_attack_speed") + self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_enchantress_5")
+	self.slow_attack_speed          = self.ability:GetSpecialValueFor("slow_attack_speed") +
+	self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_enchantress_5")
 	--self.slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
 	self.stopgap_bat_increase       = self.ability:GetSpecialValueFor("stopgap_bat_increase")
 	self.kindred_spirits_multiplier = self.ability:GetSpecialValueFor("kindred_spirits_multiplier")
@@ -180,17 +195,22 @@ function modifier_imba_enchantress_untouchable_peace_on_earth:OnCreated()
 
 	if not IsServer() then return end
 
-	self.particle = ParticleManager:CreateParticle("particles/item/angelic_alliance/angelic_alliance_disarm.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent)
+	self.particle = ParticleManager:CreateParticle("particles/item/angelic_alliance/angelic_alliance_disarm.vpcf",
+		PATTACH_OVERHEAD_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle, 0, self.parent:GetAbsOrigin())
 	self:AddParticle(self.particle, false, false, -1, false, false)
 
-	self.particle2 = ParticleManager:CreateParticle("particles/units/unit_greevil/loot_greevil_tgt_end_sparks.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle2 = ParticleManager:CreateParticle("particles/units/unit_greevil/loot_greevil_tgt_end_sparks.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle2, 3, self.parent:GetAbsOrigin())
 	self:AddParticle(self.particle2, false, false, -1, false, false)
 
-	self.particle3 = ParticleManager:CreateParticle("particles/units/heroes/hero_enchantress/enchantress_natures_attendants_test.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle3 = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_enchantress/enchantress_natures_attendants_test.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+		self.parent)
 	for wisp = 1, 4 do
-		ParticleManager:SetParticleControlEnt(self.particle3, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle3, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			self.parent:GetAbsOrigin(), true)
 	end
 	self:AddParticle(self.particle3, false, false, -1, false, false)
 end
@@ -212,8 +232,10 @@ end
 -------------
 
 -- LinkLuaModifier("modifier_imba_enchantress_enchant", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enchantress_enchant_controlled", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enchantress_enchant_slow", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_enchant_controlled", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_enchant_slow", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_enchantress_enchant = class({})
 
@@ -234,7 +256,8 @@ function imba_enchantress_enchant:CastFilterResultTarget(target)
 		return UF_FAIL_FRIENDLY
 	end
 
-	local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+	local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(),
+		self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 	return nResult
 end
 
@@ -249,7 +272,8 @@ function imba_enchantress_enchant:OnSpellStart()
 	-- AbilitySpecials
 	self.dominate_duration   = self:GetSpecialValueFor("dominate_duration")
 	self.slow_movement_speed = self:GetSpecialValueFor("slow_movement_speed")
-	self.tooltip_duration    = self:GetSpecialValueFor("tooltip_duration") + self.caster:FindTalentValue("special_bonus_imba_enchantress_6")
+	self.tooltip_duration    = self:GetSpecialValueFor("tooltip_duration") +
+	self.caster:FindTalentValue("special_bonus_imba_enchantress_6")
 
 	if self.caster:HasTalent("special_bonus_imba_enchantress_6") then
 		self.dominate_duration = self.dominate_duration * self.caster:FindTalentValue("special_bonus_imba_enchantress_6")
@@ -270,7 +294,8 @@ function imba_enchantress_enchant:OnSpellStart()
 		if string.find(self.target:GetUnitName(), "guys_") then
 			local lane_creep_name = self.target:GetUnitName()
 
-			local new_lane_creep = CreateUnitByName(self.target:GetUnitName(), self.target:GetAbsOrigin(), false, self.caster, self.caster, self.caster:GetTeamNumber())
+			local new_lane_creep = CreateUnitByName(self.target:GetUnitName(), self.target:GetAbsOrigin(), false,
+				self.caster, self.caster, self.caster:GetTeamNumber())
 			-- Copy the relevant stats over to the creep
 			new_lane_creep:SetBaseMaxHealth(self.target:GetMaxHealth())
 			new_lane_creep:SetHealth(self.target:GetHealth())
@@ -286,15 +311,17 @@ function imba_enchantress_enchant:OnSpellStart()
 		self.target:SetOwner(self.caster)
 		self.target:SetTeam(self.caster:GetTeam())
 		self.target:SetControllableByPlayer(self.caster:GetPlayerID(), false)
-		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_controlled", { duration = self.dominate_duration })
+		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_controlled",
+			{ duration = self.dominate_duration })
 		--self.target:AddNewModifier(self.caster, self, "modifier_dominated", {duration = self.dominate_duration}) -- This didn't work for me
 		self.target:AddNewModifier(self.caster, self, "modifier_kill", { duration = self.dominate_duration })
 
-		self.target:Heal(self.target:GetMaxHealth(), self.caster)
+		self.target:Heal(self.target:GetMaxHealth(), self)
 
 		-- IMBAfication: Kindred Spirits
 		if self:GetCaster():HasAbility("imba_enchantress_untouchable") and self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"):IsTrained() then
-			self.target:AddNewModifier(self.caster, self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"), "modifier_imba_enchantress_untouchable", {})
+			self.target:AddNewModifier(self.caster, self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"),
+				"modifier_imba_enchantress_untouchable", {})
 		end
 
 		if self.caster:GetName() == "npc_dota_hero_enchantress" then
@@ -304,7 +331,8 @@ function imba_enchantress_enchant:OnSpellStart()
 		-- Basic dispel (just buffs)
 		self.target:Purge(true, false, false, false, false)
 
-		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_slow", { duration = self.tooltip_duration * (1 - self.target:GetStatusResistance()) })
+		self.target:AddNewModifier(self.caster, self, "modifier_imba_enchantress_enchant_slow",
+			{ duration = self.tooltip_duration * (1 - self.target:GetStatusResistance()) })
 
 		if self.caster:GetName() == "npc_dota_hero_enchantress" then
 			self.caster:EmitSound("enchantress_ench_ability_enchant_0" .. math.random(4, 6))
@@ -340,7 +368,8 @@ function modifier_imba_enchantress_enchant_controlled:OnCreated()
 	if not IsServer() then return end
 
 	self.remaining_hp = self.parent:GetHealth()
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_enchantress/enchantress_enchant.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_enchantress/enchantress_enchant.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle, 0, self.parent:GetAbsOrigin())
 	self:AddParticle(self.particle, false, false, -1, false, false)
 
@@ -429,7 +458,8 @@ function modifier_imba_enchantress_enchant_slow:OnCreated()
 
 	if not IsServer() then return end
 
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_enchantress/enchantress_enchant_slow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_enchantress/enchantress_enchant_slow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle, 0, self.parent:GetAbsOrigin())
 	self:AddParticle(self.particle, false, false, -1, false, false)
 
@@ -463,8 +493,10 @@ end
 -- Nature's Attendants --
 -------------------------
 
-LinkLuaModifier("modifier_imba_enchantress_natures_attendants", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enchantress_natures_attendants_mini", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_natures_attendants", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_natures_attendants_mini", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_enchantress_natures_attendants = class({})
 
@@ -489,7 +521,8 @@ function imba_enchantress_natures_attendants:OnSpellStart()
 		end
 	end
 
-	self.caster:AddNewModifier(self.caster, self, "modifier_imba_enchantress_natures_attendants", { duration = self.duration })
+	self.caster:AddNewModifier(self.caster, self, "modifier_imba_enchantress_natures_attendants",
+		{ duration = self.duration })
 
 	if self.caster:GetName() == "npc_dota_hero_enchantress" then
 		self.caster:EmitSound("enchantress_ench_ability_nature_0" .. math.random(1, 6))
@@ -558,12 +591,14 @@ function modifier_imba_enchantress_natures_attendants:OnCreated()
 	-- 3/5/7/9 wisps based on level
 	-- 3-5/7/9/11 for the wisp control points
 	-- CP60 for colour, CP61 Vector(1, 0, 0) to activate it
-	self.particle_name = "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl" .. self.level .. ".vpcf"
+	self.particle_name = "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl" ..
+	self.level .. ".vpcf"
 
 	self.particle = ParticleManager:CreateParticle(self.particle_name, PATTACH_ABSORIGIN_FOLLOW, self.parent)
 
 	for wisp = 3, 3 + (self.level * 2) do
-		ParticleManager:SetParticleControlEnt(self.particle, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			self.parent:GetAbsOrigin(), true)
 	end
 
 	if self:GetStackCount() == 1 then
@@ -619,7 +654,8 @@ function modifier_imba_enchantress_natures_attendants:OnIntervalThink()
 	if #hurt_allies == 0 then
 		-- If everyone's full health, bring all the wisps back to Enchantress
 		for wisp = 3, 3 + (self.level * 2) do
-			ParticleManager:SetParticleControlEnt(self.particle, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.particle, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				self.parent:GetAbsOrigin(), true)
 		end
 	else
 		-- Each wisp picks a random valid target to attach to and heal
@@ -627,10 +663,12 @@ function modifier_imba_enchantress_natures_attendants:OnIntervalThink()
 			local selected_unit = RandomInt(1, #hurt_allies)
 
 			-- Reminder that particle only has 3/5/7/9 wisps and 3 to 5/7/9/11 for CP so if you want to add more wisps either edit the particle or accept it'll look weird
-			ParticleManager:SetParticleControlEnt(self.particle, math.min(wisp + 2, 3 + (self.level * 2)), hurt_allies[selected_unit], PATTACH_POINT_FOLLOW, "attach_hitloc", hurt_allies[selected_unit]:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.particle, math.min(wisp + 2, 3 + (self.level * 2)),
+				hurt_allies[selected_unit], PATTACH_POINT_FOLLOW, "attach_hitloc",
+				hurt_allies[selected_unit]:GetAbsOrigin(), true)
 
 			-- Each wisp heals for a separate instance
-			hurt_allies[selected_unit]:Heal(self.heal, self.caster)
+			hurt_allies[selected_unit]:Heal(self.heal, self.ability)
 
 			-- Cyan: Every wisp heal also grants 5/6/7/8 mana
 			if self:GetStackCount() == 2 then
@@ -639,7 +677,8 @@ function modifier_imba_enchantress_natures_attendants:OnIntervalThink()
 
 			-- IMBAfication: Rest for the Weary
 			if hurt_allies[selected_unit]:GetHealthPercent() < self.critical_health_pct and not hurt_allies[selected_unit]:HasModifier("modifier_imba_enchantress_natures_attendants_mini") then
-				hurt_allies[selected_unit]:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_natures_attendants_mini", { duration = self.ability.duration })
+				hurt_allies[selected_unit]:AddNewModifier(self.caster, self.ability,
+					"modifier_imba_enchantress_natures_attendants_mini", { duration = self.ability.duration })
 			end
 		end
 	end
@@ -736,7 +775,8 @@ function modifier_imba_enchantress_natures_attendants_mini:OnCreated()
 	self.particle = ParticleManager:CreateParticle(self.particle_name, PATTACH_ABSORIGIN_FOLLOW, self.parent)
 
 	for wisp = 3, 7 do
-		ParticleManager:SetParticleControlEnt(self.particle, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			self.parent:GetAbsOrigin(), true)
 	end
 
 	self:AddParticle(self.particle, false, false, -1, false, false)
@@ -751,7 +791,7 @@ function modifier_imba_enchantress_natures_attendants_mini:OnIntervalThink()
 
 	for wisp = 1, self.wisp_count_mini do
 		-- Each wisp heals for a separate instance
-		self.parent:Heal(self.heal, self.caster)
+		self.parent:Heal(self.heal, self.ability)
 	end
 end
 
@@ -764,7 +804,8 @@ end
 ------------------
 -- Natura Shift --
 ------------------
-LinkLuaModifier("modifier_imba_enchantress_natura_shift", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_natura_shift", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_enchantress_natura_shift = class({})
 
@@ -843,8 +884,10 @@ end
 -- Impetus --
 -------------
 
-LinkLuaModifier("modifier_imba_enchantress_impetus", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enchantress_impetus_huntmastery_timer", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_impetus", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_impetus_huntmastery_timer", "components/abilities/heroes/hero_enchantress.lua",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_enchantress_impetus = class({})
 
@@ -957,13 +1000,15 @@ function modifier_imba_enchantress_impetus:OnAttackLanded(keys)
 		-- If the attack is flagged as Impetus, apply the effects
 		if self.attack_queue[1] and not keys.target:IsBuilding() and keys.target:IsAlive() then
 			-- IMBAfication: Huntmastery
-			keys.target:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_impetus_huntmastery_timer", { duration = self.huntmastery_grace_period })
+			keys.target:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_impetus_huntmastery_timer",
+				{ duration = self.huntmastery_grace_period })
 
 			-- Remove distance cap on damage
 			-- Note that CalcDistanceBetweenEntityOBB(self.caster, keys.target) actually gives different / "wrong" results...
 			--local distance 			= math.min(CalcDistanceBetweenEntityOBB(self.caster, keys.target), self.distance_cap)
 			local distance       = (self.caster:GetAbsOrigin() - keys.target:GetAbsOrigin()):Length()
-			local impetus_damage = distance * ((self.distance_damage_pct + self.caster:FindTalentValue("special_bonus_imba_enchantress_9")) / 100)
+			local impetus_damage = distance *
+			((self.distance_damage_pct + self.caster:FindTalentValue("special_bonus_imba_enchantress_9")) / 100)
 
 			local damageTable    = {
 				victim = keys.target,
@@ -983,12 +1028,16 @@ function modifier_imba_enchantress_impetus:OnAttackLanded(keys)
 			-- Armament Equivalency
 			if self.caster:HasTalent("special_bonus_imba_enchantress_7") then
 				if not self.armament_spell_amp_pct or not self.armament_attack_dmg_pct then
-					self.armament_spell_amp_pct  = self.caster:FindTalentValue("special_bonus_imba_enchantress_7", "spell_amp_pct") / 100
-					self.armament_attack_dmg_pct = self.caster:FindTalentValue("special_bonus_imba_enchantress_7", "attack_dmg_pct") / 100
+					self.armament_spell_amp_pct  = self.caster:FindTalentValue("special_bonus_imba_enchantress_7",
+						"spell_amp_pct") / 100
+					self.armament_attack_dmg_pct = self.caster:FindTalentValue("special_bonus_imba_enchantress_7",
+						"attack_dmg_pct") / 100
 				end
 
-				local phys_damage       = impetus_damage * keys.target:GetSpellAmplification(false) * self.armament_spell_amp_pct
-				local magic_damage      = impetus_damage * (keys.target:GetAverageTrueAttackDamage(self.caster) / 100) * self.armament_attack_dmg_pct
+				local phys_damage       = impetus_damage * keys.target:GetSpellAmplification(false) *
+				self.armament_spell_amp_pct
+				local magic_damage      = impetus_damage * (keys.target:GetAverageTrueAttackDamage(self.caster) / 100) *
+				self.armament_attack_dmg_pct
 
 				-- First apply the extra physical damage...
 				damageTable.damage      = phys_damage
@@ -1072,7 +1121,8 @@ function modifier_imba_enchantress_impetus_huntmastery_timer:OnDeath(keys)
 	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (keys.unit.IsReincarnating and not keys.unit:IsReincarnating()) then
 		if self:GetAbility():GetName() == "imba_enchantress_impetus_723" then
 			if not self:GetCaster():HasModifier("modifier_imba_enchantress_impetus_723") then
-				local impetus_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enchantress_impetus_723", {})
+				local impetus_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(),
+					"modifier_imba_enchantress_impetus_723", {})
 
 				if impetus_modifier then
 					impetus_modifier:IncrementStackCount()
@@ -1100,8 +1150,10 @@ end
 -- IMBA_ENCHANTRESS_IMPETUS_723 --
 ----------------------------------
 
-LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enchantress_impetus_723", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_impetus_723", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_enchantress_impetus_723          = imba_enchantress_impetus_723 or class({})
 modifier_imba_enchantress_impetus_723 = modifier_imba_enchantress_impetus_723 or class({})
@@ -1131,7 +1183,8 @@ function imba_enchantress_impetus_723:OnOrbImpact(keys)
 		keys.target:EmitSound("Hero_Enchantress.ImpetusDamage")
 
 		-- IMBAfication: Huntmastery
-		keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_enchantress_impetus_huntmastery_timer", { duration = self:GetSpecialValueFor("huntmastery_grace_period") })
+		keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_enchantress_impetus_huntmastery_timer",
+			{ duration = self:GetSpecialValueFor("huntmastery_grace_period") })
 
 		-- Remove distance cap on damage
 		-- Note that CalcDistanceBetweenEntityOBB(self:Getcaster(), keys.target) actually gives different / "wrong" results...
@@ -1209,17 +1262,28 @@ end
 
 -- Client-side helper functions --
 
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_1", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_1_aura", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_2", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_2_aura", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_3", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_4", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_5", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_6", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_7", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_8", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enchantress_9", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_1", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_1_aura", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_2", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_2_aura", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_3", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_4", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_5", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_6", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_7", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_8", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_9", "components/abilities/heroes/hero_enchantress",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_enchantress_2_aura = class({})
 modifier_special_bonus_imba_enchantress_3      = class({})
@@ -1252,9 +1316,11 @@ function modifier_special_bonus_imba_enchantress_1:GetAuraSearchFlags() return D
 
 function modifier_special_bonus_imba_enchantress_1:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 
-function modifier_special_bonus_imba_enchantress_1:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_special_bonus_imba_enchantress_1:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO +
+	DOTA_UNIT_TARGET_BASIC end
 
-function modifier_special_bonus_imba_enchantress_1:GetModifierAura() return "modifier_special_bonus_imba_enchantress_1_aura" end
+function modifier_special_bonus_imba_enchantress_1:GetModifierAura() return
+	"modifier_special_bonus_imba_enchantress_1_aura" end
 
 ----------------------------
 -- TALENT 1 MODIFIER AURA --
@@ -1302,9 +1368,11 @@ function modifier_special_bonus_imba_enchantress_2:GetAuraSearchFlags() return D
 
 function modifier_special_bonus_imba_enchantress_2:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 
-function modifier_special_bonus_imba_enchantress_2:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_special_bonus_imba_enchantress_2:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO +
+	DOTA_UNIT_TARGET_BASIC end
 
-function modifier_special_bonus_imba_enchantress_2:GetModifierAura() return "modifier_special_bonus_imba_enchantress_2_aura" end
+function modifier_special_bonus_imba_enchantress_2:GetModifierAura() return
+	"modifier_special_bonus_imba_enchantress_2_aura" end
 
 ----------------------------
 -- TALENT 2 MODIFIER AURA --
@@ -1423,40 +1491,56 @@ function modifier_special_bonus_imba_enchantress_9:RemoveOnDeath() return false 
 -- Hopefully people don't go skilling zero abilities and only all talents while dead and then complaining that it doesn't work...
 function imba_enchantress_untouchable:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_1") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_1"), "modifier_special_bonus_imba_enchantress_1", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_1"),
+			"modifier_special_bonus_imba_enchantress_1", {})
 	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_2") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_2"), "modifier_special_bonus_imba_enchantress_2", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_2"),
+			"modifier_special_bonus_imba_enchantress_2", {})
 	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_3") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_3"), "modifier_special_bonus_imba_enchantress_3", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_3"),
+			"modifier_special_bonus_imba_enchantress_3", {})
 	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_5") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_5"), "modifier_special_bonus_imba_enchantress_5", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_5"),
+			"modifier_special_bonus_imba_enchantress_5", {})
 	end
 end
 
 function imba_enchantress_enchant:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_4") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_4"), "modifier_special_bonus_imba_enchantress_4", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_4"),
+			"modifier_special_bonus_imba_enchantress_4", {})
 	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_6") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_6"), "modifier_special_bonus_imba_enchantress_6", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_6"),
+			"modifier_special_bonus_imba_enchantress_6", {})
 	end
 end
 
 function imba_enchantress_natures_attendants:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_8") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_8"), "modifier_special_bonus_imba_enchantress_8", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_8"),
+			"modifier_special_bonus_imba_enchantress_8", {})
 	end
 end
 
 function imba_enchantress_impetus:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_enchantress_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enchantress_7") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_7"), "modifier_special_bonus_imba_enchantress_7", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enchantress_7"),
+			"modifier_special_bonus_imba_enchantress_7", {})
 	end
 end

@@ -649,7 +649,7 @@ function imba_oracle_purifying_flames:OnSpellStart()
 			ability      = self
 		})
 	else
-		self.target:Heal(self:GetSpecialValueFor("damage"), self:GetCaster())
+		self.target:Heal(self:GetSpecialValueFor("damage"), self)
 
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.target, self:GetSpecialValueFor("damage"), nil)
 	end
@@ -685,7 +685,7 @@ function modifier_imba_oracle_purifying_flames:OnCreated()
 end
 
 function modifier_imba_oracle_purifying_flames:OnIntervalThink()
-	self:GetParent():Heal(self.heal_per_second, self:GetCaster())
+	self:GetParent():Heal(self.heal_per_second, self:GetAbility())
 
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_second, nil)
 end
@@ -950,7 +950,7 @@ end
 
 -- "If the target is invulnerable as False Promise expires, the delayed heal and damage wait for it to become vulnerable again."
 -- Since Ball Lightning is coded...differently, this exception needs to be included as well
-function modifier_imba_oracle_false_promise_timer:DestroyOnExpire() return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_ball_lightning") end
+function modifier_imba_oracle_false_promise_timer:DestroyOnExpire() return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_storm_spirit_ball_lightning") end
 
 -- I have no idea how this priority function works
 function modifier_imba_oracle_false_promise_timer:GetPriority() return MODIFIER_PRIORITY_ULTRA end
@@ -1037,7 +1037,7 @@ function modifier_imba_oracle_false_promise_timer:OnDestroy()
 		self.end_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_oracle/oracle_false_promise_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:ReleaseParticleIndex(self.end_particle)
 
-		self:GetParent():Heal(self.heal_counter - self.damage_counter, self:GetCaster())
+		self:GetParent():Heal(self.heal_counter - self.damage_counter, self:GetAbility())
 
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_counter - self.damage_counter, nil)
 	else
@@ -1287,7 +1287,7 @@ end
 -- MODIFIER_IMBA_ORACLE_FALSE_PROMISE_TIMER_ALTER_TARGETS --
 ------------------------------------------------------------
 
-function modifier_imba_oracle_false_promise_timer_alter_targets:DestroyOnExpire() return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_ball_lightning") end
+function modifier_imba_oracle_false_promise_timer_alter_targets:DestroyOnExpire() return not self:GetParent():IsInvulnerable() and not self:GetParent():HasModifier("modifier_imba_storm_spirit_ball_lightning") end
 
 function modifier_imba_oracle_false_promise_timer_alter_targets:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
@@ -1416,16 +1416,12 @@ function modifier_special_bonus_imba_oracle_fates_edict_cooldown:IsPurgable() re
 function modifier_special_bonus_imba_oracle_fates_edict_cooldown:RemoveOnDeath() return false end
 
 function imba_oracle_fates_edict:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_oracle_fates_edict_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_oracle_fates_edict_cooldown"), "modifier_special_bonus_imba_oracle_fates_edict_cooldown", {})
 	end
 end
 
 function imba_oracle_purifying_flames:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_oracle_purifying_flames_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_oracle_purifying_flames_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_oracle_purifying_flames_cooldown"), "modifier_special_bonus_imba_oracle_purifying_flames_cooldown", {})
 	end

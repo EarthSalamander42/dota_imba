@@ -204,7 +204,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData(hTarget, vLocation, E
 			local heal = (self:GetVanillaAbilitySpecial("heal_amount") + self.overchannel_damage_increase) -- * heal_amp
 
 			-- heal allies or self and apply mist
-			target:Heal(heal, caster)
+			target:Heal(heal, self)
 			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_ally", { duration = mist_duration })
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 
@@ -331,7 +331,7 @@ function modifier_imba_mist_coil_mist_ally:OnDestroy(keys)
 	if not self:GetAbility() then return end
 
 	if IsServer() and self:GetParent():IsAlive() then
-		self:GetParent():Heal(self:GetStackCount(), self:GetCaster())
+		self:GetParent():Heal(self:GetStackCount(), self:GetAbility())
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self:GetStackCount(), nil)
 	end
 end
@@ -451,13 +451,15 @@ function modifier_imba_aphotic_shield_buff_block:OnCreated()
 		-- Extra effect if shield was casted with over channel
 		if caster:HasModifier("modifier_over_channel_handler") then
 			local over_channel_particle = ParticleManager:CreateParticle(
-				"particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+				"particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+				target)
 			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc,
 				target_origin, true)
 			self:AddParticle(over_channel_particle, false, false, -1, false, false)
 
 			over_channel_particle = ParticleManager:CreateParticle(
-				"particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+				"particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+				target)
 			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc,
 				target_origin, true)
 			self:AddParticle(over_channel_particle, false, false, -1, false, false)
@@ -633,7 +635,6 @@ function imba_abaddon_frostmourne:GetBehavior()
 end
 
 function imba_abaddon_frostmourne:OnOwnerSpawned()
-	if not IsServer() then return end
 	self:EndCooldown()
 	--[[
 	if self:GetCaster():HasAbility("special_bonus_imba_abaddon_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_abaddon_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_abaddon_2") then
@@ -971,6 +972,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 			-- Unit having this debuff must be the one taking damage
 			if target == kv.unit then
 				local caster = self:GetCaster()
+				local ability = self:GetAbility()
 				local damage = kv.damage
 				local target_health_left = target:GetHealth()
 
@@ -989,7 +991,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 					PATTACH_POINT_FOLLOW, caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 				-- Heal caster equal to a percentage of damage taken by unit affected by this debuff
-				caster:Heal(heal_amount, caster)
+				caster:Heal(heal_amount, ability)
 
 				if caster:HasModifier("modifier_imba_borrowed_time_buff_hot_caster") then
 					local buffed_allies = caster._borrowed_time_buffed_allies
@@ -1002,7 +1004,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 							ParticleManager:ReleaseParticleIndex(healFX)
 							-- Show value healed on allies
 							SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, k, heal_amount, nil)
-							k:Heal(heal_amount, caster)
+							k:Heal(heal_amount, ability)
 						end
 					end
 				end
@@ -1419,7 +1421,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:GetModifierIncomingDamage_P
 			local max_health = target:GetMaxHealth()
 			self:SetStackCount(self:GetStackCount() + math.floor(kv.damage / self.ratio))
 		end
-		target:Heal(kv.damage, target)
+		target:Heal(kv.damage, self:GetAbility())
 
 		return -9999999
 	end

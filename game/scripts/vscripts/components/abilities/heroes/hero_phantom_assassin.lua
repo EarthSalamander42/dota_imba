@@ -24,13 +24,6 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 	self.cast_range					=	self:GetCastRange() + GetCastRangeIncrease(caster)
 	self.playbackrate				=	1 + self.scepter_knives_interval
 
-	--TALENT: +35 Stifling Dagger bonus damage
-	if caster:HasTalent("special_bonus_imba_phantom_assassin_1") then
-		bonus_damage	=	self:GetSpecialValueFor("bonus_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_1")
-	else
-		bonus_damage	=	self:GetSpecialValueFor("bonus_damage")
-	end
-
 	--coup de grace variables
 	local ability_crit = caster:FindAbilityByName("modifier_imba_coup_de_grace")
 	local ps_coup_modifier = "modifier_imba_phantom_strike_coup_de_grace"
@@ -44,11 +37,11 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 	-- Secondary knives
 	if scepter or caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
 		local secondary_knives_thrown = 0
+		local scepter_dagger_count = 0
 
 		-- TALENT: +1 Stifling Dagger bonus dagger (like aghs)
 		if not scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
 			scepter_dagger_count = self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
-			-- secondary_knives_thrown = scepter_dagger_count
 		elseif scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
 			scepter_dagger_count = self:GetSpecialValueFor("scepter_dagger_count") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
 		else
@@ -141,7 +134,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 	end
 end
 
-function imba_phantom_assassin_stifling_dagger:LaunchDagger(enemy)
+function imba_phantom_assassin_stifling_dagger:LaunchDagger(enemy, extra_data)
 	if enemy == nil then return end
 
 	local dagger_projectile = {
@@ -446,10 +439,9 @@ function imba_phantom_assassin_phantom_strike:OnSpellStart()
 
 			--Increased Coup de Grace chance for the next 4 attacks
 			--TALENT
+			local attacks_count = self.attacks
 			if self.caster:HasTalent("special_bonus_imba_phantom_assassin_6") then
 				attacks_count = self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_6") + 4
-			else
-				attacks_count = self.attacks
 			end
 
 			self.caster:SetModifierStackCount( "modifier_imba_phantom_strike_coup_de_grace", self.caster, attacks_count)
@@ -1151,8 +1143,6 @@ function modifier_special_bonus_imba_phantom_assassin_10:IsPurgable() 		return f
 function modifier_special_bonus_imba_phantom_assassin_10:RemoveOnDeath() 	return false end
 
 function imba_phantom_assassin_blur:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_phantom_assassin_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_assassin_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_assassin_10"), "modifier_special_bonus_imba_phantom_assassin_10", {})
 	end

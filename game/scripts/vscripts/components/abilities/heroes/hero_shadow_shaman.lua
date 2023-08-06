@@ -255,8 +255,9 @@ function imba_shadow_shaman_voodoo:OnSpellStart()
 	if target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 		if not target:TriggerSpellAbsorb(self) then
 			-- "Hex instantly destroys illusions."
-			if target:IsIllusion() and not Custom_bIsStrongIllusion(self.parent) then
-				target:Kill(target, self:GetCaster())
+			if target:IsIllusion() and not Custom_bIsStrongIllusion(target) then
+				target:Kill(self, self:GetCaster())
+				return
 			else
 				if self:GetCaster():GetName() == "npc_dota_hero_shadow_shaman" and RollPercentage(75) then
 					self:GetCaster():EmitSound("shadowshaman_shad_ability_voodoo_0" .. RandomInt(1, 4))
@@ -1191,17 +1192,13 @@ function modifier_special_bonus_imba_shadow_shaman_wards_movement:IsPurgable() r
 function modifier_special_bonus_imba_shadow_shaman_wards_movement:RemoveOnDeath() return false end
 
 function imba_shadow_shaman_voodoo:OnOwnerSpawned()
-	if not IsServer() then return end
+	local caster = self:GetCaster()
 
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_hex_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_shaman_hex_cooldown"), "modifier_special_bonus_imba_shadow_shaman_hex_cooldown", {})
+	if caster:HasTalent("special_bonus_imba_shadow_shaman_hex_cooldown") and not caster:HasModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_shaman_hex_cooldown"), "modifier_special_bonus_imba_shadow_shaman_hex_cooldown", {})
 	end
-end
 
-function imba_shadow_shaman_voodoo:OnOwnerSpawned()
-	if not IsServer() then return end
-
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_shaman_wards_movement") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_shaman_wards_movement"), "modifier_special_bonus_imba_shadow_shaman_wards_movement", {})
+	if caster:HasTalent("special_bonus_imba_shadow_shaman_wards_movement") and not caster:HasModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_shaman_wards_movement"), "modifier_special_bonus_imba_shadow_shaman_wards_movement", {})
 	end
 end

@@ -1197,16 +1197,12 @@ function modifier_special_bonus_imba_brewmaster_primal_split_cooldown:IsPurgable
 function modifier_special_bonus_imba_brewmaster_primal_split_cooldown:RemoveOnDeath() return false end
 
 function imba_brewmaster_drunken_brawler:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_brewmaster_druken_brawler_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_brewmaster_druken_brawler_damage") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_brewmaster_druken_brawler_damage"), "modifier_special_bonus_imba_brewmaster_druken_brawler_damage", {})
 	end
 end
 
 function imba_brewmaster_primal_split:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_brewmaster_primal_split_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_brewmaster_primal_split_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_brewmaster_primal_split_cooldown"), "modifier_special_bonus_imba_brewmaster_primal_split_cooldown", {})
 	end

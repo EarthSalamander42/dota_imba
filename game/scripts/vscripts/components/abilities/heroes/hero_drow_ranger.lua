@@ -20,10 +20,14 @@
 ----------------------------
 
 imba_drow_ranger_frost_arrows = class({})
-LinkLuaModifier("modifier_imba_frost_arrows_thinker", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_arrows_slow", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_arrows_freeze", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_arrows_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_arrows_thinker", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_arrows_slow", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_arrows_freeze", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_arrows_buff", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_frost_arrows:GetIntrinsicModifierName()
 	return "modifier_imba_frost_arrows_thinker"
@@ -57,8 +61,6 @@ end
 
 -- Frost arrows thinker modifier
 modifier_imba_frost_arrows_thinker = class({})
-
-
 
 function modifier_imba_frost_arrows_thinker:DeclareFunctions()
 	return {
@@ -209,14 +211,16 @@ function ApplyFrostAttack(modifier, target)
 	-- Apply slow effect if the target didn't suddenly become magic immune
 	if not target:IsMagicImmune() then
 		if not target:HasModifier(modifier.modifier_slow) then
-			local modifier_slow_handler = target:AddNewModifier(modifier.caster, modifier.ability, modifier.modifier_slow, { duration = duration * (1 - target:GetStatusResistance()) })
+			local modifier_slow_handler = target:AddNewModifier(modifier.caster, modifier.ability, modifier
+			.modifier_slow, { duration = duration * (1 - target:GetStatusResistance()) })
 			if modifier_slow_handler then
 				modifier_slow_handler:IncrementStackCount()
 			end
 		else
 			local modifier_slow_handler = target:FindModifierByName(modifier.modifier_slow)
 			modifier_slow_handler:IncrementStackCount()
-			modifier_slow_handler:SetDuration(modifier_slow_handler:GetDuration() * (1 - target:GetStatusResistance()), true)
+			modifier_slow_handler:SetDuration(modifier_slow_handler:GetDuration() * (1 - target:GetStatusResistance()),
+				true)
 		end
 	end
 end
@@ -269,9 +273,12 @@ function SetArrowAttackProjectile(caster, frost_attack, marksmanship_attack)
 	local frost_skadi_projectile = "particles/hero/drow/skadi_arrows/drow_skadi_frost_arrow.vpcf"
 	local frost_deso_projectile = "particles/hero/drow/deso_arrows/drow_deso_frost_arrow.vpcf"
 	local frost_deso_skadi_projectile = "particles/hero/drow/deso_skadi_arrows/drow_deso_skadi_frost_arrow.vpcf"
-	local frost_lifesteal_skadi_projectile = "particles/hero/drow/lifesteal_skadi_arrows/drow_lifesteal_skadi_frost_arrow.vpcf"
-	local frost_lifesteal_deso_projectile = "particles/hero/drow/lifesteal_deso_arrows/drow_lifedrain_deso_frost_arrow.vpcf"
-	local frost_lifesteal_deso_skadi_projectile = "particles/hero/drow/lifesteal_deso_skadi_arrows/drow_lifesteal_deso_skadi_frost_arrow.vpcf"
+	local frost_lifesteal_skadi_projectile =
+	"particles/hero/drow/lifesteal_skadi_arrows/drow_lifesteal_skadi_frost_arrow.vpcf"
+	local frost_lifesteal_deso_projectile =
+	"particles/hero/drow/lifesteal_deso_arrows/drow_lifedrain_deso_frost_arrow.vpcf"
+	local frost_lifesteal_deso_skadi_projectile =
+	"particles/hero/drow/lifesteal_deso_skadi_arrows/drow_lifesteal_deso_skadi_frost_arrow.vpcf"
 
 	-- Set variables
 	local has_lifesteal
@@ -387,7 +394,7 @@ function modifier_imba_frost_arrows_slow:OnRemoved()
 	--Talent #4: Update the stack count on Drow accordingly when the parent lose the debuff (including when dying), remove the buff if no more stacks are left
 	if IsServer() then
 		local target_stacks = self:GetStackCount()
-		stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
+		local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
 		if stack_count <= target_stacks then
 			self.caster:RemoveModifierByName(self.caster_modifier)
 		else
@@ -421,11 +428,13 @@ function modifier_imba_frost_arrows_slow:OnStackCountChanged()
 					self.caster:RemoveModifierByName(self.caster_modifier)
 				else
 					local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
-					self.caster:SetModifierStackCount(self.caster_modifier, self.caster, stack_count - self.stacks_to_freeze)
+					self.caster:SetModifierStackCount(self.caster_modifier, self.caster,
+						stack_count - self.stacks_to_freeze)
 				end
 			end
 
-			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, { duration = self.freeze_duration * (1 - self.parent:GetStatusResistance()) })
+			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze,
+				{ duration = self.freeze_duration * (1 - self.parent:GetStatusResistance()) })
 
 			-- Play freeze sound
 			EmitSoundOn("hero_Crystal.frostbite", self.parent)
@@ -530,11 +539,14 @@ end
 -- IMBA_DROW_RANGER_FROST_ARROWS_723 --
 ---------------------------------------
 
-LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_drow_ranger_frost_arrows_723_bonus_damage", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_frost_arrows_723_bonus_damage", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_drow_ranger_frost_arrows_723                       = imba_drow_ranger_frost_arrows_723 or class({})
-modifier_imba_drow_ranger_frost_arrows_723_bonus_damage = modifier_imba_drow_ranger_frost_arrows_723_bonus_damage or class({})
+modifier_imba_drow_ranger_frost_arrows_723_bonus_damage = modifier_imba_drow_ranger_frost_arrows_723_bonus_damage or
+class({})
 
 function imba_drow_ranger_frost_arrows_723:GetIntrinsicModifierName()
 	return "modifier_generic_orb_effect_lua"
@@ -555,7 +567,9 @@ end
 function imba_drow_ranger_frost_arrows_723:OnOrbImpact(keys)
 	-- Apply slow effect if the target didn't suddenly become magic immune
 	if not keys.target:IsMagicImmune() then
-		local modifier_slow_handler = keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_frost_arrows_slow", { duration = self:GetDuration() * (1 - keys.target:GetStatusResistance()) })
+		local modifier_slow_handler = keys.target:AddNewModifier(self:GetCaster(), self,
+			"modifier_imba_frost_arrows_slow",
+			{ duration = self:GetDuration() * (1 - keys.target:GetStatusResistance()) })
 
 		if modifier_slow_handler then
 			modifier_slow_handler:IncrementStackCount()
@@ -640,7 +654,8 @@ function modifier_imba_deadeye_aura:GetAuraRadius()
 end
 
 function modifier_imba_deadeye_aura:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE
+	return DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD +
+	DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 end
 
 function modifier_imba_deadeye_aura:GetAuraSearchTeam()
@@ -739,7 +754,8 @@ function imba_drow_ranger_gust:GetBehavior()
 end
 
 function imba_drow_ranger_gust:GetCastRange(location, target)
-	return self:GetSpecialValueFor("wave_distance") + (self:GetCaster():FindTalentValue("special_bonus_imba_drow_ranger_9"))
+	return self:GetSpecialValueFor("wave_distance") +
+	(self:GetCaster():FindTalentValue("special_bonus_imba_drow_ranger_9"))
 end
 
 function imba_drow_ranger_gust:OnSpellStart()
@@ -760,7 +776,8 @@ function imba_drow_ranger_gust:OnSpellStart()
 
 	-- Ability specials
 	local wave_speed = ability:GetSpecialValueFor("wave_speed")
-	local wave_distance = ability:GetSpecialValueFor("wave_distance") + caster:FindTalentValue("special_bonus_imba_drow_ranger_9")
+	local wave_distance = ability:GetSpecialValueFor("wave_distance") +
+	caster:FindTalentValue("special_bonus_imba_drow_ranger_9")
 	local wave_width = ability:GetSpecialValueFor("wave_width")
 	local jump_speed = ability:GetSpecialValueFor("jump_speed")
 	local leap_range = ability:GetSpecialValueFor("leap_range")
@@ -825,7 +842,8 @@ function imba_drow_ranger_gust:OnProjectileHit(target, location)
 
 		-- Ability specials
 		local knockback_duration = ability:GetSpecialValueFor("knockback_duration")
-		local max_distance = ability:GetSpecialValueFor("max_distance") + caster:FindTalentValue("special_bonus_imba_drow_ranger_9")
+		local max_distance = ability:GetSpecialValueFor("max_distance") +
+		caster:FindTalentValue("special_bonus_imba_drow_ranger_9")
 		local silence_duration = ability:GetSpecialValueFor("silence_duration")
 		local chill_duration = ability:GetSpecialValueFor("chill_duration")
 		local chill_stacks = ability:GetSpecialValueFor("chill_stacks")
@@ -873,16 +891,19 @@ function imba_drow_ranger_gust:OnProjectileHit(target, location)
 		ApplyDamage(damageTable)
 
 		-- Apply silence
-		target:AddNewModifier(caster, ability, modifier_silence, { duration = silence_duration * (1 - target:GetStatusResistance()) })
+		target:AddNewModifier(caster, ability, modifier_silence,
+			{ duration = silence_duration * (1 - target:GetStatusResistance()) })
 
 
 		-- if appropriate, apply chill stacks (only if Frost Arrows were learned)
 		if caster:HasAbility(frost_arrow_ability) or caster:HasAbility("imba_drow_ranger_frost_arrows_723") then
-			local frost_ability = caster:FindAbilityByName(frost_arrow_ability) or caster:FindAbilityByName("imba_drow_ranger_frost_arrows_723")
+			local frost_ability = caster:FindAbilityByName(frost_arrow_ability) or
+			caster:FindAbilityByName("imba_drow_ranger_frost_arrows_723")
 			if frost_ability:GetLevel() > 0 then
 				-- Apply stacks or increase stacks if already exists
 				if not target:HasModifier(modifier_chill) then
-					local modifier = target:AddNewModifier(caster, frost_ability, modifier_chill, { duration = chill_duration * (1 - target:GetStatusResistance()) })
+					local modifier = target:AddNewModifier(caster, frost_ability, modifier_chill,
+						{ duration = chill_duration * (1 - target:GetStatusResistance()) })
 					if modifier then
 						modifier:SetStackCount(chill_stacks)
 					end
@@ -1055,7 +1076,8 @@ imba_drow_ranger_trueshot = class({})
 LinkLuaModifier("modifier_imba_trueshot_aura", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trueshot", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trueshot_active", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_trueshot_talent_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trueshot_talent_buff", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_trueshot:GetIntrinsicModifierName()
 	return "modifier_imba_trueshot_aura"
@@ -1187,7 +1209,9 @@ function modifier_imba_trueshot:OnIntervalThink()
 
 
 		-- Set the values in the nettable
-		CustomNetTables:SetTableValue("player_table", "precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID()), { precision_aura_drow_agility = drow_agility })
+		CustomNetTables:SetTableValue("player_table",
+			"precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID()),
+			{ precision_aura_drow_agility = drow_agility })
 	end
 end
 
@@ -1201,7 +1225,8 @@ end
 function modifier_imba_trueshot:GetModifierPreAttack_BonusDamage()
 	if CustomNetTables:GetTableValue("player_table", "precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID())) then
 		if CustomNetTables:GetTableValue("player_table", "precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID())).precision_aura_drow_agility then
-			local drow_agility = CustomNetTables:GetTableValue("player_table", "precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID())).precision_aura_drow_agility
+			local drow_agility = CustomNetTables:GetTableValue("player_table",
+				"precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID())).precision_aura_drow_agility
 
 			-- Calculate bonus damage
 			local bonus_damage = drow_agility * (self.agi_to_damage_pct / 100)
@@ -1224,7 +1249,8 @@ function modifier_imba_trueshot:GetModifierBonusStats_Agility()
 	-- Check if Drow's agility was indexed
 	if CustomNetTables:GetTableValue("player_table", "precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID())) then
 		if CustomNetTables:GetTableValue("player_table", "precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID())).precision_aura_drow_agility then
-			local drow_agility = CustomNetTables:GetTableValue("player_table", "precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID())).precision_aura_drow_agility
+			local drow_agility = CustomNetTables:GetTableValue("player_table",
+				"precision_aura_drow_agility" .. tostring(self.parent:GetPlayerOwnerID())).precision_aura_drow_agility
 			-- Only applies when the active component works
 			if self.caster:HasModifier(self.modifier_active) then
 				-- Only applies to heroes
@@ -1328,7 +1354,8 @@ function modifier_imba_trueshot_talent_buff:IsHidden() return false end
 -- IMBA_DROW_RANGER_MULTISHOT --
 --------------------------------
 
-LinkLuaModifier("modifier_imba_drow_ranger_multishot", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_multishot", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_drow_ranger_multishot          = imba_drow_ranger_multishot or class({})
 modifier_imba_drow_ranger_multishot = modifier_imba_drow_ranger_multishot or class({})
@@ -1336,7 +1363,8 @@ modifier_imba_drow_ranger_multishot = modifier_imba_drow_ranger_multishot or cla
 function imba_drow_ranger_multishot:OnSpellStart()
 	self.targets_hit = {}
 
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_drow_ranger_multishot", { duration = self:GetChannelTime() })
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_drow_ranger_multishot",
+		{ duration = self:GetChannelTime() })
 end
 
 function imba_drow_ranger_multishot:OnChannelFinish(bInterrupted)
@@ -1353,7 +1381,10 @@ function imba_drow_ranger_multishot:OnProjectileHit_ExtraData(target, location, 
 
 		if self:GetCaster():HasAbility("imba_drow_ranger_frost_arrows_723") and self:GetCaster():FindAbilityByName("imba_drow_ranger_frost_arrows_723"):IsTrained() then
 			if not target:IsMagicImmune() then
-				local frost_modifier = target:AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("imba_drow_ranger_frost_arrows_723"), "modifier_imba_frost_arrows_slow", { duration = self:GetSpecialValueFor("arrow_slow_duration") * (1 - target:GetStatusResistance()) })
+				local frost_modifier = target:AddNewModifier(self:GetCaster(),
+					self:GetCaster():FindAbilityByName("imba_drow_ranger_frost_arrows_723"),
+					"modifier_imba_frost_arrows_slow",
+					{ duration = self:GetSpecialValueFor("arrow_slow_duration") * (1 - target:GetStatusResistance()) })
 
 				if frost_modifier then
 					frost_modifier:IncrementStackCount()
@@ -1363,7 +1394,8 @@ function imba_drow_ranger_multishot:OnProjectileHit_ExtraData(target, location, 
 
 		ApplyDamage({
 			victim       = target,
-			damage       = ((self:GetCaster():GetBaseDamageMax() + self:GetCaster():GetBaseDamageMin()) / 2) * self:GetSpecialValueFor("arrow_damage_pct") / 100,
+			damage       = ((self:GetCaster():GetBaseDamageMax() + self:GetCaster():GetBaseDamageMin()) / 2) *
+			self:GetSpecialValueFor("arrow_damage_pct") / 100,
 			damage_type  = DAMAGE_TYPE_PHYSICAL,
 			damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_BLOCK,
 			attacker     = self:GetCaster(),
@@ -1424,7 +1456,8 @@ function modifier_imba_drow_ranger_multishot:OnIntervalThink()
 	ProjectileManager:CreateLinearProjectile({
 		Ability           = self:GetAbility(),
 		EffectName        = "particles/units/heroes/hero_drow/drow_multishot_proj_linear_proj.vpcf",
-		vSpawnOrigin      = self:GetParent():GetAttachmentOrigin(self:GetParent():ScriptLookupAttachment("attach_attack1")),
+		vSpawnOrigin      = self:GetParent():GetAttachmentOrigin(self:GetParent():ScriptLookupAttachment(
+		"attach_attack1")),
 		fDistance         = self:GetParent():Script_GetAttackRange() * self.arrow_range_multiplier,
 		fStartRadius      = self.arrow_width,
 		fEndRadius        = self.arrow_width,
@@ -1436,7 +1469,9 @@ function modifier_imba_drow_ranger_multishot:OnIntervalThink()
 		iUnitTargetType   = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		fExpireTime       = GameRules:GetGameTime() + 10.0,
 		bDeleteOnHit      = true,
-		vVelocity         = RotatePosition(Vector(0, 0, 0), QAngle(0, -self.adjusted_angle + (self.angle_per_arrow * self.num_arrow_in_salvo * 2), 0), self:GetParent():GetForwardVector()) * self.arrow_speed,
+		vVelocity         = RotatePosition(Vector(0, 0, 0),
+			QAngle(0, -self.adjusted_angle + (self.angle_per_arrow * self.num_arrow_in_salvo * 2), 0),
+			self:GetParent():GetForwardVector()) * self.arrow_speed,
 		bProvidesVision   = true,
 		iVisionRadius     = 100,
 		iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
@@ -1469,11 +1504,16 @@ end
 
 imba_drow_ranger_marksmanship = class({})
 LinkLuaModifier("modifier_imba_marksmanship", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_marksmanship_scepter_dmg_reduction", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_markmanship_aura", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_markmanship_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_markmanship_slow", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_proc_armor", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_marksmanship_scepter_dmg_reduction", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_markmanship_aura", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_markmanship_buff", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_markmanship_slow", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_proc_armor", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_marksmanship:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -1544,7 +1584,9 @@ function modifier_imba_marksmanship:OnIntervalThink()
 			self.radius,
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
 			DOTA_UNIT_TARGET_HERO,
-			DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+			DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE +
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO +
+			DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
 			FIND_ANY_ORDER,
 			false
 		)
@@ -1567,7 +1609,8 @@ function modifier_imba_marksmanship:OnIntervalThink()
 			ParticleManager:ReleaseParticleIndex(self.particle_start_fx)
 
 			-- Apply marksmanship particle
-			self.particle_marksmanship_fx = ParticleManager:CreateParticle(self.particle_marksmanship, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+			self.particle_marksmanship_fx = ParticleManager:CreateParticle(self.particle_marksmanship,
+				PATTACH_ABSORIGIN_FOLLOW, self.caster)
 			ParticleManager:SetParticleControl(self.particle_marksmanship_fx, 0, self.caster:GetAbsOrigin())
 			ParticleManager:SetParticleControl(self.particle_marksmanship_fx, 2, Vector(2, 0, 0))
 			ParticleManager:SetParticleControl(self.particle_marksmanship_fx, 3, self.caster:GetAbsOrigin())
@@ -1672,7 +1715,8 @@ function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage(pa
 						victim       = params.target,
 						damage       = self:GetAbility():GetSpecialValueFor("bonus_damage"),
 						damage_type  = DAMAGE_TYPE_PHYSICAL,
-						damage_flags = DOTA_DAMAGE_FLAG_IGNORES_PHYSICAL_ARMOR + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
+						damage_flags = DOTA_DAMAGE_FLAG_IGNORES_PHYSICAL_ARMOR + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION +
+						DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
 						attacker     = self.caster,
 						ability      = self:GetAbility()
 					}
@@ -1706,7 +1750,8 @@ function modifier_imba_marksmanship:OnAttackLanded(keys)
 		-- Only apply on caster's attacks
 		if self.caster == attacker then
 			if self:GetStackCount() == 1 then
-				keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_proc_armor", { duration = 0.01 })
+				keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(),
+					"modifier_imba_drow_ranger_marksmanship_proc_armor", { duration = 0.01 })
 			end
 
 			-- Only apply when she has scepter
@@ -1718,7 +1763,8 @@ function modifier_imba_marksmanship:OnAttackLanded(keys)
 					self.splinter_radius_scepter,
 					DOTA_UNIT_TARGET_TEAM_ENEMY,
 					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+					DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES +
+					DOTA_UNIT_TARGET_FLAG_NO_INVIS,
 					FIND_ANY_ORDER,
 					false)
 
@@ -1830,7 +1876,7 @@ function modifier_imba_markmanship_aura:GetAuraEntityReject(target)
 	if target:IsHero() and not target:IsIllusion() then
 		return false
 	end
-	return true
+	return not self:GetAbility() or not self:GetAbility():IsTrained()
 end
 
 function modifier_imba_markmanship_aura:GetAuraRadius()
@@ -1879,10 +1925,6 @@ function modifier_imba_markmanship_aura:IsPurgable()
 	return false
 end
 
-function modifier_imba_markmanship_aura:GetAuraEntityReject(target)
-	return not self:GetAbility() or not self:GetAbility():IsTrained()
-end
-
 -- Markmanship talent aura modifier for allies
 modifier_imba_markmanship_buff = class({})
 
@@ -1910,7 +1952,8 @@ function modifier_imba_markmanship_buff:OnAttackLanded(keys)
 		if self.parent == attacker then
 			-- Only apply if the target isn't magic immune or a building
 			if not target:IsMagicImmune() and not target:IsBuilding() then
-				target:AddNewModifier(self.caster, self.ability, self.modifier, { duration = self.duration * (1 - target:GetStatusResistance()) })
+				target:AddNewModifier(self.caster, self.ability, self.modifier,
+					{ duration = self.duration * (1 - target:GetStatusResistance()) })
 			end
 		end
 	end
@@ -2003,18 +2046,25 @@ end
 -- IMBA_DROW_RANGER_MARKSMANSHIP_723 --
 ---------------------------------------
 
-LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_aura_bonus", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_aura_bonus", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_proc_damage", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_proc_armor", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_proc_damage", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_marksmanship_723_proc_armor", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_drow_ranger_marksmanship_723                      = imba_drow_ranger_marksmanship_723 or class({})
 modifier_imba_drow_ranger_marksmanship_723             = modifier_imba_drow_ranger_marksmanship_723 or class({})
-modifier_imba_drow_ranger_marksmanship_723_aura_bonus  = modifier_imba_drow_ranger_marksmanship_723_aura_bonus or class({})
+modifier_imba_drow_ranger_marksmanship_723_aura_bonus  = modifier_imba_drow_ranger_marksmanship_723_aura_bonus or
+class({})
 
-modifier_imba_drow_ranger_marksmanship_723_proc_damage = modifier_imba_drow_ranger_marksmanship_723_proc_damage or class({})
-modifier_imba_drow_ranger_marksmanship_723_proc_armor  = modifier_imba_drow_ranger_marksmanship_723_proc_armor or class({})
+modifier_imba_drow_ranger_marksmanship_723_proc_damage = modifier_imba_drow_ranger_marksmanship_723_proc_damage or
+class({})
+modifier_imba_drow_ranger_marksmanship_723_proc_armor  = modifier_imba_drow_ranger_marksmanship_723_proc_armor or
+class({})
 
 function imba_drow_ranger_marksmanship_723:GetIntrinsicModifierName()
 	return "modifier_imba_drow_ranger_marksmanship_723"
@@ -2029,7 +2079,8 @@ function modifier_imba_drow_ranger_marksmanship_723:OnCreated()
 
 	if not IsServer() then return end
 
-	self.marksmanship_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_drow/drow_marksmanship.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.marksmanship_particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_drow/drow_marksmanship.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControl(self.marksmanship_particle, 0, self:GetParent():GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.marksmanship_particle, 3, self:GetParent():GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.marksmanship_particle, 5, self:GetParent():GetAbsOrigin())
@@ -2046,7 +2097,8 @@ function modifier_imba_drow_ranger_marksmanship_723:OnIntervalThink()
 		self.start_particle = nil
 		self:SetStackCount(-1)
 	elseif not self.start_particle then
-		self.start_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.start_particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:ReleaseParticleIndex(self.start_particle)
 		self:SetStackCount(0)
 
@@ -2071,7 +2123,8 @@ function modifier_imba_drow_ranger_marksmanship_723:OnAttackRecord(keys)
 		if not self:GetParent():PassivesDisabled() and not self:GetParent():IsIllusion() and self.start_particle and not keys.target:IsOther() and not keys.target:IsBuilding() and keys.target:GetTeamNumber() ~= keys.attacker:GetTeamNumber() and RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance"), self) then
 			self.procs[keys.record] = true
 
-			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_723_proc_damage", {})
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(),
+				"modifier_imba_drow_ranger_marksmanship_723_proc_damage", {})
 		else
 		end
 	end
@@ -2103,7 +2156,8 @@ function modifier_imba_drow_ranger_marksmanship_723:OnAttack(keys)
 				Ability           = self:GetAbility(),
 				EffectName        = self.projectile_name,
 				iMoveSpeed        = self:GetParent():GetProjectileSpeed(),
-				vSourceLoc        = self:GetParent():GetAttachmentOrigin(self:GetParent():ScriptLookupAttachment("attach_attack1")),
+				vSourceLoc        = self:GetParent():GetAttachmentOrigin(self:GetParent():ScriptLookupAttachment(
+				"attach_attack1")),
 				bDrawsOnMinimap   = false,
 				bDodgeable        = true,
 				bIsAttack         = true,
@@ -2122,7 +2176,8 @@ function modifier_imba_drow_ranger_marksmanship_723:OnAttackLanded(keys)
 		if self.procs[keys.record] then
 			keys.target:EmitSound("Hero_DrowRanger.Marksmanship.Target")
 
-			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drow_ranger_marksmanship_723_proc_armor", {})
+			keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(),
+				"modifier_imba_drow_ranger_marksmanship_723_proc_armor", {})
 
 			-- IMBAfication: Perfect Shot
 			if keys.target:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("instakill_threshold") and not keys.target:IsRoshan() and not keys.target:HasModifier("modifier_oracle_false_promise_timer") and not keys.target:HasModifier("modifier_imba_oracle_false_promise_timer") then
@@ -2159,7 +2214,8 @@ function modifier_imba_drow_ranger_marksmanship_723:OnAttackLanded(keys)
 							iSourceAttachment   = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
 							bFrost              = self.bFrost,
 							OnProjectileHitUnit = function(params, projectileID)
-								self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_marksmanship_scepter_dmg_reduction", {})
+								self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(),
+									"modifier_imba_marksmanship_scepter_dmg_reduction", {})
 								self:GetParent():PerformAttack(enemy, false, true, true, true, false, false, false)
 								self:GetParent():RemoveModifierByName("modifier_imba_marksmanship_scepter_dmg_reduction")
 
@@ -2199,7 +2255,8 @@ function modifier_imba_drow_ranger_marksmanship_723:IsAura() return not self:Get
 
 function modifier_imba_drow_ranger_marksmanship_723:IsAuraActiveOnDeath() return false end
 
-function modifier_imba_drow_ranger_marksmanship_723:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("agility_range") end
+function modifier_imba_drow_ranger_marksmanship_723:GetAuraRadius() return self:GetAbility():GetSpecialValueFor(
+	"agility_range") end
 
 function modifier_imba_drow_ranger_marksmanship_723:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE end
 
@@ -2207,9 +2264,11 @@ function modifier_imba_drow_ranger_marksmanship_723:GetAuraSearchTeam() return D
 
 function modifier_imba_drow_ranger_marksmanship_723:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO end
 
-function modifier_imba_drow_ranger_marksmanship_723:GetModifierAura() return "modifier_imba_drow_ranger_marksmanship_723_aura_bonus" end
+function modifier_imba_drow_ranger_marksmanship_723:GetModifierAura() return
+	"modifier_imba_drow_ranger_marksmanship_723_aura_bonus" end
 
-function modifier_imba_drow_ranger_marksmanship_723:GetAuraEntityReject(hTarget) return not self:GetAbility():IsTrained() or not hTarget:IsRangedAttacker() or self:GetParent():PassivesDisabled() or not self.start_particle end
+function modifier_imba_drow_ranger_marksmanship_723:GetAuraEntityReject(hTarget) return not self:GetAbility():IsTrained() or
+	not hTarget:IsRangedAttacker() or self:GetParent():PassivesDisabled() or not self.start_particle end
 
 -----------------------------------------------------------
 -- MODIFIER_IMBA_DROW_RANGER_MARKSMANSHIP_723_AURA_BONUS --
@@ -2295,9 +2354,11 @@ end
 -- TRUESHOT AURA 7.20 --
 ------------------------
 
-LinkLuaModifier("modifier_imba_drow_ranger_trueshot_720", "components/abilities/heroes/hero_drow_ranger.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_trueshot_720", "components/abilities/heroes/hero_drow_ranger.lua",
+	LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_drow_ranger_trueshot_720_global", "components/abilities/heroes/hero_drow_ranger.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_drow_ranger_trueshot_720_aura", "components/abilities/heroes/hero_drow_ranger.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drow_ranger_trueshot_720_aura", "components/abilities/heroes/hero_drow_ranger.lua",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_drow_ranger_trueshot_720               = class({})
 modifier_imba_drow_ranger_trueshot_720      = class({})
@@ -2322,7 +2383,8 @@ function imba_drow_ranger_trueshot_720:OnSpellStart()
 
 	--#6 talent: Trueshot Burst
 	if self:GetCaster():HasTalent("special_bonus_imba_drow_ranger_6") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_trueshot_talent_buff", { duration = self:GetDuration() })
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_trueshot_talent_buff",
+			{ duration = self:GetDuration() })
 	end
 end
 
@@ -2366,7 +2428,8 @@ function modifier_imba_drow_ranger_trueshot_720:OnCreated()
 end
 
 function modifier_imba_drow_ranger_trueshot_720:OnIntervalThink()
-	self:SetStackCount(self:GetCaster():GetAgility() * (self:GetAbility():GetTalentSpecialValueFor("trueshot_ranged_attack_speed") / 100))
+	self:SetStackCount(self:GetCaster():GetAgility() *
+	(self:GetAbility():GetTalentSpecialValueFor("trueshot_ranged_attack_speed") / 100))
 
 	if self.activation_counter > 0 then
 		self.activation_counter = math.max(self.activation_counter - 0.1, 0)
@@ -2392,7 +2455,8 @@ end
 function modifier_imba_drow_ranger_trueshot_720_aura:GetModifierAttackSpeedBonus_Constant()
 	if self == nil or self:GetCaster() == nil then return end
 
-	local trueshot_stacks = self:GetCaster():GetModifierStackCount("modifier_imba_drow_ranger_trueshot_720", self:GetCaster())
+	local trueshot_stacks = self:GetCaster():GetModifierStackCount("modifier_imba_drow_ranger_trueshot_720",
+		self:GetCaster())
 
 	if self:GetParent():IsRangedAttacker() then
 		return trueshot_stacks
@@ -2404,9 +2468,12 @@ end
 -------------------------------------------
 
 -- Client-side helper functions --
-LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_5", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_6", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_9", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_5", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_6", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_9", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_drow_ranger_5 = modifier_special_bonus_imba_drow_ranger_5 or class({})
 modifier_special_bonus_imba_drow_ranger_6 = modifier_special_bonus_imba_drow_ranger_6 or class({})
@@ -2426,13 +2493,17 @@ function modifier_special_bonus_imba_drow_ranger_6:RemoveOnDeath() return false 
 
 function imba_drow_ranger_marksmanship:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_drow_ranger_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_drow_ranger_5") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_5"), "modifier_special_bonus_imba_drow_ranger_5", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_5"),
+			"modifier_special_bonus_imba_drow_ranger_5", {})
 	end
 end
 
 function imba_drow_ranger_trueshot_720:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_drow_ranger_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_drow_ranger_6") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_6"), "modifier_special_bonus_imba_drow_ranger_6", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_6"),
+			"modifier_special_bonus_imba_drow_ranger_6", {})
 	end
 end
 
@@ -2440,13 +2511,18 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_7", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_frost_arrows_damage", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_10", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_3", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_7", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_frost_arrows_damage",
+	"components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_10", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_drow_ranger_3", "components/abilities/heroes/hero_drow_ranger",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_drow_ranger_7                   = modifier_special_bonus_imba_drow_ranger_7 or class({})
-modifier_special_bonus_imba_drow_ranger_frost_arrows_damage = modifier_special_bonus_imba_drow_ranger_frost_arrows_damage or class({})
+modifier_special_bonus_imba_drow_ranger_frost_arrows_damage = modifier_special_bonus_imba_drow_ranger_frost_arrows_damage or
+class({})
 modifier_special_bonus_imba_drow_ranger_10                  = modifier_special_bonus_imba_drow_ranger_10 or class({})
 modifier_special_bonus_imba_drow_ranger_3                   = modifier_special_bonus_imba_drow_ranger_3 or class({})
 
@@ -2487,6 +2563,8 @@ function modifier_special_bonus_imba_drow_ranger_9:RemoveOnDeath() return false 
 
 function imba_drow_ranger_gust:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_drow_ranger_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_drow_ranger_9") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_9"), "modifier_special_bonus_imba_drow_ranger_9", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_drow_ranger_9"),
+			"modifier_special_bonus_imba_drow_ranger_9", {})
 	end
 end

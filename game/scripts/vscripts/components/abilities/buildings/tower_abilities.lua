@@ -34,8 +34,10 @@ function HexAura(keys)
 	local tower_loc = caster:GetAbsOrigin()
 
 	-- Find nearby enemies
-	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, hex_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, hex_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, hex_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, hex_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 
 	-- Check if the ability should be cast
 	if #creeps >= min_creeps or #heroes >= 1 then
@@ -84,7 +86,8 @@ function ManaFlare(keys)
 	local tower_loc = caster:GetAbsOrigin()
 
 	-- Find nearby enemies
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, burn_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, burn_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 
 	-- Check if the ability should be cast
 	if #heroes >= 1 then
@@ -95,7 +98,7 @@ function ManaFlare(keys)
 		for _, enemy in pairs(heroes) do
 			-- Burn mana
 			local mana_to_burn = enemy:GetMaxMana() * burn_pct / 100
-			enemy:ReduceMana(mana_to_burn)
+			enemy:ReduceMana(mana_to_burn, ability)
 
 			-- Play mana burn particle
 			local mana_burn_pfx = ParticleManager:CreateParticle(particle_burn, PATTACH_ABSORIGIN, enemy)
@@ -126,8 +129,12 @@ function Chronotower(keys)
 	local tower_loc = caster:GetAbsOrigin()
 
 	-- Find nearby enemies
-	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		FIND_ANY_ORDER, false)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		FIND_ANY_ORDER, false)
 
 	-- Check if the ability should be cast
 	if #creeps >= min_creeps or #heroes >= 1 then
@@ -165,7 +172,8 @@ function Reality(keys)
 	local tower_loc = caster:GetAbsOrigin()
 
 	-- Find nearby enemies
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, reality_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, reality_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 
 	-- Kill any existing illusions
 	local ability_used = false
@@ -206,8 +214,10 @@ function Force(keys)
 	local knockback_param
 
 	-- Find nearby enemies
-	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, force_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, force_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, force_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, force_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 
 	-- Check if the ability should be cast
 	if #creeps >= min_creeps or #heroes >= 1 then
@@ -239,7 +249,8 @@ function Force(keys)
 			-- Create dummy that knockbacks toward the tower
 			local direction = (enemy:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
 			local knockback_dummy_loc = enemy:GetAbsOrigin() + direction * 150
-			local knockback_dummy = CreateUnitByName("npc_dummy_unit", knockback_dummy_loc, false, caster, caster, caster:GetTeamNumber())
+			local knockback_dummy = CreateUnitByName("npc_dummy_unit", knockback_dummy_loc, false, caster, caster,
+				caster:GetTeamNumber())
 
 			-- Set up knockback parameters
 			knockback_param =
@@ -285,8 +296,10 @@ function Nature(keys)
 	local tower_loc = caster:GetAbsOrigin()
 
 	-- Find nearby enemies
-	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, root_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, root_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, root_radius, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, root_radius, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 
 	-- Check if the ability should be cast
 	if #creeps >= min_creeps or #heroes >= 1 then
@@ -323,7 +336,8 @@ function Mindblast(keys)
 	local tower_loc = caster:GetAbsOrigin()
 
 	-- Find nearby enemies
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, silence_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), tower_loc, nil, silence_radius, DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 
 	-- Check if the ability should be cast
 	if #heroes >= 1 then
@@ -362,7 +376,8 @@ function GrievousWounds(keys)
 	local total_damage = base_damage * (1 + current_stacks * damage_increase / 100)
 
 	-- Apply damage
-	ApplyDamage({ attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL })
+	ApplyDamage({ attacker = caster, victim = target, ability = ability, damage = total_damage,
+		damage_type = DAMAGE_TYPE_PHYSICAL })
 
 	-- Apply bonus damage modifier
 	AddStacks(ability, caster, target, modifier_debuff, 1, true)
@@ -380,7 +395,8 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_tower_protective_instinct = imba_tower_protective_instinct or class({})
-LinkLuaModifier("modifier_imba_tower_protective_instinct", "components/abilities/buildings/tower_abilities.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_protective_instinct", "components/abilities/buildings/tower_abilities.lua",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_protective_instinct:GetIntrinsicModifierName()
 	return "modifier_imba_tower_protective_instinct"
@@ -448,8 +464,10 @@ function modifier_imba_tower_protective_instinct:IsDebuff() return false end
 ---------------------------------------------------
 
 imba_tower_machinegun = imba_tower_machinegun or class({})
-LinkLuaModifier("modifier_imba_tower_machinegun_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_machinegun_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_machinegun_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_machinegun_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_machinegun:GetIntrinsicModifierName()
 	return "modifier_imba_tower_machinegun_aura"
@@ -542,13 +560,14 @@ function modifier_imba_tower_machinegun_aura_buff:IsPurgable() return false end
 function modifier_imba_tower_machinegun_aura_buff:IsDebuff() return false end
 
 function modifier_imba_tower_machinegun_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_tower_machinegun_aura_buff:GetModifierAttackSpeedBonus_Constant()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local extra_as = self.bonus_as + self.as_per_protective_instinct * protective_instinct_stacks
 	return extra_as
@@ -563,8 +582,10 @@ end
 ---------------------------------------------------
 
 imba_tower_thorns = imba_tower_thorns or class({})
-LinkLuaModifier("modifier_imba_tower_thorns_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_thorns_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_thorns_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_thorns_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_thorns:GetAbilityTextureName()
 	return "tower_thorns"
@@ -660,9 +681,9 @@ function modifier_imba_tower_thorns_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_thorns_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_thorns_aura_buff:OnAttackLanded(keys)
@@ -670,14 +691,17 @@ function modifier_imba_tower_thorns_aura_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 
 		-- Only apply if the parent is the victim and the attacker is on the opposite team
 		if self.parent == target and attacker:GetTeamNumber() ~= self.parent:GetTeamNumber() then
 			-- Create return effect
 			local return_pfx = ParticleManager:CreateParticle(self.particle_return, PATTACH_ABSORIGIN, self.parent)
-			ParticleManager:SetParticleControlEnt(return_pfx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(return_pfx, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(return_pfx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				self.parent:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(return_pfx, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				attacker:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(return_pfx)
 
 			-- Get the hero's main attribute value
@@ -690,7 +714,8 @@ function modifier_imba_tower_thorns_aura_buff:OnAttackLanded(keys)
 			end
 
 			-- Calculate damage based on percentage of main stat
-			local return_damage_pct_final = self.return_damage_pct + self.return_damage_per_stack * protective_instinct_stacks
+			local return_damage_pct_final = self.return_damage_pct +
+			self.return_damage_per_stack * protective_instinct_stacks
 			local return_damage = main_attribute_value * (return_damage_pct_final / 100)
 
 			-- Increase damage to the minimum if it's not sufficient
@@ -720,8 +745,10 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_tower_aegis = imba_tower_aegis or class({})
-LinkLuaModifier("modifier_imba_tower_aegis_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_aegis_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_aegis_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_aegis_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_aegis:GetAbilityTextureName()
 	return "modifier_invulnerable"
@@ -814,13 +841,14 @@ function modifier_imba_tower_aegis_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_aegis_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+	}
 end
 
 function modifier_imba_tower_aegis_aura_buff:GetModifierPhysicalArmorBonus()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	return self.bonus_armor + self.armor_per_protective * protective_instinct_stacks
 end
@@ -833,8 +861,10 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_tower_toughness = imba_tower_toughness or class({})
-LinkLuaModifier("modifier_imba_tower_toughness_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_toughness_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_toughness_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_toughness_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_toughness:GetAbilityTextureName()
 	return "tower_toughness"
@@ -946,12 +976,15 @@ function modifier_imba_tower_toughness_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_toughness_aura_buff:DeclareFunctions()
-	return { MODIFIER_PROPERTY_HEALTH_BONUS }
+	return {
+		MODIFIER_PROPERTY_HEALTH_BONUS
+	}
 end
 
 function modifier_imba_tower_toughness_aura_buff:GetModifierHealthBonus()
 	if self.caster then
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 		return self.bonus_health + self.health_per_protective * protective_instinct_stacks
 	end
 end
@@ -964,8 +997,10 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_tower_sniper = imba_tower_sniper or class({})
-LinkLuaModifier("modifier_imba_tower_sniper_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_sniper_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_sniper_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_sniper_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_sniper:GetAbilityTextureName()
 	return "sniper_assassinate"
@@ -1057,13 +1092,14 @@ function modifier_imba_tower_sniper_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_sniper_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_ATTACK_RANGE_BONUS }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
 end
 
 function modifier_imba_tower_sniper_aura_buff:GetModifierAttackRangeBonus()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 	return self.bonus_range + self.range_per_protective * protective_instinct_stacks
 end
 
@@ -1075,8 +1111,10 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_tower_splash_fire = imba_tower_splash_fire or class({})
-LinkLuaModifier("modifier_imba_tower_splash_fire_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_splash_fire_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_splash_fire_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_splash_fire_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_splash_fire:GetAbilityTextureName()
 	return "tower_explosion"
@@ -1172,9 +1210,9 @@ function modifier_imba_tower_splash_fire_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_splash_fire_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded(keys)
@@ -1192,8 +1230,10 @@ function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded(keys)
 			ParticleManager:ReleaseParticleIndex(explosion_pfx)
 
 			-- Calculate bonus damage
-			local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
-			local splash_damage = damage * ((self.splash_damage_pct + self.bonus_splash_per_protective * protective_instinct_stacks) / 100)
+			local protective_instinct_stacks = self.caster:GetModifierStackCount(
+			"modifier_imba_tower_protective_instinct", self.caster)
+			local splash_damage = damage *
+			((self.splash_damage_pct + self.bonus_splash_per_protective * protective_instinct_stacks) / 100)
 
 			-- Apply bonus damage on every enemy EXCEPT the main target
 			local enemy_units = FindUnitsInRadius(self.parent:GetTeamNumber(),
@@ -1231,8 +1271,10 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_tower_replenishment = imba_tower_replenishment or class({})
-LinkLuaModifier("modifier_imba_tower_replenishment_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_replenishment_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_replenishment_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_replenishment_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_replenishment:GetAbilityTextureName()
 	return "keeper_of_the_light_chakra_magic"
@@ -1325,7 +1367,8 @@ function modifier_imba_tower_replenishment_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_replenishment_aura_buff:GetCustomCooldownReductionStacking()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 	return self.cooldown_reduction_pct + self.bonus_cooldown_reduction * protective_instinct_stacks
 end
 
@@ -1337,7 +1380,8 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_tower_observatory = imba_tower_observatory or class({})
-LinkLuaModifier("modifier_imba_tower_observatory_vision", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_observatory_vision", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_observatory:GetIntrinsicModifierName()
 	return "modifier_imba_tower_observatory_vision"
@@ -1371,30 +1415,30 @@ function modifier_imba_tower_observatory_vision:IsHidden()
 end
 
 function modifier_imba_tower_observatory_vision:CheckState()
-	local state = {
+	return {
 		[MODIFIER_STATE_FLYING] = true,
 		[MODIFIER_STATE_ROOTED] = true
 	}
-
-	return state
 end
 
 function modifier_imba_tower_observatory_vision:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_BONUS_DAY_VISION,
-		MODIFIER_PROPERTY_BONUS_NIGHT_VISION }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_BONUS_DAY_VISION,
+		MODIFIER_PROPERTY_BONUS_NIGHT_VISION
+	}
 end
 
 function modifier_imba_tower_observatory_vision:GetBonusDayVision()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 	local bonus_vision = self.additional_vision_per_hero * protective_instinct_stacks
 
 	return bonus_vision
 end
 
 function modifier_imba_tower_observatory_vision:GetBonusNightVision()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 	local bonus_vision = self.additional_vision_per_hero * protective_instinct_stacks
 
 	return bonus_vision
@@ -1408,8 +1452,10 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_tower_spell_shield = imba_tower_spell_shield or class({})
-LinkLuaModifier("modifier_imba_tower_spell_shield_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_spell_shield_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_spell_shield_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_spell_shield_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_spell_shield:GetAbilityTextureName()
 	return "tower_spellshield"
@@ -1502,13 +1548,14 @@ function modifier_imba_tower_spell_shield_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_spell_shield_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+	}
 end
 
 function modifier_imba_tower_spell_shield_aura_buff:GetModifierMagicalResistanceBonus()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 	return self.magic_resistance + self.bonus_mr_per_protective * protective_instinct_stacks
 end
 
@@ -1521,8 +1568,10 @@ end
 ---------------------------------------------------
 
 imba_tower_mana_burn = imba_tower_mana_burn or class({})
-LinkLuaModifier("modifier_imba_tower_mana_burn_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_mana_burn_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_mana_burn_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_mana_burn_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_mana_burn:GetAbilityTextureName()
 	return "tower_mana_burn"
@@ -1599,7 +1648,7 @@ function modifier_imba_tower_mana_burn_aura_buff:OnCreated()
 	self.ability = self:GetAbility()
 	if not self.ability then
 		self:Destroy()
-		return nil
+		return
 	end
 	self.particle_mana_burn = "particles/generic_gameplay/generic_manaburn.vpcf"
 
@@ -1619,23 +1668,25 @@ function modifier_imba_tower_mana_burn_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_mana_burn_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_mana_burn_aura_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 
 		-- Only apply if the parent is the attacker and the victim is on the opposite team
 		if self.parent == attacker and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
 			-- Only applies on non spell immune enemies
 			if not target:IsMagicImmune() then
 				-- Create mana burn effect
-				local particle_mana_burn_fx = ParticleManager:CreateParticle(self.particle_mana_burn, PATTACH_ABSORIGIN, target)
+				local particle_mana_burn_fx = ParticleManager:CreateParticle(self.particle_mana_burn, PATTACH_ABSORIGIN,
+					target)
 				ParticleManager:SetParticleControl(particle_mana_burn_fx, 0, target:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(particle_mana_burn_fx)
 
@@ -1657,7 +1708,7 @@ function modifier_imba_tower_mana_burn_aura_buff:OnAttackLanded(keys)
 				local mana_burn_damage = mana_burn_total * (self.mana_burn_damage_pct / 100)
 
 				-- Burn target's mana
-				target:ReduceMana(mana_burn_total)
+				target:ReduceMana(mana_burn_total, self.ability)
 
 				-- Apply damage
 				local damageTable = {
@@ -1683,9 +1734,12 @@ end
 ---------------------------------------------------
 
 imba_tower_permabash = imba_tower_permabash or class({})
-LinkLuaModifier("modifier_imba_tower_permabash_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_permabash_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_permabash_stun", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_permabash_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_permabash_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_permabash_stun", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_permabash:GetIntrinsicModifierName()
 	return "modifier_imba_tower_permabash_aura"
@@ -1781,16 +1835,17 @@ function modifier_imba_tower_permabash_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_permabash_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_permabash_aura_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 
 		-- Only apply if the parent is the victim and the attacker is on the opposite team
 		if self.parent == attacker and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
@@ -1819,8 +1874,9 @@ end
 modifier_imba_tower_permabash_stun = modifier_imba_tower_permabash_stun or class({})
 
 function modifier_imba_tower_permabash_stun:CheckState()
-	local state = { [MODIFIER_STATE_STUNNED] = true }
-	return state
+	return {
+		[MODIFIER_STATE_STUNNED] = true
+	}
 end
 
 function modifier_imba_tower_permabash_stun:GetEffectName()
@@ -1846,8 +1902,10 @@ function modifier_imba_tower_permabash_stun:IsDebuff() return false end
 ---------------------------------------------------
 
 imba_tower_vicious = imba_tower_vicious or class({})
-LinkLuaModifier("modifier_imba_tower_vicious_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_vicious_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_vicious_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_vicious_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_vicious:GetAbilityTextureName()
 	return "tower_vicious"
@@ -1942,14 +2000,15 @@ function modifier_imba_tower_vicious_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_vicious_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
+	}
 end
 
 function modifier_imba_tower_vicious_aura_buff:GetModifierPreAttack_CriticalStrike()
 	if IsServer() then
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 
 		-- Calculate crit chance
 		local true_crit_chance = self.crit_chance + self.crit_chance_per_protective * protective_instinct_stacks
@@ -1971,8 +2030,10 @@ end
 ---------------------------------------------------
 
 imba_tower_spellmastery = imba_tower_spellmastery or class({})
-LinkLuaModifier("modifier_imba_tower_spellmastery_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_spellmastery_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_spellmastery_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_spellmastery_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_spellmastery:GetAbilityTextureName()
 	return "tower_spellmastery"
@@ -2067,14 +2128,15 @@ function modifier_imba_tower_spellmastery_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_spellmastery_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING
+	}
 end
 
 function modifier_imba_tower_spellmastery_aura_buff:GetModifierSpellAmplify_Percentage()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local spellamp = self.spellamp_bonus + self.spellamp_per_protective * protective_instinct_stacks
 	return spellamp
@@ -2093,8 +2155,10 @@ end
 ---------------------------------------------------
 
 imba_tower_plague = imba_tower_plague or class({})
-LinkLuaModifier("modifier_imba_tower_plague_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_plague_aura_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_plague_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_plague_aura_debuff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_plague:GetAbilityTextureName()
 	return "tower_rot"
@@ -2192,21 +2256,23 @@ function modifier_imba_tower_plague_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_plague_aura_debuff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_tower_plague_aura_debuff:GetModifierMoveSpeedBonus_Percentage()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local ms_slow_total = self.ms_slow + self.additional_slow_per_protective * protective_instinct_stacks
 	return ms_slow_total
 end
 
 function modifier_imba_tower_plague_aura_debuff:GetModifierAttackSpeedBonus_Constant()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local as_slow_total = self.as_slow + self.additional_slow_per_protective * protective_instinct_stacks
 	return as_slow_total
@@ -2221,8 +2287,10 @@ end
 ---------------------------------------------------
 
 imba_tower_atrophy = imba_tower_atrophy or class({})
-LinkLuaModifier("modifier_imba_tower_atrophy_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_atrophy_aura_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_atrophy_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_atrophy_aura_debuff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_atrophy:GetAbilityTextureName()
 	return "tower_atrophy"
@@ -2310,16 +2378,18 @@ function modifier_imba_tower_atrophy_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_atrophy_aura_debuff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
+	}
 end
 
 function modifier_imba_tower_atrophy_aura_debuff:GetModifierBaseDamageOutgoing_Percentage()
 	if self.caster then
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 
-		local total_damage_reduction = self.damage_reduction + self.additional_dr_per_protective * protective_instinct_stacks
+		local total_damage_reduction = self.damage_reduction +
+		self.additional_dr_per_protective * protective_instinct_stacks
 		return total_damage_reduction
 	end
 end
@@ -2333,8 +2403,10 @@ end
 ---------------------------------------------------
 
 imba_tower_regeneration = imba_tower_regeneration or class({})
-LinkLuaModifier("modifier_imba_tower_regeneration_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_regeneration_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_regeneration_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_regeneration_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_regeneration:GetAbilityTextureName()
 	return "tower_regen"
@@ -2428,13 +2500,14 @@ function modifier_imba_tower_regeneration_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_regeneration_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE
+	}
 end
 
 function modifier_imba_tower_regeneration_aura_buff:GetModifierHealthRegenPercentage()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local hp_regen_total = self.hp_regen + self.bonus_hp_regen_per_protective * protective_instinct_stacks
 	return hp_regen_total
@@ -2449,9 +2522,12 @@ end
 ---------------------------------------------------
 
 imba_tower_starlight = imba_tower_starlight or class({})
-LinkLuaModifier("modifier_imba_tower_starlight_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_starlight_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_starlight_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_starlight_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_starlight_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_starlight_debuff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_starlight:GetAbilityTextureName()
 	return "tower_starlight"
@@ -2547,9 +2623,9 @@ function modifier_imba_tower_starlight_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_starlight_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_starlight_aura_buff:OnAttackLanded(keys)
@@ -2561,7 +2637,8 @@ function modifier_imba_tower_starlight_aura_buff:OnAttackLanded(keys)
 		if self.parent == attacker and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
 			if RollPseudoRandom(self.blind_chance, self) then
 				-- Apply effect
-				local particle_beam_fx = ParticleManager:CreateParticle(self.particle_beam, PATTACH_ABSORIGIN_FOLLOW, target)
+				local particle_beam_fx = ParticleManager:CreateParticle(self.particle_beam, PATTACH_ABSORIGIN_FOLLOW,
+					target)
 				ParticleManager:SetParticleControl(particle_beam_fx, 0, target:GetAbsOrigin())
 				ParticleManager:SetParticleControl(particle_beam_fx, 1, target:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(particle_beam_fx)
@@ -2607,13 +2684,14 @@ function modifier_imba_tower_starlight_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_starlight_debuff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_MISS_PERCENTAGE }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MISS_PERCENTAGE
+	}
 end
 
 function modifier_imba_tower_starlight_debuff:GetModifierMiss_Percentage()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	-- Calculate miss chance
 	local total_miss_chance = self.miss_chance + self.additional_miss_per_protective * protective_instinct_stacks
@@ -2637,9 +2715,12 @@ end
 ---------------------------------------------------
 
 imba_tower_grievous_wounds = imba_tower_grievous_wounds or class({})
-LinkLuaModifier("modifier_imba_tower_grievous_wounds_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_grievous_wounds_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_grievous_wounds_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_grievous_wounds_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_grievous_wounds_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_grievous_wounds_debuff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_grievous_wounds:GetAbilityTextureName()
 	return "ursa_fury_swipes"
@@ -2735,22 +2816,24 @@ function modifier_imba_tower_grievous_wounds_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_grievous_wounds_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_grievous_wounds_aura_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 
 		-- Only apply if the parent is the victim and the attacker is on the opposite team
 		if self.parent == attacker and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
 			-- Add debuff modifier. Increment stack count and refresh
 			if not target:HasModifier(self.grievous_debuff) then
-				target:AddNewModifier(self.caster, self.ability, self.grievous_debuff, { duration = self.debuff_duration })
+				target:AddNewModifier(self.caster, self.ability, self.grievous_debuff,
+					{ duration = self.debuff_duration })
 			end
 
 			local grievous_debuff_handler = target:FindModifierByName(self.grievous_debuff)
@@ -2761,7 +2844,8 @@ function modifier_imba_tower_grievous_wounds_aura_buff:OnAttackLanded(keys)
 
 			-- Calculate damage based on stacks
 			local grievous_stacks = grievous_debuff_handler:GetStackCount()
-			local damage = (self.damage_increase + self.damage_increase_per_hero * protective_instinct_stacks) * grievous_stacks
+			local damage = (self.damage_increase + self.damage_increase_per_hero * protective_instinct_stacks) *
+			grievous_stacks
 
 			-- Apply damage
 			local damageTable = {
@@ -2809,10 +2893,14 @@ end
 ---------------------------------------------------
 
 imba_tower_essence_drain = imba_tower_essence_drain or class({})
-LinkLuaModifier("modifier_imba_tower_essence_drain_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_essence_drain_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_essence_drain_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_essence_drain_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_essence_drain_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_essence_drain_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_essence_drain_debuff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_essence_drain_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_essence_drain:GetAbilityTextureName()
 	return "slark_essence_shift"
@@ -2909,9 +2997,9 @@ function modifier_imba_tower_essence_drain_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_essence_drain_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded(keys)
@@ -2919,7 +3007,8 @@ function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded(keys)
 		local attacker = keys.attacker
 		local target = keys.target
 
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 
 		-- Only apply if the parent is the attacker and the victim is on the opposite team
 		if (self.parent == attacker) and (attacker:GetTeamNumber() ~= target:GetTeamNumber()) and target:IsHero() then
@@ -3039,11 +3128,11 @@ function modifier_imba_tower_essence_drain_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_essence_drain_debuff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS }
-
-	return decFuncs
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
+	}
 end
 
 function modifier_imba_tower_essence_drain_debuff:GetModifierBonusStats_Agility()
@@ -3150,11 +3239,11 @@ function modifier_imba_tower_essence_drain_buff:IsDebuff()
 end
 
 function modifier_imba_tower_essence_drain_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS }
-
-	return decFuncs
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
+	}
 end
 
 function modifier_imba_tower_essence_drain_buff:GetModifierBonusStats_Agility()
@@ -3208,8 +3297,10 @@ end
 ---------------------------------------------------
 
 imba_tower_protection = imba_tower_protection or class({})
-LinkLuaModifier("modifier_imba_tower_protection_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_protection_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_protection_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_protection_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_protection:GetAbilityTextureName()
 	return "tower_protection"
@@ -3303,13 +3394,14 @@ function modifier_imba_tower_protection_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_protection_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+	}
 end
 
 function modifier_imba_tower_protection_aura_buff:GetModifierIncomingDamage_Percentage()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local damage_reduction_total = self.damage_reduction + self.additional_dr_per_protective * protective_instinct_stacks
 	return damage_reduction_total
@@ -3324,8 +3416,10 @@ end
 ---------------------------------------------------
 
 imba_tower_disease = imba_tower_disease or class({})
-LinkLuaModifier("modifier_imba_tower_disease_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_disease_aura_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_disease_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_disease_aura_debuff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_disease:GetAbilityTextureName()
 	return "disease_aura"
@@ -3418,29 +3512,32 @@ function modifier_imba_tower_disease_aura_debuff:IsHidden()
 end
 
 function modifier_imba_tower_disease_aura_debuff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS }
-
-	return decFuncs
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS
+	}
 end
 
 function modifier_imba_tower_disease_aura_debuff:GetModifierBonusStats_Agility()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local total_stat_reduction = self.stat_reduction + self.additional_sr_per_protective * protective_instinct_stacks
 	return total_stat_reduction
 end
 
 function modifier_imba_tower_disease_aura_debuff:GetModifierBonusStats_Intellect()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local total_stat_reduction = self.stat_reduction + self.additional_sr_per_protective * protective_instinct_stacks
 	return total_stat_reduction
 end
 
 function modifier_imba_tower_disease_aura_debuff:GetModifierBonusStats_Strength()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	local total_stat_reduction = self.stat_reduction + self.additional_sr_per_protective * protective_instinct_stacks
 	return total_stat_reduction
@@ -3455,9 +3552,12 @@ end
 ---------------------------------------------------
 
 imba_tower_doppleganger = imba_tower_doppleganger or class({})
-LinkLuaModifier("modifier_imba_tower_doppleganger_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_doppleganger_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_doppleganger_cooldown", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_doppleganger_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_doppleganger_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_doppleganger_cooldown", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_doppleganger:GetAbilityTextureName()
 	return "tower_doppleganger"
@@ -3536,7 +3636,8 @@ function modifier_imba_tower_doppleganger_aura_buff:OnCreated()
 		return nil
 	end
 	self.parent = self:GetParent()
-	self.particle_doppleganger = "particles/econ/items/phantom_lancer/phantom_lancer_immortal_ti6/phantom_lancer_immortal_ti6_spiritlance_cast.vpcf"
+	self.particle_doppleganger =
+	"particles/econ/items/phantom_lancer/phantom_lancer_immortal_ti6/phantom_lancer_immortal_ti6_spiritlance_cast.vpcf"
 	self.prevention_modifier = "modifier_imba_tower_doppleganger_cooldown"
 
 	-- Ability specials
@@ -3557,9 +3658,9 @@ function modifier_imba_tower_doppleganger_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_doppleganger_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 end
 
 function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
@@ -3567,7 +3668,8 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 		local attacker = keys.attacker
 		local target = keys.target
 
-		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+			self.caster)
 
 		-- If the parent is an illusion, do nothing
 		if self.parent:IsIllusion() then
@@ -3577,11 +3679,14 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 		-- Only apply if the parent is the victim and the attacker is on the opposite team and is not prevented
 		if self.parent == target and attacker:GetTeamNumber() ~= self.parent:GetTeamNumber() and not self.parent:HasModifier(self.prevention_modifier) then
 			-- Calculate cooldown and add a prevention modifier to the parent
-			local cooldown_doppleganger = self.doppleganger_cooldown - self.cd_reduction_per_protective * protective_instinct_stacks
-			self.parent:AddNewModifier(self.caster, self.ability, self.prevention_modifier, { duration = cooldown_doppleganger })
+			local cooldown_doppleganger = self.doppleganger_cooldown -
+			self.cd_reduction_per_protective * protective_instinct_stacks
+			self.parent:AddNewModifier(self.caster, self.ability, self.prevention_modifier,
+				{ duration = cooldown_doppleganger })
 
 			-- Create effect
-			local particle_doppleganger_fx = ParticleManager:CreateParticle(self.particle_doppleganger, PATTACH_ABSORIGIN, self.parent)
+			local particle_doppleganger_fx = ParticleManager:CreateParticle(self.particle_doppleganger, PATTACH_ABSORIGIN,
+				self.parent)
 			ParticleManager:SetParticleControl(particle_doppleganger_fx, 0, self.parent:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle_doppleganger_fx, 1, self.parent:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle_doppleganger_fx)
@@ -3589,10 +3694,13 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 			-- Calculate doppleganger origin and create it
 			local rand_distance = math.random(0, self.summon_distance)
 			local summon_origin = self.parent:GetAbsOrigin() + RandomVector(rand_distance)
-			local doppleganger = CreateUnitByName(self.parent:GetUnitName(), summon_origin, true, self.parent, nil, self.parent:GetTeamNumber())
+			local doppleganger = CreateUnitByName(self.parent:GetUnitName(), summon_origin, true, self.parent, nil,
+				self.parent:GetTeamNumber())
 
 			-- Turn doppleganger into an illusion with the correct properties
-			doppleganger:AddNewModifier(self.caster, self.ability, "modifier_illusion", { duration = self.doppleganger_duration, outgoing_damage = self.outgoing_damage, incoming_damage = self.incoming_damage })
+			doppleganger:AddNewModifier(self.caster, self.ability, "modifier_illusion",
+				{ duration = self.doppleganger_duration, outgoing_damage = self.outgoing_damage,
+					incoming_damage = self.incoming_damage })
 			doppleganger:MakeIllusion()
 			doppleganger:SetRespawnsDisabled(true)
 
@@ -3682,7 +3790,8 @@ function StartChannelingAnimation(parent, doppleganger, ability_name)
 	local ability_gesture
 
 	local channel_4 = { "imba_bane_fiends_grip", "imba_pudge_dismember", }
-	local cast_4    = { "imba_crystal_maiden_freezing_field", "imba_enigma_black_hole", "imba_sandking_epicenter", "witch_doctor_death_ward", }
+	local cast_4    = { "imba_crystal_maiden_freezing_field", "imba_enigma_black_hole", "imba_sandking_epicenter",
+		"witch_doctor_death_ward", }
 	local cast_1    = { "elder_titan_echo_stomp", "keeper_of_the_light_illuminate", "oracle_fortunes_end", }
 	local cast_3    = { "imba_lion_mana_drain", } -- Should be changed in the next update to "imba_lion_mana_drain"
 
@@ -3745,9 +3854,12 @@ end
 ---------------------------------------------------
 
 imba_tower_barrier = imba_tower_barrier or class({})
-LinkLuaModifier("modifier_imba_tower_barrier_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_barrier_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_barrier_aura_cooldown", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_barrier_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_barrier_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_barrier_aura_cooldown", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_barrier:GetIntrinsicModifierName()
 	return "modifier_imba_tower_barrier_aura"
@@ -3834,16 +3946,25 @@ function modifier_imba_tower_barrier_aura_buff:OnCreated()
 	self.maxdamage_per_protective = self:GetAbility():GetSpecialValueFor("maxdamage_per_protective")
 	self.replenish_duration       = self:GetAbility():GetSpecialValueFor("replenish_duration")
 
-	self:SetStackCount(self.base_maxdamage + self.maxdamage_per_protective * #FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false))
+	self:SetStackCount(self.base_maxdamage +
+	self.maxdamage_per_protective *
+	#FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200,
+		DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE +
+		DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS +
+		DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false))
 end
 
 function modifier_imba_tower_barrier_aura_buff:DeclareFunctions()
-	return { MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK }
+	return {
+		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
+	}
 end
 
 function modifier_imba_tower_barrier_aura_buff:GetModifierTotal_ConstantBlock(keys)
 	if keys.damage >= self:GetStackCount() then
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_tower_barrier_aura_cooldown", { duration = self.replenish_duration })
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_tower_barrier_aura_cooldown",
+			{ duration = self.replenish_duration })
 		self:Destroy()
 		return self:GetStackCount()
 	else
@@ -3888,8 +4009,10 @@ end
 ---------------------------------------------------
 
 imba_tower_soul_leech = imba_tower_soul_leech or class({})
-LinkLuaModifier("modifier_imba_tower_soul_leech_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_soul_leech_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_soul_leech_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_soul_leech_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_soul_leech:GetAbilityTextureName()
 	return "tower_soul_leech"
@@ -3986,9 +4109,9 @@ function modifier_imba_tower_soul_leech_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_soul_leech_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_TAKEDAMAGE }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_tower_soul_leech_aura_buff:OnTakeDamage(keys)
@@ -3997,19 +4120,22 @@ function modifier_imba_tower_soul_leech_aura_buff:OnTakeDamage(keys)
 	local damage = keys.damage
 	local damage_type = keys.damage_type
 
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	-- Only apply if the parent of this buff attacked an enemy
 	if attacker == self.parent and self.parent:GetTeamNumber() ~= target:GetTeamNumber() then
 		-- Play appropriate effect depending on damage type
 		if damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE then
-			local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_ABSORIGIN, attacker)
+			local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_ABSORIGIN,
+				attacker)
 			ParticleManager:SetParticleControl(particle_spellsteal_fx, 0, attacker:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle_spellsteal_fx)
 		end
 
 		if damage_type == DAMAGE_TYPE_PHYSICAL then
-			local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_ABSORIGIN, attacker)
+			local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_ABSORIGIN,
+				attacker)
 			ParticleManager:SetParticleControl(particle_lifesteal_fx, 0, attacker:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)
 		end
@@ -4039,9 +4165,12 @@ end
 ---------------------------------------------------
 
 imba_tower_frost_shroud = imba_tower_frost_shroud or class({})
-LinkLuaModifier("modifier_imba_tower_frost_shroud_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_frost_shroud_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_frost_shroud_debuff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_frost_shroud_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_frost_shroud_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_frost_shroud_debuff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_frost_shroud:GetAbilityTextureName()
 	return "tower_frost_shroud"
@@ -4140,9 +4269,9 @@ function modifier_imba_tower_frost_shroud_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_frost_shroud_aura_buff:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_TAKEDAMAGE }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_tower_frost_shroud_aura_buff:OnTakeDamage(keys)
@@ -4174,7 +4303,8 @@ function modifier_imba_tower_frost_shroud_aura_buff:OnTakeDamage(keys)
 				for _, enemy in pairs(enemies) do
 					-- Add debuff modifier to the enemy Increment stack count and refresh
 					if not enemy:HasModifier(self.modifier_frost) then
-						enemy:AddNewModifier(self.caster, self.ability, self.modifier_frost, { duration = self.frost_shroud_duration })
+						enemy:AddNewModifier(self.caster, self.ability, self.modifier_frost,
+							{ duration = self.frost_shroud_duration })
 					end
 
 					local modifier_frost_handler = enemy:FindModifierByName(self.modifier_frost)
@@ -4263,14 +4393,15 @@ function modifier_imba_tower_frost_shroud_debuff:IsDebuff()
 end
 
 function modifier_imba_tower_frost_shroud_debuff:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 end
 
 function modifier_imba_tower_frost_shroud_debuff:GetModifierMoveSpeedBonus_Percentage()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	-- Calculate slow percentage, based on stack count
 	local movespeed_slow = (self.ms_slow + self.slow_per_protective * protective_instinct_stacks) * self:GetStackCount()
@@ -4278,10 +4409,12 @@ function modifier_imba_tower_frost_shroud_debuff:GetModifierMoveSpeedBonus_Perce
 end
 
 function modifier_imba_tower_frost_shroud_debuff:GetModifierAttackSpeedBonus_Constant()
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 
 	-- Calculate slow percentage, based on stack count
-	local attackspeed_slow = (self.as_slow + self.slow_per_protective * protective_instinct_stacks) * self:GetStackCount()
+	local attackspeed_slow = (self.as_slow + self.slow_per_protective * protective_instinct_stacks) *
+	self:GetStackCount()
 	return attackspeed_slow
 end
 
@@ -4295,7 +4428,8 @@ end
 
 
 imba_tower_healing_tower = imba_tower_healing_tower or class({})
-LinkLuaModifier("modifier_tower_healing_think", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_tower_healing_think", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_healing_tower:GetIntrinsicModifierName()
 	return "modifier_tower_healing_think"
@@ -4469,8 +4603,10 @@ end
 ---------------------------------------------------
 
 imba_tower_tenacity = imba_tower_tenacity or class({})
-LinkLuaModifier("modifier_imba_tower_tenacity_aura", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tower_tenacity_aura_buff", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_tenacity_aura", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_tenacity_aura_buff", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_tower_tenacity:GetAbilityTextureName()
 	return "tower_tenacity"
@@ -4556,11 +4692,9 @@ function modifier_imba_tower_tenacity_aura_buff:OnCreated()
 end
 
 function modifier_imba_tower_tenacity_aura_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_imba_tower_tenacity_aura_buff:OnRefresh()
@@ -4573,7 +4707,8 @@ end
 
 function modifier_imba_tower_tenacity_aura_buff:GetModifierStatusResistanceStacking()
 	if self.caster:IsNull() then return 0 end
-	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct",
+		self.caster)
 	local tenacity = self.base_tenacity_pct + self.tenacity_per_protective * protective_instinct_stacks
 	return tenacity
 end
@@ -4582,7 +4717,8 @@ end
 -- IMBA_TOWER_SECONDARY_RESISTANCE --
 -------------------------------------
 
-LinkLuaModifier("modifier_imba_tower_secondary_resistance", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_secondary_resistance", "components/abilities/buildings/tower_abilities",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_tower_secondary_resistance          = imba_tower_secondary_resistance or class({})
 modifier_imba_tower_secondary_resistance = modifier_imba_tower_secondary_resistance or class({})

@@ -60,13 +60,10 @@ function modifier_item_imba_cheese_death_prevention:IsPurgeException() return fa
 function modifier_item_imba_cheese_death_prevention:RemoveOnDeath() return false end
 
 function modifier_item_imba_cheese_death_prevention:DeclareFunctions()
-	local state =
-	{
+	return {
 		MODIFIER_PROPERTY_MIN_HEALTH,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
-
-	return state
 end
 
 function modifier_item_imba_cheese_death_prevention:OnTakeDamage(keys)
@@ -90,5 +87,5 @@ function modifier_item_imba_cheese_death_prevention:GetMinHealth()
 		return 1
 	end
 
-	return nil
+	return
 end

@@ -20,9 +20,12 @@
 ---------------------------------------------------------------------
 
 if imba_dazzle_poison_touch == nil then imba_dazzle_poison_touch = class({}) end
-LinkLuaModifier("modifier_imba_dazzle_poison_touch_setin", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)         -- Set in modifier (slow + attack counter)
-LinkLuaModifier("modifier_imba_dazzle_poison_touch_debuff", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)        -- Stun + damage over time
-LinkLuaModifier("modifier_imba_dazzle_poison_touch_talent_slow", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)   -- Because FUCK Valve, and FUCK net tables
+LinkLuaModifier("modifier_imba_dazzle_poison_touch_setin", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                             -- Set in modifier (slow + attack counter)
+LinkLuaModifier("modifier_imba_dazzle_poison_touch_debuff", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                             -- Stun + damage over time
+LinkLuaModifier("modifier_imba_dazzle_poison_touch_talent_slow", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                             -- Because FUCK Valve, and FUCK net tables
 
 function imba_dazzle_poison_touch:GetAbilityTextureName()
 	return "dazzle_poison_touch"
@@ -55,7 +58,8 @@ function imba_dazzle_poison_touch:OnProjectileHit(target, location)
 	if target:TriggerSpellAbsorb(self) then return end
 
 	EmitSoundOn("Hero_Dazzle.Poison_Touch", target)
-	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_setin", { duration = self:GetSpecialValueFor("set_in_time") * (1 - target:GetStatusResistance()) })
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_setin",
+		{ duration = self:GetSpecialValueFor("set_in_time") * (1 - target:GetStatusResistance()) })
 end
 
 -----------------------------------------------
@@ -92,11 +96,14 @@ function modifier_imba_dazzle_poison_touch_setin:OnDestroy()
 			local ability = self:GetAbility()
 
 			if ability:GetCaster():HasTalent("special_bonus_imba_dazzle_4") then
-				local slowMod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_talent_slow", { duration = ability:GetSpecialValueFor("poison_duration") * (1 - parent:GetStatusResistance()) })
+				local slowMod = parent:AddNewModifier(ability:GetCaster(), ability,
+					"modifier_imba_dazzle_poison_touch_talent_slow",
+					{ duration = ability:GetSpecialValueFor("poison_duration") * (1 - parent:GetStatusResistance()) })
 				slowMod:SetStackCount(parent:GetMaxHealth())
 			end
 
-			local mod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_debuff", { duration = ability:GetSpecialValueFor("poison_duration") * (1 - parent:GetStatusResistance()) })
+			local mod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_debuff",
+				{ duration = ability:GetSpecialValueFor("poison_duration") * (1 - parent:GetStatusResistance()) })
 			mod:SetStackCount(self:GetStackCount())
 		end
 	end
@@ -115,7 +122,8 @@ function modifier_imba_dazzle_poison_touch_setin:OnIntervalThink()
 		local remaining = self:GetRemainingTime()
 		if remaining <= 1 then
 			local ability = self:GetAbility()
-			self:GetParent():AddNewModifier(ability:GetCaster(), ability, "modifier_stunned", { duration = 1 * (1 - self:GetParent():GetStatusResistance()) })
+			self:GetParent():AddNewModifier(ability:GetCaster(), ability, "modifier_stunned",
+				{ duration = 1 * (1 - self:GetParent():GetStatusResistance()) })
 			self:StartIntervalThink(-1)
 		end
 	end
@@ -206,7 +214,8 @@ function modifier_imba_dazzle_poison_touch_debuff:OnIntervalThink()
 		totalDamage = baseDamage + stackDamage * stacks
 
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, self:GetParent(), totalDamage, nil)
-		ApplyDamage({ victim = self:GetParent(), attacker = ability:GetCaster(), damage = totalDamage, damage_type = DAMAGE_TYPE_PHYSICAL })
+		ApplyDamage({ victim = self:GetParent(), attacker = ability:GetCaster(), damage = totalDamage,
+			damage_type = DAMAGE_TYPE_PHYSICAL })
 	end
 end
 
@@ -225,7 +234,9 @@ function modifier_imba_dazzle_poison_touch_debuff:OnAbilityFullyCast(keys)
 		local originalAbility = self:GetAbility()
 		local originalCaster = originalAbility:GetCaster()
 		if ability:GetCursorTarget() == parent and caster:GetTeamNumber() == parent:GetTeamNumber() and not caster:FindModifierByName("modifier_imba_dazzle_poison_touch_debuff") and keys.ability:GetName() ~= "ability_capture" then
-			local mod = caster:AddNewModifier(originalAbility:GetCaster(), originalAbility, "modifier_imba_dazzle_poison_touch_debuff", { duration = originalAbility:GetSpecialValueFor("poison_duration") * (1 - caster:GetStatusResistance()) })
+			local mod = caster:AddNewModifier(originalAbility:GetCaster(), originalAbility,
+				"modifier_imba_dazzle_poison_touch_debuff",
+				{ duration = originalAbility:GetSpecialValueFor("poison_duration") * (1 - caster:GetStatusResistance()) })
 			mod:SetStackCount(self:GetStackCount())
 		end
 	end
@@ -288,7 +299,8 @@ function modifier_imba_dazzle_poison_touch_talent_slow:OnTakeDamage(keys)
 	end
 end
 
-LinkLuaModifier("modifier_imba_dazzle_poison_touch_707", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dazzle_poison_touch_707", "components/abilities/heroes/hero_dazzle",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_dazzle_poison_touch_707          = imba_dazzle_poison_touch_707 or class({})
 modifier_imba_dazzle_poison_touch_707 = modifier_imba_dazzle_poison_touch_707 or class({})
@@ -307,7 +319,8 @@ function imba_dazzle_poison_touch_707:OnSpellStart()
 		self:GetCaster():GetTeamNumber(),
 		target:GetAbsOrigin(),
 		self:GetCaster():GetAbsOrigin(),
-		self:GetCaster():GetAbsOrigin() + ((target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetSpecialValueFor("end_distance") + self:GetCaster():GetCastRangeBonus())),
+		self:GetCaster():GetAbsOrigin() +
+		((target:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized() * (self:GetSpecialValueFor("end_distance") + self:GetCaster():GetCastRangeBonus())),
 		self:GetSpecialValueFor("start_radius"),
 		self:GetSpecialValueFor("end_radius"),
 		nil,
@@ -351,7 +364,8 @@ function imba_dazzle_poison_touch_707:OnProjectileHit_ExtraData(target, location
 	if target and not target:IsMagicImmune() then
 		target:EmitSound("Hero_Dazzle.Poison_Touch")
 
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_707", { duration = self:GetSpecialValueFor("duration") })
+		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_707",
+			{ duration = self:GetSpecialValueFor("duration") })
 	end
 end
 
@@ -434,11 +448,16 @@ end
 ---------------------------------------------------------------------
 
 if imba_dazzle_shallow_grave == nil then imba_dazzle_shallow_grave = class({}) end
-LinkLuaModifier("modifier_imba_dazzle_shallow_grave", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)                  -- Shallow Grave effect
-LinkLuaModifier("modifier_imba_dazzle_nothl_protection", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)               -- Passive self-cast
-LinkLuaModifier("modifier_imba_dazzle_post_shallow_grave_buff", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)        -- Post-grave buff
-LinkLuaModifier("modifier_imba_dazzle_nothl_protection_aura_talent", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)   -- Talent aura Nothl Protection
-LinkLuaModifier("modifier_imba_dazzle_nothl_protection_particle", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)      -- Talent aura Nothl Protection
+LinkLuaModifier("modifier_imba_dazzle_shallow_grave", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Shallow Grave effect
+LinkLuaModifier("modifier_imba_dazzle_nothl_protection", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Passive self-cast
+LinkLuaModifier("modifier_imba_dazzle_post_shallow_grave_buff", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Post-grave buff
+LinkLuaModifier("modifier_imba_dazzle_nothl_protection_aura_talent", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Talent aura Nothl Protection
+LinkLuaModifier("modifier_imba_dazzle_nothl_protection_particle", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Talent aura Nothl Protection
 
 function imba_dazzle_shallow_grave:GetAOERadius()
 	if self:GetCaster():HasScepter() then
@@ -450,10 +469,12 @@ end
 
 function imba_dazzle_shallow_grave:GetBehavior()
 	if self:GetCaster():HasScepter() then
-		return DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+		return DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK +
+		DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 	end
 
-	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK +
+	DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 end
 
 function imba_dazzle_shallow_grave:GetCastRange()
@@ -473,16 +494,21 @@ function imba_dazzle_shallow_grave:OnSpellStart()
 		local target = self:GetCursorTarget()
 		EmitSoundOn("Hero_Dazzle.Shallow_Grave", target)
 		if self:GetCaster():HasScepter() then
-			local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil, self:GetAOERadius(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), target:GetAbsOrigin(), nil,
+				self:GetAOERadius(), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE,
+				FIND_ANY_ORDER, false)
 			for _, target in pairs(allies) do
 				if target == self:GetCursorTarget() then
-					target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", { duration = self:GetSpecialValueFor("duration") })
+					target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave",
+						{ duration = self:GetSpecialValueFor("duration") })
 				else
-					target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", { duration = self:GetSpecialValueFor("duration"), bGravely = false })
+					target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave",
+						{ duration = self:GetSpecialValueFor("duration"), bGravely = false })
 				end
 			end
 		else
-			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave", { duration = self:GetSpecialValueFor("duration") })
+			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_shallow_grave",
+				{ duration = self:GetSpecialValueFor("duration") })
 		end
 	end
 end
@@ -524,7 +550,9 @@ function modifier_imba_dazzle_shallow_grave:OnCreated(params)
 	if IsServer() then
 		self.shallowDamage = 0
 		self.shallowDamageInstances = 0
-		self.shallow_grave_particle = ParticleManager:CreateParticle("particles/econ/items/dazzle/dazzle_dark_light_weapon/dazzle_dark_shallow_grave.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.shallow_grave_particle = ParticleManager:CreateParticle(
+		"particles/econ/items/dazzle/dazzle_dark_light_weapon/dazzle_dark_shallow_grave.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+			self:GetParent())
 
 		self.gravely = true
 
@@ -544,14 +572,15 @@ function modifier_imba_dazzle_shallow_grave:OnDestroy()
 		if parent:IsAlive() and self.shallowDamage > 0 and self.gravely ~= 0 then
 			if self.shallowDamageInstances > 0 then
 				local ability = self:GetAbility()
-				local modifier = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_post_shallow_grave_buff", { duration = ability:GetSpecialValueFor("post_grave_duration") })
+				local modifier = parent:AddNewModifier(ability:GetCaster(), ability,
+					"modifier_imba_dazzle_post_shallow_grave_buff",
+					{ duration = ability:GetSpecialValueFor("post_grave_duration") })
 				modifier:SetStackCount(self.shallowDamageInstances)
 			end
 
 			local ability = self:GetAbility()
 			local caster = ability:GetCaster()
 
-			-- parent:Heal(self.shallowDamage, caster)
 			if caster:HasTalent("special_bonus_imba_dazzle_3") then
 				self.targetsHit = {}
 				table.insert(self.targetsHit, parent:entindex(), true)
@@ -623,12 +652,14 @@ end
 function modifier_imba_dazzle_shallow_grave:ShadowWave(ability, caster, oldTarget, heal)
 	local bounceDistance = ability:GetSpecialValueFor("talent_wave_bounce_distance")
 
-	oldTarget:Heal(heal, caster)
+	oldTarget:Heal(heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, heal, nil)
 
 	-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
-	local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-	local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 	local newTarget
 
 	for _, hero in pairs(heroTable) do
@@ -670,9 +701,12 @@ function modifier_imba_dazzle_shallow_grave:ShadowWave(ability, caster, oldTarge
 	end
 
 	if newTarget then
-		local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, oldTarget)
-		ParticleManager:SetParticleControlEnt(waveParticle, 0, oldTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", oldTarget:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", newTarget:GetAbsOrigin(), true)
+		local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf",
+			PATTACH_CUSTOMORIGIN, oldTarget)
+		ParticleManager:SetParticleControlEnt(waveParticle, 0, oldTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			oldTarget:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			newTarget:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(waveParticle)
 
 		self:ShadowWave(ability, caster, newTarget, heal)
@@ -750,20 +784,22 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage(keys)
 					self.shallowDamageInstances = self.shallowDamageInstances + 1
 					self.isActive = true
 
-					parent:AddNewModifier(caster, nil, "modifier_imba_dazzle_nothl_protection_particle", { duration = nothl_duration })
-
 					local nothl_duration = ability:GetSpecialValueFor("nothl_protection_duration")
+					parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_nothl_protection_particle",
+						{ duration = nothl_duration })
+
 					Timers:CreateTimer(nothl_duration, function()
 						if self:IsNull() then return end
 
 						-- Checking if alive for cases of death that don't care for Nothl Protection
-						if self:GetParent():IsAlive() and self.shallowDamage > 0 and self:GetParent():HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
+						if parent:IsAlive() and self.shallowDamage > 0 and parent:HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
 							if self.shallowDamageInstances > 0 then
-								local modifier = parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_post_shallow_grave_buff", { duration = ability:GetSpecialValueFor("post_grave_duration") })
+								local modifier = parent:AddNewModifier(parent, ability,
+									"modifier_imba_dazzle_post_shallow_grave_buff",
+									{ duration = ability:GetSpecialValueFor("post_grave_duration") })
 								modifier:SetStackCount(self.shallowDamageInstances)
 							end
 
-							-- parent:Heal(self.shallowDamage, parent)
 							if parent:HasTalent("special_bonus_imba_dazzle_3") then
 								self.targetsHit = {}
 								table.insert(self.targetsHit, parent:entindex(), true)
@@ -802,8 +838,10 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage(keys)
 
 						if #parent.shallow_grave_meme_table > 3 then
 							-- Nil handling
-							parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or 0
-							parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
+							parent.time_of_triggered_rare_shallow_grave_meme = parent
+							.time_of_triggered_rare_shallow_grave_meme or 0
+							parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or
+							0
 							-- Normal trigger									-- Make sure the sounds don't overlap
 							if not parent.has_triggered_shallow_grave_meme and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time - 6 > parent.time_of_triggered_shallow_grave_meme then
 								parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1")
@@ -870,13 +908,15 @@ end
 
 -- For the talent that releases a shadow wave
 function modifier_imba_dazzle_nothl_protection:ShadowWave(ability, caster, oldTarget, heal)
-	oldTarget:Heal(heal, caster)
+	oldTarget:Heal(heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, heal, nil)
 	local bounceDistance = ability:GetSpecialValueFor("talent_wave_bounce_distance")
 
 	-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
-	local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-	local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 	local newTarget
 
 	for _, hero in pairs(heroTable) do
@@ -918,9 +958,12 @@ function modifier_imba_dazzle_nothl_protection:ShadowWave(ability, caster, oldTa
 	end
 
 	if newTarget then
-		local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, oldTarget)
-		ParticleManager:SetParticleControlEnt(waveParticle, 0, oldTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", oldTarget:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", newTarget:GetAbsOrigin(), true)
+		local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf",
+			PATTACH_CUSTOMORIGIN, oldTarget)
+		ParticleManager:SetParticleControlEnt(waveParticle, 0, oldTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			oldTarget:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			newTarget:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(waveParticle)
 
 		self:ShadowWave(ability, caster, newTarget, heal)
@@ -974,7 +1017,8 @@ end
 modifier_imba_dazzle_nothl_protection_particle = class({})
 function modifier_imba_dazzle_nothl_protection_particle:OnCreated()
 	if IsServer() then
-		self.particles = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_self.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.particles = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_self.vpcf",
+			PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	end
 end
 
@@ -995,7 +1039,7 @@ function modifier_imba_dazzle_post_shallow_grave_buff:IsHidden() return false en
 
 function modifier_imba_dazzle_post_shallow_grave_buff:IsDebuff() return false end
 
-function modifier_imba_dazzle_post_shallow_grave_buff:DeclareFunctions() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_dazzle_post_shallow_grave_buff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_dazzle_post_shallow_grave_buff:GetTexture()
 	return "dazzle_shallow_grave"
@@ -1014,7 +1058,8 @@ function modifier_imba_dazzle_post_shallow_grave_buff:OnCreated()
 	self.armor = ability:GetSpecialValueFor("post_grave_armor_per_hit")
 	self.resist = ability:GetSpecialValueFor("post_grave_resist_per_hit")
 	if IsServer() then
-		self.post_shallow_grave_particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_post_grave.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.post_shallow_grave_particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_post_grave.vpcf",
+			PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	end
 end
 
@@ -1041,7 +1086,8 @@ end
 -----------------------------------------------
 -----	Nothl Protection Aura modifier	  -----
 -----------------------------------------------
-if modifier_imba_dazzle_nothl_protection_aura_talent == nil then modifier_imba_dazzle_nothl_protection_aura_talent = class({}) end
+if modifier_imba_dazzle_nothl_protection_aura_talent == nil then modifier_imba_dazzle_nothl_protection_aura_talent =
+	class({}) end
 function modifier_imba_dazzle_nothl_protection_aura_talent:IsPurgable() return false end
 
 function modifier_imba_dazzle_nothl_protection_aura_talent:IsHidden() return false end
@@ -1072,20 +1118,24 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnDestroy()
 
 		-- Checking if alive for cases of death that don't care for Shallow Grave
 		if parent:IsAlive() and self.shallowDamage > 0 then
-			self:GetAbility():GetCaster():FindModifierByName("modifier_imba_dazzle_nothl_protection"):TalentAuraTimeUpdater(parent:GetEntityIndex())
+			self:GetAbility():GetCaster():FindModifierByName("modifier_imba_dazzle_nothl_protection")
+				:TalentAuraTimeUpdater(parent:GetEntityIndex())
 
 			local ability = self:GetAbility()
 			local caster = ability:GetCaster()
 
-			-- parent:Heal(self.shallowDamage, self:GetAbility():GetCaster())
+			-- parent:Heal(self.shallowDamage, ability)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, parent, self.shallowDamage, nil)
 			if self.shallowDamageInstances > 0 then
-				local modifier = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_post_shallow_grave_buff", { duration = ability:GetSpecialValueFor("post_grave_duration") })
+				local modifier = parent:AddNewModifier(ability:GetCaster(), ability,
+					"modifier_imba_dazzle_post_shallow_grave_buff",
+					{ duration = ability:GetSpecialValueFor("post_grave_duration") })
 				modifier:SetStackCount(self.shallowDamageInstances)
 			end
 
 			if caster:HasTalent("special_bonus_imba_dazzle_3") then
-				self.shallow_wave_damage_pct = caster:FindTalentValue("special_bonus_imba_dazzle_3", "shallow_wave_damage_pct")
+				self.shallow_wave_damage_pct = caster:FindTalentValue("special_bonus_imba_dazzle_3",
+					"shallow_wave_damage_pct")
 				self.targetsHit = {}
 				table.insert(self.targetsHit, parent:entindex(), true)
 				EmitSoundOn("Hero_Dazzle.Shadow_Wave", self:GetCaster())
@@ -1123,7 +1173,8 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnTakeDamage(keys)
 
 				if #parent.shallow_grave_meme_table > 3 then
 					-- Nil handling
-					parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or 0
+					parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or
+					0
 					parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
 					-- Normal trigger									-- Make sure the sounds don't overlap
 					if not parent.has_triggered_shallow_grave_meme and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time - 6 > parent.time_of_triggered_shallow_grave_meme then
@@ -1151,8 +1202,10 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnTakeDamage(keys)
 
 			if not self.triggered then
 				self.triggered = true
-				local particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_talent.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
-				Timers:CreateTimer(self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_6", "talent_aura_nothl_duration"), function()
+				local particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_talent.vpcf",
+					PATTACH_ABSORIGIN_FOLLOW, parent)
+				Timers:CreateTimer(
+				self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_6", "talent_aura_nothl_duration"), function()
 					if not self:IsNull() then
 						ParticleManager:DestroyParticle(particle, false)
 						ParticleManager:ReleaseParticleIndex(particle)
@@ -1168,12 +1221,14 @@ end
 function modifier_imba_dazzle_nothl_protection_aura_talent:ShadowWave(ability, caster, oldTarget, heal)
 	local bounceDistance = caster:FindTalentValue("special_bonus_imba_dazzle_3", "talent_wave_bounce_distance")
 
-	oldTarget:Heal(heal, caster)
+	oldTarget:Heal(heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, self.heal, nil)
 
 	-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
-	local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-	local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), oldTarget:GetAbsOrigin(), nil, bounceDistance,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 	local newTarget
 
 	for _, hero in pairs(heroTable) do
@@ -1215,9 +1270,12 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:ShadowWave(ability, c
 	end
 
 	if newTarget then
-		local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, oldTarget)
-		ParticleManager:SetParticleControlEnt(waveParticle, 0, oldTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", oldTarget:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", newTarget:GetAbsOrigin(), true)
+		local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf",
+			PATTACH_CUSTOMORIGIN, oldTarget)
+		ParticleManager:SetParticleControlEnt(waveParticle, 0, oldTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			oldTarget:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
+			newTarget:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(waveParticle)
 
 		self:ShadowWave(ability, caster, newTarget, heal)
@@ -1228,8 +1286,10 @@ end
 -------------------------	Shadow Wave		-------------------------
 ---------------------------------------------------------------------
 if imba_dazzle_shadow_wave == nil then imba_dazzle_shadow_wave = class({}) end
-LinkLuaModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)            -- Talent delayed wave bounce
-LinkLuaModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE)   -- Talent delayed wave bounce cooldown
+LinkLuaModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                        -- Talent delayed wave bounce
+LinkLuaModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", "components/abilities/heroes/hero_dazzle.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                        -- Talent delayed wave bounce cooldown
 
 function imba_dazzle_shadow_wave:GetAbilityTextureName()
 	return "dazzle_shadow_wave"
@@ -1278,9 +1338,12 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 				self.talentWaveDelayed[oldest].handler:DestroyCustom()
 
 				-- Destroy all bounce cooldowns
-				local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+				local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE,
+					DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+					DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
 				for _, unit in ipairs(units) do
-					local cooldownMods = unit:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+					local cooldownMods = unit:FindAllModifiersByName(
+					"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 					for _, mod in ipairs(cooldownMods) do
 						if mod:GetStackCount() == oldest then
 							mod:Destroy()
@@ -1289,12 +1352,13 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 				end
 			end
 
-			self:WaveHit(target, isAlly, poisonTouched)
+			self:WaveHit(target, isAlly, nil)
 			if target ~= caster then
 				self:WaveHit(caster, true)
 			end
 
-			local mod = target:AddNewModifier(caster, self, "modifier_imba_dazzle_shadow_wave_delayed_bounce", { duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay") })
+			local mod = target:AddNewModifier(caster, self, "modifier_imba_dazzle_shadow_wave_delayed_bounce",
+				{ duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay") })
 			mod:SetStackCount(oldest)
 
 			self.talentWaveDelayed[oldest] = {
@@ -1305,9 +1369,12 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 			}
 
 			EmitSoundOn("Hero_Dazzle.Shadow_Wave", self:GetCaster())
-			local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, caster)
-			ParticleManager:SetParticleControlEnt(waveParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(waveParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			local waveParticle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, caster)
+			ParticleManager:SetParticleControlEnt(waveParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(waveParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				target:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(waveParticle)
 		else
 			self.targetsHit = {}
@@ -1322,9 +1389,12 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 			end
 
 			EmitSoundOn("Hero_Dazzle.Shadow_Wave", self:GetCaster())
-			local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, caster)
-			ParticleManager:SetParticleControlEnt(waveParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(waveParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			local waveParticle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, caster)
+			ParticleManager:SetParticleControlEnt(waveParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(waveParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				target:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(waveParticle)
 		end
 	end
@@ -1354,8 +1424,10 @@ function imba_dazzle_shadow_wave:WaveBounce(target, isAlly, poisonTouched)
 
 		-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
 		-- Priority changed from vanilla since the skill now applies a buff, which you'd probably prefer hitting heroes over creeps
-		local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounceDistance, targetTeam, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-		local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounceDistance, targetTeam, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounceDistance,
+			targetTeam, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounceDistance,
+			targetTeam, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 
 		for _, hero in pairs(heroTable) do
 			if hero:GetHealth() < hero:GetMaxHealth() and not self.targetsHit[hero:entindex()] then
@@ -1396,9 +1468,12 @@ function imba_dazzle_shadow_wave:WaveBounce(target, isAlly, poisonTouched)
 		end
 
 		if newTarget then
-			local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, target)
-			ParticleManager:SetParticleControlEnt(waveParticle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", newTarget:GetAbsOrigin(), true)
+			local waveParticle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, target)
+			ParticleManager:SetParticleControlEnt(waveParticle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				newTarget:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(waveParticle)
 
 			self:WaveBounce(newTarget, isAlly, poisonTouched)
@@ -1419,7 +1494,7 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 
 		if isAlly then
 			-- If ally, heal and change search type to find enemies
-			unit:Heal(totalHeal, caster)
+			unit:Heal(totalHeal, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, unit, totalHeal, nil)
 
 			-- dispel
@@ -1436,7 +1511,10 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 			local oldMod = unit:FindModifierByName("modifier_imba_dazzle_poison_touch_debuff")
 			if poisonTouched and poisonTouchAbility then
 				if not oldMod or oldMod:GetStackCount() < poisonTouched then
-					local modifier = unit:AddNewModifier(caster, poisonTouchAbility, "modifier_imba_dazzle_poison_touch_debuff", { duration = poisonTouchAbility:GetSpecialValueFor("poison_duration") * (1 - unit:GetStatusResistance()) })
+					local modifier = unit:AddNewModifier(caster, poisonTouchAbility,
+						"modifier_imba_dazzle_poison_touch_debuff",
+						{ duration = poisonTouchAbility:GetSpecialValueFor("poison_duration") *
+						(1 - unit:GetStatusResistance()) })
 					EmitSoundOn("Hero_Dazzle.Poison_Tick", unit)
 					modifier:SetStackCount(poisonTouched)
 				end
@@ -1448,17 +1526,21 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 			targetTeam = DOTA_UNIT_TARGET_TEAM_BOTH
 		end
 
-		local aoeTargets = FindUnitsInRadius(caster:GetTeamNumber(), unit:GetAbsOrigin(), nil, damageRadius, targetTeam, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+		local aoeTargets = FindUnitsInRadius(caster:GetTeamNumber(), unit:GetAbsOrigin(), nil, damageRadius, targetTeam,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST,
+			false)
 		for _, target in pairs(aoeTargets) do
 			if target ~= unit then
-				local damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave_impact_damage.vpcf", PATTACH_CUSTOMORIGIN, caster)
-				ParticleManager:SetParticleControlEnt(damage_particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+				local damage_particle = ParticleManager:CreateParticle(
+				"particles/units/heroes/hero_dazzle/dazzle_shadow_wave_impact_damage.vpcf", PATTACH_CUSTOMORIGIN, caster)
+				ParticleManager:SetParticleControlEnt(damage_particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
+					target:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(damage_particle)
 
 				if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 					ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
 				else
-					target:Heal(totalHeal, caster)
+					target:Heal(totalHeal, self)
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, totalHeal, nil)
 				end
 			end
@@ -1492,7 +1574,11 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnCreated()
 		local parent = self:GetParent()
 		local ability = self:GetAbility()
 		local caster = ability:GetCaster()
-		local cooldownMod = parent:AddNewModifier(caster, ability, "modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", { duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_rehit_cd") + caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay") })
+		local cooldownMod = parent:AddNewModifier(caster, ability,
+			"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown",
+			{
+				duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_rehit_cd") +
+				caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay") })
 
 		Timers:CreateTimer(0.01, function()
 			if not (self:IsNull() or ability:IsNull()) then
@@ -1529,13 +1615,16 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 
 			-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
 			-- Priority changed from vanilla since the skill now applies a buff, which you'd probably prefer hitting heroes over creeps
-			local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, bounceDistance, targetTeam, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-			local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, bounceDistance, targetTeam, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, bounceDistance,
+				targetTeam, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, bounceDistance,
+				targetTeam, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 			local stacks = self:GetStackCount()
 
 			for _, hero in pairs(heroTable) do
 				if hero ~= parent and hero:GetHealth() < hero:GetMaxHealth() then
-					local cooldownMods = hero:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+					local cooldownMods = hero:FindAllModifiersByName(
+					"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 					local hasCD = false
 					for _, mod in ipairs(cooldownMods) do
 						if mod:GetStackCount() == stacks then
@@ -1554,7 +1643,8 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 			if not newTarget then
 				for _, hero in pairs(heroTable) do
 					if hero ~= parent then
-						local cooldownMods = hero:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+						local cooldownMods = hero:FindAllModifiersByName(
+						"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 						local hasCD = false
 						for _, mod in ipairs(cooldownMods) do
 							if mod:GetStackCount() == stacks then
@@ -1574,7 +1664,8 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 			if not newTarget then
 				for _, creep in pairs(creepTable) do
 					if creep ~= parent and creep:GetHealth() < creep:GetMaxHealth() then
-						local cooldownMods = creep:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+						local cooldownMods = creep:FindAllModifiersByName(
+						"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 						local hasCD = false
 						for _, mod in ipairs(cooldownMods) do
 							if mod:GetStackCount() == stacks then
@@ -1594,7 +1685,8 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 			if not newTarget then
 				for _, creep in pairs(creepTable) do
 					if creep ~= parent then
-						local cooldownMods = creep:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+						local cooldownMods = creep:FindAllModifiersByName(
+						"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 						local hasCD = false
 						for _, mod in ipairs(cooldownMods) do
 							if mod:GetStackCount() == stacks then
@@ -1612,16 +1704,20 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 			end
 
 			if newTarget then
-				local mod = newTarget:AddNewModifier(caster, ability, "modifier_imba_dazzle_shadow_wave_delayed_bounce", { duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay") })
+				local mod = newTarget:AddNewModifier(caster, ability, "modifier_imba_dazzle_shadow_wave_delayed_bounce",
+					{ duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay") })
 				mod:SetStackCount(self:GetStackCount())
 
 				self.data.handler = mod
 
 				ability:SetDelayedWaveData(self:GetStackCount(), self.data)
 
-				local waveParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, parent)
-				ParticleManager:SetParticleControlEnt(waveParticle, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", newTarget:GetAbsOrigin(), true)
+				local waveParticle = ParticleManager:CreateParticle(
+				"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, parent)
+				ParticleManager:SetParticleControlEnt(waveParticle, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc",
+					parent:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
+					newTarget:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(waveParticle)
 
 				EmitSoundOn("Hero_Dazzle.Shadow_Wave", parent)
@@ -1639,7 +1735,8 @@ end
 -----------------------------------------------------------------------
 -----	Shadow Wave delayed wave jump talent modifier cooldown	  -----
 -----------------------------------------------------------------------
-if modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown == nil then modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown = class({}) end
+if modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown == nil then modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown =
+	class({}) end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsPurgable() return false end
 
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsHidden() return true end
@@ -2063,7 +2160,9 @@ function modifier_imba_dazzle_bad_juju:OnAbilityFullyCast(params)
 				behavior = behavior + DOTA_UNIT_TARGET_BUILDING
 			end
 
-			local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, behavior, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil,
+				self:GetAbility():GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, behavior,
+				DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 			for _, unit in pairs(units) do
 				local modifier_name = "modifier_imba_dazzle_bad_juju_buff"
@@ -2085,7 +2184,10 @@ function modifier_imba_dazzle_bad_juju:OnAbilityFullyCast(params)
 
 			-- Aghanim's Scepter logic (Patch 7.25)
 			if self:GetCaster():HasScepter() then
-				local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+				local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil,
+					self:GetAbility():GetSpecialValueFor("scepter_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY,
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 
 				local target_number = 0
 
@@ -2130,7 +2232,8 @@ function modifier_imba_dazzle_bad_juju_buff:GetModifierPhysicalArmorBonus()
 	return armor_reduction * self:GetStackCount()
 end
 
-LinkLuaModifier("modifier_imba_dazzle_bad_juju_debuff", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dazzle_bad_juju_debuff", "components/abilities/heroes/hero_dazzle",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_imba_dazzle_bad_juju_debuff = modifier_imba_dazzle_bad_juju_debuff or class({})
 
@@ -2161,10 +2264,13 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_damage", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_slow", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_damage", "components/abilities/heroes/hero_dazzle",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_slow", "components/abilities/heroes/hero_dazzle",
+	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_dazzle_poison_touch_damage = modifier_special_bonus_imba_dazzle_poison_touch_damage or class({})
+modifier_special_bonus_imba_dazzle_poison_touch_damage = modifier_special_bonus_imba_dazzle_poison_touch_damage or
+class({})
 modifier_special_bonus_imba_dazzle_poison_touch_slow = modifier_special_bonus_imba_dazzle_poison_touch_slow or class({})
 
 function modifier_special_bonus_imba_dazzle_poison_touch_damage:IsHidden() return true end
@@ -2183,7 +2289,8 @@ function modifier_special_bonus_imba_dazzle_poison_touch_slow:RemoveOnDeath() re
 -----	Talents	 -----
 ----------------------
 for i = 1, 8 do
-	LinkLuaModifier("modifier_special_bonus_imba_dazzle_" .. i, "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_special_bonus_imba_dazzle_" .. i, "components/abilities/heroes/hero_dazzle",
+		LUA_MODIFIER_MOTION_NONE)
 end
 
 modifier_special_bonus_imba_dazzle_1 = class({

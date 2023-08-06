@@ -560,7 +560,7 @@ function modifier_imba_soul_catcher_buff:OnCreated(params)
 
 	-- We'll let a frame for the game to include max health increase before healing
 	Timers:CreateTimer(FrameTime(), function()
-		self.parent:Heal(self.allied_heal, self.caster)
+		self.parent:Heal(self.allied_heal, self.ability)
 	end)
 end
 
@@ -679,7 +679,7 @@ function modifier_imba_soul_catcher_debuff:OnDeath(keys)
 				local new_direction
 
 				for i = 1, self.unleashed_projectile_count do
-					angle = QAngle(0, (i - 1) * (rotation_per_projectile), 0)
+					local angle = QAngle(0, (i - 1) * (rotation_per_projectile), 0)
 					new_direction = RotatePosition(origin_point, angle, direction)
 					shadow_poison_ability_handle:FireShadowPoisonProjectile(origin_point, new_direction, true)
 				end
@@ -701,8 +701,8 @@ function modifier_imba_soul_catcher_debuff:OnDestroy()
 	-- Only trigger if your soul wasn't taken
 	if not self.soul_taken then
 		-- Heal the target by the percentage of stolen health
-		local health_restore = self.health_stolen * self.health_returned_pct / 100
-		self.parent:Heal(health_restore, self.caster)
+		local health_restore = self.health_stolen * self.health_returned_pct * 0.01
+		self.parent:Heal(health_restore, self.ability)
 	end
 end
 
@@ -916,10 +916,10 @@ function modifier_shadow_poison_debuff:OnCreated()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 	self.impact_sound = "Hero_ShadowDemon.ShadowPoison.Impact"
-	self.particle_ui = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_stackui.vpcf"                                                                                                                                                                                             --cp0 location, cp1 vector(second digit, first digit, 0)"
-	self.particle_4stacks = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_4stack.vpcf"                                                                                                                                                                                         --cp0 location
-	self.particle_kill = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_kill.vpcf"                                                                                                                                                                                              --cp0 location, cp2 location, cp3 Vector(1,0,0)
-	self.particle_illusion_blast = "particles/hero/shadow_demon/shadow_demon_shadow_poison_soul_illusion_blast.vpcf"                                                                                                                                                                                  --cp0 location
+	self.particle_ui = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_stackui.vpcf"                                                                                                                                                                                               --cp0 location, cp1 vector(second digit, first digit, 0)"
+	self.particle_4stacks = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_4stack.vpcf"                                                                                                                                                                                           --cp0 location
+	self.particle_kill = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_kill.vpcf"                                                                                                                                                                                                --cp0 location, cp2 location, cp3 Vector(1,0,0)
+	self.particle_illusion_blast = "particles/hero/shadow_demon/shadow_demon_shadow_poison_soul_illusion_blast.vpcf"                                                                                                                                                                                    --cp0 location
 	self.kill_responses = { "shadow_demon_shadow_demon_ability_shadow_poison_05", "shadow_demon_shadow_demon_ability_shadow_poison_06", "shadow_demon_shadow_demon_ability_shadow_poison_08", "shadow_demon_shadow_demon_ability_shadow_poison_09", "shadow_demon_shadow_demon_ability_shadow_poison_10" } --20% chance
 	self.modifier_demonic_purge = "modifier_imba_demonic_purge_debuff"
 
@@ -1017,7 +1017,7 @@ function modifier_shadow_poison_debuff:OnDestroy()
 		EmitSoundOn(self.impact_sound, self.caster)
 
 		-- Calculate damage and deal it
-		damage = self:CalculateShadowPoisonDamage()
+		local damage = self:CalculateShadowPoisonDamage()
 		local damageTable = {
 			victim = self.parent,
 			attacker = self.caster,
@@ -1146,7 +1146,7 @@ function imba_shadow_demon_shadow_poison_release:OnSpellStart()
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 		caster:GetAbsOrigin(),
 		nil,
-		FIND_UNITS_EVERYWHERE,    --global
+		FIND_UNITS_EVERYWHERE, --global
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
 		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
@@ -1660,14 +1660,14 @@ function modifier_special_bonus_imba_shadow_demon_disruption_charges:IsPurgable(
 function modifier_special_bonus_imba_shadow_demon_disruption_charges:RemoveOnDeath() return false end
 
 function imba_shadow_demon_shadow_poison:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_demon_shadow_poison_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_damage") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_damage"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_damage", {})
-	end
-end
+	local caster = self:GetCaster()
 
-function imba_shadow_demon_shadow_poison:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_demon_shadow_poison_cd") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_cd") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_cd"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_cd", {})
+	if caster:HasTalent("special_bonus_imba_shadow_demon_shadow_poison_damage") and not caster:HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_damage") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_damage"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_damage", {})
+	end
+
+	if caster:HasTalent("special_bonus_imba_shadow_demon_shadow_poison_cd") and not caster:HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_cd") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_cd"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_cd", {})
 	end
 end
 

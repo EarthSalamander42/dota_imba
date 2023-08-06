@@ -32,7 +32,7 @@ function BattleFury(keys)
 	-- Destroy wards in the area
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, chop_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _, enemy in pairs(enemies) do
-		if IsWardOrBomb(enemy) then
+		if not enemy:IsNull() and (enemy:IsWard() or enemy:IsOther()) then
 			enemy:Kill(ability, caster)
 		end
 	end
@@ -97,7 +97,13 @@ function BattleFuryStackUp(keys)
 	local modifier_cleave = keys.modifier_cleave
 
 	-- Apply a stack of the cleave modifier
-	AddStacks(ability, caster, caster, modifier_cleave, 1, true)
+	local mod = caster:FindModifierByName(modifier_cleave)
+	if mod then
+		mod:SetStackCount(mod:GetStackCount() + 1)
+	else
+		mod = caster:AddNewModifier(caster, ability, modifier_cleave, {})
+		mod:SetStackCount(1)
+	end
 end
 
 function BattleFuryStackDown(keys)

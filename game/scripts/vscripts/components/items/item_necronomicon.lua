@@ -124,16 +124,18 @@ modifier_item_imba_necronomicon = modifier_item_imba_necronomicon or class({})
 
 function modifier_item_imba_necronomicon:IsHidden() return true end
 
-function modifier_item_imba_necronomicon:DeclareFunctions() return {
-	MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS,
-	MODIFIER_PROPERTY_EXTRA_INTELLECT_BONUS,
-} end
+function modifier_item_imba_necronomicon:DeclareFunctions() 
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+	}
+end
 
-function modifier_item_imba_necronomicon:GetModifierExtraStrengthBonus()
+function modifier_item_imba_necronomicon:GetModifierBonusStats_Strength()
 	return self:GetAbility():GetSpecialValueFor("bonus_strength")
 end
 
-function modifier_item_imba_necronomicon:GetModifierExtraIntellectBonus()
+function modifier_item_imba_necronomicon:GetModifierBonusStats_Intellect()
 	return self:GetAbility():GetSpecialValueFor("bonus_intellect")
 end
 

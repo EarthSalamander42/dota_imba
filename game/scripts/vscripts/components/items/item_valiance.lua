@@ -194,18 +194,18 @@ function modifier_item_imba_valiance_guard:OnDestroy()
 end
 
 function modifier_item_imba_valiance_guard:CheckState()
-	return { [MODIFIER_STATE_STUNNED] = true }
+	return {
+		[MODIFIER_STATE_STUNNED] = true
+	}
 end
 
 function modifier_item_imba_valiance_guard:DeclareFunctions()
 	return {
 		-- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
-
-		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 end
 

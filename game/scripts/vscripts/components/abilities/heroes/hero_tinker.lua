@@ -716,12 +716,31 @@ function imba_tinker_heat_seeking_missile:OnProjectileThink_ExtraData(location, 
 	local caster = self:GetCaster()
 
 	if ExtraData.mini_missile_count and ExtraData.mini_missile_count > 0 then
-		local distance = (location - Vector(ExtraData.cast_origin_x, ExtraData.cast_origin_y, 0)):Length2D()
-		local interval = math.floor(ExtraData.speed)
-
-		local technomancy
-		if caster:HasAbility("imba_tinker_technomancy") then
-			technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
+	local distance = (location - Vector(ExtraData.cast_origin_x, ExtraData.cast_origin_y, 0)):Length2D()
+	local interval = math.floor(ExtraData.speed)
+	
+	local technomancy
+	if caster:HasAbility("imba_tinker_technomancy") then
+		 technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
+	end
+	if technomancy and technomancy:GetLevel() >= 2 then
+	interval = math.floor(interval * (1 - technomancy:GetSpecialValueFor("interval_reduction")))
+	end
+	
+	-- Spawn once every second, determines whether the missile has travelled for a second by it's distance
+	if (math.floor(distance) % interval) < math.floor(interval * FrameTime()) and (math.floor(distance - interval * FrameTime())) > math.floor(interval * FrameTime()) then		
+		
+		-- Find valid targets
+		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+		
+		-- If no valid units are found, dududududu
+		if #heroes == 0 and #units == 0 then
+			local dud_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControlEnt(dud_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack3", caster:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(dud_pfx)
+			caster:EmitSound("Hero_Tinker.Heat-Seeking_Missile_Dud")
+			return
 		end
 		if technomancy and technomancy:GetLevel() >= 2 then
 			interval = math.floor(interval * (1 - technomancy:GetSpecialValueFor("interval_reduction")))
@@ -1328,25 +1347,24 @@ function imba_tinker_march_of_the_machines:OnProjectileThink_ExtraData(location,
 		if ExtraData.railgun_damage then
 			self[ExtraData.index].counter = self[ExtraData.index].counter or 0
 			if self[ExtraData.index].counter == 0 then
-				projectile =
-				{
-					Ability          = self,
-					EffectName       = "particles/units/heroes/hero_zuus/zuus_arc_lightning_head_c.vpcf",
-					vSpawnOrigin     = location,
-					fDistance        = ExtraData.railgun_range,
-					fStartRadius     = ExtraData.railgun_radius,
-					fEndRadius       = ExtraData.railgun_radius,
-					Source           = caster,
-					bHasFrontalCone  = true,
-					bReplaceExisting = false,
-					iUnitTargetTeam  = DOTA_UNIT_TARGET_TEAM_ENEMY,
-					iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
-					iUnitTargetType  = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					fExpireTime      = GameRules:GetGameTime() + 10.0,
-					bDeleteOnHit     = false,
-					vVelocity        = Vector(ExtraData.direction_x, ExtraData.direction_y, 0) * 20000,
-					bProvidesVision  = false,
-					ExtraData        = { raildamage = ExtraData.railgun_damage }
+				local projectile = {
+					Ability				= self,
+					EffectName			= "particles/units/heroes/hero_zuus/zuus_arc_lightning_head_c.vpcf",
+					vSpawnOrigin		= location,
+					fDistance			= ExtraData.railgun_range,
+					fStartRadius		= ExtraData.railgun_radius,
+					fEndRadius			= ExtraData.railgun_radius,
+					Source				= caster,
+					bHasFrontalCone		= true,
+					bReplaceExisting	= false,
+					iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+					iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+					iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					fExpireTime 		= GameRules:GetGameTime() + 10.0,
+					bDeleteOnHit		= false,
+					vVelocity			= Vector(ExtraData.direction_x,ExtraData.direction_y,0) * 20000,
+					bProvidesVision		= false,
+					ExtraData			= {raildamage = ExtraData.railgun_damage}
 				}
 				ProjectileManager:CreateLinearProjectile(projectile)
 
@@ -1472,17 +1490,15 @@ end
 
 function modifier_imba_march_tesla_stun:OnCreated()
 	if IsServer() then
-		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
-		self:AddParticle(stun_fx, false, false, -1, false, false)
+		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+		self:AddParticle(stun_fx,false,false,-1,false,false)
 	end
 end
 
 function modifier_imba_march_tesla_stun:CheckState()
-	local state =
-	{
+	return {
 		[MODIFIER_STATE_STUNNED] = true
 	}
-	return state
 end
 
 function modifier_imba_march_tesla_stun:IsHidden()

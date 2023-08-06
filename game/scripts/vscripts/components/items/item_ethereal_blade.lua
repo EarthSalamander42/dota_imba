@@ -47,32 +47,29 @@ function item_imba_ethereal_blade:OnSpellStart()
 	self.projectile_speed			=	self:GetSpecialValueFor("projectile_speed")
 	self.tooltip_range				=	self:GetSpecialValueFor("tooltip_range")
 	
-	if not IsServer() then return end
-	
 	local target			= self:GetCursorTarget()
 	
 	-- Play the cast sound
 	self.caster:EmitSound("DOTA_Item.EtherealBlade.Activate")
 
 	-- Fire the projectile
-	local projectile =
-			{
-				Target 				= target,
-				Source 				= self.caster,
-				Ability 			= self,
-				EffectName 			= "particles/items_fx/ethereal_blade.vpcf",
-				iMoveSpeed			= self.projectile_speed,
-				vSourceLoc 			= caster_location,
-				bDrawsOnMinimap 	= false,
-				bDodgeable 			= true,
-				bIsAttack 			= false,
-				bVisibleToEnemies 	= true,
-				bReplaceExisting 	= false,
-				flExpireTime 		= GameRules:GetGameTime() + 20,
-				bProvidesVision 	= false,
-			}
-			
-		ProjectileManager:CreateTrackingProjectile(projectile)
+	local projectile = {
+		Target 				= target,
+		Source 				= self.caster,
+		Ability 			= self,
+		EffectName 			= "particles/items_fx/ethereal_blade.vpcf",
+		iMoveSpeed			= self.projectile_speed,
+		vSourceLoc 			= self.caster:GetAbsOrigin(),
+		bDrawsOnMinimap 	= false,
+		bDodgeable 			= true,
+		bIsAttack 			= false,
+		bVisibleToEnemies 	= true,
+		bReplaceExisting 	= false,
+		flExpireTime 		= GameRules:GetGameTime() + 20,
+		bProvidesVision 	= false,
+	}
+
+	ProjectileManager:CreateTrackingProjectile(projectile)
 end
 
 function item_imba_ethereal_blade:OnProjectileHit(target, location)

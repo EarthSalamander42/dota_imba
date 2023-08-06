@@ -1755,24 +1755,18 @@ function modifier_special_bonus_imba_silencer_10:IsPurgable() return false end
 function modifier_special_bonus_imba_silencer_10:RemoveOnDeath() return false end
 
 function imba_silencer_arcane_curse:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_silencer_arcane_curse_slow") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_arcane_curse_slow") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_arcane_curse_slow"), "modifier_special_bonus_imba_silencer_arcane_curse_slow", {})
 	end
 end
 
 function imba_silencer_arcane_supremacy:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_silencer_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_4"), "modifier_special_bonus_imba_silencer_4", {})
 	end
 end
 
 function imba_silencer_global_silence_v2:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_silencer_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_10"), "modifier_special_bonus_imba_silencer_10", {})
 	end

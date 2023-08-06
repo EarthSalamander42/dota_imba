@@ -1053,7 +1053,13 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 		elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_POINT == 0 then
 			-- If the ability targets allies, use it on the ward's vicinity
 			if ability_target_team == DOTA_UNIT_TARGET_TEAM_FRIENDLY then
-				ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = ward:GetAbsOrigin(), AbilityIndex = ability:GetEntityIndex(), Queue = queue })
+				ExecuteOrderFromTable({
+					UnitIndex = ward:GetEntityIndex(),
+					OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
+					Position = ward:GetAbsOrigin(),
+					AbilityIndex = ability:GetEntityIndex(),
+					Queue = false
+				})
 				ability_was_used = true
 
 				-- Else, use it as close as possible to the enemy
@@ -1062,7 +1068,15 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 				if ability_range > 0 and (target_point - ward_position):Length2D() > ability_range then
 					target_point = ward_position + (target_point - ward_position):Normalized() * (ability_range - 50)
 				end
-				ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = target_point, AbilityIndex = ability:GetEntityIndex(), Queue = queue })
+
+				ExecuteOrderFromTable({
+					UnitIndex = ward:GetEntityIndex(),
+					OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
+					Position = target_point,
+					AbilityIndex = ability:GetEntityIndex(),
+					Queue = false
+				})
+
 				ability_was_used = true
 			end
 
@@ -1075,13 +1089,25 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 
 				-- If there is at least one ally nearby, cast the ability
 				if #allies > 0 then
-					ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = allies[1]:GetEntityIndex(), AbilityIndex = ability:GetEntityIndex(), Queue = queue })
+					ExecuteOrderFromTable({
+						UnitIndex = ward:GetEntityIndex(),
+						OrderType = DOTA_UNIT_ORDER_CAST_TARGET,
+						TargetIndex = allies[1]:GetEntityIndex(),
+						AbilityIndex = ability:GetEntityIndex(),
+						Queue = false
+					})
 					ability_was_used = true
 				end
 
 				-- If not, try to use it on the original caster
 			elseif (target_point - ward_position):Length2D() <= ability_range then
-				ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = target:GetEntityIndex(), AbilityIndex = ability:GetEntityIndex(), Queue = queue })
+				ExecuteOrderFromTable({
+					UnitIndex = ward:GetEntityIndex(),
+					OrderType = DOTA_UNIT_ORDER_CAST_TARGET,
+					TargetIndex = target:GetEntityIndex(),
+					AbilityIndex = ability:GetEntityIndex(),
+					Queue = false
+				})
 				ability_was_used = true
 
 				-- If the original caster is too far away, cast the ability on a random nearby enemy
@@ -1091,7 +1117,13 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 
 				-- If there is at least one ally nearby, cast the ability
 				if #enemies > 0 then
-					ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = enemies[1]:GetEntityIndex(), AbilityIndex = ability:GetEntityIndex(), Queue = queue })
+					ExecuteOrderFromTable({
+						UnitIndex = ward:GetEntityIndex(),
+						OrderType = DOTA_UNIT_ORDER_CAST_TARGET,
+						TargetIndex = enemies[1]:GetEntityIndex(),
+						AbilityIndex = ability:GetEntityIndex(),
+						Queue = false
+					})
 					ability_was_used = true
 				end
 			end
@@ -1146,7 +1178,7 @@ function imba_pugna_life_drain:OnUpgrade()
 	local caster = self:GetCaster()
 	local ability_cancel = "imba_pugna_life_drain_end"
 
-	ability_cancel_handler = caster:FindAbilityByName(ability_cancel)
+	local ability_cancel_handler = caster:FindAbilityByName(ability_cancel)
 	if ability_cancel_handler then
 		if ability_cancel_handler:GetLevel() == 0 then
 			ability_cancel_handler:SetLevel(1)
@@ -1290,7 +1322,7 @@ function modifier_imba_life_drain:OnIntervalThink()
 		-- If the target is an enemy illusion, kill it
 		if self.parent:IsIllusion() and self.parent:GetTeamNumber() ~= self.caster:GetTeamNumber() and not Custom_bIsStrongIllusion(self.parent) then
 			self.parent:Kill(self.ability, self.caster)
-			return nil
+			return
 		end
 
 		-- Check if the link has been severed
@@ -1349,7 +1381,7 @@ function modifier_imba_life_drain:OnIntervalThink()
 			local missing_health = self.parent:GetMaxHealth() - self.parent:GetHealth()
 
 			-- Heal the parent for the damage done to the caster
-			self.parent:Heal(actual_damage, self.caster)
+			self.parent:Heal(actual_damage, self.ability)
 
 			-- If that instance was an excessive heal, recover mana instead
 			if missing_health < actual_damage then
@@ -1378,7 +1410,7 @@ function modifier_imba_life_drain:OnIntervalThink()
 			local missing_health = self.caster:GetMaxHealth() - self.caster:GetHealth()
 
 			-- Heal the caster for the damage done to the parent
-			self.caster:Heal(actual_damage, self.caster)
+			self.caster:Heal(actual_damage, self.ability)
 
 			-- If that instance was an excessive heal, recover mana instead
 			if missing_health < actual_damage then

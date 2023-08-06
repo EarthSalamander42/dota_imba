@@ -617,7 +617,7 @@ function imba_wisp_tether_break:OnSpellStart()
 	-- Let's manually add Tether for Morphling so they can use the skill properly (super bootleg)
 	if not self:GetCaster():HasAbility("imba_wisp_tether") then
 		local stolenAbility = self:GetCaster():AddAbility("imba_wisp_tether")
-		stolenAbility:SetLevel(min((self:GetCaster():GetLevel() / 2) - 1, 4))
+		stolenAbility:SetLevel(math.min((self:GetCaster():GetLevel() / 2) - 1, 4))
 		self:GetCaster():SwapAbilities("imba_wisp_tether_break", "imba_wisp_tether", false, true)
 	end
 
@@ -1015,7 +1015,7 @@ function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, ex
 		end
 
 		-- Let's just have another one here for Rubick to "properly" destroy Spirit particles
-		if spirit_pfx_silence ~= nil then
+		if spirit.spirit_pfx_silence ~= nil then
 			ParticleManager:DestroyParticle(spirit.spirit_pfx_silence, true)
 			ParticleManager:ReleaseParticleIndex(spirit.spirit_pfx_silence)
 		end
@@ -1294,7 +1294,7 @@ function imba_wisp_spirits_toggle:OnSpellStart()
 		-- Let's manually add Spirits for Morphling so they can use the skill properly (super bootleg)
 		if not self:GetCaster():HasAbility("imba_wisp_spirits") then
 			local stolenAbility = self:GetCaster():AddAbility("imba_wisp_spirits")
-			stolenAbility:SetLevel(min((self:GetCaster():GetLevel() / 2) - 1, 4))
+			stolenAbility:SetLevel(math.min((self:GetCaster():GetLevel() / 2) - 1, 4))
 			self:GetCaster():SwapAbilities("imba_wisp_spirits_toggle", "imba_wisp_spirits", false, true)
 		end
 
@@ -1327,10 +1327,6 @@ imba_wisp_swap_spirits = class({})
 function imba_wisp_swap_spirits:IsInnateAbility() return true end
 
 function imba_wisp_swap_spirits:IsStealable() return false end
-
-function imba_wisp_swap_spirits:GetIntrinsicModifierName()
-	return "modifier_imba_wisp_swap_spirits_silence"
-end
 
 function imba_wisp_swap_spirits:GetIntrinsicModifierName()
 	return "modifier_imba_wisp_swap_spirits_silence"
@@ -2059,8 +2055,8 @@ function modifier_imba_wisp_overcharge_721:OnCreated()
 end
 
 function modifier_imba_wisp_overcharge_721:OnIntervalThink()
-	self.parent:ModifyHealth(self.caster:GetHealth() * (1 - (self.talent_drain_pct / 100 * self.talent_drain_interval)), self.ability, false, 0)
-	self.parent:ReduceMana(self.caster:GetMana() * self.talent_drain_pct / 100 * self.talent_drain_interval)
+	self.parent:ModifyHealth(self.caster:GetHealth() * (1 - (self.talent_drain_pct * 0.01 * self.talent_drain_interval)), self.ability, false, 0)
+	self.parent:ReduceMana(self.caster:GetMana() * self.talent_drain_pct * 0.01 * self.talent_drain_interval, self.ability)
 end
 
 function modifier_imba_wisp_overcharge_721:OnRefresh()

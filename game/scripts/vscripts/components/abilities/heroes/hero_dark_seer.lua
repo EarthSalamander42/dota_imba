@@ -213,7 +213,7 @@ function modifier_imba_dark_seer_vacuum:OnCreated(params)
 	end
 end
 
-function modifier_imba_dark_seer_vacuum:OnRefresh()
+function modifier_imba_dark_seer_vacuum:OnRefresh(params)
 	self:OnCreated(params)
 end
 
@@ -448,7 +448,7 @@ function modifier_imba_dark_seer_wormhole:OnCreated(params)
 	end
 end
 
-function modifier_imba_dark_seer_wormhole:OnRefresh()
+function modifier_imba_dark_seer_wormhole:OnRefresh(params)
 	self:OnCreated(params)
 end
 
@@ -1319,8 +1319,6 @@ function modifier_special_bonus_imba_dark_seer_surge_cast_range:IsPurgable() ret
 function modifier_special_bonus_imba_dark_seer_surge_cast_range:RemoveOnDeath() return false end
 
 function imba_dark_seer_surge:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_dark_seer_surge_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_dark_seer_surge_cast_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_dark_seer_surge_cast_range"), "modifier_special_bonus_imba_dark_seer_surge_cast_range", {})
 	end

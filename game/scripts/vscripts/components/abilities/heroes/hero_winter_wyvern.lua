@@ -113,9 +113,8 @@ end
 --------------------------------------------------------------
 modifier_imba_winter_wyvern_arctic_burn = class({})
 function modifier_imba_winter_wyvern_arctic_burn:IsHidden() return true end
-
-function modifier_imba_winter_wyvern_arctic_burn:DeclareFunctions()
-	decFuncs = {
+function modifier_imba_winter_wyvern_arctic_burn:DeclareFunctions() 
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
@@ -123,8 +122,6 @@ function modifier_imba_winter_wyvern_arctic_burn:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		-- MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_arctic_burn:OnAttackLanded(keys)
@@ -177,13 +174,10 @@ end
 --------------------------------------------------------------
 modifier_imba_winter_wyvern_arctic_burn_slow = class({})
 function modifier_imba_winter_wyvern_arctic_burn_slow:IsHidden() return true end
-
-function modifier_imba_winter_wyvern_arctic_burn_slow:DeclareFunctions()
-	decFuncs = {
+function modifier_imba_winter_wyvern_arctic_burn_slow:DeclareFunctions() 
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_arctic_burn_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -476,14 +470,11 @@ modifier_imba_winter_wyvern_splinter_blast_slow = class({})
 function modifier_imba_winter_wyvern_splinter_blast_slow:IsHidden() return false end
 
 function modifier_imba_winter_wyvern_splinter_blast_slow:IsDebuff() return true end
-
-function modifier_imba_winter_wyvern_splinter_blast_slow:DeclareFunctions()
-	decFuncs = {
+function modifier_imba_winter_wyvern_splinter_blast_slow:DeclareFunctions() 
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_splinter_blast_slow:OnCreated(keys)
@@ -574,13 +565,10 @@ function modifier_imba_winter_wyvern_cold_embrace:IsHidden() return true end
 function modifier_imba_winter_wyvern_cold_embrace:IsPurgable() return false end
 
 function modifier_imba_winter_wyvern_cold_embrace:IsDebuff() return false end
-
-function modifier_imba_winter_wyvern_cold_embrace:DeclareFunctions()
-	decFuncs = {
+function modifier_imba_winter_wyvern_cold_embrace:DeclareFunctions() 
+	return {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys)
@@ -634,21 +622,59 @@ function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys)
 								splinter_proc              = 1
 							});
 					end
-				end
-
-				-- Reset damage taken
-				self.damage_taken = 0
-
-				-- Only let this thing activate once for now
-				self.activated = true
-
-				-- Gonna make it not remove for now
-
-				-- Remove Cold Embrace, could not get healing to work without delay.
-				-- Timers:CreateTimer(0.03, function()
-				-- parent:RemoveModifierByName("modifier_winter_wyvern_cold_embrace");
-				-- parent:RemoveModifierByName("modifier_imba_winter_wyvern_cold_embrace");
-				-- end)
+					
+					-- Heal to max
+					--parent:Heal(parent:GetMaxHealth(), self:GetAbility());
+					
+					parent:Heal(self.damage_treshold, self:GetAbility());
+					
+					-- Escape particle
+					local curse_blast = ParticleManager:CreateParticle("particles/units/heroes/hero_winter_wyvern/wyvern_winters_curse_blast.vpcf", PATTACH_ABSORIGIN, parent);
+					ParticleManager:SetParticleControl(curse_blast, 2, Vector(1,1,1000));
+					ParticleManager:ReleaseParticleIndex(curse_blast);
+					
+					if self:GetCaster():HasAbility("imba_winter_wyvern_splinter_blast") then
+						local splinter_blast = self:GetCaster():FindAbilityByName("imba_winter_wyvern_splinter_blast")
+					
+						if splinter_blast:IsTrained() then
+							
+							imba_winter_wyvern_splinter_blast:CreateTrackingProjectile(
+								{
+									target 						= self:GetCaster(),
+									caster 						= self:GetCaster(),
+									ability 					= splinter_blast,
+									iMoveSpeed 					= splinter_blast:GetSpecialValueFor("projectile_speed"),
+									iSourceAttachment 			= self:GetCaster():ScriptLookupAttachment("attach_attack1"),
+									EffectName 					= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter.vpcf",
+									secondary_projectile_speed 	= splinter_blast:GetSpecialValueFor("secondary_projectile_speed"),
+									split_radius 				= splinter_blast:GetSpecialValueFor("split_radius"),
+									slow_duration 				= splinter_blast:GetSpecialValueFor("duration"),
+									slow						= splinter_blast:GetSpecialValueFor("bonus_movespeed"),
+									attack_slow 				= splinter_blast:GetSpecialValueFor("attack_slow"),
+									hero_cdr 					= splinter_blast:GetSpecialValueFor("hero_cdr"),
+									cdr_units 					= splinter_blast:GetSpecialValueFor("cdr_units"),
+									splinter_threshold 			= splinter_blast:GetSpecialValueFor("threshold"),
+									splinter_dmg_efficiency 	= splinter_blast:GetSpecialValueFor("splinter_dmg_efficiency"),
+									splinter_aoe_efficiency 	= splinter_blast:GetSpecialValueFor("splinter_aoe_efficiency"),
+									damage 						= splinter_blast:GetAbilityDamage() + self.damage_taken,
+									splinter_proc 				= 1
+								});
+						end
+					end
+					
+					-- Reset damage taken
+					self.damage_taken = 0
+					
+					-- Only let this thing activate once for now
+					self.activated = true
+					
+					-- Gonna make it not remove for now
+					
+					-- Remove Cold Embrace, could not get healing to work without delay.
+					-- Timers:CreateTimer(0.03, function()
+						-- parent:RemoveModifierByName("modifier_winter_wyvern_cold_embrace");
+						-- parent:RemoveModifierByName("modifier_imba_winter_wyvern_cold_embrace");
+					-- end)
 				--end
 			end
 		end
@@ -680,13 +706,10 @@ end
 ---------------------------------------------------------------------------------------------------------------------
 modifier_imba_winter_wyvern_cold_embrace_resistance = class({})
 function modifier_imba_winter_wyvern_cold_embrace_resistance:IsHidden() return true end
-
-function modifier_imba_winter_wyvern_cold_embrace_resistance:DeclareFunctions()
-	decFuncs = {
+function modifier_imba_winter_wyvern_cold_embrace_resistance:DeclareFunctions() 
+	return {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 	}
-
-	return decFuncs
 end
 
 function modifier_imba_winter_wyvern_cold_embrace_resistance:GetModifierMagicalResistanceBonus()

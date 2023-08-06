@@ -1070,7 +1070,7 @@ end
 function imba_axe_culling_blade:KillUnit(target)
 	TrueKill(self.caster, target, self)
 	self.heal_amount = (self.caster:GetMaxHealth() / 100) * self.max_health_kill_heal_pct
-	self.caster:Heal(self.heal_amount, self.caster)
+	self.caster:Heal(self.heal_amount, self)
 	-- Play the kill particle
 	self.culling_kill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf", PATTACH_CUSTOMORIGIN, self.caster, self.caster)
 	--ParticleManager:SetParticleControlEnt(self.culling_kill_particle, 0, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target_location, true)

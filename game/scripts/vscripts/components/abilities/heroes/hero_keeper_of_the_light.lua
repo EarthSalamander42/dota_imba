@@ -1,18 +1,30 @@
 -- Creator:
 --	   AltiV, March 1st, 2019
 
-LinkLuaModifier("modifier_imba_keeper_of_the_light_illuminate_self_thinker", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_illuminate", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_spirit_form_illuminate", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_blinding_light", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blinding_light_knockback", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_chakra_magic", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_mana_leak", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_recall", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_spotlights", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp_aura", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp_blessing", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_illuminate_self_thinker",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_illuminate",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_spirit_form_illuminate",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_blinding_light",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blinding_light_knockback", "components/abilities/heroes/hero_keeper_of_the_light.lua",
+	LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_chakra_magic",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_mana_leak", "components/abilities/heroes/hero_keeper_of_the_light.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_recall", "components/abilities/heroes/hero_keeper_of_the_light.lua",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_spotlights",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp_aura",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp_blessing",
+	"components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_keeper_of_the_light_illuminate                       = class({})
 modifier_imba_keeper_of_the_light_illuminate_self_thinker = class({}) -- Custom class for attempting non-channel logic
@@ -74,7 +86,8 @@ function imba_keeper_of_the_light_illuminate:OnSpellStart()
 	-- Emit casting sound
 	self.caster:EmitSound("Hero_KeeperOfTheLight.Illuminate.Charge")
 
-	self.caster:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_illuminate_self_thinker", { duration = self:GetSpecialValueFor("max_channel_time") })
+	self.caster:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_illuminate_self_thinker",
+		{ duration = self:GetSpecialValueFor("max_channel_time") })
 end
 
 function imba_keeper_of_the_light_illuminate:OnChannelThink()
@@ -140,21 +153,24 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnCreated()
 	self.vision_time_count = GameRules:GetGameTime()
 
 	-- Emit glowing staff particle
-	self.weapon_particle   = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/kotl_illuminate_cast.vpcf", PATTACH_POINT_FOLLOW, self.caster)
-	ParticleManager:SetParticleControlEnt(self.weapon_particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
+	self.weapon_particle   = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_keeper_of_the_light/kotl_illuminate_cast.vpcf", PATTACH_POINT_FOLLOW, self.caster)
+	ParticleManager:SetParticleControlEnt(self.weapon_particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1",
+		self.caster:GetAbsOrigin(), true)
 	self:AddParticle(self.weapon_particle, false, false, -1, false, false)
 
-	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate", "imba_keeper_of_the_light_illuminate_end", false, true)
+	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate", "imba_keeper_of_the_light_illuminate_end", false,
+		true)
 
-	-- I can't restore the standard spirit form models so I'll have to use some abstractions...
-	local horse_thinker = CreateModifierThinker(self.caster, self.ability, nil, { duration = self.max_channel_time }, self.caster_location, self.caster:GetTeamNumber(), false)
-
-	-- CreateUnitByName("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam())
+	local horse_thinker = CreateUnitByName("npc_dummy_unit", self.caster_location, false, self.caster, self.caster,
+		self.caster:GetTeamNumber())
+	horse_thinker:AddNewModifier(self.caster, self.ability, "modifier_kill", { duration = self.max_channel_time })
 
 	self.spirit = horse_thinker
 	-- Set the unit/horse facing in the direction of where the wave will shoot
 	horse_thinker:SetForwardVector(self.direction)
-	horse_thinker:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_spirit_form_illuminate", { duration = self.duration })
+	horse_thinker:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_spirit_form_illuminate",
+		{ duration = self.duration })
 
 	self:StartIntervalThink(FrameTime())
 end
@@ -165,11 +181,15 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnIntervalThi
 	-- Every 0.5 seconds, create a visibility node further ahead
 	if GameRules:GetGameTime() - self.vision_time_count >= self.channel_vision_interval then
 		self.vision_time_count = GameRules:GetGameTime()
-		self.ability:CreateVisibilityNode(self.caster_location + (self.direction * self.channel_vision_step * self.vision_counter), self.channel_vision_radius, self.channel_vision_duration)
+		self.ability:CreateVisibilityNode(
+		self.caster_location + (self.direction * self.channel_vision_step * self.vision_counter),
+			self.channel_vision_radius, self.channel_vision_duration)
 		self.vision_counter = self.vision_counter + 1
 	end
 
-	self:SetStackCount(math.min((GameRules:GetGameTime() - self.game_time_start + self.ability:GetCastPoint()) * self.damage_per_second, self.total_damage))
+	self:SetStackCount(math.min(
+	(GameRules:GetGameTime() - self.game_time_start + self.ability:GetCastPoint()) * self.damage_per_second,
+		self.total_damage))
 end
 
 function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnDestroy()
@@ -193,7 +213,8 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnDestroy()
 		self.caster_location, self.caster:GetTeamNumber(), false)
 
 	-- Swap the main ability back in
-	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate_end", "imba_keeper_of_the_light_illuminate", false, true)
+	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate_end", "imba_keeper_of_the_light_illuminate", false,
+		true)
 
 	-- Remove the "spirit" channeling Illuminate
 	if self.spirit then
@@ -266,7 +287,8 @@ function modifier_imba_keeper_of_the_light_illuminate:OnCreated(params)
 
 	-- Create the Illuminate particle with CP1 being the velocity and CP3 being the origin
 	-- Why is the circle particle so bright
-	self.particle          = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/kotl_illuminate.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle          = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_keeper_of_the_light/kotl_illuminate.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle, 1, self.direction * self.speed)
 	ParticleManager:SetParticleControl(self.particle, 3, self.parent:GetAbsOrigin())
 
@@ -282,15 +304,19 @@ end
 function modifier_imba_keeper_of_the_light_illuminate:OnIntervalThink()
 	if not IsServer() then return end
 
-	local targets       = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	local damage        = math.min((self.channel_time + self.ability:GetCastPoint()) * self.damage_per_second, self.total_damage)
+	local targets       = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius,
+		DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER, false)
+	local damage        = math.min((self.channel_time + self.ability:GetCastPoint()) * self.damage_per_second,
+		self.total_damage)
 
 	local valid_targets = {}
 
 	-- Borrowed from Bristleback logic which I still don't fully understand, but essentially this checks to make sure the target is within the "front" of the wave, because the local targets table returns everything in a circle
 	for _, target in pairs(targets) do
 		local target_pos   = target:GetAbsOrigin()
-		local target_angle = math.deg(math.atan2((target_pos.x - self.parent:GetAbsOrigin().x), target_pos.y - self.parent:GetAbsOrigin().y))
+		local target_angle = math.deg(math.atan2((target_pos.x - self.parent:GetAbsOrigin().x),
+			target_pos.y - self.parent:GetAbsOrigin().y))
 
 		local difference   = math.abs(self.direction_angle - target_angle)
 
@@ -336,11 +362,12 @@ function modifier_imba_keeper_of_the_light_illuminate:OnIntervalThink()
 				local spotlight_modifier = self.caster:FindModifierByName("modifier_imba_keeper_of_the_light_spotlights")
 
 				if spotlight_modifier then
-					spotlight_modifier:Spotlight(target:GetAbsOrigin(), self.radius, spotlight_modifier:GetAbility():GetSpecialValueFor("attack_duration"))
+					spotlight_modifier:Spotlight(target:GetAbsOrigin(), self.radius,
+						spotlight_modifier:GetAbility():GetSpecialValueFor("attack_duration"))
 				end
 				--...and heal allies
 			elseif GameRules:IsDaytime() and self.caster:HasScepter() then
-				target:Heal(damage, self.caster)
+				target:Heal(damage, self.ability)
 
 				-- Apparently the vanilla skill only shows the heal number if it's a hero?...
 				if target:IsHero() then
@@ -353,11 +380,13 @@ function modifier_imba_keeper_of_the_light_illuminate:OnIntervalThink()
 			target:EmitSound("Hero_KeeperOfTheLight.Illuminate.Target.Secondary")
 
 			-- Apply the "hit by Illuminate" particle
-			local particle_name = "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact_small.vpcf"
+			local particle_name =
+			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact_small.vpcf"
 
 			-- Heroes get a larger particle (supposedly)
 			if target:IsHero() then
-				particle_name = "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				particle_name =
+				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 			end
 
 			local particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, target)
@@ -424,7 +453,8 @@ function imba_keeper_of_the_light_illuminate_end:OnSpellStart()
 
 	if illuminate then
 		-- Then check if the caster is currently "channeling" the illuminate (which they should be if this end ability is castable in the first place)
-		local illuminate_self_thinker = self.caster:FindModifierByName("modifier_imba_keeper_of_the_light_illuminate_self_thinker")
+		local illuminate_self_thinker = self.caster:FindModifierByName(
+		"modifier_imba_keeper_of_the_light_illuminate_self_thinker")
 
 		-- If so, destroy it (which will release the wave)
 		if illuminate_self_thinker then
@@ -438,7 +468,8 @@ end
 --------------------
 
 function imba_keeper_of_the_light_blinding_light:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) * (math.max(self:GetCaster():FindTalentValue("special_bonus_imba_keeper_of_the_light_luminous_burster", "cooldown_mult"), 1))
+	return self.BaseClass.GetCooldown(self, level) *
+	(math.max(self:GetCaster():FindTalentValue("special_bonus_imba_keeper_of_the_light_luminous_burster", "cooldown_mult"), 1))
 end
 
 -- Strobe IMBAfication will be an "opt-out" add-on
@@ -492,7 +523,8 @@ function imba_keeper_of_the_light_blinding_light:OnSpellStart()
 	if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_luminous_burster") then
 		local bursts          = 0
 		local max_bursts      = self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_luminous_burster")
-		local burst_delay     = self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_luminous_burster", "delay")
+		local burst_delay     = self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_luminous_burster",
+			"delay")
 
 		local burst_direction = (position - self.caster:GetAbsOrigin()):Normalized()
 
@@ -516,7 +548,9 @@ function imba_keeper_of_the_light_blinding_light:Pulse(position)
 	-- Emit sound
 	self.caster:EmitSound("Hero_KeeperOfTheLight.BlindingLight")
 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf", PATTACH_POINT_FOLLOW, self.caster, self.caster)
+	local particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf", PATTACH_POINT_FOLLOW,
+		self.caster, self.caster)
 	ParticleManager:SetParticleControl(particle, 0, position)
 	ParticleManager:SetParticleControl(particle, 1, position)
 	ParticleManager:SetParticleControl(particle, 2, Vector(self.radius, 0, 0))
@@ -526,11 +560,14 @@ function imba_keeper_of_the_light_blinding_light:Pulse(position)
 	local spotlight_modifier = self.caster:FindModifierByName("modifier_imba_keeper_of_the_light_spotlights")
 
 	if spotlight_modifier then
-		spotlight_modifier:Spotlight(position, self.radius, spotlight_modifier:GetAbility():GetSpecialValueFor("attack_duration"))
+		spotlight_modifier:Spotlight(position, self.radius,
+			spotlight_modifier:GetAbility():GetSpecialValueFor("attack_duration"))
 	end
 
 	-- Apply Blinding Light modifier and blind to all applicable enemies in radius
-	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), position, nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), position, nil, self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER, false)
 
 	for _, enemy in pairs(enemies) do
 		local damageTable = {
@@ -548,13 +585,16 @@ function imba_keeper_of_the_light_blinding_light:Pulse(position)
 		enemy:SetForwardVector((enemy:GetAbsOrigin() - position):Normalized())
 
 		-- nil checks cause of timer shenanigans
-		enemy:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_blinding_light", { duration = self.duration * (1 - enemy:GetStatusResistance()) })
+		enemy:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_blinding_light",
+			{ duration = self.duration * (1 - enemy:GetStatusResistance()) })
 
 		if enemy:HasModifier("modifier_imba_blinding_light_knockback") then
 			enemy:FindModifierByName("modifier_imba_blinding_light_knockback"):Destroy()
 		end
 
-		enemy:AddNewModifier(self.caster, self, "modifier_imba_blinding_light_knockback", { x = position.x, y = position.y, z = position.z, duration = self.knockback_duration * (1 - enemy:GetStatusResistance()) })
+		enemy:AddNewModifier(self.caster, self, "modifier_imba_blinding_light_knockback",
+			{ x = position.x, y = position.y, z = position.z,
+				duration = self.knockback_duration * (1 - enemy:GetStatusResistance()) })
 	end
 end
 
@@ -680,15 +720,16 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 	-- self.mana_leak_pct		= self:GetSpecialValueFor("mana_leak_pct")
 	-- self.stun_duration		= self:GetSpecialValueFor("stun_duration")
 
-	if not IsServer() then return end
-
 	if self.target:GetTeam() == self.caster:GetTeam() then
 		-- Emit cast sound
 		self.caster:EmitSound("Hero_KeeperOfTheLight.ChakraMagic.Target")
 
 		-- Emit particle
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_chakra_magic.vpcf", PATTACH_POINT_FOLLOW, self.caster)
-		ParticleManager:SetParticleControlEnt(self.particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
+		self.particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_chakra_magic.vpcf", PATTACH_POINT_FOLLOW,
+			self.caster)
+		ParticleManager:SetParticleControlEnt(self.particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1",
+			self.caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.particle, 1, self.target:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(self.particle)
 
@@ -741,8 +782,10 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 		--particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf CP0 CP1
 
 		-- Emit particle
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf", PATTACH_POINT_FOLLOW, self.caster)
-		ParticleManager:SetParticleControlEnt(self.particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
+		self.particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf", PATTACH_POINT_FOLLOW, self.caster)
+		ParticleManager:SetParticleControlEnt(self.particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1",
+			self.caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.particle, 1, self.target:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(self.particle)
 
@@ -753,17 +796,20 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 		end
 
 		-- IMBAfication: Mana Leak
-		self.target:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_mana_leak", { duration = self.duration * (1 - self.target:GetStatusResistance()) })
+		self.target:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_mana_leak",
+			{ duration = self.duration * (1 - self.target:GetStatusResistance()) })
 
 		-- Flow Inhibition Talent
 		if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_flow_inhibition") then
-			local inhibition_multiplier = self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_flow_inhibition")
+			local inhibition_multiplier = self.caster:FindTalentValue(
+			"special_bonus_imba_keeper_of_the_light_flow_inhibition")
 
-			self.target:ReduceMana(self.mana_restore * inhibition_multiplier)
+			self.target:ReduceMana(self.mana_restore * inhibition_multiplier, self)
 
 			-- Apparently the vanilla skill only shows the mana number if it's a hero?...
 			if self.target:IsHero() then
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, self.target, self.mana_restore * inhibition_multiplier, nil)
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, self.target,
+					self.mana_restore * inhibition_multiplier, nil)
 			end
 
 			for abilities = 0, 23 do
@@ -806,10 +852,12 @@ function modifier_imba_keeper_of_the_light_mana_leak:OnCreated()
 	self.starting_position = self.parent:GetAbsOrigin()
 
 	if self.parent:GetMaxMana() <= 0 then
-		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", { duration = self.stun_duration * (1 - self.parent:GetStatusResistance()) })
+		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned",
+			{ duration = self.stun_duration * (1 - self.parent:GetStatusResistance()) })
 		self:Destroy()
 	else
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		local particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 		ParticleManager:ReleaseParticleIndex(particle)
 		self:StartIntervalThink(0.1)
 	end
@@ -827,13 +875,15 @@ function modifier_imba_keeper_of_the_light_mana_leak:OnIntervalThink()
 	local max_mana     = self.parent:GetMaxMana()
 
 	if distance > 0 and distance <= 300 then
-		self.parent:ReduceMana((distance / 100) * (max_mana * self.mana_leak_pct / 100))
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		self.parent:ReduceMana((distance * 0.01) * (max_mana * self.mana_leak_pct * 0.01), self.ability)
+		local particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 		ParticleManager:ReleaseParticleIndex(particle)
 	end
 
 	if self.parent:GetMana() <= 0 then
-		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", { duration = self.stun_duration * (1 - self.parent:GetStatusResistance()) })
+		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned",
+			{ duration = self.stun_duration * (1 - self.parent:GetStatusResistance()) })
 		self:Destroy()
 	end
 
@@ -862,7 +912,9 @@ function modifier_imba_keeper_of_the_light_mana_leak:OnOrder(keys)
 		local spotlight_modifier = self.caster:FindModifierByName("modifier_imba_keeper_of_the_light_spotlights")
 
 		if spotlight_modifier then
-			spotlight_modifier:Spotlight(self.parent:GetAbsOrigin(), spotlight_modifier:GetAbility():GetSpecialValueFor("passive_radius"), spotlight_modifier:GetAbility():GetSpecialValueFor("damaged_duration"))
+			spotlight_modifier:Spotlight(self.parent:GetAbsOrigin(),
+				spotlight_modifier:GetAbility():GetSpecialValueFor("passive_radius"),
+				spotlight_modifier:GetAbility():GetSpecialValueFor("damaged_duration"))
 		end
 	end
 end
@@ -887,7 +939,9 @@ function imba_keeper_of_the_light_recall:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_KeeperOfTheLight.Recall.Cast")
 
 	if not self:GetCursorTarget() or self:GetCursorTarget() == self:GetCaster() then
-		local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil,
+			FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_CLOSEST, false)
 
 		for _, ally in pairs(allies) do
 			if ally ~= self:GetCaster() then
@@ -898,7 +952,8 @@ function imba_keeper_of_the_light_recall:OnSpellStart()
 	end
 
 	if self:GetCursorTarget() and self:GetCursorTarget() ~= self:GetCaster() then
-		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_keeper_of_the_light_recall", { duration = self:GetSpecialValueFor("teleport_delay") })
+		self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_keeper_of_the_light_recall",
+			{ duration = self:GetSpecialValueFor("teleport_delay") })
 	end
 end
 
@@ -926,19 +981,24 @@ function modifier_imba_keeper_of_the_light_recall:OnDestroy()
 		local caster_position = self:GetCaster():GetAbsOrigin()
 
 		if self:GetAbility() and self:GetCaster() and self:GetCaster():IsAlive() then
-			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_poof.vpcf", PATTACH_POINT, self:GetParent())
+			local particle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_poof.vpcf", PATTACH_POINT,
+				self:GetParent())
 			ParticleManager:ReleaseParticleIndex(particle)
 
 			-- Teleport the parent to the caster's position
 			FindClearSpaceForUnit(self:GetParent(), self:GetCaster():GetAbsOrigin(), false)
 
-			EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_KeeperOfTheLight.Recall.End", self:GetCaster())
+			EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), "Hero_KeeperOfTheLight.Recall.End",
+				self:GetCaster())
 
 			local parent = self:GetParent()
 
 			Timers:CreateTimer(FrameTime(), function()
 				if parent then
-					local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_poof.vpcf", PATTACH_POINT, parent)
+					local particle = ParticleManager:CreateParticle(
+					"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_poof.vpcf", PATTACH_POINT,
+						parent)
 					ParticleManager:ReleaseParticleIndex(particle)
 				end
 			end)
@@ -964,7 +1024,9 @@ function modifier_imba_keeper_of_the_light_recall:OnTakeDamage(keys)
 	if keys.unit == self:GetParent() and keys.attacker ~= self:GetParent() and (keys.attacker:IsRealHero() or keys.attacker:IsRoshan()) and keys.original_damage > 0 then
 		self:GetParent():EmitSound("Hero_KeeperOfTheLight.Recall.Fail")
 
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_failure.vpcf", PATTACH_POINT, self:GetParent())
+		local particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_failure.vpcf", PATTACH_POINT,
+			self:GetParent())
 		ParticleManager:ReleaseParticleIndex(particle)
 
 		self:Destroy()
@@ -983,7 +1045,8 @@ end
 
 function imba_keeper_of_the_light_spotlights:OnInventoryContentsChanged()
 	if not self.spotlights_modifier then
-		self.spotlights_modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_keeper_of_the_light_spotlights", self:GetCaster())
+		self.spotlights_modifier = self:GetCaster():FindModifierByNameAndCaster(
+		"modifier_imba_keeper_of_the_light_spotlights", self:GetCaster())
 	end
 
 	if self.spotlights_modifier then
@@ -1017,7 +1080,8 @@ end
 
 function modifier_imba_keeper_of_the_light_spotlights:OnIntervalThink()
 	if GameRules:IsDaytime() then
-		AddFOWViewer(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self:GetParent():GetCurrentVisionRange(), 0.1, false)
+		AddFOWViewer(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(),
+			self:GetParent():GetCurrentVisionRange(), 0.1, false)
 	end
 end
 
@@ -1051,7 +1115,8 @@ end
 function modifier_imba_keeper_of_the_light_spotlights:Spotlight(position, radius, duration)
 	if not IsServer() or self.parent:PassivesDisabled() then return end
 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling.vpcf", PATTACH_POINT, self.parent)
+	local particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling.vpcf", PATTACH_POINT, self.parent)
 	ParticleManager:SetParticleControl(particle, 0, position)
 	ParticleManager:SetParticleControl(particle, 1, Vector(radius, 1, 1))
 
@@ -1097,15 +1162,18 @@ function imba_keeper_of_the_light_will_o_wisp:OnSpellStart()
 
 	-- Calculate total duration that the wisp will be present for using on and off durations
 	-- The initial off duration + total amount of time it's on + total amount of time it's off minus one instace
-	self.duration             = self.off_duration_initial + (self.on_duration * self.on_count) + (self.off_duration * (self.on_count - 1))
+	self.duration             = self.off_duration_initial + (self.on_duration * self.on_count) +
+	(self.off_duration * (self.on_count - 1))
 
 	if not IsServer() then return end
 
 	-- Issue: This thing actually has a slightly larger hitbox than the standard wisp -_-
-	local ignis_fatuus = CreateUnitByName("npc_dota_ignis_fatuus", self.position, true, self.caster, self.caster, self.caster:GetTeamNumber())
+	local ignis_fatuus = CreateUnitByName("npc_dota_ignis_fatuus", self.position, true, self.caster, self.caster,
+		self.caster:GetTeamNumber())
 
 	-- Add the hypnotizing aura modifier
-	ignis_fatuus:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_will_o_wisp", { duration = self.duration })
+	ignis_fatuus:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_will_o_wisp",
+		{ duration = self.duration })
 
 	-- Set up gold bounty
 	ignis_fatuus:SetMaximumGoldBounty(self.bounty)
@@ -1160,12 +1228,14 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnCreated()
 	-- CP1 = Vector(radius, 1, 1)
 	-- CP2 = Vector("hypnotize is on", 0, 0)
 	-- CP3/4/5 = I don't know
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, 1, 1))
 	ParticleManager:SetParticleControl(self.particle, 2, Vector(0, 0, 0))
 	self:AddParticle(self.particle, false, false, -1, false, false)
 
-	self.particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_on.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle2 = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_on.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle2, 2, Vector(0, 0, 0))
 	self:AddParticle(self.particle2, false, false, -1, false, false)
 
@@ -1200,11 +1270,14 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnIntervalThink()
 			ParticleManager:SetParticleControl(self.particle2, 2, Vector(0, 0, 0))
 			self.timer = 0
 		else
-			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius,
+				DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,
+				FIND_ANY_ORDER, false)
 
 			for _, enemy in pairs(enemies) do
 				if not enemy:HasModifier("modifier_imba_keeper_of_the_light_will_o_wisp_aura") then
-					enemy:AddNewModifier(self.parent, self.ability, "modifier_imba_keeper_of_the_light_will_o_wisp_aura", { duration = self.on_duration - self.timer })
+					enemy:AddNewModifier(self.parent, self.ability, "modifier_imba_keeper_of_the_light_will_o_wisp_aura",
+						{ duration = self.on_duration - self.timer })
 				end
 
 				-- CALLING THIS A BILLION TIMES CAUSE IDK WHY IT KEEPS FAILING
@@ -1214,7 +1287,9 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnIntervalThink()
 			local truesight_modifier = self.parent:FindModifierByName("modifier_item_imba_gem_of_true_sight")
 
 			if not truesight_modifier then
-				self.parent:AddNewModifier(self.caster, self.caster:FindAbilityByName("special_bonus_imba_keeper_of_the_light_ignis_truesight"), "modifier_item_imba_gem_of_true_sight", { duration = self.on_duration })
+				self.parent:AddNewModifier(self.caster,
+					self.caster:FindAbilityByName("special_bonus_imba_keeper_of_the_light_ignis_truesight"),
+					"modifier_item_imba_gem_of_true_sight", { duration = self.on_duration })
 			end
 		end
 	end
@@ -1226,11 +1301,14 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnRemoved()
 	self.parent:EmitSound("Hero_KeeperOfTheLight.Wisp.Destroy")
 	self.parent:StopSound("Hero_KeeperOfTheLight.Wisp.Aura")
 
-	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER, false)
 
 	-- Remove exisiting hypnotize modifiers on everyone if the wisp is destroyed during this
 	for _, enemy in pairs(enemies) do
-		local hypnotize_modifier = enemy:FindModifierByNameAndCaster("modifier_imba_keeper_of_the_light_will_o_wisp_aura", self.parent)
+		local hypnotize_modifier = enemy:FindModifierByNameAndCaster(
+		"modifier_imba_keeper_of_the_light_will_o_wisp_aura", self.parent)
 
 		if hypnotize_modifier then
 			hypnotize_modifier:Destroy()
@@ -1292,7 +1370,8 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnAttacked(keys)
 
 			-- Then with ally logic
 		else
-			keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_keeper_of_the_light_will_o_wisp_blessing", { duration = self.ignis_blessing_duration })
+			keys.attacker:AddNewModifier(self.caster, self.ability,
+				"modifier_imba_keeper_of_the_light_will_o_wisp_blessing", { duration = self.ignis_blessing_duration })
 		end
 	end
 end
@@ -1427,15 +1506,23 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_travelling_light", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight",
+	"components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_travelling_light",
+	"components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition",
+	"components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate",
+	"components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight = modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight or class({})
-modifier_special_bonus_imba_keeper_of_the_light_travelling_light = modifier_special_bonus_imba_keeper_of_the_light_travelling_light or class({})
-modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition = modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition or class({})
-modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate = modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate or class({})
+modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight =
+modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight or class({})
+modifier_special_bonus_imba_keeper_of_the_light_travelling_light =
+modifier_special_bonus_imba_keeper_of_the_light_travelling_light or class({})
+modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition =
+modifier_special_bonus_imba_keeper_of_the_light_flow_inhibition or class({})
+modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate =
+modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate or class({})
 
 function modifier_special_bonus_imba_keeper_of_the_light_ignis_truesight:IsHidden() return true end
 
@@ -1463,7 +1550,8 @@ function modifier_special_bonus_imba_keeper_of_the_light_pure_illuminate:RemoveO
 
 -- -- Client-side helper functions --
 
-LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_luminous_burster", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_luminous_burster",
+	"components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_keeper_of_the_light_luminous_burster = class({})
 
@@ -1478,6 +1566,8 @@ function modifier_special_bonus_imba_keeper_of_the_light_luminous_burster:Remove
 
 function imba_keeper_of_the_light_blinding_light:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_keeper_of_the_light_luminous_burster") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_keeper_of_the_light_luminous_burster") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_keeper_of_the_light_luminous_burster"), "modifier_special_bonus_imba_keeper_of_the_light_luminous_burster", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_keeper_of_the_light_luminous_burster"),
+			"modifier_special_bonus_imba_keeper_of_the_light_luminous_burster", {})
 	end
 end

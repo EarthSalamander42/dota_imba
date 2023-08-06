@@ -440,7 +440,7 @@ function imba_snapfire_firesnap_cookie:OnProjectileHit( target, location )
 	-- Firesnap Cookie heals
 	if self:GetCaster():HasTalent("special_bonus_unique_snapfire_5") then
 		if target:GetTeam() == self:GetCaster():GetTeam() then
-			target:Heal(self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_5"), self:GetCaster())
+			target:Heal(self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_5"), self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetCaster():FindTalentValue("special_bonus_unique_snapfire_5"), nil)
 		end
 	end
@@ -1218,7 +1218,7 @@ end
 --------------------------------------------------------------------------------
 -- Interval Effects
 function modifier_imba_snapfire_mortimer_kisses:OnIntervalThink()
-	self:CreateBlob(kv)
+	self:CreateBlob()
 end
 
 function modifier_imba_snapfire_mortimer_kisses:CreateBlob(kv)

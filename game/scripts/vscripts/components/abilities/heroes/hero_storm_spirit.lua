@@ -1,7 +1,7 @@
 -- Editors:
 --     Fudge: 20.07.2017
 
-imba_storm_spirit_static_remnant = storm_spirit_static_remnant or class({})
+imba_storm_spirit_static_remnant = imba_storm_spirit_static_remnant or class({})
 LinkLuaModifier("modifier_imba_static_remnant", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------
@@ -210,10 +210,9 @@ function modifier_imba_static_remnant:CheckState()
 end
 
 function modifier_imba_static_remnant:DeclareFunctions()
-	funcs = {
+	return {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 	}
-	return funcs
 end
 
 function modifier_imba_static_remnant:GetOverrideAnimation()
@@ -223,7 +222,7 @@ end
 --------------------------------------
 ---		   ELECTRIC VORTEX		   ---
 --------------------------------------
-imba_storm_spirit_electric_vortex = storm_spirit_electric_vortex or class({})
+imba_storm_spirit_electric_vortex = imba_storm_spirit_electric_vortex or class({})
 LinkLuaModifier("modifier_imba_vortex_pull", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vortex_root", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vortex_self_slow", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
@@ -319,7 +318,7 @@ function modifier_imba_vortex_pull:IsStunDebuff() return true end
 
 function modifier_imba_vortex_pull:IsMotionController() return true end
 
-function modifier_imba_vortex_pull:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_LOW end
+function modifier_imba_vortex_pull:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_imba_vortex_pull:OnCreated(params)
 	if IsServer() then
@@ -360,17 +359,6 @@ function modifier_imba_vortex_pull:OnIntervalThink()
 
 	-- Horizontal motion
 	self:HorizontalMotion(self:GetParent(), FrameTime())
-end
-
-function modifier_imba_vortex_pull:OnDestroy()
-	if IsServer() then
-		-- Find a clear space to stand on
-		self:GetCaster():SetUnitOnClearGround()
-	end
-end
-
-function modifier_imba_vortex_pull:GetMotionControllerPriority()
-	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
 end
 
 function modifier_imba_vortex_pull:CheckState()
@@ -414,6 +402,7 @@ function modifier_imba_vortex_pull:OnDestroy()
 		StopSoundOn("Hero_StormSpirit.ElectricVortex", self:GetParent())
 
 		-- Find a clear space to stand on
+		self:GetCaster():SetUnitOnClearGround()
 		self:GetParent():SetUnitOnClearGround()
 	end
 end
@@ -434,7 +423,7 @@ function modifier_imba_vortex_root:IsStunDebuff() return true end
 
 function modifier_imba_vortex_root:IsMotionController() return true end
 
-function modifier_imba_vortex_root:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_LOW end
+function modifier_imba_vortex_root:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_imba_vortex_root:OnCreated(params)
 	if IsServer() then
@@ -478,17 +467,6 @@ function modifier_imba_vortex_root:OnIntervalThink()
 	self:HorizontalMotion(self:GetParent(), FrameTime())
 end
 
-function modifier_imba_vortex_root:OnDestroy()
-	if IsServer() then
-		-- Find a clear space to stand on
-		self:GetCaster():SetUnitOnClearGround()
-	end
-end
-
-function modifier_imba_vortex_root:GetMotionControllerPriority()
-	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
-end
-
 function modifier_imba_vortex_root:CheckState()
 	local state =
 	{
@@ -530,6 +508,7 @@ function modifier_imba_vortex_root:OnDestroy()
 		StopSoundOn("Hero_StormSpirit.ElectricVortex", self:GetParent())
 
 		-- Find a clear space to stand on
+		self:GetCaster():SetUnitOnClearGround()
 		self:GetParent():SetUnitOnClearGround()
 	end
 end
@@ -775,12 +754,12 @@ end
 imba_storm_spirit_ball_lightning = imba_storm_spirit_ball_lightning or class({})
 
 LinkLuaModifier("modifier_item_imba_lotus_orb_active", "components/items/item_lotus_orb.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ball_lightning", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_storm_spirit_ball_lightning", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_storm_spirit_ball_lightning:OnSpellStart()
 	if IsServer() then
 		-- Prevent some stupid shit that happens when you try to zip while already zipping
-		if self:GetCaster():FindModifierByName("modifier_imba_ball_lightning") then
+		if self:GetCaster():FindModifierByName("modifier_imba_storm_spirit_ball_lightning") then
 			self:RefundManaCost()
 			return
 		end
@@ -852,7 +831,7 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 		self.projectileID = ProjectileManager:CreateLinearProjectile(projectile)
 
 		-- Add Motion-Controller Modifier
-		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
+		caster:AddNewModifier(caster, self, "modifier_imba_storm_spirit_ball_lightning", {})
 		--		StartAnimation(self:GetCaster(), {duration=10.0, activity=ACT_DOTA_OVERRIDE_ABILITY_4, rate=1.0})
 	end
 end
@@ -876,7 +855,8 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 		self.units_traveled_in_last_tick = ExtraData.speed
 
 		-- Use up mana for traveling
-		caster:ReduceMana(((ExtraData.pct_mana_cost / 100) + ExtraData.base_mana_cost) * self.units_traveled_in_last_tick / 100)
+		local travel_mana_spent = ((ExtraData.pct_mana_cost * 0.01) + ExtraData.base_mana_cost) * self.units_traveled_in_last_tick * 0.01
+		caster:SpendMana(travel_mana_spent, self)
 		-- Note: the last *0.01 in the calculation is because the manacost is calculated for every 100 units.
 
 		if self.traveled_remnant ~= nil and self.remnant then
@@ -913,8 +893,8 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 		-- caster:StopSound("Hero_StormSpirit.BallLightning.Loop")
 
 		-- Get rid of the Ball
-		if caster:FindModifierByName("modifier_imba_ball_lightning") then
-			caster:FindModifierByName("modifier_imba_ball_lightning"):Destroy()
+		if caster:FindModifierByName("modifier_imba_storm_spirit_ball_lightning") then
+			caster:FindModifierByName("modifier_imba_storm_spirit_ball_lightning"):Destroy()
 		end
 		ProjectileManager:DestroyLinearProjectile(self.projectileID)
 	end
@@ -945,7 +925,7 @@ function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, loca
 				damage = damage,
 				damage_type = self:GetAbilityDamageType(),
 				attacker = caster,
-				ability = ability,
+				ability = self,
 				damage_flags = damage_flags
 			}
 
@@ -974,31 +954,31 @@ function imba_storm_spirit_ball_lightning:GetManaCost()
 end
 
 --- BALL LIGHTNING MODIFIER
-modifier_imba_ball_lightning = modifier_imba_ball_lightning or class({})
+modifier_imba_storm_spirit_ball_lightning = modifier_imba_storm_spirit_ball_lightning or class({})
 
 -- Modifier properties
-function modifier_imba_ball_lightning:IsDebuff() return false end
+function modifier_imba_storm_spirit_ball_lightning:IsDebuff() return false end
 
-function modifier_imba_ball_lightning:IsHidden() return false end
+function modifier_imba_storm_spirit_ball_lightning:IsHidden() return false end
 
-function modifier_imba_ball_lightning:IsPurgable() return false end
+function modifier_imba_storm_spirit_ball_lightning:IsPurgable() return false end
 
-function modifier_imba_ball_lightning:GetEffectName()
+function modifier_imba_storm_spirit_ball_lightning:GetEffectName()
 	return "particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
 end
 
 -- Once again with the Rubick exceptions...
-function modifier_imba_ball_lightning:OnCreated()
+function modifier_imba_storm_spirit_ball_lightning:OnCreated()
 	self:StartIntervalThink(1)
 end
 
-function modifier_imba_ball_lightning:OnIntervalThink()
+function modifier_imba_storm_spirit_ball_lightning:OnIntervalThink()
 	if not self:GetAbility() or self:GetAbility():IsNull() then
 		self:Destroy()
 	end
 end
 
-function modifier_imba_ball_lightning:OnDestroy()
+function modifier_imba_storm_spirit_ball_lightning:OnDestroy()
 	if not IsServer() then return end
 
 	self:GetCaster():StopSound("Hero_StormSpirit.BallLightning.Loop")
@@ -1007,19 +987,19 @@ function modifier_imba_ball_lightning:OnDestroy()
 	ProjectileManager:ProjectileDodge(self:GetParent())
 end
 
--- function modifier_imba_ball_lightning:CheckState()
+-- function modifier_imba_storm_spirit_ball_lightning:CheckState()
 -- local state	=	{
 -- --		[MODIFIER_STATE_MAGIC_IMMUNE] = true
 -- }
 -- return state
 -- end
 
-function modifier_imba_ball_lightning:GetEffectAttachType()
+function modifier_imba_storm_spirit_ball_lightning:GetEffectAttachType()
 	-- Yep, this is a thing.
 	return PATTACH_ROOTBONE_FOLLOW
 end
 
-function modifier_imba_ball_lightning:DeclareFunctions()
+function modifier_imba_storm_spirit_ball_lightning:DeclareFunctions()
 	local funcs = {
 		--		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
@@ -1029,19 +1009,19 @@ function modifier_imba_ball_lightning:DeclareFunctions()
 	return funcs
 end
 
---	function modifier_imba_ball_lightning:GetOverrideAnimation()
+--	function modifier_imba_storm_spirit_ball_lightning:GetOverrideAnimation()
 --		return ACT_DOTA_OVERRIDE_ABILITY_4
 --	end
 
-function modifier_imba_ball_lightning:GetAbsoluteNoDamagePhysical()
+function modifier_imba_storm_spirit_ball_lightning:GetAbsoluteNoDamagePhysical()
 	return 1
 end
 
-function modifier_imba_ball_lightning:GetAbsoluteNoDamageMagical()
+function modifier_imba_storm_spirit_ball_lightning:GetAbsoluteNoDamageMagical()
 	return 1
 end
 
-function modifier_imba_ball_lightning:GetAbsoluteNoDamagePure()
+function modifier_imba_storm_spirit_ball_lightning:GetAbsoluteNoDamagePure()
 	return 1
 end
 

@@ -456,7 +456,7 @@ function modifier_imba_lion_hex:OnCreated()
 	-- If the parent is an illusion, pop it and exit
 	if self.parent:IsIllusion() and not Custom_bIsStrongIllusion(self.parent) then
 		self.parent:Kill(self.ability, self.caster)
-		return nil
+		return
 	end
 
 	if IsServer() then
@@ -871,14 +871,9 @@ function modifier_imba_manadrain_aura_debuff:OnIntervalThink()
 		local mana_drain = mana_drain_per_sec * self.interval
 
 		-- Reduce the target's mana by the value or get everything he has
-		local target_mana = self.parent:GetMana()
-		if target_mana > mana_drain then
-			self.parent:ReduceMana(mana_drain)
-			self.caster:GiveMana(mana_drain)
-		else
-			self.parent:ReduceMana(target_mana)
-			self.caster:GiveMana(target_mana)
-		end
+		local mana_exchange = math.min(mana_drain, self.parent:GetMana())
+		self.parent:ReduceMana(mana_exchange, self.ability)
+		self.caster:GiveMana(mana_exchange)
 	end
 end
 
@@ -895,7 +890,7 @@ function modifier_imba_manadrain_debuff:OnCreated()
 	-- Destroy the target if it is an illusion
 	if self.parent:IsIllusion() and not Custom_bIsStrongIllusion(self.parent) then
 		self.parent:Kill(self.ability, self.caster)
-		return nil
+		return
 	end
 
 	-- Ability specials
@@ -931,18 +926,12 @@ function modifier_imba_manadrain_debuff:OnIntervalThink()
 		local target_mana = self.parent:GetMana()
 
 		-- Check if target has more mana than max possible to drain, else drain what target has
-		if target_mana > self.mana_drain_per_interval then
-			self.parent:ReduceMana(self.mana_drain_per_interval)
-			self.caster:GiveMana(self.mana_drain_per_interval)
-			self.mana_drained = self.mana_drain_per_interval
-		else
-			self.caster:GiveMana(target_mana)
-			self.parent:ReduceMana(target_mana)
-			self.mana_drained = target_mana
-		end
+		self.mana_drained = math.min(target_mana, self.mana_drain_per_interval)
+		self.caster:GiveMana(self.mana_drained)
+		self.parent:ReduceMana(self.mana_drained, self.ability)
 
 		-- Damage target by a percent of mana drained
-		local damage = self.mana_drained * self.mana_pct_as_damage / 100
+		local damage = self.mana_drained * self.mana_pct_as_damage * 0.01
 
 		local damageTable = {
 			victim = self.parent,
@@ -962,7 +951,7 @@ function modifier_imba_manadrain_debuff:OnIntervalThink()
 				mana_overcharge = self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_manadrain_manaovercharge", { duration = self.caster:FindTalentValue("special_bonus_imba_lion_3", "duration") })
 			end
 			if mana_overcharge then
-				mana_overcharge_stacks = mana_overcharge:GetStackCount()
+				local mana_overcharge_stacks = mana_overcharge:GetStackCount()
 				mana_overcharge:SetStackCount(mana_overcharge_stacks + mana_over_drain)
 			end
 		end
@@ -1033,14 +1022,10 @@ function modifier_imba_manadrain_buff:OnIntervalThink()
 		-- Get target's current mana
 		local caster_mana = self.caster:GetMana()
 
-		-- If the caster has more mana than how much it is supposed to give, give it all
-		if caster_mana > self.mana_drain_per_interval then
-			self.caster:ReduceMana(self.mana_drain_per_interval)
-			self.parent:GiveMana(self.mana_drain_per_interval)
-		else
-			self.parent:GiveMana(caster_mana)
-			self.target:ReduceMana(caster_mana)
-		end
+		-- Transfer mana from caster to the parent
+		local mana_exchange = math.min(caster_mana, self.mana_drain_per_interval)
+		self.parent:GiveMana(mana_exchange)
+		self.caster:ReduceMana(mana_exchange, self.ability)
 	end
 end
 
@@ -1144,15 +1129,14 @@ function imba_lion_finger_of_death:OnSpellStart()
 	-- #3 Talent: Assign Mana Overcharge damage
 	local mana_overcharge = caster:FindModifierByName("modifier_imba_manadrain_manaovercharge")
 	if mana_overcharge then
-		mana_overcharge_stacks = mana_overcharge:GetStackCount()
-		damage = damage + mana_overcharge_stacks
+		damage = damage + mana_overcharge:GetStackCount()
 		caster:RemoveModifierByName("modifier_imba_manadrain_manaovercharge")
 	end
 
 	-- If target has Linken's Sphere off cooldown, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return nil
+			return
 		end
 	end
 
@@ -1164,7 +1148,8 @@ function imba_lion_finger_of_death:OnSpellStart()
 		-- Index a table for enemies to be marked
 		local finger_scepter_enemies = {}
 
-		enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+		local enemies = FindUnitsInRadius(
+			caster:GetTeamNumber(),
 			target:GetAbsOrigin(),
 			nil,
 			enemies_frog_radius,
@@ -1172,7 +1157,8 @@ function imba_lion_finger_of_death:OnSpellStart()
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
 			FIND_ANY_ORDER,
-			false)
+			false
+		)
 
 		for _, enemy in pairs(enemies) do
 			if not enemy:IsMagicImmune() and not enemy:HasModifier(modifier_hex) then
@@ -1181,7 +1167,8 @@ function imba_lion_finger_of_death:OnSpellStart()
 			end
 		end
 
-		enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+		enemies = FindUnitsInRadius(
+			caster:GetTeamNumber(),
 			target:GetAbsOrigin(),
 			nil,
 			scepter_radius,
@@ -1189,7 +1176,8 @@ function imba_lion_finger_of_death:OnSpellStart()
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
 			FIND_ANY_ORDER,
-			false)
+			false
+		)
 
 		for _, enemy in pairs(enemies) do
 			local marked = false
@@ -1372,10 +1360,6 @@ end
 
 function modifier_imba_finger_of_death_hex:GetModifierModelChange()
 	return "models/props_gameplay/frog.vmdl"
-end
-
-function modifier_imba_finger_of_death_hex:GetModifierMoveSpeed_Absolute()
-	return self:GetAbility():GetSpecialValueFor("hex_move_speed")
 end
 
 function modifier_imba_finger_of_death_hex:GetModifierMoveSpeed_Absolute()

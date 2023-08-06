@@ -249,7 +249,7 @@ function modifier_imba_smoke_screen_invi_indicator:OnIntervalThink()
 		self.counter = self.counter + 1
 	end
 	if self.counter >= self.fade_delay then
-		self.caster:AddNewModifier(caster, ability, "modifier_imba_smoke_screen_invi", {})
+		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_smoke_screen_invi", {})
 	end
 end
 
@@ -902,8 +902,8 @@ function modifier_imba_blink_strike_thinker:OnIntervalThink()
 				local tJumpableUnits = FindUnitsInRadius(self.hCaster:GetTeamNumber(), self.hCaster:GetAbsOrigin(), nil, self.max_range, self.hAbility:GetAbilityTargetTeam(), self.hAbility:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_FARTHEST, false)
 				-- Creating nodes for A*, a 2D-graph for calculations, using x and y coordinates
 				local graph = {}
-				local caster_index = false
-				local target_index = false
+				local caster_index
+				local target_index
 				-- Making a table suitable for the A*-algorithm, adding a lagg-threshold to ensure mass units affect performance (e.g. Broodmother)
 				for i = 1, math.min(#tJumpableUnits, self.lagg_threshold) do
 					local pos = tJumpableUnits[i]:GetAbsOrigin()
@@ -935,6 +935,11 @@ function modifier_imba_blink_strike_thinker:OnIntervalThink()
 					graph[target_index].x = pos.x
 					graph[target_index].y = pos.y
 					graph[target_index].IsTarget = true
+				end
+
+				-- if astar can't be found in the global scope try requiring the library again
+				if not astar then
+					astar = require('libraries/astar')
 				end
 				-- This are the parameters for the A-star.
 				local valid_node_func = function(node, neighbor)
@@ -1049,9 +1054,9 @@ end
 --------------------	  Cloak and Dagger		 --------------------
 ---------------------------------------------------------------------
 imba_riki_cloak_and_dagger = imba_riki_cloak_and_dagger or class({})
-LinkLuaModifier("modifier_imba_riki_cloak_and_dagger", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)       -- Backstab and invisibility handler
-LinkLuaModifier("modifier_imba_riki_invisibility", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)           -- Invisibility modifier
-LinkLuaModifier("modifier_imba_riki_backstab_translation", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)   -- Attack translate
+LinkLuaModifier("modifier_imba_riki_cloak_and_dagger", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)     -- Backstab and invisibility handler
+LinkLuaModifier("modifier_imba_riki_invisibility", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)         -- Invisibility modifier
+LinkLuaModifier("modifier_imba_riki_backstab_translation", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE) -- Attack translate
 LinkLuaModifier("modifier_imba_riki_peek_a_boo", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_riki_backbreaker", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_riki_backbroken", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1095,7 +1100,6 @@ function imba_riki_cloak_and_dagger:GetIntrinsicModifierName()
 end
 
 function imba_riki_cloak_and_dagger:OnOwnerSpawned()
-	if not IsServer() then return end
 	self:EndCooldown()
 	if self:GetCaster():HasAbility("special_bonus_imba_riki_3") and self:GetCaster():FindAbilityByName("special_bonus_imba_riki_3"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_riki_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_riki_3", {})
@@ -1259,12 +1263,18 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded(keys)
 				-- #8 Talent: Riki gains a chance to attack an opponent's back
 				if parent:HasTalent("special_bonus_imba_riki_8") and back_chance_success and target ~= self:GetParent() then
 					-- Get the Blink Strike ability for the debuff duration. If it doesn't have it, no debuff for you!
-					blink_strike_ability = parent:FindAbilityByName("imba_riki_blink_strike")
+					local blink_strike_ability = parent:FindAbilityByName("imba_riki_blink_strike")
 					local turn_debuff_duration
 					if blink_strike_ability then
 						turn_debuff_duration = blink_strike_ability:GetSpecialValueFor("duration")
 						target:AddNewModifier(parent, blink_strike_ability, "modifier_imba_blink_strike_debuff_turn", { duration = turn_debuff_duration * (1 - target:GetStatusResistance()) })
-						ApplyDamage({ victim = target, attacker = attacker, damage = blink_strike_ability:GetSpecialValueFor("bonus_damage") or blink_strike_ability:GetSpecialValueFor("damage"), damage_type = blink_strike_ability:GetAbilityDamageType() })
+						ApplyDamage({
+							victim = target,
+							attacker = attacker,
+							damage = blink_strike_ability:GetSpecialValueFor("bonus_damage") or blink_strike_ability:GetSpecialValueFor("damage"),
+							damage_type = blink_strike_ability:GetAbilityDamageType(),
+							ability = blink_strike_ability
+						})
 					end
 
 					-- Emit Blink Strike sound
@@ -1522,7 +1532,7 @@ function modifier_imba_riki_backbreaker:OnRefresh()
 			ParticleManager:ReleaseParticleIndex(backbreak_particle_fx)
 			EmitSoundOn("Imba.RikiCritStab", parent)
 
-			parent:AddNewModifier(caster, ability, "modifier_imba_riki_backbroken", { duration = caster:FindTalentValue("special_bonus_imba_riki_7", "break_duration") * (1 - target:GetStatusResistance()) })
+			parent:AddNewModifier(caster, ability, "modifier_imba_riki_backbroken", { duration = caster:FindTalentValue("special_bonus_imba_riki_7", "break_duration") * (1 - parent:GetStatusResistance()) })
 			self:Destroy()
 		end
 	end
@@ -1542,7 +1552,7 @@ end
 ---------------------------------------------------------------------
 --------------------	Tricks of the Trade		---------------------
 ---------------------------------------------------------------------
-if imba_riki_tricks_of_the_trade == nil then imba_riki_tricks_of_the_trade = class({}) end
+imba_riki_tricks_of_the_trade = imba_riki_tricks_of_the_trade or class({})
 LinkLuaModifier("modifier_imba_riki_tricks_of_the_trade_primary", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)     -- Hides the caster and damages all enemies in the AoE
 LinkLuaModifier("modifier_imba_riki_tricks_of_the_trade_secondary", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)   -- Attacks a single enemy based on attack speed
 LinkLuaModifier("modifier_imba_martyrs_mark", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1666,7 +1676,7 @@ end
 function imba_riki_tricks_of_the_trade:OnChannelThink()
 	local caster = self:GetCaster()
 	if caster:HasScepter() and self.target and not self.target:IsNull() then
-		origin = self.target:GetAbsOrigin()
+		local origin = self.target:GetAbsOrigin()
 		caster:SetAbsOrigin(origin)
 		ParticleManager:SetParticleControl(self.TricksParticle, 0, origin)
 		ParticleManager:SetParticleControl(self.TricksParticle, 3, origin)
@@ -1865,10 +1875,12 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 		local caster = ability:GetCaster()
 		local origin = caster:GetAbsOrigin()
 
-		if caster:HasScepter() and target then
+		if caster:HasScepter() then
 			local target = ability:GetCursorTarget()
-			origin = target:GetAbsOrigin()
-			caster:SetAbsOrigin(origin)
+			if target then
+				origin = target:GetAbsOrigin()
+				caster:SetAbsOrigin(origin)
+			end
 		end
 
 		local aoe = ability:GetSpecialValueFor("area_of_effect")
@@ -2112,8 +2124,6 @@ function imba_riki_cloak_and_dagger_723:GetBehavior()
 end
 
 function imba_riki_cloak_and_dagger_723:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasModifier("modifier_imba_riki_cloak_and_dagger_723") then
 		self:GetCaster():FindModifierByName("modifier_imba_riki_cloak_and_dagger_723"):SetDuration(-1, false)
 	end
@@ -2228,7 +2238,6 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_riki_1", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_riki_2", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_riki_3", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_riki_4", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_riki_5", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_riki_6", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
@@ -2238,7 +2247,6 @@ LinkLuaModifier("modifier_special_bonus_imba_riki_cloak_and_dagger_damage", "com
 
 modifier_special_bonus_imba_riki_1 = modifier_special_bonus_imba_riki_1 or class({})
 modifier_special_bonus_imba_riki_2 = modifier_special_bonus_imba_riki_2 or class({})
-modifier_special_bonus_imba_riki_3 = modifier_special_bonus_imba_riki_3 or class({})
 modifier_special_bonus_imba_riki_4 = modifier_special_bonus_imba_riki_4 or class({})
 modifier_special_bonus_imba_riki_5 = modifier_special_bonus_imba_riki_5 or class({})
 modifier_special_bonus_imba_riki_6 = modifier_special_bonus_imba_riki_6 or class({})
@@ -2250,9 +2258,11 @@ function modifier_special_bonus_imba_riki_1:IsHidden() return true end
 
 function modifier_special_bonus_imba_riki_1:IsPurgable() return false end
 
-function modifier_special_bonus_imba_riki_1:RemoveOnDeath() return false end
+function modifier_special_bonus_imba_riki_4:IsHidden() return true end
 
-function modifier_special_bonus_imba_riki_2:IsHidden() return true end
+function modifier_special_bonus_imba_riki_4:IsPurgable() return false end
+
+function modifier_special_bonus_imba_riki_4:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_riki_2:IsPurgable() return false end
 

@@ -619,24 +619,17 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 
 	-- Calculate mana burn
 	local manaburn = target_stat * intelligence_mult
-	local actual_mana_burned = 0
-
-	-- Burn mana
 	local target_mana = target:GetMana()
 
-	if target_mana > manaburn then
-		target:ReduceMana(manaburn)
-		actual_mana_burned = manaburn
-	else
-		target:ReduceMana(target_mana)
-		actual_mana_burned = target_mana
-	end
+	-- Burn mana
+	local actual_mana_burned = math.min(target_mana, manaburn)
+	target:ReduceMana(actual_mana_burned, ability)
 
 	-- Calculate damage
 	local damage = actual_mana_burned * mana_burn_damage_pct / 100
 
 	-- Apply damage
-	damageTable = {
+	local damageTable = {
 		victim = target,
 		attacker = caster,
 		damage = damage,
@@ -651,10 +644,10 @@ end
 modifier_imba_mana_burn_parasite = class({})
 
 function modifier_imba_mana_burn_parasite:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_HERO_KILLED,
-		MODIFIER_EVENT_ON_TAKEDAMAGE }
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_HERO_KILLED,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 end
 
 function modifier_imba_mana_burn_parasite:OnCreated()
@@ -708,17 +701,11 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 	if IsServer() then
 		-- Leech mana per interval
 		local target_current_mana = self.parent:GetMana()
-		local mana_leeched = 0
-		local mana_lost = 0
+		--local mana_lost = 0
 
 		-- Check if there is enough mana to leech
-		if target_current_mana >= self.parasite_mana_leech then
-			self.parent:ReduceMana(self.parasite_mana_leech)
-			mana_leeched = self.parasite_mana_leech
-		else -- Get the mana that the target has
-			self.parent:ReduceMana(target_current_mana)
-			mana_leeched = target_current_mana
-		end
+		local mana_leeched = math.min(target_current_mana, self.parasite_mana_leech)
+		self.parent:ReduceMana(mana_leeched, self.ability)
 
 		-- Check if the target has lost mana since the last check. If he has, add it to the charge count
 		--if target_current_mana < self.last_known_target_mana then
@@ -770,11 +757,9 @@ function modifier_imba_mana_burn_parasite:OnTakeDamage(keys)
 		if self.parent == unit and damage > 0 then
 			local mana_burned = damage * (self.scarring_burn_pct / 100) -- 8%/10%/12%/14%
 
-			if mana_burned > self.parent:GetMana() then
-				mana_burned = self.parent:GetMana()
-			end
+			mana_burned = math.min(mana_burned, self.parent:GetMana())
 
-			self.parent:ReduceMana(mana_burned)
+			self.parent:ReduceMana(mana_burned, self.ability)
 
 			self.parasite_charged_mana = self.parasite_charged_mana + mana_burned
 
@@ -840,7 +825,7 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		end
 
 		-- Get target's current mana
-		local target_current_mana = self.parent:GetMana()
+		--local target_current_mana = self.parent:GetMana()
 
 		-- Play explosion sound
 		EmitSoundOn(self.sound_explosion, self.parent)
@@ -860,7 +845,7 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		--local damage = (self.starting_target_mana - target_current_mana) * self.parasite_mana_as_damage_pct / 100
 		local damage = self.parasite_charged_mana * self.parasite_mana_as_damage_pct / 100
 
-		damageTable = {
+		local damageTable = {
 			victim = self.parent,
 			attacker = self.caster,
 			damage = damage,
@@ -1007,9 +992,9 @@ function modifier_imba_spiked_carapace:OnCreated()
 		self.modifier_burrowed = "modifier_nyx_assassin_burrow"
 
 		-- Yes, i know. If you find another way to send a particle name clientside for the status effect i'll take it.
-		if Battlepass and BATTLEPASS_NYX_ASSASSIN and Battlepass:GetRewardUnlocked(self.caster:GetPlayerID()) >= BATTLEPASS_NYX_ASSASSIN["nyx_assassin_immortal"] then
-			self:SetStackCount(1)
-		end
+		--if Battlepass and BATTLEPASS_NYX_ASSASSIN and Battlepass:GetRewardUnlocked(self.caster:GetPlayerID()) >= BATTLEPASS_NYX_ASSASSIN["nyx_assassin_immortal"] then
+		--self:SetStackCount(1)
+		--end
 
 		-- Ability specials
 		self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")

@@ -2,7 +2,8 @@
 --     zimberzimber, 22.03.2017
 --	   AltiV, 06.04.2019 (adding 7.20 Time Lock)
 
-LinkLuaModifier("modifier_imba_faceless_void_chronocharges", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE) -- Chronocharges counter
+LinkLuaModifier("modifier_imba_faceless_void_chronocharges", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                -- Chronocharges counter
 if modifier_imba_faceless_void_chronocharges == nil then modifier_imba_faceless_void_chronocharges = class({}) end
 function modifier_imba_faceless_void_chronocharges:IsPurgable() return false end
 
@@ -20,7 +21,8 @@ end
 --------------------	  Timelord		 --------------------
 -------------------------------------------------------------
 if imba_faceless_void_timelord == nil then imba_faceless_void_timelord = class({}) end
-LinkLuaModifier("modifier_imba_faceless_void_timelord", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE) -- increases attack speed by [current attack speed] * 0.15
+LinkLuaModifier("modifier_imba_faceless_void_timelord", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                           -- increases attack speed by [current attack speed] * 0.15
 
 function imba_faceless_void_timelord:GetAbilityTextureName()
 	return "faceless_void_timelord"
@@ -89,18 +91,24 @@ end
 --------------------	  Time Walk		 --------------------
 -------------------------------------------------------------
 if imba_faceless_void_time_walk == nil then imba_faceless_void_time_walk = class(VANILLA_ABILITIES_BASECLASS) end
-LinkLuaModifier("modifier_imba_faceless_void_time_walk_damage_counter", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE) -- Reduced moenemt/attack speed stolen by caster
-LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_as", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)        -- Bonus attack speed stolen from enemies
-LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_ms", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)        -- Bonus movement speed stolen from enemies
-LinkLuaModifier("modifier_imba_faceless_void_time_walk_cast", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)           -- Motion + invuln
-LinkLuaModifier("modifier_imba_faceless_void_time_walk_slow", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)           -- Reduced moenemt/attack speed stolen by caster
+LinkLuaModifier("modifier_imba_faceless_void_time_walk_damage_counter",
+	"components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)                                                                     -- Reduced moenemt/attack speed stolen by caster
+LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_as", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                           -- Bonus attack speed stolen from enemies
+LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_ms", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                           -- Bonus movement speed stolen from enemies
+LinkLuaModifier("modifier_imba_faceless_void_time_walk_cast", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                           -- Motion + invuln
+LinkLuaModifier("modifier_imba_faceless_void_time_walk_slow", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                           -- Reduced moenemt/attack speed stolen by caster
 
 function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
 
 function imba_faceless_void_time_walk:IsNetherWardStealable() return false end
 
 function imba_faceless_void_time_walk:GetCooldown(level)
-	return self:GetVanillaKeyValue("AbilityCooldown", level) - self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_11")
+	return self:GetVanillaKeyValue("AbilityCooldown", level) -
+	self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_11")
 end
 
 function imba_faceless_void_time_walk:GetIntrinsicModifierName()
@@ -152,7 +160,8 @@ end
 
 function imba_faceless_void_time_walk:GetCastRange(location, target)
 	if IsClient() then
-		local cast_range = self:GetVanillaAbilitySpecial("range") + self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
+		local cast_range = self:GetVanillaAbilitySpecial("range") +
+		self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
 
 		-- Volvo did you hardcode this value? can't find it ugh
 		if self:GetCaster():HasShard() then
@@ -172,7 +181,8 @@ function imba_faceless_void_time_walk:OnSpellStart()
 	-- Play sound and apply casting modifier
 	caster:EmitSound("Hero_FacelessVoid.TimeWalk")
 
-	local max_cast_range = self:GetVanillaAbilitySpecial("range") + caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
+	local max_cast_range = self:GetVanillaAbilitySpecial("range") +
+	caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
 
 	-- Volvo did you hardcode this value? can't find it ugh
 	if self:GetCaster():HasShard() then
@@ -180,7 +190,8 @@ function imba_faceless_void_time_walk:OnSpellStart()
 	end
 
 	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {
-		duration = math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), max_cast_range) / self:GetVanillaAbilitySpecial("speed") + 0.5, -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
+		duration = math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), max_cast_range) /
+		self:GetVanillaAbilitySpecial("speed") + 0.5,                                                                                          -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
 		x        = position.x,
 		y        = position.y,
 		z        = position.z
@@ -198,10 +209,11 @@ function imba_faceless_void_time_walk:OnSpellStart()
 
 	-- Heal recent damage
 	if caster.time_walk_damage_taken then
-		caster:Heal(caster.time_walk_damage_taken, self:GetCaster())
+		caster:Heal(caster.time_walk_damage_taken, self)
 	end
 
-	local aoe_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf", PATTACH_ABSORIGIN, caster)
+	local aoe_pfx = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(aoe_pfx, 1, Vector(slow_radius, 0, 0))
 	ParticleManager:ReleaseParticleIndex(aoe_pfx)
 	ProjectileManager:ProjectileDodge(caster)
@@ -210,7 +222,8 @@ end
 ------------------------------------------
 -----	Time Walk damage counter	 -----
 ------------------------------------------
-if modifier_imba_faceless_void_time_walk_damage_counter == nil then modifier_imba_faceless_void_time_walk_damage_counter = class({}) end
+if modifier_imba_faceless_void_time_walk_damage_counter == nil then modifier_imba_faceless_void_time_walk_damage_counter =
+	class({}) end
 function modifier_imba_faceless_void_time_walk_damage_counter:IsPurgable() return false end
 
 function modifier_imba_faceless_void_time_walk_damage_counter:IsDebuff() return false end
@@ -312,7 +325,8 @@ function modifier_imba_faceless_void_time_walk_cast:IgnoreTenacity() return true
 
 function modifier_imba_faceless_void_time_walk_cast:IsMotionController() return true end
 
-function modifier_imba_faceless_void_time_walk_cast:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+function modifier_imba_faceless_void_time_walk_cast:GetMotionControllerPriority() return
+	DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_imba_faceless_void_time_walk_cast:GetEffectName()
 	return "particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
@@ -340,7 +354,8 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		local position = GetGroundPosition(Vector(params.x, params.y, params.z), nil)
 
 		-- Compare distance to cast point and max distance, use whichever is closer
-		local max_distance = ability:GetVanillaAbilitySpecial("range") + caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
+		local max_distance = ability:GetVanillaAbilitySpecial("range") +
+		caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
 
 		if caster:HasShard() then
 			max_distance = max_distance + 200
@@ -358,10 +373,13 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		self.distance_traveled = 0
 		self.distance = distance
 
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+		local particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf", PATTACH_ABSORIGIN,
+			self:GetParent())
 		ParticleManager:SetParticleControl(particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle, 1, self:GetParent():GetAbsOrigin() + self.direction * distance)
-		ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetForwardVector(), true)
+		ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc",
+			self:GetParent():GetForwardVector(), true)
 		ParticleManager:ReleaseParticleIndex(particle)
 
 		-- Enemy effect handler
@@ -396,32 +414,38 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 		local chronocharges = 0
 
 		-- Slow enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe,
+			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER, false)
 
 		for _, enemy in pairs(enemies) do
 			if not enemy:HasModifier("modifier_imba_faceless_void_time_walk_slow") then
 				-- If the enemy is a real hero index their move and attack speed, and grant a chronocharge
 				if enemy:IsRealHero() then
 					self.as_stolen = self.as_stolen + enemy:GetAttackSpeed() * as_steal
-					self.ms_stolen = self.ms_stolen + enemy:GetMoveSpeedModifier(enemy:GetBaseMoveSpeed(), false) * ms_steal
+					self.ms_stolen = self.ms_stolen +
+					enemy:GetMoveSpeedModifier(enemy:GetBaseMoveSpeed(), false) * ms_steal
 					chronocharges = chronocharges + 1
 				end
 
 				-- Play hit particle only on hit heroes, and their illusions to prevent the caster from finding the real hero with this skill.
 				if enemy:IsHero() then
-					local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf", PATTACH_ABSORIGIN, enemy)
+					local particle = ParticleManager:CreateParticle(
+					"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf", PATTACH_ABSORIGIN, enemy)
 					ParticleManager:SetParticleControl(particle, 0, enemy:GetAbsOrigin())
 					ParticleManager:ReleaseParticleIndex(particle)
 				end
 
 				-- Apply the slow
-				enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", { duration = duration * (1 - enemy:GetStatusResistance()) })
+				enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow",
+					{ duration = duration * (1 - enemy:GetStatusResistance()) })
 			end
 		end
 
 		-- If spell not stolen, add chronocharges
 		if not ability:IsStolen() and self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges") then
-			self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + chronocharges)
+			self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self
+			:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + chronocharges)
 		end
 	end
 end
@@ -433,8 +457,10 @@ function modifier_imba_faceless_void_time_walk_cast:OnRemoved()
 		local duration = ability:GetSpecialValueFor("duration")
 		local aoe = self:GetAbility():GetSpecialValueFor("slow_radius")
 
-		local asBuff = caster:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_buff_as", { duration = duration })
-		local msBuff = caster:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_buff_ms", { duration = duration })
+		local asBuff = caster:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_buff_as",
+			{ duration = duration })
+		local msBuff = caster:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_buff_ms",
+			{ duration = duration })
 		asBuff:SetStackCount(self.as_stolen)
 		msBuff:SetStackCount(self.ms_stolen)
 
@@ -447,7 +473,8 @@ function modifier_imba_faceless_void_time_walk_cast:OnRemoved()
 		-- Timer because it has a slight offset otherwise
 		Timers:CreateTimer(0.1, function()
 			-- Play particle around landing point
-			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf", PATTACH_ABSORIGIN, caster)
+			local particle = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf", PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(particle, 1, Vector(aoe, aoe, aoe))
 			ParticleManager:ReleaseParticleIndex(particle)
 
@@ -466,8 +493,10 @@ function modifier_imba_faceless_void_time_walk_cast:HorizontalMotion(me, dt)
 	print(self.distance_traveled)
 	print(self.distance)
 	if self.distance_traveled < self.distance then
-		self:GetCaster():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + (self.direction * math.min(self.velocity * dt, self.distance - self.distance_traveled)))
-		self.distance_traveled = self.distance_traveled + math.min(self.velocity * dt, self.distance - self.distance_traveled)
+		self:GetCaster():SetAbsOrigin(self:GetCaster():GetAbsOrigin() +
+		(self.direction * math.min(self.velocity * dt, self.distance - self.distance_traveled)))
+		self.distance_traveled = self.distance_traveled +
+		math.min(self.velocity * dt, self.distance - self.distance_traveled)
 	else
 		self:Destroy()
 	end
@@ -515,9 +544,12 @@ end
 --------------------	  Time Dilation		--------------------
 ----------------------------------------------------------------
 if imba_faceless_void_time_dilation == nil then imba_faceless_void_time_dilation = class({}) end
-LinkLuaModifier("modifier_imba_faceless_void_time_dilation_buff", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE) -- Ally/Caster buff
-LinkLuaModifier("modifier_imba_faceless_void_time_dilation_slow", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE) -- Enemy debuff
-LinkLuaModifier("modifier_imba_time_dilation_talent", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)             -- Talent caster buff
+LinkLuaModifier("modifier_imba_faceless_void_time_dilation_buff", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                     -- Ally/Caster buff
+LinkLuaModifier("modifier_imba_faceless_void_time_dilation_slow", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                     -- Enemy debuff
+LinkLuaModifier("modifier_imba_time_dilation_talent", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                     -- Talent caster buff
 
 function imba_faceless_void_time_dilation:IsHiddenWhenStolen() return false end
 
@@ -539,9 +571,11 @@ function imba_faceless_void_time_dilation:OnUpgrade()
 
 				-- If the last caster was indexed (should be, but just in case)
 				if originalCaster then
-					local chronochargeModifier = originalCaster:FindModifierByName("modifier_imba_faceless_void_chronocharges")
+					local chronochargeModifier = originalCaster:FindModifierByName(
+					"modifier_imba_faceless_void_chronocharges")
 					if chronochargeModifier then
-						self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount())
+						self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(
+						self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount())
 					end
 				end
 			end
@@ -580,16 +614,19 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 	end
 
 	-- Get enemies caught in the aoe
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe,
+		DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
 	for _, enemy in pairs(enemies) do
 		if enemy:IsRealHero() then
 			enemy:EmitSound("Hero_FacelessVoid.TimeDilation.Target")
 
-			local hit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, enemy)
+			local hit_pfx = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, enemy)
 			ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(hit_pfx)
 
-			local hit_pfx_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf_d.vpcf", PATTACH_ABSORIGIN, enemy)
+			local hit_pfx_2 = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf_d.vpcf", PATTACH_ABSORIGIN, enemy)
 			ParticleManager:ReleaseParticleIndex(hit_pfx_2)
 
 			-- Iterate through the enemies abilities
@@ -603,13 +640,15 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 
 					-- #1 TALENT: Time Dilation grants Backtrack
 					if caster:HasTalent("special_bonus_imba_faceless_void_1") then
-						caster:AddNewModifier(caster, self, "modifier_imba_time_dilation_talent", { duration = caster:FindTalentValue("special_bonus_imba_faceless_void_1", "duration") })
+						caster:AddNewModifier(caster, self, "modifier_imba_time_dilation_talent",
+							{ duration = caster:FindTalentValue("special_bonus_imba_faceless_void_1", "duration") })
 					end
 				end
 			end
 
 			if abilities_on_cooldown > 0 then
-				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", { duration = cd_increase * (1 - enemy:GetStatusResistance()) })
+				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow",
+					{ duration = cd_increase * (1 - enemy:GetStatusResistance()) })
 
 				if debuff then
 					debuff:SetStackCount(abilities_on_cooldown)
@@ -619,7 +658,8 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 	end
 
 	-- Get allies caught in the aoe
-	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 	local charges_spent = 0
 	for _, ally in pairs(allies) do
 		-- #7 TALENT: Time Dilation no longer spends chronocharges to affect allies.
@@ -653,11 +693,13 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 
 		-- If the ally had any cooldowns tweaked apply positive buff with stacks equal to affected skills
 		if abilities_on_cooldown > 0 then
-			local buff = ally:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_buff", { duration = cd_increase })
+			local buff = ally:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_buff",
+				{ duration = cd_increase })
 			buff:SetStackCount(abilities_on_cooldown)
 
 			ally:EmitSound("Hero_FacelessVoid.TimeDilation.Target")
-			local hit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, ally)
+			local hit_pfx = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, ally)
 			ParticleManager:SetParticleControl(hit_pfx, 0, ally:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(hit_pfx)
 
@@ -674,12 +716,14 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 	-- Particles and sound
 	caster:EmitSound("Hero_FacelessVoid.TimeDilation.Cast")
 
-	local cast_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf", PATTACH_ABSORIGIN, caster)
+	local cast_pfx = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(cast_pfx, 0, caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(cast_pfx, 1, Vector(aoe * 2, 0, 0))
 	ParticleManager:ReleaseParticleIndex(cast_pfx)
 
-	local cast_pfx_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, caster)
+	local cast_pfx_2 = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(cast_pfx_2, 0, caster:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(cast_pfx_2)
 end
@@ -720,11 +764,13 @@ end
 
 -- #2 TALENT: Time dilation gives hp and mana regen
 function modifier_imba_faceless_void_time_dilation_buff:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_faceless_void_2", "hp_regen") * self:GetStackCount()
+	return self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_faceless_void_2", "hp_regen") *
+	self:GetStackCount()
 end
 
 function modifier_imba_faceless_void_time_dilation_buff:GetModifierConstantManaRegen()
-	return self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_faceless_void_2", "mp_regen") * self:GetStackCount()
+	return self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_faceless_void_2", "mp_regen") *
+	self:GetStackCount()
 end
 
 -----------------------------------
@@ -806,20 +852,23 @@ end
 function modifier_imba_time_dilation_talent:GetModifierIncomingDamage_Percentage()
 	local caster = self:GetCaster()
 	-- When Void takes damage Give him a chance to prevent that damage
-	local chance = self.caster:FindTalentValue("special_bonus_imba_faceless_void_1", "backtrack_pct_per_enemy") * self:GetStackCount()
+	local chance = self.caster:FindTalentValue("special_bonus_imba_faceless_void_1", "backtrack_pct_per_enemy") *
+	self:GetStackCount()
 	local max_chance = self.caster:FindTalentValue("special_bonus_imba_faceless_void_1", "max_pct")
 
 	if chance < max_chance then
 		if RollPercentage(chance) then
 			-- ACTUAL BACKTRACK PARTICLE!!!
-			local backtrack_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, caster)
+			local backtrack_fx = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(backtrack_fx, 0, caster:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(backtrack_fx)
 			return -100
 		end
 	else
 		if RollPercentage(max_chance) then
-			local backtrack_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, caster)
+			local backtrack_fx = ParticleManager:CreateParticle(
+			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(backtrack_fx, 0, caster:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(backtrack_fx)
 			return -100
@@ -831,8 +880,10 @@ end
 --------------------	  Time Lock		 --------------------
 -------------------------------------------------------------
 if imba_faceless_void_time_lock == nil then imba_faceless_void_time_lock = class({}) end
-LinkLuaModifier("modifier_imba_faceless_void_time_lock", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)      -- Passive effect
-LinkLuaModifier("modifier_imba_faceless_void_time_lock_stun", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE) -- The stun
+LinkLuaModifier("modifier_imba_faceless_void_time_lock", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Passive effect
+LinkLuaModifier("modifier_imba_faceless_void_time_lock_stun", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- The stun
 
 function imba_faceless_void_time_lock:GetIntrinsicModifierName()
 	if not self:GetCaster():IsIllusion() then
@@ -881,8 +932,10 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 				if not target:FindModifierByName("modifier_imba_faceless_void_chronosphere_handler") then
 					-- #4 TALENT: Increases the cd increase on bash on enemies affected by time dilation and reduces his own
 					if target:FindModifierByName("modifier_imba_faceless_void_time_dilation_slow") then
-						talent_cd_increase       = attacker:FindTalentValue("special_bonus_imba_faceless_void_4", "target_increase")
-						local caster_cd_decrease = attacker:FindTalentValue("special_bonus_imba_faceless_void_4", "self_reduction")
+						talent_cd_increase       = attacker:FindTalentValue("special_bonus_imba_faceless_void_4",
+							"target_increase")
+						local caster_cd_decrease = attacker:FindTalentValue("special_bonus_imba_faceless_void_4",
+							"self_reduction")
 
 						-- Iterate through all of Void's abilities
 						for i = 0, 23 do
@@ -898,14 +951,17 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 					-- #5 TALENT: Bash spawns Chronospheres
 					if attacker:HasTalent("special_bonus_imba_faceless_void_5") then
-						attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true, target:GetAbsOrigin())
+						attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true,
+							target:GetAbsOrigin())
 					end
 
 					-- Stun, based on if it's a hero or a creep
 					if target:IsHero() then
-						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration * (1 - target:GetStatusResistance()) })
+						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun",
+							{ duration = bashDuration * (1 - target:GetStatusResistance()) })
 					else
-						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration * (1 - target:GetStatusResistance()) })
+						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun",
+							{ duration = creep_bash_duration * (1 - target:GetStatusResistance()) })
 					end
 
 					-- Emit sound
@@ -913,7 +969,11 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 					-- Add a chronocharge if a hero was bashed
 					if target:IsRealHero() then
-						self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + 1)
+						local chronochargeModifier = parent:FindModifierByName(
+						"modifier_imba_faceless_void_chronocharges")
+						if chronochargeModifier then
+							chronochargeModifier:SetStackCount(chronochargeModifier:GetStackCount() + 1)
+						end
 					end
 
 					-- Iterate through all victims abilities
@@ -922,7 +982,8 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 						-- If there is an ability, it's learned, not a passive, not a talent/attribute bonus, and on cooldown, apply cooldown increase
 						if targetAbility and targetAbility:GetLevel() > 0 and not targetAbility:IsPassive() and not targetAbility:IsAttributeBonus() and not targetAbility:IsCooldownReady() then
-							local newCooldown = targetAbility:GetCooldownTimeRemaining() + cdIncrease + talent_cd_increase
+							local newCooldown = targetAbility:GetCooldownTimeRemaining() + cdIncrease +
+							talent_cd_increase
 							targetAbility:EndCooldown()
 							targetAbility:StartCooldown(newCooldown)
 						end
@@ -945,8 +1006,10 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 						if enemy:FindModifierByName("modifier_imba_faceless_void_chronosphere_handler") then
 							-- #4 TALENT: Increases the cd increase on bash on enemies affected by time dilation and reduces his own
 							if enemy:FindModifierByName("modifier_imba_faceless_void_time_dilation_slow") then
-								talent_cd_increase       = attacker:FindTalentValue("special_bonus_imba_faceless_void_4", "target_increase")
-								local caster_cd_decrease = attacker:FindTalentValue("special_bonus_imba_faceless_void_4", "self_reduction")
+								talent_cd_increase       = attacker:FindTalentValue("special_bonus_imba_faceless_void_4",
+									"target_increase")
+								local caster_cd_decrease = attacker:FindTalentValue("special_bonus_imba_faceless_void_4",
+									"self_reduction")
 
 								-- Iterate through all of Void's abilities
 								for i = 0, 23 do
@@ -962,27 +1025,35 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 							-- #5 TALENT: Bash spawns Chronospheres
 							if attacker:HasTalent("special_bonus_imba_faceless_void_5") then
-								attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true, enemy:GetAbsOrigin())
+								attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true,
+									enemy:GetAbsOrigin())
 							end
 
 							-- Stun, based on if it's a hero or a creep
 							if target:IsHero() then
-								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration * (1 - target:GetStatusResistance()) })
+								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun",
+									{ duration = bashDuration * (1 - target:GetStatusResistance()) })
 							else
-								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration * (1 - target:GetStatusResistance()) })
+								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun",
+									{ duration = creep_bash_duration * (1 - target:GetStatusResistance()) })
 							end
 
 							-- Bonus damage to main target is already bundled in "GetModifierProcAttack_BonusDamage_Magical", so no need to damage the main target.
 							if target ~= enemy then
 								-- Deal damage
-								ApplyDamage({ attacker = parent, victim = enemy, ability = ability, damage = bashDamage, damage_type = DAMAGE_TYPE_MAGICAL })
+								ApplyDamage({ attacker = parent, victim = enemy, ability = ability, damage = bashDamage,
+									damage_type = DAMAGE_TYPE_MAGICAL })
 							end
 							-- Emit sound
 							EmitSoundOn("Hero_FacelessVoid.TimeLockImpact", enemy)
 
 							-- Add a chronocharge if a hero was bashed
 							if enemy:IsRealHero() then
-								AddStacksLua(ability, parent, parent, "modifier_imba_faceless_void_chronocharges", 1, false)
+								local chronochargeModifier = parent:FindModifierByName(
+								"modifier_imba_faceless_void_chronocharges")
+								if chronochargeModifier then
+									chronochargeModifier:SetStackCount(chronochargeModifier:GetStackCount() + 1)
+								end
 							end
 
 							-- Iterate through all victims abilities
@@ -990,7 +1061,8 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 								local enemyAbility = enemy:GetAbilityByIndex(i)
 								-- If there is an ability, it's learned, not a passive, not a talent/attribute bonus, and on cooldown, apply cooldown increase
 								if enemyAbility and enemyAbility:GetLevel() > 0 and not enemyAbility:IsPassive() and not enemyAbility:IsAttributeBonus() and not enemyAbility:IsCooldownReady() then
-									local newCooldown = enemyAbility:GetCooldownTimeRemaining() + cdIncrease + talent_cd_increase
+									local newCooldown = enemyAbility:GetCooldownTimeRemaining() + cdIncrease +
+									talent_cd_increase
 									enemyAbility:EndCooldown()
 									enemyAbility:StartCooldown(newCooldown)
 								end
@@ -1030,7 +1102,8 @@ function modifier_imba_faceless_void_time_lock_stun:OnCreated()
 	if IsServer() then
 		self:GetParent():SetRenderColor(128, 128, 255)
 
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+		local particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf", PATTACH_ABSORIGIN, self:GetParent())
 		ParticleManager:ReleaseParticleIndex(particle)
 	end
 end
@@ -1050,9 +1123,12 @@ end
 --------------------	  Chronosphere		--------------------
 ----------------------------------------------------------------
 if imba_faceless_void_chronosphere == nil then imba_faceless_void_chronosphere = class({}) end
-LinkLuaModifier("modifier_imba_faceless_void_chronosphere_aura", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)        -- Aura - Handle applier
-LinkLuaModifier("modifier_imba_faceless_void_chronosphere_handler", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)     -- Handler
-LinkLuaModifier("modifier_imba_faceless_void_chronosphere_caster_buff", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE) -- Bonus attack speed for caster and their minions
+LinkLuaModifier("modifier_imba_faceless_void_chronosphere_aura", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                           -- Aura - Handle applier
+LinkLuaModifier("modifier_imba_faceless_void_chronosphere_handler", "components/abilities/heroes/hero_faceless_void.lua",
+	LUA_MODIFIER_MOTION_NONE)                                                                                                                           -- Handler
+LinkLuaModifier("modifier_imba_faceless_void_chronosphere_caster_buff",
+	"components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)                                                                     -- Bonus attack speed for caster and their minions
 
 function imba_faceless_void_chronosphere:IsHiddenWhenStolen() return false end
 
@@ -1062,7 +1138,8 @@ function imba_faceless_void_chronosphere:GetAOERadius()
 	local aoe = self:GetSpecialValueFor("base_radius") + caster:FindTalentValue("special_bonus_imba_faceless_void_10")
 
 	if caster:HasModifier("modifier_imba_faceless_void_chronocharges") then
-		aoe = aoe + chronocharge_radius * caster:GetModifierStackCount("modifier_imba_faceless_void_chronocharges", caster)
+		aoe = aoe +
+		chronocharge_radius * caster:GetModifierStackCount("modifier_imba_faceless_void_chronocharges", caster)
 	end
 
 	return aoe
@@ -1090,7 +1167,8 @@ function imba_faceless_void_chronosphere:OnSpellStart(mini_chrono, target_locati
 	local sound_cast = "Hero_FacelessVoid.Chronosphere"
 
 	-- Parameters
-	local base_radius = self:GetSpecialValueFor("base_radius") + caster:FindTalentValue("special_bonus_imba_faceless_void_10")
+	local base_radius = self:GetSpecialValueFor("base_radius") +
+	caster:FindTalentValue("special_bonus_imba_faceless_void_10")
 	local chronocharge_radius = self:GetSpecialValueFor("chronocharge_radius")
 	local duration = self:GetSpecialValueFor("duration")
 	local total_radius
@@ -1118,7 +1196,10 @@ function imba_faceless_void_chronosphere:OnSpellStart(mini_chrono, target_locati
 	local enemies_count = 0
 	if not mini_chrono then
 		-- Decide which cast sound to play
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD +
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 		enemies_count = #enemies
 
 		-- Note who the enemy team is
@@ -1211,7 +1292,8 @@ function modifier_imba_faceless_void_chronosphere_aura:OnCreated()
 			self:SetStackCount(chronocharges)
 		end
 
-		self.base_radius = self.ability:GetSpecialValueFor("base_radius") + self.caster:FindTalentValue("special_bonus_imba_faceless_void_10")
+		self.base_radius = self.ability:GetSpecialValueFor("base_radius") +
+		self.caster:FindTalentValue("special_bonus_imba_faceless_void_10")
 		self.bonus_radius = self.ability:GetSpecialValueFor("chronocharge_radius")
 		self.total_radius = self.base_radius + self.bonus_radius * self:GetStackCount()
 
@@ -1220,7 +1302,9 @@ function modifier_imba_faceless_void_chronosphere_aura:OnCreated()
 			self.total_radius = self.caster:FindTalentValue("special_bonus_imba_faceless_void_5", "aoe")
 		end
 
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf", PATTACH_WORLDORIGIN, self.parent, self.caster)
+		local particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf", PATTACH_WORLDORIGIN, self.parent,
+			self.caster)
 		ParticleManager:SetParticleControl(particle, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle, 1, Vector(self.total_radius, self.total_radius, self.total_radius))
 		self:AddParticle(particle, false, false, -1, false, false)
@@ -1249,11 +1333,14 @@ function modifier_imba_faceless_void_chronosphere_aura:OnIntervalThink()
 	local caster = self:GetCaster()
 
 	-- Find the caster and unit under their control under the Chronosphere, and give them the attack speed bonus modifier
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	local units = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	for _, unit in ipairs(units) do
 		if unit == caster or unit:GetPlayerOwner() == caster:GetPlayerOwner() then
 			if not self.modifiers[unit:GetEntityIndex()] then
-				local mod = unit:AddNewModifier(caster, self:GetAbility(), "modifier_imba_faceless_void_chronosphere_caster_buff", {})
+				local mod = unit:AddNewModifier(caster, self:GetAbility(),
+					"modifier_imba_faceless_void_chronosphere_caster_buff", {})
 				mod:SetStackCount(self:GetStackCount())
 				table.insert(self.modifiers, unit:GetEntityIndex(), mod)
 			end
@@ -1388,7 +1475,6 @@ end
 
 function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
 		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
@@ -1397,12 +1483,6 @@ function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
 		-- #8 TALENT: Void cleaves from attacks in chrono
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-end
-
-function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_Max()
-	if self:GetStackCount() == 1 or self:GetStackCount() == 4 then
-		return self:GetAbility():GetSpecialValueFor("movement_speed")
-	end
 end
 
 -- #3 TALENT: Void gains infinite movement speed in Chrono
@@ -1448,13 +1528,17 @@ function modifier_imba_faceless_void_chronosphere_handler:OnAttackLanded(params)
 	if caster:HasTalent("special_bonus_imba_faceless_void_8") then
 		local ability = self:GetAbility()
 		if (params.attacker == caster) and caster:IsRealHero() and (params.target:GetTeamNumber() ~= caster:GetTeamNumber()) and self:GetStackCount() == 1 then
-			local cleave_particle = "particles/econ/items/faceless_void/faceless_void_weapon_bfury/faceless_void_weapon_bfury_cleave.vpcf"
-			local cleave_damage_pct = caster:FindTalentValue("special_bonus_imba_faceless_void_8", "cleave_damage_pct") / 100
-			local cleave_radius_start = caster:FindTalentValue("special_bonus_imba_faceless_void_8", "cleave_starting_width")
+			local cleave_particle =
+			"particles/econ/items/faceless_void/faceless_void_weapon_bfury/faceless_void_weapon_bfury_cleave.vpcf"
+			local cleave_damage_pct = caster:FindTalentValue("special_bonus_imba_faceless_void_8", "cleave_damage_pct") /
+			100
+			local cleave_radius_start = caster:FindTalentValue("special_bonus_imba_faceless_void_8",
+				"cleave_starting_width")
 			local cleave_radius_end = caster:FindTalentValue("special_bonus_imba_faceless_void_8", "cleave_ending_width")
 			local cleave_distance = caster:FindTalentValue("special_bonus_imba_faceless_void_8", "cleave_distance")
 
-			DoCleaveAttack(params.attacker, params.target, ability, (params.damage * cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle)
+			DoCleaveAttack(params.attacker, params.target, ability, (params.damage * cleave_damage_pct),
+				cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle)
 		end
 	end
 end
@@ -1462,7 +1546,8 @@ end
 -----------------------------------------------
 -----	Chronosphere Caster Modifier	  -----
 -----------------------------------------------
-if modifier_imba_faceless_void_chronosphere_caster_buff == nil then modifier_imba_faceless_void_chronosphere_caster_buff = class({}) end
+if modifier_imba_faceless_void_chronosphere_caster_buff == nil then modifier_imba_faceless_void_chronosphere_caster_buff =
+	class({}) end
 function modifier_imba_faceless_void_chronosphere_caster_buff:IsPurgable() return false end
 
 function modifier_imba_faceless_void_chronosphere_caster_buff:IsHidden() return false end
@@ -1488,8 +1573,10 @@ function modifier_imba_faceless_void_chronosphere_caster_buff:GetModifierAttackS
 	return self:GetAbility():GetSpecialValueFor("chronocharge_attackspeed") * self:GetStackCount()
 end
 
-LinkLuaModifier("modifier_imba_faceless_void_time_lock_720", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_faceless_void_time_lock_720_freeze", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_faceless_void_time_lock_720", "components/abilities/heroes/hero_faceless_void",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_faceless_void_time_lock_720_freeze", "components/abilities/heroes/hero_faceless_void",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_faceless_void_time_lock_720                 = class({})
 modifier_imba_faceless_void_time_lock_720        = class({})
@@ -1575,16 +1662,19 @@ function modifier_imba_faceless_void_time_lock_720:ApplyTimeLock(target)
 
 	-- Hero stun duration
 	if target:IsConsideredHero() or target:IsRoshan() then
-		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", { duration = duration * (1 - target:GetStatusResistance()) })
+		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze",
+			{ duration = duration * (1 - target:GetStatusResistance()) })
 		-- Creep stun duration
 	else
-		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", { duration = duration_creep * (1 - target:GetStatusResistance()) })
+		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze",
+			{ duration = duration_creep * (1 - target:GetStatusResistance()) })
 	end
 
 	-- IMBAfication: Chronocharges
 	-- Add a chronocharge if a hero was bashed
 	if target:IsRealHero() and self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges") then
-		self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + 1)
+		self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent()
+		:FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + 1)
 	end
 
 	-- IMBAfication: Lost In The Moment
@@ -1606,10 +1696,12 @@ function modifier_imba_faceless_void_time_lock_720:ApplyTimeLock(target)
 	end
 
 	-- Prepare for the second attack
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_lock_bash.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	local particle = ParticleManager:CreateParticle(
+	"particles/units/heroes/hero_faceless_void/faceless_void_time_lock_bash.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
-	ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_CUSTOMORIGIN, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_CUSTOMORIGIN, "attach_hitloc",
+		target:GetAbsOrigin(), true)
 
 	ParticleManager:ReleaseParticleIndex(particle)
 
@@ -1676,8 +1768,10 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_faceless_void_7", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_faceless_void_12", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_7", "components/abilities/heroes/hero_faceless_void",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_12", "components/abilities/heroes/hero_faceless_void",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_faceless_void_7  = modifier_special_bonus_imba_faceless_void_7 or class({})
 modifier_special_bonus_imba_faceless_void_12 = modifier_special_bonus_imba_faceless_void_12 or class({})
@@ -1695,10 +1789,14 @@ function modifier_special_bonus_imba_faceless_void_12:IsPurgable() return false 
 function modifier_special_bonus_imba_faceless_void_12:RemoveOnDeath() return false end
 
 -- Client-side helper functions --
-LinkLuaModifier("modifier_special_bonus_imba_faceless_void_3", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_faceless_void_9", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_faceless_void_10", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_faceless_void_11", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_3", "components/abilities/heroes/hero_faceless_void",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_9", "components/abilities/heroes/hero_faceless_void",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_10", "components/abilities/heroes/hero_faceless_void",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_11", "components/abilities/heroes/hero_faceless_void",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_faceless_void_3  = class({})
 modifier_special_bonus_imba_faceless_void_9  = class({})
@@ -1725,11 +1823,15 @@ function modifier_special_bonus_imba_faceless_void_10:RemoveOnDeath() return fal
 
 function imba_faceless_void_chronosphere:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_3") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_3"), "modifier_special_bonus_imba_faceless_void_3", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_3"),
+			"modifier_special_bonus_imba_faceless_void_3", {})
 	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_10") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_10"), "modifier_special_bonus_imba_faceless_void_10", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_10"),
+			"modifier_special_bonus_imba_faceless_void_10", {})
 	end
 end
 
@@ -1753,11 +1855,15 @@ function modifier_special_bonus_imba_faceless_void_11:RemoveOnDeath() return fal
 
 function imba_faceless_void_time_walk:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_9") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_9"), "modifier_special_bonus_imba_faceless_void_9", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_9"),
+			"modifier_special_bonus_imba_faceless_void_9", {})
 	end
 
 	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_11") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_11"), "modifier_special_bonus_imba_faceless_void_11", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_11"),
+			"modifier_special_bonus_imba_faceless_void_11", {})
 	end
 end
 

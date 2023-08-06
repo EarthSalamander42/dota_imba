@@ -295,7 +295,7 @@ function modifier_imba_undying_decay_buff:OnStackCountChanged(prev_stacks)
 		end
 
 		-- "The strength gain on Undying does not keep the current health percentage either, and instead adds 20 health per strength to the current health pool."
-		self:GetCaster():Heal(self.strength_gain * self.hp_gain_per_str, self:GetCaster())
+		self:GetCaster():Heal(self.strength_gain * self.hp_gain_per_str, self.ability)
 
 		-- Refresh timer
 		self:ForceRefresh()
@@ -594,7 +594,7 @@ function imba_undying_soul_rip:OnSpellStart()
 		elseif target:GetTeamNumber() == caster:GetTeamNumber() and not IsUndyingTombstone(target) then
 			target:EmitSound("Hero_Undying.SoulRip.Ally")
 
-			target:Heal(damage_per_unit * units_ripped, caster)
+			target:Heal(damage_per_unit * units_ripped, self)
 
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, damage_per_unit * units_ripped, nil)
 
@@ -618,7 +618,7 @@ function imba_undying_soul_rip:OnSpellStart()
 		elseif target:GetTeamNumber() == caster:GetTeamNumber() and IsUndyingTombstone(target) then
 			target:EmitSound("Hero_Undying.SoulRip.Ally")
 
-			target:Heal(tombstone_heal, caster)
+			target:Heal(tombstone_heal, self)
 
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, tombstone_heal, nil)
 		end

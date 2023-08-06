@@ -24,7 +24,7 @@
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_stout_shield == nil then item_imba_stout_shield = class({}) end
-LinkLuaModifier("modifier_item_imba_stout_shield", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE)   -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_stout_shield", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE) -- Owner's bonus attributes, stackable
 
 function item_imba_stout_shield:GetAbilityTextureName()
 	return "imba_stout_shield"
@@ -54,7 +54,9 @@ function modifier_item_imba_stout_shield:GetAttributes() return MODIFIER_ATTRIBU
 
 -- Declare modifier events/properties
 function modifier_item_imba_stout_shield:DeclareFunctions()
-	return { MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK }
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
+	}
 end
 
 function modifier_item_imba_stout_shield:GetModifierPhysical_ConstantBlock()
@@ -72,7 +74,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_poor_mans_shield == nil then item_imba_poor_mans_shield = class({}) end
-LinkLuaModifier("modifier_item_imba_poor_mans_shield", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE)   -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_poor_mans_shield", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE) -- Owner's bonus attributes, stackable
 LinkLuaModifier("modifier_item_imba_poor_mans_shield_active", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE)
 
 modifier_item_imba_poor_mans_shield_active = class({})
@@ -157,7 +159,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_vanguard == nil then item_imba_vanguard = class({}) end
-LinkLuaModifier("modifier_item_imba_vanguard", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE)   -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_vanguard", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE) -- Owner's bonus attributes, stackable
 
 function item_imba_vanguard:GetAbilityTextureName()
 	return "imba_vanguard"
@@ -495,7 +497,7 @@ end
 
 -- -- Declare modifier events/properties
 -- function modifier_item_imba_greatwyrm_plate:DeclareFunctions()
--- local funcs = {
+-- return {
 -- MODIFIER_PROPERTY_HEALTH_BONUS,
 -- MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 -- MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
@@ -505,7 +507,6 @@ end
 -- MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 -- MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
 -- }
--- return funcs
 -- end
 
 -- function modifier_item_imba_greatwyrm_plate:GetModifierHealthBonus()

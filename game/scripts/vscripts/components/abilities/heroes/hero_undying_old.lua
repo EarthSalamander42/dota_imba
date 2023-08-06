@@ -227,13 +227,14 @@ function imba_undying_decay:OnSpellStart()
 	-- Separate handling for clones
 	if #clone_owner_units > 0 then
 		for tables in clone_owner_units do
-			enemy:EmitSound("Hero_Undying.Decay.Target")
-			self:GetCaster():EmitSound("Hero_Undying.Decay.Transfer")
-
+			-- Take random clone
 			selected_unit = EntIndexToHScript(tables[RandomInt(1, #tables)])
 
-			enemy:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff_counter", { duration = self:GetTalentSpecialValueFor("decay_duration") * (1 - enemy:GetStatusResistance()) })
-			debuff_modifier = enemy:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff", { duration = self:GetTalentSpecialValueFor("decay_duration") * (1 - enemy:GetStatusResistance()) })
+			selected_unit:EmitSound("Hero_Undying.Decay.Target")
+			self:GetCaster():EmitSound("Hero_Undying.Decay.Transfer")
+
+			selected_unit:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff_counter", { duration = self:GetTalentSpecialValueFor("decay_duration") * (1 - selected_unit:GetStatusResistance()) })
+			debuff_modifier = selected_unit:AddNewModifier(selected_unit, self, "modifier_imba_undying_decay_debuff", { duration = self:GetTalentSpecialValueFor("decay_duration") * (1 - selected_unit:GetStatusResistance()) })
 			table.insert(self.debuff_modifier_table, debuff_modifier)
 
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_undying_decay_buff_counter", { duration = self:GetTalentSpecialValueFor("decay_duration") })

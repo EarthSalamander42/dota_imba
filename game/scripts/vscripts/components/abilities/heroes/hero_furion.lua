@@ -1,12 +1,18 @@
 -- Editors:
 --    AltiV, January 17th, 2020
 
-LinkLuaModifier("modifier_imba_furion_wrath_of_nature", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)      -- This is used as intrinsic modifier for variant / IMBAfication
-LinkLuaModifier("modifier_imba_furion_wrath_of_nature_aura", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE) -- As is this
-LinkLuaModifier("modifier_imba_furion_wrath_of_nature_thinker", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_furion_wrath_of_nature_spawn", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_stack", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_counter", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_furion_wrath_of_nature", "components/abilities/heroes/hero_furion",
+	LUA_MODIFIER_MOTION_NONE) -- This is used as intrinsic modifier for variant / IMBAfication
+LinkLuaModifier("modifier_imba_furion_wrath_of_nature_aura", "components/abilities/heroes/hero_furion",
+	LUA_MODIFIER_MOTION_NONE) -- As is this
+LinkLuaModifier("modifier_imba_furion_wrath_of_nature_thinker", "components/abilities/heroes/hero_furion",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_furion_wrath_of_nature_spawn", "components/abilities/heroes/hero_furion",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_stack", "components/abilities/heroes/hero_furion",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_counter", "components/abilities/heroes/hero_furion",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_furion_wrath_of_nature                         = imba_furion_wrath_of_nature_spawn or class({})
 modifier_imba_furion_wrath_of_nature                = modifier_imba_furion_wrath_of_nature or class({})
@@ -25,8 +31,10 @@ function imba_furion_wrath_of_nature:GetIntrinsicModifierName()
 end
 
 function imba_furion_wrath_of_nature:OnAbilityPhaseStart()
-	local cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-	ParticleManager:SetParticleControlEnt(cast_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	local cast_particle = ParticleManager:CreateParticle(
+		"particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(cast_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc",
+		self:GetCaster():GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(cast_particle)
 
 	return true
@@ -37,14 +45,18 @@ function imba_furion_wrath_of_nature:OnSpellStart()
 	EmitSoundOnLocationWithCaster(self:GetCursorPosition(), "Hero_Furion.WrathOfNature_Cast", self:GetCaster())
 
 	-- Going to use a thinker to keep track of the bounced targets and general logic
-	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_furion_wrath_of_nature_thinker", {}, self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
+	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_furion_wrath_of_nature_thinker", {},
+		self:GetCursorPosition(), self:GetCaster():GetTeamNumber(), false)
 end
 
 ------------------------------------------
 -- MODIFIER_IMBA_FURION_WRATH_OF_NATURE --
 ------------------------------------------
 
-function modifier_imba_furion_wrath_of_nature:IsHidden() return not self:GetCaster():HasScepter() and not self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost") end
+function modifier_imba_furion_wrath_of_nature:IsHidden()
+	return not self:GetCaster():HasScepter() and
+		not self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost")
+end
 
 function modifier_imba_furion_wrath_of_nature:IsPurgable() return false end
 
@@ -56,7 +68,10 @@ function modifier_imba_furion_wrath_of_nature:IsAuraActiveOnDeath() return false
 
 function modifier_imba_furion_wrath_of_nature:GetAuraRadius() return FIND_UNITS_EVERYWHERE end
 
-function modifier_imba_furion_wrath_of_nature:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD end
+function modifier_imba_furion_wrath_of_nature:GetAuraSearchFlags()
+	return DOTA_UNIT_TARGET_FLAG_INVULNERABLE +
+		DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD
+end
 
 function modifier_imba_furion_wrath_of_nature:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 
@@ -65,7 +80,11 @@ function modifier_imba_furion_wrath_of_nature:GetAuraSearchType() return DOTA_UN
 function modifier_imba_furion_wrath_of_nature:GetModifierAura() return "modifier_imba_furion_wrath_of_nature_aura" end
 
 -- Normally I would use GetName() here (or maybe just directly apply the bonus damage onto the proper units) but Name/Classname/Debugname are all "npc_dota_creep" so I'll check with weird model filtering
-function modifier_imba_furion_wrath_of_nature:GetAuraEntityReject(hTarget) return (not self:GetCaster():HasScepter() and not self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost")) or not self:GetAbility():IsTrained() or self:GetParent() ~= hTarget:GetOwner() or not string.find(hTarget:GetModelName(), "furion") or not string.find(hTarget:GetModelName(), "treant") end
+function modifier_imba_furion_wrath_of_nature:GetAuraEntityReject(hTarget)
+	return (not self:GetCaster():HasScepter() and not self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost")) or
+		not self:GetAbility():IsTrained() or self:GetParent() ~= hTarget:GetOwner() or
+		not string.find(hTarget:GetModelName(), "furion") or not string.find(hTarget:GetModelName(), "treant")
+end
 
 -----------------------------------------------
 -- MODIFIER_IMBA_FURION_WRATH_OF_NATURE_AURA --
@@ -141,12 +160,18 @@ function modifier_imba_furion_wrath_of_nature_thinker:OnCreated()
 
 			-- This particle is kinda complicated...
 			-- This is 100% wrong but IDK the exact CPs to use
-			self.wrath_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_furion/furion_wrath_of_nature.vpcf", PATTACH_POINT_FOLLOW, enemy)
-			ParticleManager:SetParticleControl(self.wrath_particle, 0, enemy:GetAbsOrigin() + ((self.position - enemy:GetAbsOrigin()):Normalized() * 200))
-			ParticleManager:SetParticleControlEnt(self.wrath_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControl(self.wrath_particle, 2, enemy:GetAbsOrigin() + ((self.position - enemy:GetAbsOrigin()):Normalized() * 200))
-			ParticleManager:SetParticleControlEnt(self.wrath_particle, 3, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(self.wrath_particle, 4, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+			self.wrath_particle = ParticleManager:CreateParticle(
+				"particles/units/heroes/hero_furion/furion_wrath_of_nature.vpcf", PATTACH_POINT_FOLLOW, enemy)
+			ParticleManager:SetParticleControl(self.wrath_particle, 0,
+				enemy:GetAbsOrigin() + ((self.position - enemy:GetAbsOrigin()):Normalized() * 200))
+			ParticleManager:SetParticleControlEnt(self.wrath_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				enemy:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(self.wrath_particle, 2,
+				enemy:GetAbsOrigin() + ((self.position - enemy:GetAbsOrigin()):Normalized() * 200))
+			ParticleManager:SetParticleControlEnt(self.wrath_particle, 3, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				enemy:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.wrath_particle, 4, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				enemy:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(self.wrath_particle)
 
 			self.position = enemy:GetAbsOrigin()
@@ -203,12 +228,18 @@ function modifier_imba_furion_wrath_of_nature_thinker:OnIntervalThink()
 			self.bFoundTarget   = true
 			self.counter        = self.counter + 1
 
-			self.wrath_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_furion/furion_wrath_of_nature.vpcf", PATTACH_POINT_FOLLOW, enemy)
-			ParticleManager:SetParticleControl(self.wrath_particle, 0, enemy:GetAbsOrigin() + ((self.position - enemy:GetAbsOrigin()):Normalized() * 200))
-			ParticleManager:SetParticleControlEnt(self.wrath_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControl(self.wrath_particle, 2, enemy:GetAbsOrigin() + ((self.position - enemy:GetAbsOrigin()):Normalized() * 200))
-			ParticleManager:SetParticleControlEnt(self.wrath_particle, 3, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(self.wrath_particle, 4, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+			self.wrath_particle = ParticleManager:CreateParticle(
+				"particles/units/heroes/hero_furion/furion_wrath_of_nature.vpcf", PATTACH_POINT_FOLLOW, enemy)
+			ParticleManager:SetParticleControl(self.wrath_particle, 0,
+				enemy:GetAbsOrigin() + ((self.position - enemy:GetAbsOrigin()):Normalized() * 200))
+			ParticleManager:SetParticleControlEnt(self.wrath_particle, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				enemy:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(self.wrath_particle, 2,
+				enemy:GetAbsOrigin() + ((self.position - enemy:GetAbsOrigin()):Normalized() * 200))
+			ParticleManager:SetParticleControlEnt(self.wrath_particle, 3, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				enemy:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.wrath_particle, 4, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				enemy:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(self.wrath_particle)
 
 			self.position = enemy:GetAbsOrigin()
@@ -250,11 +281,13 @@ function modifier_imba_furion_wrath_of_nature_thinker:OnIntervalThink()
 			self.hit_enemies[enemy:entindex()] = true
 
 			if not enemy:IsAlive() then
-				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_furion_wrath_of_nature_damage_counter", { duration = self.kill_damage_duration })
-				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_furion_wrath_of_nature_damage_stack", {
-					duration = self.kill_damage_duration,
-					kill_damage = self.kill_damage
-				})
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(),
+					"modifier_imba_furion_wrath_of_nature_damage_counter", { duration = self.kill_damage_duration })
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(),
+					"modifier_imba_furion_wrath_of_nature_damage_stack", {
+						duration = self.kill_damage_duration,
+						kill_damage = self.kill_damage
+					})
 			end
 
 			break
@@ -294,14 +327,20 @@ function modifier_imba_furion_wrath_of_nature_spawn:OnDeath(keys)
 		if self:GetCaster():HasModifier("modifier_imba_furion_wrath_of_nature") then
 			if self:GetCaster():HasScepter() then
 				if (self:GetParent():IsRealHero() or self:GetParent():IsClone()) and self.treant_bonus_damage_hero then
-					self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self.treant_bonus_damage_hero)
+					self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self
+						:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() +
+						self.treant_bonus_damage_hero)
 				elseif self.treant_bonus_damage then
-					self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self.treant_bonus_damage)
+					self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self
+						:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() +
+						self.treant_bonus_damage)
 				end
 			end
 
 			if self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost") then
-				self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() + self:GetCaster():FindTalentValue("special_bonus_imba_furion_wrath_of_nature_boost"))
+				self:GetCaster():FindModifierByName("modifier_imba_furion_wrath_of_nature"):SetStackCount(self:GetCaster()
+					:FindModifierByName("modifier_imba_furion_wrath_of_nature"):GetStackCount() +
+					self:GetCaster():FindTalentValue("special_bonus_imba_furion_wrath_of_nature_boost"))
 			end
 
 			self:Destroy()
@@ -325,7 +364,9 @@ function modifier_imba_furion_wrath_of_nature_damage_stack:OnCreated(keys)
 	if self:GetParent():HasModifier("modifier_imba_furion_wrath_of_nature_damage_counter") then
 		self:SetStackCount(keys.kill_damage)
 
-		self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):GetStackCount() + self:GetStackCount())
+		self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):SetStackCount(self
+			:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):GetStackCount() +
+			self:GetStackCount())
 	end
 end
 
@@ -333,7 +374,9 @@ function modifier_imba_furion_wrath_of_nature_damage_stack:OnDestroy()
 	if not IsServer() then return end
 
 	if self:GetParent():HasModifier("modifier_imba_furion_wrath_of_nature_damage_counter") then
-		self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):GetStackCount() - self:GetStackCount())
+		self:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):SetStackCount(self
+			:GetParent():FindModifierByName("modifier_imba_furion_wrath_of_nature_damage_counter"):GetStackCount() -
+			self:GetStackCount())
 	end
 end
 
@@ -355,9 +398,11 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_furion_wrath_of_nature_boost", "components/abilities/heroes/hero_furion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_furion_wrath_of_nature_boost", "components/abilities/heroes/hero_furion",
+	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_furion_wrath_of_nature_boost = modifier_special_bonus_imba_furion_wrath_of_nature_boost or class({})
+modifier_special_bonus_imba_furion_wrath_of_nature_boost = modifier_special_bonus_imba_furion_wrath_of_nature_boost or
+	class({})
 
 function modifier_special_bonus_imba_furion_wrath_of_nature_boost:IsHidden() return true end
 
@@ -366,9 +411,9 @@ function modifier_special_bonus_imba_furion_wrath_of_nature_boost:IsPurgable() r
 function modifier_special_bonus_imba_furion_wrath_of_nature_boost:RemoveOnDeath() return false end
 
 function imba_furion_wrath_of_nature:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_furion_wrath_of_nature_boost") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_furion_wrath_of_nature_boost") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_furion_wrath_of_nature_boost"), "modifier_special_bonus_imba_furion_wrath_of_nature_boost", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_furion_wrath_of_nature_boost"),
+			"modifier_special_bonus_imba_furion_wrath_of_nature_boost", {})
 	end
 end

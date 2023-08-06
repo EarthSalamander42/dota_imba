@@ -79,13 +79,13 @@ function modifier_imba_ironleaf_boots:OnDestroy()
 end
 
 function modifier_imba_ironleaf_boots:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS }
-
-	return decFuncs
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+	}
 end
 
 function modifier_imba_ironleaf_boots:GetModifierMoveSpeedBonus_Percentage()
@@ -197,13 +197,13 @@ function modifier_imba_ironleaf_boots_unique:OnDestroy()
 end
 
 function modifier_imba_ironleaf_boots_unique:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_EVENT_ON_UNIT_MOVED,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ABILITY_START,
-		MODIFIER_EVENT_ON_RESPAWN }
-
-	return decFuncs
+		MODIFIER_EVENT_ON_RESPAWN
+	}
 end
 
 function modifier_imba_ironleaf_boots_unique:OnRespawn(keys)
@@ -284,8 +284,7 @@ end
 modifier_imba_ironleaf_boots_meditate = modifier_imba_ironleaf_boots_meditate or class({})
 
 function modifier_imba_ironleaf_boots_meditate:IsHidden()
-	if self:GetStackCount() == 0 then return true end
-	return false
+	return self:GetStackCount() == 0
 end
 
 function modifier_imba_ironleaf_boots_meditate:IsPurgable() return false end
@@ -335,11 +334,11 @@ function modifier_imba_ironleaf_boots_meditate:OnIntervalThink()
 end
 
 function modifier_imba_ironleaf_boots_meditate:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ATTACK_LANDED,
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT }
-
-	return decFuncs
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+	}
 end
 
 function modifier_imba_ironleaf_boots_meditate:GetModifierMoveSpeedBonus_Percentage()
@@ -418,11 +417,11 @@ function modifier_imba_ironleaf_boots_leafwalk:OnCreated()
 end
 
 function modifier_imba_ironleaf_boots_leafwalk:DeclareFunctions()
-	local decFuncs = { MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+	return {
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_PROPERTY_INVISIBILITY_LEVEL }
-
-	return decFuncs
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL
+	}
 end
 
 function modifier_imba_ironleaf_boots_leafwalk:OnAbilityExecuted(keys)
@@ -454,9 +453,9 @@ function modifier_imba_ironleaf_boots_leafwalk:GetModifierInvisibilityLevel()
 end
 
 function modifier_imba_ironleaf_boots_leafwalk:CheckState()
-	local state = { [MODIFIER_STATE_INVISIBLE] = true }
-
-	return state
+	return {
+		[MODIFIER_STATE_INVISIBLE] = true
+	}
 end
 
 -- Leafwalk Magic Resistance modifier
@@ -482,9 +481,9 @@ function modifier_imba_ironleaf_boots_magic_res:OnCreated()
 end
 
 function modifier_imba_ironleaf_boots_magic_res:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+	}
 end
 
 function modifier_imba_ironleaf_boots_magic_res:GetModifierMagicalResistanceBonus()

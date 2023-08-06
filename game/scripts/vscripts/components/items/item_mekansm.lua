@@ -120,24 +120,26 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_mekansm:DeclareFunctions()
-	local funcs = {
-		--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		--		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		--		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+	return {
+		--MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		--MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		--MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 	}
-	return funcs
 end
 
 --[[
 function modifier_item_imba_mekansm:GetModifierBonusStats_Strength()
-	return self.bonus_all_stats end
+	return self.bonus_all_stats
+end
 
 function modifier_item_imba_mekansm:GetModifierBonusStats_Agility()
-	return self.bonus_all_stats end
+	return self.bonus_all_stats
+end
 
 function modifier_item_imba_mekansm:GetModifierBonusStats_Intellect()
-	return self.bonus_all_stats end
+	return self.bonus_all_stats
+end
 --]]
 function modifier_item_imba_mekansm:GetModifierPhysicalArmorBonus()
 	return self.bonus_armor
@@ -169,7 +171,7 @@ function modifier_item_imba_mekansm_aura_emitter:GetModifierAura()
 		if self:GetParent():IsAlive() then
 			return "modifier_item_imba_mekansm_aura"
 		else
-			return nil
+			return
 		end
 	end
 end
@@ -343,9 +345,9 @@ end
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves:DeclareFunctions()
 	return {
-		--		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		--		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		--		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		--MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		--MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		--MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_MANA_BONUS,
@@ -413,7 +415,7 @@ function modifier_item_imba_guardian_greaves_aura_emitter:GetModifierAura()
 		if self:GetParent():IsAlive() then
 			return "modifier_item_imba_guardian_greaves_aura"
 		else
-			return nil
+			return
 		end
 	end
 end
@@ -545,10 +547,9 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves_heal:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_guardian_greaves_heal:GetModifierHealthRegenPercentage()

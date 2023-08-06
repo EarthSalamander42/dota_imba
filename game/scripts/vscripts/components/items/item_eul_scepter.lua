@@ -111,24 +111,29 @@ end
 
 function modifier_item_imba_cyclone_active:HorizontalMotion(unit, time)
 	if not IsServer() then return end
+	local parent = self:GetParent()
 	-- Change the Face Angle
-	local angle = self:GetParent():GetAngles()
+	local angle = parent:GetAngles()
 	local new_angle = RotateOrientation(angle, QAngle(0,20,0))
-	self:GetParent():SetAngles(new_angle[1], new_angle[2], new_angle[3])
+	parent:SetAngles(new_angle[1], new_angle[2], new_angle[3])
 	-- Change the height at the first and last 0.3 sec
 	if self:GetElapsedTime() <= 0.3 then
 		self.cyc_pos.z = self.cyc_pos.z + 50
-		self:GetParent():SetAbsOrigin(self.cyc_pos)
+		parent:SetAbsOrigin(self.cyc_pos)
 	elseif self:GetDuration() - self:GetElapsedTime() < 0.3 then
 		self.step = self.step or (self.cyc_pos.z - self.abs.z) / ((self:GetDuration() - self:GetElapsedTime()) / FrameTime())
 		self.cyc_pos.z = self.cyc_pos.z - self.step
-		self:GetParent():SetAbsOrigin(self.cyc_pos)
+		parent:SetAbsOrigin(self.cyc_pos)
 	else -- Random move
-		local pos = GetRandomPosition2D(self:GetParent():GetAbsOrigin(),5)
+		local current_pos = parent:GetAbsOrigin()
+		local radius = 5
+		local pos = current_pos + Vector(1, 0, 0) * math.random(0-radius, radius)
+		pos = RotatePosition(current_pos, QAngle(0, math.random(-360, 360), 0), pos)
 		while ((pos - self.abs):Length2D() > 50) do
-			pos = GetRandomPosition2D(self:GetParent():GetAbsOrigin(),5)
+			pos = current_pos + Vector(1, 0, 0) * math.random(0-radius, radius)
+		    pos = RotatePosition(current_pos, QAngle(0, math.random(-360, 360), 0), pos)
 		end
-		self:GetParent():SetAbsOrigin(pos)
+		parent:SetAbsOrigin(pos)
 	end
 end
 
@@ -193,24 +198,29 @@ end
 
 function modifier_item_imba_cyclone_active_debuff:HorizontalMotion(unit, time)
 	if not IsServer() then return end
+	local parent = self:GetParent()
 	-- Change the Face Angle
-	local angle = self:GetParent():GetAngles()
+	local angle = parent:GetAngles()
 	local new_angle = RotateOrientation(angle, QAngle(0,20,0))
-	self:GetParent():SetAngles(new_angle[1], new_angle[2], new_angle[3])
+	parent:SetAngles(new_angle[1], new_angle[2], new_angle[3])
 	-- Change the height at the first and last 0.3 sec
 	if self:GetElapsedTime() <= 0.3 then
 		self.cyc_pos.z = self.cyc_pos.z + 50
-		self:GetParent():SetAbsOrigin(self.cyc_pos)
+		parent:SetAbsOrigin(self.cyc_pos)
 	elseif self:GetDuration() - self:GetElapsedTime() < 0.3 then
 		self.step = self.step or (self.cyc_pos.z - self.abs.z) / ((self:GetDuration() - self:GetElapsedTime()) / FrameTime())
 		self.cyc_pos.z = self.cyc_pos.z - self.step
-		self:GetParent():SetAbsOrigin(self.cyc_pos)
+		parent:SetAbsOrigin(self.cyc_pos)
 	else -- Random move
-		local pos = GetRandomPosition2D(self:GetParent():GetAbsOrigin(),5)
+		local current_pos = parent:GetAbsOrigin()
+		local radius = 5
+		local pos = current_pos + Vector(1, 0, 0) * math.random(0-radius, radius)
+		pos = RotatePosition(current_pos, QAngle(0, math.random(-360, 360), 0), pos)
 		while ((pos - self.abs):Length2D() > 50) do
-			pos = GetRandomPosition2D(self:GetParent():GetAbsOrigin(),5)
+			pos = current_pos + Vector(1, 0, 0) * math.random(0-radius, radius)
+			pos = RotatePosition(current_pos, QAngle(0, math.random(-360, 360), 0), pos)
 		end
-		self:GetParent():SetAbsOrigin(pos)
+		parent:SetAbsOrigin(pos)
 	end
 end
 

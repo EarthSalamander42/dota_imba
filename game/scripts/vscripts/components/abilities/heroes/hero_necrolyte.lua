@@ -294,16 +294,16 @@ function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation,
 
 		-- Base Heal
 		if extraData.base_heal then
-			target:Heal(extraData.base_heal, caster)
+			target:Heal(extraData.base_heal, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, extraData.base_heal, nil)
-			return nil
+			return
 		end
 
 		local caster_loc = caster:GetAbsOrigin()
 
 		if not extraData.radius then
 			local heal = target:GetMaxHealth() * (extraData.sec_heal_pct / 100)
-			target:Heal(heal, caster)
+			target:Heal(heal, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 		end
 		--Essence dilation
@@ -1092,32 +1092,24 @@ function modifier_special_bonus_imba_necrolyte_7:IsPurgable() return false end
 function modifier_special_bonus_imba_necrolyte_7:RemoveOnDeath() return false end
 
 function imba_necrolyte_death_pulse:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_1") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_1"), "modifier_special_bonus_imba_necrolyte_1", {})
 	end
 end
 
 function imba_necrolyte_ghost_shroud:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_5"), "modifier_special_bonus_imba_necrolyte_5", {})
 	end
 end
 
 function imba_necrolyte_heartstopper_aura:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_4"), "modifier_special_bonus_imba_necrolyte_4", {})
 	end
 end
 
 function imba_necrolyte_reapers_scythe:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_necrolyte_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_necrolyte_7") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_necrolyte_7"), "modifier_special_bonus_imba_necrolyte_7", {})
 	end

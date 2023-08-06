@@ -79,13 +79,18 @@ function modifier_imba_initiate_robe_passive:OnCreated()
 end
 
 function modifier_imba_initiate_robe_passive:OnIntervalThink()
-	-- If mana percentage at any frame is lower than the frame before it, set stacks
-	if self:GetAbility() and self.parent:GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then
-		self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self:GetAbility():GetSpecialValueFor("mana_conversion_rate") / 100), self:GetAbility():GetSpecialValueFor("max_stacks")))
+	local ability = self:GetAbility()
+	if not self.parent or self.parent:IsNull() or not ability or ability:IsNull() then
+		return
 	end
 
-	self.mana_raw = self:GetParent():GetMana()
-	self.mana_pct = self:GetParent():GetManaPercent()
+	-- If mana percentage at any frame is lower than the frame before it, set stacks
+	if self.parent:GetManaPercent() < self.mana_pct and self.parent:GetMana() < self.mana_raw then
+		self:SetStackCount(math.min(self:GetStackCount() + (self.mana_raw - self.parent:GetMana()) * (ability:GetSpecialValueFor("mana_conversion_rate") * 0.01), ability:GetSpecialValueFor("max_stacks")))
+	end
+
+	self.mana_raw = self.parent:GetMana()
+	self.mana_pct = self.parent:GetManaPercent()
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierHealthBonus()
@@ -117,8 +122,9 @@ function modifier_imba_initiate_robe_passive:GetModifierTotal_ConstantBlock(keys
 
 	-- Block for the smaller value between total current stacks and total damage
 	if blocked > 0 and keys.damage > 0 then
-		SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), min(self:GetStackCount(), keys.damage), self:GetParent())
-		self:SetStackCount(max(self:GetStackCount() - keys.damage, 0))
+		blocked = math.min(blocked, keys.damage)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, self:GetParent(), blocked, nil)
+		self:SetStackCount(math.max(self:GetStackCount() - keys.damage, 0))
 	end
 
 	return blocked

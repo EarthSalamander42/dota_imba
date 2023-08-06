@@ -95,6 +95,20 @@ function C_DOTA_BaseNPC:HasShard()
 	return false
 end
 
+if not C_DOTA_BaseNPC.GetAttackRange then
+	function C_DOTA_BaseNPC:GetAttackRange()
+		return self:Script_GetAttackRange()
+	end
+end
+
+if not C_DOTA_BaseNPC.GetMagicalArmorValue then
+	function C_DOTA_BaseNPC:GetMagicalArmorValue()
+		local experimental_formula = false
+		local inflictor = nil
+		return self:Script_GetMagicalArmorValue(experimental_formula, inflictor)
+	end
+end
+
 --[[
 function C_DOTA_BaseNPC:IsInRiver()
 	if self:GetAbsOrigin().z < 160 then

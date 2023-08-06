@@ -703,17 +703,12 @@ function modifier_imba_sacred_arrow_haste:OnCreated()
 end
 
 function modifier_imba_sacred_arrow_haste:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+	}
 end
 
-function modifier_imba_sacred_arrow_haste:GetModifierMoveSpeedOverride()
-	return self.on_prowl_movespeed
-end
-
-function modifier_imba_sacred_arrow_haste:GetModifierMoveSpeed_Max()
+function modifier_imba_sacred_arrow_haste:GetModifierMoveSpeed_Absolute()
 	return self.on_prowl_movespeed
 end
 
@@ -1180,10 +1175,6 @@ end
 
 function modifier_imba_leap_talent_cast_angle_handler:GetModifierDisableTurning()
 	return 1
-end
-
-function modifier_imba_leap_talent_cast_angle_handler:IsHidden()
-	return false
 end
 
 -------------------------------

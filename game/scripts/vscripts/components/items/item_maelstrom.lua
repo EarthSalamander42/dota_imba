@@ -224,9 +224,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 		self:GetParent():EmitSound("Item.Maelstrom.Chain_Lightning.Jump")
 
 		if (keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self.static_radius and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
-			local static_particle = nil
-
-			static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker, self:GetCaster())
+			local static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker, self:GetCaster())
 			ParticleManager:SetParticleControlEnt(static_particle, 0, keys.attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.attacker:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(static_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(static_particle)
@@ -247,7 +245,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.static_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
 			if enemy ~= keys.attacker then
-				static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
+				local static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
 				ParticleManager:SetParticleControlEnt(static_particle, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(static_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(static_particle)
@@ -537,15 +535,11 @@ function modifier_item_imba_maelstrom:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 
-function modifier_item_imba_maelstrom:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen
-end
-
 function modifier_item_imba_maelstrom:GetModifierAttackRangeBonus()
 	if not self:GetParent():IsRangedAttacker() and
 		((self:GetAbility():GetName() == "item_imba_maelstrom" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_mjollnir") and not self:GetParent():HasItemInInventory("item_imba_jarnbjorn") and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar")) or
-		(self:GetAbility():GetName() == "item_imba_mjollnir" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_jarnbjorn") and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar")) or
-		(self:GetAbility():GetName() == "item_imba_jarnbjorn" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar"))) then
+			(self:GetAbility():GetName() == "item_imba_mjollnir" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_jarnbjorn") and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar")) or
+			(self:GetAbility():GetName() == "item_imba_jarnbjorn" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar"))) then
 		return self.bonus_range
 	end
 end

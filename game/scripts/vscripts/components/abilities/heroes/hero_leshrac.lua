@@ -11,8 +11,10 @@
 -- SPLIT EARTH --
 -----------------
 LinkLuaModifier("modifier_imba_split_earth_stun", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_split_earth_empowered_split", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_split_earth_tormented_true_sight", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_split_earth_empowered_split", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_split_earth_tormented_true_sight", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_leshrac_split_earth = imba_leshrac_split_earth or class({})
 
@@ -55,7 +57,8 @@ function imba_leshrac_split_earth:OnSpellStart(ese_location, ese_radius) -- proc
 	local ability = self
 	local target_point = ability:GetCursorPosition()
 	local cast_sound = "Hero_Leshrac.Split_Earth"
-	local particle_spikes = "particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf" --cp0 location, cp1 radius Vector (radius, 1, 1)
+	local particle_spikes =
+	"particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"                      --cp0 location, cp1 radius Vector (radius, 1, 1)
 	local particle_orb = "particles/hero/leshrac/leshrac_splitter_blast_projectile.vpcf"
 	local modifier_stun = "modifier_imba_split_earth_stun"
 	local modifier_empowered = "modifier_imba_split_earth_empowered_split"
@@ -79,7 +82,8 @@ function imba_leshrac_split_earth:OnSpellStart(ese_location, ese_radius) -- proc
 
 	-- Talent: Empowered Split Earth stack duration increase
 	if caster:HasTalent("special_bonus_unique_imba_leshrac_empowered_split_earth_duration") then
-		empowered_split_duration = empowered_split_duration + caster:FindTalentValue("special_bonus_unique_imba_leshrac_empowered_split_earth_duration")
+		empowered_split_duration = empowered_split_duration +
+		caster:FindTalentValue("special_bonus_unique_imba_leshrac_empowered_split_earth_duration")
 	end
 
 	-- IMBAfication: Empowered Split
@@ -130,7 +134,8 @@ function imba_leshrac_split_earth:OnSpellStart(ese_location, ese_radius) -- proc
 
 		for _, enemy in pairs(enemies) do
 			-- Stun
-			enemy:AddNewModifier(caster, ability, modifier_stun, { duration = duration * (1 - enemy:GetStatusResistance()) })
+			enemy:AddNewModifier(caster, ability, modifier_stun,
+				{ duration = duration * (1 - enemy:GetStatusResistance()) })
 
 			-- Tormented Soul Form: causes enemies hit to become visible through fog/invis
 			if caster:HasModifier(modifier_tormented) then
@@ -285,8 +290,6 @@ function modifier_imba_split_earth_stun:IsStunDebuff() return true end
 
 function modifier_imba_split_earth_stun:IsPurgeException() return true end
 
-function modifier_imba_split_earth_stun:IsStunDebuff() return true end
-
 function modifier_imba_split_earth_stun:CheckState()
 	return { [MODIFIER_STATE_STUNNED] = true }
 end
@@ -326,7 +329,8 @@ function modifier_imba_split_earth_empowered_split:OnCreated()
 
 	-- Talent: Empowered Split Earth stack duration increase
 	if self.caster:HasTalent("special_bonus_unique_imba_leshrac_empowered_split_earth_duration") then
-		self.empowered_split_duration = self.empowered_split_duration + self.caster:FindTalentValue("special_bonus_unique_imba_leshrac_empowered_split_earth_duration")
+		self.empowered_split_duration = self.empowered_split_duration +
+		self.caster:FindTalentValue("special_bonus_unique_imba_leshrac_empowered_split_earth_duration")
 	end
 
 	-- Initialize stacks table
@@ -416,8 +420,10 @@ end
 -- DIABOLIC EDICT --
 --------------------
 
-LinkLuaModifier("modifier_imba_leshrac_diabolic_edict", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leshrac_diabolic_edict_weakening_torment", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_diabolic_edict", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_diabolic_edict_weakening_torment", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_leshrac_diabolic_edict = imba_leshrac_diabolic_edict or class({})
 
@@ -444,7 +450,8 @@ function imba_leshrac_diabolic_edict:OnSpellStart(ese_target, ese_explosion_coun
 		duration = duration / num_explosions * ese_explosion_count
 
 		-- Give special cast
-		self:GetCaster():AddNewModifier(caster, ability, modifier_diabolic, { duration = duration, ese_explosion_count = ese_explosion_count, ese_target = ese_target:entindex() })
+		self:GetCaster():AddNewModifier(caster, ability, modifier_diabolic,
+			{ duration = duration, ese_explosion_count = ese_explosion_count, ese_target = ese_target:entindex() })
 	else
 		-- Normal cast
 		self:GetCaster():AddNewModifier(caster, ability, modifier_diabolic, { duration = duration })
@@ -485,7 +492,8 @@ function modifier_imba_leshrac_diabolic_edict:OnCreated(keys)
 	self.modifier_weakening = "modifier_imba_leshrac_diabolic_edict_weakening_torment"
 
 	-- Ability specials
-	self.num_explosions = self.ability:GetSpecialValueFor("num_explosions") + self.caster:FindTalentValue("special_bonus_unique_leshrac_1")
+	self.num_explosions = self.ability:GetSpecialValueFor("num_explosions") +
+	self.caster:FindTalentValue("special_bonus_unique_leshrac_1")
 	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.tower_bonus = self.ability:GetSpecialValueFor("tower_bonus")
 	self.damage = self.ability:GetSpecialValueFor("damage")
@@ -499,7 +507,8 @@ function modifier_imba_leshrac_diabolic_edict:OnCreated(keys)
 
 	-- Talent: Diabolic Edict explosions increase (only applicable on standard casts)
 	if self.caster:HasTalent("special_bonus_unique_imba_leshrac_diabolic_edict_explosions") then
-		self.num_explosions = self.num_explosions + self.caster:FindTalentValue("special_bonus_unique_imba_leshrac_diabolic_edict_explosions")
+		self.num_explosions = self.num_explosions +
+		self.caster:FindTalentValue("special_bonus_unique_imba_leshrac_diabolic_edict_explosions")
 	end
 
 	-- If this is a Pulse Nova Earth Storm Edict cast, adjust values and set target	
@@ -575,7 +584,8 @@ function modifier_imba_leshrac_diabolic_edict:DiabolicEditExplosion(target)
 		if self.caster:HasModifier(self.modifier_tormented) then
 			-- Add weakning modifier if enemy doesn't have it already
 			if not target:HasModifier(self.modifier_weakening) then
-				target:AddNewModifier(self.caster, self.ability, self.modifier_weakening, { duration = self.tormented_soul_weakening_duration * (1 - target:GetStatusResistance()) })
+				target:AddNewModifier(self.caster, self.ability, self.modifier_weakening,
+					{ duration = self.tormented_soul_weakening_duration * (1 - target:GetStatusResistance()) })
 			end
 
 			-- Increase stacks and refresh the modifier
@@ -593,8 +603,9 @@ function modifier_imba_leshrac_diabolic_edict:DiabolicEditExplosion(target)
 		end
 
 		-- Play particle effects. For clarity, particle should be at least 50-100 in radius (this is how it originally behaves)
-		ParticleManager:SetParticleControlEnt(pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(pfx, 2, Vector(max(self.explosion_radius, RandomInt(50, 100)), 0, 0))
+		ParticleManager:SetParticleControlEnt(pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc",
+			target:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControl(pfx, 2, Vector(math.max(self.explosion_radius, RandomInt(50, 100)), 0, 0))
 
 		-- If explosion radius is bigger than 0, look for enemies in range to deal damage (no buildings!)
 		if self.explosion_radius > 0 then
@@ -642,7 +653,8 @@ function modifier_imba_leshrac_diabolic_edict:OnDestroy()
 	if self:GetStackCount() <= 0 then return end
 
 	-- Fire particle
-	self.particle_ring_fx = ParticleManager:CreateParticle(self.particle_ring, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
+	self.particle_ring_fx = ParticleManager:CreateParticle(self.particle_ring, PATTACH_ABSORIGIN_FOLLOW, self.caster,
+		self.caster)
 	ParticleManager:SetParticleControl(self.particle_ring_fx, 0, self.caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_ring_fx, 1, Vector(100, 0, self.purity_casing_radius))
 	ParticleManager:ReleaseParticleIndex(self.particle_ring_fx)
@@ -672,7 +684,8 @@ function modifier_imba_leshrac_diabolic_edict:OnDestroy()
 		ApplyDamage(damageTable)
 
 		-- Fire hit particles
-		self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN_FOLLOW, enemy, self.caster)
+		self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN_FOLLOW, enemy,
+			self.caster)
 		ParticleManager:SetParticleControl(self.particle_hit_fx, 0, enemy:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(self.particle_hit_fx)
 	end
@@ -682,7 +695,8 @@ end
 -- TORMENTED WEAKENING DEBUFF MODIFIER --
 -----------------------------------------
 
-modifier_imba_leshrac_diabolic_edict_weakening_torment = modifier_imba_leshrac_diabolic_edict_weakening_torment or class({})
+modifier_imba_leshrac_diabolic_edict_weakening_torment = modifier_imba_leshrac_diabolic_edict_weakening_torment or
+class({})
 
 function modifier_imba_leshrac_diabolic_edict_weakening_torment:IsHidden() return false end
 
@@ -722,12 +736,18 @@ end
 ---------------------
 -- LIGHTNING STORM --
 ---------------------
-LinkLuaModifier("modifier_imba_leshrac_lightning_storm_slow", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leshrac_lightning_storm_scepter_thinker", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leshrac_lightning_storm_lightning_rider", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leshrac_lightning_storm_tormented_cloud_aura", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leshrac_lightning_storm_tormented_cloud_debuff", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leshrac_lightning_storm_tormented_mark", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_lightning_storm_slow", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_lightning_storm_scepter_thinker", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_lightning_storm_lightning_rider", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_lightning_storm_tormented_cloud_aura", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_lightning_storm_tormented_cloud_debuff",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_lightning_storm_tormented_mark", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_leshrac_lightning_storm = imba_leshrac_lightning_storm or class({})
 
@@ -803,7 +823,8 @@ function imba_leshrac_lightning_storm:OnSpellStart(ese_target, ese_jump_count)
 			false)
 
 		for _, marked_unit in pairs(marked_units) do
-			marked_unit:AddNewModifier(caster, ability, modifier_tormented_mark, { duration = tormented_soul_mark_duration * (1 - marked_unit:GetStatusResistance()) })
+			marked_unit:AddNewModifier(caster, ability, modifier_tormented_mark,
+				{ duration = tormented_soul_mark_duration * (1 - marked_unit:GetStatusResistance()) })
 		end
 	end
 
@@ -855,7 +876,8 @@ function imba_leshrac_lightning_storm:LaunchLightningBoltOnTarget(target)
 	local caster = self:GetCaster()
 	local ability = self
 	local hit_sound = "Hero_Leshrac.Lightning_Storm"
-	local particle_bolt = "particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf" --cp0 hitloc location, cp1 lightning spawn location, cp2 location, cp5 location, 	
+	local particle_bolt =
+	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"                    --cp0 hitloc location, cp1 lightning spawn location, cp2 location, cp5 location, 	
 	local modifier_slow = "modifier_imba_leshrac_lightning_storm_slow"
 	local modifier_rider = "modifier_imba_leshrac_lightning_storm_lightning_rider"
 
@@ -865,7 +887,8 @@ function imba_leshrac_lightning_storm:LaunchLightningBoltOnTarget(target)
 
 	-- Talent: Lightning Storm slow duration increase
 	if caster:HasTalent("special_bonus_unique_imba_leshrac_lightning_storm_duration") then
-		slow_duration = slow_duration + caster:FindTalentValue("special_bonus_unique_imba_leshrac_lightning_storm_duration")
+		slow_duration = slow_duration +
+		caster:FindTalentValue("special_bonus_unique_imba_leshrac_lightning_storm_duration")
 	end
 
 	-- Play hit sound
@@ -873,7 +896,8 @@ function imba_leshrac_lightning_storm:LaunchLightningBoltOnTarget(target)
 
 	-- Play lightning particle
 	local particle_bolt_fx = ParticleManager:CreateParticle(particle_bolt, PATTACH_ABSORIGIN, target, caster)
-	ParticleManager:SetParticleControlEnt(particle_bolt_fx, 0, target, PATTACH_ABSORIGIN, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(particle_bolt_fx, 0, target, PATTACH_ABSORIGIN, "attach_hitloc",
+		target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(particle_bolt_fx, 1, target:GetAbsOrigin() + Vector(0, 0, 2000))
 	ParticleManager:SetParticleControl(particle_bolt_fx, 2, target:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_bolt_fx, 5, target:GetAbsOrigin())
@@ -895,7 +919,8 @@ function imba_leshrac_lightning_storm:LaunchLightningBoltOnTarget(target)
 	ApplyDamage(damageTable)
 
 	-- Give it the slow modifier
-	target:AddNewModifier(caster, ability, modifier_slow, { duration = slow_duration * (1 - target:GetStatusResistance()) })
+	target:AddNewModifier(caster, ability, modifier_slow,
+		{ duration = slow_duration * (1 - target:GetStatusResistance()) })
 
 	-- IMBAfication: Lightning Rider
 	-- If caster doesn't have the buff, give it to him
@@ -958,7 +983,8 @@ function modifier_imba_leshrac_lightning_storm_slow:OnCreated()
 	self.particle_slow = "particles/units/heroes/hero_leshrac/leshrac_lightning_slow.vpcf" --cp0 location, cp1 location
 
 	-- Create particle effect
-	self.particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent, self.caster)
+	self.particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent,
+		self.caster)
 	ParticleManager:SetParticleControl(self.particle_slow_fx, 0, self.parent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_slow_fx, 1, self.parent:GetAbsOrigin())
 	self:AddParticle(self.particle_slow_fx, false, false, -1, false, false)
@@ -980,7 +1006,8 @@ end
 -- LIGHTNING STORM SCEPTER THINKER MODIFIER --
 ----------------------------------------------
 
-modifier_imba_leshrac_lightning_storm_scepter_thinker = modifier_imba_leshrac_lightning_storm_scepter_thinker or class({})
+modifier_imba_leshrac_lightning_storm_scepter_thinker = modifier_imba_leshrac_lightning_storm_scepter_thinker or
+class({})
 
 function modifier_imba_leshrac_lightning_storm_scepter_thinker:IsHidden() return true end
 
@@ -1070,7 +1097,8 @@ end
 -- LIGHTNING RIDER BUFF MODIFIER --
 -----------------------------------
 
-modifier_imba_leshrac_lightning_storm_lightning_rider = modifier_imba_leshrac_lightning_storm_lightning_rider or class({})
+modifier_imba_leshrac_lightning_storm_lightning_rider = modifier_imba_leshrac_lightning_storm_lightning_rider or
+class({})
 
 function modifier_imba_leshrac_lightning_storm_lightning_rider:IsHidden() return false end
 
@@ -1169,7 +1197,8 @@ end
 -- TORMENTED CLOUD AURA MODIFIER --
 -----------------------------------
 
-modifier_imba_leshrac_lightning_storm_tormented_cloud_aura = modifier_imba_leshrac_lightning_storm_tormented_cloud_aura or class({})
+modifier_imba_leshrac_lightning_storm_tormented_cloud_aura = modifier_imba_leshrac_lightning_storm_tormented_cloud_aura or
+class({})
 
 function modifier_imba_leshrac_lightning_storm_tormented_cloud_aura:IsHidden() return true end
 
@@ -1194,11 +1223,13 @@ function modifier_imba_leshrac_lightning_storm_tormented_cloud_aura:OnCreated()
 
 	if IsServer() then
 		-- Create particle		
-		self.particle_storm_cloud_fx = ParticleManager:CreateParticle(self.particle_storm_cloud, PATTACH_WORLDORIGIN, nil, self.caster)
+		self.particle_storm_cloud_fx = ParticleManager:CreateParticle(self.particle_storm_cloud, PATTACH_WORLDORIGIN, nil,
+			self.caster)
 		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 1, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 2, self.parent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 3, Vector(self.tormented_soul_cast_aura_radius, 0, 0))
+		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 3,
+			Vector(self.tormented_soul_cast_aura_radius, 0, 0))
 		ParticleManager:SetParticleControl(self.particle_storm_cloud_fx, 62, Vector(1, 1, 1))
 		self:AddParticle(self.particle_storm_cloud_fx, false, false, -1, false, false)
 	end
@@ -1252,7 +1283,8 @@ end
 -- TORMENTED CLOUD AURA DEBUFF MODIFIER --
 ------------------------------------------
 
-modifier_imba_leshrac_lightning_storm_tormented_cloud_debuff = modifier_imba_leshrac_lightning_storm_tormented_cloud_debuff or class({})
+modifier_imba_leshrac_lightning_storm_tormented_cloud_debuff =
+modifier_imba_leshrac_lightning_storm_tormented_cloud_debuff or class({})
 
 function modifier_imba_leshrac_lightning_storm_tormented_cloud_debuff:IsHidden() return false end
 
@@ -1326,12 +1358,14 @@ end
 -- PULSE NOVA --
 ----------------
 LinkLuaModifier("modifier_imba_leshrac_pulse_nova", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leshrac_pulse_nova_earth_edict_storm_debuff", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leshrac_pulse_nova_earth_edict_storm_debuff", "components/abilities/heroes/hero_leshrac",
+	LUA_MODIFIER_MOTION_NONE)
 
 imba_leshrac_pulse_nova = imba_leshrac_pulse_nova or class({})
 
 function imba_leshrac_pulse_nova:GetCastRange(location, target)
-	return self:GetSpecialValueFor("radius") + self:GetCaster():FindTalentValue("special_bonus_unique_imba_leshrac_pulse_nova_radius")
+	return self:GetSpecialValueFor("radius") +
+	self:GetCaster():FindTalentValue("special_bonus_unique_imba_leshrac_pulse_nova_radius")
 end
 
 function imba_leshrac_pulse_nova:OnUpgrade()
@@ -1553,7 +1587,8 @@ end
 -- EARTH STORM AND EDICT DEBUFF MODIFIER --
 -------------------------------------------
 
-modifier_imba_leshrac_pulse_nova_earth_edict_storm_debuff = modifier_imba_leshrac_pulse_nova_earth_edict_storm_debuff or class({})
+modifier_imba_leshrac_pulse_nova_earth_edict_storm_debuff = modifier_imba_leshrac_pulse_nova_earth_edict_storm_debuff or
+class({})
 
 function modifier_imba_leshrac_pulse_nova_earth_edict_storm_debuff:IsHidden() return false end
 
@@ -1585,7 +1620,8 @@ function modifier_imba_leshrac_pulse_nova_earth_edict_storm_debuff:OnCreated()
 
 	-- Talent: Trigger threshold re-set to reduced value
 	if self.caster:HasTalent("special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold") then
-		self.ese_stacks_threshold = self.caster:FindTalentValue("special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold")
+		self.ese_stacks_threshold = self.caster:FindTalentValue(
+		"special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold")
 	end
 
 	-- Initialize last chosen effect and actual chances variables
@@ -1753,7 +1789,9 @@ function imba_leshrac_tormented_soul_form:OnSpellStart()
 		attacker = caster,
 		damage = damage,
 		damage_type = DAMAGE_TYPE_PURE,
-		damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY,
+		damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NON_LETHAL + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS +
+		DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_REFLECTION +
+		DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY,
 		ability = ability
 	}
 
@@ -1815,8 +1853,10 @@ function imba_leshrac_tormented_soul_form:TormentedDiabolicEdict()
 		local modifier_diabolic_handle = caster:FindModifierByName(modifier_diabolic)
 		if ability_diabolic_handle and modifier_diabolic_handle then
 			-- Ability specials
-			local tormented_soul_cast_exp_count = ability_diabolic_handle:GetSpecialValueFor("tormented_soul_cast_exp_count")
-			local tormented_soul_cast_exp_delay = ability_diabolic_handle:GetSpecialValueFor("tormented_soul_cast_exp_delay")
+			local tormented_soul_cast_exp_count = ability_diabolic_handle:GetSpecialValueFor(
+			"tormented_soul_cast_exp_count")
+			local tormented_soul_cast_exp_delay = ability_diabolic_handle:GetSpecialValueFor(
+			"tormented_soul_cast_exp_delay")
 			local radius = ability_diabolic_handle:GetSpecialValueFor("radius")
 
 			if tormented_soul_cast_exp_count and tormented_soul_cast_exp_delay then
@@ -1854,11 +1894,13 @@ function imba_leshrac_tormented_soul_form:TormentedLightningStorm()
 		local ability_lightning_handle = caster:FindAbilityByName(ability_lightning)
 		if ability_lightning_handle then
 			-- Ability specials
-			local tormented_soul_cast_duration = ability_lightning_handle:GetSpecialValueFor("tormented_soul_cast_duration")
+			local tormented_soul_cast_duration = ability_lightning_handle:GetSpecialValueFor(
+			"tormented_soul_cast_duration")
 
 			if tormented_soul_cast_duration then
 				-- Spawn a modifier dummy at caster's location to be used as the storm aura
-				CreateModifierThinker(caster, ability_lightning_handle, modifier_storm_cloud, { duration = tormented_soul_cast_duration }, caster:GetAbsOrigin(), caster:GetTeamNumber(), false)
+				CreateModifierThinker(caster, ability_lightning_handle, modifier_storm_cloud,
+					{ duration = tormented_soul_cast_duration }, caster:GetAbsOrigin(), caster:GetTeamNumber(), false)
 			end
 		end
 	end
@@ -1881,7 +1923,8 @@ function imba_leshrac_tormented_soul_form:TormentedPulseNova()
 
 		if ability_nova_handle and modifier_nova_handle then
 			-- Ability specials			
-			local tormented_soul_cast_range_mult = ability_nova_handle:GetSpecialValueFor("tormented_soul_cast_range_mult")
+			local tormented_soul_cast_range_mult = ability_nova_handle:GetSpecialValueFor(
+			"tormented_soul_cast_range_mult")
 
 			modifier_nova_handle:OnIntervalThink(tormented_soul_cast_range_mult)
 		end
@@ -1908,7 +1951,8 @@ function modifier_imba_tormented_soul_form:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.particle_buff = "particles/hero/leshrac/leshrac_tormented_soulrocks.vpcf" --cp0 location, cp5 location, cp6 location, cp7 Vector(1,0,0)
+	self.particle_buff =
+	"particles/hero/leshrac/leshrac_tormented_soulrocks.vpcf"                   --cp0 location, cp5 location, cp6 location, cp7 Vector(1,0,0)
 	self.particle_totalsteal = "particles/hero/leshrac/totalsteal_lifesteal.vpcf"
 
 	-- Ability specials	
@@ -1917,12 +1961,14 @@ function modifier_imba_tormented_soul_form:OnCreated()
 
 	-- Talent: Totalsteal values increase
 	if self.caster:HasTalent("special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal") then
-		self.totalsteal_convertion_pct = self.totalsteal_convertion_pct + self.caster:FindTalentValue("special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal")
+		self.totalsteal_convertion_pct = self.totalsteal_convertion_pct +
+		self.caster:FindTalentValue("special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal")
 	end
 
 	if IsServer() then
 		-- Create particle sysetm for the buff
-		self.particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
+		self.particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.caster,
+			self.caster)
 		ParticleManager:SetParticleControl(self.particle_buff_fx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle_buff_fx, 5, self.caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle_buff_fx, 6, self.caster:GetAbsOrigin())
@@ -1971,12 +2017,13 @@ function modifier_imba_tormented_soul_form:OnTakeDamage(keys)
 		local replenish = damage * self.totalsteal_convertion_pct / 100
 
 		-- Apply the particle effect
-		local particle_totalsteal_fx = ParticleManager:CreateParticle(self.particle_totalsteal, PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
+		local particle_totalsteal_fx = ParticleManager:CreateParticle(self.particle_totalsteal, PATTACH_ABSORIGIN_FOLLOW,
+			self.caster, self.caster)
 		ParticleManager:SetParticleControl(particle_totalsteal_fx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle_totalsteal_fx)
 
 		-- Heal the caster
-		self.caster:Heal(replenish, self.caster)
+		self.caster:Heal(replenish, self.ability)
 
 		-- Give mana to the caster
 		self.caster:GiveMana(replenish)
@@ -2005,23 +2052,39 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_empowered_split_earth_duration", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_pulse_nova_damage", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_lightning_storm_duration", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_duration", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_diabolic_edict_explosions", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold", "components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_empowered_split_earth_duration",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_pulse_nova_damage",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_lightning_storm_duration",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_duration",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_diabolic_edict_explosions",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold",
+	"components/abilities/heroes/hero_leshrac", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_unique_imba_leshrac_empowered_split_earth_duration = modifier_special_bonus_unique_imba_leshrac_empowered_split_earth_duration or class({})
-modifier_special_bonus_unique_imba_leshrac_pulse_nova_damage = modifier_special_bonus_unique_imba_leshrac_pulse_nova_damage or class({})
-modifier_special_bonus_unique_imba_leshrac_lightning_storm_duration = modifier_special_bonus_unique_imba_leshrac_lightning_storm_duration or class({})
-modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_duration = modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_duration or class({})
-modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius = modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius or class({})
-modifier_special_bonus_unique_imba_leshrac_diabolic_edict_explosions = modifier_special_bonus_unique_imba_leshrac_diabolic_edict_explosions or class({})
-modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal = modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal or class({})
-modifier_special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold = modifier_special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold or class({})
+modifier_special_bonus_unique_imba_leshrac_empowered_split_earth_duration =
+modifier_special_bonus_unique_imba_leshrac_empowered_split_earth_duration or class({})
+modifier_special_bonus_unique_imba_leshrac_pulse_nova_damage =
+modifier_special_bonus_unique_imba_leshrac_pulse_nova_damage or class({})
+modifier_special_bonus_unique_imba_leshrac_lightning_storm_duration =
+modifier_special_bonus_unique_imba_leshrac_lightning_storm_duration or class({})
+modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_duration =
+modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_duration or class({})
+modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius =
+modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius or class({})
+modifier_special_bonus_unique_imba_leshrac_diabolic_edict_explosions =
+modifier_special_bonus_unique_imba_leshrac_diabolic_edict_explosions or class({})
+modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal =
+modifier_special_bonus_unique_imba_leshrac_tormented_soul_form_totalsteal or class({})
+modifier_special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold =
+modifier_special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold or class({})
 
 
 function modifier_special_bonus_unique_imba_leshrac_empowered_split_earth_duration:IsHidden() return true end
@@ -2074,6 +2137,8 @@ function modifier_special_bonus_unique_imba_leshrac_pulse_nova_ese_threshold:Rem
 
 function imba_leshrac_pulse_nova:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_unique_imba_leshrac_pulse_nova_radius") and not self:GetCaster():HasModifier("modifier_modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_unique_imba_leshrac_pulse_nova_radius"), "modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_unique_imba_leshrac_pulse_nova_radius"),
+			"modifier_special_bonus_unique_imba_leshrac_pulse_nova_radius", {})
 	end
 end

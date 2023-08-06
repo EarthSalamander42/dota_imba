@@ -101,43 +101,48 @@ end
 
 -- "Does not work against allied units when attacking them."
 function modifier_item_imba_diffusal:GetModifierProcAttack_BonusDamage_Physical(keys)
-	if self:GetAbility() and 
-	keys.attacker == self:GetParent() and 
-	keys.attacker:FindAllModifiersByName(self:GetName())[1] == self and 
-	not keys.attacker:HasModifier("modifier_item_imba_diffusal_2") and 
-	not keys.attacker:HasModifier("modifier_item_imba_witchblade") and 
-	keys.attacker:GetTeamNumber() ~= keys.target:GetTeamNumber() and 
-	(keys.target.GetMaxMana and keys.target:GetMaxMana() > 0) and 
-	not keys.target:IsMagicImmune() then 
+	local ability = self:GetAbility()
+	local attacker = keys.attacker
+	local target = keys.target
+
+	if ability and
+	attacker == self:GetParent() and
+	attacker:FindAllModifiersByName(self:GetName())[1] == self and
+	not attacker:HasModifier("modifier_item_imba_diffusal_2") and
+	not attacker:HasModifier("modifier_item_imba_witchblade") and
+	attacker:GetTeamNumber() ~= target:GetTeamNumber() and
+	(target.GetMaxMana and target:GetMaxMana() > 0) and
+	not target:IsMagicImmune() then 
 		-- Apply mana burn particle effect
-		local particle_manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
+		local particle_manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:ReleaseParticleIndex(particle_manaburn_fx)
-		
-		local mana_burn = nil
-		
+
+		local mana_burn
+
 		-- Determine amount of mana burn - illusions deal less
-		if keys.attacker:IsIllusion() then
-			if keys.attacker:IsRangedAttacker() then
-				mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn_illusion_ranged")
+		if attacker:IsIllusion() then
+			if attacker:IsRangedAttacker() then
+				mana_burn = ability:GetSpecialValueFor("feedback_mana_burn_illusion_ranged")
 			else
-				mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn_illusion_melee")
+				mana_burn = ability:GetSpecialValueFor("feedback_mana_burn_illusion_melee")
 			end
 		else
-			mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn")
+			mana_burn = ability:GetSpecialValueFor("feedback_mana_burn")
 		end
-		
+
 		-- Anti Mage Compromise?...
-		if keys.attacker:HasAbility("imba_antimage_mana_break") then
-			mana_burn = math.max(mana_burn - keys.attacker:FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
+		if attacker:HasAbility("imba_antimage_mana_break") then
+			mana_burn = math.max(mana_burn - attacker:FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
 		end
 
 		-- Get the target's mana, to check how much we're burning them
-		local target_mana = keys.target:GetMana()
+		local target_mana = target:GetMana()
 
 		-- Burn mana
-		keys.target:ReduceMana(mana_burn)
-		
-		return math.min(target_mana, mana_burn) * self:GetAbility():GetSpecialValueFor("damage_per_burn")
+		local actual_mana_burn = math.min(target_mana, mana_burn)
+		target:ReduceMana(actual_mana_burn, ability)
+
+		return actual_mana_burn * ability:GetSpecialValueFor("damage_per_burn")
 	end
 end
 
@@ -197,9 +202,10 @@ end
 
 function item_imba_diffusal_blade_2:OnSpellStart()
 	local target = self:GetCursorTarget()
+	local caster = self:GetCaster()
 	
 	-- Play cast sound
-	self:GetCaster():EmitSound("DOTA_Item.DiffusalBlade.Activate")
+	caster:EmitSound("DOTA_Item.DiffusalBlade.Activate")
 	target:EmitSound("DOTA_Item.DiffusalBlade.Target")
 
 	if target:TriggerSpellAbsorb(self) then return end
@@ -214,7 +220,7 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 	-- Purge target
 	target:Purge(true, false, false, false, false)
 
-	self:GetCaster():SetContextThink(DoUniqueString(self:GetName()), function()
+	caster:SetContextThink(DoUniqueString(self:GetName()), function()
 		if initial_modifiers - target:GetModifierCount() > 0 then
 			-- Burn mana and deal damage according to modifiers lost on the purge
 			local mana_burn = (initial_modifiers - target:GetModifierCount()) * self:GetSpecialValueFor("dispel_burn")
@@ -224,12 +230,13 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 			local particle_dispel_fx = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_2_dispel_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:ReleaseParticleIndex(particle_dispel_fx)
 
-			target:ReduceMana(mana_burn)
+			local actual_mana_burn = math.min(mana_burn, target_mana)
+			target:ReduceMana(actual_mana_burn, self)
 
 			ApplyDamage({
 				victim			= target,
-				attacker		= self:GetCaster(),
-				damage			= math.min(mana_burn, target_mana),
+				attacker		= caster,
+				damage			= actual_mana_burn,
 				damage_type		= DAMAGE_TYPE_MAGICAL,
 				ability			= self,
 				damage_flags	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL
@@ -237,14 +244,14 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 		end
 
 		-- Add the slow modifier
-		target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_diffusal_blade_2_slow", {duration = self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, self, "modifier_item_imba_diffusal_blade_2_slow", {duration = self:GetSpecialValueFor("purge_slow_duration") * (1 - target:GetStatusResistance())})
 		
 		-- If the target is not a hero (or a creep hero), root it
 		if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance())})
+			target:AddNewModifier(caster, self, "modifier_rooted", {duration = self:GetSpecialValueFor("purge_root_duration") * (1 - target:GetStatusResistance())})
 		end
 	
-		return nil
+		return
 	end, FrameTime())
 end
 
@@ -280,81 +287,87 @@ end
 
 -- "Does not work against allied units when attacking them."
 function modifier_item_imba_diffusal_2:GetModifierProcAttack_BonusDamage_Physical(keys)
-	if self:GetAbility() and 
-	keys.attacker == self:GetParent() and 
-	keys.attacker:FindAllModifiersByName(self:GetName())[1] == self and 
-	not keys.attacker:HasModifier("modifier_item_imba_witchblade") and 
-	keys.attacker:GetTeamNumber() ~= keys.target:GetTeamNumber() and 
-	(keys.target.GetMaxMana and keys.target:GetMaxMana() > 0) 
-	and not keys.target:IsMagicImmune() then 
+	local ability = self:GetAbility()
+	local attacker = keys.attacker
+	local target = keys.target
+	
+	if ability and 
+	attacker == self:GetParent() and 
+	attacker:FindAllModifiersByName(self:GetName())[1] == self and 
+	not attacker:HasModifier("modifier_item_imba_witchblade") and 
+	attacker:GetTeamNumber() ~= target:GetTeamNumber() and 
+	(target.GetMaxMana and target:GetMaxMana() > 0) 
+	and not target:IsMagicImmune() then 
 		-- Apply mana burn particle effect
 		local particle_manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
 		ParticleManager:ReleaseParticleIndex(particle_manaburn_fx)
-		
-		local mana_burn = nil
-		
+
+		local mana_burn
+
 		-- Determine amount of mana burn - illusions deal less
-		if keys.attacker:IsIllusion() then
-			if keys.attacker:IsRangedAttacker() then
-				mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn_illusion_ranged")
+		if attacker:IsIllusion() then
+			if attacker:IsRangedAttacker() then
+				mana_burn = ability:GetSpecialValueFor("feedback_mana_burn_illusion_ranged")
 			else
-				mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn_illusion_melee")
+				mana_burn = ability:GetSpecialValueFor("feedback_mana_burn_illusion_melee")
 			end
 		else
-			mana_burn = self:GetAbility():GetSpecialValueFor("feedback_mana_burn")
+			mana_burn = ability:GetSpecialValueFor("feedback_mana_burn")
 		end
-		
+
 		-- Anti Mage Compromise?...
-		if keys.attacker:HasAbility("imba_antimage_mana_break") then
-			mana_burn = math.max(mana_burn - keys.attacker:FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
+		if attacker:HasAbility("imba_antimage_mana_break") then
+			mana_burn = math.max(mana_burn - attacker:FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
 		end
 
 		-- Get the target's mana, to check how much we're burning them
-		local target_mana = keys.target:GetMana()
+		local target_mana = target:GetMana()
 
 		-- Burn mana
-		keys.target:ReduceMana(mana_burn)
-		
+		local actual_mana_burn = math.min(target_mana, mana_burn)
+		target:ReduceMana(actual_mana_burn, ability)
+
 		-- IMBAfication: Mana Combustion
-		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("dispel_chance_pct"), self) then
+		if RollPseudoRandom(ability:GetSpecialValueFor("dispel_chance_pct"), self) then
 			-- Look if there is at least one buff to dispel			
 			local purgable_buffs = {}
-			
-			for _, modifier in pairs(keys.target:FindAllModifiers()) do
+
+			for _, modifier in pairs(target:FindAllModifiers()) do
 				if modifier.IsDebuff and modifier.IsPurgable then
 					if not modifier:IsDebuff() and modifier:IsPurgable() then
 						table.insert(purgable_buffs, modifier)
 					end
 				end
 			end
-			
+
 			if #purgable_buffs >= 1 then
 				purgable_buffs[RandomInt(1, #purgable_buffs)]:Destroy()
 			end
-			
+
 			-- Apply particle effect
-			local particle_dispel_fx = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_2_dispel_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
+			local particle_dispel_fx = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_2_dispel_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:ReleaseParticleIndex(particle_dispel_fx)
-			
+
 			-- Burn additional mana and deal magical damage
-			local target_mana = keys.target:GetMana()
-			keys.target:ReduceMana(self:GetAbility():GetSpecialValueFor("dispel_burn"))
+			local mana = target:GetMana()
+			local additional_mana_burn = math.min(ability:GetSpecialValueFor("dispel_burn"), mana)
+			target:ReduceMana(additional_mana_burn, ability)
 
 			-- Deal appropriate magical damage, based on mana burnt
 			local damageTable = {
-				victim			= keys.target,
-				attacker		= keys.attacker,
-				damage			= math.min(self:GetAbility():GetSpecialValueFor("dispel_burn"), target_mana),
+				victim			= target,
+				attacker		= attacker,
+				damage			= additional_mana_burn,
 				damage_type 	= DAMAGE_TYPE_MAGICAL,
-				ability			= self:GetAbility(),
+				ability			= ability,
 				damage_flags	= DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL
 			}
-			
+
 			ApplyDamage(damageTable)
 		end
-		
-		-- The target_mana and mana_burn variables are from the regular proc, and not from the Combust code block
-		return math.min(target_mana, mana_burn) * self:GetAbility():GetSpecialValueFor("damage_per_burn")
+
+		-- Mana burn damage that is not related to the Mana Combustion
+		return actual_mana_burn * ability:GetSpecialValueFor("damage_per_burn")
 	end
 end
 
@@ -661,7 +674,7 @@ end
 			-- local target_mana = target:GetMana()
 
 			-- -- Burn mana
-			-- target:ReduceMana(mana_burn)
+			-- target:ReduceMana(mana_burn, nil)
 
 			-- -- Damage target depending on amount of mana actually burnt
 			-- local damage
@@ -871,7 +884,7 @@ end
 
 			-- -- Burn the target's mana
 			-- local target_mana = target:GetMana()
-			-- target:ReduceMana(mana_burn)
+			-- target:ReduceMana(mana_burn, nil)
 
 			-- -- Calculate damage according to burnt mana
 			-- local damage
@@ -1053,7 +1066,7 @@ end
 			-- local target_mana = target:GetMana()
 
 			-- -- Burn mana
-			-- target:ReduceMana(mana_burn)
+			-- target:ReduceMana(mana_burn, nil)
 
 			-- -- Damage target depending on amount of mana actually burnt
 			-- local damage
@@ -1127,7 +1140,7 @@ end
 
 								-- -- Burn additional mana and deal magical damage
 								-- local target_mana = target:GetMana()
-								-- target:ReduceMana(self.dispel_burn)
+								-- target:ReduceMana(self.dispel_burn, nil)
 
 								-- -- Calculate damage
 								-- local damage

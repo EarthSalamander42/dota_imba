@@ -27,8 +27,8 @@
 local active_sword_sound = "DOTA_Item.IronTalon.Activate"
 
 if item_imba_sange == nil then item_imba_sange = class({}) end
-LinkLuaModifier("modifier_item_imba_sange", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_sange_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Maim debuff
+LinkLuaModifier("modifier_item_imba_sange", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)        -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_sange_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE) -- Maim debuff
 
 function item_imba_sange:GetIntrinsicModifierName()
 	return "modifier_item_imba_sange"
@@ -100,12 +100,11 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-	return funcs
 end
 
 function modifier_item_imba_sange_active:GetModifierStatusResistanceStacking()
@@ -164,13 +163,12 @@ function modifier_item_imba_heavens_halberd:GetAttributes() return MODIFIER_ATTR
 
 -- Declare modifier events/properties
 function modifier_item_imba_heavens_halberd:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-	return funcs
 end
 
 function modifier_item_imba_heavens_halberd:GetModifierPreAttack_BonusDamage()
@@ -213,11 +211,9 @@ function modifier_item_imba_heavens_halberd_ally_buff:GetEffectAttachType()
 end
 
 function modifier_item_imba_heavens_halberd_ally_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_heavens_halberd_ally_buff:GetModifierStatusResistanceStacking()
@@ -247,10 +243,9 @@ end
 
 -- Declare modifier states
 function modifier_item_imba_heavens_halberd_active_disarm:CheckState()
-	local states = {
+	return {
 		[MODIFIER_STATE_DISARMED] = true,
 	}
-	return states
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -258,8 +253,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_yasha == nil then item_imba_yasha = class({}) end
-LinkLuaModifier("modifier_item_imba_yasha", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_yasha_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Stacking attack speed
+LinkLuaModifier("modifier_item_imba_yasha", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)        -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_yasha_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE) -- Stacking attack speed
 
 function item_imba_yasha:GetIntrinsicModifierName()
 	return "modifier_item_imba_yasha"
@@ -288,13 +283,12 @@ function modifier_item_imba_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULT
 
 -- Declare modifier events/properties
 function modifier_item_imba_yasha:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		--MODIFIER_PROPERTY_EVASION_CONSTANT,
 	}
-	return funcs
 end
 
 function modifier_item_imba_yasha:GetModifierAttackSpeedBonus_Constant()
@@ -338,11 +332,9 @@ function modifier_item_imba_yasha_active:GetEffectAttachType()
 end
 
 function modifier_item_imba_yasha_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_yasha_active:GetModifierEvasion_Constant()
@@ -354,8 +346,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_kaya == nil then item_imba_kaya = class({}) end
-LinkLuaModifier("modifier_item_imba_kaya", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_kaya", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)        -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE) -- Owner's bonus attributes, stackable
 
 function item_imba_kaya:GetIntrinsicModifierName()
 	return "modifier_item_imba_kaya"
@@ -542,7 +534,7 @@ function modifier_item_imba_sange_yasha:GetAttributes() return MODIFIER_ATTRIBUT
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_yasha:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
@@ -551,8 +543,6 @@ function modifier_item_imba_sange_yasha:DeclareFunctions()
 		--MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_sange_yasha:GetModifierPreAttack_BonusDamage()
@@ -612,12 +602,10 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_yasha_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_sange_yasha_active:GetModifierStatusResistanceStacking()
@@ -635,8 +623,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_kaya_and_sange == nil then item_imba_kaya_and_sange = class({}) end
-LinkLuaModifier("modifier_item_imba_kaya_and_sange", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_kaya_and_sange_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Maim/amp debuff
+LinkLuaModifier("modifier_item_imba_kaya_and_sange", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)        -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_kaya_and_sange_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE) -- Maim/amp debuff
 
 function item_imba_kaya_and_sange:GetIntrinsicModifierName()
 	return "modifier_item_imba_kaya_and_sange"
@@ -793,8 +781,8 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_yasha_and_kaya == nil then item_imba_yasha_and_kaya = class({}) end
-LinkLuaModifier("modifier_item_imba_yasha_and_kaya", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)          -- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_yasha_and_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Amp debuff
+LinkLuaModifier("modifier_item_imba_yasha_and_kaya", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)        -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_yasha_and_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE) -- Amp debuff
 
 function item_imba_yasha_and_kaya:GetIntrinsicModifierName()
 	return "modifier_item_imba_yasha_and_kaya"
@@ -972,11 +960,11 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_triumvirate == nil then item_imba_triumvirate = class({}) end
-LinkLuaModifier("modifier_item_imba_triumvirate", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)                 -- Owner's bonus attributes, stackable
-LinkLuaModifier("modifier_item_imba_triumvirate_stacks_debuff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Maim/amp debuff
-LinkLuaModifier("modifier_item_imba_triumvirate_proc_debuff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)     -- Disarm/silence debuff
-LinkLuaModifier("modifier_item_imba_triumvirate_stacks_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)     -- Stacking attack speed
-LinkLuaModifier("modifier_item_imba_triumvirate_proc_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)       -- Move speed proc
+LinkLuaModifier("modifier_item_imba_triumvirate", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)               -- Owner's bonus attributes, stackable
+LinkLuaModifier("modifier_item_imba_triumvirate_stacks_debuff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE) -- Maim/amp debuff
+LinkLuaModifier("modifier_item_imba_triumvirate_proc_debuff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Disarm/silence debuff
+LinkLuaModifier("modifier_item_imba_triumvirate_stacks_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)   -- Stacking attack speed
+LinkLuaModifier("modifier_item_imba_triumvirate_proc_buff", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE)     -- Move speed proc
 
 function item_imba_triumvirate:GetAbilityTextureName()
 	return "imba_sange_and_kaya_and_yasha"
@@ -1085,15 +1073,11 @@ end
 
 -- Modifier property storage
 function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
-	if IsServer() then
-		if not self:GetAbility() then self:Destroy() end
-	end
-
 	self.ability = self:GetAbility()
 
 	if not self.ability then
 		self:Destroy()
-		return nil
+		return
 	end
 
 	self.maim_stack = self.ability:GetSpecialValueFor("maim_stack")
@@ -1122,26 +1106,25 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate_stacks_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-	return funcs
 end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMagicalResistanceBonus()
-	if not self.amp_stack then return nil end
+	if not self.amp_stack then return end
 	return self.amp_stack * self:GetStackCount()
 end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierAttackSpeedBonus_Constant()
-	if not self.maim_stack then return nil end
+	if not self.maim_stack then return end
 	return self.maim_stack * self:GetStackCount()
 end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMoveSpeedBonus_Percentage()
-	if not self.maim_stack then return nil end
+	if not self.maim_stack then return end
 	return self.maim_stack * self:GetStackCount()
 end
 
@@ -1167,11 +1150,10 @@ end
 
 -- Declare modifier states
 function modifier_item_imba_triumvirate_proc_debuff:CheckState()
-	local states = {
+	return {
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_SILENCED] = true,
 	}
-	return states
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -1224,10 +1206,9 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate_stacks_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
-	return funcs
 end
 
 function modifier_item_imba_triumvirate_stacks_buff:GetModifierAttackSpeedBonus_Constant()
@@ -1278,10 +1259,9 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate_proc_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_triumvirate_proc_buff:GetModifierMoveSpeedBonus_Percentage()

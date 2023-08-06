@@ -642,7 +642,7 @@ function modifier_imba_lycan_summon_wolves_charges:OnDeath(keys)
 		)
 
 		-- Add spawn particles in spawn location
-		wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
+		local wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
 		ParticleManager:ReleaseParticleIndex(wolves_spawn_particle)
 
 		if player_id then
@@ -882,7 +882,7 @@ function modifier_imba_howl_flying_movement_talent:IsHidden() return false end
 
 function modifier_imba_howl_flying_movement_talent:IsPurgable() return false end
 
-function modifier_imba_howl_flying_movement_talent:IsPurgeException() return true end  -- Dispellable by hard dispells
+function modifier_imba_howl_flying_movement_talent:IsPurgeException() return true end -- Dispellable by hard dispells
 
 function modifier_imba_howl_flying_movement_talent:OnCreated()
 	if IsServer() then
@@ -1216,7 +1216,6 @@ end
 
 -- Need this if player skills talent while dead
 function imba_lycan_shapeshift:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_lycan_7") and self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_7"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lycan_7") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lycan_7", {})
 	end
@@ -1463,77 +1462,6 @@ function modifier_imba_shapeshift:OnCreated()
 	if IsServer() then
 		if not self.parent:HasModifier(self.certain_crit_buff) then
 			self.parent:AddNewModifier(self.caster, self.ability, self.certain_crit_buff, {})
-		end
-	end
-end
-
-function modifier_imba_shapeshift:OnDestroy()
-	if IsServer() then
-		if self.parent:HasModifier(self.certain_crit_buff) then
-			self.parent:RemoveModifierByName(self.certain_crit_buff)
-		end
-	end
-end
-
-function modifier_imba_shapeshift:GetEffectName()
-	return "particles/units/heroes/hero_lycan/lycan_shapeshift_buff.vpcf"
-end
-
-function modifier_imba_shapeshift:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-
-function modifier_imba_shapeshift:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
-		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-		--MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT  -- #7 TALENT: Bonus movespeed property
-	}
-	return decFuncs
-end
-
-function modifier_imba_shapeshift:GetBonusNightVision()
-	return self.night_vision_bonus
-end
-
-function modifier_imba_shapeshift:GetModifierMoveSpeed_AbsoluteMin()
-	-- #7 TALENT: Increases the movement speed cap of units affected by Shapeshift further
-	if self.caster:HasTalent("special_bonus_imba_lycan_7") then
-		return self.caster:FindTalentValue("special_bonus_imba_lycan_7", "max_movespeed")
-	else
-		return self.absolute_speed
-	end
-end
-
-function modifier_imba_shapeshift:GetModifierPreAttack_CriticalStrike()
-	if IsServer() then
-		-- Check for certain crit modifier, remove and start cooldown timer
-		if self.parent:HasModifier(self.certain_crit_buff) then
-			self.parent:RemoveModifierByName(self.certain_crit_buff)
-
-			-- Renews the target's Certain Crit modifier if Lycan is still in his Shapeshift form.
-			Timers:CreateTimer(self.certain_crit_cooldown, function()
-				if self.caster:HasModifier(self.transform_buff) then
-					self.parent:AddNewModifier(self.caster, self.ability, self.certain_crit_buff, {})
-				end
-			end)
-
-			return self.crit_damage
-		end
-
-		-- Roll a random for critical		
-		if RollPseudoRandom(self.crit_chance, self) then
-			return self.crit_damage
-		end
-
-		return nil
-	end
-end
-
-function modifier_imba_shapeshift:OnDestroy()
-	if IsServer() then
-		if self.parent:HasModifier(self.certain_crit_buff) then
-			self.parent:RemoveModifierByName(self.certain_crit_buff)
 		end
 	end
 end
@@ -2638,8 +2566,6 @@ function modifier_special_bonus_imba_lycan_10:RemoveOnDeath() return false end
 -- end
 
 function imba_lycan_summon_wolves:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_lycan_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lycan_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_10"), "modifier_special_bonus_imba_lycan_10", {})
 	end

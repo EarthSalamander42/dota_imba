@@ -39,10 +39,10 @@ function modifier_imba_gauntlets:OnCreated()
 end
 
 function modifier_imba_gauntlets:DeclareFunctions()
-	local decFuncs = { MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK }
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
+	}
 end
 
 function modifier_imba_gauntlets:GetModifierBonusStats_Strength()
@@ -57,5 +57,5 @@ function modifier_imba_gauntlets:GetModifierPhysical_ConstantBlock()
 		return self.damage_block
 	end
 
-	return nil
+	return
 end

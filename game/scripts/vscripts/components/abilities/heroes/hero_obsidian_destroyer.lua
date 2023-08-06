@@ -494,7 +494,7 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
 	if modifier_debuff_handler then
 		for i = 1, stack_count do
 			-- Remove mana from the target for each stack
-			target:ReduceMana(mana_per_int)
+			target:ReduceMana(mana_per_int, ability)
 
 			-- Increment the stack count
 			modifier_debuff_handler:IncrementStackCount()
@@ -869,13 +869,13 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 
 		-- If there was no target (happens because of the transitions from point to target), do nothing
 		if not target then
-			return nil
+			return
 		end
 
 		-- If target has Linken's sphere ready, do nothing
 		if caster:GetTeamNumber() ~= target:GetTeamNumber() then
 			if target:TriggerSpellAbsorb(self) then
-				return nil
+				return
 			end
 		end
 
@@ -894,7 +894,7 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 
 		-- If the caster has Essence Aura, roll for a proc
 		if caster:HasModifier(modifier_essence) then
-			modifier_essence_handler = caster:FindModifierByName(modifier_essence)
+			local modifier_essence_handler = caster:FindModifierByName(modifier_essence)
 			if modifier_essence_handler then
 				modifier_essence_handler:ProcEssenceAura()
 			end
@@ -1401,7 +1401,7 @@ function modifier_imba_essence_aura_buff:ProcEssenceAura()
 				-- #5 Talent: Essence Aura now heals when proccing
 				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_5") then
 					local heal_amount = self.caster:GetIntellect()
-					self.parent:Heal(heal_amount, self.caster)
+					self.parent:Heal(heal_amount, self.ability)
 				end
 				-- #8 Talent: Essence Aura can go beyond maximum mana temporarily (caster only)
 				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_8") and self.caster == self.parent then
@@ -1752,7 +1752,8 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(particle_area_fx)
 
 	-- Find all enemies in radius
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+	local enemies = FindUnitsInRadius(
+		caster:GetTeamNumber(),
 		target_point,
 		nil,
 		radius,
@@ -1760,7 +1761,8 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 		FIND_ANY_ORDER,
-		false)
+		false
+	)
 
 	for _, enemy in pairs(enemies) do
 		-- #7 Talent: Sanity Eclipse pierces spell immunity
@@ -1780,11 +1782,11 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 						mana_burn = max_mana * (caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_6", "mana_burn") / 100)
 					end
 				end
-				enemy:ReduceMana(mana_burn)
+				enemy:ReduceMana(mana_burn, ability)
 			end
 
-			-- If the enemy is an illusion, KILL IT!!!!!!!!!!!!!!!!!!
-			if enemy:IsIllusion() and (not enemy.Custom_IsStrongIllusion or not enemy:Custom_IsStrongIllusion()) then
+			-- If the enemy is an illusion (and not strong illusion), KILL IT!!!!!!!!!!!!!!!!!!
+			if enemy:IsIllusion() and not Custom_bIsStrongIllusion(enemy) then
 				enemy:Kill(ability, caster)
 			else
 				-- Calculate difference in intelligence for heroes, otherwise there are regarded as 0 int

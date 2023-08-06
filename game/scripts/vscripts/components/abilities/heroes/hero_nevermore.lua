@@ -701,7 +701,8 @@ end
 function modifier_imba_shadow_raze_pool:OnIntervalThink()
 	if IsServer() then
 		-- Find enemies in AoE
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+		local enemies = FindUnitsInRadius(
+			self.caster:GetTeamNumber(),
 			self.parent:GetAbsOrigin(),
 			nil,
 			self.radius,
@@ -709,18 +710,23 @@ function modifier_imba_shadow_raze_pool:OnIntervalThink()
 			DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_ANY_ORDER,
-			false)
+			false
+		)
+
+		local damage_table = {
+			attacker = self.caster,
+			ability = self.ability,
+			-- damage = ((enemy:GetMaxHealth() / 100) * self.percent_damage_per_tick) + self.flat_damage_per_tick, -- WTF is this broken garbage no
+			damage = self.flat_damage_per_tick,
+			damage_type = DAMAGE_TYPE_MAGICAL
+		}
 
 		-- Deal damage per tick to each enemy
 		for _, enemy in pairs(enemies) do
-			damage_table = ({ victim = enemy,
-				attacker = self.caster,
-				ability = self.ability,
-				-- damage = ((enemy:GetMaxHealth() / 100) * self.percent_damage_per_tick) + self.flat_damage_per_tick, -- WTF is this broken garbage no
-				damage = self.flat_damage_per_tick,
-				damage_type = DAMAGE_TYPE_MAGICAL })
-
-			ApplyDamage(damage_table)
+			if not enemy:IsNull() then
+				damage_table.victim = enemy
+				ApplyDamage(damage_table)
+			end
 		end
 	end
 end
@@ -756,7 +762,6 @@ end
 
 -- Should close out talent behavior change problems
 function imba_nevermore_necromastery:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_nevermore_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_nevermore_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_nevermore_2") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_nevermore_2", {})
 	end
@@ -1089,7 +1094,7 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
 
 						-- Heal the caster for a percentage of damage dealt
 						local heal_amount = damage * lifesteal / 100
-						self.caster:Heal(heal_amount, self.caster)
+						self.caster:Heal(heal_amount, self.ability)
 
 						-- Add lifesteal effect
 						local particle_lifesteal_fx = ParticleManager:CreateParticle(particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, self.caster)
@@ -1595,18 +1600,6 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
 	-- Remove phased movement from caster
 	caster:RemoveModifierByName(modifier_phase)
 
-	-- Add particles for the caster and the ground
-	local particle_caster_souls_fx = ParticleManager:CreateParticle(particle_caster_souls, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(particle_caster_souls_fx, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_caster_souls_fx, 1, Vector(lines, 0, 0))
-	ParticleManager:SetParticleControl(particle_caster_souls_fx, 2, caster:GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(particle_caster_souls_fx)
-
-	local particle_caster_ground_fx = ParticleManager:CreateParticle(particle_caster_ground, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(particle_caster_ground_fx, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_caster_ground_fx, 1, Vector(lines, 0, 0))
-	ParticleManager:ReleaseParticleIndex(particle_caster_ground_fx)
-
 	-- Find the Necromastery modifier, its stack count and the ability that used it
 	local modifier_souls_handler
 	local stacks
@@ -1624,7 +1617,7 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
 
 	-- If the modifier was not found, Requiem fails (no souls to release).
 	if not modifier_souls_handler then
-		return nil
+		return
 	end
 
 	-- Talent: Maximum Necromastery soul increase (REMOVED)
@@ -1652,6 +1645,18 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
 			RemoveNecromasterySouls(caster, temp_souls_count)
 		end
 	end
+
+	-- Add particles for the caster and the ground
+	local particle_caster_souls_fx = ParticleManager:CreateParticle(particle_caster_souls, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(particle_caster_souls_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_caster_souls_fx, 1, Vector(line_count, 0, 0))
+	ParticleManager:SetParticleControl(particle_caster_souls_fx, 2, caster:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(particle_caster_souls_fx)
+
+	local particle_caster_ground_fx = ParticleManager:CreateParticle(particle_caster_ground, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(particle_caster_ground_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_caster_ground_fx, 1, Vector(line_count, 0, 0))
+	ParticleManager:ReleaseParticleIndex(particle_caster_ground_fx)
 
 	-- Add the Soul Harvest modifier to the caster
 	caster:AddNewModifier(caster, ability, modifier_harvest, { duration = harvest_base_cd })
@@ -1732,13 +1737,13 @@ function imba_nevermore_requiem:OnProjectileHit_ExtraData(target, location, extr
 
 	-- If this line is a scepter line, heal the caster for the actual damage dealt
 	if scepter_line then
-		caster:Heal(damage_dealt, caster)
+		caster:Heal(damage_dealt, ability)
 	end
 
 	-- F.E.A.R.	
 	if not death_cast then
 		if not target:HasModifier("modifier_nevermore_requiem_fear") then
-			target:AddNewModifier(self:GetCaster(), self, "modifier_nevermore_requiem_fear", { duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance()) })
+			target:AddNewModifier(caster, ability, "modifier_nevermore_requiem_fear", { duration = self:GetSpecialValueFor("requiem_slow_duration") * (1 - target:GetStatusResistance()) })
 		else
 			target:FindModifierByName("modifier_nevermore_requiem_fear"):SetDuration(math.min(target:FindModifierByName("modifier_nevermore_requiem_fear"):GetRemainingTime() + self:GetSpecialValueFor("requiem_slow_duration"), self:GetSpecialValueFor("requiem_slow_duration_max")) * (1 - target:GetStatusResistance()), true)
 		end
@@ -1764,7 +1769,7 @@ function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 	local velocity = (line_end_position - caster:GetAbsOrigin()):Normalized() * lines_travel_speed
 
 	-- Launch the line
-	projectile_info = {
+	local projectile_info = {
 		Ability = ability,
 		EffectName = particle_lines,
 		vSpawnOrigin = caster:GetAbsOrigin(),
@@ -1780,7 +1785,10 @@ function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 		bDeleteOnHit = false,
 		vVelocity = velocity,
 		bProvidesVision = false,
-		ExtraData = { scepter_line = false, death_cast = death_cast }
+		ExtraData = {
+			scepter_line = false,
+			death_cast = death_cast
+		}
 	}
 
 	-- Create the projectile
@@ -1801,27 +1809,18 @@ function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 			local velocity = (caster:GetAbsOrigin() - line_end_position):Normalized() * lines_travel_speed
 
 			-- Launch the line
-			projectile_info = {
-				Ability = ability,
-				EffectName = particle_lines,
-				vSpawnOrigin = line_end_position,
-				fDistance = travel_distance,
-				fStartRadius = lines_end_width,
-				fEndRadius = lines_starting_width,
-				Source = caster,
-				bHasFrontalCone = false,
-				bReplaceExisting = false,
-				iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
-				iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				bDeleteOnHit = false,
-				vVelocity = velocity,
-				bProvidesVision = false,
-				ExtraData = { scepter_line = true }
+			local scepter_projectile_info = projectile_info
+			-- Differences from normal lines
+			scepter_projectile_info.vSpawnOrigin = line_end_position
+			scepter_projectile_info.fStartRadius = lines_end_width
+			scepter_projectile_info.fEndRadius = lines_starting_width
+			--scepter_projectile_info.Source = nil -- uncomment this if scepter line is originating from caster
+			scepter_projectile_info.ExtraData = {
+				scepter_line = true
 			}
 
 			-- Create the projectile
-			ProjectileManager:CreateLinearProjectile(projectile_info)
+			ProjectileManager:CreateLinearProjectile(scepter_projectile_info)
 
 			-- Create the particle
 			local particle_lines_fx = ParticleManager:CreateParticle(particle_lines, PATTACH_ABSORIGIN, caster)
@@ -1931,7 +1930,6 @@ function modifier_imba_reqiuem_harvest:IsDebuff() return false end
 ---------------------
 
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_1", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_nevermore_2", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_3", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_4", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_5", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
@@ -1940,7 +1938,6 @@ LinkLuaModifier("modifier_special_bonus_imba_nevermore_7", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_8", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_nevermore_1 = modifier_special_bonus_imba_nevermore_1 or class({})
-modifier_special_bonus_imba_nevermore_2 = modifier_special_bonus_imba_nevermore_2 or class({})
 modifier_special_bonus_imba_nevermore_3 = modifier_special_bonus_imba_nevermore_3 or class({})
 modifier_special_bonus_imba_nevermore_4 = modifier_special_bonus_imba_nevermore_4 or class({})
 modifier_special_bonus_imba_nevermore_5 = modifier_special_bonus_imba_nevermore_5 or class({})
@@ -1949,8 +1946,6 @@ modifier_special_bonus_imba_nevermore_7 = modifier_special_bonus_imba_nevermore_
 modifier_special_bonus_imba_nevermore_8 = modifier_special_bonus_imba_nevermore_8 or class({})
 
 function modifier_special_bonus_imba_nevermore_1:IsHidden() return true end
-
-function modifier_special_bonus_imba_nevermore_1:IsPurgable() return false end
 
 function modifier_special_bonus_imba_nevermore_1:RemoveOnDeath() return false end
 

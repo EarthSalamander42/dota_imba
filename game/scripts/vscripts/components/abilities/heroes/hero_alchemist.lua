@@ -274,7 +274,10 @@ end
 
 -- #4 Talent : Enemies that die under the effect of Acid Spray spawn gold bags.
 function modifier_imba_acid_spray_handler:OnDeath(params)
-	if not IsServer() then return end
+	if IsServer() then
+		-- Ability properties
+		local caster 	= 	self:GetCaster()
+		local parent	=	self:GetParent()
 
 	-- Ability properties
 	local parent = self:GetParent()
@@ -307,10 +310,25 @@ function modifier_imba_acid_spray_handler:OnDeath(params)
 				newItem:SetPurchaseTime(0)
 				newItem:SetCurrentCharges(gold)
 
-				CreateItemOnPositionSync(parent:GetAbsOrigin(), newItem)
-				local dropTarget = parent:GetAbsOrigin() + RandomVector(RandomFloat(50, 150))
-				newItem:LaunchLoot(true, 300, 0.75, dropTarget)
-				EmitSoundOn("Dungeon.TreasureItemDrop", parent)
+				local drop_chance
+				if params.unit:IsHero() then
+					drop_chance = drop_chance_hero
+				else
+					drop_chance = drop_chance_creep
+				end
+
+				-- % Chance to drop gold bag
+				if RollPercentage(drop_chance) then
+					-- Drop gold bag
+					local newItem = CreateItem( "item_bag_of_gold", nil, nil )
+					newItem:SetPurchaseTime( 0 )
+					newItem:SetCurrentCharges( gold )
+
+					local drop = CreateItemOnPositionSync( parent:GetAbsOrigin(), newItem )
+					local dropTarget = parent:GetAbsOrigin() + RandomVector( RandomFloat( 50, 150 ) )
+					newItem:LaunchLoot( true, 300, 0.75, dropTarget, nil )
+					EmitSoundOn( "Dungeon.TreasureItemDrop", parent )
+				end
 			end
 		end
 	end
@@ -441,7 +459,7 @@ function imba_alchemist_unstable_concoction:GetAbilityTextureName()
 		return "alchemist_unstable_concoction_throw"
 	end
 
-	return self.BaseClass.GetAbilityTextureName(self)
+	return "alchemist_unstable_concoction"
 end
 
 function imba_alchemist_unstable_concoction:IsHiddenWhenStolen()
@@ -1271,12 +1289,13 @@ function imba_alchemist_greevils_greed:OnSpellStart()
 	-- local target = self:GetCursorTarget()
 	local owner = caster:GetOwner()
 
-	-- local hull_size = target:GetHullRadius()
-	-- local particle_greevil = ""
-	-- local particle_greevil_fx = ParticleManager:CreateParticle(particle_greevil, PATTACH_ABSORIGIN_FOLLOW, target)
-	-- ParticleManager:SetParticleControl(particle_greevil_fx, 0, target:GetAbsOrigin())
-	-- ParticleManager:SetParticleControl(particle_greevil_fx, 1, Vector(hull_size * 3, 1, 1))
-	-- ParticleManager:ReleaseParticleIndex(particle_greevil_fx)
+	local greed_ability = owner:FindAbilityByName("imba_alchemist_goblins_greed")
+
+	local hull_size = target:GetHullRadius()
+	local particle_greevil_fx = ParticleManager:CreateParticle("particles/hero/alchemist/greevil_midas_touch.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(particle_greevil_fx, 0, target:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_greevil_fx, 1, Vector(hull_size*3, 1, 1))
+	ParticleManager:ReleaseParticleIndex(particle_greevil_fx)
 
 	caster.target = nil
 	caster:MoveToNPC(owner)

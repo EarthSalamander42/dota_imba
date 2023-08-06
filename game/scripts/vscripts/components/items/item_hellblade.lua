@@ -112,7 +112,7 @@ function item_imba_hellblade:TransferAllDebuffs(caster, target)
 				local modifier_class = modifier:GetClass()
 				
 				if modifier_ability ~= nil then
-					if modifier_class == datadrive_baseclass then
+					if modifier_class == "modifier_datadriven" then
 						modifier_ability:ApplyDataDrivenModifier(caster, target, modifier_name, {duration = modifier_duration})
 					else
 						target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
@@ -179,7 +179,7 @@ function modifier_imba_helldrain:OnIntervalThink()
 		local valid_enemies = 0
 		for _,enemy in pairs(enemies) do
 			if enemy:HasModifier("modifier_imba_helldrain_damage") then
-				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION, ability = item})
+				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION, ability = item})
 
 				-- Apply aura damage and heal
 				caster:Heal(actual_damage, caster)
@@ -253,13 +253,12 @@ function modifier_item_imba_hellblade:OnDestroy()
 end
 
 function modifier_item_imba_hellblade:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
 	}
-
-	return decFuncs
 end
 
 function modifier_item_imba_hellblade:GetModifierBonusStats_Agility()
@@ -306,9 +305,9 @@ function modifier_item_imba_hellblade_unique:OnCreated()
 end
 
 function modifier_item_imba_hellblade_unique:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACKED}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ATTACKED
+	}
 end
 
 function modifier_item_imba_hellblade_unique:OnAttacked(keys)
@@ -465,9 +464,9 @@ function modifier_item_imba_hellblade_debuff:OnCreated()
 end
 
 function modifier_item_imba_hellblade_debuff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_item_imba_hellblade_debuff:GetModifierMoveSpeedBonus_Percentage()
@@ -498,19 +497,21 @@ function modifier_item_imba_hellblade_debuff:OnIntervalThink()
 		local manadrain = self.manadrain_per_second * self.tick_rate
 
 		-- Apply damage to enemy, heal caster
-		local damageTable = {victim = self.parent,
+		local damageTable = {
+			victim = self.parent,
 			attacker = self.caster,
 			damage = lifedrain,
 			damage_type = DAMAGE_TYPE_MAGICAL,
 			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS,
-			ability = self.ability}
+			ability = self.ability
+		}
 
 		ApplyDamage(damageTable)
 
-		self.caster:Heal(lifedrain, self.caster)
+		self.caster:Heal(lifedrain, self.ability)
 
 		-- Reduce enemy's mana, replenish caster's.
-		self.parent:ReduceMana(manadrain)
+		self.parent:ReduceMana(manadrain, self.ability)
 		self.caster:GiveMana(manadrain)
 	end
 end

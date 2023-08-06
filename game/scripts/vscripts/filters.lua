@@ -369,7 +369,7 @@ function GameMode:ItemAddedFilter(keys)
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
 			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
-			drop:LaunchLoot(false, 250, 0.5, unit:GetAbsOrigin() + RandomVector(100))
+			drop:LaunchLoot(false, 250, 0.5, unit:GetAbsOrigin() + RandomVector(100), nil)
 
 			UTIL_Remove(item:GetContainer())
 			UTIL_Remove(item)

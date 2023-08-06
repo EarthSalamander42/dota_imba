@@ -170,6 +170,7 @@ function modifier_imba_timbersaw_whirling_death_debuff:OnCreated(params)
 	if not IsServer() or not self:GetParent().GetPrimaryStatValue then return end
 
 	self.efficacy = params.efficacy
+	self.parent_attribute = self:GetParent():GetPrimaryAttribute()
 
 	if not params.stat_loss_pct then
 		self.primary_stat_loss = self:GetParent():GetPrimaryStatValue() * self:GetAbility():GetTalentSpecialValueFor("stat_loss_pct") / 100 * (-1) * self.efficacy
@@ -180,8 +181,8 @@ function modifier_imba_timbersaw_whirling_death_debuff:OnCreated(params)
 	-- IMBAfication: Blood to Oil
 	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_timbersaw_whirling_death_oil", {
 		duration = params.blood_oil_duration,
-		attribute = self:GetParent():GetPrimaryAttribute(),
-		stat_gain = self.primary_stat_loss * params.blood_oil_convert_pct / 100 * (-1)
+		attribute = self.parent_attribute,
+		stat_gain = self.primary_stat_loss * params.blood_oil_convert_pct * 0.01 * (-1)
 	})
 
 	self:StartIntervalThink(FrameTime())
@@ -209,15 +210,27 @@ end
 
 if IsServer() then
 	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Strength()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_STRENGTH then return self.primary_stat_loss end
+		if self.parent_attribute == DOTA_ATTRIBUTE_STRENGTH then
+			return self.primary_stat_loss
+		elseif self.parent_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.primary_stat_loss / 2
+		end
 	end
 
 	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Agility()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_AGILITY then return self.primary_stat_loss end
+		if self.parent_attribute == DOTA_ATTRIBUTE_AGILITY then
+			return self.primary_stat_loss
+		elseif self.parent_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.primary_stat_loss / 2
+		end
 	end
 
 	function modifier_imba_timbersaw_whirling_death_debuff:GetModifierBonusStats_Intellect()
-		if self:GetParent():GetPrimaryAttribute() == DOTA_ATTRIBUTE_INTELLECT then return self.primary_stat_loss end
+		if self.parent_attribute == DOTA_ATTRIBUTE_INTELLECT then
+			return self.primary_stat_loss
+		elseif self.parent_attribute == DOTA_ATTRIBUTE_ALL then
+			return self.primary_stat_loss / 2
+		end
 	end
 end
 
@@ -253,15 +266,27 @@ end
 
 if IsServer() then
 	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Strength()
-		if self.attribute == DOTA_ATTRIBUTE_STRENGTH then return self.stat_gain end
+		if self.attribute == DOTA_ATTRIBUTE_STRENGTH then
+			return self.stat_gain
+		elseif self.attribute == DOTA_ATTRIBUTE_ALL then
+			return self.stat_gain / 2
+		end
 	end
 
 	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Agility()
-		if self.attribute == DOTA_ATTRIBUTE_AGILITY then return self.stat_gain end
+		if self.attribute == DOTA_ATTRIBUTE_AGILITY then
+			return self.stat_gain
+		elseif self.attribute == DOTA_ATTRIBUTE_ALL then
+			return self.stat_gain / 2
+		end
 	end
 
 	function modifier_imba_timbersaw_whirling_death_oil:GetModifierBonusStats_Intellect()
-		if self.attribute == DOTA_ATTRIBUTE_INTELLECT then return self.stat_gain end
+		if self.attribute == DOTA_ATTRIBUTE_INTELLECT then
+			return self.stat_gain
+		elseif self.attribute == DOTA_ATTRIBUTE_ALL then
+			return self.stat_gain / 2
+		end
 	end
 end
 
@@ -1146,7 +1171,7 @@ function imba_timbersaw_chakram_2:OnProjectileHitHandle(target, location, projec
 			self.projectiles[projectileHandle].launching_enemies = {}
 		end
 
-		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[enemy] then
+		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[target] then
 			target:EmitSound("Hero_Shredder.Chakram.Target")
 
 			-- "A passing Chakram first applies the passing damage, then the debuff."
@@ -1415,7 +1440,7 @@ function imba_timbersaw_chakram:OnProjectileHitHandle(target, location, projecti
 			self.projectiles[projectileHandle].launching_enemies = {}
 		end
 
-		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[enemy] then
+		if self.projectiles[projectileHandle].launching_enemies and not self.projectiles[projectileHandle].launching_enemies[target] then
 			target:EmitSound("Hero_Shredder.Chakram.Target")
 
 			-- "A passing Chakram first applies the passing damage, then the debuff."
@@ -1811,7 +1836,7 @@ function modifier_imba_timbersaw_chakram_thinker:OnIntervalThink()
 	if self.interval == self.damage_interval or (self.interval ~= self.damage_interval and self.counter >= self.damage_interval) then
 		-- Issue: This doesn't account for mana-reduction values when checking if there's enough mana for Chakram to be sustained
 		if self:GetCaster():GetMana() >= self.mana_per_second and (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self.break_distance then
-			self:GetCaster():ReduceMana(self.mana_per_second)
+			self:GetCaster():SpendMana(self.mana_per_second, self:GetAbility())
 
 			for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)) do
 				-- if not self.counter then
@@ -2138,8 +2163,6 @@ function modifier_special_bonus_imba_timbersaw_timber_chain_range:IsPurgable() r
 function modifier_special_bonus_imba_timbersaw_timber_chain_range:RemoveOnDeath() return false end
 
 function imba_timbersaw_timber_chain:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_timbersaw_timber_chain_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_timbersaw_timber_chain_range"), "modifier_special_bonus_imba_timbersaw_timber_chain_range", {})
 	end

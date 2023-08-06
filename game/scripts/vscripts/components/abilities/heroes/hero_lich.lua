@@ -114,7 +114,8 @@ function IncreaseStacksColdFront(caster, target, stacks)
 
 	-- Add the modifier if the target doesn't have it already
 	if not target:HasModifier(modifier_debuff) then
-		target:AddNewModifier(caster, ability, modifier_debuff, { duration = duration * (1 - target:GetStatusResistance()) })
+		target:AddNewModifier(caster, ability, modifier_debuff,
+			{ duration = duration * (1 - target:GetStatusResistance()) })
 	end
 
 	-- Increase the stacks and refresh its duration
@@ -184,7 +185,8 @@ function modifier_imba_cold_front_debuff:OnStackCountChanged()
 			FrostNova(self.caster, self.frost_nova_ability, self.parent, true)
 
 			-- Apply freeze on the target
-			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, { duration = self.freeze_duration * (1 - self.parent:GetStatusResistance()) })
+			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze,
+				{ duration = self.freeze_duration * (1 - self.parent:GetStatusResistance()) })
 		end
 	end
 end
@@ -248,7 +250,8 @@ end
 
 function imba_lich_frost_nova:GetCooldown(level)
 	if self:GetCaster():HasTalent("special_bonus_imba_lich_11") and self:GetCaster():GetModifierStackCount("modifier_imba_frost_nova_handler", self:GetCaster()) == 1 then
-		return self.BaseClass.GetCooldown(self, level) * self:GetCaster():FindTalentValue("special_bonus_imba_lich_11", "cooldown_mult")
+		return self.BaseClass.GetCooldown(self, level) *
+		self:GetCaster():FindTalentValue("special_bonus_imba_lich_11", "cooldown_mult")
 	else
 		return self.BaseClass.GetCooldown(self, level)
 	end
@@ -405,7 +408,8 @@ function FrostNova(caster, ability, target, cold_front)
 			end
 
 			-- Apply Frost Nova debuff
-			enemy:AddNewModifier(caster, ability, modifier_nova, { duration = slow_duration * (1 - enemy:GetStatusResistance()) })
+			enemy:AddNewModifier(caster, ability, modifier_nova,
+				{ duration = slow_duration * (1 - enemy:GetStatusResistance()) })
 		end
 	end
 
@@ -438,7 +442,8 @@ function FrostNova(caster, ability, target, cold_front)
 				-- local location = target:GetAbsOrigin() + Vector(math.cos(math.rad(45 * i)), math.sin(math.rad(45 * i))) * (damage_radius + distance_per_nova)
 
 				-- Apply particle effect
-				local particle_nova_flower_fx = ParticleManager:CreateParticle(particle_nova_flower, PATTACH_WORLDORIGIN, nil)
+				local particle_nova_flower_fx = ParticleManager:CreateParticle(particle_nova_flower, PATTACH_WORLDORIGIN,
+					nil)
 				ParticleManager:SetParticleControl(particle_nova_flower_fx, 0, location)
 				ParticleManager:SetParticleControl(particle_nova_flower_fx, 3, location)
 
@@ -516,12 +521,15 @@ function FrostNova(caster, ability, target, cold_front)
 					local chaos_variable = RandomInt(-15, 15)
 
 					-- Might save this for a future update (makes a circle instead of a line)
-					local location = target_loc + Vector(math.cos(math.rad((angle * j) + deviation + chaos_variable)), math.sin(math.rad((angle * j) + deviation + chaos_variable))) * (i * ring_distance)
+					local location = target_loc +
+					Vector(math.cos(math.rad((angle * j) + deviation + chaos_variable)),
+						math.sin(math.rad((angle * j) + deviation + chaos_variable))) * (i * ring_distance)
 
 					location.z = GetGroundHeight(location, nil)
 
 					-- Apply particle effect
-					local particle_nova_flower_fx = ParticleManager:CreateParticle(particle_nova_flower, PATTACH_WORLDORIGIN, nil)
+					local particle_nova_flower_fx = ParticleManager:CreateParticle(particle_nova_flower,
+						PATTACH_WORLDORIGIN, nil)
 					ParticleManager:SetParticleControl(particle_nova_flower_fx, 0, location)
 					ParticleManager:SetParticleControl(particle_nova_flower_fx, 3, location)
 
@@ -539,7 +547,7 @@ function FrostNova(caster, ability, target, cold_front)
 						-- Apply explosion particle
 						local particle_nova_fx = ParticleManager:CreateParticle(particle_nova, PATTACH_WORLDORIGIN, nil)
 						ParticleManager:SetParticleControl(particle_nova_fx, 0, location)
-						ParticleManager:SetParticleControl(particle_nova_fx, 1, Vector(damage_radius, damage_radius, damage_radius))
+						ParticleManager:SetParticleControl(particle_nova_fx, 1, Vector(radius, radius, radius))
 						ParticleManager:SetParticleControl(particle_nova_fx, 2, location)
 						ParticleManager:ReleaseParticleIndex(particle_nova_fx)
 
@@ -659,7 +667,8 @@ function modifier_special_bonus_imba_lich_11:RemoveOnDeath() return false end
 
 function imba_lich_frost_nova:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_lich_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lich_11") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lich_11"), "modifier_special_bonus_imba_lich_11", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_lich_11"), "modifier_special_bonus_imba_lich_11", {})
 	end
 end
 
@@ -672,7 +681,8 @@ LinkLuaModifier("modifier_imba_frost_armor_buff", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_frost_armor_debuff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_armor_freeze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_armor_auto_cast", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_armor_freezing_point", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_armor_freezing_point", "components/abilities/heroes/hero_lich",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_frost_armor:GetAbilityTextureName()
 	return "lich_frost_armor"
@@ -687,7 +697,8 @@ function imba_lich_frost_armor:CastFilterResultTarget(target)
 			return UF_FAIL_CUSTOM
 		end
 
-		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(),
+			self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 		return nResult
 	end
 end
@@ -803,7 +814,8 @@ function modifier_imba_frost_armor_buff:OnCreated()
 	self.cold_front_stacks = self.ability:GetSpecialValueFor("cold_front_stacks")
 
 	-- Add particle
-	self.particle_frost_armor_fx = ParticleManager:CreateParticle(self.particle_frost_armor, PATTACH_OVERHEAD_FOLLOW, self.parent)
+	self.particle_frost_armor_fx = ParticleManager:CreateParticle(self.particle_frost_armor, PATTACH_OVERHEAD_FOLLOW,
+		self.parent)
 	ParticleManager:SetParticleControl(self.particle_frost_armor_fx, 0, self.parent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_frost_armor_fx, 1, Vector(1, 1, 1))
 	-- Commenting this line out because it isn't properly attaching the particle
@@ -908,7 +920,8 @@ function modifier_imba_frost_armor_buff:OnAttackLanded(keys)
 
 		-- If attacker doesn't have the debuff, apply it
 		if not attacker:HasModifier(self.modifier_armor_debuff) then
-			modifier_debuff_handler = attacker:AddNewModifier(self.caster, self.ability, self.modifier_armor_debuff, { duration = self.frost_duration * (1 - attacker:GetStatusResistance()) })
+			modifier_debuff_handler = attacker:AddNewModifier(self.caster, self.ability, self.modifier_armor_debuff,
+				{ duration = self.frost_duration * (1 - attacker:GetStatusResistance()) })
 
 			-- Set frost armor stacks to attacks to break
 			if modifier_debuff_handler then
@@ -928,7 +941,8 @@ function modifier_imba_frost_armor_buff:OnAttackLanded(keys)
 		if self.caster:HasTalent("special_bonus_imba_lich_8") then
 			-- Strengthen aura
 			local max_slow = self.caster:FindTalentValue('special_bonus_imba_lich_8', "max_slow")
-			local slow_increase_per_hit = self.caster:FindTalentValue("special_bonus_imba_lich_8", "slow_increase_per_hit")
+			local slow_increase_per_hit = self.caster:FindTalentValue("special_bonus_imba_lich_8",
+				"slow_increase_per_hit")
 			if self:GetStackCount() < max_slow then
 				self:SetStackCount(math.min(self:GetStackCount() + slow_increase_per_hit, max_slow))
 			end
@@ -1068,7 +1082,8 @@ function modifier_imba_frost_armor_debuff:OnStackCountChanged()
 		end
 
 		-- Apply disarm
-		self.parent:AddNewModifier(self.caster, self.ability, self.modifier_disarm, { duration = self.disarm_duration * (1 - self.parent:GetStatusResistance()) })
+		self.parent:AddNewModifier(self.caster, self.ability, self.modifier_disarm,
+			{ duration = self.disarm_duration * (1 - self.parent:GetStatusResistance()) })
 	end
 end
 
@@ -1081,9 +1096,12 @@ function modifier_imba_frost_armor_freeze:OnCreated()
 	self.parent = self:GetParent()
 	self.particle_hand_freeze = "particles/hero/lich/lich_ice_armor_freeze.vpcf"
 
-	self.particle_hand_freeze_fx = ParticleManager:CreateParticle(self.particle_hand_freeze, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
-	ParticleManager:SetParticleControlEnt(self.particle_hand_freeze_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(self.particle_hand_freeze_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+	self.particle_hand_freeze_fx = ParticleManager:CreateParticle(self.particle_hand_freeze, PATTACH_CUSTOMORIGIN_FOLLOW,
+		self.parent)
+	ParticleManager:SetParticleControlEnt(self.particle_hand_freeze_fx, 0, self.parent, PATTACH_POINT_FOLLOW,
+		"attach_hitloc", self.parent:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(self.particle_hand_freeze_fx, 1, self.parent, PATTACH_POINT_FOLLOW,
+		"attach_hitloc", self.parent:GetAbsOrigin(), true)
 	self:AddParticle(self.particle_hand_freeze_fx, false, false, -1, false, false)
 end
 
@@ -1183,8 +1201,10 @@ function modifier_imba_frost_armor_auto_cast:RemoveOnDeath() return false end
 
 imba_lich_dark_ritual = class({})
 LinkLuaModifier("modifier_imba_dark_ritual_creeps", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_dark_ritual_allied_sacrifice", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_dark_ritual_enemy_sacrifice", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_ritual_allied_sacrifice", "components/abilities/heroes/hero_lich",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_ritual_enemy_sacrifice", "components/abilities/heroes/hero_lich",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_dark_ritual:GetAbilityTextureName()
 	return "lich_dark_ritual"
@@ -1199,7 +1219,8 @@ function imba_lich_dark_ritual:CastFilterResultTarget(target)
 		end
 
 		-- Otherwise, normal filtering
-		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(),
+			self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 		return nResult
 	end
 end
@@ -1285,7 +1306,8 @@ function imba_lich_dark_ritual:OnSpellStart()
 			allied_creeps_radius,
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 			DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED,
+			DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS +
+			DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED,
 			FIND_ANY_ORDER,
 			false)
 
@@ -1323,17 +1345,23 @@ function imba_lich_dark_ritual:OnSpellStart()
 			hero:AddNewModifier(caster, ability, modifier_allied_sacrifice, { duration = sacrifice_duration })
 
 			-- Add ally particle effect
-			local particle_sacrifice_allies_fx = ParticleManager:CreateParticle(particle_sacrifice_allies, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControlEnt(particle_sacrifice_allies_fx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(particle_sacrifice_allies_fx, 1, hero, PATTACH_POINT_FOLLOW, "attach_hitloc", hero:GetAbsOrigin(), true)
+			local particle_sacrifice_allies_fx = ParticleManager:CreateParticle(particle_sacrifice_allies,
+				PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleControlEnt(particle_sacrifice_allies_fx, 0, target, PATTACH_POINT_FOLLOW,
+				"attach_hitloc", target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(particle_sacrifice_allies_fx, 1, hero, PATTACH_POINT_FOLLOW,
+				"attach_hitloc", hero:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(particle_sacrifice_allies_fx)
 		else
 			hero:AddNewModifier(caster, ability, modifier_enemy_sacrifice, { duration = sacrifice_duration })
 
 			-- Add enemy particle effect
-			local particle_sacrifice_enemy_fx = ParticleManager:CreateParticle(particle_sacrifice_enemy, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControlEnt(particle_sacrifice_enemy_fx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(particle_sacrifice_enemy_fx, 1, hero, PATTACH_POINT_FOLLOW, "attach_hitloc", hero:GetAbsOrigin(), true)
+			local particle_sacrifice_enemy_fx = ParticleManager:CreateParticle(particle_sacrifice_enemy,
+				PATTACH_CUSTOMORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleControlEnt(particle_sacrifice_enemy_fx, 0, target, PATTACH_POINT_FOLLOW,
+				"attach_hitloc", target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(particle_sacrifice_enemy_fx, 1, hero, PATTACH_POINT_FOLLOW,
+				"attach_hitloc", hero:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(particle_sacrifice_enemy_fx)
 		end
 	end
@@ -1463,7 +1491,8 @@ end
 
 imba_lich_chain_frost = class({})
 LinkLuaModifier("modifier_imba_chain_frost_slow", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chain_frost_talent_buff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chain_frost_talent_buff", "components/abilities/heroes/hero_lich",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_chain_frost:GetAbilityTextureName()
 	return "lich_chain_frost"
@@ -1481,7 +1510,8 @@ function imba_lich_chain_frost:CastFilterResultTarget(target)
 			end
 		end
 
-		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(),
+			self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 		return nResult
 	end
 end
@@ -1535,7 +1565,8 @@ function imba_lich_chain_frost:LaunchProjectile(source, target)
 		bProvidesVision = true,
 		iVisionRadius = projectile_vision,
 		iVisionTeamNumber = caster:GetTeamNumber(),
-		ExtraData = { bounces_left = num_bounces, current_projectile_speed = projectile_base_speed, main_chain_frost = true, counter = 0 }
+		ExtraData = { bounces_left = num_bounces, current_projectile_speed = projectile_base_speed,
+			main_chain_frost = true, counter = 0 }
 	}
 
 	ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)
@@ -1631,7 +1662,8 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 				bProvidesVision = true,
 				iVisionRadius = projectile_vision,
 				iVisionTeamNumber = caster:GetTeamNumber(),
-				ExtraData = { bounces_left = bounces_left, current_projectile_speed = projectile_speed, main_chain_frost = true, counter = extradata.counter + 1 }
+				ExtraData = { bounces_left = bounces_left, current_projectile_speed = projectile_speed,
+					main_chain_frost = true, counter = extradata.counter + 1 }
 			}
 
 			ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)
@@ -1696,7 +1728,8 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 	ApplyDamage(damageTable)
 
 	-- Apply slow
-	target:AddNewModifier(caster, ability, modifier_slow, { duration = slow_duration * (1 - target:GetStatusResistance()) })
+	target:AddNewModifier(caster, ability, modifier_slow,
+		{ duration = slow_duration * (1 - target:GetStatusResistance()) })
 
 	-- Add Cold Front stacks
 	IncreaseStacksColdFront(caster, target, cold_front_stacks)
@@ -1823,7 +1856,8 @@ function imba_lich_frost_shield:OnSpellStart()
 
 	EmitSoundOn("Hero_Lich.IceAge", self:GetCursorTarget())
 
-	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_frost_shield", { duration = self:GetSpecialValueFor("duration") }):SetStackCount(armor_bonus)
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_frost_shield",
+		{ duration = self:GetSpecialValueFor("duration") }):SetStackCount(armor_bonus)
 end
 
 --------------------------------------
@@ -1852,7 +1886,8 @@ function modifier_imba_lich_frost_shield:OnCreated()
 		self.hp_regen = self.caster:FindTalentValue("special_bonus_imba_lich_9")
 
 		if self.parent:IsBuilding() then
-			self.hp_regen = self.hp_regen * (self.caster:FindTalentValue("special_bonus_imba_lich_9", "building_efficiency") / 100)
+			self.hp_regen = self.hp_regen *
+			(self.caster:FindTalentValue("special_bonus_imba_lich_9", "building_efficiency") / 100)
 		end
 	end
 
@@ -1860,12 +1895,15 @@ function modifier_imba_lich_frost_shield:OnCreated()
 	if not IsServer() then return end
 
 	-- Add the "encircling orb" particle
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_ice_age.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-	ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_ice_age.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil,
+		self.parent:GetAbsOrigin(), true)
 	self:AddParticle(self.particle, false, false, -1, false, false)
 
 	-- Add the frost armor particle
-	self.particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_frost_armor.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent)
+	self.particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_frost_armor.vpcf",
+		PATTACH_OVERHEAD_FOLLOW, self.parent)
 	self:AddParticle(self.particle2, false, false, -1, false, false)
 
 	-- Doesn't implement the innate 60 second cooldown on voicelines so percentage chance is reduced from 75% to 60%
@@ -1885,8 +1923,10 @@ function modifier_imba_lich_frost_shield:OnIntervalThink()
 	if not IsServer() then return end
 
 	-- Pulse particle
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_ice_age_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-	ParticleManager:SetParticleControlEnt(particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_ice_age_dmg.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil,
+		self.parent:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(particle, 2, Vector(self.radius, self.radius, self.radius))
 
 	ParticleManager:ReleaseParticleIndex(particle)
@@ -1921,7 +1961,8 @@ function modifier_imba_lich_frost_shield:OnIntervalThink()
 		ApplyDamage(damageTable)
 
 		-- Apply the slow modifier
-		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_lich_frost_shield_slow", { duration = self.slow_duration * (1 - enemy:GetStatusResistance()) })
+		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_lich_frost_shield_slow",
+			{ duration = self.slow_duration * (1 - enemy:GetStatusResistance()) })
 
 		IncreaseStacksColdFront(self.caster, enemy, self.cold_front_stacks)
 	end
@@ -2003,9 +2044,11 @@ end
 
 imba_lich_sinister_gaze = class({})
 
-LinkLuaModifier("modifier_imba_lich_sinister_gaze_handler", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lich_sinister_gaze_handler", "components/abilities/heroes/hero_lich",
+	LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lich_sinister_gaze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_lich_sinister_gaze_bonus_health", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lich_sinister_gaze_bonus_health", "components/abilities/heroes/hero_lich",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_sinister_gaze:GetIntrinsicModifierName()
 	return "modifier_imba_lich_sinister_gaze_handler"
@@ -2038,7 +2081,8 @@ function imba_lich_sinister_gaze:CastFilterResultTarget(target)
 		return UF_FAIL_CUSTOM
 	end
 
-	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, self:GetCaster():GetTeamNumber())
+	return UnitFilter(target, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, self:GetCaster():GetTeamNumber())
 end
 
 function imba_lich_sinister_gaze:GetCustomCastErrorTarget(target)
@@ -2076,14 +2120,19 @@ function imba_lich_sinister_gaze:OnSpellStart()
 	if not self:GetCaster():HasScepter() then
 		self.target:EmitSound("Hero_Lich.SinisterGaze.Target")
 
-		self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", { duration = self:GetChannelTime() })
+		self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze",
+			{ duration = self:GetChannelTime() })
 		self.target:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", { duration = self:GetChannelTime() })
 
 		if self.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 			IncreaseStacksColdFront(self.caster, self.target, self.cold_front_stacks)
 		end
 	else
-		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil, self:GetSpecialValueFor("aoe_scepter"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, FIND_CLOSEST, false)
+		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorPosition(), nil,
+			self:GetSpecialValueFor("aoe_scepter"), DOTA_UNIT_TARGET_TEAM_BOTH,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+			FIND_CLOSEST, false)
 
 		if #units == 0 then
 			self.end_channel = true
@@ -2094,7 +2143,8 @@ function imba_lich_sinister_gaze:OnSpellStart()
 						self.target = unit
 					end
 
-					unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", { duration = self:GetChannelTime() })
+					unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze",
+						{ duration = self:GetChannelTime() })
 					unit:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", { duration = self:GetChannelTime() })
 
 					if self.target:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
@@ -2126,7 +2176,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.caster, mana_gained, nil)
 
 		if self.target:GetTeam() == self.caster:GetTeam() then
-			self.caster:Heal(health_gained, self.caster)
+			self.caster:Heal(health_gained, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, health_gained, nil)
 		end
 
@@ -2138,13 +2188,14 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 				if not self.target:IsAlive() and not self.target:IsReincarnating() and (self.target:IsRealHero() or self.target:IsClone()) then
 					local consumption_health = self.target:GetMaxHealth()
 
-					self.caster:AddNewModifier(self.caster, self, "modifier_imba_lich_sinister_gaze_bonus_health", { duration = self.soul_consumption_duration }):SetStackCount(consumption_health)
+					self.caster:AddNewModifier(self.caster, self, "modifier_imba_lich_sinister_gaze_bonus_health",
+						{ duration = self.soul_consumption_duration }):SetStackCount(consumption_health)
 
 					self.caster:CalculateStatBonus(true)
 
 					-- Sure takes a while to add that max health through the modifier...
 					-- Timers:CreateTimer(0.5, function()
-					self.caster:Heal(consumption_health, self.caster)
+					self.caster:Heal(consumption_health, self)
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, consumption_health, nil)
 					-- end)
 
@@ -2180,8 +2231,10 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 			end
 
 			local particle = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)
-			ParticleManager:SetParticleControlEnt(particle, 0, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(particle, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(particle, 0, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				self.target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(particle, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc",
+				self.caster:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(particle)
 		end
 	end)
@@ -2222,15 +2275,19 @@ function modifier_imba_lich_sinister_gaze_handler:OnAbilityExecuted(keys)
 	if keys.ability == self:GetAbility() and keys.target then
 		if keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			if not keys.target:IsCreep() then
-				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()) * 100)
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") *
+				(1 - keys.target:GetStatusResistance()) * 100)
 			else
-				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * (100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")) / 100 * (1 - keys.target:GetStatusResistance()) * 100)
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") *
+				(100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")) / 100 *
+				(1 - keys.target:GetStatusResistance()) * 100)
 			end
 		else
 			if not keys.target:IsCreep() then
 				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * 100)
 			else
-				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * (100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")))
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") *
+				(100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")))
 			end
 		end
 	else
@@ -2255,7 +2312,8 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 	self.caster      = self:GetCaster()
 	self.parent      = self:GetParent()
 
-	self.destination = self.ability:GetSpecialValueFor("destination") + self.caster:FindTalentValue("special_bonus_imba_lich_10")
+	self.destination = self.ability:GetSpecialValueFor("destination") +
+	self.caster:FindTalentValue("special_bonus_imba_lich_10")
 	self.distance    = CalcDistanceBetweenEntityOBB(self:GetCaster(), self:GetParent()) * (self.destination / 100)
 	self.mana_drain  = self.ability:GetSpecialValueFor("mana_drain")
 
@@ -2278,17 +2336,25 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 	if self.caster:GetName() == "npc_dota_hero_lich" then
 		-- Particle attachments aren't perfect but they're good enough...I guess
 		-- Add the gaze particles
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_gaze.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-		ParticleManager:SetParticleControlEnt(self.particle, 0, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.particle, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_portrait", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.particle, 3, self.caster, PATTACH_ABSORIGIN_FOLLOW, nil, self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.particle, 10, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
+		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_gaze.vpcf",
+			PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		ParticleManager:SetParticleControlEnt(self.particle, 0, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil,
+			self.parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_portrait",
+			self.caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle, 3, self.caster, PATTACH_ABSORIGIN_FOLLOW, nil,
+			self.caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle, 10, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil,
+			self.parent:GetAbsOrigin(), true)
 		self:AddParticle(self.particle, false, false, -1, false, false)
 
 		-- Add the red eyes particle
-		self.particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_gaze_eyes.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-		ParticleManager:SetParticleControlEnt(self.particle2, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_eye_l", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(self.particle2, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_eye_r", self.caster:GetAbsOrigin(), true)
+		self.particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_gaze_eyes.vpcf",
+			PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		ParticleManager:SetParticleControlEnt(self.particle2, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_eye_l",
+			self.caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle2, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_eye_r",
+			self.caster:GetAbsOrigin(), true)
 		self:AddParticle(self.particle2, false, false, -1, false, false)
 	end
 
@@ -2299,11 +2365,11 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 end
 
 function modifier_imba_lich_sinister_gaze:OnIntervalThink()
-	if not self:GetCaster() or not self:GetAbility() or not self:GetAbility():IsChanneling() then
+	if self.caster:IsNull() or self.ability:IsNull() or not self.ability:IsChanneling() then
 		self:Destroy()
 	else
-		if self.parent.ReduceMana then
-			self.parent:ReduceMana(self.mana_per_interval)
+		if not self.parent:IsNull() and self.parent.ReduceMana then
+			self.parent:ReduceMana(self.mana_per_interval, self.ability)
 		end
 
 		if self.caster.GiveMana then
@@ -2344,7 +2410,8 @@ function modifier_imba_lich_sinister_gaze:GetModifierMoveSpeed_Limit()
 	if not IsServer() then return end
 
 	if not self:GetCaster():HasScepter() then
-		return self.distance / (self.ability:GetChannelTime() * (1 - math.min(self.status_resistance, 0.9999))) -- If target has 100% status resistance, make non-divide by 0 so target zips to caster
+		return self.distance /
+		(self.ability:GetChannelTime() * (1 - math.min(self.status_resistance, 0.9999)))                  -- If target has 100% status resistance, make non-divide by 0 so target zips to caster
 	else
 		return self.distance / self.ability:GetChannelTime()
 	end

@@ -6,7 +6,7 @@ LinkLuaModifier("modifier_imba_enigma_generic_pull", "components/abilities/heroe
 function CalculatePullLength(caster, target, length)
 	if not IsServer() then return end
 	local son = caster:FindAbilityByName("imba_enigma_demonic_conversion")
-	iLenght = length
+	local iLenght = length
 	if son then
 		local debuff = target:FindModifierByName("modifier_imba_enigma_eidolon_attack_counter")
 		if debuff then
@@ -66,8 +66,9 @@ function SearchForEngimaThinker(caster, victim, length, talent)
 
 	if Black_Hole.thinker and not Black_Hole.thinker:IsNull() then hThinker = Black_Hole.thinker end -- black hole
 
-	iLenght = CalculatePullLength(caster, victim, length)
-	victim:AddNewModifier(caster, nil, "modifier_imba_enigma_generic_pull", { duration = 1.0 * (1 - victim:GetStatusResistance()), target = hThinker:entindex(), length = iLenght })
+	local iLenght = CalculatePullLength(caster, victim, length)
+	victim:AddNewModifier(caster, nil, "modifier_imba_enigma_generic_pull",
+		{ duration = 1.0 * (1 - victim:GetStatusResistance()), target = hThinker:entindex(), length = iLenght })
 end
 
 modifier_imba_enigma_generic_pull = modifier_imba_enigma_generic_pull or class({})
@@ -153,11 +154,13 @@ function SetTalentSpellImmunity(caster)
 		local time = modifier:GetRemainingTime() + caster:FindTalentValue("special_bonus_imba_enigma_7")
 		modifier:SetDuration(time, true)
 	else
-		caster:AddNewModifier(caster, nil, "modifier_enigma_magic_immunity", { duration = caster:FindTalentValue("special_bonus_imba_enigma_7") })
+		caster:AddNewModifier(caster, nil, "modifier_enigma_magic_immunity",
+			{ duration = caster:FindTalentValue("special_bonus_imba_enigma_7") })
 	end
 end
 
-LinkLuaModifier("modifier_special_bonus_imba_enigma_7", "components/abilities/heroes/hero_enigma.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_7", "components/abilities/heroes/hero_enigma.lua",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_enigma_7 = modifier_special_bonus_imba_enigma_7 or class({})
 
@@ -189,7 +192,8 @@ end
 imba_enigma_malefice = imba_enigma_malefice or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_enigma_malefice", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enigma_2", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_2", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_malefice:IsHiddenWhenStolen() return false end
 
@@ -206,7 +210,6 @@ function imba_enigma_malefice:OnUpgrade()
 end
 
 function imba_enigma_malefice:OnOwnerSpawned()
-	if not IsServer() then return end
 	-- Two ways to ensure talents get added properly I guess
 	if self:GetCaster():HasAbility("special_bonus_imba_enigma_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_2") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_2", {})
@@ -286,7 +289,8 @@ function modifier_imba_enigma_malefice:OnCreated()
 	local target = self:GetParent()
 	local ability = self:GetAbility()
 	self.interval = ability:GetVanillaAbilitySpecial("tick_rate")
-	self.dmg = ability:GetVanillaAbilitySpecial("damage") + caster:FindTalentValue("special_bonus_imba_enigma_malefice_damage")
+	self.dmg = ability:GetVanillaAbilitySpecial("damage") +
+	caster:FindTalentValue("special_bonus_imba_enigma_malefice_damage")
 	self.stun_duration = ability:GetVanillaAbilitySpecial("stun_duration")
 	self:StartIntervalThink(self.interval)
 	self:OnIntervalThink()
@@ -304,7 +308,8 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
 		ability = ability
 	}
 	ApplyDamage(damageTable)
-	target:AddNewModifier(caster, ability, "modifier_stunned", { duration = self.stun_duration * (1 - target:GetStatusResistance()) })
+	target:AddNewModifier(caster, ability, "modifier_stunned",
+		{ duration = self.stun_duration * (1 - target:GetStatusResistance()) })
 	EmitSoundOn("Hero_Enigma.MaleficeTick", target)
 
 	if ability:GetAutoCastState() then
@@ -319,8 +324,10 @@ end
 imba_enigma_demonic_conversion = imba_enigma_demonic_conversion or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_enigma_eidolon", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enigma_eidolon_attack_counter", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enigma_eidolon_attacks_debuff", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_eidolon_attack_counter", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_eidolon_attacks_debuff", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
 	if IsServer() then
@@ -329,7 +336,8 @@ function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
 		if caster:HasTalent("special_bonus_imba_enigma_8") and target:IsRealHero() then
 			return UF_SUCCESS
 		end
-		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(),
+			self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 		return nResult
 	end
 end
@@ -347,7 +355,8 @@ function imba_enigma_demonic_conversion:OnSpellStart()
 		target:Kill(ability, caster)
 		target = nil
 	end
-	local eidolon_count = ability:GetVanillaAbilitySpecial("spawn_count") + caster:FindTalentValue("special_bonus_imba_enigma_6")
+	local eidolon_count = ability:GetVanillaAbilitySpecial("spawn_count") +
+	caster:FindTalentValue("special_bonus_imba_enigma_6")
 	if eidolon_count > 0 then
 		for i = 1, eidolon_count do
 			ability:CreateEidolon(target, location, 1, ability:GetVanillaKeyValue("AbilityDuration"))
@@ -358,14 +367,17 @@ end
 function imba_enigma_demonic_conversion:CreateEidolon(hParent, vLocation, iWave, fDuration)
 	local caster = self:GetCaster()
 	hParent = hParent or caster
-	local eidolon = CreateUnitByName("npc_imba_enigma_eidolon_" .. math.min(4, self:GetLevel()), vLocation, true, caster, caster, caster:GetTeamNumber())
+	local eidolon = CreateUnitByName("npc_imba_enigma_eidolon_" .. math.min(4, self:GetLevel()), vLocation, true, caster,
+		caster, caster:GetTeamNumber())
 	eidolon:AddNewModifier(caster, self, "modifier_kill", { duration = fDuration })
 	eidolon:SetOwner(caster)
 	eidolon:SetControllableByPlayer(caster:GetPlayerID(), true)
 	eidolon:SetUnitOnClearGround()
 
-	local attacks_needed = self:GetVanillaAbilitySpecial("split_attack_count") + self:GetSpecialValueFor("additional_attacks_split") * (iWave - 1)
-	eidolon:AddNewModifier(caster, self, "modifier_imba_enigma_eidolon", { duration = fDuration, wave = iWave, parent = hParent:entindex(), stack = attacks_needed })
+	local attacks_needed = self:GetVanillaAbilitySpecial("split_attack_count") +
+	self:GetSpecialValueFor("additional_attacks_split") * (iWave - 1)
+	eidolon:AddNewModifier(caster, self, "modifier_imba_enigma_eidolon",
+		{ duration = fDuration, wave = iWave, parent = hParent:entindex(), stack = attacks_needed })
 end
 
 modifier_imba_enigma_eidolon = modifier_imba_enigma_eidolon or class({})
@@ -406,7 +418,8 @@ function modifier_imba_enigma_eidolon:OnCreated(keys)
 
 	self.armor_bonus        = self.parent:GetPhysicalArmorValue(false) * self.trans_pct / 100
 	self.movespeed_bonus    = self.parent:GetIdealSpeed() * self.trans_pct / 100
-	self.attack_speed_bonus = (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) * self.trans_pct / 100
+	self.attack_speed_bonus = (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) *
+	self.trans_pct / 100
 
 	if not IsServer() then return end
 
@@ -414,7 +427,8 @@ function modifier_imba_enigma_eidolon:OnCreated(keys)
 
 	if self.parent:HasModifier("modifier_imba_echo_rapier_haste") then
 		local echo_buf = self.parent:FindModifierByName("modifier_imba_echo_rapier_haste")
-		self.attack_speed_bonus = ((self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) - echo_buf.attack_speed_buff) * self.trans_pct / 100
+		self.attack_speed_bonus = ((self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) - echo_buf.attack_speed_buff) *
+		self.trans_pct / 100
 	end
 
 	self.damage_bonus = self.trans_pct * self.parent:GetAverageTrueAttackDamage(self.parent) / 100
@@ -443,20 +457,26 @@ function modifier_imba_enigma_eidolon:OnAttackLanded(keys)
 		if self:GetParent():GetTeamNumber() ~= keys.target:GetTeamNumber() then
 			local target = keys.target
 			if not target:HasModifier("modifier_imba_enigma_eidolon_attack_counter") then
-				target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attack_counter", {})
+				target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attack_counter",
+					{})
 			end
 			if not self:GetParent():IsNull() and not self.last_target:IsNull() and self.last_target:FindModifierByNameAndCaster("modifier_imba_enigma_eidolon_attacks_debuff", self:GetParent()) then
-				self.last_target:FindModifierByNameAndCaster("modifier_imba_enigma_eidolon_attacks_debuff", self:GetParent()):Destroy()
+				self.last_target:FindModifierByNameAndCaster("modifier_imba_enigma_eidolon_attacks_debuff",
+					self:GetParent()):Destroy()
 			end
 			self.last_target = target
-			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attacks_debuff", { duration = self:GetAbility():GetSpecialValueFor("increased_mass_duration") * (1 - target:GetStatusResistance()) })
+			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attacks_debuff",
+				{ duration = self:GetAbility():GetSpecialValueFor("increased_mass_duration") *
+				(1 - target:GetStatusResistance()) })
 		end
 
 		if self.attacks > 1 then
 			self.attacks = self.attacks - 1
 		else
-			self:GetAbility():CreateEidolon(self.parent, self:GetParent():GetAbsOrigin(), self.wave + 1, self:GetRemainingTime() + self:GetAbility():GetVanillaAbilitySpecial("life_extension"))
-			self:GetAbility():CreateEidolon(self.parent, self:GetParent():GetAbsOrigin(), self.wave + 1, self:GetRemainingTime() + self:GetAbility():GetVanillaAbilitySpecial("life_extension"))
+			self:GetAbility():CreateEidolon(self.parent, self:GetParent():GetAbsOrigin(), self.wave + 1,
+				self:GetRemainingTime() + self:GetAbility():GetVanillaAbilitySpecial("life_extension"))
+			self:GetAbility():CreateEidolon(self.parent, self:GetParent():GetAbsOrigin(), self.wave + 1,
+				self:GetRemainingTime() + self:GetAbility():GetVanillaAbilitySpecial("life_extension"))
 			self:GetParent():ForceKill(false)
 		end
 	end
@@ -511,8 +531,10 @@ function modifier_imba_enigma_eidolon_attacks_debuff:GetAttributes() return MODI
 
 imba_enigma_midnight_pulse = imba_enigma_midnight_pulse or class(VANILLA_ABILITIES_BASECLASS)
 
-LinkLuaModifier("modifier_imba_enigma_midnight_pulse_thinker", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enigma_midnight_pulse_aura", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_midnight_pulse_thinker", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_midnight_pulse_aura", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_midnight_pulse:GetAOERadius() return self:GetVanillaAbilitySpecial("radius") end
 
@@ -523,7 +545,8 @@ function imba_enigma_midnight_pulse:OnSpellStart()
 	local radius = self:GetVanillaAbilitySpecial("radius")
 	EmitSoundOnLocationWithCaster(point, "Hero_Enigma.Midnight_Pulse", caster)
 	GridNav:DestroyTreesAroundPoint(point, radius, false)
-	CreateModifierThinker(caster, self, "modifier_imba_enigma_midnight_pulse_thinker", { duration = duration }, point, caster:GetTeamNumber(), false)
+	CreateModifierThinker(caster, self, "modifier_imba_enigma_midnight_pulse_thinker", { duration = duration }, point,
+		caster:GetTeamNumber(), false)
 end
 
 modifier_imba_enigma_midnight_pulse_thinker = modifier_imba_enigma_midnight_pulse_thinker or class({})
@@ -532,9 +555,11 @@ function modifier_imba_enigma_midnight_pulse_thinker:IsAura() return true end
 
 function modifier_imba_enigma_midnight_pulse_thinker:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
 
-function modifier_imba_enigma_midnight_pulse_thinker:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+function modifier_imba_enigma_midnight_pulse_thinker:GetAuraSearchFlags() return
+	DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
 
-function modifier_imba_enigma_midnight_pulse_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+function modifier_imba_enigma_midnight_pulse_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_BASIC +
+	DOTA_UNIT_TARGET_HERO end
 
 function modifier_imba_enigma_midnight_pulse_thinker:GetAuraRadius() return self.radius end
 
@@ -553,7 +578,8 @@ function modifier_imba_enigma_midnight_pulse_thinker:OnCreated(keys)
 	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
 	self.pull_length = self:GetAbility():GetSpecialValueFor("pull_strength")
 	self:StartIntervalThink(1.0)
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf",
+		PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, 0, 0))
 end
@@ -600,13 +626,15 @@ function modifier_imba_enigma_midnight_pulse_thinker:OnIntervalThink()
 	for _, eidolon in pairs(eidolons) do
 		if eidolon:HasModifier("modifier_imba_enigma_eidolon") then
 			eidolon:Heal(ability:GetSpecialValueFor("eidolon_hp_regen"), nil)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, eidolon, ability:GetSpecialValueFor("eidolon_hp_regen"), nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, eidolon, ability:GetSpecialValueFor("eidolon_hp_regen"),
+				nil)
 		end
 	end
 
 	-- growable radius talent
 	if caster:HasTalent("special_bonus_imba_enigma_3") then
-		self.radius = self.radius + ability:GetVanillaAbilitySpecial("radius") / ability:GetVanillaAbilitySpecial("duration")
+		self.radius = self.radius +
+		ability:GetVanillaAbilitySpecial("radius") / ability:GetVanillaAbilitySpecial("duration")
 		ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, 0, 0))
 	end
 end
@@ -634,12 +662,16 @@ function modifier_imba_enigma_midnight_pulse_aura:GetTexture() return "enigma_mi
 --=================================================================================================================
 
 imba_enigma_black_hole = imba_enigma_black_hole or class(VANILLA_ABILITIES_BASECLASS)
-LinkLuaModifier("modifier_imba_enigma_black_hole_thinker", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_black_hole_thinker", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_enigma_black_hole", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE) --Auctually enemies' buff
-LinkLuaModifier("modifier_imba_enigma_black_hole_pull", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_black_hole_pull", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_singularity", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enigma_1", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enigma_5", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_1", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_5", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_black_hole:IsHiddenWhenStolen() return false end
 
@@ -650,7 +682,6 @@ function imba_enigma_black_hole:IsStealable() return true end
 function imba_enigma_black_hole:IsNetherWardStealable() return true end
 
 function imba_enigma_black_hole:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_enigma_1") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_1"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_1") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_1", {})
 	end
@@ -676,7 +707,9 @@ function imba_enigma_black_hole:GetIntrinsicModifierName()
 end
 
 function imba_enigma_black_hole:GetAOERadius()
-	return self:GetVanillaAbilitySpecial("radius") + self:GetCaster():GetModifierStackCount("modifier_imba_singularity", self:GetCaster()) * self:GetSpecialValueFor("singularity_stun_radius_increment_per_stack")
+	return self:GetVanillaAbilitySpecial("radius") +
+	self:GetCaster():GetModifierStackCount("modifier_imba_singularity", self:GetCaster()) *
+	self:GetSpecialValueFor("singularity_stun_radius_increment_per_stack")
 end
 
 function imba_enigma_black_hole:OnSpellStart()
@@ -688,9 +721,11 @@ function imba_enigma_black_hole:OnSpellStart()
 	local base_pull_radius = self:GetVanillaAbilitySpecial("scepter_radius")
 	local extra_pull_radius = self:GetSpecialValueFor("singularity_pull_radius_increment_per_stack")
 	self.radius = base_radius + extra_radius * caster:FindModifierByName("modifier_imba_singularity"):GetStackCount()
-	self.pull_radius = base_pull_radius + extra_pull_radius * caster:FindModifierByName("modifier_imba_singularity"):GetStackCount()
+	self.pull_radius = base_pull_radius +
+	extra_pull_radius * caster:FindModifierByName("modifier_imba_singularity"):GetStackCount()
 	local duration = self:GetVanillaAbilitySpecial("duration")
-	self.thinker = CreateModifierThinker(caster, self, "modifier_imba_enigma_black_hole_thinker", { duration = duration }, pos, caster:GetTeamNumber(), false)
+	self.thinker = CreateModifierThinker(caster, self, "modifier_imba_enigma_black_hole_thinker", { duration = duration },
+		pos, caster:GetTeamNumber(), false)
 
 	--[[
 	-- Force a minimum CD for sanity
@@ -728,7 +763,8 @@ end
 function imba_enigma_black_hole:OnOwnerDied()
 	local singularity = self:GetCaster():FindModifierByName("modifier_imba_singularity")
 	if singularity then
-		singularity:SetStackCount(math.floor(singularity:GetStackCount() * (100 - self:GetSpecialValueFor("death_loss_pct")) / 100))
+		singularity:SetStackCount(math.floor(singularity:GetStackCount() *
+		(100 - self:GetSpecialValueFor("death_loss_pct")) / 100))
 	end
 end
 
@@ -740,7 +776,8 @@ function modifier_imba_enigma_black_hole_thinker:IsAura() return true end
 
 function modifier_imba_enigma_black_hole_thinker:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
 
-function modifier_imba_enigma_black_hole_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+function modifier_imba_enigma_black_hole_thinker:GetAuraSearchType() return DOTA_UNIT_TARGET_BASIC +
+	DOTA_UNIT_TARGET_HERO end
 
 function modifier_imba_enigma_black_hole_thinker:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
 
@@ -755,9 +792,13 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 	if not IsServer() then return end
 
 	if self:GetCaster().black_hole_effect then
-		self.pfx_ulti = ParticleManager:CreateParticle("particles/econ/items/slark/slark_ti6_blade/slark_ti6_pounce_leash_gold_body_energy_pull.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-		ParticleManager:SetParticleControlEnt(self.pfx_ulti, 0, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), false)
-		ParticleManager:SetParticleControlEnt(self.pfx_ulti, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), false)
+		self.pfx_ulti = ParticleManager:CreateParticle(
+		"particles/econ/items/slark/slark_ti6_blade/slark_ti6_pounce_leash_gold_body_energy_pull.vpcf",
+			PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:SetParticleControlEnt(self.pfx_ulti, 0, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW,
+			"attach_hitloc", self:GetCaster():GetAbsOrigin(), false)
+		ParticleManager:SetParticleControlEnt(self.pfx_ulti, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW,
+			"attach_hitloc", self:GetCaster():GetAbsOrigin(), false)
 		ParticleManager:SetParticleControl(self.pfx_ulti, 3, self:GetParent():GetAbsOrigin())
 	end
 
@@ -805,8 +846,11 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 		actual_vision = self.pull_radius
 	end
 
-	self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_blackhole_scaleable.vpcf", PATTACH_WORLDORIGIN, nil, self:GetCaster())
-	ParticleManager:SetParticleControl(self.particle, 0, Vector(self:GetParent():GetAbsOrigin().x, self:GetParent():GetAbsOrigin().y, self:GetParent():GetAbsOrigin().z + 64))
+	self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_blackhole_scaleable.vpcf",
+		PATTACH_WORLDORIGIN, nil, self:GetCaster())
+	ParticleManager:SetParticleControl(self.particle, 0,
+		Vector(self:GetParent():GetAbsOrigin().x, self:GetParent():GetAbsOrigin().y,
+			self:GetParent():GetAbsOrigin().z + 64))
 	ParticleManager:SetParticleControl(self.particle, 10, Vector(self.radius, actual_vision, 0))
 
 	-- Create an FoW viewer for all teams so everyone sees it
@@ -846,7 +890,9 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 
 	-- Pull effect
 	if self:GetCaster():HasShard() then
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.pull_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil,
+			self.pull_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 		for _, enemy in pairs(enemies) do
 			if not enemy:IsRoshan() then
@@ -866,13 +912,18 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 			end
 		end
 
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil,
+			self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			if not enemy:IsRoshan() then
-				ApplyDamage({ victim = enemy, attacker = self:GetCaster(), damage = self.dmg, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility() })
+				ApplyDamage({ victim = enemy, attacker = self:GetCaster(), damage = self.dmg,
+					damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility() })
 
 				if self.scepter then
-					ApplyDamage({ victim = enemy, attacker = self:GetCaster(), damage = enemy:GetMaxHealth() * midnightDamagePcnt, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility() })
+					ApplyDamage({ victim = enemy, attacker = self:GetCaster(),
+						damage = enemy:GetMaxHealth() * midnightDamagePcnt, damage_type = DAMAGE_TYPE_PURE,
+						ability = self:GetAbility() })
 				end
 			end
 		end
@@ -880,12 +931,16 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 		-- Here's a big one
 		local singularity = self:GetCaster():FindModifierByName("modifier_imba_singularity")
 		if singularity and singularity:GetStackCount() >= self:GetAbility():GetSpecialValueFor("singularity_cap") and not IsNearFountain(self:GetCaster():GetAbsOrigin(), 2500) then
-			local buildings = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local buildings = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil,
+				FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE,
+				FIND_ANY_ORDER, false)
 
 			for _, building in pairs(buildings) do
-				ApplyDamage({ victim = building, attacker = self:GetCaster(), damage = self.dmg, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility() })
+				ApplyDamage({ victim = building, attacker = self:GetCaster(), damage = self.dmg,
+					damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility() })
 
-				building:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", { duration = 1.0 * (1 - building:GetStatusResistance()) })
+				building:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned",
+					{ duration = 1.0 * (1 - building:GetStatusResistance()) })
 			end
 		end
 	end
@@ -1028,7 +1083,8 @@ function modifier_imba_enigma_black_hole_pull:OnIntervalThink()
 end
 
 function modifier_imba_enigma_black_hole_pull:HorizontalMotion(unit, time)
-	self.pull_distance = CalculatePullLength(self:GetCaster(), self:GetParent(), self.base_pull_distance) / (1.0 / FrameTime())
+	self.pull_distance = CalculatePullLength(self:GetCaster(), self:GetParent(), self.base_pull_distance) /
+	(1.0 / FrameTime())
 	local thinker = self:GetAbility().thinker
 	local pos = unit:GetAbsOrigin()
 
@@ -1076,16 +1132,20 @@ end
 function modifier_imba_singularity:OnDeath(keys)
 	if IsServer() and keys.unit == self:GetParent() and self:GetParent():HasTalent("special_bonus_imba_enigma_4") and self:GetParent():IsRealHero() then
 		local ability = self:GetAbility()
-		local duration = ability:GetVanillaAbilitySpecial("duration") / self:GetParent():FindTalentValue("special_bonus_imba_enigma_4")
+		local duration = ability:GetVanillaAbilitySpecial("duration") /
+		self:GetParent():FindTalentValue("special_bonus_imba_enigma_4")
 		local base_radius = ability:GetVanillaAbilitySpecial("radius")
 		local extra_radius = ability:GetSpecialValueFor("singularity_stun_radius_increment_per_stack")
 		local base_pull_radius = ability:GetSpecialValueFor("pull_radius")
 		local extra_pull_radius = ability:GetSpecialValueFor("singularity_pull_radius_increment_per_stack")
-		ability.radius = base_radius + extra_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
-		ability.pull_radius = base_pull_radius + extra_pull_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
+		ability.radius = base_radius +
+		extra_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
+		ability.pull_radius = base_pull_radius +
+		extra_pull_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
 
 		Timers:CreateTimer(FrameTime(), function()
-			ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker", { duration = duration, talent = 1 }, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
+			ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker",
+				{ duration = duration, talent = 1 }, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
 		end)
 	end
 end
@@ -1094,10 +1154,14 @@ end
 -- TALENT HANDLERS --
 ---------------------
 
-LinkLuaModifier("modifier_special_bonus_imba_enigma_8", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enigma_malefice_damage", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enigma_3", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_special_bonus_imba_enigma_4", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_8", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_malefice_damage", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_3", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_4", "components/abilities/heroes/hero_enigma",
+	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_enigma_8 = modifier_special_bonus_imba_enigma_8 or class({})
 modifier_special_bonus_imba_enigma_malefice_damage = modifier_special_bonus_imba_enigma_malefice_damage or class({})
@@ -1156,9 +1220,11 @@ function modifier_special_bonus_imba_enigma_5:IsPurgable() return false end
 
 function modifier_special_bonus_imba_enigma_5:RemoveOnDeath() return false end
 
-LinkLuaModifier("modifier_special_bonus_imba_enigma_demonic_conversion_attack_range", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_demonic_conversion_attack_range",
+	"components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_enigma_demonic_conversion_attack_range = modifier_special_bonus_imba_enigma_demonic_conversion_attack_range or class({})
+modifier_special_bonus_imba_enigma_demonic_conversion_attack_range =
+modifier_special_bonus_imba_enigma_demonic_conversion_attack_range or class({})
 
 function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:IsHidden() return true end
 
@@ -1168,6 +1234,8 @@ function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:Remo
 
 function imba_enigma_demonic_conversion:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_enigma_demonic_conversion_attack_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_demonic_conversion_attack_range") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_demonic_conversion_attack_range"), "modifier_special_bonus_imba_enigma_demonic_conversion_attack_range", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(),
+			self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_demonic_conversion_attack_range"),
+			"modifier_special_bonus_imba_enigma_demonic_conversion_attack_range", {})
 	end
 end
