@@ -35,9 +35,11 @@ modifier_imba_weaver_time_lapse				= class({})
 ---------------
 
 function imba_weaver_the_swarm:OnSpellStart()
+	local caster = self:GetCaster()
+
 	-- Preventing projectiles getting stuck in one spot due to potential 0 length vector
-	if self:GetCursorPosition() == self:GetCaster():GetAbsOrigin() then
-		self:GetCaster():SetCursorPosition(self:GetCursorPosition() + self:GetCaster():GetForwardVector())
+	if self:GetCursorPosition() == caster:GetAbsOrigin() then
+		caster:SetCursorPosition(self:GetCursorPosition() + caster:GetForwardVector())
 	end
 	
 	-- Rationale for how this is programmed:
@@ -48,10 +50,10 @@ function imba_weaver_the_swarm:OnSpellStart()
 		-- I cannot create a linear projectile and feed its own ID into ExtraData, just based on how the functions work
 		-- Therefore, I'm going to make some modifier thinkers on these travelling beetles and attach the projectileIDs to those, which then delete themselves in an OnCreated function for the enemy
 	
-	self:GetCaster():EmitSound("Hero_Weaver.Swarm.Cast")
+	caster:EmitSound("Hero_Weaver.Swarm.Cast")
 	
-	if self:GetCaster():GetName() == "npc_dota_hero_weaver" and RollPercentage(75) then
-		self:GetCaster():EmitSound("weaver_weav_ability_swarm_0"..RandomInt(1, 6))
+	if caster:GetName() == "npc_dota_hero_weaver" and RollPercentage(75) then
+		caster:EmitSound("weaver_weav_ability_swarm_0"..RandomInt(1, 6))
 	end
 	
 	local start_pos			= nil
@@ -60,13 +62,10 @@ function imba_weaver_the_swarm:OnSpellStart()
 	local projectileID		= nil
 	
 	for beetles = 1, self:GetSpecialValueFor("count") do
-		start_pos = self:GetCaster():GetAbsOrigin() + RandomVector(RandomInt(0, self:GetSpecialValueFor("spawn_radius")))
+		start_pos = caster:GetAbsOrigin() + RandomVector(RandomInt(0, self:GetSpecialValueFor("spawn_radius")))
 		
-		beetle_dummy = CreateModifierThinker(self:GetCaster(), self, nil, 
-		{
-			
-		}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
-		
+		beetle_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+
 		-- Let's not kill eardrums
 		if beetles == 1 then
 			beetle_dummy:EmitSound("Hero_Weaver.Swarm.Projectile")	
@@ -79,10 +78,10 @@ function imba_weaver_the_swarm:OnSpellStart()
 			vSpawnOrigin		= start_pos,
 			-- "The Swarm moves forward at a speed of 600, taking 5 seconds to reach max distance."
 			-- Gonna add the 5 second as an AbilitySpecial which isn't a thing in vanilla
-			fDistance			= (self:GetSpecialValueFor("speed") * self:GetSpecialValueFor("travel_time")) + self:GetCaster():GetCastRangeBonus(),
+			fDistance			= (self:GetSpecialValueFor("speed") * self:GetSpecialValueFor("travel_time")) + caster:GetCastRangeBonus(),
 			fStartRadius		= self:GetSpecialValueFor("radius"),
 			fEndRadius			= self:GetSpecialValueFor("radius"),
-			Source				= self:GetCaster(),
+			Source				= caster,
 			bHasFrontalCone		= false,
 			bReplaceExisting	= false,
 			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -90,11 +89,11 @@ function imba_weaver_the_swarm:OnSpellStart()
 			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			fExpireTime 		= GameRules:GetGameTime() + 10.0,
 			bDeleteOnHit		= false,
-			vVelocity			= (self:GetCursorPosition() - self:GetCaster():GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
+			vVelocity			= (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("speed") * Vector(1, 1, 0),
 			bProvidesVision		= true,
 			-- "The beetles provide flying vision while traveling forwards and while attached to a unit."
 			iVisionRadius 		= 321,
-			iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
+			iVisionTeamNumber 	= caster:GetTeamNumber(),
 			
 			ExtraData			= 
 			{
@@ -276,9 +275,12 @@ end
 
 -- "Beetles attack in 1.25/1.1/0.95/0.8 second intervals, starting immediately when latching on a unit, resulting in up to 13/15/17/21 attacks."
 function modifier_imba_weaver_the_swarm_debuff:OnCreated(params)
-	if self:GetAbility() then
-		self.armor_reduction	= self:GetAbility():GetTalentSpecialValueFor("armor_reduction")
-		self.mana_burn_pct		= self:GetAbility():GetTalentSpecialValueFor("mana_burn_pct")
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
+
+	if self.ability then
+		self.armor_reduction	= self.ability:GetTalentSpecialValueFor("armor_reduction")
+		self.mana_burn_pct		= self.ability:GetTalentSpecialValueFor("mana_burn_pct")
 	else
 		self.armor_reduction	= 1
 		self.mana_burn_pct		= 50
@@ -292,12 +294,12 @@ function modifier_imba_weaver_the_swarm_debuff:OnCreated(params)
 	self.beetle			= EntIndexToHScript(params.beetle_entindex)
 	
 	self.damage_table	= {
-		victim 			= self:GetParent(),
+		victim 			= self.parent,
 		damage 			= self.damage,
 		damage_type		= self.damage_type,
 		damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
 		attacker 		= self:GetCaster(),
-		ability 		= self:GetAbility()
+		ability 		= self.ability
 	}
 	
 	self:OnIntervalThink()
@@ -310,7 +312,7 @@ function modifier_imba_weaver_the_swarm_debuff:OnIntervalThink()
 	ApplyDamage(self.damage_table)
 	
 	-- IMBAfication: M. Eater
-	self:GetParent():ReduceMana(self.damage * self.mana_burn_pct * 0.01)
+	self.parent:ReduceMana(self.damage * self.mana_burn_pct * 0.01, self.ability)
 end
 
 function modifier_imba_weaver_the_swarm_debuff:OnDestroy()
@@ -338,7 +340,7 @@ function modifier_imba_weaver_the_swarm_debuff:OnAttackLanded(keys)
 		
 		-- ApplyDamage(self.damage_table)
 		
-		-- self:GetParent():ReduceMana(self.damage * self.mana_burn_pct * 0.01)
+		-- self.parent:ReduceMana(self.damage * self.mana_burn_pct * 0.01, self.ability)
 	end
 end
 
@@ -549,12 +551,24 @@ function modifier_imba_weaver_geminate_attack:DeclareFunctions()
 end
 
 function modifier_imba_weaver_geminate_attack:OnAttack(keys)
-	if keys.attacker == self:GetParent() and self:GetAbility():IsFullyCastable() and not self:GetParent():IsIllusion() and not self:GetParent():PassivesDisabled() and not keys.no_attack_cooldown and keys.target:GetUnitName() ~= "npc_dota_observer_wards" and keys.target:GetUnitName() ~= "npc_dota_sentry_wards" then
-		for geminate_attacks = 1, self:GetAbility():GetTalentSpecialValueFor("tooltip_attack") do
-			self:GetParent():AddNewModifier(keys.target, self:GetAbility(), "modifier_imba_weaver_geminate_attack_delay", {delay = self:GetAbility():GetSpecialValueFor("delay") * geminate_attacks})
+	if not IsServer() then return end
+
+	local ability = self:GetAbility()
+	local parent = self:GetParent()
+	local target = keys.target
+
+	if not target or target:IsNull() then
+		return
+	end
+	if target.GetUnitName == nil or not target:IsBaseNPC() then
+		return
+	end
+	if keys.attacker == parent and ability:IsFullyCastable() and not parent:IsIllusion() and not parent:PassivesDisabled() and not keys.no_attack_cooldown and target:GetUnitName() ~= "npc_dota_observer_wards" and target:GetUnitName() ~= "npc_dota_sentry_wards" then
+		for geminate_attacks = 1, ability:GetTalentSpecialValueFor("tooltip_attack") do
+			parent:AddNewModifier(target, ability, "modifier_imba_weaver_geminate_attack_delay", {delay = ability:GetSpecialValueFor("delay") * geminate_attacks})
 		end
 		
-		self:GetAbility():UseResources(true, true, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 

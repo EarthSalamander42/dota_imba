@@ -58,45 +58,44 @@ function imba_earth_spirit_stone_caller:GetIntrinsicModifierName()
 	return "modifier_imba_earth_spirit_remnant_handler" end
 
 function imba_earth_spirit_stone_caller:OnSpellStart()
-	if IsServer() then
-		if self.handler then
-			self.handler:OnCreated()
+	local caster = self:GetCaster()
+
+	if self.handler then
+		self.handler:OnCreated()
+	else
+		self.handler = caster:FindModifierByName("modifier_imba_earth_spirit_remnant_handler")
+	end
+
+	local target = self:GetCursorPosition()
+	local unit = self:GetCursorTarget()
+	local remnantDuration = self:GetVanillaAbilitySpecial("duration")
+	local effectRadius = self:GetVanillaAbilitySpecial("radius")
+	local visionDuration = self:GetSpecialValueFor("vision_duration")
+	
+	-- self casting sets the target as caster target + 100 units forward
+	if unit == caster then
+		target = caster:GetAbsOrigin() + caster:GetForwardVector() * 100
+	end
+	
+	local dummy = CreateUnitByName("npc_imba_dota_earth_spirit_stone", target, false, caster, nil, caster:GetTeamNumber())
+	dummy:AddNewModifier(caster, self, "modifier_imba_stone_remnant", {duration = remnantDuration})
+	EmitSoundOn("Hero_EarthSpirit.StoneRemnant.Impact", dummy)
+	self.handler:NewRemnant(dummy:GetEntityIndex())
+	
+	if caster:HasTalent("special_bonus_imba_earth_spirit_1") then
+		dummy:SetDayTimeVisionRange(caster:FindTalentValue("special_bonus_imba_earth_spirit_1"))
+		dummy:SetNightTimeVisionRange(caster:FindTalentValue("special_bonus_imba_earth_spirit_1"))
+	else
+		self:CreateVisibilityNode(target, effectRadius, visionDuration)
+	end
+	
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, effectRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	for _, enemy in ipairs(enemies) do
+		local mark = enemy:FindModifierByName("modifier_imba_earths_mark")
+		if mark then
+			mark:IncrementStackCount()
 		else
-			self.handler = caster:FindModifierByName("modifier_imba_earth_spirit_remnant_handler")
-		end
-		
-		local caster = self:GetCaster()
-		local target = self:GetCursorPosition()
-		local unit = self:GetCursorTarget()
-		local remnantDuration = self:GetVanillaAbilitySpecial("duration")
-		local effectRadius = self:GetVanillaAbilitySpecial("radius")
-		local visionDuration = self:GetSpecialValueFor("vision_duration")
-		
-		-- self casting sets the target as caster target + 100 units forward
-		if unit == caster then
-			target = caster:GetAbsOrigin() + caster:GetForwardVector() * 100
-		end
-		
-		local dummy = CreateUnitByName("npc_imba_dota_earth_spirit_stone", target, false, caster, nil, caster:GetTeamNumber())
-		dummy:AddNewModifier(caster, self, "modifier_imba_stone_remnant", {duration = remnantDuration})
-		EmitSoundOn("Hero_EarthSpirit.StoneRemnant.Impact", dummy)
-		self.handler:NewRemnant(dummy:GetEntityIndex())
-		
-		if caster:HasTalent("special_bonus_imba_earth_spirit_1") then
-			dummy:SetDayTimeVisionRange(caster:FindTalentValue("special_bonus_imba_earth_spirit_1"))
-			dummy:SetNightTimeVisionRange(caster:FindTalentValue("special_bonus_imba_earth_spirit_1"))
-		else
-			self:CreateVisibilityNode(target, effectRadius, visionDuration)
-		end
-		
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, effectRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-		for _, enemy in ipairs(enemies) do
-			local mark = enemy:FindModifierByName("modifier_imba_earths_mark")
-			if mark then
-				mark:IncrementStackCount()
-			else
-				enemy:AddNewModifier(caster, self, "modifier_imba_earths_mark", {})
-			end
+			enemy:AddNewModifier(caster, self, "modifier_imba_earths_mark", {})
 		end
 	end
 end
@@ -1440,7 +1439,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 			
 			if self.caster:HasTalent("special_bonus_imba_earth_spirit_3") then
 				local heal = self.caster:FindTalentValue("special_bonus_imba_earth_spirit_3") * mark:GetStackCount()
-				self.caster:Heal(heal, self.caster)
+				self.caster:Heal(heal, self.ability)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, heal, nil)
 			end
 		end

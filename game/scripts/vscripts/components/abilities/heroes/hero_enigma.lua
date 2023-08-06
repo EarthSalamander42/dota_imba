@@ -6,7 +6,7 @@ LinkLuaModifier("modifier_imba_enigma_generic_pull","components/abilities/heroes
 function CalculatePullLength(caster, target, length)
 	if not IsServer() then return end
 	local son = caster:FindAbilityByName("imba_enigma_demonic_conversion")
-	iLenght = length
+	local iLenght = length
 	if son then
 		local debuff = target:FindModifierByName("modifier_imba_enigma_eidolon_attack_counter")
 		if debuff then
@@ -66,7 +66,7 @@ function SearchForEngimaThinker(caster, victim, length, talent)
 
 	if Black_Hole.thinker and not Black_Hole.thinker:IsNull() then hThinker = Black_Hole.thinker end -- black hole
 
-	iLenght = CalculatePullLength(caster, victim, length)
+	local iLenght = CalculatePullLength(caster, victim, length)
 	victim:AddNewModifier(caster, nil, "modifier_imba_enigma_generic_pull", {duration = 1.0 * (1 - victim:GetStatusResistance()), target = hThinker:entindex(), length = iLenght})
 end
 
@@ -194,7 +194,6 @@ function imba_enigma_malefice:OnUpgrade()
 end
 
 function imba_enigma_malefice:OnOwnerSpawned()
-	if not IsServer() then return end
 	-- Two ways to ensure talents get added properly I guess
 	if self:GetCaster():HasAbility("special_bonus_imba_enigma_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_2") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_2", {})
@@ -598,7 +597,6 @@ function imba_enigma_black_hole:IsStealable() 				return true end
 function imba_enigma_black_hole:IsNetherWardStealable() 	return true end
 
 function imba_enigma_black_hole:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_enigma_1") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_1"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_1") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_1", {})
 	end

@@ -500,9 +500,9 @@ end
 			local quas_orbs 		= caster:FindAllModifiersByName("modifier_imba_invoker_quas")
 			local wex_orbs 			= caster:FindAllModifiersByName("modifier_imba_invoker_wex")
 			local exort_orbs 		= caster:FindAllModifiersByName("modifier_imba_invoker_exort")
-			local num_quas_orbs 	= table.getn(quas_orbs)
-			local num_wex_orbs 		= table.getn(wex_orbs)
-			local num_exort_orbs 	= table.getn(exort_orbs)
+			local num_quas_orbs 	= #quas_orbs
+			local num_wex_orbs 		= #wex_orbs
+			local num_exort_orbs 	= #exort_orbs
 			
 			-- TODO: Check for other functions that let you spam this sound
 			caster:EmitSound("Hero_Invoker.Invoke")
@@ -886,9 +886,8 @@ end
 
 			self:GetCaster():StartGesture(ACT_DOTA_CAST_SUN_STRIKE)
 
-			local bCataclysm = self:GetCursorTarget() == self:GetCaster()
-
-			if bCataclysm and self:GetCaster():HasScepter() then
+			local bCataclysm
+			if self:GetCursorTarget() == self:GetCaster() and self:GetCaster():HasScepter() then
 				bCataclysm = 1
 				self:StartCooldown(self:GetSpecialValueFor("cataclysm_cooldown") * self:GetCaster():GetCooldownReduction())
 			else
@@ -1085,10 +1084,10 @@ end
 			damage_table.attacker 		= caster
 			damage_table.ability 		= ability
 			damage_table.damage_type 	= ability:GetAbilityDamageType() 
-			damage_table.damage 		= damage / table.getn(enemies_hit)
+			damage_table.damage 		= damage / #enemies_hit
 			
 			-- Deal damage to each enemy hero
-			for _,hero in pairs(enemies_hit) do
+			for _, hero in pairs(enemies_hit) do
 				damage_table.victim = hero
 				ApplyDamage(damage_table)
 			end
@@ -1349,7 +1348,7 @@ end
 
 				AddFOWViewer(self:GetCaster():GetTeamNumber(), self.target_point, self.vision_distance, self.vision_duration, false)
 
-				local sun_strike_beam = nil
+				local sun_strike_beam
 
 				if self.target_point then
 					sun_strike_beam = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_POINT, self:GetCaster(), self:GetCaster():GetTeamNumber())
@@ -1389,7 +1388,7 @@ end
 							EmitSoundOnLocationWithCaster(self.cataclysm_point, "Hero_Invoker.SunStrike.Charge", self:GetCaster())
 							AddFOWViewer(self:GetCaster():GetTeamNumber(), self.cataclysm_point, self.vision_distance, self.vision_duration, false)
 							
-							sun_strike_beam = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_CUSTOMORIGIN, nil)
+							local sun_strike_beam = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_CUSTOMORIGIN, nil)
 							ParticleManager:SetParticleControl(sun_strike_beam, 0, self.cataclysm_point)
 							ParticleManager:SetParticleControl(sun_strike_beam, 1, Vector(self.area_of_effect, 0, 0))
 							self:AddParticle(sun_strike_beam, false, false, -1, false, false)
@@ -1706,8 +1705,7 @@ end
 				local wex_level 					= caster:FindAbilityByName("imba_invoker_wex"):GetLevel() - 1
 				local self_slow 					= ability:GetLevelSpecialValueFor("self_slow", wex_level)
 				local enemy_slow 					= ability:GetLevelSpecialValueFor("enemy_slow", quas_level)
-				local aura_think_interval 			= ability:GetSpecialValueFor("aura_update_interval")		
-				local increase_max_movement_speed 	= ability:GetSpecialValueFor("increase_max_movement_speed")		
+				local aura_think_interval 			= ability:GetSpecialValueFor("aura_update_interval")	
 				
 				caster:StartGesture(ACT_DOTA_CAST_GHOST_WALK)
 				
@@ -1718,7 +1716,6 @@ end
 				caster:AddNewModifier(caster, self, "modifier_imba_invoker_ghost_walk", {	duration 			= ghost_walk_duration, 
 																							self_slow 			= self_slow, 
 																							enemy_slow 			= enemy_slow,
-																							max_movement_speed 	= max_movement_speed,
 																							aura_fade_time 		= aura_fade_time,
 																							aura_think_interval = aura_think_interval,
 																							area_of_effect 		= area_of_effect,
@@ -1740,27 +1737,24 @@ end
 		function modifier_imba_invoker_ghost_walk:IsDebuff() 		return false end
 		function modifier_imba_invoker_ghost_walk:GetEffectName() 	return "particles/units/heroes/hero_invoker/invoker_ghost_walk.vpcf" end
 		function modifier_imba_invoker_ghost_walk:DeclareFunctions()
-			local funcs = {
+			return {
 				MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 				MODIFIER_EVENT_ON_ATTACK,
 				MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 				MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
-				MODIFIER_PROPERTY_MOVESPEED_MAX
+				MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
 			}
-			
-			return funcs
 		end
 
-		function modifier_imba_invoker_ghost_walk:GetModifierMoveSpeed_Max()
-			return self.max_movement_speed
+		function modifier_imba_invoker_ghost_walk:GetModifierIgnoreMovespeedLimit()
+			return 1
 		end
 
 		function modifier_imba_invoker_ghost_walk:CheckState()
-			local state = {
+			return {
 				[MODIFIER_STATE_INVISIBLE] 			= true,
 				[MODIFIER_STATE_NO_UNIT_COLLISION] 	= true,
 			}
-			return state
 		end
 
 		function modifier_imba_invoker_ghost_walk:GetPriority()
@@ -1780,7 +1774,6 @@ end
 				self.enemy_slow 			= kv.enemy_slow
 				self.self_slow 				= kv.self_slow
 				self.ghost_walk_fade_time 	= kv.invis_fade_time
-				self.max_movement_speed 	= kv.max_movement_speed
 
 				-- self:StartIntervalThink(kv.aura_think_interval)
 			else
@@ -2381,7 +2374,7 @@ end
 				if attacker == self.parent and target:IsHero() or target:IsIllusion() then
 					if attacker:GetMana() >= self.melt_strike_mana_cost then
 						if target:HasModifier("modifier_imba_forged_spirit_melting_strike") then
-							debuff_count = target:GetModifierStackCount("modifier_imba_forged_spirit_melting_strike", self.caster)
+							local debuff_count = target:GetModifierStackCount("modifier_imba_forged_spirit_melting_strike", self.caster)
 							if debuff_count > self.max_armor_removed then
 								debuff_count = self.max_armor_removed
 							end
@@ -2551,7 +2544,7 @@ end
 				end
 
 				-- Create a dummy unit that will follow the path of the tornado, providing flying vision and sound.
-				local tornado_dummy_unit =  CreateModifierThinker(caster, self, nil, {},caster_location, caster:GetTeamNumber(), false)
+				local tornado_dummy_unit = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeamNumber())
 				-- Play tornado sound 
 				tornado_dummy_unit:EmitSound("Hero_Invoker.Tornado")
 
@@ -3022,13 +3015,14 @@ end
 			end
 			
 			-- Burn an amount of mana dependent on WEX.
-			enemy:ReduceMana(enemy_mana_to_burn)
+			enemy:ReduceMana(enemy_mana_to_burn, ability)
 			-- Apply damage based on amount burned * damage_per_mana_pct modifier.
-			ApplyDamage({	
-				victim = enemy, 
-				attacker = caster, 
-				damage = enemy_mana_to_burn * (damage_per_mana_pct / 100), 
-				damage_type = DAMAGE_TYPE_PURE
+			ApplyDamage({
+				victim = enemy,
+				attacker = caster,
+				damage = enemy_mana_to_burn * (damage_per_mana_pct / 100),
+				damage_type = DAMAGE_TYPE_PURE,
+				ability = ability
 			})
 			
 			-- Restore some of the burnt mana to Invoker if the affected unit is a real hero.
@@ -3479,7 +3473,7 @@ end
 				-- Play Chaos Meteor Sounds
 				self.caster:EmitSound("Hero_Invoker.ChaosMeteor.Cast")
 				
-				self.meteor_dummy = CreateModifierThinker(self.caster, self.ability, nil, {}, self.target_point, self.caster:GetTeamNumber(), false)
+				self.meteor_dummy = CreateUnitByName("npc_dummy_unit", self.target_point, false, self.caster, self.caster, self.caster:GetTeamNumber())
 				self.meteor_dummy:EmitSound("Hero_Invoker.ChaosMeteor.Loop")
 
 				-- Create start_point of the meteor 1000z up in the air! Meteors velocity is same while falling through the air as it is rolling on the ground.
@@ -3814,8 +3808,7 @@ end
 					iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 					ExtraData = {
 						deafening_blast_damage 				= deafening_blast_damage, 
-						deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
-						deafening_blast_knockback_distance  = deafening_blast_knockback_distance,
+						deafening_blast_knockback_duration 	= deafening_blast_knockback_duration,
 						deafening_blast_disarm_duration 	= deafening_blast_disarm_duration,
 						disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
 						knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
@@ -3877,8 +3870,7 @@ end
 						iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 						ExtraData = {
 							deafening_blast_damage 				= deafening_blast_damage, 
-							deafening_blast_knockback_duration 	= deafening_blast_knockback_duration, 
-							deafening_blast_knockback_distance  = deafening_blast_knockback_distance,
+							deafening_blast_knockback_duration 	= deafening_blast_knockback_duration,
 							deafening_blast_disarm_duration 	= deafening_blast_disarm_duration,
 							disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
 							knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path
@@ -3982,8 +3974,7 @@ end
 					iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 					ExtraData = {
 						deafening_blast_damage 				= self.deafening_blast_damage, 
-						deafening_blast_knockback_duration 	= self.deafening_blast_knockback_duration, 
-						deafening_blast_knockback_distance  = self.deafening_blast_knockback_distance,
+						deafening_blast_knockback_duration 	= self.deafening_blast_knockback_duration,
 						deafening_blast_disarm_duration 	= self.deafening_blast_disarm_duration,
 						disarm_effect_path 					= imba_invoker_deafening_blast.ability_disarm_effect_path,
 						knockback_effect_path 				= imba_invoker_deafening_blast.ability_knockback_effect_path

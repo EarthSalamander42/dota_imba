@@ -577,6 +577,12 @@ function imba_phantom_lancer_phantom_edge:OnOwnerSpawned()
 	if self.toggle_state then
 		self:ToggleAbility()
 	end
+
+	local caster = self:GetCaster()
+
+	if caster:HasTalent("special_bonus_imba_phantom_lancer_phantom_edge_distance") and not caster:HasModifier("modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_phantom_lancer_phantom_edge_distance"), "modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance", {})
+	end
 end
 
 function imba_phantom_lancer_phantom_edge:OnOwnerDied()
@@ -607,7 +613,7 @@ function modifier_imba_phantom_lancer_phantom_edge:OnIntervalThink()
 			self.rush_modifier:SetStackCount(-self.target:entindex())
 		end
 		
-		self:GetAbility():UseResources(true, false, true)
+		self:GetAbility():UseResources(true, false, false, true)
 
 		self.bRushChecking = false
 	end
@@ -628,7 +634,7 @@ function modifier_imba_phantom_lancer_phantom_edge:OnOrder(keys)
 				
 				if self:GetAbility():IsCooldownReady() then
 					self.rush_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_phantom_lancer_phantom_edge_boost", {duration = 5, bAgility = true})
-					self:GetAbility():UseResources(true, false, true)
+					self:GetAbility():UseResources(true, false, false, true)
 				else
 					self.rush_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_phantom_lancer_phantom_edge_boost", {duration = 5, bAgility = false})
 				end
@@ -658,7 +664,7 @@ function modifier_imba_phantom_lancer_phantom_edge:OnAttackRecord(keys)
 				self.rush_modifier:SetStackCount(-keys.target:entindex())
 			end
 		
-			self:GetAbility():UseResources(true, false, true)
+			self:GetAbility():UseResources(true, false, false, true)
 		end
 	end
 end
@@ -943,9 +949,11 @@ function imba_phantom_lancer_juxtapose:OnOwnerSpawned()
 	if self.toggle_state then
 		self:ToggleAbility()
 	end
+
+	local caster = self:GetCaster()
 	
-	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"), "modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter", {})
+	if caster:HasTalent("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") and not caster:HasModifier("modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"), "modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter", {})
 	end
 end
 
@@ -1041,7 +1049,7 @@ function modifier_imba_phantom_lancer_juxtapose:OnAttackLanded(keys)
 				
 				self.confusion_positions = nil
 				
-				self.owner:FindAbilityByName("imba_phantom_lancer_juxtapose"):UseResources(true, false, true)
+				self.owner:FindAbilityByName("imba_phantom_lancer_juxtapose"):UseResources(true, false, false, true)
 			end
 		end
 	
@@ -1143,17 +1151,5 @@ end
 function imba_phantom_lancer_doppelwalk:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_doppelwalk_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_doppelwalk_cooldown"), "modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown", {})
-	end
-end
-
-function imba_phantom_lancer_phantom_edge:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_phantom_edge_distance") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_phantom_edge_distance"), "modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance", {})
-	end
-end
-
-function imba_phantom_lancer_juxtapose:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter"), "modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter", {})
 	end
 end

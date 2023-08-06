@@ -196,7 +196,7 @@ function modifier_imba_shotgun_passive:OnAttack(params)
 			local bullet_pfx = ParticleManager:CreateParticle("particles/item/starfury/shotgun_bulletcase_charlie.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 			ParticleManager:SetParticleControl(bullet_pfx, 0, hero:GetAttachmentOrigin(DOTA_PROJECTILE_ATTACHMENT_ATTACK_1))
 			ParticleManager:SetParticleControl(bullet_pfx, 4, vColor)
-			self.item:UseResources(false, false, true)
+			self.item:UseResources(false, false, false, true)
 			StartSoundEventFromPosition("Imba.Shotgun",hero:GetAbsOrigin())
 		end
 	end
@@ -311,7 +311,7 @@ function modifier_imba_starfury_passive:OnAttackLanded(params)
 					TrackingProjectiles:Projectile(projectile)
 					if not bFound then
 						bFound = true
-						self.item:UseResources(false, false, true)
+						self.item:UseResources(false, false, false, true)
 					end
 				end
 			end

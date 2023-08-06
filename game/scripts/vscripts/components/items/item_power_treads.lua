@@ -19,9 +19,10 @@
 		Date:	5.2.2017	]]
 
 LinkLuaModifier( "modifier_imba_power_treads_2", "components/items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )					-- Mega Treads passive item effect
-LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_00", "components/items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )	-- Mega Treads strength stat multiplier
-LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_01", "components/items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )	-- Mega Treads agility stat multiplier
-LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_02", "components/items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )	-- Mega Treads intelligence stat multiplier
+LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_00", "components/items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_01", "components/items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_02", "components/items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_03", "components/items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )
 
 -----------------------------------------------------------------------------------------------------------
 --	Item Definition
@@ -42,7 +43,7 @@ function item_imba_power_treads_2:OnSpellStart()
 
 		-- Switch tread attribute
 		local modifiers = caster:FindAllModifiersByName("modifier_imba_power_treads_2")
-		for _,modifier in pairs(modifiers) do
+		for _, modifier in pairs(modifiers) do
 			if modifier:GetAbility() == self then
 				local state = modifier:GetStackCount()
 				modifier:SetStackCount((state - 1 + DOTA_ATTRIBUTE_MAX) % DOTA_ATTRIBUTE_MAX)
@@ -52,25 +53,26 @@ function item_imba_power_treads_2:OnSpellStart()
 		end
 
 		-- Remove stat multiplier modifiers (they get reapplied in the item modifier if relevant)
-		for i = 0,2 do
+		for i = 0, DOTA_ATTRIBUTE_MAX-1 do
 			local mod = caster:FindModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..i)
 			if mod then caster:RemoveModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..i) end
 		end
 		caster:CalculateStatBonus(true)
 		
 		-- This is in attempts to reserve the Mega Treads item state if dropped and picked back up
-		self.type = self:GetCaster():GetModifierStackCount("modifier_imba_power_treads_2", self:GetCaster())
+		self.type = caster:GetModifierStackCount("modifier_imba_power_treads_2", caster)
 	end
 end
 
 function item_imba_power_treads_2:GetAbilityTextureName()
 	if IsClient() then
-		-- if not self.state then return "imba_power_treads" end
+		local caster = self:GetCaster()
+		local number = self.state or caster:GetModifierStackCount("modifier_imba_power_treads_2", caster)
 
-		if self.state then
-			return "imba_mega_treads_"..self.state
+		if number and number ~= DOTA_ATTRIBUTE_ALL then
+			return "imba_mega_treads_"..tostring(number) -- 0: STR; 1: AGI; 2: INT
 		else
-			return "imba_mega_treads_"..self:GetCaster():GetModifierStackCount("modifier_imba_power_treads_2", self:GetCaster())
+			return "imba_power_treads" -- placeholder icon for universal Mega Treads, new icon should be "imba_mega_treads_3"
 		end
 	end
 end
@@ -86,14 +88,13 @@ function modifier_imba_power_treads_2:RemoveOnDeath() return false end
 function modifier_imba_power_treads_2:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_power_treads_2:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
-	return funcs
 end
 
 function modifier_imba_power_treads_2:OnCreated()
@@ -182,7 +183,7 @@ end
 
 function modifier_imba_power_treads_2:OnDestroy()
 	if IsServer() then
-		for i = 0,2 do
+		for i = 0, DOTA_ATTRIBUTE_MAX-1 do
 			local parent = self:GetParent()
 			parent:RemoveModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..i)
 		end
@@ -196,35 +197,59 @@ function modifier_imba_power_treads_2:GetModifierMoveSpeedBonus_Special_Boots()
 end
 
 function modifier_imba_power_treads_2:GetModifierBonusStats_Strength()
-	if self:GetStackCount() ~= DOTA_ATTRIBUTE_STRENGTH then return end
+	local state = self:GetStackCount()
+	if state ~= DOTA_ATTRIBUTE_STRENGTH and state ~= DOTA_ATTRIBUTE_ALL then
+		return
+	end
 
 	local parent = self:GetParent()
 	if not parent:IsHero() or parent:IsClone() then return end
 
 	local ability = self:GetAbility()
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")
+
+	if state == DOTA_ATTRIBUTE_ALL then
+		return stat_bonus / 3
+	end
+
 	return stat_bonus
 end
 
 function modifier_imba_power_treads_2:GetModifierBonusStats_Agility()
-	if self:GetStackCount() ~= DOTA_ATTRIBUTE_AGILITY then return end
+	local state = self:GetStackCount()
+	if state ~= DOTA_ATTRIBUTE_AGILITY and state ~= DOTA_ATTRIBUTE_ALL then
+		return
+	end
 
-	local ability = self:GetAbility()
 	local parent = self:GetParent()
 	if not parent:IsHero() or parent:IsClone() then return end
 
+	local ability = self:GetAbility()
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")
+
+	if state == DOTA_ATTRIBUTE_ALL then
+		return stat_bonus / 3
+	end
+
 	return stat_bonus
 end
 
 function modifier_imba_power_treads_2:GetModifierBonusStats_Intellect()
-	if self:GetStackCount() ~= DOTA_ATTRIBUTE_INTELLECT then return end
+	local state = self:GetStackCount()
+	if state ~= DOTA_ATTRIBUTE_INTELLECT and state ~= DOTA_ATTRIBUTE_ALL then
+		return
+	end
 
 	local parent = self:GetParent()
 	if not parent:IsHero() or parent:IsClone() then return end
 
 	local ability = self:GetAbility()
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")
+
+	if state == DOTA_ATTRIBUTE_ALL then
+		return stat_bonus / 3
+	end
+
 	return stat_bonus
 end
 
@@ -246,11 +271,9 @@ function modifier_imba_mega_treads_stat_multiplier_00:IsPurgable() return false 
 function modifier_imba_mega_treads_stat_multiplier_00:RemoveOnDeath() return false end
 
 function modifier_imba_mega_treads_stat_multiplier_00:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_imba_mega_treads_stat_multiplier_00:GetModifierStatusResistanceStacking()
@@ -268,8 +291,9 @@ function modifier_imba_mega_treads_stat_multiplier_01:IsPurgable() return false 
 function modifier_imba_mega_treads_stat_multiplier_01:RemoveOnDeath() return false end
 
 function modifier_imba_mega_treads_stat_multiplier_01:DeclareFunctions()
-	local funcs = {MODIFIER_PROPERTY_EVASION_CONSTANT}
-	return funcs
+	return {
+		MODIFIER_PROPERTY_EVASION_CONSTANT,
+	}
 end
 
 function modifier_imba_mega_treads_stat_multiplier_01:GetModifierEvasion_Constant()
@@ -287,10 +311,30 @@ function modifier_imba_mega_treads_stat_multiplier_02:IsPurgable() return false 
 function modifier_imba_mega_treads_stat_multiplier_02:RemoveOnDeath() return false end
 
 function modifier_imba_mega_treads_stat_multiplier_02:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING}
-	return funcs
+	return {
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
+	}
 end
 
 function modifier_imba_mega_treads_stat_multiplier_02:GetModifierCastRangeBonusStacking()
 	return self:GetAbility():GetSpecialValueFor("int_mode_cast_range")
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Universal attack damage bonus modifier
+-----------------------------------------------------------------------------------------------------------
+if modifier_imba_mega_treads_stat_multiplier_03 == nil then modifier_imba_mega_treads_stat_multiplier_03 = class({}) end
+function modifier_imba_mega_treads_stat_multiplier_03:IsHidden() return true end
+function modifier_imba_mega_treads_stat_multiplier_03:IsDebuff() return false end
+function modifier_imba_mega_treads_stat_multiplier_03:IsPurgable() return false end
+function modifier_imba_mega_treads_stat_multiplier_03:RemoveOnDeath() return false end
+
+function modifier_imba_mega_treads_stat_multiplier_03:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+end
+
+function modifier_imba_mega_treads_stat_multiplier_02:GetModifierPreAttack_BonusDamage()
+	return self:GetAbility():GetSpecialValueFor("uni_mode_damage")
 end

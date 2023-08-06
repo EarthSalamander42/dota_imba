@@ -1425,16 +1425,12 @@ function modifier_special_bonus_imba_templar_assassin_psionic_trap_damage:IsPurg
 function modifier_special_bonus_imba_templar_assassin_psionic_trap_damage:RemoveOnDeath() 	return false end
 
 function imba_templar_assassin_meld:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_templar_assassin_meld_armor_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_templar_assassin_meld_armor_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_templar_assassin_meld_armor_reduction"), "modifier_special_bonus_imba_templar_assassin_meld_armor_reduction", {})
 	end
 end
 
 function imba_templar_assassin_psionic_trap:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_templar_assassin_psionic_trap_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_templar_assassin_psionic_trap_damage") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_templar_assassin_psionic_trap_damage"), "modifier_special_bonus_imba_templar_assassin_psionic_trap_damage", {})
 	end

@@ -267,13 +267,13 @@ function modifier_imba_juggernaut_blade_fury:OnAttackLanded(keys)
 		if self.deflect or (CalcDistanceBetweenEntityOBB(keys.attacker, self:GetCaster()) <= self.radius and RollPercentage(self.deflect_chance)) then
 			local target = keys.target
 			local attacker = keys.attacker
-			check_attack_capability = attacker:GetAttackCapability()
+			local attack_capability = attacker:GetAttackCapability()
 
-			attacker_projectile_particle = attacker:GetRangedProjectileName()
-			attacker_projectile_speed = attacker:GetProjectileSpeed()
+			local attacker_projectile_particle = attacker:GetRangedProjectileName()
+			local attacker_projectile_speed = attacker:GetProjectileSpeed()
 			
 			-- Check if the attacker is a ranged attacker.
-			if target == self:GetCaster() and check_attack_capability == 2 then
+			if target == self:GetCaster() and attack_capability == DOTA_UNIT_CAP_RANGED_ATTACK then
 				-- Sets the confirmed deflect to false
 				self.deflect = false
 				
@@ -300,10 +300,9 @@ function modifier_imba_juggernaut_blade_fury:OnAttackLanded(keys)
 				)
 
 				if enemy[1] then
-					deflected_target = enemy[1]
-						
-					local projectile_deflected
-					projectile_deflected = {
+					local deflected_target = enemy[1]
+
+					local projectile_deflected = {
 						hTarget = deflected_target,
 						hCaster = self:GetCaster(),
 						Ability = self:GetAbility(),
@@ -370,7 +369,7 @@ function modifier_imba_juggernaut_blade_fury_succ:OnIntervalThink()
 		-- return nil
 	-- end
 		
-	self:HorizontalMotion(self.target, self.succ_tick)
+	self:HorizontalMotion()
 end
 
 function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
@@ -382,8 +381,8 @@ function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
 		end
 
 		-- Ability Specials
-		enemy_position = self.target:GetAbsOrigin()
-		caster_position = self.caster:GetAbsOrigin()
+		local enemy_position = self.target:GetAbsOrigin()
+		local caster_position = self.caster:GetAbsOrigin()
 		
 		-- The Succ radius 
 		self.radius = self:GetAbility():GetVanillaAbilitySpecial("blade_fury_radius")
@@ -399,7 +398,7 @@ function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
 			local newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1","pull_strength")
 				
 			-- If the target is within the radius of Blade Fury, increase the succ force!
-			blade_fury_modifier = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
+			local blade_fury_modifier = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
 			if blade_fury_modifier then
 				if distance < blade_fury_modifier.radius then
 					newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1","pull_strength_fury")
@@ -442,10 +441,19 @@ function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:OnTakeDamage
 		local attacker = keys.attacker
 		
 		-- Calculates damage
-		parent_health = self.parent:GetHealth()
-		if keys.damage > parent_health and target == self.parent then
+		local parent_health = self.parent:GetHealth()
+		if damage > parent_health and target == self.parent then
 			-- Deals damage, crediting to the caster
-			ApplyDamage({attacker = self.caster, victim = self.parent, ability = self:GetAbility(), damage = target_health + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
+			ApplyDamage(
+				{
+					attacker = self.caster,
+					victim = self.parent,
+					ability = self:GetAbility(),
+					damage = parent_health + 10,
+					damage_type = DAMAGE_TYPE_PURE,
+					damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK
+				}
+			)
 		end
 	end
 end
@@ -1172,9 +1180,9 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTw
 			
 		-- Get the point of the horizontal slice
 		if (not self.targetted_enemy) then
-			target_position = self.newPoint
+			self.target_position = self.newPoint
 		else
-			target_position = self.targetted_enemy:GetAbsOrigin()
+			self.target_position = self.targetted_enemy:GetAbsOrigin()
 		end
 		
 		local direction
@@ -1185,7 +1193,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTw
 		-- Determine the angle for Juggernaut to force move to
 		-- On the second dash, self.quangle_angle is set
 		if self.second_dash then
-		self.qangle_angle = 90 + (self.initialAngle).y
+			self.qangle_angle = 90 + (self.initialAngle).y
 		end
 		
 		
@@ -1195,13 +1203,13 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTw
 		-- If this is the second dash, proceed to this step
 		if self.second_dash then
 			-- Set the caster on the target's position to calculate the force to move to.
-			self.caster:SetAbsOrigin(target_position)
+			self.caster:SetAbsOrigin(self.target_position)
 			
 			-- Calculate the force to move to after setting to the target's position
 			direction = self.caster:GetForwardVector()   
 			
-			final_location = target_position + direction * self.maxDistance * 0.5
-			set_location = target_position + direction * (-1) * self.maxDistance * 0.5
+			final_location = self.target_position + direction * self.maxDistance * 0.5
+			set_location = self.target_position + direction * (-1) * self.maxDistance * 0.5
 			
 			self.caster:SetAbsOrigin(set_location)
 		
@@ -1227,42 +1235,42 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnDestroy()
 	if IsServer() then
 		-- When it ends, check if it triggers the second dash
 		if self.second_dash then
-			second_dash_handler = self.caster:AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_juggernaut_blade_dance_empowered_slice", {})
+			local second_dash_handler = self.caster:AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_juggernaut_blade_dance_empowered_slice", {})
 
 			if second_dash_handler then
-			second_dash_handler.attack_count = self.attack_count
-			second_dash_handler.second_dash = false
-			second_dash_handler.third_dash = true
-			second_dash_handler.initialPos = self.caster:GetAbsOrigin()
-			second_dash_handler.endPoint = self.endPoint
-			second_dash_handler.target_position = target_position
-			second_dash_handler.qangle_angle = self.qangle_angle
-			second_dash_handler.max_attack_count = self.max_attack_count
+				second_dash_handler.attack_count = self.attack_count
+				second_dash_handler.second_dash = false
+				second_dash_handler.third_dash = true
+				second_dash_handler.initialPos = self.caster:GetAbsOrigin()
+				second_dash_handler.endPoint = self.endPoint
+				second_dash_handler.target_position = self.target_position
+				second_dash_handler.qangle_angle = self.qangle_angle
+				second_dash_handler.max_attack_count = self.max_attack_count
 			end
 			return
 		end
 		-- When it ends, check if it triggers the third dash
 		if self.third_dash then
 		
-			third_dash_handler = self.caster:AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_juggernaut_blade_dance_empowered_slice", {})
+			local third_dash_handler = self.caster:AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_juggernaut_blade_dance_empowered_slice", {})
 	
 			if third_dash_handler then
-			third_dash_handler.attack_count = self.attack_count
-			third_dash_handler.third_dash = false
-			third_dash_handler.third_dash_finale = true
-			third_dash_handler.initialPos = self.caster:GetAbsOrigin()
-			third_dash_handler.endPoint = self.endPoint
-			third_dash_handler.target_position = self.target_position
-			third_dash_handler.qangle_angle = self.qangle_angle
-			third_dash_handler.max_attack_count = self.max_attack_count
+				third_dash_handler.attack_count = self.attack_count
+				third_dash_handler.third_dash = false
+				third_dash_handler.third_dash_finale = true
+				third_dash_handler.initialPos = self.caster:GetAbsOrigin()
+				third_dash_handler.endPoint = self.endPoint
+				third_dash_handler.target_position = self.target_position
+				third_dash_handler.qangle_angle = self.qangle_angle
+				third_dash_handler.max_attack_count = self.max_attack_count
 			end
 			return
 		end
 		if self.third_dash_finale then
 			-- If the final dash is finished, set Juggernaut's position to the target and destroys itself
 			if self.target_position then
-			self.caster:SetAbsOrigin(self.target_position)
-			self.caster:SetUnitOnClearGround()
+				self.caster:SetAbsOrigin(self.target_position)
+				self.caster:SetUnitOnClearGround()
 			end
 		end
 		self.enemies_hit = nil
@@ -1499,31 +1507,32 @@ function modifier_imba_juggernaut_blade_dance_jade_blossom:GetTexture()
 function modifier_imba_juggernaut_blade_dance_jade_blossom:OnCreated()
 	if IsServer() then
 		self.duration = self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_8","duration")
-		self:NewStack(self.duration)
+		self:NewStack()
 	end
 end
 function modifier_imba_juggernaut_blade_dance_jade_blossom:OnRefresh()
 	if IsServer() then
-		self:NewStack(self.duration)
+		self:NewStack()
 		self:SetDuration(self.duration,true)
 	end
 end
 function modifier_imba_juggernaut_blade_dance_jade_blossom:NewStack()
 	if IsServer() then
 		self:IncrementStackCount()
+		local mod = self
 		Timers:CreateTimer(self.duration, function()
-		self:ExpiredStack()
+			if mod and not mod:IsNull() then
+				mod:ExpiredStack()
+			end
 		end)
 	end
 end
 function modifier_imba_juggernaut_blade_dance_jade_blossom:ExpiredStack()
-	if IsServer() then
-		if (not self:IsNull()) then
-			if self:GetStackCount() > 0 then
-				self:DecrementStackCount()
-			else
-				self:Destroy()
-			end
+	if not self:IsNull() then
+		if self:GetStackCount() > 0 then
+			self:DecrementStackCount()
+		else
+			self:Destroy()
 		end
 	end
 end
@@ -1564,6 +1573,11 @@ end
 
 function imba_juggernaut_omni_slash:OnOwnerSpawned()
 	self:OnOwnerDied()
+	local caster = self:GetCaster()
+	-- Modifier related to the talent
+	if caster:HasTalent("special_bonus_imba_juggernaut_7") and not caster:HasModifier("modifier_special_bonus_imba_juggernaut_7") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_juggernaut_7"), "modifier_special_bonus_imba_juggernaut_7", {})
+	end
 end
 
 function imba_juggernaut_omni_slash:OnUpgrade()
@@ -1648,11 +1662,11 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		
 		for _,modifier in pairs(caster_modifiers) do
 			if modifier:GetName() == "modifier_imba_juggernaut_blade_fury" then
-				caster_blade_fury_modifier = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_fury") 
-				blade_fury_modifier = omnislash_image:AddNewModifier(omnislash_image, modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetRemainingTime()})
+				local caster_blade_fury_modifier = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_fury") 
+				local blade_fury_modifier = omnislash_image:AddNewModifier(omnislash_image, modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetRemainingTime()})
 				if blade_fury_modifier then
-				blade_fury_modifier.original_caster = self.caster
-				blade_fury_modifier.radius = caster_blade_fury_modifier.radius
+					blade_fury_modifier.original_caster = self.caster
+					blade_fury_modifier.radius = caster_blade_fury_modifier.radius
 				end
 			elseif modifier then
 				if modifier:GetAbility() and not modifier:GetAbility():IsPassive() then
@@ -1830,9 +1844,9 @@ function modifier_imba_omni_slash_talent:GetModifierBaseAttack_BonusDamage()
 
 		-- In case if the lead dev changes mind and allow 2 of these to stack, use self.original_caster than self.caster for versatility. >:3
 		if self.caster:HasTalent("special_bonus_imba_juggernaut_8") then
-			jade_blossom = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_jade_blossom")
+			local jade_blossom = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_jade_blossom")
 			if jade_blossom then
-				blossomed_damage = self.hero_agility + jade_blossom:GetStackCount()
+				local blossomed_damage = self.hero_agility + jade_blossom:GetStackCount()
 				bonus_damage = blossomed_damage * self.base_bonus_damage * 0.01 
 			end
 		end
@@ -2038,9 +2052,9 @@ function modifier_imba_omni_slash_caster:GetModifierBaseAttack_BonusDamage()
 	
 	-- In case if the lead dev changes mind and allow 2 of these to stack, use self.original_caster than self.caster for versatility. >:3
 	if self.original_caster:HasTalent("special_bonus_imba_juggernaut_8") then
-		jade_blossom = self.original_caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_jade_blossom")
+		local jade_blossom = self.original_caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_jade_blossom")
 		if jade_blossom then
-			blossomed_damage = self.hero_agility + jade_blossom:GetStackCount()
+			local blossomed_damage = self.hero_agility + jade_blossom:GetStackCount()
 			bonus_damage = blossomed_damage * self.base_bonus_damage * 0.01 
 		end
 	end
@@ -2223,12 +2237,6 @@ function modifier_special_bonus_imba_juggernaut_7:IsHidden() 		return true end
 function modifier_special_bonus_imba_juggernaut_7:IsPurgable() 		return false end
 function modifier_special_bonus_imba_juggernaut_7:RemoveOnDeath() 	return false end
 
-function imba_juggernaut_omni_slash:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_juggernaut_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_juggernaut_7") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_juggernaut_7"), "modifier_special_bonus_imba_juggernaut_7", {})
-	end
-end
-
 -- Arcana animation handler
 modifier_juggernaut_arcana = modifier_juggernaut_arcana or class ({})
 
@@ -2365,8 +2373,6 @@ function modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed:IsPurg
 function modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed:RemoveOnDeath() 	return false end
 
 function imba_juggernaut_blade_fury:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_juggernaut_blade_fury_movement_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_juggernaut_blade_fury_movement_speed"), "modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed", {})
 	end

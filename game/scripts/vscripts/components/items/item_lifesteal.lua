@@ -82,10 +82,6 @@ function modifier_imba_morbid_mask:OnDestroy()
 	end
 end
 
-function modifier_imba_morbid_mask:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
-end
-
 modifier_imba_morbid_mask_unique = class({})
 function modifier_imba_morbid_mask_unique:IsHidden() return true end
 function modifier_imba_morbid_mask_unique:IsPurgable() return false end

@@ -462,7 +462,10 @@ function imba_outworld_devourer_sanity_eclipse:OnSpellStart()
 			self.eclipse_damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 			ParticleManager:ReleaseParticleIndex(self.eclipse_damage_particle)
 			
-			if not enemy:IsIllusion() and (not enemy.Custom_IsStrongIllusion or (enemy.Custom_IsStrongIllusion and enemy:Custom_IsStrongIllusion())) then
+			if enemy:IsIllusion() and not Custom_bIsStrongIllusion(enemy) then
+				-- IMBAfication: Occam's Bazooka
+			   enemy:Kill(self, self:GetCaster())
+			else
 				ApplyDamage({
 					victim 			= enemy,
 					damage 			= self:GetSpecialValueFor("base_damage") + ((self:GetCaster():GetMaxMana() - enemy:GetMaxMana()) * self:GetTalentSpecialValueFor("damage_multiplier")),
@@ -471,9 +474,6 @@ function imba_outworld_devourer_sanity_eclipse:OnSpellStart()
 					attacker 		= self:GetCaster(),
 					ability 		= self
 				})
-			elseif enemy:IsIllusion() and (not enemy.Custom_IsStrongIllusion or (enemy.Custom_IsStrongIllusion and not enemy:Custom_IsStrongIllusion())) then
-				 -- IMBAfication: Occam's Bazooka
-				enemy:Kill(self, self:GetCaster())
 			end
 			
 			-- IMBAfication: Remnants of Sanity's Eclipse
@@ -481,7 +481,7 @@ function imba_outworld_devourer_sanity_eclipse:OnSpellStart()
 				self.eclipse_mana_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 				ParticleManager:ReleaseParticleIndex(self.eclipse_mana_particle)
 			
-				enemy:ReduceMana(enemy:GetMaxMana() * self:GetSpecialValueFor("max_mana_burn_pct") * 0.01)
+				enemy:ReduceMana(enemy:GetMaxMana() * self:GetSpecialValueFor("max_mana_burn_pct") * 0.01, self)
 			end
 		end
 	end

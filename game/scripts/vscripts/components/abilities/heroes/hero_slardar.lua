@@ -699,16 +699,19 @@ function modifier_imba_slithereen_crush_stun:IsStunDebuff()
 end
 
 function modifier_imba_slithereen_crush_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state
+	return {
+		[MODIFIER_STATE_STUNNED] = true
+	}
 end
 
 function modifier_imba_slithereen_crush_stun:DeclareFunctions()
-    return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+    return {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+	}
 end
 
 function modifier_imba_slithereen_crush_stun:GetOverrideAnimation()
-	 return ACT_DOTA_DISABLED
+	return ACT_DOTA_DISABLED
 end
 
 -- Slow modifier
@@ -739,14 +742,6 @@ end
 
 function modifier_imba_slithereen_crush_slow:GetStatusEffectName()
 	return "particles/status_fx/status_effect_slardar_crush.vpcf"
-end
-
-function modifier_imba_slithereen_crush_stun:IsDebuff()
-	return true
-end
-
-function modifier_imba_slithereen_crush_stun:IsHidden()
-	return false
 end
 
 function modifier_imba_slithereen_crush_stun:IsPurgable()
@@ -798,18 +793,6 @@ function modifier_imba_slithereen_crush_royal_break:CheckState()
 	local state = {[MODIFIER_STATE_BLOCK_DISABLED] = true,
 		[MODIFIER_STATE_EVADE_DISABLED] = true}
 	return state
-end
-
-function modifier_imba_slithereen_crush_stun:IsDebuff()
-	return true
-end
-
-function modifier_imba_slithereen_crush_stun:IsHidden()
-	return false
-end
-
-function modifier_imba_slithereen_crush_stun:IsPurgable()
-	return true
 end
 
 
@@ -1183,7 +1166,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 	-- if target has linken's sphere off cooldown, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return nil
+			return
 		end
 	end
 
@@ -1212,7 +1195,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 	EmitSoundOn(sound_cast, caster)
 
 	-- Apply debuff modifier on enemy
-	target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - target:GetStatusResistance())})
+	local corrosive_haze_modifier = target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration * (1 - target:GetStatusResistance())})
 
 	-- Apply particle effects on enemy
 	-- Timers:CreateTimer(0.01, function()
@@ -1231,7 +1214,8 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 		local radius = caster:FindTalentValue("special_bonus_imba_slardar_7", "radius")
 
 		-- Find all enemies and apply Corrosive Haze on them as well
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+		local enemies = FindUnitsInRadius(
+			caster:GetTeamNumber(),
 			target:GetAbsOrigin(),
 			nil,
 			radius,
@@ -1239,7 +1223,8 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_ANY_ORDER,
-			false)
+			false
+		)
 		-- Ignore main target
 		for _,enemy in pairs(enemies) do
 			if enemy ~= target and not enemy:HasModifier(modifier_debuff) then
@@ -1247,7 +1232,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 	
 				-- Apply particle effects on enemy
 				-- Timers:CreateTimer(0.01, function()
-					particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, enemy)
+					local particle_haze_fx = ParticleManager:CreateParticle(particle_haze, PATTACH_OVERHEAD_FOLLOW, enemy)
 					ParticleManager:SetParticleControl(particle_haze_fx, 0, enemy:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle_haze_fx, 1, enemy:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle_haze_fx, 2, enemy:GetAbsOrigin())
@@ -1947,8 +1932,6 @@ function modifier_special_bonus_imba_slardar_6:IsPurgable() 	return false end
 function modifier_special_bonus_imba_slardar_6:RemoveOnDeath() 	return false end
 
 function imba_slardar_slithereen_crush:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_slardar_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_slardar_6") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_slardar_6"), "modifier_special_bonus_imba_slardar_6", {})
 	end

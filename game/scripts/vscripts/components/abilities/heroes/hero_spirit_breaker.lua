@@ -329,7 +329,7 @@ function modifier_imba_spirit_breaker_charge_of_darkness:OnDestroy()
 	-- Gonna call these first cause they're arguably more important and don't want to brick the hero if code fails
 	if self:GetAbility() then
 		self:GetAbility():SetActivated(true)
-		self:GetAbility():UseResources(false, false, true)
+		self:GetAbility():UseResources(false, false, false, true)
 	end
 	
 	self:GetParent():StopSound("Hero_Spirit_Breaker.ChargeOfDarkness.FP")
@@ -798,7 +798,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 			knockback_modifier:Destroy()
 		end
 		
-		knockback_properties = {
+		local knockback_properties = {
 			 center_x 			= parent_loc.x,
 			 center_y 			= parent_loc.y,
 			 center_z 			= parent_loc.z,
@@ -825,7 +825,7 @@ function imba_spirit_breaker_greater_bash:Bash(target, parent, bUltimate)
 		ability 		= self
 	}
 
-	damage_dealt = ApplyDamage(damageTable)
+	ApplyDamage(damageTable)
 	
 	-- IMBAfication: Power Forward
 	parent:AddNewModifier(parent, self, "modifier_imba_spirit_breaker_greater_bash_speed", {duration = self:GetSpecialValueFor("movespeed_duration")})
@@ -863,7 +863,7 @@ function modifier_imba_spirit_breaker_greater_bash:OnAttackLanded(keys)
 	
 		if RollPseudoRandom(self:GetAbility():GetTalentSpecialValueFor("chance_pct"), self) then
 			self:GetAbility():Bash(keys.target, keys.attacker)
-			self:GetAbility():UseResources(false, false, true)
+			self:GetAbility():UseResources(false, false, false, true)
 		end
 	end
 end
@@ -1082,7 +1082,7 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 		ability 		= self
 	}
 		
-	damage_dealt = ApplyDamage(damageTable)
+	ApplyDamage(damageTable)
 
 	-- if self:GetCaster():HasScepter() then
 		-- for _, enemy in pairs(enemies) do
@@ -1100,7 +1100,7 @@ function imba_spirit_breaker_nether_strike:OnSpellStart()
 					-- ability 		= self
 				-- }
 				
-				-- damage_dealt = ApplyDamage(damageTable)
+				-- ApplyDamage(damageTable)
 			-- end
 		-- end
 	-- end
@@ -1268,8 +1268,6 @@ function modifier_special_bonus_imba_spirit_breaker_bonus_health:GetModifierHeal
 end
 
 function imba_spirit_breaker_charge_of_darkness:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_charge_speed") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_charge_speed") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_charge_speed"), "modifier_special_bonus_imba_spirit_breaker_charge_speed", {})
 	end
@@ -1280,8 +1278,6 @@ function imba_spirit_breaker_charge_of_darkness:OnOwnerSpawned()
 end
 
 function imba_spirit_breaker_bulldoze:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_spirit_breaker_bulldoze_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_spirit_breaker_bulldoze_cooldown"), "modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown", {})
 	end

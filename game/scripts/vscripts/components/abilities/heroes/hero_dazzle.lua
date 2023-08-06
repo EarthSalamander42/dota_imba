@@ -531,7 +531,6 @@ function modifier_imba_dazzle_shallow_grave:OnDestroy()
 			local ability = self:GetAbility()
 			local caster = ability:GetCaster()
 
-			-- parent:Heal(self.shallowDamage, caster)
 			if caster:HasTalent("special_bonus_imba_dazzle_3") then
 				self.targetsHit = {}
 				table.insert(self.targetsHit, parent:entindex(), true)
@@ -603,7 +602,7 @@ end
 function modifier_imba_dazzle_shallow_grave:ShadowWave(ability, caster, oldTarget, heal)
 	local bounceDistance = ability:GetSpecialValueFor("talent_wave_bounce_distance")
 
-	oldTarget:Heal(heal, caster)
+	oldTarget:Heal(heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, heal, nil)
 
 	-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
@@ -729,20 +728,19 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 					self.shallowDamageInstances = self.shallowDamageInstances + 1
 					self.isActive = true
 
-					parent:AddNewModifier(caster, nil , "modifier_imba_dazzle_nothl_protection_particle", { duration = nothl_duration})
-					
 					local nothl_duration = ability:GetSpecialValueFor("nothl_protection_duration")
+					parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_nothl_protection_particle", { duration = nothl_duration})
+
 					Timers:CreateTimer(nothl_duration, function()
 						if self:IsNull() then return end
 					
 						-- Checking if alive for cases of death that don't care for Nothl Protection
-						if self:GetParent():IsAlive() and self.shallowDamage > 0 and self:GetParent():HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
+						if parent:IsAlive() and self.shallowDamage > 0 and parent:HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
 							if self.shallowDamageInstances > 0 then
 								local modifier = parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_post_shallow_grave_buff", {duration = ability:GetSpecialValueFor("post_grave_duration")})
 								modifier:SetStackCount(self.shallowDamageInstances)
 							end
 
-							-- parent:Heal(self.shallowDamage, parent)
 							if parent:HasTalent("special_bonus_imba_dazzle_3") then
 								self.targetsHit = {}
 								table.insert(self.targetsHit, parent:entindex(), true)
@@ -849,7 +847,7 @@ end
 
 -- For the talent that releases a shadow wave
 function modifier_imba_dazzle_nothl_protection:ShadowWave(ability, caster, oldTarget, heal)
-	oldTarget:Heal(heal, caster)
+	oldTarget:Heal(heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, heal, nil)
 	local bounceDistance = ability:GetSpecialValueFor("talent_wave_bounce_distance")
 
@@ -967,7 +965,7 @@ if modifier_imba_dazzle_post_shallow_grave_buff == nil then modifier_imba_dazzle
 function modifier_imba_dazzle_post_shallow_grave_buff:IsPurgable() return true end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsHidden() return false end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsDebuff() return false end
-function modifier_imba_dazzle_post_shallow_grave_buff:DeclareFunctions()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_dazzle_post_shallow_grave_buff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_dazzle_post_shallow_grave_buff:GetTexture()
 	return "dazzle_shallow_grave" end
@@ -1043,7 +1041,7 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnDestroy()
 			local ability = self:GetAbility()
 			local caster = ability:GetCaster()
 
-			-- parent:Heal(self.shallowDamage, self:GetAbility():GetCaster())
+			-- parent:Heal(self.shallowDamage, ability)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, parent, self.shallowDamage, nil)
 			if self.shallowDamageInstances > 0 then
 				local modifier = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_post_shallow_grave_buff", {duration = ability:GetSpecialValueFor("post_grave_duration")})
@@ -1134,7 +1132,7 @@ end
 function modifier_imba_dazzle_nothl_protection_aura_talent:ShadowWave(ability, caster, oldTarget, heal)
 	local bounceDistance = caster:FindTalentValue("special_bonus_imba_dazzle_3", "talent_wave_bounce_distance")
 
-	oldTarget:Heal(heal, caster)
+	oldTarget:Heal(heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, self.heal, nil)
 
 	-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
@@ -1255,7 +1253,7 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 				end
 			end
 
-			self:WaveHit(target, isAlly, poisonTouched)
+			self:WaveHit(target, isAlly, nil)
 			if target ~= caster then
 				self:WaveHit(caster, true)
 			end
@@ -1385,7 +1383,7 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 
 		if isAlly then
 			-- If ally, heal and change search type to find enemies
-			unit:Heal(totalHeal, caster)
+			unit:Heal(totalHeal, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, unit, totalHeal, nil)
 
 			-- dispel
@@ -1424,7 +1422,7 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 				if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 					ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 				else
-					target:Heal(totalHeal, caster)
+					target:Heal(totalHeal, self)
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, totalHeal, nil)
 				end
 			end

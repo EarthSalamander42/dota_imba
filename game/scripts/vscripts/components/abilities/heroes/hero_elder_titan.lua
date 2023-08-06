@@ -11,6 +11,8 @@ local function FindNearestPointFromLine(caster, dir, affected)
 	return caster + ntgt
 end
 
+local astral_spirit
+
 -- Echo Stomp
 imba_elder_titan_echo_stomp = class({})
 

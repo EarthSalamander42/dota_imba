@@ -251,24 +251,25 @@ end
 
 function imba_lina_dragon_slave:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if target then
-		local ability_laguna = self:GetCaster():FindAbilityByName("imba_lina_laguna_blade")
+		local caster = self:GetCaster()
+		local ability_laguna = caster:FindAbilityByName("imba_lina_laguna_blade")
 
-		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_dragon_slave_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
+		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_dragon_slave_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster, caster)
 		ParticleManager:SetParticleControl(pfx, 0, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(pfx, 1, target:GetAbsOrigin())
 
-		ApplyDamage({victim = target, attacker = self:GetCaster(), ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 
 		-- #5 Talent: Lina's Spells causes DoT based on Fiery Soul stacks
-		if self:GetCaster():HasTalent("special_bonus_imba_lina_5") then
+		if caster:HasTalent("special_bonus_imba_lina_5") then
 			local blaze_burn = target:FindModifierByName("modifier_imba_fiery_soul_blaze_burn")
 
 			if blaze_burn then
 				blaze_burn:ForceRefresh()
 			else
-				local fiery_soul = self:GetCaster():FindAbilityByName("imba_lina_fiery_soul")
+				local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
 				if fiery_soul:GetLevel() > 0 then
-					target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration") * (1 - target:GetStatusResistance())})
+					target:AddNewModifier(caster, fiery_soul, "modifier_imba_fiery_soul_blaze_burn", {duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration") * (1 - target:GetStatusResistance())})
 				end
 			end
 		end
@@ -472,7 +473,7 @@ function modifier_imba_lsa_talent_magma:OnCreated(kv)
 		self.tick_interval = self.caster:FindTalentValue("special_bonus_imba_lina_4", "tick_interval")
 
 		-- Play magma particle effect, assign to modifier
-		local particle_magma = ParticleManager:CreateParticle("particles/hero/lina/from_the_ash.vpcf", PATTACH_WORLDORIGIN, nil, caster)
+		local particle_magma = ParticleManager:CreateParticle("particles/hero/lina/from_the_ash.vpcf", PATTACH_WORLDORIGIN, nil, self.caster)
 		ParticleManager:SetParticleControl(particle_magma, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_magma, 1, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_magma, 2, Vector(1,0,0))
@@ -500,14 +501,18 @@ function modifier_imba_lsa_talent_magma:OnIntervalThink()
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_ANY_ORDER,
 			false)
-
-		-- Deal damage per tick to each enemy
-		for _,enemy in pairs(enemies) do
-			damage_table = ({victim = enemy,
+		local damage_table = (
+			{
 				attacker = self.caster,
 				ability = self.ability,
 				damage = self.damage,
-				damage_type = DAMAGE_TYPE_MAGICAL})
+				damage_type = DAMAGE_TYPE_MAGICAL
+			}
+		)
+
+		-- Deal damage per tick to each enemy
+		for _, enemy in pairs(enemies) do
+			damage_table.victim = enemy
 
 			ApplyDamage(damage_table)
 		end
@@ -868,7 +873,7 @@ function modifier_special_bonus_imba_lina_3:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_lina_3:OnCreated()
 	if IsServer() then
-		fiery_soul = self:GetParent():FindAbilityByName("imba_lina_fiery_soul")
+		local fiery_soul = self:GetParent():FindAbilityByName("imba_lina_fiery_soul")
 		if fiery_soul:GetLevel() > 0 then
 			local fiery_soul_modifier = self:GetParent():FindModifierByName("modifier_imba_fiery_soul_counter")
 			if fiery_soul_modifier then

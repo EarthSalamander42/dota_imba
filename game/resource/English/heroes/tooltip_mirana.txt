@@ -31,7 +31,7 @@
 "DOTA_Tooltip_modifier_imba_sacred_arrow_stun_Description"              "Stunned. Enemies' first attack on you will be a critical hit."
 
 "DOTA_Tooltip_modifier_imba_sacred_arrow_haste"                        "On The Prowl"
-"DOTA_Tooltip_modifier_imba_sacred_arrow_haste_Description"            "Moving at %dMODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE% speed. First hit on the arrowed enemy will be an automatic critical hit."
+"DOTA_Tooltip_modifier_imba_sacred_arrow_haste_Description"            "Moving at %dMODIFIER_PROPERTY_MOVESPEED_ABSOLUTE% speed. First hit on the arrowed enemy will be an automatic critical hit."
 
 // Mirana's Leap
 "DOTA_Tooltip_ability_imba_mirana_leap"                                 "Leap"

@@ -378,7 +378,6 @@ function imba_dragon_knight_elder_dragon_charge:OnUpgrade()
 end
 
 function imba_dragon_knight_elder_dragon_charge:OnOwnerSpawned()
-	if not IsServer() then return end
 	if not self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
 		self:SetActivated(false)
 	end
@@ -493,9 +492,9 @@ function modifier_imba_elder_dragon_charge:IsMotionController() return true end
 function modifier_imba_elder_dragon_charge:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_imba_elder_dragon_charge:CheckState()
-	state = {[MODIFIER_STATE_STUNNED] = true}
-
-	return state
+	return {
+		[MODIFIER_STATE_STUNNED] = true
+	}
 end
 
 function modifier_imba_elder_dragon_charge:OnCreated(keys)
@@ -738,7 +737,6 @@ modifier_imba_elder_dragon_form_debuff = class({})
 
 function modifier_imba_elder_dragon_form_debuff:IsHidden() return false end
 function modifier_imba_elder_dragon_form_debuff:IsDebuff() return true end
-function modifier_imba_elder_dragon_form_debuff:IsHidden() return false end
 function modifier_imba_elder_dragon_form_debuff:IsPurgable() return false end
 
 function modifier_imba_elder_dragon_form_debuff:DeclareFunctions()

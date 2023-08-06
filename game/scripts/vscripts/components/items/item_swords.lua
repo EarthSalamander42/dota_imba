@@ -95,12 +95,11 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-	return funcs
 end
 
 function modifier_item_imba_sange_active:GetModifierStatusResistanceStacking()
@@ -158,13 +157,12 @@ function modifier_item_imba_heavens_halberd:GetAttributes()	return MODIFIER_ATTR
 
 -- Declare modifier events/properties
 function modifier_item_imba_heavens_halberd:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-	return funcs
 end
 
 function modifier_item_imba_heavens_halberd:GetModifierPreAttack_BonusDamage()
@@ -205,11 +203,9 @@ function modifier_item_imba_heavens_halberd_ally_buff:GetEffectAttachType()
 end
 
 function modifier_item_imba_heavens_halberd_ally_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_heavens_halberd_ally_buff:GetModifierStatusResistanceStacking()
@@ -237,10 +233,9 @@ end
 
 -- Declare modifier states
 function modifier_item_imba_heavens_halberd_active_disarm:CheckState()
-	local states = {
+	return {
 		[MODIFIER_STATE_DISARMED] = true,
 	}
-	return states
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -275,13 +270,12 @@ function modifier_item_imba_yasha:GetAttributes()	return MODIFIER_ATTRIBUTE_MULT
 
 -- Declare modifier events/properties
 function modifier_item_imba_yasha:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		--MODIFIER_PROPERTY_EVASION_CONSTANT,
 	}
-	return funcs
 end
 
 function modifier_item_imba_yasha:GetModifierAttackSpeedBonus_Constant()
@@ -323,11 +317,9 @@ function modifier_item_imba_yasha_active:GetEffectAttachType()
 end
 
 function modifier_item_imba_yasha_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_yasha_active:GetModifierEvasion_Constant()
@@ -515,7 +507,7 @@ function modifier_item_imba_sange_yasha:GetAttributes()	return MODIFIER_ATTRIBUT
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_yasha:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
@@ -524,8 +516,6 @@ function modifier_item_imba_sange_yasha:DeclareFunctions()
 		--MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_sange_yasha:GetModifierPreAttack_BonusDamage()
@@ -583,12 +573,10 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_yasha_active:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
-
-	return funcs
 end
 
 function modifier_item_imba_sange_yasha_active:GetModifierStatusResistanceStacking()
@@ -941,7 +929,8 @@ function item_imba_triumvirate:GetAbilityTextureName()
 end
 
 function item_imba_triumvirate:GetIntrinsicModifierName()
-	return "modifier_item_imba_triumvirate" end
+	return "modifier_item_imba_triumvirate"
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Triumvirate passive modifier (stackable)
@@ -969,7 +958,8 @@ end
 
 function modifier_item_imba_triumvirate:GetModifierPreAttack_BonusDamage()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
 
 function modifier_item_imba_triumvirate:GetModifierPercentageCooldown()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
@@ -977,23 +967,28 @@ end
 
 function modifier_item_imba_triumvirate:GetModifierAttackSpeedBonus_Constant()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
+	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+end
 
 function modifier_item_imba_triumvirate:GetModifierMoveSpeedBonus_Percentage_Unique()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
+	return self:GetAbility():GetSpecialValueFor("bonus_ms")
+end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Strength()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_str") end
+	return self:GetAbility():GetSpecialValueFor("bonus_str")
+end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Agility()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_agi") end
+	return self:GetAbility():GetSpecialValueFor("bonus_agi")
+end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Intellect()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_int") end
+	return self:GetAbility():GetSpecialValueFor("bonus_int")
+end
 
 -- On attack landed, roll for proc and apply stacks
 function modifier_item_imba_triumvirate:OnAttackLanded( keys )
@@ -1030,15 +1025,11 @@ end
 
 -- Modifier property storage
 function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
-	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-
 	self.ability = self:GetAbility()
 
 	if not self.ability then
 		self:Destroy()
-		return nil
+		return
 	end
 
 	self.maim_stack = self.ability:GetSpecialValueFor("maim_stack")
@@ -1067,25 +1058,27 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate_stacks_debuff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
-	return funcs
 end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMagicalResistanceBonus()
-	if not self.amp_stack then return nil end
-	return self.amp_stack * self:GetStackCount() end
+	if not self.amp_stack then return end
+	return self.amp_stack * self:GetStackCount()
+end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierAttackSpeedBonus_Constant()
-	if not self.maim_stack then return nil end
-	return self.maim_stack * self:GetStackCount() end
+	if not self.maim_stack then return end
+	return self.maim_stack * self:GetStackCount()
+end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMoveSpeedBonus_Percentage()
-	if not self.maim_stack then return nil end
-	return self.maim_stack * self:GetStackCount() end
+	if not self.maim_stack then return end
+	return self.maim_stack * self:GetStackCount()
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Triumvirate silence/disarm debuff
@@ -1107,11 +1100,10 @@ end
 
 -- Declare modifier states
 function modifier_item_imba_triumvirate_proc_debuff:CheckState()
-	local states = {
+	return {
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_SILENCED] = true,
 	}
-	return states
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -1162,14 +1154,14 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate_stacks_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
-	return funcs
 end
 
 function modifier_item_imba_triumvirate_stacks_buff:GetModifierAttackSpeedBonus_Constant()
-	return self.as_stack * self:GetStackCount() end
+	return self.as_stack * self:GetStackCount()
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Triumvirate move speed proc
@@ -1213,14 +1205,14 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate_proc_buff:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_triumvirate_proc_buff:GetModifierMoveSpeedBonus_Percentage()
-	return self.proc_ms end
+	return self.proc_ms
+end
 
 
 -----------------------------------------------------------------------------------------------------------
@@ -1250,7 +1242,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		-- Proc! Apply the disarm modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 
@@ -1273,7 +1265,7 @@ function YashaAttack(attacker, ability, modifier_stacks, modifier_proc)
 		-- Proc! Apply the move speed modifier and put the ability on cooldown
 		attacker:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_self")})
 		attacker:EmitSound("Imba.YashaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 
@@ -1300,7 +1292,7 @@ function kayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		-- Proc! Apply the silence modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.kayaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 
@@ -1331,7 +1323,7 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 		-- Apply the disarm modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 
 	-- Stack the maim up
@@ -1367,7 +1359,7 @@ function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_pr
 		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.kayaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 end
 
@@ -1398,7 +1390,7 @@ function kayaYashaAttack(attacker, target, ability, modifier_enemy_stacks, modif
 		-- Apply the silence modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.kayaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 
 	-- Stack the magic amp up
@@ -1437,7 +1429,7 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy") * (1 - target:GetStatusResistance())})
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.kayaProc")
-		ability:UseResources(false, false, true)
+		ability:UseResources(false, false, false, true)
 	end
 
 	-- Stack the maim/amp up

@@ -292,25 +292,48 @@ function modifier_imba_medusa_serpent_shot:GetModifierDamageOutgoing_Percentage(
 end
 
 function modifier_imba_medusa_serpent_shot:OnTakeDamage(keys)
-	if keys.attacker == self:GetParent() and keys.damage_category == 1 and keys.damage_type == 1 and not keys.unit:IsBuilding() and not keys.unit:IsOther() and not keys.unit:IsMagicImmune() and self.records[keys.record] then
+	local parent = self:GetParent()
+	if keys.attacker ~= parent then
+		return
+	end
+
+	if keys.damage_category ~= DOTA_DAMAGE_CATEGORY_ATTACK then
+		return
+	end
+
+	if keys.damage_type ~= DAMAGE_TYPE_PHYSICAL then
+		return
+	end
+
+	local damaged_unit = keys.unit
+	if damaged_unit:IsNull() or not damaged_unit:IsBaseNPC() then
+		return
+	end
+
+	if damaged_unit:IsBuilding() or damaged_unit:IsOther() or damaged_unit:IsMagicImmune() then
+		return
+	end
+
+	if self.records[keys.record] then
 		local damage_dealt = keys.damage
-	
+		local ability = self:GetAbility()
+
 		if keys.original_damage <= 0 then
 			local damageTable = {
-				victim 			= keys.unit,
+				victim 			= damaged_unit,
 				damage 			= self:GetStackCount() * (100 + self.damage_modifier) * 0.01, -- reminder that damage_modifier is technically a negative number
 				damage_type		= DAMAGE_TYPE_MAGICAL,
 				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-				attacker 		= self:GetParent(),
-				ability 		= self:GetAbility()
+				attacker 		= parent,
+				ability 		= ability
 			}
-			
+
 			damage_dealt = ApplyDamage(damageTable)
 		end
-		
-		keys.unit:ReduceMana(damage_dealt * self.serpent_shot_mana_burn_pct * 0.01)
-		
-		local manaburn_particle = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_manaburn_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.unit)
+
+		damaged_unit:ReduceMana(damage_dealt * self.serpent_shot_mana_burn_pct * 0.01, ability)
+
+		local manaburn_particle = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_manaburn_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, damaged_unit)
 		ParticleManager:ReleaseParticleIndex(manaburn_particle)
 	end
 end
@@ -445,14 +468,10 @@ function imba_medusa_mystic_snake:OnProjectileHit_ExtraData(hTarget, vLocation, 
 				local target_mana 	= hTarget:GetMana()
 				local mana_to_steal	= hTarget:GetMaxMana() * (self:GetTalentSpecialValueFor("snake_mana_steal") + (self:GetSpecialValueFor("mana_thief_steal") * ExtraData.bounces)) * 0.01
 				
-				hTarget:ReduceMana(mana_to_steal)
+				hTarget:ReduceMana(mana_to_steal, self)
 				
 				-- "Upon returning to Medusa, she receives exactly the amount of mana all targets lost to Mystic Snake." seems to be a lie based on vanilla testing since it still steals the standard amount even if it burns less due to manaloss reductions so zzz
-				if target_mana < mana_to_steal then
-					ExtraData.mana_stolen = ExtraData.mana_stolen + math.max(target_mana, 0)
-				else
-					ExtraData.mana_stolen = ExtraData.mana_stolen + math.max(mana_to_steal, 0)
-				end
+				ExtraData.mana_stolen = ExtraData.mana_stolen + math.max(math.min(target_mana, mana_to_steal), 0)
 			end
 			
 			local damageTable = {
@@ -701,6 +720,12 @@ function imba_medusa_mana_shield:OnOwnerSpawned()
 	if self.toggle_state then
 		self:ToggleAbility()
 	end
+
+	local caster = self:GetCaster()
+
+	if caster:HasTalent("special_bonus_imba_medusa_bonus_mana") and not caster:HasModifier("modifier_special_bonus_imba_medusa_bonus_mana") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_medusa_bonus_mana"), "modifier_special_bonus_imba_medusa_bonus_mana", {})
+	end
 end
 
 function imba_medusa_mana_shield:OnOwnerDied()
@@ -812,35 +837,35 @@ end
 -- end
 
 function modifier_imba_medusa_mana_shield:DeclareFunctions()
-	local decFuncs = {
+	return {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		-- MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
     }
-
-    return decFuncs
 end
 
 function modifier_imba_medusa_mana_shield:GetModifierIncomingDamage_Percentage(keys)
 	if not IsServer() then return end
-	
+
+	local parent = self:GetParent()
+
 	-- "While spell immune, Mana Shield does not react on magical damage."
-	if not (keys.damage_type == DAMAGE_TYPE_MAGICAL and self:GetParent():IsMagicImmune()) and self:GetParent().GetMana then
-		
+	if not (keys.damage_type == DAMAGE_TYPE_MAGICAL and parent:IsMagicImmune()) and parent.GetMana then
+
 		-- Calculate how much mana will be used in attempts to block some damage
 		local mana_to_block	= keys.original_damage * self.absorption_tooltip * 0.01 / self.damage_per_mana
-		
-		if mana_to_block >= self:GetParent():GetMana() then
-			self:GetParent():EmitSound("Hero_Medusa.ManaShield.Proc")
-			
-			local shield_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-			ParticleManager:ReleaseParticleIndex(shield_particle)
-		end			
 
-		local mana_before = self:GetParent():GetMana()
-		self:GetParent():ReduceMana(mana_to_block)
-		local mana_after = self:GetParent():GetMana()
-		
-		return math.min(self.absorption_tooltip, self.absorption_tooltip * self:GetParent():GetMana() / math.max(mana_to_block, 1)) * (-1)
+		if mana_to_block >= parent:GetMana() then
+			parent:EmitSound("Hero_Medusa.ManaShield.Proc")
+
+			local shield_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+			ParticleManager:ReleaseParticleIndex(shield_particle)
+		end
+
+		--local mana_before = parent:GetMana()
+		parent:ReduceMana(mana_to_block, self:GetAbility())
+		--local mana_after = parent:GetMana()
+
+		return math.min(self.absorption_tooltip, self.absorption_tooltip * parent:GetMana() / math.max(mana_to_block, 1)) * (-1)
 	end
 end
 
@@ -1304,12 +1329,3 @@ end
 function modifier_special_bonus_imba_medusa_bonus_mana:GetModifierManaBonus()
 	return self.bonus_mana
 end
-
-function imba_medusa_mana_shield:OnOwnerSpawned()
-	if not IsServer() then return end
-
-	if self:GetCaster():HasTalent("special_bonus_imba_medusa_bonus_mana") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_medusa_bonus_mana") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_medusa_bonus_mana"), "modifier_special_bonus_imba_medusa_bonus_mana", {})
-	end
-end
-

@@ -113,7 +113,7 @@ function modifier_imba_rejuvenation:OnCreated()
 end
 
 function modifier_imba_rejuvenation:OnIntervalThink()
-	self:GetParent():Heal(self.heal_per_sec, self:GetCaster())
+	self:GetParent():Heal(self.heal_per_sec, self:GetAbility())
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_sec, nil)
 end
 

@@ -144,14 +144,14 @@ function modifier_imba_bloodrage_buff_stats:OnDeath(params)
 			local heal = params.unit:GetMaxHealth() * self.health_bonus_pct / 100
 			
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, params.attacker, heal, nil)
-			params.attacker:Heal(heal, self:GetCaster())
+			params.attacker:Heal(heal, self:GetAbility())
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(healFX)
 		elseif params.unit:IsRealHero() and (self:GetParent():GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= self.health_bonus_aoe then
 			local heal = params.unit:GetMaxHealth() * (self.health_bonus_pct / 100) * (self.health_bonus_share_percent * 0.01)
 			
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL , self:GetParent(), heal, nil)
-			self:GetParent():Heal(heal, self:GetCaster())
+			self:GetParent():Heal(heal, self:GetAbility())
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end
@@ -240,7 +240,6 @@ end
 
 -- Needed for the CD reduction talent
 function imba_bloodseeker_blood_bath:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_bloodseeker_9") and self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_9"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_9") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_bloodseeker_9", {})
 	end
@@ -431,7 +430,7 @@ function modifier_imba_blood_bath_buff_stats:OnTakeDamage(params)
 		local bonusHP = params.damage * self.overheal
 		self:SetStackCount(self:GetStackCount() + bonusHP)
 		self:GetParent():CalculateStatBonus(true)
-		self:GetParent():Heal(bonusHP, self:GetParent())
+		self:GetParent():Heal(bonusHP, self:GetAbility())
 	end
 end
 
@@ -571,9 +570,9 @@ function modifier_imba_thirst_passive:OnTakeDamage(params)
 			local duration = self:GetAbility():GetTalentSpecialValueFor("atk_buff_duration")
 			local attackList = self:GetCaster():FindAllModifiersByName("modifier_imba_thirst_haste")
 			local confirmTheKill = false
-			for _,modifier in pairs(attackList) do
+			for _, modifier in pairs(attackList) do
 				if modifier.sourceUnit == params.unit then
-					attackerCount = 1
+					local attackerCount = 1
 					if params.attacker == self:GetCaster() then attackerCount = 2 end
 					confirmTheKill = true
 					if modifier:GetStackCount() <= attackerCount then
@@ -588,7 +587,7 @@ function modifier_imba_thirst_passive:OnTakeDamage(params)
 				
 				if modifier then
 					modifier.sourceUnit = params.unit
-					attackerCount = 1
+					local attackerCount = 1
 					if params.attacker == self:GetCaster() then attackerCount = 2 end
 					if modifier:GetStackCount() <= attackerCount then
 						modifier:SetStackCount(attackerCount)
@@ -891,7 +890,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 
 		ApplyDamage(damage_table)
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then
-			caster:Heal(damage, caster)
+			caster:Heal(damage, self)
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end
@@ -944,7 +943,7 @@ if IsServer() then
 			if move_damage > 0 then
 				ApplyDamage({victim = self.parent, attacker = self.caster, damage = move_damage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NONE, ability = self.ability})
 				if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-					self.caster:Heal(move_damage, self.caster)
+					self.caster:Heal(move_damage, self.ability)
 					local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 					ParticleManager:ReleaseParticleIndex(healFX)
 				end
@@ -964,7 +963,7 @@ if IsServer() then
 		if params.unit == self.parent then
 			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-				self.caster:Heal(self.castdamage, self.caster)
+				self.caster:Heal(self.castdamage, self.ability)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
@@ -975,7 +974,7 @@ if IsServer() then
 		if params.attacker == self.parent then
 			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.attackdamage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-				self.caster:Heal(self.castdamage, self.caster)
+				self.caster:Heal(self.castdamage, self.ability)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
@@ -1027,13 +1026,16 @@ function modifier_imba_rupture_charges:OnCreated()
 		else
 			-- Illusions find their owner and its charges
 			local playerid = self.caster:GetPlayerID()
-			local real_hero = playerid:GetAssignedHero()
-
-			if hero:HasModifier(self.modifier_charge) then
-				self.modifier_charge_handler = hero:FindModifierByName(self.modifier_charge)
-				if self.modifier_charge_handler then
-					self:SetStackCount(self.modifier_charge_handler:GetStackCount())
-					self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)
+			local player = PlayerResource:GetPlayer(playerid)
+			-- Check if player is disconnected (player is nil when dced)
+			if player then
+				local real_hero = player:GetAssignedHero()
+				if real_hero and real_hero:HasModifier(self.modifier_charge) then
+					self.modifier_charge_handler = real_hero:FindModifierByName(self.modifier_charge)
+					if self.modifier_charge_handler then
+						self:SetStackCount(self.modifier_charge_handler:GetStackCount())
+						self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)
+					end
 				end
 			end
 		end
@@ -1180,16 +1182,12 @@ function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:IsPurgable()
 function modifier_special_bonus_imba_bloodseeker_rupture_cast_range:RemoveOnDeath() 	return false end
 
 function imba_bloodseeker_rupture:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_rupture_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_rupture_cast_range"), "modifier_special_bonus_imba_bloodseeker_rupture_cast_range", {})
 	end
 end
 
 function imba_bloodseeker_bloodrage:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_7") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_7"), "modifier_special_bonus_imba_bloodseeker_7", {})
 	end

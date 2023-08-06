@@ -63,7 +63,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 
 		-- if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
 			-- -- Jinada goes on cooldown
-			-- jinada_ability:UseResources(false, false, true)
+			-- jinada_ability:UseResources(false, false, false, true)
 
 			-- -- Consumes Jinada's buff
 			-- caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
@@ -90,7 +90,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 		bVisibleToEnemies = true,
 		bReplaceExisting = false,
 		bProvidesVision = false,
-		ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
+		ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = false}
 	}
 
 	ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
@@ -105,7 +105,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 
 				-- if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
 					-- -- Jinada goes on cooldown
-					-- jinada_ability:UseResources(false, false, true)
+					-- jinada_ability:UseResources(false, false, false, true)
 
 					-- -- Consumes Jinada's buff
 					-- caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
@@ -531,20 +531,20 @@ function imba_bounty_hunter_jinada:ShadowJaunt(caster, ability, target)
 	-- If target has Linken's sphere, do nothing
 	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return nil
+			return
 		end
 	end
 
 	-- Teleport caster near the target
 	local blink_direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
-	target_pos = target:GetAbsOrigin() + blink_direction * (-50)
+	local target_pos = target:GetAbsOrigin() + blink_direction * (-50)
 	FindClearSpaceForUnit(caster, target_pos, false)
 
 	-- Set caster's forward vector toward the enemy
 	caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized())
 
 	-- Start skill cooldown.
-	ability:UseResources(false, false, true)
+	ability:UseResources(false, false, false, true)
 
 	-- Wait for one second. If crit buff is still not used, remove it.
 	Timers:CreateTimer(1, function()
@@ -728,7 +728,7 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 
 			-- Start the skill's cooldown if it's ready (might not be because of active)
 			if self.ability:IsCooldownReady() then
-				self.ability:UseResources(false, false, true)
+				self.ability:UseResources(false, false, false, true)
 			end
 
 			-- transfer gold from target to caster
@@ -976,9 +976,10 @@ function modifier_imba_shadow_walk_buff_invis:OnIntervalThink()
 end
 
 function modifier_imba_shadow_walk_buff_invis:CheckState()
-	local state = {[MODIFIER_STATE_INVISIBLE] = true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
-	return state
+	return {
+		[MODIFIER_STATE_INVISIBLE] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+	}
 end
 
 function modifier_imba_shadow_walk_buff_invis:GetPriority()
@@ -986,18 +987,22 @@ function modifier_imba_shadow_walk_buff_invis:GetPriority()
 end
 
 function modifier_imba_shadow_walk_buff_invis:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_UNIT_MOVED,
-		MODIFIER_PROPERTY_MOVESPEED_MAX}
-
-	return decFuncs
+		MODIFIER_PROPERTY_IGNORE_MOVESPEED_LIMIT,
+	}
 end
 
-function modifier_imba_shadow_walk_buff_invis:GetModifierMoveSpeed_Max()
-	return 550 * (1 + self:GetStackCount() * 0.01)
+--function modifier_imba_shadow_walk_buff_invis:GetModifierMoveSpeed_Absolute()
+	--return 550 * (1 + self:GetStackCount() * 0.01)
+--end
+
+function modifier_imba_shadow_walk_buff_invis:GetModifierIgnoreMovespeedLimit()
+	return 1
 end
 
 function modifier_imba_shadow_walk_buff_invis:OnUnitMoved(keys)

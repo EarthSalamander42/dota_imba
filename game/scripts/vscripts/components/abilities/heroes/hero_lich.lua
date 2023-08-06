@@ -542,7 +542,7 @@ function FrostNova(caster, ability, target, cold_front)
 						-- Apply explosion particle
 						local particle_nova_fx = ParticleManager:CreateParticle(particle_nova, PATTACH_WORLDORIGIN, nil)
 						ParticleManager:SetParticleControl(particle_nova_fx, 0, location)
-						ParticleManager:SetParticleControl(particle_nova_fx, 1, Vector(damage_radius, damage_radius, damage_radius))
+						ParticleManager:SetParticleControl(particle_nova_fx, 1, Vector(radius, radius, radius))
 						ParticleManager:SetParticleControl(particle_nova_fx, 2, location)
 						ParticleManager:ReleaseParticleIndex(particle_nova_fx)
 
@@ -2109,7 +2109,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 	    SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.caster, mana_gained, nil)
 
 		if self.target:GetTeam() == self.caster:GetTeam() then
-			self.caster:Heal(health_gained, self.caster)
+			self.caster:Heal(health_gained, self)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, health_gained, nil)
 		end
 
@@ -2127,7 +2127,7 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 					
 					-- Sure takes a while to add that max health through the modifier...
 					-- Timers:CreateTimer(0.5, function()
-						self.caster:Heal(consumption_health, self.caster)
+						self.caster:Heal(consumption_health, self)
 						SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, consumption_health, nil)
 					-- end)
 				
@@ -2279,11 +2279,11 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 end
 
 function modifier_imba_lich_sinister_gaze:OnIntervalThink()
-	if not self:GetCaster() or not self:GetAbility() or not self:GetAbility():IsChanneling() then
+	if self.caster:IsNull() or self.ability:IsNull() or not self.ability:IsChanneling() then
 		self:Destroy()
 	else
-		if self.parent.ReduceMana then
-			self.parent:ReduceMana(self.mana_per_interval)
+		if not self.parent:IsNull() and self.parent.ReduceMana then
+			self.parent:ReduceMana(self.mana_per_interval, self.ability)
 		end
 		
 		if self.caster.GiveMana then

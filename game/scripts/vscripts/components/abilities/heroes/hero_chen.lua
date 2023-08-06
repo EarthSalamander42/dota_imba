@@ -1062,7 +1062,7 @@ end
 
 -- Self leveling function (since this is technically a completely separate ability)
 function imba_chen_test_of_faith:OnHeroLevelUp()
-	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 3), 4))
+	self:SetLevel(math.min(math.floor(self:GetCaster():GetLevel() / 3), 4))
 end
 
 function imba_chen_test_of_faith:OnSpellStart()
@@ -1091,7 +1091,7 @@ function imba_chen_test_of_faith:OnSpellStart()
 			heal_value	= heal_value + (PlayerResource:GetAssists(target:GetPlayerID()) * self:GetSpecialValueFor("faithful_assist_mult"))
 		end
 	
-		target:Heal(heal_value, self:GetCaster())
+		target:Heal(heal_value, self)
 		
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal_value, nil)
 	else
@@ -1177,7 +1177,7 @@ function imba_chen_hand_of_god:OnSpellStart()
 			end
 			
 			-- Heal happens after the IMBAfication logic here
-			ally:Heal(self:GetTalentSpecialValueFor("heal_amount"), self:GetCaster())
+			ally:Heal(self:GetTalentSpecialValueFor("heal_amount"), self)
 		end
 	end
 end
@@ -1258,32 +1258,24 @@ function modifier_special_bonus_imba_chen_remnants_of_penitence:IsPurgable() 	re
 function modifier_special_bonus_imba_chen_remnants_of_penitence:RemoveOnDeath() 	return false end
 
 function imba_chen_penitence:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_remnants_of_penitence") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_remnants_of_penitence") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_remnants_of_penitence"), "modifier_special_bonus_imba_chen_remnants_of_penitence", {})
 	end
 end
 
 function imba_chen_divine_favor:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_divine_favor_cd_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_divine_favor_cd_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_divine_favor_cd_reduction"), "modifier_special_bonus_imba_chen_divine_favor_cd_reduction", {})
 	end
 end
 
 function imba_chen_test_of_faith:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_test_of_faith_cd_reduction") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_test_of_faith_cd_reduction") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_test_of_faith_cd_reduction"), "modifier_special_bonus_imba_chen_test_of_faith_cd_reduction", {})
 	end
 end
 
 function imba_chen_hand_of_god:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_chen_hand_of_god_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_chen_hand_of_god_cooldown") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_chen_hand_of_god_cooldown"), "modifier_special_bonus_imba_chen_hand_of_god_cooldown", {})
 	end

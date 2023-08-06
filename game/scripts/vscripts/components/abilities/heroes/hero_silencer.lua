@@ -118,7 +118,7 @@ function modifier_imba_arcane_curse_debuff:OnIntervalThink()
 				-- #1 Talent: Silencer heals from Arcane Curse damage
 				if self.talent_learned then
 					local heal_amount = actual_Damage * self.caster:FindTalentValue("special_bonus_imba_silencer_1") * 0.01
-					self.caster:Heal(heal_amount, self.caster)
+					self.caster:Heal(heal_amount, self:GetAbility())
 
 					-- Show heal particles on the caster
 					local particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
@@ -1717,24 +1717,18 @@ function modifier_special_bonus_imba_silencer_10:IsPurgable() 	return false end
 function modifier_special_bonus_imba_silencer_10:RemoveOnDeath() 	return false end
 
 function imba_silencer_arcane_curse:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_silencer_arcane_curse_slow") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_arcane_curse_slow") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_arcane_curse_slow"), "modifier_special_bonus_imba_silencer_arcane_curse_slow", {})
 	end
 end
 
 function imba_silencer_arcane_supremacy:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_silencer_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_4"), "modifier_special_bonus_imba_silencer_4", {})
 	end
 end
 
 function imba_silencer_global_silence_v2:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_silencer_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_silencer_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_silencer_10"), "modifier_special_bonus_imba_silencer_10", {})
 	end

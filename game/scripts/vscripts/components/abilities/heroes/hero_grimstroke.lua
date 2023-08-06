@@ -157,12 +157,13 @@ function imba_grimstroke_dark_artistry:OnSpellStart()
 end
 
 function imba_grimstroke_dark_artistry:Stroke(start_location, end_position, bPrimary, bMain)
+	local caster = self:GetCaster()
 	if start_location == end_position then
-		end_position = end_position + self:GetCaster():GetForwardVector()
+		end_position = end_position + caster:GetForwardVector()
 	end
 	
-	-- Create a modifier thinker to attach the sound to, as well as keep track of accumulating damage within one stroke
-	local stroke_dummy = CreateModifierThinker(self:GetCaster(), self, nil, {}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	-- Create a dummy unit to attach the sound to, as well as keep track of accumulating damage within one stroke
+	local stroke_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	stroke_dummy:EmitSound("Hero_Grimstroke.DarkArtistry.Projectile")
 	stroke_dummy.hit_units = 0
 	
@@ -1141,7 +1142,7 @@ end
 ---------------------------
 
 function imba_grimstroke_ink_gods_incarnation:OnHeroLevelUp()
-	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 6), 3))
+	self:SetLevel(math.min(math.floor(self:GetCaster():GetLevel() / 6), 3))
 end
 
 function imba_grimstroke_ink_gods_incarnation:OnSpellStart()
@@ -1490,7 +1491,7 @@ function imba_grimstroke_soul_chain_vanilla_enhancer:GetIntrinsicModifierName()
 end
 
 function imba_grimstroke_soul_chain_vanilla_enhancer:OnHeroLevelUp()
-	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 6), 3))
+	self:SetLevel(math.min(math.floor(self:GetCaster():GetLevel() / 6), 3))
 end
 
 ----------------------------------------
@@ -1585,8 +1586,6 @@ function modifier_special_bonus_imba_grimstroke_stroke_of_fate_cast_range:IsPurg
 function modifier_special_bonus_imba_grimstroke_stroke_of_fate_cast_range:RemoveOnDeath() 	return false end
 
 function imba_grimstroke_dark_artistry:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_grimstroke_stroke_of_fate_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_grimstroke_stroke_of_fate_cast_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_grimstroke_stroke_of_fate_cast_range"), "modifier_special_bonus_imba_grimstroke_stroke_of_fate_cast_range", {})
 	end

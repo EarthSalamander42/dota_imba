@@ -1343,7 +1343,7 @@ function modifier_imba_take_aim_range:OnAttack(keys)
 
 			-- If the attacker fired an Aimed Shot, go on cooldown
 			if self:GetStackCount() == 0 and self.ability:IsCooldownReady() then
-				self.ability:UseResources(false, false, true)
+				self.ability:UseResources(false, false, false, true)
 			end
 		end
 	end
@@ -1962,8 +1962,6 @@ function modifier_special_bonus_imba_sniper_9:IsPurgable() 		return false end
 function modifier_special_bonus_imba_sniper_9:RemoveOnDeath() 	return false end
 
 function imba_sniper_assassinate:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_sniper_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sniper_6") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sniper_6"), "modifier_special_bonus_imba_sniper_6", {})
 	end

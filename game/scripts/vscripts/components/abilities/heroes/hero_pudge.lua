@@ -433,9 +433,11 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 end
 
 function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, ExtraData)
+	local buff1
+	local buff2
 	if hTarget then
-		local buff1 = hTarget:FindModifierByName("modifier_imba_hook_target_enemy")
-		local buff2 = hTarget:FindModifierByName("modifier_imba_hook_target_ally")
+		buff1 = hTarget:FindModifierByName("modifier_imba_hook_target_enemy")
+		buff2 = hTarget:FindModifierByName("modifier_imba_hook_target_ally")
 	end
 
 	if hTarget and self:GetCaster():GetTeamNumber() ~= hTarget:GetTeamNumber() and (IsNearFountain(hTarget:GetAbsOrigin(), 1700) or IsNearFountain(self:GetCaster():GetAbsOrigin(), 1700)) then
@@ -1149,8 +1151,9 @@ function imba_pudge_dismember:OnSpellStart()
 end
 
 function imba_pudge_dismember:OnChannelFinish(bInterrupted)
+	local target_buff
 	if self.target then
-		local target_buff = self.target:FindModifierByNameAndCaster("modifier_imba_dismember", self:GetCaster())
+		target_buff = self.target:FindModifierByNameAndCaster("modifier_imba_dismember", self:GetCaster())
 
 		if bInterrupted then
 			self.target:RemoveModifierByName("modifier_imba_dismember")
@@ -1447,15 +1450,15 @@ function UpdateHookStacks(caster)
 		local pudge = Entities:FindAllByName("npc_dota_hero_pudge")
 		for _, main_hero in pairs(pudge) do			
 			local borrowed_stacks = main_hero:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
-			
+
 			if main_hero:HasScepter() then
-				stacks = main_hero:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks") + main_hero:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("scepter_hook_stacks")
+				borrowed_stacks = borrowed_stacks + main_hero:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("scepter_hook_stacks")
 			end
-		
+
 			return borrowed_stacks
 		end
 	end
-	
+
 	local stacks = caster:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
 
 	if caster:HasScepter() then

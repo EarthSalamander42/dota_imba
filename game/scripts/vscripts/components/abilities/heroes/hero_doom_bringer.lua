@@ -162,14 +162,12 @@ end
 
 -------------------------------------------
 modifier_imba_doom_bringer_doom_handler = class({})
-function modifier_imba_doom_bringer_doom_handler:IsHidden() return false end
-
 function modifier_imba_doom_bringer_doom_handler:IsHidden()	return true end
 
 function modifier_imba_doom_bringer_doom_handler:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
-	
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_ORDER
+	}
 end
 
 function modifier_imba_doom_bringer_doom_handler:OnOrder(keys)

@@ -105,7 +105,7 @@ function item_imba_moon_shard:OnSpellStart()
 	local current_stacks = self:GetCurrentCharges()
 	if target then
 		if target:IsTempestDouble() then
-			target = nil
+			return
 		end
 		-- if target == caster then
 			-- EmitSoundOnClient("Item.MoonShard.Consume", caster:GetPlayerOwner())

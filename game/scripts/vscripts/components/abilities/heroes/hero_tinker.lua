@@ -729,7 +729,7 @@ function imba_tinker_heat_seeking_missile:OnProjectileThink_ExtraData(location, 
 	end
 	
 	-- Spawn once every second, determines whether the missile has travelled for a second by it's distance
-	if (math.mod(math.floor(distance),interval)) < math.floor(interval * FrameTime()) and (math.floor(distance - interval * FrameTime())) > math.floor(interval * FrameTime()) then		
+	if (math.floor(distance) % interval) < math.floor(interval * FrameTime()) and (math.floor(distance - interval * FrameTime())) > math.floor(interval * FrameTime()) then		
 		
 		-- Find valid targets
 		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
@@ -738,10 +738,10 @@ function imba_tinker_heat_seeking_missile:OnProjectileThink_ExtraData(location, 
 		-- If no valid units are found, dududududu
 		if #heroes == 0 and #units == 0 then
 			local dud_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf", PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControlEnt(dud_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack3", caster_loc, true)
+			ParticleManager:SetParticleControlEnt(dud_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack3", caster:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(dud_pfx)
 			caster:EmitSound("Hero_Tinker.Heat-Seeking_Missile_Dud")
-			return nil
+			return
 		end
 		
 		-- Else, shoot missiles at heroes
@@ -1332,8 +1332,7 @@ function imba_tinker_march_of_the_machines:OnProjectileThink_ExtraData(location,
 		if ExtraData.railgun_damage then
 			self[ExtraData.index].counter = self[ExtraData.index].counter or 0
 			if self[ExtraData.index].counter == 0 then
-				projectile = 
-				{
+				local projectile = {
 					Ability				= self,
 					EffectName			= "particles/units/heroes/hero_zuus/zuus_arc_lightning_head_c.vpcf",
 					vSpawnOrigin		= location,
@@ -1476,17 +1475,15 @@ end
 
 function modifier_imba_march_tesla_stun:OnCreated()
 	if IsServer() then
-		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
+		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 		self:AddParticle(stun_fx,false,false,-1,false,false)
 	end
 end
 
 function modifier_imba_march_tesla_stun:CheckState()
-	local state =
-	{
+	return {
 		[MODIFIER_STATE_STUNNED] = true
 	}
-	return state
 end
 
 function modifier_imba_march_tesla_stun:IsHidden()

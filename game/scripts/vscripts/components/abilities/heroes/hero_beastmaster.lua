@@ -97,14 +97,13 @@ function modifier_imba_beastmaster_hawk:OnCreated()
 	end
 end
 function modifier_imba_beastmaster_hawk:DeclareFunctions()
-	local decFuncs  =   {
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 	}
-	return decFuncs
 end
 
 -- SUPA FAST BIRDS CAW CAW
-function modifier_imba_beastmaster_hawk:GetModifierMoveSpeed_Max()
+function modifier_imba_beastmaster_hawk:GetModifierMoveSpeed_Absolute()
 	return 1200
 end
 --[[
@@ -266,7 +265,7 @@ function imba_beastmaster_summon_boar:OnSpellStart()
 
 		for i = 1, boar_count do
 			-- Create boar
-			boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
+			local boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
 			boar:AddNewModifier(caster, self, "modifier_imba_beastmaster_boar", {})
 			boar:AddNewModifier(caster, self, "modifier_kill", {duration = boar_duration})
 
@@ -297,13 +296,6 @@ function modifier_imba_beastmaster_boar:OnCreated()
 		-- Level the poison ability
 		poison_ability:SetLevel(ability:GetLevel() )
 	end
-end
-
-function modifier_imba_beastmaster_boar:DeclareFunctions()
-	local decFuncs  =   {
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
-	}
-	return decFuncs
 end
 
 -- Kill boar when it's duration is over

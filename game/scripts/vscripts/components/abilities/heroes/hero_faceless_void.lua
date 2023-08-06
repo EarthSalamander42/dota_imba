@@ -187,7 +187,7 @@ function imba_faceless_void_time_walk:OnSpellStart()
 	
 	-- Heal recent damage
 	if caster.time_walk_damage_taken then
-		caster:Heal(caster.time_walk_damage_taken, self:GetCaster())
+		caster:Heal(caster.time_walk_damage_taken, self)
 	end
 
 	local aoe_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf", PATTACH_ABSORIGIN, caster)
@@ -866,7 +866,10 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 					-- Add a chronocharge if a hero was bashed
 					if target:IsRealHero() then
-						self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + 1)
+						local chronochargeModifier = parent:FindModifierByName("modifier_imba_faceless_void_chronocharges")
+						if chronochargeModifier then
+							chronochargeModifier:SetStackCount(chronochargeModifier:GetStackCount() + 1)
+						end
 					end
 
 					-- Iterate through all victims abilities
@@ -936,7 +939,10 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 							-- Add a chronocharge if a hero was bashed
 							if enemy:IsRealHero() then
-								AddStacksLua(ability, parent, parent, "modifier_imba_faceless_void_chronocharges", 1, false)
+								local chronochargeModifier = parent:FindModifierByName("modifier_imba_faceless_void_chronocharges")
+								if chronochargeModifier then
+									chronochargeModifier:SetStackCount(chronochargeModifier:GetStackCount() + 1)
+								end
 							end
 
 							-- Iterate through all victims abilities
@@ -1324,7 +1330,6 @@ end
 
 function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
 	return {
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
 		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
@@ -1333,12 +1338,6 @@ function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
 		-- #8 TALENT: Void cleaves from attacks in chrono
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-end
-
-
-function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_Max()
-	if self:GetStackCount() == 1 or self:GetStackCount() == 4 then
-		return self:GetAbility():GetSpecialValueFor("movement_speed") end
 end
 
 -- #3 TALENT: Void gains infinite movement speed in Chrono

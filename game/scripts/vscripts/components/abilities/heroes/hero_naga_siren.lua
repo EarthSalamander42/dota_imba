@@ -658,17 +658,17 @@ function modifier_special_bonus_imba_naga_siren_rip_tide_armor:IsPurgable() 	ret
 function modifier_special_bonus_imba_naga_siren_rip_tide_armor:RemoveOnDeath() 	return false end
 
 function imba_naga_siren_rip_tide:OnOwnerSpawned()
-	if not IsServer() then return end
+	local caster = self:GetCaster()
+	local talent_name_1 = "special_bonus_imba_naga_siren_mirror_image_perfect_image"
+	local mod_name_1 = "modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image"
+	local talent_name_2 = "special_bonus_imba_naga_siren_rip_tide_armor"
+	local mod_name_2 = "modifier_special_bonus_imba_naga_siren_rip_tide_armor"
 
-	if self:GetCaster():HasTalent("special_bonus_imba_naga_siren_rip_tide_armor") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_naga_siren_mirror_image_perfect_image"), "modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image", {})
+	if caster:HasTalent(talent_name_1) and not caster:HasModifier(mod_name_1) then
+		caster:AddNewModifier(caster, caster:FindAbilityByName(talent_name_1), mod_name_1, {})
 	end
-end
-
-function imba_naga_siren_rip_tide:OnOwnerSpawned()
-	if not IsServer() then return end
-
-	if self:GetCaster():HasTalent("special_bonus_imba_naga_siren_rip_tide_armor") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_naga_siren_rip_tide_armor") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_naga_siren_rip_tide_armor"), "modifier_special_bonus_imba_naga_siren_rip_tide_armor", {})
+	
+	if caster:HasTalent(talent_name_2) and not caster:HasModifier(mod_name_2) then
+		caster:AddNewModifier(caster, caster:FindAbilityByName(talent_name_2), mod_name_2, {})
 	end
 end

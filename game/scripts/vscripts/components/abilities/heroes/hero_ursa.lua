@@ -778,7 +778,7 @@ function modifier_imba_overpower_talent_fangs:OnAttackStart(keys)
 			self.ability:DisarmEnemies(self.caster, self.ability)
 
 			-- Trigger the cooldown of the ability
-			self.ability:UseResources(false, false, true)
+			self.ability:UseResources(false, false, false, true)
 		end
 	end
 end
@@ -1643,8 +1643,6 @@ function modifier_special_bonus_imba_ursa_3:IsPurgable() 	return false end
 function modifier_special_bonus_imba_ursa_3:RemoveOnDeath() 	return false end
 
 function imba_ursa_territorial_hunter:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_ursa_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_ursa_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_ursa_3"), "modifier_special_bonus_imba_ursa_3", {})
 	end

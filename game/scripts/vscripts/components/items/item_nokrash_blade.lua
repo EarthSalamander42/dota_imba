@@ -76,21 +76,20 @@ function modifier_item_nokrash_blade_unique:IsPermanent() return true end
 
 function modifier_item_nokrash_blade_unique:ActivateNokrahProjectile()
 	if IsServer() then
-		self:GetParent():SetRangedProjectileName("particles/items_fx/nokrahs_blade.vpcf")
+		local owner = self:GetParent()
+		if not owner.original_attack_projectile then
+			owner.original_attack_projectile = owner:GetRangedProjectileName()
+		end
+		owner:SetRangedProjectileName("particles/items_fx/nokrahs_blade.vpcf")
 	end
 end
 
 function modifier_item_nokrash_blade_unique:DeactivateNokrahProjectile()
 	if IsServer() then
 		local owner = self:GetParent()
-		if NPC_HEROES_CUSTOM[owner:GetUnitName()] then
-			if NPC_HEROES_CUSTOM[owner:GetUnitName()]["ProjectileModel"] then
-				owner:SetRangedProjectileName(NPC_HEROES_CUSTOM[owner:GetUnitName()]["ProjectileModel"])
-			end
-		elseif NPC_HEROES[owner:GetUnitName()] then
-			if NPC_HEROES[owner:GetUnitName()]["ProjectileModel"] then
-				owner:SetRangedProjectileName(NPC_HEROES[owner:GetUnitName()]["ProjectileModel"])
-			end
+		if owner.original_attack_projectile then
+			owner:SetRangedProjectileName(owner.original_attack_projectile)
+			owner.original_attack_projectile = nil
 		end
 	end
 end

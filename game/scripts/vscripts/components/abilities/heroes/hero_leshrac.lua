@@ -284,7 +284,6 @@ function modifier_imba_split_earth_stun:IsPurgable() return false end
 function modifier_imba_split_earth_stun:IsDebuff() return true end
 function modifier_imba_split_earth_stun:IsStunDebuff() return true end
 function modifier_imba_split_earth_stun:IsPurgeException() return true end
-function modifier_imba_split_earth_stun:IsStunDebuff() return true end
 
 function modifier_imba_split_earth_stun:CheckState()
 	return {[MODIFIER_STATE_STUNNED] = true}
@@ -591,7 +590,7 @@ function modifier_imba_leshrac_diabolic_edict:DiabolicEditExplosion(target)
 
 		-- Play particle effects. For clarity, particle should be at least 50-100 in radius (this is how it originally behaves)
 		ParticleManager:SetParticleControlEnt(pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(pfx, 2, Vector(max(self.explosion_radius, RandomInt(50,100)), 0, 0))
+		ParticleManager:SetParticleControl(pfx, 2, Vector(math.max(self.explosion_radius, RandomInt(50,100)), 0, 0))
 
 		-- If explosion radius is bigger than 0, look for enemies in range to deal damage (no buildings!)
 		if self.explosion_radius > 0 then
@@ -1970,7 +1969,7 @@ function modifier_imba_tormented_soul_form:OnTakeDamage(keys)
 		ParticleManager:ReleaseParticleIndex(particle_totalsteal_fx)
 
 		-- Heal the caster 
-		self.caster:Heal(replenish, self.caster)
+		self.caster:Heal(replenish, self.ability)
 
 		-- Give mana to the caster
 		self.caster:GiveMana(replenish)

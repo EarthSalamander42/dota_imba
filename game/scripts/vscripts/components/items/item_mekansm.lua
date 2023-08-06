@@ -117,28 +117,31 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_mekansm:DeclareFunctions()
-	local funcs = {
---		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
---		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
---		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+	return {
+		--MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		--MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		--MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 	}
-	return funcs
 end
 
 --[[
 function modifier_item_imba_mekansm:GetModifierBonusStats_Strength()
-	return self.bonus_all_stats end
+	return self.bonus_all_stats
+end
 
 function modifier_item_imba_mekansm:GetModifierBonusStats_Agility()
-	return self.bonus_all_stats end
+	return self.bonus_all_stats
+end
 
 function modifier_item_imba_mekansm:GetModifierBonusStats_Intellect()
-	return self.bonus_all_stats end
+	return self.bonus_all_stats
+end
 --]]
 
 function modifier_item_imba_mekansm:GetModifierPhysicalArmorBonus()
-	return self.bonus_armor end
+	return self.bonus_armor
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Mekansm aura emitter
@@ -161,13 +164,14 @@ function modifier_item_imba_mekansm_aura_emitter:GetModifierAura()
 		if self:GetParent():IsAlive() then
 			return "modifier_item_imba_mekansm_aura"
 		else
-			return nil
+			return
 		end
 	end
 end
 
 function modifier_item_imba_mekansm_aura_emitter:GetAuraRadius()
-	return self:GetAbility():GetSpecialValueFor("aura_radius") end
+	return self:GetAbility():GetSpecialValueFor("aura_radius")
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Mekansm aura
@@ -180,7 +184,8 @@ function modifier_item_imba_mekansm_aura:IsPurgable() return false end
 
 -- Aura icon
 function modifier_item_imba_mekansm_aura:GetTexture()
-	return "item_mekansm" end
+	return "item_mekansm"
+end
 
 -- Stores the aura's parameters to prevent errors when the item is destroyed
 function modifier_item_imba_mekansm_aura:OnCreated(keys)
@@ -316,9 +321,9 @@ end
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves:DeclareFunctions()
 	return {
---		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
---		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
---		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		--MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		--MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		--MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_MANA_BONUS,
@@ -369,17 +374,19 @@ function modifier_item_imba_guardian_greaves_aura_emitter:OnCreated()
 end
 
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
 
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
+end
 
 function modifier_item_imba_guardian_greaves_aura_emitter:GetModifierAura()
 	if IsServer() then
 		if self:GetParent():IsAlive() then
 			return "modifier_item_imba_guardian_greaves_aura"
 		else
-			return nil
+			return
 		end
 	end
 end
@@ -387,7 +394,8 @@ end
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraRadius()
 	if not self:GetAbility() then return 0 end
 	
-	return self.aura_radius end
+	return self.aura_radius
+end
 
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves_aura_emitter:DeclareFunctions()
@@ -428,7 +436,8 @@ function modifier_item_imba_guardian_greaves_aura:IsPurgable() return false end
 
 -- Aura icon
 function modifier_item_imba_guardian_greaves_aura:GetTexture()
-	return "item_guardian_greaves" end
+	return "item_guardian_greaves"
+end
 
 -- Stores the aura's parameters to prevent errors when the item is destroyed
 function modifier_item_imba_guardian_greaves_aura:OnCreated(keys)
@@ -500,10 +509,9 @@ end
 
 -- Declare modifier events/properties
 function modifier_item_imba_guardian_greaves_heal:DeclareFunctions()
-	local funcs = {
+	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
 	}
-	return funcs
 end
 
 function modifier_item_imba_guardian_greaves_heal:GetModifierHealthRegenPercentage()
@@ -560,13 +568,13 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 				for i = 0, 5 do
 					local item = hero:GetItemInSlot(i)
 					if item and item:GetAbilityName() == "item_imba_guardian_greaves" then
-						item:UseResources(true, false, true)
+						item:UseResources(true, false, false, true)
 						break
 					end
 				end
 			end
 		else
-			ability:UseResources(true, false, true)
+			ability:UseResources(true, false, false, true)
 		end
 	end
 end

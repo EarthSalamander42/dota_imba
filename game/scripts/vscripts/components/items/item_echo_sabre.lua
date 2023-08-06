@@ -77,7 +77,7 @@ function modifier_imba_echo_sabre:OnAttack(keys)
 	if keys.attacker == parent and item and not parent:IsIllusion() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self and not self:GetParent():HasItemInInventory("item_imba_reverb_rapier") then
 		if not parent:IsRangedAttacker() then 
 			if item:IsCooldownReady() and not keys.no_attack_cooldown then
-				item:UseResources(false,false,true)
+				item:UseResources(false, false, false, true)
 				parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
 				if not keys.target:IsBuilding() and not keys.target:IsOther() then
 					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
@@ -245,7 +245,7 @@ function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 	if keys.attacker == parent and item and not parent:IsIllusion() and self:GetParent():FindAllModifiersByName(self:GetName())[1] == self then
 		if not parent:IsRangedAttacker() then 
 			if item:IsCooldownReady() and not keys.no_attack_cooldown then
-				item:UseResources(false,false,true)
+				item:UseResources(false, false, false, true)
 				parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
 				if not keys.target:IsBuilding() and not keys.target:IsOther() then
 					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})

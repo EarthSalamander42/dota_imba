@@ -101,7 +101,7 @@ function modifier_imba_nian_frenzy_swipes:OnIntervalThink()
 		if self:GetParent():GetMana() >= self.mana_per_attack and self:GetAbility() then
 		
 			if not self:GetParent():IsStunned() and not self:GetParent():IsOutOfGame() then
-				-- self:GetCaster():ReduceMana(self.mana_per_attack)
+				-- self:GetCaster():ReduceMana(self.mana_per_attack, self:GetAbility())
 
 				self:GetParent():FadeGesture(ACT_DOTA_ATTACK)
 				-- Arbitrary divisor
@@ -609,9 +609,9 @@ end
 -- VOLCANIC BURSTER --
 ----------------------
 
-function imba_nian_volcanic_burster:GetCastAnimation()
-	return ACT_DOTA_NIAN_GAME_END
-end
+--function imba_nian_volcanic_burster:GetCastAnimation()
+	--return ACT_DOTA_NIAN_GAME_END
+--end
 
 function imba_nian_volcanic_burster:GetPlaybackRateOverride()
 	return 0.8
@@ -871,8 +871,6 @@ function modifier_special_bonus_imba_nian_crushing_leap_cooldown:IsPurgable() 		
 function modifier_special_bonus_imba_nian_crushing_leap_cooldown:RemoveOnDeath() 	return false end
 
 function imba_nian_crushing_leap:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_nian_crushing_leap_cast_range") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_nian_crushing_leap_cast_range") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_nian_crushing_leap_cast_range"), "modifier_special_bonus_imba_nian_crushing_leap_cast_range", {})
 	end

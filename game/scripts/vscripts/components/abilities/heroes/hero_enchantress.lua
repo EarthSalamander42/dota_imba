@@ -287,7 +287,7 @@ function imba_enchantress_enchant:OnSpellStart()
 		--self.target:AddNewModifier(self.caster, self, "modifier_dominated", {duration = self.dominate_duration}) -- This didn't work for me
 		self.target:AddNewModifier(self.caster, self, "modifier_kill", {duration = self.dominate_duration})
 
-		self.target:Heal(self.target:GetMaxHealth(), self.caster)
+		self.target:Heal(self.target:GetMaxHealth(), self)
 
 		-- IMBAfication: Kindred Spirits
 		if self:GetCaster():HasAbility("imba_enchantress_untouchable") and self:GetCaster():FindAbilityByName("imba_enchantress_untouchable"):IsTrained() then
@@ -625,7 +625,7 @@ function modifier_imba_enchantress_natures_attendants:OnIntervalThink()
 			ParticleManager:SetParticleControlEnt(self.particle, math.min(wisp + 2, 3 + (self.level * 2)), hurt_allies[selected_unit], PATTACH_POINT_FOLLOW, "attach_hitloc", hurt_allies[selected_unit]:GetAbsOrigin(), true)
 			
 			-- Each wisp heals for a separate instance
-			hurt_allies[selected_unit]:Heal(self.heal, self.caster)
+			hurt_allies[selected_unit]:Heal(self.heal, self.ability)
 			
 			-- Cyan: Every wisp heal also grants 5/6/7/8 mana
 			if self:GetStackCount() == 2 then
@@ -746,7 +746,7 @@ function modifier_imba_enchantress_natures_attendants_mini:OnIntervalThink()
 	
 	for wisp = 1, self.wisp_count_mini do
 		-- Each wisp heals for a separate instance
-		self.parent:Heal(self.heal, self.caster)
+		self.parent:Heal(self.heal, self.ability)
 	end
 end
 
@@ -935,7 +935,7 @@ function modifier_imba_enchantress_impetus:OnAttack( keys )
 	if keys.attacker == self.caster then
 		if not self.caster:IsIllusion() and self.ability:IsFullyCastable() and not self.caster:IsSilenced() and not keys.target:IsBuilding() and not keys.target:IsOther() and (self.ability:GetAutoCastState() or self.impetus_orb) then
 			table.insert(self.attack_queue, true)
-			self.ability:UseResources(true, false, false)
+			self.ability:UseResources(true, false, false, false)
 			self.caster:EmitSound(self.impetus_start)
 			self.impetus_orb = false
 		else

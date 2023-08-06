@@ -640,7 +640,7 @@ function modifier_imba_lycan_summon_wolves_charges:OnDeath(keys)
 		)
 		
 		-- Add spawn particles in spawn location
-		wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
+		local wolves_spawn_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, wolf)
 		ParticleManager:ReleaseParticleIndex(wolves_spawn_particle)
 		
 		if player_id then
@@ -1213,7 +1213,6 @@ end
 
 -- Need this if player skills talent while dead
 function imba_lycan_shapeshift:OnOwnerSpawned()
-	if not IsServer() then return end
 	if self:GetCaster():HasAbility("special_bonus_imba_lycan_7") and self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_7"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lycan_7") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lycan_7", {})
 	end
@@ -1526,15 +1525,6 @@ function modifier_imba_shapeshift:GetModifierPreAttack_CriticalStrike()
 		return nil
 	end
 end
-
-function modifier_imba_shapeshift:OnDestroy()
-	if IsServer() then
-		if self.parent:HasModifier(self.certain_crit_buff) then
-			self.parent:RemoveModifierByName(self.certain_crit_buff)
-		end
-	end
-end
-
 
 -- certain crit buff
 modifier_imba_shapeshift_certain_crit = class({})
@@ -2631,8 +2621,6 @@ function modifier_special_bonus_imba_lycan_10:RemoveOnDeath()	return false end
 -- end
 
 function imba_lycan_summon_wolves:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_lycan_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lycan_10") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_10"), "modifier_special_bonus_imba_lycan_10", {})
 	end

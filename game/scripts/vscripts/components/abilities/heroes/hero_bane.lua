@@ -483,7 +483,7 @@ function imba_bane_brain_sap:OnSpellStart()
 
 		local enfeeble_bonus_damage	= enfeeble_stack_to_damage * enfeeble_charges
 		-- Deal damage
-		damage_table = {
+		local damage_table = {
 			victim      = target,
 			attacker    = caster,
 			damage      = sapdamage + enfeeble_bonus_damage,
@@ -492,8 +492,9 @@ function imba_bane_brain_sap:OnSpellStart()
 		}
 
 		ApplyDamage(damage_table)
+
 		-- Heal caster
-		caster:Heal(sapdamage, caster)
+		caster:Heal(sapdamage, self)
 
 		-- Apply brain sap debuff
 		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = sapduration * (1 - target:GetStatusResistance())})
@@ -642,33 +643,34 @@ function imba_bane_brain_sap_723:CastFilterResultTarget(target)
 end
 
 function imba_bane_brain_sap_723:OnSpellStart()
+	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 
 	if not target:TriggerSpellAbsorb(self) then
-		self:GetCaster():EmitSound("Hero_Bane.BrainSap")
+		caster:EmitSound("Hero_Bane.BrainSap")
 		target:EmitSound("Hero_Bane.BrainSap.Target")
 		
-		if self:GetCaster():GetName() == "npc_dota_hero_bane" and RollPercentage(75) then
-			self:GetCaster():EmitSound("bane_bane_ability_brainsap_"..string.format("%02d",RandomInt(1,6)))
+		if caster:GetName() == "npc_dota_hero_bane" and RollPercentage(75) then
+			caster:EmitSound("bane_bane_ability_brainsap_"..string.format("%02d",RandomInt(1,6)))
 		end
 		
-		local sap_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_sap.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-		ParticleManager:SetParticleControlEnt(sap_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+		local sap_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_sap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControlEnt(sap_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(sap_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(sap_particle)
 		
 		local damage_heal	= ApplyDamage({
 			victim      = target,
-			attacker    = self:GetCaster(),
+			attacker    = caster,
 			damage      = self:GetTalentSpecialValueFor("brain_sap_damage"),
 			damage_type = self:GetAbilityDamageType(),
 			ability     = self
 		})
 		
-		self:GetCaster():Heal(damage_heal, self:GetCaster())
+		caster:Heal(damage_heal, self)
 		
 		-- IMBAfication: Addlebrain
-		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_brain_sap_mana", {duration = self:GetSpecialValueFor("addlebrain_duration") * (1 - target:GetStatusResistance())})
+		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = self:GetSpecialValueFor("addlebrain_duration") * (1 - target:GetStatusResistance())})
 	end
 end
 
@@ -909,7 +911,7 @@ function modifier_imba_nightmare_dot:OnIntervalThink()
 			self:GetParent():SetHealth(CurHP - nightmare_damage)
 		end
 		-- Emit Nightmare affected sound effect
-		EmitSoundOn("Hero_Bane.Nightmare.Loop", target)
+		parent:EmitSound("Hero_Bane.Nightmare.Loop")
 	end
 end
 
@@ -938,8 +940,9 @@ function modifier_imba_nightmare_dot:OnDestroy()
 		if parent:HasModifier("modifier_imba_nightmare_invul") then
 			parent:RemoveModifierByName("modifier_imba_nightmare_invul")
 		end
+		parent:StopSound("Hero_Bane.Nightmare.Loop")
 		-- Emit Nightmare end sound effect
-		EmitSoundOn("Hero_Bane.Nightmare.End", self:GetParent())
+		parent:EmitSound("Hero_Bane.Nightmare.End")
 	end
 end
 
@@ -1205,7 +1208,7 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 
 				-- Spawn daemon
 				local demon	=	CreateUnitByName("npc_imba_fiends_grip_demon", caster:GetAbsOrigin() + RandomVector(100), true, caster, caster, caster:GetTeam() )
-				demon:AddNewModifier(caster, nil, "modifier_imba_fiends_grip_demon", {} )
+				demon:AddNewModifier(caster, ability, "modifier_imba_fiends_grip_demon", {} )
 				demon:SetRenderColor(75,0,130)
 				-- Apply link particle
 				parent.grip_link_particle_table[#parent.grip_link_particle_table+1] = ParticleManager:CreateParticle(drain_particle, PATTACH_ABSORIGIN, demon)			-- Create a seperate link particle for each demon
@@ -1215,26 +1218,26 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 			end
 
 			-- Multiply bonus damage by how many demons there are
-			self.total_demon_damage	=	demon_damage * #parent.grip_link_particle_table
-			self.total_demon_mana_drain= 	demon_mana_drain * #parent.grip_link_particle_table
+			self.total_demon_damage	= demon_damage * #parent.grip_link_particle_table
+			self.total_demon_mana_drain = demon_mana_drain * #parent.grip_link_particle_table
 		else
 			self.total_demon_damage,self.total_demon_mana_drain = 0,0
 		end
 
 		-- Drain mana
 		local mana_drained = math.min(parent:GetMaxMana() * (fiends_grip_mana_damage + self.total_demon_mana_drain) * 0.01, parent:GetMana())
-		parent:ReduceMana( (parent:GetMaxMana() * (fiends_grip_mana_damage + self.total_demon_mana_drain) * 0.01) * baby_multiplier )
+		parent:ReduceMana(mana_drained * baby_multiplier, ability)
 		caster:GiveMana(mana_drained)
 
 		-- Deal damage
 		local damage = {
-			victim      = self:GetParent(),
-			attacker    = self:GetCaster(),
+			victim      = parent,
+			attacker    = caster,
 			damage      = (fiends_grip_damage + self.total_demon_damage) * baby_multiplier,
 			damage_type = DAMAGE_TYPE_MAGICAL,
-			ability     = self:GetAbility()
+			ability     = ability
 		}
-		if not self:GetParent():IsMagicImmune() then
+		if not parent:IsMagicImmune() then
 			ApplyDamage(damage)
 		end
 	end
@@ -1532,13 +1535,15 @@ function modifier_imba_bane_fiends_grip_723:OnIntervalThink()
 	-- "Applies the damage first on each tick, and then the mana loss."
 	ApplyDamage(self.damage_table)
 
-	self.mana_drained = math.min(self:GetParent():GetMaxMana() * self.mana_drain_per_tick * 0.01, self:GetParent():GetMana())
-	self:GetParent():ReduceMana(self.mana_drained)
+	local parent = self:GetParent()
+	self.mana_drained = math.min(parent:GetMaxMana() * self.mana_drain_per_tick * 0.01, parent:GetMana())
+	parent:ReduceMana(self.mana_drained, self:GetAbility())
 	self:GetCaster():GiveMana(self.mana_drained)
 	
 	-- IMBAfication: Neverending Suffering
-	if self:GetParent():HasModifier("modifier_imba_bane_enfeeble_723_effect") then
-		self:GetParent():FindModifierByName("modifier_imba_bane_enfeeble_723_effect"):SetDuration(self:GetParent():FindModifierByName("modifier_imba_bane_enfeeble_723_effect"):GetRemainingTime() + self.fiend_grip_tick_interval, true)
+	if parent:HasModifier("modifier_imba_bane_enfeeble_723_effect") then
+		local mod = parent:FindModifierByName("modifier_imba_bane_enfeeble_723_effect")
+		mod:SetDuration(mod:GetRemainingTime() + self.fiend_grip_tick_interval, true)
 	end
 end
 

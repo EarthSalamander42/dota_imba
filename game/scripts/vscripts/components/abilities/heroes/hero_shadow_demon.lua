@@ -556,7 +556,7 @@ function modifier_imba_soul_catcher_buff:OnCreated(params)
 
 	-- We'll let a frame for the game to include max health increase before healing
 	Timers:CreateTimer(FrameTime(), function()        
-		self.parent:Heal(self.allied_heal, self.caster)
+		self.parent:Heal(self.allied_heal, self.ability)
 	end)
 end
 
@@ -673,7 +673,7 @@ function modifier_imba_soul_catcher_debuff:OnDeath(keys)
 				local new_direction
 
 				for i = 1, self.unleashed_projectile_count do
-					angle = QAngle(0, (i-1) * (rotation_per_projectile), 0)                    
+					local angle = QAngle(0, (i-1) * (rotation_per_projectile), 0)
 					new_direction = RotatePosition(origin_point, angle, direction)
 					shadow_poison_ability_handle:FireShadowPoisonProjectile(origin_point, new_direction, true)
 				end
@@ -697,7 +697,7 @@ function modifier_imba_soul_catcher_debuff:OnDestroy()
 
 		-- Heal the target by the percentage of stolen health
 		local health_restore = self.health_stolen * self.health_returned_pct * 0.01
-		self.parent:Heal(health_restore, self.caster)
+		self.parent:Heal(health_restore, self.ability)
 	end
 end
 
@@ -1008,15 +1008,17 @@ function modifier_shadow_poison_debuff:OnDestroy()
 	if not self.parent:IsIllusion() and self.parent:IsAlive() then 
 
 		-- Play impact sound
-		EmitSoundOn(self.impact_sound, self.caster)         
-			   
+		EmitSoundOn(self.impact_sound, self.caster)
+
 		-- Calculate damage and deal it
-		damage = self:CalculateShadowPoisonDamage()
-		local damageTable = {victim = self.parent,
-							attacker = self.caster,
-							damage = damage,
-							damage_type = DAMAGE_TYPE_MAGICAL,                        
-							ability = self.ability}
+		local damage = self:CalculateShadowPoisonDamage()
+		local damageTable = {
+			victim = self.parent,
+			attacker = self.caster,
+			damage = damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			ability = self.ability
+		}
 
 		ApplyDamage(damageTable)
 
@@ -1648,14 +1650,14 @@ function modifier_special_bonus_imba_shadow_demon_disruption_charges:RemoveOnDea
 
 
 function imba_shadow_demon_shadow_poison:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_demon_shadow_poison_damage") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_damage") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_damage"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_damage", {})
-	end
-end
+	local caster = self:GetCaster()
 
-function imba_shadow_demon_shadow_poison:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_shadow_demon_shadow_poison_cd") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_cd") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_cd"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_cd", {})
+	if caster:HasTalent("special_bonus_imba_shadow_demon_shadow_poison_damage") and not caster:HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_damage") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_damage"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_damage", {})
+	end
+
+	if caster:HasTalent("special_bonus_imba_shadow_demon_shadow_poison_cd") and not caster:HasModifier("modifier_special_bonus_imba_shadow_demon_shadow_poison_cd") then
+		caster:AddNewModifier(caster, caster:FindAbilityByName("special_bonus_imba_shadow_demon_shadow_poison_cd"), "modifier_special_bonus_imba_shadow_demon_shadow_poison_cd", {})
 	end
 end
 

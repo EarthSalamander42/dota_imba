@@ -211,7 +211,7 @@ function item_imba_desolator:OnProjectileHit(target, target_loc)
 		end
 
 		-- Fire the effect particle
-		local effect_pfx = ParticleManager:CreateParticle("particles/item/desolator/desolator_active_damage.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+		local effect_pfx = ParticleManager:CreateParticle("particles/item/desolator/desolator_active_damage.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(effect_pfx, 0, target_loc)
 		ParticleManager:SetParticleControl(effect_pfx, 1, target_loc + Vector(0, 0, 100))
 		ParticleManager:ReleaseParticleIndex(effect_pfx)
@@ -416,7 +416,7 @@ function item_imba_desolator_2:OnProjectileHit(target, target_loc)
 		end
 
 		-- Fire the effect particle
-		local effect_pfx = ParticleManager:CreateParticle("particles/item/desolator/desolator_active_damage.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+		local effect_pfx = ParticleManager:CreateParticle("particles/item/desolator/desolator_active_damage.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(effect_pfx, 0, target_loc)
 		ParticleManager:SetParticleControl(effect_pfx, 1, target_loc + Vector(0, 0, 100))
 		ParticleManager:ReleaseParticleIndex(effect_pfx)

@@ -50,7 +50,9 @@ function modifier_item_imba_stout_shield:GetAttributes()	return MODIFIER_ATTRIBU
 
 -- Declare modifier events/properties
 function modifier_item_imba_stout_shield:DeclareFunctions()
-	return {MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK}
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
+	}
 end
 
 function modifier_item_imba_stout_shield:GetModifierPhysical_ConstantBlock()
@@ -124,7 +126,7 @@ end
 function modifier_item_imba_poor_mans_shield:GetModifierPhysical_ConstantBlock(keys)
 	if keys.attacker:IsHero() and self:GetAbility() and self:GetAbility():IsCooldownReady() then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_poor_mans_shield_active", {duration = self.bonus_block_duration})
-		self:GetAbility():UseResources(false, false, true)
+		self:GetAbility():UseResources(false, false, false, true)
 	end
 	
 	if RollPseudoRandom(self.block_chance, self) then
@@ -473,7 +475,7 @@ end
 
 -- -- Declare modifier events/properties
 -- function modifier_item_imba_greatwyrm_plate:DeclareFunctions()
-	-- local funcs = {
+	-- return {
 		-- MODIFIER_PROPERTY_HEALTH_BONUS,
 		-- MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		-- MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
@@ -483,7 +485,6 @@ end
 		-- MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 		-- MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK
 	-- }
-	-- return funcs
 -- end
 
 -- function modifier_item_imba_greatwyrm_plate:GetModifierHealthBonus()

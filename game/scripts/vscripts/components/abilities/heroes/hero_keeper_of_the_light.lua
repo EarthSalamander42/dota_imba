@@ -145,12 +145,10 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnCreated()
 	self:AddParticle(self.weapon_particle, false, false, -1, false, false)
 	
 	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate", "imba_keeper_of_the_light_illuminate_end", false, true)
-	
-	-- I can't restore the standard spirit form models so I'll have to use some abstractions...
-	local horse_thinker = 	CreateModifierThinker(self.caster, self.ability, nil, {duration = self.max_channel_time}, self.caster_location, self.caster:GetTeamNumber(), false)
-	
-	-- CreateUnitByName("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam())
-	
+
+	local horse_thinker = CreateUnitByName("npc_dummy_unit", self.caster_location, false, self.caster, self.caster, self.caster:GetTeamNumber())
+	horse_thinker:AddNewModifier(self.caster, self.ability, "modifier_kill", {duration = self.max_channel_time})
+
 	self.spirit = horse_thinker
 	-- Set the unit/horse facing in the direction of where the wave will shoot
 	horse_thinker:SetForwardVector(self.direction)
@@ -341,7 +339,7 @@ function modifier_imba_keeper_of_the_light_illuminate:OnIntervalThink()
 				end
 			--...and heal allies
 			elseif GameRules:IsDaytime() and self.caster:HasScepter() then
-				target:Heal(damage, self.caster)
+				target:Heal(damage, self.ability)
 				
 				-- Apparently the vanilla skill only shows the heal number if it's a hero?...
 				if target:IsHero() then
@@ -682,8 +680,6 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 	-- self.mana_leak_pct		= self:GetSpecialValueFor("mana_leak_pct")
 	-- self.stun_duration		= self:GetSpecialValueFor("stun_duration")
 	
-	if not IsServer() then return end
-	
 	if self.target:GetTeam() == self.caster:GetTeam() then
 		-- Emit cast sound
 		self.caster:EmitSound("Hero_KeeperOfTheLight.ChakraMagic.Target")
@@ -761,7 +757,7 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 		if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_flow_inhibition") then
 			local inhibition_multiplier = self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_flow_inhibition")
 		
-			self.target:ReduceMana(self.mana_restore * inhibition_multiplier)
+			self.target:ReduceMana(self.mana_restore * inhibition_multiplier, self)
 			
 			-- Apparently the vanilla skill only shows the mana number if it's a hero?...
 			if self.target:IsHero() then
@@ -829,7 +825,7 @@ function modifier_imba_keeper_of_the_light_mana_leak:OnIntervalThink()
 	local max_mana			= self.parent:GetMaxMana()
 	
 	if distance > 0 and distance <= 300 then
-		self.parent:ReduceMana((distance * 0.01) * (max_mana * self.mana_leak_pct * 0.01))
+		self.parent:ReduceMana((distance * 0.01) * (max_mana * self.mana_leak_pct * 0.01), self.ability)
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 		ParticleManager:ReleaseParticleIndex(particle)
 	end
@@ -1038,7 +1034,7 @@ function modifier_imba_keeper_of_the_light_spotlights:OnAttackLanded(keys)
 
 	if keys.attacker == self.parent and not self.parent:PassivesDisabled() and self.ability:IsCooldownReady() then
 		self:Spotlight(keys.target:GetAbsOrigin(), self.passive_radius, self.attack_duration)
-		self.ability:UseResources(false, false, true)
+		self.ability:UseResources(false, false, false, true)
 	end
 end
 
@@ -1047,7 +1043,7 @@ function modifier_imba_keeper_of_the_light_spotlights:OnTakeDamage(keys)
 
 	if keys.unit == self.parent and not self.parent:PassivesDisabled() and self.ability:IsCooldownReady() then
 		self:Spotlight(keys.attacker:GetAbsOrigin(), self.passive_radius, self.damaged_duration)
-		self.ability:UseResources(false, false, true)
+		self.ability:UseResources(false, false, false, true)
 	end
 end
 

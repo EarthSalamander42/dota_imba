@@ -226,6 +226,7 @@ function modifier_item_imba_lotus_orb_active:GetReflectSpell(params)
 			end
 		end
 
+		local ability
 		if old_spell then
 			ability = self:GetParent():FindAbilityByName(reflected_spell_name)
 		else

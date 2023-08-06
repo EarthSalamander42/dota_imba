@@ -358,7 +358,7 @@ function imba_treant_leech_seed:OnSpellStart()
 end
 
 function imba_treant_leech_seed:OnProjectileHit_ExtraData(target, location, ExtraData)
-	target:Heal(self:GetTalentSpecialValueFor("leech_damage") * self:GetSpecialValueFor("damage_interval"), self:GetCaster())
+	target:Heal(self:GetTalentSpecialValueFor("leech_damage") * self:GetSpecialValueFor("damage_interval"), self)
 	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, self:GetTalentSpecialValueFor("leech_damage") * self:GetSpecialValueFor("damage_interval"), nil)
 end
@@ -657,7 +657,7 @@ function modifier_imba_treant_living_armor:OnRefresh()
 end
 
 function modifier_imba_treant_living_armor:OnIntervalThink()
-	self:GetParent():Heal(self.heal_per_tick, self:GetCaster())
+	self:GetParent():Heal(self.heal_per_tick, self:GetAbility())
 	
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), self.heal_per_tick, nil)
 end

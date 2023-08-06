@@ -482,7 +482,7 @@ function modifier_imba_warcry:OnCreated()
 			ParticleManager:ReleaseParticleIndex(self.buff_fx)
 		end
 
-		self.buff_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_warcry_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		self.buff_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_warcry_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 		-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
 		ParticleManager:SetParticleControlEnt(self.buff_fx, 0, self:GetParent(), PATTACH_POINT_FOLLOW, nil, self:GetParent():GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.buff_fx, 1, self:GetParent(), PATTACH_OVERHEAD_FOLLOW, nil, self:GetParent():GetAbsOrigin(), true)
@@ -1120,10 +1120,10 @@ LinkLuaModifier("modifier_special_bonus_imba_sven_10", "components/abilities/her
 modifier_special_bonus_imba_sven_4	= class({})
 modifier_special_bonus_imba_sven_5	= class({})
 modifier_special_bonus_imba_sven_6	= modifier_special_bonus_imba_sven_6 or class({})
-modifier_special_bonus_imba_sven_7	= modifier_special_bonus_imba_sven_8 or class({})
+modifier_special_bonus_imba_sven_7	= modifier_special_bonus_imba_sven_7 or class({})
 modifier_special_bonus_imba_sven_8	= modifier_special_bonus_imba_sven_8 or class({})
-modifier_special_bonus_imba_sven_9	= modifier_special_bonus_imba_sven_8 or class({})
-modifier_special_bonus_imba_sven_10	= modifier_special_bonus_imba_sven_8 or class({})
+modifier_special_bonus_imba_sven_9	= modifier_special_bonus_imba_sven_9 or class({})
+modifier_special_bonus_imba_sven_10	= modifier_special_bonus_imba_sven_10 or class({})
 
 function modifier_special_bonus_imba_sven_4:IsHidden() 			return true end
 function modifier_special_bonus_imba_sven_4:IsPurgable() 		return false end
@@ -1154,24 +1154,18 @@ function modifier_special_bonus_imba_sven_10:IsPurgable() 		return false end
 function modifier_special_bonus_imba_sven_10:RemoveOnDeath() 	return false end
 
 function imba_sven_storm_bolt:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_sven_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_5"), "modifier_special_bonus_imba_sven_5", {})
 	end
 end
 
 function imba_sven_great_cleave:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_sven_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_6") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_6"), "modifier_special_bonus_imba_sven_6", {})
 	end
 end
 
 function imba_sven_gods_strength:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_sven_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sven_4") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sven_4"), "modifier_special_bonus_imba_sven_4", {})
 	end

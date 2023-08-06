@@ -165,7 +165,7 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 	-- Spend HP cost
 	self.healthCost = caster:GetHealth() * hpCost / 100
 	if caster:HasModifier("modifier_imba_phoenix_burning_wings_buff") then
-		caster:Heal(self.healthCost, caster)
+		caster:Heal(self.healthCost, self)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, self.healthCost, nil)
 	else
 		local AfterCastHealth = caster:GetHealth() - self.healthCost
@@ -269,7 +269,7 @@ function modifier_imba_phoenix_icarus_dive_dash_dummy:OnDestroy()
 		if unit:GetTeamNumber() == caster:GetTeamNumber() and unit ~= caster then
 			local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 			stop_dmg_heal = stop_dmg_heal * heal_amp
-			unit:Heal(stop_dmg_heal, caster)
+			unit:Heal(stop_dmg_heal, ability)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, unit, stop_dmg_heal, nil)
 	elseif unit:GetTeamNumber() ~= caster:GetTeamNumber() and unit ~= caster then -- It's  an enemy, dmg
 		local damageTable = {
@@ -353,16 +353,10 @@ end
 function modifier_imba_phoenix_icarus_dive_slow_debuff:IsStunDebuff() 		return false end
 function modifier_imba_phoenix_icarus_dive_slow_debuff:RemoveOnDeath() 		return true  end
 
-function modifier_imba_phoenix_icarus_dive_slow_debuff:OnCreated()
-	self.slow_movement_speed_pct	= self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") * (-1)
-end
-
 function modifier_imba_phoenix_icarus_dive_slow_debuff:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 end
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:GetTexture()
@@ -377,6 +371,7 @@ function modifier_imba_phoenix_icarus_dive_slow_debuff:GetModifierMoveSpeedBonus
 function modifier_imba_phoenix_icarus_dive_slow_debuff:OnCreated()
 	self.burn_tick_interval	= self:GetAbility():GetSpecialValueFor("burn_tick_interval")
 	self.damage_per_second	= self:GetAbility():GetSpecialValueFor("damage_per_second")
+	self.slow_movement_speed_pct = self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") * (-1)
 
 	if not IsServer() then
 		return
@@ -398,7 +393,7 @@ function modifier_imba_phoenix_icarus_dive_slow_debuff:OnIntervalThink()
 	local damageTable = {
 		victim = self:GetParent(),
 		attacker = self:GetCaster(),
-		damage = self.damage_per_second * ( self.burn_tick_interval / 1.0 ),
+		damage = self.damage_per_second * self.burn_tick_interval,
 		damage_type = DAMAGE_TYPE_MAGICAL,
 		ability = self:GetAbility(),
 	}
@@ -532,7 +527,7 @@ function imba_phoenix_fire_spirits:OnSpellStart()
 	local AfterCastHealth = caster:GetHealth()-(caster:GetHealth() * hpCost / 100)
 
 	if caster:HasModifier("modifier_imba_phoenix_burning_wings_buff") then
-		caster:Heal((caster:GetHealth() * hpCost / 100), caster)
+		caster:Heal((caster:GetHealth() * hpCost / 100), self)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, (caster:GetHealth() * hpCost / 100), nil)
 	else
 		if AfterCastHealth <= 1 then
@@ -783,7 +778,7 @@ function imba_phoenix_launch_fire_spirit:OnProjectileHit( hTarget, vLocation)
 	end
 	-- Particles and sound
 	local DummyUnit = CreateUnitByName("npc_dummy_unit",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", {duration = 0.1})
+	DummyUnit:AddNewModifier(caster, self, "modifier_kill", {duration = 0.1})
 	local pfx_explosion = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(pfx_explosion, 0, location)
 	ParticleManager:ReleaseParticleIndex(pfx_explosion)
@@ -977,7 +972,7 @@ function modifier_imba_phoenix_fire_spirits_buff:OnIntervalThink()
 	local dmg = ability:GetSpecialValueFor("damage_per_second") * ( tick / 1.0 )
 	local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 	dmg = dmg * heal_amp
-	self:GetParent():Heal(dmg * self:GetStackCount(), caster)
+	self:GetParent():Heal(dmg * self:GetStackCount(), ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), dmg * self:GetStackCount(), nil)
 end
 
@@ -1062,11 +1057,11 @@ function imba_phoenix_sun_ray:OnSpellStart()
 
 	-- Create particle FX
 	local particleName = "particles/units/heroes/hero_phoenix/phoenix_sunray.vpcf"
-	local pfx = ParticleManager:CreateParticle( particleName, PATTACH_WORLDORIGIN, nil )
+	local pfx = ParticleManager:CreateParticle( particleName, PATTACH_WORLDORIGIN, caster )
 	local attach_point = caster:ScriptLookupAttachment( "attach_head" )
 	-- Attach a loop sound to the endcap
 	local endcapSoundName = "Hero_Phoenix.SunRay.Beam"
-	StartSoundEvent( endcapSoundName, endcap )
+	StartSoundEvent( endcapSoundName, caster )
 	StartSoundEvent("Hero_Phoenix.SunRay.Cast", caster)
 
 	--
@@ -1104,9 +1099,9 @@ function imba_phoenix_sun_ray:OnSpellStart()
 			--  Destroy FXs and the thinkers.
 			if not caster:HasModifier( modifierCasterName ) then
 				ParticleManager:DestroyParticle( pfx, false )
-				StopSoundEvent( endcapSoundName, endcap )
+				StopSoundEvent( endcapSoundName, caster )
 				caster:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
-				return nil
+				return
 			end
 
 			-- Cut Trees
@@ -1234,39 +1229,38 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:IsStunDebuff() 		return fals
 function modifier_imba_phoenix_sun_ray_caster_dummy:RemoveOnDeath() 	return true  end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_MOVESPEED_LIMIT,
-		MODIFIER_PROPERTY_MOVESPEED_MAX,
-		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE}
-	return funcs
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_LIMIT,
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
+	}
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:CheckState()
-	return{ [MODIFIER_STATE_DISARMED] = true,
-		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,}
+	return {
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
+	}
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierMoveSpeed_Limit()
 	if not self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
 		return 1
 	else
-		return nil
+		return
 	end
 end
 
-function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierMoveSpeed_Max()
+function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierMoveSpeed_Absolute()
 	if not self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
 		return 1
 	else
-		return nil
+		return
 	end
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierIgnoreCastAngle()
-	if not self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
-		return 360
-	else
-		return nil
-	end
+	return 1
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:GetEffectName()
@@ -1563,7 +1557,7 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 	local total_heal = base_heal + taker_health * pct_base_heal
 	total_heal = total_heal * (1 + (caster:GetSpellAmplification(false) * 0.01))
 	if taker ~= self:GetCaster() then
-		taker:Heal( total_heal , self:GetCaster())
+		taker:Heal(total_heal, ability)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, taker, total_heal, nil)
 
 		local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf", PATTACH_ABSORIGIN, taker )
@@ -1578,7 +1572,8 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 			--ParticleManager:DestroyParticle(pfx_explode, false)
 			ParticleManager:ReleaseParticleIndex(pfx_explode)
 			local damage_this_tick = self.explode_dmg / ( 1 / self.tick_interval )
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+			local enemies = FindUnitsInRadius(
+				caster:GetTeamNumber(),
 				taker:GetAbsOrigin(),
 				nil,
 				self.explode_radius,
@@ -1586,15 +1581,16 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 				DOTA_UNIT_TARGET_FLAG_NONE,
 				FIND_ANY_ORDER,
-				false)
+				false
+			)
+			local damageTable = {
+				attacker = caster,
+				damage = damage_this_tick,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				ability = ability,
+			}
 			for _, enemy in pairs(enemies) do
-				local damageTable = {
-					victim = enemy,
-					attacker = caster,
-					damage = damage_this_tick,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = self:GetAbility(),
-				}
+				damageTable.victim = enemy
 				ApplyDamage(damageTable)
 			end
 		end
@@ -1604,7 +1600,7 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 		local heal_cost_per_tick = heal_cost_pct / tick_per_sec
 		local heal_cost_this_time = caster:GetHealth() * heal_cost_per_tick
 		if caster:HasModifier("modifier_imba_phoenix_burning_wings_buff") then
-			caster:Heal(heal_cost_this_time, caster)
+			caster:Heal(heal_cost_this_time, ability)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal_cost_this_time, nil)
 		else
 			if (caster:GetHealth() - heal_cost_this_time) <= 1 then
@@ -2022,24 +2018,24 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnIntervalThink()
 	end
 
 	local attach_point = egg:ScriptLookupAttachment( "attach_hitloc" )
-	local info =
-		{
-			Target = target,
-			Source = caster,
-			Ability = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"),
-			EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
-			iMoveSpeed = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("spirit_speed"),
-			vSourceLoc= egg:GetAttachmentOrigin(attach_point),				-- Optional (HOW)
-			bDrawsOnMinimap = false,						  -- Optional
-			bDodgeable = true,								-- Optional
-			bIsAttack = false,								-- Optional
-			bVisibleToEnemies = true,						 -- Optional
-			bReplaceExisting = false,						 -- Optional
-			flExpireTime = GameRules:GetGameTime() + 10,	  -- Optional but recommended
-			bProvidesVision = false,						   -- Optional
-			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-		}
-	projectile = ProjectileManager:CreateTrackingProjectile(info)
+	local info = {
+		Target = target,
+		Source = caster,
+		Ability = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"),
+		EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
+		iMoveSpeed = caster:FindAbilityByName("imba_phoenix_launch_fire_spirit"):GetSpecialValueFor("spirit_speed"),
+		vSourceLoc = egg:GetAttachmentOrigin(attach_point),				-- Optional (HOW)
+		bDrawsOnMinimap = false,						  -- Optional
+		bDodgeable = true,								-- Optional
+		bIsAttack = false,								-- Optional
+		bVisibleToEnemies = true,						 -- Optional
+		bReplaceExisting = false,						 -- Optional
+		flExpireTime = GameRules:GetGameTime() + 10,	  -- Optional but recommended
+		bProvidesVision = false,						   -- Optional
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+	}
+	
+	ProjectileManager:CreateTrackingProjectile(info)
 	EmitSoundOn("Hero_Phoenix.FireSpirits.Launch", caster)
 
 	self:DecrementStackCount()
@@ -2062,7 +2058,7 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnProjectileHit( hTarget, 
 	end
 	-- Particles and sound
 	local DummyUnit = CreateUnitByName("npc_dummy_unit",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	DummyUnit:AddNewModifier(caster, ability, "modifier_kill", {duration = 0.1})
+	DummyUnit:AddNewModifier(caster, self:GetAbility(), "modifier_kill", {duration = 0.1})
 	local pfx_explosion = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(pfx_explosion, 0, location)
 	ParticleManager:ReleaseParticleIndex(pfx_explosion)
@@ -2473,7 +2469,6 @@ function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath()
 		return true
 	end
 end
-function modifier_imba_phoenix_supernova_scepter_passive:RemoveOnDeath() 			return false end
 function modifier_imba_phoenix_supernova_scepter_passive:AllowIllusionDuplicate() 	return true end
 
 function modifier_imba_phoenix_supernova_scepter_passive:DeclareFunctions()
@@ -2711,7 +2706,7 @@ function modifier_imba_phoenix_burning_wings_buff:OnTakeDamage( keys )
 	for _, abi in pairs(abi_table) do
 		if keys.inflictor == abi then
 			local damage = keys.damage
-			caster:Heal(damage, caster)
+			caster:Heal(damage, abi)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, damage, nil)
 		end
 	end
@@ -2749,7 +2744,7 @@ function modifier_imba_phoenix_burning_wings_ally_buff:OnDestroy()
 		return
 	end
 	local num_heal = ability:GetSpecialValueFor("hit_ally_heal") + ability:GetSpecialValueFor("hit_ally_heal") * ( caster:GetSpellAmplification(false) / 100 )
-	caster:Heal(num_heal, caster)
+	caster:Heal(num_heal, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, num_heal, nil)
 end
 

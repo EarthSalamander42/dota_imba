@@ -390,7 +390,7 @@ function imba_slark_pounce:OnSpellStart()
 			self:GetCaster():FindModifierByName("modifier_imba_slark_pounce").direction = self:GetCaster():GetForwardVector()		
 		end
 		
-		self:UseResources(false, false, true)
+		self:UseResources(false, false, false, true)
 	end
 end
 
@@ -451,12 +451,12 @@ function modifier_imba_slark_pounce:OnRemoved()
 
 	if self:GetAbility() then
 		if not self:GetCaster():HasScepter() then
-			self:GetAbility():UseResources(false, false, true)
+			self:GetAbility():UseResources(false, false, false, true)
 		else
 			if self:GetCaster():GetModifierStackCount("modifier_imba_slark_pounce_charge_counter", self:GetCaster()) == 0 then
 				self:GetAbility():StartCooldown(self:GetCaster():FindModifierByName("modifier_imba_slark_pounce_charge_counter"):GetRemainingTime())
 			else
-				self:GetAbility():UseResources(false, false, true)
+				self:GetAbility():UseResources(false, false, false, true)
 			end
 		end
 	end
@@ -980,8 +980,6 @@ end
 -- end
 
 function imba_slark_shadow_dance:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_passive_regen") and self:GetAutoCastState() and not self:GetCaster():HasModifier("modifier_imba_slark_shadow_dance_dark_reef_handler") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_slark_shadow_dance_dark_reef_handler", {})
 	end

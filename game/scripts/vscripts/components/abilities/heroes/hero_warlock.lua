@@ -437,10 +437,11 @@ function modifier_imba_shadow_word:OnIntervalThink()
 		local spell_power = self.caster:GetSpellAmplification(false)
 		local heal = self.tick_value * (1 + spell_power * 0.01)
 
-		self.parent:Heal(heal, self.caster)
+		self.parent:Heal(heal, self.ability)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.parent, heal, nil)
 	else
-		local damageTable = {victim = self.parent,
+		local damageTable = {
+			victim = self.parent,
 			attacker = self.caster,
 			damage = self.tick_value,
 			damage_type = DAMAGE_TYPE_MAGICAL,
@@ -554,7 +555,13 @@ function imba_warlock_upheaval:OnSpellStart()
 			local ability_demon = demon:FindAbilityByName("imba_warlock_upheaval")
 			ability_demon:SetLevel(self:GetLevel())
 			ability_demon:SetActivated(true)
-			ExecuteOrderFromTable({ UnitIndex = demon:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = demon:GetAbsOrigin(), AbilityIndex = ability_demon:GetEntityIndex(), Queue = queue})
+			ExecuteOrderFromTable({
+				UnitIndex = demon:GetEntityIndex(),
+				OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
+				Position = demon:GetAbsOrigin(),
+				AbilityIndex = ability_demon:GetEntityIndex(),
+				Queue = false
+			})
 
 			-- Start the demon's idle activity
 			demon:StartGesture(ACT_DOTA_IDLE)
@@ -564,6 +571,7 @@ end
 
 function imba_warlock_upheaval:OnChannelFinish()
 	local caster = self:GetCaster()
+	local ability = self
 	local sound_loop = "Hero_Warlock.Upheaval"
 	local sound_end = "Hero_Warlock.Upheaval.Stop"
 
@@ -1102,7 +1110,7 @@ function imba_warlock_rain_of_chaos:SummonGolem(target_point, bScepter, bDeath)
 
 		-- #8 Talent: Chaotic Golems are now Spell Immune
 		if self:GetCaster():HasTalent("special_bonus_imba_warlock_8") then
-			ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
+			local ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
 			ability_spell_immunity:SetLevel(1)
 		end
 
@@ -1740,8 +1748,6 @@ function modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance:I
 function modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance:RemoveOnDeath() 	return false end
 
 function imba_warlock_rain_of_chaos:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_imba_warlock_chaotic_offering_magic_resistance") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_warlock_chaotic_offering_magic_resistance"), "modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", {})
 	end

@@ -708,12 +708,6 @@ function modifier_earthshaker_enchant_totem_lua_leap:UpdateVerticalMotion( me, d
 	-- self:GetParent():SetOrigin( GetGroundPosition(self:GetParent():GetOrigin(), nil) + Vector(0, 0, z_axis) )
 end
 
-function modifier_earthshaker_enchant_totem_lua_leap:OnVerticalMotionInterrupted()
-	-- if IsServer() then
-		-- self:Destroy()
-	-- end
-end
-
 function modifier_earthshaker_enchant_totem_lua_leap:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
@@ -1043,8 +1037,6 @@ function modifier_special_bonus_imba_earthshaker_bonus_magic_resistance:GetModif
 end
 
 function earthshaker_enchant_totem_lua:OnOwnerSpawned()
-	if not IsServer() then return end
-
 	if self:GetCaster():HasTalent("special_bonus_unique_earthshaker") and not self:GetCaster():HasModifier("modifier_special_bonus_unique_earthshaker") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_unique_earthshaker"), "modifier_special_bonus_unique_earthshaker", {})
 	end

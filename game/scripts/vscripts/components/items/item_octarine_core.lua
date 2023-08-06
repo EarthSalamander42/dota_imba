@@ -99,7 +99,6 @@ function modifier_imba_octarine_core_basic:DeclareFunctions()
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_EVENT_ON_SPENT_MANA,
 	}
@@ -164,7 +163,7 @@ end
 
 function modifier_imba_octarine_core_basic:OnSpentMana( keys )
 	if self:GetAbility() and keys.unit == self:GetParent() and keys.unit:FindAllModifiersByName(self:GetName())[1] == self and self:GetStackCount() == 2 and self:GetAbility():IsCooldownReady() and keys.cost > 0 then	-- [ 1 = disabled | 2 = enabled ]
-		self:GetAbility():UseResources(false, false, true)
+		self:GetAbility():UseResources(false, false, false, true)
 		
 		-- Blast geometry
 		local blast_duration = 0.75 * 0.75

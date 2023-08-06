@@ -58,8 +58,6 @@ end
 -- Frost arrows thinker modifier
 modifier_imba_frost_arrows_thinker = class({})
 
-
-
 function modifier_imba_frost_arrows_thinker:DeclareFunctions()
 	return {
 		MODIFIER_EVENT_ON_ATTACK_START,
@@ -167,7 +165,7 @@ function modifier_imba_frost_arrows_thinker:OnAttack(keys)
 			EmitSoundOn(self.sound_cast, self.caster)
 
 			-- Spend mana
-			self.ability:UseResources(true, false, false)
+			self.ability:UseResources(true, false, false, false)
 		end
 	end
 end
@@ -390,7 +388,7 @@ function modifier_imba_frost_arrows_slow:OnRemoved()
 	--Talent #4: Update the stack count on Drow accordingly when the parent lose the debuff (including when dying), remove the buff if no more stacks are left
 	if IsServer() then
 		local target_stacks = self:GetStackCount()
-		stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
+		local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
 		if stack_count <= target_stacks then
 			self.caster:RemoveModifierByName(self.caster_modifier)
 		else
@@ -1828,7 +1826,7 @@ function modifier_imba_markmanship_aura:GetAuraEntityReject(target)
 	if target:IsHero() and not target:IsIllusion() then
 		return false
 	end
-	return true
+	return not self:GetAbility() or not self:GetAbility():IsTrained()
 end
 
 function modifier_imba_markmanship_aura:GetAuraRadius()
@@ -1875,10 +1873,6 @@ end
 
 function modifier_imba_markmanship_aura:IsPurgable()
 	return false
-end
-
-function modifier_imba_markmanship_aura:GetAuraEntityReject(target)
-	return not self:GetAbility() or not self:GetAbility():IsTrained()
 end
 
 -- Markmanship talent aura modifier for allies
@@ -2136,7 +2130,7 @@ function modifier_imba_drow_ranger_marksmanship_723:OnAttackLanded(keys)
 				if enemy ~= keys.target then 
 					if splinter_counter < self:GetAbility():GetSpecialValueFor("split_count_scepter") then
 						if self.frost_arrow_modifier and self.frost_arrow_modifier:GetAbility() and (self.frost_arrow_modifier.cast or self.frost_arrow_modifier:GetAbility():GetAutoCastState()) and self.frost_arrow_modifier:GetAbility():IsFullyCastable() then 
-							self.frost_arrow_modifier:GetAbility():UseResources(true, false, false)
+							self.frost_arrow_modifier:GetAbility():UseResources(true, false, false, false)
 							
 							self.bFrost = true
 							self.splinter_projectile_name = "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"

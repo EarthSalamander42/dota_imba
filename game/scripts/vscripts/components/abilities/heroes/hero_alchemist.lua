@@ -247,8 +247,8 @@ end
 function modifier_imba_acid_spray_handler:OnDeath(params)
 	if IsServer() then
 		-- Ability properties
-		caster 	= 	self:GetCaster()
-		parent	=	self:GetParent()
+		local caster 	= 	self:GetCaster()
+		local parent	=	self:GetParent()
 
 		if (params.unit == parent) then
 
@@ -281,7 +281,7 @@ function modifier_imba_acid_spray_handler:OnDeath(params)
 
 					local drop = CreateItemOnPositionSync( parent:GetAbsOrigin(), newItem )
 					local dropTarget = parent:GetAbsOrigin() + RandomVector( RandomFloat( 50, 150 ) )
-					newItem:LaunchLoot( true, 300, 0.75, dropTarget )
+					newItem:LaunchLoot( true, 300, 0.75, dropTarget, nil )
 					EmitSoundOn( "Dungeon.TreasureItemDrop", parent )
 				end
 			end
@@ -405,6 +405,10 @@ MergeTables(LinkedModifiers,{
 imba_alchemist_unstable_concoction = imba_alchemist_unstable_concoction or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_alchemist_unstable_concoction:GetAbilityTextureName()
+	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") then
+		return "alchemist_unstable_concoction_throw"
+	end
+
 	return "alchemist_unstable_concoction"
 end
 
@@ -582,7 +586,7 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 							location = acid_spray_modifier.center
 						end
 
-						particle_acid_blast_fx = ParticleManager:CreateParticle(particle_acid_blast, PATTACH_WORLDORIGIN, caster)
+						local particle_acid_blast_fx = ParticleManager:CreateParticle(particle_acid_blast, PATTACH_WORLDORIGIN, caster)
 						ParticleManager:SetParticleControl(particle_acid_blast_fx, 0, location)
 						ParticleManager:SetParticleControl(particle_acid_blast_fx, 1, location)
 						ParticleManager:SetParticleControl(particle_acid_blast_fx, 2, Vector(acid_spray_radius, 0, 0))
@@ -613,14 +617,6 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 			target:AddNewModifier(caster, chemical_rage, "modifier_imba_chemical_rage_buff_haste", { duration = total_duration })
 		end
 	end
-end
-
-function imba_alchemist_unstable_concoction:GetAbilityTextureName()
-	if self:GetCaster():HasModifier("modifier_imba_unstable_concoction_handler") then
-		return "alchemist_unstable_concoction_throw"
-	end
-
-	return self.BaseClass.GetAbilityTextureName(self)
 end
 
 function imba_alchemist_unstable_concoction:GetCooldown(level)
@@ -1127,11 +1123,10 @@ function imba_alchemist_greevils_greed:OnSpellStart()
 	local greed_ability = owner:FindAbilityByName("imba_alchemist_goblins_greed")
 
 	local hull_size = target:GetHullRadius()
-	local particle_greevil_fx = ParticleManager:CreateParticle(particle_greevil, PATTACH_ABSORIGIN_FOLLOW, target)
+	local particle_greevil_fx = ParticleManager:CreateParticle("particles/hero/alchemist/greevil_midas_touch.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:SetParticleControl(particle_greevil_fx, 0, target:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_greevil_fx, 1, Vector(hull_size*3, 1, 1))
 	ParticleManager:ReleaseParticleIndex(particle_greevil_fx)
-
 
 	caster.target = nil
 	caster:MoveToNPC(caster:GetOwner())

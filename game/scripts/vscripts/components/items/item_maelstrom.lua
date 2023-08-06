@@ -219,9 +219,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 		self:GetParent():EmitSound("Item.Maelstrom.Chain_Lightning.Jump")
 			
 		if (keys.attacker:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() <= self.static_radius and not keys.attacker:IsBuilding() and not keys.attacker:IsOther() and keys.attacker:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
-			local static_particle	= nil
-			
-			static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker, self:GetCaster())
+			local static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker, self:GetCaster())
 			ParticleManager:SetParticleControlEnt(static_particle, 0, keys.attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.attacker:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(static_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(static_particle)
@@ -242,7 +240,7 @@ function modifier_item_imba_static_charge:OnTakeDamage(keys)
 		
 		for _, enemy in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.static_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)) do
 			if enemy ~= keys.attacker then
-				static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
+				local static_particle = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy, self:GetCaster())
 				ParticleManager:SetParticleControlEnt(static_particle, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(static_particle, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(static_particle)
@@ -531,10 +529,6 @@ function modifier_item_imba_maelstrom:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 
-function modifier_item_imba_maelstrom:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen
-end
-
 function modifier_item_imba_maelstrom:GetModifierAttackRangeBonus()
 	if not self:GetParent():IsRangedAttacker() and 
 	((self:GetAbility():GetName() == "item_imba_maelstrom" and self:GetAbility():GetSecondaryCharges() == 1 and not self:GetParent():HasItemInInventory("item_imba_mjollnir") and not self:GetParent():HasItemInInventory("item_imba_jarnbjorn") and not self:GetParent():HasItemInInventory("item_imba_monkey_king_bar")) or 
@@ -566,7 +560,7 @@ function modifier_item_imba_maelstrom:OnAttackLanded(keys)
 	
 	-- Cleave Logic (Jarnbjorn)
 	if self:GetAbility():GetName() == "item_imba_jarnbjorn" and keys.attacker == self:GetParent() and not self:GetParent():IsRangedAttacker() and self:GetParent():IsAlive() and not self:GetParent():IsIllusion() and not keys.target:IsBuilding() and not keys.target:IsOther() and self:GetParent():GetTeamNumber() ~= keys.target:GetTeamNumber()  then
-		DoCleaveAttack(self:GetParent(), keys.target, ability, keys.damage * self.cleave_damage_percent * 0.01, self.cleave_starting_width, self.cleave_ending_width, self.cleave_distance, "particles/econ/items/sven/sven_ti7_sword/sven_ti7_sword_spell_great_cleave.vpcf")
+		DoCleaveAttack(self:GetParent(), keys.target, self:GetAbility(), keys.damage * self.cleave_damage_percent * 0.01, self.cleave_starting_width, self.cleave_ending_width, self.cleave_distance, "particles/econ/items/sven/sven_ti7_sword/sven_ti7_sword_spell_great_cleave.vpcf")
 	end
 end
 
