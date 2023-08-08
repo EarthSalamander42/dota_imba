@@ -138,7 +138,7 @@
 		}
 
 		function OverrideDotaNeutralItemsShop() {
-			var shop_grid_1 = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("TeamNeutralItemsTierList");
+			var shop_grid_1 = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("TeamNeutralTokensList");
 
 			if (!Game.GameStateIsAfter(6)) {
 				$.Schedule(1.0, OverrideDotaNeutralItemsShop);
@@ -153,7 +153,7 @@
 						var sub_child = child.GetChild(j);
 
 						if (sub_child && sub_child.id && sub_child.id == "TierItemsList") {
-							sub_child.style.height = "75px";
+							sub_child.style.height = "50px";
 							sub_child.style.overflow = "scroll squish";
 						}
 					}

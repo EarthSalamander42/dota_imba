@@ -204,24 +204,24 @@ function fetch() {
 function AllPlayersLoaded() {
 	$.Msg("ALL PLAYERS LOADED IN!");
 
-	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
-		//$.Msg("Game Mode: ", i)
-		var panel = $("#vote-container").GetChild(i);
-		var gamemode = panel.id.replace("VoteGameModeText", "");
+	// for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
+	// 	//$.Msg("Game Mode: ", i)
+	// 	var panel = $("#vote-container").GetChild(i);
+	// 	var gamemode = panel.id.replace("VoteGameModeText", "");
 
-		if (!panel.BHasClass("Active"))
-			panel.AddClass("Active");
+	// 	if (!panel.BHasClass("Active"))
+	// 		panel.AddClass("Active");
 
-		(function (panel, gamemode) {
-			panel.SetPanelEvent("onmouseover", function () {
-				$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("#description_gamemode_" + gamemode));
-			})
+	// 	(function (panel, gamemode) {
+	// 		panel.SetPanelEvent("onmouseover", function () {
+	// 			$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("#description_gamemode_" + gamemode));
+	// 		})
 
-			panel.SetPanelEvent("onmouseout", function () {
-				$.DispatchEvent("UIHideTextTooltip", panel);
-			})
-		})(panel, gamemode);
-	}
+	// 		panel.SetPanelEvent("onmouseout", function () {
+	// 			$.DispatchEvent("UIHideTextTooltip", panel);
+	// 		})
+	// 	})(panel, gamemode);
+	// }
 
 	var vote_panel = $.GetContextPanel().FindChildrenWithClassTraverse("vote-select-panel-container");
 
