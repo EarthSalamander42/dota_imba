@@ -1,5 +1,5 @@
 #base heroes/abaddon/hero.txt
-// #base heroes/abyssal_underlord/hero.txt
+#base heroes/abyssal_underlord/hero.txt
 #base heroes/ancient_apparition/hero.txt
 // #base heroes/batrider/hero.txt
 // #base heroes/beastmaster/hero.txt
@@ -23,14 +23,14 @@
 // #base heroes/gyrocopter/hero.txt
 // #base heroes/hoodwink/hero.txt
 // #base heroes/huskar/hero.txt
-// #base heroes/juggernaut/hero.txt
+#base heroes/juggernaut/hero.txt
 // #base heroes/keeper_of_the_light/hero.txt
 // #base heroes/legion_commander/hero.txt
 // #base heroes/leshrac/hero.txt
 // #base heroes/life_stealer/hero.txt
 // #base heroes/lone_druid/hero.txt
 // #base heroes/luna/hero.txt
-// #base heroes/mars/hero.txt
+#base heroes/mars/hero.txt
 // #base heroes/medusa/hero.txt
 // #base heroes/meepo/hero.txt
 // #base heroes/monkey_king/hero.txt
@@ -52,7 +52,7 @@
 // #base heroes/spectre/hero.txt
 // #base heroes/spirit_breaker/hero.txt
 // #base heroes/shadow_demon/hero.txt
-// #base heroes/techies/hero.txt
+#base heroes/techies/hero.txt
 // // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
 // #base heroes/templar_assassin/hero.txt
 // #base heroes/terrorblade/hero.txt
@@ -94,7 +94,7 @@
 	"npc_dota_hero_alchemist"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_alchemist_acid_spray"
 		"Ability2"					"imba_alchemist_unstable_concoction"
@@ -127,7 +127,7 @@
 	
 
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
@@ -163,7 +163,7 @@
 	
 
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 		
 		"Ability1"					"imba_axe_berserkers_call"
 		"Ability2"					"imba_axe_battle_hunger"
@@ -194,7 +194,7 @@
 	
 
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_bane_enfeeble_723"
 		"Ability2"					"imba_bane_brain_sap_723"
@@ -232,7 +232,7 @@
 	"npc_dota_hero_bloodseeker"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_bloodseeker_bloodrage"
 		"Ability2"					"imba_bloodseeker_blood_bath"
@@ -266,7 +266,7 @@
 	"npc_dota_hero_bounty_hunter"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_bounty_hunter_shuriken_toss"
 		"Ability2"			 		"imba_bounty_hunter_jinada"
@@ -295,7 +295,7 @@
 	"npc_dota_hero_centaur"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
  
 		"Ability1"					"imba_centaur_hoof_stomp"
 		"Ability2"					"imba_centaur_double_edge"
@@ -325,7 +325,7 @@
 	"npc_dota_hero_clinkz"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_clinkz_strafe"
 		"Ability2"					"imba_clinkz_searing_arrows"
@@ -369,7 +369,7 @@
 	"npc_dota_hero_crystal_maiden"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 		
 		"Ability1"					"imba_crystal_maiden_crystal_nova"
 		"Ability2"					"imba_crystal_maiden_frostbite"
@@ -402,7 +402,7 @@
 	"npc_dota_hero_dazzle"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_dazzle_poison_touch_707"
 		"Ability2"					"imba_dazzle_shallow_grave"
@@ -439,7 +439,7 @@
 	"npc_dota_hero_disruptor"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_disruptor_thunder_strike"
 		"Ability2"					"imba_disruptor_glimpse"
@@ -471,7 +471,7 @@
 	"npc_dota_hero_dragon_knight"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_dragon_knight_breathe_fire"
 		"Ability2"					"imba_dragon_knight_dragon_tail"
@@ -501,7 +501,7 @@
 	"npc_dota_hero_drow_ranger"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 		
 		"Ability1"					"imba_drow_ranger_frost_arrows_723"
 		"Ability2"					"imba_drow_ranger_gust"
@@ -548,7 +548,7 @@
 	"npc_dota_hero_elder_titan"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_elder_titan_echo_stomp"
 		"Ability2"					"imba_elder_titan_ancestral_spirit"
@@ -581,7 +581,7 @@
 		"AttackRange"				"500"
 
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_jakiro_dual_breath"
 		"Ability2"					"imba_jakiro_ice_path"
@@ -612,7 +612,7 @@
 	"npc_dota_hero_kunkka"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 		
 		"Ability1"					"imba_kunkka_torrent"		
 		"Ability2"					"imba_kunkka_tidebringer"	
@@ -644,7 +644,7 @@
 	"npc_dota_hero_lich"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 		
 		"Ability1"					"imba_lich_frost_nova"
 		"Ability2"					"imba_lich_frost_shield"
@@ -676,7 +676,7 @@
 	"npc_dota_hero_lina"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 		
 		"Ability1"					"imba_lina_dragon_slave"
 		"Ability2"					"imba_lina_light_strike_array"
@@ -709,7 +709,7 @@
 	"npc_dota_hero_lion"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_lion_earth_spike"
 		"Ability2"					"imba_lion_hex"
@@ -739,7 +739,7 @@
 	"npc_dota_hero_lycan"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_lycan_summon_wolves"
 		"Ability2"					"imba_lycan_howl_723"
@@ -773,7 +773,7 @@
 	"npc_dota_hero_magnataur"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 		
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		"particle_folder"			"particles/units/heroes/hero_magnataur"
@@ -807,7 +807,7 @@
 	"npc_dota_hero_mirana"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_mirana_starfall"
 		"Ability2"					"imba_mirana_arrow"
@@ -839,7 +839,7 @@
 	"npc_dota_hero_necrolyte"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_necrolyte_death_pulse"
 		"Ability2"					"imba_necrolyte_ghost_shroud"
@@ -864,7 +864,7 @@
 	"npc_dota_hero_night_stalker"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_night_stalker_void"
 		"Ability2"					"imba_night_stalker_crippling_fear_720"
@@ -899,7 +899,7 @@
 	"npc_dota_hero_nyx_assassin"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_nyx_assassin_impale"
 		"Ability2"					"imba_nyx_assassin_mana_burn"
@@ -932,7 +932,7 @@
 	"npc_dota_hero_omniknight"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_omniknight_purification"
 		//"Ability2"					"imba_omniknight_repel"
@@ -963,7 +963,7 @@
 	"npc_dota_hero_pangolier"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_pangolier_swashbuckle"
 		"Ability2"					"imba_pangolier_shield_crash"
@@ -992,7 +992,7 @@
 	"npc_dota_hero_phantom_assassin"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_phantom_assassin_stifling_dagger"
 		"Ability2"					"imba_phantom_assassin_phantom_strike"
@@ -1026,7 +1026,7 @@
 	"npc_dota_hero_phoenix"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_phoenix_icarus_dive"
 		"Ability2"					"imba_phoenix_fire_spirits"
@@ -1057,7 +1057,7 @@
 	"npc_dota_hero_pudge"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_pudge_meat_hook"
 		"Ability2"					"imba_pudge_rot"
@@ -1088,7 +1088,7 @@
 	"npc_dota_hero_pugna"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_pugna_nether_blast"
 		"Ability2"					"imba_pugna_decrepify"
@@ -1116,7 +1116,7 @@
 	"npc_dota_hero_queenofpain"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_queenofpain_shadow_strike"
 		"Ability2"					"imba_queenofpain_blink"
@@ -1149,7 +1149,7 @@
 	"npc_dota_hero_sand_king"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_sandking_burrowstrike"
 		"Ability2"					"imba_sandking_sand_storm_720"
@@ -1179,7 +1179,7 @@
 	"npc_dota_hero_nevermore"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 	
 		"Ability1"					"imba_nevermore_shadowraze_close"
 		"Ability2"					"imba_nevermore_shadowraze_medium"
@@ -1209,7 +1209,7 @@
 	"npc_dota_hero_skeleton_king"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_wraith_king_wraithfire_blast"
 		"Ability2"					"imba_wraith_king_vampiric_aura"
@@ -1239,7 +1239,7 @@
 	"npc_dota_hero_skywrath_mage"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_skywrath_mage_arcane_bolt"
 		"Ability2"					"imba_skywrath_mage_concussive_shot"
@@ -1271,7 +1271,7 @@
 	"npc_dota_hero_slardar"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_slardar_guardian_sprint"
 		"Ability2"					"imba_slardar_slithereen_crush"
@@ -1311,7 +1311,7 @@
 	"npc_dota_hero_sniper"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_sniper_shrapnel"
 		"Ability2"					"imba_sniper_headshot"
@@ -1342,7 +1342,7 @@
 	"npc_dota_hero_storm_spirit"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_storm_spirit_static_remnant"
 		"Ability2"					"imba_storm_spirit_electric_vortex"
@@ -1371,7 +1371,7 @@
 	"npc_dota_hero_sven"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_sven_storm_bolt"
 		"Ability2"					"imba_sven_great_cleave"
@@ -1401,7 +1401,7 @@
 	"npc_dota_hero_tiny"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_tiny_avalanche"
 		"Ability2"					"imba_tiny_toss"
@@ -1437,7 +1437,7 @@
 	"npc_dota_hero_troll_warlord"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_troll_warlord_berserkers_rage"
 		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
@@ -1477,7 +1477,7 @@
 	"npc_dota_hero_ursa"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_ursa_earthshock"
 		"Ability2"					"imba_ursa_overpower"
@@ -1505,7 +1505,7 @@
 	"npc_dota_hero_vengefulspirit"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_vengefulspirit_magic_missile"
 		"Ability2"					"imba_vengefulspirit_wave_of_terror"
@@ -1542,7 +1542,7 @@
 	"npc_dota_hero_venomancer"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_venomancer_venomous_gale"
 		"Ability2"					"imba_venomancer_poison_sting"
@@ -1575,7 +1575,7 @@
 	"npc_dota_hero_warlock"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_warlock_fatal_bonds"
 		"Ability2"					"imba_warlock_shadow_word"
@@ -1606,7 +1606,7 @@
 	"npc_dota_hero_witch_doctor"
 	{
 		//Picking Screen
-		"IsImba"					"1"
+		// "IsImba"					"1"
 
 		"Ability1"					"imba_witch_doctor_paralyzing_cask"
 		"Ability2"					"imba_witch_doctor_voodoo_restoration"

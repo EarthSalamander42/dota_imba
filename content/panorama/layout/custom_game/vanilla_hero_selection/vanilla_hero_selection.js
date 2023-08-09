@@ -15,8 +15,8 @@ function InitHeroSelection()  {
 	var same_selection = CustomNetTables.GetTableValue("game_options", "same_hero_pick");
 
 	if (same_selection && same_selection.value == 1) {
-		$.Schedule(0.5, SetPickButtonAlwaysEnabled)
-		$.Schedule(0.5, UpdatePickedHeroes)
+		$.Schedule(0.5, SetPickButtonAlwaysEnabled);
+		$.Schedule(0.5, UpdatePickedHeroes);
 
 		GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
 	}
@@ -54,7 +54,6 @@ function InitHeroSelection()  {
 						hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
 					}
 
-					$.Msg(herolist)
 					if (herolist && herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
 						hero_panel.style.boxShadow = "inset #FF7800aa 0px 0px 2px 2px";
 						hero_panel.style.transitionDuration = '0.25s';

@@ -36,6 +36,7 @@ if GetMapName() == "imba_demo" or IsInToolsMode() then
 	require("components/demo/init")
 end
 require('components/gold')
+require('components/hero_selection/init')
 require('components/neutral_creeps/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes')         -- Rune system override
