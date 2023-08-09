@@ -51,7 +51,7 @@
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_Description"              "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. It takes %ward_hp_tooltip% hits to destroy a single Ward.\n<font color='#FF7800'>Snake Charmer:</font> If a serpent ward kills a unit, it gains %snake_charmer_creep_count% max health, heals for %snake_charmer_creep_count% health, and has its base attack time reduced by %snake_charmer_creep_bat_reduction_pct%%%. Real hero and building kills provide %snake_charmer_hero_count% health and %snake_charmer_hero_bat_reduction_pct%%% base attack time reduction."
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_Lore"                     "Snake charming was a big part of the Shadow Shaman's act; now Rhasta can empower the Snakes to do his bidding."
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_damage_tooltip"           "ATTACK DAMAGE:"
-"DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_duration"                 "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_duration"                 "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_shadow_shaman_mass_serpent_ward_scepter_description"      "Causes Serpent Wards to have split shot, attacking 3 units for full damage. Increases attack range of Serpent Wards by 250."
 
 "npc_imba_dota_shadow_shaman_ward_1"										"Serpent Ward"

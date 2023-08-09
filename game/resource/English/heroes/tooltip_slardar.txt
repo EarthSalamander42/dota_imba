@@ -4,7 +4,7 @@
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Lore"                	"As Slardar has made the transition from the Deeps, it has been necessary to use his powerful tail for sprinting instead of swimming."
 
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_ms_bonus_pct"			"%BONUS MOVE SPEED:"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_duration"				"#{DOTA_Tooltip_ability_courier_shield_duration}"
 
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_scepter_puddle_regen"					"SCEPTER HP REGEN:"
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_scepter_puddle_armor"					"SCEPTER BONUS ARMOR:"
@@ -59,7 +59,7 @@
 "DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Lore"				"Thieves of the wealth of the Deep Ones meet the brutality of the Slithereen Guard in melee combat."
 "DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_chance_pct"	"%CHANCE:"
 "DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_damage"		"BONUS DAMAGE:"
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_duration" 			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_duration" 			"#{DOTA_Tooltip_ability_courier_shield_duration}"
 
 "DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun"                      "Bash of The Deep"
 "DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun_Description"          "Stunned, bashed, IN YOUR FACE!"
@@ -81,7 +81,7 @@
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_scepter_description"		"<font color='#FF7800'>Adds a new ability: Rain Cloud. Passively creates a cloud that follows Slardar around. While the cloud soaks Slardar in rainwater, many of his skills are improved. While inside your Rain Cloud, enemies affected by Corrosive Haze take 30% increased damage from any source while they are stunned.</font>"
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Lore"						"Even the strongest armor counts for little when left to the brine of the sea."
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_armor_reduction"			"ARMOR REDUCTION:"
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"					"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_slip_up_chance_pct"		"%SLIPSTREAM CHANCE:"
 
 "DOTA_Tooltip_modifier_imba_corrosive_haze_debuff"                      	"Corrosive Haze"

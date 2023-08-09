@@ -25,7 +25,7 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_flame_guard_note0"                  "Permanent (talent) version grants bonus magic resistance instead of a shield."
 "DOTA_Tooltip_Ability_imba_ember_spirit_flame_guard_lore"                   "Burn or be burned."
 "DOTA_Tooltip_Ability_imba_ember_spirit_flame_guard_effect_radius"          "EFFECT RADIUS:"
-"DOTA_Tooltip_Ability_imba_ember_spirit_flame_guard_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_Ability_imba_ember_spirit_flame_guard_duration"               "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_Ability_imba_ember_spirit_flame_guard_damage_per_second"      "DAMAGE PER SECOND:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_flame_guard_absorb_amount"          "%HEALTH AS SHIELD:"
 

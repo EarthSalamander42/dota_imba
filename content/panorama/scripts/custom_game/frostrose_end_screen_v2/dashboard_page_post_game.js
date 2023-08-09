@@ -154,7 +154,7 @@ function EndScoreboard(args) {
 	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel());
 
 	// Set game time
-	$("#GameTimeText").text = $.Localize("#DOTA_Tooltip_ability_fountain_glyph_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
+	$("#GameTimeText").text = $.Localize("#DOTA_Tooltip_ability_courier_shield_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
 
 	const map_name = Game.GetMapInfo().map_display_name;
 

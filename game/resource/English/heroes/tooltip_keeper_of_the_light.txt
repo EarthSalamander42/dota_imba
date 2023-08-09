@@ -22,7 +22,7 @@
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_blinding_light_Note0"			"Causes knockback of 350 range over 0.4 seconds, centered on the middle of the target area. Upon landing, units will destroy trees in a 150 radius."
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_blinding_light_Lore"			"The Primordial light turns the tides of battle in favor of Ezalor and his allies."
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_blinding_light_miss_rate"		"%MISS CHANCE:"
-"DOTA_Tooltip_ability_imba_keeper_of_the_light_blinding_light_duration"		"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_keeper_of_the_light_blinding_light_duration"		"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_blinding_light_radius"		"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_blinding_light_damage"		"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_keeper_of_the_light_blinding_light_cast_range_tooltip" "CAST RANGE:"

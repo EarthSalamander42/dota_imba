@@ -6,7 +6,7 @@
 "DOTA_Tooltip_ability_imba_sniper_shrapnel_damage"                      "SHRAPNEL DAMAGE:"
 "DOTA_Tooltip_ability_imba_sniper_shrapnel_ms_slow_pct"                "%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_sniper_shrapnel_radius"                      "#{DOTA_Tooltip_ability_filler_ability_radius}"
-"DOTA_Tooltip_ability_imba_sniper_shrapnel_duration"                    "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_sniper_shrapnel_duration"                    "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_sniper_shrapnel_distance_damage_pct"                     "%OUT OF RANGE DAMAGE:"
 "DOTA_Tooltip_ability_imba_sniper_shrapnel_max_charge_count"            "MAX CHARGES:"
 

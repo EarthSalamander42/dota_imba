@@ -58,7 +58,7 @@
 "DOTA_Tooltip_ability_imba_centaur_stampede_Lore"                      "rumblerumbleRUMBLERUMBLE"
 "DOTA_Tooltip_ability_imba_centaur_stampede_Note0"                      "If Nether Ward steals this spell, it makes every trample deal fixed damage instead of being based on strength."
 "DOTA_Tooltip_ability_imba_centaur_stampede_strength_damage"            "%CENTAUR'S STRENGTH AS DAMAGE:"
-"DOTA_Tooltip_ability_imba_centaur_stampede_duration"                  "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_centaur_stampede_duration"                  "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_centaur_stampede_stun_duration"              "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_centaur_stampede_damage_reduction_scepter"	"%SCEPTER DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_centaur_stampede_ms_slow_pct"                "%MOVE SPEED SLOW:"

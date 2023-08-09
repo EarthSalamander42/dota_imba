@@ -700,7 +700,7 @@
 "DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_damage"                 "POISON DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_movement_speed_melee"   "%MELEE SLOW:"
 "DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_movement_speed_range"   "%RANGED SLOW:"
-"DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_duration"               "#{DOTA_Tooltip_ability_courier_shield_duration}"
 
 // Orchid Malevolence
 "DOTA_Tooltip_Ability_item_imba_orchid"                        "Orchid Malevolence"
@@ -912,7 +912,7 @@
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_Description"		"<h1>Use: Embedded Truth</h1>When used, grants its bearer true sight in %radius% radius as a buff for %duration_tooltip% minutes.<br><font color='#e03e2e'>The buff is lost on death.</font><br><br>Drops a Gem of True Sight at the parent's location when Embedded Truth is removed by any means."
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_Lore"            "The golden soul of a being incapable of lies or deceit. Its gaze can pierce any disguise or veil."
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_Note0"            "Cannot be consumed while Embedded Truth is active."
-//"DOTA_Tooltip_ability_item_imba_soul_of_truth_duration_tooltip"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+//"DOTA_Tooltip_ability_item_imba_soul_of_truth_duration_tooltip"             "#{DOTA_Tooltip_ability_courier_shield_duration}"
 //"DOTA_Tooltip_ability_item_imba_soul_of_truth_radius"          "TRUE SIGHT RADIUS:"
 //"DOTA_Tooltip_ability_item_imba_soul_of_truth_armor"            "+$armor"
 //"DOTA_Tooltip_ability_item_imba_soul_of_truth_health_regen"                 "+$hp_regen"
@@ -1004,7 +1004,7 @@
 "DOTA_Tooltip_ability_item_imba_urn_of_shadows_bonus_mana_regen"            "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_urn_of_shadows_damage"          "ENEMY TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_urn_of_shadows_heal"            "ALLY TOTAL HEAL:"
-"DOTA_Tooltip_ability_item_imba_urn_of_shadows_duration"                    "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_item_imba_urn_of_shadows_duration"                    "#{DOTA_Tooltip_ability_courier_shield_duration}"
 
 "DOTA_Tooltip_modifier_imba_urn_of_shadows_active_ally"                     "Soul Release"
 "DOTA_Tooltip_modifier_imba_urn_of_shadows_active_ally_Description"         "Healing over time."

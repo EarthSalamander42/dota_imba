@@ -98,7 +98,7 @@
 "DOTA_Tooltip_ability_imba_silencer_global_silence_Description"                     "Silencer curses all enemy heroes and units.\n<font color='#FF7800'>Silence! Do Not Speak:</font> Should a cursed enemy attempt to cast a spell, be mid cast or channel any spell while under the curse, they are immediately silenced for the rest of the duration, and have Last Word applied on them."
 "DOTA_Tooltip_ability_imba_silencer_global_silence_Note0"              "Until a unit attempts to cast, it is not actually silenced. If it does, it becomes silenced for the rest of the duration."
 "DOTA_Tooltip_ability_imba_silencer_global_silence_Lore"                "After years of dealing with loud-mouthed spellcasters, Nortrom came up with a warning curse. Should an afflicted being not heed it, they will know Nortroms wrath. Unfortunetly for them, people can rarely keep their mouths shuts."
-"DOTA_Tooltip_ability_imba_silencer_global_silence_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_silencer_global_silence_duration"            "#{DOTA_Tooltip_ability_courier_shield_duration}"
 
 "DOTA_Tooltip_modifier_imba_silencer_global_silence"                    "Global Silence"
 "DOTA_Tooltip_modifier_imba_silencer_global_silence_Description"                    "Casting a spell or being mid spell cast will silence you for the rest of the duration."

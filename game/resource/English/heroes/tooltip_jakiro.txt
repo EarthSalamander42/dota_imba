@@ -83,7 +83,7 @@
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_damage_scepter"          "SCEPTER DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_range"                      "LENGTH:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_range_scepter"              "SCEPTER LENGTH:"
-"DOTA_Tooltip_ability_imba_jakiro_macropyre_duration"                  "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_jakiro_macropyre_duration"                  "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_duration_scepter"          "SCEPTER DURATION:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_scepter_description"		"Increases flame length, duration, and damage."
 

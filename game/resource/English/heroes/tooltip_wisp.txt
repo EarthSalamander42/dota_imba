@@ -43,7 +43,7 @@
 "DOTA_Tooltip_ability_imba_wisp_spirits_slow"          			"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_wisp_spirits_max_range"          	"OSCILLATION RADIUS:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_explode_radius"         "EXPLOSION RADIUS:"
-"DOTA_Tooltip_ability_imba_wisp_spirits_spirit_duration"      	"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_wisp_spirits_spirit_duration"      	"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_wisp_spirits_num_spririts"			"SPIRIT COUNT:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_spirit_debuff_duration"	"DISARM/SILENCE DURATION:"
 

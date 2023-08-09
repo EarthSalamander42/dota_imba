@@ -39,7 +39,7 @@
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath"								"Thundergod's Wrath"
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_description"					"Strikes all enemy heroes with a bolt of lightning, no matter where they may be. Thundergod's Wrath also provides True Sight around each hero struck. If an enemy hero is invisible, it takes no damage, but the True Sight is still created at that hero's location.\n<font color='#FF7800'>Redirection: </font>Consumes all Thundergod's Focus stacks, converting them into Static Charge stacks on all enemies hit. Half of the Static Charge stacks are also consumed on enemies when struck with Thundergod's Wrath. <font color='#FF0000'>Does not place Static Charge stacks on enemies more than 2500 distance away.</font>\n<font color='#FF7800'>Awakening:</font> With %stacks_to_awaken% or more stacks of Thundergod's Focus, Zeus gains the Awaken buff. Awaken lasts for three seconds per Thundergod's Focus stack consumed, up to a maximum of 42 seconds.\n<font color='#FF7800'>Awaken:</font> In Awaken, Zeus improves cast time by %cast_time_increase_pct%%%, and increases vision by %vision_increase_pct%%%. Additionally, any physical attack landed on Zeus triggers Arc Lightning damage on his attacker (does not jump between enemies). Awaken's counter Arc Lightning does not pierce spell immunity or apply Static Field's Static Charge stacks."
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_lore"							"The Lord of Heaven smites all who oppose him, near or far."
-"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_sight_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_sight_duration"				"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_true_sight_radius_tooltip"	"TRUE SIGHT RADIUS:"
 
 //---------------------------------------------------------------------------
@@ -51,7 +51,7 @@
 // \n<font color='#FF7800'>Zap:</font> At any time, Zeus can choose to travel to the cloud by lightning.
 
 "DOTA_Tooltip_Ability_imba_zuus_cloud_lore"						"Where the thunder god's ire grows, storm clouds quickly gather."
-"DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_duration"			"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_bolt_interval"		"LIGHTNING BOLT INTERVAL:"
 
 //---------------------------------------------------------------------------

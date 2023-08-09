@@ -141,7 +141,7 @@
 		"DOTA_Tooltip_ability_creature_viper_nethertoxin_damage"			"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_creature_viper_nethertoxin_magic_resistance"	"MAGIC RESISTANCE REDUCTION:"
 		"DOTA_Tooltip_ability_creature_viper_nethertoxin_radius"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
-		"DOTA_Tooltip_ability_creature_viper_nethertoxin_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+		"DOTA_Tooltip_ability_creature_viper_nethertoxin_duration"			"#{DOTA_Tooltip_ability_courier_shield_duration}"
 
 		"DOTA_Tooltip_modifier_antechamber_start"							"Pre-game"
 		"DOTA_Tooltip_modifier_antechamber_start_Description"				"Silenced until the game begins."

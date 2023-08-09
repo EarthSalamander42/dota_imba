@@ -58,7 +58,7 @@
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_Description"				"Pangolier rolls the dice and lets fate decide the outcome for his enemies. Grants a chance to slow, apply Disarm and reduce armor.\n<font color='#FF7800'>Remnants of Heartpiercer:</font> Every attack Pangolier inflicts on enemies already afflicted by Lucky Shot's Disarm has a %heartpiercer_chance%%% chance to apply a debuff that fully nullifies their armor for %duration% seconds."
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_Note0"					"Lucky Shot uses pseudo-random distribution, while Remnants of Heartpiercer uses standard random chance."
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_chance_pct"				"%CHANCE:"
-"DOTA_Tooltip_ability_imba_pangolier_lucky_shot_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_pangolier_lucky_shot_duration"				"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_slow"					"%SLOW:"
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_armor"					"ARMOR REDUCTION:"
 

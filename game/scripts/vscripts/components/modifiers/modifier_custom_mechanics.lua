@@ -16,30 +16,8 @@ function modifier_custom_mechanics:OnCreated()
 			"item_imba_blade_mail",
 			"luna_moon_glaive"
 		}
-
-		self:StartIntervalThink(1)
 	end
 end
-
-function modifier_custom_mechanics:OnIntervalThink()
-	-- Rough Out of Bounds warp back logic
-	if self:GetParent():GetAbsOrigin().x >= 8000 then
-		FindClearSpaceForUnit(self:GetParent(), GetGroundPosition(Vector(7500, self:GetParent():GetAbsOrigin().y, self:GetParent():GetAbsOrigin().z), nil), true)
-	elseif self:GetParent():GetAbsOrigin().x <= -8000 then
-		FindClearSpaceForUnit(self:GetParent(), GetGroundPosition(Vector(-7500, self:GetParent():GetAbsOrigin().y, self:GetParent():GetAbsOrigin().z), nil), true)
-	elseif self:GetParent():GetAbsOrigin().y >= 8000 then
-		FindClearSpaceForUnit(self:GetParent(), GetGroundPosition(Vector(self:GetParent():GetAbsOrigin().x, 7500, self:GetParent():GetAbsOrigin().z), nil), true)
-	elseif self:GetParent():GetAbsOrigin().y <= -8000 then
-		FindClearSpaceForUnit(self:GetParent(), GetGroundPosition(Vector(self:GetParent():GetAbsOrigin().x, -7500, self:GetParent():GetAbsOrigin().z), nil), true)
-	end
-end
-
--- Damage block handler
--- function modifier_custom_mechanics:GetModifierPhysical_ConstantBlock()
--- if IsServer() then
--- return self:GetParent():GetDamageBlock()
--- end
--- end
 
 -- Damage amp/reduction handler
 function modifier_custom_mechanics:GetModifierIncomingDamage_Percentage()
@@ -54,17 +32,14 @@ function modifier_custom_mechanics:DeclareFunctions()
 
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_START,
-		-- MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
-		--		MODIFIER_PROPERTY_RESPAWNTIME,
-		--		MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE,
 	}
 	return funcs
 end
 
 function modifier_custom_mechanics:GetModifierHealthBonus()
-	return 300
+	return (GetUnitKeyValuesByName(self:GetParent():GetName())["StatusHealth"] * IMBAFIED_VALUE_BONUS / 100) or 0
 end
 
 --- Enum DamageCategory_t
@@ -141,19 +116,3 @@ function modifier_custom_mechanics:OnAttackStart(keys)
 		self:GetParent():RemoveSelf()
 	end
 end
-
---[[
--- this function stack with actual respawn time, and when trying to call GetRespawnTime() or GetTimeUntilRespawn() game crash
-function modifier_custom_mechanics:GetModifierConstantRespawnTime()
---	local respawn_time = self:GetParent():GetTimeUntilRespawn() / 2
-	local respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[self:GetParent():GetLevel()]
-	print("Respawn Time:", respawn_time)
-
-	return respawn_time
-end
---]]
---[[ Respawn time is always 1 second...
-function modifier_custom_mechanics:GetModifierPercentageRespawnTime()
-	return 50
-end
---]]

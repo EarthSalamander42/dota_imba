@@ -443,7 +443,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2094"
+		"ID"							"3094"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"imba_recipe"
 
@@ -469,7 +469,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2095"
+		"ID"							"3095"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_arcane_boots"
 		"AbilityTextureName"			"item_arcane_boots"
@@ -5893,7 +5893,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2091"
+		"ID"							"3091"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"imba_recipe"
 

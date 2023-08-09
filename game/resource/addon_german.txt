@@ -192,6 +192,7 @@
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Note1"                                        "<font color='#FF7800'>The active component blocks Legion Commander's Duel.</font>"
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Lore"                                         "Anti-Mage's burning hatred for magic makes him impervious against most of its vile effects."
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_magic_resistance"                             "%MAGIERESISTENZ:"
+		"DOTA_Tooltip_ability_imba_antimage_spell_shield_active_duration"                              "DAUER:"
 		"DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect"                                         "Spell Shield"
 		"DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect_Description"                             "Kontere und reflektiere jeden Zauber für einen kurzen Zeitraum."
 		"DOTA_Tooltip_modifier_imba_antimage_blink_spell_immunity"                                     "Blink Spellguard"

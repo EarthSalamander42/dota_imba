@@ -7,7 +7,7 @@
 "DOTA_Tooltip_ability_imba_bane_enfeeble_vision_reduction"              "BASE VISION REDUCTION:"
 "DOTA_Tooltip_ability_imba_bane_enfeeble_stack_vision_efficiency"		"%VISION DEGRADE PER STACK:"
 "DOTA_Tooltip_ability_imba_bane_enfeeble_bonus_status_resistance"		"%STATUS RESISTANCE REDUCTION:"
-"DOTA_Tooltip_ability_imba_bane_enfeeble_enfeeble_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_bane_enfeeble_enfeeble_duration"					"#{DOTA_Tooltip_ability_courier_shield_duration}"
 
 
 "DOTA_Tooltip_modifier_imba_enfeeble_debuff"                            "Enfeeble"
@@ -52,7 +52,7 @@
 "DOTA_Tooltip_ability_imba_bane_nightmare_Description"                  "Puts the target enemy or friendly Hero to sleep <font color='#FF7800'>and deals damage per second.</font> Sleeping units are awakened when attacked, but the Nightmare passes to the attacking unit. Bane can attack nightmared targets freely.\n<font color='#FF7800'>Baleful Visions:</font> Upon waking up from Nightmare, the target is still foggy and dazed, having 0 vision range for a period of time.\n<font color='#FF7800'>Sound Sleeper:</font> Nightmare is not interrupted by non-player controlled unit or building damage.\n<font color='#FF7800'>Unpleasantries:</font> Enemies affected by Nightmare are prevented from regenerating or healing."
 "DOTA_Tooltip_ability_imba_bane_nightmare_Lore"                        "A stolen prowess from the goddess Nyctasha is to put prey into forever sleep."
 "DOTA_Tooltip_ability_imba_bane_nightmare_Note0"                        "The target becomes briefly invulnerable upon being Nightmared."
-"DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_duration"          "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_damage"            "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_invuln_duration"                "INVULNERABILITY DURATION:"
 "DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_baleful_visions_duration"       "BALEFUL VISIONS DURATION:"

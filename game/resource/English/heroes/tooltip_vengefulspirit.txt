@@ -17,7 +17,7 @@
 "DOTA_Tooltip_ability_imba_vengefulspirit_wave_of_terror_wave_width"					  "EFFECT RADIUS:"
 "DOTA_Tooltip_ability_imba_vengefulspirit_wave_of_terror_armor_reduction"           "ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_imba_vengefulspirit_wave_of_terror_atk_reduction_pct"         "%BASE ATTACK REDUCTION:"
-"DOTA_Tooltip_ability_imba_vengefulspirit_wave_of_terror_duration"					    "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_vengefulspirit_wave_of_terror_duration"					    "#{DOTA_Tooltip_ability_courier_shield_duration}"
 
 "DOTA_Tooltip_modifier_imba_wave_of_terror"										"Wave of Terror"
 "DOTA_Tooltip_modifier_imba_wave_of_terror_Description"					  "Reduced armor and attack damage"

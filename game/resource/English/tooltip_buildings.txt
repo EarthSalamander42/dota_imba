@@ -273,7 +273,7 @@
 "DOTA_Tooltip_Ability_imba_tower_essence_drain_Lore"                    "Harder, better, faster, stronger."
 "DOTA_Tooltip_Ability_imba_tower_essence_drain_stat_drain_amount_enemy"             "ENEMY STAT LOSS:"
 "DOTA_Tooltip_Ability_imba_tower_essence_drain_stat_drain_amount_ally"              "MAIN ATTRIBUTE GAIN:"
-"DOTA_Tooltip_Ability_imba_tower_essence_drain_duration"                "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_Ability_imba_tower_essence_drain_duration"                "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_Ability_imba_tower_essence_drain_duration_per_protective"             "INCREASED DURATION PER HERO:"
 
 "DOTA_Tooltip_modifier_imba_tower_essence_drain_aura_buff"              "Essence Drain Aura"

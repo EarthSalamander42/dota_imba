@@ -41,7 +41,7 @@
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Lore"          "The dormant dragon power springs forth from within Davion, combining the powers of a legendary knight with a legendary Eldwurm."
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Note0"         "Corrosive Breath poison damage is lethal."
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Note1"         "Manta Style's cooldown time will be based on whether Dragon Knight was in his ranged or melee form when the item was used."
-"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_duration"        "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_duration"        "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_bonus_movement_speed"  "BONUS MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_bonus_attack_range"    "BONUS ATTACK RANGE:"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_scepter_description"   "Increases the level of your ultimate. Adds a 4th level, Black Dragon. Black Dragon has 50% bonus Corrosive Damage, Splash Damage and Slow amount. Increases attack range to 600, grants free pathing, and grants 30% Magic resistance.\n\n<font color='#FF7800'>Elder Dragon Form is now freely toggleable.</font>"

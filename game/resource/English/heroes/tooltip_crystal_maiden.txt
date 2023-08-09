@@ -36,7 +36,7 @@
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Lore"					"Rylai channels winds from the Blueheart Glacier, imprisoning attackers in thick blocks of ice."
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_total_damage"			"HERO TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_creep_total_damage"		"CREEP TOTAL DAMAGE:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration"          "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_damage_interval"                "DAMAGE INTERVAL:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration_passive_recharge"      "ICY TOUCH COOLDOWN:"
 

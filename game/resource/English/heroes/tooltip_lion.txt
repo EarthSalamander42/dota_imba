@@ -25,7 +25,7 @@
 "DOTA_Tooltip_ability_imba_lion_hex_Description"						"Transforms an enemy unit into a harmless beast, with all special abilities disabled.\n<font color='#FF7800'>Chain Hex:</font> After %bounce_interval% seconds or whenever Hex expires (whichever comes sooner), a random enemy in a radius around the target will be hexed. Chain Hex continues until there is no longer a valid target in the area."
 "DOTA_Tooltip_ability_imba_lion_hex_Note0"								"Chain Hex cannot bounce to already-hexed, hexed within 2.5 seconds, or spell immune enemies."
 "DOTA_Tooltip_ability_imba_lion_hex_Lore"								"Lion is compelled to share his transfiguration, twisting the essence of those who oppose him."
-"DOTA_Tooltip_ability_imba_lion_hex_duration"							"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_lion_hex_duration"							"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_lion_hex_hex_bounce_radius"					"CHAIN HEX RADIUS:"
 "DOTA_Tooltip_ability_imba_lion_hex_maximum_hex_enemies"				"MAXIMUM ENEMIES PER CHAIN HEX:"
 

@@ -29,7 +29,7 @@
 "DOTA_Tooltip_ability_imba_lich_frost_armor_Note1"                      "Can be set to auto cast."
 "DOTA_Tooltip_ability_imba_lich_frost_armor_Lore"                      "Originally crafted during his ambush for self-defense, the Lich is capable of enchanting others with a formidable defense of frost magic."
 "DOTA_Tooltip_ability_imba_lich_frost_armor_armor_bonus"                "BONUS ARMOR:"
-"DOTA_Tooltip_ability_imba_lich_frost_armor_armor_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_lich_frost_armor_armor_duration"            "#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_lich_frost_armor_freeze_attacks"            "ICE SHACKLES ATTACKS:"
 
 "DOTA_Tooltip_modifier_imba_frost_armor_buff"                          "Ice Armor"
@@ -109,7 +109,7 @@
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze"									"Sinister Gaze"
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze_Description"						"CHANNELED - Hypnotizes an enemy unit, causing it to move towards a point between the two of you and drains a percentage of its current mana.\n<font color='#FF7800'>Soul Consumption: </font>If the targetted hero dies while Sinister Gaze is channelling, Lich consumes their essence, temporarily gaining their max health as his own and healing for that amount. Lasts for %soul_consumption_duration% seconds, is unpurgable, can stack multiple times, and persists through death.\n<font color='#FF7800'>Retaliatory Chains: </font>If Lich dies while Sinister Gaze is channelling, the target's soul is wrenched by his dying breath, dealing pure damage equal to %retaliatory_chains_dmg_pct%%% of Lich's max health. Damage is not affected by spell amplification.\n<font color='#FF7800'>Remnants of Sacrifice: </font>Sinister Gaze can be cast on allied creeps, and casting this on creeps reduces its channel time by %creep_channel_reduction%%%. If this ability is fully channeled on a non-ancient creep, it is sacrificed, converting %sacrifice_mana_pct%%% of its current health into mana for Lich. If it is an allied creep, %sacrifice_health_pct%%% of its current health is also converted into health.\n<font color='#9ADBDA'>Cold Front:</font> Immediately applies %cold_front_stacks% stacks of Cold Front on target on ability cast."
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze_Lore"						"Mind the cold..."
-"DOTA_Tooltip_ability_imba_lich_sinister_gaze_duration"						"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_lich_sinister_gaze_duration"						"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze_destination"					"%DISTANCE MOVED:"
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze_mana_drain"					"%MANA DRAIN:"
 "DOTA_Tooltip_ability_imba_lich_sinister_gaze_cast_range_tooltip"					"CAST RANGE:"

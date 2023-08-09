@@ -192,6 +192,7 @@
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Note1"                                        "<font color='#FF7800'>Активная способность может блокировать способность Duel от Legion Commander.</font>"
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Lore"                                         "Сконцентрировавшись, Антимаг обращает врождённое сопротивление в точную контратаку."
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_magic_resistance"                             "%СОПРОТИВЛЕНИЕ МАГИИ:"
+		"DOTA_Tooltip_ability_imba_antimage_spell_shield_active_duration"                              "ДЛИТЕЛЬНОСТЬ:"
 		"DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect"                                         "Щит от Counterspell"
 		"DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect_Description"                             "Блокирует все направленные заклинания и отражает их обратно во врага."
 		"DOTA_Tooltip_modifier_imba_antimage_blink_spell_immunity"                                     "Blink Spellguard"

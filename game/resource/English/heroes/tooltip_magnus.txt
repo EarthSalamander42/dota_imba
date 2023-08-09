@@ -21,7 +21,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_empower_Lore"					"#{DOTA_Tooltip_ability_magnataur_empower_Lore}"
 "DOTA_Tooltip_ability_imba_magnataur_empower_scepter_description"	"<font color='#FF7800'>Continuously applies a reduced-duration Empower to allies. Lingers for 12 seconds after leaving the radius.</font>"
 
-"DOTA_Tooltip_ability_imba_magnataur_empower_empower_duration"		"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_magnataur_empower_empower_duration"		"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_magnataur_empower_bonus_damage_pct"		"#{DOTA_Tooltip_ability_magnataur_empower_bonus_damage_pct}"
 "DOTA_Tooltip_ability_imba_magnataur_empower_cleave_damage_pct"		"%CLEAVE DAMAGE:"
 

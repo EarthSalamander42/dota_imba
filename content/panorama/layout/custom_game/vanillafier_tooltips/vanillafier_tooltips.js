@@ -579,14 +579,19 @@ function SetPositionLoop(hPanel, hPosition) {
 		});
 
 		return;
-	}
-
-	// fix for panel staying visible sometimes?
-	$.Schedule(0.03, function() {
-		if (AbilityDetails.style.opacity == 1) {
+	} else {
+		// In tools mode, switch between abilities will cause the panel to remain hidden because there's no delay between server and client
+		if (!Game.IsInToolsMode()) {
 			HideTooltips();
 		}
-	});
+	}
+
+	// fix for panel staying visible sometimes? also causing a bug where it doesn't show up at all when switching between abilities
+	// $.Schedule(0.03, function() {
+	// 	if (AbilityDetails.style.opacity == 1) {
+	// 		HideTooltips();
+	// 	}
+	// });
 }
 
 function SetTooltipsPosition(hPosition) {

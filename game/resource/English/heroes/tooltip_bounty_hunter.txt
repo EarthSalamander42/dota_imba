@@ -49,7 +49,7 @@
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Description"				"Bounty Hunter becomes invisible and gains the ability to move through other units. If he breaks the invisibility with an attack, it will deal bonus damage.\n<font color='#FF7800'>Shadow Sprint:</font> Gains %invis_ms_bonus%%% bonus movement speed while invisible.\n<font color='#FF7800'>Shadow Hunting Shadows:</font> While invisible, Bounty Hunter can detect and reveal invisible units within %true_sight_radius% radius."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Note0"						"Bonus damage is a separate instance and does not multiply Jinada's critical damage."
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_Lore"						"The court jesters present during King Goff's assassination can recount no other image than a dancing shadow."
-"DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_duration"					"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_bonus_damage"				"BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_shadow_walk_fade_time"					"FADE TIME:"
 
@@ -67,7 +67,7 @@
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Note3"					"<font color='#FF7800'>Gold gain is affected by the map gold multiplier.</font>"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Lore"                    "Using his elevated senses of sight and smell, Gondar's hunts have quite a good chance of success."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_ms_bonus_allies_pct"		"%ALLIED MOVE SPEED BONUS:"
-"DOTA_Tooltip_ability_imba_bounty_hunter_track_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_bounty_hunter_track_duration"				"#{DOTA_Tooltip_ability_courier_shield_duration}"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_target_crit_multiplier"	"%SELF CRITICAL STRIKE AGAINST TARGET:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_bonus_gold_self"			"BOUNTY GOLD (SELF):"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_bonus_gold_allies"		"BOUNTY GOLD (ALLIES):"
