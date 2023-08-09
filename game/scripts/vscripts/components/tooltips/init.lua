@@ -23,18 +23,18 @@ function CustomTooltips:GetIMBAValue(value)
 			value = tonumber(value)
 		end
 
-		if type(value) == "number" then
-			return value + (value * IMBAFIED_VALUE_BONUS / 100)
-		end
+		-- if type(value) == "number" then
+		-- 	return value + (value * IMBAFIED_VALUE_BONUS / 100)
+		-- end
 
 		if type(value) == "table" and value["value"] and type(value["value"]) == "string" then
 			value["value"] = split(value["value"], " ")
 
-			for k, v in pairs(value["value"]) do
-				if v then
-					value["value"][k] = tonumber(v) * (100 + IMBAFIED_VALUE_BONUS) / 100
-				end
-			end
+			-- for k, v in pairs(value["value"]) do
+			-- 	if v then
+			-- 		value["value"][k] = tonumber(v) * (100 + IMBAFIED_VALUE_BONUS) / 100
+			-- 	end
+			-- end
 
 			print("GetIMBAValue", value, type(value))
 			value["value"] = table.concat(value["value"], " ")
