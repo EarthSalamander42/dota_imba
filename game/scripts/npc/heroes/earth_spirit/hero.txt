@@ -1,0 +1,34 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Earth Spirit
+	//=================================================================================================================
+	"npc_dota_hero_earth_spirit"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_earth_spirit_boulder_smash"
+		"Ability2"					"imba_earth_spirit_rolling_boulder"
+		"Ability3"					"imba_earth_spirit_geomagnetic_grip"
+		"Ability4"					"imba_earth_spirit_stone_caller"
+		"Ability5"					"imba_earth_spirit_petrify"
+		"Ability6"					"imba_earth_spirit_magnetize"
+
+		"Ability10"					"special_bonus_imba_earth_spirit_1"
+		"Ability11"					"special_bonus_attack_damage_65"
+		"Ability12"					"special_bonus_imba_earth_spirit_3"
+		"Ability13"					"special_bonus_armor_8"
+		"Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
+		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
+		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
+		"Ability17"					"special_bonus_imba_earth_spirit_2"
+
+		// Removed Talents
+		// "Ability14"					"special_bonus_spell_amplify_20"
+		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
+		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
+		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
+		// "Ability17"					"special_bonus_imba_earth_spirit_8"
+	}
+}

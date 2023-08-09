@@ -1,78 +1,82 @@
 #base heroes/abaddon/hero.txt
-#base heroes/abyssal_underlord/hero.txt
+// #base heroes/abyssal_underlord/hero.txt
 #base heroes/ancient_apparition/hero.txt
-#base heroes/batrider/hero.txt
-#base heroes/beastmaster/hero.txt
-#base heroes/brewmaster/hero.txt
-#base heroes/bristleback/hero.txt
-// #base heroes/broodmother/hero.txt
-#base heroes/chaos_knight/hero.txt
-#base heroes/chen/hero.txt
-#base heroes/dark_seer/hero.txt
-#base heroes/dark_willow/hero.txt
-#base heroes/death_prophet/hero.txt
-#base heroes/doom_bringer/hero.txt
-#base heroes/earthshaker/hero.txt
-#base heroes/ember_spirit/hero.txt
-#base heroes/enchantress/hero.txt
-#base heroes/furion/hero.txt
-// #base heroes/grimstroke/hero.txt
-#base heroes/gyrocopter/hero.txt
-#base heroes/hoodwink/hero.txt
-#base heroes/huskar/hero.txt
-#base heroes/keeper_of_the_light/hero.txt
-#base heroes/legion_commander/hero.txt
-#base heroes/leshrac/hero.txt
-#base heroes/life_stealer/hero.txt
-#base heroes/lone_druid/hero.txt
-#base heroes/luna/hero.txt
-#base heroes/mars/hero.txt
-#base heroes/medusa/hero.txt
-#base heroes/meepo/hero.txt
-#base heroes/monkey_king/hero.txt
-#base heroes/morphling/hero.txt
-#base heroes/naga_siren/hero.txt
-#base heroes/ogre_magi/hero.txt
-#base heroes/oracle/hero.txt
-#base heroes/outworld_devourer/hero.txt
-#base heroes/phantom_lancer/hero.txt
-// #base heroes/puck/hero.txt
-#base heroes/rattletrap/hero.txt
-#base heroes/razor/hero.txt
-#base heroes/riki/hero.txt
-#base heroes/rubick/hero.txt
-#base heroes/shadow_shaman/hero.txt
-#base heroes/silencer/hero.txt
-#base heroes/slark/hero.txt
-#base heroes/snapfire/hero.txt
-#base heroes/spectre/hero.txt
-#base heroes/spirit_breaker/hero.txt
-#base heroes/shadow_demon/hero.txt
-#base heroes/techies/hero.txt
-// If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
-#base heroes/templar_assassin/hero.txt
-#base heroes/terrorblade/hero.txt
-#base heroes/tidehunter/hero.txt
-#base heroes/timbersaw/hero.txt
-#base heroes/tinker/hero.txt
-#base heroes/treant/hero.txt
-#base heroes/tusk/hero.txt
-#base heroes/undying/hero.txt
-#base heroes/visage/hero.txt
-#base heroes/viper/hero.txt
-#base heroes/void_spirit/hero.txt
-#base heroes/weaver/hero.txt
-#base heroes/wisp/hero.txt
-#base heroes/zeus/hero.txt
-#base heroes/windranger/hero.txt
-#base heroes/winter_wyvern/hero.txt
-// If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
-#base heroes/invoker/hero.txt
-#base custom_heroes/hell_empress/hero.txt
-#base custom_heroes/malfurion/hero.txt
-#base custom_heroes/nian/hero.txt
-#base custom_heroes/sohei/hero.txt
-#base custom_heroes/vardor/hero.txt
+// #base heroes/batrider/hero.txt
+// #base heroes/beastmaster/hero.txt
+// #base heroes/brewmaster/hero.txt
+// #base heroes/bristleback/hero.txt
+// // #base heroes/broodmother/hero.txt
+// #base heroes/chaos_knight/hero.txt
+// #base heroes/chen/hero.txt
+// #base heroes/dark_seer/hero.txt
+// #base heroes/dark_willow/hero.txt
+// #base heroes/death_prophet/hero.txt
+// #base heroes/doom_bringer/hero.txt
+#base heroes/earth_spirit/hero.txt
+// #base heroes/earthshaker/hero.txt
+// #base heroes/ember_spirit/hero.txt
+// #base heroes/enchantress/hero.txt
+#base heroes/enigma/hero.txt
+#base heroes/faceless_void/hero.txt
+// #base heroes/furion/hero.txt
+// // #base heroes/grimstroke/hero.txt
+// #base heroes/gyrocopter/hero.txt
+// #base heroes/hoodwink/hero.txt
+// #base heroes/huskar/hero.txt
+// #base heroes/juggernaut/hero.txt
+// #base heroes/keeper_of_the_light/hero.txt
+// #base heroes/legion_commander/hero.txt
+// #base heroes/leshrac/hero.txt
+// #base heroes/life_stealer/hero.txt
+// #base heroes/lone_druid/hero.txt
+// #base heroes/luna/hero.txt
+// #base heroes/mars/hero.txt
+// #base heroes/medusa/hero.txt
+// #base heroes/meepo/hero.txt
+// #base heroes/monkey_king/hero.txt
+// #base heroes/morphling/hero.txt
+// #base heroes/naga_siren/hero.txt
+// #base heroes/ogre_magi/hero.txt
+// #base heroes/oracle/hero.txt
+// #base heroes/outworld_devourer/hero.txt
+// #base heroes/phantom_lancer/hero.txt
+// // #base heroes/puck/hero.txt
+// #base heroes/rattletrap/hero.txt
+// #base heroes/razor/hero.txt
+// #base heroes/riki/hero.txt
+// #base heroes/rubick/hero.txt
+// #base heroes/shadow_shaman/hero.txt
+// #base heroes/silencer/hero.txt
+// #base heroes/slark/hero.txt
+// #base heroes/snapfire/hero.txt
+// #base heroes/spectre/hero.txt
+// #base heroes/spirit_breaker/hero.txt
+// #base heroes/shadow_demon/hero.txt
+// #base heroes/techies/hero.txt
+// // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
+// #base heroes/templar_assassin/hero.txt
+// #base heroes/terrorblade/hero.txt
+// #base heroes/tidehunter/hero.txt
+// #base heroes/timbersaw/hero.txt
+// #base heroes/tinker/hero.txt
+// #base heroes/treant/hero.txt
+// #base heroes/tusk/hero.txt
+// #base heroes/undying/hero.txt
+// #base heroes/visage/hero.txt
+// #base heroes/viper/hero.txt
+// #base heroes/void_spirit/hero.txt
+// #base heroes/weaver/hero.txt
+// #base heroes/wisp/hero.txt
+// #base heroes/zeus/hero.txt
+// #base heroes/windranger/hero.txt
+// #base heroes/winter_wyvern/hero.txt
+// // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
+// #base heroes/invoker/hero.txt
+// #base custom_heroes/hell_empress/hero.txt
+// #base custom_heroes/malfurion/hero.txt
+// #base custom_heroes/nian/hero.txt
+// #base custom_heroes/sohei/hero.txt
+// #base custom_heroes/vardor/hero.txt
 
 "DOTAHeroes"
 {
@@ -539,38 +543,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Earth Spirit
-	//=================================================================================================================
-	"npc_dota_hero_earth_spirit"
-	{
-		//Picking Screen
-		"IsImba"					"1"
-
-		"Ability1"					"imba_earth_spirit_boulder_smash"
-		"Ability2"					"imba_earth_spirit_rolling_boulder"
-		"Ability3"					"imba_earth_spirit_geomagnetic_grip"
-		"Ability4"					"imba_earth_spirit_stone_caller"
-		"Ability5"					"imba_earth_spirit_petrify"
-		"Ability6"					"imba_earth_spirit_magnetize"
-
-		"Ability10"					"special_bonus_imba_earth_spirit_1"
-		"Ability11"					"special_bonus_attack_damage_65"
-		"Ability12"					"special_bonus_imba_earth_spirit_3"
-		"Ability13"					"special_bonus_armor_8"
-		"Ability14"					"special_bonus_imba_earth_spirit_4" // "Earth's Mark Upgrade"
-		"Ability15"					"special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration"
-		"Ability16"					"special_bonus_imba_earth_spirit_7" // "Eternal Mark" ("Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune.")
-		"Ability17"					"special_bonus_imba_earth_spirit_2"
-		
-		// Removed Talents
-		// "Ability14"					"special_bonus_spell_amplify_20"
-		// "Ability15"					"special_bonus_imba_earth_spirit_6" // "+3 free Stone Remnants"
-		// "Ability15"					"special_bonus_imba_earth_spirit_5" // "-10s Overdraw Cooldown"
-		// "Ability16"					"special_bonus_imba_earth_spirit_magnetize_unpurgable"
-		// "Ability17"					"special_bonus_imba_earth_spirit_8"
-	}
-
-	//=================================================================================================================
 	// HERO: Elder Titan
 	//=================================================================================================================
 	"npc_dota_hero_elder_titan"
@@ -599,71 +571,6 @@
 		//"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity (also disabled in code)
 		//"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
 		//"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
-	}
-
-	//=================================================================================================================
-	// HERO: Enigma
-	//=================================================================================================================
-	"npc_dota_hero_enigma"
-	{
-		//Picking Screen
-		"IsImba"					"1"
-
-		"Ability1"					"imba_enigma_malefice"
-		"Ability2"					"imba_enigma_demonic_conversion"
-		"Ability3"					"imba_enigma_midnight_pulse"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_enigma_black_hole"
-
-		"Ability10"					"special_bonus_imba_enigma_demonic_conversion_attack_range"
-		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
-		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
-		"Ability13"					"special_bonus_imba_enigma_malefice_damage"
-		"Ability14"					"special_bonus_imba_enigma_5" // +500 Black Hole cast range
-		"Ability15"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
-		"Ability16"					"special_bonus_imba_enigma_2" // Malefice 325 AoE Radius
-		"Ability17"					"special_bonus_imba_enigma_4" // Black Hole cast on death
-		
-		// Removed Talents
-		// "Ability10"					"special_bonus_movement_speed_25"
-		// "Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 6 seconds.
-		// "Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
-	}
-
-	//=================================================================================================================
-	// HERO: Faceless Void
-	//=================================================================================================================
-	"npc_dota_hero_faceless_void"
-	{
-		//Picking Screen
-		"IsImba"					"1"
-
-		"Ability1"					"imba_faceless_void_time_walk"
-		"Ability2"					"imba_faceless_void_time_dilation"
-		//"Ability3"					"imba_faceless_void_time_lock"
-		"Ability3"					"imba_faceless_void_time_lock_720"
-		//"Ability4"					"imba_faceless_void_timelord"
-		"Ability5"					"imba_faceless_void_time_walk_reverse"
-		"Ability6"					"imba_faceless_void_chronosphere"
-
-		"Ability10"					"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
-		"Ability11"					"special_bonus_strength_12"
-		"Ability12"					"special_bonus_imba_faceless_void_12" // +X Time Lock Damage
-		"Ability13"					"special_bonus_imba_faceless_void_11" // -Xs Time Walk
-		"Ability14"					"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
-		"Ability15"					"special_bonus_imba_faceless_void_9" // Increased Time Walk cast range
-		"Ability16"					"special_bonus_unique_faceless_void_4" // Backtrack
-		"Ability17"					"special_bonus_imba_faceless_void_10" // Increased Chronosphere radius
-		
-		// Removed Talents
-		
-		//"Ability11"					"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
-		//"Ability12"					"special_bonus_imba_faceless_void_6" // Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
-		//"Ability13"					"special_bonus_imba_faceless_void_8" // Chronosphere causes Faceless Void attacks to cleav
-		//"Ability15"					"special_bonus_imba_faceless_void_4" // Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
-		//"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
-		//"Ability17"					"special_bonus_imba_faceless_void_1" // Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
 	}
 
 	//=================================================================================================================
@@ -697,37 +604,6 @@
 		// "Ability16"				"special_bonus_imba_jakiro_5" // +Xs Ice Path stun duration
 		// "Ability17"				"special_bonus_imba_jakiro_8" // Macropyre slows enemies (X% * Y% per tick)
 		
-	}
-
-	//=================================================================================================================
-	// HERO: Juggernaut
-	//=================================================================================================================
-	"npc_dota_hero_juggernaut"
-	{
-		//Picking Screen
-		"IsImba"					"1"
-
-		"Ability1"					"imba_juggernaut_blade_fury"
-		"Ability2"					"imba_juggernaut_healing_ward"
-		"Ability3"					"imba_juggernaut_blade_dance"
-		"Ability4"					"juggernaut_swift_slash"
-		"Ability5"					"juggernaut_omni_slash"
-		"Ability6"					"imba_juggernaut_omni_slash"
-
-		"Ability10"					"special_bonus_all_stats_6"
-		"Ability11"					"special_bonus_imba_juggernaut_2" // Blade Fury radius increases by 20 every 0.2 seconds
-		"Ability12"					"special_bonus_imba_juggernaut_blade_fury_movement_speed"
-		"Ability13"					"special_bonus_imba_juggernaut_3" // Healing Ward gives 50/100 (base/totem) attack speed
-		"Ability14"					"special_bonus_armor_10"
-		"Ability15"					"special_bonus_imba_juggernaut_1" // Blade Fury Vacuum
-		"Ability16"					"special_bonus_imba_juggernaut_4" // Secret Blade Triplicate
-		"Ability17"					"special_bonus_imba_juggernaut_10" // Omnislash increased duration
-		
-		// Removed Talents
-		// "Ability11"					"special_bonus_imba_juggernaut_5" // Enhanced Blade
-		// "Ability12"					"special_bonus_imba_juggernaut_6" // Dance of Fury
-		// "Ability14"					"special_bonus_imba_juggernaut_7" // Omnislash Doppelgänger Replacement
-		// "Ability16"				"special_bonus_imba_juggernaut_9" // Omnislash EX
 	}
 
 	//=================================================================================================================

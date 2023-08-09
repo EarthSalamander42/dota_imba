@@ -6,84 +6,85 @@
 
 #base heroes/abaddon/abilities.txt
 #base heroes/abyssal_underlord/abilities.txt
-#base heroes/alchemist/abilities.txt
+// #base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
-#base heroes/arc_warden/abilities.txt
-#base heroes/bane/abilities.txt
-#base heroes/batrider/abilities.txt
-#base heroes/beastmaster/abilities.txt
-#base heroes/bloodseeker/abilities.txt
-#base heroes/brewmaster/abilities.txt
-#base heroes/bristleback/abilities.txt
+// #base heroes/arc_warden/abilities.txt
+// #base heroes/bane/abilities.txt
+// #base heroes/batrider/abilities.txt
+// #base heroes/beastmaster/abilities.txt
+// #base heroes/bloodseeker/abilities.txt
+// #base heroes/brewmaster/abilities.txt
+// #base heroes/bristleback/abilities.txt
 // #base heroes/broodmother/abilities.txt
-#base heroes/chaos_knight/abilities.txt
-#base heroes/chen/abilities.txt
-#base heroes/dark_seer/abilities.txt
-#base heroes/dark_willow/abilities.txt
-#base heroes/death_prophet/abilities.txt
-#base heroes/doom_bringer/abilities.txt
-#base heroes/earthshaker/abilities.txt
+// #base heroes/chaos_knight/abilities.txt
+// #base heroes/chen/abilities.txt
+// #base heroes/dark_seer/abilities.txt
+// #base heroes/dark_willow/abilities.txt
+// #base heroes/death_prophet/abilities.txt
+// #base heroes/doom_bringer/abilities.txt
+// #base heroes/earthshaker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
-#base heroes/ember_spirit/abilities.txt
-#base heroes/enchantress/abilities.txt
+// #base heroes/ember_spirit/abilities.txt
+// #base heroes/enchantress/abilities.txt
+#base heroes/enigma/abilities.txt
 #base heroes/faceless_void/abilities.txt
-#base heroes/furion/abilities.txt
+// #base heroes/furion/abilities.txt
 // #base heroes/grimstroke/abilities.txt
-#base heroes/gyrocopter/abilities.txt
-#base heroes/hoodwink/abilities.txt
-#base heroes/huskar/abilities.txt
-#base heroes/invoker/abilities.txt
-#base heroes/keeper_of_the_light/abilities.txt
-#base heroes/legion_commander/abilities.txt
-#base heroes/leshrac/abilities.txt
-#base heroes/life_stealer/abilities.txt
-#base heroes/lone_druid/abilities.txt
-#base heroes/luna/abilities.txt
-#base custom_heroes/malfurion/abilities.txt
+// #base heroes/gyrocopter/abilities.txt
+// #base heroes/hoodwink/abilities.txt
+// #base heroes/huskar/abilities.txt
+// #base heroes/invoker/abilities.txt
+#base heroes/juggernaut/abilities.txt
+// #base heroes/keeper_of_the_light/abilities.txt
+// #base heroes/legion_commander/abilities.txt
+// #base heroes/leshrac/abilities.txt
+// #base heroes/life_stealer/abilities.txt
+// #base heroes/lone_druid/abilities.txt
+// #base heroes/luna/abilities.txt
+// #base custom_heroes/malfurion/abilities.txt
 #base heroes/mars/abilities.txt
-#base heroes/medusa/abilities.txt
-#base heroes/meepo/abilities.txt
-#base heroes/monkey_king/abilities.txt
-#base heroes/morphling/abilities.txt
-#base heroes/naga_siren/abilities.txt
-#base custom_heroes/nian/abilities.txt
-#base heroes/night_stalker/abilities.txt
-#base heroes/ogre_magi/abilities.txt
-#base heroes/oracle/abilities.txt
-#base heroes/outworld_devourer/abilities.txt
+// #base heroes/medusa/abilities.txt
+// #base heroes/meepo/abilities.txt
+// #base heroes/monkey_king/abilities.txt
+// #base heroes/morphling/abilities.txt
+// #base heroes/naga_siren/abilities.txt
+// #base custom_heroes/nian/abilities.txt
+// #base heroes/night_stalker/abilities.txt
+// #base heroes/ogre_magi/abilities.txt
+// #base heroes/oracle/abilities.txt
+// #base heroes/outworld_devourer/abilities.txt
 // #base heroes/puck/abilities.txt
-#base heroes/phantom_lancer/abilities.txt
-#base heroes/rattletrap/abilities.txt
-#base heroes/razor/abilities.txt
-#base heroes/riki/abilities.txt
-#base heroes/rubick/abilities.txt
-#base heroes/silencer/abilities.txt
-#base heroes/slark/abilities.txt
-#base heroes/shadow_demon/abilities.txt
-#base heroes/shadow_shaman/abilities.txt
-#base heroes/snapfire/abilities.txt
-#base heroes/spectre/abilities.txt
-#base heroes/spirit_breaker/abilities.txt
-#base heroes/sven/abilities.txt
+// #base heroes/phantom_lancer/abilities.txt
+// #base heroes/rattletrap/abilities.txt
+// #base heroes/razor/abilities.txt
+// #base heroes/riki/abilities.txt
+// #base heroes/rubick/abilities.txt
+// #base heroes/silencer/abilities.txt
+// #base heroes/slark/abilities.txt
+// #base heroes/shadow_demon/abilities.txt
+// #base heroes/shadow_shaman/abilities.txt
+// #base heroes/snapfire/abilities.txt
+// #base heroes/spectre/abilities.txt
+// #base heroes/spirit_breaker/abilities.txt
+// #base heroes/sven/abilities.txt
 #base heroes/techies/abilities.txt
-#base heroes/templar_assassin/abilities.txt
-#base heroes/terrorblade/abilities.txt
-#base heroes/tidehunter/abilities.txt
-#base heroes/timbersaw/abilities.txt
-#base heroes/tinker/abilities.txt
-#base heroes/treant/abilities.txt
-#base heroes/tusk/abilities.txt
-#base heroes/undying/abilities.txt
-#base custom_heroes/vardor/abilities.txt
-#base heroes/visage/abilities.txt
-#base heroes/viper/abilities.txt
-#base heroes/void_spirit/abilities.txt
-#base heroes/weaver/abilities.txt
-#base heroes/windranger/abilities.txt
-#base heroes/winter_wyvern/abilities.txt
-#base heroes/wisp/abilities.txt
-#base heroes/zeus/abilities.txt
-
+// #base heroes/templar_assassin/abilities.txt
+// #base heroes/terrorblade/abilities.txt
+// #base heroes/tidehunter/abilities.txt
+// #base heroes/timbersaw/abilities.txt
+// #base heroes/tinker/abilities.txt
+// #base heroes/treant/abilities.txt
+// #base heroes/tusk/abilities.txt
+// #base heroes/undying/abilities.txt
+// #base custom_heroes/vardor/abilities.txt
+// #base heroes/visage/abilities.txt
+// #base heroes/viper/abilities.txt
+// #base heroes/void_spirit/abilities.txt
+// #base heroes/weaver/abilities.txt
+// #base heroes/windranger/abilities.txt
+// #base heroes/winter_wyvern/abilities.txt
+// #base heroes/wisp/abilities.txt
+// #base heroes/zeus/abilities.txt
 
 "DOTAAbilities"
 {
@@ -4769,521 +4770,6 @@
 			{
 				"var_type"		"FIELD_INTEGER"
 				"value"			"35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Enigma's Malefice
-	//=================================================================================================================
-	"imba_enigma_malefice"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"enigma_malefice"		
-		"ScriptFile"      				"components/abilities/heroes/hero_enigma"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
-			"particle"					"particles/status_fx/status_effect_enigma_malefice.vpcf"
-			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"	
-		}		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"pull_delay"				"0.4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pull_strength" 		"100 140 200 280"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_bonus_duration_percent" 		"25"
-			}		
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"health_bonus_duration"				"2"
-			}														
-		}
-	}
-
-	//=================================================================================================================
-	// Enigma's Demonic Conversion
-	//=================================================================================================================
-	"imba_enigma_demonic_conversion"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"enigma_demonic_conversion"
-		"MaxLevel"   				    "4"
-		"ScriptFile"     			    "components/abilities/heroes/hero_enigma"    
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
-		}		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"35"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"child_duration"			"8"
-			}
-			"03"
-			{
-				"var_type"      			"FIELD_INTEGER"
-				"shard_percentage" 			"5 10 15 20"
-			}
-			"04"
-			{
-				"var_type"     				"FIELD_FLOAT"
-				"increased_mass_duration" 	"2.5"
-			}
-			"05"
-			{
-				"var_type"     				"FIELD_INTEGER"
-				"increased_mass_pull_pct" 	"7"
-			}
-			"06"
-			{
-				"var_type"     				"FIELD_INTEGER"
-				"additional_attacks_split"	"6"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Enigma's Midnight Pulse
-	//=================================================================================================================
-	"imba_enigma_midnight_pulse"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"enigma_midnight_pulse"		
-		"ScriptFile" 					"components/abilities/heroes/hero_enigma"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
-			"particle"					"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastAnimation"			"ACT_DOTA_MIDNIGHT_PULSE"
-		"AOERadius"						"550"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pull_strength"				"45 65 85 105"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"pull_duration"				"1"
-			}
-			"03"
-			{
-				"var_type"     				"FIELD_INTEGER"
-				"eidolon_hp_regen"			"20 30 40 50"
-			}
-		}
-	}	
-
-	//=================================================================================================================
-	// Enigma's Black Hole
-	//=================================================================================================================
-	"imba_enigma_black_hole"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_lua"
-		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"					"2"
-		"AbilityTextureName"				"enigma_black_hole"		
-		"ScriptFile"        				"components/abilities/heroes/hero_enigma"
-		"HasShardUpgrade"					"1"
-		"HasScepterUpgrade"					"1"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
-			"particle"						"particles/units/heroes/hero_enigma/enigma_blackhole_target.vpcf"
-			"particle"						"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
-			"particle"						"particles/econ/items/enigma/enigma_world_chasm/status_effect_enigma_blackhole_tgt_ti5.vpcf"
-			"particle"						"particles/status_fx/status_effect_enigma_blackhole_tgt.vpcf"
-			"particle"						"particles/hero/enigma/screen_blackhole_indicator.vpcf"
-			"particle"						"particles/hero/enigma/enigma_blackhole_scaleable.vpcf"
-			"particle"						"particles/hero/enigma/enigma_blackhole_ti5_scaleable.vpcf"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------		
-		"AOERadius"							"420"
-		"AbilityChannelTime"				"4.0"
-		"AbilityChannelAnimation"			"ACT_DOTA_CHANNEL_ABILITY_4"
-		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pull_radius"				"1200"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_pull_power" 			"75"			
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pull_strength" 			"75 105 140"			
-			}
-			"05"
-			{
-				"var_type" 										"FIELD_INTEGER"
-				"singularity_stun_radius_increment_per_stack" 	"20"
-			}
-			"06"
-			{
-				"var_type" 				"FIELD_INTEGER"
-				"cast_range" 			"275"
-				"LinkedSpecialBonus"	"special_bonus_imba_enigma_5"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"singularity_cap"		"50"
-			}
-			"08"
-			{
-				"var_type" 					"FIELD_INTEGER"
-				"singularity_pull_radius_increment_per_stack" "40"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"interrupt_disable_loss_pct"	"70"
-			}
-			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"interrupt_manual_loss_pct"		"25"
-			}
-			"11"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"death_loss_pct"				"10"			
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Enigma Talents
-	//=================================================================================================================
-	"special_bonus_imba_enigma_1"	// Each Singularity stack consumed now decreases Black Hole's cooldown
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_black_hole"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"6"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_2"	// Malefice has an AoE Radius
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_malefice"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"325"
-			}
-		}
-	}
-		
-	"special_bonus_imba_enigma_3"	// Midnight Pulse doubles its AoE over the duration.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_midnight_pulse"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_4"	// Black Hole cast on death
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_black_hole"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"3"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_5"	// +500 Black Hole cast range
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_malefice"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"500"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_6"	// +3 Eidolons
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_midnight_pulse"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"3"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_7"	// Magic immunity on spell cast
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_black_hole"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"1.0"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_8"	// Cast Eidolons on heroes
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_demonic_conversion"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_malefice_damage"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_malefice"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"100"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_demonic_conversion_attack_range"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"200"
 			}
 		}
 	}

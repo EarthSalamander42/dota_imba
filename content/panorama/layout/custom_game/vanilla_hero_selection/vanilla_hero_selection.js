@@ -5,7 +5,7 @@ var picked_heroes = [];
 var children_count = 0;
 
 	// $.Msg(herolist.hotdisabledlist)
-//	$.Msg(GridCategories)
+	// $.Msg(GridCategories)
 
 function InitHeroSelection()  {
 	// $.Msg("InitHeroSelection()")
@@ -34,8 +34,8 @@ function InitHeroSelection()  {
 
 	while (i < GridCategories.GetChildCount()) {
 		var HeroListContainer = GridCategories.GetChild(i).FindChildTraverse("HeroList");
-//		$.Msg(GridCategories.GetChild(i))
-//		$.Msg(HeroListContainer)
+		// $.Msg(GridCategories.GetChild(i))
+		// $.Msg(HeroListContainer)
 
 		for (var j = 0; j < HeroListContainer.GetChildCount(); j++) {
 			if (HeroListContainer.GetChild(j)) {
@@ -54,6 +54,7 @@ function InitHeroSelection()  {
 						hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
 					}
 
+					$.Msg(herolist)
 					if (herolist && herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
 						hero_panel.style.boxShadow = "inset #FF7800aa 0px 0px 2px 2px";
 						hero_panel.style.transitionDuration = '0.25s';

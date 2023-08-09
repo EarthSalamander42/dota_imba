@@ -1,0 +1,32 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Enigma
+	//=================================================================================================================
+	"npc_dota_hero_enigma"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_enigma_malefice"
+		"Ability2"					"imba_enigma_demonic_conversion"
+		"Ability3"					"imba_enigma_midnight_pulse"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_enigma_black_hole"
+
+		"Ability10"					"special_bonus_imba_enigma_demonic_conversion_attack_range"
+		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
+		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
+		"Ability13"					"special_bonus_imba_enigma_malefice_damage"
+		"Ability14"					"special_bonus_imba_enigma_5" // +500 Black Hole cast range
+		"Ability15"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
+		"Ability16"					"special_bonus_imba_enigma_2" // Malefice 325 AoE Radius
+		"Ability17"					"special_bonus_imba_enigma_4" // Black Hole cast on death
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_movement_speed_25"
+		// "Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 6 seconds.
+		// "Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
+	}
+}
