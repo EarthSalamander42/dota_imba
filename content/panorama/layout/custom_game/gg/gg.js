@@ -11,7 +11,7 @@ function GenerateGGTopBar(player, team, has_gg) {
 	}
 
 	// ERROR: find traverse of null when full team has gg
-	var TopBarHud = FindDotaHudElement(team_string + 'Player' + player).FindChildTraverse('SlantedContainerPanel');
+	var TopBarHud = GameUI.Utils.FindDotaHudElement(team_string + 'Player' + player).FindChildTraverse('SlantedContainerPanel');
 
 //	$.Msg(TopBarHud.FindChildTraverse("GGBar-" + player))
 //	$.Msg(has_gg)

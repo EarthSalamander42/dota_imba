@@ -7,7 +7,6 @@
 	</styles>
 
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/layout/custom_game/common/utils.js" />
 		<include src="file://{resources}/layout/custom_game/party_highlighter/party_highlighter.js" />
 		<include src="file://{resources}/scripts/custom_game/shared_scoreboard_updater.js" />

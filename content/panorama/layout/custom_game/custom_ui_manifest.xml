@@ -214,7 +214,7 @@
 		<CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
 		<!-- <CustomUIElement type="CustomGameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" /> -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud_hero_demo.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/demo/hud_hero_demo.xml" />
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ardm_precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg/gg.xml" /> 
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" /> -->
@@ -227,7 +227,6 @@
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/manifold_paradox.xml" /> -->
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" /> -->
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_plus_stats.xml" /> -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/icefrog_donators_popup.xml" />
 
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen_v2/dashboard_page_post_game.xml" />

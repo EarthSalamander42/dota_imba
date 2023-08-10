@@ -41,7 +41,5 @@ function SetFlyoutScoreboardVisible(bVisible) {
 
 	SetFlyoutScoreboardVisible(false);
 
-//	HideIMR($.GetContextPanel());
-
 	$.RegisterEventHandler("DOTACustomUI_SetFlyoutScoreboardVisible", $.GetContextPanel(), SetFlyoutScoreboardVisible);
 })();

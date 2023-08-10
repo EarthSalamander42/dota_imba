@@ -19,7 +19,7 @@ var nw_line_3;
 		return;
 	}
 
-	var PlusStats = FindDotaHudElement("stackable_side_panels").GetChild(1);
+	var PlusStats = GameUI.Utils.FindDotaHudElement("stackable_side_panels").GetChild(1);
 	var PlusContainer = PlusStats.FindChildTraverse("QuestStatusContainer");
 
 	PlusStats.style.opacity = 1;

@@ -5,7 +5,6 @@
 	</styles>
 
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/layout/custom_game/gg/gg.js" /> 
 	</scripts>
 	

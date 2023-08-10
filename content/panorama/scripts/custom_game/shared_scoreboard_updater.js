@@ -46,10 +46,6 @@ function LightenDarkenColor(col, amt) {
 	return (usePound?"#":"") + color;
 }
 
-function rnd(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 // =============================================================================
 // =============================================================================
 function _ScoreboardUpdater_SetTextSafe(panel, childName, textValue) {
@@ -198,20 +194,20 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 					// 	var bubblecount = 30;
 
 					// 	for (var i = 0; i <= bubblecount; i++) {
-					// 		var size = rnd(50, 80) / 10;
+					// 		var size = GameUI.Utils.rnd(50, 80) / 10;
 
 					// 		holder.BCreateChildren(
 					// 			'<Panel class="particle" style="background-color: ' + LightenDarkenColor(donator_color, 70) +
 					// 			';x:' +
-					// 			rnd(5, 90) +
+					// 			GameUI.Utils.rnd(5, 90) +
 					// 			"%; y:" +
-					// 			rnd(95, 85) +
+					// 			GameUI.Utils.rnd(95, 85) +
 					// 			"%;width:" +
 					// 			size +
 					// 			"px; height:" +
 					// 			size +
 					// 			"px;animation-delay: " +
-					// 			rnd(0, 40) / 10 +
+					// 			GameUI.Utils.rnd(0, 40) / 10 +
 					// 			's;" />'
 					// 		);
 					// 	}

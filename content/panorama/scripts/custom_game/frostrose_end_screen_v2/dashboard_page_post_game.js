@@ -104,20 +104,20 @@ function SetDonatorRow(panel, playerId, player_table) {
 						var bubblecount = 30;
 
 						for (var i = 0; i <= bubblecount; i++) {
-							var size = rnd(50, 80) / 10;
+							var size = GameUI.Utils.rnd(50, 80) / 10;
 
 							holder.BCreateChildren(
 								'<Panel class="particle" style="background-color: ' + LightenDarkenColor(donator_color, 70) +
 								';x:' +
-								rnd(5, 90) +
+								GameUI.Utils.rnd(5, 90) +
 								"%; y:" +
-								rnd(95, 85) +
+								GameUI.Utils.rnd(95, 85) +
 								"%;width:" +
 								size +
 								"px; height:" +
 								size +
 								"px;animation-delay: " +
-								rnd(0, 40) / 10 +
+								GameUI.Utils.rnd(0, 40) / 10 +
 								's;" />'
 							);
 						}
@@ -723,7 +723,7 @@ function ResetEndScoreboardPanels() {
 
 	$("#ContainerLoading").style.opacity = "1";
 	// Show loading panel
-	FindDotaHudElement("topbar").style.visibility = "collapse";
+	GameUI.Utils.FindDotaHudElement("topbar").style.visibility = "collapse";
 	$.GetContextPanel().AddClass("MatchDataLoading");
 	$.Schedule(0.0, function() {
 		if ($.GetContextPanel().BHasClass("MatchDataLoading")) {

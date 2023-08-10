@@ -17,10 +17,10 @@ local split = function(inputstr, sep)
 end
 
 function CustomTooltips:GetIMBAValue(value)
-	print("GetIMBAValue", value, type(value))
+	-- print("GetIMBAValue", value, type(value))
 	if value then
 		if type(value) == "string" then
-			value = tonumber(value)
+			value = math.round(tonumber(value))
 		end
 
 		-- if type(value) == "number" then
@@ -30,13 +30,17 @@ function CustomTooltips:GetIMBAValue(value)
 		if type(value) == "table" and value["value"] and type(value["value"]) == "string" then
 			value["value"] = split(value["value"], " ")
 
+			for k, v in pairs(value["value"]) do
+				v = math.round(tonumber(v))
+			end
+
 			-- for k, v in pairs(value["value"]) do
 			-- 	if v then
 			-- 		value["value"][k] = tonumber(v) * (100 + IMBAFIED_VALUE_BONUS) / 100
 			-- 	end
 			-- end
 
-			print("GetIMBAValue", value, type(value))
+			-- print("GetIMBAValue", value, type(value))
 			value["value"] = table.concat(value["value"], " ")
 		end
 	end
@@ -71,7 +75,6 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		hero = EntIndexToHScript(keys.iSelectedEntIndex)
 	end
 
-	local ability_values = {}
 	local specials = GetAbilitySpecials(ability_name, true)
 	local imba_specials = GetAbilitySpecials("imba_" .. ability_name)
 	local specials_issued = {}

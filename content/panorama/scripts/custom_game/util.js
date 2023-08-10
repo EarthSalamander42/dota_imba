@@ -1,111 +1,179 @@
-var Util_Func = {};
-
-var HudNotFoundException = /** @class */
 (function() {
-	function HudNotFoundException(message) {
-		this.message = message;
+	InitGlobalUtilFuncs();
+
+	if (Game.IsInToolsMode() && Game.GameStateIsAfter(8)) {
+		InitIngameGlobalUtils();
 	}
-	return HudNotFoundException;
 }());
 
-function GetDotaHud() {
-	var p = $.GetContextPanel();
-	try {
-		while (true) {
-			if (p.id === "Hud")
-				return p;
-			else
-				p = p.GetParent();
-		}
-	} catch (e) {}
-}
+function InitGlobalUtilFuncs() {
+	var Utils = {
+		unitsByName: {},
+		GetDotaHud: function () {
+			var panel = $.GetContextPanel();
+			while (panel && panel.id !== 'Hud') {
+				panel = panel.GetParent();
+			}
 
-/**
- * Takes an array-like table passed from Lua that has stringified indices
- * starting from 1 and returns an array of type T containing the elements of the
- * table. Order of elements is preserved.
- */
-function LuaTableToArray(table) {
-	var array = [];
+			if (!panel) {
+				throw new Error('Could not find Hud root from panel with id: ' + $.GetContextPanel().id);
+			}
 
-	for (var i = 1; table[i.toString()] !== undefined; i++) {
-		array.push(table[i.toString()]);
-	}
+			return panel;
+		},
 
-	return array;
-}
+		FindDotaHudElement: function (id) {
+			return Utils.GetDotaHud().FindChildTraverse(id);
+		},
 
-/**
- * Takes an integer and returns a hex code string of the color represented by
- * the integer
- */
-function ColorToHexCode(color) {
-	var red = (color & 0xff).toString(16);
-	var green = ((color & 0xff00) >> 8).toString(16);
-	var blue = ((color & 0xff0000) >> 16).toString(16);
+		RawTimetoGameTime: function (time, bMilliSecs) {
+			var millisecs_decimals = 2;
+			
+			if (bMilliSecs) {
+				time = time.toFixed(millisecs_decimals);
+			}
 
-	return '#' + red + green + blue;
-}
+			var millisecs = time.toString().slice(-millisecs_decimals);
+			var sec = Math.floor(time % 60);
+			var min = Math.floor(time / 60);
 
-function ColoredText(colorCode, text) {
-	return '<font color="' + colorCode + '">' + text + '</font>';
-}
+			var timerText = min + ':';
 
-/*
- * Credits: Gafu Ji (not working atm needs to be fixed)
- */
+			if (sec < 10) {
+				timerText += '0';
+			}
 
-/*
-function IsDonator(ID) {
-	if (var donators = CustomNetTables.GetTableValue("game_options", "donators")) {
-		var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
-		// Assuming donators is an array
-		if (donators.indexOf(local_steamid) > -1) {
-			return true;
-		}
-	}
-	return false;
-}
-*/
+			timerText += sec;
 
-/* Credits: EarthSalamander #42 */
-function IsDonator(ID) {
-	var i = 0
-	if (CustomNetTables.GetTableValue("game_options", "donators") == undefined) {
-		return false;
-	}
+			if (bMilliSecs) {
+				timerText += '.';
 
-	var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
-	var donators = CustomNetTables.GetTableValue("game_options", "donators");
+				if (millisecs < 10) {
+					timerText += '0';
+				}
 
-	for (var key in donators) {
-		var steamid = key;
-		var status = donators[key];
-		if (local_steamid === steamid && status != 1 || status != 2)
-			return status;
-	}
+				timerText += millisecs;
+			}
 
-	return false;
-}
+			return timerText;
+		},
 
-function IsDeveloper(ID) {
-	var i = 0
-	if (CustomNetTables.GetTableValue("game_options", "donators") == undefined) {
-		return false;
-	}
-
-	var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
-	var developers = CustomNetTables.GetTableValue("game_options", "donators");
+		GetBuffIDByName: function (selectedEntityID, buff_name, ability_name) {
+			var num_buffs = Entities.GetNumBuffs(selectedEntityID);
 		
-	for (var key in developers) {
-		var steamid = developers[key].steamid;
-		var status = developers[key].status;
-		if (local_steamid === steamid && status == 1 || status == 2)
-			return true;
+			if (num_buffs) {
+				for (var i = 0; i <= num_buffs + 100; i++) {
+					var buff = Buffs.GetName(selectedEntityID, i);
+			
+					if (buff && buff == buff_name) {
+						if (ability_name) {
+							if (Abilities.GetAbilityName(Buffs.GetAbility(selectedEntityID, i)) == ability_name) {
+								return i;
+							}
+						} else {
+							return i;
+						}
+					}
+				}
+			}
+
+			return false;
+		},
+
+		isInt: function (n) {
+			return n % 1 === 0;
+		},
+
+		isFloat: function (n) {
+			return Number(n) === n && n % 1 !== 0;
+		},
+
+		bit_band: function (iBehavior, iBitCheck) {
+			return iBehavior & iBitCheck;
+		},
+
+		setHTMLNewLine: function (text) {
+			while (text.indexOf('\n') !== -1) {
+				$.Msg(text);
+				text = text.replace('\n', '<br>');
+			}
+
+			return text;
+		},
+
+		custom_Round: function (num, numDecimalPlaces) {
+			var mult = Math.pow(10, numDecimalPlaces || 0);
+			return Math.round(num * mult) / mult;
+		},
+
+		rnd: function (min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
 	}
 
-	return false;
+	GameUI.Utils = Utils;
 }
+
+function InitIngameGlobalUtils() {
+	FixIllusionRemainingTime();
+	FixHTMLUnitName();
+	
+}
+
+function FixIllusionRemainingTime() {
+	const center_block = GameUI.Utils.FindDotaHudElement("center_block");
+
+	if (center_block) {
+		const xp = center_block.FindChildTraverse("xp");
+
+		if (xp) {
+			xp.style.marginLeft = "0px";
+		} else {
+			$.Schedule(1.0, FixIllusionRemainingTime);
+		}
+	} else {
+		$.Schedule(1.0, FixIllusionRemainingTime);
+	}
+}
+
+function FixHTMLUnitName() {
+	$.Msg("FixHTMLUnitName");
+	const center_block = GameUI.Utils.FindDotaHudElement("center_block");
+
+	if (center_block) {
+		const unitname = center_block.FindChildTraverse("UnitNameLabel");
+
+		if (unitname) {
+			unitname.html = true;
+		} else {
+			$.Schedule(1.0, FixHTMLUnitName);
+		}
+	} else {
+		$.Schedule(1.0, FixHTMLUnitName);
+	}
+}
+
+// function ColoredText(colorCode, text) {
+// 	return '<font color="' + colorCode + '">' + text + '</font>';
+// }
+
+// function IsDeveloper(ID) {
+// 	if (CustomNetTables.GetTableValue("game_options", "donators") == undefined) {
+// 		return false;
+// 	}
+
+// 	var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
+// 	var developers = CustomNetTables.GetTableValue("game_options", "donators");
+		
+// 	for (var key in developers) {
+// 		var steamid = developers[key].steamid;
+// 		var status = developers[key].status;
+// 		if (local_steamid === steamid && status == 1 || status == 2)
+// 			return true;
+// 	}
+
+// 	return false;
+// }
 
 // Somehow called multiple times, creating many panels for nothing
 function OverrideTopBarHeroImage(args) {
@@ -115,7 +183,7 @@ function OverrideTopBarHeroImage(args) {
 		team = "Dire"
 	}
 
-	var panel = FindDotaHudElement(team + "Player" + args.player_id).FindChildTraverse("HeroImage")
+	var panel = GameUI.Utils.FindDotaHudElement(team + "Player" + args.player_id).FindChildTraverse("HeroImage")
 	var newheroimage = $.CreatePanel('Panel', panel, '');
 	newheroimage.style.width = "100%";
 	newheroimage.style.height = "100%";
@@ -126,8 +194,8 @@ function OverrideTopBarHeroImage(args) {
 GameEvents.Subscribe("override_hero_image", OverrideTopBarHeroImage);
 
 /*
-if (FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")) {
-	var panel =  FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
+if (GameUI.Utils.FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")) {
+	var panel =  GameUI.Utils.FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
 	$.Msg(panel)
 	OverrideHeroImage("0", panel, "lina")
 }
@@ -144,8 +212,7 @@ function OverrideTopBarColor() {
 				team = "Dire"
 			}
 
-			var panel = FindDotaHudElement(team + "Player" + id)
-	//		$.Msg(id)
+			var panel = GameUI.Utils.FindDotaHudElement(team + "Player" + id)
 
 			if (panel)
 				panel.FindChildTraverse('PlayerColor').style.backgroundColor = colors[id];
@@ -155,100 +222,21 @@ function OverrideTopBarColor() {
 
 GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);
 
-// Mutation tooltips (used in mutation.js and hero_selection.js)
-var mutation = [];
-
-function Mutation(args) {
-	mutation[0] = args["imba"]
-	mutation[1] = args["positive"]
-	mutation[2] = args["negative"]
-	mutation[3] = args["terrain"]
-
-	if ($("#Mutations"))
-	{
-		$("#Mutations").style.visibility = "visible";
-
-		for (var j = 0; j <= 3; j++) {
-			SetMutationTooltip(j)
-		}
-	}
-}
-
-function SetMutationTooltip(j) {
-	var panel = $("#Mutation" + j)
-//	$.Msg(panel)
-
-	$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]);
-
-	panel.SetPanelEvent("onmouseover", function () {
-		$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("mutation_" + mutation[j] + "_Description"));
-	})
-
-	panel.SetPanelEvent("onmouseout", function () {
-		$.DispatchEvent("UIHideTextTooltip", panel);
-	})
-}
-
-GameEvents.Subscribe("send_mutations", Mutation);
-
-// temporary
-function DonatorStatusConverter(new_status) {
-	if (new_status == 6)
-		return 1;
-	else if (new_status == 5)
-		return 2;
-	else if (new_status == 4)
-		return 3;
-	else if (new_status == 7)
-		return 4;
-	else if (new_status == 8)
-		return 5;
-	else if (new_status == 9)
-		return 6;
-	else if (new_status == 1)
-		return 102;
-	else if (new_status == 2)
-		return 101;
-	else if (new_status == 3)
-		return 100;
-}
-
-function DonatorStatusConverterReverse(new_status) {
-	if (new_status == 1)
-		return 6;
-	else if (new_status == 2)
-		return 5;
-	else if (new_status == 3)
-		return 4;
-	else if (new_status == 4)
-		return 7;
-	else if (new_status == 5)
-		return 8;
-	else if (new_status == 6)
-		return 9;
-	else if (new_status == 100)
-		return 3;
-	else if (new_status == 101)
-		return 2;
-	else if (new_status == 102)
-		return 1;
-}
-
-GameEvents.Subscribe("toggle_ui", ToggleUI);
-
 var toggle_ui = true;
 
 function ToggleUI() {
 	if (toggle_ui == true) {
-		FindDotaHudElement("HUDElements").style.visibility = "collapse";
-		FindDotaHudElement("CustomUIRoot").style.visibility = "collapse";
+		GameUI.Utils.FindDotaHudElement("HUDElements").style.visibility = "collapse";
+		GameUI.Utils.FindDotaHudElement("CustomUIRoot").style.visibility = "collapse";
 		toggle_ui = false;
 	} else {
-		FindDotaHudElement("HUDElements").style.visibility = "visible";
-		FindDotaHudElement("CustomUIRoot").style.visibility = "visible";
+		GameUI.Utils.FindDotaHudElement("HUDElements").style.visibility = "visible";
+		GameUI.Utils.FindDotaHudElement("CustomUIRoot").style.visibility = "visible";
 		toggle_ui = true;
 	}
 }
+
+GameEvents.Subscribe("toggle_ui", ToggleUI);
 
 function SetupLoadingScreen(args) {
 //	$.Msg("Setup loading screen!");
@@ -313,111 +301,27 @@ function SetupLoadingScreen(args) {
 	}
 }
 
-function FindDotaHudElement(id) {
-	return GetDotaHud().FindChildTraverse(id);
-}
+// function GetDonatorColor(status) {
+// 	// lua donator status are still using old numbers
+// 	//	var donator_colors = CustomNetTables.GetTableValue("game_options", "donator_colors")
+// 	//	$.Msg("Donator colors:")
+// 	//	$.Msg(donator_colors)
 
-function GetDonatorColor(status) {
-	// lua donator status are still using old numbers
-	//	var donator_colors = CustomNetTables.GetTableValue("game_options", "donator_colors")
-	//	$.Msg("Donator colors:")
-	//	$.Msg(donator_colors)
+// 	// Placeholder
+// 	var donator_colors = [];
+// 	donator_colors[1] = "#00CC00";
+// 	donator_colors[2] = "#DAA520";
+// 	donator_colors[3] = "#DC2828";
+// 	donator_colors[4] = "#993399";
+// 	donator_colors[5] = "#2F5B97";
+// 	donator_colors[6] = "#BB4B0A";
+// 	donator_colors[7] = "#871414";
+// 	donator_colors[100] = "#0066FF";
+// 	donator_colors[101] = "#641414";
+// 	donator_colors[102] = "#871414";
 
-	// Placeholder
-	var donator_colors = [];
-	donator_colors[1] = "#00CC00";
-	donator_colors[2] = "#DAA520";
-	donator_colors[3] = "#DC2828";
-	donator_colors[4] = "#993399";
-	donator_colors[5] = "#2F5B97";
-	donator_colors[6] = "#BB4B0A";
-	donator_colors[7] = "#871414";
-	donator_colors[100] = "#0066FF";
-	donator_colors[101] = "#641414";
-	donator_colors[102] = "#871414";
-
-	return donator_colors[status];
-}
-
-function isInt(n) {
-	return n % 1 === 0;
-}
-
-function isFloat(n) {
-	return Number(n) === n && n % 1 !== 0;
-}
-
-function SetHTMLNewLine(text) {
-	while (text.indexOf("\n") !== -1) {
-		text = text.replace("\n", "<br>");
-	}
-
-	return text;
-}
-
-function bit_band(iBehavior, iBitCheck) {
-	return iBehavior & iBitCheck;
-}
-
-function RawTimetoGameTime(time, bMilliSecs) {
-	var millisecs_decimals = 2;
-
-	if (bMilliSecs == true)
-		time = time.toFixed(millisecs_decimals);
-
-	var millisecs = time.toString().slice(-millisecs_decimals);
-	var sec = Math.floor( time % 60 );
-	var min = Math.floor( time / 60 );
-
-	var timerText = "";
-	timerText += min;
-	timerText += ":";
-
-	if (sec < 10) {
-		timerText += "0";
-	}
-
-	timerText += sec;
-
-	if (bMilliSecs == true) {
-		timerText += ".";
-
-		if (millisecs < 10) {
-			timerText += "0";
-		}
-
-		timerText += millisecs;
-	}
-
-	return timerText;
-}
-
-function HideIMR(panel) {
-	var map_info = Game.GetMapInfo();
-	var imr_panel = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr5v5");
-	var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr10v10");
-	var imr_panel_1v1 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr1v1");
-
-	var end_imr5v5 = panel.FindChildrenWithClassTraverse("es-legend-imr");
-	var end_imr10v10 = panel.FindChildrenWithClassTraverse("es-legend-imr10v10");
-	var end_imr1v1 = panel.FindChildrenWithClassTraverse("es-legend-imr1v1");
-
-	var show = function(panels) {
-		for ( var i in panels)
-			panels[i].style.visibility = "visible";
-	};
-
-	if (map_info.map_display_name == "ranked_5v5") {
-		show(imr_panel);
-		show(end_imr5v5);
-	} else if (map_info.map_display_name == "ranked_10v10") {
-		show(imr_panel_10v10);
-		show(end_imr10v10);
-	} else if (map_info.map_display_name == "ranked_1v1") {
-		show(imr_panel_1v1);
-		show(end_imr1v1);
-	}
-}
+// 	return donator_colors[status];
+// }
 
 function LightenDarkenColor(col, amt) {
 	var usePound = false;
@@ -457,67 +361,6 @@ function LightenDarkenColor(col, amt) {
 	return (usePound?"#":"") + color;
 }
 
-function rnd(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 (function () {
 	GameEvents.Subscribe("setup_loading_screen", SetupLoadingScreen);
 })();
-
-/*
-// Credits: Nibuja
-
-//Check there are changes to buffs
-$.RegisterForUnhandledEvent("StyleClassesChanged", (panel) => {
-	const mainSelected = Players.GetLocalPlayerPortraitUnit();
-	if (panel === null) return;
-	const buffIndex = GetBuffIndexFromPanel(panel);
-
-		if (buffIndex) {
-			const buffID = GetBuffIDFromIndex(buffIndex, panel);
-		const buffName = Buffs.GetName(mainSelected, buffID);
-
-			//check if its the modifier you want
-		}
-});
-
-//Retrieves the index part from the id of a buff panel
-function GetBuffIndexFromPanel(panel) {
-	if (panel.paneltype === "DOTABuff") {
-		const parent = panel.GetParent();
-		if (parent !== undefined && parent.id === "buffs") {
-			return parseInt(panel.id.slice(4), 10);
-		}
-	}
-	return -1;
-}
-
-//Checks which buff id belongs to the according panel index
-function GetBuffIDFromIndex(buffIndex, panel) {
-	const mainSelected = Players.GetLocalPlayerPortraitUnit();
-	const buffList = panel.GetParent();
-	const buffCount = buffList.GetChildCount();
-	let maxBuffID = 0;
-	for (var i = buffCount - 1; i >= 0; i--) {
-		const buffPanel = buffList.GetChild(i);
-		if (!buffPanel.BHasClass("Hidden")) {
-			maxBuffID += 1;
-		}
-	}
-	let index = maxBuffID;
-	let buffID = 0;
-
-	for (var i = Entities.GetNumBuffs(mainSelected) - 1; i >= 0; i--) {
-		const buff = Entities.GetBuff(mainSelected, i);
-		if (!Buffs.IsHidden(mainSelected, buff)) {
-			index -= 1;
-		}
-		if (index == buffIndex) {
-			buffID = buff;
-			break;
-		}
-	}
-	return buffID;
-}
-*/

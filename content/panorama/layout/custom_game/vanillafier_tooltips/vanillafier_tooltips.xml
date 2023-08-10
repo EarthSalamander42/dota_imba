@@ -1,6 +1,5 @@
 <root>
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/layout/custom_game/vanillafier_tooltips/vanillafier_tooltips.js" /> 
 	</scripts>
 

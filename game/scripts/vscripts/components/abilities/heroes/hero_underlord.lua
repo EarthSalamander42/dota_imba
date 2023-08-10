@@ -2,15 +2,15 @@
 -- IMBAfication by EarthSalamander. Date 13/06/2021
 --------------------------------------------------------------------------------
 imba_abyssal_underlord_firestorm = imba_abyssal_underlord_firestorm or class(VANILLA_ABILITIES_BASECLASS)
-LinkLuaModifier( "modifier_imba_abyssal_underlord_firestorm", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_firestorm_thinker", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_blizzard", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_imba_abyssal_underlord_firestorm", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_firestorm_thinker", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_blizzard", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Custom KV
 -- AOE Radius
 function imba_abyssal_underlord_firestorm:GetAOERadius()
-	return self:GetVanillaAbilitySpecial( "radius" )
+	return self:GetVanillaAbilitySpecial("radius")
 end
 
 --------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ end
 function imba_abyssal_underlord_firestorm:OnAbilityPhaseStart()
 	local point = self:GetCursorPosition()
 
-	self:PlayEffects( point )
+	self:PlayEffects(point)
 
 	return true -- if success
 end
@@ -40,10 +40,10 @@ function imba_abyssal_underlord_firestorm:OnSpellStart()
 
 	-- create thinker
 	CreateModifierThinker(
-		caster, -- player source
-		self, -- ability source
+		caster,                                        -- player source
+		self,                                          -- ability source
 		"modifier_imba_abyssal_underlord_firestorm_thinker", -- modifier name
-		{}, -- kv
+		{},                                            -- kv
 		point,
 		caster:GetTeamNumber(),
 		false
@@ -51,26 +51,26 @@ function imba_abyssal_underlord_firestorm:OnSpellStart()
 end
 
 --------------------------------------------------------------------------------
-function imba_abyssal_underlord_firestorm:PlayEffects( point )
+function imba_abyssal_underlord_firestorm:PlayEffects(point)
 	-- Get Resources
 	local particle_cast = "particles/units/heroes/heroes_underlord/underlord_firestorm_pre.vpcf"
 	local sound_cast = "Hero_AbyssalUnderlord.Firestorm.Start"
 
 	-- get data
-	local radius = self:GetVanillaAbilitySpecial( "radius" )
+	local radius = self:GetVanillaAbilitySpecial("radius")
 
 	-- Create Particle
-	self.effect_cast = ParticleManager:CreateParticleForTeam( particle_cast, PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber() )
-	ParticleManager:SetParticleControl( self.effect_cast, 0, point )
-	ParticleManager:SetParticleControl( self.effect_cast, 1, Vector( 2, 2, 2 ) )
+	self.effect_cast = ParticleManager:CreateParticleForTeam(particle_cast, PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber())
+	ParticleManager:SetParticleControl(self.effect_cast, 0, point)
+	ParticleManager:SetParticleControl(self.effect_cast, 1, Vector(2, 2, 2))
 
 	-- Create Sound
-	EmitSoundOnLocationWithCaster( point, sound_cast, self:GetCaster() )
+	EmitSoundOnLocationWithCaster(point, sound_cast, self:GetCaster())
 end
 
 function imba_abyssal_underlord_firestorm:StopEffects()
-	ParticleManager:DestroyParticle( self.effect_cast, true )
-	ParticleManager:ReleaseParticleIndex( self.effect_cast )
+	ParticleManager:DestroyParticle(self.effect_cast, true)
+	ParticleManager:ReleaseParticleIndex(self.effect_cast)
 end
 
 --------------------------------------------------------------------------------
@@ -89,19 +89,19 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_firestorm_thinker:OnCreated( kv )
+function modifier_imba_abyssal_underlord_firestorm_thinker:OnCreated(kv)
 	self.caster = self:GetCaster()
 	self.parent = self:GetParent()
 	self.ability = self:GetAbility()
 
 	-- references
-	local damage = self.ability:GetVanillaAbilitySpecial( "wave_damage" )
-	local delay = self.ability:GetVanillaAbilitySpecial( "first_wave_delay" )
-	self.radius = self.ability:GetVanillaAbilitySpecial( "radius" )
-	self.count = self.ability:GetVanillaAbilitySpecial( "wave_count" )
-	self.interval = self.ability:GetVanillaAbilitySpecial( "wave_interval" )
+	local damage = self.ability:GetVanillaAbilitySpecial("wave_damage")
+	local delay = self.ability:GetVanillaAbilitySpecial("first_wave_delay")
+	self.radius = self.ability:GetVanillaAbilitySpecial("radius")
+	self.count = self.ability:GetVanillaAbilitySpecial("wave_count")
+	self.interval = self.ability:GetVanillaAbilitySpecial("wave_interval")
 
-	self.burn_duration = self.ability:GetVanillaAbilitySpecial( "burn_duration" )
+	self.burn_duration = self.ability:GetVanillaAbilitySpecial("burn_duration")
 
 	if not IsServer() then return end
 
@@ -119,11 +119,11 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:OnCreated( kv )
 	-- ApplyDamage(damageTable)
 
 	-- Start interval
-	self:StartIntervalThink( delay )
+	self:StartIntervalThink(delay)
 end
 
-function modifier_imba_abyssal_underlord_firestorm_thinker:OnRefresh( kv )
-	
+function modifier_imba_abyssal_underlord_firestorm_thinker:OnRefresh(kv)
+
 end
 
 function modifier_imba_abyssal_underlord_firestorm_thinker:OnRemoved()
@@ -131,7 +131,7 @@ end
 
 function modifier_imba_abyssal_underlord_firestorm_thinker:OnDestroy()
 	if not IsServer() then return end
-	UTIL_Remove( self:GetParent() )
+	UTIL_Remove(self:GetParent())
 end
 
 --------------------------------------------------------------------------------
@@ -139,28 +139,28 @@ end
 function modifier_imba_abyssal_underlord_firestorm_thinker:OnIntervalThink()
 	if not self.delayed then
 		self.delayed = true
-		self:StartIntervalThink( self.interval )
+		self:StartIntervalThink(self.interval)
 		self:OnIntervalThink()
 		return
 	end
 
 	-- find enemies
 	local enemies = FindUnitsInRadius(
-		self.caster:GetTeamNumber(),	-- int, your team number
-		self.parent:GetOrigin(),	-- point, center point
-		nil,	-- handle, cacheUnit. (not known)
-		self.radius,	-- float, radius. or use FIND_UNITS_EVERYWHERE
-		DOTA_UNIT_TARGET_TEAM_ENEMY,	-- int, team filter
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,	-- int, type filter
-		0,	-- int, flag filter
-		0,	-- int, order filter
-		false	-- bool, can grow cache
+		self.caster:GetTeamNumber(),              -- int, your team number
+		self.parent:GetOrigin(),                  -- point, center point
+		nil,                                      -- handle, cacheUnit. (not known)
+		self.radius,                              -- float, radius. or use FIND_UNITS_EVERYWHERE
+		DOTA_UNIT_TARGET_TEAM_ENEMY,              -- int, team filter
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, -- int, type filter
+		0,                                        -- int, flag filter
+		0,                                        -- int, order filter
+		false                                     -- bool, can grow cache
 	)
 
-	for _,enemy in pairs(enemies) do
+	for _, enemy in pairs(enemies) do
 		-- damage
 		self.damageTable.victim = enemy
-		ApplyDamage( self.damageTable )
+		ApplyDamage(self.damageTable)
 
 		local modifier_name = "modifier_imba_abyssal_underlord_firestorm"
 
@@ -169,7 +169,7 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:OnIntervalThink()
 			modifier_name = "modifier_imba_abyssal_underlord_blizzard"
 		end
 
---		local has_modifier = enemy:HasModifier(modifier_name)
+		--		local has_modifier = enemy:HasModifier(modifier_name)
 
 		-- add debuff
 		local modifier = enemy:AddNewModifier(
@@ -182,9 +182,9 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:OnIntervalThink()
 		)
 
 		-- apply 1 stack on first hit?
---		if has_modifier == false then
---			modifier:SetStackCount(1)
---		end
+		--		if has_modifier == false then
+		--			modifier:SetStackCount(1)
+		--		end
 	end
 
 	-- play effects
@@ -192,7 +192,7 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:OnIntervalThink()
 
 	-- count wave
 	self.wave = self.wave + 1
-	if self.wave>=self.count then
+	if self.wave >= self.count then
 		self:Destroy()
 	end
 end
@@ -205,13 +205,13 @@ function modifier_imba_abyssal_underlord_firestorm_thinker:PlayEffects()
 	local sound_cast = "Hero_AbyssalUnderlord.Firestorm"
 
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_WORLDORIGIN, nil )
-	ParticleManager:SetParticleControl( effect_cast, 0, self.parent:GetOrigin() )
-	ParticleManager:SetParticleControl( effect_cast, 4, Vector( self.radius, 0, 0 ) )
-	ParticleManager:ReleaseParticleIndex( effect_cast )
+	local effect_cast = ParticleManager:CreateParticle(particle_cast, PATTACH_WORLDORIGIN, nil)
+	ParticleManager:SetParticleControl(effect_cast, 0, self.parent:GetOrigin())
+	ParticleManager:SetParticleControl(effect_cast, 4, Vector(self.radius, 0, 0))
+	ParticleManager:ReleaseParticleIndex(effect_cast)
 
 	-- Create Sound
-	EmitSoundOn( sound_cast, self.parent )
+	EmitSoundOn(sound_cast, self.parent)
 end
 
 --------------------------------------------------------------------------------
@@ -238,7 +238,7 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_firestorm:OnCreated( kv )
+function modifier_imba_abyssal_underlord_firestorm:OnCreated(kv)
 	-- references
 	if not IsServer() then return end
 	self.damage_pct = (self:GetAbility():GetVanillaAbilitySpecial("burn_damage") + (self:GetAbility():GetSpecialValueFor("burn_damage_stack") * self:GetStackCount())) / 100
@@ -254,10 +254,10 @@ function modifier_imba_abyssal_underlord_firestorm:OnCreated( kv )
 	-- ApplyDamage(damageTable)
 
 	-- Start interval
-	self:StartIntervalThink(self:GetAbility():GetVanillaAbilitySpecial( "burn_interval" ))
+	self:StartIntervalThink(self:GetAbility():GetVanillaAbilitySpecial("burn_interval"))
 end
 
-function modifier_imba_abyssal_underlord_firestorm:OnRefresh( kv )
+function modifier_imba_abyssal_underlord_firestorm:OnRefresh(kv)
 	if not IsServer() then return end
 
 	self:IncrementStackCount()
@@ -284,7 +284,7 @@ function modifier_imba_abyssal_underlord_firestorm:OnIntervalThink()
 
 	-- apply damage
 	self.damageTable.damage = damage
-	ApplyDamage( self.damageTable )
+	ApplyDamage(self.damageTable)
 end
 
 --------------------------------------------------------------------------------
@@ -319,13 +319,15 @@ function modifier_imba_abyssal_underlord_blizzard:IsPurgable()
 	return true
 end
 
-function modifier_imba_abyssal_underlord_blizzard:DeclareFunctions() return {
-	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-} end
+function modifier_imba_abyssal_underlord_blizzard:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
+end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_blizzard:OnCreated( kv )
+function modifier_imba_abyssal_underlord_blizzard:OnCreated(kv)
 	-- references
 	self.slow = self:GetAbility():GetSpecialValueFor("blizzard_slow_percentage")
 
@@ -343,7 +345,7 @@ function modifier_imba_abyssal_underlord_blizzard:OnCreated( kv )
 	-- ApplyDamage(damageTable)
 end
 
-function modifier_imba_abyssal_underlord_blizzard:OnRefresh( kv )
+function modifier_imba_abyssal_underlord_blizzard:OnRefresh(kv)
 	if not IsServer() then return end
 
 	self:IncrementStackCount()
@@ -373,17 +375,17 @@ end
 
 --------------------------------------------------------------------------------
 imba_abyssal_underlord_pit_of_malice = imba_abyssal_underlord_pit_of_malice or class(VANILLA_ABILITIES_BASECLASS)
-LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice_cooldown", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice_thinker", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_imba_abyssal_underlord_pit_of_malice", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_pit_of_malice_cooldown", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_pit_of_malice_thinker", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_pit_of_malice_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Custom KV
 -- AOE Radius
 function imba_abyssal_underlord_pit_of_malice:GetAOERadius()
-	return self:GetVanillaAbilitySpecial( "radius" )
+	return self:GetVanillaAbilitySpecial("radius")
 end
 
 --------------------------------------------------------------------------------
@@ -391,15 +393,15 @@ end
 function imba_abyssal_underlord_pit_of_malice:OnAbilityPhaseStart()
 	-- create effects
 	self.point = self:GetCursorPosition()
-	self:PlayEffects( self.point, true )
+	self:PlayEffects(self.point, true)
 
 	return true -- if success
 end
+
 function imba_abyssal_underlord_pit_of_malice:OnAbilityPhaseInterrupted()
 	-- kill effect
-	ParticleManager:DestroyParticle( self.effect_cast, true )
-	ParticleManager:ReleaseParticleIndex( self.effect_cast )
-
+	ParticleManager:DestroyParticle(self.effect_cast, true)
+	ParticleManager:ReleaseParticleIndex(self.effect_cast)
 end
 
 --------------------------------------------------------------------------------
@@ -408,21 +410,21 @@ function imba_abyssal_underlord_pit_of_malice:OnSpellStart()
 	if not IsServer() then return end
 
 	-- release cast effect
-	ParticleManager:ReleaseParticleIndex( self.effect_cast )
+	ParticleManager:ReleaseParticleIndex(self.effect_cast)
 
 	-- unit identifier
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
 
 	-- load data
-	local duration = self:GetVanillaAbilitySpecial( "pit_duration" )
+	local duration = self:GetVanillaAbilitySpecial("pit_duration")
 
 	-- create thinker
 	CreateModifierThinker(
-		caster, -- player source
-		self, -- ability source
+		caster,                                            -- player source
+		self,                                              -- ability source
 		"modifier_imba_abyssal_underlord_pit_of_malice_thinker", -- modifier name
-		{ duration = duration }, -- kv
+		{ duration = duration },                           -- kv
 		point,
 		caster:GetTeamNumber(),
 		false
@@ -437,8 +439,8 @@ function imba_abyssal_underlord_pit_of_malice:AddTwistedRealityStack()
 	else
 		-- create cooldown modifier
 		self:GetCaster():AddNewModifier(
-			self:GetCaster(), -- player source
-			self, -- ability source
+			self:GetCaster(),                             -- player source
+			self,                                         -- ability source
 			"modifier_imba_abyssal_underlord_pit_of_malice_stack", -- modifier name
 			{
 				duration = self:GetVanillaAbilitySpecial("pit_increase_duration"),
@@ -450,13 +452,13 @@ function imba_abyssal_underlord_pit_of_malice:AddTwistedRealityStack()
 end
 
 --------------------------------------------------------------------------------
-function imba_abyssal_underlord_pit_of_malice:PlayEffects( point, bPlaySound )
+function imba_abyssal_underlord_pit_of_malice:PlayEffects(point, bPlaySound)
 	-- Get Resources
 	local particle_cast = "particles/units/heroes/heroes_underlord/underlord_pitofmalice_pre.vpcf"
 	local sound_cast = "Hero_AbyssalUnderlord.PitOfMalice.Start"
 
 	-- Get Data
-	local radius = self:GetVanillaAbilitySpecial( "radius" )
+	local radius = self:GetVanillaAbilitySpecial("radius")
 	local stack_modifier = self:GetCaster():FindModifierByName("modifier_imba_abyssal_underlord_pit_of_malice_stack")
 	local bonus_radius = self:GetSpecialValueFor("bonus_radius_per_stack")
 
@@ -464,15 +466,17 @@ function imba_abyssal_underlord_pit_of_malice:PlayEffects( point, bPlaySound )
 		radius = radius + (bonus_radius * stack_modifier:GetStackCount())
 	end
 
+	print("Current Pit of Malice radius:", radius)
+
 	-- Create Particle
-	self.effect_cast = ParticleManager:CreateParticleForTeam( particle_cast, PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber() )
-	ParticleManager:SetParticleControl( self.effect_cast, 0, point )
-	ParticleManager:SetParticleControl( self.effect_cast, 1, Vector( radius, 1, 1 ) )
+	self.effect_cast = ParticleManager:CreateParticleForTeam(particle_cast, PATTACH_WORLDORIGIN, self:GetCaster(), self:GetCaster():GetTeamNumber())
+	ParticleManager:SetParticleControl(self.effect_cast, 0, point)
+	ParticleManager:SetParticleControl(self.effect_cast, 1, Vector(radius, 1, 1))
 	-- ParticleManager:ReleaseParticleIndex( effect_cast )
 
 	-- Create Sound
 	if bPlaySound and bPlaySound == true then
-		EmitSoundOnLocationForAllies( point, sound_cast, self:GetCaster() )
+		EmitSoundOnLocationForAllies(point, sound_cast, self:GetCaster())
 	end
 end
 
@@ -495,26 +499,26 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_pit_of_malice_thinker:OnCreated( kv )
+function modifier_imba_abyssal_underlord_pit_of_malice_thinker:OnCreated(kv)
 	-- references
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
-	self.pit_damage = self:GetAbility():GetVanillaAbilitySpecial( "pit_damage" )
-	self.duration = self:GetAbility():GetVanillaAbilitySpecial( "ensnare_duration" )
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
+	self.pit_damage = self:GetAbility():GetVanillaAbilitySpecial("pit_damage")
+	self.duration = self:GetAbility():GetVanillaAbilitySpecial("ensnare_duration")
 
 	if not IsServer() then return end
 	self.caster = self:GetCaster()
 	self.parent = self:GetParent()
 
 	-- start interval
-	self:StartIntervalThink( 0.033 )
+	self:StartIntervalThink(0.033)
 	self:OnIntervalThink()
 
 	-- play effects
 	self:PlayEffects()
 end
 
-function modifier_imba_abyssal_underlord_pit_of_malice_thinker:OnRefresh( kv )
-	
+function modifier_imba_abyssal_underlord_pit_of_malice_thinker:OnRefresh(kv)
+
 end
 
 function modifier_imba_abyssal_underlord_pit_of_malice_thinker:OnRemoved()
@@ -528,7 +532,7 @@ end
 
 function modifier_imba_abyssal_underlord_pit_of_malice_thinker:OnDestroy()
 	if not IsServer() then return end
-	UTIL_Remove( self:GetParent() )
+	UTIL_Remove(self:GetParent())
 end
 
 --------------------------------------------------------------------------------
@@ -538,28 +542,28 @@ function modifier_imba_abyssal_underlord_pit_of_malice_thinker:OnIntervalThink()
 
 	-- find enemies
 	local enemies = FindUnitsInRadius(
-		self.caster:GetTeamNumber(),	-- int, your team number
-		self.parent:GetOrigin(),	-- point, center point
-		nil,	-- handle, cacheUnit. (not known)
-		self.radius,	-- float, radius. or use FIND_UNITS_EVERYWHERE
-		DOTA_UNIT_TARGET_TEAM_ENEMY,	-- int, team filter
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,	-- int, type filter
-		0,	-- int, flag filter
-		0,	-- int, order filter
-		false	-- bool, can grow cache
+		self.caster:GetTeamNumber(),              -- int, your team number
+		self.parent:GetOrigin(),                  -- point, center point
+		nil,                                      -- handle, cacheUnit. (not known)
+		self.radius,                              -- float, radius. or use FIND_UNITS_EVERYWHERE
+		DOTA_UNIT_TARGET_TEAM_ENEMY,              -- int, team filter
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, -- int, type filter
+		0,                                        -- int, flag filter
+		0,                                        -- int, order filter
+		false                                     -- bool, can grow cache
 	)
 
-	for _,enemy in pairs(enemies) do
+	for _, enemy in pairs(enemies) do
 		-- check if not cooldown
-		local modifier = enemy:FindModifierByNameAndCaster( "modifier_imba_abyssal_underlord_pit_of_malice_cooldown", self:GetCaster() )
+		local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_abyssal_underlord_pit_of_malice_cooldown", self:GetCaster())
 
 		if not modifier then
 			-- apply modifier
 			enemy:AddNewModifier(
-				self.caster, -- player source
-				self:GetAbility(), -- ability source
+				self.caster,                         -- player source
+				self:GetAbility(),                   -- ability source
 				"modifier_imba_abyssal_underlord_pit_of_malice", -- modifier name
-				{ duration = self.duration } -- kv
+				{ duration = self.duration }         -- kv
 			)
 
 			self:GetAbility():AddTwistedRealityStack()
@@ -620,7 +624,7 @@ function modifier_imba_abyssal_underlord_pit_of_malice_thinker:PlayEffects()
 
 	-- Get Data
 	local parent = self:GetParent()
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
 	local stack_modifier = self:GetCaster():FindModifierByName("modifier_imba_abyssal_underlord_pit_of_malice_stack")
 	local bonus_radius = self:GetAbility():GetSpecialValueFor("bonus_radius_per_stack")
 
@@ -634,13 +638,13 @@ function modifier_imba_abyssal_underlord_pit_of_malice_thinker:PlayEffects()
 	end
 
 	-- Create Particle
-	self.pfx = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, parent )
-	ParticleManager:SetParticleControl( self.pfx, 0, parent:GetOrigin() )
-	ParticleManager:SetParticleControl( self.pfx, 1, Vector( self.radius, 1, 1 ) )
-	ParticleManager:SetParticleControl( self.pfx, 2, Vector( self:GetDuration(), 0, 0 ) )
+	self.pfx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN_FOLLOW, parent)
+	ParticleManager:SetParticleControl(self.pfx, 0, parent:GetOrigin())
+	ParticleManager:SetParticleControl(self.pfx, 1, Vector(self.radius, 1, 1))
+	ParticleManager:SetParticleControl(self.pfx, 2, Vector(self:GetDuration(), 0, 0))
 
 	-- Create Sound
-	EmitSoundOn( sound_cast, parent )
+	EmitSoundOn(sound_cast, parent)
 end
 
 --------------------------------------------------------------------------------
@@ -649,9 +653,11 @@ modifier_imba_abyssal_underlord_pit_of_malice_cooldown = modifier_imba_abyssal_u
 --------------------------------------------------------------------------------
 modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls = modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls or class({})
 
-function modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls:DeclareFunctions() return {
-	MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
-} end
+function modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+	}
+end
 
 function modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls:GetModifierHPRegenAmplify_Percentage()
 	return self:GetAbility():GetSpecialValueFor("hp_regen_amp")
@@ -672,17 +678,17 @@ function modifier_imba_abyssal_underlord_pit_of_malice_cooldown:IsPurgable()
 end
 
 function modifier_imba_abyssal_underlord_pit_of_malice_cooldown:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE 
+	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_pit_of_malice_cooldown:OnCreated( kv )
+function modifier_imba_abyssal_underlord_pit_of_malice_cooldown:OnCreated(kv)
 
 end
 
-function modifier_imba_abyssal_underlord_pit_of_malice_cooldown:OnRefresh( kv )
-	
+function modifier_imba_abyssal_underlord_pit_of_malice_cooldown:OnRefresh(kv)
+
 end
 
 function modifier_imba_abyssal_underlord_pit_of_malice_cooldown:OnRemoved()
@@ -718,16 +724,16 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_pit_of_malice:OnCreated( kv )
+function modifier_imba_abyssal_underlord_pit_of_malice:OnCreated(kv)
 	-- references
-	local interval = self:GetAbility():GetVanillaAbilitySpecial( "pit_interval" )
+	local interval = self:GetAbility():GetVanillaAbilitySpecial("pit_interval")
 
 	if not IsServer() then return end
 
 	-- create cooldown modifier
 	self:GetParent():AddNewModifier(
-		self:GetCaster(), -- player source
-		self:GetAbility(), -- ability source
+		self:GetCaster(),                                   -- player source
+		self:GetAbility(),                                  -- ability source
 		"modifier_imba_abyssal_underlord_pit_of_malice_cooldown", -- modifier name
 		{
 			duration = interval,
@@ -742,11 +748,11 @@ function modifier_imba_abyssal_underlord_pit_of_malice:OnCreated( kv )
 		sound_cast = "Hero_AbyssalUnderlord.Pit.Target"
 	end
 
-	EmitSoundOn( sound_cast, self:GetParent() )
+	EmitSoundOn(sound_cast, self:GetParent())
 end
 
-function modifier_imba_abyssal_underlord_pit_of_malice:OnRefresh( kv )
-	
+function modifier_imba_abyssal_underlord_pit_of_malice:OnRefresh(kv)
+
 end
 
 function modifier_imba_abyssal_underlord_pit_of_malice:OnRemoved()
@@ -784,12 +790,12 @@ end
 
 --------------------------------------------------------------------------------
 imba_abyssal_underlord_atrophy_aura = imba_abyssal_underlord_atrophy_aura or class(VANILLA_ABILITIES_BASECLASS)
-LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_debuff", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_scepter", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_abyssal_underlord_atrophy_aura_active", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_imba_abyssal_underlord_atrophy_aura", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_atrophy_aura_debuff", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_atrophy_aura_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_atrophy_aura_scepter", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_abyssal_underlord_atrophy_aura_active", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Passive Modifier
@@ -812,17 +818,19 @@ end
 function imba_abyssal_underlord_atrophy_aura:OnSpellStart()
 	if not IsServer() then return end
 
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_abyssal_underlord_atrophy_aura_active", {duration = self:GetSpecialValueFor("active_duration")})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_abyssal_underlord_atrophy_aura_active", { duration = self:GetSpecialValueFor("active_duration") })
 end
 
 modifier_imba_abyssal_underlord_atrophy_aura_active = modifier_imba_abyssal_underlord_atrophy_aura_active or class({})
 
-function modifier_imba_abyssal_underlord_atrophy_aura_active:DeclareFunctions() return {
-	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-	MODIFIER_EVENT_ON_ATTACK_LANDED,
-	MODIFIER_PROPERTY_TOOLTIP,
-	MODIFIER_PROPERTY_TOOLTIP2,
-} end
+function modifier_imba_abyssal_underlord_atrophy_aura_active:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_TOOLTIP,
+		MODIFIER_PROPERTY_TOOLTIP2,
+	}
+end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_active:OnCreated()
 	if not IsServer() then return end
@@ -847,9 +855,11 @@ function modifier_imba_abyssal_underlord_atrophy_aura_active:OnCreated()
 	ParticleManager:SetParticleControl(self.pfx, 1, Vector(0, self.attack_count, 0))
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura_active:AddCustomTransmitterData() return {
-	attack_count = self.attack_count,
-} end
+function modifier_imba_abyssal_underlord_atrophy_aura_active:AddCustomTransmitterData()
+	return {
+		attack_count = self.attack_count,
+	}
+end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_active:HandleCustomTransmitterData(data)
 	self.attack_count = data.attack_count
@@ -926,34 +936,34 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_atrophy_aura:OnCreated( kv )
+function modifier_imba_abyssal_underlord_atrophy_aura:OnCreated(kv)
 	-- references
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
-	self.hero_bonus = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_from_hero" )
-	self.creep_bonus = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_from_creep" )
-	self.bonus = self:GetAbility():GetSpecialValueFor( "permanent_bonus" )
-	self.duration = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_duration" )
-	self.duration_scepter = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_duration_scepter" )
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
+	self.hero_bonus = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_from_hero")
+	self.creep_bonus = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_from_creep")
+	self.bonus = self:GetAbility():GetSpecialValueFor("permanent_bonus")
+	self.duration = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_duration")
+	self.duration_scepter = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_duration_scepter")
 
 	if not IsServer() then return end
 
 	-- create scepter modifier
 	self.scepter_aura = self:GetParent():AddNewModifier(
-		self:GetParent(), -- player source
-		self:GetAbility(), -- ability source
+		self:GetParent(),                                 -- player source
+		self:GetAbility(),                                -- ability source
 		"modifier_imba_abyssal_underlord_atrophy_aura_scepter", -- modifier name
-		{} -- kv
+		{}                                                -- kv
 	)
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura:OnRefresh( kv )
+function modifier_imba_abyssal_underlord_atrophy_aura:OnRefresh(kv)
 	-- references
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
-	self.hero_bonus = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_from_hero" )
-	self.creep_bonus = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_from_creep" )
-	self.bonus = self:GetAbility():GetSpecialValueFor( "permanent_bonus" )
-	self.duration = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_duration" )
-	self.duration_scepter = self:GetAbility():GetVanillaAbilitySpecial( "bonus_damage_duration_scepter" )
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
+	self.hero_bonus = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_from_hero")
+	self.creep_bonus = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_from_creep")
+	self.bonus = self:GetAbility():GetSpecialValueFor("permanent_bonus")
+	self.duration = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_duration")
+	self.duration_scepter = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_duration_scepter")
 
 	if not IsServer() then return end
 
@@ -972,14 +982,14 @@ end
 function modifier_imba_abyssal_underlord_atrophy_aura:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_DEATH,
-		
+
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 	}
 
 	return funcs
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura:OnDeath( params )
+function modifier_imba_abyssal_underlord_atrophy_aura:OnDeath(params)
 	if not IsServer() then return end
 	local parent = self:GetParent()
 
@@ -990,7 +1000,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura:OnDeath( params )
 	if params.unit:IsIllusion() then return end
 
 	-- check if has modifier
-	if not params.unit:FindModifierByNameAndCaster( "modifier_imba_abyssal_underlord_atrophy_aura_debuff", parent ) then return end
+	if not params.unit:FindModifierByNameAndCaster("modifier_imba_abyssal_underlord_atrophy_aura_debuff", parent) then return end
 
 	local hero = params.unit:IsHero()
 	local bonus
@@ -1009,28 +1019,28 @@ function modifier_imba_abyssal_underlord_atrophy_aura:OnDeath( params )
 	end
 
 	-- add stack
-	self:SetStackCount( self:GetStackCount() + bonus )
+	self:SetStackCount(self:GetStackCount() + bonus)
 
 	-- add expire modifier
 	local modifier = parent:AddNewModifier(
-		parent, -- player source
-		self:GetAbility(), -- ability source
+		parent,                                         -- player source
+		self:GetAbility(),                              -- ability source
 		"modifier_imba_abyssal_underlord_atrophy_aura_stack", -- modifier name
-		{ duration = duration } -- kv
+		{ duration = duration }                         -- kv
 	)
 	modifier.parent = self
 	modifier.bonus = bonus
 
 	-- add duration
-	self:SetDuration( self.duration, true )
+	self:SetDuration(self.duration, true)
 
 	-- add permanent bonus if hero
 	if hero then
 		parent:AddNewModifier(
-			parent, -- player source
-			self:GetAbility(), -- ability source
+			parent,                                                -- player source
+			self:GetAbility(),                                     -- ability source
 			"modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack", -- modifier name
-			{ bonus = self.bonus } -- kv
+			{ bonus = self.bonus }                                 -- kv
 		)
 	end
 end
@@ -1041,8 +1051,8 @@ end
 
 --------------------------------------------------------------------------------
 -- helper
-function modifier_imba_abyssal_underlord_atrophy_aura:RemoveStack( value )
-	self:SetStackCount( self:GetStackCount() - value )
+function modifier_imba_abyssal_underlord_atrophy_aura:RemoveStack(value)
+	self:SetStackCount(self:GetStackCount() - value)
 end
 
 --------------------------------------------------------------------------------
@@ -1079,9 +1089,9 @@ function modifier_imba_abyssal_underlord_atrophy_aura:IsAuraActiveOnDeath()
 	return false
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura:GetAuraEntityReject( hEntity )
+function modifier_imba_abyssal_underlord_atrophy_aura:GetAuraEntityReject(hEntity)
 	if IsServer() then
-		if hEntity==self:GetCaster() then return true end
+		if hEntity == self:GetCaster() then return true end
 	end
 
 	return false
@@ -1109,21 +1119,21 @@ function modifier_imba_abyssal_underlord_atrophy_aura_debuff:IsPurgable()
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_debuff:GetAttributes()
-	return MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE 
+	return MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
 end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_atrophy_aura_debuff:OnCreated( kv )
+function modifier_imba_abyssal_underlord_atrophy_aura_debuff:OnCreated(kv)
 	-- references
-	self.reduction = self:GetAbility():GetVanillaAbilitySpecial( "damage_reduction_pct" )
+	self.reduction = self:GetAbility():GetVanillaAbilitySpecial("damage_reduction_pct")
 
 	if not IsServer() then return end
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura_debuff:OnRefresh( kv )
+function modifier_imba_abyssal_underlord_atrophy_aura_debuff:OnRefresh(kv)
 	-- references
-	self.reduction = self:GetAbility():GetVanillaAbilitySpecial( "damage_reduction_pct" )	
+	self.reduction = self:GetAbility():GetVanillaAbilitySpecial("damage_reduction_pct")
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_debuff:OnRemoved()
@@ -1142,7 +1152,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura_debuff:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura_debuff:GetModifierBaseDamageOutgoing_Percentage( params )
+function modifier_imba_abyssal_underlord_atrophy_aura_debuff:GetModifierBaseDamageOutgoing_Percentage(params)
 	return -self.reduction
 end
 
@@ -1173,14 +1183,14 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack:OnCreated( kv )
+function modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack:OnCreated(kv)
 	if not IsServer() then return end
-	self:SetStackCount( kv.bonus )
+	self:SetStackCount(kv.bonus)
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack:OnRefresh( kv )
+function modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack:OnRefresh(kv)
 	if not IsServer() then return end
-	self:SetStackCount( self:GetStackCount() + kv.bonus )
+	self:SetStackCount(self:GetStackCount() + kv.bonus)
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack:OnRemoved()
@@ -1209,7 +1219,7 @@ modifier_imba_abyssal_underlord_atrophy_aura_scepter = modifier_imba_abyssal_und
 --------------------------------------------------------------------------------
 -- Classifications
 function modifier_imba_abyssal_underlord_atrophy_aura_scepter:IsHidden()
-	return self:GetStackCount()==0
+	return self:GetStackCount() == 0
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_scepter:IsDebuff()
@@ -1230,17 +1240,17 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_atrophy_aura_scepter:OnCreated( kv )
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
+function modifier_imba_abyssal_underlord_atrophy_aura_scepter:OnCreated(kv)
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
 	self.bonus_pct = 50
 
 	if not IsServer() then return end
 
-	self.modifier = self:GetCaster():FindModifierByNameAndCaster( "modifier_imba_abyssal_underlord_atrophy_aura", self:GetCaster() )
+	self.modifier = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_abyssal_underlord_atrophy_aura", self:GetCaster())
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura_scepter:OnRefresh( kv )
-	self:OnCreated( kv )
+function modifier_imba_abyssal_underlord_atrophy_aura_scepter:OnRefresh(kv)
+	self:OnCreated(kv)
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_scepter:OnRemoved()
@@ -1261,16 +1271,16 @@ end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_scepter:GetModifierPreAttack_BonusDamage()
 	-- not applicable to original owner
-	if self:GetParent()==self:GetCaster() then return 0 end
+	if self:GetParent() == self:GetCaster() then return 0 end
 
 	-- calculate stack value
 	if IsServer() then
 		-- copy half of stack value
 		local bonus = self.modifier:GetStackCount()
-		bonus = math.floor( bonus*self.bonus_pct/100 )
+		bonus = math.floor(bonus * self.bonus_pct / 100)
 
 		-- set stack
-		self:SetStackCount( bonus )
+		self:SetStackCount(bonus)
 	end
 
 	return self:GetStackCount()
@@ -1286,7 +1296,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura_scepter:IsAura()
 	if not caster:HasScepter() then return false end
 
 	-- only for original owner
-	return self:GetParent()==self:GetCaster()
+	return self:GetParent() == self:GetCaster()
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_scepter:GetModifierAura()
@@ -1317,9 +1327,9 @@ function modifier_imba_abyssal_underlord_atrophy_aura_scepter:IsAuraActiveOnDeat
 	return false
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura_scepter:GetAuraEntityReject( hEntity )
+function modifier_imba_abyssal_underlord_atrophy_aura_scepter:GetAuraEntityReject(hEntity)
 	if IsServer() then
-		
+
 	end
 
 	return false
@@ -1343,7 +1353,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura_stack:IsPurgable()
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_stack:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE 
+	return MODIFIER_ATTRIBUTE_MULTIPLE + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_stack:RemoveOnDeath()
@@ -1352,12 +1362,12 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_atrophy_aura_stack:OnCreated( kv )
+function modifier_imba_abyssal_underlord_atrophy_aura_stack:OnCreated(kv)
 
 end
 
-function modifier_imba_abyssal_underlord_atrophy_aura_stack:OnRefresh( kv )
-	
+function modifier_imba_abyssal_underlord_atrophy_aura_stack:OnRefresh(kv)
+
 end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_stack:OnRemoved()
@@ -1365,12 +1375,12 @@ end
 
 function modifier_imba_abyssal_underlord_atrophy_aura_stack:OnDestroy()
 	if not IsServer() then return end
-	self.parent:RemoveStack( self.bonus )
+	self.parent:RemoveStack(self.bonus)
 end
 
 --------------------------------------------------------------------------------
 imba_abyssal_underlord_dark_rift = imba_abyssal_underlord_dark_rift or class(VANILLA_ABILITIES_BASECLASS)
-LinkLuaModifier( "modifier_imba_abyssal_underlord_dark_rift", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_imba_abyssal_underlord_dark_rift", "components/abilities/heroes/hero_underlord", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 -- Ability Start
@@ -1385,43 +1395,43 @@ function imba_abyssal_underlord_dark_rift:OnSpellStart()
 	-- search for closest target if it is a point
 	if not target then
 		local targets = FindUnitsInRadius(
-			caster:GetTeamNumber(),	-- int, your team number
-			point,	-- point, center point
-			nil,	-- handle, cacheUnit. (not known)
-			FIND_UNITS_EVERYWHERE,	-- float, radius. or use FIND_UNITS_EVERYWHERE
-			DOTA_UNIT_TARGET_TEAM_FRIENDLY,	-- int, team filter
-			DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_CREEP,	-- int, type filter
-			DOTA_UNIT_TARGET_FLAG_INVULNERABLE,	-- int, flag filter
-			FIND_CLOSEST,	-- int, order filter
-			false	-- bool, can grow cache
+			caster:GetTeamNumber(),                    -- int, your team number
+			point,                                     -- point, center point
+			nil,                                       -- handle, cacheUnit. (not known)
+			FIND_UNITS_EVERYWHERE,                     -- float, radius. or use FIND_UNITS_EVERYWHERE
+			DOTA_UNIT_TARGET_TEAM_FRIENDLY,            -- int, team filter
+			DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_CREEP, -- int, type filter
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE,        -- int, flag filter
+			FIND_CLOSEST,                              -- int, order filter
+			false                                      -- bool, can grow cache
 		)
 
-		if #targets>0 then target = targets[1] end
+		if #targets > 0 then target = targets[1] end
 	end
 
 	-- if, somehow, for an exceptional miracle, there is still no target, then do nothing. This should be done on ability phase, but whatever
 	if not target then return end
 
 	-- load data
-	local duration = self:GetVanillaAbilitySpecial( "teleport_delay" )
+	local duration = self:GetVanillaAbilitySpecial("teleport_delay")
 
 	-- add modifier to target
 	local modifier = target:AddNewModifier(
-		caster, -- player source
-		self, -- ability source
+		caster,                                -- player source
+		self,                                  -- ability source
 		"modifier_imba_abyssal_underlord_dark_rift", -- modifier name
-		{ duration = duration } -- kv
+		{ duration = duration }                -- kv
 	)
 
 	-- check sister ability
-	local ability = caster:FindAbilityByName( "imba_abyssal_underlord_cancel_dark_rift" )
+	local ability = caster:FindAbilityByName("imba_abyssal_underlord_cancel_dark_rift")
 	if not ability then
-		ability = caster:AddAbility( "imba_abyssal_underlord_cancel_dark_rift" )
-		ability:SetStolen( true )
+		ability = caster:AddAbility("imba_abyssal_underlord_cancel_dark_rift")
+		ability:SetStolen(true)
 	end
 
 	-- check ability level
-	ability:SetLevel( 1 )
+	ability:SetLevel(1)
 
 	-- give info about modifier
 	ability.modifier = modifier
@@ -1473,9 +1483,9 @@ end
 
 --------------------------------------------------------------------------------
 -- Initializations
-function modifier_imba_abyssal_underlord_dark_rift:OnCreated( kv )
+function modifier_imba_abyssal_underlord_dark_rift:OnCreated(kv)
 	-- references
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial( "radius" )
+	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
 
 	if not IsServer() then return end
 
@@ -1485,8 +1495,8 @@ function modifier_imba_abyssal_underlord_dark_rift:OnCreated( kv )
 	self:PlayEffects2()
 end
 
-function modifier_imba_abyssal_underlord_dark_rift:OnRefresh( kv )
-	
+function modifier_imba_abyssal_underlord_dark_rift:OnRefresh(kv)
+
 end
 
 function modifier_imba_abyssal_underlord_dark_rift:OnRemoved()
@@ -1500,29 +1510,29 @@ function modifier_imba_abyssal_underlord_dark_rift:OnRemoved()
 
 	-- success teleporting
 	local targets = FindUnitsInRadius(
-		caster:GetTeamNumber(),	-- int, your team number
-		caster:GetOrigin(),	-- point, center point
-		nil,	-- handle, cacheUnit. (not known)
-		self.radius,	-- float, radius. or use FIND_UNITS_EVERYWHERE
-		DOTA_UNIT_TARGET_TEAM_FRIENDLY,	-- int, team filter
-		DOTA_UNIT_TARGET_HERO,	-- int, type filter
-		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,	-- int, flag filter
-		0,	-- int, order filter
-		false	-- bool, can grow cache
+		caster:GetTeamNumber(),                                            -- int, your team number
+		caster:GetOrigin(),                                                -- point, center point
+		nil,                                                               -- handle, cacheUnit. (not known)
+		self.radius,                                                       -- float, radius. or use FIND_UNITS_EVERYWHERE
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,                                    -- int, team filter
+		DOTA_UNIT_TARGET_HERO,                                             -- int, type filter
+		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, -- int, flag filter
+		0,                                                                 -- int, order filter
+		false                                                              -- bool, can grow cache
 	)
 
-	-- teleport units 
+	-- teleport units
 	local point = self:GetParent():GetOrigin()
-	for _,target in pairs(targets) do
+	for _, target in pairs(targets) do
 		-- disjoint
-		ProjectileManager:ProjectileDodge( target )
+		ProjectileManager:ProjectileDodge(target)
 
 		-- move to position
-		FindClearSpaceForUnit( target, point, true )
+		FindClearSpaceForUnit(target, point, true)
 	end
 
 	-- switch ability layout
-	local ability = self:GetCaster():FindAbilityByName( "imba_abyssal_underlord_cancel_dark_rift" )
+	local ability = self:GetCaster():FindAbilityByName("imba_abyssal_underlord_cancel_dark_rift")
 	if not ability then return end
 
 	caster:SwapAbilities(
@@ -1546,10 +1556,10 @@ function modifier_imba_abyssal_underlord_dark_rift:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_abyssal_underlord_dark_rift:OnDeath( params )
+function modifier_imba_abyssal_underlord_dark_rift:OnDeath(params)
 	if not IsServer() then return end
 
-	if params.unit~=self:GetCaster() and params.unit~=self:GetParent() then return end
+	if params.unit ~= self:GetCaster() and params.unit ~= self:GetParent() then return end
 
 	-- either caster or target dies, destroy
 	self:Cancel()
@@ -1572,7 +1582,7 @@ function modifier_imba_abyssal_underlord_dark_rift:Cancel()
 	self.success = false
 
 	-- switch ability layout
-	local ability = self:GetCaster():FindAbilityByName( "imba_abyssal_underlord_cancel_dark_rift" )
+	local ability = self:GetCaster():FindAbilityByName("imba_abyssal_underlord_cancel_dark_rift")
 	if not ability then return end
 	self:GetCaster():SwapAbilities(
 		self:GetAbility():GetAbilityName(),
@@ -1599,15 +1609,15 @@ function modifier_imba_abyssal_underlord_dark_rift:PlayEffects1()
 	local parent = self:GetParent()
 
 	-- Create Particle
-	local effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_OVERHEAD_FOLLOW, parent )
+	local effect_cast = ParticleManager:CreateParticle(particle_cast, PATTACH_OVERHEAD_FOLLOW, parent)
 	ParticleManager:SetParticleControlEnt(
 		effect_cast,
 		6,
 		parent,
 		PATTACH_ABSORIGIN_FOLLOW,
 		"attach_hitloc",
-		Vector(0,0,0), -- unknown
-		true -- unknown, true
+		Vector(0, 0, 0), -- unknown
+		true     -- unknown, true
 	)
 
 	-- buff particle
@@ -1621,7 +1631,7 @@ function modifier_imba_abyssal_underlord_dark_rift:PlayEffects1()
 	)
 
 	-- Create Sound
-	EmitSoundOn( sound_cast, parent )
+	EmitSoundOn(sound_cast, parent)
 end
 
 function modifier_imba_abyssal_underlord_dark_rift:PlayEffects2()
@@ -1634,16 +1644,16 @@ function modifier_imba_abyssal_underlord_dark_rift:PlayEffects2()
 	local parent = self:GetParent()
 
 	-- Create Particle
-	self.effect_cast = ParticleManager:CreateParticle( particle_cast, PATTACH_ABSORIGIN_FOLLOW, caster )
-	ParticleManager:SetParticleControl( self.effect_cast, 1, Vector( self.radius, 0, 0 ) )
+	self.effect_cast = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(self.effect_cast, 1, Vector(self.radius, 0, 0))
 	ParticleManager:SetParticleControlEnt(
 		self.effect_cast,
 		2,
 		caster,
 		PATTACH_ABSORIGIN_FOLLOW,
 		"attach_hitloc",
-		Vector(0,0,0), -- unknown
-		true -- unknown, true
+		Vector(0, 0, 0), -- unknown
+		true     -- unknown, true
 	)
 
 	-- buff particle
@@ -1657,7 +1667,7 @@ function modifier_imba_abyssal_underlord_dark_rift:PlayEffects2()
 	)
 
 	-- Create Sound
-	EmitSoundOn( sound_cast, caster )
+	EmitSoundOn(sound_cast, caster)
 end
 
 function modifier_imba_abyssal_underlord_dark_rift:PlayEffects3()
@@ -1670,11 +1680,11 @@ function modifier_imba_abyssal_underlord_dark_rift:PlayEffects3()
 	local parent = self:GetParent()
 
 	-- Set Effect
-	ParticleManager:SetParticleControl( self.effect_cast, 5, caster:GetOrigin() )
+	ParticleManager:SetParticleControl(self.effect_cast, 5, caster:GetOrigin())
 
 	-- Create Sound
-	EmitSoundOn( sound_cast1, parent )
-	EmitSoundOnLocationWithCaster( caster:GetOrigin(), sound_cast2, caster )
+	EmitSoundOn(sound_cast1, parent)
+	EmitSoundOnLocationWithCaster(caster:GetOrigin(), sound_cast2, caster)
 end
 
 function modifier_imba_abyssal_underlord_dark_rift:PlayEffects4()
@@ -1688,11 +1698,11 @@ function modifier_imba_abyssal_underlord_dark_rift:PlayEffects4()
 	local parent = self:GetParent()
 
 	-- Kill effect
-	ParticleManager:DestroyParticle( self.effect_cast, true )
+	ParticleManager:DestroyParticle(self.effect_cast, true)
 
 	-- Create Sound
-	StopSoundOn( sound_cast1, caster )
-	StopSoundOn( sound_cast2, parent )
-	EmitSoundOn( sound_cancel, caster )
-	EmitSoundOn( sound_cancel, parent )
+	StopSoundOn(sound_cast1, caster)
+	StopSoundOn(sound_cast2, parent)
+	EmitSoundOn(sound_cancel, caster)
+	EmitSoundOn(sound_cancel, parent)
 end

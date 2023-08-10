@@ -1,6 +1,3 @@
-"npc_dota_hero_brewmaster"							"Brewmaster (IMBA)"
-
-//BREWMASTER
 "DOTA_Tooltip_ability_imba_brewmaster_thunder_clap"								"Thunder Clap"
 "DOTA_Tooltip_ability_imba_brewmaster_thunder_clap_Lore"							"A slam of Mangix' mighty keg starts the festivities."
 "DOTA_Tooltip_ability_imba_brewmaster_thunder_clap_Description"					"Slams the ground, dealing damage and slowing the movement speed and attack rate of nearby enemy units.\n<font color='#FF7800'>Mind the Debris:</font> Up to %debris_max_targets% enemies within %debris_buffer_radius% distance away from Thunder Clap's outer edge have a boulder hurled at them, dealing %debris_damage% damage and stunning for %debris_stun_duration% seconds on contact.\n<font color='#FF7800'>Celebratory Conduction:</font> Units hit by Thunder Clap become charged for the slow duration, having a %conduction_chance%%% when attacking to release Chain Lightning, dealing %conduction_damage% damage to up to %conduction_max_targets% other targets."

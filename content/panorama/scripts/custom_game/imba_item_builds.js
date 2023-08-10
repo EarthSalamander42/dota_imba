@@ -23,11 +23,11 @@ var category_name = [
 ];
 
 (function() {
-	Shop = FindDotaHudElement("shop");
+	Shop = GameUI.Utils.FindDotaHudElement("shop");
 	ItemBuild = Shop.FindChildTraverse("ItemBuild");
 	Categories = Shop.FindChildTraverse("Categories");
-	GuideBrowser = FindDotaHudElement("GuideBrowser");
-	GridUpgradeItems = FindDotaHudElement("GridUpgradeItems");
+	GuideBrowser = GameUI.Utils.FindDotaHudElement("GuideBrowser");
+	GridUpgradeItems = GameUI.Utils.FindDotaHudElement("GridUpgradeItems");
 
 	GridUpgradeItems.style.overflow = "squish scroll";
 

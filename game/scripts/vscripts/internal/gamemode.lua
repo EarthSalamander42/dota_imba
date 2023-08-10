@@ -38,11 +38,11 @@ function GameMode:_InitGameMode()
 	GameRules:SetUseBaseGoldBountyOnHeroes(USE_NONSTANDARD_HERO_GOLD_BOUNTY)
 
 	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_DOUBLEDAMAGE, true) --Double Damage
-	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_HASTE, true)      --Haste
-	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_ILLUSION, true)   --Illusion
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_HASTE, true)     --Haste
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_ILLUSION, true)  --Illusion
 	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_INVISIBILITY, true) --Invis
 	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_REGENERATION, true) --Regen
-	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_ARCANE, true)     --Arcane
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_ARCANE, true)    --Arcane
 	--	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_BOUNTY, false) --Bounty
 
 	GameRules:GetGameModeEntity():SetFreeCourierModeEnabled(true)
@@ -57,8 +57,15 @@ function GameMode:_InitGameMode()
 	GameRules:LockCustomGameSetupTeamAssignment(true)
 
 	if IMBA_PICK_SCREEN == false then
-		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
-		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
+		if IsInToolsMode() then
+			GameRules:SetCustomGameSetupRemainingTime(0)
+			GameRules:SetCustomGameSetupAutoLaunchDelay(0)
+			GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
+			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(0)
+		else
+			GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
+			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
+		end
 
 		if not IsInToolsMode() or GetMapName() ~= "imba_demo" then
 			GameRules:SetCustomGameBansPerTeam(IMBA_PLAYERS_ON_GAME / #CUSTOM_TEAM_PLAYER_COUNT)

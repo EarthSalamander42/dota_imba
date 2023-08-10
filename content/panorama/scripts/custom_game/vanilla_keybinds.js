@@ -72,7 +72,7 @@ function SetupVanillaKeyBinding(sName, callback_function, bHold, secondary_callb
 function SetupTopBar() {
 //	$.Msg("10v10 top bar")
 	$.GetContextPanel().SetHasClass('TenVTen', true);
-	var topbar = FindDotaHudElement('topbar');
+	var topbar = GameUI.Utils.FindDotaHudElement('topbar');
 	topbar.style.width = '1550px';
 
 	// Nice topbar colors
@@ -83,11 +83,11 @@ function SetupTopBar() {
 	TopBarDireTeamContainer.style.width = '780px'; // 620px
 
 	// Top Bar Radiant
-	var TopBarRadiantTeam = FindDotaHudElement('TopBarRadiantTeam');
+	var TopBarRadiantTeam = GameUI.Utils.FindDotaHudElement('TopBarRadiantTeam');
 	TopBarRadiantTeam.style.width = '100%'; // 540px
 
 	// Top Bar Dire
-	var TopBarDireTeam = FindDotaHudElement('TopBarDireTeam');
+	var TopBarDireTeam = GameUI.Utils.FindDotaHudElement('TopBarDireTeam');
 	TopBarDireTeam.style.width = '100%'; // 540px
 
 	for (var tbg of TopBarRadiantTeam.FindChildrenWithClassTraverse("TeamBackground")) {

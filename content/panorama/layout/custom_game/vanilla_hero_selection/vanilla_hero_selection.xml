@@ -5,7 +5,6 @@
 	</styles>
 
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="s2r://panorama/layout/custom_game/vanilla_hero_selection/vanilla_hero_selection.js" />
 	</scripts>
 

@@ -209,7 +209,7 @@ function GetKeyValue(name, key, level, tbl)
 		if t[key] and level then
 			local s = split(t[key])
 			if s[level] then
-				return tonumber(s[level]) or s[level]     -- Try to cast to number
+				return tonumber(s[level]) or s[level] -- Try to cast to number
 			else
 				return tonumber(s[#s]) or s[#s]
 			end
@@ -249,7 +249,7 @@ function GetAbilitySpecial(name, key, level)
 							return tonumber(s[level]) -- If we match the level, return that one
 						else
 							return tonumber(s[#s])
-						end                      -- Otherwise, return the max
+						end -- Otherwise, return the max
 					end
 					break
 				end
@@ -283,7 +283,7 @@ function GetAbilityValue(name, key, level)
 							return tonumber(s[level]) -- If we match the level, return that one
 						else
 							return tonumber(s[#s])
-						end                      -- Otherwise, return the max
+						end -- Otherwise, return the max
 					end
 
 					break
@@ -361,20 +361,22 @@ function GetAbilitySpecials(name, bImbafied)
 			if AbilityValues then
 				for value_name, value in pairs(AbilityValues) do
 					if value_name ~= "var_type" and value_name ~= "LinkedSpecialBonus" and value_name ~= "RequiresScepter" and i ~= "CalculateSpellDamageTooltip" then
-						-- if type(value) == "table" then
-						-- for i, j in pairs(value) do
-						-- table.insert(ability_specials, {value_name, value})
-						-- end
-						-- else
 						if bImbafied then
-							print("GetIMBAValue:", value_name, value)
+							if type(value) == "table" and type(value["value"]) == "string" then
+								value["value"] = split(value["value"], " ")
+
+								for k, v in pairs(value["value"]) do
+									v = math.round(tonumber(v))
+								end
+
+								value["value"] = table.concat(value["value"], " ")
+							elseif type(value) == "number" then
+								value = math.round(tonumber(value))
+							end
 							table.insert(ability_specials, { value_name, CustomTooltips:GetIMBAValue(value) })
 						else
 							table.insert(ability_specials, { value_name, value })
 						end
-						-- end
-
-						-- break
 					end
 				end
 			else

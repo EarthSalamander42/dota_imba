@@ -8,7 +8,7 @@ function UpdateTooltip(args) {
 //	$.Msg(hide_panel)
 	i = 3;
 
-	var query_panel = FindDotaHudElement("QueryUnit");
+	var query_panel = GameUI.Utils.FindDotaHudElement("QueryUnit");
 
 	if (args.victim_id != undefined && Game.GetLocalPlayerID() == args.killer_id) {
 		query_panel.RemoveClass("Hidden");
@@ -48,7 +48,7 @@ function Countdown() {
 	i--;
 
 	if (i < 0) {
-		ClosePanel(FindDotaHudElement("QueryUnit"));
+		ClosePanel(GameUI.Utils.FindDotaHudElement("QueryUnit"));
 		hide_panel = true;
 		i = 0;
 //	} else {

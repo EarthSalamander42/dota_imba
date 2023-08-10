@@ -1413,3 +1413,13 @@ function GetEtherealAbilities()
 
 	return abilities
 end
+
+function math.round(num, numDecimalPlaces)
+	if (type(num) ~= "number") then
+		print("math.round: wrong argument type (<number> expected), got " .. type(num))
+		return num
+	end
+
+	local mult = 10 ^ (numDecimalPlaces or 1)
+	return math.floor(num * mult + 0.5) / mult
+end
