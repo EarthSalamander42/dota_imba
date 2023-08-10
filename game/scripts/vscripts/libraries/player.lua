@@ -141,11 +141,12 @@ end
 -- Initializes heroes' innate abilities
 function CDOTA_BaseNPC:InitializeAbilities()
 	-- Cycle through all of the heroes' abilities, and upgrade the innates ones
-	for i = 0, 15 do
+	for i = 0, 24 do
 		local current_ability = self:GetAbilityByIndex(i)
 
 		if current_ability then
-			if current_ability.IsInnateAbility and current_ability:IsInnateAbility() then
+			local values = GetAbilityKeyValuesByName(current_ability:GetAbilityName())
+			if current_ability.IsInnateAbility and current_ability:IsInnateAbility() or values and values["IsInnateAbility"] then
 				current_ability:SetLevel(1)
 			end
 
@@ -509,7 +510,7 @@ function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 			break
 		elseif k == "AbilityValues" then -- new vanilla format
 			for l, m in pairs(v) do
-				print(l, m)
+				-- print(l, m)
 				if type(m) == "table" then
 					if m[value] then
 						talentName = m["LinkedSpecialBonus"]

@@ -81,11 +81,11 @@ function GameMode:_InitGameMode()
 	--	SetTeamCustomHealthbarColor(DOTA_TEAM_BADGUYS, 128, 0, 0)
 
 	-- WHY DON'T YOU WORK FOR CHAT PLAYER COLORS, WHAT HAPPENED TO YOU BUDDY
-	for ID = 0, PlayerResource:GetPlayerCount() - 1 do
-		if PlayerResource:IsValidPlayer(ID) then
-			PlayerResource:SetCustomPlayerColor(ID, PLAYER_COLORS[ID][1], PLAYER_COLORS[ID][2], PLAYER_COLORS[ID][3])
-		end
-	end
+	-- for ID = 0, PlayerResource:GetPlayerCount() - 1 do
+	-- 	if PlayerResource:IsValidPlayer(ID) then
+	-- 		PlayerResource:SetCustomPlayerColor(ID, PLAYER_COLORS[ID][1], PLAYER_COLORS[ID][2], PLAYER_COLORS[ID][3])
+	-- 	end
+	-- end
 
 	-- Event Hooks
 	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap(self, 'OnPlayerLevelUp'), self)
@@ -187,5 +187,45 @@ function GameMode:EffigyDestroyed(keys)
 		else
 			-- Say(nil, keys.real_unit_name.."'s effigy has been destroyed!", false)
 		end
+	end
+end
+
+function GameMode:SetupTower(tower)
+	if tower.initialized then return end
+	--	if tower.initialized or GetMapName() == Map1v1() then return end
+	for i = 1, 4 do
+		for _, ability in pairs(TOWER_ABILITIES["tower" .. i]) do
+			if string.find(tower:GetUnitName(), "tower" .. i) then
+				--				print("Tower found:", ability) -- tower spawned from pocket tower mutation are found and print well, abilities are not given for reasons
+				tower:AddAbility(ability):SetLevel(i)
+				tower.initialized = true
+			end
+		end
+	end
+end
+
+function GameMode:SetPlayerColors()
+	-- setup Player colors into hex for panorama
+	local hex_colors = {}
+
+	for team = 2, 3 do
+		hex_colors[team] = {}
+
+		for i = 0, #PLAYER_COLORS + 1 do
+			if PLAYER_COLORS and PLAYER_COLORS[team] and PLAYER_COLORS[team][i] then
+				table.insert(hex_colors[team], i, rgbToHex(PLAYER_COLORS[team][i]))
+			end
+		end
+	end
+
+	CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
+end
+
+function GameMode:ApplyPlayerColors(nPlayerID)
+	local player = PlayerResource:GetPlayer(nPlayerID)
+
+	-- Setup topbar player colors
+	if player and PlayerResource:IsValidPlayer(nPlayerID) and PlayerResource:GetConnectionState(nPlayerID) == DOTA_CONNECTION_STATE_CONNECTED then
+		CustomGameEventManager:Send_ServerToPlayer(player, "override_top_bar_colors", {})
 	end
 end

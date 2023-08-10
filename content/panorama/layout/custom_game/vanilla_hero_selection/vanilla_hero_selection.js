@@ -8,7 +8,7 @@ var children_count = 0;
 	// $.Msg(GridCategories)
 
 function InitHeroSelection()  {
-	// $.Msg("InitHeroSelection()")
+	// $.Msg("InitHeroSelection()");
 	var pick_screen_title = GameUI.Utils.FindDotaHudElement('HeroSelectionText');
 	var gamemode = CustomNetTables.GetTableValue("game_options", "gamemode");
 	if (gamemode) gamemode = gamemode["1"];
@@ -45,6 +45,8 @@ function InitHeroSelection()  {
 					HeroListContainer.GetChild(j).RemoveClass("AllHeroChallenge");
 
 				if (hero_panel) {
+					hero_panel.style.boxShadow = "none";
+
 					if (IsHeroDisabled("npc_dota_hero_" + hero_panel.heroname) == true) {
 						hero_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
 						hero_panel.GetParent().GetParent().AddClass("Banned");
@@ -53,6 +55,7 @@ function InitHeroSelection()  {
 						hero_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
 						hero_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
 					}
+
 
 					if (herolist && herolist.imbalist["npc_dota_hero_" + hero_panel.heroname]) {
 						hero_panel.style.boxShadow = "inset #FF7800aa 0px 0px 2px 2px";

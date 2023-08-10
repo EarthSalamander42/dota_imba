@@ -1,0 +1,24 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Roshan: Inherent Buffs
+	//=================================================================================================================
+	"roshan_inherent_buffs_custom"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/roshan/abilities/roshan_inherent_buffs.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityValues"
+		{
+			"interval"					"60.0"
+			"bonus_health"				"130"
+			"bonus_damage"				"6"
+			"bonus_armor"				"0.375"
+		}
+	}
+}

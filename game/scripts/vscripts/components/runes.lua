@@ -15,8 +15,30 @@
 -- Editors:
 --     EarthSalamander #42, 07.08.18
 
-if ImbaRunes == nil then
-	ImbaRunes = class({})
+-- DOTA_RUNE_INVALID = -1
+-- DOTA_RUNE_DOUBLEDAMAGE = 0
+-- DOTA_RUNE_HASTE = 1
+-- DOTA_RUNE_ILLUSION = 2
+-- DOTA_RUNE_INVISIBILITY = 3
+-- DOTA_RUNE_REGENERATION = 4
+-- DOTA_RUNE_BOUNTY = 5
+-- DOTA_RUNE_ARCANE = 6
+-- DOTA_RUNE_WATER = 7
+-- DOTA_RUNE_XP = 8
+-- DOTA_RUNE_SHIELD = 9
+-- DOTA_RUNE_COUNT = 10
+
+if Runes == nil then
+	Runes = class({})
+	Runes.spawnTime = {}
+	Runes.spawnTime[DOTA_RUNE_XP] = 420.0 -- 7 minutes
+	-- if IsInToolsMode() then
+	-- 	Runes.spawnTime[DOTA_RUNE_XP] = 10.0
+	-- end
+	Runes.spawnLocation = {}
+	Runes.spawnLocation[DOTA_RUNE_XP] = {}
+
+	ListenToGameEvent("game_rules_state_change", Dynamic_Wrap(Runes, "OnGameRulesStateChange"), Runes)
 end
 
 require("components/settings/settings_runes")
@@ -26,145 +48,175 @@ LinkLuaModifier("modifier_imba_double_damage_rune", "components/modifiers/runes/
 LinkLuaModifier("modifier_imba_haste_rune", "components/modifiers/runes/modifier_imba_haste_rune", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_haste_rune_speed_limit_break", "components/modifiers/runes/modifier_imba_haste_rune_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_regen_rune", "components/modifiers/runes/modifier_imba_regen_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invisibility_rune_handler", "components/modifiers/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_illusion_rune", "components/modifiers/runes/modifier_imba_illusion_rune", LUA_MODIFIER_MOTION_NONE)
 --	LinkLuaModifier("modifier_imba_frost_rune", "components/modifiers/runes/modifier_imba_frost_rune", LUA_MODIFIER_MOTION_NONE)
 --	LinkLuaModifier("modifier_imba_ember_rune", "components/modifiers/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
 --	LinkLuaModifier("modifier_imba_stone_rune", "components/modifiers/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_invisibility_rune_handler", "components/modifiers/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_illusion_rune", "components/modifiers/runes/modifier_imba_illusion_rune", LUA_MODIFIER_MOTION_NONE)
 
-function ImbaRunes:Init()
-	ImbaRunes.bounty_rune_spawners = {}
-	ImbaRunes.bounty_rune_locations = {}
-	ImbaRunes.powerup_rune_spawners = Entities:FindAllByClassname("dota_item_rune_spawner_powerup")
-	ImbaRunes.powerup_rune_locations = {}
+function Runes:OnGameRulesStateChange()
+	local newState = GameRules:State_Get()
 
-	ImbaRunes.bounty_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner_bounty")
-
-	for i = 1, #ImbaRunes.powerup_rune_spawners do
-		ImbaRunes.powerup_rune_locations[i] = ImbaRunes.powerup_rune_spawners[i]:GetAbsOrigin()
-		ImbaRunes.powerup_rune_spawners[i]:RemoveSelf()
-	end
-
-	for i = 1, #ImbaRunes.bounty_rune_spawners do
-		ImbaRunes.bounty_rune_locations[i] = ImbaRunes.bounty_rune_spawners[i]:GetAbsOrigin()
-		ImbaRunes.bounty_rune_spawners[i]:RemoveSelf()
+	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		Runes:Init()
+	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		Runes:Spawn()
 	end
 end
 
--- Spawns runes on the map
-function ImbaRunes:Spawn()
-	if IMBA_RUNE_SYSTEM == false then return end
-	-- List of powerup rune types
-	-- item name, particle name
-	local powerup_rune_types = {
-		{ "item_imba_rune_arcane",       "particles/generic_gameplay/rune_arcane.vpcf",                          "particles/generic_gameplay/rune_arcane_super.vpcf" },
-		{ "item_imba_rune_doubledamage", "particles/generic_gameplay/rune_doubledamage.vpcf",                    "particles/generic_gameplay/rune_quadrupledamage.vpcf" },
-		{ "item_imba_rune_haste",        "particles/generic_gameplay/rune_haste.vpcf",                           "particles/generic_gameplay/rune_haste_super.vpcf" },
-		{ "item_imba_rune_regen",        "particles/generic_gameplay/rune_regeneration.vpcf",                    "particles/generic_gameplay/rune_regeneration_super.vpcf" },
-		{ "item_imba_rune_illusion",     "particles/generic_gameplay/rune_illusion.vpcf",                        "particles/generic_gameplay/rune_illusion_super.vpcf" },
-		{ "item_imba_rune_invis",        "particles/generic_gameplay/rune_invisibility.vpcf",                    "particles/generic_gameplay/rune_invisibility_super.vpcf" },
-		{ "item_imba_rune_frost",        "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf" },
-		--		{"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
-		--		{"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
-	}
+function Runes:Init()
+	-- Wisdom runes fix
+	local xp_rune_spawners = Entities:FindAllByClassname("dota_item_rune_spawner_xp")
 
-	local powerup_super_rune_colors = {}
-	powerup_super_rune_colors[2] = { 204, 51, 255 }
+	for _, rune_spawner in pairs(xp_rune_spawners) do
+		table.insert(Runes.spawnLocation[DOTA_RUNE_XP], rune_spawner:GetAbsOrigin())
+		rune_spawner:RemoveSelf()
+	end
+end
 
-	local powerup_super_rune_particles = {}
-	powerup_super_rune_particles[2] = "particles/generic_gameplay/rune_quadrupledamage.vpcf",
+function Runes:Spawn()
+	for rune_id = 0, 9 do
+		if Runes.spawnLocation[rune_id] then
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("rune_timer_" .. rune_id), function()
+				-- Runes spawn on each others. We want to check if there is already a rune on the same spot, and if so, spawn the new rune on a nearby empty spot
+				for _, location in pairs(Runes.spawnLocation[rune_id]) do
+					local random_vector_number = 55
+					local iteration = 0
+					local max_iterations = 1000 -- that will never happen, but just in case
 
-		Timers:CreateTimer(function()
-			ImbaRunes:RemoveRunes(1)
+					while Entities:FindAllByClassnameWithin("dota_item_rune", location, random_vector_number) and Entities:FindAllByClassnameWithin("dota_item_rune", location, random_vector_number)[1] do
+						if iteration >= max_iterations then
+							break
+						end
 
-			for k, v in pairs(ImbaRunes.powerup_rune_locations) do
-				local random_int = RandomInt(1, #powerup_rune_types)
-				local rune = CreateItemOnPositionForLaunch(ImbaRunes.powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
-				ImbaRunes:RegisterRune(rune, 1)
-				if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
-					if powerup_super_rune_colors[random_int] then
-						rune:SetRenderColor(powerup_super_rune_colors[random_int][1], powerup_super_rune_colors[random_int][2], powerup_super_rune_colors[random_int][3])
+						location = location + RandomVector(random_vector_number)
+						random_vector_number = random_vector_number + 0.1
+						-- iteration = iteration + 1
 					end
 
-					if powerup_super_rune_particles[random_int] then
-						ImbaRunes:SpawnRuneParticle(rune, powerup_super_rune_particles[random_int])
-					else
-						ImbaRunes:SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
-					end
-				else
-					ImbaRunes:SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
+					CreateRune(location, rune_id)
 				end
-			end
 
-			return RUNE_SPAWN_TIME
-		end)
-
-	Timers:CreateTimer(function()
-		ImbaRunes:RemoveRunes(2)
-
-		for k, v in pairs(ImbaRunes.bounty_rune_locations) do
-			local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-			local rune = CreateItemOnPositionForLaunch(ImbaRunes.bounty_rune_locations[k], bounty_rune)
-			ImbaRunes:RegisterRune(rune, 2)
-			ImbaRunes:SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
+				return Runes.spawnTime[rune_id]
+			end, Runes.spawnTime[rune_id])
 		end
-
-		return BOUNTY_RUNE_SPAWN_TIME
-	end)
-end
-
-function ImbaRunes:SpawnRuneParticle(rune, particle)
-	local rune_particle = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, rune)
-	ParticleManager:SetParticleControl(rune_particle, 0, rune:GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(rune_particle)
-end
-
-function ImbaRunes:RegisterRune(rune, rune_type)
-	AddFOWViewer(2, rune:GetAbsOrigin(), 100, 0.02, false)
-	AddFOWViewer(3, rune:GetAbsOrigin(), 100, 0.02, false)
-
-	-- Initialize table
-	if not rune_spawn_table then
-		rune_spawn_table = {}
-	end
-
-	if not bounty_rune_spawn_table then
-		bounty_rune_spawn_table = {}
-	end
-
-	-- Register rune into table
-	if rune_type == 1 then
-		table.insert(rune_spawn_table, rune)
-	elseif rune_type == 2 then
-		table.insert(bounty_rune_spawn_table, rune)
 	end
 end
 
-function ImbaRunes:RemoveRunes(rune_type)
-	local rune_table
+-- Spawns runes on the map (old full custom system)
+-- function Runes:Spawn()
+-- 	if IMBA_RUNE_SYSTEM == false then return end
+-- 	-- List of powerup rune types
+-- 	-- item name, particle name
+-- 	local powerup_rune_types = {
+-- 		{ "item_imba_rune_arcane",       "particles/generic_gameplay/rune_arcane.vpcf",                          "particles/generic_gameplay/rune_arcane_super.vpcf" },
+-- 		{ "item_imba_rune_doubledamage", "particles/generic_gameplay/rune_doubledamage.vpcf",                    "particles/generic_gameplay/rune_quadrupledamage.vpcf" },
+-- 		{ "item_imba_rune_haste",        "particles/generic_gameplay/rune_haste.vpcf",                           "particles/generic_gameplay/rune_haste_super.vpcf" },
+-- 		{ "item_imba_rune_regen",        "particles/generic_gameplay/rune_regeneration.vpcf",                    "particles/generic_gameplay/rune_regeneration_super.vpcf" },
+-- 		{ "item_imba_rune_illusion",     "particles/generic_gameplay/rune_illusion.vpcf",                        "particles/generic_gameplay/rune_illusion_super.vpcf" },
+-- 		{ "item_imba_rune_invis",        "particles/generic_gameplay/rune_invisibility.vpcf",                    "particles/generic_gameplay/rune_invisibility_super.vpcf" },
+-- 		{ "item_imba_rune_frost",        "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf" },
+-- 		--		{"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
+-- 		--		{"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
+-- 	}
 
-	if rune_type == 1 then
-		rune_table = rune_spawn_table
-	elseif rune_type == 2 then
-		rune_table = bounty_rune_spawn_table
-	end
+-- 	local powerup_super_rune_colors = {}
+-- 	powerup_super_rune_colors[2] = { 204, 51, 255 }
 
-	if rune_table then
-		-- Remove existing runes
-		for _, rune in pairs(rune_table) do
-			if not rune:IsNull() then
-				local item = rune:GetContainedItem()
-				UTIL_Remove(item)
-				UTIL_Remove(rune)
-			end
-		end
+-- 	local powerup_super_rune_particles = {}
+-- 	powerup_super_rune_particles[2] = "particles/generic_gameplay/rune_quadrupledamage.vpcf",
 
-		-- Clear the table
-		rune_table = {}
-	end
-end
+-- 		Timers:CreateTimer(function()
+-- 			Runes:RemoveRunes(1)
 
-function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
+-- 			for k, v in pairs(Runes.powerup_rune_locations) do
+-- 				local random_int = RandomInt(1, #powerup_rune_types)
+-- 				local rune = CreateItemOnPositionForLaunch(Runes.powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
+-- 				Runes:RegisterRune(rune, 1)
+-- 				if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+-- 					if powerup_super_rune_colors[random_int] then
+-- 						rune:SetRenderColor(powerup_super_rune_colors[random_int][1], powerup_super_rune_colors[random_int][2], powerup_super_rune_colors[random_int][3])
+-- 					end
+
+-- 					if powerup_super_rune_particles[random_int] then
+-- 						Runes:SpawnRuneParticle(rune, powerup_super_rune_particles[random_int])
+-- 					else
+-- 						Runes:SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
+-- 					end
+-- 				else
+-- 					Runes:SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
+-- 				end
+-- 			end
+
+-- 			return RUNE_SPAWN_TIME
+-- 		end)
+
+-- 	Timers:CreateTimer(function()
+-- 		Runes:RemoveRunes(2)
+
+-- 		for k, v in pairs(Runes.bounty_rune_locations) do
+-- 			local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
+-- 			local rune = CreateItemOnPositionForLaunch(Runes.bounty_rune_locations[k], bounty_rune)
+-- 			Runes:RegisterRune(rune, 2)
+-- 			Runes:SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
+-- 		end
+
+-- 		return BOUNTY_RUNE_SPAWN_TIME
+-- 	end)
+-- end
+
+-- function Runes:SpawnRuneParticle(rune, particle)
+-- 	local rune_particle = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, rune)
+-- 	ParticleManager:SetParticleControl(rune_particle, 0, rune:GetAbsOrigin())
+-- 	ParticleManager:ReleaseParticleIndex(rune_particle)
+-- end
+
+-- function Runes:RegisterRune(rune, rune_type)
+-- 	AddFOWViewer(2, rune:GetAbsOrigin(), 100, 0.02, false)
+-- 	AddFOWViewer(3, rune:GetAbsOrigin(), 100, 0.02, false)
+
+-- 	-- Initialize table
+-- 	if not rune_spawn_table then
+-- 		rune_spawn_table = {}
+-- 	end
+
+-- 	if not bounty_rune_spawn_table then
+-- 		bounty_rune_spawn_table = {}
+-- 	end
+
+-- 	-- Register rune into table
+-- 	if rune_type == 1 then
+-- 		table.insert(rune_spawn_table, rune)
+-- 	elseif rune_type == 2 then
+-- 		table.insert(bounty_rune_spawn_table, rune)
+-- 	end
+-- end
+
+-- function Runes:RemoveRunes(rune_type)
+-- 	local rune_table
+
+-- 	if rune_type == 1 then
+-- 		rune_table = rune_spawn_table
+-- 	elseif rune_type == 2 then
+-- 		rune_table = bounty_rune_spawn_table
+-- 	end
+
+-- 	if rune_table then
+-- 		-- Remove existing runes
+-- 		for _, rune in pairs(rune_table) do
+-- 			if not rune:IsNull() then
+-- 				local item = rune:GetContainedItem()
+-- 				UTIL_Remove(item)
+-- 				UTIL_Remove(rune)
+-- 			end
+-- 		end
+
+-- 		-- Clear the table
+-- 		rune_table = {}
+-- 	end
+-- end
+
+function Runes:PickupRune(rune_name, unit, bActiveByBottle)
 	if string.find(rune_name, "item_imba_rune_") then
 		rune_name = string.gsub(rune_name, "item_imba_rune_", "")
 	end
@@ -201,10 +253,10 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 			current_bounty = current_bounty * (custom_gold_bonus / 100)
 
-			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
-				current_bounty = current_bounty * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
-				current_xp = current_xp * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
-			end
+			-- if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+			-- 	current_bounty = current_bounty * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
+			-- 	current_xp = current_xp * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
+			-- end
 
 			-- #3 Talent: Bounty runes give gold bags
 			-- if unit:HasTalent("special_bonus_imba_alchemist_3") then

@@ -376,8 +376,13 @@ function GrievousWounds(keys)
 	local total_damage = base_damage * (1 + current_stacks * damage_increase / 100)
 
 	-- Apply damage
-	ApplyDamage({ attacker = caster, victim = target, ability = ability, damage = total_damage,
-		damage_type = DAMAGE_TYPE_PHYSICAL })
+	ApplyDamage({
+		attacker = caster,
+		victim = target,
+		ability = ability,
+		damage = total_damage,
+		damage_type = DAMAGE_TYPE_PHYSICAL
+	})
 
 	-- Apply bonus damage modifier
 	AddStacks(ability, caster, target, modifier_debuff, 1, true)
@@ -715,7 +720,7 @@ function modifier_imba_tower_thorns_aura_buff:OnAttackLanded(keys)
 
 			-- Calculate damage based on percentage of main stat
 			local return_damage_pct_final = self.return_damage_pct +
-			self.return_damage_per_stack * protective_instinct_stacks
+				self.return_damage_per_stack * protective_instinct_stacks
 			local return_damage = main_attribute_value * (return_damage_pct_final / 100)
 
 			-- Increase damage to the minimum if it's not sufficient
@@ -1231,9 +1236,9 @@ function modifier_imba_tower_splash_fire_aura_buff:OnAttackLanded(keys)
 
 			-- Calculate bonus damage
 			local protective_instinct_stacks = self.caster:GetModifierStackCount(
-			"modifier_imba_tower_protective_instinct", self.caster)
+				"modifier_imba_tower_protective_instinct", self.caster)
 			local splash_damage = damage *
-			((self.splash_damage_pct + self.bonus_splash_per_protective * protective_instinct_stacks) / 100)
+				((self.splash_damage_pct + self.bonus_splash_per_protective * protective_instinct_stacks) / 100)
 
 			-- Apply bonus damage on every enemy EXCEPT the main target
 			local enemy_units = FindUnitsInRadius(self.parent:GetTeamNumber(),
@@ -2389,7 +2394,7 @@ function modifier_imba_tower_atrophy_aura_debuff:GetModifierBaseDamageOutgoing_P
 			self.caster)
 
 		local total_damage_reduction = self.damage_reduction +
-		self.additional_dr_per_protective * protective_instinct_stacks
+			self.additional_dr_per_protective * protective_instinct_stacks
 		return total_damage_reduction
 	end
 end
@@ -2845,7 +2850,7 @@ function modifier_imba_tower_grievous_wounds_aura_buff:OnAttackLanded(keys)
 			-- Calculate damage based on stacks
 			local grievous_stacks = grievous_debuff_handler:GetStackCount()
 			local damage = (self.damage_increase + self.damage_increase_per_hero * protective_instinct_stacks) *
-			grievous_stacks
+				grievous_stacks
 
 			-- Apply damage
 			local damageTable = {
@@ -3680,7 +3685,7 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 		if self.parent == target and attacker:GetTeamNumber() ~= self.parent:GetTeamNumber() and not self.parent:HasModifier(self.prevention_modifier) then
 			-- Calculate cooldown and add a prevention modifier to the parent
 			local cooldown_doppleganger = self.doppleganger_cooldown -
-			self.cd_reduction_per_protective * protective_instinct_stacks
+				self.cd_reduction_per_protective * protective_instinct_stacks
 			self.parent:AddNewModifier(self.caster, self.ability, self.prevention_modifier,
 				{ duration = cooldown_doppleganger })
 
@@ -3699,8 +3704,11 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 
 			-- Turn doppleganger into an illusion with the correct properties
 			doppleganger:AddNewModifier(self.caster, self.ability, "modifier_illusion",
-				{ duration = self.doppleganger_duration, outgoing_damage = self.outgoing_damage,
-					incoming_damage = self.incoming_damage })
+				{
+					duration = self.doppleganger_duration,
+					outgoing_damage = self.outgoing_damage,
+					incoming_damage = self.incoming_damage
+				})
 			doppleganger:MakeIllusion()
 			doppleganger:SetRespawnsDisabled(true)
 
@@ -3947,12 +3955,12 @@ function modifier_imba_tower_barrier_aura_buff:OnCreated()
 	self.replenish_duration       = self:GetAbility():GetSpecialValueFor("replenish_duration")
 
 	self:SetStackCount(self.base_maxdamage +
-	self.maxdamage_per_protective *
-	#FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200,
-		DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO,
-		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE +
-		DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS +
-		DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false))
+		self.maxdamage_per_protective *
+		#FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, 1200,
+			DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE +
+			DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS +
+			DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false))
 end
 
 function modifier_imba_tower_barrier_aura_buff:DeclareFunctions()
@@ -4414,7 +4422,7 @@ function modifier_imba_tower_frost_shroud_debuff:GetModifierAttackSpeedBonus_Con
 
 	-- Calculate slow percentage, based on stack count
 	local attackspeed_slow = (self.as_slow + self.slow_per_protective * protective_instinct_stacks) *
-	self:GetStackCount()
+		self:GetStackCount()
 	return attackspeed_slow
 end
 
@@ -4552,7 +4560,7 @@ function modifier_tower_healing_think:OnIntervalThink()
 
 			-- If a hero was found, there might be more: repeat operation
 			if heroes_need_healing then
-				return bounce_delay
+				return self.bounce_delay
 			else
 				return nil
 			end

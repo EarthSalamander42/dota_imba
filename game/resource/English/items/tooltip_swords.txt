@@ -1,5 +1,5 @@
 // Sange
-"DOTA_Tooltip_Ability_item_imba_sange"							"#{DOTA_Tooltip_ability_item_sange} (Pre 7.23)"
+"DOTA_Tooltip_Ability_item_imba_sange"							"#{DOTA_Tooltip_ability_item_Sange} (Pre 7.23)"
 "DOTA_Tooltip_ability_item_imba_sange_Description"				"<h1><font color='#FF7800'>Active: Steadfast Durability</font></h1> Grants %bonus_status_resistance_active%%% status resistance for %active_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_sange_Lore"						"Sange is an unusually accurate weapon, seeking weak points automatically."
 "DOTA_Tooltip_ability_item_imba_sange_maim_stack"				"%MAIM SLOW:"
@@ -11,7 +11,7 @@
 "DOTA_Tooltip_modifier_item_imba_sange_active_Description"		"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance."
 
 // Yasha
-"DOTA_Tooltip_Ability_item_imba_yasha"							"#{DOTA_Tooltip_ability_item_yasha}"
+"DOTA_Tooltip_Ability_item_imba_yasha"							"#{DOTA_Tooltip_Ability_item_yasha}"
 "DOTA_Tooltip_ability_item_imba_yasha_Description"				"<h1><font color='#FF7800'>Active: Sword Dance</font></h1> Grants %bonus_evasion_active%%%  Evasion for %active_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_yasha_Lore"						"Yasha is regarded as the swiftest weapon ever created."
 "DOTA_Tooltip_ability_item_imba_yasha_Note0"					"Movement speed bonus does not stack with itself or other Yasha upgrades."
@@ -50,7 +50,7 @@
 "DOTA_Tooltip_modifier_item_imba_sange_yasha_active_Description"	"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance and %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion."
 
 // Heaven's Halberd
-"DOTA_Tooltip_ability_item_imba_heavens_halberd"					"#{DOTA_Tooltip_ability_item_heavens_halberd} (Pre 7.23)"
+"DOTA_Tooltip_ability_item_imba_heavens_halberd"					"#{DOTA_Tooltip_Ability_item_heavens_halberd} (Pre 7.23)"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_Description"		"<h1>Active: Disarm</h1> Prevents a target from attacking for %disarm_melee_duration% seconds. Duration increases to %disarm_range_duration% seconds if the target is ranged.\n<h1><font color='#FF7800'>Active: Resilience</font></h1> Can be cast on allies to grant %bonus_status_resistance_active%%% status resistance for %disarm_range_duration% seconds.</font>"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_Lore"				"This halberd moves with the speed of a smaller weapon, allowing the bearer to win duels that a heavy edge would not."
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_Note0"				"Disarm cannot be purged."
@@ -86,7 +86,7 @@
 // Yasha and Kaya
 "DOTA_Tooltip_Ability_item_imba_yasha_and_kaya"							"Yasha and Kaya"
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Description"				"<h1><font color='#FF7800'>Active: Spell Dance</font></h1> Grants %bonus_evasion_active%%%  Evasion and %bonus_cdr_active%%  mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
-// "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Lore"					"#{DOTA_Tooltip_ability_item_yasha_and_kaya_Lore}"
+// "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Lore"					"#{DOTA_Tooltip_Ability_item_yasha_and_kaya_Lore}"
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Note0"					"Movement speed bonus does not stack with itself or other Yasha upgrades."
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_intellect"			"+$int"
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_spell_amp"				"%+Spell Amplification"

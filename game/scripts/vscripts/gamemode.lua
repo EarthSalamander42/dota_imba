@@ -35,14 +35,17 @@ require('components/courier/init')
 if GetMapName() == "imba_demo" or IsInToolsMode() then
 	require("components/demo/init")
 end
+require('components/garbage_collector/init')
 require('components/gold')
 require('components/hero_selection/init')
 require('components/neutral_creeps/init')
 require('components/respawn_timer') -- Respawn time system override
+require('components/roshan/init')
 require('components/runes')         -- Rune system override
 require('components/settings/settings')
 -- require('components/new_team_selection')
 require('components/tooltips/init')
+require('components/tormentor/init')
 
 require('events/events')
 require('filters')
@@ -505,7 +508,7 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 		PrecacheUnitByNameAsync(new_hero, function()
 			PlayerResource:ReplaceHeroWith(keys.iPlayerID, new_hero, 0, 0)
 
-			Timers:CreateTimer(1.0, function()
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("remove_old_hero"), function()
 				if old_hero then
 					UTIL_Remove(old_hero)
 				end
@@ -516,7 +519,7 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 						UTIL_Remove(hero)
 					end
 				end
-			end)
+			end, 1.0)
 		end)
 
 		print("banned hero randomed, re-random:", new_hero)

@@ -1,20 +1,24 @@
+// Hero units
 // #base heroes/broodmother/units.txt
 #base heroes/ember_spirit/units.txt
 #base heroes/invoker/units.txt
 #base heroes/mars/units.txt
 #base heroes/undying/units.txt
 
-#base custom_heroes/hell_empress/hero.txt
-#base custom_heroes/malfurion/hero.txt
-#base custom_heroes/malfurion/units.txt
-#base custom_heroes/nian/hero.txt
-#base custom_heroes/sohei/hero.txt
-#base custom_heroes/vardor/hero.txt
-#base custom_heroes/vardor/units.txt
+// Custom Heroes
+// #base custom_heroes/hell_empress/hero.txt
+// #base custom_heroes/malfurion/hero.txt
+// #base custom_heroes/malfurion/units.txt
+// #base custom_heroes/nian/hero.txt
+// #base custom_heroes/sohei/hero.txt
+// #base custom_heroes/vardor/hero.txt
+// #base custom_heroes/vardor/units.txt
 
+// Units
 #base units/companions.txt
 #base units/contributors.txt
 #base units/statues.txt
+#base units/tormentor/units.txt
 #base units/vanilla_override.txt
 
 "DOTAUnits"

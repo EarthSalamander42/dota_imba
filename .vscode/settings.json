@@ -928,7 +928,9 @@
 		"json",
 		"GetAbilityKeyValuesByName",
 		"CDOTABaseAbility",
-		"GetUnitKeyValuesByName"
+		"GetUnitKeyValuesByName",
+		"Tutorial",
+		"DOTA_RUNE_XP"
 	],
 	"Lua.hint.await": true,
 	"Lua.semantic.annotation": false,

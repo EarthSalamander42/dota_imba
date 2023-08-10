@@ -94,7 +94,6 @@ function InitGlobalUtilFuncs() {
 
 		setHTMLNewLine: function (text) {
 			while (text.indexOf('\n') !== -1) {
-				$.Msg(text);
 				text = text.replace('\n', '<br>');
 			}
 
@@ -200,27 +199,6 @@ if (GameUI.Utils.FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).
 	OverrideHeroImage("0", panel, "lina")
 }
 */
-
-function OverrideTopBarColor() {
-	var colors = CustomNetTables.GetTableValue("game_options", "player_colors");
-
-	for (var id in colors) {
-		if (Players.GetTeam(parseInt(id)) && Players.GetTeam(parseInt(id)) && Players.GetTeam(parseInt(id)) != 1) {
-			var team = "Radiant"
-
-			if (Players.GetTeam(parseInt(id)) == 3) {
-				team = "Dire"
-			}
-
-			var panel = GameUI.Utils.FindDotaHudElement(team + "Player" + id)
-
-			if (panel)
-				panel.FindChildTraverse('PlayerColor').style.backgroundColor = colors[id];
-		}
-	}
-}
-
-GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);
 
 var toggle_ui = true;
 

@@ -1,6 +1,6 @@
 #base heroes/abaddon/hero.txt
 // #base heroes/abyssal_underlord/hero.txt
-// #base heroes/alchemist/hero.txt
+#base heroes/alchemist/hero.txt
 #base heroes/ancient_apparition/hero.txt
 // #base heroes/antimage/hero.txt
 // #base heroes/axe/hero.txt

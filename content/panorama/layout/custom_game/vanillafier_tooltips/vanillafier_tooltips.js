@@ -9,13 +9,7 @@ var hud_init = false;
 	OnThink();
 
 	InitMainPanelCSS();
-
-	const button = $("#GameInfoButton");
-
-	$.Msg(button);
-	if (button) {
-		button.style.visibility = "collapse";
-	}
+	HideGameInfoButton();
 
 	// Call it on file load in case player reconnects
 	$.Schedule(1.0, TransferMainPanelFromHeroSelectionToHud);
@@ -25,6 +19,16 @@ var hud_init = false;
 	GameEvents.Subscribe("dota_player_hero_selection_dirty", InitTooltips);
 	GameEvents.Subscribe("server_tooltips_info", SetAbilityTooltips);
 })();
+
+function HideGameInfoButton() {
+	var button = GameUI.Utils.FindDotaHudElement("GameInfoButton");
+
+	if (button) {
+		button.style.visibility = "collapse";
+	} else {
+		$.Schedule(1.0, HideGameInfoButton);
+	}
+}
 
 var DotaHud;
 var AbilityDetails;

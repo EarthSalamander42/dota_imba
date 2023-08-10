@@ -34,7 +34,7 @@ RUNE_SPAWN_TIME = 120        -- How long in seconds should we wait between rune 
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
 	-- Might be worth setting something here to differentiate our workspaces, since you seem to like bots on, but I don't...
-	BOTS_ENABLED = false
+	BOTS_ENABLED = true
 else
 	BOTS_ENABLED = false
 end
@@ -123,21 +123,9 @@ IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF          = 2500 -- Range at which most on-da
 -- IMBA: map-based settings
 -------------------------------------------------------------------------------------------------
 
-MAX_NUMBER_OF_TEAMS                          = 2     -- How many potential teams can be in this game mode?
-IMBA_PLAYERS_ON_GAME                         = 10    -- Number of players in the game
-USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS           = false -- Should we use custom team colors to color the players/minimap?
-
-PLAYER_COLORS                                = {}    -- Stores individual player colors
-PLAYER_COLORS[0]                             = { 67, 133, 255 }
-PLAYER_COLORS[1]                             = { 170, 255, 195 }
-PLAYER_COLORS[2]                             = { 130, 0, 150 }
-PLAYER_COLORS[3]                             = { 255, 234, 0 }
-PLAYER_COLORS[4]                             = { 255, 153, 0 }
-PLAYER_COLORS[5]                             = { 190, 255, 0 }
-PLAYER_COLORS[6]                             = { 255, 0, 0 }
-PLAYER_COLORS[7]                             = { 0, 128, 128 }
-PLAYER_COLORS[8]                             = { 255, 250, 200 }
-PLAYER_COLORS[9]                             = { 49, 49, 49 }
+MAX_NUMBER_OF_TEAMS                          = 2                -- How many potential teams can be in this game mode?
+IMBA_PLAYERS_ON_GAME                         = 10               -- Number of players in the game
+USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS           = false            -- Should we use custom team colors to color the players/minimap?
 
 TEAM_COLORS                                  = {}               -- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
 TEAM_COLORS[DOTA_TEAM_GOODGUYS]              = { 61, 210, 150 } -- Teal
@@ -146,6 +134,22 @@ TEAM_COLORS[DOTA_TEAM_BADGUYS]               = { 243, 201, 9 }  -- Yellow
 CUSTOM_TEAM_PLAYER_COUNT                     = {}
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
+
+PLAYER_COLORS                                = {}
+PLAYER_COLORS[2]                             = {}
+PLAYER_COLORS[3]                             = {}
+
+PLAYER_COLORS[2][0]                          = { 51, 117, 255 }  -- Vanilla dota color: blue
+PLAYER_COLORS[2][1]                          = { 102, 255, 191 } -- Vanilla dota color: teal
+PLAYER_COLORS[2][2]                          = { 191, 0, 191 }   -- Vanilla dota color: purple
+PLAYER_COLORS[2][3]                          = { 243, 240, 11 }  -- Vanilla dota color: yellow
+PLAYER_COLORS[2][4]                          = { 255, 107, 0 }   -- Vanilla dota color: orange
+
+PLAYER_COLORS[3][0]                          = { 254, 134, 194 } -- Vanilla dota color: pink
+PLAYER_COLORS[3][1]                          = { 161, 180, 71 }  -- Vanilla dota color: light green
+PLAYER_COLORS[3][2]                          = { 101, 217, 247 } -- Vanilla dota color: light blue
+PLAYER_COLORS[3][3]                          = { 0, 131, 33 }    -- Vanilla dota color: dark green
+PLAYER_COLORS[3][4]                          = { 164, 105, 0 }   -- Vanilla dota color: brown
 
 if GetMapName() == Map1v1() then
 	IMBA_PLAYERS_ON_GAME                         = 2
@@ -158,20 +162,19 @@ elseif string.find(GetMapName(), "10v10") then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
 
-	PLAYER_COLORS[10]                            = { 255, 0, 255 }
-	PLAYER_COLORS[11]                            = { 128, 128, 0 }
-	PLAYER_COLORS[12]                            = { 100, 255, 255 }
-	PLAYER_COLORS[13]                            = { 0, 190, 0 }
-	PLAYER_COLORS[14]                            = { 170, 110, 40 }
-	PLAYER_COLORS[15]                            = { 0, 0, 128 }
-	PLAYER_COLORS[16]                            = { 230, 190, 255 }
-	PLAYER_COLORS[17]                            = { 128, 0, 0 }
-	PLAYER_COLORS[18]                            = { 144, 144, 144 }
-	PLAYER_COLORS[19]                            = { 254, 254, 254 }
-	PLAYER_COLORS[20]                            = { 166, 166, 166 }
-	PLAYER_COLORS[21]                            = { 255, 89, 255 }
-	PLAYER_COLORS[22]                            = { 203, 255, 89 }
-	PLAYER_COLORS[23]                            = { 108, 167, 255 }
+	-- Custom colors for 10v10 not in vanilla dota and different for radiant and dire
+	PLAYER_COLORS[2][5]                          = { 255, 0, 0 } -- Custom color: red
+	PLAYER_COLORS[2][6]                          = { 0, 255, 0 } -- Custom color: green
+	PLAYER_COLORS[2][7]                          = { 255, 0, 255 } -- Custom color: pink
+	PLAYER_COLORS[2][8]                          = { 0, 0, 255 } -- Custom color: light blue
+	PLAYER_COLORS[2][9]                          = { 0, 0, 0 }  -- Custom color: black
+
+	-- Custom colors for 10v10 not in vanilla dota and different for radiant and dire
+	PLAYER_COLORS[3][5]                          = { 128, 128, 128 } -- Custom color: gray
+	PLAYER_COLORS[3][6]                          = { 0, 128, 0 }  -- Custom color: dark green
+	PLAYER_COLORS[3][7]                          = { 128, 0, 0 }  -- Custom color: brown
+	PLAYER_COLORS[3][8]                          = { 128, 128, 0 } -- Custom color: olive
+	PLAYER_COLORS[3][9]                          = { 128, 0, 128 } -- Custom color: purple
 elseif GetMapName() == "imba_demo" then
 	IMBA_PLAYERS_ON_GAME                         = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 1

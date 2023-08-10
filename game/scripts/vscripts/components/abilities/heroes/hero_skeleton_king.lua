@@ -295,12 +295,12 @@ function modifier_imba_wraithfire_blast_debuff:OnIntervalThink()
 
 		local damageTable = {
 			victim = self.parent,
-			attacker = self.caster, 
+			attacker = self.caster,
 			damage = damage,
 			damage_type = DAMAGE_TYPE_MAGICAL,
 			ability = self.ability
 		}
-		
+
 		ApplyDamage(damageTable)
 	end
 end
@@ -556,155 +556,155 @@ function modifier_imba_vampiric_aura_buff:GetModifierPreAttack_BonusDamage()
 end
 
 function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local damage = keys.damage
-		local damage_type = keys.damage_type
-		local target = keys.unit
+	if not IsServer() then return end
 
-		-- Only apply on the parent attacks
-		if self.parent == attacker then
-			local heal_amount = 0
+	local attacker = keys.attacker
+	local damage = keys.damage
+	local damage_type = keys.damage_type
+	local target = keys.unit
 
-			-- If the target is on the same team, do nothing
-			if attacker:GetTeamNumber() == target:GetTeamNumber() then
-				return nil
-			end
+	-- Only apply on the parent attacks
+	if self.parent == attacker then
+		local heal_amount = 0
 
-			-- If the target is a building, a courier or a ward, do nothing
-			if target:IsBuilding() or target:IsOther() then
-				return nil
-			end
-
-			-- Don't heal off of reflection damage
-			if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
-				return nil
-			end
-
-			-- If the damage was physical, use the lifesteal particle, and heal using the lifesteal values
-			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker, self.caster)
-				ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-				ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)
-
-				-- If it was an illusion, no heal is done (fakes lifesteal)
-				if attacker:IsIllusion() then
-					return nil
-				end
-
-				-- #9 Talent: Vampiric Aura lifesteal increase
-				local lifesteal_pct = self.lifesteal_pct + self.caster:FindTalentValue("special_bonus_imba_skeleton_king_9")
-
-				-- Calculate lifesteal and heal the attacker
-				heal_amount = damage * lifesteal_pct / 100
-
-				if self.parent == self.caster then
-					heal_amount = heal_amount * self.self_bonus
-				end
-				
-				self.parent:Heal(heal_amount, self.ability)
-			-- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
-			else
-				if not self.delay_particle_time or (GameRules:GetGameTime() - self.delay_particle_time > 1) then
-					local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker, self.caster)
-					ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
-					ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-					ParticleManager:ReleaseParticleIndex(particle_spellsteal_fx)
-
-					self.delay_particle_time = GameRules:GetGameTime()
-				end
-
-				-- If it was an illusion, no heal is done (fakes lifesteal)
-				if attacker:IsIllusion() then
-					return nil
-				end
-
-				-- Calculate lifesteal and heal the attacker
-				heal_amount = damage * self.spellsteal_pct / 100
-
-				if self.parent == self.caster then
-					heal_amount = heal_amount * self.self_bonus
-				end
-				
-				self.parent:Heal(heal_amount, self.ability)
-			end
-
-			-- After a small delay, find both illusions and the real aura bearer
-			Timers:CreateTimer(self.heal_delay, function()
-				local casters = FindUnitsInRadius(
-					self.parent:GetTeamNumber(),
-					self.parent:GetAbsOrigin(),
-					nil,
-					self.radius,
-					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-					DOTA_UNIT_TARGET_HERO,
-					DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-					FIND_ANY_ORDER,
-					false
-				)
-
-				for _, caster in pairs(casters) do
-					-- Ignore everyone that are not the same name as the caster
-					if caster:GetUnitName() == self.caster:GetUnitName() and attacker:GetUnitName() ~= self.caster:GetUnitName() then
-						-- If any healing was done by anyone that is not the caster, show a transition to the aura bearer(s)
-						if heal_amount > 0 and caster ~= attacker then
-							local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, caster, self.caster)
-							ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-							ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-							ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)
-
-							-- Heal the aura bearer, if it's a real hero
-							if caster:IsRealHero() then
-								local caster_heal = heal_amount * self.caster_heal * 0.01
-								caster:Heal(caster_heal, self.ability)
-							end
-						end
-					end
-				end
-			end)
+		-- If the target is on the same team, do nothing
+		if attacker:GetTeamNumber() == target:GetTeamNumber() then
+			return nil
 		end
 
-		if self.parent == target and target ~= self.caster and self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_1") then
-			local heal_amount = 0
+		-- If the target is a building, a courier or a ward, do nothing
+		if target:IsBuilding() or target:IsOther() then
+			return nil
+		end
 
-			-- If the target is on the same team, do nothing
-			if attacker:GetTeamNumber() == target:GetTeamNumber() then
+		-- Don't heal off of reflection damage
+		if bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
+			return nil
+		end
+
+		-- If the damage was physical, use the lifesteal particle, and heal using the lifesteal values
+		if damage_type == DAMAGE_TYPE_PHYSICAL then
+			local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker, self.caster)
+			ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)
+
+			-- If it was an illusion, no heal is done (fakes lifesteal)
+			if attacker:IsIllusion() then
 				return nil
 			end
 
-			-- If the attacker is a building, a courier or a ward, do nothing
-			if attacker:IsBuilding() or attacker:IsOther() then
-				return nil
+			-- #9 Talent: Vampiric Aura lifesteal increase
+			local lifesteal_pct = self.lifesteal_pct + self.caster:FindTalentValue("special_bonus_imba_skeleton_king_9")
+
+			-- Calculate lifesteal and heal the attacker
+			heal_amount = damage * lifesteal_pct / 100
+
+			if self.parent == self.caster then
+				heal_amount = heal_amount * self.self_bonus
+			end
+
+			self.parent:Heal(heal_amount, self.ability)
+			-- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
+		else
+			if not self.delay_particle_time or (GameRules:GetGameTime() - self.delay_particle_time > 1) then
+				local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker, self.caster)
+				ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+				ParticleManager:ReleaseParticleIndex(particle_spellsteal_fx)
+
+				self.delay_particle_time = GameRules:GetGameTime()
 			end
 
 			-- If it was an illusion, no heal is done (fakes lifesteal)
-			if target:IsIllusion() then
+			if attacker:IsIllusion() then
 				return nil
 			end
 
 			-- Calculate lifesteal and heal the attacker
-			heal_amount = damage
+			heal_amount = damage * self.spellsteal_pct / 100
 
-			-- After a small delay, find both illusions and the real aura bearer
-			Timers:CreateTimer(self.heal_delay, function()
-				if not self.caster:IsAlive() then
-					return nil
+			if self.parent == self.caster then
+				heal_amount = heal_amount * self.self_bonus
+			end
+
+			self.parent:Heal(heal_amount, self.ability)
+		end
+
+		-- After a small delay, find both illusions and the real aura bearer
+		Timers:CreateTimer(self.heal_delay, function()
+			local casters = FindUnitsInRadius(
+				self.parent:GetTeamNumber(),
+				self.parent:GetAbsOrigin(),
+				nil,
+				self.radius,
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO,
+				DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+				FIND_ANY_ORDER,
+				false
+			)
+
+			for _, caster in pairs(casters) do
+				-- Ignore everyone that are not the same name as the caster
+				if caster:GetUnitName() == self.caster:GetUnitName() and attacker:GetUnitName() ~= self.caster:GetUnitName() then
+					-- If any healing was done by anyone that is not the caster, show a transition to the aura bearer(s)
+					if heal_amount > 0 and caster ~= attacker then
+						local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, caster, self.caster)
+						ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+						ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+						ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)
+
+						-- Heal the aura bearer, if it's a real hero
+						if caster:IsRealHero() then
+							local caster_heal = heal_amount * self.caster_heal * 0.01
+							caster:Heal(caster_heal, self.ability)
+						end
+					end
 				end
-				local casters = FindUnitsInRadius(
-					self.parent:GetTeamNumber(),
-					self.parent:GetAbsOrigin(),
-					nil,
-					self.radius,
-					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-					DOTA_UNIT_TARGET_HERO,
-					DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-					FIND_ANY_ORDER,
-					false
-				)
+			end
+		end)
+	end
 
-				for _,caster in pairs(casters) do
+	if self.parent == target and target ~= self.caster and self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_1") then
+		local heal_amount = 0
 
+		-- If the target is on the same team, do nothing
+		if attacker:GetTeamNumber() == target:GetTeamNumber() then
+			return nil
+		end
+
+		-- If the attacker is a building, a courier or a ward, do nothing
+		if attacker:IsBuilding() or attacker:IsOther() then
+			return nil
+		end
+
+		-- If it was an illusion, no heal is done (fakes lifesteal)
+		if target:IsIllusion() then
+			return nil
+		end
+
+		-- Calculate lifesteal and heal the attacker
+		heal_amount = damage
+
+		-- After a small delay, find both illusions and the real aura bearer
+		Timers:CreateTimer(self.heal_delay, function()
+			if not self.caster:IsAlive() then
+				return nil
+			end
+			local casters = FindUnitsInRadius(
+				self.parent:GetTeamNumber(),
+				self.parent:GetAbsOrigin(),
+				nil,
+				self.radius,
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO,
+				DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+				FIND_ANY_ORDER,
+				false
+			)
+
+			for _, caster in pairs(casters) do
 				for _, caster in pairs(casters) do
 					-- Ignore everyone that are not the same name as the caster
 					if caster:GetUnitName() == self.caster:GetUnitName() and attacker:GetUnitName() ~= self.caster:GetUnitName() then
@@ -723,8 +723,8 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 						end
 					end
 				end
-			end)
-		end
+			end
+		end)
 	end
 end
 

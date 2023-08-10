@@ -312,13 +312,15 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 			playerAvatar.steamid = playerInfo.player_steamid;
 		}
 
+		// Need to find which child number the player is in the PlayerList container in order to set the correct background color.
+		var playerListChildren = playersContainer.Children();
+		var playerIndex = playerListChildren.indexOf(playerPanel);
+
 		var playerColorBar = playerPanel.FindChildInLayoutFile("PlayerColorBar");
 		if (playerColorBar !== null) {
 			var PlyColors = CustomNetTables.GetTableValue("game_options", "player_colors");
-			if (PlyColors != undefined)
-			{
-				if (PlyColors[playerId] != undefined)
-					playerColorBar.style.backgroundColor = PlyColors[playerId];
+			if (PlyColors && PlyColors[playerInfo.player_team_id] && PlyColors[playerInfo.player_team_id][playerIndex]) {
+				playerColorBar.style.backgroundColor = PlyColors[playerInfo.player_team_id][playerIndex];
 			}
 		}
 	}

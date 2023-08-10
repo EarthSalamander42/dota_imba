@@ -6,7 +6,7 @@
 
 #base heroes/abaddon/abilities.txt
 // #base heroes/abyssal_underlord/abilities.txt
-// #base heroes/alchemist/abilities.txt
+#base heroes/alchemist/abilities.txt
 #base heroes/ancient_apparition/abilities.txt
 // #base heroes/antimage/abilities.txt
 // #base heroes/arc_warden/abilities.txt
@@ -87,6 +87,10 @@
 // #base heroes/winter_wyvern/abilities.txt
 // #base heroes/wisp/abilities.txt
 // #base heroes/zeus/abilities.txt
+
+// Units
+#base units/roshan/abilities.txt
+#base units/tormentor/abilities.txt
 
 "DOTAAbilities"
 {

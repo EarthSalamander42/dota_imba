@@ -1,0 +1,13 @@
+"npc_dota_miniboss_custom"												"Tormentor"
+
+"DOTA_Tooltip_Ability_miniboss_unyielding_shield_custom"				"#{DOTA_Tooltip_Ability_miniboss_unyielding_shield}"
+"DOTA_Tooltip_Ability_miniboss_unyielding_shield_custom_Description"	"#{DOTA_Tooltip_Ability_miniboss_unyielding_shield_Description}"
+
+"DOTA_Tooltip_Ability_miniboss_reflect_custom"							"#{DOTA_Tooltip_Ability_miniboss_reflect}"
+"DOTA_Tooltip_Ability_miniboss_reflect_custom_Description"				"#{DOTA_Tooltip_Ability_miniboss_reflect_Description}"
+
+"DOTA_Tooltip_modifier_miniboss_unyielding_shield_custom"				"#{DOTA_Tooltip_modifier_miniboss_unyielding_shield}"
+"DOTA_Tooltip_modifier_miniboss_unyielding_shield_custom_Description"	"#{DOTA_Tooltip_modifier_miniboss_unyielding_shield_Description}"
+
+"DOTA_Tooltip_modifier_miniboss_reflect_custom"							"#{DOTA_Tooltip_modifier_miniboss_reflect}"
+"DOTA_Tooltip_modifier_miniboss_reflect_custom_Description"				"#{DOTA_Tooltip_modifier_miniboss_reflect_Description}"

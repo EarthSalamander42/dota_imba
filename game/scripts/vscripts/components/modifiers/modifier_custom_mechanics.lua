@@ -9,6 +9,8 @@ function modifier_custom_mechanics:IsPurgable() return false end
 function modifier_custom_mechanics:RemoveOnDeath() return false end
 
 function modifier_custom_mechanics:OnCreated()
+	self.parent = self:GetParent()
+
 	if IsServer() then
 		self.health_regen_amp = 0
 
@@ -39,7 +41,9 @@ function modifier_custom_mechanics:DeclareFunctions()
 end
 
 function modifier_custom_mechanics:GetModifierHealthBonus()
-	return (GetUnitKeyValuesByName(self:GetParent():GetName())["StatusHealth"] * IMBAFIED_VALUE_BONUS / 100) or 0
+	if self.parent and IsValidEntity(self.parent) and not self.parent:IsNull() and self.parent:IsRealHero() then
+		return (GetUnitKeyValuesByName(self.parent:GetName())["StatusHealth"] * IMBAFIED_VALUE_BONUS / 100) or 0
+	end
 end
 
 --- Enum DamageCategory_t

@@ -32,6 +32,7 @@ function GameMode:_OnNPCSpawned(keys)
 		npc.bFirstSpawned = true
 		if npc:GetUnitName() ~= FORCE_PICKED_HERO then
 			npc:InitializeAbilities()
+			self:ApplyPlayerColors(npc:GetPlayerID())
 		end
 	end
 
@@ -40,20 +41,20 @@ function GameMode:_OnNPCSpawned(keys)
 	GameMode._reentrantCheck = false
 end
 
-function GameMode:_OnEntityKilled( keys )
+function GameMode:_OnEntityKilled(keys)
 	if GameMode._reentrantCheck then
 		return
 	end
 
-	local killedUnit = EntIndexToHScript( keys.entindex_killed )
+	local killedUnit = EntIndexToHScript(keys.entindex_killed)
 	local killerEntity = nil
 
 	if keys.entindex_attacker ~= nil then
-		killerEntity = EntIndexToHScript( keys.entindex_attacker )
+		killerEntity = EntIndexToHScript(keys.entindex_attacker)
 	end
 
 	GameMode._reentrantCheck = true
-	GameMode:OnEntityKilled( keys )
+	GameMode:OnEntityKilled(keys)
 	GameMode._reentrantCheck = false
 end
 
@@ -64,7 +65,7 @@ function GameMode:_OnConnectFull(keys)
 
 	GameMode:_CaptureGameMode()
 
-	local entIndex = keys.index+1
+	local entIndex = keys.index + 1
 	-- The Player entity of the joining user
 	local ply = EntIndexToHScript(entIndex)
 
@@ -72,6 +73,6 @@ function GameMode:_OnConnectFull(keys)
 	self.vUserIds[keys.userid] = ply
 
 	GameMode._reentrantCheck = true
-	GameMode:OnConnectFull( keys )
+	GameMode:OnConnectFull(keys)
 	GameMode._reentrantCheck = false
 end

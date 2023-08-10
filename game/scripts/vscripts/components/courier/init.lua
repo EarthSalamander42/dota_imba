@@ -38,7 +38,7 @@ ListenToGameEvent("npc_spawned", function(keys)
 	if USE_TEAM_COURIER == true or USE_TEAM_COURIER == nil then return end
 
 	local hero = EntIndexToHScript(keys.entindex)
-	
+
 	if hero.GetPlayerID and not TurboCourier.COURIER_PLAYER[hero:GetPlayerID()] then
 		Timers:CreateTimer(0.1, function()
 			if hero:IsRealHero() and not hero:IsIllusion() then
@@ -59,11 +59,11 @@ function TurboCourier:SpawnTurboCourier(hero, pos)
 	self.COURIER_PLAYER[heroID].return_position = pos
 
 	-- Let's give 'em different colours...
-	if PLAYER_COLORS and PLAYER_COLORS[heroID] then
-		self.COURIER_PLAYER[heroID]:SetRenderColor(PLAYER_COLORS[heroID][1], PLAYER_COLORS[heroID][2], PLAYER_COLORS[heroID][3])
-		-- This spams the hell out of CLocalize console which makes it hard to debug
-		-- self.COURIER_PLAYER[heroID]:SetCustomHealthLabel(PlayerResource:GetPlayerName(heroID), PLAYER_COLORS[heroID][1], PLAYER_COLORS[heroID][2], PLAYER_COLORS[heroID][3])
-	end
+	-- if PLAYER_COLORS and PLAYER_COLORS[heroID] then
+	-- 	self.COURIER_PLAYER[heroID]:SetRenderColor(PLAYER_COLORS[heroID][1], PLAYER_COLORS[heroID][2], PLAYER_COLORS[heroID][3])
+	-- 	-- This spams the hell out of CLocalize console which makes it hard to debug
+	-- 	-- self.COURIER_PLAYER[heroID]:SetCustomHealthLabel(PlayerResource:GetPlayerName(heroID), PLAYER_COLORS[heroID][1], PLAYER_COLORS[heroID][2], PLAYER_COLORS[heroID][3])
+	-- end
 
 	self.COURIER_PLAYER[heroID]:SetOwner(hero)
 	self.COURIER_PLAYER[heroID]:SetControllableByPlayer(hero:GetPlayerID(), true)

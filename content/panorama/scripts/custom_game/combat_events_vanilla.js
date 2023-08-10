@@ -1,12 +1,10 @@
 var CombatEvents = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("ToastManager");
 
 function SetBountyRuneGold(data) {
-	$.Msg(data);
+	// $.Msg(data);
 	var event_panel = CombatEvents.GetChild(CombatEvents.GetChildCount() - 1);
 
 	if (event_panel && event_panel.BHasClass("event_dota_rune_pickup") && (!event_panel.gold_rune_set || Game.IsInToolsMode())) {
-		$.Msg("Rune picked up!")
-
 		// tools mode needs 
 		if (Game.IsInToolsMode()) {
 			if (event_panel.FindChildTraverse("additional_text")) {

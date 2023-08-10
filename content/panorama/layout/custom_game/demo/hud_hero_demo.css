@@ -1,37 +1,35 @@
 .CustomHudRoot{
 
-     width: 100%;
-     height: 100%;
+	 width: 100%;
+	 height: 100%;
 }
 
  .DemoHud{
 
-     flow-children: right;
-     height: 100%;
-     width: 100%;
+	 flow-children: right;
+	 height: 100%;
+	 width: 100%;
  }
 
  .ControlPanel{
+	transform: translateX( 0% ) translateY( -100px );
+	vertical-align: top;
+	horizontal-align: left;
+	flow-children: right;
 
-     transform: translateX( 0% ) translateY( -100px );
-     vertical-align: top;
-     horizontal-align: left;
-  flow-children: right;
+	padding-top: 210px;
+	padding-bottom: 10px;
 
-  padding-top: 150px;
-  padding-bottom: 10px;
-
-     transition-property: background-color, transform;
-  transition-duration: 0.35s;
-  transition-timing-function: ease-in-out;
- }
+	transition-property: background-color, transform;
+	transition-duration: 0.35s;
+	transition-timing-function: ease-in-out;
+}
 
  .HUDFlipped .ControlPanel{
-
-     horizontal-align: right;
-     flow-children: left;
-     transform: translateX( 0% ) translateY( -100px );
-     margin-right: -4px;
+	horizontal-align: right;
+	flow-children: left;
+	transform: translateX( 0% ) translateY( -100px );
+	margin-right: -4px;
  }
 
  .ControlPanelContainer{
@@ -39,9 +37,9 @@
 
   width: 244px;
   max-height: 785px;
-     flow-children: down;
+	 flow-children: down;
 
-     background-color: gradient( linear, 0% 0%, 70% 0%, from( #111111 ), to( #222222 ) );
+	 background-color: gradient( linear, 0% 0%, 70% 0%, from( #111111 ), to( #222222 ) );
   box-shadow: #000000AA 2px 2px 8px;
 
   overflow: squish scroll;
@@ -49,7 +47,7 @@
 
  .HUDFlipped .ControlPanelContainer{
 
-     horizontal-align: right;
+	 horizontal-align: right;
  }
 
  #ControlPanelSlideThumbContainer{
@@ -66,9 +64,9 @@
   vertical-align: middle;
   transform: translateX( 0px );
 
-     background-color: gradient( linear, 0% 0%, 70% 0%, from( #111111 ), to( #3b3b3b ) );
-     border-top-right-radius: 8px;
-     border-bottom-right-radius: 12px;
+	 background-color: gradient( linear, 0% 0%, 70% 0%, from( #111111 ), to( #3b3b3b ) );
+	 border-top-right-radius: 8px;
+	 border-bottom-right-radius: 12px;
 
   box-shadow: #000000AA 1px 1px 6px;
 
@@ -80,7 +78,7 @@
 
  .HUDFlipped #ControlPanelSlideThumbContainer{
 
-     transform: scaleX(-1);
+	 transform: scaleX(-1);
  }
 
  .RightArrowButtonIcon{
@@ -130,8 +128,8 @@
 
  .ControlPanel. #ControlPanelSlideThumb:hover .RightArrowButtonIcon{
 
-     transform: translateX( 3px ) rotateZ(180deg);
-     wash-color: white;
+	 transform: translateX( 3px ) rotateZ(180deg);
+	 wash-color: white;
  }
 
  .Minimized .ControlPanel{
@@ -142,7 +140,7 @@
 
  .HUDFlipped .Minimized .ControlPanel{
 
-     transform: translateX( 244px ) translateY( -100px );
+	 transform: translateX( 244px ) translateY( -100px );
  }
 
 
@@ -310,14 +308,14 @@
   height: 30px;
   width: fill-parent-flow( 1.0 );
 
-     transition-property: background-color, border, color;
-     transition-duration: 0.15s;
-     transition-timing-function: linear;
+	 transition-property: background-color, border, color;
+	 transition-duration: 0.15s;
+	 transition-timing-function: linear;
  }
 
  .DemoButton Label{
 
-     horizontal-align: center;
+	 horizontal-align: center;
   vertical-align: middle;
 
   color: #D8DADE;
@@ -405,8 +403,8 @@
   brightness: 1.0;
 
   transition-property: brightness;
-     transition-duration: 0.15s;
-     transition-timing-function: ease-in-out;
+	 transition-duration: 0.15s;
+	 transition-timing-function: ease-in-out;
  }
 
  .LeftButton{
@@ -460,9 +458,9 @@
   saturation: 0.8;
   brightness: 0.6;
 
-     transition-property: brightness, saturation, opacity;
-     transition-duration: 0.2s;
-     transition-timing-function: linear;
+	 transition-property: brightness, saturation, opacity;
+	 transition-duration: 0.2s;
+	 transition-timing-function: linear;
  }
 
  .RuneButton:hover{
@@ -487,18 +485,18 @@
 
  .DemoButton:hover{
 
-     background-color: gradient( linear, 0% 0%, 70% 0%, from( #676b70 ), to( #3e4144 ) );
+	 background-color: gradient( linear, 0% 0%, 70% 0%, from( #676b70 ), to( #3e4144 ) );
   border: 1px solid #686b70;
  }
 
  .DemoButton:hover Label{
 
-     color: #FFF;
+	 color: #FFF;
  }
 
  .DemoButton:active{
 
-     background-color: #7E94B1;
+	 background-color: #7E94B1;
   pre-transform-scale2d: 1.02;
  }
 
@@ -521,7 +519,7 @@
   background-color: #000c;
 
   opacity: 0.0;
-     transform: translateX( -60px ) translateY( -100px );
+	 transform: translateX( -60px ) translateY( -100px );
 
   transition-property: opacity, transform;
   transition-duration: 0.2s;
@@ -569,8 +567,8 @@
  #Footer{
 
   flow-children: right;
-     height: 30px;
-     width: 100%;
+	 height: 30px;
+	 width: 100%;
   margin: 12px;
  }
 
@@ -607,6 +605,6 @@
 
 .DemoButton.QuitButton:active{
 
-     background-color: gradient( linear, 0% 0%, 0% 100%, from( #aa8888 ), to( #ffaaaa ) );
+	 background-color: gradient( linear, 0% 0%, 0% 100%, from( #aa8888 ), to( #ffaaaa ) );
   pre-transform-scale2d: 1.02;
 }

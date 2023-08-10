@@ -573,20 +573,6 @@ function GetCastRangeIncrease(unit)
 	return cast_range_increase
 end
 
-function SetupTower(tower)
-	if tower.initialized then return end
-	--	if tower.initialized or GetMapName() == Map1v1() then return end
-	for i = 1, 4 do
-		for _, ability in pairs(TOWER_ABILITIES["tower" .. i]) do
-			if string.find(tower:GetUnitName(), "tower" .. i) then
-				--				print("Tower found:", ability) -- tower spawned from pocket tower mutation are found and print well, abilities are not given for reasons
-				tower:AddAbility(ability):SetLevel(i)
-				tower.initialized = true
-			end
-		end
-	end
-end
-
 -- Outdated formula
 --[[
 function GetReductionFromArmor(armor)

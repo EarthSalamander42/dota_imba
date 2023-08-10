@@ -29,26 +29,20 @@ function GameMode:OnGameRulesStateChange(keys)
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		InitItemIds()
 		GameMode:OnSetGameMode() -- setup gamemode rules
-
-		-- setup Player colors into hex for panorama
-		local hex_colors = {}
-		for i = 0, 24 do
-			if PLAYER_COLORS and PLAYER_COLORS[i] then
-				table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
-			end
-		end
-
-		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
+		self:SetPlayerColors() -- setup player colors
 
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 			if IsInToolsMode() then
-				if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
-					BOTS_ENABLED = true
-				end
-
 				if BOTS_ENABLED == true then
-					SendToServerConsole('sm_gmode 1')
-					SendToServerConsole('dota_bot_populate')
+					Tutorial:AddBot("npc_dota_hero_shredder", "", "", false)
+					Tutorial:AddBot("npc_dota_hero_skeleton_king", "", "", false)
+					Tutorial:AddBot("npc_dota_hero_tidehunter", "", "", false)
+					Tutorial:AddBot("npc_dota_hero_vengefulspirit", "", "", false)
+
+					Tutorial:AddBot("npc_dota_hero_troll_warlord", "", "", true)
+					Tutorial:AddBot("npc_dota_hero_slark", "", "", true)
+					Tutorial:AddBot("npc_dota_hero_shadow_shaman", "", "", true)
+					Tutorial:AddBot("npc_dota_hero_void_spirit", "", "", true)
 				end
 			end
 
@@ -121,16 +115,8 @@ function GameMode:OnGameRulesStateChange(keys)
 			local towers = Entities:FindAllByClassname("npc_dota_tower")
 
 			for _, tower in pairs(towers) do
-				SetupTower(tower)
+				self:SetupTower(tower)
 			end
-
-			-- Initialize IMBA Runes system
-			if IMBA_RUNE_SYSTEM == true then
-				ImbaRunes:Init()
-			end
-
-			-- Setup topbar player colors
-			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 
 			-- MORE FAIL-SAFE
 			print("Pre-Game PreventBannedHeroToBeRandomed()")
@@ -181,11 +167,9 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- if api:GetCustomGamemode() > 1 then
 			-- SpawnEasterEgg()
 			-- end
-
-			if IMBA_RUNE_SYSTEM == true then
-				ImbaRunes:Spawn()
-			end
 		end
+
+		GameRules:SetTimeOfDay(0.251) -- really? have to set that manually?
 	end
 end
 
@@ -228,8 +212,7 @@ function GameMode:OnNPCSpawned(keys)
 
 			return
 		elseif npc:GetClassname() == "npc_dota_tower" then
-			print("Tower Spawned!")
-			SetupTower(npc)
+			self:SetupTower(npc)
 			return
 		else
 			if npc.first_spawn ~= true then
@@ -711,7 +694,7 @@ function GameMode:OnPlayerChat(keys)
 			end
 
 			if str == "-spawnimbarune" then
-				ImbaRunes:Spawn()
+				Runes:Spawn()
 			end
 
 			if str == "-replaceherowith" then
@@ -1265,7 +1248,7 @@ function GameMode:OnRuneActivated(keys)
 	local hero = PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero()
 
 	if keys.rune == DOTA_RUNE_ILLUSION then
-		ImbaRunes:PickupRune("illusion", hero, false)
+		Runes:PickupRune("illusion", hero, false)
 	end
 end
 

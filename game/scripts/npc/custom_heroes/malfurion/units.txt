@@ -22,7 +22,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"                  "neutral_spell_immunity"
-		"Ability2"					"custom_creep_scaling"
+		// "Ability2"					"custom_creep_scaling"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -95,7 +95,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"                  "neutral_spell_immunity"
-		"Ability2"					"custom_creep_scaling"
+		// "Ability2"					"custom_creep_scaling"
 
 		// Armor
 		//----------------------------------------------------------------

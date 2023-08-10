@@ -108,34 +108,34 @@ function item_imba_moon_shard:OnSpellStart()
 			return
 		end
 		-- if target == caster then
-			-- EmitSoundOnClient("Item.MoonShard.Consume", caster:GetPlayerOwner())
-			-- local moon_buff = caster:FindModifierByName("modifier_item_imba_moon_shard_active")
-			-- if moon_buff then
-				-- moon_buff:SetStackCount(moon_buff:GetStackCount() + current_stacks)
-			-- else
-				-- moon_buff = caster:AddNewModifier(caster, self, "modifier_item_imba_moon_shard_active", {})
-				-- moon_buff:SetStackCount(current_stacks)
-			-- end
-			-- caster:RemoveItem(self)
+		-- EmitSoundOnClient("Item.MoonShard.Consume", caster:GetPlayerOwner())
+		-- local moon_buff = caster:FindModifierByName("modifier_item_imba_moon_shard_active")
+		-- if moon_buff then
+		-- moon_buff:SetStackCount(moon_buff:GetStackCount() + current_stacks)
 		-- else
-			EmitSoundOnClient("Item.MoonShard.Consume", caster:GetPlayerOwner())
-			
-			if target ~= caster then
-				EmitSoundOnClient("Item.MoonShard.Consume", target:GetPlayerOwner())
-			end
-			
-			local moon_buff = target:FindModifierByName("modifier_item_imba_moon_shard_active")
-			if moon_buff then
-				moon_buff:SetStackCount(moon_buff:GetStackCount() + 1)
-			else
-				moon_buff = target:AddNewModifier(caster, self, "modifier_item_imba_moon_shard_active", {})
-				moon_buff:SetStackCount(1)
-			end
-			if current_stacks > 1 then
-				self:SetCurrentCharges(current_stacks-1)
-			else
-				caster:RemoveItem(self)
-			end
+		-- moon_buff = caster:AddNewModifier(caster, self, "modifier_item_imba_moon_shard_active", {})
+		-- moon_buff:SetStackCount(current_stacks)
+		-- end
+		-- caster:RemoveItem(self)
+		-- else
+		EmitSoundOnClient("Item.MoonShard.Consume", caster:GetPlayerOwner())
+
+		if target ~= caster then
+			EmitSoundOnClient("Item.MoonShard.Consume", target:GetPlayerOwner())
+		end
+
+		local moon_buff = target:FindModifierByName("modifier_item_imba_moon_shard_active")
+		if moon_buff then
+			moon_buff:SetStackCount(moon_buff:GetStackCount() + 1)
+		else
+			moon_buff = target:AddNewModifier(caster, self, "modifier_item_imba_moon_shard_active", {})
+			moon_buff:SetStackCount(1)
+		end
+		if current_stacks > 1 then
+			self:SetCurrentCharges(current_stacks - 1)
+		else
+			caster:RemoveItem(self)
+		end
 		-- end
 	else
 		EmitSoundOn("Item.DropWorld", caster)
@@ -144,14 +144,12 @@ function item_imba_moon_shard:OnSpellStart()
 		moon:SetPurchaser(caster)
 		moon:SetPurchaseTime(self:GetPurchaseTime())
 		if current_stacks > 1 then
-			self:SetCurrentCharges(current_stacks-1)
+			self:SetCurrentCharges(current_stacks - 1)
 		else
 			caster:RemoveItem(self)
 		end
 	end
-
 end
-
 
 ---------------------------------------
 --     STATS MODIFIER (STACKABLE)    --
@@ -159,14 +157,17 @@ end
 modifier_item_imba_moon_shard = modifier_item_imba_moon_shard or class({})
 
 function modifier_item_imba_moon_shard:IsHidden() return false end
+
 function modifier_item_imba_moon_shard:IsDebuff() return false end
+
 function modifier_item_imba_moon_shard:IsPurgable() return false end
+
 function modifier_item_imba_moon_shard:RemoveOnDeath() return false end
 
 function modifier_item_imba_moon_shard:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
+		if not self:GetAbility() then self:Destroy() end
+	end
 
 	if not IsServer() then return end
 	self:StartIntervalThink(0.2)
@@ -178,7 +179,7 @@ function modifier_item_imba_moon_shard:OnIntervalThink()
 	local caster = self:GetCaster()
 	local stack = ability:GetCurrentCharges()
 	local empty_slot = 0
-	for i=0,5 do
+	for i = 0, 5 do
 		local item = caster:GetItemInSlot(i)
 		if not item or item:GetAbilityName() == ability:GetAbilityName() then
 			empty_slot = empty_slot + 1
@@ -187,7 +188,7 @@ function modifier_item_imba_moon_shard:OnIntervalThink()
 	if empty_slot < stack then
 		stack = empty_slot
 	end
-	
+
 	self:SetStackCount(stack)
 end
 
@@ -210,7 +211,6 @@ function modifier_item_imba_moon_shard:GetBonusNightVision()
 	end
 end
 
-
 ---------------------------------------
 --     ACTIVE MODIFIER               --
 ---------------------------------------
@@ -218,28 +218,32 @@ end
 modifier_item_imba_moon_shard_active = modifier_item_imba_moon_shard_active or class({})
 
 function modifier_item_imba_moon_shard_active:IsHidden() return false end
+
 function modifier_item_imba_moon_shard_active:IsDebuff() return false end
+
 function modifier_item_imba_moon_shard_active:IsPurgable() return false end
+
 function modifier_item_imba_moon_shard_active:RemoveOnDeath() return false end
+
 function modifier_item_imba_moon_shard_active:GetTexture() return "item_moon_shard" end
 
 function modifier_item_imba_moon_shard_active:OnCreated()
 	if IsServer() then
-        if not self:GetAbility() then self:Destroy() end
-    end
-	
+		if not self:GetAbility() then self:Destroy() end
+	end
+
 	if self:GetAbility() then
-		self.consume_as_1		= self:GetAbility():GetSpecialValueFor("consume_as_1")
-		self.consume_vision_1	= self:GetAbility():GetSpecialValueFor("consume_vision_1")
-		self.consume_as_2		= self:GetAbility():GetSpecialValueFor("consume_as_2")
-		self.consume_vision_2	= self:GetAbility():GetSpecialValueFor("consume_vision_2")
-		self.consume_as_3		= self:GetAbility():GetSpecialValueFor("consume_as_3")
+		self.consume_as_1     = self:GetAbility():GetSpecialValueFor("consume_as_1")
+		self.consume_vision_1 = self:GetAbility():GetSpecialValueFor("consume_vision_1")
+		self.consume_as_2     = self:GetAbility():GetSpecialValueFor("consume_as_2")
+		self.consume_vision_2 = self:GetAbility():GetSpecialValueFor("consume_vision_2")
+		self.consume_as_3     = self:GetAbility():GetSpecialValueFor("consume_as_3")
 	else
-		self.consume_as_1		= 70
-		self.consume_vision_1	= 250
-		self.consume_as_2		= 50
-		self.consume_vision_2	= 150
-		self.consume_as_3		= 30
+		self.consume_as_1     = 70
+		self.consume_vision_1 = 250
+		self.consume_as_2     = 50
+		self.consume_vision_2 = 150
+		self.consume_as_3     = 30
 	end
 end
 

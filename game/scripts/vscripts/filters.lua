@@ -236,11 +236,12 @@ function GameMode:ModifierFilter(keys)
 		if modifier_name == "modifier_tusk_snowball_movement" then
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
 				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
-				Timers:CreateTimer(9.0, function()
+
+				modifier_owner:SetContextThink(DoUniqueString("ActivateSnowball"), function()
 					if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
 						modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
 					end
-				end)
+				end, 9.0)
 			end
 		end
 
@@ -253,7 +254,7 @@ function GameMode:ModifierFilter(keys)
 		if IMBA_RUNE_SYSTEM == false then
 			if string.find(modifier_name, "modifier_rune_") then
 				local rune_name = string.gsub(modifier_name, "modifier_rune_", "")
-				ImbaRunes:PickupRune(rune_name, modifier_owner, false)
+				Runes:PickupRune(rune_name, modifier_owner, false)
 
 				return false
 			end
@@ -311,7 +312,7 @@ function GameMode:ItemAddedFilter(keys)
 
 	-- Custom Rune System
 	if string.find(item_name, "item_imba_rune_") and unit:IsRealHero() then
-		ImbaRunes:PickupRune(item_name, unit)
+		Runes:PickupRune(item_name, unit)
 		return false
 	end
 
@@ -875,6 +876,20 @@ function GameMode:OrderFilter(keys)
 	-- end
 	-- end
 	-- end
+
+	if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+		local target = EntIndexToHScript(keys["entindex_target"])
+		if target:GetUnitName() == "npc_dota_goodguys_healers" or target:GetUnitName() == "npc_dota_badguys_healers" then
+			if GetMapName() == Map1v1() then
+				DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_shrine_1v1")
+				return false
+			elseif target:GetTeam() ~= unit:GetTeam() then
+				unit:MoveToPosition(target:GetAbsOrigin())
+				return false
+			end
+		end
+	end
+
 
 	if GetMapName() == Map1v1() then
 		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then

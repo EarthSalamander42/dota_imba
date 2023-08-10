@@ -154,7 +154,7 @@ function EndScoreboard(args) {
 	$.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HudChat").SetParent($.GetContextPanel());
 
 	// Set game time
-	$("#GameTimeText").text = $.Localize("#DOTA_Tooltip_ability_courier_shield_duration") +  RawTimetoGameTime(Game.GetDOTATime(false, false));
+	$("#GameTimeText").text = $.Localize("#DOTA_Tooltip_ability_courier_shield_duration") +  GameUI.Utils.RawTimetoGameTime(Game.GetDOTATime(false, false));
 
 	const map_name = Game.GetMapInfo().map_display_name;
 
@@ -220,8 +220,10 @@ function EndScoreboard(args) {
 	// 	$("#" + team_number + "PlayerRowLegend").FindChildrenWithClassTraverse("LegendMMRChange")[0].style.visibility = "visible";
 
 	// $.Msg(args.players);
-	for (var team_number = 2; team_number <= 13; team_number++) {
-		if (team_number == 4 || team_number == 5) continue;
+	$.Msg(Game.GetAllTeamIDs());
+	for (var id in Game.GetAllTeamIDs()) {
+		const team_number = Game.GetAllTeamIDs()[id];
+		if (team_number == 0 || team_number == 1 || team_number == 4 || team_number == 5) continue;
 
 		var pinned_team_container = $.CreatePanel('Panel', $("#HeroIconsColumn"), 'PinnedSnippet_' + team_number);
 		pinned_team_container.BLoadLayoutSnippet("PinnedTeam");
@@ -262,8 +264,15 @@ function EndScoreboard(args) {
 		var panel_abilities_row_container = pinned_team_container.FindChildTraverse("AbilitiesPlayerRows");
 
 		// Set Team name and score
-		pinned_team_container.FindChildTraverse("TeamName").text = $.Localize("#Overthrow_Team_" + team_number);
+		// Localize overthrow team name only if there is 'imbathrow' in the map name
+		if (Game.GetMapInfo().map_display_name.indexOf("imbathrow") != -1) {
+			pinned_team_container.FindChildTraverse("TeamName").text = $.Localize("#Overthrow_Team_" + team_number);
+		} else {
+			const team_name = Game.GetTeamDetails(team_number).team_name;
+			pinned_team_container.FindChildTraverse("TeamName").text = $.Localize(team_name);
+		}
 		pinned_team_container.FindChildTraverse("TeamName").style.textShadow = "0px 0px 6px 1.0 " + GameUI.CustomUIConfig().team_colors[team_number];
+
 		pinned_team_container.FindChildTraverse("TeamScore").text = "Score: " + Game.GetTeamDetails(team_number).team_score;
 
 		if (Game.GetGameWinner() == team_number)

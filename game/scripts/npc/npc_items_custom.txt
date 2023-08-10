@@ -1798,7 +1798,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2044"
+		"ID"							"3044"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"imba_recipe"
 		"Model"							"models/props_gameplay/recipe.vmdl"
@@ -1822,7 +1822,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2045"
+		"ID"							"3045"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"imba_recipe"
 
@@ -1846,7 +1846,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2046"
+		"ID"							"3046"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"imba_recipe"
 

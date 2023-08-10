@@ -1,0 +1,47 @@
+"DOTAAbilities"
+{
+	"miniboss_unyielding_shield_custom"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/tormentor/abilities/miniboss_unyielding_shield.lua"
+		"AbilityTextureName"			"miniboss_unyielding_shield"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityValues"
+		{
+			"damage_absorb"				"2500"
+			"absorb_bonus_per_death"	"200"
+			"regen_per_second"			"100"
+			"regen_bonus_per_death"		"100"
+		}
+	}
+
+	"miniboss_reflect_custom"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/tormentor/abilities/miniboss_reflect.lua"
+		"AbilityTextureName"			"miniboss_reflect"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityValues"
+		{
+			"passive_reflection_pct"				"90"
+			"passive_reflection_bonus_per_death"	"20"
+
+			"radius"								"1200" // This for some reason is not in the original ability
+			"illusion_damage_pct"					"200" // This for some reason is not in the original ability
+		}
+	}
+}

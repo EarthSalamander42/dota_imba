@@ -595,11 +595,6 @@ end
 
 -- Core
 function api:Request(endpoint, okCallback, failCallback, method, payload)
-	print(endpoint)
-	print(okCallback)
-	print(failCallback)
-	print(method)
-	print(payload)
 	if okCallback == nil then
 		okCallback = function()
 		end
@@ -635,7 +630,6 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 		end
 	end
 
-	print(header_key)
 	CustomNetTables:SetTableValue("game_options", "server_key", { header_key })
 
 	request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", header_key)
@@ -650,7 +644,6 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 
 	print("About to send request...")
 	request:Send(function(result)
-		print(result)
 		local code = result.StatusCode;
 		print("Result status code:", code)
 
@@ -675,7 +668,6 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 				return fail("Json error: " .. tostring(err))
 			end
 
-			print(obj)
 			if obj == nil then
 				return fail("Unknown Server error")
 			end
@@ -704,7 +696,7 @@ function api:RegisterGame(callback)
 		api.disabled_heroes = data.disabled_heroes or nil
 
 		if IsInToolsMode() then
-			print(data)
+			print(data.players)
 		end
 
 		if callback ~= nil then
