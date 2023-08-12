@@ -161,13 +161,6 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	if npc then
-		-- UnitSpawned Api Event
-		local player = "-1"
-
-		if npc:IsRealHero() and npc:GetPlayerID() then
-			player = PlayerResource:GetSteamID(npc:GetPlayerID())
-		end
-
 		if npc:IsCourier() then
 			if npc.first_spawn == true then
 				CombatEvents("generic", "courier_respawn", npc)
@@ -983,151 +976,56 @@ function GameMode:OnThink()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
 		return nil
 	end
+
 	if GameRules:IsGamePaused() then
 		return 1
 	end
 
-	for k, v in pairs(CScriptParticleManager.ACTIVE_PARTICLES) do
-		if v[2] >= 60 then
-			ParticleManager:DestroyParticle(v[1], false)
-			ParticleManager:ReleaseParticleIndex(v[1])
-			table.remove(CScriptParticleManager.ACTIVE_PARTICLES, k)
-		else
-			CScriptParticleManager.ACTIVE_PARTICLES[k][2] = CScriptParticleManager.ACTIVE_PARTICLES[k][2] + 1
-		end
-	end
+	-- for k, v in pairs(CScriptParticleManager.ACTIVE_PARTICLES) do
+	-- 	if v[2] >= 60 then
+	-- 		ParticleManager:DestroyParticle(v[1], false)
+	-- 		ParticleManager:ReleaseParticleIndex(v[1])
+	-- 		table.remove(CScriptParticleManager.ACTIVE_PARTICLES, k)
+	-- 	else
+	-- 		CScriptParticleManager.ACTIVE_PARTICLES[k][2] = CScriptParticleManager.ACTIVE_PARTICLES[k][2] + 1
+	-- 	end
+	-- end
 
-	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		-- Ban system that forces heroes into their fountain area and locks their position there (either through database or manual intervention)
-		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 or (IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())]) then
-			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
-				local pos = GetGroundPosition(Vector(-6700, -7165, 1509), nil)
-				if hero:GetTeamNumber() == 3 then
-					pos = GetGroundPosition(Vector(7168, 6050, 1431), nil)
-				end
-				FindClearSpaceForUnit(hero, pos, false)
+	-- for _, hero in pairs(HeroList:GetAllHeroes()) do
+	-- 	-- Undying talent fix
+	-- 	if hero.undying_respawn_timer then
+	-- 		if hero.undying_respawn_timer > 0 then
+	-- 			hero.undying_respawn_timer = hero.undying_respawn_timer - 1
+	-- 		end
 
-				hero:Interrupt()
-			end
+	-- 		break
+	-- 	end
 
-			-- The "(IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())])" line is for "banning" units without going into the database (or I guess if it goes down?)
-			if (IMBA_PUNISHED and hero.GetPlayerID and IMBA_PUNISHED[PlayerResource:GetSteamAccountID(hero:GetPlayerID())]) then
-				local donator_level = 10
+	-- 	-- Lone Druid fixes
+	-- 	if hero:GetUnitName() == "npc_dota_hero_lone_druid" and hero.savage_roar then
+	-- 		local Bears = FindUnitsInRadius(hero:GetTeam(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
+	-- 		for _, Bear in pairs(Bears) do
+	-- 			if Bear and string.find(Bear:GetUnitName(), "npc_dota_lone_druid_bear") and Bear:FindAbilityByName("lone_druid_savage_roar_bear") and Bear:FindAbilityByName("lone_druid_savage_roar_bear"):IsHidden() then
+	-- 				Bear:FindAbilityByName("lone_druid_savage_roar_bear"):SetHidden(false)
+	-- 			end
 
-				hero:SetCustomHealthLabel("#donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
-			end
-		end
-
-		-- Make courier controllable, repeat every second to avoid uncontrollable issues
-		if COURIER_TEAM and IsValidEntity(COURIER_TEAM[hero:GetTeamNumber()]) then
-			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
-				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
-			end
-		end
-
-		-- Undying talent fix
-		if hero.undying_respawn_timer then
-			if hero.undying_respawn_timer > 0 then
-				hero.undying_respawn_timer = hero.undying_respawn_timer - 1
-			end
-
-			break
-		end
-
-		-- Lone Druid fixes
-		if hero:GetUnitName() == "npc_dota_hero_lone_druid" and hero.savage_roar then
-			local Bears = FindUnitsInRadius(hero:GetTeam(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
-			for _, Bear in pairs(Bears) do
-				if Bear and string.find(Bear:GetUnitName(), "npc_dota_lone_druid_bear") and Bear:FindAbilityByName("lone_druid_savage_roar_bear") and Bear:FindAbilityByName("lone_druid_savage_roar_bear"):IsHidden() then
-					Bear:FindAbilityByName("lone_druid_savage_roar_bear"):SetHidden(false)
-				end
-
-				break
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_morphling" and hero:GetModelName() == "models/heroes/morphling/morphling.vmdl" then
-			for _, modifier in pairs(MORPHLING_RESTRICTED_MODIFIERS) do
-				if hero:HasModifier(modifier) then
-					hero:RemoveModifierByName(modifier)
-				end
-			end
-		elseif hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
-			if hero:HasTalent("special_bonus_imba_witch_doctor_6") then
-				if not hero:HasModifier("modifier_imba_voodoo_restoration") then
-					local ability = hero:FindAbilityByName("imba_witch_doctor_voodoo_restoration")
-					hero:AddNewModifier(hero, ability, "modifier_imba_voodoo_restoration", {})
-				end
-			end
-		end
-
-		-- Tusk fixes
-		-- Just to clarify on what this does since I didn't know until I commented it out: if you refresh and reuse Snowball while moving, you get permanently lingering particles; there seems to be some other code in the filters.lua file that combines with this to prevent that
-		if hero:FindAbilityByName("tusk_snowball") then
-			if hero:FindModifierByName("modifier_tusk_snowball_movement") then
-				hero:FindAbilityByName("tusk_snowball"):SetActivated(false)
-			else
-				hero:FindAbilityByName("tusk_snowball"):SetActivated(true)
-			end
-		end
-	end
-
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		if GetMapName() == "imba_demo" or GameRules:IsCheatMode() then return 1 end
-
-		-- End the game if one team completely abandoned
-		--		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 and not IsInToolsMode() and not GameRules:IsCheatMode() then
-		if not TEAM_ABANDON then
-			TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
-			TEAM_ABANDON[2] = { FULL_ABANDON_TIME, false, 0 }
-			TEAM_ABANDON[3] = { FULL_ABANDON_TIME, false, 0 }
-		end
-
-		TEAM_ABANDON[2][3] = PlayerResource:GetPlayerCountForTeam(2)
-		TEAM_ABANDON[3][3] = PlayerResource:GetPlayerCountForTeam(3)
-
-		for ID = 0, PlayerResource:GetPlayerCount() - 1 do
-			local team = PlayerResource:GetTeam(ID)
-
-			if PlayerResource:GetConnectionState(ID) ~= 2 and PlayerResource:GetHasAbandonedDueToLongDisconnect(ID) then
-				-- if disconnected then
-				TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] - 1
-			end
-		end
-
-		for team = 2, 3 do
-			--				print(team, "Abandom time remaining / Team abandoning? / Players Remaining:", TEAM_ABANDON[team][1], TEAM_ABANDON[team][2], TEAM_ABANDON[team][3])
-
-			if TEAM_ABANDON[team][3] > 0 then
-				if TEAM_ABANDON[team][2] ~= false then
-					TEAM_ABANDON[team][2] = false
-				end
-
-				if not TEAM_ABANDON[team][1] == FULL_ABANDON_TIME then
-					TEAM_ABANDON[team][1] = FULL_ABANDON_TIME
-				end
-			else
-				local abandon_text = "#imba_team_good_abandon_message"
-
-				if team == 3 then
-					abandon_text = "#imba_team_bad_abandon_message"
-				end
-
-				abandon_text = string.gsub(abandon_text, "{s:seconds}", TEAM_ABANDON[team][1])
-				Notifications:BottomToAll({ text = abandon_text, duration = 1.0 })
-
-				TEAM_ABANDON[team][2] = true
-				TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] - 1
-
-				if TEAM_ABANDON[2][1] <= 0 then
-					GAME_WINNER_TEAM = 3
-					GameRules:SetGameWinner(3)
-				elseif TEAM_ABANDON[3][1] <= 0 then
-					GAME_WINNER_TEAM = 2
-					GameRules:SetGameWinner(2)
-				end
-			end
-		end
-		--		end
-	end
+	-- 			break
+	-- 		end
+	-- 	elseif hero:GetUnitName() == "npc_dota_hero_morphling" and hero:GetModelName() == "models/heroes/morphling/morphling.vmdl" then
+	-- 		for _, modifier in pairs(MORPHLING_RESTRICTED_MODIFIERS) do
+	-- 			if hero:HasModifier(modifier) then
+	-- 				hero:RemoveModifierByName(modifier)
+	-- 			end
+	-- 		end
+	-- 	elseif hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
+	-- 		if hero:HasTalent("special_bonus_imba_witch_doctor_6") then
+	-- 			if not hero:HasModifier("modifier_imba_voodoo_restoration") then
+	-- 				local ability = hero:FindAbilityByName("imba_witch_doctor_voodoo_restoration")
+	-- 				hero:AddNewModifier(hero, ability, "modifier_imba_voodoo_restoration", {})
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
 
 	return 1
 end

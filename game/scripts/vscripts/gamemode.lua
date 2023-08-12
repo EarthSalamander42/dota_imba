@@ -6,10 +6,10 @@ end
 require('addon_init')
 
 require('components/api/init')
--- if IsInToolsMode() then
---	require('internal/eventtest')
-require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
--- end
+if IsInToolsMode() then
+	--	require('internal/eventtest')
+	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+end
 
 require('libraries/animations')
 require('libraries/disable_help')

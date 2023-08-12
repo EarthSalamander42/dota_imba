@@ -35,36 +35,36 @@ function GameMode:OnUnitFirstSpawn(unit)
 	-- end
 
 	-- Gotta do it manually here because the ability/modifier doesn't work on server-side for some godforsaken reason
-	if unit:GetClassname() == "npc_dota_creep_lane" or unit:GetClassname() == "npc_dota_creep_siege" or string.find(unit:GetUnitName(), "_neutral_") then
-		-- if unit:HasAbility("custom_creep_scaling") then
-		-- local creep_scaling_ability = unit:FindAbilityByName("custom_creep_scaling")
-		-- creep_scaling_ability:SetLevel(1)
+	-- if unit:GetClassname() == "npc_dota_creep_lane" or unit:GetClassname() == "npc_dota_creep_siege" or string.find(unit:GetUnitName(), "_neutral_") then
+	-- if unit:HasAbility("custom_creep_scaling") then
+	-- local creep_scaling_ability = unit:FindAbilityByName("custom_creep_scaling")
+	-- creep_scaling_ability:SetLevel(1)
 
-		-- local multiplier = creep_scaling_ability:GetSpecialValueFor("base_mult")
+	-- local multiplier = creep_scaling_ability:GetSpecialValueFor("base_mult")
 
-		-- if string.find(unit:GetUnitName(), "upgraded") then
-		-- 	multiplier = creep_scaling_ability:GetSpecialValueFor("super_mult")
-		-- elseif string.find(unit:GetUnitName(), "upgraded_mega") then
-		-- 	multiplier = creep_scaling_ability:GetSpecialValueFor("mega_mult")
-		-- end
+	-- if string.find(unit:GetUnitName(), "upgraded") then
+	-- 	multiplier = creep_scaling_ability:GetSpecialValueFor("super_mult")
+	-- elseif string.find(unit:GetUnitName(), "upgraded_mega") then
+	-- 	multiplier = creep_scaling_ability:GetSpecialValueFor("mega_mult")
+	-- end
 
-		-- local game_time = math.floor(GameRules:GetDOTATime(false, false) / 60)
+	-- local game_time = math.floor(GameRules:GetDOTATime(false, false) / 60)
 
-		-- unit:SetBaseDamageMin(unit:GetBaseDamageMin() + creep_scaling_ability:GetSpecialValueFor("melee_attack") * game_time * multiplier) -- Works
-		-- unit:SetBaseDamageMax(unit:GetBaseDamageMax() + creep_scaling_ability:GetSpecialValueFor("melee_attack") * game_time * multiplier) -- Works
-		-- -- unit:SetBaseAttackTime(unit:GetBaseAttackTime() - creep_scaling_ability:GetSpecialValueFor("melee_aspd") * game_time * multiplier)
-		-- unit:SetBaseMoveSpeed(unit:GetBaseMoveSpeed() + creep_scaling_ability:GetSpecialValueFor("melee_ms") * game_time * multiplier) -- Works but doesn't show on client side (wtf...)
-		-- unit:SetMaxHealth(unit:GetMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier)       -- Works
-		-- unit:SetBaseMaxHealth(unit:GetBaseMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier) -- Works
-		-- unit:SetHealth(unit:GetMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier)          -- Works
-		-- unit:SetBaseHealthRegen(unit:GetBaseHealthRegen() + creep_scaling_ability:GetSpecialValueFor("melee_regen") * game_time * multiplier) -- Works
-		-- end
+	-- unit:SetBaseDamageMin(unit:GetBaseDamageMin() + creep_scaling_ability:GetSpecialValueFor("melee_attack") * game_time * multiplier) -- Works
+	-- unit:SetBaseDamageMax(unit:GetBaseDamageMax() + creep_scaling_ability:GetSpecialValueFor("melee_attack") * game_time * multiplier) -- Works
+	-- -- unit:SetBaseAttackTime(unit:GetBaseAttackTime() - creep_scaling_ability:GetSpecialValueFor("melee_aspd") * game_time * multiplier)
+	-- unit:SetBaseMoveSpeed(unit:GetBaseMoveSpeed() + creep_scaling_ability:GetSpecialValueFor("melee_ms") * game_time * multiplier) -- Works but doesn't show on client side (wtf...)
+	-- unit:SetMaxHealth(unit:GetMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier)       -- Works
+	-- unit:SetBaseMaxHealth(unit:GetBaseMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier) -- Works
+	-- unit:SetHealth(unit:GetMaxHealth() + creep_scaling_ability:GetSpecialValueFor("melee_hp") * game_time * multiplier)          -- Works
+	-- unit:SetBaseHealthRegen(unit:GetBaseHealthRegen() + creep_scaling_ability:GetSpecialValueFor("melee_regen") * game_time * multiplier) -- Works
+	-- end
 
-		if IMBA_GREEVILING == true then
-			Greeviling(unit)
-			return
-		end
-	end
+	-- 	if IMBA_GREEVILING == true then
+	-- 		Greeviling(unit)
+	-- 		return
+	-- 	end
+	-- end
 
 	-- Burning Army override (skeletons invulnerable + fix not dying when duration ends)
 	if unit:GetClassname() == "npc_dota_clinkz_skeleton_archer" then
@@ -88,13 +88,13 @@ function GameMode:OnUnitFirstSpawn(unit)
 	end
 
 	-- Replacing Cloak Aura with a version that stacks with itself
-	if unit:HasAbility("mudgolem_cloak_aura") then
-		local old_cloak_aura_ability = unit:FindAbilityByName("mudgolem_cloak_aura")
-		local new_cloak_aura_ability = unit:AddAbility("imba_mudgolem_cloak_aura")
-		new_cloak_aura_ability:SetLevel(old_cloak_aura_ability:GetLevel())
-		unit:SwapAbilities("mudgolem_cloak_aura", "imba_mudgolem_cloak_aura", false, true)
-		unit:RemoveAbilityByHandle(old_cloak_aura_ability)
-	end
+	-- if unit:HasAbility("mudgolem_cloak_aura") then
+	-- 	local old_cloak_aura_ability = unit:FindAbilityByName("mudgolem_cloak_aura")
+	-- 	local new_cloak_aura_ability = unit:AddAbility("imba_mudgolem_cloak_aura")
+	-- 	new_cloak_aura_ability:SetLevel(old_cloak_aura_ability:GetLevel())
+	-- 	unit:SwapAbilities("mudgolem_cloak_aura", "imba_mudgolem_cloak_aura", false, true)
+	-- 	unit:RemoveAbilityByHandle(old_cloak_aura_ability)
+	-- end
 
 	--[[
 	-- Find hidden modifiers

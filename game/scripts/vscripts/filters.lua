@@ -232,19 +232,6 @@ function GameMode:ModifierFilter(keys)
 			end
 		end
 
-		-- Deactivate Tusk's Snowball so you don't allow multiple casting while Snowball is active (resulting in permanently lingering particles)
-		if modifier_name == "modifier_tusk_snowball_movement" then
-			if modifier_owner:FindAbilityByName("tusk_snowball") then
-				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
-
-				modifier_owner:SetContextThink(DoUniqueString("ActivateSnowball"), function()
-					if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
-						modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
-					end
-				end, 9.0)
-			end
-		end
-
 		if modifier_owner:GetUnitName() == "npc_imba_warlock_demonic_ascension" then
 			if modifier_name == "modifier_fountain_aura_effect_lua" then
 				return false
