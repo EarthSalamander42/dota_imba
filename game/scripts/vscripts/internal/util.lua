@@ -866,38 +866,12 @@ function ReconnectPlayer(player_id)
 
 	-- Reinitialize the player's pick screen panorama, if necessary
 	Timers:CreateTimer(function()
-		--		print(PlayerResource:GetSelectedHeroEntity(player_id))
+		-- print(PlayerResource:GetSelectedHeroEntity(player_id))
 
 		if PlayerResource:GetSelectedHeroEntity(player_id) then
-			if IMBA_PICK_SCREEN == true then
-				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", { PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state })
-
-				local hero = PlayerResource:GetSelectedHeroEntity(player_id)
-
-				if hero and PICKING_SCREEN_OVER == true then
-					if hero:GetUnitName() == FORCE_PICKED_HERO then
-						print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
-						local random_hero = HeroSelection:RandomHero()
-						print("Random Hero:", random_hero)
-						HeroSelection:GiveStartingHero(player_id, random_hero, true)
-					end
-				end
-			end
-
-			-- set player connected again for GG logic
-			Timers:CreateTimer(2.0, function()
-				local gg_table = {
-					ID = player_id,
-					team = PlayerResource:GetTeam(player_id),
-					disconnect = 2,
-				}
-
-				GoodGame:Call(gg_table)
-			end)
-
-			--			TeamOrdering:OnPlayerReconnect(player_id)
+			-- TeamOrdering:OnPlayerReconnect(player_id)
 		else
-			--			print("Not fully reconnected yet:", player_id)
+			-- print("Not fully reconnected yet:", player_id)
 			return 1.0
 		end
 	end)

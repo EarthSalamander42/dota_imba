@@ -6,10 +6,10 @@ end
 require('addon_init')
 
 require('components/api/init')
-if IsInToolsMode() then       -- might lag a bit and backend to get errors not working yet
-	--	require('internal/eventtest')
-	require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
-end
+-- if IsInToolsMode() then
+--	require('internal/eventtest')
+require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
+-- end
 
 require('libraries/animations')
 require('libraries/disable_help')
@@ -83,7 +83,6 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(Dynamic_Wrap(GameMode, "ItemAddedFilter"), self)
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter(Dynamic_Wrap(GameMode, "BountyRuneFilter"), self)
 	GameRules:GetGameModeEntity():SetThink("OnThink", self, 1)
-	-- GameRules:GetGameModeEntity():SetPauseEnabled(not IMBA_PICK_SCREEN)
 
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter(Dynamic_Wrap(GameMode, "RuneSpawnFilter"), self)
 
@@ -526,28 +525,28 @@ function GameMode:PreventBannedHeroToBeRandomed(keys)
 	end
 end
 
-local party_votes = {}
+-- local party_votes = {}
 
-function GameMode:OnPartyVote(keys)
-	local votes_count = 0
+-- function GameMode:OnPartyVote(keys)
+-- 	local votes_count = 0
 
-	if not party_votes[keys.PlayerID] then
-		party_votes[keys.PlayerID] = true
-	end
+-- 	if not party_votes[keys.PlayerID] then
+-- 		party_votes[keys.PlayerID] = true
+-- 	end
 
-	for k, v in pairs(party_votes) do
-		if v == true then
-			votes_count = votes_count + 1
-		end
-	end
+-- 	for k, v in pairs(party_votes) do
+-- 		if v == true then
+-- 			votes_count = votes_count + 1
+-- 		end
+-- 	end
 
-	if votes_count >= PlayerResource:GetPlayerCount() or IsInToolsMode() and PARTIES_ALLOWED == false then
-		CustomGameEventManager:Send_ServerToAllClients("setup_loading_screen", { value = "visible" })
-		PARTIES_ALLOWED = true
-	end
+-- 	if votes_count >= PlayerResource:GetPlayerCount() or IsInToolsMode() and PARTIES_ALLOWED == false then
+-- 		CustomGameEventManager:Send_ServerToAllClients("setup_loading_screen", { value = "visible" })
+-- 		PARTIES_ALLOWED = true
+-- 	end
 
-	CustomGameEventManager:Send_ServerToAllClients("send_party_votes", {
-		vote_count = votes_count,
-		max_votes = PlayerResource:GetPlayerCount(),
-	})
-end
+-- 	CustomGameEventManager:Send_ServerToAllClients("send_party_votes", {
+-- 		vote_count = votes_count,
+-- 		max_votes = PlayerResource:GetPlayerCount(),
+-- 	})
+-- end

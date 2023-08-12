@@ -46,30 +46,15 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			GoodCamera = Entities:FindByName(nil, "good_healer_6")
-			BadCamera = Entities:FindByName(nil, "bad_healer_6")
-
 			return nil
 		end, 2.0)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		if IMBA_PICK_SCREEN == false then
-			-- prevent_bots_to_random_banned_heroes
-			if IsInToolsMode() then
-				for i = 1, PlayerResource:GetPlayerCount() - 1 do
-					if PlayerResource:IsValidPlayer(i) then
-						GameMode:PreventBannedHeroToBeRandomed({ iPlayerID = i })
-						PlayerResource:SetCanRepick(i, false)
-					end
-				end
-			end
-		else
-			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+		-- prevent_bots_to_random_banned_heroes
+		if IsInToolsMode() then
+			for i = 1, PlayerResource:GetPlayerCount() - 1 do
 				if PlayerResource:IsValidPlayer(i) then
-					if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
-						PlayerResource:SetCameraTarget(i, GoodCamera)
-					else
-						PlayerResource:SetCameraTarget(i, BadCamera)
-					end
+					GameMode:PreventBannedHeroToBeRandomed({ iPlayerID = i })
+					PlayerResource:SetCanRepick(i, false)
 				end
 			end
 		end
@@ -131,30 +116,28 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
 			-- Welcome message
-			if IMBA_PICK_SCREEN == false then
-				local line_duration = 5
+			local line_duration = 5
 
-				-- First line
-				Notifications:BottomToAll({ text = "#imba_introduction_line_01", duration = line_duration, style = { color = "DodgerBlue" } })
-				Notifications:BottomToAll({ text = " ", duration = line_duration, style = { color = "Orange" }, continue = true })
-				Notifications:BottomToAll({ text = "#imba_introduction_line_02", duration = line_duration, style = { color = "Orange" }, continue = true })
-				Notifications:BottomToAll({ text = " ", duration = line_duration, style = { color = "Orange" }, continue = true })
-				Notifications:BottomToAll({ text = "(" .. GAME_VERSION .. ")", duration = line_duration, style = { color = "Orange" }, continue = true })
+			-- First line
+			Notifications:BottomToAll({ text = "#imba_introduction_line_01", duration = line_duration, style = { color = "DodgerBlue" } })
+			Notifications:BottomToAll({ text = " ", duration = line_duration, style = { color = "Orange" }, continue = true })
+			Notifications:BottomToAll({ text = "#imba_introduction_line_02", duration = line_duration, style = { color = "Orange" }, continue = true })
+			Notifications:BottomToAll({ text = " ", duration = line_duration, style = { color = "Orange" }, continue = true })
+			Notifications:BottomToAll({ text = "(" .. GAME_VERSION .. ")", duration = line_duration, style = { color = "Orange" }, continue = true })
 
-				-- Second line
+			-- Second line
+			GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+				Notifications:BottomToAll({ text = "#imba_introduction_line_03", duration = line_duration, style = { color = "DodgerBlue" } })
+
+				-- Third line
 				GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-					Notifications:BottomToAll({ text = "#imba_introduction_line_03", duration = line_duration, style = { color = "DodgerBlue" } })
-
-					-- Third line
-					GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
-						Notifications:BottomToAll({ text = "#imba_introduction_line_04", duration = line_duration, style = { ["font-size"] = "30px", color = "Orange" } })
-
-						return nil
-					end, line_duration)
+					Notifications:BottomToAll({ text = "#imba_introduction_line_04", duration = line_duration, style = { ["font-size"] = "30px", color = "Orange" } })
 
 					return nil
 				end, line_duration)
-			end
+
+				return nil
+			end, line_duration)
 
 			return nil
 		end, 5.0)
@@ -169,7 +152,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- end
 		end
 
-		GameRules:SetTimeOfDay(0.251) -- really? have to set that manually?
+		GameRules:SetTimeOfDay(0.25) -- really? have to set that manually?
 	end
 end
 
@@ -290,14 +273,6 @@ function GameMode:OnDisconnect(keys)
 				return 1
 			end
 		end)
-
-		local dc_table = {
-			ID = player_id,
-			team = PlayerResource:GetTeam(player_id),
-			disconnect = 1
-		}
-
-		GoodGame:Call(dc_table)
 	end
 end
 
@@ -674,7 +649,7 @@ function GameMode:OnPlayerChat(keys)
 	if not caster then return end
 
 	for str in string.gmatch(text, "%S+") do
-		if IsInToolsMode() or GameRules:IsCheatMode() or (api.imba ~= nil and api.imba.is_developer(steamid)) then
+		if IsInToolsMode() or GameRules:IsCheatMode() then
 			if str == "-addability" then
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")
@@ -1154,17 +1129,6 @@ function GameMode:OnThink()
 		--		end
 	end
 
-	-- What the hell
-	--[[
-	-- Testing trying to remove invinicible 0 hp illusions (really hoping this doesn't lag things to death)
-	local entities = Entities:FindAllInSphere(GetGroundPosition(Vector(0, 0, 0), nil), 25000)
-
-	for _, entity in pairs(entities) do
-		if entity.HasModifier and entity:HasModifier("modifier_illusion") and entity:FindModifierByName("modifier_illusion"):GetRemainingTime() < 0 and entity:GetHealth() <= 0 then
-			entity:RemoveSelf()
-		end
-	end
---]]
 	return 1
 end
 

@@ -515,7 +515,6 @@ IMBA_FIRST_BLOOD = false
 IMBA_RUNE_SYSTEM = false   -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false   -- Should we use custom gold system?
-IMBA_PICK_SCREEN = false   -- Should we use custom pick screen?
 IMBA_GREEVILING = false    -- Should we use fancy greevil creeps?
 
 SAME_HERO_SELECTION = false

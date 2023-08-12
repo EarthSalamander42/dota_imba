@@ -11,10 +11,8 @@ function GameMode:_InitGameMode()
 	-- Store day/night time clientside
 	StoreCurrentDayCycle()
 	--	print("Vote Settings listener initialized.")
-	CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(GameMode, "OnSettingVote"))
-	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 	CustomGameEventManager:RegisterListener("effigy_destroyed", Dynamic_Wrap(GameMode, 'EffigyDestroyed'))
-	CustomGameEventManager:RegisterListener("party_vote", Dynamic_Wrap(GameMode, "OnPartyVote"))
+	-- CustomGameEventManager:RegisterListener("party_vote", Dynamic_Wrap(GameMode, "OnPartyVote"))
 
 	self:SetupAncients()
 
@@ -48,28 +46,20 @@ function GameMode:_InitGameMode()
 	GameRules:GetGameModeEntity():SetFreeCourierModeEnabled(true)
 	GameRules:GetGameModeEntity():SetUseDefaultDOTARuneSpawnLogic(true)
 
-	--	if IMBA_PICK_SCREEN == false then
-	--		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
-	--	else
-	--		GameRules:SetStartingGold(0)
-	--	end
-
 	GameRules:LockCustomGameSetupTeamAssignment(true)
 
-	if IMBA_PICK_SCREEN == false then
-		if IsInToolsMode() then
-			GameRules:SetCustomGameSetupRemainingTime(0.0)
-			GameRules:SetCustomGameSetupAutoLaunchDelay(0.0)
-			GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
-			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(0)
-		else
-			GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
-			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
-		end
+	if IsInToolsMode() then
+		GameRules:SetCustomGameSetupRemainingTime(0.0)
+		GameRules:SetCustomGameSetupAutoLaunchDelay(0.0)
+		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
+		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(0)
+	else
+		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
+		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
+	end
 
-		if not IsInToolsMode() or GetMapName() ~= "imba_demo" then
-			GameRules:SetCustomGameBansPerTeam(IMBA_PLAYERS_ON_GAME / #CUSTOM_TEAM_PLAYER_COUNT)
-		end
+	if not IsInToolsMode() or GetMapName() ~= "imba_demo" then
+		GameRules:SetCustomGameBansPerTeam(IMBA_PLAYERS_ON_GAME / #CUSTOM_TEAM_PLAYER_COUNT)
 	end
 
 	if IsInToolsMode() then
@@ -138,10 +128,6 @@ function GameMode:_CaptureGameMode()
 
 		mode:SetGoldSoundDisabled(DISABLE_GOLD_SOUNDS)
 		mode:SetRemoveIllusionsOnDeath(REMOVE_ILLUSIONS_ON_DEATH)
-
-		if FORCE_PICKED_HERO ~= nil and IMBA_PICK_SCREEN == true then
-			mode:SetCustomGameForceHero(FORCE_PICKED_HERO)
-		end
 
 		mode:SetFixedRespawnTime(-1)
 		--		mode:SetFountainConstantManaRegen( FOUNTAIN_CONSTANT_MANA_REGEN )

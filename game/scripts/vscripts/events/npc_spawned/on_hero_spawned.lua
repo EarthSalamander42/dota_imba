@@ -96,12 +96,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_dummy_dummy", {})
 		hero:SetDayTimeVisionRange(0)
 		hero:SetNightTimeVisionRange(0)
-
-		if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-			PlayerResource:SetCameraTarget(hero:GetPlayerID(), GoodCamera)
-		else
-			PlayerResource:SetCameraTarget(hero:GetPlayerID(), BadCamera)
-		end
 	else
 		hero.picked = true
 
