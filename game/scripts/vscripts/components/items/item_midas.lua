@@ -18,7 +18,7 @@
 --[[	Author: D2Imba, rework by Shush
 		Date:	05.03.2017	]]
 
-item_imba_hand_of_midas = class({})
+item_imba_hand_of_midas = item_imba_hand_of_midas or class({})
 LinkLuaModifier("modifier_item_imba_hand_of_midas", "components/items/item_midas", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_hand_of_midas:CastFilterResultTarget(target)
@@ -53,6 +53,10 @@ function item_imba_hand_of_midas:CastFilterResultTarget(target)
 		-- If the target is a building, deny it
 		if target:IsBuilding() then
 			return UF_FAIL_BUILDING
+		end
+
+		if not target:IsAlive() then
+			return UF_FAIL_DEAD
 		end
 
 		return UF_SUCCESS
@@ -148,15 +152,18 @@ function item_imba_hand_of_midas:GetIntrinsicModifierName()
 	return "modifier_item_imba_hand_of_midas"
 end
 
-modifier_item_imba_hand_of_midas = class({})
+modifier_item_imba_hand_of_midas = modifier_item_imba_hand_of_midas or class({})
 
-function modifier_item_imba_hand_of_midas:IsHidden()		return true end
-function modifier_item_imba_hand_of_midas:IsPurgable()		return false end
-function modifier_item_imba_hand_of_midas:RemoveOnDeath()	return false end
-function modifier_item_imba_hand_of_midas:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_hand_of_midas:IsHidden() return true end
+
+function modifier_item_imba_hand_of_midas:IsPurgable() return false end
+
+function modifier_item_imba_hand_of_midas:RemoveOnDeath() return false end
+
+function modifier_item_imba_hand_of_midas:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_hand_of_midas:DeclareFunctions()
-	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	return { MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT }
 end
 
 function modifier_item_imba_hand_of_midas:GetModifierAttackSpeedBonus_Constant()

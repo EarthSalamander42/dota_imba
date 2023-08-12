@@ -58,8 +58,8 @@ function GameMode:_InitGameMode()
 
 	if IMBA_PICK_SCREEN == false then
 		if IsInToolsMode() then
-			GameRules:SetCustomGameSetupRemainingTime(0)
-			GameRules:SetCustomGameSetupAutoLaunchDelay(0)
+			GameRules:SetCustomGameSetupRemainingTime(0.0)
+			GameRules:SetCustomGameSetupAutoLaunchDelay(0.0)
 			GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(HERO_SELECTION_TIME)
 			GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(0)
 		else

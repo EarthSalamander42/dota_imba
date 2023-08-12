@@ -34,7 +34,7 @@ RUNE_SPAWN_TIME = 120        -- How long in seconds should we wait between rune 
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
 	-- Might be worth setting something here to differentiate our workspaces, since you seem to like bots on, but I don't...
-	BOTS_ENABLED = true
+	BOTS_ENABLED = false
 else
 	BOTS_ENABLED = false
 end

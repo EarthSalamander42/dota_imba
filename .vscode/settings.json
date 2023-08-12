@@ -930,7 +930,8 @@
 		"CDOTABaseAbility",
 		"GetUnitKeyValuesByName",
 		"Tutorial",
-		"DOTA_RUNE_XP"
+		"DOTA_RUNE_XP",
+		"MODIFIER_PROPERTY_INCOMING_DAMAGE_CONSTANT"
 	],
 	"Lua.hint.await": true,
 	"Lua.semantic.annotation": false,

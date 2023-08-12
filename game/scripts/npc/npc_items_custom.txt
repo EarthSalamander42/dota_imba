@@ -397,7 +397,15 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"90.0"
+		"AbilityCooldown"				"100.0"
+		// "AbilityCooldown"				"0.0"
+		// "AbilityCharges"				"2"
+		// "AbilityChargeRestoreTime"		"100"
+		// "ItemInitialCharges"			"1"
+		// "ItemRequiresCharges"			"1"
+		// "ItemDisplayCharges"			"1"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"1"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1870,7 +1878,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2192"
+		"ID"							"3192"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"imba_recipe"
 
@@ -1894,7 +1902,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2193"
+		"ID"							"3193"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"imba_recipe"
 
@@ -6113,7 +6121,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2096"
+		"ID"							"3096"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.vmdl"
 		"AbilityTextureName" 			"imba_recipe"

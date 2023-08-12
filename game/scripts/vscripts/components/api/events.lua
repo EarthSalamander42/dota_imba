@@ -48,6 +48,10 @@ ListenToGameEvent('game_rules_state_change', function()
 
 			return 1.0
 		end)
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		-- if IsInToolsMode() then
+		-- 	GameRules:SetGameWinner(2)
+		-- end
 	end
 end, nil)
 
@@ -58,6 +62,7 @@ function api:OnGameEnd()
 
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {
 			players = payload.players,
+			teams = payload.teams,
 			data = data,
 			info = {
 				winner = GAME_WINNER_TEAM,

@@ -264,29 +264,59 @@ function GetAbilityValue(name, key, level)
 	local t = KeyValues.All[name]
 
 	if key and t then
-		local tspecial = t["AbilityValues"]
+		local AbilitySpecials = t["AbilitySpecial"]
 
-		if tspecial then
-			-- Find the key we are looking for
-			for ability_key, value in pairs(tspecial) do
-				if ability_key == key then
-					if not level or type(value) == "number" then -- no level specified or there is only 1 ability value regardless of level
-						-- print("Return table value:", value)
-						return value
-					else
-						if type(value) == "table" and value["value"] then
-							value = value["value"]
+		if AbilitySpecials then
+			for k, v in pairs(AbilitySpecials) do
+				for i, j in pairs(v) do
+					if i ~= "var_type" and i ~= "LinkedSpecialBonus" and i ~= "RequiresScepter" and i ~= "CalculateSpellDamageTooltip" then
+						if i == key then
+							if not level or type(j) == "number" then -- no level specified or there is only 1 ability value regardless of level
+								-- print("Return table value:", j)
+								return j
+							else
+								if type(j) == "table" and j["value"] then
+									j = j["value"]
+								end
+
+								local s = split(j)
+								if s[level] then
+									return tonumber(s[level]) -- If we match the level, return that one
+								else
+									return tonumber(s[#s])
+								end -- Otherwise, return the max
+							end
+
+							break
+						end
+					end
+				end
+			end
+		else
+			local tspecial = t["AbilityValues"]
+
+			if tspecial then
+				-- Find the key we are looking for
+				for ability_key, value in pairs(tspecial) do
+					if ability_key == key then
+						if not level or type(value) == "number" then -- no level specified or there is only 1 ability value regardless of level
+							-- print("Return table value:", value)
+							return value
+						else
+							if type(value) == "table" and value["value"] then
+								value = value["value"]
+							end
+
+							local s = split(value)
+							if s[level] then
+								return tonumber(s[level]) -- If we match the level, return that one
+							else
+								return tonumber(s[#s])
+							end -- Otherwise, return the max
 						end
 
-						local s = split(value)
-						if s[level] then
-							return tonumber(s[level]) -- If we match the level, return that one
-						else
-							return tonumber(s[#s])
-						end -- Otherwise, return the max
+						break
 					end
-
-					break
 				end
 			end
 		end
@@ -311,12 +341,9 @@ function CDOTABaseAbility:GetVanillaKeyValue(key, level)
 		-- print("GetVanillaAbilityValue:", GetAbilitySpecial(self:GetVanillaAbilityName(), key, level or self:GetLevel()))
 		return GetAbilityValue(self:GetVanillaAbilityName(), key, level or self:GetLevel())
 	end
-
-	print("CRITICAL ERROR: GetVanillaKeyValue not found:", self:GetVanillaAbilityName())
 end
 
 function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
-	-- print("GetVanillaAbilitySpecial:", GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0)
 	return GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
 end
 

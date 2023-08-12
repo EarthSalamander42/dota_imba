@@ -79,19 +79,19 @@ function HeroDemo:Init()
 	CustomGameEventManager:RegisterListener("SpawnRuneArcanePressed", function(...) return self:OnSpawnRuneArcanePressed(...) end)
 
 	if Convars:GetInt("dota_hero_demo_spawn_creeps_enabled") == 1 then
-		print("Starting demo mode with creeps spawning")
+		-- print("Starting demo mode with creeps spawning")
 		SendToServerConsole("dota_creeps_no_spawning 0")
 	else
-		print("Starting demo mode with no creeps spawning")
+		-- print("Starting demo mode with no creeps spawning")
 		SendToServerConsole("dota_creeps_no_spawning 1")
 	end
 
 	self:FindTowers()
 	if Convars:GetInt("dota_hero_demo_towers_enabled") == 1 then
-		print("Starting demo mode with towers")
+		-- print("Starting demo mode with towers")
 		self:SetTowersEnabled(true)
 	else
-		print("Starting demo mode with no towers")
+		-- print("Starting demo mode with no towers")
 		self:SetTowersEnabled(false)
 	end
 

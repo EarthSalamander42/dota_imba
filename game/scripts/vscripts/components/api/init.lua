@@ -827,6 +827,16 @@ function api:CompleteGame(successCallback)
 		end
 	end
 
+	local teams = {}
+
+	for i = 2, 13 do
+		if i ~= 4 and i ~= 5 then
+			teams[i] = {
+				score = GetTeamHeroKills(i),
+			}
+		end
+	end
+
 	local winnerTeam = api:GetWinnerTeam()
 	if winnerTeam == nil or winnerTeam == 0 then
 		winnerTeam = json.null
@@ -852,10 +862,8 @@ function api:CompleteGame(successCallback)
 		winner = winnerTeam,
 		game_id = self:GetApiGameId(),
 		players = players,
-		radiant_score = self:GetKillsForTeam(2),
-		dire_score = self:GetKillsForTeam(3),
+		teams = teams,
 		game_time = GameRules:GetDOTATime(false, false),
-		game_type = CUSTOM_GAME_TYPE,
 		gamemode = api:GetCustomGamemode(),
 		rosh_lvl = rosh_lvl,
 		rosh_hp = rosh_hp,
@@ -863,6 +871,8 @@ function api:CompleteGame(successCallback)
 		cheat_mode = self:IsCheatGame(),
 		map = GetMapName(),
 	}
+
+	print("Game complete payload:", payload)
 
 	self:Request("game-complete", function(data)
 			print("Game complete successful!")

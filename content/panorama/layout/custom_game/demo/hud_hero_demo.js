@@ -1,11 +1,14 @@
-function Init()
-{
+function Init() {
+	if (!Game.IsInToolsMode()) {
+		return;
+	}
     var contextPanel = $.GetContextPanel();
     var parent = contextPanel.GetParent();
     var customRoot = parent.GetParent();
     var hudRoot = customRoot.GetParent().FindChild( 'HUDElements' );
     var menuButtons = hudRoot.FindChild( 'MenuButtons' );
 	menuButtons.AddClass( "HeroDemo" );
+	$.GetContextPanel().SetHasClass( "Visible", true );
 
 	$.RegisterEventHandler( 'DOTAUIHeroPickerHeroSelected', $( '#SelectHeroContainer' ), SwitchToNewHero );
 
