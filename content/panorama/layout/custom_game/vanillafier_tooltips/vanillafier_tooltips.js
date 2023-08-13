@@ -50,7 +50,7 @@ var AbilityManaCost;
 var AbilityLore;
 var AbilityUpgradeLevel;
 
-function InitMainPanelCSS(bFirst) {
+function InitMainPanelCSS() {
 	if (hud_init == false) {
 		DotaHud = $.GetContextPanel();
 	}
@@ -98,7 +98,7 @@ function TransferMainPanelFromHeroSelectionToHud() {
 
 		DotaHud = new_parent;
 
-		InitMainPanelCSS()
+		InitMainPanelCSS();
 	} else {
 		$.Msg("CRITICAL ERROR! Can't find new parent for custom tooltips system.");
 	}
@@ -201,14 +201,20 @@ function RequestUnitTooltips(i, sAbilityName) {
 		sAbilityName = hPanel.FindChildTraverse("AbilityImage").abilityname;
 	}
 
-	GameEvents.SendCustomGameEventToServer("get_tooltips_info", {
+	const data = {
 		sAbilityName: sAbilityName,
 		iAbility: i,
 		iSelectedEntIndex: selected_entities[0],
-	})
+	}
+
+	// $.Msg(data);
+	GameEvents.SendCustomGameEventToServer("get_tooltips_info", data);
+	// $.Msg("Request sent!");
 }
 
 function SetAbilityTooltips(keys) {
+	// $.Msg("SetAbilityTooltips");
+	// $.Msg(keys);
 	var hero = Players.GetSelectedEntities(Game.GetLocalPlayerID());
 	if (hero && hero[0])
 		hero = hero[0];
@@ -338,12 +344,12 @@ function SetAbilityTooltips(keys) {
 
 	var AbilityDescription_String = "#DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Description";
 	var AbilityDescription = $.Localize(AbilityDescription_String);
-	var Imba_description = true;
+	// var Imba_description = true;
 
-	if (AbilityDescription_String == AbilityDescription) {
-		AbilityDescription = $.Localize(localized_ability_name + "_Description");
-		Imba_description = false;
-	}
+	// if (AbilityDescription_String == AbilityDescription) {
+	// 	AbilityDescription = $.Localize(localized_ability_name + "_Description");
+	// 	Imba_description = false;
+	// }
 
 	// set newline to supported format
 	AbilityDescription = GameUI.Utils.setHTMLNewLine(AbilityDescription);
@@ -364,31 +370,32 @@ function SetAbilityTooltips(keys) {
 	// Set IMBA KV in description
 	if (keys["sSpecial"]) {
 		for (var i in keys["sSpecial"]) {
-			var special_key = keys["sSpecial"][i][1];
+			var special_key = keys["sSpecial"][i]["key"];
 
 			// Turn weird values with 10 decimals into 2 decimals max
-			if (keys["sSpecial"][i])
-				special_value = Number(keys["sSpecial"][i]).toFixed(0);
+			// if (keys["sSpecial"][i])
+			// 	special_value = Number(keys["sSpecial"][i]).toFixed(0);
 
-			if (GameUI.Utils.isFloat(keys["sSpecial"][i]))
-				keys["sSpecial"][i] = keys["sSpecial"][i].toFixed(2);
+			// if (GameUI.Utils.isFloat(keys["sSpecial"][i]))
+			// 	keys["sSpecial"][i] = keys["sSpecial"][i].toFixed(2);
 
-			var ability_value = keys["sSpecial"][i][2];
+			var ability_value = keys["sSpecial"][i]["value"];
+			// $.Msg(ability_value);
 
 			if (ability_value) {
 				if (typeof(ability_value) == "object" && ability_value["value"]) {
 					if (typeof(ability_value["value"]) == "string") {
-						ability_value = parseInt(ability_value["value"]);
+						// ability_value = parseInt(ability_value["value"]);
 					} else if (typeof(ability_value["value"]) == "number") {
 						if (GameUI.Utils.isFloat(ability_value["value"])) {
-							ability_value["value"] = GameUI.Utils.custom_Round(ability_value["value"], 1);
+							ability_value["value"] = GameUI.Utils.custom_Round(ability_value["value"], 1).toString();
 						}
 
 						ability_value = ability_value["value"].toString();
 					}
 				} else if (typeof(ability_value) == "number") {
 					if (GameUI.Utils.isFloat(ability_value)) {
-						ability_value = GameUI.Utils.custom_Round(ability_value, 1);
+						ability_value = GameUI.Utils.custom_Round(ability_value, 1).toString();
 					}
 
 					ability_value = ability_value.toString();
@@ -397,7 +404,8 @@ function SetAbilityTooltips(keys) {
 				continue;
 			}
 
-			var special_values = ability_value.toString().split(" ");
+			// $.Msg(special_key + " / " + JSON.stringify(ability_value));
+			var special_values = ability_value["value"] && ability_value["value"].split(" ") || ability_value.split(" ");
 			var special_value = special_values[Math.min(ability_level - 1, special_values.length - 1)];
 
 			var tooltip_string = localized_ability_name + "_" + special_key;
@@ -455,6 +463,20 @@ function SetAbilityTooltips(keys) {
 				AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + imba_tooltip_string_localized + " " + special_values + "<br>";
 			}
 		}
+	}
+
+	// Add abilitycastrange tooltip if it exists
+	var imbafication_string = "#DOTA_Tooltip_Ability_" + keys.sAbilityName + "_abilitycastrange";
+	var localized_imbafication = $.Localize(imbafication_string);
+
+	if (localized_imbafication != imbafication_string) {
+		var cast_ranges = keys["iCastRange"].split(" ");
+		var cast_range = cast_ranges[Math.min(ability_level - 1, cast_ranges.length - 1)];
+
+		cast_ranges = cast_ranges.join(" / ");
+		cast_range = SetActiveValue(cast_ranges, cast_range);
+
+		AbilityExtraAttributes_Text = AbilityExtraAttributes_Text + localized_imbafication + " " + cast_range + "<br>";
 	}
 
 	for (let index = 0; index < 10; index++) {
@@ -606,17 +628,17 @@ function SetPositionLoop(hPanel, hPosition) {
 		return;
 	} else {
 		// In tools mode, switch between abilities will cause the panel to remain hidden because there's no delay between server and client
-		if (!Game.IsInToolsMode()) {
+		// if (!Game.IsInToolsMode()) {
 			HideTooltips();
-		}
+		// }
 	}
 
-	// fix for panel staying visible sometimes? also causing a bug where it doesn't show up at all when switching between abilities
-	// $.Schedule(0.03, function() {
-	// 	if (AbilityDetails.style.opacity == 1) {
-	// 		HideTooltips();
-	// 	}
-	// });
+	// fix for panel staying visible sometimes?
+	$.Schedule(0.03, function() {
+		if (AbilityDetails.style.opacity == 1) {
+			HideTooltips();
+		}
+	});
 }
 
 function SetTooltipsPosition(hPosition) {

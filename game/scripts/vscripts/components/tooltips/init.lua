@@ -2,13 +2,15 @@ if not CustomTooltips then
 	CustomTooltips = class({})
 	CustomTooltips.particles = {}
 
+	print("Register CustomTooltips events")
 	CustomGameEventManager:RegisterListener("get_tooltips_info", Dynamic_Wrap(CustomTooltips, 'GetTooltipsInfo'))
 	CustomGameEventManager:RegisterListener("remove_tooltips_info", Dynamic_Wrap(CustomTooltips, 'RemoveTooltipsInfo'))
 end
 
 local split = function(inputstr, sep)
 	if sep == nil then sep = "%s" end
-	local t = {}; i = 1
+	local t = {}
+	local i = 1
 	for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
 		t[i] = str
 		i = i + 1
@@ -19,14 +21,6 @@ end
 function CustomTooltips:GetIMBAValue(value)
 	-- print("GetIMBAValue", value, type(value))
 	if value then
-		if type(value) == "string" then
-			value = math.round(tonumber(value))
-		end
-
-		-- if type(value) == "number" then
-		-- 	return value + (value * IMBAFIED_VALUE_BONUS / 100)
-		-- end
-
 		if type(value) == "table" and value["value"] and type(value["value"]) == "string" then
 			value["value"] = split(value["value"], " ")
 
@@ -42,6 +36,20 @@ function CustomTooltips:GetIMBAValue(value)
 
 			-- print("GetIMBAValue", value, type(value))
 			value["value"] = table.concat(value["value"], " ")
+		elseif type(value) == "string" then
+			value = split(value, " ")
+
+			for k, v in pairs(value) do
+				v = math.round(tonumber(v))
+			end
+
+			-- for k, v in pairs(value) do
+			-- 	if v then
+			-- 		value[k] = tonumber(v) * (100 + IMBAFIED_VALUE_BONUS) / 100
+			-- 	end
+			-- end
+
+			value = table.concat(value, " ")
 		end
 	end
 
@@ -49,7 +57,8 @@ function CustomTooltips:GetIMBAValue(value)
 end
 
 function CustomTooltips:GetTooltipsInfo(keys)
-	--	print(keys)
+	-- print("GetTooltipsInfo")
+	-- print(keys)
 
 	if not keys.PlayerID or keys.PlayerID == -1 then
 		print("ERROR: Invalid Player ID:", keys.PlayerID)
@@ -86,25 +95,32 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	end
 
 	-- print(specials_issued)
+	-- print(specials)
 
 	-- use imba values by default, add vanilla values if imba missing (this way imba values has priority over vanilla)
 	for k, value in pairs(specials) do
+		local special_key = value[1]
+		local special_value = value[2]
+
 		-- prevent adding doublons, prioritize imba values
-		if value and value[1] and not specials_issued[value[1]] then
-			--			print("From now on, ignore", v[1])
-			specials_issued[value[1]] = true
+		if value and special_key and not specials_issued[special_key] then
+			-- print("From now on, ignore", v[1])
+			specials_issued[special_key] = true
 
 			if hero and hero:FindAbilityByName(keys.sAbilityName) then
-				local talent_value = hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(value[1])
+				-- local talent_value = hero:FindAbilityByName(keys.sAbilityName):GetTalentSpecialValueFor(special_key)
 
 				-- imba talent value found
-				if talent_value and talent_value ~= 0 then
-					table.insert(imba_specials, talent_value)
-				else -- default to vanilla
-					table.insert(imba_specials, value)
-				end
+				-- if talent_value and talent_value ~= 0 then
+				-- print("Add talent value", talent_value)
+				-- table.insert(imba_specials, { key = special_key, value = talent_value })
+				-- else -- default to vanilla
+				-- print("Add vanilla value", value)
+				table.insert(imba_specials, { key = special_key, value = special_value })
+				-- end
 			else
-				table.insert(imba_specials, value)
+				-- print("Hero not found, add value", value)
+				table.insert(imba_specials, { key = special_key, value = special_value })
 			end
 		end
 	end
@@ -192,6 +208,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 		sSpellImmunity = GetSpellImmunityType(ability_name),
 		sSpellDispellable = GetSpellDispellableType(ability_name),
 		sSpecial = imba_specials,
+		iCastRange = GetAbilityKV(ability_name, "AbilityCastRange"),
 		iBonusCastRange = bonus_cast_range,
 		iBehavior = GetAbilityKV(ability_name, "AbilityBehavior"),
 		iDamageType = GetAbilityKV(ability_name, "AbilityUnitDamageType"),
@@ -204,7 +221,7 @@ function CustomTooltips:GetTooltipsInfo(keys)
 	end
 
 	-- print(values)
-	--	print("Send server tooltips info:", imba_specials)
+	-- print("Send server tooltips info:", imba_specials)
 	CustomGameEventManager:Send_ServerToPlayer(player, "server_tooltips_info", values)
 end
 

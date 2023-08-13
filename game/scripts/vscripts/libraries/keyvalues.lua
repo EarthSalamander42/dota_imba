@@ -397,9 +397,18 @@ function GetAbilitySpecials(name, bImbafied)
 								end
 
 								value["value"] = table.concat(value["value"], " ")
+							elseif type(value) == "string" then
+								value = split(value, " ")
+
+								for k, v in pairs(value) do
+									v = math.round(tonumber(v))
+								end
+
+								value = table.concat(value, " ")
 							elseif type(value) == "number" then
-								value = math.round(tonumber(value))
+								value = math.round(value)
 							end
+
 							table.insert(ability_specials, { value_name, CustomTooltips:GetIMBAValue(value) })
 						else
 							table.insert(ability_specials, { value_name, value })
@@ -407,14 +416,13 @@ function GetAbilitySpecials(name, bImbafied)
 					end
 				end
 			else
-				-- print("KV: AbilityValues not found either.", name)
+				print("KV: AbilityValues not found either.", name)
 			end
 		end
 	else
-		-- print("KV: not found.", name)
+		print("KV: not found.", name)
 	end
 
-	-- print(name, ability_specials)
 	return ability_specials
 end
 
@@ -422,13 +430,10 @@ function GetAbilityCooldown(name)
 	local imba_name = "imba_" .. name
 
 	if GetAbilityKV(imba_name, "AbilityCooldown") then -- imba cd (override all)
-		-- print("GetImbaCooldown:", GetAbilityKV(imba_name, "AbilityCooldown"))
 		return GetAbilityKV(imba_name, "AbilityCooldown")
 	elseif GetAbilityKV(name, "AbilityCooldown") then -- vanilla cd (default)
-		-- print("GetVanillaCooldown:", GetAbilityKV(name, "AbilityCooldown"))
 		return GetAbilityKV(name, "AbilityCooldown")
 	elseif GetAbilityValue(name, "AbilityCooldown") then -- vanilla cd (in AbilityValues because tied to a talent)
-		-- print("GetVanillaValueCooldown:", GetAbilityValue(name, "AbilityCooldown"))
 		return GetAbilityValue(name, "AbilityCooldown").value
 	end
 
