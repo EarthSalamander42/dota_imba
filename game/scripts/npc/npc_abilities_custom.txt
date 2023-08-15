@@ -4800,21 +4800,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"10"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration_scepter"			"30"
 				"RequiresScepter"			"1"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 140 180"
 			}
 			"04"
 			{
