@@ -344,12 +344,12 @@ function SetAbilityTooltips(keys) {
 
 	var AbilityDescription_String = "#DOTA_Tooltip_Ability_" + keys.sAbilityName + "_Description";
 	var AbilityDescription = $.Localize(AbilityDescription_String);
-	// var Imba_description = true;
+	var Imba_description = true;
 
-	// if (AbilityDescription_String == AbilityDescription) {
-	// 	AbilityDescription = $.Localize(localized_ability_name + "_Description");
-	// 	Imba_description = false;
-	// }
+	if (AbilityDescription_String == AbilityDescription) {
+		AbilityDescription = $.Localize(localized_ability_name + "_Description");
+		Imba_description = false;
+	}
 
 	// set newline to supported format
 	AbilityDescription = GameUI.Utils.setHTMLNewLine(AbilityDescription);
@@ -402,6 +402,12 @@ function SetAbilityTooltips(keys) {
 				}
 			} else {
 				continue;
+			}
+
+			if (typeof(ability_value) == "number") {
+				ability_value = ability_value.toString();
+			} else if (ability_value["value"] !== undefined && typeof(ability_value["value"]) == "number") {
+				ability_value["value"] = ability_value["value"].toString();
 			}
 
 			// $.Msg(special_key + " / " + JSON.stringify(ability_value));
@@ -469,7 +475,7 @@ function SetAbilityTooltips(keys) {
 	var imbafication_string = "#DOTA_Tooltip_Ability_" + keys.sAbilityName + "_abilitycastrange";
 	var localized_imbafication = $.Localize(imbafication_string);
 
-	if (localized_imbafication != imbafication_string) {
+	if (keys["iCastRange"] && localized_imbafication != imbafication_string) {
 		var cast_ranges = keys["iCastRange"].split(" ");
 		var cast_range = cast_ranges[Math.min(ability_level - 1, cast_ranges.length - 1)];
 

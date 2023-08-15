@@ -326,46 +326,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"min_damage"  			"225"
 			}
-
-			// 7.20 Stuff (leaving the values above alone cause there's too much garbage in the code that relies on it already)
-			"09"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"attack_rate_multiplier"		"1.6"
-				"LinkedSpecialBonus"			"special_bonus_imba_juggernaut_9"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"30 40 50"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3 3.25 3.5"
-				//"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_2"
-				"LinkedSpecialBonus"		"special_bonus_imba_juggernaut_10"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"omni_slash_radius"			"425"
-			}
-			"13"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"4 4.25 4.5" // DISABLED
-				//"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_2"
-				"LinkedSpecialBonus"		"special_bonus_imba_juggernaut_10"
-				"RequiresScepter"		"1"
-			}
-			"14"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"cooldown_scepter"	"70" // DISABLED
-				"RequiresScepter"		"1"
-			}
 		}
 	}
 

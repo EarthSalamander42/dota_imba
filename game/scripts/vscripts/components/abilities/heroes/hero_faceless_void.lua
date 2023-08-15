@@ -127,7 +127,7 @@ end
 
 function imba_faceless_void_time_walk:GetAOERadius()
 	if self:GetCaster():HasScepter() then
-		return self:GetVanillaAbilitySpecial("radius_scepter")
+		return self:GetSpecialValueFor("radius_scepter")
 	end
 end
 
@@ -160,7 +160,7 @@ end
 
 function imba_faceless_void_time_walk:GetCastRange(location, target)
 	if IsClient() then
-		local cast_range = self:GetVanillaAbilitySpecial("range") +
+		local cast_range = self:GetSpecialValueFor("range") +
 			self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
 
 		-- Volvo did you hardcode this value? can't find it ugh
@@ -181,7 +181,7 @@ function imba_faceless_void_time_walk:OnSpellStart()
 	-- Play sound and apply casting modifier
 	caster:EmitSound("Hero_FacelessVoid.TimeWalk")
 
-	local max_cast_range = self:GetVanillaAbilitySpecial("range") +
+	local max_cast_range = self:GetSpecialValueFor("range") +
 		caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
 
 	-- Volvo did you hardcode this value? can't find it ugh
@@ -191,7 +191,7 @@ function imba_faceless_void_time_walk:OnSpellStart()
 
 	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {
 		duration = math.min((position - self:GetCaster():GetAbsOrigin()):Length2D(), max_cast_range) /
-			self:GetVanillaAbilitySpecial("speed") + 0.5, -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
+			self:GetSpecialValueFor("speed") + 0.5, -- Arbitrary increase to account for some poor programming causing the ability to not go full range with cast range bonuses -_-
 		x        = position.x,
 		y        = position.y,
 		z        = position.z
@@ -242,7 +242,7 @@ function modifier_imba_faceless_void_time_walk_damage_counter:OnCreated()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.damage_time = self.ability:GetVanillaAbilitySpecial("backtrack_duration")
+	self.damage_time = self.ability:GetSpecialValueFor("backtrack_duration")
 
 	if IsServer() then
 		if not self.caster.time_walk_damage_taken then
@@ -349,7 +349,7 @@ function modifier_imba_faceless_void_time_walk_cast:CheckState()
 end
 
 function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
-	self.radius_scepter = self:GetAbility():GetVanillaAbilitySpecial("radius_scepter")
+	self.radius_scepter = self:GetAbility():GetSpecialValueFor("radius_scepter")
 
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -358,7 +358,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		local position = GetGroundPosition(Vector(params.x, params.y, params.z), nil)
 
 		-- Compare distance to cast point and max distance, use whichever is closer
-		local max_distance = ability:GetVanillaAbilitySpecial("range") + caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
+		local max_distance = ability:GetSpecialValueFor("range") + caster:FindTalentValue("special_bonus_imba_faceless_void_9") + self:GetCaster():GetCastRangeBonus()
 
 		if caster:HasShard() then
 			max_distance = max_distance + 200
@@ -371,7 +371,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		end
 
 		-- Initialize variables for HorizontalMotion
-		self.velocity = ability:GetVanillaAbilitySpecial("speed")
+		self.velocity = ability:GetSpecialValueFor("speed")
 		self.direction = (position - self:GetParent():GetAbsOrigin()):Normalized()
 		self.distance_traveled = 0
 		self.distance = distance
@@ -1880,7 +1880,7 @@ function imba_faceless_void_time_walk_reverse:OnSpellStart()
 	--	self:GetCaster():FaceTowards(position)
 
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_faceless_void_time_walk_cast", {
-		duration = (position - self:GetCaster():GetAbsOrigin()):Length2D() / self:GetVanillaAbilitySpecial("speed"),
+		duration = (position - self:GetCaster():GetAbsOrigin()):Length2D() / self:GetSpecialValueFor("speed"),
 		x        = position.x,
 		y        = position.y,
 		z        = position.z

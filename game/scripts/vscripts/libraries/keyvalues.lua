@@ -347,8 +347,34 @@ function CDOTABaseAbility:GetVanillaAbilitySpecial(key)
 	return GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
 end
 
+local original_GetSpecialValueFor = CDOTABaseAbility.GetSpecialValueFor
+CDOTABaseAbility.GetSpecialValueFor = function(self, sName)
+	local vanilla_value = self:GetVanillaAbilitySpecial(sName)
+
+	if vanilla_value and vanilla_value ~= 0 then
+		if IsInToolsMode() then
+			local imba_value = original_GetSpecialValueFor(self, sName)
+
+			if imba_value and imba_value ~= 0 then
+				print("Duplicate value found in imba files for unit " .. self:GetCaster():GetUnitName() .. " ability " .. self:GetAbilityName() .. " value " .. sName .. " (vanilla: " .. vanilla_value .. ") (imba: " .. imba_value .. ")")
+			end
+		end
+
+		return vanilla_value or 0
+	end
+
+	-- call the original function
+	local imba_value = original_GetSpecialValueFor(self, sName)
+
+	if imba_value and imba_value ~= 0 then
+		return imba_value or 0
+	else
+		print("No value found in imba files for unit " .. self:GetCaster():GetUnitName() .. " ability " .. self:GetAbilityName() .. " for value named: '" .. sName .. "'")
+	end
+end
+
 function CDOTABaseAbility:GetImbafiedAbilitySpecial(key)
-	-- print("GetVanillaAbilitySpecial:", GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0)
+	-- print("GetSpecialValueFor:", GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0)
 	local vanilla_value = GetAbilityValue(self:GetVanillaAbilityName(), key, self:GetLevel()) or 0
 
 	if vanilla_value then

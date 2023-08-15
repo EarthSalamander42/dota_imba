@@ -99,7 +99,7 @@ function imba_abaddon_death_coil:OnSpellStart(unit, special_cast)
 				"abaddon_abad_deathcoil_08", }
 			caster:EmitCasterSound("npc_dota_hero_abaddon", responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20, "coil")
 
-			local health_cost = self:GetVanillaAbilitySpecial("self_damage")
+			local health_cost = self:GetSpecialValueFor("self_damage")
 
 			if getOverChannelDamageIncrease then
 				ApplyDamage({
@@ -141,7 +141,7 @@ function imba_abaddon_death_coil:OnSpellStart(unit, special_cast)
 			bProvidesVision = true,
 			bVisibleToEnemies = true,
 			bReplaceExisting = false,
-			iMoveSpeed = self:GetVanillaAbilitySpecial("missile_speed"),
+			iMoveSpeed = self:GetSpecialValueFor("missile_speed"),
 			iVisionRadius = 0,
 			iVisionTeamNumber = caster:GetTeamNumber(),
 			ExtraData = { special_cast = special_cast }
@@ -172,7 +172,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData(hTarget, vLocation, E
 				return nil
 			end
 
-			local damage = self:GetVanillaAbilitySpecial("target_damage") + self.overchannel_damage_increase
+			local damage = self:GetSpecialValueFor("target_damage") + self.overchannel_damage_increase
 			local damage_type = DAMAGE_TYPE_MAGICAL
 
 			-- Apply damage + parsing if the ability killed the target
@@ -189,7 +189,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData(hTarget, vLocation, E
 			local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_frostmourne")
 
 			if curse_of_avernus then
-				local debuff_duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")
+				local debuff_duration = curse_of_avernus:GetSpecialValueFor("slow_duration")
 
 				-- debuff_duration can be 0 if caster has ability but not learnt it yet
 				if debuff_duration > 0 and not caster:PassivesDisabled() then
@@ -201,7 +201,7 @@ function imba_abaddon_death_coil:OnProjectileHit_ExtraData(hTarget, vLocation, E
 			--Apply spellpower to heal
 			-- local heal_amp = 1 + (caster:GetSpellAmplification(false) / 100)
 
-			local heal = (self:GetVanillaAbilitySpecial("heal_amount") + self.overchannel_damage_increase) -- * heal_amp
+			local heal = (self:GetSpecialValueFor("heal_amount") + self.overchannel_damage_increase) -- * heal_amp
 
 			-- heal allies or self and apply mist
 			target:Heal(heal, self)
@@ -395,7 +395,7 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 		-- Did not use RemoveModifierByNameAndCaster because it will not destroy the shield if it was stolen by rubick from another rubick who stole from abaddon
 		target:RemoveModifierByName(modifier_name_aphotic_shield)
 
-		local duration = self:GetVanillaAbilitySpecial("duration")
+		local duration = self:GetSpecialValueFor("duration")
 		-- Add new modifier
 		target:AddNewModifier(caster, self, modifier_name_aphotic_shield, { duration = duration })
 	end
@@ -423,7 +423,7 @@ function modifier_imba_aphotic_shield_buff_block:OnCreated()
 		local target_origin = target:GetAbsOrigin()
 		local attach_hitloc = "attach_hitloc"
 
-		self.shield_init_value = ability:GetVanillaAbilitySpecial("damage_absorb") + getOverChannelShieldIncrease(caster)
+		self.shield_init_value = ability:GetSpecialValueFor("damage_absorb") + getOverChannelShieldIncrease(caster)
 		self.shield_remaining = self.shield_init_value
 		self.target_current_health = target:GetHealth()
 
@@ -473,7 +473,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 		local caster              = self:GetCaster()
 		local ability             = self:GetAbility()
 		local ability_level       = ability:GetLevel()
-		local radius              = ability:GetVanillaAbilitySpecial("radius")
+		local radius              = ability:GetSpecialValueFor("radius")
 		local explode_target_team = DOTA_UNIT_TARGET_TEAM_BOTH
 		local explode_target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 		local target_vector       = target:GetAbsOrigin()
@@ -496,7 +496,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 
 		local debuff_duration
 		if curse_of_avernus then
-			debuff_duration = curse_of_avernus:GetVanillaAbilitySpecial("slow_duration")
+			debuff_duration = curse_of_avernus:GetSpecialValueFor("slow_duration")
 		end
 
 		-- Talent : When Aphotic Shield is destroyed, cast Mist Coil in 425 AoE
@@ -541,7 +541,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 					bProvidesVision = true,
 					bVisibleToEnemies = true,
 					bReplaceExisting = false,
-					iMoveSpeed = mist_coil_ability:GetVanillaAbilitySpecial("missile_speed"),
+					iMoveSpeed = mist_coil_ability:GetSpecialValueFor("missile_speed"),
 					iVisionRadius = 0,
 					iVisionTeamNumber = caster:GetTeamNumber(),
 					ExtraData = { special_cast = true }
@@ -744,7 +744,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 
 					-- Apply debuff if enemy
 					if self:GetAbility() then
-						local slow_duration = self:GetAbility():GetVanillaAbilitySpecial("slow_duration") -- Not possible for this to be 0 here
+						local slow_duration = self:GetAbility():GetSpecialValueFor("slow_duration") -- Not possible for this to be 0 here
 						target:AddNewModifier(self:GetCaster(), self:GetAbility(),
 							"modifier_imba_curse_of_avernus_debuff_counter",
 							{ duration = slow_duration * (1 - target:GetStatusResistance()) })
@@ -832,9 +832,9 @@ function modifier_imba_curse_of_avernus_debuff_counter:OnRefresh(kv)
 
 	self:IncrementStackCount()
 
-	if self:GetStackCount() >= self:GetAbility():GetVanillaAbilitySpecial("hit_count") then
+	if self:GetStackCount() >= self:GetAbility():GetSpecialValueFor("hit_count") then
 		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_curse_of_avernus_debuff_slow",
-			{ duration = self:GetAbility():GetVanillaAbilitySpecial("curse_duration") })
+			{ duration = self:GetAbility():GetSpecialValueFor("curse_duration") })
 		self:GetParent():RemoveModifierByName("modifier_imba_curse_of_avernus_debuff_counter")
 		local responses = { "abaddon_abad_frostmourne_01", "abaddon_abad_frostmourne_02", "abaddon_abad_frostmourne_03",
 			"abaddon_abad_frostmourne_04", "abaddon_abad_frostmourne_05", "abaddon_abad_frostmourne_06",
@@ -867,7 +867,7 @@ end
 
 function modifier_imba_curse_of_avernus_debuff_counter:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility()
-		:GetVanillaAbilitySpecial("movement_speed") * (-1)
+		:GetSpecialValueFor("movement_speed") * (-1)
 end
 
 modifier_imba_curse_of_avernus_debuff_slow = modifier_imba_curse_of_avernus_debuff_slow or class({
@@ -913,7 +913,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnCreated(kv)
 		end
 
 		if not current_buff then
-			local buff_duration = self:GetAbility():GetVanillaAbilitySpecial("slow_duration") -- Not possible for this to be 0 here
+			local buff_duration = self:GetAbility():GetSpecialValueFor("slow_duration") -- Not possible for this to be 0 here
 			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), buff_name, { duration = buff_duration })
 		else
 			current_buff:ForceRefresh()
@@ -940,7 +940,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnAttack(kv)
 
 			if caster:GetTeamNumber() == attacker:GetTeamNumber() then
 				local ability = self:GetAbility()
-				local buff_duration = ability:GetVanillaAbilitySpecial("slow_duration") -- Not possible for this to be 0 here
+				local buff_duration = ability:GetSpecialValueFor("slow_duration") -- Not possible for this to be 0 here
 
 				-- Apply buff on allies who attack this enemy
 				if self.has_talent then
@@ -1015,7 +1015,7 @@ end
 
 function modifier_imba_curse_of_avernus_debuff_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility()
-		:GetVanillaAbilitySpecial("curse_slow") * (-1)
+		:GetSpecialValueFor("curse_slow") * (-1)
 end
 
 modifier_imba_curse_of_avernus_buff_haste = modifier_imba_curse_of_avernus_buff_haste or class({
@@ -1027,7 +1027,7 @@ modifier_imba_curse_of_avernus_buff_haste = modifier_imba_curse_of_avernus_buff_
 })
 
 function modifier_imba_curse_of_avernus_buff_haste:_UpdateIncreaseValues()
-	self.attack_increase = self:GetAbility():GetVanillaAbilitySpecial("curse_attack_speed")
+	self.attack_increase = self:GetAbility():GetSpecialValueFor("curse_attack_speed")
 
 	if self:GetCaster():HasTalent("special_bonus_imba_abaddon_2") then
 		self.attack_increase = self.attack_increase +
@@ -1195,10 +1195,10 @@ function imba_abaddon_borrowed_time:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability_level = self:GetLevel()
-		local buff_duration = self:GetVanillaAbilitySpecial("duration")
+		local buff_duration = self:GetSpecialValueFor("duration")
 
 		if caster:HasScepter() then
-			buff_duration = self:GetVanillaAbilitySpecial("duration_scepter")
+			buff_duration = self:GetSpecialValueFor("duration_scepter")
 		end
 		caster:AddNewModifier(caster, self, "modifier_imba_borrowed_time_buff_hot_caster", { duration = buff_duration })
 		local responses = { "abaddon_abad_borrowedtime_02", "abaddon_abad_borrowedtime_03",
@@ -1258,7 +1258,7 @@ function modifier_imba_borrowed_time_handler:OnCreated()
 		if target:IsIllusion() then
 			self:Destroy()
 		else
-			self.hp_threshold = self:GetAbility():GetVanillaAbilitySpecial("hp_threshold")
+			self.hp_threshold = self:GetAbility():GetSpecialValueFor("hp_threshold")
 
 			-- Check if we need to auto cast immediately
 			self:_CheckHealth(0)
@@ -1379,19 +1379,19 @@ end
 
 function modifier_imba_borrowed_time_buff_hot_caster:OnTakeDamage(kv)
 	if IsServer() then
-		if (kv.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetVanillaAbilitySpecial("redirect_range_scepter") and self:GetCaster():HasScepter() and kv.unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() and not kv.unit:IsBuilding() then
+		if (kv.unit:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("redirect_range_scepter") and self:GetCaster():HasScepter() and kv.unit:GetTeamNumber() == self:GetCaster():GetTeamNumber() and not kv.unit:IsBuilding() then
 			if not kv.unit.borrowed_time_damage_taken then
 				kv.unit.borrowed_time_damage_taken = 0
 			end
 
 			kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken + kv.damage
 
-			if kv.unit.borrowed_time_damage_taken / self:GetAbility():GetVanillaAbilitySpecial("ally_threshold_scepter") >= 1 then
-				-- print("iteration:", kv.unit.borrowed_time_damage_taken / self:GetAbility():GetVanillaAbilitySpecial("ally_threshold_scepter"))
+			if kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter") >= 1 then
+				-- print("iteration:", kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter"))
 				-- print("Damage stored:", kv.unit.borrowed_time_damage_taken)
-				for i = 1, kv.unit.borrowed_time_damage_taken / self:GetAbility():GetVanillaAbilitySpecial("ally_threshold_scepter") do
+				for i = 1, kv.unit.borrowed_time_damage_taken / self:GetAbility():GetSpecialValueFor("ally_threshold_scepter") do
 					kv.unit.borrowed_time_damage_taken = kv.unit.borrowed_time_damage_taken -
-						self:GetAbility():GetVanillaAbilitySpecial("ally_threshold_scepter")
+						self:GetAbility():GetSpecialValueFor("ally_threshold_scepter")
 					self:GetCaster():FindAbilityByName("imba_abaddon_death_coil"):OnSpellStart(kv.unit, true)
 				end
 			end

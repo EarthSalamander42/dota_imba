@@ -1,85 +1,86 @@
 #base heroes/abaddon/hero.txt
-// #base heroes/abyssal_underlord/hero.txt
+#base heroes/abyssal_underlord/hero.txt
 #base heroes/alchemist/hero.txt
 #base heroes/ancient_apparition/hero.txt
-// #base heroes/antimage/hero.txt
-// #base heroes/axe/hero.txt
-// #base heroes/batrider/hero.txt
-// #base heroes/beastmaster/hero.txt
-// #base heroes/brewmaster/hero.txt
-// #base heroes/bristleback/hero.txt
-// // #base heroes/broodmother/hero.txt
-// #base heroes/chaos_knight/hero.txt
-// #base heroes/chen/hero.txt
-// #base heroes/dark_seer/hero.txt
-// #base heroes/dark_willow/hero.txt
-// #base heroes/death_prophet/hero.txt
-// #base heroes/doom_bringer/hero.txt
+#base heroes/antimage/hero.txt
+#base heroes/axe/hero.txt
+#base heroes/batrider/hero.txt
+#base heroes/beastmaster/hero.txt
+#base heroes/brewmaster/hero.txt
+#base heroes/bristleback/hero.txt
+#base heroes/broodmother/hero.txt
+#base heroes/chaos_knight/hero.txt
+#base heroes/chen/hero.txt
+#base heroes/dark_seer/hero.txt
+#base heroes/dark_willow/hero.txt
+#base heroes/death_prophet/hero.txt
+#base heroes/doom_bringer/hero.txt
 #base heroes/earth_spirit/hero.txt
-// #base heroes/earthshaker/hero.txt
-// #base heroes/ember_spirit/hero.txt
-// #base heroes/enchantress/hero.txt
+#base heroes/earthshaker/hero.txt
+#base heroes/ember_spirit/hero.txt
+#base heroes/enchantress/hero.txt
 #base heroes/enigma/hero.txt
 #base heroes/faceless_void/hero.txt
-// #base heroes/furion/hero.txt
-// // #base heroes/grimstroke/hero.txt
-// #base heroes/gyrocopter/hero.txt
-// #base heroes/hoodwink/hero.txt
-// #base heroes/huskar/hero.txt
+#base heroes/furion/hero.txt
+#base heroes/grimstroke/hero.txt
+#base heroes/gyrocopter/hero.txt
+#base heroes/hoodwink/hero.txt
+#base heroes/huskar/hero.txt
 #base heroes/juggernaut/hero.txt
-// #base heroes/keeper_of_the_light/hero.txt
-// #base heroes/legion_commander/hero.txt
-// #base heroes/leshrac/hero.txt
-// #base heroes/life_stealer/hero.txt
-// #base heroes/lone_druid/hero.txt
-// #base heroes/luna/hero.txt
+#base heroes/keeper_of_the_light/hero.txt
+#base heroes/legion_commander/hero.txt
+#base heroes/leshrac/hero.txt
+#base heroes/life_stealer/hero.txt
+#base heroes/lone_druid/hero.txt
+#base heroes/luna/hero.txt
 #base heroes/mars/hero.txt
-// #base heroes/medusa/hero.txt
-// #base heroes/meepo/hero.txt
-// #base heroes/monkey_king/hero.txt
-// #base heroes/morphling/hero.txt
-// #base heroes/naga_siren/hero.txt
-// #base heroes/ogre_magi/hero.txt
-// #base heroes/oracle/hero.txt
-// #base heroes/outworld_devourer/hero.txt
-// #base heroes/phantom_lancer/hero.txt
-// // #base heroes/puck/hero.txt
-// #base heroes/rattletrap/hero.txt
-// #base heroes/razor/hero.txt
-// #base heroes/riki/hero.txt
-// #base heroes/rubick/hero.txt
-// #base heroes/shadow_shaman/hero.txt
-// #base heroes/silencer/hero.txt
-// #base heroes/slark/hero.txt
-// #base heroes/snapfire/hero.txt
-// #base heroes/spectre/hero.txt
-// #base heroes/spirit_breaker/hero.txt
-// #base heroes/shadow_demon/hero.txt
+#base heroes/medusa/hero.txt
+#base heroes/meepo/hero.txt
+#base heroes/monkey_king/hero.txt
+#base heroes/morphling/hero.txt
+#base heroes/naga_siren/hero.txt
+#base heroes/ogre_magi/hero.txt
+#base heroes/oracle/hero.txt
+#base heroes/outworld_devourer/hero.txt
+#base heroes/phantom_lancer/hero.txt
+#base heroes/puck/hero.txt
+#base heroes/pudge/hero.txt
+#base heroes/rattletrap/hero.txt
+#base heroes/razor/hero.txt
+#base heroes/riki/hero.txt
+#base heroes/rubick/hero.txt
+#base heroes/shadow_shaman/hero.txt
+#base heroes/silencer/hero.txt
+#base heroes/slark/hero.txt
+#base heroes/snapfire/hero.txt
+#base heroes/spectre/hero.txt
+#base heroes/spirit_breaker/hero.txt
+#base heroes/shadow_demon/hero.txt
 #base heroes/techies/hero.txt
-// // If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
-// #base heroes/templar_assassin/hero.txt
-// #base heroes/terrorblade/hero.txt
-// #base heroes/tidehunter/hero.txt
-// #base heroes/timbersaw/hero.txt
-// #base heroes/tinker/hero.txt
-// #base heroes/treant/hero.txt
-// #base heroes/tusk/hero.txt
-// #base heroes/undying/hero.txt
-// #base heroes/visage/hero.txt
-// #base heroes/viper/hero.txt
-// #base heroes/void_spirit/hero.txt
-// #base heroes/weaver/hero.txt
-// #base heroes/wisp/hero.txt
-// #base heroes/zeus/hero.txt
-// #base heroes/windranger/hero.txt
-// #base heroes/winter_wyvern/hero.txt
-// // If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
-// #base heroes/invoker/hero.txt
-// #base custom_heroes/hell_empress/hero.txt
-// #base custom_heroes/malfurion/hero.txt
-// #base custom_heroes/nian/hero.txt
-// #base custom_heroes/sohei/hero.txt
-// #base custom_heroes/vardor/hero.txt
+// If you disable this hero, make sure "npc_dota_templar_assassin_psionic_trap" gets its vanilla ability back
+#base heroes/templar_assassin/hero.txt
+#base heroes/terrorblade/hero.txt
+#base heroes/tidehunter/hero.txt
+#base heroes/timbersaw/hero.txt
+#base heroes/tinker/hero.txt
+#base heroes/treant/hero.txt
+#base heroes/tusk/hero.txt
+#base heroes/undying/hero.txt
+#base heroes/visage/hero.txt
+#base heroes/viper/hero.txt
+#base heroes/void_spirit/hero.txt
+#base heroes/weaver/hero.txt
+#base heroes/wisp/hero.txt
+#base heroes/zeus/hero.txt
+#base heroes/windranger/hero.txt
+#base heroes/winter_wyvern/hero.txt
+// If you disable this hero, make sure "npc_dota_invoker_forged_spirit" gets its vanilla ability back
+#base heroes/invoker/hero.txt
+#base custom_heroes/hell_empress/hero.txt
+#base custom_heroes/malfurion/hero.txt
+#base custom_heroes/nian/hero.txt
+#base custom_heroes/sohei/hero.txt
+#base custom_heroes/vardor/hero.txt
 
 "DOTAHeroes"
 {
@@ -952,37 +953,6 @@
 		
 // 		// Removed Talents
 // 		// "Ability10"					"special_bonus_imba_phoenix_1" // Double Dive speed, removed cast point, and doubled hp cost on Icarus Dive
-// 	}
-
-// 	//========================================================================================================
-// 	// HERO: Pudge
-// 	//========================================================================================================
-// 	"npc_dota_hero_pudge"
-// 	{
-// 		//Picking Screen
-// 		"IsImba"					"1"
-
-// 		"Ability1"					"imba_pudge_meat_hook"
-// 		"Ability2"					"imba_pudge_rot"
-// 		"Ability3"					"imba_pudge_flesh_heap"
-// 		"Ability4"					"imba_pudge_sharp_hook"
-// 		"Ability5"					"imba_pudge_light_hook"
-// 		"Ability6"					"imba_pudge_dismember"
-// 		"Ability7"					"imba_pudge_eject"
-
-// 		"Ability10"					"special_bonus_armor_5"
-// 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
-// 		"Ability12"					"special_bonus_spell_lifesteal_13"
-// 		"Ability13"					"special_bonus_imba_pudge_9" // +X% Rot Slow
-// 		"Ability14"					"special_bonus_imba_pudge_8" // +Xs Dismember Duration
-// 		"Ability15"					"special_bonus_cooldown_reduction_15"
-// 		"Ability16"					"special_bonus_imba_pudge_7" // Meat Hook applies Rupture
-// 		"Ability17"					"special_bonus_imba_pudge_5" // +1000 Hook Distance
-		
-// 		// Removed Talents
-// 		// "Ability12"					"special_bonus_armor_10" // +10 armor
-// 		// "Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
-// 		// "Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
 // 	}
 
 // 	//=================================================================================================================

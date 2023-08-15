@@ -31,7 +31,7 @@ end
 
 function imba_mars_spear:GetCastRange()
 	if IsClient() then
-		return self:GetVanillaAbilitySpecial("spear_range")
+		return self:GetSpecialValueFor("spear_range")
 	end
 end
 
@@ -52,10 +52,10 @@ function imba_mars_spear:OnSpellStart()
 
 	-- load data
 	local projectile_name = "particles/units/heroes/hero_mars/mars_spear.vpcf"
-	local projectile_distance = self:GetVanillaAbilitySpecial("spear_range")
-	local projectile_speed = self:GetVanillaAbilitySpecial("spear_speed")
-	local projectile_radius = self:GetVanillaAbilitySpecial("spear_width")
-	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
+	local projectile_distance = self:GetSpecialValueFor("spear_range")
+	local projectile_speed = self:GetSpecialValueFor("spear_speed")
+	local projectile_radius = self:GetSpecialValueFor("spear_width")
+	local projectile_vision = self:GetSpecialValueFor("spear_vision")
 	local heaven_spear_delay = self:GetSpecialValueFor("heaven_spear_delay")
 	self.trailblazer_particles = {}
 
@@ -128,7 +128,7 @@ function modifier_imba_mars_spear_heaven_spear:OnCreated()
 	self.origin = self:GetAbility():GetCursorPosition()
 	self.radius = self:GetAbility():GetSpecialValueFor("heaven_spear_radius")
 	self.knockback_radius = self:GetAbility():GetSpecialValueFor("heaven_spear_knockback")
-	self.stun_duration = self:GetAbility():GetVanillaAbilitySpecial("stun_duration")
+	self.stun_duration = self:GetAbility():GetSpecialValueFor("stun_duration")
 	self.knockback_duration = self:GetAbility():GetSpecialValueFor("heaven_spear_duration")
 	self.delay = self:GetAbility():GetSpecialValueFor("heaven_spear_delay")
 	self.height = 700
@@ -193,7 +193,7 @@ function modifier_imba_mars_spear_heaven_spear:OnRemoved()
 			local damageTable = {
 				victim = v,
 				attacker = self:GetCaster(),
-				damage = self:GetAbility():GetVanillaAbilitySpecial("damage"),
+				damage = self:GetAbility():GetSpecialValueFor("damage"),
 				damage_type = self:GetAbility():GetAbilityDamageType(),
 				ability = self:GetAbility(), --Optional.
 				damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
@@ -246,7 +246,7 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 		self.end_pos = self.start_pos
 	else
 		local direction = (self:GetCaster():GetCursorPosition() - self.start_pos):Normalized()
-		self.end_pos = self.start_pos + direction * self:GetAbility():GetVanillaAbilitySpecial("spear_range")
+		self.end_pos = self.start_pos + direction * self:GetAbility():GetSpecialValueFor("spear_range")
 	end
 
 	if self.heaven_spear and self.heaven_spear == 1 then
@@ -265,7 +265,7 @@ function modifier_imba_mars_spear_trailblazer_thinker:OnCreated(keys)
 end
 
 function modifier_imba_mars_spear_trailblazer_thinker:OnIntervalThink()
-	local damage = (self:GetAbility():GetVanillaAbilitySpecial("damage") * (self:GetAbility():GetSpecialValueFor("trailblazer_damage_pct") / 100)) * self.tick_time
+	local damage = (self:GetAbility():GetSpecialValueFor("damage") * (self:GetAbility():GetSpecialValueFor("trailblazer_damage_pct") / 100)) * self.tick_time
 	local enemies = nil
 
 	if self.heaven_spear and self.heaven_spear == 1 then
@@ -352,7 +352,7 @@ function imba_mars_spear:OnProjectileHitHandle(target, location, iProjectileHand
 
 	if not target then
 		-- add viewer
-		local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
+		local projectile_vision = self:GetSpecialValueFor("spear_vision")
 		AddFOWViewer(self:GetCaster():GetTeamNumber(), location, projectile_vision, 1, false)
 
 		-- destroy data
@@ -361,8 +361,8 @@ function imba_mars_spear:OnProjectileHitHandle(target, location, iProjectileHand
 	end
 
 	-- get stun and damage
-	local stun = self:GetVanillaAbilitySpecial("stun_duration") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_spear_stun_duration")
-	local damage = self:GetVanillaAbilitySpecial("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_spear_bonus_damage")
+	local stun = self:GetSpecialValueFor("stun_duration") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_spear_stun_duration")
+	local damage = self:GetSpecialValueFor("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_spear_bonus_damage")
 
 	-- apply damage
 	local damageTable = {
@@ -389,8 +389,8 @@ function imba_mars_spear:OnProjectileHitHandle(target, location, iProjectileHand
 		end
 
 		-- add sidestep modifier to other unit
-		local knockback_duration = self:GetVanillaAbilitySpecial("knockback_duration")
-		local knockback_distance = self:GetVanillaAbilitySpecial("knockback_distance")
+		local knockback_duration = self:GetSpecialValueFor("knockback_duration")
+		local knockback_distance = self:GetSpecialValueFor("knockback_distance")
 
 		target:AddNewModifier(
 			self:GetCaster(),        -- player source
@@ -513,8 +513,8 @@ end
 
 function imba_mars_spear:Pinned(iProjectileHandle)
 	local data = self.projectiles[iProjectileHandle]
-	local duration = self:GetVanillaAbilitySpecial("stun_duration")
-	local projectile_vision = self:GetVanillaAbilitySpecial("spear_vision")
+	local duration = self:GetSpecialValueFor("stun_duration")
+	local projectile_vision = self:GetSpecialValueFor("spear_vision")
 
 	-- add viewer
 	AddFOWViewer(self:GetCaster():GetTeamNumber(), data.unit:GetOrigin(), projectile_vision, duration, false)
@@ -801,10 +801,10 @@ function imba_mars_gods_rebuke:OnSpellStart()
 	end
 
 	-- load data
-	local radius = self:GetVanillaAbilitySpecial("radius")
-	local angle = self:GetVanillaAbilitySpecial("angle") / 2
-	local duration = self:GetVanillaAbilitySpecial("knockback_duration")
-	local distance = self:GetVanillaAbilitySpecial("knockback_distance")
+	local radius = self:GetSpecialValueFor("radius")
+	local angle = self:GetSpecialValueFor("angle") / 2
+	local duration = self:GetSpecialValueFor("knockback_duration")
+	local distance = self:GetSpecialValueFor("knockback_distance")
 
 	-- find units
 	local enemies = FindUnitsInRadius(
@@ -957,8 +957,8 @@ function modifier_imba_mars_gods_rebuke:IsPurgable() return false end
 -- Initializations
 function modifier_imba_mars_gods_rebuke:OnCreated(kv)
 	-- references
-	self.bonus_damage = self:GetAbility():GetVanillaAbilitySpecial("bonus_damage_vs_heroes")
-	self.bonus_crit = self:GetAbility():GetVanillaAbilitySpecial("crit_mult") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_gods_rebuke_extra_crit")
+	self.bonus_damage = self:GetAbility():GetSpecialValueFor("bonus_damage_vs_heroes")
+	self.bonus_crit = self:GetAbility():GetSpecialValueFor("crit_mult") + self:GetCaster():FindTalentValue("special_bonus_unique_mars_gods_rebuke_extra_crit")
 
 	local mod = self:GetParent():FindModifierByName("modifier_imba_mars_bulwark_jupiters_strength")
 
@@ -1068,10 +1068,10 @@ end
 -- Initializations
 function modifier_imba_mars_bulwark:OnCreated(kv)
 	-- references
-	self.reduction_front = self:GetAbility():GetVanillaAbilitySpecial("physical_damage_reduction")
-	self.reduction_side = self:GetAbility():GetVanillaAbilitySpecial("physical_damage_reduction_side")
-	self.angle_front = self:GetAbility():GetVanillaAbilitySpecial("forward_angle") / 2
-	self.angle_side = self:GetAbility():GetVanillaAbilitySpecial("side_angle") / 2
+	self.reduction_front = self:GetAbility():GetSpecialValueFor("physical_damage_reduction")
+	self.reduction_side = self:GetAbility():GetSpecialValueFor("physical_damage_reduction_side")
+	self.angle_front = self:GetAbility():GetSpecialValueFor("forward_angle") / 2
+	self.angle_side = self:GetAbility():GetSpecialValueFor("side_angle") / 2
 
 	if IsServer() then
 		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_mars_bulwark_jupiters_strength", {})
@@ -1080,10 +1080,10 @@ end
 
 function modifier_imba_mars_bulwark:OnRefresh(kv)
 	-- references
-	self.reduction_front = self:GetAbility():GetVanillaAbilitySpecial("physical_damage_reduction")
-	self.reduction_side = self:GetAbility():GetVanillaAbilitySpecial("physical_damage_reduction_side")
-	self.angle_front = self:GetAbility():GetVanillaAbilitySpecial("forward_angle") / 2
-	self.angle_side = self:GetAbility():GetVanillaAbilitySpecial("side_angle") / 2
+	self.reduction_front = self:GetAbility():GetSpecialValueFor("physical_damage_reduction")
+	self.reduction_side = self:GetAbility():GetSpecialValueFor("physical_damage_reduction_side")
+	self.angle_front = self:GetAbility():GetSpecialValueFor("forward_angle") / 2
+	self.angle_side = self:GetAbility():GetSpecialValueFor("side_angle") / 2
 end
 
 function modifier_imba_mars_bulwark:OnRemoved()
@@ -1179,8 +1179,8 @@ function modifier_imba_mars_bulwark_active:OnCreated()
 
 	self.ability = self:GetAbility()
 	self.forward_vector = self:GetParent():GetForwardVector()
-	self.angle_front = self.ability:GetVanillaAbilitySpecial("forward_angle") / 2
-	self.angle_side = self.ability:GetVanillaAbilitySpecial("side_angle") / 2
+	self.angle_front = self.ability:GetSpecialValueFor("forward_angle") / 2
+	self.angle_side = self.ability:GetSpecialValueFor("side_angle") / 2
 	self.spiked_shield_return_pct = self.ability:GetSpecialValueFor("spiked_shield_return_pct")
 
 	self:StartIntervalThink(FrameTime())
@@ -1322,7 +1322,7 @@ LinkLuaModifier("modifier_imba_mars_arena_of_blood_scepter", "components/abiliti
 -- Custom KV
 -- AOE Radius
 function imba_mars_arena_of_blood:GetAOERadius()
-	return self:GetVanillaAbilitySpecial("radius")
+	return self:GetSpecialValueFor("radius")
 end
 
 function imba_mars_arena_of_blood:GetCastRange(vLocation, hTarget)
@@ -1346,10 +1346,10 @@ function imba_mars_arena_of_blood:OnSpellStart()
 	--	else
 	-- create thinker
 	CreateModifierThinker(
-		self:GetCaster(),                       -- player source
-		self,                                   -- ability source
+		self:GetCaster(),                      -- player source
+		self,                                  -- ability source
 		"modifier_imba_mars_arena_of_blood_thinker", -- modifier name
-		{},                                     -- kv
+		{},                                    -- kv
 		cast_position,
 		self:GetCaster():GetTeamNumber(),
 		false
@@ -1390,8 +1390,8 @@ function modifier_imba_mars_arena_of_blood_blocker:OnCreated(kv)
 
 	if kv.model == 1 then
 		-- references
-		self.fade_min = self:GetAbility():GetVanillaAbilitySpecial("warrior_fade_min_dist")
-		self.fade_max = self:GetAbility():GetVanillaAbilitySpecial("warrior_fade_max_dist")
+		self.fade_min = self:GetAbility():GetSpecialValueFor("warrior_fade_min_dist")
+		self.fade_max = self:GetAbility():GetSpecialValueFor("warrior_fade_max_dist")
 		self.fade_range = self.fade_max - self.fade_min
 		self.origin = self:GetParent():GetOrigin()
 
@@ -1482,7 +1482,7 @@ function modifier_imba_mars_arena_of_blood_coliseum_aura:IsAura() return true en
 
 function modifier_imba_mars_arena_of_blood_coliseum_aura:GetModifierAura() return "modifier_imba_mars_arena_of_blood_coliseum" end
 
-function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraRadius() return self:GetAbility():GetVanillaAbilitySpecial("radius") end
+function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("radius") end
 
 function modifier_imba_mars_arena_of_blood_coliseum_aura:GetAuraDuration() return 0.0 end
 
@@ -1551,7 +1551,7 @@ function modifier_imba_mars_arena_of_blood_coliseum:OnIntervalThink()
 		local heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
 			self:GetCaster():GetAbsOrigin(),
 			nil,
-			self:GetAbility():GetVanillaAbilitySpecial("radius"),
+			self:GetAbility():GetSpecialValueFor("radius"),
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 			DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
@@ -1602,8 +1602,8 @@ function modifier_imba_mars_arena_of_blood_projectile_aura:IsPurgable() return f
 --------------------------------------------------------------------------------
 -- Initializations
 function modifier_imba_mars_arena_of_blood_projectile_aura:OnCreated(kv)
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
-	self.width = self:GetAbility():GetVanillaAbilitySpecial("width")
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+	self.width = self:GetAbility():GetSpecialValueFor("width")
 
 	if not IsServer() then return end
 
@@ -1768,10 +1768,10 @@ end
 -- Initializations
 function modifier_imba_mars_arena_of_blood_spear_aura:OnCreated(kv)
 	-- references
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
-	self.width = self:GetAbility():GetVanillaAbilitySpecial("spear_distance_from_wall")
-	self.duration = self:GetAbility():GetVanillaAbilitySpecial("spear_attack_interval")
-	self.damage = self:GetAbility():GetVanillaAbilitySpecial("spear_damage")
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+	self.width = self:GetAbility():GetSpecialValueFor("spear_distance_from_wall")
+	self.duration = self:GetAbility():GetSpecialValueFor("spear_attack_interval")
+	self.damage = self:GetAbility():GetSpecialValueFor("spear_damage")
 	self.knockback_duration = 0.2
 
 	self.spear_radius = self.radius - self.width
@@ -1921,9 +1921,9 @@ function modifier_imba_mars_arena_of_blood_thinker:IsHidden() return true end
 -- Initializations
 function modifier_imba_mars_arena_of_blood_thinker:OnCreated(kv)
 	-- references
-	self.delay = self:GetAbility():GetVanillaAbilitySpecial("formation_time")
-	self.duration = self:GetAbility():GetVanillaAbilitySpecial("duration")
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
+	self.delay = self:GetAbility():GetSpecialValueFor("formation_time")
+	self.duration = self:GetAbility():GetSpecialValueFor("duration")
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
 
 	if IsServer() then
 		self.thinkers = {}
@@ -2121,8 +2121,8 @@ function modifier_imba_mars_arena_of_blood_wall_aura:OnCreated(kv)
 	-- zero limit outer ring = radius + 100
 	-- normal limit outer ring = radius + 200
 
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial("radius")
-	self.width = self:GetAbility():GetVanillaAbilitySpecial("width")
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+	self.width = self:GetAbility():GetSpecialValueFor("width")
 
 	self.twice_width = self.width * 2
 	self.aura_radius = self.radius + self.twice_width
@@ -2414,7 +2414,7 @@ end
 
 function modifier_imba_mars_arena_of_blood_enhance:GetModifierModelScale(keys)
 	if self:GetParent():HasModifier("modifier_mars_arena_of_blood_animation") then
-		return self:GetAbility():GetVanillaAbilitySpecial("expansion_pct")
+		return self:GetAbility():GetSpecialValueFor("expansion_pct")
 	end
 end
 
@@ -2425,7 +2425,7 @@ function modifier_imba_mars_arena_of_blood_enhance:OnAbilityFullyCast(keys)
 			self:GetAbility(),
 			"modifier_imba_mars_arena_of_blood_thinker",
 			{
-				duration			= keys.ability:GetVanillaAbilitySpecial("formation_time") + keys.ability:GetVanillaAbilitySpecial("duration"),
+				duration			= keys.ability:GetSpecialValueFor("formation_time") + keys.ability:GetSpecialValueFor("duration"),
 				ability_entindex	= keys.ability:entindex()
 			},
 			keys.ability:GetCursorPosition(),
@@ -2445,10 +2445,10 @@ function modifier_imba_mars_arena_of_blood_thinker:OnCreated(keys)
 	if keys.ability_entindex and EntIndexToHScript(keys.ability_entindex) then
 		self.arena_ability	= EntIndexToHScript(keys.ability_entindex)
 		
-		self.duration		= self.arena_ability:GetVanillaAbilitySpecial("duration")
-		self.radius			= self.arena_ability:GetVanillaAbilitySpecial("radius")
-		self.width			= self.arena_ability:GetVanillaAbilitySpecial("width")
-		self.formation_time	= self.arena_ability:GetVanillaAbilitySpecial("formation_time")
+		self.duration		= self.arena_ability:GetSpecialValueFor("duration")
+		self.radius			= self.arena_ability:GetSpecialValueFor("radius")
+		self.width			= self.arena_ability:GetSpecialValueFor("width")
+		self.formation_time	= self.arena_ability:GetSpecialValueFor("formation_time")
 	else
 		self:Destroy()
 	end

@@ -119,7 +119,7 @@ function imba_techies_land_mines:CastFilterResultLocation(location)
 
 		-- Ability specials
 		local mine_distance = ability:GetSpecialValueFor("mine_distance")
-		local trigger_range = ability:GetVanillaAbilitySpecial("radius")
+		local trigger_range = ability:GetSpecialValueFor("radius")
 
 		-- #1 Talent: Trigger range increase
 		trigger_range = trigger_range + caster:FindTalentValue("special_bonus_imba_techies_1")
@@ -165,7 +165,7 @@ function imba_techies_land_mines:GetAOERadius()
 	local caster = self:GetCaster()
 	local ability = self
 
-	local trigger_range = ability:GetVanillaAbilitySpecial("radius")
+	local trigger_range = ability:GetSpecialValueFor("radius")
 	local mine_distance = ability:GetSpecialValueFor("mine_distance")
 
 	-- #1 Talent: Trigger range increase
@@ -258,11 +258,11 @@ function modifier_imba_proximity_mine:OnCreated()
 	self.ability = self.owner:FindAbilityByName("imba_techies_land_mines")
 
 	-- Ability specials
-	self.explosion_delay = self.ability:GetVanillaAbilitySpecial("proximity_threshold")
-	self.mine_damage = self.ability:GetVanillaAbilitySpecial("damage")
-	self.trigger_range = self.ability:GetVanillaAbilitySpecial("radius")
-	self.activation_delay = self.ability:GetVanillaAbilitySpecial("activation_delay")
-	self.building_damage_pct = self.ability:GetVanillaAbilitySpecial("building_damage_pct")
+	self.explosion_delay = self.ability:GetSpecialValueFor("proximity_threshold")
+	self.mine_damage = self.ability:GetSpecialValueFor("damage")
+	self.trigger_range = self.ability:GetSpecialValueFor("radius")
+	self.activation_delay = self.ability:GetSpecialValueFor("activation_delay")
+	self.building_damage_pct = self.ability:GetSpecialValueFor("building_damage_pct")
 
 	-- IMBA Ability specials
 	self.buidling_damage_duration = self.ability:GetSpecialValueFor("buidling_damage_duration")
@@ -648,7 +648,7 @@ function imba_techies_stasis_trap:IsNetherWardStealable()
 end
 
 function imba_techies_stasis_trap:GetAOERadius()
-	local root_range = self:GetVanillaAbilitySpecial("stun_radius")
+	local root_range = self:GetSpecialValueFor("stun_radius")
 	return root_range
 end
 
@@ -819,10 +819,10 @@ function modifier_imba_statis_trap:OnCreated()
 		self.ability = self.owner:FindAbilityByName("imba_techies_stasis_trap")
 
 		-- Ability specials
-		self.activate_delay = self.ability:GetVanillaAbilitySpecial("activation_time")
-		self.trigger_range = self.ability:GetVanillaAbilitySpecial("stun_radius")
-		self.root_range = self.ability:GetVanillaAbilitySpecial("stun_radius")
-		self.root_duration = self.ability:GetVanillaAbilitySpecial("stun_duration")
+		self.activate_delay = self.ability:GetSpecialValueFor("activation_time")
+		self.trigger_range = self.ability:GetSpecialValueFor("stun_radius")
+		self.root_range = self.ability:GetSpecialValueFor("stun_radius")
+		self.root_duration = self.ability:GetSpecialValueFor("stun_duration")
 		self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
 		self.flying_vision_duration = self.ability:GetSpecialValueFor("flying_vision_duration")
 
@@ -1085,7 +1085,7 @@ function imba_techies_suicide:IsHiddenWhenStolen()
 end
 
 function imba_techies_suicide:GetAOERadius()
-	local radius = self:GetVanillaAbilitySpecial("radius")
+	local radius = self:GetSpecialValueFor("radius")
 	return radius
 end
 
@@ -1267,10 +1267,10 @@ function modifier_imba_blast_off_movement:OnCreated(keys)
 		local particle_trail = "particles/units/heroes/hero_techies/techies_blast_off_trail.vpcf"
 
 		-- Ability specials
-		self.damage = self.ability:GetVanillaAbilitySpecial("damage")
-		self.radius = self.ability:GetVanillaAbilitySpecial("radius")
-		self.self_damage_pct = self.ability:GetVanillaAbilitySpecial("hp_cost")
-		self.silence_duration = self.ability:GetVanillaAbilitySpecial("silence_duration")
+		self.damage = self.ability:GetSpecialValueFor("damage")
+		self.radius = self.ability:GetSpecialValueFor("radius")
+		self.self_damage_pct = self.ability:GetSpecialValueFor("hp_cost")
+		self.silence_duration = self.ability:GetSpecialValueFor("silence_duration")
 		self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")
 		self.jump_max_height = self.ability:GetSpecialValueFor("jump_max_height")
 
@@ -1538,8 +1538,8 @@ function imba_techies_remote_mines:GetAOERadius()
 	local ability = self
 	local scepter = caster:HasScepter()
 
-	local radius = ability:GetVanillaAbilitySpecial("radius")
-	local scepter_radius_bonus = ability:GetVanillaAbilitySpecial("cast_range_scepter_bonus")
+	local radius = ability:GetSpecialValueFor("radius")
+	local scepter_radius_bonus = ability:GetSpecialValueFor("cast_range_scepter_bonus")
 
 	if scepter then
 		radius = radius + scepter_radius_bonus
@@ -1580,7 +1580,7 @@ function imba_techies_remote_mines:OnSpellStart()
 	local mine_ability = "imba_techies_remote_mines_pinpoint_detonation"
 
 	-- Ability specials
-	local mine_duration = ability:GetVanillaAbilitySpecial("duration")
+	local mine_duration = ability:GetSpecialValueFor("duration")
 
 	-- Roll for rare cast response
 	local sound
@@ -1654,13 +1654,13 @@ function imba_techies_remote_mines_pinpoint_detonation:OnSpellStart()
 	local scepter = owner:HasScepter()
 
 	-- Ability specials
-	local damage = ability:GetVanillaAbilitySpecial("damage")
-	local radius = ability:GetVanillaAbilitySpecial("radius")
+	local damage = ability:GetSpecialValueFor("damage")
+	local radius = ability:GetSpecialValueFor("radius")
 	local inflammable_duration = ability:GetSpecialValueFor("inflammable_duration")
 	local inflammable_charge_radius = ability:GetSpecialValueFor("inflammable_charge_radius")
 	local inflammable_charge_damage = ability:GetSpecialValueFor("inflammable_charge_damage")
-	local scepter_damage_bonus = ability:GetVanillaAbilitySpecial("damage_scepter")
-	local scepter_radius_bonus = ability:GetVanillaAbilitySpecial("cast_range_scepter_bonus")
+	local scepter_damage_bonus = ability:GetSpecialValueFor("damage_scepter")
+	local scepter_radius_bonus = ability:GetSpecialValueFor("cast_range_scepter_bonus")
 
 	-- Play activation sound
 	EmitSoundOn(sound_activate, caster)
@@ -1833,7 +1833,7 @@ end
 function imba_techies_focused_detonate:GetAOERadius()
 	local ability = self
 
-	local radius = ability:GetVanillaAbilitySpecial("radius")
+	local radius = ability:GetSpecialValueFor("radius")
 	return radius
 end
 
@@ -1845,7 +1845,7 @@ function imba_techies_focused_detonate:OnSpellStart()
 	local detonate_ability = "imba_techies_remote_mines_pinpoint_detonation"
 
 	-- Ability specials
-	local radius = ability:GetVanillaAbilitySpecial("radius")
+	local radius = ability:GetSpecialValueFor("radius")
 
 	-- Find all mines in radius
 	local remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -1935,7 +1935,7 @@ end
 function imba_techies_minefield_sign:GetAOERadius()
 	local caster = self:GetCaster()
 	local ability = self
-	local radius = ability:GetVanillaAbilitySpecial("aura_radius")
+	local radius = ability:GetSpecialValueFor("aura_radius")
 
 	-- #6 Talent: Minefield radius increase
 	radius = radius + caster:FindTalentValue("special_bonus_imba_techies_6")
@@ -1987,7 +1987,7 @@ function modifier_imba_minefield_sign_aura:OnCreated()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.radius = self.ability:GetVanillaAbilitySpecial("aura_radius")
+	self.radius = self.ability:GetSpecialValueFor("aura_radius")
 end
 
 function modifier_imba_minefield_sign_aura:IsHidden() return false end
@@ -2065,7 +2065,7 @@ function modifier_imba_minefield_sign_detection:OnDestroy()
 				local detonate_ability = "imba_techies_remote_mines"
 				local detonate_ability_handler = parent:FindAbilityByName(detonate_ability)
 				if detonate_ability_handler then --detonate only if parent has the ability
-					local radius = detonate_ability_handler:GetVanillaAbilitySpecial("radius")
+					local radius = detonate_ability_handler:GetSpecialValueFor("radius")
 
 					local enemies = FindUnitsInRadius(parent:GetTeamNumber(),
 						parent:GetAbsOrigin(),

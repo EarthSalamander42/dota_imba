@@ -1,0 +1,33 @@
+"DOTAAHeroes"
+{
+	//========================================================================================================
+	// HERO: Pudge
+	//========================================================================================================
+	"npc_dota_hero_pudge"
+	{
+		//Picking Screen
+		"IsImba"					"1"
+
+		"Ability1"					"imba_pudge_meat_hook"
+		"Ability2"					"imba_pudge_rot"
+		"Ability3"					"imba_pudge_flesh_heap"
+		"Ability4"					"imba_pudge_sharp_hook"
+		"Ability5"					"imba_pudge_light_hook"
+		"Ability6"					"imba_pudge_dismember"
+		"Ability7"					"imba_pudge_eject"
+
+		"Ability10"					"special_bonus_armor_5"
+		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
+		"Ability12"					"special_bonus_spell_lifesteal_13"
+		"Ability13"					"special_bonus_imba_pudge_9" // +X% Rot Slow
+		"Ability14"					"special_bonus_imba_pudge_8" // +Xs Dismember Duration
+		"Ability15"					"special_bonus_cooldown_reduction_15"
+		"Ability16"					"special_bonus_imba_pudge_7" // Meat Hook applies Rupture
+		"Ability17"					"special_bonus_imba_pudge_5" // +1000 Hook Distance
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_armor_10" // +10 armor
+		// "Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
+		// "Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
+	}
+}

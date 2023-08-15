@@ -18,7 +18,7 @@ imba_juggernaut_blade_fury = imba_juggernaut_blade_fury or class(VANILLA_ABILITI
 function imba_juggernaut_blade_fury:IsNetherWardStealable() return true end
 
 function imba_juggernaut_blade_fury:GetCastRange()
-	return self:GetVanillaAbilitySpecial("blade_fury_radius")
+	return self:GetSpecialValueFor("blade_fury_radius")
 end
 
 function imba_juggernaut_blade_fury:OnSpellStart()
@@ -27,13 +27,13 @@ function imba_juggernaut_blade_fury:OnSpellStart()
 	-- Fix the infinite radius in custom, but benefits the use of Refresher
 	if self:GetCaster():HasModifier("modifier_imba_juggernaut_blade_fury") then
 		local buff = self:GetCaster():FindModifierByName("modifier_imba_juggernaut_blade_fury")
-		if buff.radius >= (self:GetVanillaAbilitySpecial("blade_fury_radius") * 2) then
-			buff.radius = self:GetVanillaAbilitySpecial("blade_fury_radius")
+		if buff.radius >= (self:GetSpecialValueFor("blade_fury_radius") * 2) then
+			buff.radius = self:GetSpecialValueFor("blade_fury_radius")
 		end
 	end
 
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_juggernaut_blade_fury",
-		{ duration = self:GetVanillaAbilitySpecial("duration") })
+		{ duration = self:GetSpecialValueFor("duration") })
 
 	-- Play cast lines
 	local rand = RandomInt(2, 9)
@@ -73,10 +73,9 @@ function modifier_imba_juggernaut_blade_fury:GetModifierAura() return "modifier_
 
 function modifier_imba_juggernaut_blade_fury:OnCreated()
 	self.original_caster = self:GetCaster()
-	self.dps = self:GetAbility():GetVanillaAbilitySpecial("blade_fury_damage") +
-		self:GetCaster():FindTalentValue("special_bonus_unique_juggernaut_3")
-	self.radius = self:GetAbility():GetVanillaAbilitySpecial("blade_fury_radius")
-	self.tick = self:GetAbility():GetVanillaAbilitySpecial("blade_fury_damage_tick")
+	self.dps = self:GetAbility():GetSpecialValueFor("blade_fury_damage") + self:GetCaster():FindTalentValue("special_bonus_unique_juggernaut_3")
+	self.radius = self:GetAbility():GetSpecialValueFor("blade_fury_radius")
+	self.tick = self:GetAbility():GetSpecialValueFor("blade_fury_damage_tick")
 	self.deflect_chance = self:GetAbility():GetTalentSpecialValueFor("deflect_chance")
 	self.deflect = true
 	self.shard_interval = self:GetAbility():GetSpecialValueFor("shard_attack_interval")
@@ -160,8 +159,8 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 					(wind_dance:GetStackCount() * self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_6", "dps") * self.tick)
 			end
 			-- Crit Chance
-			local crit = self.bladedance:GetVanillaAbilitySpecial("blade_dance_crit_mult") / 100
-			local chance = self.bladedance:GetVanillaAbilitySpecial("blade_dance_crit_chance")
+			local crit = self.bladedance:GetSpecialValueFor("blade_dance_crit_mult") / 100
+			local chance = self.bladedance:GetSpecialValueFor("blade_dance_crit_chance")
 			if RollPercentage(chance + self.prng - math.floor((chance - 5) / chance)) then
 				self.prng = 0
 
@@ -424,7 +423,7 @@ function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
 		local caster_position = self.caster:GetAbsOrigin()
 
 		-- The Succ radius
-		self.radius = self:GetAbility():GetVanillaAbilitySpecial("blade_fury_radius")
+		self.radius = self:GetAbility():GetSpecialValueFor("blade_fury_radius")
 		local succ_radius = self.radius * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1")
 
 		-- Direction
@@ -606,32 +605,28 @@ function imba_juggernaut_healing_ward_passive:OnSpellStart()
 	self:SetActivated(false)
 end
 
-LinkLuaModifier("modifier_imba_juggernaut_healing_ward_passive", "components/abilities/heroes/hero_juggernaut",
-	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_juggernaut_healing_ward_passive", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_healing_ward_passive = modifier_imba_juggernaut_healing_ward_passive or class({})
 
 function modifier_imba_juggernaut_healing_ward_passive:OnCreated()
+	self.caster = self:GetCaster()
+	self.parent = self:GetParent()
+
 	if IsServer() then
 		-- Play spawn particle
-		local eruption_pfx = ParticleManager:CreateParticle(
-			"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward_eruption.vpcf", PATTACH_CUSTOMORIGIN,
-			self:GetCaster(), self:GetCaster())
-		ParticleManager:SetParticleControl(eruption_pfx, 0, self:GetCaster():GetAbsOrigin())
+		local eruption_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_healing_ward_eruption.vpcf", PATTACH_CUSTOMORIGIN, self.caster, self.caster)
+		ParticleManager:SetParticleControl(eruption_pfx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(eruption_pfx)
 
-		-- Attach ambient particle
-		self:GetCaster().healing_ward_ambient_pfx = ParticleManager:CreateParticle(
-			"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf", PATTACH_ABSORIGIN_FOLLOW,
-			self:GetCaster(),
-			self:GetCaster())
-		ParticleManager:SetParticleControl(self:GetCaster().healing_ward_ambient_pfx, 0,
-			self:GetCaster():GetAbsOrigin() + Vector(0, 0, 100))
-		ParticleManager:SetParticleControl(self:GetCaster().healing_ward_ambient_pfx, 1,
-			Vector(self:GetAbility():GetVanillaAbilitySpecial("healing_ward_aura_radius"), 1, 1))
-		ParticleManager:SetParticleControlEnt(self:GetCaster().healing_ward_ambient_pfx, 2, self:GetCaster(),
-			PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+		local healing_ward_ability = self.caster:FindAbilityByName("imba_juggernaut_healing_ward")
 
-		EmitSoundOn("Hero_Juggernaut.HealingWard.Loop", self:GetParent())
+		-- Attach ambient particle
+		self.caster.healing_ward_ambient_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
+		ParticleManager:SetParticleControl(self.caster.healing_ward_ambient_pfx, 0, self.caster:GetAbsOrigin() + Vector(0, 0, 100))
+		ParticleManager:SetParticleControl(self.caster.healing_ward_ambient_pfx, 1, Vector(healing_ward_ability:GetSpecialValueFor("healing_ward_aura_radius"), 1, 1))
+		ParticleManager:SetParticleControlEnt(self.caster.healing_ward_ambient_pfx, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+
+		EmitSoundOn("Hero_Juggernaut.HealingWard.Loop", self.parent)
 		-- self:StartIntervalThink(0.1) -- anti valve garbage measures
 	end
 end
@@ -639,33 +634,28 @@ end
 function modifier_imba_juggernaut_healing_ward_passive:OnRefresh()
 	if IsServer() then
 		-- Play spawn particle
-		local eruption_pfx = ParticleManager:CreateParticle(
-			"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_eruption_dc.vpcf",
-			PATTACH_CUSTOMORIGIN, self:GetCaster(), self:GetCaster())
-		ParticleManager:SetParticleControl(eruption_pfx, 0, self:GetCaster():GetAbsOrigin())
+		local eruption_pfx = ParticleManager:CreateParticle("particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_eruption_dc.vpcf", PATTACH_CUSTOMORIGIN, self.caster, self.caster)
+		ParticleManager:SetParticleControl(eruption_pfx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(eruption_pfx)
 
+		local healing_ward_ability = self.caster:FindAbilityByName("imba_juggernaut_healing_ward")
+
 		-- Attach ambient particle
-		ParticleManager:DestroyParticle(self:GetCaster().healing_ward_ambient_pfx, false)
-		ParticleManager:ReleaseParticleIndex(self:GetCaster().healing_ward_ambient_pfx)
-		self:GetCaster().healing_ward_ambient_pfx = nil
-		self:GetCaster().healing_ward_ambient_pfx = ParticleManager:CreateParticle(
-			"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_dc.vpcf",
-			PATTACH_ABSORIGIN_FOLLOW, self:GetCaster(), self:GetCaster())
-		ParticleManager:SetParticleControl(self:GetCaster().healing_ward_ambient_pfx, 0,
-			self:GetCaster():GetAbsOrigin() + Vector(0, 0, 100))
-		ParticleManager:SetParticleControl(self:GetCaster().healing_ward_ambient_pfx, 1,
-			Vector(self:GetAbility():GetTalentSpecialValueFor("heal_radius_totem"), 1, 1))
-		ParticleManager:SetParticleControlEnt(self:GetCaster().healing_ward_ambient_pfx, 2, self:GetCaster(),
-			PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+		ParticleManager:DestroyParticle(self.caster.healing_ward_ambient_pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.caster.healing_ward_ambient_pfx)
+		self.caster.healing_ward_ambient_pfx = nil
+		self.caster.healing_ward_ambient_pfx = ParticleManager:CreateParticle("particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_dc.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster, self.caster)
+		ParticleManager:SetParticleControl(self.caster.healing_ward_ambient_pfx, 0, self.caster:GetAbsOrigin() + Vector(0, 0, 100))
+		ParticleManager:SetParticleControl(self.caster.healing_ward_ambient_pfx, 1, Vector(healing_ward_ability:GetSpecialValueFor("healing_ward_aura_radius"), 1, 1))
+		ParticleManager:SetParticleControlEnt(self.caster.healing_ward_ambient_pfx, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
 	end
 end
 
 -- function modifier_imba_juggernaut_healing_ward_passive:OnIntervalThink()
--- if IsTotem(self:GetParent()) and self:GetParent():GetModelName() == "models/heroes/juggernaut/jugg_healing_ward.vmdl" then
--- self:GetParent():SetModel("models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl")
--- elseif not IsTotem(self:GetParent()) and self:GetParent():GetModelName() == "models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl" then
--- self:GetParent():SetModel("models/heroes/juggernaut/jugg_healing_ward.vmdl")
+-- if IsTotem(self.parent) and self.parent:GetModelName() == "models/heroes/juggernaut/jugg_healing_ward.vmdl" then
+-- self.parent:SetModel("models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl")
+-- elseif not IsTotem(self.parent) and self.parent:GetModelName() == "models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl" then
+-- self.parent:SetModel("models/heroes/juggernaut/jugg_healing_ward.vmdl")
 -- end
 -- end
 
@@ -686,7 +676,7 @@ function modifier_imba_juggernaut_healing_ward_passive:GetModifierAura()
 end
 
 -- function modifier_imba_juggernaut_healing_ward_passive:GetAuraEntityReject(target)
--- if target:GetUnitName() == self:GetParent():GetUnitName() then return true end
+-- if target:GetUnitName() == self.parent:GetUnitName() then return true end
 -- return false
 -- end
 
@@ -706,12 +696,11 @@ end
 
 function modifier_imba_juggernaut_healing_ward_passive:GetAuraRadius()
 	if self:GetAbility() then
-		local healing_ward_ability = self:GetParent():GetOwner():FindAbilityByName("imba_juggernaut_healing_ward")
-		local radius = healing_ward_ability:GetVanillaAbilitySpecial("healing_ward_aura_radius")
+		local healing_ward_ability = self.parent:GetOwner():FindAbilityByName("imba_juggernaut_healing_ward")
+		local radius = healing_ward_ability:GetSpecialValueFor("healing_ward_aura_radius")
 
-		if IsTotem(self:GetParent()) then
-			local totem_bonus_radius_pct = radius * healing_ward_ability:GetSpecialValueFor("radius_bonus_totem_pct") /
-				100
+		if IsTotem(self.parent) then
+			local totem_bonus_radius_pct = radius * healing_ward_ability:GetSpecialValueFor("radius_bonus_totem_pct") / 100
 			local totem_radius = radius + totem_bonus_radius_pct
 
 			return totem_radius
@@ -752,26 +741,25 @@ function modifier_imba_juggernaut_healing_ward_passive:GetModifierIncomingDamage
 end
 
 function modifier_imba_juggernaut_healing_ward_passive:OnAttackLanded(params) -- health handling
-	if params.target == self:GetParent() then
-		if self:GetParent():GetHealth() > 1 then
-			self:GetParent():SetHealth(self:GetParent():GetHealth() - 1)
+	if params.target == self.parent then
+		if self.parent:GetHealth() > 1 then
+			self.parent:SetHealth(self.parent:GetHealth() - 1)
 		else
-			self:GetParent():Kill(nil, params.attacker)
+			self.parent:Kill(nil, params.attacker)
 		end
 	end
 end
 
 function modifier_imba_juggernaut_healing_ward_passive:OnDeath(params) -- modifier kill instadeletes thanks valve
-	if params.unit == self:GetParent() then
-		ParticleManager:DestroyParticle(self:GetCaster().healing_ward_ambient_pfx, false)
-		ParticleManager:ReleaseParticleIndex(self:GetCaster().healing_ward_ambient_pfx)
-		self:GetCaster().healing_ward_ambient_pfx = nil
-		StopSoundOn("Hero_Juggernaut.HealingWard.Loop", self:GetParent())
+	if params.unit == self.parent then
+		ParticleManager:DestroyParticle(self.caster.healing_ward_ambient_pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.caster.healing_ward_ambient_pfx)
+		self.caster.healing_ward_ambient_pfx = nil
+		StopSoundOn("Hero_Juggernaut.HealingWard.Loop", self.parent)
 	end
 end
 
-LinkLuaModifier("modifier_imba_juggernaut_healing_ward_aura", "components/abilities/heroes/hero_juggernaut",
-	LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_juggernaut_healing_ward_aura", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_healing_ward_aura = modifier_imba_juggernaut_healing_ward_aura or class({})
 
 function modifier_imba_juggernaut_healing_ward_aura:OnCreated()
@@ -785,9 +773,8 @@ function modifier_imba_juggernaut_healing_ward_aura:OnCreated()
 	if not IsServer() then return end
 
 	local healing_ward_ability = self.caster:GetOwner():FindAbilityByName("imba_juggernaut_healing_ward")
-	self.heal_per_sec = healing_ward_ability:GetVanillaAbilitySpecial("healing_ward_heal_amount")
-	self.heal_per_sec_totem = self.heal_per_sec +
-		(self.heal_per_sec * healing_ward_ability:GetSpecialValueFor("heal_per_sec_totem_pct") / 100)
+	self.heal_per_sec = healing_ward_ability:GetSpecialValueFor("healing_ward_heal_amount")
+	self.heal_per_sec_totem = self.heal_per_sec + (self.heal_per_sec * healing_ward_ability:GetSpecialValueFor("heal_per_sec_totem_pct") / 100)
 
 	if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
 		if IsTotem(self.caster) then
@@ -1389,7 +1376,7 @@ if IsServer() then
 
 		if self:GetAbility() and keys.attacker == self:GetParent() then
 			self.critProc = false
-			if RollPseudoRandom(self:GetAbility():GetVanillaAbilitySpecial("blade_dance_crit_chance"), self) then
+			if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("blade_dance_crit_chance"), self) then
 				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_ATTACK_EVENT,
 					self:GetParent():GetSecondsPerAttack())
 				local crit_pfx = ParticleManager:CreateParticle(
@@ -1402,7 +1389,7 @@ if IsServer() then
 				self.critProc = true
 				self:GetParent():EmitSound("Hero_Juggernaut.BladeDance", self:GetCaster())
 
-				return self:GetAbility():GetVanillaAbilitySpecial("blade_dance_crit_mult")
+				return self:GetAbility():GetSpecialValueFor("blade_dance_crit_mult")
 			end
 		end
 	end
@@ -1797,11 +1784,11 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		local omnislash_modifier_handler
 
 		-- if self.caster:HasScepter() then
-		-- omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetVanillaAbilitySpecial("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
+		-- omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		-- else
 		omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster",
 			{
-				duration = self:GetVanillaAbilitySpecial("duration") +
+				duration = self:GetSpecialValueFor("duration") +
 					self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")
 			})
 		-- end
@@ -1843,11 +1830,11 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		local omnislash_modifier_handler
 
 		-- if self.caster:HasScepter() then
-		-- omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetVanillaAbilitySpecial("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
+		-- omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		-- else
 		omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster",
 			{
-				duration = self:GetVanillaAbilitySpecial("duration") +
+				duration = self:GetSpecialValueFor("duration") +
 					self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")
 			})
 		-- end
@@ -2027,7 +2014,7 @@ function modifier_imba_omni_slash_caster:OnCreated()
 	if IsServer() then
 		Timers:CreateTimer(FrameTime(), function()
 			if (not self.parent:IsNull()) then
-				self.bounce_range = self:GetAbility():GetVanillaAbilitySpecial("omni_slash_radius")
+				self.bounce_range = self:GetAbility():GetSpecialValueFor("omni_slash_radius")
 
 				self.hero_agility = self.original_caster:GetAgility()
 				self:GetAbility():SetRefCountsModifiers(false)
@@ -2035,9 +2022,9 @@ function modifier_imba_omni_slash_caster:OnCreated()
 				self:BounceAndSlaughter(true)
 
 				-- Well this looks messy as hell
-				-- local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetVanillaAbilitySpecial("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
+				-- local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
 
-				local slash_rate = (self.caster:GetSecondsPerAttack() / (math.max(self:GetAbility():GetVanillaAbilitySpecial("attack_rate_multiplier"), 1))) /
+				local slash_rate = (self.caster:GetSecondsPerAttack() / (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1))) /
 					math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
 
 				self:StartIntervalThink(slash_rate)
@@ -2052,9 +2039,9 @@ function modifier_imba_omni_slash_caster:OnIntervalThink()
 	self:BounceAndSlaughter()
 
 	-- Slash interval updates as attack speed updates
-	-- local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetVanillaAbilitySpecial("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
+	-- local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
 
-	local slash_rate = (self.caster:GetSecondsPerAttack() / (math.max(self:GetAbility():GetVanillaAbilitySpecial("attack_rate_multiplier"), 1))) /
+	local slash_rate = (self.caster:GetSecondsPerAttack() / (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1))) /
 		math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
 
 	self:StartIntervalThink(-1)
@@ -2228,7 +2215,7 @@ end
 -- end
 
 function modifier_imba_omni_slash_caster:GetModifierPreAttack_BonusDamage(kv)
-	return self:GetAbility():GetVanillaAbilitySpecial("bonus_damage")
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
 end
 
 function modifier_imba_omni_slash_caster:GetOverrideAnimation()
